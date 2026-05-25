@@ -135,7 +135,7 @@ extern void BossRoomInitCluster_00410340(void);
  *     Else: setup pipeline with DispatcherComplex260_00407400, MStackCall_00406340,
  *     install self at [esi+8] = 0x00410210, set state flags.
  */
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -188,7 +188,7 @@ __declspec(naked) void BootInstallerPair_004101f0(void) {
         shr     ecx, 2
         mov     dword ptr [g_data_00542048], ecx
         call    DispatcherComplex260_00407400
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_bip_done
         test    byte ptr [g_state_0054208c], 4
@@ -207,7 +207,7 @@ __declspec(naked) void BootInstallerPair_004101f0(void) {
         mov     dword ptr [g_data_0054206c], eax
         mov     dword ptr [edx*4 + 0x5c], eax
         call    MStackCall_00406340
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_bip_done
         mov     eax, 0x004d57c8
@@ -228,14 +228,14 @@ __declspec(naked) void BootInstallerPair_004101f0(void) {
         mov     dword ptr [g_data_0054206c], ecx
         mov     dword ptr [g_data_00542058], eax
         call    BossRoomInitCluster_00410340
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bip_done
         mov     eax, 1
         mov     dword ptr [esi + 8], offset L_bip_callback
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_data_0054204c], eax
-        mov     dword ptr [g_data_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
     L_bip_done:
         pop     esi
         ret

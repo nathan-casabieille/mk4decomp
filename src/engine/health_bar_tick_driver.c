@@ -135,7 +135,7 @@ extern unsigned int g_const_00427780;
 extern void func_00427780(void);
 
 extern unsigned int g_data_005380e0;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
@@ -178,7 +178,7 @@ __declspec(naked) void RoundEndHandlerCluster_00457de0(void)
         jne      short L_7e7d
     L_7e38:
         call     BootInitGuardedCallChain_004265d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7f8b
         push     3
@@ -200,11 +200,11 @@ __declspec(naked) void RoundEndHandlerCluster_00457de0(void)
         ret
     L_7e7d:
         call     HealthBarTickDriver_00458cc0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7f8b
         call     SpawnTrioInitCluster_00458440
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7f8b
         push     0x25e
@@ -213,7 +213,7 @@ __declspec(naked) void RoundEndHandlerCluster_00457de0(void)
         mov      dword ptr [esi + 0x84], 2
         add      esp, 4
         mov      dword ptr [g_data_0054204c], 0x3c
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
         pop      esi
         pop      ebx
         ret
@@ -233,11 +233,11 @@ __declspec(naked) void RoundEndHandlerCluster_00457de0(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [g_data_0052aac4], eax
         call     SequencedInit3CallB_00458ae0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_7f8b
         call     QuadCallPauseJmp_00457ff0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_7f8b
         push     0x25e
@@ -246,7 +246,7 @@ __declspec(naked) void RoundEndHandlerCluster_00457de0(void)
         add      esp, 8
         mov      dword ptr [g_data_00542074], 9
         call     Push16Call_00489f50
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_7f8b
         mov      edx, OFFSET g_data_004e8698
@@ -261,7 +261,7 @@ __declspec(naked) void RoundEndHandlerCluster_00457de0(void)
         mov      dword ptr [esi + 8], OFFSET L_7de0
         mov      dword ptr [esi + 0x84], ebx
         mov      dword ptr [g_data_0054204c], ebx
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
     L_7f8b:
         pop      esi
         pop      ebx
@@ -285,7 +285,7 @@ __declspec(naked) void RoundEndHandlerCluster_00457de0(void)
         mov      dword ptr [eax + 8], OFFSET L_7f90
         mov      dword ptr [eax + 0x84], ecx
         mov      dword ptr [g_data_0054204c], 0x708
-        mov      dword ptr [g_data_00541e6c], ecx
+        mov      dword ptr [g_framePauseFlag], ecx
         ret
     }
 }

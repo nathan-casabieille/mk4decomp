@@ -146,7 +146,7 @@ extern unsigned int g_data_00535ddc;
 extern unsigned int g_data_00542054;
 
 extern unsigned int g_data_004d57ac;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542060;
 extern unsigned int g_data_0054206c;
@@ -209,7 +209,7 @@ __declspec(naked) void MoveFsmCluster_004364a0(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edx
         call     CallPauseConstStoreJmp_00438170
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -231,7 +231,7 @@ __declspec(naked) void MoveFsmCluster_004364a0(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edx
         call     InstallSelfDecBitCheck_004391d0
-        mov      dword ptr [g_data_00541e6c], esi
+        mov      dword ptr [g_framePauseFlag], esi
         pop      edi
         pop      esi
         ret
@@ -246,7 +246,7 @@ __declspec(naked) void MoveFsmCluster_004364a0(void)
         /* === Helper 3 (0x436608): post-action dispatch === */
         push     OFFSET g_data_004e4a14
         call     QuadBlockArgInstallChain_0043a950
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         test     eax, eax
         jne      short L_664f
@@ -264,7 +264,7 @@ __declspec(naked) void MoveFsmCluster_004364a0(void)
         jmp      SetJmp_00438f70
     L_6621:
         call     MStackChainExtractCall_004397d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_664f
         test     byte ptr [g_data_0054208c], 1
@@ -279,7 +279,7 @@ __declspec(naked) void MoveFsmCluster_004364a0(void)
         ret
         /* === Helper 4 (0x436650): special-result flag toggle === */
         call     ScaledChain3c74_0048f910
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_667e
         mov      eax, dword ptr [g_data_0054206c]
@@ -300,7 +300,7 @@ __declspec(naked) void MoveFsmCluster_004364a0(void)
         test     eax, eax
         jne      short L_66c0
         call     State208cBit0Flag_0048f160
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_66c0
         test     byte ptr [g_data_0054208c], 1

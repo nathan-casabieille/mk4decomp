@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_0052ab3c;
 extern unsigned int g_data_00535d14;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
@@ -183,7 +183,7 @@ __declspec(naked) void BootScheduledNodeTimerWalk_0041f570(void)
         mov     dword ptr [g_data_00542088], edx
         mov     eax, dword ptr [eax*4 + 8]
         mov     dword ptr [esi + 0xd8], eax
-        mov     dword ptr [g_data_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
         mov     ecx, dword ptr [esi + 0xd8]
         mov     dword ptr [g_data_00535d14], ecx
         call    dword ptr [esi + 0xd8]
@@ -232,7 +232,7 @@ __declspec(naked) void BootScheduledNodeTimerWalk_0041f570(void)
         pop     ebp
         pop     edi
     L_bsntw_done:
-        mov     dword ptr [g_data_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
         pop     esi
         pop     ebx
         ret

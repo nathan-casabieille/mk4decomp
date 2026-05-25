@@ -125,7 +125,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004f3808;
 extern unsigned int g_data_0052aac4;
 extern unsigned int g_data_0053a50c;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -180,7 +180,7 @@ __declspec(naked) void InstallSelfStateMachine6_004a48e0(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     AudioInstallSelfStatePush_004aa8a0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         pop      ebx
@@ -223,7 +223,7 @@ __declspec(naked) void InstallSelfStateMachine6_004a48e0(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     AudioInstallSelfStatePush_004aa8a0
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
         pop      ebx
@@ -234,7 +234,7 @@ __declspec(naked) void InstallSelfStateMachine6_004a48e0(void)
         add      esp, 8
     L_4a51:
         call     FiveTableWalkInit_00403c90
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         je       L_4b51
         pop      edi
         pop      esi
@@ -245,13 +245,13 @@ __declspec(naked) void InstallSelfStateMachine6_004a48e0(void)
         mov      dword ptr [g_data_0053a50c], 0x10
         mov      dword ptr [eax*4 + 0x30], edi
         call     BootInitGuardedCallChain_004265d0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_4b66
         mov      ecx, 0x506c44
         shr      ecx, 2
         mov      dword ptr [g_data_00542044], ecx
         call     LoadGeoAsset_Default
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_4b66
         mov      edx, dword ptr [g_data_00542060]
         mov      eax, dword ptr [edx*4 + 0x30]
@@ -259,7 +259,7 @@ __declspec(naked) void InstallSelfStateMachine6_004a48e0(void)
         shr      ecx, 2
         mov      dword ptr [g_data_00542048], ecx
         call     DispatcherComplex260_00407400
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_4b66
         mov      edx, dword ptr [g_data_00542044]
         mov      eax, 0x1f
@@ -268,7 +268,7 @@ __declspec(naked) void InstallSelfStateMachine6_004a48e0(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [ecx*4 + 0x30], eax
         call     MStackPushComplexCallPop_00406430
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_4b66
         mov      edx, dword ptr [g_data_00542044]
         mov      ebx, 1
@@ -277,7 +277,7 @@ __declspec(naked) void InstallSelfStateMachine6_004a48e0(void)
         mov      dword ptr [esi + 8], 0x4a48e0
         mov      dword ptr [esi + 0x84], ebx
         mov      dword ptr [g_data_0054204c], 0xf0
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
         pop      ebx

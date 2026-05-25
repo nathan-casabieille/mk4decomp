@@ -129,7 +129,7 @@ extern unsigned int g_data_0050cb3c;
 extern unsigned int g_data_005108dc;
 extern unsigned int g_data_0052ab10;
 extern unsigned int g_data_00535e48;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -162,7 +162,7 @@ __declspec(naked) void CombatChainWalkExpand_00463870(void)
         mov      dword ptr [g_data_0054207c], 0
         mov      dword ptr [g_data_00542048], edx
         call     DispatcherComplex260_00407030
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3c6e
         test     byte ptr [g_data_0054208c], 4
@@ -198,7 +198,7 @@ __declspec(naked) void CombatChainWalkExpand_00463870(void)
         mov      dword ptr [g_data_0054206c], 0
         mov      dword ptr [edx*4 + 0x40], 0
         call     MStackCall_00406340
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3c6e
         mov      eax, dword ptr [g_data_00542044]
@@ -220,17 +220,17 @@ __declspec(naked) void CombatChainWalkExpand_00463870(void)
     L_39cd:
         mov      dword ptr [g_data_00542048], ebx
         call     DispatcherComplex260_00407030
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3c6e
         test     byte ptr [g_data_0054208c], 4
         jne      L_3c6e
         call     MStackBracket4_ListInsertZeroFill_00408600
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3c6e
         call     MStackPush3LinkedListWalk_004088b0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3c6e
         mov      eax, dword ptr [g_data_004d57ac]
@@ -257,14 +257,14 @@ __declspec(naked) void CombatChainWalkExpand_00463870(void)
         mov      ecx, dword ptr [eax*4 + 0x18]
         mov      dword ptr [g_data_00542044], ecx
         call     InstallSelfDispatch_00407620
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3c6e
         mov      edx, OFFSET g_data_0050a49c
         shr      edx, 2
         mov      dword ptr [g_data_00542048], edx
         call     MStackPush4LLWalkPop4_004090e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3c6e
         mov      eax, dword ptr [g_data_004d57ac]
@@ -291,7 +291,7 @@ __declspec(naked) void CombatChainWalkExpand_00463870(void)
         mov      eax, dword ptr [g_data_0054205c]
         mov      dword ptr [edx*4 + 0x40], eax
         call     MStackCall_00406340
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3c6e
         mov      ecx, dword ptr [g_data_00542044]
@@ -314,7 +314,7 @@ __declspec(naked) void CombatChainWalkExpand_00463870(void)
         mov      edx, dword ptr [ecx*4]
         mov      dword ptr [g_data_00542078], edx
         call     DirtyDoubleDeref_00408cb0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3c6e
         mov      eax, dword ptr [g_data_00542044]

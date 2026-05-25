@@ -128,7 +128,7 @@ extern unsigned int g_data_004ef290;
 extern unsigned int g_data_004ef2c0;
 extern unsigned int g_data_0052ab10;
 extern unsigned int g_data_00538124;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
@@ -151,7 +151,7 @@ __declspec(naked) void BlockedCounterCluster_004816d0(void)
         mov      eax, dword ptr [g_data_0054205c]
         and      dword ptr [eax*4 + 0x34], 0xfffffffe
         call     SwapTwoGlobals_004911c0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1707
         mov      eax, dword ptr [g_data_0054206c]
@@ -171,7 +171,7 @@ __declspec(naked) void BlockedCounterCluster_004816d0(void)
         nop
         /* H2: trigger ground impact */
         call     L_16d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1749
         push     0x26
@@ -202,12 +202,12 @@ __declspec(naked) void BlockedCounterCluster_004816d0(void)
         test     ecx, ecx
         je       short L_1791
         call     CjDispatchCommit_004818e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1813
         push     OFFSET g_data_004ef290
         call     ArgSarStoreJmp_004594f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         ret
     L_1791:
@@ -231,7 +231,7 @@ __declspec(naked) void BlockedCounterCluster_004816d0(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     BossArrivalSequence_00481950
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_1813:
         ret
         nop
@@ -274,7 +274,7 @@ __declspec(naked) void BlockedCounterCluster_004816d0(void)
         mov      dword ptr [g_data_0054206c], edi
         mov      dword ptr [g_data_00538124], edi
         call     Push16Call_00489f50
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_18d8
         mov      ecx, dword ptr [g_data_0054205c]
@@ -285,7 +285,7 @@ __declspec(naked) void BlockedCounterCluster_004816d0(void)
         mov      dword ptr [esi + 8], OFFSET L_1820
         mov      dword ptr [esi + 0x84], edi
         mov      dword ptr [g_data_0054204c], 0x3c
-        mov      dword ptr [g_data_00541e6c], edi
+        mov      dword ptr [g_framePauseFlag], edi
     L_18d8:
         pop      edi
         pop      esi

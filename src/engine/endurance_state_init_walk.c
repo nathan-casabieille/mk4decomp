@@ -131,7 +131,7 @@ extern void EnduranceStateInitWalk_004785a0(void);
 extern void ScaledOrStore_004903d0(void);
 
 extern unsigned int g_data_004d57ac;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054205c;
@@ -165,13 +165,13 @@ __declspec(naked) void SpawnListBatchLoader_00477710(void)
         mov      edx, dword ptr [g_data_00542080]
         mov      dword ptr [g_data_00542048], edx
         call     MStackPushDispatchBitGate_00407330
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_790f
         test     byte ptr [g_data_0054208c], bl
         jne      L_78ca
         call     MStackPushComplexCallPop_00406430
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_790f
         mov      eax, dword ptr [g_data_004d57ac]
@@ -183,7 +183,7 @@ __declspec(naked) void SpawnListBatchLoader_00477710(void)
         mov      dword ptr [g_data_00542044], ecx
         je       short L_77c9
         call     ScaledOrStore_004903d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_790f
     L_77c9:
@@ -225,23 +225,23 @@ __declspec(naked) void SpawnListBatchLoader_00477710(void)
         jne      L_7733
     L_7882:
         call     PollThenInit_00477920
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_790f
         call     MultiGateDispatchCallJmp_004779d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_790f
         call     EnduranceStateInitWalk_004785a0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_790f
         call     SpawnLeftRightProps_00478140
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_790f
         call     BulletVolleySpawner_00478350
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       short L_78e4
         pop      ebx

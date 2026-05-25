@@ -131,7 +131,7 @@ extern void MStackPush2ClampLookup_00459160(void);
 extern void TripleEntryDispatch_00458810(void);
 
 extern unsigned int g_data_005380b0;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
@@ -169,7 +169,7 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], ecx
         call    MStackPush2ClampLookup_00459160
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_gscp_ret
         mov     ecx, dword ptr [g_state_004d57ac]
@@ -192,7 +192,7 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
     L_gscp_setSlot:
         mov     dword ptr [g_data_005380a4], eax
         call    SpawnTrioInitCluster_00458440
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_gscp_ret
         push    0
@@ -216,7 +216,7 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
         mov     dword ptr [g_data_00542044], eax
         mov     dword ptr [eax*4], 0x27
         call    SpawnTrioInitCluster_00458440
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_gscp_ret
         jmp     CallSetPause_0041f830
@@ -234,7 +234,7 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
         je      short L_gscp_sub2_inst
         mov     dword ptr [g_data_00542074], 0x264
         call    Push16Call_00489f50
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_gscp_sub2_ret
         jmp     CallSetPause_0041f830
@@ -243,7 +243,7 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
         mov     dword ptr [eax + 8], offset L_gscp_sub2
         mov     dword ptr [eax + 0x84], ecx
         mov     dword ptr [g_data_0054204c], ecx
-        mov     dword ptr [g_data_00541e6c], ecx
+        mov     dword ptr [g_framePauseFlag], ecx
     L_gscp_sub2_ret:
         ret
         nop

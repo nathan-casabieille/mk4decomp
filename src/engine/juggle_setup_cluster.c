@@ -140,7 +140,7 @@ extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_00542088;
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
@@ -154,7 +154,7 @@ __declspec(naked) void PoseCopyIdleCluster_004537a0(void)
     __asm {
         /* === Helper 1: pose-copy from slot ECX to slot EAX === */
         call     MStackCall_004062f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_38a4
         mov      ecx, dword ptr [g_data_00542054]
@@ -257,15 +257,15 @@ __declspec(naked) void PoseCopyIdleCluster_004537a0(void)
         jmp      JuggleSetupCluster_004539d0
     L_3935:
         call     DualScaledStore_00452740
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      func_00453a01
         call     Chain2AxisDiffStoreTailJmp_0044cad0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      func_00453a01
         mov      dword ptr [g_data_00542074], 0xe666
         mov      dword ptr [g_data_0054206c], 0xfffef334
         call     MStackPush3SideStore_0044cb80
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      func_00453a01
         mov      ecx, dword ptr [g_data_0053a7a0]
         mov      eax, OFFSET g_data_004e7fd0

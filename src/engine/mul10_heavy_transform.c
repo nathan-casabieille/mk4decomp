@@ -134,7 +134,7 @@ extern unsigned int g_data_00541f94;
 extern unsigned int g_data_00541f98;
 extern unsigned int g_data_00541f9c;
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -151,7 +151,7 @@ __declspec(naked) void PoseTreeBlendWalker_0049d680(void)
         push     esi
         push     edi
         call     MStackPush8_004ab790
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d8d0
         mov      ecx, dword ptr [g_data_00542048]
@@ -177,7 +177,7 @@ __declspec(naked) void PoseTreeBlendWalker_0049d680(void)
         mov      dword ptr [g_data_0054206c], eax
         je       short L_d719
         call     StoreDoubleNegPauseSubStore_004ab750
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d8d0
         mov      eax, dword ptr [g_data_0054206c]
@@ -190,7 +190,7 @@ __declspec(naked) void PoseTreeBlendWalker_0049d680(void)
         mov      dword ptr [g_data_0054206c], eax
         je       short L_d746
         call     StoreDoubleNegPauseSubStore_004ab750
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d8d0
         mov      eax, dword ptr [g_data_0054206c]
@@ -203,7 +203,7 @@ __declspec(naked) void PoseTreeBlendWalker_0049d680(void)
         mov      dword ptr [g_data_0054206c], eax
         je       short L_d774
         call     StoreDoubleNegPauseSubStore_004ab750
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d8d0
         mov      eax, dword ptr [g_data_0054206c]
@@ -216,7 +216,7 @@ __declspec(naked) void PoseTreeBlendWalker_0049d680(void)
         mov      dword ptr [g_data_0054206c], eax
         je       short L_d7a2
         call     StoreDoubleNegPauseSubStore_004ab750
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d8d0
         mov      eax, dword ptr [g_data_0054206c]
@@ -224,7 +224,7 @@ __declspec(naked) void PoseTreeBlendWalker_0049d680(void)
         add      eax, dword ptr [esi + 0x18]
         mov      dword ptr [g_data_0054206c], eax
         call     BootMod6487eClampAndChainMul10_00407510
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d8d0
         mov      edx, dword ptr [g_data_0054206c]
@@ -234,7 +234,7 @@ __declspec(naked) void PoseTreeBlendWalker_0049d680(void)
         mov      dword ptr [g_data_0054206c], eax
         je       short L_d7e7
         call     StoreDoubleNegPauseSubStore_004ab750
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d8d0
         mov      eax, dword ptr [g_data_0054206c]
@@ -242,7 +242,7 @@ __declspec(naked) void PoseTreeBlendWalker_0049d680(void)
         add      eax, dword ptr [esi + 0x1c]
         mov      dword ptr [g_data_0054206c], eax
         call     BootMod6487eClampAndChainMul10_00407510
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d8d0
         mov      eax, dword ptr [g_data_0054206c]
@@ -252,7 +252,7 @@ __declspec(naked) void PoseTreeBlendWalker_0049d680(void)
         mov      dword ptr [g_data_0054206c], eax
         je       short L_d82c
         call     StoreDoubleNegPauseSubStore_004ab750
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d8d0
         mov      eax, dword ptr [g_data_0054206c]
@@ -260,7 +260,7 @@ __declspec(naked) void PoseTreeBlendWalker_0049d680(void)
         add      eax, dword ptr [esi + 0x20]
         mov      dword ptr [g_data_0054206c], eax
         call     BootMod6487eClampAndChainMul10_00407510
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d8d0
         mov      ecx, dword ptr [g_data_0054206c]
@@ -270,7 +270,7 @@ __declspec(naked) void PoseTreeBlendWalker_0049d680(void)
         mov      dword ptr [g_data_00542044], edx
         mov      dword ptr [g_data_00542048], eax
         call     Mul10HeavyTransform_00424bf0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d8d0
         mov      edx, dword ptr [g_data_00542054]
@@ -279,7 +279,7 @@ __declspec(naked) void PoseTreeBlendWalker_0049d680(void)
         mov      dword ptr [g_data_00542048], ecx
         mov      dword ptr [g_data_00542044], edx
         call     QuadInterpolator_00425380
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d8d0
         mov      eax, dword ptr [g_data_00542054]

@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_005114b4;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_00542054;
@@ -159,7 +159,7 @@ void MStackBracket3_ChainSwapAdvance_0041d560(void) {
         sar     eax, 2
         mov     dword ptr [g_data_00542048], eax
         call    MStackPushDispatchBitGate_00407330
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_msb3csa_abort
         test    byte ptr [g_state_0054208c], 4
@@ -174,15 +174,15 @@ void MStackBracket3_ChainSwapAdvance_0041d560(void) {
         mov     dword ptr [g_data_0054206c], eax
         mov     dword ptr [ecx*4 + 0x34], eax
         call    MStackPushTwoEntryChainCall_004058c0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_msb3csa_abort
         call    PushPopScaled18_004059a0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_msb3csa_abort
         call    PushDualDerefClearPop_004092a0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_msb3csa_abort
         mov     eax, dword ptr [g_data_0054205c]
@@ -198,7 +198,7 @@ void MStackBracket3_ChainSwapAdvance_0041d560(void) {
         mov     eax, dword ptr [g_data_0054205c]
         or      dword ptr [eax*4 + 0x34], 0x00180000
         call    ScaledTripleCopy54_004ac040
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_msb3csa_abort
         mov     eax, dword ptr [g_data_00542054]
@@ -214,7 +214,7 @@ void MStackBracket3_ChainSwapAdvance_0041d560(void) {
         mov     dword ptr [g_data_0054206c], 0
         mov     dword ptr [edx*4 + 0x28], 0
         call    MStackCall_00406340
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_msb3csa_abort
         mov     ecx, dword ptr [g_state_0054208c]

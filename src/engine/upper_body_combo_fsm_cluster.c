@@ -125,7 +125,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_004ea440;
 extern unsigned int g_data_0053a470;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -174,7 +174,7 @@ __declspec(naked) void UpperBodyComboFsmCluster_00492aa0(void)
         mov      eax, dword ptr [eax*4 + 4]
         mov      dword ptr [g_data_0054206c], eax
         call     eax
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2b5d
     L_2b32:
@@ -232,7 +232,7 @@ __declspec(naked) void UpperBodyComboFsmCluster_00492aa0(void)
         mov      dword ptr [g_data_00542048], ecx
         mov      dword ptr [g_data_00542054], eax
         call     DispatcherComplex260_00407400
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2cc0
         test     byte ptr [g_data_0054208c], 4
@@ -250,7 +250,7 @@ __declspec(naked) void UpperBodyComboFsmCluster_00492aa0(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [ecx*4 + 0x30], eax
         call     MStackPushComplexCallPop_00406430
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2cc0
         mov      edx, dword ptr [g_data_00542044]
@@ -260,7 +260,7 @@ __declspec(naked) void UpperBodyComboFsmCluster_00492aa0(void)
         mov      dword ptr [esi + 8], OFFSET L_2b60
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_data_0054204c], 5
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret      
     L_2c9f:
@@ -268,7 +268,7 @@ __declspec(naked) void UpperBodyComboFsmCluster_00492aa0(void)
         mov      dword ptr [esi + 8], OFFSET L_2b60
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], 2
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_2cc0:
         pop      esi
         ret
@@ -327,7 +327,7 @@ __declspec(naked) void UpperBodyComboFsmCluster_00492aa0(void)
         mov      dword ptr [g_data_00542048], ecx
         mov      dword ptr [g_data_00542054], eax
         call     DispatcherComplex260_00407400
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2e4f
         test     byte ptr [g_data_0054208c], 4
@@ -345,7 +345,7 @@ __declspec(naked) void UpperBodyComboFsmCluster_00492aa0(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [ecx*4 + 0x30], eax
         call     MStackPushComplexCallPop_00406430
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2e4f
         mov      ecx, dword ptr [g_data_00542044]
@@ -360,14 +360,14 @@ __declspec(naked) void UpperBodyComboFsmCluster_00492aa0(void)
         mov      dword ptr [esi + 8], OFFSET L_2cd0
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_data_0054204c], 5
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret      
     L_2e2a:
         mov      dword ptr [esi + 8], OFFSET L_2cd0
         mov      dword ptr [esi + 0x84], 1
         mov      dword ptr [g_data_0054204c], 2
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_2e4f:
         pop      esi
         ret      

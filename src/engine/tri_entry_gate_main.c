@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_00535ddc;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542060;
 extern unsigned int g_data_0054206c;
@@ -191,13 +191,13 @@ __declspec(naked) void TriEntryGateMain_00435440(void)
         mov     eax, dword ptr [g_data_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    EsiInstallTwoCallCmpInstall_00438b10
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
     L_tegm_phase0:
         push    0x4e4a08
         call    QuadBlockArgInstallChain_0043a950
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         jne     L_tegm_ret
@@ -242,7 +242,7 @@ __declspec(naked) void TriEntryGateMain_00435440(void)
         mov     edx, dword ptr [g_data_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    InstallSelfBitGate_00438aa0
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
     L_tegm_ret:
         pop     esi
         ret

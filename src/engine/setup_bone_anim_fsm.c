@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004d57ac;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
@@ -164,7 +164,7 @@ __declspec(naked) void SetupBoneAnimFsm_0043dea0(void)
         mov      ecx, dword ptr [g_data_0054205c]
         mov      dword ptr [g_data_00542044], ecx
         call     MStackPush2ChainLLInsert_00406790
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       L_e21d
         pop      esi
@@ -174,7 +174,7 @@ __declspec(naked) void SetupBoneAnimFsm_0043dea0(void)
         add      edx, 0x15
         mov      dword ptr [g_data_0054204c], edx
         call     Vec3PackedTripleCallBracket_004764d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e265
         cmp      dword ptr [g_data_0054206c], 0xfffecccd
@@ -191,12 +191,12 @@ __declspec(naked) void SetupBoneAnimFsm_0043dea0(void)
         mov      dword ptr [g_data_004d57ac], ecx
         mov      dword ptr [ecx*4], eax
         call     MStackBracketedScaledStores_00475b30
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e265
         mov      dword ptr [g_data_0054206c], 0x17
         call     GatedWordPushCall_00489f90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e265
         mov      eax, dword ptr [g_data_004d57ac]
@@ -237,13 +237,13 @@ __declspec(naked) void SetupBoneAnimFsm_0043dea0(void)
         mov      dword ptr [g_data_00542070], 0xffff199a
         mov      dword ptr [g_data_00542044], edx
         call     EsiTripleMul10Vec_00440660
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e265
         mov      dword ptr [esi + 8], OFFSET SetupBoneAnimFsm_0043dea0
         mov      dword ptr [esi + 0x84], 3
         mov      dword ptr [g_data_0054204c], 0x28
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret      
     L_e087:
@@ -253,7 +253,7 @@ __declspec(naked) void SetupBoneAnimFsm_0043dea0(void)
         jns      L_e1fc
         mov      dword ptr [g_data_0054206c], 0x74
         call     MStackPush2LLWalkCompare_004069b0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e265
         test     byte ptr [g_data_0054208c], 4
@@ -263,7 +263,7 @@ __declspec(naked) void SetupBoneAnimFsm_0043dea0(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [ecx*4 + 0x30], eax
         call     HelperCallTripleMul10_0043e2d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e265
         mov      edx, dword ptr [g_data_00542044]
@@ -272,7 +272,7 @@ __declspec(naked) void SetupBoneAnimFsm_0043dea0(void)
         mov      dword ptr [esi + 8], OFFSET SetupBoneAnimFsm_0043dea0
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_data_0054204c], 3
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret      
     L_e11d:
@@ -289,7 +289,7 @@ __declspec(naked) void SetupBoneAnimFsm_0043dea0(void)
         mov      dword ptr [g_data_00542070], ecx
         mov      dword ptr [g_data_00542050], eax
         call     GuardedCascadeCjLink70Mul10_0043e850
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e265
         mov      edx, dword ptr [g_data_00542044]
@@ -311,7 +311,7 @@ __declspec(naked) void SetupBoneAnimFsm_0043dea0(void)
         jne      L_e139
     L_e1ac:
         call     ScaledSaveCallRestoreJmp_00472f40
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e265
         push     OFFSET SetupVecFsmCluster_0043e3e0 + 0x180
@@ -330,7 +330,7 @@ __declspec(naked) void SetupBoneAnimFsm_0043dea0(void)
     L_e1fc:
         mov      dword ptr [g_data_0054206c], 0x74
         call     MStackPush2LLWalkCompare_004069b0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e265
         test     byte ptr [g_data_0054208c], 4
@@ -345,14 +345,14 @@ __declspec(naked) void SetupBoneAnimFsm_0043dea0(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [edx*4 + 0x30], eax
         call     DualPackedStoreCallSubBack_0043e270
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e265
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET SetupBoneAnimFsm_0043dea0
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_e265:
         pop      esi
         ret      

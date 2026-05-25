@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004d6718;
 extern unsigned int g_data_004f27f0;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541f98;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
@@ -153,7 +153,7 @@ __declspec(naked) void MstackPushPackChainInit_00498c40(void)
         mov     dword ptr [eax*4], ecx
         mov     dword ptr [g_data_0054206c], edx
         call    PushSetXfmMaskCallPop_00407140
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         xor     esi, esi
         cmp     eax, esi
         jne     L_mppci_ret
@@ -175,7 +175,7 @@ __declspec(naked) void MstackPushPackChainInit_00498c40(void)
         shr     edx, 2
         mov     dword ptr [g_data_00542050], edx
         call    Vec3AccMul10ChainBlend_0049c3d0
-        cmp     dword ptr [g_data_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         jne     L_mppci_ret
         call    TripleEntry3Block_00498df0
         mov     eax, dword ptr [g_data_00542044]
@@ -187,7 +187,7 @@ __declspec(naked) void MstackPushPackChainInit_00498c40(void)
         mov     dword ptr [g_data_0054206c], 1
         mov     dword ptr [g_data_00542044], ecx
         call    CmpDivJmp_0049d080
-        cmp     dword ptr [g_data_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         jne     L_mppci_ret
         test    byte ptr [g_data_0054208c], 4
         jne     L_mppci_join
@@ -216,7 +216,7 @@ __declspec(naked) void MstackPushPackChainInit_00498c40(void)
         mov     dword ptr [g_data_0054206c], eax
         mov     dword ptr [ecx*4 + 8], eax
         call    ScaledTripleCopy4_0049d2d0
-        cmp     dword ptr [g_data_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         jne     short L_mppci_ret
     L_mppci_join:
         mov     edx, dword ptr [g_data_0054204c]

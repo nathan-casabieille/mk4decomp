@@ -141,7 +141,7 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_data_004eaee0;
 extern unsigned int g_data_005019d0;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054205c;
@@ -197,12 +197,12 @@ __declspec(naked) void StateRemapPackedInstall_0046b360(void) {
         mov     dword ptr [g_data_0054206c], eax
         mov     dword ptr [ecx*4 + 0x74], eax
         call    ScaledAndAlfe_00490390
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_srp_e2End
         push    offset g_data_00542a78
         call    ArgScaledTestStore_00494140
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         jne     short L_srp_e2End
@@ -224,7 +224,7 @@ __declspec(naked) void StateRemapPackedInstall_0046b360(void) {
         mov     eax, dword ptr [g_data_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    ScaledClearJmp_00428d60
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
     L_srp_e2End:
         pop     esi
         ret
@@ -236,7 +236,7 @@ __declspec(naked) void StateRemapPackedInstall_0046b360(void) {
         /* entry 3 (offset 0x130) */
     L_srp_entry3:
         call    FiveCallScaledChainTailJmp_0045f8d0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_srp_e3End
         mov     eax, dword ptr [g_data_00542060]

@@ -146,7 +146,7 @@ extern unsigned int g_data_005435a0;
 extern unsigned int g_data_005435b8;
 extern unsigned int g_data_00543830;
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
@@ -176,14 +176,14 @@ __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
         call     QuadCallPhase2_004be800
         add      esp, 0x10
         call     FiveTableWalkInit_00403c90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_702b
         mov      ecx, OFFSET g_data_0050b118
         shr      ecx, 2
         mov      dword ptr [g_data_00542044], ecx
         call     LoadGeoAsset_Default
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_702b
         call     TripleCallSetCopy_004a4880
@@ -235,7 +235,7 @@ __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
         mov      dword ptr [g_data_00543830], ecx
         mov      dword ptr [g_data_00542074], 0x1000
         call     AllocNode
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_702b
         jmp      CallSetPause_0041f830
@@ -255,7 +255,7 @@ __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     AudioInstallSelfStatePush_004aa8a0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_702b:
         ret
     }

@@ -126,7 +126,7 @@ extern unsigned int g_data_0050b13c;
 extern unsigned int g_data_0052ab10;
 extern unsigned int g_data_00537f48;
 extern unsigned int g_data_005380e0;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -145,14 +145,14 @@ __declspec(naked) void DualTableMappedDispatch_00492e60(void)
         call    TableWalkBoundedCmp_004bd890
         add     esp, 4
         call    BootInitGuardedCallChain_004265d0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_dtmd_ret
         mov     eax, offset g_data_0050b13c
         shr     eax, 2
         mov     dword ptr [g_data_00542044], eax
         call    LoadGeoAsset_Default
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_dtmd_ret
         mov     eax, dword ptr [g_data_00537f48]
@@ -181,7 +181,7 @@ __declspec(naked) void DualTableMappedDispatch_00492e60(void)
         mov     dword ptr [g_data_0054204c], ecx
         mov     dword ptr [g_data_00542048], 0x7e20000
         call    Thunk_004bd5c0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_dtmd_ret
         mov     eax, dword ptr [g_data_0054204c]
@@ -191,7 +191,7 @@ __declspec(naked) void DualTableMappedDispatch_00492e60(void)
         mov     dword ptr [g_data_0054204c], eax
         mov     dword ptr [g_data_00542048], 0x7e00000
         call    Thunk_004bd5c0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_dtmd_ret
         mov     eax, dword ptr [g_data_005380e0]
@@ -217,7 +217,7 @@ __declspec(naked) void DualTableMappedDispatch_00492e60(void)
         mov     dword ptr [g_data_0054204c], esi
         mov     dword ptr [g_data_00542048], 0x7f10000
         call    Thunk_004bd5c0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_dtmd_ret
         mov     eax, dword ptr [g_data_0054204c]
@@ -227,7 +227,7 @@ __declspec(naked) void DualTableMappedDispatch_00492e60(void)
         mov     dword ptr [g_data_0054204c], eax
         mov     dword ptr [g_data_00542048], 0x7e10000
         call    Thunk_004bd5c0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_dtmd_ret
         mov     eax, dword ptr [g_data_0052ab10]

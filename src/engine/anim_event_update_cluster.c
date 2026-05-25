@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_0053a7b0;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -156,14 +156,14 @@ __declspec(naked) void AnimEventUpdateCluster_00493ef0(void)
         mov      dword ptr [eax*4], edx
         mov      dword ptr [g_data_0054206c], ebx
         call     DirtyDoubleDeref_00408cb0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_401a
         mov      eax, dword ptr [g_data_00542044]
         mov      ecx, dword ptr [eax*4]
         mov      dword ptr [g_data_00542044], ecx
         call     ScaledTestPauseStore_00408860
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_401a
         test     byte ptr [g_data_0054208c], 4
@@ -176,7 +176,7 @@ __declspec(naked) void AnimEventUpdateCluster_00493ef0(void)
         mov      dword ptr [edx*4 + 0x2c], 0x5999
         mov      dword ptr [g_data_0054206c], ebx
         call     DirtyDoubleDeref_00408cb0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_401a
         mov      eax, dword ptr [g_data_00542044]
@@ -190,7 +190,7 @@ __declspec(naked) void AnimEventUpdateCluster_00493ef0(void)
         jne      short L_3fef
         mov      dword ptr [g_data_0054206c], ebx
         call     OrDualStore_0048a190
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_401a
         call     DualBitGateInitCall_0048a1c0
@@ -247,7 +247,7 @@ __declspec(naked) void AnimEventUpdateCluster_00493ef0(void)
         test     eax, eax
         jne      short L_40cd
         call     ChainNodeAdvanceCallback_00408e70
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_4131
     L_40cd:

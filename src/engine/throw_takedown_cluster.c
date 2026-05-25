@@ -142,7 +142,7 @@ extern unsigned int g_data_004ed4a0;
 extern unsigned int g_data_00537e94;
 
 extern unsigned int g_data_004d57ac;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542060;
 extern unsigned int g_data_0054206c;
@@ -157,19 +157,19 @@ __declspec(naked) void MoveSelectorCluster_0047d9a0(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [ecx*4 + 0x74], eax
         call     ScaledZero44_00491500
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_dac7
         mov      dword ptr [g_data_00537e94], 5
         mov      dword ptr [g_data_0054206c], 0x8000
         mov      dword ptr [g_data_00542070], 0
         call     Wrapper_0048ff30
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_dac7
         push     OFFSET g_data_004ed490
         call     TripleScaledChainStore_004908f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         test     eax, eax
         jne      L_dac7
@@ -189,7 +189,7 @@ __declspec(naked) void MoveSelectorCluster_0047d9a0(void)
         cmp      eax, 7
         jne      short L_da5b
         call     ThrowTakedownCluster_0047dc20
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_dac7
         mov      eax, dword ptr [g_data_0054206c]
@@ -197,7 +197,7 @@ __declspec(naked) void MoveSelectorCluster_0047d9a0(void)
         cmp      eax, 0xe
         jne      short L_da73
         call     ThrowTakedownCluster_0047dc20
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_dac7
         mov      eax, dword ptr [g_data_0054206c]
@@ -205,7 +205,7 @@ __declspec(naked) void MoveSelectorCluster_0047d9a0(void)
         cmp      eax, 0xc
         jne      short L_da8b
         call     ThrowTakedownCluster_0047dc20
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_dac7
         mov      eax, dword ptr [g_data_0054206c]
@@ -213,12 +213,12 @@ __declspec(naked) void MoveSelectorCluster_0047d9a0(void)
         cmp      eax, 9
         jne      short L_da9e
         call     ThrowTakedownCluster_0047dc20
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_dac7
     L_da9e:
         call     DualSetCallPair_0047dbc0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_dac7
         mov      eax, dword ptr [g_data_004d57ac]
@@ -258,15 +258,15 @@ __declspec(naked) void MoveSelectorCluster_0047d9a0(void)
         /* === Helper 3 (0x47db00) === */
     L_db00:
         call     ZeroThreeSlots_00490780
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_db37
         call     ZeroSixStores6080_00490e40
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_db37
         call     DualCallPauseDirtyJmp_00490c30
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_db37
         push     OFFSET g_data_004ed4a0
@@ -309,7 +309,7 @@ __declspec(naked) void MoveSelectorCluster_0047d9a0(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edx
         call     SlotEvent3EntryChain_0046fdf0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         ret
     }

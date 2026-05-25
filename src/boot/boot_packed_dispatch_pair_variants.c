@@ -126,7 +126,7 @@ extern unsigned int g_data_004d67f8;
 extern unsigned int g_data_004d6808;
 extern unsigned int g_data_004d6818;
 extern unsigned int g_data_004d6828;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541ffc;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
@@ -161,7 +161,7 @@ __declspec(naked) void BootPackedDispatchPair_00413380(void)
         mov     dword ptr [g_data_0054206c], edx
     L_bpdp_skipReplace:
         call    PushSetXfmMaskCallPop_00407140
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_bpdp_ret
         test    byte ptr [g_data_0054208c], 4
@@ -176,7 +176,7 @@ __declspec(naked) void BootPackedDispatchPair_00413380(void)
         mov     dword ptr [g_data_0054206c], eax
         mov     dword ptr [ecx*4 + 0x34], eax
         call    ScaledTripleCopy54_004ac040
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bpdp_ret
         mov     eax, dword ptr [g_data_0054205c]
@@ -239,18 +239,18 @@ __declspec(naked) void BootPackedDispatchPair_00413380(void)
     L_bpdp_main_chain:
         mov     dword ptr [g_data_0054206c], 0x3333
         call    AudioMixerStep_004ab700
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bpdp_main_ret
         add     dword ptr [g_data_0054206c], 0xd999
         call    ZeroAndDirty4_00405430
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bpdp_main_ret
         test    byte ptr [g_data_0054208c], 4
         je      short L_bpdp_main_install
         call    BootPackedDispatchPair_00413380
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bpdp_main_ret
     L_bpdp_main_install:
@@ -258,7 +258,7 @@ __declspec(naked) void BootPackedDispatchPair_00413380(void)
         mov     dword ptr [esi + 8], offset L_bpdp_main
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_data_0054204c], 4
-        mov     dword ptr [g_data_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
     L_bpdp_main_ret:
         pop     esi
         ret
@@ -282,7 +282,7 @@ __declspec(naked) void BootPackedDispatchPair_00413580(void)
         mov     dword ptr [g_data_0054206c], edx
     L_bpdp2_skipReplace:
         call    PushSetXfmMaskCallPop_00407140
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_bpdp2_ret
         test    byte ptr [g_data_0054208c], 4
@@ -297,7 +297,7 @@ __declspec(naked) void BootPackedDispatchPair_00413580(void)
         mov     dword ptr [g_data_0054206c], eax
         mov     dword ptr [ecx*4 + 0x34], eax
         call    ScaledTripleCopy54_004ac040
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bpdp2_ret
         mov     eax, dword ptr [g_data_0054205c]
@@ -360,18 +360,18 @@ __declspec(naked) void BootPackedDispatchPair_00413580(void)
     L_bpdp2_main_chain:
         mov     dword ptr [g_data_0054206c], 0x3333
         call    AudioMixerStep_004ab700
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bpdp2_main_ret
         add     dword ptr [g_data_0054206c], 0xd999
         call    ZeroAndDirty4_00405430
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bpdp2_main_ret
         test    byte ptr [g_data_0054208c], 4
         je      short L_bpdp2_main_install
         call    BootPackedDispatchPair_00413580
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bpdp2_main_ret
     L_bpdp2_main_install:
@@ -379,7 +379,7 @@ __declspec(naked) void BootPackedDispatchPair_00413580(void)
         mov     dword ptr [esi + 8], offset L_bpdp2_main
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_data_0054204c], 4
-        mov     dword ptr [g_data_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
     L_bpdp2_main_ret:
         pop     esi
         ret

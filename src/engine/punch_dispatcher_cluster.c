@@ -126,7 +126,7 @@ extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_004f2178;
 extern unsigned int g_data_004f2190;
 extern unsigned int g_data_004f21a0;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
@@ -169,7 +169,7 @@ __declspec(naked) void PunchDispatcherCluster_00497b50(void)
         mov      dword ptr [g_data_00542044], ecx
         mov      dword ptr [eax], ecx
         call     CondPickDualStore_0049c670
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_7bb8
         push     OFFSET g_data_004f2178
@@ -198,7 +198,7 @@ __declspec(naked) void PunchDispatcherCluster_00497b50(void)
         ret
     L_7be9:
         call     SweepCluster_004984e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7ca3
         mov      ecx, dword ptr [g_data_00542060]
@@ -230,7 +230,7 @@ __declspec(naked) void PunchDispatcherCluster_00497b50(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
         call     ScaledLoadIncJmp_00428d00
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_7ca3:
         pop      esi
         ret
@@ -254,7 +254,7 @@ __declspec(naked) void PunchDispatcherCluster_00497b50(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         call     DualCmpSwapStore_0049c5a0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7e3c
         mov      eax, dword ptr [g_data_004d57ac]
@@ -294,7 +294,7 @@ __declspec(naked) void PunchDispatcherCluster_00497b50(void)
         add      esp, 8
         mov      dword ptr [esi + 0x5c], eax
         call     TripleBlockChainDiffMStackThunks_0049ca10
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7e3c
         mov      ecx, dword ptr [g_data_00542084]
@@ -337,15 +337,15 @@ __declspec(naked) void PunchDispatcherCluster_00497b50(void)
         nop
         /* === h4 (0x497e40): chained dispatcher → tail-jmp 49c850 === */
         call     StageEventCluster_00497e80
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_7e7e
         call     PushChainAddCallPop_00493c80
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_7e7e
         call     Vec2SumMul10ChainCompute_0049bc60
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_7e7e
         mov      eax, dword ptr [g_data_00542070]

@@ -128,7 +128,7 @@ extern unsigned int g_data_005380a0;
 extern unsigned int g_data_0053a420;
 extern unsigned int g_data_0053a424;
 extern unsigned int g_data_0053a428;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541f88;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
@@ -198,7 +198,7 @@ __declspec(naked) void Vec3PackedTripleCallBracket_004764d0(void)
         mov     dword ptr [g_data_00542048], eax
         mov     dword ptr [g_data_00542044], ecx
         call    QuadInterpolator_00425380
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_v3ptcb_ret
         mov     edx, dword ptr [g_data_005380a0]

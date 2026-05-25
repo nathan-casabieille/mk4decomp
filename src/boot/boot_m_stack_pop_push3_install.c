@@ -122,7 +122,7 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
@@ -145,7 +145,7 @@ __declspec(naked) void BootMStackPopPush3Install_004046d0(void)
         test    eax, eax
         je      L_bmpp3i_phase0
         call    Ten404c40_404bd0_00426780
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_bmpp3i_ret
         mov     ecx, dword ptr [g_data_00542060]
@@ -204,12 +204,12 @@ __declspec(naked) void BootMStackPopPush3Install_004046d0(void)
         mov     dword ptr [g_data_00542044], ecx
         mov     dword ptr [eax], ecx
         call    Eleven404b90_404c00_004266d0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bmpp3i_ret
         mov     dword ptr [g_data_00542074], 0x12c
         call    Push16Call_00489f50
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bmpp3i_ret
         mov     dword ptr [esi + 8], offset BootMStackPopPush3Install_004046d0
@@ -227,7 +227,7 @@ __declspec(naked) void BootMStackPopPush3Install_004046d0(void)
         mov     edx, dword ptr [g_data_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    InstallSelfCountedAccum_0042e1d0
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
     L_bmpp3i_ret:
         pop     esi
         ret

@@ -128,7 +128,7 @@ extern unsigned int g_data_004f1420;
 extern unsigned int g_data_004f1430;
 extern unsigned int g_data_004f1440;
 extern unsigned int g_data_004f1458;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_00542060;
@@ -186,7 +186,7 @@ __declspec(naked) void GameModeHandlerCluster_004955d0(void)
         /* Helper 3: StreamInitCountdownBody_00494830 + conditional ArgScaledChain_004949b0. */
         push     OFFSET g_data_004f1420
         call     StreamInitCountdownBody_00494830
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         test     eax, eax
         jne      short L_5663
@@ -209,7 +209,7 @@ __declspec(naked) void GameModeHandlerCluster_004955d0(void)
         nop
         /* Helper 4: heavy ThresholdSetMatchDispatch_0046dc10 + state-stack manipulation. */
         call     ThresholdSetMatchDispatch_0046dc10
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5711
         mov      eax, dword ptr [g_data_004d57ac]
@@ -224,7 +224,7 @@ __declspec(naked) void GameModeHandlerCluster_004955d0(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         call     FlagCascadeStateSet_0048ec30
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5711
         mov      eax, dword ptr [g_data_004d57ac]
@@ -281,7 +281,7 @@ __declspec(naked) void GameModeHandlerCluster_004955d0(void)
         /* Helper 6: sister of helper 3, with g_data_004f1458; tail-jumps. */
         push     OFFSET g_data_004f1458
         call     StreamInitCountdownBody_00494830
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         test     eax, eax
         jne      short L_576b

@@ -130,7 +130,7 @@ extern unsigned int g_data_0054206c;
 extern unsigned int g_state_004d57ac;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542048;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_00542080;
 extern unsigned int g_data_00542070;
@@ -181,7 +181,7 @@ __declspec(naked) void SelfInstallPhaseDispatch_00428990(void)
         mov     dword ptr [g_data_0054206c], 0
         mov     dword ptr [g_data_00542048], eax
         call    BootFrameSetup_00408190
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_sipd3_ret
         mov     eax, dword ptr [g_state_004d57ac]
@@ -202,7 +202,7 @@ __declspec(naked) void SelfInstallPhaseDispatch_00428990(void)
         mov     edx, dword ptr [ecx*4 + 0x2c]
         mov     dword ptr [g_data_0054207c], edx
         call    CopyJmp_00406ba0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_sipd3_ret
         mov     eax, dword ptr [g_data_0054205c]
@@ -216,7 +216,7 @@ __declspec(naked) void SelfInstallPhaseDispatch_00428990(void)
         mov     dword ptr [g_data_00542070], edx
         mov     dword ptr [g_data_00542050], eax
         call    MStackPushTripleFields_00407d50
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_sipd3_ret
         mov     eax, dword ptr [g_data_00542058]
@@ -224,14 +224,14 @@ __declspec(naked) void SelfInstallPhaseDispatch_00428990(void)
         je      short L_sipd3_afterPtr
         call    eax
     L_sipd3_afterPtr:
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_sipd3_ret
         mov     eax, 1
         mov     dword ptr [esi + 8], offset SelfInstallPhaseDispatch_00428990
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_data_0054204c], eax
-        mov     dword ptr [g_data_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
     L_sipd3_ret:
         pop     esi
         ret

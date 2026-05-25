@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_00535ddc;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
@@ -145,7 +145,7 @@ __declspec(naked) void ThrowGrabInitCluster_00436b30(void)
     __asm {
         /* === h1 (0x436b30): timer + tail-jmp 471250 === */
         call     LeaPlus22StoreSelf_0048e4d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_6b63
         mov      eax, dword ptr [g_data_004d57ac]
@@ -182,7 +182,7 @@ __declspec(naked) void ThrowGrabInitCluster_00436b30(void)
         ret
     L_6b99:
         call     LeaPlus22StoreSelf_0048e4d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_6c1a
         mov      dword ptr [g_data_00542084], 0x21999
@@ -202,7 +202,7 @@ __declspec(naked) void ThrowGrabInitCluster_00436b30(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     StateGateMStackOverlap_00438690
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_6c1a:
         pop      esi
         ret
@@ -224,7 +224,7 @@ __declspec(naked) void ThrowGrabInitCluster_00436b30(void)
         ret
     L_6c49:
         call     LeaPlus22StoreSelf_0048e4d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_6cca
         mov      dword ptr [g_data_00542084], 0x16666
@@ -244,7 +244,7 @@ __declspec(naked) void ThrowGrabInitCluster_00436b30(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     StateGateMStackOverlap_00438690
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_6cca:
         pop      esi
         ret
@@ -273,7 +273,7 @@ __declspec(naked) void ThrowGrabInitCluster_00436b30(void)
         ret
     L_6d0d:
         call     MStackChainBit2Cascade_0048e8f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_6d78
         test     byte ptr [g_data_0054208c], bl
@@ -284,15 +284,15 @@ __declspec(naked) void ThrowGrabInitCluster_00436b30(void)
         ret
     L_6d2b:
         call     LeaPlus22StoreSelf_0048e4d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_6d78
         call     ScaledZeroFour_00490740
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_6d78
         call     CallPauseScaledStoreCopyJmp_00461220
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_6d78
         mov      dword ptr [g_data_00542080], 0x3c
@@ -300,7 +300,7 @@ __declspec(naked) void ThrowGrabInitCluster_00436b30(void)
         mov      dword ptr [esi + 8], OFFSET L_6cd0
         mov      dword ptr [esi + 0x84], ebx
         mov      dword ptr [g_data_0054204c], ebx
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
     L_6d78:
         pop      esi
         pop      ebx
@@ -324,7 +324,7 @@ __declspec(naked) void ThrowGrabInitCluster_00436b30(void)
         ret
     L_6da9:
         call     LeaPlus22StoreSelf_0048e4d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_6e46
         mov      eax, dword ptr [g_data_00535ddc]
@@ -352,7 +352,7 @@ __declspec(naked) void ThrowGrabInitCluster_00436b30(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     StateGateMStackOverlap_00438690
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_6e46:
         pop      esi
         ret

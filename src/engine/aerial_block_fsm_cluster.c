@@ -137,7 +137,7 @@ extern unsigned int g_data_0050b8dc;
 extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_0052ab10;
 extern unsigned int g_data_00535ddc;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -160,12 +160,12 @@ __declspec(naked) void ThrowGrabPoseCopyCluster_0047f4e0(void)
         /* === Helper 1 (0x47f4e0): grab finalize event === */
         mov      dword ptr [g_data_0054207c], 0
         call     EntryThunkBodyStateMachine_00457bb0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f529
         push     OFFSET g_data_004ed778
         call     TripleScaledChainStore_004908f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         test     eax, eax
         jne      short L_f529
@@ -185,7 +185,7 @@ __declspec(naked) void ThrowGrabPoseCopyCluster_0047f4e0(void)
         /* === Helper 2: 0x405 anim w/ source-pose copy === */
         mov      dword ptr [g_data_0054206c], 6
         call     ScaledIndexConditionalAdd_0048e400
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_f72f
         mov      eax, dword ptr [g_data_00542060]
@@ -209,7 +209,7 @@ __declspec(naked) void ThrowGrabPoseCopyCluster_0047f4e0(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         call     MStackPushDispatchBitGate_00407330
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_f72f
         mov      eax, dword ptr [g_data_004d57ac]
@@ -223,7 +223,7 @@ __declspec(naked) void ThrowGrabPoseCopyCluster_0047f4e0(void)
         jmp      AerialBlockFsmCluster_0047f730
     L_f5e7:
         call     MStackPushTwoEntryChainCall_004058c0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_f72f
         mov      eax, dword ptr [g_data_00542044]
@@ -282,7 +282,7 @@ __declspec(naked) void ThrowGrabPoseCopyCluster_0047f4e0(void)
     L_f6ef:
         mov      dword ptr [g_data_0054204c], OFFSET func_0047fa30
         call     AllocNode
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f72f
         mov      al, byte ptr [g_data_0054208c]
@@ -291,7 +291,7 @@ __declspec(naked) void ThrowGrabPoseCopyCluster_0047f4e0(void)
         mov      dword ptr [g_data_00542044], edx
         je       short L_f72a
         call     MStackPush2ChainLLInsert_00406790
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f72f
     L_f72a:

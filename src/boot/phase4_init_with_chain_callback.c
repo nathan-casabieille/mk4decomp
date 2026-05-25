@@ -126,7 +126,7 @@ extern unsigned int g_data_0049db40;
 extern unsigned int g_data_004d62a8;
 extern unsigned int g_data_004d62e8;
 extern unsigned int g_data_0053813c;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -152,7 +152,7 @@ __declspec(naked) void Phase4InitWithChainCallback_0040e860(void)
 {
     __asm {
         call    MStackPush8_004ab790
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4iwcc_A_ret
         mov     eax, dword ptr [g_state_004d57ac]
@@ -178,11 +178,11 @@ __declspec(naked) void Phase4InitWithChainCallback_0040e860(void)
         test    al, 1
         jne     L_p4iwcc_A_pop_tail
         call    StackPushAdd15CallPop_0040a7e0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4iwcc_A_ret
         call    ZeroThreeFields_0040a8b0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4iwcc_A_ret
     L_p4iwcc_A_pop_tail:
@@ -215,7 +215,7 @@ __declspec(naked) void Phase4InitWithChainCallback_0040e860(void)
         test    eax, eax
         je      L_p4iwcc_B_phase0
         call    MStackCall_00406740
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4iwcc_B_exit
         call    CallSetPause_0041f830
@@ -231,17 +231,17 @@ __declspec(naked) void Phase4InitWithChainCallback_0040e860(void)
         mov     eax, dword ptr [g_data_0054205c]
         mov     dword ptr [g_data_00542044], eax
         call    MStackPushZeroCallPop_004066f0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4iwcc_B_exit
         call    MStackCall_00406600
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4iwcc_B_exit
         mov     dword ptr [g_data_0054207c], 0x2E14
         mov     dword ptr [g_data_0054206c], 0x4CCC
         call    StoreDoubleNegPauseSubStore_004ab750
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4iwcc_B_exit
         mov     eax, dword ptr [g_data_0054206c]
@@ -277,7 +277,7 @@ __declspec(naked) void Phase4InitWithChainCallback_0040e860(void)
         mov     dword ptr [g_data_0054206c], eax
         mov     dword ptr [g_data_00542048], ecx
         call    MStackPushNegMul10Var_0040a730
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4iwcc_B_exit
         mov     eax, dword ptr [g_data_0054205c]
@@ -319,14 +319,14 @@ __declspec(naked) void Phase4InitWithChainCallback_0040e860(void)
         mov     dword ptr [g_data_00542044], ecx
         mov     dword ptr [g_data_00542048], edx
         call    LinkedListFieldAdd_0049d450
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4iwcc_B_exit
         mov     eax, 1
         mov     dword ptr [esi + 8], 0x0040E920
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_data_0054204c], 0x19
-        mov     dword ptr [g_data_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
     L_p4iwcc_B_exit:
         pop     esi
         ret

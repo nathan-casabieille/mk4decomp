@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004e4b48;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542060;
 extern unsigned int g_data_00542074;
@@ -144,7 +144,7 @@ __declspec(naked) void GameStateProgressCluster_0043aff0(void)
         mov      dword ptr [g_data_00542074], 0x5fa
         call     Push16Call_00489f50
         call     FiveCallScaledChainTailJmp_0045f8d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b01a
         push     OFFSET g_data_004e4b48
@@ -190,7 +190,7 @@ __declspec(naked) void GameStateProgressCluster_0043aff0(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edx
         call     ScaledLoadIncJmp_00428d00
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -213,7 +213,7 @@ __declspec(naked) void GameStateProgressCluster_0043aff0(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edx
         call     InstallSelfDoubleMStack_0043b9a0
-        mov      dword ptr [g_data_00541e6c], esi
+        mov      dword ptr [g_framePauseFlag], esi
         pop      edi
         pop      esi
         ret
@@ -237,7 +237,7 @@ __declspec(naked) void GameStateProgressCluster_0043aff0(void)
         ret
     L_b149:
         call     DualCallPauseDirtyJmp_00490c30
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b1ca
         mov      dword ptr [g_data_00542084], 0x18000
@@ -257,7 +257,7 @@ __declspec(naked) void GameStateProgressCluster_0043aff0(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     CmpDispatchPushCallPop_00438530
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_b1ca:
         pop      esi
         ret

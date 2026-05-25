@@ -159,7 +159,7 @@ extern void IterStepScaledStore_0048e600(void);
  *   Entry 5 (offset 0x140, 36b): push 0x4eb738, call IterStepScaledStore_0048e600;
  *     on no-error push 0x4eb740, call ArgSarStoreJmp_004594f0.
  */
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054205c;
@@ -192,14 +192,14 @@ __declspec(naked) void FiveEntryAlarmInstallChain_0046ee00(void) {
         ret
     L_fea_phase0:
         call    ScaledZeroFour_00490740
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_fea_e1End
         mov     eax, 1
         mov     dword ptr [esi + 8], offset FiveEntryAlarmInstallChain_0046ee00
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_data_0054204c], 0xc
-        mov     dword ptr [g_data_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
     L_fea_e1End:
         pop     esi
         ret
@@ -215,7 +215,7 @@ __declspec(naked) void FiveEntryAlarmInstallChain_0046ee00(void) {
         /* entry 2 (offset 0x90) */
     L_fea_entry2:
         call    ScaledMove74to70_0046eaa0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_fea_e2End
         mov     ecx, dword ptr [g_data_00542060]
@@ -230,11 +230,11 @@ __declspec(naked) void FiveEntryAlarmInstallChain_0046ee00(void) {
         jmp     FiveBlockDispatchChain_0046ec20
     L_fea_skipJmp:
         call    ScaledAndAlfe_00490390
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_fea_e2End
         call    TripleCallPauseJmp_00470500
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_fea_e2End
         push    offset g_data_004eb6f8
@@ -282,7 +282,7 @@ __declspec(naked) void FiveEntryAlarmInstallChain_0046ee00(void) {
     L_fea_entry5:
         push    offset g_data_004eb738
         call    IterStepScaledStore_0048e600
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         jne     short L_fea_e5End

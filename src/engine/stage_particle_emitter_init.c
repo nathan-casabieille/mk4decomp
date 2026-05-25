@@ -127,7 +127,7 @@ extern unsigned int g_data_00537f78;
 extern unsigned int g_data_00538158;
 extern unsigned int g_data_0053815c;
 extern unsigned int g_data_00541de0;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
@@ -149,7 +149,7 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         mov      esi, 0xffffae15
         jne      L_4400
         call     BootPhaseGateBracketedInit_004060c0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_4551
         mov      eax, dword ptr [g_data_00542044]
@@ -170,7 +170,7 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [ecx*4 + 0x34], eax
         call     MStackCall_004063e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_4551
     L_4400:
@@ -179,7 +179,7 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         mov      dword ptr [g_data_0054206c], eax
         jne      L_44ab
         call     BootPhaseGateBracketedInit_004060c0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_4551
         mov      ecx, dword ptr [g_data_00542044]
@@ -200,7 +200,7 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [ecx*4 + 0x34], eax
         call     MStackCall_004063e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_4551
     L_44ab:
@@ -209,7 +209,7 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         mov      dword ptr [g_data_0054206c], eax
         jne      L_4551
         call     BootPhaseGateBracketedInit_004060c0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_4551
         mov      edx, dword ptr [g_data_00542044]

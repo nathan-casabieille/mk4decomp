@@ -139,7 +139,7 @@ extern unsigned int g_data_00535e7c;
  *     Else tail-call IndirectDispatchCjStore directly.
  */
 extern unsigned int g_data_00538148;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
@@ -177,10 +177,10 @@ __declspec(naked) void Phase3InstallTableCheck_0048acd0(void) {
     L_p3itc_phase1:
         mov     dword ptr [g_data_0054206c], ebx
         call    dword ptr [g_data_00542080]
-        cmp     dword ptr [g_data_00541e6c], ebx
+        cmp     dword ptr [g_framePauseFlag], ebx
         jne     L_p3itc_done
         call    MStackPush6OpPop6_0048af60
-        cmp     dword ptr [g_data_00541e6c], ebx
+        cmp     dword ptr [g_framePauseFlag], ebx
         jne     L_p3itc_done
         mov     edx, dword ptr [g_data_00542058]
         mov     ecx, dword ptr [g_data_00542084]
@@ -191,7 +191,7 @@ __declspec(naked) void Phase3InstallTableCheck_0048acd0(void) {
         jl      L_p3itc_dispatchOnly
         mov     dword ptr [g_data_00542084], eax
         call    IndirectDispatchCjStore_0048ae50
-        cmp     dword ptr [g_data_00541e6c], ebx
+        cmp     dword ptr [g_framePauseFlag], ebx
         jne     L_p3itc_done
         call    StackPopDispatchTagged_0041f780
         pop     esi
@@ -200,7 +200,7 @@ __declspec(naked) void Phase3InstallTableCheck_0048acd0(void) {
     L_p3itc_phase0:
         mov     dword ptr [g_data_0054206c], ebx
         call    dword ptr [g_data_00542080]
-        cmp     dword ptr [g_data_00541e6c], ebx
+        cmp     dword ptr [g_framePauseFlag], ebx
         jne     L_p3itc_done
         mov     eax, dword ptr [g_data_0054205c]
         mov     ecx, dword ptr [g_data_00542050]
@@ -219,13 +219,13 @@ __declspec(naked) void Phase3InstallTableCheck_0048acd0(void) {
         mov     dword ptr [ecx*4 + 8], eax
     L_p3itc_dispatchOnly:
         call    IndirectDispatchCjStore_0048ae50
-        cmp     dword ptr [g_data_00541e6c], ebx
+        cmp     dword ptr [g_framePauseFlag], ebx
         jne     short L_p3itc_done
         mov     eax, 1
         mov     dword ptr [esi + 8], offset Phase3InstallTableCheck_0048acd0
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_data_0054204c], eax
-        mov     dword ptr [g_data_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
     L_p3itc_done:
         pop     esi
         pop     ebx

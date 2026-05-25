@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004f1300;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -155,7 +155,7 @@ __declspec(naked) void ThrowPoseCallbackSetup_00491f10(void)
         mov      dword ptr [g_data_00542048], ecx
         mov      dword ptr [g_data_0054204c], eax
         call     DispatcherComplex260_00407030
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2131
         mov      al, byte ptr [g_data_0054208c]
@@ -163,7 +163,7 @@ __declspec(naked) void ThrowPoseCallbackSetup_00491f10(void)
         test     al, bl
         jne      L_2131
         call     MStackPushComplexCallPop_00406430
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2131
         mov      eax, dword ptr [g_data_00542070]
@@ -173,7 +173,7 @@ __declspec(naked) void ThrowPoseCallbackSetup_00491f10(void)
         mov      dword ptr [g_data_0054206c], eax
         je       short L_1fa4
         call     ScaledOrStore_004903d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2131
     L_1fa4:
@@ -186,7 +186,7 @@ __declspec(naked) void ThrowPoseCallbackSetup_00491f10(void)
         mov      dword ptr [g_data_00542048], edx
         mov      dword ptr [g_data_0054204c], eax
         call     FramePauseScaledStore_00406c10
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2131
         test     byte ptr [g_data_0054208c], bl
@@ -204,7 +204,7 @@ __declspec(naked) void ThrowPoseCallbackSetup_00491f10(void)
         mov      edx, dword ptr [g_data_00542050]
         mov      dword ptr [g_data_00542048], edx
         call     MStackPush2ChainPrepend_00409970
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2131
         mov      eax, dword ptr [g_data_0054204c]
@@ -230,20 +230,20 @@ __declspec(naked) void ThrowPoseCallbackSetup_00491f10(void)
         mov      eax, dword ptr [g_data_0054205c]
         mov      dword ptr [g_data_00542044], eax
         call     MStackBracket4_ListInsertZeroFill_00408600
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2131
         test     byte ptr [g_data_0054208c], bl
         jne      short L_2131
         call     MStackPush3LinkedListWalk_004088b0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2131
         test     byte ptr [g_data_0054208c], bl
         jne      short L_2131
         mov      dword ptr [g_data_0054206c], 2
         call     ChainDirtyBitWalker_00408c10
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2131
         mov      ecx, dword ptr [g_data_00542048]

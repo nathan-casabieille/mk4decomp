@@ -126,7 +126,7 @@ extern void GameStateLinearAdvance4Way_00484480(void);
 extern void EsiAliasInstallSelf_00484650(void);
 extern void RunFsmCluster_004846b0(void);
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542060;
 
@@ -159,7 +159,7 @@ __declspec(naked) void GameStateLinearAdvance4Way_00484480(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], ecx
         call     RunFsmCluster_004846b0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -179,7 +179,7 @@ __declspec(naked) void GameStateLinearAdvance4Way_00484480(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], ecx
         call     RunFsmCluster_004846b0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -199,7 +199,7 @@ __declspec(naked) void GameStateLinearAdvance4Way_00484480(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], ecx
         call     RunFsmCluster_004846b0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -220,7 +220,7 @@ __declspec(naked) void GameStateLinearAdvance4Way_00484480(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], ecx
         call     RunFsmCluster_004846b0
-        mov      dword ptr [g_data_00541e6c], esi
+        mov      dword ptr [g_framePauseFlag], esi
         pop      edi
         pop      esi
         ret

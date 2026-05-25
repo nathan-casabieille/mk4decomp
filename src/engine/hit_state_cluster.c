@@ -126,7 +126,7 @@ extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_004eb1e0;
 extern unsigned int g_data_004eb240;
 extern unsigned int g_data_004eb258;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
@@ -183,7 +183,7 @@ __declspec(naked) void HitStateCluster_0046c7c0(void)
         nop      
         nop      
         call     ScaledMove74to70_0046eaa0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c840
         mov      ecx, dword ptr [g_data_00542060]
@@ -191,7 +191,7 @@ __declspec(naked) void HitStateCluster_0046c7c0(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [ecx*4 + 0x74], eax
         call     ScaledAndAlfe_00490390
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c840
         push     OFFSET g_data_004eb1e0
@@ -283,7 +283,7 @@ __declspec(naked) void HitStateCluster_0046c7c0(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edx
         call     SlotEvent3EntryChain_0046fdf0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         ret
     L_c950:
@@ -312,7 +312,7 @@ __declspec(naked) void HitStateCluster_0046c7c0(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edx
         call     SlotEvent3EntryChain_0046fdf0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         ret
     L_c9d0:
@@ -328,7 +328,7 @@ __declspec(naked) void HitStateCluster_0046c7c0(void)
         mov      ebx, 1
         je       L_ca67
         call     CopyJmp_0048ef90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_cb69
         test     byte ptr [g_data_0054208c], bl
@@ -339,7 +339,7 @@ __declspec(naked) void HitStateCluster_0046c7c0(void)
         ret      
     L_ca22:
         call     GuardedSeq_004297b0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_cb69
         mov      ecx, dword ptr [g_data_0054205c]
@@ -360,17 +360,17 @@ __declspec(naked) void HitStateCluster_0046c7c0(void)
         jne      L_cac2
     L_ca74:
         call     ScaledAndAlfe_00490390
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_cb69
         call     PushPopWalkSet1006_00470ee0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_cb69
         mov      dword ptr [esi + 8], OFFSET L_c9d0
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_data_0054204c], ebx
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
         pop      esi
         pop      ebx
         ret      
@@ -378,7 +378,7 @@ __declspec(naked) void HitStateCluster_0046c7c0(void)
         mov      dword ptr [g_data_00542080], 3
     L_cac2:
         call     ScaledLoadIncJmp_00429840
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_cb69
         mov      eax, dword ptr [g_data_004d57ac]
@@ -388,7 +388,7 @@ __declspec(naked) void HitStateCluster_0046c7c0(void)
         mov      dword ptr [eax*4], ecx
         mov      dword ptr [g_data_0054206c], 0x27
         call     ScaledInit_0048d450
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_cb69
         mov      eax, dword ptr [g_data_004d57ac]
@@ -406,7 +406,7 @@ __declspec(naked) void HitStateCluster_0046c7c0(void)
         ret      
     L_cb32:
         call     CopyJmp_0048ef90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_cb69
         test     byte ptr [g_data_0054208c], bl
@@ -419,7 +419,7 @@ __declspec(naked) void HitStateCluster_0046c7c0(void)
         mov      dword ptr [esi + 8], OFFSET L_c9d0
         mov      dword ptr [esi + 0x84], ebx
         mov      dword ptr [g_data_0054204c], ebx
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
     L_cb69:
         pop      esi
         pop      ebx

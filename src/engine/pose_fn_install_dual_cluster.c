@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_0052ab10;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
@@ -164,7 +164,7 @@ __declspec(naked) void PoseFnInstallDualCluster_00463090(void)
         mov      eax, dword ptr [g_data_00542054]
         mov      dword ptr [g_data_0054206c], eax
         call     MStackChainCountdownLoop_00463fb0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_321c
         mov      edx, dword ptr [g_data_00542060]
         mov      ecx, dword ptr [g_data_00542070]
@@ -172,7 +172,7 @@ __declspec(naked) void PoseFnInstallDualCluster_00463090(void)
         mov      dword ptr [g_data_0054206c], 0x6978
         mov      dword ptr [g_data_00542070], 0x20000
         call     RangeMulMod_004ab2a0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_321c
         mov      eax, dword ptr [g_data_00542074]
         mov      ecx, dword ptr [g_data_0054206c]
@@ -182,7 +182,7 @@ __declspec(naked) void PoseFnInstallDualCluster_00463090(void)
         mov      dword ptr [ecx*4 + 0x38], eax
         mov      dword ptr [g_data_0054206c], edi
         call     MStackChainCountdownLoop_00463fb0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_321c
         mov      eax, dword ptr [g_data_00542078]
         mov      edx, dword ptr [g_data_00542060]
@@ -217,7 +217,7 @@ __declspec(naked) void PoseFnInstallDualCluster_00463090(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     PendingMatch_00432110
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_321c:
         pop      edi
         pop      esi
@@ -254,7 +254,7 @@ __declspec(naked) void PoseFnInstallDualCluster_00463090(void)
         mov      dword ptr [g_data_0054205c], eax
         mov      dword ptr [g_data_0054206c], ecx
         call     MStackChainCountdownLoop_00463fb0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3388
         mov      eax, dword ptr [g_data_00542070]
         mov      edx, dword ptr [g_data_00542060]
@@ -296,7 +296,7 @@ __declspec(naked) void PoseFnInstallDualCluster_00463090(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     PendingMatch_00432110
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_3388:
         pop      edi
         pop      esi

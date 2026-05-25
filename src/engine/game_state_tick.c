@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_00535e48;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541fc0;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
@@ -146,7 +146,7 @@ __declspec(naked) void GameStateTick_0049f1f0(void)
         mov      eax, dword ptr [eax*4 + 4]
         mov      dword ptr [g_data_00542044], eax
         call     eax
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      func_0049f33b
         mov      al, byte ptr [g_data_0054208c]

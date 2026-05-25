@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004d5324;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054206c;
@@ -139,7 +139,7 @@ __declspec(naked) void Vec3SetupQuadrupleMul10Sub_00442bc0(void)
     {
         push    esi
         call    MStackCall_00406340
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_v3sqs_ret
         mov     ecx, dword ptr [g_data_00542044]
@@ -167,13 +167,13 @@ __declspec(naked) void Vec3SetupQuadrupleMul10Sub_00442bc0(void)
         mov     ecx, dword ptr [g_data_004d5324]
         mov     dword ptr [g_data_0054206c], ecx
         call    AudioMixerStep_004ab700
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_v3sqs_ret
         mov     edx, dword ptr [g_data_0054206c]
         mov     dword ptr [g_data_00542074], edx
         call    MStackPush1MagicMod2_004244d0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_v3sqs_ret
         mov     eax, dword ptr [g_data_00542070]
@@ -196,21 +196,21 @@ __declspec(naked) void Vec3SetupQuadrupleMul10Sub_00442bc0(void)
         mov     dword ptr [esi + 0x74], ecx
         mov     dword ptr [g_data_0054206c], 0x1999
         call    StoreDoubleNegPauseSubStore_004ab750
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_v3sqs_ret
         mov     edx, dword ptr [g_data_0054206c]
         mov     dword ptr [esi + 0x78], edx
         mov     dword ptr [g_data_0054206c], 0x1999
         call    StoreDoubleNegPauseSubStore_004ab750
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_v3sqs_ret
         mov     eax, dword ptr [g_data_0054206c]
         mov     dword ptr [esi + 0x7c], eax
         mov     dword ptr [g_data_0054206c], 0x1999
         call    StoreDoubleNegPauseSubStore_004ab750
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_v3sqs_ret
         mov     ecx, dword ptr [g_data_0054206c]
@@ -221,7 +221,7 @@ __declspec(naked) void Vec3SetupQuadrupleMul10Sub_00442bc0(void)
         add     ecx, esi
         mov     dword ptr [g_data_00542044], ecx
         call    TripleVecAccCallStore_00476880
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_v3sqs_ret
         sub     dword ptr [g_data_00542044], esi

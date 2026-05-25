@@ -145,7 +145,7 @@ extern unsigned int g_data_004f17c0;
 extern unsigned int g_data_004f17c8;
 extern unsigned int g_data_004f17d8;
 extern unsigned int g_data_004f17f8;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
 extern unsigned int g_data_0054206c;
@@ -163,7 +163,7 @@ extern void StreamInitCountdownBody_00494830(void);
 __declspec(naked) void Alarm4EntryInstallCountdown_00496960(void) {
     __asm {
         call    PushPopWalkSet1006_00470ee0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_aei_e1End
         push    offset g_data_004f17c0
@@ -184,7 +184,7 @@ __declspec(naked) void Alarm4EntryInstallCountdown_00496960(void) {
         mov     dword ptr [g_data_0054206c], eax
         mov     dword ptr [ecx*4 + 0x74], eax
         call    StreamInitCountdownBody_00494830
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         jne     short L_aei_e2End
@@ -225,7 +225,7 @@ __declspec(naked) void Alarm4EntryInstallCountdown_00496960(void) {
         mov     dword ptr [eax*4 + g_table_004d57b0], ecx
         mov     dword ptr [g_data_0054206c], 0xb
         call    ScaledInit_0048d490
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_aei_e3End
         mov     eax, dword ptr [g_state_004d57ac]
@@ -243,13 +243,13 @@ __declspec(naked) void Alarm4EntryInstallCountdown_00496960(void) {
         ret
     L_aei_notBit0:
         call    ScaledLoadIncJmp_00429840
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_aei_e3End
         mov     dword ptr [esi + 8], offset L_aei_body
         mov     dword ptr [esi + 0x84], ebx
         mov     dword ptr [g_data_0054204c], ebx
-        mov     dword ptr [g_data_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
     L_aei_e3End:
         pop     esi
         pop     ebx

@@ -125,7 +125,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004d5324;
 extern unsigned int g_data_004ec898;
 extern unsigned int g_data_00535e6c;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054205c;
@@ -159,7 +159,7 @@ __declspec(naked) void MStackBracket3PackedSlotInit_004757c0(void)
         mov     dword ptr [eax*4], ecx
         mov     dword ptr [g_data_0054206c], edx
         call    PushSetXfmMaskCallPop_00407140
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mb3p_ret
         test    byte ptr [g_data_0054208c], 4
@@ -188,7 +188,7 @@ __declspec(naked) void MStackBracket3PackedSlotInit_004757c0(void)
         mov     dword ptr [g_data_0054206c], eax
         mov     dword ptr [ecx*4 + 0x30], eax
         call    MStackCall_00406340
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mb3p_ret
         mov     edx, dword ptr [g_data_00542044]
@@ -213,7 +213,7 @@ __declspec(naked) void MStackBracket3PackedSlotInit_004757c0(void)
         mov     eax, dword ptr [g_data_004d5324]
         mov     dword ptr [g_data_0054206c], eax
         call    AudioMixerStep_004ab700
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_mb3p_ret
         mov     ecx, dword ptr [g_data_0054206c]

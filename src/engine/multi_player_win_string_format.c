@@ -125,7 +125,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_00537e88;
 extern unsigned int g_data_0053a318;
 extern unsigned int g_data_0053a408;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054206c;
@@ -144,7 +144,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         push     esi
         push     edi
         call     PushPopPendingTwoCalls_0042f4f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         /* jne 0x42f4e8 (external, raw bytes) */
         _emit    0x0f
@@ -222,7 +222,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         and      ecx, 3
         rep movsb
         call     AllocSlotPushTripleGlobals_00427470
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         /* jne 0x42f4e8 (external, raw bytes) */
         _emit    0x0f
@@ -240,7 +240,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         mov      dword ptr [g_data_00542078], 0x5a0000
         mov      dword ptr [g_data_0054207c], 0x370000
         call     Push70CallScaleArith_00457ad0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         /* jne 0x42f4e8 (external, raw bytes) */
         _emit    0x0f
@@ -250,7 +250,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         _emit    0x00
         _emit    0x00
         call     MStackPop4Rewrite_004274f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         /* jne 0x42f4e8 (external, raw bytes) */
         _emit    0x0f
@@ -267,7 +267,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         mov      edi, 0x238
     L_f121:
         call     AllocSlotPushTripleGlobals_00427470
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         /* jne 0x42f4e8 (external, raw bytes) */
         _emit    0x0f
@@ -284,7 +284,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         mov      dword ptr [g_data_00542078], 0x5a0000
         mov      dword ptr [g_data_0054207c], 0x500000
         call     Push70CallScaleArith_00457ad0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         /* jne 0x42f4e8 (external, raw bytes) */
         _emit    0x0f
@@ -294,7 +294,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         _emit    0x00
         _emit    0x00
         call     MStackPop4Rewrite_004274f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         /* jne 0x42f4e8 (external, raw bytes) */
         _emit    0x0f
@@ -307,7 +307,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         mov      ecx, dword ptr [g_data_00542084]
         mov      dword ptr [edx*4 + 0x5c], ecx
         call     AllocSlotPushTripleGlobals_00427470
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         /* jne 0x42f4e8 (external, raw bytes) */
         _emit    0x0f
@@ -325,7 +325,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         mov      dword ptr [g_data_00542078], esi
         mov      dword ptr [g_data_0054207c], 0x640000
         call     Push70CallScaleArith_00457ad0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         /* jne 0x42f4e8 (external, raw bytes) */
         _emit    0x0f
@@ -335,7 +335,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         _emit    0x00
         _emit    0x00
         call     MStackPop4Rewrite_004274f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         /* jne 0x42f4e8 (external, raw bytes) */
         _emit    0x0f
@@ -348,7 +348,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         mov      ecx, dword ptr [g_data_00542084]
         mov      dword ptr [edx*4 + 0x5c], ecx
         call     AllocSlotPushTripleGlobals_00427470
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         /* jne 0x42f4e8 (external, raw bytes) */
         _emit    0x0f
@@ -365,7 +365,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         mov      dword ptr [g_data_00542078], esi
         mov      dword ptr [g_data_0054207c], 0x780000
         call     Push70CallScaleArith_00457ad0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         /* jne 0x42f4e8 (external, raw bytes) */
         _emit    0x0f
@@ -375,7 +375,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         _emit    0x00
         _emit    0x00
         call     MStackPop4Rewrite_004274f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         /* jne 0x42f4e8 (external, raw bytes) */
         _emit    0x0f
@@ -448,7 +448,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         and      ecx, 3
         rep movsb
         call     AllocSlotPushTripleGlobals_00427470
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         /* jne 0x42f4e8 (external, raw bytes) */
         _emit    0x0f
@@ -466,7 +466,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         mov      dword ptr [g_data_00542078], 0xffa60000
         mov      dword ptr [g_data_0054207c], 0x370000
         call     Push70CallScaleArith_00457ad0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         /* jne 0x42f4e8 (external, raw bytes) */
         _emit    0x0f
@@ -476,7 +476,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         _emit    0x00
         _emit    0x00
         call     MStackPop4Rewrite_004274f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         /* jne 0x42f4e8 (external, raw bytes) */
         _emit    0x0f
@@ -493,7 +493,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         mov      edi, 0x238
     L_f394:
         call     AllocSlotPushTripleGlobals_00427470
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         /* jne 0x42f4e8 (external, raw bytes) */
         _emit    0x0f
@@ -510,7 +510,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         mov      dword ptr [g_data_00542078], 0xffa60000
         mov      dword ptr [g_data_0054207c], 0x500000
         call     Push70CallScaleArith_00457ad0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         /* jne 0x42f4e8 (external, raw bytes) */
         _emit    0x0f
@@ -520,7 +520,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         _emit    0x00
         _emit    0x00
         call     MStackPop4Rewrite_004274f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         /* jne 0x42f4e8 (external, raw bytes) */
         _emit    0x0f
@@ -533,7 +533,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         mov      ecx, dword ptr [g_data_00542084]
         mov      dword ptr [edx*4 + 0x5c], ecx
         call     AllocSlotPushTripleGlobals_00427470
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         /* jne 0x42f4e8 (external, raw bytes) */
         _emit    0x0f
@@ -551,7 +551,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         mov      dword ptr [g_data_00542078], esi
         mov      dword ptr [g_data_0054207c], 0x640000
         call     Push70CallScaleArith_00457ad0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         /* jne 0x42f4e8 (external, raw bytes) */
         _emit    0x0f
@@ -561,7 +561,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         _emit    0x00
         _emit    0x00
         call     MStackPop4Rewrite_004274f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         /* jne 0x42f4e8 (external, raw bytes) */
         _emit    0x75
@@ -570,7 +570,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         mov      ecx, dword ptr [g_data_00542084]
         mov      dword ptr [edx*4 + 0x5c], ecx
         call     AllocSlotPushTripleGlobals_00427470
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         /* jne 0x42f4e8 (external, raw bytes) */
         _emit    0x75
@@ -583,13 +583,13 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         mov      dword ptr [g_data_00542078], esi
         mov      dword ptr [g_data_0054207c], 0x780000
         call     Push70CallScaleArith_00457ad0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         /* jne 0x42f4e8 (external, raw bytes) */
         _emit    0x75
         _emit    0x26
         call     MStackPop4Rewrite_004274f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         /* jne 0x42f4e8 (external, raw bytes) */
         _emit    0x75

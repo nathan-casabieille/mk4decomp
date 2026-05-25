@@ -129,7 +129,7 @@ extern unsigned int g_data_0052ab4c;
 extern unsigned int g_data_00535e6c;
 extern unsigned int g_data_00537f78;
 extern unsigned int g_data_00541de0;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -162,7 +162,7 @@ void RoundEndAudioCluster_0042e8d0(void) {
         mov      dword ptr [g_data_00542054], eax
         mov      dword ptr [g_data_00542048], ecx
         call     DispatcherComplex260_00407030
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e9a6
         test     byte ptr [g_data_0054208c], 4
@@ -175,7 +175,7 @@ void RoundEndAudioCluster_0042e8d0(void) {
         shr      edx, 2
         mov      dword ptr [g_data_00542048], edx
         call     DispatcherComplex260_00407030
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_e9a6
         test     byte ptr [g_data_0054208c], 4
@@ -236,7 +236,7 @@ void RoundEndAudioCluster_0042e8d0(void) {
         mov      dword ptr [eax + 8], OFFSET L_e9b0
         mov      dword ptr [eax + 0x84], ecx
         mov      dword ptr [g_data_0054204c], ecx
-        mov      dword ptr [g_data_00541e6c], ecx
+        mov      dword ptr [g_framePauseFlag], ecx
         ret
         nop
         nop
@@ -280,7 +280,7 @@ void RoundEndAudioCluster_0042e8d0(void) {
         mov      dword ptr [edx + 8], OFFSET L_ea70
         mov      dword ptr [edx + 0x84], eax
         mov      dword ptr [g_data_0054204c], 7
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         }
 }
 

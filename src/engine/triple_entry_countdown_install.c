@@ -133,19 +133,19 @@ extern unsigned int g_data_00535e7c;
  *     sets byte 0x54380c = 1 → tail-call Wrapper_00471340.
  *   Phase non-0: chain CallPauseScaledStoreCopyJmp_00461220, install Self
  *     at body1 with slot[+0x84] = 1 and g_data_0054204c = 0x78, arm
- *     g_data_00541e6c = 1.
+ *     g_framePauseFlag = 1.
  *   1b NOP align pad.
  *   Entry 3 / body2 (offset 0xb0, 191b): phase-state install with
  *     countdown via g_data_00542080. Phase 0: sets g_data_0054205c*4+0x4c
  *     = 0xfffffd71, install Self at body2 with slot[+0x84] = 1, arm
- *     g_data_00541e6c = 1. Phase 1: counts down g_data_00542080 from 0xa;
+ *     g_framePauseFlag = 1. Phase 1: counts down g_data_00542080 from 0xa;
  *     when reaches 0, tail-jmps state-tail at +0x100 (≈0x46a3a0). Else
  *     installs Self with slot[+0x84] = 2 and re-arms 0x541e6c.
  *     Phase 2: increments [g_data_0054205c*4 + 0x4c] by 0x41, sets
  *     g_data_00542070 = 0x41, then continues into the phase-1 countdown.
  */
 extern unsigned int g_data_0052ab40;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
@@ -175,7 +175,7 @@ __declspec(naked) void TripleEntryCountdownInstall_0046a230(void) {
         test    eax, eax
         jne     short L_tec_b1install
         call    State6Latch_0048e240
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_tec_b1done
         mov     eax, dword ptr [g_data_0052ab40]
@@ -185,11 +185,11 @@ __declspec(naked) void TripleEntryCountdownInstall_0046a230(void) {
         jne     short L_tec_b1nonzero
     L_tec_b1install:
         call    ClearBit2x34_00490130
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_tec_b1done
         call    ScaledZeroFour_00490740
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_tec_b1done
         mov     byte ptr [g_data_0054380c], 1
@@ -198,14 +198,14 @@ __declspec(naked) void TripleEntryCountdownInstall_0046a230(void) {
         ret
     L_tec_b1nonzero:
         call    CallPauseScaledStoreCopyJmp_00461220
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_tec_b1done
         mov     eax, 1
         mov     dword ptr [esi + 8], offset L_tec_body1
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_data_0054204c], 0x78
-        mov     dword ptr [g_data_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
     L_tec_b1done:
         pop     esi
         ret
@@ -237,7 +237,7 @@ __declspec(naked) void TripleEntryCountdownInstall_0046a230(void) {
         mov     dword ptr [eax + 8], offset L_tec_body2
         mov     dword ptr [eax + 0x84], 2
         mov     dword ptr [g_data_0054204c], ecx
-        mov     dword ptr [g_data_00541e6c], ecx
+        mov     dword ptr [g_framePauseFlag], ecx
         ret
     L_tec_b2phase0:
         mov     edx, dword ptr [g_data_0054205c]
@@ -248,7 +248,7 @@ __declspec(naked) void TripleEntryCountdownInstall_0046a230(void) {
         mov     dword ptr [eax + 8], offset L_tec_body2
         mov     dword ptr [eax + 0x84], ecx
         mov     dword ptr [g_data_0054204c], ecx
-        mov     dword ptr [g_data_00541e6c], ecx
+        mov     dword ptr [g_framePauseFlag], ecx
         ret
     }
 }

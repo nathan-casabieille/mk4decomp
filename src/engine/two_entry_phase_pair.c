@@ -122,7 +122,7 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542060;
@@ -163,7 +163,7 @@ __declspec(naked) void TwoEntryPhasePair_004952e0(void)
         mov     eax, dword ptr [g_data_00542060]
         mov     dword ptr [eax*4 + 0x84], edx
         call    ScaledLoadJmp_00428d20
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         ret
     L_tepp_entry2:
@@ -184,7 +184,7 @@ __declspec(naked) void TwoEntryPhasePair_004952e0(void)
         ret
     L_tepp_phase1:
         call    StateDispatchTable_00490fc0
-        cmp     dword ptr [g_data_00541e6c], edi
+        cmp     dword ptr [g_framePauseFlag], edi
         jne     L_tepp_ret2
         mov     ecx, dword ptr [g_data_0054206c]
         mov     dword ptr [g_data_00542084], 0x1999
@@ -205,7 +205,7 @@ __declspec(naked) void TwoEntryPhasePair_004952e0(void)
         mov     edx, dword ptr [g_data_00542060]
         mov     dword ptr [edx*4 + 0x84], edi
         call    EsiInstallClampAddCall_0048fe40
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         pop     esi
         ret
@@ -225,7 +225,7 @@ __declspec(naked) void TwoEntryPhasePair_004952e0(void)
         mov     edx, dword ptr [g_data_00542060]
         mov     dword ptr [edx*4 + 0x84], edi
         call    ScaledLoadJmp_00428d20
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
     L_tepp_ret2:
         pop     edi
         pop     esi

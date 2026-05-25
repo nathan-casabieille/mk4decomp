@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_00538094;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
@@ -161,17 +161,17 @@ __declspec(naked) void SlotPhaseDispatcherBigSwitch_0045fac0(void)
         mov     ebx, 4
     L_spdbs_loop:
         call    DirtyToggleByGate_0048f350
-        cmp     dword ptr [g_data_00541e6c], edi
+        cmp     dword ptr [g_framePauseFlag], edi
         jne     L_spdbs_ret
         test    byte ptr [g_data_0054208c], bl
         jne     L_spdbs_b4
         call    CjMaskedFlagProbe_0048ecf0
-        cmp     dword ptr [g_data_00541e6c], edi
+        cmp     dword ptr [g_framePauseFlag], edi
         jne     L_spdbs_ret
         test    byte ptr [g_data_0054208c], 1
         jne     L_spdbs_b1
         call    NotShrCmp1Store_00460d80
-        cmp     dword ptr [g_data_00541e6c], edi
+        cmp     dword ptr [g_framePauseFlag], edi
         jne     L_spdbs_ret
         mov     eax, dword ptr [g_data_0054206c]
         mov     ecx, eax
@@ -212,7 +212,7 @@ __declspec(naked) void SlotPhaseDispatcherBigSwitch_0045fac0(void)
         mov     ecx, dword ptr [g_data_0054206c]
         mov     dword ptr [edx*4 + 0x74], ecx
         call    CallPauseTriCmpJmp_00460910
-        cmp     dword ptr [g_data_00541e6c], edi
+        cmp     dword ptr [g_framePauseFlag], edi
         jne     short L_spdbs_ret
         mov     eax, dword ptr [g_data_00542060]
         lea     esi, [eax*4]
@@ -238,7 +238,7 @@ __declspec(naked) void SlotPhaseDispatcherBigSwitch_0045fac0(void)
         mov     dword ptr [esi + 8], offset SlotPhaseDispatcherBigSwitch_0045fac0
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_data_0054204c], eax
-        mov     dword ptr [g_data_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
     L_spdbs_ret:
         pop     edi
         pop     esi

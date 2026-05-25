@@ -133,7 +133,7 @@ extern unsigned int g_data_0050f130;
 extern unsigned int g_data_0050f14c;
 extern unsigned int g_data_0051599c;
 extern unsigned int g_data_00535de4;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -205,12 +205,12 @@ __declspec(naked) void KonquestPortalCluster_004a5290(void)
         mov      dword ptr [g_data_00542048], edx
     L_530d:
         call     DispatcherComplex260_00407400
-        cmp      dword ptr [g_data_00541e6c], ebp
+        cmp      dword ptr [g_framePauseFlag], ebp
         jne      L_552f
         mov      eax, dword ptr [g_data_00542044]
         mov      dword ptr [g_data_00542058], eax
         call     MStackPushComplexCallPop_00406430
-        cmp      dword ptr [g_data_00541e6c], ebp
+        cmp      dword ptr [g_framePauseFlag], ebp
         jne      L_552f
         test     byte ptr [g_data_0054208c], 4
         jne      short L_5360
@@ -239,7 +239,7 @@ __declspec(naked) void KonquestPortalCluster_004a5290(void)
         je       short L_53c3
         call     SetJmp_004a1ac0
         call     dword ptr [g_data_00542044]
-        cmp      dword ptr [g_data_00541e6c], ebp
+        cmp      dword ptr [g_framePauseFlag], ebp
         jne      L_552f
     L_53c3:
         test     byte ptr [g_data_0054208c], bl
@@ -268,7 +268,7 @@ __declspec(naked) void KonquestPortalCluster_004a5290(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], ebp
         call     InstallSelfPackedF80_00426000
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
         pop      ebp
@@ -281,7 +281,7 @@ __declspec(naked) void KonquestPortalCluster_004a5290(void)
         call     TableWalkBoundedCmp_004bd890
         add      esp, 4
         call     FiveTableWalkInit_00403c90
-        cmp      dword ptr [g_data_00541e6c], ebp
+        cmp      dword ptr [g_framePauseFlag], ebp
         jne      L_552f
         mov      esi, OFFSET g_data_004f394c
     L_547e:
@@ -314,7 +314,7 @@ __declspec(naked) void KonquestPortalCluster_004a5290(void)
         mov      dword ptr [g_data_005433b8], 4
         mov      dword ptr [g_data_00542044], ecx
         call     LoadGeoAsset_Default
-        cmp      dword ptr [g_data_00541e6c], ebp
+        cmp      dword ptr [g_framePauseFlag], ebp
         jne      short L_552f
         call     TripleCallSetCopy_004a4880
         mov      dword ptr [g_data_00542058], ebp
@@ -324,7 +324,7 @@ __declspec(naked) void KonquestPortalCluster_004a5290(void)
         mov      dword ptr [edi + 8], OFFSET L_5290
         mov      dword ptr [edi + 0x84], ebx
         mov      dword ptr [g_data_0054204c], ebx
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
     L_552f:
         pop      edi
         pop      esi

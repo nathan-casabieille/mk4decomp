@@ -131,7 +131,7 @@ extern unsigned int g_data_00535e7c;
  *       sets g_data_00542080=4, installs Self at [esi+8], sets slot[+0x84]=2,
  *       and writes packed_ptr (Self + 0x02000000) at [eax*4] (with
  *       g_data_00542044 bumped after); zeroes slot[+0x84] and calls
- *       GuardedSeq_00428480, arms g_data_00541e6c=1.
+ *       GuardedSeq_00428480, arms g_framePauseFlag=1.
  *     - phase 0 (eax==0): pushes 0x00542aac, calls GuardedPackedSlotInit_00428760;
  *       on success sets g_data_00542080=2, sets g_data_00542058 = &g_data_00500c08>>2,
  *       installs Self at [esi+8], sets slot[+0x84]=1, packs (Self + 0x01000000)
@@ -139,7 +139,7 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_data_004ec0c0;
 extern unsigned int g_data_00500c08;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
@@ -174,7 +174,7 @@ __declspec(naked) void Phase3PackedInstallSelf_0046ff80(void) {
         shr     eax, 2
         mov     dword ptr [g_data_00542044], eax
         call    GuardedDirtyXformFromTable_0048f6d0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis_done
         mov     dword ptr [g_data_00542080], 4
@@ -193,13 +193,13 @@ __declspec(naked) void Phase3PackedInstallSelf_0046ff80(void) {
         mov     eax, dword ptr [g_data_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    GuardedSeq_00428480
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
     L_pis_phase0:
         push    offset g_data_00542aac
         call    GuardedPackedSlotInit_00428760
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         jne     short L_pis_done
@@ -222,7 +222,7 @@ __declspec(naked) void Phase3PackedInstallSelf_0046ff80(void) {
         mov     edx, dword ptr [g_data_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    GuardedSeq_00428480
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
     L_pis_done:
         pop     esi
         ret

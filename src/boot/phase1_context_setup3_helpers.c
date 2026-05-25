@@ -125,7 +125,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_0049db40;
 extern unsigned int g_data_004d6c50;
 extern unsigned int g_data_004d6c58;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_00542054;
@@ -154,7 +154,7 @@ __declspec(naked) void Phase1ContextSetup3Helpers_0040d990(void)
         call    CopyThreeFields_00404df0
         add     esp, 4
         call    MStackPush8_004ab790
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p13_ret
         mov     ecx, dword ptr [g_data_00542060]
@@ -164,7 +164,7 @@ __declspec(naked) void Phase1ContextSetup3Helpers_0040d990(void)
         mov     dword ptr [g_data_00542058], eax
         mov     dword ptr [g_data_00542054], edx
         call    SetJmp_00405420
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p13_ret
         test    byte ptr [g_state_0054208c], 4
@@ -182,11 +182,11 @@ __declspec(naked) void Phase1ContextSetup3Helpers_0040d990(void)
         test    al, 1
         jne     L_p13_tailjmp
         call    StackPushAdd15CallPop_0040a7e0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p13_ret
         call    ZeroThreeFields_0040a8b0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p13_ret
     L_p13_tailjmp:

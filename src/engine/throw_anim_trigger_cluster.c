@@ -129,7 +129,7 @@ extern unsigned int g_data_00535e48;
 extern unsigned int g_data_00535e6c;
 extern unsigned int g_data_00537ea8;
 extern unsigned int g_data_00541d88;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -167,24 +167,24 @@ __declspec(naked) void ThrowAnimTriggerCluster_0049efa0(void)
         mov      dword ptr [eax*4], ecx
         mov      dword ptr [g_data_00542048], edx
         call     DispatcherComplex260_00407030
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_f183
         test     byte ptr [g_data_0054208c], 4
         jne      L_f145
         call     MStackBracket4_ListInsertZeroFill_00408600
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_f183
         call     MStackPush3LinkedListWalk_004088b0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_f183
         mov      eax, OFFSET g_data_0050a0f0
         shr      eax, 2
         mov      dword ptr [g_data_00542048], eax
         call     MStackPush4LLWalkPop4_004090e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f183
         mov      ecx, dword ptr [g_data_00542044]
@@ -201,7 +201,7 @@ __declspec(naked) void ThrowAnimTriggerCluster_0049efa0(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [ecx*4 + 0x30], eax
         call     MStackCall_00406340
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f183
         mov      ecx, dword ptr [g_data_00542044]
@@ -225,7 +225,7 @@ __declspec(naked) void ThrowAnimTriggerCluster_0049efa0(void)
         mov      eax, dword ptr [g_data_00542044]
         mov      dword ptr [ecx*4 + 0x3c], eax
         call     RoundWinTransition_0049e7e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f183
     L_f145:

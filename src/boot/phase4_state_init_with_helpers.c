@@ -160,7 +160,7 @@ extern unsigned int g_data_00543800;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_0054206c;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -182,7 +182,7 @@ __declspec(naked) void Phase4StateInitWithHelpers_004143f0(void)
         mov     dword ptr [g_data_0054205c], 0
         mov     dword ptr [g_data_0054206c], 0xEB85
         call    ZeroAndDirty4_00405430
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4s_pop1
         mov     al, byte ptr [g_state_0054208c]
@@ -193,7 +193,7 @@ __declspec(naked) void Phase4StateInitWithHelpers_004143f0(void)
         shr     edx, 2
         mov     dword ptr [g_data_0054206c], edx
         call    PushSetXfmMaskCallPop_00407140
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4s_pop1
         test    byte ptr [g_state_0054208c], bl
@@ -225,7 +225,7 @@ __declspec(naked) void Phase4StateInitWithHelpers_004143f0(void)
         mov     dword ptr [g_state_004d57ac], ecx
         mov     dword ptr [ecx*4], eax
         call    ChainNodeAdvanceCallback_00408e70
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4s_pop1
     L_p4s_loop_top:
@@ -240,7 +240,7 @@ __declspec(naked) void Phase4StateInitWithHelpers_004143f0(void)
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], ecx
         call    ChainNodeAdvanceCallback_00408e70
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         je      L_p4s_loop_top
         pop     ebx
@@ -249,7 +249,7 @@ __declspec(naked) void Phase4StateInitWithHelpers_004143f0(void)
         mov     eax, dword ptr [g_data_0054205c]
         mov     dword ptr [g_data_00542044], eax
         call    MStackCall_00406600
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4s_pop1
     L_p4s_skip_body:

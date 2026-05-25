@@ -133,7 +133,7 @@ extern unsigned int g_data_00535e7c;
  *       in 0x54206c, calls ScaledStoreThree_00409260.
  *   Loop ends on null next-pointer. Pops the 4 mstack entries back.
  */
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -181,13 +181,13 @@ __declspec(naked) void MStackPush4LLWalkPop4_004090e0(void) {
         mov     bl, 4
     L_m4w_loopTop:
         call    SplitHi8Lo24_004abfc0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_m4w_doneNoPop
         mov     ecx, dword ptr [g_data_00542070]
         mov     dword ptr [g_data_0054206c], ecx
         call    MStackInitCallToggle_00408ad0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_m4w_doneNoPop
         test    byte ptr [g_data_0054208c], bl
@@ -204,7 +204,7 @@ __declspec(naked) void MStackPush4LLWalkPop4_004090e0(void) {
         mov     dword ptr [g_data_00542048], edx
         mov     dword ptr [g_data_0054206c], eax
         call    ScaledStoreThree_00409260
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_m4w_doneNoPop
     L_m4w_loopAdv:

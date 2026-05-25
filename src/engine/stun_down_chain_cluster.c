@@ -133,7 +133,7 @@ extern void PendingMatch_00452770(void);
 extern void DualPushSet7dCallPop_00474290(void);
 extern void Thunk_0049cbc0(void);
 extern unsigned int g_data_004e7a68;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -157,7 +157,7 @@ __declspec(naked) void StunDownCluster_00451fc0(void)
         jl       L_2054
     L_1fdc:
         call     ChainDirtyBitWalker_00408c10
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2054
         mov      eax, dword ptr [g_data_00542054]
@@ -173,7 +173,7 @@ __declspec(naked) void StunDownCluster_00451fc0(void)
         mov      dword ptr [g_data_00542058], eax
     L_201d:
         call     DualPushSet7dCallPop_00474290
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2054
         mov      eax, dword ptr [g_data_00542050]
@@ -226,7 +226,7 @@ __declspec(naked) void StunDownCluster_00451fc0(void)
         mov      dword ptr [esi + 8], OFFSET L_2060
         mov      dword ptr [esi + 0x84], 3
         mov      dword ptr [g_data_0054204c], 0x50
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -248,7 +248,7 @@ __declspec(naked) void StunDownCluster_00451fc0(void)
         mov      dword ptr [esi + 8], OFFSET L_2060
         mov      dword ptr [esi + 0x84], 5
         mov      dword ptr [g_data_0054204c], 0xc8
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -267,13 +267,13 @@ __declspec(naked) void StunDownCluster_00451fc0(void)
         mov      dword ptr [esi + 8], OFFSET L_2060
         mov      dword ptr [esi + 0x84], 7
         mov      dword ptr [g_data_0054204c], 0x1e
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
     L_21de:
         call     PendingMatch_00452770
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_22df
         push     OFFSET StunDownChainCluster_00452310 + 0x80
         call     StoreLoadJmp_00404ef0
@@ -296,7 +296,7 @@ __declspec(naked) void StunDownCluster_00451fc0(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     StunDownChainCluster_00452310
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -305,21 +305,21 @@ __declspec(naked) void StunDownCluster_00451fc0(void)
         call     StoreLoadJmp_00404ef0
         add      esp, 4
         call     DualScaledStore_00452740
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_22df
         call     Chain2AxisDiffStoreTailJmp_0044cad0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_22df
         mov      dword ptr [g_data_00542074], 0xe666
         mov      dword ptr [g_data_0054206c], 0xfffe7334
         call     MStackPush3SideStore_0044cb80
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_22df
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_2060
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], 0x28
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      edi
         pop      esi
         ret      

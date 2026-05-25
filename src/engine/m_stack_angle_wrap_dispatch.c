@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004d57ac;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054206c;
@@ -207,7 +207,7 @@ __declspec(naked) void MStackAngleWrapDispatch_0048b800(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         call     RandSarMod0xFFF_0041f230
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_bab2
         mov      eax, dword ptr [g_data_004d57ac]
@@ -217,7 +217,7 @@ __declspec(naked) void MStackAngleWrapDispatch_0048b800(void)
         mov      dword ptr [g_data_00542074], ecx
         mov      dword ptr [eax*4], edx
         call     RandSarMod0xFFFSub400_0041f1f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_bab2
         mov      eax, dword ptr [g_data_004d57ac]

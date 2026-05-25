@@ -128,7 +128,7 @@ extern unsigned int g_data_00537e88;
 extern unsigned int g_data_0053a318;
 extern unsigned int g_data_0053a408;
 extern unsigned int g_data_00541dd8;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
@@ -186,7 +186,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         mov      eax, dword ptr [g_data_0052aabc]
         mov      dword ptr [g_data_0054206c], eax
         call     StoreIncrMStackPush6_004275c0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_f691
         mov      dword ptr [g_data_00542070], 4
@@ -195,11 +195,11 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         mov      dword ptr [g_data_0054207c], OFFSET g_data_008c0000
         mov      dword ptr [g_data_00542084], 1
         call     DispatcherComplex181_00426310
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f691
         call     RoundCleanupCluster_00427690
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f691
         jmp      short L_f67a
@@ -207,7 +207,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         mov      edx, dword ptr [g_data_0052aabc]
         mov      dword ptr [g_data_0054206c], edx
         call     StoreIncrMStackPush6_004275c0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f691
         mov      dword ptr [g_data_00542070], 4
@@ -216,11 +216,11 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         mov      dword ptr [g_data_0054207c], OFFSET g_data_008c0000
         mov      dword ptr [g_data_00542084], 1
         call     DispatcherComplex181_00426310
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f691
         call     RoundCleanupCluster_00427690
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f691
     L_f67a:
@@ -246,7 +246,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         nop
         /* === Helper 2 (0x42f6a0): event 0x225 tail === */
         call     Cmp7DirtyToggle_0042ee10
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f6ce
         test     byte ptr [g_data_0054208c], 1
@@ -280,7 +280,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         mov      dword ptr [g_data_0054206c], eax
         je       short L_f72b
         call     GuardedDualMaskFlagToggle_004261d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f75c
         test     byte ptr [g_data_0054208c], bl
@@ -296,7 +296,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         mov      dword ptr [esi + 8], OFFSET L_f6d0
         mov      dword ptr [esi + 0x84], ebx
         mov      dword ptr [g_data_0054204c], 0xa
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
     L_f75c:
         pop      esi
         pop      ebx

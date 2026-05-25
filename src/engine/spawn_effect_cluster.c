@@ -126,7 +126,7 @@ extern unsigned int g_data_004d5324;
 extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_004e5798;
 extern unsigned int g_data_004e57d0;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -165,7 +165,7 @@ __declspec(naked) void SpawnEffectCluster_004420a0(void)
         mov      dword ptr [g_data_00542044], 0
         mov      dword ptr [g_data_0054206c], esi
         call     DispatcherComplex138_004760f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2165
         mov      bl, 4
@@ -181,7 +181,7 @@ __declspec(naked) void SpawnEffectCluster_004420a0(void)
         mov      ecx, dword ptr [eax*4 + 0x18]
         mov      dword ptr [g_data_00542044], ecx
         call     ScaledOr4Jmp_00476e00
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2165
         mov      eax, dword ptr [g_data_004d57ac]
@@ -191,7 +191,7 @@ __declspec(naked) void SpawnEffectCluster_004420a0(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [g_data_0054206c], esi
         call     DispatcherComplex138_004760f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       L_20e3
         pop      esi
@@ -252,11 +252,11 @@ __declspec(naked) void SpawnEffectCluster_004420a0(void)
         call     CopyThreeFields_00404df0
         add      esp, 4
         call     MStackPush2RunCountdown_004089e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_23af
         call     MStackBracket7_DispatchAndChain_004b8fa0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_23af
         mov      dword ptr [g_data_00542054], 3
@@ -274,7 +274,7 @@ __declspec(naked) void SpawnEffectCluster_004420a0(void)
         mov      dword ptr [g_data_00542054], eax
         jns      L_2243
         call     L_20a0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       L_22d6
         pop      edi
@@ -290,7 +290,7 @@ __declspec(naked) void SpawnEffectCluster_004420a0(void)
         shr      eax, 2
         mov      dword ptr [g_data_0054206c], eax
         call     PushSetXfmMaskCallPop_00407140
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_23af
         mov      eax, dword ptr [g_data_004d57ac]
@@ -308,14 +308,14 @@ __declspec(naked) void SpawnEffectCluster_004420a0(void)
         ret      
     L_22de:
         call     MStackCall_00406600
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_23af
         mov      edx, dword ptr [g_data_00542058]
         mov      eax, dword ptr [edx*4]
         mov      dword ptr [g_data_0054206c], eax
         call     ChainDirtyBitWalker_00408c10
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_23af
         mov      ecx, dword ptr [g_data_00542048]
@@ -335,7 +335,7 @@ __declspec(naked) void SpawnEffectCluster_004420a0(void)
         mov      edx, dword ptr [g_data_004d5324]
         mov      dword ptr [g_data_0054206c], edx
         call     AudioMixerStep_004ab700
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_23af
         mov      ecx, dword ptr [g_data_00542044]
@@ -345,7 +345,7 @@ __declspec(naked) void SpawnEffectCluster_004420a0(void)
         mov      dword ptr [esi + 8], edi
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_23af:
         pop      edi
         pop      esi
@@ -375,13 +375,13 @@ __declspec(naked) void SpawnEffectCluster_004420a0(void)
         jmp      dword ptr [eax*4 + L_jmptbl]
     L_23ee:
         call     SpawnFreezeProjectileChain_00442530
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2518
         mov      dword ptr [esi + 8], OFFSET L_23c0
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_data_0054204c], 3
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_2427:
@@ -395,18 +395,18 @@ __declspec(naked) void SpawnEffectCluster_004420a0(void)
         mov      dword ptr [esi + 8], OFFSET L_23c0
         mov      dword ptr [esi + 0x84], 3
         mov      dword ptr [g_data_0054204c], 5
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_2476:
         call     FourSegmentPoseWalk_00442880
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2518
         mov      dword ptr [esi + 8], OFFSET L_23c0
         mov      dword ptr [esi + 0x84], 4
         mov      dword ptr [g_data_0054204c], 8
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_24af:
@@ -420,16 +420,16 @@ __declspec(naked) void SpawnEffectCluster_004420a0(void)
         mov      dword ptr [esi + 8], OFFSET L_23c0
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], 5
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret      
     L_24f7:
         call     FourSegmentPoseWalk_00442880
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2518
         call     ChainInitMul10BulkStore_00442740
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2518
         call     Thunk_0049cbc0

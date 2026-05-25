@@ -139,7 +139,7 @@ extern unsigned int g_data_004e7f50;
 extern unsigned int g_data_004e7f60;
 extern unsigned int g_data_004e7f70;
 extern unsigned int g_data_00501250;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
@@ -245,7 +245,7 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
         mov      dword ptr [eax + 8], OFFSET RoundCleanupCluster_00487510
         mov      dword ptr [eax + 0x84], ecx
         mov      dword ptr [g_data_0054204c], 0x28
-        mov      dword ptr [g_data_00541e6c], ecx
+        mov      dword ptr [g_framePauseFlag], ecx
         ret
         nop
         nop
@@ -261,7 +261,7 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
         /* H2: animate + tail-jump */
         mov      dword ptr [g_data_0054206c], 0x27
         call     TableLookupCall_00489f60
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_758b
         mov      dword ptr [g_data_00542074], 1
@@ -277,12 +277,12 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
         /* H3: load + sound */
         push     OFFSET g_data_004eef18
         call     IterStepDualStore_00490b40
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         test     eax, eax
         jne      short L_75c1
         call     MStackPushSet0004_00490230
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_75c1
         push     OFFSET g_data_004eef20
@@ -320,13 +320,13 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
         mov      ebx, 1
         je       short L_763f
         call     DualEntryBitFlagDispatch_0048e820
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_76ea
         test     byte ptr [g_data_0054208c], bl
         je       short L_7637
         call     MStackPush3CmpCall_0048eec0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_76ea
         test     byte ptr [g_data_0054208c], bl
@@ -340,7 +340,7 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
         mov      dword ptr [esi + 8], OFFSET L_75d0
         mov      dword ptr [esi + 0x84], 3
         mov      dword ptr [g_data_0054204c], ebx
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
         pop      esi
         pop      ebx
         ret
@@ -351,7 +351,7 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
         mov      dword ptr [g_data_0054206c], eax
         jne      short L_768b
         call     GameLoaderHandlerCluster_004876f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_76ea
         mov      eax, dword ptr [g_data_0054206c]
@@ -359,14 +359,14 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
         cmp      eax, 0x10b
         jne      short L_76a0
         call     GameLoaderHandlerCluster_004876f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_76ea
     L_76a0:
         mov      dword ptr [esi + 8], OFFSET L_75d0
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_data_0054204c], 5
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         pop      ebx
         ret
@@ -375,7 +375,7 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
         mov      dword ptr [esi + 8], OFFSET L_75d0
         mov      dword ptr [esi + 0x84], ebx
         mov      dword ptr [g_data_0054204c], 8
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
     L_76ea:
         pop      esi
         pop      ebx
@@ -430,7 +430,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         mov      dword ptr [esi + 0x84], 2
         add      esp, 4
         mov      dword ptr [g_data_0054204c], 0x64
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -453,7 +453,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     InstallSelfPackedTailJmp_004751f0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -477,20 +477,20 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     SetJmp_004753a0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
     L_5a88:
         /* case 0: pre-stage */
         call     DualScaledStore_00452740
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_5b22
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_5950
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], 0x47
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      edi
         pop      esi
         ret
@@ -500,7 +500,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         mov      dword ptr [g_data_00542044], ecx
         mov      dword ptr [g_data_0054207c], edi
         call     ChainGatedNegAccum_0048b740
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_5b22
         mov      edx, dword ptr [g_data_00542054]
         mov      eax, dword ptr [g_data_00542078]
@@ -566,7 +566,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         mov      dword ptr [g_data_00542044], ecx
         mov      dword ptr [g_data_004d57ac], eax
         call     MStackPush2GlobalSwap_00477400
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5bb4
         push     OFFSET g_data_004e7f70

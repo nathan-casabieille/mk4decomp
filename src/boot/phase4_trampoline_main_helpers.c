@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004d77b0;
 extern unsigned int g_data_0052aac4;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -179,7 +179,7 @@ __declspec(naked) void Phase4TrampolineMainHelpers_00414b90(void)
         dec     eax
         je      L_p4tmh2_M_phase1_alt
         call    SetJmp_00405420
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh2_M_ret
         test    byte ptr [g_state_0054208c], 4
@@ -196,7 +196,7 @@ __declspec(naked) void Phase4TrampolineMainHelpers_00414b90(void)
         cmp     dword ptr [g_data_0052aac4], 4
         jne     L_p4tmh2_M_set_54_4
         call    Wrapper_0048a260
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh2_M_ret
     L_p4tmh2_M_set_54_4:
@@ -204,7 +204,7 @@ __declspec(naked) void Phase4TrampolineMainHelpers_00414b90(void)
     L_p4tmh2_M_call_4ab670:
         mov     dword ptr [g_data_0054206c], 0x0C
         call    CallPauseInc_004ab670
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh2_M_ret
         mov     eax, dword ptr [g_data_0054206c]
@@ -213,7 +213,7 @@ __declspec(naked) void Phase4TrampolineMainHelpers_00414b90(void)
         mov     dword ptr [g_data_0054204c], eax
         mov     dword ptr [esi + 8], 0x00414BB0
         mov     dword ptr [esi + 0x84], 2
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
     L_p4tmh2_M_phase0:
@@ -232,7 +232,7 @@ __declspec(naked) void Phase4TrampolineMainHelpers_00414b90(void)
         mov     eax, dword ptr [g_data_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    GuardedSelfRefSet_0048d070
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
     L_p4tmh2_M_ret:
         pop     esi
         ret
@@ -260,7 +260,7 @@ __declspec(naked) void Phase4TrampolineMainHelpers_00414b90(void)
         mov     ecx, dword ptr [eax*4 + 0x28]
         mov     dword ptr [g_data_00542048], ecx
         call    ChainNodeAdvanceCallback_00408e70
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh2_H_pop_ret
         mov     eax, dword ptr [g_data_00542044]
@@ -271,7 +271,7 @@ __declspec(naked) void Phase4TrampolineMainHelpers_00414b90(void)
     L_p4tmh2_H_phase0:
         mov     dword ptr [g_data_0054206c], 0x0A
         call    StorePauseImulShr16_004ab630
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh2_H_pop_ret
         mov     eax, dword ptr [g_data_0054206c]
@@ -288,13 +288,13 @@ __declspec(naked) void Phase4TrampolineMainHelpers_00414b90(void)
         and     edx, 0x003FFFFF
         mov     dword ptr [g_data_00542048], edx
         call    FramePauseScaledStore_00406c10
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh2_H_pop_ret
         test    byte ptr [g_state_0054208c], 4
         jne     L_p4tmh2_H_tailjmp
         call    ScaledTestPauseStore_00408860
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh2_H_pop_ret
         test    byte ptr [g_state_0054208c], 4
@@ -305,7 +305,7 @@ __declspec(naked) void Phase4TrampolineMainHelpers_00414b90(void)
         mov     dword ptr [g_data_0054206c], ecx
         mov     dword ptr [g_data_00542050], eax
         call    ScaledStoreThree_00409260
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh2_H_pop_ret
         mov     edx, dword ptr [g_data_00542044]
@@ -322,7 +322,7 @@ __declspec(naked) void Phase4TrampolineMainHelpers_00414b90(void)
         mov     edx, dword ptr [eax*4]
         mov     dword ptr [g_data_0054206c], edx
         call    StoreDoubleNegPauseSubStore_004ab750
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh2_H_pop_ret
         mov     ecx, dword ptr [g_data_00542044]
@@ -334,7 +334,7 @@ __declspec(naked) void Phase4TrampolineMainHelpers_00414b90(void)
         mov     dword ptr [g_data_0054206c], edx
         mov     dword ptr [g_data_00542050], eax
         call    StoreDoubleNegPauseSubStore_004ab750
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh2_H_pop_ret
         mov     ecx, dword ptr [g_data_00542044]
@@ -368,7 +368,7 @@ __declspec(naked) void Phase4TrampolineMainHelpers_00414b90(void)
         mov     dword ptr [g_data_0054206c], ecx
         mov     dword ptr [g_data_00542050], eax
         call    DirtyDoubleDeref_00408cb0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh2_H_pop_ret
         mov     edx, dword ptr [g_data_00542044]
@@ -376,7 +376,7 @@ __declspec(naked) void Phase4TrampolineMainHelpers_00414b90(void)
         mov     dword ptr [g_data_00542048], edx
         mov     dword ptr [g_data_00542044], eax
         call    PushPopScaled1cDoubleCall_00408510
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh2_H_pop_ret
     L_p4tmh2_H_install:
@@ -384,12 +384,12 @@ __declspec(naked) void Phase4TrampolineMainHelpers_00414b90(void)
         mov     dword ptr [edi + 8], 0x00414CF0
         mov     dword ptr [edi + 0x84], eax
         mov     dword ptr [g_data_0054204c], eax
-        mov     dword ptr [g_data_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
         pop     edi
         ret
     L_p4tmh2_H_call_5e20:
         call    MStackPushCallCallPop_00405e20
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh2_H_pop_ret
     L_p4tmh2_H_tailjmp:
@@ -401,7 +401,7 @@ __declspec(naked) void Phase4TrampolineMainHelpers_00414b90(void)
         nop
     L_p4tmh2_S:
         call    MStackPushCallCallPop_00405e20
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh2_S_ret
         mov     dword ptr [g_data_00542044], 0

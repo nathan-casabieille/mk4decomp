@@ -131,7 +131,7 @@ extern void SelfInstallPhaseDispatch_00428990(void);
  *   g_cj_00542054=baseSel[*4+0x64], g_cj_00542058=baseSel[*4+0x68]; jmp StackPopDispatchTagged.
  */
 extern unsigned int g_data_004ea058;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
@@ -418,7 +418,7 @@ __declspec(naked) void SelfInstallPhaseDispatch_0045fd30(void)
         test    eax, eax
         jne     L_sipd2_retCommon
         call    CjMaskedFlagProbe_0048ecf0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_sipd2_retCommon
         test    byte ptr [g_data_0054208c], bl
@@ -429,7 +429,7 @@ __declspec(naked) void SelfInstallPhaseDispatch_0045fd30(void)
         ret
     L_sipd2_continue:
         call    GuardedDualAndFlagToggle_0048f020
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_sipd2_retCommon
         test    byte ptr [g_data_0054208c], bl
@@ -449,19 +449,19 @@ __declspec(naked) void SelfInstallPhaseDispatch_0045fd30(void)
         mov     eax, dword ptr [g_data_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    InstallSelfChainCascade_0045feb0
-        mov     dword ptr [g_data_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
         pop     esi
         pop     ebx
         ret
     L_sipd2_phase2:
         call    GuardedDualConst2AndToggle_0048eba0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_sipd2_retCommon
         test    byte ptr [g_data_0054208c], bl
         jne     short L_sipd2_finishInstall
         call    MStackPushSet0001_00490260
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_sipd2_retCommon
         mov     eax, dword ptr [g_state_004d57ac]
@@ -475,25 +475,25 @@ __declspec(naked) void SelfInstallPhaseDispatch_0045fd30(void)
         ret
     L_sipd2_phase0:
         call    ScaledAndAlfe_00490390
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_sipd2_retCommon
         mov     ecx, offset g_data_004ea058
         shr     ecx, 2
         mov     dword ptr [g_data_00542044], ecx
         call    GuardedDirtyXformFromTable_0048f6d0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_sipd2_retCommon
         call    MultiThunkDispatcher_00460470
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_sipd2_retCommon
     L_sipd2_finishInstall:
         mov     dword ptr [esi + 8], offset SelfInstallPhaseDispatch_0045fd30
         mov     dword ptr [esi + 0x84], ebx
         mov     dword ptr [g_data_0054204c], ebx
-        mov     dword ptr [g_data_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
     L_sipd2_retCommon:
         pop     esi
         pop     ebx

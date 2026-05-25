@@ -145,7 +145,7 @@ extern unsigned int g_data_004ea9d8;
 extern unsigned int g_data_004ea9e8;
 extern unsigned int g_data_004ea9f8;
 extern unsigned int g_data_00501838;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
@@ -170,7 +170,7 @@ __declspec(naked) void FourEntryAlarmInstall_004662e0(void) {
         mov     dword ptr [g_data_00542074], 0x267
         mov     dword ptr [g_data_0054204c], 0x44ea20
         call    AllocNode
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_fea2_e1End
         push    offset g_data_004ea9c0
@@ -219,7 +219,7 @@ __declspec(naked) void FourEntryAlarmInstall_004662e0(void) {
         add     esp, 4
         push    offset g_data_004ea9e8
         call    ArgSarStoreJmp_004594f0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         pop     esi
         ret
@@ -229,7 +229,7 @@ __declspec(naked) void FourEntryAlarmInstall_004662e0(void) {
         mov     dword ptr [esi + 8], offset L_fea2_body
         mov     dword ptr [esi + 0x84], 1
         mov     dword ptr [g_data_0054204c], 0xf
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
     L_fea2_entry4:
@@ -244,7 +244,7 @@ __declspec(naked) void FourEntryAlarmInstall_004662e0(void) {
         mov     dword ptr [g_data_00542074], 0x267
         mov     dword ptr [g_data_0054204c], 0x44ea20
         call    AllocNode
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_fea2_e4End
         push    offset g_data_004ea9f8

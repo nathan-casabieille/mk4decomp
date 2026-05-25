@@ -138,7 +138,7 @@ extern unsigned int g_data_0053a7a8;
 
 extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_0052ab10;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -168,7 +168,7 @@ __declspec(naked) void ThrowEventCluster_0043e960(void)
         mov      dword ptr [g_data_0054205c], eax
         mov      dword ptr [g_data_0054206c], 1
         call     ChainDirtyBitWalker_00408c10
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_e9f4
         mov      ecx, dword ptr [g_data_00542048]
@@ -212,7 +212,7 @@ __declspec(naked) void ThrowEventCluster_0043e960(void)
     L_ea2d:
         /* case 1: 43ec80 + install state 2 */
         call     DispatchCopyFields_0043ec80
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_ebc3
         mov      dword ptr [esi + 8], OFFSET L_ea00
         mov      ecx, dword ptr [g_data_00542060]
@@ -229,7 +229,7 @@ __declspec(naked) void ThrowEventCluster_0043e960(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     ComboMenuFsmCluster_0043f3a0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -238,7 +238,7 @@ __declspec(naked) void ThrowEventCluster_0043e960(void)
         mov      ecx, dword ptr [g_data_0052ab10]
         mov      dword ptr [g_data_0054205c], ecx
         call     StackPushCallPopChain_0043ed70
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_ebc3
         mov      dword ptr [esi + 8], OFFSET L_ea00
         mov      edx, dword ptr [g_data_00542060]
@@ -255,7 +255,7 @@ __declspec(naked) void ThrowEventCluster_0043e960(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     TagTeamHandlerCluster_0043ede0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -276,7 +276,7 @@ __declspec(naked) void ThrowEventCluster_0043e960(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     InstallSelfChainStateInit_0043f2c0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -292,7 +292,7 @@ __declspec(naked) void ThrowEventCluster_0043e960(void)
         mov      dword ptr [esi + 8], OFFSET L_ea00
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], 0x3d
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      edi
         pop      esi
         ret
@@ -357,14 +357,14 @@ __declspec(naked) void ThrowEventCluster_0043e960(void)
         mov      eax, dword ptr [g_data_00542054]
         mov      dword ptr [g_data_00542048], eax
         call     MStackAngleRatioSubchain_00476af0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_ec7d
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_ebe0
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_ec7d:
         pop      esi
         ret

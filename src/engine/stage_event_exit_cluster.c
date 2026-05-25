@@ -144,7 +144,7 @@ extern void ScaledChainJmp_00429470(void);
  *   slot, slot[+0x84]=0, calls ScaledChainJmp_00429470, arms 0x541e6c.
  */
 extern unsigned int g_data_00538158;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
@@ -186,12 +186,12 @@ __declspec(naked) void InstallSelfMStackPackedFlow_0047c990(void) {
         mov     dword ptr [eax*4 + g_table_004d57b0], ecx
         mov     dword ptr [g_data_0054206c], 0xb333
         call    EsiEdiAliasDualMul10_004906b0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_ism_done
         mov     dword ptr [g_data_00542088], 0x11999
         call    PunchAnimCluster_00496d80
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_ism_done
         mov     eax, dword ptr [g_state_004d57ac]
@@ -200,7 +200,7 @@ __declspec(naked) void InstallSelfMStackPackedFlow_0047c990(void) {
         mov     dword ptr [g_data_00542080], edx
         mov     dword ptr [g_state_004d57ac], eax
         call    NotMaskStorePair_0045f440
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_ism_done
         mov     ecx, dword ptr [g_data_0054205c]
@@ -238,7 +238,7 @@ __declspec(naked) void InstallSelfMStackPackedFlow_0047c990(void) {
         mov     edx, dword ptr [g_data_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    ScaledChainJmp_00429470
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
     L_ism_done:
         pop     esi
         ret

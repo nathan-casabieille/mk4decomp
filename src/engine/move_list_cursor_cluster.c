@@ -122,7 +122,7 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
@@ -138,7 +138,7 @@ __declspec(naked) void MoveListCursorCluster_0045b420(void)
     L_b420:
         /* H1 */
         call     ScaledIterStep_0045c020
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b445
         mov      eax, dword ptr [g_data_00542060]
@@ -159,7 +159,7 @@ __declspec(naked) void MoveListCursorCluster_0045b420(void)
         nop
         /* H2 */
         mov      ecx, dword ptr [g_data_00542070]
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         and      ecx, 0xff
         test     eax, eax
         mov      dword ptr [g_data_00542070], ecx
@@ -242,7 +242,7 @@ __declspec(naked) void MoveListCursorCluster_0045b420(void)
         jmp      L_b420
     L_b56e:
         call     ScaledIterStep_0045c020
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b581
         jmp      PendingMatch_00459510
@@ -271,7 +271,7 @@ __declspec(naked) void MoveListCursorCluster_0045b420(void)
         mov      dword ptr [eax + 8], OFFSET L_b590
         mov      dword ptr [eax + 0x84], ecx
         mov      dword ptr [g_data_0054204c], 0x3c
-        mov      dword ptr [g_data_00541e6c], ecx
+        mov      dword ptr [g_framePauseFlag], ecx
         ret
         nop
         nop
@@ -286,13 +286,13 @@ __declspec(naked) void MoveListCursorCluster_0045b420(void)
         nop
         /* H7: combined call + dispatch */
         call     ScaledIterStep_0045c020
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b614
         mov      eax, dword ptr [g_data_0054206c]
         mov      dword ptr [g_data_00542044], eax
         call     eax
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b614
         test     byte ptr [g_data_0054208c], 4
@@ -300,7 +300,7 @@ __declspec(naked) void MoveListCursorCluster_0045b420(void)
         jmp      L_b420
     L_b601:
         call     ScaledIterStep_0045c020
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b614
         jmp      PendingMatch_00459510

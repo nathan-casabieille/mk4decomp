@@ -147,9 +147,9 @@ extern void MatchInitMonsterChain_004228b0(void);
  *       with table pointers 0x004a2090 / 0x004a2180. Installs self at
  *       [esi+8]=0x403170 and sets [eax*4+0x84]=2 (with packed_ptr +
  *       0x02000000 tag), then calls MatchInitMonsterChain_004228b0 and asserts the error
- *       flag g_data_00541e6c = 1.
+ *       flag g_framePauseFlag = 1.
  *     - phase 2: install self at [esi+8]=0x403170, zero [esi+0x84]=3,
- *       set g_data_0054204c=4, set g_data_00541e6c=1, return.
+ *       set g_data_0054204c=4, set g_framePauseFlag=1, return.
  *     - phase 3: call GuardedScaledLookupCallJmp_004220a0, on no-error set
  *       g_data_0054206c=3, call AndShlStore_00409280, call
  *       StackPopDispatchTagged_0041f780, return.
@@ -157,7 +157,7 @@ extern void MatchInitMonsterChain_004228b0(void);
 extern unsigned int g_data_00537f48;
 extern unsigned int g_data_005380e0;
 extern unsigned int g_data_00541dc8;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
@@ -179,11 +179,11 @@ __declspec(naked) void Phase3InstallSelf_00403170(void) {
         dec     eax
         je      short L_p3i_phase2
         call    GuardedScaledLookupCallJmp_004220a0
-        cmp     dword ptr [g_data_00541e6c], edi
+        cmp     dword ptr [g_framePauseFlag], edi
         jne     L_p3i_done
         mov     dword ptr [g_data_0054206c], 3
         call    AndShlStore_00409280
-        cmp     dword ptr [g_data_00541e6c], edi
+        cmp     dword ptr [g_framePauseFlag], edi
         jne     L_p3i_done
         call    StackPopDispatchTagged_0041f780
         pop     edi
@@ -195,7 +195,7 @@ __declspec(naked) void Phase3InstallSelf_00403170(void) {
         mov     dword ptr [esi + 8], offset Phase3InstallSelf_00403170
         mov     dword ptr [esi + 0x84], 3
         mov     dword ptr [g_data_0054204c], 4
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         pop     esi
         ret
@@ -204,7 +204,7 @@ __declspec(naked) void Phase3InstallSelf_00403170(void) {
         call    TableWalkBoundedCmp_004bd890
         add     esp, 4
         call    BootInitGuardedCallChain_004265d0
-        cmp     dword ptr [g_data_00541e6c], edi
+        cmp     dword ptr [g_framePauseFlag], edi
         jne     L_p3i_done
         call    DualScaledLitInitJmp_00464800
         call    TableWalkPause_004bd850
@@ -219,7 +219,7 @@ __declspec(naked) void Phase3InstallSelf_00403170(void) {
         call    QuadCallPhase2_004be800
         add     esp, 0x10
         call    BootInitGuardedCallChain_004265d0
-        cmp     dword ptr [g_data_00541e6c], edi
+        cmp     dword ptr [g_framePauseFlag], edi
         jne     short L_p3i_done
         push    edi
         push    offset g_data_004a2090
@@ -244,7 +244,7 @@ __declspec(naked) void Phase3InstallSelf_00403170(void) {
         mov     eax, dword ptr [g_data_00542060]
         mov     dword ptr [eax*4 + 0x84], edi
         call    MatchInitMonsterChain_004228b0
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
     L_p3i_done:
         pop     edi
         pop     esi

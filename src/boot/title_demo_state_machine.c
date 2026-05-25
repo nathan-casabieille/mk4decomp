@@ -137,7 +137,7 @@ extern unsigned int g_data_00541de8;
 extern unsigned int g_data_00541dec;
 extern unsigned int g_data_00541df0;
 extern unsigned int g_data_00541df4;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
@@ -243,7 +243,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], ebp
         call     PendingMatch_004a2a80
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
     L_1cb3:
         pop      edi
         pop      esi
@@ -255,7 +255,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         add      esp, 4
         mov      dword ptr [g_data_00542074], ebp
         call     Push16Call_00489f50
-        cmp      dword ptr [g_data_00541e6c], ebp
+        cmp      dword ptr [g_framePauseFlag], ebp
         jne      L_1cb3
         mov      eax, 2
         mov      dword ptr [g_data_0053a50c], ebp
@@ -263,10 +263,10 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      dword ptr [g_data_0052aac4], eax
         mov      dword ptr [g_data_00542074], ebp
         call     Push16Call_00489f50
-        cmp      dword ptr [g_data_00541e6c], ebp
+        cmp      dword ptr [g_framePauseFlag], ebp
         jne      L_1cb3
         call     ZeroMultiGlobalsCmp_00404680
-        cmp      dword ptr [g_data_00541e6c], ebp
+        cmp      dword ptr [g_framePauseFlag], ebp
         jne      L_1cb3
         mov      dword ptr [g_data_0054206c], ebp
         mov      dword ptr [g_data_00541dc0], ebp
@@ -276,7 +276,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      dword ptr [esi + 8], edi
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_data_0054204c], ebx
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
         pop      ebp
@@ -285,7 +285,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
     L_1d46:
         mov      dword ptr [g_data_00542074], ebp
         call     Push16Call_00489f50
-        cmp      dword ptr [g_data_00541e6c], ebp
+        cmp      dword ptr [g_framePauseFlag], ebp
         jne      L_1cb3
         push     -1
         push     -1
@@ -307,7 +307,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], ebp
         call     PhaseInstallSelf3Step_00402350
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
         pop      ebp
@@ -327,7 +327,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], ebp
         call     PendingMatch_00402540
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
         pop      ebp
@@ -366,7 +366,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], ebp
         call     TitleDemoStateMachine_004032d0
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
         pop      ebp
@@ -386,7 +386,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      ecx, dword ptr [g_data_00542060]
         mov      dword ptr [ecx*4 + 0x84], ebp
         call     BootStateMachine4Way_00402f60
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
         pop      ebp
@@ -415,7 +415,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], ebp
         call     PendingMatch_00403d60
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
         pop      ebp
@@ -441,7 +441,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], ebp
         call     PendingMatch_00403670
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
         pop      ebp
@@ -461,7 +461,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      ecx, dword ptr [g_data_00542060]
         mov      dword ptr [ecx*4 + 0x84], ebp
         call     BootInitVec3PhaseInstall_00402c10
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
         pop      ebp
@@ -485,7 +485,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], ebp
         call     BootStateInitWithRecurseInstall_00402de0
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
         pop      ebp
@@ -505,7 +505,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], ebp
         call     BootStateMachine4Way_00402f60
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
         pop      ebp
@@ -544,7 +544,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      ecx, dword ptr [g_data_00542060]
         mov      dword ptr [ecx*4 + 0x84], ebp
         call     PendingMatch_00403d60
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
         pop      ebp
@@ -570,7 +570,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], ebp
         call     PendingMatch_00403670
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
         pop      ebp
@@ -590,7 +590,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], ebp
         call     InstallSelfCounter_00404920
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
         pop      ebp
@@ -611,7 +611,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      ecx, dword ptr [g_data_00542060]
         mov      dword ptr [ecx*4 + 0x84], ebp
         call     BootStateInitWithRecurseInstall_00402de0
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
         pop      ebp
@@ -631,7 +631,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], ebp
         call     TitleDemoStateMachine_004032d0
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
         pop      ebp
@@ -644,7 +644,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         pop      edi
         pop      esi
         mov      dword ptr [g_data_0054204c], ebx
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
         pop      ebp
         pop      ebx
         ret      

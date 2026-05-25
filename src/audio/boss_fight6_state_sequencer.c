@@ -127,7 +127,7 @@ extern unsigned int g_data_004d2330;
 extern unsigned int g_data_004d2340;
 extern unsigned int g_data_00537f94;
 extern unsigned int g_data_0053a430;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
@@ -159,12 +159,12 @@ __declspec(naked) void BossFight6StateSequencer_004a3ce0(void)
         cmp      eax, edi
         jne      short L_3d63
         call     TwoCallsTwoBranchTail_004a3c50
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3f2d
         mov      dword ptr [esi + 8], OFFSET L_3ce0
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_data_0054204c], 0x1e
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -179,7 +179,7 @@ __declspec(naked) void BossFight6StateSequencer_004a3ce0(void)
         mov      dword ptr [esi + 8], OFFSET L_3ce0
         mov      dword ptr [esi + 0x84], 3
         mov      dword ptr [g_data_0054204c], 0x24
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -191,7 +191,7 @@ __declspec(naked) void BossFight6StateSequencer_004a3ce0(void)
         mov      dword ptr [esi + 8], OFFSET L_3ce0
         mov      dword ptr [esi + 0x84], 4
         mov      dword ptr [g_data_0054204c], 0x3c
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -200,7 +200,7 @@ __declspec(naked) void BossFight6StateSequencer_004a3ce0(void)
         mov      dword ptr [esi + 8], OFFSET L_3ce0
         mov      dword ptr [esi + 0x84], 5
         mov      dword ptr [g_data_0054204c], 0x3c
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -209,7 +209,7 @@ __declspec(naked) void BossFight6StateSequencer_004a3ce0(void)
         mov      dword ptr [esi + 8], OFFSET L_3ce0
         mov      dword ptr [esi + 0x84], 6
         mov      dword ptr [g_data_0054204c], 0xf0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -253,7 +253,7 @@ __declspec(naked) void BossFight6StateSequencer_004a3ce0(void)
         mov      dword ptr [esi + 8], OFFSET L_3ce0
         mov      dword ptr [esi + 0x84], edi
         mov      dword ptr [g_data_0054204c], 0x24
-        mov      dword ptr [g_data_00541e6c], edi
+        mov      dword ptr [g_framePauseFlag], edi
         pop      edi
         pop      esi
         ret

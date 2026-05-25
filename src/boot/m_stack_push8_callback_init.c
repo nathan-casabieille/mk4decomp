@@ -137,7 +137,7 @@ extern unsigned int g_data_00535e7c;
  *   Calls MStackCall_004065b0, tail-jmp MStackPop8_004ab860.
  */
 extern unsigned int g_data_004d67b8;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_00542054;
@@ -167,18 +167,18 @@ __declspec(naked) void MStackPush8CallbackInit_00413b70(void) {
         add     esp, 4
         mov     dword ptr [g_data_0054206c], 0x3333
         call    AudioMixerStep_004ab700
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mp8c_ret
         add     dword ptr [g_data_0054206c], 0xd999
         call    ZeroAndDirty4_00405430
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mp8c_ret
         test    byte ptr [g_data_0054208c], 4
         je      L_mp8c_ret
         call    MStackPush8_004ab790
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mp8c_ret
         mov     ecx, dword ptr [g_data_0054205c]
@@ -187,7 +187,7 @@ __declspec(naked) void MStackPush8CallbackInit_00413b70(void) {
         mov     dword ptr [g_data_00542054], ecx
         mov     dword ptr [g_data_0054206c], edx
         call    PushSetXfmMaskCallPop_00407140
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mp8c_ret
         test    byte ptr [g_data_0054208c], 4
@@ -197,12 +197,12 @@ __declspec(naked) void MStackPush8CallbackInit_00413b70(void) {
         mov     dword ptr [g_data_0054206c], eax
         mov     dword ptr [ecx*4 + 0x30], eax
         call    ScaledTripleCopy54_004ac040
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mp8c_ret
         mov     dword ptr [g_data_0054206c], 0xfffffeb9
         call    MStackPushNegMul10_0040a690
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_mp8c_ret
         mov     edx, dword ptr [g_data_0054205c]
@@ -227,7 +227,7 @@ __declspec(naked) void MStackPush8CallbackInit_00413b70(void) {
         mov     eax, dword ptr [g_data_0054205c]
         mov     dword ptr [g_data_00542044], eax
         call    MStackCall_004065b0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_mp8c_ret
     L_mp8c_tailJmp:

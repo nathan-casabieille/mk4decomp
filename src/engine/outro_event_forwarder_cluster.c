@@ -129,7 +129,7 @@ extern unsigned int g_data_004eec68;
 extern unsigned int g_data_004eec90;
 extern unsigned int g_data_004eecc0;
 extern unsigned int g_data_004eece8;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
@@ -153,7 +153,7 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
     __asm {
     L_5e70:
         call     ScaledAndAlf7_00490310
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5e8d
         mov      dword ptr [g_data_0054206c], 3
@@ -163,11 +163,11 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         nop
         nop
         call     ScaledDecOrZero_00483b50
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5efc
         call     ScaledAndAlf7_00490310
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5efc
         mov      eax, dword ptr [g_data_00542060]
@@ -184,7 +184,7 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         jmp      QuadBlockInstallChainThunks_00483c90
     L_5ee1:
         call     L_5e70
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5efc
         push     OFFSET g_data_004eec10
@@ -196,11 +196,11 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         nop
         nop
         call     ScaledDecOrZero_00483b50
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5f54
         call     ScaledAndAlf7_00490310
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5f54
         mov      eax, dword ptr [g_data_00542060]
@@ -211,7 +211,7 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         jmp      QuadBlockInstallChainThunks_00483c90
     L_5f39:
         call     L_5e70
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5f54
         push     OFFSET g_data_004eec28
@@ -237,11 +237,11 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         nop
         nop
         call     GateDispatch6c_00494580
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5fa7
         call     CopyJmp_0048ef90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5fa7
         test     byte ptr [g_data_0054208c], 1
@@ -262,7 +262,7 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         nop
         nop
         call     GateDispatch6c_00494580
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5fe2
         mov      ecx, dword ptr [g_data_00542060]
@@ -288,7 +288,7 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         nop
         nop
         call     GateDispatch6c_00494580
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_600b
         push     OFFSET g_data_004eecc0
@@ -302,15 +302,15 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         nop
         mov      dword ptr [g_data_0054206c], 0x9999
         call     CmpP1DualInitStore_00482ab0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_6051
         call     ScaledMove48to58_00490720
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_6051
         call     GateDispatch6c_00494580
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_6051
         push     OFFSET g_data_004eece8
@@ -354,7 +354,7 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         mov      dword ptr [eax + 8], OFFSET L_6060
         mov      dword ptr [eax + 0x84], 2
         mov      dword ptr [g_data_0054204c], 0xf
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         ret
     L_60bb:
@@ -376,7 +376,7 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edx
         call     Phase3Packed3EntryDispatch_00486130
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         ret
     }

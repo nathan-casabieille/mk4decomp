@@ -126,7 +126,7 @@ extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_0052ab40;
 extern unsigned int g_data_00538038;
 extern unsigned int g_data_0053a430;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541ec4;
 extern unsigned int g_data_00541ec8;
 extern unsigned int g_data_00542044;
@@ -159,7 +159,7 @@ void StrikeAnim4Picker_00493100(void) {
         mov      dword ptr [g_data_00542094], eax
         je       short L_3126
         call     TestStoreConstJmp_004933b0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_33a1
     L_3126:
@@ -205,14 +205,14 @@ void StrikeAnim4Picker_00493100(void) {
         mov      dword ptr [edx*4 + 0x30], eax
         mov      dword ptr [g_data_0054206c], 1
         call     ScaledAddDeref_00494800
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_33a1
         mov      eax, dword ptr [g_data_00542044]
         mov      dword ptr [g_data_0054206c], 2
         mov      dword ptr [g_data_00542048], eax
         call     ScaledAddDeref_00494800
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_33a1
         mov      ecx, dword ptr [g_data_004d57ac]
@@ -237,7 +237,7 @@ void StrikeAnim4Picker_00493100(void) {
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         call     MStackBracket1_TreeWalkRecursive2_00406dd0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_33a1
         test     byte ptr [g_data_0054208c], 4
@@ -245,7 +245,7 @@ void StrikeAnim4Picker_00493100(void) {
         mov      edx, dword ptr [g_data_00542044]
         mov      dword ptr [g_data_00542050], edx
         call     ScaledTestPauseStore_00408860
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_33a1
         test     byte ptr [g_data_0054208c], 4
@@ -254,18 +254,18 @@ void StrikeAnim4Picker_00493100(void) {
         mov      ecx, dword ptr [eax*4 + 0x1c]
         mov      dword ptr [g_data_00542048], ecx
         call     PushSetCallCleanup_00408580
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_33a1
         mov      edx, dword ptr [g_data_00542050]
         mov      dword ptr [g_data_00542044], edx
         call     MStackChainDecodeCall_004936f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_33a1
         mov      dword ptr [g_data_0054206c], 0xa
         call     DirtyDoubleDeref_00408cb0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_33a1
         mov      eax, dword ptr [g_data_00542044]
@@ -273,11 +273,11 @@ void StrikeAnim4Picker_00493100(void) {
         mov      dword ptr [g_data_00542048], eax
         mov      dword ptr [g_data_00542044], ecx
         call     MStackPush2ChainPrepend_00409970
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_33a1
         call     ScaledLoadJmp30_00493eb0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_33a1
         mov      ecx, dword ptr [g_data_0054205c]
@@ -288,7 +288,7 @@ void StrikeAnim4Picker_00493100(void) {
         jmp      short L_3350
     L_3342:
         call     MStackPushCallCallPop_00405e20
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_33a1
     L_3350:

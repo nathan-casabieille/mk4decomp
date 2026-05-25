@@ -122,7 +122,7 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
@@ -142,7 +142,7 @@ __declspec(naked) void EightPackedSubInstallSelfWalk_0042b6f0(void)
     __asm
     {
         call    FiveCallScaledChainTailJmp_0045f8d0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub1_ret
         push    0x4e2fa0
@@ -156,11 +156,11 @@ __declspec(naked) void EightPackedSubInstallSelfWalk_0042b6f0(void)
         nop
     L_eps_sub2:
         call    MStackPushCallPopDirtyJmp_0042cc90
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub2_ret
         call    TwoCallTail_0042b690
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub2_ret
         push    0x4e33b8
@@ -176,14 +176,14 @@ __declspec(naked) void EightPackedSubInstallSelfWalk_0042b6f0(void)
         nop
     L_eps_sub3:
         call    StateDispatchTable_00490fc0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub3_ret
         mov     eax, dword ptr [g_data_0054206c]
         mov     dword ptr [g_data_0054206c], 0
         mov     dword ptr [g_data_00542048], eax
         call    BootFrameSetup_00408190
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub3_ret
         jmp     FiveCallGuardSetTail_0046f6b0
@@ -201,11 +201,11 @@ __declspec(naked) void EightPackedSubInstallSelfWalk_0042b6f0(void)
         nop
     L_eps_sub4:
         call    MStackPushCallPopDirtyJmp_0042cc90
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub4_ret
         call    TwoCallTail_0042b690
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub4_ret
         push    0x4e2fe0
@@ -221,14 +221,14 @@ __declspec(naked) void EightPackedSubInstallSelfWalk_0042b6f0(void)
         nop
     L_eps_sub5:
         call    StateDispatchTable_00490fc0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub5_ret
         mov     eax, dword ptr [g_data_0054206c]
         mov     dword ptr [g_data_0054206c], 0
         mov     dword ptr [g_data_00542048], eax
         call    BootFrameSetup_00408190
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub5_ret
         jmp     FiveCallGuardSetTail_0046f6b0
@@ -246,7 +246,7 @@ __declspec(naked) void EightPackedSubInstallSelfWalk_0042b6f0(void)
         nop
     L_eps_sub6:
         call    TwoCallTail_0042b690
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub6_ret
         push    0x4e3020
@@ -260,13 +260,13 @@ __declspec(naked) void EightPackedSubInstallSelfWalk_0042b6f0(void)
         nop
     L_eps_sub7:
         call    State208cBit0Flag_0048f160
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub7_ret
         test    byte ptr [g_data_0054208c], 1
         je      short L_eps_sub7_skipCall
         call    PendingMatch_0042b930
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub7_ret
     L_eps_sub7_skipCall:
@@ -301,21 +301,21 @@ __declspec(naked) void EightPackedSubInstallSelfWalk_0042b6f0(void)
         ret
     L_eps_sub8_phase0:
         call    StateDispatchTable_00490fc0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub8_ret
         mov     ecx, dword ptr [g_data_0054206c]
         mov     dword ptr [g_data_0054206c], 0
         mov     dword ptr [g_data_00542048], ecx
         call    BootFrameSetup_00408190
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub8_ret
         mov     eax, 1
         mov     dword ptr [esi + 8], offset L_eps_sub8
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_data_0054204c], eax
-        mov     dword ptr [g_data_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
     L_eps_sub8_ret:
         pop     esi
         ret

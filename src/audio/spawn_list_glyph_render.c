@@ -125,7 +125,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004f3ee0;
 extern unsigned int g_data_005157a4;
 extern unsigned int g_data_00538038;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -159,7 +159,7 @@ __declspec(naked) void SpawnListGlyphRender_004aa610(void)
         mov      edi, dword ptr [g_data_00542044]
         or       dword ptr [edi*4 + 0x34], 0x20000
         call     MStackPushComplexCallPop_00406430
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         xor      esi, esi
         cmp      eax, esi
         jne      short L_a73d
@@ -317,7 +317,7 @@ __declspec(naked) void SpawnListGlyphRender_004aa610(void)
         mov      dword ptr [ebx + 0x84], eax
         pop      esi
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      ebx
         ret
     }

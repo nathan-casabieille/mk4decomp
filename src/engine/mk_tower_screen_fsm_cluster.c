@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_00537e88;
 extern unsigned int g_data_0053a408;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541fb0;
 extern unsigned int g_data_00541fb4;
 extern unsigned int g_data_00541fb8;
@@ -164,7 +164,7 @@ __declspec(naked) void MkTowerScreenFsmCluster_00462560(void)
         mov      eax, dword ptr [eax*4]
         mov      dword ptr [g_data_0054206c], eax
         call     MStackPush2LLWalkCompare_004069b0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_264f
         mov      al, byte ptr [g_data_0054208c]
@@ -187,7 +187,7 @@ __declspec(naked) void MkTowerScreenFsmCluster_00462560(void)
         mov      dword ptr [g_data_0054206c], edx
     L_25fd:
         call     Thunk_00427460
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_264f
         mov      eax, dword ptr [g_data_00542044]
@@ -255,7 +255,7 @@ __declspec(naked) void MkTowerScreenFsmCluster_00462560(void)
         mov      dword ptr [eax + 8], OFFSET L_2660
         mov      dword ptr [eax + 0x84], ecx
         mov      dword ptr [g_data_0054204c], 0xa
-        mov      dword ptr [g_data_00541e6c], ecx
+        mov      dword ptr [g_framePauseFlag], ecx
         ret
         nop
         nop
@@ -280,25 +280,25 @@ __declspec(naked) void MkTowerScreenFsmCluster_00462560(void)
         dec      eax
         jne      short L_274b
         call     MStackChainOrBitLoop_004635a0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_277a
         mov      dword ptr [esi + 8], OFFSET L_26f0
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_data_0054204c], 4
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_274b:
         call     MStackPush2ScaledChainLoop_00463430
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_277a
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_26f0
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], 4
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_277a:
         pop      esi
         ret

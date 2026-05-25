@@ -126,7 +126,7 @@ extern unsigned int g_data_00511fa4;
 extern unsigned int g_data_0052ab10;
 extern unsigned int g_data_00535e6c;
 extern unsigned int g_data_0053e35c;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -151,7 +151,7 @@ __declspec(naked) void Phase4SlotInitPackedHelper_00416040(void)
     __asm {
         push    esi
         call    MStackPush8_004ab790
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sip_A_ret
         mov     eax, dword ptr [g_data_00542044]
@@ -160,7 +160,7 @@ __declspec(naked) void Phase4SlotInitPackedHelper_00416040(void)
         mov     dword ptr [g_data_0054204c], eax
         mov     dword ptr [g_data_00542048], ecx
         call    MStackPushDispatchBitGate_00407330
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sip_A_ret
         test    byte ptr [g_state_0054208c], 4
@@ -202,7 +202,7 @@ __declspec(naked) void Phase4SlotInitPackedHelper_00416040(void)
         neg     edx
         mov     dword ptr [g_data_0054206c], edx
         call    BootMod6487eClampAndChainMul10_00407510
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sip_A_ret
         mov     eax, dword ptr [g_data_0054205c]
@@ -211,21 +211,21 @@ __declspec(naked) void Phase4SlotInitPackedHelper_00416040(void)
         mov     dword ptr [g_data_0054206c], 0x1999
         lea     esi, [eax*4]
         call    StoreDoubleNegPauseSubStore_004ab750
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sip_A_ret
         mov     edx, dword ptr [g_data_0054206c]
         mov     dword ptr [esi + 0x6C], edx
         mov     dword ptr [g_data_0054206c], 0x1999
         call    StoreDoubleNegPauseSubStore_004ab750
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sip_A_ret
         mov     eax, dword ptr [g_data_0054206c]
         mov     dword ptr [esi + 0x74], eax
         mov     dword ptr [g_data_0054206c], 0xCCC
         call    AudioMixerStep_004ab700
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sip_A_ret
         mov     ecx, dword ptr [g_data_0054206c]
@@ -233,27 +233,27 @@ __declspec(naked) void Phase4SlotInitPackedHelper_00416040(void)
         mov     dword ptr [esi + 0x70], ecx
         mov     dword ptr [g_data_0054206c], 0x9999
         call    StoreDoubleNegPauseSubStore_004ab750
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sip_A_ret
         mov     edx, dword ptr [g_data_0054206c]
         mov     dword ptr [esi + 0x80], edx
         mov     dword ptr [g_data_0054206c], 0xF5C
         call    StoreDoubleNegPauseSubStore_004ab750
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sip_A_ret
         mov     eax, dword ptr [g_data_0054206c]
         mov     dword ptr [esi + 0x7C], eax
         mov     dword ptr [g_data_0054206c], 0xF5C
         call    StoreDoubleNegPauseSubStore_004ab750
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sip_A_ret
         mov     ecx, dword ptr [g_data_0054206c]
         mov     dword ptr [esi + 0x78], ecx
         call    SetJmp_00408d20
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sip_A_ret
         mov     edx, dword ptr [g_data_00542048]
@@ -261,7 +261,7 @@ __declspec(naked) void Phase4SlotInitPackedHelper_00416040(void)
         mov     dword ptr [g_data_0054206c], eax
         mov     dword ptr [edx*4 + 0x10], eax
         call    MStackCall_004062f0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sip_A_ret
     L_p4sip_A_tailjmp:
@@ -279,7 +279,7 @@ __declspec(naked) void Phase4SlotInitPackedHelper_00416040(void)
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], ecx
         call    ChainWalkPushPop_00405a40
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sip_B_ret
         mov     ecx, dword ptr [g_data_0054205c]
@@ -294,7 +294,7 @@ __declspec(naked) void Phase4SlotInitPackedHelper_00416040(void)
         mov     dword ptr [g_data_0054206c], eax
         js      L_p4sip_B_pop1
         call    SetJmp_00405420
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sip_B_ret
         test    byte ptr [g_state_0054208c], 4
@@ -311,7 +311,7 @@ __declspec(naked) void Phase4SlotInitPackedHelper_00416040(void)
         mov     dword ptr [g_data_00542044], ecx
         mov     dword ptr [g_data_00542048], eax
         call    BootSetJmpStoreThenChainTriple_0040b970
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sip_B_ret
     L_p4sip_B_skip_paint:
@@ -321,11 +321,11 @@ __declspec(naked) void Phase4SlotInitPackedHelper_00416040(void)
         add     eax, 0x13
         mov     dword ptr [g_data_0054206c], eax
         call    TableLookupCall_00489ff0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sip_B_ret
         call    MStackCall_00406740
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sip_B_ret
         mov     dword ptr [g_data_00542044], 0

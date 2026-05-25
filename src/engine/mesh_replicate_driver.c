@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004ecb58;
 extern unsigned int g_data_00514950;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -170,7 +170,7 @@ __declspec(naked) void MeshReplicateDriver_00473220(void)
         mov      esi, 0xa001000
     L_3289:
         call     DirtyDoubleDeref_00408cb0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3440
         mov      ecx, dword ptr [g_data_00542044]
@@ -179,7 +179,7 @@ __declspec(naked) void MeshReplicateDriver_00473220(void)
         mov      dword ptr [g_data_00542050], ecx
         mov      dword ptr [g_data_00542048], edx
         call     MStackBracket1_TreeWalkRecursive2_00406dd0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3440
         test     byte ptr [g_data_0054208c], bl
@@ -228,7 +228,7 @@ __declspec(naked) void MeshReplicateDriver_00473220(void)
         mov      eax, dword ptr [edx*4 + 0x14]
         mov      dword ptr [g_data_00542048], eax
         call     PushPopScaled1cDoubleCall_00408510
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_3440
         mov      edx, dword ptr [g_data_00542044]
@@ -246,13 +246,13 @@ __declspec(naked) void MeshReplicateDriver_00473220(void)
         mov      ecx, dword ptr [g_data_0054205c]
         mov      dword ptr [g_data_00542044], ecx
         call     MStackBracket4_ListInsertZeroFill_00408600
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_3440
         test     byte ptr [g_data_0054208c], bl
         jne      short L_3440
         call     MStackPush3LinkedListWalk_004088b0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_3440
         test     byte ptr [g_data_0054208c], bl

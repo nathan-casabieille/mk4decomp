@@ -138,7 +138,7 @@ extern void ChainDispatcher4Call_00486290(void);
  *     phase 1: add g_data_00542084 into [g_data_0054205c*4 + 0x58] AND into
  *              [g_data_00542054*4 + 0x58] (both mirrored through 0x54206c),
  *              installs Self at [eax+8], slot[+0x84]=2, g_data_0054204c=3,
- *              arms g_data_00541e6c=1.
+ *              arms g_framePauseFlag=1.
  *     phase 2: sub g_data_00542084 from the same +0x58 fields, installs
  *              Self, slot[+0x84]=1, g_data_0054204c=3, arms 0x541e6c=1.
  *   (9-byte NOP align pad.)
@@ -151,7 +151,7 @@ extern void ChainDispatcher4Call_00486290(void);
  *     tail-jmp BattleEndCluster_00483650; else fall through to the next adjacent
  *     function ChainDispatcher4Call_00486290 via jmp.
  */
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
@@ -186,7 +186,7 @@ __declspec(naked) void Phase3Packed3EntryDispatch_00486130(void) {
         mov     dword ptr [eax + 8], offset Phase3Packed3EntryDispatch_00486130
         mov     dword ptr [eax + 0x84], 2
         mov     dword ptr [g_data_0054204c], 3
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
     L_p3p_phase2:
@@ -207,7 +207,7 @@ __declspec(naked) void Phase3Packed3EntryDispatch_00486130(void) {
         mov     dword ptr [eax + 8], offset Phase3Packed3EntryDispatch_00486130
         mov     dword ptr [eax + 0x84], ecx
         mov     dword ptr [g_data_0054204c], 3
-        mov     dword ptr [g_data_00541e6c], ecx
+        mov     dword ptr [g_framePauseFlag], ecx
         ret
         /* 9-byte NOP pad */
         nop
@@ -222,11 +222,11 @@ __declspec(naked) void Phase3Packed3EntryDispatch_00486130(void) {
         /* entry 2 (offset 0x100) */
     L_p3p_entry2:
         call    ScaledTestCallPauseJmpFar_00487150
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_p3p_e2End
         call    CopyJmp_0048ef90
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_p3p_e2End
         test    byte ptr [g_data_0054208c], 1

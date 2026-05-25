@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004d5320;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_0054206c;
@@ -145,7 +145,7 @@ void RandPushTrigPair_0043f120(void) {
         add     esp, 4
         mov     dword ptr [g_data_00542074], eax
         call    RandSarMod0xFFF_0041f230
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_rptp_ret
         mov     eax, dword ptr [g_state_004d57ac]
@@ -163,7 +163,7 @@ void RandPushTrigPair_0043f120(void) {
         add     esp, 4
         mov     dword ptr [g_data_00542074], eax
         call    RandSarMod0xFFFSub400_0041f1f0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_rptp_ret
         mov     eax, dword ptr [g_data_0054206c]

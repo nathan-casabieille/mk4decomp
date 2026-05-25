@@ -128,7 +128,7 @@ extern unsigned int g_data_0052aac4;
 extern unsigned int g_data_00537f94;
 extern unsigned int g_data_00538148;
 extern unsigned int g_data_0053a430;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
@@ -170,12 +170,12 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         dec      eax
         je       L_7f20
         call     LoadSetFpJmp_004093a0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8019
         push     OFFSET g_data_004eb938
         call     ArgSarStoreJmp_004594f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         pop      esi
         ret
@@ -195,7 +195,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     PendingMatch_0046b670
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_7f81:
@@ -214,14 +214,14 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         inc      dword ptr [g_data_005433e8]
     L_7faa:
         call     GateDispatch6c_00494580
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8019
         mov      eax, 0x20
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [g_data_0053a430], eax
         call     PushCallPauseSetMaxThenCallPauseJmp_0048e380
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8019
         cmp      dword ptr [g_data_0052aac4], 2
@@ -235,7 +235,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         mov      dword ptr [esi + 0x84], 1
         add      esp, 8
         mov      dword ptr [g_data_0054204c], 0x1e
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_8019:
         pop      esi
         ret
@@ -273,7 +273,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     InstallSelf3WayChainCmp_00428d80
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -297,18 +297,18 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     ScaledLoadJmp_00428d20
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
     L_8124:
         call     CallPauseScaledStoreCopyJmp_00461220
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_81e7
         mov      dword ptr [esi + 8], OFFSET L_8020
         mov      dword ptr [esi + 0x84], 4
         mov      dword ptr [g_data_0054204c], 0x1e
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -331,14 +331,14 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     EsiInstallChainCmpDualCall_00429300
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
     L_81cb:
         mov      dword ptr [g_data_00542074], 0x3d
         call     Push16Call_00489f50
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_81e7
         call     ScaledInitWithCounterAndType_004314f0
     L_81e7:
@@ -384,14 +384,14 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
     L_8235:
         mov      dword ptr [g_data_00542080], 0x28
         call     PoseFsmTriHelpers_00431650
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_83d1
         mov      eax, dword ptr [g_data_00542060]
         mov      ecx, dword ptr [eax*4 + 0x44]
         mov      dword ptr [g_data_00542074], ecx
         call     MStackPush1MagicMod2_004244d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_83d1
         mov      edx, dword ptr [g_data_0054206c]
@@ -457,15 +457,15 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         mov      edx, dword ptr [g_data_00542088]
         mov      dword ptr [eax*4 + 0x3c], edx
         call     DualWalkRange_00468440
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_83d1
         call     DualSlotPropagateCall_004683e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_83d1
         call     DualSlotPropagateCall_004683e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_83d1
         push     OFFSET g_data_004eb958

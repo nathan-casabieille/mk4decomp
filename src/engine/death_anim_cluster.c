@@ -136,7 +136,7 @@ extern unsigned int g_data_0053a408;
 extern unsigned int g_data_0053a510;
 extern unsigned int g_data_00541de8;
 extern unsigned int g_data_00541dec;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054205c;
@@ -191,7 +191,7 @@ __declspec(naked) void DeathAnimCluster_0042eaf0(void)
     L_eb8b:
         mov      dword ptr [g_data_00542070], esi
         call     GuardedDualPushTailJmp_004231f0
-        cmp      dword ptr [g_data_00541e6c], esi
+        cmp      dword ptr [g_framePauseFlag], esi
         jne      L_ed0b
         mov      eax, dword ptr [g_data_004d57ac]
         mov      ecx, dword ptr [eax*4]
@@ -205,7 +205,7 @@ __declspec(naked) void DeathAnimCluster_0042eaf0(void)
         mov      dword ptr [g_data_00541de8], edx
         mov      dword ptr [g_data_00541dec], ecx
         call     GameMusicState4Way_00426d90
-        cmp      dword ptr [g_data_00541e6c], esi
+        cmp      dword ptr [g_framePauseFlag], esi
         jne      L_ed0b
         mov      ecx, dword ptr [g_data_0054205c]
         mov      dword ptr [ecx*4 + 0x30], 0x23c
@@ -246,7 +246,7 @@ __declspec(naked) void DeathAnimCluster_0042eaf0(void)
         mov      eax, dword ptr [g_data_0054206c]
         mov      dword ptr [ecx*4 + 0x28], eax
         call     ScaledLoadOrSetJmp_00406b20
-        cmp      dword ptr [g_data_00541e6c], esi
+        cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_ed0b
         mov      eax, dword ptr [g_data_00537f78]
         mov      dword ptr [g_data_00542048], eax

@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_data_004f7888;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -90,7 +90,7 @@ __declspec(naked) void RenderSceneNode(void)
         mov      dword ptr [g_data_00542084], edi
         je       L_a78d
         call     ZBucketClampStore_004ba5d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_ae73
         mov      eax, dword ptr [g_data_00542098]
@@ -160,7 +160,7 @@ __declspec(naked) void RenderSceneNode(void)
         mov      dword ptr [g_data_00542070], eax
         mov      dword ptr [g_data_00542044], ecx
         call     eax
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_ae73
         mov      eax, dword ptr [g_data_00542044]
@@ -168,7 +168,7 @@ __declspec(naked) void RenderSceneNode(void)
         mov      dword ptr [g_data_0054204c], eax
         mov      dword ptr [g_data_00542048], ecx
         call     WtSnapshotPushCall_004bda70
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_ae73
     L_a89b:
@@ -178,7 +178,7 @@ __declspec(naked) void RenderSceneNode(void)
         mov      dword ptr [g_data_0054204c], edx
         mov      dword ptr [g_data_00542044], eax
         call     TransformAccumulate_004bddf0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_ae73
         mov      eax, dword ptr [g_data_00542084]
@@ -239,7 +239,7 @@ __declspec(naked) void RenderSceneNode(void)
         jmp      L_adb3
     L_a9aa:
         call     MStackPushCallCallPop_00405dd0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       L_ab22
         pop      edi
@@ -324,7 +324,7 @@ __declspec(naked) void RenderSceneNode(void)
         je       L_ab56
         mov      esi, eax
         call     edx
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_ae73
         mov      eax, dword ptr [g_data_00542044]
@@ -553,7 +553,7 @@ __declspec(naked) void RenderSceneNode(void)
         je       L_ae33
         mov      dword ptr [g_data_0054206c], OFFSET RenderSceneNode
         call     Helper_TickAlt
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       L_ae4a
         pop      edi
@@ -566,7 +566,7 @@ __declspec(naked) void RenderSceneNode(void)
         mov      edx, dword ptr [ebp]
         mov      dword ptr [g_data_00542044], edx
         call     L_a720
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_ae73
     L_ae4a:

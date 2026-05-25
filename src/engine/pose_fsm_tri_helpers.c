@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_0052ab10;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
@@ -167,7 +167,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         nop
         /* === h2 (0x431680): pause-guarded chain → 4314f0 tail-jmp === */
         call     DualEntryInitDispatch_00431360
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1700
         mov      eax, dword ptr [g_data_00542054]
@@ -187,11 +187,11 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         mov      ecx, dword ptr [eax*4]
         mov      dword ptr [g_data_00542044], ecx
         call     AiAngleDistComputation_00431920
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1700
         call     PendingMatch_004326a0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1700
         jmp      ScaledInitWithCounterAndType_004314f0
@@ -241,7 +241,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         mov      ecx, dword ptr [g_data_0054206c]
         mov      dword ptr [eax + 0x48], ecx
         call     CameraAimSplineDriver_00430e60
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_191d
         mov      edx, dword ptr [g_data_00542060]
         mov      ecx, dword ptr [g_data_0054206c]
@@ -270,7 +270,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     PendingMatch_00432110
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -280,13 +280,13 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         mov      dword ptr [g_data_0054204c], ecx
         mov      dword ptr [esi + 8], OFFSET L_1710
         mov      dword ptr [esi + 0x84], 2
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
     L_1853:
         call     DualEntryInitDispatch_00431360
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_191d
         mov      edx, dword ptr [g_data_00542054]
         mov      dword ptr [g_data_00542088], 0x10000
@@ -305,7 +305,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         mov      eax, dword ptr [eax*4]
         mov      dword ptr [g_data_00542044], eax
         call     AiAngleDistComputation_00431920
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_191d
         mov      dword ptr [esi + 8], OFFSET L_1710
         mov      ecx, dword ptr [g_data_00542060]
@@ -322,7 +322,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     PendingMatch_00432110
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_191d:
         pop      edi
         pop      esi

@@ -145,7 +145,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_00535e48;
 extern unsigned int g_data_00537ea8;
 extern unsigned int g_data_00541d88;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541fc0;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
@@ -169,7 +169,7 @@ __declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
         mov     eax, dword ptr [eax*4 + 4]
         mov     dword ptr [g_data_00542044], eax
         call    eax
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_id3_doneNoPop
         mov     al, byte ptr [g_data_0054208c]
@@ -193,7 +193,7 @@ __declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
         dec     eax
         mov     dword ptr [g_data_0054206c], eax
         call    LinkedListIndirectDirtyToggle_0049f7b0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_id3_doneNoPop
         test    byte ptr [g_data_0054208c], bl
@@ -211,14 +211,14 @@ __declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
         mov     edx, dword ptr [g_data_00535e48]
         mov     dword ptr [g_data_00542070], edx
         call    RoundWinTransition_0049e7e0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_id3_doneNoPop
         mov     eax, dword ptr [g_data_00542048]
         mov     ecx, dword ptr [eax*4 + 8]
         mov     dword ptr [g_data_0054206c], ecx
         call    GuardedScaledCall_0048a020
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_id3_doneNoPop
     L_id3_freshPath:

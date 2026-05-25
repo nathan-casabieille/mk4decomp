@@ -134,7 +134,7 @@ extern unsigned int g_data_00535e7c;
  *   clears it again (with a do-while-0 style fork on the eq flag) and exits.
  */
 extern unsigned int g_data_0053a1ac;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541eb0;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
@@ -161,7 +161,7 @@ __declspec(naked) void MStackPush2Burst6Init_00405450(void) {
         mov     eax, dword ptr [g_data_00541eb0]
         mov     dword ptr [g_data_00542044], eax
         call    MStackPushChainStepIndex_004ab510
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         xor     edx, edx
         cmp     eax, edx
         jne     L_mpb_pop2

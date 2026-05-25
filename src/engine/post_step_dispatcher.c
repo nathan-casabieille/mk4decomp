@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004d57ac;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -198,16 +198,16 @@ __declspec(naked) void PostStepDispatcher_00497790(void)
         mov      dword ptr [g_data_00542044], edx
         mov      dword ptr [g_data_00542048], eax
         call     Phase2InitDispatchInstallSelf_0040ba70
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_793c
         call     Wrapper_0048a340
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_793c
     L_788d:
         call     MStackCall_00406740
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_793c
         call     CallSetPause_0041f830
@@ -219,14 +219,14 @@ __declspec(naked) void PostStepDispatcher_00497790(void)
         mov      dword ptr [g_data_0054206c], 0x1999
         lea      esi, [eax*4]
         call     StoreDoubleNegPauseSubStore_004ab750
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_793c
         mov      ecx, dword ptr [g_data_0054206c]
         mov      dword ptr [esi + 0x6c], ecx
         mov      dword ptr [g_data_0054206c], 0x1999
         call     StoreDoubleNegPauseSubStore_004ab750
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_793c
         mov      edx, dword ptr [g_data_0054206c]
@@ -243,7 +243,7 @@ __declspec(naked) void PostStepDispatcher_00497790(void)
         mov      dword ptr [edi + 8], OFFSET PostStepDispatcher_00497790
         mov      dword ptr [edi + 0x84], eax
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_793c:
         pop      edi
         pop      esi
@@ -270,7 +270,7 @@ __declspec(naked) void PostStepDispatcher_00497790(void)
         mov      dword ptr [esi + 8], OFFSET L_7940
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_data_0054204c], 0x14
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret      
     L_79a5:
@@ -282,7 +282,7 @@ __declspec(naked) void PostStepDispatcher_00497790(void)
     L_79b5:
         mov      dword ptr [g_data_0054206c], 8
         call     TableLookupCall_00489ff0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7b00
         mov      eax, dword ptr [g_data_004d57ac]
@@ -295,7 +295,7 @@ __declspec(naked) void PostStepDispatcher_00497790(void)
         mov      dword ptr [g_data_0054206c], 5
         mov      dword ptr [g_data_0054205c], eax
         call     FlagThunk4EntryDispatcher_0040a470
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7b00
         mov      eax, dword ptr [g_data_004d57ac]
@@ -338,7 +338,7 @@ __declspec(naked) void PostStepDispatcher_00497790(void)
         mov      dword ptr [esi + 8], OFFSET L_7940
         mov      dword ptr [esi + 0x84], 1
         mov      dword ptr [g_data_0054204c], 3
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_7b00:
         pop      esi
         ret      

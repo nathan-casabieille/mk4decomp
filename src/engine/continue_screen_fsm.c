@@ -126,7 +126,7 @@ extern unsigned int g_data_004dee18;
 extern unsigned int g_data_004df9a0;
 extern unsigned int g_data_00506c14;
 extern unsigned int g_data_005080f4;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -160,21 +160,21 @@ __declspec(naked) void ContinueScreenFsm_00423c20(void)
         dec      eax
         je       L_3d25
         call     BootInitGuardedCallChain_004265d0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3e8f
         mov      ecx, OFFSET g_data_00506c14
         shr      ecx, 2
         mov      dword ptr [g_data_00542044], ecx
         call     LoadGeoAsset_Default
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3e8f
         mov      dword ptr [g_data_00542074], 0x25
         call     Push16Call_00489f50
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3e8f
         mov      dword ptr [g_data_0054206c], edi
         call     CopyGlobal_004ac1f0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3e8f
         mov      edx, OFFSET g_data_004dee18
         mov      dword ptr [g_data_0054206c], 0xa
@@ -184,7 +184,7 @@ __declspec(naked) void ContinueScreenFsm_00423c20(void)
         mov      dword ptr [g_data_00542078], edi
         mov      dword ptr [g_data_0054207c], 0xff9c0000
         call     Push70CallScaleArith_00457ad0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_3e8f
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, 0x10000
@@ -214,7 +214,7 @@ __declspec(naked) void ContinueScreenFsm_00423c20(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     InstallSelfPackedF80_00426000
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -223,19 +223,19 @@ __declspec(naked) void ContinueScreenFsm_00423c20(void)
         shr      eax, 2
         mov      dword ptr [g_data_00542044], eax
         call     LoadGeoAsset_Default
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3e8f
         mov      ecx, OFFSET g_data_00506c14
         shr      ecx, 2
         mov      dword ptr [g_data_00542044], ecx
         call     LoadGeoAsset_Default
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_3e8f
         mov      edx, OFFSET g_data_005080f4
         shr      edx, 2
         mov      dword ptr [g_data_00542048], edx
         call     DispatcherComplex260_00407400
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_3e8f
         mov      eax, dword ptr [g_data_00542044]
         mov      dword ptr [eax*4 + 0x54], edi
@@ -244,31 +244,31 @@ __declspec(naked) void ContinueScreenFsm_00423c20(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [ecx*4 + 0x30], eax
         call     PushSetCallPop_00406530
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_3e8f
         call     RegistryPushBindPop_00403c20
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_3e8f
         mov      dword ptr [esi + 8], OFFSET L_3c20
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_data_0054204c], 0xf0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
     L_3e4e:
         call     BootInitGuardedCallChain_004265d0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_3e8f
         mov      dword ptr [g_data_0054206c], edi
         call     CopyGlobal_004ac1f0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_3e8f
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_3c20
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], 8
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_3e8f:
         pop      edi
         pop      esi

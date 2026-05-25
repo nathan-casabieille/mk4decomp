@@ -128,7 +128,7 @@ extern void RegionFlushChain_004b9250(void);
 extern unsigned int g_data_00ab48d8;
 extern unsigned int g_data_004f7888;
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -198,13 +198,13 @@ __declspec(naked) void MStackBracket7_DispatchAndChain_004b8fa0(void)
         mov     dword ptr [g_data_00542070], ecx
         mov     dword ptr [g_data_00542050], eax
         call    ecx
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_msb7dc_pop7
         test    byte ptr [g_data_00542058], 1
         je      L_msb7dc_skip_be210
         call    ScaledNegThreeWords_004be210
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_msb7dc_pop7
     L_msb7dc_skip_be210:
@@ -223,7 +223,7 @@ __declspec(naked) void MStackBracket7_DispatchAndChain_004b8fa0(void)
         mov     dword ptr [g_data_00542048], edx
         mov     dword ptr [g_data_00542050], eax
         call    ChainStreamMatMulVecAdd_004bd9a0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         je      L_msb7dc_chain_init
         pop     edi
@@ -252,7 +252,7 @@ __declspec(naked) void MStackBracket7_DispatchAndChain_004b8fa0(void)
         mov     dword ptr [g_data_00542048], esi
         mov     dword ptr [g_data_0054204c], edi
         call    RegionFlushChain_004b9250
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_msb7dc_pop7
         mov     eax, dword ptr [g_state_004d57ac]

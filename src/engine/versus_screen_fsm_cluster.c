@@ -127,7 +127,7 @@ extern unsigned int g_data_0053a7a0;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542044;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00501094;
@@ -173,7 +173,7 @@ __declspec(naked) void DualSubInstallChain_0044f4b0(void)
         mov     eax, dword ptr [g_data_00542060]
         mov     dword ptr [eax*4 + 0x84], edx
         call    EsiInstallSetCbChainExtend_0048a970
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         ret
         nop
@@ -199,12 +199,12 @@ __declspec(naked) void DualSubInstallChain_0044f4b0(void)
         test    eax, eax
         je      short L_dsic_sub2_phase0
         call    PendingMatch_0043d830
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_dsic_sub2_ret
         push    0x4e6f40
         call    ArgSarStoreJmp_004594f0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         pop     esi
         ret
@@ -219,7 +219,7 @@ __declspec(naked) void DualSubInstallChain_0044f4b0(void)
         add     esp, 8
         mov     dword ptr [g_data_0054205c], ecx
         call    DoubleCallChainInit_0043d780
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_dsic_sub2_ret
         mov     edx, offset g_data_00501094
@@ -240,7 +240,7 @@ __declspec(naked) void DualSubInstallChain_0044f4b0(void)
         mov     edx, dword ptr [g_data_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    InstallSelfChainAccumPath_004752b0
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
     L_dsic_sub2_ret:
         pop     esi
         ret

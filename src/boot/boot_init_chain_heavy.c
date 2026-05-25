@@ -129,7 +129,7 @@ extern unsigned int g_data_00537e8c;
 extern unsigned int g_data_00537f78;
 extern unsigned int g_data_0053a520;
 extern unsigned int g_data_00541de0;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541e7c;
 extern unsigned int g_data_00541e80;
 extern unsigned int g_data_00541e84;
@@ -166,10 +166,10 @@ __declspec(naked) void BootInitChainHeavy_00404f20(void)
         xor     esi, esi
         mov     dword ptr [g_data_0054343c], esi
         call    Helper_GeoLoadPre
-        cmp     dword ptr [g_data_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         call    Thunk_004bd8d0
-        cmp     dword ptr [g_data_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         mov     eax, dword ptr [g_data_00541e7c]
         mov     ecx, dword ptr [g_data_00541e80]
@@ -179,56 +179,56 @@ __declspec(naked) void BootInitChainHeavy_00404f20(void)
         mov     dword ptr [g_data_00542050], ecx
         mov     dword ptr [g_data_00542054], 0xC8
         call    LinkedListBuilder_004ab380
-        cmp     dword ptr [g_data_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         mov     edx, dword ptr [g_data_00541e84]
         mov     dword ptr [g_data_00542054], esi
         mov     dword ptr [g_data_00542050], edx
         call    VertexSlotInitFlagWalk_00409740
-        cmp     dword ptr [g_data_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         mov     eax, dword ptr [g_data_00541e88]
         mov     dword ptr [g_data_00542054], esi
         mov     dword ptr [g_data_00542050], eax
         call    VertexSlotInitFlagWalk_00409740
-        cmp     dword ptr [g_data_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         mov     ecx, dword ptr [g_data_00541e8c]
         mov     dword ptr [g_data_00542054], esi
         mov     dword ptr [g_data_00542050], ecx
         call    VertexSlotInitFlagWalk_00409740
-        cmp     dword ptr [g_data_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         mov     edx, dword ptr [g_data_00541e98]
         mov     dword ptr [g_data_00542054], esi
         mov     dword ptr [g_data_00542050], edx
         call    VertexSlotInitFlagWalk_00409740
-        cmp     dword ptr [g_data_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         mov     eax, dword ptr [g_data_00541e90]
         mov     dword ptr [g_data_00542054], esi
         mov     dword ptr [g_data_00542050], eax
         call    VertexSlotInitFlagWalk_00409740
-        cmp     dword ptr [g_data_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         mov     ecx, dword ptr [g_data_00541e94]
         mov     dword ptr [g_data_00542054], esi
         mov     dword ptr [g_data_00542050], ecx
         call    VertexSlotInitFlagWalk_00409740
-        cmp     dword ptr [g_data_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         mov     edx, dword ptr [g_data_00541e9c]
         mov     dword ptr [g_data_00542054], esi
         mov     dword ptr [g_data_00542050], edx
         call    VertexSlotInitFlagWalk_00409740
-        cmp     dword ptr [g_data_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         mov     eax, dword ptr [g_data_00541ea0]
         mov     dword ptr [g_data_00542048], 3
         mov     dword ptr [g_data_00542050], eax
         mov     dword ptr [g_data_00542054], esi
         call    VertexSlotInitFlagWalk_00409740
-        cmp     dword ptr [g_data_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         mov     ecx, dword ptr [g_data_00541ea4]
         mov     edx, dword ptr [g_data_00541ea8]
@@ -238,7 +238,7 @@ __declspec(naked) void BootInitChainHeavy_00404f20(void)
         mov     dword ptr [g_data_00542050], edx
         mov     dword ptr [g_data_00542054], 0x1C2
         call    LinkedListBuilder_004ab380
-        cmp     dword ptr [g_data_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         mov     eax, dword ptr [g_data_00541eac]
         mov     ecx, dword ptr [g_data_00541eb0]
@@ -248,13 +248,13 @@ __declspec(naked) void BootInitChainHeavy_00404f20(void)
         mov     dword ptr [g_data_00542050], ecx
         mov     dword ptr [g_data_00542054], 0xC8
         call    LinkedListBuilder_004ab380
-        cmp     dword ptr [g_data_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         call    ScaledChainAccumLoop_0049cd40
-        cmp     dword ptr [g_data_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         call    BootPhaseGateBracketedInit_004060c0
-        cmp     dword ptr [g_data_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         mov     edx, dword ptr [g_data_00542044]
         mov     eax, 0x0C
@@ -263,7 +263,7 @@ __declspec(naked) void BootInitChainHeavy_00404f20(void)
         mov     eax, dword ptr [g_data_00542044]
         mov     dword ptr [g_data_0052ab10], eax
         call    MStackCall_004063e0
-        cmp     dword ptr [g_data_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         mov     dword ptr [g_data_0053a520], esi
         mov     dword ptr [g_data_00537e8c], esi

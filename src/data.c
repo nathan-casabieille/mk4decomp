@@ -1345,7 +1345,6 @@ unsigned int g_data_00541e44;
 unsigned int g_data_00541e50;
 unsigned int g_data_00541e64;
 unsigned int g_data_00541e68;
-unsigned int g_data_00541e6c;
 unsigned int g_data_00541e74;
 unsigned int g_data_00541e78;
 unsigned int g_data_00541e7c;

@@ -150,7 +150,7 @@ extern unsigned int g_data_005380e0;
 extern unsigned int g_data_0053a3c0;
 extern unsigned int g_data_0053a408;
 extern unsigned int g_data_0053a468;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541fb0;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
@@ -193,13 +193,13 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         mov      dword ptr [esi + 0x84], 2
         add      esp, 8
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         pop      ebx
         ret      
         mov      dword ptr [g_data_00542074], 0x47
         call     Push16Call_00489f50
-        cmp      dword ptr [g_data_00541e6c], ebx
+        cmp      dword ptr [g_framePauseFlag], ebx
         je       L_df68
         pop      esi
         pop      ebx
@@ -209,7 +209,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         call     SetWalkCurCallPauseDirty_00404c70
         add      esp, 8
         call     MStackDirtyArgsBit0_0049fa50
-        cmp      dword ptr [g_data_00541e6c], ebx
+        cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_e1aa
         test     byte ptr [g_data_0054208c], 1
         jne      L_df8b
@@ -218,13 +218,13 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         mov      dword ptr [esi + 8], OFFSET SceneEvalFsm_0049dea0
         mov      dword ptr [esi + 0x84], 3
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         pop      ebx
         ret      
     L_df8b:
         call     DualTestDirtyToggle_004282c0
-        cmp      dword ptr [g_data_00541e6c], ebx
+        cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_e1aa
         test     byte ptr [g_data_0054208c], 1
         je       L_e05e
@@ -246,7 +246,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         call     QuadCallPhase2_004be800
         add      esp, 0x10
         call     DualTestDirtyToggle_00427ea0
-        cmp      dword ptr [g_data_00541e6c], ebx
+        cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_e1aa
         test     byte ptr [g_data_0054208c], 1
         jne      L_e010
@@ -254,10 +254,10 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         mov      dword ptr [g_data_0053a408], 1
     L_e010:
         call     AmbientMonitorCluster_0049e3c0
-        cmp      dword ptr [g_data_00541e6c], ebx
+        cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_e1aa
         call     GuardedCmpDualToggle_0049e360
-        cmp      dword ptr [g_data_00541e6c], ebx
+        cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_e1aa
         cmp      dword ptr [g_data_0053a3c0], ebx
         je       L_e0fc
@@ -299,7 +299,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], ebx
         call     PendingMatch_00461ca0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         pop      ebx
         ret      
@@ -314,7 +314,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         call     TaggedSceneDispatch_004be690
         add      esp, 4
         call     ThrowAnimTriggerCluster_0049efa0
-        cmp      dword ptr [g_data_00541e6c], ebx
+        cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_e1aa
         mov      dword ptr [esi + 8], OFFSET SceneEvalFsm_0049dea0
         mov      ecx, dword ptr [g_data_00542060]
@@ -331,13 +331,13 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], ebx
         call     PhaseClampInstallSlot_0049e1c0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         pop      ebx
         ret      
     L_e198:
         call     BootInitGuardedCallChain_004265d0
-        cmp      dword ptr [g_data_00541e6c], ebx
+        cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_e1aa
         call     StackPopDispatchTagged_0041f780
     L_e1aa:

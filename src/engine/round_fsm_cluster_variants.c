@@ -142,7 +142,7 @@ extern unsigned int g_data_00541dc4;
 extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_004e39c0;
 extern unsigned int g_data_0052ab10;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542058;
@@ -207,7 +207,7 @@ __declspec(naked) void CinematicFsmCluster_0047aaf0(void)
         /* === Helper 3: 0x215 event + post-stage === */
         mov      dword ptr [g_data_0054206c], 0xc
         call     ScaledIndexConditionalAdd_0048e400
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_abac
         mov      ecx, dword ptr [g_data_00542060]
@@ -238,7 +238,7 @@ __declspec(naked) void CinematicFsmCluster_0047aaf0(void)
         ret
     L_abe1:
         call     RoundFsmCluster_0047aff0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_ad1e
         mov      eax, dword ptr [g_data_00542080]
@@ -246,11 +246,11 @@ __declspec(naked) void CinematicFsmCluster_0047aaf0(void)
         mov      dword ptr [g_data_00542080], eax
         jne      L_aca9
         call     MStackPushSet0008_004901a0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_ad1e
         call     ScaledZero44_00491500
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_ad1e
         mov      dword ptr [esi + 8], OFFSET L_abb0
@@ -268,13 +268,13 @@ __declspec(naked) void CinematicFsmCluster_0047aaf0(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     ScaledChainJmp_00429470
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_ac89:
         push     OFFSET g_data_004ed15c
         call     IterStepDualStore_00490b40
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         test     eax, eax
         jne      short L_ad1e
@@ -287,7 +287,7 @@ __declspec(naked) void CinematicFsmCluster_0047aaf0(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         call     CmpEqInitCallElseJmp_0048d4b0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_ad1e
         mov      eax, dword ptr [g_data_004d57ac]
@@ -306,7 +306,7 @@ __declspec(naked) void CinematicFsmCluster_0047aaf0(void)
         mov      dword ptr [esi + 8], OFFSET L_abb0
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_ad1e:
         pop      esi
         ret
@@ -334,7 +334,7 @@ __declspec(naked) void RoundFsmCluster_004308a0(void)
         mov      dword ptr [g_data_00542078], eax
         mov      dword ptr [g_data_0054207c], eax
         call     Atan2QuadrantLookup_004245b0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_098f
         mov      edx, dword ptr [g_data_0054205c]
@@ -357,7 +357,7 @@ __declspec(naked) void RoundFsmCluster_004308a0(void)
         sub      ecx, eax
         mov      dword ptr [g_data_00542078], ecx
         call     Atan2QuadrantLookup_004245b0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_098f
         mov      edx, dword ptr [g_data_0054206c]
@@ -425,7 +425,7 @@ __declspec(naked) void RoundFsmCluster_004308a0(void)
         mov      dword ptr [esi + 8], OFFSET L_09a0
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret      
     L_0a58:
@@ -449,7 +449,7 @@ __declspec(naked) void RoundFsmCluster_004308a0(void)
         mov      dword ptr [esi + 8], OFFSET L_09a0
         mov      dword ptr [esi + 0x84], 3
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret      
     L_0ac5:
@@ -459,12 +459,12 @@ __declspec(naked) void RoundFsmCluster_004308a0(void)
     L_0ad7:
         push     OFFSET g_data_004e39c0
         call     TripleScaledChainStore54_004313d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         test     eax, eax
         jne      L_0bb8
         call     L_08a0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_0bb8
         mov      edx, dword ptr [g_data_0054205c]
@@ -478,7 +478,7 @@ __declspec(naked) void RoundFsmCluster_004308a0(void)
         mov      dword ptr [esi + 8], OFFSET L_09a0
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret      
     L_0b45:
@@ -500,7 +500,7 @@ __declspec(naked) void RoundFsmCluster_004308a0(void)
         mov      dword ptr [esi + 8], OFFSET L_09a0
         mov      dword ptr [esi + 0x84], 4
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret      
     L_0b9e:
@@ -579,14 +579,14 @@ __declspec(naked) void RoundFsmCluster_004308a0(void)
     L_0c72:
         sub      dword ptr [g_data_00542088], eax
         call     GuardedArithDualCallChain_00431e90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_0d25
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_0bd0
         mov      dword ptr [esi + 0x84], 3
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret      
     L_0cac:
@@ -595,27 +595,27 @@ __declspec(naked) void RoundFsmCluster_004308a0(void)
     L_0cb6:
         sub      dword ptr [g_data_00542088], eax
         call     GuardedArithDualCallChain_00431e90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_0d25
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_0bd0
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret      
     L_0cec:
         mov      dword ptr [g_data_00542088], 0x1921f
         call     GuardedArithDualCallChain_00431e90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_0d25
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_0bd0
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], 0x16
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_0d25:
         pop      esi
         ret      

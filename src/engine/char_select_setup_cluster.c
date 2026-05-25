@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004e8190;
 extern unsigned int g_data_0050b604;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -155,13 +155,13 @@ __declspec(naked) void CharSelectSetupCluster_004565a0(void)
         shr      eax, 2
         mov      dword ptr [g_data_00542048], eax
         call     DispatcherComplex260_00407030
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_6688
         test     byte ptr [g_data_0054208c], 4
         jne      L_6688
         call     MStackCall_00406600
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_6688
         mov      ecx, dword ptr [g_data_00542054]
@@ -185,14 +185,14 @@ __declspec(naked) void CharSelectSetupCluster_004565a0(void)
         mov      edx, dword ptr [eax*4 + 0x18]
         mov      dword ptr [g_data_00542044], edx
         call     ScaledTestPauseStore_00408860
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_6688
         mov      eax, OFFSET g_data_004e8190
         shr      eax, 2
         mov      dword ptr [g_data_0054206c], eax
         call     ScaledStoreThree_00409260
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_6688
         mov      ecx, dword ptr [g_data_0054205c]
@@ -222,7 +222,7 @@ __declspec(naked) void CharSelectSetupCluster_004565a0(void)
         je       short L_66ed
         mov      dword ptr [g_data_0054206c], 0x4b
         call     GatedWordPushCall_00489f90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_67a8
         push     0x154f
@@ -234,38 +234,38 @@ __declspec(naked) void CharSelectSetupCluster_004565a0(void)
     L_66ed:
         mov      dword ptr [g_data_0054206c], 0x4a
         call     GatedWordPushCall_00489f90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_67a8
         mov      dword ptr [esi + 8], OFFSET L_6690
         mov      dword ptr [esi + 0x84], 3
         mov      dword ptr [g_data_0054204c], 0xbd
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_6730:
         mov      dword ptr [g_data_0054206c], 0x4a
         call     GatedWordPushCall_00489f90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_67a8
         mov      dword ptr [esi + 8], OFFSET L_6690
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_data_0054204c], 0xbd
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_676f:
         mov      dword ptr [g_data_0054206c], 0x49
         call     GatedWordPushCall_00489f90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_67a8
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_6690
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], 0x7d
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_67a8:
         pop      esi
         ret
@@ -297,20 +297,20 @@ __declspec(naked) void CharSelectSetupCluster_004565a0(void)
         ret
     L_67ea:
         call     DualScaledStore_00452740
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_689e
         mov      dword ptr [g_data_00542054], 0x1f4
     L_6806:
         call     PendingMatch_004568b0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_689e
         mov      edi, 0x93
         mov      dword ptr [g_data_00542044], 0
         mov      dword ptr [g_data_0054206c], edi
         call     DispatcherComplex138_00476060
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_689e
         mov      bl, 4
@@ -325,7 +325,7 @@ __declspec(naked) void CharSelectSetupCluster_004565a0(void)
         mov      dword ptr [eax*4 + 0x5c], ecx
         mov      dword ptr [g_data_0054206c], edi
         call     DispatcherComplex138_00476060
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       short L_683d
         pop      edi
@@ -337,7 +337,7 @@ __declspec(naked) void CharSelectSetupCluster_004565a0(void)
         mov      dword ptr [esi + 8], OFFSET L_67b0
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_689e:
         pop      edi
         pop      esi

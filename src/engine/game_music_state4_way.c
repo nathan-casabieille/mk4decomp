@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004e2670;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -156,11 +156,11 @@ __declspec(naked) void GameMusicState4Way_00426d90(void)
         jmp      dword ptr [eax*4 + L_d90_jmptbl]
     L_6dce:
         call     MStackPush2RunCountdown_004089e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_6f81
         call     MStackBracket7_DispatchAndChain_004b8fa0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_6f81
         mov      eax, dword ptr [g_data_00542054]
@@ -183,7 +183,7 @@ __declspec(naked) void GameMusicState4Way_00426d90(void)
         je       short L_6e16
     L_6e34:
         call     ChainDirtyBitWalker_00408c10
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_6f81
         mov      eax, dword ptr [g_data_00542048]
@@ -191,19 +191,19 @@ __declspec(naked) void GameMusicState4Way_00426d90(void)
         mov      dword ptr [g_data_00542048], eax
         mov      dword ptr [g_data_00542058], eax
         call     SetupHelperCluster_00426fa0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_6f81
         mov      dword ptr [esi + 8], OFFSET L_6da0
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_data_0054204c], 0x10
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_6e91:
         mov      dword ptr [g_data_0054206c], 0xd999
         call     SetJmp_00405420
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_6f81
         mov      cl, byte ptr [g_data_0054208c]
@@ -213,12 +213,12 @@ __declspec(naked) void GameMusicState4Way_00426d90(void)
         mov      dword ptr [esi + 8], OFFSET L_6da0
         mov      dword ptr [esi + 0x84], 3
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_6ede:
         call     SetJmp_00405420
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_6f81
         mov      cl, byte ptr [g_data_0054208c]
@@ -228,7 +228,7 @@ __declspec(naked) void GameMusicState4Way_00426d90(void)
         mov      dword ptr [esi + 8], OFFSET L_6da0
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], 6
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_6f22:
@@ -247,7 +247,7 @@ __declspec(naked) void GameMusicState4Way_00426d90(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     GuardedSelfRefSet_0048d070
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_6f81:
         pop      esi
         ret

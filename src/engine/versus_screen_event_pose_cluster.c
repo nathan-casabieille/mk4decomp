@@ -125,7 +125,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004e4c20;
 extern unsigned int g_data_004e4c38;
 extern unsigned int g_data_00501a24;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542060;
@@ -152,7 +152,7 @@ __declspec(naked) void VersusScreenEventPoseCluster_0043b680(void)
     __asm {
         /* === h1 (0x43b680): event 004e4c20 forwarder === */
         call     CopyJmp_0043a620
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b69b
         push     OFFSET g_data_004e4c20
@@ -200,7 +200,7 @@ __declspec(naked) void VersusScreenEventPoseCluster_0043b680(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     ScaledLoadIncJmp_00428d00
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -223,7 +223,7 @@ __declspec(naked) void VersusScreenEventPoseCluster_0043b680(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     InstallSelfDoubleMStack_0043b9a0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -232,11 +232,11 @@ __declspec(naked) void VersusScreenEventPoseCluster_0043b680(void)
         mov      dword ptr [g_data_00542074], 0x5fa
         call     Push16Call_00489f50
         call     FiveCallScaledChainTailJmp_0045f8d0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_b83a
         push     OFFSET g_data_005422fc
         call     GuardedPackedSlotInit_00428760
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         cmp      eax, edi
         jne      short L_b83a
@@ -256,7 +256,7 @@ __declspec(naked) void VersusScreenEventPoseCluster_0043b680(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     EsiInstallDecCallChain_004294a0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_b83a:
         pop      edi
         pop      esi
@@ -275,7 +275,7 @@ __declspec(naked) void VersusScreenEventPoseCluster_0043b680(void)
         je       short L_b876
         push     OFFSET g_data_004e4c38
         call     ArgSarStoreJmp_004594f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         pop      esi
         ret
@@ -283,7 +283,7 @@ __declspec(naked) void VersusScreenEventPoseCluster_0043b680(void)
         mov      dword ptr [g_data_00542074], 0x604
         call     Push16Call_00489f50
         call     FiveCallScaledChainTailJmp_0045f8d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_b919
         mov      ecx, OFFSET g_data_00501a24
@@ -306,7 +306,7 @@ __declspec(naked) void VersusScreenEventPoseCluster_0043b680(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
         call     EsiInstallClampAddCall_0048fe40
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_b919:
         pop      esi
         ret
@@ -317,7 +317,7 @@ __declspec(naked) void VersusScreenEventPoseCluster_0043b680(void)
         nop
         /* === h4 (0x43b920): pre-pose chain → tail 43b980 === */
         call     MStackPush3CmpCall_0048eec0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b971
         test     byte ptr [g_data_0054208c], 1
@@ -326,12 +326,12 @@ __declspec(naked) void VersusScreenEventPoseCluster_0043b680(void)
     L_b93c:
         mov      dword ptr [g_data_0054206c], 0x3d70
         call     SfxAttenuateAndApply_0048dee0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b971
         mov      dword ptr [g_data_0054206c], 0x88
         call     ScaledLitLoadCall_00480fe0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b971
         jmp      GuardedPushCall_0043b980

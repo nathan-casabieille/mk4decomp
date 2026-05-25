@@ -130,7 +130,7 @@ extern unsigned int g_data_00538158;
 extern unsigned int g_data_0053a3e0;
 extern unsigned int g_data_0053a408;
 extern unsigned int g_data_0053a700;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
@@ -157,7 +157,7 @@ __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         call     SwapOrPassSet_0048fbf0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7eda
         mov      edx, dword ptr [g_data_0054206c]
@@ -190,7 +190,7 @@ __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
         jae      short L_7ec2
         mov      dword ptr [ecx*4], eax
         call     MultiGateDispatchCallJmp_004779d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_7eda
     L_7ec2:
@@ -238,7 +238,7 @@ __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
         mov      dword ptr [g_data_0054208c], ecx
         je       short L_7f5e
         call     MStackPushComplexCallPop_00406430
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_8119
     L_7f5e:
         mov      edx, dword ptr [g_data_0054208c]
@@ -254,7 +254,7 @@ __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
         mov      dword ptr [g_data_0054208c], ecx
         je       L_80c4
         call     MStackPushComplexCallPop_00406430
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_8119
         push     0x90
         call     DualPushSetCallDualPop_00404b10
@@ -265,7 +265,7 @@ __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
         mov      ecx, dword ptr [g_data_00542054]
         mov      dword ptr [g_data_00542044], ecx
         call     MStackPush2ChainLLInsert_00406790
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_8119
         mov      edx, dword ptr [g_data_00542058]
         mov      dword ptr [g_data_00542044], edx
@@ -293,7 +293,7 @@ __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
         mov      dword ptr [g_data_0054208c], ecx
         je       short L_804d
         call     ScaledLoadGuardedJmp_004066d0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_8119
     L_804d:
         mov      edx, dword ptr [g_data_0054208c]
@@ -309,7 +309,7 @@ __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
         mov      dword ptr [g_data_0054208c], ecx
         je       short L_8088
         call     ScaledLoadGuardedJmp_004066d0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_8119
     L_8088:
         mov      dword ptr [esi + 8], OFFSET L_7ee0
@@ -322,7 +322,7 @@ __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
     L_80ae:
         call     MultiGateDispatchCallJmp_004779d0
     L_80b3:
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_8119
         call     CallSetPause_0041f830
         pop      edi
@@ -344,7 +344,7 @@ __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
         mov      dword ptr [esi + 0x84], 1
     L_8105:
         mov      dword ptr [g_data_0054204c], 0xa
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_8119:
         pop      edi
         pop      esi

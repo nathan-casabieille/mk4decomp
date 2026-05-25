@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_0052ab40;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542094;
 extern void Helper_SetState_02(void);
@@ -153,7 +153,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      dword ptr [g_data_00542094], ecx
         je       short L_13e1
         call     Helper_SetState_1A
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1631
         mov      eax, dword ptr [g_data_0052ab40]
@@ -164,7 +164,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      dword ptr [g_data_00542094], edx
         je       short L_140d
         call     Helper_SetState_0E
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1631
         mov      eax, dword ptr [g_data_0052ab40]
@@ -175,7 +175,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      dword ptr [g_data_00542094], ecx
         je       short L_1439
         call     Helper_SetState_0C
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1631
         mov      eax, dword ptr [g_data_0052ab40]
@@ -186,7 +186,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      dword ptr [g_data_00542094], edx
         je       short L_1465
         call     TenThunkDualSave_004616e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1631
         mov      eax, dword ptr [g_data_0052ab40]
@@ -197,7 +197,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      dword ptr [g_data_00542094], ecx
         je       short L_1491
         call     Helper_SetState_09
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1631
         mov      eax, dword ptr [g_data_0052ab40]
@@ -208,7 +208,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      dword ptr [g_data_00542094], edx
         je       short L_14ba
         call     TripleBlockInstallSelfThunk_00461930
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1631
         mov      eax, dword ptr [g_data_0052ab40]
@@ -219,7 +219,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      dword ptr [g_data_00542094], ecx
         je       short L_14e3
         call     Helper_SetState_03
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1631
         mov      eax, dword ptr [g_data_0052ab40]
@@ -230,7 +230,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      dword ptr [g_data_00542094], edx
         je       short L_150f
         call     Helper_SetState_0B
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1631
         mov      eax, dword ptr [g_data_0052ab40]
@@ -241,7 +241,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      dword ptr [g_data_00542094], ecx
         je       short L_1538
         call     Helper_SetState_04
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1631
         mov      eax, dword ptr [g_data_0052ab40]
@@ -252,7 +252,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      dword ptr [g_data_00542094], edx
         je       short L_1561
         call     Helper_SetState_05
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1631
         mov      eax, dword ptr [g_data_0052ab40]
@@ -263,7 +263,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      dword ptr [g_data_00542094], ecx
         je       short L_158a
         call     Helper_SetState_06
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1631
         mov      eax, dword ptr [g_data_0052ab40]
@@ -274,7 +274,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      dword ptr [g_data_00542094], edx
         je       short L_15b3
         call     Helper_SetState_07
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1631
         mov      eax, dword ptr [g_data_0052ab40]
@@ -285,7 +285,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      dword ptr [g_data_00542094], ecx
         je       short L_15db
         call     TableWalk3StrideCall_00461640
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1631
         mov      eax, dword ptr [g_data_0052ab40]
@@ -301,7 +301,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      dword ptr [g_data_00542094], edx
         je       short L_1616
         call     Helper_SetState_02
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1631
         mov      eax, dword ptr [g_data_0052ab40]
@@ -311,7 +311,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      dword ptr [g_data_00542094], eax
         je       short L_1631
         call     Helper_SetState_0F
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
     L_1631:
         ret
     L_1632:

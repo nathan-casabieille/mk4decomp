@@ -142,7 +142,7 @@ extern void GDispatch1_00439c40(void);
 extern void TieredCmpDispatch_00439cb0(void);
 extern void ThreeStageGateCascade_00438340(void);
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_00542060;
 extern unsigned int g_data_0054206c;
@@ -160,11 +160,11 @@ __declspec(naked) void HitReactionStateCluster_004335f0(void)
     __asm {
         /* === Helper 1 (0x4335f0): hit-launch dispatcher === */
         call     LeaPlus22StoreSelf_0048e4d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_3630
         call     ScaledMove48to58_00490720
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_3630
         call     DualGatedStateYield_0048fc80
@@ -209,7 +209,7 @@ __declspec(naked) void HitReactionStateCluster_004335f0(void)
         jg       short L_3695
         mov      dword ptr [g_data_0054206c], 0x1f4
         call     AudioVolumeRescale_004ab690
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3897
         test     byte ptr [g_data_0054208c], 1
         jne      short L_36f2
@@ -238,11 +238,11 @@ __declspec(naked) void HitReactionStateCluster_004335f0(void)
         ret
     L_36cc:
         call     ScaledLoadInstallOrCall_00433990
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3897
         push     OFFSET g_data_004e4460
         call     PackedAdvanceCallTailJmp_004392c0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         pop      edi
         pop      esi
@@ -250,7 +250,7 @@ __declspec(naked) void HitReactionStateCluster_004335f0(void)
     L_36f2:
         mov      dword ptr [g_data_0054206c], 0xb4
         call     CallPauseInc_004ab670
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3897
         mov      eax, dword ptr [g_data_0054206c]
         mov      edx, OFFSET L_3640
@@ -271,7 +271,7 @@ __declspec(naked) void HitReactionStateCluster_004335f0(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     CmpJmpConstStoreJmp_004389e0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -281,34 +281,34 @@ __declspec(naked) void HitReactionStateCluster_004335f0(void)
         push     OFFSET g_data_004e49fc
         mov      dword ptr [ecx*4 + 0x74], edi
         call     QuadBlockArgInstallChain_0043a950
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         cmp      eax, edi
         jne      L_3897
         mov      dword ptr [g_data_0053a478], edi
         call     InstallSelfCountdownCascade_00439fd0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3897
         cmp      dword ptr [g_data_0053a478], edi
         jne      L_3897
         mov      dword ptr [g_data_0053a478], edi
         call     MultiBranchStateFilter_00439a40
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3897
         cmp      dword ptr [g_data_0053a478], edi
         jne      L_3897
         mov      dword ptr [g_data_0053a478], edi
         call     RoundReadyFsmCluster_0043a080
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_3897
         cmp      dword ptr [g_data_0053a478], edi
         jne      short L_3897
         call     GDispatch1_00439c40
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_3897
         mov      dword ptr [g_data_0053a478], edi
         call     TieredCmpDispatch_00439cb0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_3897
         cmp      dword ptr [g_data_0053a478], edi
         jne      short L_3897
@@ -327,7 +327,7 @@ __declspec(naked) void HitReactionStateCluster_004335f0(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     ThreeStageGateCascade_00438340
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_3897:
         pop      edi
         pop      esi

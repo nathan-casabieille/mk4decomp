@@ -139,7 +139,7 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_data_004ba0e0;
 extern unsigned int g_data_004d78a8;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_00542054;
@@ -156,7 +156,7 @@ extern void ScaledTripleCopy54_004ac040(void);
 __declspec(naked) void MStackPush8SlotInitPop8_00415010(void) {
     __asm {
         call    MStackPush8_004ab790
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mp8_ret
         mov     eax, dword ptr [g_data_0054205c]
@@ -165,7 +165,7 @@ __declspec(naked) void MStackPush8SlotInitPop8_00415010(void) {
         mov     dword ptr [g_data_00542054], eax
         mov     dword ptr [g_data_0054206c], ecx
         call    PushSetXfmMaskCallPop_00407140
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mp8_ret
         test    byte ptr [g_data_0054208c], 4
@@ -180,7 +180,7 @@ __declspec(naked) void MStackPush8SlotInitPop8_00415010(void) {
         mov     dword ptr [g_data_0054206c], eax
         mov     dword ptr [ecx*4 + 0x34], eax
         call    ScaledTripleCopy54_004ac040
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mp8_ret
         mov     edx, dword ptr [g_data_00542054]
@@ -189,7 +189,7 @@ __declspec(naked) void MStackPush8SlotInitPop8_00415010(void) {
         mov     dword ptr [ecx*4 + 0x68], eax
         mov     dword ptr [g_data_0054206c], 0xfffffeb9
         call    MStackPushNegMul10_0040a690
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mp8_ret
         mov     edx, dword ptr [g_data_0054205c]
@@ -216,7 +216,7 @@ __declspec(naked) void MStackPush8SlotInitPop8_00415010(void) {
         mov     eax, dword ptr [g_data_0054205c]
         mov     dword ptr [g_data_00542044], eax
         call    MStackCall_004065b0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_mp8_ret
     L_mp8_tailJmp:

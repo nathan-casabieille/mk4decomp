@@ -157,7 +157,7 @@ extern void ScaledClearJmp_00428d60(void);
  *   PendingMatch_004694b0. Then tail-jmp ScaledChainJmp_00429470 or
  *   ScaledClearJmp_00428d60 depending on g_data_00542080.
  */
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
@@ -172,12 +172,12 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
     __asm {
         mov     dword ptr [g_data_0054206c], 0x52
         call    TableLookupCall_00489ff0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_sfp_done
         mov     dword ptr [g_data_0054206c], 0xa
         call    ScaledIndexConditionalAdd_0048e400
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_sfp_done
         mov     ecx, dword ptr [g_data_00542060]
@@ -220,7 +220,7 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
         mov     dword ptr [g_data_00542050], ecx
         mov     dword ptr [g_data_00542080], 0
         call    GuardedDualConst2AndToggle_0048eba0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_sfp_done
         mov     eax, dword ptr [g_data_0054208c]
@@ -238,23 +238,23 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
     L_sfp_callBlock:
         mov     dword ptr [g_data_00542044], eax
         call    Mul10SumStoreNegCommit_00490970
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_sfp_done
         push    offset g_data_00542a58
         call    GuardedPackedSlotInit_00428760
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         jne     short L_sfp_done
         call    MStackPush3CmpCall_0048eec0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_sfp_done
         test    byte ptr [g_data_0054208c], 1
         je      short L_sfp_skipCallb0
         call    PendingMatch_004694b0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_sfp_done
     L_sfp_skipCallb0:

@@ -135,7 +135,7 @@ extern unsigned int g_data_004a2180;
 void PhaseInstallSelf3Step_00402350(void);
 
 extern unsigned int g_data_0053a50c;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -177,13 +177,13 @@ __declspec(naked) void PhaseInstallSelf3Step_00402350(void)
         mov     eax, dword ptr [g_data_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    InstallSelfPackedF80_00426000
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         pop     ebx
         ret
     L_pis3_phase0:
         call    BootInitGuardedCallChain_004265d0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis3_exit
         push    0
@@ -195,21 +195,21 @@ __declspec(naked) void PhaseInstallSelf3Step_00402350(void)
         shr     ecx, 2
         mov     dword ptr [g_data_00542044], ecx
         call    LoadGeoAsset_Default
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis3_exit
         mov     edx, offset g_data_00506c2c
         shr     edx, 2
         mov     dword ptr [g_data_00542044], edx
         call    LoadGeoAsset_Default
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis3_exit
         mov     eax, offset g_data_00508308
         shr     eax, 2
         mov     dword ptr [g_data_00542048], eax
         call    DispatcherComplex260_00407400
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis3_exit
         mov     ecx, dword ptr [g_data_00542044]
@@ -219,18 +219,18 @@ __declspec(naked) void PhaseInstallSelf3Step_00402350(void)
         mov     dword ptr [g_data_0054206c], ebx
         mov     dword ptr [edx*4 + 0x30], ebx
         call    PushSetCallPop_00406530
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis3_exit
         call    RegistryPushBindPop_00403c20
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis3_exit
         mov     eax, offset g_data_00508324
         shr     eax, 2
         mov     dword ptr [g_data_00542048], eax
         call    DispatcherComplex260_00407400
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis3_exit
         mov     ecx, dword ptr [g_data_00542044]
@@ -239,18 +239,18 @@ __declspec(naked) void PhaseInstallSelf3Step_00402350(void)
         mov     dword ptr [g_data_0054206c], ebx
         mov     dword ptr [edx*4 + 0x30], ebx
         call    PushSetCallPop_00406530
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis3_exit
         call    RegistryPushBindPop_00403c20
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis3_exit
         mov     eax, 1
         mov     dword ptr [esi + 8], offset PhaseInstallSelf3Step_00402350
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_data_0054204c], 0x1E0
-        mov     dword ptr [g_data_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
     L_pis3_exit:
         pop     esi
         pop     ebx

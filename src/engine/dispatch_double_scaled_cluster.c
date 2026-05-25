@@ -134,7 +134,7 @@ extern void InstallSelfChain494d60_00494d60(void);
 extern void DispatchDoubleScaledCluster_00494e20(void);
 
 extern unsigned int g_data_004d57ac;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
@@ -175,7 +175,7 @@ __declspec(naked) void MoveDispatch4StateFsm_00494a60(void)
         mov      dword ptr [g_data_00542080], ecx
     L_4aba:
         call     ScaledLoadIncJmp_00429840
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_4d5c
         mov      eax, dword ptr [g_data_00542054]
@@ -188,7 +188,7 @@ __declspec(naked) void MoveDispatch4StateFsm_00494a60(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], edx
         call     ScaledInit_0048d490
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_4d5c
         mov      eax, dword ptr [g_data_004d57ac]
@@ -212,7 +212,7 @@ __declspec(naked) void MoveDispatch4StateFsm_00494a60(void)
         mov      dword ptr [esi + 8], OFFSET L_4a60
         mov      dword ptr [esi + 0x84], 3
         mov      dword ptr [g_data_0054204c], 1
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_4b69:
@@ -221,7 +221,7 @@ __declspec(naked) void MoveDispatch4StateFsm_00494a60(void)
         shr      eax, 0x10
         mov      dword ptr [g_data_0054206c], eax
         call     TableLookupCall_00489ff0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_4d5c
         mov      ecx, dword ptr [g_data_0054205c]
@@ -248,7 +248,7 @@ __declspec(naked) void MoveDispatch4StateFsm_00494a60(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
         call     InstallSelf3WayChainCmp_00428d80
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_4c20:
@@ -315,7 +315,7 @@ __declspec(naked) void MoveDispatch4StateFsm_00494a60(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     InstallSelf3WayChainCmp_00428d80
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_4d5c:
         pop      esi
         ret

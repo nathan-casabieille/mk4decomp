@@ -136,7 +136,7 @@ extern void GuardedScaled_0040cd20(void);
 extern void BootOneShotMStackPush3_0040c100(void);
 extern void Phase4FourPackedDispatch_0041b900(void);
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
@@ -162,43 +162,43 @@ __declspec(naked) void Phase4DispatchMultiInit_0041b610(void)
         dec     eax
         je      L_p4dmi_A_phase2
         call    BootInstallerPair_004101f0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
         call    SetWorkTypeScaledCallStoreCcc_0041aa80
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
         call    DualCallPauseAddrSetRecurse_00419720
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
         call    DualCallPauseAddrSetRecurse_00419b60
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
         call    DualCallPauseAddrSetRecurse_00419aa0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
         call    DualCallPauseAddrSetRecurse_004199e0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
         call    DualCallPauseAddrSetRecurse_004197e0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
         call    DualCallPauseAddrSetRecurse_004198a0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
         call    TripleChainTailJmp_00419900
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
         call    Phase1SlotLinkAndInit_00419470
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
         mov     ecx, dword ptr [g_data_00542060]
@@ -213,30 +213,30 @@ __declspec(naked) void Phase4DispatchMultiInit_0041b610(void)
         ret
     L_p4dmi_A_phase2:
         call    GuardedScaled_0040cd20
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
         mov     dword ptr [g_data_0054206c], 8
         call    FlagThunk4EntryDispatcher_0040a470
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
         mov     eax, 1
         mov     dword ptr [esi + 8], 0x0041B610
         mov     dword ptr [esi + 0x84], 3
         mov     dword ptr [g_data_0054204c], eax
-        mov     dword ptr [g_data_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret
     L_p4dmi_A_phase1:
         call    GuardedScaled_0040cd20
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
         mov     dword ptr [esi + 8], 0x0041B610
         mov     dword ptr [esi + 0x84], 2
         mov     dword ptr [g_data_0054204c], 3
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
     L_p4dmi_A_phase0:
@@ -255,26 +255,26 @@ __declspec(naked) void Phase4DispatchMultiInit_0041b610(void)
         mov     dword ptr [g_data_0054206c], 0
         mov     dword ptr [g_data_0054205c], ecx
         call    FlagThunk4EntryDispatcher_0040a470
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
         call    BootOneShotMStackPush3_0040c100
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
         call    BootInstallerPair_004101f0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
         call    GuardedScaled_0040cd20
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
         mov     eax, 1
         mov     dword ptr [esi + 8], 0x0041B610
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_data_0054204c], 3
-        mov     dword ptr [g_data_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
     L_p4dmi_A_exit:
         pop     esi
         ret
@@ -296,7 +296,7 @@ __declspec(naked) void Phase4DispatchMultiInit_0041b610(void)
         jns     L_p4dmi_B_call
         mov     dword ptr [g_data_0054207c], 1
         call    Phase4FourPackedDispatch_0041b900
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_B_exit
         call    CallSetPause_0041f830
@@ -307,14 +307,14 @@ __declspec(naked) void Phase4DispatchMultiInit_0041b610(void)
         mov     dword ptr [g_data_0054207c], 0
     L_p4dmi_B_call:
         call    Phase4FourPackedDispatch_0041b900
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_B_exit
         mov     eax, 1
         mov     dword ptr [esi + 8], 0x0041B860
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_data_0054204c], 2
-        mov     dword ptr [g_data_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
     L_p4dmi_B_exit:
         pop     esi
         ret

@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_004e6408;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -159,11 +159,11 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         mov      ecx, dword ptr [eax*4 + 0x4c]
         mov      dword ptr [g_data_0054205c], ecx
         call     MStackPush2RunCountdown_004089e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a0d7
         call     MStackBracket7_DispatchAndChain_004b8fa0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a0d7
         mov      dword ptr [g_data_0054206c], 3
@@ -189,26 +189,26 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         mov      dword ptr [g_data_0054206c], 6
         mov      dword ptr [g_data_0054205c], ecx
         call     GuardedSeq_00476de0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a274
         mov      dword ptr [g_data_0054206c], 6
         call     DirtyDoubleDeref_00408cb0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a274
         mov      edx, dword ptr [g_data_00542044]
         mov      dword ptr [g_data_00542048], edx
         call     IntroInitCluster_0044d280
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a274
         call     PushPopScaled1cDoubleCall_00408510
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a274
         call     PendingMatch_0044a7f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a274
         mov      eax, dword ptr [g_data_00542058]
@@ -234,7 +234,7 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         mov      eax, dword ptr [g_data_0054205c]
         mov      dword ptr [g_data_00542054], eax
         call     DualSlotCopyChain_004756f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a274
         mov      eax, dword ptr [g_data_004d57ac]
@@ -243,7 +243,7 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         mov      dword ptr [g_data_00542054], ecx
         mov      dword ptr [g_data_004d57ac], eax
         call     MStackCall_00406340
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a274
         mov      eax, dword ptr [g_data_00542060]
@@ -303,12 +303,12 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         mov      dword ptr [g_data_0054206c], 8
         mov      dword ptr [g_data_0054205c], edx
         call     GuardedSeq_00476f10
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a4fa
         mov      dword ptr [g_data_0054206c], 6
         call     ChainDirtyBitWalker_00408c10
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a4fa
         call     DualScaledLoadStoreJmp_00475790
@@ -320,7 +320,7 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         mov      dword ptr [g_data_00542058], eax
         jns      L_a4a0
         call     GuardedScaled_00475090
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a4fa
         mov      cl, byte ptr [g_data_0054208c]
@@ -332,7 +332,7 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [g_data_0054205c], edx
         call     ChainDirtyBitWalker_00408c10
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a4fa
         call     DualScaledLoadStoreJmp_00475790
@@ -345,7 +345,7 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         call     GuardedTripleSetTailJmp8_0044a500
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a4fa
         mov      eax, dword ptr [g_data_004d57ac]
@@ -363,13 +363,13 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         call     GuardedScaled_00475090
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a4fa
         test     byte ptr [g_data_0054208c], 4
         jne      L_a424
         call     L_a090
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a4fa
     L_a424:
@@ -383,7 +383,7 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
     L_a448:
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret      
     L_a45f:
@@ -404,7 +404,7 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         call     GuardedTripleSetTailJmp8_0044a500
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a4fa
         mov      eax, dword ptr [g_data_004d57ac]
@@ -416,7 +416,7 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         mov      dword ptr [esi + 8], OFFSET L_a290
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_a4fa:
         pop      esi
         ret      

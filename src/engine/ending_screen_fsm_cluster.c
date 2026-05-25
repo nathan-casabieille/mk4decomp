@@ -127,7 +127,7 @@ extern unsigned int g_data_004e5cc0;
 extern unsigned int g_data_004e6070;
 extern unsigned int g_data_0053a24c;
 extern unsigned int g_data_0053a35c;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -153,7 +153,7 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
     __asm {
         mov      dword ptr [g_data_0054206c], 0x200
         call     AudioVolumeRescale_004ab690
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_44bf
         test     byte ptr [g_data_0054208c], 1
@@ -182,7 +182,7 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
         add      ecx, 0x15
         mov      dword ptr [g_data_00542044], ecx
         call     TripleVecAccCallStore_00476880
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_44bf
         mov      eax, dword ptr [g_data_00542044]
@@ -202,7 +202,7 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
         add      ecx, 0x1b
         mov      dword ptr [g_data_00542044], ecx
         call     TripleVecAccCallStore_00476880
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_44bf
         sub      dword ptr [g_data_00542044], 0x1b
@@ -232,13 +232,13 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
         dec      eax
         mov      dword ptr [g_data_0054206c], 0x11
         call     GatedWordPushCall_00489f90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_4574
         mov      dword ptr [esi + 8], OFFSET L_44f0
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_data_0054204c], 0x146
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_4553:
@@ -246,7 +246,7 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
         mov      dword ptr [esi + 8], OFFSET L_44f0
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], 0x43
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_4574:
         pop      esi
         ret
@@ -296,7 +296,7 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
         mov      dword ptr [g_data_0053a35c], 0
         mov      dword ptr [g_data_0054206c], ecx
         call     PushSetXfmMaskCallPop_00407140
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_475f
         test     byte ptr [g_data_0054208c], 4
@@ -321,7 +321,7 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
         mov      dword ptr [g_data_0054206c], 2
         mov      dword ptr [g_data_00542044], eax
         call     CmpDivJmp_0049d080
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_475f
         mov      eax, dword ptr [g_data_004d57ac]
@@ -330,7 +330,7 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
         mov      dword ptr [g_data_00542044], ecx
         mov      dword ptr [g_data_004d57ac], eax
         call     MStackCall_00406600
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_475f
     L_46e6:
@@ -344,7 +344,7 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         call     IK_ChainPoseUpdate_00444860
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_475f
         mov      eax, dword ptr [g_data_004d57ac]
@@ -355,7 +355,7 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
         mov      dword ptr [esi + 8], OFFSET L_4580
         mov      dword ptr [esi + 0x84], 1
         mov      dword ptr [g_data_0054204c], 1
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_475f:
         pop      esi
         ret
@@ -407,7 +407,7 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
         mov      dword ptr [eax + 8], OFFSET L_4770
         mov      dword ptr [eax + 0x84], 2
         mov      dword ptr [g_data_0054204c], ecx
-        mov      dword ptr [g_data_00541e6c], ecx
+        mov      dword ptr [g_framePauseFlag], ecx
         ret
     L_4803:
         mov      dword ptr [g_data_00542088], 0xa3d
@@ -424,7 +424,7 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
         mov      dword ptr [eax + 8], OFFSET L_4770
         mov      dword ptr [eax + 0x84], ecx
         mov      dword ptr [g_data_0054204c], ecx
-        mov      dword ptr [g_data_00541e6c], ecx
+        mov      dword ptr [g_framePauseFlag], ecx
         ret
     }
 }

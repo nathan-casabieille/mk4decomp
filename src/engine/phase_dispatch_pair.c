@@ -122,7 +122,7 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
@@ -152,7 +152,7 @@ __declspec(naked) void PhaseDispatchPair_004799c0(void)
         je      short L_pdp_install1
         mov     dword ptr [g_data_0054206c], 0x13
         call    CmpEqInitCallElseJmp_0048d4b0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pdp_ret1
         test    byte ptr [g_data_0054208c], bl
@@ -179,7 +179,7 @@ __declspec(naked) void PhaseDispatchPair_004799c0(void)
         mov     dword ptr [esi + 8], offset PhaseDispatchPair_004799c0
         mov     dword ptr [esi + 0x84], ebx
         mov     dword ptr [g_data_0054204c], ebx
-        mov     dword ptr [g_data_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
     L_pdp_ret1:
         pop     esi
         pop     ebx
@@ -223,10 +223,10 @@ __declspec(naked) void PhaseDispatchPair_004799c0(void)
         mov     edx, dword ptr [g_data_0054206c]
         mov     dword ptr [eax + 0x68], edx
         call    ScaledChainNegStore_00470310
-        cmp     dword ptr [g_data_00541e6c], edi
+        cmp     dword ptr [g_framePauseFlag], edi
         jne     short L_pdp_ret2
         call    SlotPhaseResetInstallChain_0048e0e0
-        cmp     dword ptr [g_data_00541e6c], edi
+        cmp     dword ptr [g_framePauseFlag], edi
         jne     short L_pdp_ret2
         mov     dword ptr [esi + 8], offset L_pdp_entry2
         mov     eax, dword ptr [g_data_00542060]
@@ -243,7 +243,7 @@ __declspec(naked) void PhaseDispatchPair_004799c0(void)
         mov     edx, dword ptr [g_data_00542060]
         mov     dword ptr [edx*4 + 0x84], edi
         call    SlotEvent3EntryChain_0046fdf0
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
     L_pdp_ret2:
         pop     edi
         pop     esi

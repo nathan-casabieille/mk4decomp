@@ -148,7 +148,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004f25d8;
 extern unsigned int g_data_004f2640;
 extern unsigned int g_data_004f2650;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
@@ -173,7 +173,7 @@ extern void Vec2SumMul10ChainCompute_0049bc60(void);
 __declspec(naked) void Alarm5EntryScopedChain_0049be10(void) {
     __asm {
         call    MStackCall_00406740
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a5e_e1End
         jmp     CallSetPause_0041f830
@@ -198,7 +198,7 @@ __declspec(naked) void Alarm5EntryScopedChain_0049be10(void) {
         mov     dword ptr [g_data_0054206c], eax
         mov     dword ptr [ecx*4 + 0x74], eax
         call    CondPickDualStore_0049c670
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a5e_e2End
         push    offset g_data_004f25d8
@@ -223,12 +223,12 @@ __declspec(naked) void Alarm5EntryScopedChain_0049be10(void) {
     L_a5e_entry3:
         push    esi
         call    DualCmpSwapStore_0049c5a0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_a5e_e3End
         push    offset g_data_004f2640
         call    ScaledStackCallPause_0049c360
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         jne     L_a5e_e3End
@@ -273,7 +273,7 @@ __declspec(naked) void Alarm5EntryScopedChain_0049be10(void) {
         /* entry 4 (offset 0xf0) */
     L_a5e_entry4:
         call    Vec2SumMul10ChainCompute_0049bc60
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a5e_e4End
         mov     eax, dword ptr [g_data_00542070]
@@ -296,11 +296,11 @@ __declspec(naked) void Alarm5EntryScopedChain_0049be10(void) {
         /* entry 5 (offset 0x150) */
     L_a5e_entry5:
         call    Phase1ContextSetupHelper_0040c260
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a5e_e5End
         call    BootCallChainDoubleMul10_0040b890
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a5e_e5End
         jmp     Triple3PathDispatch_0049bf90

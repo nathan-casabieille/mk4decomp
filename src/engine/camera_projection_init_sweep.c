@@ -126,7 +126,7 @@ extern unsigned int g_data_004e86d8;
 extern unsigned int g_data_00535e48;
 extern unsigned int g_data_00535e50;
 extern unsigned int g_data_00537eb4;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -158,7 +158,7 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         mov      dword ptr [g_data_0054206c], 0x6487e
         mov      dword ptr [g_data_00542070], 0x280000
         call     RangeMulMod_004ab2a0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8430
         mov      eax, dword ptr [g_data_0054206c]
@@ -167,7 +167,7 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         mov      dword ptr [g_data_00542084], eax
         mov      dword ptr [g_data_0054204c], edi
         call     BootPhaseGateBracketedInit_004060c0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8430
         mov      al, byte ptr [g_data_0054208c]
@@ -181,7 +181,7 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         mov      dword ptr [g_data_00537eb4], eax
         mov      dword ptr [g_data_00542048], ecx
         call     FramePauseScaledStore_00406c10
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8430
         test     byte ptr [g_data_0054208c], bl
@@ -216,7 +216,7 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         mov      dword ptr [g_data_0054204c], eax
     L_829d:
         call     FramePauseScaledStore_00406c10
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8430
         test     byte ptr [g_data_0054208c], bl
@@ -224,13 +224,13 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         mov      edx, dword ptr [g_data_00542050]
         mov      dword ptr [g_data_00542048], edx
         call     MStackPush2ChainPrepend_00409970
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8430
         mov      eax, dword ptr [g_data_00542088]
         mov      dword ptr [g_data_00542074], eax
         call     Chain2CallMul10Accum_00426a30
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8430
         mov      ecx, dword ptr [g_data_00542044]
@@ -244,7 +244,7 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         sub      edx, ecx
         mov      dword ptr [g_data_0054206c], edx
         call     Thunk_00427460
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8430
         mov      ecx, dword ptr [g_data_00542044]
@@ -255,7 +255,7 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         mov      dword ptr [g_data_00542088], eax
         mov      dword ptr [g_data_0054206c], eax
         call     Thunk_00427460
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8430
         mov      eax, dword ptr [g_data_00535e48]
@@ -277,17 +277,17 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [edx*4 + 0x58], eax
         call     MStackCall_00406340
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_8430
         mov      eax, dword ptr [g_data_00542044]
         mov      dword ptr [g_data_0054205c], eax
         call     RegistryPushBindPop_00403c20
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_8430
         call     MStackBracket4_ListInsertZeroFill_00408600
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         pop      edi
         pop      ebx
         ret
@@ -295,7 +295,7 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         mov      ecx, dword ptr [g_data_00537eb4]
         mov      dword ptr [g_data_00542044], ecx
         call     MStackPush2ChainLLInsert_00406790
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_8430
         mov      dword ptr [g_data_00542044], 0

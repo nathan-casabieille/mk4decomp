@@ -133,7 +133,7 @@ extern unsigned int g_data_00542094;
 extern unsigned int g_const_004985b0;
 extern unsigned int g_data_005432f0;
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
@@ -170,7 +170,7 @@ __declspec(naked) void StageEventState4Way_004982f0(void)
         mov      dword ptr [g_data_00542094], eax
         jne      short L_8370
         call     SweepCluster_004984e0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_84da
         push     0x4d
         push     OFFSET g_const_004985b0
@@ -195,7 +195,7 @@ __declspec(naked) void StageEventState4Way_004982f0(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     ScaledLoadIncJmp_00428d00
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -216,13 +216,13 @@ __declspec(naked) void StageEventState4Way_004982f0(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     InstallSelf3WayChainCmp_00428d80
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
     L_8436:
         call     CondPickDualStore_0049c670
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_84da
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, 0x30f
@@ -230,7 +230,7 @@ __declspec(naked) void StageEventState4Way_004982f0(void)
         push     OFFSET g_data_005432f0
         mov      dword ptr [ecx*4 + 0x74], eax
         call     GuardedPackedSlotInit_00428760
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         cmp      eax, edi
         jne      short L_84da
@@ -250,7 +250,7 @@ __declspec(naked) void StageEventState4Way_004982f0(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     ScaledClearJmp_00428d40
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_84da:
         pop      edi
         pop      esi

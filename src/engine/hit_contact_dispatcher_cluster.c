@@ -126,7 +126,7 @@ extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_004ed818;
 extern unsigned int g_data_00535ddc;
 extern unsigned int g_data_00538158;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
@@ -221,12 +221,12 @@ __declspec(naked) void HitContactDispatcherCluster_00480240(void)
         mov      dword ptr [edx*4 + 0x5c], ecx
     L_036c:
         call     ScaledChainJmp_004298e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_03af
         mov      dword ptr [g_data_0054206c], 0xffffd99a
         call     MStackFrameCdeclDouble_004903f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_03af
         mov      eax, dword ptr [g_data_004d57ac]
@@ -259,7 +259,7 @@ __declspec(naked) void HitContactDispatcherCluster_00480240(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [ecx*4 + 0x74], eax
         call     PushCallScaledStore_004143c0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_03f2
         push     OFFSET g_data_004ed818
@@ -295,7 +295,7 @@ __declspec(naked) void HitContactDispatcherCluster_00480240(void)
         je       short L_0454
         mov      dword ptr [g_data_0054206c], 8
         call     ScaledIndexConditionalAdd_0048e400
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_0567
         call     FiveCallGuardSetTail_0046f6b0
@@ -313,21 +313,21 @@ __declspec(naked) void HitContactDispatcherCluster_00480240(void)
         ret
     L_046d:
         call     TripleEntryChainGate_00480790
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_0567
         mov      dword ptr [g_data_0054206c], 0x9999
         call     EsiEdiAliasDualMul10_004906b0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_0567
         mov      dword ptr [g_data_00542088], 0x10000
         call     PunchAnimCluster_00496d80
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_0567
         call     NotMaskStorePair_0045f440
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_0567
         mov      ecx, dword ptr [g_data_0054205c]
@@ -343,17 +343,17 @@ __declspec(naked) void HitContactDispatcherCluster_00480240(void)
         mov      dword ptr [g_data_00542094], eax
         jne      short L_054e
         call     ScaledZeroFour_00490740
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_0567
         call     MStackPushSet0008_004901a0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_0567
         mov      dword ptr [esi + 8], OFFSET L_0400
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_data_0054204c], 0xc
-        mov      dword ptr [g_data_00541e6c], edi
+        mov      dword ptr [g_framePauseFlag], edi
         pop      edi
         pop      esi
         ret
@@ -366,7 +366,7 @@ __declspec(naked) void HitContactDispatcherCluster_00480240(void)
         mov      dword ptr [esi + 8], OFFSET L_0400
         mov      dword ptr [esi + 0x84], edi
         mov      dword ptr [g_data_0054204c], edi
-        mov      dword ptr [g_data_00541e6c], edi
+        mov      dword ptr [g_framePauseFlag], edi
     L_0567:
         pop      edi
         pop      esi

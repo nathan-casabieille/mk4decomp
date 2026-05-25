@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_00537f98;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -147,7 +147,7 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         push     ebx
         push     esi
         call     PendingMatch_0048d7b0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d7ad
         mov      al, byte ptr [g_data_0054208c]
@@ -210,7 +210,7 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         call     dword ptr [g_data_00542048]
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d7ad
         mov      ecx, dword ptr [g_data_004d57ac]
@@ -229,7 +229,7 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         add      esp, 8
         mov      dword ptr [g_data_0054206c], eax
         call     SfxAttenuateAndApply_0048dee0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d7ad
         mov      eax, dword ptr [g_data_00542088]
@@ -247,11 +247,11 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         mov      eax, dword ptr [eax*4 + 0x14]
         mov      dword ptr [g_data_0054206c], eax
         call     SfxAttenuateAndApply_0048dee0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d7ad
         call     MStackPush3CmpCall_0048eec0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d7ad
         test     byte ptr [g_data_0054208c], bl
@@ -266,7 +266,7 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         test     eax, eax
         je       short L_d71a
         call     PushCjWalkDispatchPop_00490810
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d7ad
     L_d71a:
@@ -290,7 +290,7 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         call     ScaledLitLoadCall_00480fe0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d7ad
         mov      eax, dword ptr [g_data_004d57ac]

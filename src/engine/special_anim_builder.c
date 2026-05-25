@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_0053a7b0;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -186,7 +186,7 @@ void SpecialAnimBuilder_004937b0(void) {
         mov      dword ptr [eax*4], edx
         mov      dword ptr [g_data_0054206c], ecx
         call     OrDualStore_0048a190
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3a19
         call     DualBitGateInitCall_0048a1c0
@@ -207,7 +207,7 @@ void SpecialAnimBuilder_004937b0(void) {
         mov      edx, dword ptr [g_data_00542044]
         mov      dword ptr [g_data_0054204c], edx
         call     DirtyDoubleDeref_00408cb0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3a19
         mov      eax, dword ptr [g_data_004d57ac]
@@ -222,7 +222,7 @@ void SpecialAnimBuilder_004937b0(void) {
         mov      edx, dword ptr [ecx*4 + 0x1c]
         mov      dword ptr [g_data_00542048], edx
         call     PushSetCallCleanup_00408580
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_3a19
         mov      eax, dword ptr [g_data_0054204c]
@@ -230,7 +230,7 @@ void SpecialAnimBuilder_004937b0(void) {
         mov      eax, dword ptr [eax*4 + 0x18]
         mov      dword ptr [g_data_00542044], eax
         call     BootChainBidirRecurseWalk_00405ca0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_3a19
         mov      eax, dword ptr [g_data_004d57ac]
@@ -239,26 +239,26 @@ void SpecialAnimBuilder_004937b0(void) {
         mov      dword ptr [g_data_00542048], ecx
         mov      dword ptr [g_data_004d57ac], eax
         call     MStackPush2ChainPrepend_00409970
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_3a19
         mov      edx, dword ptr [g_data_00542080]
         mov      dword ptr [g_data_0054206c], edx
         call     MStackPushTableWalk_00493a20
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_3a19
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, dword ptr [g_data_00542048]
         mov      dword ptr [ecx*4 + 0x30], eax
         call     MStackChainDecodeCall_004936f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_3a19
         mov      edx, dword ptr [g_data_0054205c]
         mov      dword ptr [g_data_00542044], edx
         call     MStackPush2ChainLLInsert_00406790
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_3a19
         mov      eax, dword ptr [g_data_004d57ac]

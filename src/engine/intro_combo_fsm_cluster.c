@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004d57ac;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -148,7 +148,7 @@ __declspec(naked) void IntroComboFsmCluster_00467800(void)
 {
     __asm {
         call     PushSetXfmMaskCallPop_00407140
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_78a1
         test     byte ptr [g_data_0054208c], 4
@@ -158,7 +158,7 @@ __declspec(naked) void IntroComboFsmCluster_00467800(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [ecx*4 + 0x30], eax
         call     MStackCall_00406340
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_78a1
         mov      edx, dword ptr [g_data_00542048]
@@ -223,11 +223,11 @@ __declspec(naked) void IntroComboFsmCluster_00467800(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         call     GuardedSeq_00467c10
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7aac
         call     GuardedSeq_00467c80
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7aac
         mov      eax, dword ptr [g_data_004d57ac]
@@ -239,7 +239,7 @@ __declspec(naked) void IntroComboFsmCluster_00467800(void)
         mov      dword ptr [esi + 8], OFFSET L_78b0
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         pop      ebx
         ret      
@@ -256,13 +256,13 @@ __declspec(naked) void IntroComboFsmCluster_00467800(void)
         mov      dword ptr [g_data_00542074], 0
         mov      dword ptr [g_data_0054204c], OFFSET PreFightInstallCluster_00474390 + 0x250
         call     AllocNode
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7aac
         mov      dword ptr [g_data_00542074], 0
         mov      dword ptr [g_data_0054204c], OFFSET L_7ab0
         call     AllocNode
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7aac
         mov      dword ptr [g_data_00542054], 8
@@ -273,7 +273,7 @@ __declspec(naked) void IntroComboFsmCluster_00467800(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         call     SetJmp_00405420
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7aac
         mov      al, byte ptr [g_data_0054208c]
@@ -282,18 +282,18 @@ __declspec(naked) void IntroComboFsmCluster_00467800(void)
         jne      L_7a5f
         mov      dword ptr [g_data_0054206c], 0x190
         call     AudioVolumeRescale_004ab690
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7aac
         test     byte ptr [g_data_0054208c], bl
         je       L_7a7b
     L_7a5f:
         call     GuardedSeq_00467c10
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7aac
         call     GuardedSeq_00467c80
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7aac
     L_7a7b:
@@ -305,7 +305,7 @@ __declspec(naked) void IntroComboFsmCluster_00467800(void)
         mov      dword ptr [esi + 8], OFFSET L_78b0
         mov      dword ptr [esi + 0x84], ebx
         mov      dword ptr [g_data_0054204c], ebx
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
     L_7aac:
         pop      esi
         pop      ebx
@@ -325,16 +325,16 @@ __declspec(naked) void IntroComboFsmCluster_00467800(void)
         mov      edx, dword ptr [ecx*4 + 0x4c]
         mov      dword ptr [g_data_0054205c], edx
         call     MStackPush2RunCountdown_004089e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7c07
         call     MStackBracket7_DispatchAndChain_004b8fa0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7c07
         mov      dword ptr [g_data_0054206c], 3
         call     ChainDirtyBitWalker_00408c10
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7c07
         call     DualScaledLoadStoreJmp_00475790
@@ -345,23 +345,23 @@ __declspec(naked) void IntroComboFsmCluster_00467800(void)
         mov      eax, dword ptr [g_data_00542054]
         mov      dword ptr [g_data_0054205c], eax
         call     MStackPush2RunCountdown_004089e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7c07
         call     MStackBracket7_DispatchAndChain_004b8fa0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7c07
         mov      dword ptr [g_data_0054206c], 3
         call     ChainDirtyBitWalker_00408c10
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7c07
         call     DualScaledLoadStoreJmp_00475790
         mov      dword ptr [esi + 8], OFFSET L_7ab0
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_data_0054204c], 4
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret      
     L_7baf:
@@ -378,7 +378,7 @@ __declspec(naked) void IntroComboFsmCluster_00467800(void)
         mov      dword ptr [esi + 8], OFFSET L_7ab0
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], 0x78
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_7c07:
         pop      esi
         ret      

@@ -126,7 +126,7 @@ extern unsigned int g_data_0050b3d4;
 extern unsigned int g_data_0050b3f0;
 extern unsigned int g_data_0050b40c;
 extern unsigned int g_data_0050b428;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
@@ -147,23 +147,23 @@ __declspec(naked) void FourSegmentPoseWalk_00442880(void)
         mov      dword ptr [g_data_00542058], eax
         mov      dword ptr [g_data_0054205c], eax
         call     MStackPush2RunCountdown_004089e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2bb9
         call     MStackBracket7_DispatchAndChain_004b8fa0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2bb9
         mov      dword ptr [g_data_0054206c], 0xa
         call     ChainDirtyBitWalker_00408c10
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2bb9
         mov      ecx, dword ptr [g_data_00542048]
         mov      dword ptr [g_data_0054206c], 9
         mov      dword ptr [g_data_00542054], ecx
         call     ChainDirtyBitWalker_00408c10
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2bb9
         mov      edx, dword ptr [g_data_00542048]
@@ -194,7 +194,7 @@ __declspec(naked) void FourSegmentPoseWalk_00442880(void)
         mov      dword ptr [ecx*4 + 0x44], eax
         mov      dword ptr [g_data_00542058], 2
         call     SetJmp_00405420
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2bb9
         mov      al, byte ptr [g_data_0054208c]
@@ -207,14 +207,14 @@ __declspec(naked) void FourSegmentPoseWalk_00442880(void)
         shr      esi, 2
         mov      dword ptr [g_data_00542048], esi
         call     DispatcherComplex260_00407030
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2bb9
     L_29de:
         test     byte ptr [g_data_0054208c], bl
         jne      L_2bb9
         call     Vec3SetupQuadrupleMul10Sub_00442bc0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2bb9
         mov      eax, dword ptr [g_data_00542058]
@@ -223,7 +223,7 @@ __declspec(naked) void FourSegmentPoseWalk_00442880(void)
         js       short L_2a20
         mov      dword ptr [g_data_00542048], esi
         call     DispatcherComplex260_00407030
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       short L_29de
         pop      esi
@@ -232,7 +232,7 @@ __declspec(naked) void FourSegmentPoseWalk_00442880(void)
     L_2a20:
         mov      dword ptr [g_data_00542058], 3
         call     SetJmp_00405420
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2bb9
         test     byte ptr [g_data_0054208c], bl
@@ -243,14 +243,14 @@ __declspec(naked) void FourSegmentPoseWalk_00442880(void)
         shr      esi, 2
         mov      dword ptr [g_data_00542048], esi
         call     DispatcherComplex260_00407030
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2bb9
     L_2a6e:
         test     byte ptr [g_data_0054208c], bl
         jne      L_2bb9
         call     Vec3SetupQuadrupleMul10Sub_00442bc0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2bb9
         mov      eax, dword ptr [g_data_00542058]
@@ -259,7 +259,7 @@ __declspec(naked) void FourSegmentPoseWalk_00442880(void)
         js       short L_2ab0
         mov      dword ptr [g_data_00542048], esi
         call     DispatcherComplex260_00407030
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       short L_2a6e
         pop      esi
@@ -268,7 +268,7 @@ __declspec(naked) void FourSegmentPoseWalk_00442880(void)
     L_2ab0:
         mov      dword ptr [g_data_00542058], ebx
         call     SetJmp_00405420
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2bb9
         test     byte ptr [g_data_0054208c], bl
@@ -279,14 +279,14 @@ __declspec(naked) void FourSegmentPoseWalk_00442880(void)
         shr      esi, 2
         mov      dword ptr [g_data_00542048], esi
         call     DispatcherComplex260_00407030
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2bb9
     L_2afa:
         test     byte ptr [g_data_0054208c], bl
         jne      L_2bb9
         call     Vec3SetupQuadrupleMul10Sub_00442bc0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2bb9
         mov      eax, dword ptr [g_data_00542058]
@@ -295,7 +295,7 @@ __declspec(naked) void FourSegmentPoseWalk_00442880(void)
         js       short L_2b3c
         mov      dword ptr [g_data_00542048], esi
         call     DispatcherComplex260_00407030
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       short L_2afa
         pop      esi
@@ -304,7 +304,7 @@ __declspec(naked) void FourSegmentPoseWalk_00442880(void)
     L_2b3c:
         mov      dword ptr [g_data_00542058], 3
         call     SetJmp_00405420
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2bb9
         test     byte ptr [g_data_0054208c], bl
@@ -315,14 +315,14 @@ __declspec(naked) void FourSegmentPoseWalk_00442880(void)
         shr      esi, 2
         mov      dword ptr [g_data_00542048], esi
         call     DispatcherComplex260_00407030
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2bb9
     L_2b82:
         test     byte ptr [g_data_0054208c], bl
         jne      short L_2bb9
         call     Vec3SetupQuadrupleMul10Sub_00442bc0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2bb9
         mov      eax, dword ptr [g_data_00542058]
@@ -331,7 +331,7 @@ __declspec(naked) void FourSegmentPoseWalk_00442880(void)
         js       short L_2bb9
         mov      dword ptr [g_data_00542048], esi
         call     DispatcherComplex260_00407030
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       short L_2b82
     L_2bb9:

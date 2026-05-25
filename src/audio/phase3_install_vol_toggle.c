@@ -140,7 +140,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004d50b4;
 extern unsigned int g_data_0052aac4;
 extern unsigned int g_data_0053a50c;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
@@ -258,7 +258,7 @@ __declspec(naked) void Phase3InstallVolToggle_004a8310(void) {
         mov     dword ptr [esi + 8], offset Phase3InstallVolToggle_004a8310
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_data_0054204c], eax
-        mov     dword ptr [g_data_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret
     }

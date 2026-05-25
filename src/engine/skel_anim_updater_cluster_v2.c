@@ -129,7 +129,7 @@ extern unsigned int g_data_00535e7c;
 /* ------------------------------------------------------------------ */
 extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_00535e6c;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -159,7 +159,7 @@ __declspec(naked) void SkelAnimUpdaterClusterV2_0049dbf0(void)
         /* === Helper 1 (0x49dbf0): per-bone update (alt counter) === */
     L_dbf0:
         call     MStackPush8_004ab790
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_ddcb
         mov      eax, dword ptr [g_data_00542048]
@@ -167,7 +167,7 @@ __declspec(naked) void SkelAnimUpdaterClusterV2_0049dbf0(void)
         mov      eax, dword ptr [eax*4]
         mov      dword ptr [g_data_0054206c], eax
         call     PushSetXfmMaskCallPop_00407140
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_ddcb
         test     byte ptr [g_data_0054208c], 4
@@ -186,7 +186,7 @@ __declspec(naked) void SkelAnimUpdaterClusterV2_0049dbf0(void)
         mov      dword ptr [g_data_00542074], ecx
         mov      dword ptr [g_data_0054204c], eax
         call     AllocNode
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_ddcb
         test     byte ptr [g_data_0054208c], 1
@@ -194,7 +194,7 @@ __declspec(naked) void SkelAnimUpdaterClusterV2_0049dbf0(void)
         mov      edx, dword ptr [g_data_0054205c]
         mov      dword ptr [g_data_00542044], edx
         call     MStackCall_00406340
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_ddcb
         mov      eax, dword ptr [g_data_0054205c]
@@ -216,7 +216,7 @@ __declspec(naked) void SkelAnimUpdaterClusterV2_0049dbf0(void)
         mov      dword ptr [g_data_00542070], edx
     L_dd0e:
         call     SetJmp_00405420
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_ddcb
         test     byte ptr [g_data_0054208c], 4
@@ -233,7 +233,7 @@ __declspec(naked) void SkelAnimUpdaterClusterV2_0049dbf0(void)
         mov      dword ptr [g_data_0054206c], eax
         je       short L_ddda
         call     CmpDivJmp_0049d080
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_ddcb
         test     byte ptr [g_data_0054208c], 4
@@ -247,7 +247,7 @@ __declspec(naked) void SkelAnimUpdaterClusterV2_0049dbf0(void)
         add      edx, 3
         mov      dword ptr [g_data_00542048], edx
         call     LinkedListFieldAdd_0049d380
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_ddcb
         mov      eax, dword ptr [g_data_004d57ac]
@@ -258,14 +258,14 @@ __declspec(naked) void SkelAnimUpdaterClusterV2_0049dbf0(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [g_data_00542048], edx
         call     PoseTreeBlendWalker_0049d680
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       short L_ddda
     L_ddcb:
         ret
     L_ddcc:
         call     MStackCall_00406740
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_ddcb
     L_ddda:
@@ -307,7 +307,7 @@ __declspec(naked) void SkelAnimUpdaterClusterV2_0049dbf0(void)
         mov      dword ptr [g_data_0054206c], eax
         je       short L_de66
         call     L_dbf0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_de8d
     L_de66:
@@ -325,7 +325,7 @@ __declspec(naked) void SkelAnimUpdaterClusterV2_0049dbf0(void)
         mov      eax, 1
         mov      dword ptr [esi + 8], edi
         mov      dword ptr [esi + 0x84], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_de8d:
         pop      edi
         pop      esi

@@ -225,7 +225,7 @@ extern unsigned int g_data_004f3aa8;
 extern unsigned int g_data_0050b118;
 extern unsigned int g_data_0050f114;
 extern unsigned int g_data_00537f94;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
@@ -611,7 +611,7 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
         mov     dword ptr [g_data_00542044], eax
         je      short L_asimi_checkFlag
         call    eax
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_asimi_ret
     L_asimi_checkFlag:
@@ -641,7 +641,7 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
         mov     edx, dword ptr [g_data_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    InstallSelfPackedF80_00426000
-        mov     dword ptr [g_data_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
         pop     edi
         pop     esi
         pop     ebx
@@ -652,7 +652,7 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
         mov     byte ptr [g_data_0054372c], bl
         mov     byte ptr [g_data_00543730], bl
         call    FiveTableWalkInit_00403c90
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_asimi_ret
         call    TripleCallSetCopy_004a4880
@@ -683,7 +683,7 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
         mov     dword ptr [edi + 8], offset AudioStateInitMultiInstall_004a4d20
         mov     dword ptr [edi + 0x84], ebx
         mov     dword ptr [g_data_0054204c], ebx
-        mov     dword ptr [g_data_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
     L_asimi_ret:
         pop     edi
         pop     esi
@@ -718,14 +718,14 @@ __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
         call     QuadCallPhase2_004be800
         add      esp, 0x10
         call     FiveTableWalkInit_00403c90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_702b
         mov      ecx, OFFSET g_data_0050b118
         shr      ecx, 2
         mov      dword ptr [g_data_00542044], ecx
         call     LoadGeoAsset_Default
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_702b
         call     TripleCallSetCopy_004a4880
@@ -777,7 +777,7 @@ __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
         mov      dword ptr [g_data_00543830], ecx
         mov      dword ptr [g_data_00542074], 0x1000
         call     AllocNode
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_702b
         jmp      CallSetPause_0041f830
@@ -797,7 +797,7 @@ __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     AudioInstallSelfStatePush_004aa8a0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_702b:
         ret
     }
@@ -819,7 +819,7 @@ __declspec(naked) void PendingMatch_004a70f0(void)
         mov      ecx, dword ptr [g_data_00538088]
         mov      dword ptr [g_data_0054205c], ecx
         call     CallDualStoreXorBit_004285e0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         test     byte ptr [g_data_0054208c], 4
         je       L_714c
@@ -830,14 +830,14 @@ __declspec(naked) void PendingMatch_004a70f0(void)
         test     byte ptr [g_data_0054206c], 0xf
         jne      L_724e
         call     MStackPush2RunCountdown_004089e0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         call     MStackBracket7_DispatchAndChain_004b8fa0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         mov      dword ptr [g_data_0054206c], 9
         call     ChainDirtyBitWalker_00408c10
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         test     byte ptr [g_data_0054208c], 4
         jne      L_724e
@@ -852,7 +852,7 @@ __declspec(naked) void PendingMatch_004a70f0(void)
         mov      ecx, dword ptr [g_data_00542044]
         mov      dword ptr [ecx*4 + 4], 0x28f
         call     MStackBracket3_FieldSequentialCopy_00411d80
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         mov      eax, dword ptr [g_data_00542044]
         cmp      eax, edi
@@ -902,7 +902,7 @@ __declspec(naked) void PendingMatch_004a70f0(void)
         mov      dword ptr [g_data_0054204c], 0x401b70
         mov      dword ptr [g_data_00542074], 0x1000
         call     AllocNode
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         call     CallSetPause_0041f830
         pop      edi
@@ -914,7 +914,7 @@ __declspec(naked) void PendingMatch_004a70f0(void)
         mov      dword ptr [g_data_0053a50c], 1
         call     BootInitGuardedCallChain_004265d0
         call     FiveTableWalkInit_00403c90
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         push     6
         call     TableWalkBoundedCmp_004bd890
@@ -923,19 +923,19 @@ __declspec(naked) void PendingMatch_004a70f0(void)
         shr      eax, 2
         mov      dword ptr [g_data_00542044], eax
         call     LoadGeoAsset_Default
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         mov      ecx, 0x5032f0
         shr      ecx, 2
         mov      dword ptr [g_data_00542044], ecx
         call     LoadGeoAsset_Default
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         mov      edx, 0x505b8c
         shr      edx, 2
         mov      dword ptr [g_data_00542048], edx
         call     DispatcherComplex260_00407030
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         mov      eax, dword ptr [g_data_00542044]
         mov      dword ptr [g_data_0053a7a8], eax
@@ -946,7 +946,7 @@ __declspec(naked) void PendingMatch_004a70f0(void)
         mov      dword ptr [ecx*4 + 0x58], 0xfffe8000
         mov      dword ptr [g_data_00542048], edx
         call     DispatcherComplex260_00407400
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         mov      eax, dword ptr [g_data_00542044]
         mov      esi, 0xff800000
@@ -955,13 +955,13 @@ __declspec(naked) void PendingMatch_004a70f0(void)
         mov      dword ptr [g_data_0054206c], esi
         mov      dword ptr [eax + 0x58], esi
         call     PushSetCallPop_00406530
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         mov      ecx, 0x5063f8
         shr      ecx, 2
         mov      dword ptr [g_data_00542048], ecx
         call     DispatcherComplex260_00407400
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         mov      edx, dword ptr [g_data_00542044]
         mov      dword ptr [edx*4 + 0x54], edi
@@ -969,7 +969,7 @@ __declspec(naked) void PendingMatch_004a70f0(void)
         mov      dword ptr [edx*4 + 0x58], esi
         lea      eax, [edx*4]
         call     PushSetCallPop_00406530
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         cmp      dword ptr [g_data_005433b8], 4
         jne      L_746c
@@ -1018,7 +1018,7 @@ __declspec(naked) void PendingMatch_004a70f0(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [g_data_00537f48], eax
         call     DoublePushCallDualPopJmp_00423270
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         mov      eax, dword ptr [g_data_0054205c]
         mov      dword ptr [g_data_00538088], eax
@@ -1035,19 +1035,19 @@ __declspec(naked) void PendingMatch_004a70f0(void)
         shr      edx, 2
         mov      dword ptr [g_data_00542058], edx
         call     ScaledArrStore_004285c0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         mov      eax, 0x506c5c
         shr      eax, 2
         mov      dword ptr [g_data_00542044], eax
         call     LoadGeoAsset_Default
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         mov      ecx, 0x50b238
         shr      ecx, 2
         mov      dword ptr [g_data_00542044], ecx
         call     ScaledSet1OnNonZero_0048c190
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         call     Phase1ChainAdvanceCallScale_00418f80
         call     InstallChainInitTailJmp_004a7030
@@ -1058,7 +1058,7 @@ __declspec(naked) void PendingMatch_004a70f0(void)
         mov      dword ptr [ebp + 8], 0x4a70f0
         mov      dword ptr [ebp + 0x84], eax
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_75fb:
         pop      edi
         pop      esi
@@ -1190,7 +1190,7 @@ __declspec(naked) void PendingMatch_004a3400(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], ebx
         call     InstallSelfPackedF80_00426000
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         pop      ebp
@@ -1212,7 +1212,7 @@ __declspec(naked) void PendingMatch_004a3400(void)
         ret      
         call     TableWalkChainCall_004a30f0
         call     FiveTableWalkInit_00403c90
-        cmp      dword ptr [g_data_00541e6c], ebx
+        cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_38b1
         mov      al, byte ptr [g_data_005433f8]
         mov      ecx, dword ptr [g_data_004f31cc]
@@ -1268,7 +1268,7 @@ __declspec(naked) void PendingMatch_004a3400(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], ebx
         call     AudioInstallSelfStatePush_004aa8a0
-        mov      dword ptr [g_data_00541e6c], esi
+        mov      dword ptr [g_framePauseFlag], esi
         pop      edi
         pop      esi
         pop      ebp
@@ -1315,7 +1315,7 @@ __declspec(naked) void PendingMatch_004a3400(void)
         mov      dword ptr [edi + 8], 0x4a3400
         mov      dword ptr [edi + 0x84], ebp
         mov      dword ptr [g_data_0054204c], ebp
-        mov      dword ptr [g_data_00541e6c], ebp
+        mov      dword ptr [g_framePauseFlag], ebp
         pop      edi
         pop      esi
         pop      ebp
@@ -1325,10 +1325,10 @@ __declspec(naked) void PendingMatch_004a3400(void)
         mov      edx, dword ptr [g_data_0053a51c]
         mov      dword ptr [g_data_0054206c], edx
         call     TablePushAccumTailJmp_00429e30
-        cmp      dword ptr [g_data_00541e6c], ebx
+        cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_38b1
         call     TestCmpZeroFour_004238b0
-        cmp      dword ptr [g_data_00541e6c], ebx
+        cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_38b1
         mov      ecx, dword ptr [g_data_00537f48]
         mov      eax, 0x535cfc
@@ -1338,14 +1338,14 @@ __declspec(naked) void PendingMatch_004a3400(void)
         mov      dword ptr [g_data_0054206c], ecx
         mov      dword ptr [g_data_00542070], ebx
         call     DownloadPlayerChar
-        cmp      dword ptr [g_data_00541e6c], ebx
+        cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_38b1
         mov      edx, dword ptr [g_data_005380e0]
         mov      esi, 1
         mov      dword ptr [g_data_0054206c], edx
         mov      dword ptr [g_data_00542070], esi
         call     DownloadPlayerChar
-        cmp      dword ptr [g_data_00541e6c], ebx
+        cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_38b1
         mov      byte ptr [g_data_0054371c], bl
         mov      dword ptr [g_data_0052aac4], ebp
@@ -1487,11 +1487,11 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         and      edx, 0x3fffff
         mov      dword ptr [g_data_00542048], edx
         call     DispatcherComplex260_00407400
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5e93
         call     MStackPushComplexCallPop_00406430
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5e93
         mov      eax, dword ptr [g_data_00542060]
@@ -1870,11 +1870,11 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         shr      edx, 2
         mov      dword ptr [g_data_00542048], edx
         call     DispatcherComplex260_00407030
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5e93
         call     MStackPushComplexCallPop_004064b0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5e93
         mov      eax, dword ptr [g_data_00542044]
@@ -1890,7 +1890,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         mov      dword ptr [ebx + 8], 0x4a5720
         mov      dword ptr [ebx + 0x84], ebp
         mov      dword ptr [g_data_0054204c], ebp
-        mov      dword ptr [g_data_00541e6c], ebp
+        mov      dword ptr [g_framePauseFlag], ebp
     L_5e93:
         pop      edi
         pop      esi

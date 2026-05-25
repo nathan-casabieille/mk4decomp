@@ -143,7 +143,7 @@ extern void SixSubdispatchSpan_0045ec10(void);
  */
 extern unsigned int g_data_00538158;
 extern unsigned int g_data_0053815c;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054205c;
@@ -158,7 +158,7 @@ __declspec(naked) void DualStreamSqDistThresh_0045ede0(void) {
         push    edi
         mov     dword ptr [g_data_00542044], eax
         call    MatchPredicateCluster_0045ef50
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_dsd_skip
         test    byte ptr [g_data_0054208c], 1
@@ -166,7 +166,7 @@ __declspec(naked) void DualStreamSqDistThresh_0045ede0(void) {
         mov     ecx, dword ptr [g_data_0053815c]
         mov     dword ptr [g_data_00542044], ecx
         call    MatchPredicateCluster_0045ef50
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_dsd_skip
         test    byte ptr [g_data_0054208c], 1

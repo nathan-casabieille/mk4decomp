@@ -122,7 +122,7 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
 extern unsigned int g_data_0054206c;
@@ -156,154 +156,154 @@ __declspec(naked) void JuggleFsmCluster_00451b90(void)
     L_1bce:
         mov      dword ptr [g_data_0054206c], 0x35
         call     GatedWordPushCall_00489f90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
         mov      dword ptr [g_data_0054206c], 0x2b
         call     GatedWordPushCall_00489f90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
         mov      dword ptr [esi + 8], OFFSET L_1ba0
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_data_0054204c], 0x12
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_1c2d:
         mov      dword ptr [g_data_0054206c], 0x36
         call     GatedWordPushCall_00489f90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
         mov      dword ptr [esi + 8], OFFSET L_1ba0
         mov      dword ptr [esi + 0x84], 3
         mov      dword ptr [g_data_0054204c], 0x12
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_1c70:
         mov      dword ptr [g_data_0054206c], 0x37
         call     GatedWordPushCall_00489f90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
         mov      dword ptr [g_data_0054206c], 0x2a
         call     GatedWordPushCall_00489f90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
         mov      dword ptr [esi + 8], OFFSET L_1ba0
         mov      dword ptr [esi + 0x84], 4
         mov      dword ptr [g_data_0054204c], 0x11
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_1ccf:
         mov      dword ptr [g_data_0054206c], 0x36
         call     GatedWordPushCall_00489f90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
         mov      dword ptr [esi + 8], OFFSET L_1ba0
         mov      dword ptr [esi + 0x84], 5
         mov      dword ptr [g_data_0054204c], 0x5f
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_1d12:
         mov      dword ptr [g_data_0054206c], 8
         call     GuardedSeq_00472840
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
         mov      dword ptr [esi + 8], OFFSET L_1ba0
         mov      dword ptr [esi + 0x84], 6
         mov      dword ptr [g_data_0054204c], 0xf
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_1d55:
         mov      dword ptr [g_data_0054206c], 0x37
         call     GatedWordPushCall_00489f90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
         mov      dword ptr [esi + 8], OFFSET L_1ba0
         mov      dword ptr [esi + 0x84], 7
         mov      dword ptr [g_data_0054204c], 4
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_1d98:
         call     MStackPush4ChainCopyPop4_00472e10
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
         call     Set2CallIncJmp_00472860
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
         call     ScaledLoadTwoCallLit_00451f70
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
         mov      dword ptr [g_data_0054207c], 5
         call     EntryThunkBodyStateMachine_00457bb0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
         mov      dword ptr [esi + 8], OFFSET L_1ba0
         mov      dword ptr [esi + 0x84], 8
         mov      dword ptr [g_data_0054204c], 0x1b
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_1e11:
         call     MStackPush4ChainCopyPop4_00472e10
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
         call     Set2CallIncJmp_00472860
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
         call     ScaledLoadTwoCallLit_00451f70
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
         mov      dword ptr [g_data_0054207c], 7
         call     EntryThunkBodyStateMachine_00457bb0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
         mov      dword ptr [esi + 8], OFFSET L_1ba0
         mov      dword ptr [esi + 0x84], 9
         mov      dword ptr [g_data_0054204c], 7
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_1e8a:
         call     DualScaledStore_00452740
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
         mov      dword ptr [g_data_0054207c], 6
         call     EntryThunkBodyStateMachine_00457bb0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_1ba0
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], 0x55
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret      
     L_1ed3:
         mov      dword ptr [g_data_0054206c], 0x12
         call     GatedWordPushCall_00489f90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
         call     Thunk_0049cbc0

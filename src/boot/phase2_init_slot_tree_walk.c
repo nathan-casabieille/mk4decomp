@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_0054206c;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_00535e6c;
@@ -144,24 +144,24 @@ __declspec(naked) void Phase2InitSlotTreeWalk_0041ad60(void)
     __asm {
         mov     dword ptr [g_data_0054206c], 0
         call    FlagThunk4EntryDispatcher_0040a470
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p2is_ret
         mov     dword ptr [g_data_0054206c], 8
         call    FlagThunk4EntryDispatcher_0040a470
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p2is_ret
         mov     dword ptr [g_data_0054206c], 2
         call    DirtyDoubleDeref_00408cb0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p2is_ret
         mov     eax, dword ptr [g_data_00542044]
         mov     ecx, dword ptr [eax*4 + 0x24]
         mov     dword ptr [g_data_00542048], ecx
         call    DispatcherComplex260_00407400
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p2is_ret
         test    byte ptr [g_state_0054208c], 4
@@ -193,16 +193,16 @@ __declspec(naked) void Phase2InitSlotTreeWalk_0041ad60(void)
         mov     edx, dword ptr [g_data_00542044]
         mov     dword ptr [g_data_00542054], edx
         call    MStackPush2RunCountdown_004089e0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p2is_ret
         call    MStackBracket7_DispatchAndChain_004b8fa0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p2is_ret
         mov     dword ptr [g_data_0054206c], 2
         call    BootStateTriple_00408d30
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p2is_ret
         mov     eax, dword ptr [g_data_00542048]
@@ -241,7 +241,7 @@ __declspec(naked) void Phase2InitSlotTreeWalk_0041ad60(void)
         mov     edx, dword ptr [eax*4]
         mov     dword ptr [g_data_00542048], edx
         call    MStackBracket1_TreeWalkRecursive2_00406dd0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p2is_ret
         test    byte ptr [g_state_0054208c], 4
@@ -251,7 +251,7 @@ __declspec(naked) void Phase2InitSlotTreeWalk_0041ad60(void)
         mov     eax, dword ptr [g_data_00542050]
         mov     dword ptr [g_data_00542048], eax
         call    Thunk_00405ac0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p2is_ret
         jmp     PendingMatch_0041afd0

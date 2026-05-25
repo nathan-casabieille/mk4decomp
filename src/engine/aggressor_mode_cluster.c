@@ -125,7 +125,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004ed518;
 extern unsigned int g_data_004ed550;
 extern unsigned int g_data_004ed560;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542060;
 extern unsigned int g_data_0054206c;
@@ -170,7 +170,7 @@ __declspec(naked) void AggressorModeCluster_0047df30(void)
         je       L_e004
         mov      dword ptr [g_data_0054206c], 3
         call     CmpEqInitCallElseJmp_0048d4b0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e0fd
         mov      eax, dword ptr [g_data_00542088]
@@ -188,24 +188,24 @@ __declspec(naked) void AggressorModeCluster_0047df30(void)
     L_df9e:
         mov      dword ptr [g_data_00542074], 0x20000
         call     GuardedRangeCmpFpuJmp_0042b8d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e0fd
         call     SetJmp_00483b40
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e0fd
         call     Cascade3ChainInit_0048fa50
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e0fd
         call     StoreLitRetSet2_0042c3b0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e0fd
         push     OFFSET g_data_004ed560
         call     ArgSarStoreJmp_004594f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         pop      esi
         ret
@@ -218,24 +218,24 @@ __declspec(naked) void AggressorModeCluster_0047df30(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [edx*4 + 0x74], eax
         call     StreamInitCountdownBody_00494830
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         test     eax, eax
         jne      L_e0fd
         mov      dword ptr [g_data_0054206c], 9
         call     TableLookupCall_00489ff0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e0fd
         push     OFFSET g_data_00542ba0
         call     GuardedPackedSlotInit_00428760
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         test     eax, eax
         jne      short L_e0fd
         mov      dword ptr [g_data_0054206c], 0xf
         call     TableLookupCall_0048a130
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_e0fd
         mov      dword ptr [g_data_00542080], 0xb
@@ -254,7 +254,7 @@ __declspec(naked) void AggressorModeCluster_0047df30(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
         call     EsiInstallDecCallChain_004294a0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_e0fd:
         pop      esi
         ret
@@ -268,7 +268,7 @@ __declspec(naked) void AggressorModeCluster_0047df30(void)
         test     ecx, ecx
         je       short L_e12f
         call     ScaledZero44_00491500
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_e191
         jmp      FiveCallGuardSetTail_0046f6b0
@@ -288,7 +288,7 @@ __declspec(naked) void AggressorModeCluster_0047df30(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     ScaledLoadJmp_00428d20
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_e191:
         ret
     }

@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_00537f98;
 extern unsigned int g_data_0053a430;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_00542060;
@@ -196,7 +196,7 @@ __declspec(naked) void DualCounterPhaseGateInstall_00421d50(void)
         mov     eax, dword ptr [g_data_00542060]
         mov     dword ptr [eax*4 + 0x84], edx
         call    ScaledInitOrSelfPtr_00421f00
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         pop     esi
         ret
@@ -235,7 +235,7 @@ __declspec(naked) void DualCounterPhaseGateInstall_00421d50(void)
         mov     eax, dword ptr [g_data_00542060]
         mov     dword ptr [eax*4 + 0x84], edx
         call    ScaledInitOrSelfPtr_00421f00
-        mov     dword ptr [g_data_00541e6c], esi
+        mov     dword ptr [g_framePauseFlag], esi
         pop     edi
         pop     esi
         ret

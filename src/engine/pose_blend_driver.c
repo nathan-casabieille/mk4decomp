@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004d57ac;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
@@ -138,7 +138,7 @@ __declspec(naked) void PoseBlendDriver_0042fc80(void)
         push     esi
         push     edi
         call     MStackSignedMod_0042fee0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_fe9d
         mov      eax, dword ptr [g_data_004d57ac]
@@ -180,7 +180,7 @@ __declspec(naked) void PoseBlendDriver_0042fc80(void)
         mov      ecx, dword ptr [g_data_00542078]
         mov      dword ptr [eax*4 + 0x5c], ecx
         call     MStackSignedMod_0042fee0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_fe9d
         mov      eax, dword ptr [g_data_004d57ac]

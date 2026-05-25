@@ -128,7 +128,7 @@ extern unsigned int g_data_00535e48;
 extern unsigned int g_data_00537e90;
 extern unsigned int g_data_00537f88;
 extern unsigned int g_data_0053a1bc;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541fc0;
 extern unsigned int g_data_00542004;
 extern unsigned int g_data_00542048;
@@ -198,7 +198,7 @@ __declspec(naked) void AudioMStackPushHandlerPair_0049ff30(void)
         mov     dword ptr [ecx*4], 1
     L_amspp_skipPush:
         call    RoundWinTransition_0049e7e0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_amspp_ret
         mov     eax, dword ptr [g_state_004d57ac]
@@ -267,7 +267,7 @@ __declspec(naked) void AudioMStackPushHandlerPair_0049ff30(void)
         mov     dword ptr [esi + 8], offset L_amspp_sub2
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_data_0054204c], eax
-        mov     dword ptr [g_data_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret
     }

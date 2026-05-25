@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_0053a1ac;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541e80;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542060;
@@ -145,7 +145,7 @@ __declspec(naked) void BootPhaseGateBracketedInit_004060c0(void)
         mov     edx, dword ptr [g_data_00541e80]
         mov     dword ptr [g_data_00542044], edx
         call    MStackPushChainStepIndex_004ab510
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_bpgbi_pop
         test    byte ptr [g_data_0054208c], 4

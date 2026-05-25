@@ -125,7 +125,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_0053a52c;
 extern unsigned int g_data_0053a530;
 extern unsigned int g_data_0053a654;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542074;
@@ -155,7 +155,7 @@ void FiveTableInitChainBracketed_004774f0(void) {
         mov     dword ptr [g_data_00542074], 0x64
         mov     dword ptr [g_data_0054204c], edx
         call    ScaledDerefStore_004774b0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_ftic_abort
         mov     eax, offset g_data_0053a530
@@ -163,7 +163,7 @@ void FiveTableInitChainBracketed_004774f0(void) {
         sar     eax, 2
         mov     dword ptr [g_data_0054204c], eax
         call    ScaledDerefStore_004774b0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_ftic_abort
         mov     eax, offset g_data_00542ab8
@@ -178,7 +178,7 @@ void FiveTableInitChainBracketed_004774f0(void) {
         je      short L_ftic_block3
     L_ftic_loop2:
         call    ScaledDerefStore_004774b0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_ftic_abort
         mov     eax, dword ptr [g_data_00542044]
@@ -201,7 +201,7 @@ void FiveTableInitChainBracketed_004774f0(void) {
         je      short L_ftic_block4
     L_ftic_loop3:
         call    ScaledDerefStore_004774b0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_ftic_abort
         mov     eax, dword ptr [g_data_00542044]
@@ -217,7 +217,7 @@ void FiveTableInitChainBracketed_004774f0(void) {
         sar     ecx, 2
         mov     dword ptr [g_data_0054204c], ecx
         call    ScaledDerefStore_004774b0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_ftic_abort
         mov     eax, dword ptr [g_state_004d57ac]

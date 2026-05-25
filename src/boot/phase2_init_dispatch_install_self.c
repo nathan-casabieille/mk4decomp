@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_0049db40;
 extern unsigned int g_data_004d6590;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -147,13 +147,13 @@ __declspec(naked) void Phase2InitDispatchInstallSelf_0040ba70(void)
 {
     __asm {
         call    SetJmp_00405420
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p2id_ret
         test    byte ptr [g_state_0054208c], 4
         je      L_p2id_ret
         call    MStackPush8_004ab790
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p2id_ret
         mov     eax, dword ptr [g_data_00542044]
@@ -172,7 +172,7 @@ __declspec(naked) void Phase2InitDispatchInstallSelf_0040ba70(void)
         test    al, 1
         jne     L_p2id_tailjmp
         call    MStackPushCallPop_0040a830
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p2id_ret
         mov     eax, dword ptr [g_data_00542050]
@@ -249,7 +249,7 @@ __declspec(naked) void Phase2InitDispatchInstallSelf_0040ba70(void)
         ret
     L_p2id_helper_phase0:
         call    MStackScopedSlotSetupPair_0040a520
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p2id_helper_pop_ret
         mov     eax, dword ptr [g_data_0054205c]
@@ -278,14 +278,14 @@ __declspec(naked) void Phase2InitDispatchInstallSelf_0040ba70(void)
         mov     ecx, dword ptr [eax*4 + 0x18]
         mov     dword ptr [g_data_00542044], ecx
         call    ChainListVecAdd_0049d200
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p2id_helper_pop_ret
         mov     eax, 1
         mov     dword ptr [esi + 8], 0x0040BB70
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_data_0054204c], eax
-        mov     dword ptr [g_data_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
     L_p2id_helper_pop_ret:
         pop     esi
         ret

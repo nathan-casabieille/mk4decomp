@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004d5d38;
 extern unsigned int g_data_004d6748;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -184,18 +184,18 @@ __declspec(naked) void Phase4FivePackedHelpers_00412cb0(void)
     L_p4fph_B_call:
         mov     dword ptr [g_data_0054206c], 0x3333
         call    AudioMixerStep_004ab700
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fph_B_exit
         add     dword ptr [g_data_0054206c], 0xD999
         call    ZeroAndDirty4_00405430
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fph_B_exit
         test    byte ptr [g_state_0054208c], 4
         je      L_p4fph_B_skip_call
         call    PushStackCallPauseSet0xa_00413070
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fph_B_exit
     L_p4fph_B_skip_call:
@@ -203,7 +203,7 @@ __declspec(naked) void Phase4FivePackedHelpers_00412cb0(void)
         mov     dword ptr [esi + 8], 0x00412CD0
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_data_0054204c], eax
-        mov     dword ptr [g_data_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
     L_p4fph_B_exit:
         pop     esi
         ret
@@ -244,18 +244,18 @@ __declspec(naked) void Phase4FivePackedHelpers_00412cb0(void)
         mov     dword ptr [g_data_00542058], 0x28
     L_p4fph_C_phase3_call:
         call    PushStackCallPauseSet0xa_00413070
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fph_C_exit
         call    MStackPushSet9Jmp_00413040
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fph_C_exit
         mov     eax, 1
         mov     dword ptr [esi + 8], 0x00412D80
         mov     dword ptr [esi + 0x84], 3
         mov     dword ptr [g_data_0054204c], eax
-        mov     dword ptr [g_data_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret
     L_p4fph_C_phase1:
@@ -266,36 +266,36 @@ __declspec(naked) void Phase4FivePackedHelpers_00412cb0(void)
         mov     dword ptr [g_data_00542058], 6
     L_p4fph_C_phase2_dec:
         call    PushStackCallPauseSet0xa_00413070
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fph_C_exit
         call    MStackPushSet9Jmp_00413040
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fph_C_exit
         mov     eax, 2
         mov     dword ptr [esi + 8], 0x00412D80
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_data_0054204c], eax
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
     L_p4fph_C_phase0:
         mov     dword ptr [g_data_00542058], 5
     L_p4fph_C_phase1_call:
         call    PushStackCallPauseSet0xa_00413070
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fph_C_exit
         call    MStackPushSet9Jmp_00413040
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fph_C_exit
         mov     eax, 1
         mov     dword ptr [esi + 8], 0x00412D80
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_data_0054204c], 3
-        mov     dword ptr [g_data_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
     L_p4fph_C_exit:
         pop     esi
         ret
@@ -326,7 +326,7 @@ __declspec(naked) void Phase4FivePackedHelpers_00412cb0(void)
         mov     dword ptr [g_data_00542058], 3
     L_p4fph_D_call:
         call    PushStackCallPauseSet0xa_00413070
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fph_D_exit
         mov     eax, dword ptr [g_data_00542044]
@@ -341,7 +341,7 @@ __declspec(naked) void Phase4FivePackedHelpers_00412cb0(void)
         mov     dword ptr [edx*4 + 0x10], 0x00412FF0
         mov     dword ptr [g_data_0054206c], eax
         call    ScaledStoreThree_00409260
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fph_D_exit
         mov     ecx, dword ptr [g_data_00542044]
@@ -352,7 +352,7 @@ __declspec(naked) void Phase4FivePackedHelpers_00412cb0(void)
         mov     dword ptr [eax*4 + 0x20], ecx
         mov     dword ptr [g_data_0054206c], 0x64
         call    CmpDivJmp_0049d080
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fph_D_exit
         test    byte ptr [g_state_0054208c], 4
@@ -361,7 +361,7 @@ __declspec(naked) void Phase4FivePackedHelpers_00412cb0(void)
         shr     edx, 2
         mov     dword ptr [g_data_00542048], edx
         call    PoseTreeBlendWalker_0049d680
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fph_D_exit
     L_p4fph_D_install_self:
@@ -369,7 +369,7 @@ __declspec(naked) void Phase4FivePackedHelpers_00412cb0(void)
         mov     dword ptr [esi + 8], 0x00412EC0
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_data_0054204c], 4
-        mov     dword ptr [g_data_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
     L_p4fph_D_exit:
         pop     esi
         ret
@@ -392,7 +392,7 @@ __declspec(naked) void Phase4FivePackedHelpers_00412cb0(void)
         mov     dword ptr [g_data_0054206c], eax
         mov     dword ptr [ecx*4 + 0x48], eax
         call    ChainListVecAdd_0049d200
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fph_E_ret
     L_p4fph_E_tail:

@@ -122,7 +122,7 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -150,12 +150,12 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         mov      ecx, dword ptr [eax*4 + 0x64]
         mov      dword ptr [g_data_0054205c], ecx
         call     MStackPush2RunCountdown_004089e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_909c
         mov      dword ptr [g_data_0054206c], 2
         call     ChainDirtyBitWalker_00408c10
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_909c
         mov      eax, dword ptr [g_data_00542048]
@@ -167,7 +167,7 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [edx*4 + 0x34], eax
         call     MStackBracket7_DispatchAndChain_004b8fa0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_909c
         mov      dword ptr [g_data_0054206c], 2
@@ -206,7 +206,7 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     PendingMatch_004492f0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_9139:
@@ -214,7 +214,7 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         mov      dword ptr [esi + 8], OFFSET L_90a0
         mov      dword ptr [esi + 0x84], 3
         mov      dword ptr [g_data_0054204c], 0x28
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_9160:
@@ -224,7 +224,7 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         mov      edx, dword ptr [ecx*4 + 0x68]
         mov      dword ptr [g_data_00542058], edx
         call     DualPushAddCallDualPopJmp_0044cc50
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_92d8
         mov      eax, dword ptr [g_data_00542070]
@@ -247,7 +247,7 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
         call     PendingMatch_004492f0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_9211:
@@ -262,18 +262,18 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         call     StoreLoadJmp_00404ef0
         add      esp, 4
         call     Chain2AxisDiffStoreTailJmp_0044cad0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_92d8
         mov      dword ptr [g_data_00542074], 0xb333
         mov      dword ptr [g_data_0054206c], 0xfffec000
         call     MStackPush3SideStore_0044cb80
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_92d8
         mov      dword ptr [g_data_00542074], 0x1999
         call     DualPushAddCallDualPopJmp_0044cc50
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_92d8
         mov      eax, dword ptr [g_data_00542044]
@@ -286,7 +286,7 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         mov      dword ptr [esi + 8], OFFSET L_90a0
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], 0xc8
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret
     L_92d3:

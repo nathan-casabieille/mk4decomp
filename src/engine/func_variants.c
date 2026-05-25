@@ -15,7 +15,7 @@ extern unsigned int g_data_004e3ac8;
 extern unsigned int g_data_004f2240;
 extern unsigned int g_data_00538158;
 extern unsigned int g_data_0053815c;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -319,9 +319,9 @@ void func_00439fa0(void) {
  * ScaledIndirectJmp_0049c850. */
 void func_00498730(void) {
     PushChainAddCallPop_00493c80();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     Vec2SumMul10ChainCompute_0049bc60();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     if ((int)g_data_00542070 <= (int)g_data_00542074) return;
     ScaledIndirectJmp_0049c850();
 }
@@ -330,7 +330,7 @@ void func_00498730(void) {
  * Standard TCO wrapper. */
 void func_00498770(void) {
     MStackCall_00406740();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     CallSetPause_0041f830();
 }
 
@@ -352,7 +352,7 @@ __declspec(naked) void func_00498790(void)
         je      short L_qsv_phase0
         dec     eax
         call    MStackChainSwapTraversal_00493d00
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_qsv_ret
         mov     ecx, dword ptr [g_data_0054205c]
@@ -361,7 +361,7 @@ __declspec(naked) void func_00498790(void)
         mov     dword ptr [g_data_0054206c], eax
         jne     short L_qsv_callPause
         call    SlideAttackEventCluster_00498900
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_qsv_ret
     L_qsv_callPause:
@@ -379,7 +379,7 @@ __declspec(naked) void func_00498790(void)
         je      short L_qsv_install1
         mov     dword ptr [g_data_0054206c], 0x12c
         call    AudioVolumeRescale_004ab690
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_qsv_ret
         test    byte ptr [g_data_0054208c], bl
@@ -400,7 +400,7 @@ __declspec(naked) void func_00498790(void)
         mov     edx, dword ptr [g_data_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    InitZeroChainLookupJmp_00494210
-        mov     dword ptr [g_data_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
         pop     esi
         pop     ebx
         ret
@@ -420,7 +420,7 @@ __declspec(naked) void func_00498790(void)
         mov     edx, dword ptr [g_data_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    Phase3DispatchScaleInstallSelf_004125e0
-        mov     dword ptr [g_data_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
     L_qsv_ret:
         pop     esi
         pop     ebx
@@ -434,9 +434,9 @@ void func_00498930(void) {
     unsigned int v;
     g_data_0054206c = 7;
     ScaledIndexConditionalAdd_0048e400();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     CondPickDualStore_0049c670();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     v = 0x30b;
     g_data_0054206c = v;
     *(unsigned int *)(g_data_00542060 * 4 + 0x74) = v;
@@ -453,22 +453,22 @@ __declspec(naked) void func_00498980(void)
         /* === h3 (0x498980): pose copy + 0x23d7 ratio + 004f2240 === */
         mov      dword ptr [g_data_0054206c], 0x47
         call     TableLookupCall_00489ff0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8ae4
         call     DualCmpSwapStore_0049c5a0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8ae4
         mov      eax, OFFSET g_data_004e3ac8
         shr      eax, 2
         mov      dword ptr [g_data_00542048], eax
         call     DispatcherComplex260_00407030
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8ae4
         call     MStackCall_00406340
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8ae4
         mov      ecx, dword ptr [g_data_00542044]
@@ -532,7 +532,7 @@ __declspec(naked) void func_00498980(void)
  * (signed cmp [70] vs [74]) -> tail-jmp ScaledIndirectJmp. */
 void func_00498af0(void) {
     Vec2SumMul10ChainCompute_0049bc60();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     if ((int)g_data_00542070 <= (int)g_data_00542074) return;
     ScaledIndirectJmp_0049c850();
 }
@@ -555,7 +555,7 @@ __declspec(naked) void func_00498b20(void)
         je       short L_8b61
         mov      dword ptr [g_data_0054206c], 0x49
         call     TableLookupCall_00489ff0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_8ba8
         call     CallSetPause_0041f830
@@ -563,19 +563,19 @@ __declspec(naked) void func_00498b20(void)
         ret
     L_8b61:
         call     MStackCall_00406740
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_8ba8
         mov      dword ptr [g_data_0054206c], 0x48
         call     TableLookupCall_00489ff0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_8ba8
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_8b20
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], 0xa
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_8ba8:
         pop      esi
         ret
@@ -586,7 +586,7 @@ __declspec(naked) void func_00498b20(void)
  * CallSetPause. Standard TCO wrapper. */
 void func_00498bb0(void) {
     MStackCall_00406740();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     CallSetPause_0041f830();
 }
 
@@ -595,7 +595,7 @@ void func_00498bb0(void) {
 void func_00498bd0(void) {
     unsigned int v;
     CondPickDualStore_0049c670();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     v = 0x309;
     g_data_0054206c = v;
     *(unsigned int *)(g_data_00542060 * 4 + 0x74) = v;
@@ -606,16 +606,16 @@ void func_00498bd0(void) {
  * MstackPushPackChainInit + ArgSar_Set0_Jmp w/ event 004f2298. */
 void func_00498c10(void) {
     DualCmpSwapStore_0049c5a0();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     MstackPushPackChainInit_00498c40();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     ((void (*)(void *))ArgSar_Set0_Jmp_0049c6f0)(&g_data_004f2298);
 }
 
 /* h3 @ 0x0047c3c0 (48b): chained event 004ed2f0 -> 004ed2f8 forwarder. */
 void func_0047c3c0(void) {
     ((void (*)(void *))IterStepDualStore_00490b40)(&g_data_004ed2f0);
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004ed2f8);
 }
 
@@ -634,7 +634,7 @@ __declspec(naked) void func_0047c3f0(void)
         test     ecx, ecx
         je       L_c4a2
         call     ScaledZero44_00491500
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c50e
         mov      ecx, dword ptr [g_data_00542060]
@@ -676,7 +676,7 @@ __declspec(naked) void func_0047c3f0(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     InstallSelfCmpJlJmp_00480b20
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_c50e:
         ret
     }
@@ -715,14 +715,14 @@ __declspec(naked) void func_0047c530(void)
 void func_0047c580(void) {
     unsigned int v;
     ScaledAndAh_004902d0();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     DualCallPauseDirtyJmp_00490c30();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     v = 0x200d;
     g_data_0054206c = v;
     *(unsigned int *)(g_data_00542060 * 4 + 0x74) = v;
     ScaledChainAndF000DirtyToggle_0048e740();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     if (g_data_0054208c & 1) {
         SevenThunks_0047cc50();
         return;
@@ -733,36 +733,36 @@ void func_0047c580(void) {
 /* h2 @ 0x00482200 (32b): event 004edb98 forwarder. */
 void func_00482200(void) {
     GateDispatch6c_00494580();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004edb98);
 }
 
 /* h3 @ 0x00482220 (32b): event 004edba8 forwarder. */
 void func_00482220(void) {
     GateDispatch6c_00494580();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004edba8);
 }
 
 /* h4 @ 0x00482240 (80b): 0x1b333 + ScaledMove48to58 + event 004edbf0. */
 void func_00482240(void) {
     GateDispatch6c_00494580();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     g_data_0054206c = 0x1b333;
     g_data_00542070 = 0;
     Wrapper_0048ff30();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     ScaledMove48to58_00490720();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004edbf0);
 }
 
 /* h5 @ 0x00482290 (48b): 488f00 + 494580 + event 004edc18. */
 void func_00482290(void) {
     CjTableThresholdDispatch_00488f00();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     GateDispatch6c_00494580();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004edc18);
 }
 
@@ -809,7 +809,7 @@ __declspec(naked) void func_004822e0(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edx
         call     GuardedDispatch4_00489080
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         ret
     }
@@ -820,31 +820,31 @@ __declspec(naked) void func_004822e0(void)
 void func_00482360(void) {
     g_data_0054206c = 0x8000;
     CmpP1DualInitStore_00482ab0();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     CjTableThresholdDispatch_00488f00();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     GateDispatch6c_00494580();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004edca8);
 }
 
 /* h10 @ 0x004823b0 (48b): 488f00 + 494580 + event 004edcf0. */
 void func_004823b0(void) {
     CjTableThresholdDispatch_00488f00();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     GateDispatch6c_00494580();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004edcf0);
 }
 
 /* h11 @ 0x004823e0 (64b): event 004edd20 + tail-jmp Wrapper_00488c60. */
 void func_004823e0(void) {
     CjTableThresholdDispatch_00488f00();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     GateDispatch6c_00494580();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004edd20);
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     Wrapper_00488c60();
 }
 
@@ -853,13 +853,13 @@ void func_004823e0(void) {
 void func_00482420(void) {
     g_data_0054206c = 0x8000;
     CmpP1DualInitStore_00482ab0();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     CjTableThresholdDispatch_00488f00();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     GateDispatch6c_00494580();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004edd58);
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     Wrapper_00488c60();
 }
 
@@ -871,18 +871,18 @@ void func_00482470(void) {
 /* h13 @ 0x00482480 (48b): 488f00 + 494580 + event 004eddb8. */
 void func_00482480(void) {
     CjTableThresholdDispatch_00488f00();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     GateDispatch6c_00494580();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004eddb8);
 }
 
 /* h14 @ 0x004824b0 (48b): 488f00 + 494580 + event 004ede00. */
 void func_004824b0(void) {
     CjTableThresholdDispatch_00488f00();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     GateDispatch6c_00494580();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004ede00);
 }
 
@@ -891,7 +891,7 @@ void func_004824b0(void) {
 void func_004824e0(void) {
     g_data_0054207c = 6;
     EntryThunkBodyStateMachine_00457bb0();
-    if (g_data_00541e6c) return;
+    if (g_framePauseFlag) return;
     EightEntryAlarmDispatch_00482500();
 }
 
@@ -994,7 +994,7 @@ __declspec(naked) void func_00432710(void) {
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], edx
         call     PendingMatch_00432ed0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
         test     byte ptr [g_data_0054208c], 1
@@ -1013,7 +1013,7 @@ __declspec(naked) void func_00432710(void) {
         add      ecx, eax
         mov      dword ptr [g_data_00542084], ecx
         call     StoreIncrMStackPush6_004275c0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
         mov      ebx, 4
@@ -1023,11 +1023,11 @@ __declspec(naked) void func_00432710(void) {
         mov      dword ptr [g_data_0054207c], 0xff9c0000
         mov      dword ptr [g_data_00542084], 1
         call     DispatcherComplex181_00426490
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
         call     RoundCleanupCluster_00427690
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
         test     byte ptr [g_data_0054208c], bl
@@ -1037,7 +1037,7 @@ __declspec(naked) void func_00432710(void) {
         mov      dword ptr [g_data_00542080], eax
         mov      dword ptr [ecx*4 + 0x5c], eax
         call     AllocSlotPushTripleGlobals_00427470
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
         mov      edx, 0x4d55a8
@@ -1048,11 +1048,11 @@ __declspec(naked) void func_00432710(void) {
         mov      dword ptr [g_data_00542078], 0xfecf0000
         mov      dword ptr [g_data_0054207c], 0xff9c0000
         call     Push70CallScaleArith2_00457b40
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
         call     MStackPop4Rewrite_004274f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
         test     byte ptr [g_data_0054208c], bl
@@ -1068,7 +1068,7 @@ __declspec(naked) void func_00432710(void) {
         sar      eax, 0x10
         mov      dword ptr [g_data_0054206c], eax
         call     StoreIncrMStackPush6_004275c0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
         mov      dword ptr [g_data_00542070], ebx
@@ -1077,11 +1077,11 @@ __declspec(naked) void func_00432710(void) {
         mov      dword ptr [g_data_0054207c], 0xffb00000
         mov      dword ptr [g_data_00542084], 1
         call     DispatcherComplex181_00426490
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
         call     RoundCleanupCluster_00427690
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
         test     byte ptr [g_data_0054208c], bl
@@ -1090,7 +1090,7 @@ __declspec(naked) void func_00432710(void) {
         mov      eax, dword ptr [g_data_00542080]
         mov      dword ptr [edx*4 + 0x5c], eax
         call     AllocSlotPushTripleGlobals_00427470
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
         mov      ecx, 0x4d55b0
@@ -1101,11 +1101,11 @@ __declspec(naked) void func_00432710(void) {
         mov      dword ptr [g_data_00542078], 0xfecf0000
         mov      dword ptr [g_data_0054207c], 0xffb00000
         call     Push70CallScaleArith2_00457b40
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
         call     MStackPop4Rewrite_004274f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
         test     byte ptr [g_data_0054208c], bl
@@ -1166,7 +1166,7 @@ __declspec(naked) void func_00432710(void) {
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], edx
         call     PendingMatch_00432ed0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
         test     byte ptr [g_data_0054208c], 1
@@ -1186,7 +1186,7 @@ __declspec(naked) void func_00432710(void) {
         add      ecx, eax
         mov      dword ptr [g_data_00542084], ecx
         call     StoreIncrMStackPush6_004275c0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
         mov      ebx, 4
@@ -1197,11 +1197,11 @@ __declspec(naked) void func_00432710(void) {
         mov      dword ptr [g_data_0054207c], esi
         mov      dword ptr [g_data_00542084], 1
         call     DispatcherComplex181_00426310
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
         call     RoundCleanupCluster_00427690
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
         test     byte ptr [g_data_0054208c], bl
@@ -1213,7 +1213,7 @@ __declspec(naked) void func_00432710(void) {
         cmp      eax, 0xa
         jb       L_2c3b
         call     AllocSlotPushTripleGlobals_00427470
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
         mov      eax, 0x4d55a8
@@ -1224,11 +1224,11 @@ __declspec(naked) void func_00432710(void) {
         mov      dword ptr [g_data_00542078], 0x14d0000
         mov      dword ptr [g_data_0054207c], esi
         call     StreamChainStringInstall_00457900
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
         call     MStackPop4Rewrite_004274f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
         test     byte ptr [g_data_0054208c], bl
@@ -1236,7 +1236,7 @@ __declspec(naked) void func_00432710(void) {
         jmp      L_2caa
     L_2c3b:
         call     AllocSlotPushTripleGlobals_00427470
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
         mov      eax, 0x4d55a8
@@ -1247,11 +1247,11 @@ __declspec(naked) void func_00432710(void) {
         mov      dword ptr [g_data_00542078], 0x1430000
         mov      dword ptr [g_data_0054207c], esi
         call     StreamChainStringInstall_00457900
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
         call     MStackPop4Rewrite_004274f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
         test     byte ptr [g_data_0054208c], bl
@@ -1268,7 +1268,7 @@ __declspec(naked) void func_00432710(void) {
         sar      eax, 0x10
         mov      dword ptr [g_data_0054206c], eax
         call     StoreIncrMStackPush6_004275c0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
         mov      esi, 0xffb40000
@@ -1278,11 +1278,11 @@ __declspec(naked) void func_00432710(void) {
         mov      dword ptr [g_data_0054207c], esi
         mov      dword ptr [g_data_00542084], 1
         call     DispatcherComplex181_00426310
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
         call     RoundCleanupCluster_00427690
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
         test     byte ptr [g_data_0054208c], bl
@@ -1294,7 +1294,7 @@ __declspec(naked) void func_00432710(void) {
         cmp      eax, 0xa
         jb       L_2dd7
         call     AllocSlotPushTripleGlobals_00427470
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
         mov      edx, 0x4d55b0
@@ -1305,11 +1305,11 @@ __declspec(naked) void func_00432710(void) {
         mov      dword ptr [g_data_00542078], 0x14a0000
         mov      dword ptr [g_data_0054207c], esi
         call     StreamChainStringInstall_00457900
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
         call     MStackPop4Rewrite_004274f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
         test     byte ptr [g_data_0054208c], bl
@@ -1317,7 +1317,7 @@ __declspec(naked) void func_00432710(void) {
         jmp      L_2e43
     L_2dd7:
         call     AllocSlotPushTripleGlobals_00427470
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
         mov      edx, 0x4d55b0
@@ -1328,11 +1328,11 @@ __declspec(naked) void func_00432710(void) {
         mov      dword ptr [g_data_00542078], 0x1400000
         mov      dword ptr [g_data_0054207c], esi
         call     StreamChainStringInstall_00457900
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
         call     MStackPop4Rewrite_004274f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
         test     byte ptr [g_data_0054208c], bl
@@ -1375,7 +1375,7 @@ void func_00448810(void) {
     *(unsigned int *)(g_data_0054205c * 4 + 0x28) = 0x3b;
     g_data_0054206c = 0x1c;
     GatedWordPushCall_00489f90();
-    if (g_data_00541e6c != 0) return;
+    if (g_framePauseFlag != 0) return;
     ((void (*)(int))ArgSarStoreJmp_004594f0)(0x4e62c8);
 }
 
@@ -1383,7 +1383,7 @@ void func_00448850(void) {
     *(unsigned int *)(g_data_0054205c * 4 + 0x28) = 0x83;
     g_data_0054206c = 0x29;
     GatedWordPushCall_00489f90();
-    if (g_data_00541e6c != 0) return;
+    if (g_framePauseFlag != 0) return;
     ((void (*)(int))ArgSarStoreJmp_004594f0)(0x4e62d8);
 }
 
@@ -1391,7 +1391,7 @@ void func_00448890(void) {
     *(unsigned int *)(g_data_0054205c * 4 + 0x28) = 0x94;
     g_data_0054206c = 0x1b;
     GatedWordPushCall_00489f90();
-    if (g_data_00541e6c != 0) return;
+    if (g_framePauseFlag != 0) return;
     ((void (*)(int))ArgSarStoreJmp_004594f0)(0x4e62e8);
 }
 
@@ -1399,7 +1399,7 @@ void func_004488d0(void) {
     *(unsigned int *)(g_data_0054205c * 4 + 0x28) = 0xa6;
     g_data_0054206c = 0x2a;
     GatedWordPushCall_00489f90();
-    if (g_data_00541e6c != 0) return;
+    if (g_framePauseFlag != 0) return;
     ((void (*)(int))ArgSarStoreJmp_004594f0)(0x4e62f8);
 }
 
@@ -1407,7 +1407,7 @@ void func_00448910(void) {
     *(unsigned int *)(g_data_0054205c * 4 + 0x28) = 0xb9;
     g_data_0054206c = 0x1b;
     GatedWordPushCall_00489f90();
-    if (g_data_00541e6c != 0) return;
+    if (g_framePauseFlag != 0) return;
     ((void (*)(int))ArgSarStoreJmp_004594f0)(0x4e6308);
 }
 
@@ -1415,7 +1415,7 @@ void func_00448950(void) {
     *(unsigned int *)(g_data_0054205c * 4 + 0x28) = 0xce;
     g_data_0054206c = 0x2b;
     GatedWordPushCall_00489f90();
-    if (g_data_00541e6c != 0) return;
+    if (g_framePauseFlag != 0) return;
     ((void (*)(int))ArgSarStoreJmp_004594f0)(0x4e6318);
 }
 
@@ -1435,17 +1435,17 @@ __declspec(naked) void func_00448990(void) {
         dec      eax
         je       L_89fc
         call     Set2CallIncJmp_00472860
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8b40
         mov      dword ptr [g_data_0054207c], 5
         call     EntryThunkBodyStateMachine_00457bb0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8b40
         push     0x4e6328
         call     ArgSarStoreJmp_004594f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         pop      esi
         ret      
@@ -1454,12 +1454,12 @@ __declspec(naked) void func_00448990(void) {
         mov      dword ptr [ecx*4 + 0x28], 0x116
         mov      dword ptr [g_data_0054206c], 0x12
         call     GatedWordPushCall_00489f90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8b40
         mov      dword ptr [g_data_0054207c], 5
         call     EntryThunkBodyStateMachine_00457bb0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8b40
         mov      dword ptr [g_data_00542080], 0x133
@@ -1476,7 +1476,7 @@ __declspec(naked) void func_00448990(void) {
         mov      dword ptr [eax*4 + 0x28], 0xe1
         mov      dword ptr [g_data_0054206c], 3
         call     GuardedSeq_00476f10
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8b40
         mov      eax, dword ptr [g_data_00542060]
@@ -1504,7 +1504,7 @@ __declspec(naked) void func_00448990(void) {
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
         call     InstallSelf3WayChainCmp_00428d80
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_8b40:
         pop      esi
         ret      
@@ -1530,18 +1530,18 @@ __declspec(naked) void func_00448990(void) {
         mov      dword ptr [edx*4 + 0x68], eax
         mov      dword ptr [g_data_0054206c], 0xc
         call     GuardedSeq_00472840
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8cd2
         mov      dword ptr [g_data_0054206c], 0x16
         call     GatedWordPushCall_00489f90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8cd2
         mov      ecx, dword ptr [g_data_00542054]
         mov      dword ptr [g_data_0054205c], ecx
         call     TripleMStackPushChainStores_00476180
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8cd2
         test     byte ptr [g_data_0054208c], 4
@@ -1562,7 +1562,7 @@ __declspec(naked) void func_00448990(void) {
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [edx*4 + 0x30], eax
         call     MStackCall_00406340
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8cd2
         mov      eax, dword ptr [g_data_00542044]
@@ -1580,17 +1580,17 @@ __declspec(naked) void func_00448990(void) {
         add      esp, 4
         mov      dword ptr [g_data_0054206c], 0xb
         call     GuardedSeq_00476de0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8cd2
         mov      dword ptr [g_data_0054206c], 0xc
         call     GuardedSeq_00476de0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8cd2
         mov      dword ptr [g_data_0054206c], 4
         call     DirtyOrFlagDispatch_00476e60
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8cd2
         push     0x4e6338
@@ -1619,7 +1619,7 @@ __declspec(naked) void func_00448990(void) {
         je       L_8d0f
         push     0x4e6348
         call     ArgSarStoreJmp_004594f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         ret      
     L_8d0f:
@@ -1639,7 +1639,7 @@ __declspec(naked) void func_00448990(void) {
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     InstallSelfWithDispatch_00428f70
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         ret      
         nop      
         nop      
@@ -1649,12 +1649,12 @@ __declspec(naked) void func_00448990(void) {
         mov      dword ptr [eax*4 + 0x28], 0x7b
         mov      dword ptr [g_data_0054206c], 0x17
         call     GatedWordPushCall_00489f90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8dcd
         mov      dword ptr [g_data_0054207c], 9
         call     EntryThunkBodyStateMachine_00457bb0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8dcd
         push     0x4e6358
@@ -1666,12 +1666,12 @@ __declspec(naked) void func_00448990(void) {
         nop      
         mov      dword ptr [g_data_0054206c], 0x17
         call     GatedWordPushCall_00489f90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8e0d
         mov      dword ptr [g_data_0054207c], 9
         call     EntryThunkBodyStateMachine_00457bb0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8e0d
         push     0x4e6368
@@ -1695,7 +1695,7 @@ __declspec(naked) void func_00448990(void) {
         mov      dword ptr [g_data_00542054], eax
         jns      L_8e88
         call     ConstStoreCallJmp_00448fa0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8f95
         call     Thunk_0049cbc0
@@ -1706,7 +1706,7 @@ __declspec(naked) void func_00448990(void) {
         mov      dword ptr [g_data_00542054], eax
         jns      L_8f2d
         call     ConstStoreCallJmp_00448fa0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8f95
         mov      dword ptr [g_data_00542054], 0x5f
@@ -1717,7 +1717,7 @@ __declspec(naked) void func_00448990(void) {
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         call     LoadStoreDoubleCallSet_00448fc0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8f95
         mov      eax, dword ptr [g_data_004d57ac]
@@ -1729,7 +1729,7 @@ __declspec(naked) void func_00448990(void) {
         mov      dword ptr [esi + 8], 0x448e10
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret      
     L_8eec:
@@ -1750,11 +1750,11 @@ __declspec(naked) void func_00448990(void) {
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         call     LoadStoreDoubleCallSet_00448fc0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8f95
         call     MatchEndFadeFsmCluster_00449010
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8f95
         mov      eax, dword ptr [g_data_004d57ac]
@@ -1766,7 +1766,7 @@ __declspec(naked) void func_00448990(void) {
         mov      dword ptr [esi + 8], 0x448e10
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_8f95:
         pop      esi
         ret      

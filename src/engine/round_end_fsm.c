@@ -157,7 +157,7 @@ extern void ScaledInitWithCounterAndType_004314f0(void);
  */
 extern unsigned int g_data_004f3608;
 extern unsigned int g_data_0052ab40;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542060;
 extern unsigned int g_data_0054206c;
@@ -174,7 +174,7 @@ __declspec(naked) void Phase3InstallSelfChain_00421380(void) {
         test    eax, eax
         je      short L_pis2_phase0
         call    SwapOrPassSet_0048fbf0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis2_done
         mov     ecx, dword ptr [g_data_0054206c]
@@ -190,11 +190,11 @@ __declspec(naked) void Phase3InstallSelfChain_00421380(void) {
         mov     dword ptr [g_data_0054206c], eax
         mov     dword ptr [g_data_00537f30], eax
         call    CallPauseClear3CallTriple_00428030
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis2_done
         call    ScenegraphWalk_0041f7d0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis2_done
         call    PendingMatch_00420300
@@ -208,7 +208,7 @@ __declspec(naked) void Phase3InstallSelfChain_00421380(void) {
         mov     dword ptr [g_data_00542094], eax
         jne     short L_pis2_skipCall
         call    TwinMStackPushScaledChain_00422110
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pis2_done
     L_pis2_skipCall:
@@ -227,7 +227,7 @@ __declspec(naked) void Phase3InstallSelfChain_00421380(void) {
         mov     edx, dword ptr [g_data_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    RoundEndFsm_0042b2f0
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
     L_pis2_done:
         pop     esi
         ret
@@ -245,27 +245,27 @@ __declspec(naked) void Phase3InstallSelfChain_00421380(void) {
         /* entry 2 (offset 0x120) */
     L_pis2_entry2:
         call    ScaledInit_0048f720
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pis2_e2End
         call    CopyJmp_00406ba0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pis2_e2End
         call    ScaledZero44_00491500
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pis2_e2End
         call    ScaledZeroFour_00490740
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pis2_e2End
         call    MStackPushSet0001_00490260
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pis2_e2End
         call    MStackPushSet0004_00490230
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pis2_e2End
         jmp     ScaledInitWithCounterAndType_004314f0

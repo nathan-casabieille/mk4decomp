@@ -135,7 +135,7 @@ extern unsigned int g_data_004eca50;
 extern unsigned int g_data_0050b268;
 
 extern unsigned int g_data_004d57ac;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -168,42 +168,42 @@ __declspec(naked) void PreFightInstallCluster_00474390(void)
         mov      dword ptr [g_data_0054206c], 0x7ae
         je       short L_441c
         call     AudioMixerStep_004ab700
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_45d4
         mov      eax, dword ptr [g_data_0054206c]
         add      eax, 0x23d7
         mov      dword ptr [g_data_00542074], eax
         call     MStackPushVec3Mul10_004767e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_45d4
         mov      ecx, OFFSET g_data_0050b268
         shr      ecx, 2
         mov      dword ptr [g_data_00542048], ecx
         call     DispatcherComplex260_00407030
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       short L_4478
         pop      esi
         ret
     L_441c:
         call     AudioMixerStep_004ab700
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_45d4
         mov      eax, dword ptr [g_data_0054206c]
         add      eax, 0x23d7
         mov      dword ptr [g_data_00542074], eax
         call     MStackPushVec3Mul10_004767e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_45d4
         mov      ecx, OFFSET g_data_004eca50
         shr      ecx, 2
         mov      dword ptr [g_data_0054206c], ecx
         call     PushSetXfmMaskCallPop_00407140
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_45d4
         test     byte ptr [g_data_0054208c], 4
@@ -221,7 +221,7 @@ __declspec(naked) void PreFightInstallCluster_00474390(void)
     L_449b:
         mov      dword ptr [g_data_0054206c], 0x6147
         call     StoreDoubleNegPauseSubStore_004ab750
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_45d4
         mov      eax, dword ptr [g_data_00542044]
@@ -264,7 +264,7 @@ __declspec(naked) void PreFightInstallCluster_00474390(void)
         add      ecx, 0x1b
         mov      dword ptr [g_data_00542044], ecx
         call     TripleVecAccCallStore_00476880
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_45d4
         mov      eax, dword ptr [g_data_00542044]
@@ -278,12 +278,12 @@ __declspec(naked) void PreFightInstallCluster_00474390(void)
         mov      dword ptr [g_data_0054206c], eax
         je       short L_45bc
         call     DoublePushAddCallDoublePop_00476930
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_45d4
     L_45bc:
         call     MStackCall_00406340
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_45d4
         mov      dword ptr [g_data_0054206c], 1
@@ -306,14 +306,14 @@ __declspec(naked) void PreFightInstallCluster_00474390(void)
         mov      dword ptr [eax*4 + 0x84], 0
         lea      esi, [eax*4]
         call     NodeWalkPoseUpdate_00474630
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_4622
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET func_004745e0
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_4622:
         pop      esi
         ret

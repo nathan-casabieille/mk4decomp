@@ -128,7 +128,7 @@ extern unsigned int g_data_00535d04;
 extern unsigned int g_data_00535ddc;
 extern unsigned int g_data_00538158;
 extern unsigned int g_data_0053a774;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054205c;
@@ -152,7 +152,7 @@ __declspec(naked) void StageEventStartCluster_0047ff80(void)
     __asm {
         /* H1 */
         call     DualSetCallPair_0047dbc0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_ffa9
         mov      eax, dword ptr [g_data_004d57ac]
@@ -190,15 +190,15 @@ __declspec(naked) void StageEventStartCluster_0047ff80(void)
         /* H3 (L_ffe0) */
     L_ffe0:
         call     ZeroThreeSlots_00490780
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_0017
         call     ZeroSixStores6080_00490e40
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_0017
         call     DualCallPauseDirtyJmp_00490c30
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_0017
         push     OFFSET g_data_004ed800
@@ -241,7 +241,7 @@ __declspec(naked) void StageEventStartCluster_0047ff80(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edx
         call     SlotEvent3EntryChain_0046fdf0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         ret
         /* H5 */
@@ -249,7 +249,7 @@ __declspec(naked) void StageEventStartCluster_0047ff80(void)
         push     esi
         mov      dword ptr [g_data_00542044], eax
         call     MStackSignedMod_0042fee0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_019a
         cmp      dword ptr [g_data_0054206c], 0x5999

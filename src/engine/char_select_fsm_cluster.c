@@ -145,7 +145,7 @@ extern unsigned int g_data_0050d434;
 extern unsigned int g_data_004d5324;
 extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_00535e6c;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -168,11 +168,11 @@ __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
     __asm {
         /* === h1 (0x4555f0): main link/init chain === */
         call     MStackPush2RunCountdown_004089e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5721
         call     MStackBracket7_DispatchAndChain_004b8fa0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5721
         mov      eax, OFFSET g_data_004e8158
@@ -184,7 +184,7 @@ __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         call     PushSetXfmMaskCallPop_00407140
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5721
         mov      eax, dword ptr [g_data_004d57ac]
@@ -196,12 +196,12 @@ __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
         mov      dword ptr [g_data_0054205c], edx
         jne      L_5721
         call     MStackCall_00406600
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5721
         mov      dword ptr [g_data_0054206c], 0xa
         call     ChainDirtyBitWalker_00408c10
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5721
         mov      eax, dword ptr [g_data_00542048]
@@ -221,7 +221,7 @@ __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
         mov      edx, dword ptr [g_data_004d5324]
         mov      dword ptr [g_data_0054206c], edx
         call     AudioMixerStep_004ab700
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5721
         mov      ecx, dword ptr [g_data_00542044]
@@ -256,7 +256,7 @@ __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
         shr      ecx, 2
         mov      dword ptr [g_data_00542048], ecx
         call     MStackPushDispatchBitGate_00407330
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_58ff
         test     byte ptr [g_data_0054208c], 4
@@ -268,11 +268,11 @@ __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
         mov      edx, dword ptr [g_data_00542044]
         mov      dword ptr [g_data_0054205c], edx
         call     MStackPushTwoEntryChainCall_004058c0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_58ff
         call     MStackCall_00406340
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_58ff
         push     OFFSET CharSelectFsmCluster_004561f0 + 0x320
@@ -283,7 +283,7 @@ __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
         mov      dword ptr [g_data_00542078], 0x16666
         mov      dword ptr [g_data_0054207c], 0
         call     ChainGatedNegAccum_0048b740
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_58ff
         mov      ecx, dword ptr [g_data_0054205c]
@@ -323,20 +323,20 @@ __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
         mov      ecx, dword ptr [g_data_00535e6c]
         mov      dword ptr [eax*4 + 0x3c], ecx
         call     ArgSarStoreJmp_004594f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         pop      esi
         ret
     L_58d0:
         call     DualScaledStore_00452740
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_58ff
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_5730
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], 0x41
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_58ff:
         pop      esi
         ret

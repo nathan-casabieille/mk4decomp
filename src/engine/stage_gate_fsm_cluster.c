@@ -137,7 +137,7 @@ extern void StageGateFsmCluster_0047b2c0(void);
 extern void EsiEdiAliasDualMul10_004906b0(void);
 extern unsigned int g_data_004ed160;
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
@@ -155,11 +155,11 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         /* === h1 (0x47aff0): pre-pose pause/check w/ bit 0x17 set === */
         mov      dword ptr [g_data_0054206c], 0xe666
         call     EsiEdiAliasDualMul10_004906b0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b036
         call     GuardedSeq_004297b0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b036
         test     byte ptr [g_data_0054208c], 1
@@ -215,13 +215,13 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         /* case 1: bit 0x13, call 0047b2c0, install state 2 */
         mov      dword ptr [g_data_00542080], 0x13
         call     StageGateFsmCluster_0047b2c0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_b297
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_b070
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      edi
         pop      esi
         ret
@@ -229,13 +229,13 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         /* case 2: bit 0x12, call 0047b2c0, install state 3 */
         mov      dword ptr [g_data_00542080], 0x12
         call     StageGateFsmCluster_0047b2c0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_b297
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_b070
         mov      dword ptr [esi + 0x84], 3
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      edi
         pop      esi
         ret
@@ -261,7 +261,7 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     EsiInstallChainCmpDualCall_00429300
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -288,7 +288,7 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     ScaledLoadIncJmp_00428d00
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -309,7 +309,7 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     ScaledLoadJmp_00429390
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -318,13 +318,13 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         mov      dword ptr [g_data_0054207c], edi
         mov      dword ptr [g_data_00542080], 0x12
         call     StageGateFsmCluster_0047b2c0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_b297
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_b070
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      edi
         pop      esi
         ret

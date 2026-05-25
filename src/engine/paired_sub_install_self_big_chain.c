@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004ed8d8;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
@@ -183,7 +183,7 @@ __declspec(naked) void PairedSubInstallSelfBigChain_0047c0d0(void)
         shr     ecx, 2
         mov     dword ptr [g_data_00542044], ecx
         call    GuardedDirtyXformFromTable_0048f6d0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_psisbc_ret
         mov     edx, dword ptr [g_data_0054205c]
@@ -200,23 +200,23 @@ __declspec(naked) void PairedSubInstallSelfBigChain_0047c0d0(void)
         mov     dword ptr [g_data_0054206c], ecx
         mov     dword ptr [g_data_00542070], edx
         call    Vec2ChainComputeStores_00480b80
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_psisbc_ret
         call    DualCallPauseDirtyJmp_00490c30
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_psisbc_ret
     L_psisbc_install2:
         mov     dword ptr [esi + 8], offset L_psisbc_entry2
         mov     dword ptr [esi + 0x84], 2
         mov     dword ptr [g_data_0054204c], 1
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
     L_psisbc_phase0:
         call    ScaledChainTwoStores_00480d20
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_psisbc_ret
         mov     eax, dword ptr [g_data_0054206c]
@@ -239,7 +239,7 @@ __declspec(naked) void PairedSubInstallSelfBigChain_0047c0d0(void)
         mov     edx, dword ptr [g_data_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    InstallSelfCmpJgJmp_00480ac0
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
     L_psisbc_ret:
         pop     esi
         ret

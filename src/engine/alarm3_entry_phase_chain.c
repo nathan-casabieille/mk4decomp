@@ -142,7 +142,7 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_data_004ed590;
 extern unsigned int g_data_004ed5a8;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
@@ -163,7 +163,7 @@ void Alarm3EntryPhaseChain_0047e1a0(void) {
     g_data_0054206c = 0x1012;
     *(unsigned int *)(g_data_00542060 * 4 + 0x74) = 0x1012;
     MStackPushSet0008_004901a0();
-    if (g_data_00541e6c == 0)
+    if (g_framePauseFlag == 0)
         ArgSarStoreJmp_004594f0(&g_data_004ed590);
 }
 
@@ -172,7 +172,7 @@ void Alarm3PhaseChainEntry2_0047e1e0(void) {
     *(unsigned int *)(g_data_00542060 * 4 + 0x68) = 0x402;
     *(unsigned int *)(g_data_00542060 * 4 + 0x74) = g_data_0054206c = 0x201;
     MStackPushSet0020_004901d0();
-    if (g_data_00541e6c == 0)
+    if (g_framePauseFlag == 0)
         ArgSarStoreJmp_004594f0(&g_data_004ed5a8);
 }
 
@@ -190,7 +190,7 @@ __declspec(naked) void Alarm3PhaseChainBody_0047e230(void) {
         je      L_a3b_installPhase0
         mov     dword ptr [g_data_0054206c], 2
         call    CmpEqInitCallElseJmp_0048d4b0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_a3b_doneNoPop
         test    byte ptr [g_data_0054208c], bl
@@ -201,18 +201,18 @@ __declspec(naked) void Alarm3PhaseChainBody_0047e230(void) {
         ret
     L_a3b_e3InitChain:
         call    TailJmpInstallSelfPair_0047e690
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a3b_doneNoPop
         cmp     dword ptr [g_data_0054206c], 0x26666
         jl      short L_a3b_installPhase0
         call    ScaledAndAldf_00490330
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a3b_doneNoPop
         mov     dword ptr [g_data_0054206c], 0x4ccc
         call    EsiEdiAliasDualMul10_004906b0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a3b_doneNoPop
         mov     ecx, dword ptr [g_data_0054205c]
@@ -227,7 +227,7 @@ __declspec(naked) void Alarm3PhaseChainBody_0047e230(void) {
         mov     dword ptr [esi + 8], offset Alarm3PhaseChainBody_0047e230
         mov     dword ptr [esi + 0x84], ebx
         mov     dword ptr [g_data_0054204c], ebx
-        mov     dword ptr [g_data_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
     L_a3b_doneNoPop:
         pop     esi
         pop     ebx

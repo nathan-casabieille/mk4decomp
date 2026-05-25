@@ -126,7 +126,7 @@ extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_004f2dc0;
 extern unsigned int g_data_00535e48;
 extern unsigned int g_data_00535e50;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541fc0;
 extern unsigned int g_data_00541fc4;
 extern unsigned int g_data_00542044;
@@ -194,7 +194,7 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
         cmp      eax, esi
         je       short L_0e03
         call     Ten404c40_404bd0_00426780
-        cmp      dword ptr [g_data_00541e6c], esi
+        cmp      dword ptr [g_framePauseFlag], esi
         jne      L_0ff9
         inc      dword ptr [g_data_00535e50]
         jmp      L_0f19
@@ -207,12 +207,12 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
         mov      dword ptr [g_data_00535e48], eax
         mov      dword ptr [g_data_0054206c], ebp
         call     StorePauseImulShr16_004ab630
-        cmp      dword ptr [g_data_00541e6c], esi
+        cmp      dword ptr [g_framePauseFlag], esi
         jne      L_0ff9
     L_0e3c:
         inc      dword ptr [g_data_0054206c]
         call     LinkedListIndirectDirtyToggle_0049f7b0
-        cmp      dword ptr [g_data_00541e6c], esi
+        cmp      dword ptr [g_framePauseFlag], esi
         jne      L_0ff9
         test     byte ptr [g_data_0054208c], bl
         jne      short L_0ed1
@@ -242,7 +242,7 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
     L_0ed1:
         mov      dword ptr [g_data_0054206c], ebp
         call     StorePauseImulShr16_004ab630
-        cmp      dword ptr [g_data_00541e6c], esi
+        cmp      dword ptr [g_framePauseFlag], esi
         je       L_0e3c
         pop      edi
         pop      esi
@@ -279,7 +279,7 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
         mov      eax, dword ptr [g_data_0054206c]
         mov      dword ptr [ecx*4], eax
         call     RoundWinTransition_0049e7e0
-        cmp      dword ptr [g_data_00541e6c], esi
+        cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_0ff9
         mov      edx, dword ptr [g_data_00542060]
         mov      ecx, dword ptr [g_data_00542048]
@@ -290,7 +290,7 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         call     GuardedScaledCall_0048a020
-        cmp      dword ptr [g_data_00541e6c], esi
+        cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_0ff9
         mov      eax, dword ptr [g_data_004d57ac]
         mov      ecx, dword ptr [g_data_00542050]
@@ -303,11 +303,11 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
         mov      edx, dword ptr [ecx*4]
         mov      dword ptr [g_data_0054204c], edx
         call     Eleven404b90_404c00_004266d0
-        cmp      dword ptr [g_data_00541e6c], esi
+        cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_0ff9
         mov      dword ptr [edi + 8], OFFSET L_0dc0
         mov      dword ptr [edi + 0x84], ebx
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
     L_0ff9:
         pop      edi
         pop      esi

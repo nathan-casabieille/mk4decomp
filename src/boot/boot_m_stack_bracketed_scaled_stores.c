@@ -122,7 +122,7 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004d5e88;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void ThreeChanPackClamp_00404cc0(void);
 extern void CopyThreeFields_00404df0(void);
 extern unsigned int g_data_00542044;
@@ -145,7 +145,7 @@ void BootMStackBracketedScaledStores_0040bf70(void) {
     g_data_00542054 = g_data_0054205c;
     g_data_0054206c = (unsigned int)&g_data_004d5e88 >> 2;
     PushSetXfmMaskCallPop_00407140();
-    if (g_data_00541e6c != 0) return;
+    if (g_framePauseFlag != 0) return;
     if (!(g_data_0054208c & 4)) {
         ScaledChainOr8_00404e50();
         g_data_0054206c = 0x13333;
@@ -158,13 +158,13 @@ void BootMStackBracketedScaledStores_0040bf70(void) {
         v = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail_00404af0)(g_data_00542070, v);
         *(unsigned int *)(g_data_0054205c * 4 + 0x74) = v;
         ScaledTripleCopy54_004ac040();
-        if (g_data_00541e6c != 0) return;
+        if (g_framePauseFlag != 0) return;
         g_data_0054206c = 0xff;
         g_data_00542044 = g_data_0054205c;
         PushSetDualDeref_00406650();
-        if (g_data_00541e6c != 0) return;
+        if (g_framePauseFlag != 0) return;
         MStackCall_00406600();
-        if (g_data_00541e6c != 0) return;
+        if (g_framePauseFlag != 0) return;
     }
     g_data_0054205c = *(unsigned int *)(g_state_004d57ac * 4);
     g_state_004d57ac--;

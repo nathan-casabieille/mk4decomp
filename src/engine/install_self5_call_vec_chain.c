@@ -137,7 +137,7 @@ extern unsigned int g_data_00535e7c;
  *   Tail unconditionally installs Self with slot[+0x84]=1,
  *   g_data_0054204c=2, arms 0x541e6c=1.
  */
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541f8c;
 extern unsigned int g_data_00541f98;
 extern unsigned int g_data_00542044;
@@ -174,7 +174,7 @@ __declspec(naked) void InstallSelf5CallVecChain_00464660(void) {
         mov     dword ptr [g_data_00542050], eax
         mov     dword ptr [g_data_00542044], ecx
         call    QuadInterpolatorV2_004255b0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_isvc_done
         mov     edx, dword ptr [g_data_00542044]
@@ -187,14 +187,14 @@ __declspec(naked) void InstallSelf5CallVecChain_00464660(void) {
         add     eax, 0x15
         mov     dword ptr [g_data_0054204c], eax
         call    TripleSubVec3_004250f0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_isvc_done
         mov     ecx, dword ptr [g_data_00542044]
         mov     dword ptr [g_data_0054206c], 0xcccc
         mov     dword ptr [g_data_00542048], ecx
         call    ThreeMul10Stores_004252c0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_isvc_done
         mov     edx, dword ptr [g_data_00542044]
@@ -204,14 +204,14 @@ __declspec(naked) void InstallSelf5CallVecChain_00464660(void) {
         add     ecx, 0x1b
         mov     dword ptr [g_data_0054204c], ecx
         call    TripleSubVec3_004250f0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_isvc_done
         mov     edx, dword ptr [g_data_00542044]
         mov     dword ptr [g_data_0054206c], 0x4ccc
         mov     dword ptr [g_data_00542048], edx
         call    ThreeClampLoop_00425a80
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_isvc_done
         mov     eax, dword ptr [g_data_00542044]
@@ -222,7 +222,7 @@ __declspec(naked) void InstallSelf5CallVecChain_00464660(void) {
         mov     dword ptr [g_data_0054204c], eax
         mov     dword ptr [g_data_00542044], eax
         call    TripleAddVec3_00425130
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_isvc_done
     L_isvc_install:
@@ -230,7 +230,7 @@ __declspec(naked) void InstallSelf5CallVecChain_00464660(void) {
         mov     dword ptr [esi + 8], offset InstallSelf5CallVecChain_00464660
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_data_0054204c], 2
-        mov     dword ptr [g_data_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
     L_isvc_done:
         pop     esi
         ret

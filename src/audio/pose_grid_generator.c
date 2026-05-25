@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054208c;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_00542058;
@@ -158,7 +158,7 @@ __declspec(naked) void AudioPhaseDispatch_004a1150(void)
         test    eax, eax
         je      L_apd_phase0
         call    Ten404c40_404bd0_00426780
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_apd_ret
         mov     eax, dword ptr [g_data_00542048]
@@ -182,7 +182,7 @@ __declspec(naked) void AudioPhaseDispatch_004a1150(void)
         call    TripleStageRollback_00404a50
         add     esp, 4
         call    RoundWinTransition_0049e7e0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_apd_ret
         push    0x16
@@ -199,7 +199,7 @@ __declspec(naked) void AudioPhaseDispatch_004a1150(void)
         ret
     L_apd_phase0:
         call    LinkedListIndirectDirtyToggle_0049f7b0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_apd_ret
         mov     al, byte ptr [g_data_0054208c]
@@ -220,7 +220,7 @@ __declspec(naked) void AudioPhaseDispatch_004a1150(void)
         mov     dword ptr [g_data_00542044], eax
         mov     dword ptr [eax*4], ebx
         call    Eleven404b90_404c00_004266d0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_apd_ret
         mov     dword ptr [esi + 8], offset AudioPhaseDispatch_004a1150
@@ -238,7 +238,7 @@ __declspec(naked) void AudioPhaseDispatch_004a1150(void)
         mov     edx, dword ptr [g_data_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    PoseGridGenerator_004a13d0
-        mov     dword ptr [g_data_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
     L_apd_ret:
         pop     esi
         pop     ebx

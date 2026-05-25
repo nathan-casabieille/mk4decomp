@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_00542058;
@@ -40,7 +40,7 @@ __declspec(naked) void Helper_TickAlt(void)
         mov     dword ptr [g_data_00542044], eax
         mov     dword ptr [g_data_0054206c], edi
         call    edi
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_ilw_ret
         test    byte ptr [g_data_0054208c], 1

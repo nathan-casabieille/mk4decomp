@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004d5fa0;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_00542058;
@@ -155,7 +155,7 @@ __declspec(naked) void Phase1ChainExtendedInitLoop2_0040c760(void)
         call    CopyThreeFields_00404df0
         add     esp, 4
         call    SetJmp_00405420
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1cei2_ret
         mov     al, byte ptr [g_state_0054208c]
@@ -163,7 +163,7 @@ __declspec(naked) void Phase1ChainExtendedInitLoop2_0040c760(void)
         test    al, bl
         je      L_p1cei2_ret
         call    MStackPush8_004ab790
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1cei2_ret
         mov     ecx, dword ptr [g_data_0054205c]
@@ -172,7 +172,7 @@ __declspec(naked) void Phase1ChainExtendedInitLoop2_0040c760(void)
         mov     dword ptr [g_data_00542058], ecx
         mov     dword ptr [g_data_0054206c], edx
         call    PushSetXfmMaskCallPop_00407140
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1cei2_ret
         test    byte ptr [g_state_0054208c], bl
@@ -181,7 +181,7 @@ __declspec(naked) void Phase1ChainExtendedInitLoop2_0040c760(void)
         mov     dword ptr [eax*4 + 0x30], 0x42
         mov     dword ptr [g_data_0054206c], 0x60000
         call    AudioMixerStep_004ab700
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1cei2_ret
         mov     ecx, dword ptr [g_data_0054205c]
@@ -191,7 +191,7 @@ __declspec(naked) void Phase1ChainExtendedInitLoop2_0040c760(void)
         mov     dword ptr [eax*4 + 0x80], 0x1999
         mov     dword ptr [g_data_0054206c], 0x41
         call    MStackPushNegMul10_0040a690
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1cei2_ret
         mov     ecx, dword ptr [g_data_0054205c]
@@ -225,7 +225,7 @@ __declspec(naked) void Phase1ChainExtendedInitLoop2_0040c760(void)
         mov     dword ptr [g_data_0054206c], edx
         mov     dword ptr [eax + 0x58], edx
         call    SetJmp_00408d20
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1cei2_ret
         mov     eax, dword ptr [g_data_00542048]
@@ -246,7 +246,7 @@ __declspec(naked) void Phase1ChainExtendedInitLoop2_0040c760(void)
         mov     dword ptr [eax*4 + 0x20], ecx
         mov     dword ptr [g_data_0054206c], 1
         call    CmpDivJmp_0049d080
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1cei2_ret
         test    byte ptr [g_state_0054208c], bl
@@ -299,7 +299,7 @@ __declspec(naked) void Phase1ChainExtendedInitLoop2_0040c760(void)
         mov     edx, dword ptr [g_data_0054205c]
         mov     dword ptr [g_data_00542044], edx
         call    MStackCall_00406600
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1cei2_ret
     L_p1cei2_tailjmp:

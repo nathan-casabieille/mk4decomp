@@ -125,7 +125,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004df6f0;
 extern unsigned int g_data_00537e88;
 extern unsigned int g_data_0053a408;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -182,20 +182,20 @@ __declspec(naked) void EnduranceFsmCluster_004238e0(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     InstallSelfPackedF80_00426000
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
     L_3981:
         /* case 0: initial → walk table */
         call     BootInitGuardedCallChain_004265d0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3a73
         mov      dword ptr [g_data_0054206c], edi
         mov      dword ptr [g_data_0053a408], edi
         mov      dword ptr [g_data_00537e88], edi
         call     BootMultiAssetLoadStateInit_00403b10
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3a73
         mov      eax, OFFSET g_data_004df6f0
         shr      eax, 2
@@ -212,7 +212,7 @@ __declspec(naked) void EnduranceFsmCluster_004238e0(void)
         mov      dword ptr [esi + 8], OFFSET L_38e0
         mov      dword ptr [esi + 0x84], 3
         mov      dword ptr [g_data_0054204c], 0x168
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -227,7 +227,7 @@ __declspec(naked) void EnduranceFsmCluster_004238e0(void)
         mov      dword ptr [esi + 0x84], 2
         add      esp, 8
         mov      dword ptr [g_data_0054204c], 0x12
-        mov      dword ptr [g_data_00541e6c], edi
+        mov      dword ptr [g_framePauseFlag], edi
         pop      edi
         pop      esi
         ret
@@ -237,7 +237,7 @@ __declspec(naked) void EnduranceFsmCluster_004238e0(void)
         mov      dword ptr [esi + 8], OFFSET L_38e0
         mov      dword ptr [esi + 0x84], edi
         mov      dword ptr [g_data_0054204c], 0x32
-        mov      dword ptr [g_data_00541e6c], edi
+        mov      dword ptr [g_framePauseFlag], edi
         pop      edi
         pop      esi
         ret
@@ -292,7 +292,7 @@ __declspec(naked) void EnduranceFsmCluster_004238e0(void)
         mov      dword ptr [g_data_0054206c], eax
         jg       L_3b5d
         call     MStackCall_00406740
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3b79
         call     CallSetPause_0041f830
@@ -307,7 +307,7 @@ __declspec(naked) void EnduranceFsmCluster_004238e0(void)
         mov      dword ptr [g_data_00542078], 0
         mov      dword ptr [g_data_0054207c], 0xfa0000
         call     Push70CallScaleArith_00457ad0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_3b79
         mov      ecx, dword ptr [g_data_00542044]
@@ -322,7 +322,7 @@ __declspec(naked) void EnduranceFsmCluster_004238e0(void)
         mov      dword ptr [esi + 8], OFFSET L_3a90
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_3b79:
         pop      esi
         ret

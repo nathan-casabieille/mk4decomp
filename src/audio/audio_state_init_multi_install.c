@@ -122,7 +122,7 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
@@ -185,7 +185,7 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
         mov     dword ptr [g_data_00542044], eax
         je      short L_asimi_checkFlag
         call    eax
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_asimi_ret
     L_asimi_checkFlag:
@@ -215,7 +215,7 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
         mov     edx, dword ptr [g_data_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    InstallSelfPackedF80_00426000
-        mov     dword ptr [g_data_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
         pop     edi
         pop     esi
         pop     ebx
@@ -226,7 +226,7 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
         mov     byte ptr [g_data_0054372c], bl
         mov     byte ptr [g_data_00543730], bl
         call    FiveTableWalkInit_00403c90
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_asimi_ret
         call    TripleCallSetCopy_004a4880
@@ -257,7 +257,7 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
         mov     dword ptr [edi + 8], offset AudioStateInitMultiInstall_004a4d20
         mov     dword ptr [edi + 0x84], ebx
         mov     dword ptr [g_data_0054204c], ebx
-        mov     dword ptr [g_data_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
     L_asimi_ret:
         pop     edi
         pop     esi

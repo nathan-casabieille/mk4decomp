@@ -122,7 +122,7 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541e74;
 extern unsigned int g_data_00541e78;
 extern unsigned int g_data_00542044;
@@ -158,20 +158,20 @@ __declspec(naked) void MStackBracket2InitChainSplitInsert_00425be0(void)
         mov     dword ptr [g_data_0054206c], 0x425ba0
         mov     dword ptr [g_data_00542044], eax
         call    Helper_TickAlt
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mbsi_pop
         test    byte ptr [g_data_0054208c], bl
         jne     L_mbsi_loadSav
         mov     dword ptr [g_data_00542048], 0
         call    MStackBracket5_LinkedListUnlink_00409aa0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mbsi_pop
         mov     ecx, dword ptr [g_data_00541e78]
         mov     dword ptr [g_data_00542048], ecx
         call    MStackPush2ChainInsert_00409870
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mbsi_pop
         mov     eax, dword ptr [g_data_00542044]
@@ -200,7 +200,7 @@ __declspec(naked) void MStackBracket2InitChainSplitInsert_00425be0(void)
         mov     ecx, dword ptr [g_data_00541e74]
         mov     dword ptr [g_data_00542048], ecx
         call    MStackPush2ChainInsert_00409870
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_mbsi_pop
         mov     ecx, dword ptr [g_state_004d57ac]

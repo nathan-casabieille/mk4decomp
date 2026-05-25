@@ -129,7 +129,7 @@ extern void CopyGlobal_004ac1f0(void);
 extern unsigned int g_data_0053a430;
 extern unsigned int g_data_0054356c;
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
@@ -159,12 +159,12 @@ __declspec(naked) void AudioStreamFsm5Way_004a3f50(void)
         cmp      eax, edi
         jne      short L_3fd3
         call     TwoCallsTwoBranchTail_004a3c50
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_411a
         mov      dword ptr [esi + 8], OFFSET AudioStreamFsm5Way_004a3f50
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_data_0054204c], 0x3c
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -172,7 +172,7 @@ __declspec(naked) void AudioStreamFsm5Way_004a3f50(void)
         mov      dword ptr [esi + 8], OFFSET AudioStreamFsm5Way_004a3f50
         mov      dword ptr [esi + 0x84], 3
         mov      dword ptr [g_data_0054204c], 0x3c
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -180,7 +180,7 @@ __declspec(naked) void AudioStreamFsm5Way_004a3f50(void)
         mov      dword ptr [esi + 8], OFFSET AudioStreamFsm5Way_004a3f50
         mov      dword ptr [esi + 0x84], 4
         mov      dword ptr [g_data_0054204c], 0xf0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -205,7 +205,7 @@ __declspec(naked) void AudioStreamFsm5Way_004a3f50(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     RoundDisplayInitCluster_004a4f00
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
@@ -227,7 +227,7 @@ __declspec(naked) void AudioStreamFsm5Way_004a3f50(void)
         mov      dword ptr [esi + 8], OFFSET AudioStreamFsm5Way_004a3f50
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], 0x24
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      edi
         pop      esi
         ret

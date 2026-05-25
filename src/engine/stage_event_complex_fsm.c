@@ -139,7 +139,7 @@ extern unsigned int g_data_0052d74c;
 extern unsigned int g_data_00537f94;
 extern unsigned int g_data_00538068;
 extern unsigned int g_data_00538158;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -171,7 +171,7 @@ __declspec(naked) void StageEventComplexFsm_0047c680(void)
         mov      dword ptr [g_data_0054206c], eax
         jne      L_c82f
         call     NotShrCmp1Store_00460d80
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_c855
         mov      eax, dword ptr [g_data_0054206c]
         mov      ecx, eax
@@ -185,14 +185,14 @@ __declspec(naked) void StageEventComplexFsm_0047c680(void)
         je       L_c864
         mov      dword ptr [g_data_0054206c], 0xb333
         call     EsiEdiAliasDualMul10_004906b0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_c855
         mov      dword ptr [g_data_00542088], ebx
         call     PunchAnimCluster_00496d80
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_c855
         call     DeltaAbsCompareBitToggle_0048ea90
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_c855
         mov      al, byte ptr [g_data_0054208c]
         mov      dword ptr [g_data_0054206c], ebp
@@ -201,7 +201,7 @@ __declspec(naked) void StageEventComplexFsm_0047c680(void)
         mov      dword ptr [g_data_0054206c], 0x8000
     L_c759:
         call     EsiEdiAliasDualMul10_004906b0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_c855
         mov      edx, dword ptr [g_data_0054205c]
         mov      esi, dword ptr [g_data_00538158]
@@ -230,7 +230,7 @@ __declspec(naked) void StageEventComplexFsm_0047c680(void)
         mov      dword ptr [g_data_0054206c], eax
         jne      short L_c7eb
         call     TripleEntryTblPushJmp_0047c880
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_c855
         mov      eax, dword ptr [g_data_0054206c]
     L_c7eb:
@@ -244,7 +244,7 @@ __declspec(naked) void StageEventComplexFsm_0047c680(void)
         jne      L_c6b0
     L_c819:
         call     DirtyToggleByGate_0048f350
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_c855
         test     byte ptr [g_data_0054208c], 4
         je       short L_c839
@@ -260,7 +260,7 @@ __declspec(naked) void StageEventComplexFsm_0047c680(void)
         mov      dword ptr [esi + 8], OFFSET StageEventComplexFsm_0047c680
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_c855:
         pop      edi
         pop      esi

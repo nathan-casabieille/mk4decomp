@@ -122,7 +122,7 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -254,14 +254,14 @@ __declspec(naked) void FsmPoseDualEntry_00472560(void)
         mov      eax, dword ptr [edx*4 + 0x18]
         mov      dword ptr [g_data_00542044], eax
         call     ChainListVecAdd_0049d200
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2769
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_2560
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_2769:
         pop      edi
         pop      esi
@@ -280,7 +280,7 @@ __declspec(naked) void FsmPoseDualEntry_00472560(void)
         mov      dword ptr [g_data_00542070], 0x1999
         mov      dword ptr [g_data_00542074], 0x9999
         call     DualEntryRecursiveInstall_00471710
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2815
         jmp      L_2560
@@ -300,7 +300,7 @@ __declspec(naked) void FsmPoseDualEntry_00472560(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     TripleCallBitJmp_00471690
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_2815:
         ret
     }

@@ -121,7 +121,7 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054205c;
@@ -140,14 +140,14 @@ void MStackBracket3SubChain_00493ad0(void) {
     g_data_0054206c = 0xffff999a;
     *(unsigned int *)(g_data_00542044 * 4 + 0x4c) = 0xffff999a;
     MStackBracket5_FieldClear_StateAdvance_00405630();
-    if (g_data_00541e6c != 0) return;
+    if (g_framePauseFlag != 0) return;
     if (!(g_data_0054208c & 4)) {
         *(unsigned int *)(g_data_00542044 * 4 + 0x1c) = 0xfffffff6;
         g_data_0054206c = 4;
         *(unsigned int *)(g_data_00542044 * 4 + 0x20) = 4;
         g_data_0054206c = *(unsigned int *)(g_data_0054205c * 4 + 0x30);
         MStackPushTableWalk_00493a20();
-        if (g_data_00541e6c != 0) return;
+        if (g_framePauseFlag != 0) return;
         v = *(unsigned int *)(g_data_00542048 * 4 + 0x1c);
         g_data_0054206c = v;
         *(unsigned int *)(g_data_00542044 * 4 + 0x34) = v;
@@ -157,7 +157,7 @@ void MStackBracket3SubChain_00493ad0(void) {
         g_data_0054206c = 0;
         *(unsigned int *)(g_data_00542044 * 4 + 0x18) = 0;
         Thunk_00405ac0();
-        if (g_data_00541e6c != 0) return;
+        if (g_framePauseFlag != 0) return;
         *(unsigned int *)(g_data_0054205c * 4 + 0x18) = g_data_00542048;
         *(unsigned int *)(g_data_00542048 * 4 + 0x18) = g_data_0054205c;
     }

@@ -134,7 +134,7 @@ extern unsigned int g_data_00538160;
 extern unsigned int g_data_00538164;
 extern unsigned int g_data_0053a178;
 extern unsigned int g_data_0053a250;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054205c;
@@ -185,7 +185,7 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [g_data_00542074], ecx
         call     FpuSqrtMul_004ab350
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_33e4
         mov      eax, dword ptr [g_data_0054206c]
@@ -194,7 +194,7 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         mov      dword ptr [g_data_0054206c], ecx
         mov      dword ptr [g_data_00542070], eax
         call     RangeMulMod_004ab2a0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_33e4
         mov      edx, dword ptr [g_data_0054206c]
@@ -204,7 +204,7 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [g_data_00542070], ecx
         call     RangeMulMod_004ab2a0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_33e4
         mov      edx, dword ptr [g_data_0054206c]

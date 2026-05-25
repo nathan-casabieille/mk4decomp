@@ -29,7 +29,7 @@ extern unsigned int g_data_0053a730;
 extern unsigned int g_data_0053a7b4;
 extern unsigned int g_data_00541d68;
 extern unsigned int g_data_00541dc4;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -96,7 +96,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      dword ptr [g_data_00542078], eax
         mov      dword ptr [g_data_00542074], ecx
         call     FpuSqrtMul_004ab350
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_983c
         mov      edx, dword ptr [g_data_0054206c]
@@ -118,7 +118,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      dword ptr [g_data_0054206c], ecx
         mov      dword ptr [g_data_00542070], edx
         call     RangeMulMod_004ab2a0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_983c
         mov      eax, dword ptr [g_data_0054206c]
@@ -130,7 +130,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      eax, dword ptr [g_data_00542084]
         mov      dword ptr [g_data_00542070], eax
         call     RangeMulMod_004ab2a0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_983c
         mov      ecx, dword ptr [g_data_0054206c]
@@ -252,7 +252,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      ecx, dword ptr [g_data_00535e78]
         mov      dword ptr [g_data_00542070], ecx
         call     RangeMulMod_004ab2a0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_983c
         mov      eax, dword ptr [g_data_00542044]
@@ -389,7 +389,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      dword ptr [g_data_00537ef4], eax
         jge      L_97ba
         call     DualInstallCallSwap_00489cd0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_983c
         mov      eax, dword ptr [g_data_00535ddc]
@@ -397,7 +397,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      dword ptr [g_data_0054206c], eax
         jle      L_97ba
         call     ScaledStateNegCallPauseLoad_00489e90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_983c
     L_97ba:
@@ -432,7 +432,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      dword ptr [g_data_0054206c], eax
         jge      L_9837
         call     GeoTransformDispatchAndApply_00489840
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_983c
     L_9837:

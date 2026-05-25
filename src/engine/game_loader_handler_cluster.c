@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_00541dc4;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
@@ -150,7 +150,7 @@ __declspec(naked) void GameLoaderHandlerCluster_004876f0(void)
     __asm {
         /* Helper 1: simple guard over ScaledAndAlfb_00490370/ScaledAndAlfe_00490390. */
         call     ScaledAndAlfb_00490370
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_7703
         jmp      ScaledAndAlfe_00490390
@@ -183,7 +183,7 @@ __declspec(naked) void GameLoaderHandlerCluster_004876f0(void)
         /* Helper 3 (L_7739): advance-to-state-1. */
     L_7739:
         call     StateDispatchTable_00490fc0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_77a7
         mov      edx, dword ptr [g_data_0054205c]
@@ -195,14 +195,14 @@ __declspec(naked) void GameLoaderHandlerCluster_004876f0(void)
         mov      edx, dword ptr [g_data_0054205c]
         mov      dword ptr [g_data_00542044], edx
         call     ScaledLoadOrSetJmp_00406b20
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_77a7
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_7710
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], 0x28
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_77a7:
         pop      esi
         ret
@@ -215,11 +215,11 @@ __declspec(naked) void GameLoaderHandlerCluster_004876f0(void)
         nop
         /* Helper 4 (L_77b0): advance-to-state-2 + tail-jmp InstallSelfMStackIndirect_00487920. */
         call     GateDispatch6c_00494580
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7812
         call     DualCallPauseDirtyJmp_00490c30
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_7812
         mov      ecx, dword ptr [g_data_00542060]
@@ -228,7 +228,7 @@ __declspec(naked) void GameLoaderHandlerCluster_004876f0(void)
         push     OFFSET g_data_00542bd4
         mov      dword ptr [ecx*4 + 0x5c], eax
         call     GuardedPackedSlotInit_00428760
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         test     eax, eax
         jne      short L_7812
@@ -269,12 +269,12 @@ __declspec(naked) void GameLoaderHandlerCluster_004876f0(void)
     L_7859:
         mov      dword ptr [g_data_0054206c], 0xf
         call     FlagThunk4EntryDispatcher_0040a470
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_788e
         mov      dword ptr [g_data_0054206c], 5
         call     TableLookupCall_0048a160
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_788e
         jmp      TripleEntryBitsetMStack_00487890

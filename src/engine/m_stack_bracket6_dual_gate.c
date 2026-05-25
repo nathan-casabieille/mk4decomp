@@ -127,7 +127,7 @@ extern unsigned int g_data_00535db0;
 extern unsigned int g_data_00537f2c;
 extern unsigned int g_data_0053a2d0;
 extern unsigned int g_data_0053a6dc;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_0054206c;
@@ -155,7 +155,7 @@ void MStackBracket6_DualGate_004788e0(void) {
         if (g_data_0053a2d0 == 0) {
             g_data_0054205c = (unsigned int)&g_data_004ecea0 >> 2;
             VersusSwapCluster_00478a90();
-            if (g_data_00541e6c != 0) return;
+            if (g_framePauseFlag != 0) return;
             g_data_0053a2d0 = 1;
         }
     }
@@ -166,7 +166,7 @@ void MStackBracket6_DualGate_004788e0(void) {
         if (g_data_00535db0 == 0) {
             g_data_0054205c = (unsigned int)&g_data_004eceb0 >> 2;
             VersusSwapCluster_00478a90();
-            if (g_data_00541e6c != 0) return;
+            if (g_framePauseFlag != 0) return;
             g_data_0054206c = 1;
             g_data_00535db0 = 1;
         }

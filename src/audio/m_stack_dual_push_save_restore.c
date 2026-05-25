@@ -122,7 +122,7 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054208c;
 extern unsigned int g_data_00537e88;
 extern unsigned int g_data_0054206c;
@@ -153,7 +153,7 @@ __declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
     {
         push    ebx
         call    Cmp3DirtyToggle_0049fa20
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_acsd_ret
         mov     al, byte ptr [g_data_0054208c]
@@ -180,7 +180,7 @@ __declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
         test    al, bl
         jne     short L_acsd_skipPush
         call    MStackPush2TableNot_00426230
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_acsd_ret
         mov     eax, dword ptr [g_data_00542074]
@@ -195,7 +195,7 @@ __declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
         call    SetWalkCurCallPauseDirty_00404c70
         add     esp, 8
         call    RoundWinTransition_0049e7e0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_acsd_ret
         push    0x230
@@ -209,7 +209,7 @@ __declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
         ret
     L_acsd_callsub:
         call    MStackDualPushSaveRestore_004a09c0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_acsd_ret
         test    byte ptr [g_data_0054208c], bl
@@ -227,7 +227,7 @@ __declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
     L_acsd_skipCmp:
         mov     dword ptr [g_data_0054206c], ebx
         call    BitSetByIndex_004a07a0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_acsd_ret
         mov     eax, dword ptr [g_data_00542078]

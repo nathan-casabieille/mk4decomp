@@ -135,7 +135,7 @@ extern void QuadInterpolatorV2_004255b0(void);
  *   advancing cj by 0x15 and calls QuadInterpolatorV2_004255b0. Finally pops the 4
  *   originals back to 0054204c/50/54/48 in reverse order.
  */
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -178,7 +178,7 @@ __declspec(naked) void MStackBootPush4Init_00408350(void) {
         mov     dword ptr [g_data_00542048], ecx
         mov     dword ptr [g_data_00542044], esi
         call    ScaledTestChainDispatch_00424ba0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mp4i_cleanup
         mov     edx, dword ptr [g_data_0054205c]
@@ -188,7 +188,7 @@ __declspec(naked) void MStackBootPush4Init_00408350(void) {
         mov     dword ptr [g_data_00542094], eax
         je      short L_mp4i_skipCall
         call    NegateThree_00425360
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mp4i_cleanup
     L_mp4i_skipCall:
@@ -200,7 +200,7 @@ __declspec(naked) void MStackBootPush4Init_00408350(void) {
         mov     dword ptr [g_data_00542050], eax
         mov     dword ptr [g_data_00542044], eax
         call    QuadInterpolatorV2_004255b0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_mp4i_cleanup
         mov     edx, dword ptr [g_data_00542054]

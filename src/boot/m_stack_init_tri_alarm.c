@@ -143,7 +143,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004d61d8;
 extern unsigned int g_data_004d62e8;
 extern unsigned int g_data_0053813c;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
@@ -161,7 +161,7 @@ extern void ZeroThreeFields_0040a8b0(void);
 __declspec(naked) void MStackInitTriAlarm_0040e190(void) {
     __asm {
         call    MStackPush8_004ab790
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_msi_e1Ret
         mov     eax, dword ptr [g_state_004d57ac]
@@ -187,11 +187,11 @@ __declspec(naked) void MStackInitTriAlarm_0040e190(void) {
         test    al, 1
         jne     short L_msi_skipAlarm
         call    StackPushAdd15CallPop_0040a7e0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_msi_e1Ret
         call    ZeroThreeFields_0040a8b0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_msi_e1Ret
     L_msi_skipAlarm:
@@ -220,7 +220,7 @@ __declspec(naked) void MStackInitTriAlarm_0040e190(void) {
         mov     dword ptr [g_data_0054207c], 0x2666
         mov     dword ptr [g_data_0054206c], 0x170a
         call    StoreDoubleNegPauseSubStore_004ab750
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_msi_e2End
         mov     eax, dword ptr [g_data_0054206c]
@@ -255,7 +255,7 @@ __declspec(naked) void MStackInitTriAlarm_0040e190(void) {
         mov     dword ptr [g_data_0054207c], 0x3333
         mov     dword ptr [g_data_0054206c], 0x7ae
         call    StoreDoubleNegPauseSubStore_004ab750
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_msi_e3End
         mov     eax, dword ptr [g_data_0054206c]

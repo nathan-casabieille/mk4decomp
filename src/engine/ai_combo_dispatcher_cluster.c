@@ -128,7 +128,7 @@ extern unsigned int g_data_004f2100;
 extern unsigned int g_data_004f2158;
 extern unsigned int g_data_004f2168;
 extern unsigned int g_data_004f27f0;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
@@ -176,7 +176,7 @@ __declspec(naked) void AiComboDispatcherCluster_00497470(void)
         shr      eax, 2
         mov      dword ptr [g_data_0054206c], eax
         call     PushSetXfmMaskCallPop_00407140
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_759d
         mov      ecx, dword ptr [g_data_0054205c]
@@ -206,7 +206,7 @@ __declspec(naked) void AiComboDispatcherCluster_00497470(void)
         mov      dword ptr [eax*4], ecx
         mov      dword ptr [g_data_00542050], edx
         call     Vec3AccMul10ChainBlend_0049c3d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_759d
         call     TripleEntry3Block_00498df0
@@ -224,7 +224,7 @@ __declspec(naked) void AiComboDispatcherCluster_00497470(void)
         nop
         /* === h2 (0x4975a0): event 004f2100 forwarder w/ 0x310 === */
         call     CondPickDualStore_0049c670
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_75d2
         mov      ecx, dword ptr [g_data_00542060]
@@ -252,12 +252,12 @@ __declspec(naked) void AiComboDispatcherCluster_00497470(void)
         /* === h3 (0x4975e0): event 004f2158 chained w/ 0x3333 ratio === */
         push     esi
         call     DualCmpSwapStore_0049c5a0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_770d
         push     OFFSET g_data_004f2158
         call     ScaledStackCallPause_0049c360
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         test     eax, eax
         jne      L_770d
@@ -342,7 +342,7 @@ __declspec(naked) void AiComboDispatcherCluster_00497470(void)
         test     eax, eax
         jne      short L_7768
         call     MStackPush8SlotInitPop8_00415010
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_7789
     L_7768:

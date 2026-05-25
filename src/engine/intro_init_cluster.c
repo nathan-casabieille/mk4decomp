@@ -137,7 +137,7 @@ extern void PushPopXformEntityCall_0044d1e0(void);
 extern void MStackCall_0044d230(void);
 extern void IntroInitCluster_0044d280(void);
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -151,7 +151,7 @@ __declspec(naked) void PreFight4StageSequencer_0044a590(void)
     __asm {
         push     ebx
         call     PushSetXfmCallStoreCopy_0044d060
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a7ee
         mov      al, byte ptr [g_data_0054208c]
@@ -165,12 +165,12 @@ __declspec(naked) void PreFight4StageSequencer_0044a590(void)
         mov      dword ptr [g_data_00542044], eax
         mov      dword ptr [eax*4 + 0x1c], ecx
         call     MStackPushTyped_0044cf50
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a7ee
         mov      dword ptr [g_data_0054206c], 9
         call     MStackPush2GuardedFieldClear_0044d0c0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a7ee
         test     byte ptr [g_data_0054208c], bl
@@ -180,14 +180,14 @@ __declspec(naked) void PreFight4StageSequencer_0044a590(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [ecx*4 + 0x1c], eax
         call     MStackPushTyped_0044cf80
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a7ee
         mov      edx, dword ptr [g_data_00542050]
         mov      eax, dword ptr [edx*4 + 0x18]
         mov      dword ptr [g_data_00542048], eax
         call     MStackCall_0044d230
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a7ee
         mov      ecx, dword ptr [g_data_00542050]
@@ -197,23 +197,23 @@ __declspec(naked) void PreFight4StageSequencer_0044a590(void)
         mov      dword ptr [g_data_00542048], edx
         mov      dword ptr [g_data_00542054], eax
         call     MStackPush2GuardedFieldClear_0044d0c0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a7ee
         test     byte ptr [g_data_0054208c], bl
         jne      L_a7ee
         call     PushPopXformEntityCall_0044d1e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a7ee
         call     MStackCall_0044d230
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a7ee
         mov      ecx, dword ptr [g_data_00542044]
         mov      dword ptr [g_data_00542048], ecx
         call     MStackBracket5_FieldClear_StateAdvance_00405630
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a7ee
         test     byte ptr [g_data_0054208c], bl
@@ -223,11 +223,11 @@ __declspec(naked) void PreFight4StageSequencer_0044a590(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [edx*4 + 0x1c], eax
         call     MStackPushTyped_0044cfb0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_a7ee
         call     MStackCall_0044d230
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_a7ee
         mov      eax, dword ptr [g_data_00542044]
@@ -236,23 +236,23 @@ __declspec(naked) void PreFight4StageSequencer_0044a590(void)
         mov      dword ptr [g_data_0054206c], 5
         mov      dword ptr [g_data_00542054], ecx
         call     MStackPush2GuardedFieldClear_0044d0c0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_a7ee
         test     byte ptr [g_data_0054208c], bl
         jne      short L_a7ee
         call     PushPopXformEntityCall_0044d1e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_a7ee
         call     MStackCall_0044d230
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_a7ee
         mov      edx, dword ptr [g_data_00542044]
         mov      dword ptr [g_data_00542048], edx
         call     IntroInitCluster_0044d280
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_a7ee
         test     byte ptr [g_data_0054208c], bl
@@ -264,7 +264,7 @@ __declspec(naked) void PreFight4StageSequencer_0044a590(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [ecx*4 + 0x3c], eax
         call     MStackCall_0044d230
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_a7ee
         mov      eax, dword ptr [g_data_00542050]

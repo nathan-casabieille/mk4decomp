@@ -122,7 +122,7 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
 extern unsigned int g_data_0054208c;
@@ -155,17 +155,17 @@ __declspec(naked) void State6CycleFsm_004517e0(void)
     L_180e:
         /* case 1 (state 1 → 2) */
         call     CallPauseTestByte4ZeroCB_00451a60
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1a45
         test     byte ptr [g_data_0054208c], 4
         je       short L_184d
         call     SetJmp_00451ab0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1a45
         call     SetJmp_00451af0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1a45
     L_184d:
@@ -173,23 +173,23 @@ __declspec(naked) void State6CycleFsm_004517e0(void)
         mov      dword ptr [esi + 8], OFFSET L_17e0
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret
     L_186f:
         /* case 2 (state 2 → 3) */
         call     CallPauseTestByte4ZeroCB_00451a60
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1a45
         test     byte ptr [g_data_0054208c], 4
         je       short L_18ae
         call     SetJmp_00451ac0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1a45
         call     SetJmp_00451b00
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1a45
     L_18ae:
@@ -197,23 +197,23 @@ __declspec(naked) void State6CycleFsm_004517e0(void)
         mov      dword ptr [esi + 8], OFFSET L_17e0
         mov      dword ptr [esi + 0x84], 3
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret
     L_18d0:
         /* case 3 (state 3 → 4) */
         call     CallPauseTestByte4ZeroCB_00451a60
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1a45
         test     byte ptr [g_data_0054208c], 4
         je       short L_190f
         call     SetJmp_00451b20
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1a45
         call     SetJmp_00451b60
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1a45
     L_190f:
@@ -221,23 +221,23 @@ __declspec(naked) void State6CycleFsm_004517e0(void)
         mov      dword ptr [esi + 8], OFFSET L_17e0
         mov      dword ptr [esi + 0x84], 4
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret
     L_1931:
         /* case 4 (state 4 → 5) */
         call     CallPauseTestByte4ZeroCB_00451a60
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1a45
         test     byte ptr [g_data_0054208c], 4
         je       short L_1970
         call     SetJmp_00451b30
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1a45
         call     SetJmp_00451b70
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1a45
     L_1970:
@@ -245,23 +245,23 @@ __declspec(naked) void State6CycleFsm_004517e0(void)
         mov      dword ptr [esi + 8], OFFSET L_17e0
         mov      dword ptr [esi + 0x84], 5
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret
     L_1992:
         /* case 5 (state 5 → 6) */
         call     CallPauseTestByte4ZeroCB_00451a60
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1a45
         test     byte ptr [g_data_0054208c], 4
         je       short L_19cd
         call     SetJmp_00451b40
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1a45
         call     SetJmp_00451b80
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1a45
     L_19cd:
@@ -269,23 +269,23 @@ __declspec(naked) void State6CycleFsm_004517e0(void)
         mov      dword ptr [esi + 8], OFFSET L_17e0
         mov      dword ptr [esi + 0x84], 6
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret
     L_19ef:
         /* case 0 (state 0 → 1) */
         call     CallPauseTestByte4ZeroCB_00451a60
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1a45
         test     byte ptr [g_data_0054208c], 4
         je       short L_1a22
         call     SetJmp_00451aa0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1a45
         call     SetJmp_00451ae0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1a45
     L_1a22:
@@ -293,7 +293,7 @@ __declspec(naked) void State6CycleFsm_004517e0(void)
         mov      dword ptr [esi + 8], OFFSET L_17e0
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret
     L_1a40:

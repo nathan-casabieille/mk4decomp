@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_0049db40;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054205c;
@@ -141,16 +141,16 @@ __declspec(naked) void Phase4SevenPackedDispatch_00417e40(void)
 {
     __asm {
         call    MStackPush2RunCountdown_004089e0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sp7_A_ret
         call    MStackBracket7_DispatchAndChain_004b8fa0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sp7_A_ret
         mov     dword ptr [g_data_0054206c], 2
         call    BootStateTriple_00408d30
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sp7_A_ret
         push    0xC0
@@ -184,7 +184,7 @@ __declspec(naked) void Phase4SevenPackedDispatch_00417e40(void)
         nop
     L_p4sp7_B:
         call    SetJmp_00408d20
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sp7_B_ret
         mov     ecx, dword ptr [g_data_00542044]
@@ -311,7 +311,7 @@ __declspec(naked) void Phase4SevenPackedDispatch_00417e40(void)
         nop
     L_p4sp7_G:
         call    SetJmp_00408d20
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sp7_G_ret
         mov     ecx, dword ptr [g_data_00542044]
@@ -327,7 +327,7 @@ __declspec(naked) void Phase4SevenPackedDispatch_00417e40(void)
         mov     dword ptr [eax*4 + 0x10], 0x0049D200
         mov     dword ptr [g_data_0054206c], 0x8000
         call    AudioMixerStep_004ab700
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sp7_G_ret
         mov     ecx, dword ptr [g_data_0054206c]
@@ -336,7 +336,7 @@ __declspec(naked) void Phase4SevenPackedDispatch_00417e40(void)
         mov     dword ptr [edx*4 + 0x48], ecx
         mov     dword ptr [g_data_0054206c], 0x10000
         call    StoreDoubleNegPauseSubStore_004ab750
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sp7_G_ret
         mov     ecx, dword ptr [g_data_00542048]
@@ -344,7 +344,7 @@ __declspec(naked) void Phase4SevenPackedDispatch_00417e40(void)
         mov     dword ptr [ecx*4 + 0x28], eax
         mov     dword ptr [g_data_0054206c], 0x10000
         call    StoreDoubleNegPauseSubStore_004ab750
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sp7_G_ret
         mov     eax, dword ptr [g_data_00542048]

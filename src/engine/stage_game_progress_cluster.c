@@ -129,7 +129,7 @@ extern unsigned int g_data_004ee0c8;
 extern unsigned int g_data_004ee0f8;
 extern unsigned int g_data_004ee118;
 extern unsigned int g_data_004ee138;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
@@ -154,7 +154,7 @@ __declspec(naked) void StageGameProgressCluster_00482780(void)
         nop
         /* H2 */
         call     ScaledMove48to58_00490720
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_27ab
         push     OFFSET g_data_004edfd0
@@ -168,7 +168,7 @@ __declspec(naked) void StageGameProgressCluster_00482780(void)
         nop
         /* H3 */
         call     GateDispatch6c_00494580
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_27cb
         push     OFFSET g_data_004ee030
@@ -182,7 +182,7 @@ __declspec(naked) void StageGameProgressCluster_00482780(void)
         nop
         /* H4 */
         call     GateDispatch6c_00494580
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_27eb
         push     OFFSET g_data_004ee098
@@ -224,7 +224,7 @@ __declspec(naked) void StageGameProgressCluster_00482780(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edx
         call     CallPauseScaledStoreJmp_00428820
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         ret
         nop
@@ -242,7 +242,7 @@ __declspec(naked) void StageGameProgressCluster_00482780(void)
         nop
         /* H6 */
         call     CjTableThresholdDispatch_00488f00
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_28ab
         push     OFFSET g_data_004ee0c8
@@ -256,7 +256,7 @@ __declspec(naked) void StageGameProgressCluster_00482780(void)
         nop
         /* H7 */
         call     CjTableThresholdDispatch_00488f00
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_28cb
         push     OFFSET g_data_004ee0f8
@@ -270,15 +270,15 @@ __declspec(naked) void StageGameProgressCluster_00482780(void)
         nop
         /* H8 */
         call     CjTableThresholdDispatch_00488f00
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2923
         call     GateDispatch6c_00494580
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2923
         call     SixBlockCjCascade_004829b0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2923
         test     byte ptr [g_data_0054208c], 1
@@ -286,7 +286,7 @@ __declspec(naked) void StageGameProgressCluster_00482780(void)
         jmp      GuardedPushCall_00482990
     L_2908:
         call     Wrapper_0048a370
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2923
         push     OFFSET g_data_004ee118
@@ -308,15 +308,15 @@ __declspec(naked) void StageGameProgressCluster_00482780(void)
         nop
         /* H9 */
         call     CjTableThresholdDispatch_00488f00
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2983
         call     GateDispatch6c_00494580
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2983
         call     SixBlockCjCascade_004829b0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2983
         test     byte ptr [g_data_0054208c], 1
@@ -324,7 +324,7 @@ __declspec(naked) void StageGameProgressCluster_00482780(void)
         jmp      GuardedPushCall_00482990
     L_2968:
         call     Wrapper_0048a370
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2983
         push     OFFSET g_data_004ee138

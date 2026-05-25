@@ -125,7 +125,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_004ecac8;
 extern unsigned int g_data_00535df0;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054206c;
@@ -190,14 +190,14 @@ __declspec(naked) void NetEntityScanAndPunish_00474b50(void)
         mov      dword ptr [g_data_004d57ac], ecx
         mov      dword ptr [ecx*4], eax
         call     MStackPush2ChainLLInsert_00406790
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_4d31
         mov      eax, OFFSET g_data_004ecac8
         shr      eax, 2
         mov      dword ptr [g_data_0054206c], eax
         call     PushSetXfmMaskCallPop_00407140
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_4d31
         test     byte ptr [g_data_0054208c], 4
@@ -218,7 +218,7 @@ __declspec(naked) void NetEntityScanAndPunish_00474b50(void)
         mov      dword ptr [g_data_0054206c], ebx
         mov      dword ptr [eax*4 + 0x30], ebx
         call     MStackCall_00406340
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_4d31
         mov      eax, dword ptr [g_data_004d57ac]

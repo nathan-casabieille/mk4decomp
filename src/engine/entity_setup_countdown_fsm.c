@@ -141,7 +141,7 @@ extern void GuardedSeq_00476fc0(void);
 extern unsigned int g_data_004e51c8;
 
 extern unsigned int g_data_004d57ac;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054205c;
@@ -155,36 +155,36 @@ __declspec(naked) void SpecialMoveChainCluster_0043f9c0(void)
         /* === h1 (0x43f9c0): 7-stage status sequence + event 4e51c8 === */
         mov      dword ptr [g_data_0054206c], 0x76
         call     MStackPush2BitLoop_00476670
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_fb81
         mov      dword ptr [g_data_0054206c], 0x7b
         call     MStackPush2BitLoop_00476670
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_fb81
         mov      dword ptr [g_data_0054206c], 0x77
         call     MStackPush2BitLoop_00476670
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_fb81
         mov      dword ptr [g_data_0054206c], 0xc1
         call     MStackPush2BitLoop_00476670
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_fb81
         mov      dword ptr [g_data_0054206c], 0xc1
         call     PushPopCurrentSetFFFFFFFF_00473070
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_fb81
         mov      dword ptr [g_data_0054206c], 0xc0
         call     PushPopCurrentSetFFFFFFFF_00473070
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_fb81
         call     TwoCallScaledOr1600_0043f8f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_fb81
         mov      eax, dword ptr [g_data_004d57ac]
@@ -206,7 +206,7 @@ __declspec(naked) void SpecialMoveChainCluster_0043f9c0(void)
         mov      dword ptr [eax + 0x5c], edx
         mov      dword ptr [g_data_0054206c], 0x93
         call     PushPopCurrentSetFFFFFFFF_00473070
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_fb81
         mov      eax, dword ptr [g_data_00542060]
@@ -226,21 +226,21 @@ __declspec(naked) void SpecialMoveChainCluster_0043f9c0(void)
         mov      dword ptr [g_data_0054205c], eax
         mov      dword ptr [g_data_0054206c], 3
         call     GuardedSeq_00476fc0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_fb81
         mov      dword ptr [g_data_0054206c], 0x74
         call     MStackPush2BitLoop_00476670
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_fb81
         mov      dword ptr [g_data_0054206c], 0x75
         call     MStackPush2BitLoop_00476670
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_fb81
         call     ScaledZeroFour_00490740
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_fb81
         push     OFFSET g_data_004e51c8
@@ -286,7 +286,7 @@ __declspec(naked) void SpecialMoveChainCluster_0043f9c0(void)
         je       short L_fbe9
         mov      dword ptr [g_data_0054206c], 3
         call     GuardedSeq_00476de0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_fc4b
         jmp      ComboLoopCluster_00440070
@@ -306,7 +306,7 @@ __declspec(naked) void SpecialMoveChainCluster_0043f9c0(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     EntitySetupCountdownFsm_0043fcf0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_fc4b:
         ret
         nop
@@ -323,7 +323,7 @@ __declspec(naked) void SpecialMoveChainCluster_0043f9c0(void)
         je       short L_fc89
         mov      dword ptr [g_data_0054206c], 3
         call     GuardedSeq_00476f10
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_fceb
         jmp      ComboLoopCluster_00440070
@@ -343,7 +343,7 @@ __declspec(naked) void SpecialMoveChainCluster_0043f9c0(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     EntitySetupCountdownFsm_0043fcf0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_fceb:
         ret
     }

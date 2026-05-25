@@ -126,7 +126,7 @@ extern unsigned int g_data_004f24a8;
 extern unsigned int g_data_004f2540;
 extern unsigned int g_data_004f2550;
 extern unsigned int g_data_004f2560;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -198,7 +198,7 @@ __declspec(naked) void RoundFinalizeCluster_0049b8b0(void)
         mov      dword ptr [g_data_0054208c], edx
         je       short L_b966
         call     MStackBracket5_LinkedListUnlink_00409aa0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_b9f9
         mov      eax, dword ptr [g_data_00542044]
@@ -207,7 +207,7 @@ __declspec(naked) void RoundFinalizeCluster_0049b8b0(void)
         mov      eax, dword ptr [g_data_0054204c]
         mov      dword ptr [g_data_00542044], eax
         call     MStackBracket2_TreeWalkRecursive_00405e70
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b9f9
         mov      eax, dword ptr [g_data_00542050]
@@ -226,12 +226,12 @@ __declspec(naked) void RoundFinalizeCluster_0049b8b0(void)
         test     eax, eax
         jne      short L_b9d5
         call     MStackPush2ChainPrepend_00409970
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b9f9
     L_b9d5:
         call     ChainWalkInstall_0049b7c0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b9f9
         mov      eax, dword ptr [g_data_0054208c]
@@ -252,7 +252,7 @@ __declspec(naked) void RoundFinalizeCluster_0049b8b0(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [ecx*4 + 0x74], eax
         call     CondPickDualStore_0049c670
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_ba32
         push     OFFSET g_data_004f24a8
@@ -275,12 +275,12 @@ __declspec(naked) void RoundFinalizeCluster_0049b8b0(void)
         nop
         /* === h3 (0x49ba40): event 004f2540 forwarder + 0x11fff2 sub === */
         call     DualCmpSwapStore_0049c5a0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_baaa
         push     OFFSET g_data_004f2540
         call     ScaledStackCallPause_0049c360
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         test     eax, eax
         jne      short L_baaa
@@ -310,12 +310,12 @@ __declspec(naked) void RoundFinalizeCluster_0049b8b0(void)
         /* === h4 (0x49bab0): event 004f2550 forwarder + 2x 0x3333 alloc === */
         push     esi
         call     DualCmpSwapStore_0049c5a0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_bb51
         push     OFFSET g_data_004f2550
         call     ScaledStackCallPause_0049c360
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         test     eax, eax
         jne      short L_bb51
@@ -367,11 +367,11 @@ __declspec(naked) void RoundFinalizeCluster_0049b8b0(void)
         /* === h5 (0x49bb70): 489ff0+40d990 chain → tail-jmp 49bb90 === */
         mov      dword ptr [g_data_0054206c], 0x5e
         call     TableLookupCall_00489ff0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_bb8b
         call     Phase1ContextSetup3Helpers_0040d990
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_bb8b
         jmp      QuadBlockSoundInit_0049bb90

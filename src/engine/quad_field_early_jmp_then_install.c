@@ -122,7 +122,7 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
@@ -173,7 +173,7 @@ __declspec(naked) void QuadFieldEarlyJmpThenInstall_0043a670(void)
         mov     dword ptr [g_data_00542074], 0x32
         mov     dword ptr [g_data_0054204c], offset L_qfeji_sub2
         call    AllocNode
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_qfeji_ret
         mov     eax, dword ptr [g_state_004d57ac]
@@ -214,7 +214,7 @@ __declspec(naked) void QuadFieldEarlyJmpThenInstall_0043a670(void)
     L_qfeji_sub2_phase0:
         mov     dword ptr [g_data_0054206c], 0xccc
         call    AudioMixerStep_004ab700
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_qfeji_sub2_ret
         mov     edx, dword ptr [g_data_0054206c]
@@ -238,7 +238,7 @@ __declspec(naked) void QuadFieldEarlyJmpThenInstall_0043a670(void)
         mov     eax, dword ptr [g_data_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    InstallSelfScaledAdv3d7Cmp_0043a830
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
     L_qfeji_sub2_ret:
         pop     esi
         ret

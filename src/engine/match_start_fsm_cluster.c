@@ -122,7 +122,7 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
@@ -179,7 +179,7 @@ __declspec(naked) void MatchStartFsmCluster_00468eb0(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edx
         call     ScaledLoadJmp_00429390
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret      
     L_8f35:
@@ -187,7 +187,7 @@ __declspec(naked) void MatchStartFsmCluster_00468eb0(void)
         mov      dword ptr [eax + 8], OFFSET MatchStartFsmCluster_00468eb0
         mov      dword ptr [eax + 0x84], ecx
         mov      dword ptr [g_data_0054204c], 0x14
-        mov      dword ptr [g_data_00541e6c], ecx
+        mov      dword ptr [g_framePauseFlag], ecx
         pop      esi
         ret
         nop
@@ -211,7 +211,7 @@ __declspec(naked) void MatchStartFsmCluster_00468eb0(void)
         jmp      dword ptr [eax*4 + L_jmptbl]
     L_8f8d:
         call     Phase4FivePackedHelpers_00412cb0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_9288
         mov      dword ptr [g_data_00542080], 0x23
         mov      dword ptr [esi + 8], OFFSET L_8f60
@@ -229,25 +229,25 @@ __declspec(naked) void MatchStartFsmCluster_00468eb0(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     InstallSelf3WayChainCmp_00428d80
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         pop      ebx
         ret      
     L_9007:
         call     Phase4DualHelperTrampoline_00412900
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_9288
         mov      dword ptr [g_data_0054206c], 0x50
         call     TableLookupCall_00489ff0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_9288
         mov      dword ptr [g_data_0054207c], 3
         call     EntryThunkBodyStateMachine_00457bb0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_9288
         call     MStackPush3CmpCall_0048eec0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_9288
         mov      al, byte ptr [g_data_0054208c]
         mov      ebx, 1
@@ -255,11 +255,11 @@ __declspec(naked) void MatchStartFsmCluster_00468eb0(void)
         jne      L_90a3
         mov      dword ptr [g_data_0054206c], 0x23d7
         call     SfxAttenuateAndApply_0048dee0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_9288
         mov      dword ptr [g_data_0054206c], 0x88
         call     ScaledLitLoadCall_00480fe0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_9288
     L_90a3:
         mov      dword ptr [g_data_00542080], 0x26
@@ -278,7 +278,7 @@ __declspec(naked) void MatchStartFsmCluster_00468eb0(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     InstallSelf3WayChainCmp_00428d80
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
         pop      ebx
@@ -289,7 +289,7 @@ __declspec(naked) void MatchStartFsmCluster_00468eb0(void)
     L_9114:
         mov      dword ptr [g_data_00542080], 0x26
         call     ScaledArrStore_00429980
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_9288
         mov      dword ptr [esi + 8], OFFSET L_8f60
         mov      dword ptr [esi + 0x84], 5
@@ -302,14 +302,14 @@ __declspec(naked) void MatchStartFsmCluster_00468eb0(void)
     L_914f:
         mov      dword ptr [g_data_00542080], 0x25
         call     ScaledArrStore_00429980
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_9288
         mov      dword ptr [esi + 8], OFFSET L_8f60
         mov      dword ptr [esi + 0x84], 4
     L_917b:
         mov      ebx, 1
         mov      dword ptr [g_data_0054204c], ebx
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
         pop      ebx
@@ -330,7 +330,7 @@ __declspec(naked) void MatchStartFsmCluster_00468eb0(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     ScaledLoadJmp_00428d20
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         pop      ebx
@@ -342,7 +342,7 @@ __declspec(naked) void MatchStartFsmCluster_00468eb0(void)
         push     OFFSET g_data_00542a54
         mov      dword ptr [ecx*4 + 0x74], eax
         call     GuardedPackedSlotInit_00428760
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         cmp      eax, edi
         jne      L_9288
@@ -363,7 +363,7 @@ __declspec(naked) void MatchStartFsmCluster_00468eb0(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     InstallSelfPair3Branch_00429240
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
         pop      ebx
@@ -438,7 +438,7 @@ __declspec(naked) void MatchStartFsmCluster_00468eb0(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edx
         call     StreamFlagPackedSelectChain_00469340
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         ret      
         jmp      StreamFlagPackedSelectChain_00469340

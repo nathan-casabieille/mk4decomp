@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_00537e94;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
@@ -154,15 +154,15 @@ __declspec(naked) void RunCluster_0047d6e0(void)
     L_d6e0:
         mov      dword ptr [g_data_0054206c], 0x4000
         call     EsiEdiAliasDualMul10_004906b0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d73b
         call     ScaledZero44_00491500
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d73b
         call     CopyJmp_0048ef90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d73b
         mov      al, byte ptr [g_data_0054208c]
@@ -184,7 +184,7 @@ __declspec(naked) void RunCluster_0047d6e0(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [g_data_00537e94], eax
         call     CallDualStoreXorBit_004285e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d77d
         test     byte ptr [g_data_0054208c], 4
@@ -291,7 +291,7 @@ __declspec(naked) void RunCluster_0047d6e0(void)
     L_d89b:
         mov      dword ptr [g_data_0054206c], 0xd
         call     TableLookupCall_00489ff0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d97c
         mov      dword ptr [g_data_00542080], 0x32
@@ -299,14 +299,14 @@ __declspec(naked) void RunCluster_0047d6e0(void)
         mov      dword ptr [g_data_0054206c], 0x18000
         mov      dword ptr [g_data_00542070], 0xffffe667
         call     DualHelperCallStoreCjFields_0048ff40
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d97c
         mov      ecx, dword ptr [g_data_00542060]
         mov      edx, dword ptr [ecx*4 + 0x38]
         mov      dword ptr [g_data_00542044], edx
         call     DualMul10AccCj_00491230
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d97c
         mov      eax, dword ptr [g_data_0053a180]
@@ -317,12 +317,12 @@ __declspec(naked) void RunCluster_0047d6e0(void)
     L_d91c:
         mov      dword ptr [g_data_0054206c], 0x53
         call     ScaledLitLoadCall_00480fe0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d97c
         mov      dword ptr [g_data_0054206c], 0xc
         call     TableLookupCall_00489ff0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d97c
         call     GuardedSeq_0047d980
@@ -336,7 +336,7 @@ __declspec(naked) void RunCluster_0047d6e0(void)
         mov      dword ptr [esi + 8], OFFSET L_d850
         mov      dword ptr [esi + 0x84], edi
         mov      dword ptr [g_data_0054204c], edi
-        mov      dword ptr [g_data_00541e6c], edi
+        mov      dword ptr [g_framePauseFlag], edi
     L_d97c:
         pop      edi
         pop      esi

@@ -141,7 +141,7 @@ extern unsigned int g_data_004d5814;
 extern unsigned int g_data_004d6990;
 extern unsigned int g_data_004107b8;
 extern unsigned int g_data_004d57ac;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -204,14 +204,14 @@ __declspec(naked) void BossRoomInitCluster_00410340(void)
         mov      dword ptr [g_data_00542054], eax
         jns      func_00410725
         call     MStackPush2RunCountdown_004089e0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      func_004107b4
         call     MStackBracket7_DispatchAndChain_004b8fa0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      func_004107b4
         mov      dword ptr [g_data_0054206c], 0xa
         call     ChainDirtyBitWalker_00408c10
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      func_004107b4
         test     byte ptr [g_data_0054208c], bl
         jne      L_04e1
@@ -226,7 +226,7 @@ __declspec(naked) void BossRoomInitCluster_00410340(void)
         shr      eax, 2
         mov      dword ptr [g_data_0054206c], eax
         call     PushSetXfmMaskCallPop_00407140
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      func_004107b4
         test     byte ptr [g_data_0054208c], bl
         jne      short L_04ae
@@ -241,7 +241,7 @@ __declspec(naked) void BossRoomInitCluster_00410340(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [edx*4 + 0x48], eax
         call     MStackCall_004062f0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      func_004107b4
     L_04ae:
         mov      eax, dword ptr [g_data_004d57ac]
@@ -251,7 +251,7 @@ __declspec(naked) void BossRoomInitCluster_00410340(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [g_data_0054206c], 0x19
         call     TableLookupCall_00489ff0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      func_004107b4
     L_04e1:
         mov      edx, dword ptr [g_data_0054205c]
@@ -274,7 +274,7 @@ __declspec(naked) void BossRoomInitCluster_00410340(void)
         mov      edx, dword ptr [ecx*4]
         mov      dword ptr [g_data_0054206c], edx
         call     L_0340
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      func_004107b4
         mov      ecx, dword ptr [g_data_00542054]
         mov      eax, 0x10000
@@ -283,7 +283,7 @@ __declspec(naked) void BossRoomInitCluster_00410340(void)
         mov      dword ptr [esi + 8], OFFSET L_0390
         mov      dword ptr [esi + 0x84], 3
         mov      dword ptr [g_data_0054204c], 2
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         pop      ebx

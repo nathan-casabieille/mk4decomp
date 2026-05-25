@@ -150,7 +150,7 @@ extern unsigned int g_data_00541df0;
 extern unsigned int g_data_00541df4;
 extern unsigned int g_data_00541e34;
 extern unsigned int g_data_00541e38;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541ee8;
 extern unsigned int g_data_00541eec;
 extern unsigned int g_data_00541ef0;
@@ -204,14 +204,14 @@ __declspec(naked) void RoundReset_004223e0(void)
     __asm {
         push     ebx
         call     Cmp2DirtyToggle_00423870
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         xor      ebx, ebx
         cmp      eax, ebx
         jne      L_25e9
         test     byte ptr [g_data_0054208c], 1
         je       short L_240f
         call     TwoStateCopyDup_004225f0
-        cmp      dword ptr [g_data_00541e6c], ebx
+        cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_25e9
     L_240f:
         mov      eax, dword ptr [g_data_0052aac4]
@@ -219,7 +219,7 @@ __declspec(naked) void RoundReset_004223e0(void)
         mov      dword ptr [g_data_0054206c], eax
         jne      short L_242f
         call     TestCmpZeroFour_004238b0
-        cmp      dword ptr [g_data_00541e6c], ebx
+        cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_25e9
     L_242f:
         mov      eax, 0x10000
@@ -295,7 +295,7 @@ __declspec(naked) void RoundReset_004223e0(void)
         mov      dword ptr [g_data_00541f84], ebx
         mov      dword ptr [g_data_00541f80], ebx
         call     TriBranchFlagWrite_00422720
-        cmp      dword ptr [g_data_00541e6c], ebx
+        cmp      dword ptr [g_framePauseFlag], ebx
         jne      short L_25e9
         mov      eax, dword ptr [g_data_0053a498]
         mov      dword ptr [g_data_0054206c], eax

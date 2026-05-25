@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_0054207c;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542060;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054206c;
@@ -145,7 +145,7 @@ __declspec(naked) void TriCounterReinitChain_0046dd90(void)
         test    eax, eax
         jne     L_tcrc_ret1
         call    ScaledChain3c74_0048f910
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_tcrc_ret1
         mov     eax, dword ptr [g_data_00542060]
@@ -162,7 +162,7 @@ __declspec(naked) void TriCounterReinitChain_0046dd90(void)
         mov     dword ptr [eax*4], ecx
         mov     dword ptr [g_data_0054206c], 0
         call    ScaledInit_0048d430
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_tcrc_ret1
         mov     eax, dword ptr [g_state_004d57ac]
@@ -185,7 +185,7 @@ __declspec(naked) void TriCounterReinitChain_0046dd90(void)
         nop
     L_tcrc_sub2:
         call    ScaledChain3c74_0048f910
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_tcrc_sub2_ret
         mov     eax, dword ptr [g_data_0054206c]
@@ -226,7 +226,7 @@ __declspec(naked) void TriCounterReinitChain_0046dd90(void)
         test    eax, eax
         jne     short L_tcrc_sub3_ret
         call    GuardedDualAndFlagToggle_0048f020
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_tcrc_sub3_ret
         test    byte ptr [g_data_0054208c], 1
@@ -234,7 +234,7 @@ __declspec(naked) void TriCounterReinitChain_0046dd90(void)
         jmp     ComboSpecialEventCluster_0046df90
     L_tcrc_sub3_doCall:
         call    DualScaledInitCmp_0046df50
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_tcrc_sub3_ret
         mov     eax, dword ptr [g_data_00542044]

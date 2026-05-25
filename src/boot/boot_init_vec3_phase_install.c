@@ -125,7 +125,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_00506d7c;
 extern unsigned int g_data_00535e6c;
 extern unsigned int g_data_0053a50c;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -163,11 +163,11 @@ __declspec(naked) void BootInitVec3PhaseInstall_00402c10(void)
         ret
     L_bivpi_phase0:
         call    FiveTableWalkInit_00403c90
-        cmp     dword ptr [g_data_00541e6c], edi
+        cmp     dword ptr [g_framePauseFlag], edi
         jne     L_bivpi_pop
         mov     dword ptr [g_data_0053a50c], 0xa
         call    BootMultiAssetLoadStateInit_00403b10
-        cmp     dword ptr [g_data_00541e6c], edi
+        cmp     dword ptr [g_framePauseFlag], edi
         jne     L_bivpi_pop
         push    edi
         push    0x4a2180
@@ -177,7 +177,7 @@ __declspec(naked) void BootInitVec3PhaseInstall_00402c10(void)
         shr     ecx, 2
         mov     dword ptr [g_data_00542048], ecx
         call    DispatcherComplex260_00407030
-        cmp     dword ptr [g_data_00541e6c], edi
+        cmp     dword ptr [g_framePauseFlag], edi
         jne     L_bivpi_pop
         test    byte ptr [g_data_0054208c], 4
         je      short L_bivpi_doVec3Init
@@ -198,7 +198,7 @@ __declspec(naked) void BootInitVec3PhaseInstall_00402c10(void)
         mov     edx, dword ptr [g_data_00542060]
         mov     dword ptr [edx*4 + 0x84], edi
         call    InstallSelfPackedF80_00426000
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         pop     esi
         ret
@@ -213,7 +213,7 @@ __declspec(naked) void BootInitVec3PhaseInstall_00402c10(void)
         mov     dword ptr [g_data_0054206c], eax
         mov     dword ptr [ecx*4 + 0x30], eax
         call    MStackCall_00406340
-        cmp     dword ptr [g_data_00541e6c], edi
+        cmp     dword ptr [g_framePauseFlag], edi
         jne     L_bivpi_pop
         mov     eax, dword ptr [g_data_00535e6c]
         mov     edx, dword ptr [g_data_00542044]
@@ -240,7 +240,7 @@ __declspec(naked) void BootInitVec3PhaseInstall_00402c10(void)
         mov     dword ptr [esi + 8], offset BootInitVec3PhaseInstall_00402c10
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_data_0054204c], 0x180
-        mov     dword ptr [g_data_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
     L_bivpi_pop:
         pop     edi
         pop     esi

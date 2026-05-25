@@ -122,7 +122,7 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -145,7 +145,7 @@ __declspec(naked) void IntroSequencePipeline_0044cd50(void)
     __asm {
         push     ebx
         call     PushSetXfmCallStoreCopy_0044d060
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_cf48
         mov      al, byte ptr [g_data_0054208c]
@@ -159,12 +159,12 @@ __declspec(naked) void IntroSequencePipeline_0044cd50(void)
         mov      dword ptr [g_data_00542044], eax
         mov      dword ptr [eax*4 + 0x1c], ecx
         call     MStackPushTyped_0044cf50
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_cf48
         mov      dword ptr [g_data_0054206c], 0x10
         call     MStackPush2GuardedFieldClear_0044d0c0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_cf48
         test     byte ptr [g_data_0054208c], bl
@@ -174,14 +174,14 @@ __declspec(naked) void IntroSequencePipeline_0044cd50(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [ecx*4 + 0x1c], eax
         call     MStackPushTyped_0044cf80
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_cf48
         mov      edx, dword ptr [g_data_00542050]
         mov      eax, dword ptr [edx*4 + 0x18]
         mov      dword ptr [g_data_00542048], eax
         call     MStackCall_0044d230
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_cf48
         mov      ecx, dword ptr [g_data_00542050]
@@ -191,23 +191,23 @@ __declspec(naked) void IntroSequencePipeline_0044cd50(void)
         mov      dword ptr [g_data_00542048], edx
         mov      dword ptr [g_data_00542054], eax
         call     MStackPush2GuardedFieldClear_0044d0c0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_cf48
         test     byte ptr [g_data_0054208c], bl
         jne      short L_cf48
         call     PushPopXformEntityCall_0044d1e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_cf48
         call     MStackCall_0044d230
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_cf48
         mov      ecx, dword ptr [g_data_00542044]
         mov      dword ptr [g_data_00542048], ecx
         call     MStackBracket5_FieldClear_StateAdvance_00405630
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_cf48
         test     byte ptr [g_data_0054208c], bl
@@ -217,11 +217,11 @@ __declspec(naked) void IntroSequencePipeline_0044cd50(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [edx*4 + 0x1c], eax
         call     MStackPushTyped_0044cfb0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_cf48
         call     MStackCall_0044d230
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_cf48
         mov      eax, dword ptr [g_data_00542044]
@@ -230,17 +230,17 @@ __declspec(naked) void IntroSequencePipeline_0044cd50(void)
         mov      dword ptr [g_data_0054206c], 0xc
         mov      dword ptr [g_data_00542054], ecx
         call     MStackPush2GuardedFieldClear_0044d0c0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_cf48
         test     byte ptr [g_data_0054208c], bl
         jne      short L_cf48
         call     PushPopXformEntityCall_0044d1e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_cf48
         call     MStackCall_0044d230
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_cf48
         mov      eax, dword ptr [g_data_00542050]

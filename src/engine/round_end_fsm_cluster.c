@@ -126,7 +126,7 @@ extern unsigned int g_data_004e9068;
 extern unsigned int g_data_0052aac4;
 extern unsigned int g_data_00537e88;
 extern unsigned int g_data_0053a408;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
@@ -170,7 +170,7 @@ __declspec(naked) void RoundEndFsmCluster_0045d680(void)
         mov      dword ptr [esi + 8], OFFSET L_d680
         mov      dword ptr [esi + 0x84], 3
         mov      dword ptr [g_data_0054204c], 8
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         pop      ebx
@@ -192,7 +192,7 @@ __declspec(naked) void RoundEndFsmCluster_0045d680(void)
         mov      dword ptr [g_data_0053a408], ebx
         mov      dword ptr [g_data_00537e88], ebx
         call     BootInitGuardedCallChain_004265d0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_d82c
         mov      dword ptr [esi + 8], OFFSET L_d680
         mov      edx, dword ptr [g_data_00542060]
@@ -209,7 +209,7 @@ __declspec(naked) void RoundEndFsmCluster_0045d680(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     AudioInstallSelfStatePush_004aa8a0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         pop      ebx
@@ -227,7 +227,7 @@ __declspec(naked) void RoundEndFsmCluster_0045d680(void)
         call     ScenegraphWalk_0041f7d0
         mov      dword ptr [g_data_00542074], 4
         call     Push16Call_00489f50
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_d82c
         mov      dword ptr [g_data_00542070], 0xa
         mov      dword ptr [esi + 8], OFFSET L_d680
@@ -246,7 +246,7 @@ __declspec(naked) void RoundEndFsmCluster_0045d680(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     InstallSelfPackedF80_00426000
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
     L_d82c:
         pop      edi
         pop      esi
@@ -267,7 +267,7 @@ __declspec(naked) void RoundEndFsmCluster_0045d680(void)
         nop
         /* === Helper 3: call 0049f900 + jmp 0041f830 === */
         call     DispatcherComplex115_0049f900
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d853
         jmp      CallSetPause_0041f830
@@ -337,7 +337,7 @@ __declspec(naked) void RoundEndFsmCluster_0045d680(void)
         nop
         /* === Helper 7: call 0049f980 + jmp 0041f830 === */
         call     DispatcherComplex115_0049f980
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d8d3
         jmp      CallSetPause_0041f830

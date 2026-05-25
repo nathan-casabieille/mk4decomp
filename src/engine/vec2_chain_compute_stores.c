@@ -122,7 +122,7 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
@@ -146,7 +146,7 @@ __declspec(naked) void Vec2ChainComputeStores_00480b80(void)
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], edx
         call    ScaledChainDouble_004911f0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_v2ccs_ret
         mov     eax, dword ptr [g_state_004d57ac]

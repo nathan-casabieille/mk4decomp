@@ -150,7 +150,7 @@ extern unsigned int g_data_00501070;
 extern unsigned int g_data_005117c4;
 
 extern unsigned int g_data_004d57ac;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -176,7 +176,7 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         call     GuardedScaled_00475060
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         xor      esi, esi
         cmp      eax, esi
         jne      L_d395
@@ -185,7 +185,7 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         test     al, bl
         je       short L_d2d7
         call     MStackBracket5_FieldClear_StateAdvance_00405630
-        cmp      dword ptr [g_data_00541e6c], esi
+        cmp      dword ptr [g_framePauseFlag], esi
         jne      L_d395
         test     byte ptr [g_data_0054208c], bl
         je       short L_d327
@@ -195,7 +195,7 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         shr      edx, 2
         mov      dword ptr [g_data_00542048], edx
         call     FramePauseScaledStore_00406c10
-        cmp      dword ptr [g_data_00541e6c], esi
+        cmp      dword ptr [g_framePauseFlag], esi
         jne      L_d395
         test     byte ptr [g_data_0054208c], bl
         je       short L_d327
@@ -257,22 +257,22 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         je       short L_d3de
         push     OFFSET g_data_004e6580
         call     ArgSarStoreJmp_004594f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         pop      esi
         ret
     L_d3de:
         call     GuardedDualScaledChainCopy_0044dd00
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d4f9
         mov      dword ptr [g_data_0054206c], 0x30
         call     GatedWordPushCall_00489f90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d4f9
         call     PendingMatch_0043d830
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d4f9
         mov      ecx, OFFSET g_data_00501070
@@ -293,7 +293,7 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
         call     InstallSelfChainAccumPath_004752b0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_d48e:
@@ -304,21 +304,21 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         call     StoreLoadJmp_00404ef0
         add      esp, 4
         call     DoubleCallChainInit_0043d780
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d4f9
         mov      eax, dword ptr [g_data_00542058]
         mov      dword ptr [g_data_00542084], 0x12666
         mov      dword ptr [g_data_0054205c], eax
         call     GameInstall2BodyMul10ScaledInit_00475590
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d4f9
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_d3a0
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], 0x10
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_d4f9:
         pop      esi
         ret
@@ -332,7 +332,7 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         mov      dword ptr [eax*4 + 0x28], 0x35
         mov      dword ptr [g_data_0054206c], 0x27
         call     GatedWordPushCall_00489f90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d535
         push     OFFSET g_data_004e6590
@@ -353,7 +353,7 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         /* === h4 (0x44d540): event 004e65a0 forwarder === */
         mov      dword ptr [g_data_0054206c], 0xfffffbc7
         call     PendingMatch_0044dd80
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d565
         push     OFFSET g_data_004e65a0

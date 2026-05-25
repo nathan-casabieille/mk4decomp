@@ -136,7 +136,7 @@ extern void SetJmp_00451b60(void);
 extern void SetJmp_00451b70(void);
 extern void SetJmp_00451b80(void);
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
 extern unsigned int g_data_0054208c;
@@ -155,21 +155,21 @@ __declspec(naked) void AnimSequence4Way_004515c0(void)
         jmp      dword ptr [eax*4 + L_5c0_jmptbl]
     L_15ee:
         call     SetJmp_00451af0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_17c7
         call     SetJmp_00405420
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_17c7
         test     byte ptr [g_data_0054208c], 4
         je       short L_163f
         call     SetJmp_00451ac0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_17c7
         call     SetJmp_00451b00
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_17c7
     L_163f:
@@ -177,26 +177,26 @@ __declspec(naked) void AnimSequence4Way_004515c0(void)
         mov      dword ptr [esi + 8], OFFSET AnimSequence4Way_004515c0
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret
     L_1661:
         call     SetJmp_00451b20
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_17c7
         call     SetJmp_00405420
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_17c7
         test     byte ptr [g_data_0054208c], 4
         je       short L_16b2
         call     SetJmp_00451b60
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_17c7
         call     SetJmp_00451b30
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_17c7
     L_16b2:
@@ -204,26 +204,26 @@ __declspec(naked) void AnimSequence4Way_004515c0(void)
         mov      dword ptr [esi + 8], OFFSET AnimSequence4Way_004515c0
         mov      dword ptr [esi + 0x84], 3
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret
     L_16d4:
         call     SetJmp_00451b70
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_17c7
         call     SetJmp_00405420
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_17c7
         test     byte ptr [g_data_0054208c], 4
         je       short L_1725
         call     SetJmp_00451b40
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_17c7
         call     SetJmp_00451b80
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_17c7
     L_1725:
@@ -231,34 +231,34 @@ __declspec(naked) void AnimSequence4Way_004515c0(void)
         mov      dword ptr [esi + 8], OFFSET AnimSequence4Way_004515c0
         mov      dword ptr [esi + 0x84], 4
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret
     L_1747:
         call     MStackPush2RunCountdown_004089e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_17c7
         call     MStackBracket7_DispatchAndChain_004b8fa0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_17c7
         call     SetJmp_00451aa0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_17c7
         call     SetJmp_00405420
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_17c7
         test     byte ptr [g_data_0054208c], 4
         je       short L_17a4
         call     SetJmp_00451ae0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_17c7
         call     SetJmp_00451ab0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_17c7
     L_17a4:
@@ -266,7 +266,7 @@ __declspec(naked) void AnimSequence4Way_004515c0(void)
         mov      dword ptr [esi + 8], OFFSET AnimSequence4Way_004515c0
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret
     L_17c2:

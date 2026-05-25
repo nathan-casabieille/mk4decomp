@@ -122,7 +122,7 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
 extern unsigned int g_data_0054206c;
@@ -148,7 +148,7 @@ __declspec(naked) void FivePackedSubChainBigEntry_004966d0(void)
         push    0x4f1728
         mov     dword ptr [ecx*4 + 0x74], eax
         call    StreamInitCountdownBody_00494830
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         jne     short L_fpscb_sub1_ret
@@ -184,7 +184,7 @@ __declspec(naked) void FivePackedSubChainBigEntry_004966d0(void)
         nop
     L_fpscb_sub3:
         call    ThresholdSetMatchDispatch_0046dc10
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_fpscb_sub3_ret
         mov     ecx, dword ptr [g_data_00542060]
@@ -218,7 +218,7 @@ __declspec(naked) void FivePackedSubChainBigEntry_004966d0(void)
         mov     dword ptr [g_data_0054206c], eax
         mov     dword ptr [ecx*4 + 0x68], eax
         call    StreamInitCountdownBody_00494830
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         jne     short L_fpscb_sub4_ret
@@ -259,7 +259,7 @@ __declspec(naked) void FivePackedSubChainBigEntry_004966d0(void)
         mov     dword ptr [eax*4], ecx
         mov     dword ptr [g_data_0054206c], 0xa
         call    ScaledInit_0048d490
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_fpscb_main_ret
         mov     eax, dword ptr [g_state_004d57ac]
@@ -277,13 +277,13 @@ __declspec(naked) void FivePackedSubChainBigEntry_004966d0(void)
         ret
     L_fpscb_main_doCall:
         call    ScaledLoadIncJmp_00429840
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_fpscb_main_ret
         mov     dword ptr [esi + 8], offset L_fpscb_main
         mov     dword ptr [esi + 0x84], ebx
         mov     dword ptr [g_data_0054204c], ebx
-        mov     dword ptr [g_data_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
     L_fpscb_main_ret:
         pop     esi
         pop     ebx

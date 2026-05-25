@@ -136,7 +136,7 @@ extern unsigned int g_data_004d50a4;
 extern unsigned int g_data_0053a498;
 
 extern unsigned int g_data_00538158;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054205c;
@@ -191,7 +191,7 @@ __declspec(naked) void EventPacketDecoder_0045de60(void)
         mov      dword ptr [g_data_00542078], eax
         jne      short L_df10
         call     ConditionalAcc4or3_0045e0b0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e0a2
         mov      edx, dword ptr [g_data_0054206c]
@@ -200,7 +200,7 @@ __declspec(naked) void EventPacketDecoder_0045de60(void)
         cmp      eax, 0xaa
         jne      short L_df34
         call     ConditionalAcc3or4_0045e0d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e0a2
         mov      edx, dword ptr [g_data_0054206c]

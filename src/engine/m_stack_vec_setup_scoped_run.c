@@ -136,7 +136,7 @@ extern unsigned int g_data_00535e7c;
  *   sets g_data_0054206c=1 on success.
  */
 extern unsigned int g_data_0051204c;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_00542058;
@@ -153,7 +153,7 @@ void MStackVecSetupScopedRun_004749a0(void) {
         shr     eax, 2
         mov     dword ptr [g_data_00542048], eax
         call    DispatcherComplex260_00407030
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mvss_done
         test    byte ptr [g_data_0054208c], 4
@@ -194,7 +194,7 @@ void MStackVecSetupScopedRun_004749a0(void) {
         mov     dword ptr [ecx*4 + 0x5c], eax
         mov     dword ptr [g_data_0054206c], 0x28f
         call    AudioMixerStep_004ab700
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_mvss_done
         mov     eax, dword ptr [g_data_0054206c]
@@ -207,12 +207,12 @@ void MStackVecSetupScopedRun_004749a0(void) {
         add     ecx, 0x1b
         mov     dword ptr [g_data_00542044], ecx
         call    TripleVecAccCallStore_00476880
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_mvss_done
         sub     dword ptr [g_data_00542044], 0x1b
         call    MStackCall_00406340
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_mvss_done
         mov     dword ptr [g_data_0054206c], 1

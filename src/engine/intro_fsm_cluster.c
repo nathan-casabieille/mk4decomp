@@ -126,7 +126,7 @@ extern unsigned int g_const_0044d820;
 extern unsigned int g_data_004e65b8;
 extern unsigned int g_data_004e65c8;
 extern unsigned int g_data_00501088;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
@@ -168,7 +168,7 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
         _emit    0xff
     L_d5a2:
         call     ScaledZeroFour_00490740
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d5b5
         jmp      Thunk_0049cbc0
@@ -197,14 +197,14 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
         dec      ecx
         je       short L_d61c
         call     DoubleScaledCrossStore_00475750
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d738
         mov      ecx, dword ptr [g_data_00542054]
         push     OFFSET g_data_004e65c8
         mov      dword ptr [g_data_0054205c], ecx
         call     ArgSarStoreJmp_004594f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         ret
     L_d61c:
@@ -226,7 +226,7 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     SetJmp_004753a0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         ret
     L_d68d:
         mov      dword ptr [eax + 8], OFFSET L_d5c0
@@ -244,7 +244,7 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     InstallSelfPackedTailJmp_004751f0
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         ret
     L_d6f0:
         mov      ecx, dword ptr [g_data_00542060]
@@ -257,7 +257,7 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
         mov      dword ptr [eax + 8], OFFSET L_d5c0
         mov      dword ptr [eax + 0x84], ecx
         mov      dword ptr [g_data_0054204c], 0xb
-        mov      dword ptr [g_data_00541e6c], ecx
+        mov      dword ptr [g_framePauseFlag], ecx
     L_d738:
         ret
         nop
@@ -278,7 +278,7 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
         add      esp, 4
         mov      dword ptr [g_data_0054206c], 0x2b
         call     GatedWordPushCall_00489f90
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d793
         mov      dword ptr [g_data_00542054], 1

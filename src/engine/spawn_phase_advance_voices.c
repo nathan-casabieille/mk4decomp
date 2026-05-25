@@ -125,7 +125,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_0052ab10;
 extern unsigned int g_data_00535de0;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541fbc;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
@@ -202,11 +202,11 @@ __declspec(naked) void SpawnPhaseAdvanceVoices_0042e290(void)
         mov      eax, dword ptr [g_data_00542048]
         mov      dword ptr [g_data_00542044], eax
         call     MStackPushTableMatch_0042e720
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_e46f
         call     MStackPush2ChainLLInsert_00406790
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_e46f
         mov      esi, dword ptr [g_data_004d57ac]

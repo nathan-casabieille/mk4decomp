@@ -149,7 +149,7 @@ extern void FiveCallGuardSetTail_0046f6b0(void);
  *     [eax+8]=Self, slot[+0x84]=1, g_data_0054204c=1, 0x541e6c=1.
  */
 extern unsigned int g_data_00538158;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
@@ -194,26 +194,26 @@ __declspec(naked) void CountdownInstallSelfMultiTail_00480840(void) {
         mov     esi, eax
         je      short L_cis_skipCall1
         call    Set1dCallSet16Jmp_004809b0
-        cmp     dword ptr [g_data_00541e6c], edi
+        cmp     dword ptr [g_framePauseFlag], edi
         jne     L_cis_done
     L_cis_skipCall1:
         cmp     dword ptr [g_data_00542088], ebx
         je      L_cis_call9e0
         call    ScaledChain3c7c_0048f930
-        cmp     dword ptr [g_data_00541e6c], edi
+        cmp     dword ptr [g_framePauseFlag], edi
         jne     L_cis_done
         cmp     dword ptr [g_data_0054206c], 3
         jge     L_cis_call9e0
         mov     dword ptr [g_data_0054206c], 0xb333
         call    EsiEdiAliasDualMul10_004906b0
-        cmp     dword ptr [g_data_00541e6c], edi
+        cmp     dword ptr [g_framePauseFlag], edi
         jne     L_cis_done
         mov     dword ptr [g_data_00542088], ebp
         call    PunchAnimCluster_00496d80
-        cmp     dword ptr [g_data_00541e6c], edi
+        cmp     dword ptr [g_framePauseFlag], edi
         jne     short L_cis_done
         call    NotMaskStorePair_0045f440
-        cmp     dword ptr [g_data_00541e6c], edi
+        cmp     dword ptr [g_framePauseFlag], edi
         jne     short L_cis_done
         mov     ecx, dword ptr [g_data_0054205c]
         mov     edx, dword ptr [g_data_00538158]
@@ -238,7 +238,7 @@ __declspec(naked) void CountdownInstallSelfMultiTail_00480840(void) {
         mov     dword ptr [eax + 8], offset CountdownInstallSelfMultiTail_00480840
         mov     dword ptr [eax + 0x84], ebx
         mov     dword ptr [g_data_0054204c], ebx
-        mov     dword ptr [g_data_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
     L_cis_done:
         pop     edi
         pop     esi

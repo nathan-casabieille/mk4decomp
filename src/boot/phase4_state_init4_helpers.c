@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004d6758;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -144,7 +144,7 @@ __declspec(naked) void Phase4StateInit4Helpers_004130c0(void)
 {
     __asm {
         call    ChainDirtyBitWalker_00408c10
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p44_ret
         test    byte ptr [g_state_0054208c], 4
@@ -155,7 +155,7 @@ __declspec(naked) void Phase4StateInit4Helpers_004130c0(void)
         mov     dword ptr [g_data_0054204c], eax
         mov     dword ptr [g_data_0054206c], ecx
         call    PushSetXfmMaskCallPop_00407140
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p44_ret
         test    byte ptr [g_state_0054208c], 4
@@ -200,7 +200,7 @@ __declspec(naked) void Phase4StateInit4Helpers_004130c0(void)
         mov     edx, dword ptr [g_data_0054205c]
         mov     dword ptr [g_data_00542044], edx
         call    MStackCall_00406600
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p44_ret
     L_p44_pop1:
@@ -216,7 +216,7 @@ __declspec(naked) void Phase4StateInit4Helpers_004130c0(void)
         nop
     L_p44_helperA:
         call    ClampMulShiftStore_004ba0e0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p44_helperA_ret
         mov     eax, dword ptr [g_data_00543800]
@@ -245,16 +245,16 @@ __declspec(naked) void Phase4StateInit4Helpers_004130c0(void)
         mov     eax, dword ptr [g_data_0054205c]
         mov     dword ptr [g_data_00542044], eax
         call    MStackPushZeroCallPop_004066f0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p44_helperB_ret
         call    MStackCall_00406600
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p44_helperB_ret
         mov     dword ptr [g_data_0054206c], 0xCCC
         call    MStackPushNegMul10_0040a690
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p44_helperB_ret
         mov     ecx, dword ptr [g_data_0054205c]
@@ -311,7 +311,7 @@ __declspec(naked) void Phase4StateInit4Helpers_004130c0(void)
         mov     dword ptr [g_data_0054206c], eax
         mov     dword ptr [ecx*4 + 0x48], eax
         call    ChainListVecAdd_0049d200
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p44_helperC_ret
     L_p44_helperC_tail:

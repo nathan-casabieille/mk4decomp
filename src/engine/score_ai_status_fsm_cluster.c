@@ -134,7 +134,7 @@ extern void MStackPushSet0020_004901d0(void);
 extern unsigned int g_data_004ed0b8;
 
 extern unsigned int g_data_004d57ac;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
@@ -180,24 +180,24 @@ __declspec(naked) void ThrowTakedownStepCluster_00479e40(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     ScaledChainJmp_00429470
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_9ece:
         call     ScaledZeroFour_00490740
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_9f15
         mov      dword ptr [g_data_00542080], 0x18
         call     ScaledArrStore_00429980
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_9f15
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_9e40
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], 0xa
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_9f15:
         pop      esi
         ret
@@ -216,7 +216,7 @@ __declspec(naked) void ThrowTakedownStepCluster_00479e40(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [ecx*4 + 0x74], eax
         call     ScoreAiStatusFsmCluster_00479b50
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_9f52
         push     OFFSET g_data_004ed0b8
@@ -259,11 +259,11 @@ __declspec(naked) void ThrowTakedownStepCluster_00479e40(void)
         ret
     L_9fb1:
         call     Push8e_Push413690_00413560
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a08e
         call     MStackPushSet0020_004901d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a08e
         mov      edx, dword ptr [g_data_0054205c]
@@ -284,7 +284,7 @@ __declspec(naked) void ThrowTakedownStepCluster_00479e40(void)
         mov      dword ptr [eax*4], edx
         mov      dword ptr [g_data_0054206c], 0x1a
         call     CmpEqInitCallElseJmp_0048d4b0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_a08e
         mov      eax, dword ptr [g_data_004d57ac]
@@ -303,7 +303,7 @@ __declspec(naked) void ThrowTakedownStepCluster_00479e40(void)
         mov      dword ptr [esi + 8], OFFSET L_9f60
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_a08e:
         pop      esi
         ret

@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004ec950;
 extern unsigned int g_data_004ecc38;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054206c;
@@ -169,14 +169,14 @@ __declspec(naked) void SizeGateInstallSelfThenSubMul10_00473480(void)
     L_sgis_after40:
         mov     dword ptr [g_data_0054206c], 0x10000
         call    StoreDoubleNegPauseSubStore_004ab750
-        cmp     dword ptr [g_data_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         jne     L_sgis_ret
         mov     eax, dword ptr [g_data_00542048]
         mov     edx, dword ptr [g_data_0054206c]
         mov     dword ptr [eax*4 + 0x18], edx
         mov     dword ptr [g_data_0054206c], 0xccc
         call    AudioMixerStep_004ab700
-        cmp     dword ptr [g_data_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         jne     L_sgis_ret
         mov     ecx, dword ptr [g_data_0054206c]
         mov     edx, dword ptr [g_data_00542048]
@@ -191,7 +191,7 @@ __declspec(naked) void SizeGateInstallSelfThenSubMul10_00473480(void)
         mov     dword ptr [eax + 0x44], esi
         mov     dword ptr [g_data_0054206c], ecx
         call    ScaledStoreThree_00409260
-        cmp     dword ptr [g_data_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         jne     short L_sgis_ret
         mov     edx, dword ptr [g_data_00542048]
         mov     eax, offset g_data_004ec950
@@ -208,7 +208,7 @@ __declspec(naked) void SizeGateInstallSelfThenSubMul10_00473480(void)
         je      short L_sgis_clear
         mov     dword ptr [g_data_0054206c], offset SizeGateInstallSelfThenSubMul10_00473480
         call    Helper_TickAlt
-        cmp     dword ptr [g_data_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         jne     short L_sgis_ret
     L_sgis_clear:
         mov     eax, dword ptr [g_data_0054208c]

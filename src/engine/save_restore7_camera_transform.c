@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_0052ab10;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
@@ -183,13 +183,13 @@ void SaveRestore7CameraTransform_004267f0(void) {
         mov      dword ptr [g_data_00542088], eax
         mov      dword ptr [g_data_00542074], eax
         call     ModMagicMul10Index_00424350
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_6a22
         mov      ecx, dword ptr [g_data_0054206c]
         mov      dword ptr [g_data_0054207c], ecx
         call     MStackMagicModMul10_00424410
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_6a22
         mov      eax, dword ptr [g_data_00542088]

@@ -141,7 +141,7 @@ extern void LinkedListInsert_004ab440(void);
  *   into g_data_00542048 and calls LinkedListInsert_004ab440. Pops the 2
  *   mstack entries back and clears bit 0 of g_data_0054208c via and 0xfe.
  */
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054205c;
@@ -175,11 +175,11 @@ __declspec(naked) void MStackPush2ChainLLInsert_00406790(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_table_004d57b0], edx
         call    GuardedChainPushSetCallPop_00406bb0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mpl_doneNoFE
         call    ScaledLoadGuardedJmp_004066d0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mpl_doneNoFE
         mov     eax, dword ptr [g_data_00542044]
@@ -215,7 +215,7 @@ __declspec(naked) void MStackPush2ChainLLInsert_00406790(void) {
         mov     dword ptr [g_data_0054208c], ecx
         je      short L_mpl_skipCall2
         call    MStackBracket2_TreeWalkRecursive_00405e70
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_mpl_doneNoFE
     L_mpl_skipCall2:
@@ -224,7 +224,7 @@ __declspec(naked) void MStackPush2ChainLLInsert_00406790(void) {
         mov     dword ptr [g_data_00542044], edx
         mov     dword ptr [g_data_00542048], eax
         call    LinkedListInsert_004ab440
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_mpl_doneNoFE
         mov     eax, dword ptr [g_state_004d57ac]

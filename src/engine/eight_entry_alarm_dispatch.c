@@ -154,7 +154,7 @@ extern unsigned int g_data_004ede90;
 extern unsigned int g_data_004edec4;
 extern unsigned int g_data_004edec8;
 extern unsigned int g_data_004edef8;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542060;
 extern unsigned int g_data_0054206c;
 extern void ArgSarStoreJmp_004594f0(void);
@@ -171,19 +171,19 @@ __declspec(naked) void EightEntryAlarmDispatch_00482500(void) {
     __asm {
         mov     dword ptr [g_data_0054206c], 0x6666
         call    CmpP1DualInitStore_00482ab0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eae_e1End
         call    CjTableThresholdDispatch_00488f00
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eae_e1End
         call    GateDispatch6c_00494580
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eae_e1End
         call    SaveSwapCallRestore_00489030
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eae_e1End
         push    offset g_data_004ede38
@@ -201,7 +201,7 @@ __declspec(naked) void EightEntryAlarmDispatch_00482500(void) {
         mov     dword ptr [g_data_0054206c], 0xfffff0a4
     L_eae_e2NoOver:
         call    MStackFrameCdeclDouble_004903f0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eae_e2End
         push    offset g_data_004ede68
@@ -222,7 +222,7 @@ __declspec(naked) void EightEntryAlarmDispatch_00482500(void) {
         /* entry 3 (offset 0xa0) */
     L_eae_entry3:
         call    DualScaledInitClear_00433c10
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eae_e3End
         jmp     LiteralPushCallEntZero_00488c00
@@ -243,7 +243,7 @@ __declspec(naked) void EightEntryAlarmDispatch_00482500(void) {
         /* entry 4 (offset 0xc0) */
     L_eae_entry4:
         call    GateDispatch6c_00494580
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eae_e4End
         push    offset g_data_004ede90
@@ -258,12 +258,12 @@ __declspec(naked) void EightEntryAlarmDispatch_00482500(void) {
         /* entry 5 (offset 0xe0) */
     L_eae_entry5:
         call    GateDispatch6c_00494580
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eae_e5End
         push    offset g_data_004edec4
         call    IterStepDualStore_00490b40
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         jne     short L_eae_e5End
@@ -289,7 +289,7 @@ __declspec(naked) void EightEntryAlarmDispatch_00482500(void) {
         /* entry 6 (offset 0x120) */
     L_eae_entry6:
         call    GateDispatch6c_00494580
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eae_e6End
         push    offset g_data_004edef8
@@ -305,7 +305,7 @@ __declspec(naked) void EightEntryAlarmDispatch_00482500(void) {
     L_eae_entry7:
         mov     dword ptr [g_data_0054206c], 6
         call    TableLookupCall_0048a160
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eae_e7End
         jmp     TripleGuardSetTailJmp_00482680
@@ -317,7 +317,7 @@ __declspec(naked) void EightEntryAlarmDispatch_00482500(void) {
     L_eae_entry8:
         mov     dword ptr [g_data_0054206c], 8
         call    TableLookupCall_00489ff0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eae_e8End
         jmp     TripleGuardSetTailJmp_00482680

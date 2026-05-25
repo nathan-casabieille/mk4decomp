@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_004eee3c;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054205c;
@@ -163,7 +163,7 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], edx
         call     ScaledChainDouble_004911f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_69c8
         mov      ecx, dword ptr [g_data_0054207c]
@@ -195,7 +195,7 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         mov      dword ptr [edx*4 + 8], ecx
         mov      dword ptr [g_data_00542048], eax
         call     Phase2InitDispatchInstallSelf_0040ba70
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_69c8
         mov      eax, dword ptr [g_data_004d57ac]

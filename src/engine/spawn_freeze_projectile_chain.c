@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004e5808;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
@@ -160,7 +160,7 @@ __declspec(naked) void SpawnFreezeProjectileChain_00442530(void)
         mov      ebx, 0x7ae
     L_2583:
         call     MStackPush3CallChainBit2_004431e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2734
         test     byte ptr [g_data_0054208c], 4
@@ -180,7 +180,7 @@ __declspec(naked) void SpawnFreezeProjectileChain_00442530(void)
         lea      eax, [eax + edx - 0x4b65f]
         mov      dword ptr [g_data_00542074], eax
         call     MStackPush1MagicMod2_004244d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2734
         mov      ecx, dword ptr [g_data_00542070]
@@ -211,21 +211,21 @@ __declspec(naked) void SpawnFreezeProjectileChain_00442530(void)
         mov      dword ptr [esi + 0x74], eax
         mov      dword ptr [g_data_0054206c], edi
         call     StoreDoubleNegPauseSubStore_004ab750
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2734
         mov      ecx, dword ptr [g_data_0054206c]
         mov      dword ptr [esi + 0x78], ecx
         mov      dword ptr [g_data_0054206c], edi
         call     StoreDoubleNegPauseSubStore_004ab750
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2734
         mov      edx, dword ptr [g_data_0054206c]
         mov      dword ptr [esi + 0x7c], edx
         mov      dword ptr [g_data_0054206c], edi
         call     StoreDoubleNegPauseSubStore_004ab750
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2734
         mov      eax, dword ptr [g_data_0054206c]
@@ -236,7 +236,7 @@ __declspec(naked) void SpawnFreezeProjectileChain_00442530(void)
         add      ecx, esi
         mov      dword ptr [g_data_00542044], ecx
         call     TripleVecAccCallStore_00476880
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2734
         mov      eax, dword ptr [g_data_00542044]

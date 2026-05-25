@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004ec710;
 extern unsigned int g_data_0053a498;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542060;
@@ -155,7 +155,7 @@ __declspec(naked) void GuardedSetInitInstallChain_004728c0(void)
     L_gsiic_chain:
         mov     dword ptr [g_data_0054206c], 4
         call    StorePauseImulShr16_004ab630
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_gsiic_ret
         add     dword ptr [g_data_0054206c], 5
@@ -196,31 +196,31 @@ __declspec(naked) void GuardedSetInitInstallChain_004728c0(void)
     L_gsiic_sub2_inner:
         mov     dword ptr [g_data_0054206c], 3
         call    StorePauseImulShr16_004ab630
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_gsiic_sub2_ret
         add     dword ptr [g_data_0054206c], 0xb
         call    GatedWordPushCall_00489f90
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_gsiic_sub2_ret
         mov     dword ptr [esi + 8], offset L_gsiic_sub2
         mov     dword ptr [esi + 0x84], 2
         mov     dword ptr [g_data_0054204c], 6
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
     L_gsiic_sub2_phase0:
         mov     dword ptr [g_data_0054206c], 0x15
         call    GatedWordPushCall_00489f90
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_gsiic_sub2_ret
         mov     eax, 1
         mov     dword ptr [esi + 8], offset L_gsiic_sub2
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_data_0054204c], 0x11
-        mov     dword ptr [g_data_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
     L_gsiic_sub2_ret:
         pop     esi
         ret
@@ -247,7 +247,7 @@ __declspec(naked) void GuardedSetInitInstallChain_004728c0(void)
         je      short L_gsiic_sub3_phase0
         mov     dword ptr [g_data_0054206c], 0xa
         call    GatedWordPushCall_00489f90
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_gsiic_sub3_ret
         mov     ecx, dword ptr [g_data_00542054]
@@ -271,7 +271,7 @@ __declspec(naked) void GuardedSetInitInstallChain_004728c0(void)
         mov     eax, 1
         mov     dword ptr [esi + 8], offset L_gsiic_sub3
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_data_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
     L_gsiic_sub3_ret:
         pop     esi
         ret

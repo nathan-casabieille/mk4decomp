@@ -122,7 +122,7 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
@@ -166,13 +166,13 @@ __declspec(naked) void TripleSubInstallSelfPair_0047a670(void)
         mov     eax, dword ptr [g_data_00542060]
         mov     dword ptr [eax*4 + 0x84], edx
         call    ScaledLoadJmp_00428d20
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         ret
     L_tsisp_sub2:
         mov     dword ptr [g_data_0054206c], 0xb
         call    ScaledIndexConditionalAdd_0048e400
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_tsisp_sub2_ret
         mov     ecx, dword ptr [g_data_00542060]
@@ -202,12 +202,12 @@ __declspec(naked) void TripleSubInstallSelfPair_0047a670(void)
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], ecx
         call    DualCallPauseDirtyJmp_00490c30
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_tsisp_sub3_abort
         mov     dword ptr [g_data_0054206c], 0x17
         call    CmpEqInitCallElseJmp_0048d4b0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_tsisp_sub3_abort
         mov     eax, dword ptr [g_state_004d57ac]
@@ -239,7 +239,7 @@ __declspec(naked) void TripleSubInstallSelfPair_0047a670(void)
         push    0x4ed130
         mov     dword ptr [eax*4 + 0x5c], ebx
         call    IterStepDualStore_00490b40
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         jne     short L_tsisp_sub3_abort
@@ -248,7 +248,7 @@ __declspec(naked) void TripleSubInstallSelfPair_0047a670(void)
         mov     dword ptr [esi + 8], offset L_tsisp_sub3
         mov     dword ptr [esi + 0x84], ebx
         mov     dword ptr [g_data_0054204c], ebx
-        mov     dword ptr [g_data_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
     L_tsisp_sub3_abort:
         pop     esi
         pop     ebx

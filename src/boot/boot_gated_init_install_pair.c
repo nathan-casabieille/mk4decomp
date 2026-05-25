@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004f360c;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -154,18 +154,18 @@ __declspec(naked) void BootGatedInitInstallPair_00412280(void)
         je      L_bgip_ret1
         mov     dword ptr [g_data_0054206c], 0x2666
         call    AudioMixerStep_004ab700
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_bgip_ret1
         add     dword ptr [g_data_0054206c], 0xd999
         call    ZeroAndDirty4_00405430
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bgip_ret1
         test    byte ptr [g_data_0054208c], 4
         je      short L_bgip_ret1
         call    MStackPush8_004ab790
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bgip_ret1
         mov     eax, dword ptr [g_data_00542044]
@@ -182,11 +182,11 @@ __declspec(naked) void BootGatedInitInstallPair_00412280(void)
         test    al, 1
         jne     short L_bgip_tailPop
         call    MStackPushCallPop_0040a830
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bgip_ret1
         call    ZeroThreeFields_0040a8b0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bgip_ret1
     L_bgip_tailPop:
@@ -250,14 +250,14 @@ __declspec(naked) void BootGatedInitInstallPair_00412280(void)
         mov     dword ptr [g_data_0054206c], eax
         mov     dword ptr [ecx*4], eax
         call    ChainListVecAdd_0049d200
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bgip_main_ret
         mov     eax, 1
         mov     dword ptr [esi + 8], offset L_bgip_main
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_data_0054204c], eax
-        mov     dword ptr [g_data_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
     L_bgip_main_ret:
         pop     esi
         ret

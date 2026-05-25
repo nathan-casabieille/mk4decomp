@@ -138,7 +138,7 @@ extern unsigned int g_data_004ef010;
 extern unsigned int g_data_00500710;
 
 extern unsigned int g_data_004d57ac;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -195,13 +195,13 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         mov      dword ptr [esi + 8], OFFSET L_8250
         mov      dword ptr [esi + 0x84], 3
         mov      dword ptr [g_data_0054204c], 8
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_82ab:
         mov      dword ptr [g_data_0054206c], 0x40
         call     TableLookupCall_00489ff0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_8361
         mov      ecx, dword ptr [g_data_0054205c]
@@ -223,7 +223,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
         call     InstallSelfOrCmpJmp_0048f570
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_8340:
@@ -231,7 +231,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         mov      dword ptr [esi + 8], OFFSET L_8250
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], 8
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_8361:
         pop      esi
         ret
@@ -276,7 +276,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         mov      dword ptr [eax + 8], OFFSET L_8370
         mov      dword ptr [eax + 0x84], ecx
         mov      dword ptr [g_data_0054204c], 4
-        mov      dword ptr [g_data_00541e6c], ecx
+        mov      dword ptr [g_framePauseFlag], ecx
         ret
         nop
         nop
@@ -290,11 +290,11 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         shr      eax, 2
         mov      dword ptr [g_data_00542048], eax
         call     ScaledArrStore_004298c0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_8446
         call     IncThunkPlusCjDispatch_00483b80
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_8446
         push     OFFSET g_data_004eefd8
@@ -321,7 +321,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         /* === Helper 6: 0xf event + jmp 004884a0 === */
         mov      dword ptr [g_data_0054206c], 0xf
         call     FlagThunk4EntryDispatcher_0040a470
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_847d
         jmp      CinematicCFsmCluster_004884a0
@@ -332,7 +332,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         /* === Helper 7: 9 event + jmp 004884a0 === */
         mov      dword ptr [g_data_0054206c], 9
         call     FlagThunk4EntryDispatcher_0040a470
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_849d
         jmp      CinematicCFsmCluster_004884a0

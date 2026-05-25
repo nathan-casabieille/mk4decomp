@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_00535e6c;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_00542054;
@@ -144,16 +144,16 @@ __declspec(naked) void Phase1SlotLinkAndInit_00419470(void)
         mov     eax, dword ptr [g_data_0054205c]
         mov     dword ptr [g_data_00542044], eax
         call    GuardedChainPushSetCallPop_00406bb0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1sli_ret
         call    ScaledLoadGuardedJmp_004066d0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1sli_ret
         mov     dword ptr [g_data_0054206c], 0xFFFFFFFF
         call    MStackInitCallToggle_00408ad0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1sli_ret
         test    byte ptr [g_state_0054208c], 4
@@ -161,13 +161,13 @@ __declspec(naked) void Phase1SlotLinkAndInit_00419470(void)
         mov     ecx, dword ptr [g_data_00542044]
         mov     dword ptr [g_data_00542050], ecx
         call    ScaledTestPauseStore_00408860
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1sli_ret
         test    byte ptr [g_state_0054208c], 4
         jne     L_p1sli_ret
         call    BootPhaseGateBracketedInit_004060c0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1sli_ret
         test    byte ptr [g_state_0054208c], 4
@@ -229,7 +229,7 @@ __declspec(naked) void Phase1SlotLinkAndInit_00419470(void)
         mov     edx, dword ptr [g_data_00542050]
         mov     dword ptr [g_data_00542044], edx
         call    BootChainBidirRecurseWalk_00405ca0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1sli_ret
         mov     eax, dword ptr [g_data_00542054]

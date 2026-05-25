@@ -127,7 +127,7 @@ extern unsigned int g_data_004f3a30;
 extern unsigned int g_data_004f3a38;
 extern unsigned int g_data_0050a0f0;
 extern unsigned int g_data_0050c618;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054208c;
@@ -166,11 +166,11 @@ __declspec(naked) void VoiceTrioBindAndKick_004a5ea0(void)
         mov      dword ptr [g_data_00542048], eax
     L_5ef4:
         call     DispatcherComplex260_00407400
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_607a
         call     MStackPushComplexCallPop_00406430
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_607a
         mov      al, byte ptr [g_data_0054208c]

@@ -131,7 +131,7 @@ extern unsigned int g_data_0053803c;
 extern unsigned int g_data_00538160;
 extern unsigned int g_data_00538164;
 extern unsigned int g_data_0053a6dc;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -164,7 +164,7 @@ __declspec(naked) void MkIntroFsm_004218b0(void)
         dec      eax
         je       short L_1937
         call     Cmp2DirtyToggle_00423870
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1aa1
         mov      al, byte ptr [g_data_0054208c]
@@ -193,27 +193,27 @@ __declspec(naked) void MkIntroFsm_004218b0(void)
         mov      dword ptr [esi + 0x84], 3
         add      esp, 4
         mov      dword ptr [g_data_0054204c], 8
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         pop      ebx
         ret
     L_196c:
         mov      dword ptr [g_data_0054206c], 0x2d
         call     TableLookupCall_00489ff0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1aa1
         mov      dword ptr [esi + 8], OFFSET L_18b0
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_data_0054204c], 0x90
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         pop      ebx
         ret
     L_19b0:
         mov      dword ptr [g_data_00542074], 0
         call     Push16Call_00489f50
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1aa1
         mov      ecx, dword ptr [g_data_00538038]
@@ -223,14 +223,14 @@ __declspec(naked) void MkIntroFsm_004218b0(void)
         mov      dword ptr [g_data_00542044], ecx
         mov      dword ptr [g_data_00542048], OFFSET func_004214a0
         call     Thunk_0049cbd0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1aa1
         mov      edx, dword ptr [g_data_0053803c]
         mov      dword ptr [g_data_00542048], OFFSET func_004214a0
         mov      dword ptr [g_data_00542044], edx
         call     Thunk_0049cbd0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1aa1
         mov      eax, OFFSET g_data_004d56d8
@@ -241,18 +241,18 @@ __declspec(naked) void MkIntroFsm_004218b0(void)
         mov      dword ptr [g_data_0054207c], 0xffc90000
         mov      dword ptr [g_data_00542048], eax
         call     Push70CallScaleArith_00457ad0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1aa1
         mov      dword ptr [g_data_00542074], 0x48
         call     Push16Call_00489f50
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1aa1
         mov      dword ptr [esi + 8], OFFSET L_18b0
         mov      dword ptr [esi + 0x84], ebx
         mov      dword ptr [g_data_0054204c], 0x10
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
     L_1aa1:
         pop      esi
         pop      ebx

@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_00500c74;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542058;
@@ -157,7 +157,7 @@ __declspec(naked) void TwoPhaseInstallScaledPackedPtr_00480d50(void)
         ret
     L_tpisp_phase1:
         call    CopyJmp_0048ef90
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_tpisp_ret
         test    byte ptr [g_data_0054208c], bl
@@ -186,7 +186,7 @@ __declspec(naked) void TwoPhaseInstallScaledPackedPtr_00480d50(void)
         mov     edx, dword ptr [g_data_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    ScaledLoadJmp_00428d20
-        mov     dword ptr [g_data_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
         pop     esi
         pop     ebx
         ret
@@ -202,7 +202,7 @@ __declspec(naked) void TwoPhaseInstallScaledPackedPtr_00480d50(void)
         mov     ecx, dword ptr [g_data_00542070]
         mov     dword ptr [eax*4 + 0x70], ecx
         call    DualCallPauseDirtyJmp_00490c30
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_tpisp_ret
         mov     edx, dword ptr [g_data_0054205c]
@@ -221,14 +221,14 @@ __declspec(naked) void TwoPhaseInstallScaledPackedPtr_00480d50(void)
         mov     dword ptr [g_data_0054206c], eax
         jge     short L_tpisp_install
         call    CallDualStoreXorBit_004285e0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_tpisp_ret
     L_tpisp_install:
         mov     dword ptr [esi + 8], offset TwoPhaseInstallScaledPackedPtr_00480d50
         mov     dword ptr [esi + 0x84], ebx
         mov     dword ptr [g_data_0054204c], ebx
-        mov     dword ptr [g_data_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
     L_tpisp_ret:
         pop     esi
         pop     ebx

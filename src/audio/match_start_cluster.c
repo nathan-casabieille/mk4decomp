@@ -130,7 +130,7 @@ extern unsigned int g_data_0053a3e0;
 extern unsigned int g_data_0053a408;
 extern unsigned int g_data_0053a51c;
 extern unsigned int g_data_0053a700;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542004;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
@@ -181,7 +181,7 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         call     SixCallSeqPushImm_004a1d80
         mov      dword ptr [g_data_00542074], 0
         call     Push16Call_00489f50
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2440
         jmp      InstallSelfTableWalk_004200d0
@@ -216,15 +216,15 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         je       L_2527
         mov      dword ptr [g_data_00542074], edi
         call     Push16Call_00489f50
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_260c
         mov      ecx, dword ptr [g_data_0053a51c]
         mov      dword ptr [g_data_0054206c], ecx
         call     TablePushAccumTailJmp_00429e30
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_260c
         call     TestCmpZeroFour_004238b0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_260c
         mov      eax, dword ptr [g_data_00537f48]
         mov      edx, OFFSET g_data_00535cfc
@@ -235,13 +235,13 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [g_data_00542070], edi
         call     DownloadPlayerChar
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_260c
         mov      ecx, dword ptr [g_data_005380e0]
         mov      dword ptr [g_data_00542070], ebx
         mov      dword ptr [g_data_0054206c], ecx
         call     DownloadPlayerChar
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_260c
         mov      byte ptr [g_data_0054371c], 0
         call     ScaledClearTripleCallJmp_004202c0
@@ -295,7 +295,7 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     AudioInstallSelfStatePush_004aa8a0
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
     L_260c:
         pop      edi
         pop      esi

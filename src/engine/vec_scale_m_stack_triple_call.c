@@ -143,7 +143,7 @@ extern unsigned int g_data_00535e7c;
  *     +0x10=0, +0x14=&g_data_004e6070>>2. Pops mstack and returns.
  */
 extern unsigned int g_data_004e6070;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_0054206c;
@@ -164,7 +164,7 @@ __declspec(naked) void VecScaleMStackTripleCall_00446980(void) {
         mov     dword ptr [g_data_00542070], eax
         mov     dword ptr [g_data_0054206c], 0xf5c
         call    StoreDoubleNegPauseSubStore_004ab750
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_vsm_e1End
         mov     eax, dword ptr [g_data_0054206c]
@@ -198,18 +198,18 @@ __declspec(naked) void VecScaleMStackTripleCall_00446980(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_table_004d57b0], ecx
         call    ChainWalkPushPop_00405a40
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_vsm_pop1
         mov     dword ptr [g_data_0054206c], 0x12c
         call    AudioVolumeRescale_004ab690
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_vsm_pop1
         test    byte ptr [g_data_0054208c], 1
         je      short L_vsm_doVecScale
         call    MStackPush2VolumeCascade_00444e00
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_vsm_pop1
     L_vsm_doVecScale:

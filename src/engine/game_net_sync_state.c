@@ -131,7 +131,7 @@ extern unsigned int g_data_00537e90;
 extern unsigned int g_data_00537f88;
 extern unsigned int g_data_0053a408;
 extern unsigned int g_data_00541d88;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
@@ -155,7 +155,7 @@ __declspec(naked) void GameNetSyncState_0049fb70(void)
         push     ebx
         push     esi
         call     Cmp3DirtyToggle_0049fa20
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         xor      esi, esi
         cmp      eax, esi
         jne      L_fd46
@@ -183,7 +183,7 @@ __declspec(naked) void GameNetSyncState_0049fb70(void)
         test     al, bl
         jne      short L_fc0c
         call     MStackPush2TableNot_00426230
-        cmp      dword ptr [g_data_00541e6c], esi
+        cmp      dword ptr [g_framePauseFlag], esi
         jne      L_fd46
         mov      eax, dword ptr [g_data_00542074]
         and      eax, 4
@@ -197,7 +197,7 @@ __declspec(naked) void GameNetSyncState_0049fb70(void)
         call     SetWalkCurCallPauseDirty_00404c70
         add      esp, 8
         call     RoundWinTransition_0049e7e0
-        cmp      dword ptr [g_data_00541e6c], esi
+        cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_fd46
         push     0x22f
         call     TripleStageRollback_00404a50
@@ -211,7 +211,7 @@ __declspec(naked) void GameNetSyncState_0049fb70(void)
         ret
     L_fc58:
         call     MStackDualPushSaveRestore_004a09c0
-        cmp      dword ptr [g_data_00541e6c], esi
+        cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_fd46
         test     byte ptr [g_data_0054208c], bl
         je       short L_fd46
@@ -228,7 +228,7 @@ __declspec(naked) void GameNetSyncState_0049fb70(void)
     L_fc9e:
         mov      dword ptr [g_data_0054206c], esi
         call     BitSetByIndex_004a07a0
-        cmp      dword ptr [g_data_00541e6c], esi
+        cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_fd46
         mov      eax, dword ptr [g_data_00542078]
         push     0x238

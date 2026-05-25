@@ -151,7 +151,7 @@ extern void InstallSelfThresholdDispatch_0047e310(void);
  *     writes 0x28f into [g_data_0054205c*4+0x4c], calls
  *     InstallSelfThresholdDispatch_0047e310.
  */
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
@@ -166,7 +166,7 @@ __declspec(naked) void Alarm3EntryPhaseChain_0047e1a0(void) {
         mov     dword ptr [g_data_0054206c], eax
         mov     dword ptr [ecx*4 + 0x74], eax
         call    MStackPushSet0008_004901a0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a3e_e1End
         push    offset g_data_004ed590
@@ -197,7 +197,7 @@ __declspec(naked) void Alarm3EntryPhaseChain_0047e1a0(void) {
         mov     dword ptr [g_data_0054206c], eax
         mov     dword ptr [ecx*4 + 0x74], eax
         call    MStackPushSet0020_004901d0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a3e_e2End
         push    offset g_data_004ed5a8
@@ -232,7 +232,7 @@ __declspec(naked) void Alarm3EntryPhaseChain_0047e1a0(void) {
         je      L_a3e_installPhase0
         mov     dword ptr [g_data_0054206c], 2
         call    CmpEqInitCallElseJmp_0048d4b0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_a3e_doneNoPop
         test    byte ptr [g_data_0054208c], bl
@@ -243,18 +243,18 @@ __declspec(naked) void Alarm3EntryPhaseChain_0047e1a0(void) {
         ret
     L_a3e_e3InitChain:
         call    TailJmpInstallSelfPair_0047e690
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a3e_doneNoPop
         cmp     dword ptr [g_data_0054206c], 0x26666
         jl      short L_a3e_installPhase0
         call    ScaledAndAldf_00490330
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a3e_doneNoPop
         mov     dword ptr [g_data_0054206c], 0x4ccc
         call    EsiEdiAliasDualMul10_004906b0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a3e_doneNoPop
         mov     ecx, dword ptr [g_data_0054205c]
@@ -269,7 +269,7 @@ __declspec(naked) void Alarm3EntryPhaseChain_0047e1a0(void) {
         mov     dword ptr [esi + 8], offset L_a3e_body
         mov     dword ptr [esi + 0x84], ebx
         mov     dword ptr [g_data_0054204c], ebx
-        mov     dword ptr [g_data_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
     L_a3e_doneNoPop:
         pop     esi
         pop     ebx

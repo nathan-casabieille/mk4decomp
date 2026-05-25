@@ -122,7 +122,7 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542060;
@@ -141,7 +141,7 @@ __declspec(naked) void IdleFsm4CaseDispatch_004531d0(void)
         /* === Helper 1 (0x4531d0): tiny pre-roll === */
         mov      dword ptr [g_data_0054206c], 4
         call     StorePauseImulShr16_004ab630
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_31f4
         add      dword ptr [g_data_0054206c], 0x3b
@@ -180,59 +180,59 @@ __declspec(naked) void IdleFsm4CaseDispatch_004531d0(void)
     L_324e:
         /* case 2: 0x420 / 0x4a0 then state 3 */
         call     GuardedSetCallOrJmp_00453420
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3401
         call     DualConstJmp_004534a0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3401
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_3200
         mov      dword ptr [esi + 0x84], 3
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret
     L_3294:
         /* case 3: 0x420 / 0x4c0 then state 4 */
         call     GuardedSetCallOrJmp_00453420
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3401
         call     DualConstJmp_004534c0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3401
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_3200
         mov      dword ptr [esi + 0x84], 4
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret
     L_32da:
         /* case 0: init loop then state 1 */
         mov      dword ptr [g_data_00542054], 4
         call     GuardedSetCallOrJmp_00453420
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3401
     L_32f6:
         call     DualConstJmp_004534a0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3401
         call     DualConstJmp_004534c0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3401
         call     DualConstJmp_004534a0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3401
         call     DualConstJmp_004534c0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_3401
         mov      eax, dword ptr [g_data_00542054]
@@ -240,7 +240,7 @@ __declspec(naked) void IdleFsm4CaseDispatch_004531d0(void)
         mov      dword ptr [g_data_00542054], eax
         js       short L_335b
         call     GuardedSetCallOrJmp_00453420
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       L_32f6
         pop      esi
@@ -249,22 +249,22 @@ __declspec(naked) void IdleFsm4CaseDispatch_004531d0(void)
         mov      dword ptr [g_data_00542054], 4
     L_3365:
         call     GuardedSetCallOrJmp_00453420
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_3401
         call     DualConstJmp_004534a0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_3401
         call     DualConstJmp_004534c0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_3401
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_3200
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret
     L_33b1:
@@ -275,18 +275,18 @@ __declspec(naked) void IdleFsm4CaseDispatch_004531d0(void)
         js       short L_33fc
     L_33be:
         call     GuardedSetCallOrJmp_00453420
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_3401
         call     DualConstJmp_00453480
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_3401
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_3200
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret
     L_33fc:

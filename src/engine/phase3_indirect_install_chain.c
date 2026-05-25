@@ -141,7 +141,7 @@ extern unsigned int g_data_00535e7c;
  *   Entry 4 (offset 0x140, 40b): same shape as entry 3 but tail-jmp
  *     DualEntryStateMachine_0045a180.
  */
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054205c;
@@ -181,13 +181,13 @@ __declspec(naked) void Phase3IndirectInstallChain_0045a010(void) {
         mov     dword ptr [g_data_00542054], ecx
         mov     dword ptr [g_state_004d57ac], eax
         call    CallDualStoreXorBit_004285e0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_p3i_done
         test    byte ptr [g_data_0054208c], 4
         jne     short L_p3i_bit2Set
         call    ScaledArrStore_004285c0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_p3i_done
         test    byte ptr [g_data_0054208c], 4
@@ -197,7 +197,7 @@ __declspec(naked) void Phase3IndirectInstallChain_0045a010(void) {
         mov     dword ptr [esi + 8], offset Phase3IndirectInstallChain_0045a010
         mov     dword ptr [esi + 0x84], 2
         mov     dword ptr [g_data_0054204c], eax
-        mov     dword ptr [g_data_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret
     L_p3i_clean:
@@ -205,7 +205,7 @@ __declspec(naked) void Phase3IndirectInstallChain_0045a010(void) {
         mov     dword ptr [esi + 8], offset Phase3IndirectInstallChain_0045a010
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_data_0054204c], eax
-        mov     dword ptr [g_data_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
     L_p3i_done:
         pop     esi
         ret
@@ -217,7 +217,7 @@ __declspec(naked) void Phase3IndirectInstallChain_0045a010(void) {
         /* entry 2 (offset 0xc0) */
     L_p3i_entry2:
         call    ScaledIterStep_0045c020
-        mov     ecx, dword ptr [g_data_00541e6c]
+        mov     ecx, dword ptr [g_framePauseFlag]
         xor     eax, eax
         cmp     ecx, eax
         jne     short L_p3i_e2End
@@ -244,7 +244,7 @@ __declspec(naked) void Phase3IndirectInstallChain_0045a010(void) {
         /* entry 3 (offset 0x110) */
     L_p3i_entry3:
         mov     ecx, dword ptr [g_data_00542070]
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         and     ecx, 0xff
         test    eax, eax
         mov     dword ptr [g_data_00542070], ecx
@@ -265,7 +265,7 @@ __declspec(naked) void Phase3IndirectInstallChain_0045a010(void) {
         /* entry 4 (offset 0x140) */
     L_p3i_entry4:
         mov     ecx, dword ptr [g_data_00542070]
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         and     ecx, 0xff
         test    eax, eax
         mov     dword ptr [g_data_00542070], ecx

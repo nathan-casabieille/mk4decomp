@@ -131,7 +131,7 @@ extern unsigned int g_x_0053a46c;
 extern unsigned int g_x_0053a180;
 extern unsigned char g_data_004dfd48;
 extern void TablePushAccumTailJmp_00429e30(void);
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054207c;
@@ -159,11 +159,11 @@ extern void MStackPop8_004ab860(void);
 void ScenePostInitSequencer_00429b70(void) {
     __asm {
         call     MStackPush8_004ab790
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_9e22
         call     TwinLoopSlotFinder_00429a40
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_9e22
         mov      eax, dword ptr [g_cj_00542058]
@@ -174,13 +174,13 @@ void ScenePostInitSequencer_00429b70(void) {
         mov      dword ptr [g_data_0054207c], 1
         mov      dword ptr [g_data_00542074], 0x10
         call     AllocNode
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_9e22
         mov      dword ptr [g_data_0054207c], 2
         mov      dword ptr [g_data_00542074], 0x10
         call     AllocNode
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_9e22
     L_9bf5:
@@ -188,7 +188,7 @@ void ScenePostInitSequencer_00429b70(void) {
         mov      edx, dword ptr [ecx*4 + 0x18]
         mov      dword ptr [g_data_0054206c], edx
         call     CopyGlobal_004ac1f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_9e22
         mov      eax, dword ptr [g_cj_00542058]
@@ -205,7 +205,7 @@ void ScenePostInitSequencer_00429b70(void) {
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [g_data_004d5304], eax
         call     PendingMatch_00429ef0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_9e22
         mov      eax, dword ptr [g_data_00535e6c]
@@ -233,7 +233,7 @@ void ScenePostInitSequencer_00429b70(void) {
         mov      eax, dword ptr [edx*4 + 0xc]
         mov      dword ptr [g_data_00542048], eax
         call     MStackPushDispatchBitGate_00407330
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_9e22
         mov      eax, dword ptr [g_cj_0054205c]
@@ -250,7 +250,7 @@ void ScenePostInitSequencer_00429b70(void) {
         je       short L_9d79
         mov      dword ptr [g_data_00542048], eax
         call     MStackPush4LLWalkPop4_004090e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_9e22
     L_9d79:
@@ -267,14 +267,14 @@ void ScenePostInitSequencer_00429b70(void) {
         mov      eax, dword ptr [edx*4 + 0x18]
         mov      dword ptr [g_scaledInit_00542044], eax
         call     InstallSelfDispatch_00407620
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_9e22
     L_9dc3:
         mov      ecx, dword ptr [g_cj_0054205c]
         mov      dword ptr [g_scaledInit_00542044], ecx
         call     MStackCall_00406390
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_9e22
         mov      edx, dword ptr [g_cj_00542058]
@@ -284,13 +284,13 @@ void ScenePostInitSequencer_00429b70(void) {
         je       short L_9df5
         call     eax
     L_9df5:
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_9e22
         mov      eax, dword ptr [g_cj_0054205c]
         mov      dword ptr [g_data_0054206c], eax
         call     MStackPop8_004ab860
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_9e22
         mov      ecx, dword ptr [g_data_0054206c]

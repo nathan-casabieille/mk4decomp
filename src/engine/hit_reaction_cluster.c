@@ -130,7 +130,7 @@ extern unsigned int g_data_00537f48;
 extern unsigned int g_data_005380e0;
 extern unsigned int g_data_00538158;
 extern unsigned int g_data_0053815c;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -181,7 +181,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         nop      
         mov      dword ptr [g_data_00542074], 0x20000
         call     GuardedRangeCmpFpuJmp_0042b8d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c0cd
         jmp      PendingMatch_00459510
@@ -259,7 +259,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         jne      L_c1e5
         mov      dword ptr [g_data_0054206c], 0x1a
         call     TableLookupCall_0048a130
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c21d
         jmp      PendingMatch_00459510
@@ -272,7 +272,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         jne      L_c218
         mov      dword ptr [g_data_0054206c], 0x1a
         call     TableLookupCall_0048a130
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c21d
         jmp      PendingMatch_00459510
@@ -290,7 +290,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         jne      L_c255
         mov      dword ptr [g_data_0054206c], 0x1c
         call     TableLookupCall_0048a130
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c28d
         jmp      PendingMatch_00459510
@@ -303,7 +303,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         jne      L_c288
         mov      dword ptr [g_data_0054206c], 0x1c
         call     TableLookupCall_0048a130
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c28d
         jmp      PendingMatch_00459510
@@ -329,7 +329,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         shr      ecx, 2
         mov      dword ptr [g_data_00542048], ecx
         call     DispatcherComplex260_00407400
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_c5a0
         test     byte ptr [g_data_0054208c], bl
         jne      L_c59b
@@ -342,7 +342,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [ecx*4 + 0x58], eax
         call     MStackPushComplexCallPop_00406430
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_c5a0
         mov      edx, dword ptr [g_data_00542044]
         mov      eax, 0xffffc667
@@ -355,7 +355,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         mov      dword ptr [esi + 8], 0x45c290
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_data_0054204c], 0x14
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         pop      ebx
@@ -369,7 +369,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         mov      dword ptr [esi + 0x84], 3
         add      esp, 4
         mov      dword ptr [g_data_0054204c], 0x14
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         pop      ebx
@@ -384,7 +384,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         mov      dword ptr [esi + 8], 0x45c290
         mov      dword ptr [esi + 0x84], ebx
         mov      dword ptr [g_data_0054204c], 0x14
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         pop      ebx
@@ -396,13 +396,13 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         mov      dword ptr [esi + 8], 0x45c290
         mov      dword ptr [esi + 0x84], 5
         mov      dword ptr [g_data_0054204c], 0x28
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         pop      ebx
         ret      
         call     AllocSlotPushTripleGlobals_00427470
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_c5a0
         mov      eax, 0x4d5550
         mov      dword ptr [g_data_0054206c], 0x30
@@ -412,17 +412,17 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         mov      dword ptr [g_data_00542078], 0xfff60000
         mov      dword ptr [g_data_0054207c], 0xffd20000
         call     Push70CallScaleArith_00457ad0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_c5a0
         call     MStackPop4Rewrite_004274f0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_c5a0
         test     byte ptr [g_data_0054208c], bl
         jne      L_c59b
         mov      ecx, dword ptr [g_data_00537f30]
         mov      dword ptr [g_data_0054206c], ecx
         call     StoreIncrMStackPush6_004275c0
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_c5a0
         mov      dword ptr [g_data_00542070], ebx
         mov      ebx, 1
@@ -431,10 +431,10 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         mov      dword ptr [g_data_0054207c], 0xffd20000
         mov      dword ptr [g_data_00542084], ebx
         call     DispatcherComplex181_00426310
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_c5a0
         call     RoundCleanupCluster_00427690
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_c5a0
         cmp      dword ptr [g_data_0054206c], edi
         je       L_c59b
@@ -450,13 +450,13 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         mov      eax, dword ptr [eax*4]
         mov      dword ptr [g_data_0054206c], eax
         call     GuardedScaledCall_0048a020
-        cmp      dword ptr [g_data_00541e6c], edi
+        cmp      dword ptr [g_framePauseFlag], edi
         jne      L_c5a0
     L_c570:
         mov      dword ptr [esi + 8], 0x45c290
         mov      dword ptr [esi + 0x84], ebx
         mov      dword ptr [g_data_0054204c], 0x3c
-        mov      dword ptr [g_data_00541e6c], ebx
+        mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
         pop      ebx

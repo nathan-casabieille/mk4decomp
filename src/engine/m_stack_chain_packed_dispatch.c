@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_0050c97c;
 extern unsigned int g_data_005108d0;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -157,13 +157,13 @@ void MStackChainPackedDispatch_00463c80(void) {
         mov     dword ptr [eax*4], ecx
         mov     dword ptr [g_data_00542048], edx
         call    DispatcherComplex260_00407030
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mscpd_ret
         test    byte ptr [g_data_0054208c], 4
         jne     L_mscpd_pop2
         call    MStackBracket4_ListInsertZeroFill_00408600
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mscpd_ret
         mov     eax, dword ptr [g_state_004d57ac]
@@ -186,7 +186,7 @@ void MStackChainPackedDispatch_00463c80(void) {
         mov     edx, dword ptr [ecx*4 + 0x18]
         mov     dword ptr [g_data_00542044], edx
         call    InstallSelfDispatch_00407620
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mscpd_ret
         mov     eax, dword ptr [g_state_004d57ac]
@@ -204,7 +204,7 @@ void MStackChainPackedDispatch_00463c80(void) {
         mov     edx, dword ptr [g_data_00542044]
         mov     dword ptr [edx*4 + 0x58], 0x6666
         call    MStackCall_00406390
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_mscpd_ret
         mov     eax, dword ptr [g_data_00542044]

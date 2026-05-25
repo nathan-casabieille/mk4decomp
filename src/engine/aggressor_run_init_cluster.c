@@ -129,7 +129,7 @@ extern unsigned int g_data_004ef278;
 extern unsigned int g_data_004ef2b8;
 extern unsigned int g_data_0052ab10;
 extern unsigned int g_data_00537ef4;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
@@ -166,7 +166,7 @@ __declspec(naked) void AggressorRunInitCluster_004813b0(void)
         nop
         /* === h2 (0x4813c0): timer + angle/dist init → tail 4314f0 === */
         call     ScaledXorStore_004903b0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1475
         mov      eax, 0x258
@@ -174,7 +174,7 @@ __declspec(naked) void AggressorRunInitCluster_004813b0(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [g_data_00537ef4], eax
         call     IterLoad_00491050
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         test     eax, eax
         jne      short L_1475
@@ -190,7 +190,7 @@ __declspec(naked) void AggressorRunInitCluster_004813b0(void)
         mov      dword ptr [g_data_00542074], 0x41
         mov      dword ptr [g_data_00542048], ecx
         call     MStackDualDiffSequencer_00477040
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1475
         mov      ecx, dword ptr [g_data_0052ab10]
@@ -244,7 +244,7 @@ __declspec(naked) void AggressorRunInitCluster_004813b0(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edx
         call     Push267_Push44eb60_Jmp_00489220
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         ret
         nop
@@ -252,7 +252,7 @@ __declspec(naked) void AggressorRunInitCluster_004813b0(void)
         mov      eax, dword ptr [g_data_0054205c]
         mov      dword ptr [g_data_00542054], eax
         call     DualScaledStore_00452740
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1561
         mov      eax, dword ptr [g_data_00542054]
@@ -301,12 +301,12 @@ __declspec(naked) void AggressorRunInitCluster_004813b0(void)
         test     ecx, ecx
         je       short L_15cd
         call     BlockedCounterCluster_004816d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_15ef
         push     OFFSET g_data_004ef278
         call     ArgSarStoreJmp_004594f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         ret
     L_15cd:
@@ -314,7 +314,7 @@ __declspec(naked) void AggressorRunInitCluster_004813b0(void)
         mov      dword ptr [eax + 8], OFFSET L_1590
         mov      dword ptr [eax + 0x84], ecx
         mov      dword ptr [g_data_0054204c], 0x1c
-        mov      dword ptr [g_data_00541e6c], ecx
+        mov      dword ptr [g_framePauseFlag], ecx
     L_15ef:
         ret
         /* === h7 (0x4815f0): pose-fn 2-state w/ 0048e1e0/004ef2b8 === */
@@ -327,12 +327,12 @@ __declspec(naked) void AggressorRunInitCluster_004813b0(void)
         test     eax, eax
         je       short L_1638
         call     CjDispatchCommit_004818e0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_16c4
         push     OFFSET g_data_004ef2b8
         call     ArgSarStoreJmp_004594f0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         pop      esi
         ret
@@ -343,7 +343,7 @@ __declspec(naked) void AggressorRunInitCluster_004813b0(void)
         mov      edx, dword ptr [eax*4 + 0x74]
         mov      dword ptr [g_data_00542088], edx
         call     ScaledZeroFour_00490740
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_16c4
         mov      dword ptr [esi + 8], OFFSET L_15f0
@@ -361,7 +361,7 @@ __declspec(naked) void AggressorRunInitCluster_004813b0(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
         call     BossArrivalSequence_00481950
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
     L_16c4:
         pop      esi
         ret

@@ -127,7 +127,7 @@ extern unsigned int g_data_004f20f0;
 extern unsigned int g_data_00538038;
 extern unsigned int g_data_0053803c;
 extern unsigned int g_data_00538158;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541f98;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
@@ -165,11 +165,11 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
         mov      ecx, dword ptr [g_data_0054206c]
         mov      dword ptr [eax*4 + 0x74], ecx
         call     CondPickDualStore_0049c670
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_712b
         call     BootInstallPeriodicAudio_00413aa0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_712b
         push     OFFSET g_data_004f20c0
@@ -185,7 +185,7 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
         push     esi
         push     edi
         call     DualCmpSwapStore_0049c5a0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_739c
         mov      ecx, dword ptr [g_data_0054205c]
@@ -200,7 +200,7 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
         mov      edx, dword ptr [eax*4 + 0x74]
         mov      dword ptr [g_data_00542080], edx
         call     AiComboDispatcherCluster_00497470
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_739c
         mov      ecx, dword ptr [g_data_00542080]
@@ -228,7 +228,7 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
         mov      dword ptr [g_data_0054206c], 1
         mov      dword ptr [g_data_00542044], ecx
         call     CmpDivJmp_0049d080
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_739c
         test     byte ptr [g_data_0054208c], 4
@@ -256,7 +256,7 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [esi + 8], eax
         call     ScaledTripleCopy4_0049d2d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_739c
     L_729f:
@@ -318,7 +318,7 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
         nop
         /* === h3 (0x4973a0): 413b70 + add + 49bc60 → tail 49c850 === */
         call     MStackPush8CallbackInit_00413b70
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_73f7
         mov      ecx, dword ptr [g_data_0054205c]
@@ -329,7 +329,7 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
         mov      dword ptr [g_data_0054206c], eax
         mov      dword ptr [ecx*4 + 0x70], eax
         call     Vec2SumMul10ChainCompute_0049bc60
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_73f7
         mov      eax, dword ptr [g_data_00542070]
@@ -355,15 +355,15 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
         mov      dword ptr [g_data_0054206c], 0x61
     L_741e:
         call     TableLookupCall_00489ff0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_744d
         call     PushCallScaledClearJmp_0040bf20
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_744d
         call     SoundSetupLoop_00413ea0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_744d
         jmp      GuardedSeq_00497450

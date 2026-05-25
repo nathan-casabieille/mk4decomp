@@ -141,7 +141,7 @@ extern void GuardedPackedSlotInit_00428760(void);
  *       sets g_data_00542080=4, installs Self at [esi+8], sets slot[+0x84]=2,
  *       and writes packed_ptr (Self + 0x02000000) at [eax*4] (with
  *       g_data_00542044 bumped after); zeroes slot[+0x84] and calls
- *       GuardedSeq_00428480, arms g_data_00541e6c=1.
+ *       GuardedSeq_00428480, arms g_framePauseFlag=1.
  *     - phase 0 (eax==0): pushes 0x00542aac, calls GuardedPackedSlotInit_00428760;
  *       on success sets g_data_00542080=2, sets g_data_00542058 = &g_data_00500c08>>2,
  *       installs Self at [esi+8], sets slot[+0x84]=1, packs (Self + 0x01000000)
@@ -152,7 +152,7 @@ extern void GuardedDirtyXformFromTable_0048f6d0(void);
 
 extern unsigned int g_data_004d5324;
 extern unsigned int g_data_004d57ac;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
@@ -196,7 +196,7 @@ __declspec(naked) void Phase3PackedInstallSelf_0046ff80(void) {
         shr     eax, 2
         mov     dword ptr [g_data_00542044], eax
         call    GuardedDirtyXformFromTable_0048f6d0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis_done
         mov     dword ptr [g_data_00542080], 4
@@ -215,13 +215,13 @@ __declspec(naked) void Phase3PackedInstallSelf_0046ff80(void) {
         mov     eax, dword ptr [g_data_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    GuardedSeq_00428480
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
     L_pis_phase0:
         push    offset g_data_00542aac
         call    GuardedPackedSlotInit_00428760
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         jne     short L_pis_done
@@ -244,7 +244,7 @@ __declspec(naked) void Phase3PackedInstallSelf_0046ff80(void) {
         mov     edx, dword ptr [g_data_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    GuardedSeq_00428480
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
     L_pis_done:
         pop     esi
         ret
@@ -261,21 +261,21 @@ __declspec(naked) void ThrowChargeCluster_0044e750(void)
         mov      dword ptr [g_data_0054206c], 0x2147
         lea      esi, [eax*4]
         call     StoreDoubleNegPauseSubStore_004ab750
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e8df
         mov      ecx, dword ptr [g_data_0054206c]
         mov      dword ptr [esi + 0x78], ecx
         mov      dword ptr [g_data_0054206c], 0x2147
         call     StoreDoubleNegPauseSubStore_004ab750
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e8df
         mov      edx, dword ptr [g_data_0054206c]
         mov      dword ptr [esi + 0x7c], edx
         mov      dword ptr [g_data_0054206c], 0x2147
         call     StoreDoubleNegPauseSubStore_004ab750
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e8df
         mov      eax, dword ptr [g_data_0054206c]
@@ -283,13 +283,13 @@ __declspec(naked) void ThrowChargeCluster_0044e750(void)
         mov      ecx, dword ptr [g_data_004d5324]
         mov      dword ptr [g_data_0054206c], ecx
         call     AudioMixerStep_004ab700
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e8df
         mov      edx, dword ptr [g_data_0054206c]
         mov      dword ptr [g_data_00542074], edx
         call     MStackPush1MagicMod2_004244d0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e8df
         mov      eax, dword ptr [g_data_0054206c]
@@ -307,7 +307,7 @@ __declspec(naked) void ThrowChargeCluster_0044e750(void)
         mov      dword ptr [g_data_00542070], eax
         mov      dword ptr [g_data_0054206c], 0xb333
         call     AudioMixerStep_004ab700
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e8df
         mov      eax, dword ptr [g_data_0054206c]
@@ -332,7 +332,7 @@ __declspec(naked) void ThrowChargeCluster_0044e750(void)
         mov      dword ptr [esi + 0x74], eax
         mov      dword ptr [g_data_0054206c], 0x11eb
         call     AudioMixerStep_004ab700
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e8df
         mov      ecx, dword ptr [g_data_0054206c]
@@ -381,7 +381,7 @@ __declspec(naked) void ThrowChargeCluster_0044e750(void)
     L_e92c:
         mov      dword ptr [g_data_0054206c], edi
         call     DispatcherComplex138_004760f0
-        cmp      dword ptr [g_data_00541e6c], esi
+        cmp      dword ptr [g_framePauseFlag], esi
         jne      L_ea0f
         test     byte ptr [g_data_0054208c], bl
         jne      L_e9f3
@@ -404,7 +404,7 @@ __declspec(naked) void ThrowChargeCluster_0044e750(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         call     MStackPush2ChainLLInsert_00406790
-        cmp      dword ptr [g_data_00541e6c], esi
+        cmp      dword ptr [g_framePauseFlag], esi
         jne      L_ea0f
         mov      eax, dword ptr [g_data_004d57ac]
         mov      edx, dword ptr [eax*4]
@@ -416,7 +416,7 @@ __declspec(naked) void ThrowChargeCluster_0044e750(void)
         mov      dword ptr [g_data_0054206c], ecx
         mov      dword ptr [g_data_004d57ac], eax
         call     MStackBracketed3StoreCall_00475990
-        cmp      dword ptr [g_data_00541e6c], esi
+        cmp      dword ptr [g_framePauseFlag], esi
         jne      L_ea0f
         jmp      L_e926
     L_e9f3:
@@ -424,7 +424,7 @@ __declspec(naked) void ThrowChargeCluster_0044e750(void)
         mov      dword ptr [ebp + 8], OFFSET L_e8f0
         mov      dword ptr [ebp + 0x84], eax
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_ea0f:
         pop      edi
         pop      esi
@@ -454,7 +454,7 @@ __declspec(naked) void ThrowChargeCluster_0044e750(void)
         dec      eax
         je       L_ea5f
         call     ThrowFsmCluster_0044eaf0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_eae8
         call     Thunk_0049cbc0
@@ -462,13 +462,13 @@ __declspec(naked) void ThrowChargeCluster_0044e750(void)
         ret      
     L_ea5f:
         call     ThrowFsmCluster_0044eaf0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_eae8
         mov      dword ptr [esi + 8], OFFSET L_ea20
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_data_0054204c], 0xf
-        mov      dword ptr [g_data_00541e6c], 1
+        mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret      
     L_ea94:
@@ -479,14 +479,14 @@ __declspec(naked) void ThrowChargeCluster_0044e750(void)
         mov      ecx, dword ptr [g_data_00542058]
         mov      dword ptr [eax*4 + 0x68], ecx
         call     ThrowFsmCluster_0044eaf0
-        mov      eax, dword ptr [g_data_00541e6c]
+        mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_eae8
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_ea20
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_data_0054204c], 0xf
-        mov      dword ptr [g_data_00541e6c], eax
+        mov      dword ptr [g_framePauseFlag], eax
     L_eae8:
         pop      esi
         ret      

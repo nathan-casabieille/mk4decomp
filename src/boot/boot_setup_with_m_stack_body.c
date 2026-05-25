@@ -142,7 +142,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004d75e0;
 extern unsigned int g_data_0052ab10;
 extern unsigned int g_data_00535e6c;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
@@ -162,7 +162,7 @@ __declspec(naked) void BootSetupWithMStackBody_00418e00(void) {
         shr     eax, 2
         mov     dword ptr [g_data_0054206c], eax
         call    PushSetXfmMaskCallPop_00407140
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_bsm_e1End
         test    byte ptr [g_data_0054208c], 4
@@ -179,7 +179,7 @@ __declspec(naked) void BootSetupWithMStackBody_00418e00(void) {
         mov     dword ptr [g_data_0054206c], eax
         mov     dword ptr [edx*4 + 0x80], eax
         call    SetJmp_00408d20
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bsm_e1End
         mov     ecx, dword ptr [g_data_00542048]
@@ -187,7 +187,7 @@ __declspec(naked) void BootSetupWithMStackBody_00418e00(void) {
         mov     dword ptr [g_data_0054206c], eax
         mov     dword ptr [ecx*4 + 0x10], eax
         call    ScaledTripleCopy54_004ac040
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bsm_e1End
         mov     edx, dword ptr [g_data_0054205c]
@@ -222,7 +222,7 @@ __declspec(naked) void BootSetupWithMStackBody_00418e00(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_table_004d57b0], edx
         call    ChainWalkPushPop_00405a40
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bsm_bodyEnd
         mov     ecx, dword ptr [g_data_0052ab10]

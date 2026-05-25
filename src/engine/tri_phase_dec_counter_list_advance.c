@@ -122,7 +122,7 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
@@ -157,7 +157,7 @@ __declspec(naked) void TriPhaseDecCounterListAdvance_0047ad20(void)
         je      short L_tpdcla_phase1
         mov     dword ptr [g_data_0054206c], 0x9d
         call    ScaledLitLoadCall_00480fe0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_tpdcla_abort
         mov     ecx, dword ptr [g_data_00542060]
@@ -177,18 +177,18 @@ __declspec(naked) void TriPhaseDecCounterListAdvance_0047ad20(void)
         ret
     L_tpdcla_phase1:
         call    TripleFieldCopyHi_0048f7b0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_tpdcla_abort
         mov     dword ptr [g_data_0054206c], 0xe666
         call    EsiEdiAliasDualMul10_004906b0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_tpdcla_abort
         mov     dword ptr [esi + 8], offset TriPhaseDecCounterListAdvance_0047ad20
         mov     dword ptr [esi + 0x84], 2
         mov     dword ptr [g_data_0054204c], 5
-        mov     dword ptr [g_data_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         pop     ebx
         ret
@@ -201,7 +201,7 @@ __declspec(naked) void TriPhaseDecCounterListAdvance_0047ad20(void)
         ret
     L_tpdcla_phase0_dispatch:
         call    MStackPush3CmpCall_0048eec0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_tpdcla_abort
         test    byte ptr [g_data_0054208c], bl
@@ -234,17 +234,17 @@ __declspec(naked) void TriPhaseDecCounterListAdvance_0047ad20(void)
         mov     dword ptr [eax], ecx
         mov     dword ptr [g_data_0054207c], 6
         call    EntryThunkBodyStateMachine_00457bb0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_tpdcla_abort
         call    TripleFieldCopyJmpHi_0048f740
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_tpdcla_abort
         mov     dword ptr [esi + 8], offset TriPhaseDecCounterListAdvance_0047ad20
         mov     dword ptr [esi + 0x84], ebx
         mov     dword ptr [g_data_0054204c], 5
-        mov     dword ptr [g_data_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
     L_tpdcla_abort:
         pop     esi
         pop     ebx

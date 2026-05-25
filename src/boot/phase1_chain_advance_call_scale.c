@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004d5364;
 extern unsigned int g_data_00507118;
-extern unsigned int g_data_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054205c;
@@ -144,7 +144,7 @@ __declspec(naked) void Phase1ChainAdvanceCallScale_00418f80(void)
         shr     eax, 2
         mov     dword ptr [g_data_00542048], eax
         call    MStackBracket1_TreeWalkRecursive2_00406dd0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1c2_ret
         test    byte ptr [g_state_0054208c], 4
@@ -162,7 +162,7 @@ __declspec(naked) void Phase1ChainAdvanceCallScale_00418f80(void)
         mov     dword ptr [eax + 0x30], 0xFFFFEB03
         mov     dword ptr [g_data_0054206c], 0x0A
         call    DirtyDoubleDeref_00408cb0
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1c2_ret
         mov     eax, dword ptr [g_data_00542044]
@@ -197,7 +197,7 @@ __declspec(naked) void Phase1ChainAdvanceCallScale_00418f80(void)
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], ecx
         call    ChainWalkPushPop_00405a40
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1c2_helper_pop_ret
         mov     ecx, dword ptr [g_data_0054205c]
@@ -214,7 +214,7 @@ __declspec(naked) void Phase1ChainAdvanceCallScale_00418f80(void)
         jle     L_p1c2_helper_skip_block
         mov     dword ptr [g_data_0054206c], 0x28A
         call    AudioVolumeRescale_004ab690
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1c2_helper_pop_ret
         test    byte ptr [g_state_0054208c], 1
@@ -259,7 +259,7 @@ __declspec(naked) void Phase1ChainAdvanceCallScale_00418f80(void)
         jmp     L_p1c2_helper_pop1
     L_p1c2_helper_else:
         call    MStackCall_00406740
-        mov     eax, dword ptr [g_data_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1c2_helper_pop_ret
         mov     dword ptr [g_data_00542044], 0
