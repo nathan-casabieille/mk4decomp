@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004e86d8;
 extern unsigned int g_dispatchArg_00535e48;
-extern unsigned int g_data_00535e50;
+extern unsigned int g_audioVoiceCounter_00535e50;
 extern unsigned int g_data_00537eb4;
 extern unsigned int g_data_00542408;
 extern void BootPhaseGateBracketedInit_004060c0(void);
@@ -168,7 +168,7 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         mov      dword ptr [ecx*4 + 0x18], edx
         mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_eventQueueTotal], eax
-        mov      dword ptr [g_data_00535e50], 0x28
+        mov      dword ptr [g_audioVoiceCounter_00535e50], 0x28
         mov      dword ptr [g_acc_00542078], 0
         mov      dword ptr [g_eventQueueNotMask], 0
         mov      dword ptr [g_xformScratch2088], 0x3243f
@@ -239,9 +239,9 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         mov      dword ptr [g_xformScratch2088], edx
         mov      dword ptr [g_dispatchArg_00535e48], eax
         mov      dword ptr [ecx*4 + 0x1c], eax
-        mov      eax, dword ptr [g_data_00535e50]
+        mov      eax, dword ptr [g_audioVoiceCounter_00535e50]
         dec      eax
-        mov      dword ptr [g_data_00535e50], eax
+        mov      dword ptr [g_audioVoiceCounter_00535e50], eax
         jne      L_8267
         mov      eax, dword ptr [g_data_00537eb4]
         mov      dword ptr [g_currentNodeIdx], eax

@@ -138,7 +138,7 @@ extern s32 g_dlNalt2;
 extern unsigned int g_data_0053a50c;
 extern unsigned int g_counter_0053a51c;
 extern unsigned int g_data_0053a7a8;
-extern unsigned int g_data_00541d8c;
+extern unsigned int g_audioCrewState_00541d8c;
 extern unsigned int g_data_00541f98;
 extern unsigned int g_data_00541fb0;
 extern u32 g_dlMode;
@@ -1455,13 +1455,13 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         mov      edx, dword ptr [esp + 0x10]
         mov      ecx, dword ptr [eax*4 + 0x38]
         lea      eax, [ecx + edx - 0x1000000]
-        mov      dword ptr [g_data_00541d8c], eax
+        mov      dword ptr [g_audioCrewState_00541d8c], eax
         mov      al, byte ptr [g_xformDirtyFlags]
         test     al, 4
         jne      L_58b1
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [ecx*4 + 0x54], 0xf9200000
-        mov      edx, dword ptr [g_data_00541d8c]
+        mov      edx, dword ptr [g_audioCrewState_00541d8c]
         mov      ecx, dword ptr [g_currentNodeIdx]
         lea      eax, [edx*4]
         mov      dword ptr [ecx*4 + 0x58], eax
@@ -1476,12 +1476,12 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         mov      ecx, eax
         mov      eax, 0x55555556
         mov      dword ptr [g_eventQueueEnd], ecx
-        imul     dword ptr [g_data_00541d8c]
+        imul     dword ptr [g_audioCrewState_00541d8c]
         mov      eax, edx
         shr      eax, 0x1f
         lea      edx, [edx + eax - 0x100000]
         mov      eax, dword ptr [g_data_005433cc]
-        mov      dword ptr [g_data_00541d8c], edx
+        mov      dword ptr [g_audioCrewState_00541d8c], edx
         mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_currentNodeIdx], eax
         cmp      edi, dword ptr [edx*4 + 0x30]
@@ -1508,7 +1508,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         test     eax, eax
         mov      dword ptr [g_currentNodeIdx], eax
         jne      L_598e
-        mov      edx, dword ptr [g_data_00541d8c]
+        mov      edx, dword ptr [g_audioCrewState_00541d8c]
         mov      eax, dword ptr [ebp]
         push     edx
         push     eax
@@ -1522,7 +1522,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [esi + 4], eax
     L_598e:
-        mov      ecx, dword ptr [g_data_00541d8c]
+        mov      ecx, dword ptr [g_audioCrewState_00541d8c]
         mov      dword ptr [eax*4 + 0x58], ecx
         mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x55555556
@@ -1533,7 +1533,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         lea      ecx, [edx + eax + 0x10000]
         mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [edx*4 + 0x5c], ecx
-        mov      ecx, dword ptr [g_data_00541d8c]
+        mov      ecx, dword ptr [g_audioCrewState_00541d8c]
         movsx    eax, byte ptr [esi - 5]
         add      ecx, 0x140000
         mov      eax, dword ptr [eax*4 + g_data_004f3a30]
@@ -1556,7 +1556,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [edx*4 + 0x5c], ecx
         mov      eax, dword ptr [g_currentNodeIdx]
-        mov      edx, dword ptr [g_data_00541d8c]
+        mov      edx, dword ptr [g_audioCrewState_00541d8c]
         mov      dword ptr [esi + 8], eax
         movsx    ecx, byte ptr [esi - 4]
         add      edx, 0x280000

@@ -115,7 +115,7 @@ extern unsigned int g_phaseTimer_00537e94;
 extern unsigned int g_dst_00537ea4;
 extern unsigned int g_data_00537ef4;
 extern unsigned int g_data_00537f04;
-extern unsigned int g_data_00537f30;
+extern unsigned int g_hitPhase_00537f30;
 extern unsigned int g_data_00537f98;
 extern unsigned int g_data_005380d8;
 extern unsigned int g_data_0053a3e4;
@@ -206,7 +206,7 @@ __declspec(naked) void RoundReset_004223e0(void)
         mov      eax, 0x10000
         mov      dword ptr [g_data_0053a3e4], eax
         mov      dword ptr [g_data_0053a474], eax
-        mov      eax, dword ptr [g_data_00537f30]
+        mov      eax, dword ptr [g_hitPhase_00537f30]
         cmp      eax, 1
         mov      dword ptr [g_walkCallback], eax
         jne      short L_2459

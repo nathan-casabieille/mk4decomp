@@ -112,7 +112,7 @@ extern unsigned int g_data_004f5924;
 extern unsigned int g_byte_00522bb4;
 extern unsigned int g_data_00522bb8;
 extern unsigned int g_data_005236b0;
-extern unsigned int g_data_005236e8;
+extern unsigned int g_crtTimeFmtPrefs_005236e8;
 extern unsigned int g_data_00f9fc18;
 extern unsigned int g_data_00f9fc68;
 extern unsigned int g_data_00f9fc6c;
@@ -302,31 +302,31 @@ __declspec(naked) void CrtTimeFmtPrefsCluster_004cfe40(void)
         pop      ebx
         ret
     L_ffee:
-        mov      ecx, dword ptr [g_data_005236e8]
+        mov      ecx, dword ptr [g_crtTimeFmtPrefs_005236e8]
         mov      eax, dword ptr [ecx]
         cmp      eax, OFFSET g_data_005236b0
         je       short L_002a
         push     eax
         call     FreeImpl_004c55f0
-        mov      edx, dword ptr [g_data_005236e8]
+        mov      edx, dword ptr [g_crtTimeFmtPrefs_005236e8]
         add      esp, 4
         mov      eax, dword ptr [edx + 4]
         push     eax
         call     FreeImpl_004c55f0
-        mov      ecx, dword ptr [g_data_005236e8]
+        mov      ecx, dword ptr [g_crtTimeFmtPrefs_005236e8]
         add      esp, 4
         mov      edx, dword ptr [ecx + 8]
         push     edx
         call     FreeImpl_004c55f0
         add      esp, 4
     L_002a:
-        mov      ecx, dword ptr [g_data_005236e8]
+        mov      ecx, dword ptr [g_crtTimeFmtPrefs_005236e8]
         mov      eax, dword ptr [g_data_00f9fc68]
         mov      dword ptr [ecx], eax
-        mov      edx, dword ptr [g_data_005236e8]
+        mov      edx, dword ptr [g_crtTimeFmtPrefs_005236e8]
         mov      eax, dword ptr [g_data_00f9fc6c]
         mov      dword ptr [edx + 4], eax
-        mov      ecx, dword ptr [g_data_005236e8]
+        mov      ecx, dword ptr [g_crtTimeFmtPrefs_005236e8]
         mov      edx, dword ptr [g_data_00f9fc70]
         mov      dword ptr [ecx + 8], edx
         jmp      L_0117
@@ -348,10 +348,10 @@ __declspec(naked) void CrtTimeFmtPrefsCluster_004cfe40(void)
         mov      dword ptr [g_data_00f9fc70], ebx
         push     2
         call     LoadArgPushCall_004c54b0
-        mov      ecx, dword ptr [g_data_005236e8]
+        mov      ecx, dword ptr [g_crtTimeFmtPrefs_005236e8]
         add      esp, 4
         mov      dword ptr [ecx], eax
-        mov      edx, dword ptr [g_data_005236e8]
+        mov      edx, dword ptr [g_crtTimeFmtPrefs_005236e8]
         mov      eax, dword ptr [edx]
         cmp      eax, ebx
         jne      short L_00bc
@@ -365,10 +365,10 @@ __declspec(naked) void CrtTimeFmtPrefsCluster_004cfe40(void)
         push     2
         mov      word ptr [eax], cx
         call     LoadArgPushCall_004c54b0
-        mov      edx, dword ptr [g_data_005236e8]
+        mov      edx, dword ptr [g_crtTimeFmtPrefs_005236e8]
         add      esp, 4
         mov      dword ptr [edx + 4], eax
-        mov      eax, dword ptr [g_data_005236e8]
+        mov      eax, dword ptr [g_crtTimeFmtPrefs_005236e8]
         mov      eax, dword ptr [eax + 4]
         cmp      eax, ebx
         jne      short L_00ec
@@ -381,10 +381,10 @@ __declspec(naked) void CrtTimeFmtPrefsCluster_004cfe40(void)
         push     2
         mov      byte ptr [eax], bl
         call     LoadArgPushCall_004c54b0
-        mov      ecx, dword ptr [g_data_005236e8]
+        mov      ecx, dword ptr [g_crtTimeFmtPrefs_005236e8]
         add      esp, 4
         mov      dword ptr [ecx + 8], eax
-        mov      edx, dword ptr [g_data_005236e8]
+        mov      edx, dword ptr [g_crtTimeFmtPrefs_005236e8]
         mov      eax, dword ptr [edx + 8]
         cmp      eax, ebx
         jne      short L_0115
@@ -396,7 +396,7 @@ __declspec(naked) void CrtTimeFmtPrefsCluster_004cfe40(void)
     L_0115:
         mov      byte ptr [eax], bl
     L_0117:
-        mov      eax, dword ptr [g_data_005236e8]
+        mov      eax, dword ptr [g_crtTimeFmtPrefs_005236e8]
         pop      edi
         pop      esi
         pop      ebx

@@ -140,7 +140,7 @@ extern void ScaledArrStore_00429980(void);
 extern void MStackPushComplexCallPop_00406430(void);
 extern unsigned int g_counter_0053a51c;
 extern unsigned int g_tickFlagF;
-extern unsigned int g_data_00537f30;
+extern unsigned int g_hitPhase_00537f30;
 extern void StreamChainStringInstall_00457900(void);
 extern void StorePauseImulShr16_004ab630(void);
 extern void Mul10TailPairMidChain_00476a20(void);

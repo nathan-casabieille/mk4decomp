@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_dispatchArg_00535e48;
-extern unsigned int g_data_00535e50;
+extern unsigned int g_audioVoiceCounter_00535e50;
 extern void ScaledPushArg_00404b90(void);
 extern void ScaledPushArg_00404c00(void);
 
@@ -126,5 +126,5 @@ void Eleven404b90_404c00_004266d0(void) {
     ((void (*)(unsigned int))ScaledPushArg_00404c00)(g_pendingNodeType);
     ((void (*)(unsigned int))ScaledPushArg_00404c00)(g_eventQueueTotal);
     ((void (*)(unsigned int))ScaledPushArg_00404c00)(g_dispatchArg_00535e48);
-    ((void (*)(unsigned int))ScaledPushArg_00404c00)(g_data_00535e50);
+    ((void (*)(unsigned int))ScaledPushArg_00404c00)(g_audioVoiceCounter_00535e50);
 }

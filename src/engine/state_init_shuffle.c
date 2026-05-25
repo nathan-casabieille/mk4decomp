@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 extern unsigned int g_x_00537ea0;
 extern unsigned int g_x_00537edc;
-extern unsigned int g_x_00537f30;
+extern unsigned int g_hitPhase_00537f30;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 extern s32 g_dlNalt3;
@@ -148,7 +148,7 @@ void StateInitShuffle_00422380(void) {
         mov     dword ptr [g_x_00541ecc], ecx
         mov     dword ptr [g_x_00541ed0], edx
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_x_00537f30], eax
+        mov     dword ptr [g_hitPhase_00537f30], eax
         }
 }
 

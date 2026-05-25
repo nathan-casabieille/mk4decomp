@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004e27cc;
 extern unsigned int g_dispatchArg_00535e48;
-extern unsigned int g_data_00537f30;
+extern unsigned int g_hitPhase_00537f30;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 extern void CallSetPause_0041f830(void);
@@ -391,7 +391,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         jne      L_c5a0
         test     byte ptr [g_xformDirtyFlags], bl
         jne      L_c59b
-        mov      ecx, dword ptr [g_data_00537f30]
+        mov      ecx, dword ptr [g_hitPhase_00537f30]
         mov      dword ptr [g_walkCallback], ecx
         call     StoreIncrMStackPush6_004275c0
         cmp      dword ptr [g_framePauseFlag], edi
@@ -410,7 +410,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         jne      L_c5a0
         cmp      dword ptr [g_walkCallback], edi
         je       L_c59b
-        mov      edx, dword ptr [g_data_00537f30]
+        mov      edx, dword ptr [g_hitPhase_00537f30]
         mov      eax, 0x5424b0
         shr      eax, 2
         lea      ecx, [edx - 1]

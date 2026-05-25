@@ -193,7 +193,7 @@ extern void CallPauseScaledStoreCopyJmp_00461220(void);
 extern void ScaledArrStore_00429980(void);
 extern void MStackPushComplexCallPop_00406430(void);
 extern unsigned int g_counter_0053a51c;
-extern unsigned int g_data_00537f30;
+extern unsigned int g_hitPhase_00537f30;
 extern void StreamChainStringInstall_00457900(void);
 extern void StorePauseImulShr16_004ab630(void);
 extern void Mul10TailPairMidChain_00476a20(void);
@@ -1938,7 +1938,7 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
  *   Entry 1 (offset 0, 277b): phase-state install.
  *     Phase 1+: SwapOrPassSet_0048fbf0; on no-error compares
  *       g_walkCallback with g_loaded_004f3608. If equal, tail-call
- *       PendingMatch_0042d240. Else bumps g_data_00537f30 by 1, calls
+ *       PendingMatch_0042d240. Else bumps g_hitPhase_00537f30 by 1, calls
  *       CallPauseClear3CallTriple_00428030, then chains
  *       ScenegraphWalk_0041f7d0 + PendingMatch_00420300.
  *     Phase 0: g_data_0052d724=1, reads g_or_0052ab40 and tests
@@ -1973,10 +1973,10 @@ __declspec(naked) void Phase3InstallSelfChain_00421380(void) {
         pop     esi
         ret
     L_pis2_advance:
-        mov     edx, dword ptr [g_data_00537f30]
+        mov     edx, dword ptr [g_hitPhase_00537f30]
         lea     eax, [edx + 1]
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_data_00537f30], eax
+        mov     dword ptr [g_hitPhase_00537f30], eax
         call    CallPauseClear3CallTriple_00428030
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
