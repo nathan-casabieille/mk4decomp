@@ -113,8 +113,8 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   0xb2d008; if jg back to 0x4c073b (inside another function); else
  *   pop edi/esi/ebp/ebx and ret.
  */
-extern unsigned int g_x_00b2d008;
-extern unsigned int g_x_00b2d00c;
+extern unsigned int g_dispatchSave1707_00b2d008;
+extern unsigned int g_dispatchSave1708_00b2d00c;
 extern unsigned int g_dispatchSave1346_00f4d044;
 extern unsigned int g_dispatchSave1358_00f70f50;
 extern unsigned int g_dispatchSave1374_00f70f98;
@@ -122,17 +122,17 @@ extern unsigned int g_viewportY;
 
 __declspec(naked) void ColdLoopTail_004c08d0(void) {
     __asm {
-        mov     edi, dword ptr [g_x_00b2d00c]
+        mov     edi, dword ptr [g_dispatchSave1708_00b2d00c]
         mov     ecx, dword ptr [g_dispatchSave1358_00f70f50]
         mov     edx, dword ptr [g_dispatchSave1374_00f70f98]
-        mov     eax, dword ptr [g_x_00b2d008]
+        mov     eax, dword ptr [g_dispatchSave1707_00b2d008]
         mov     esi, dword ptr [g_viewportY]
         add     edx, ecx
         mov     ecx, dword ptr [g_dispatchSave1346_00f4d044]
         dec     eax
         add     ecx, esi
         test    eax, eax
-        mov     dword ptr [g_x_00b2d008], eax
+        mov     dword ptr [g_dispatchSave1707_00b2d008], eax
         mov     dword ptr [g_dispatchSave1374_00f70f98], edx
         mov     dword ptr [g_dispatchSave1346_00f4d044], ecx
         _emit   0fh

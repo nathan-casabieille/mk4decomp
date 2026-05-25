@@ -111,8 +111,8 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_viewportW;
 extern unsigned int g_viewportH;
 extern unsigned int g_texturedTriVar_004ffd4c;
-extern unsigned int g_data_00b2d008;
-extern unsigned int g_data_00b2d00c;
+extern unsigned int g_dispatchSave1707_00b2d008;
+extern unsigned int g_dispatchSave1708_00b2d00c;
 extern unsigned int g_dispatchSave1345_00f4d040;
 extern unsigned int g_dispatchSave1346_00f4d044;
 extern unsigned int g_dispatchSave1357_00f70f4c;
@@ -162,8 +162,8 @@ __declspec(naked) void ScanlineTexBlitAdditive_004c0e10(void)
         sub      ebp, ecx
         sub      eax, edi
         cmp      ebp, 1
-        mov      dword ptr [g_data_00b2d00c], ebp
-        mov      dword ptr [g_data_00b2d008], eax
+        mov      dword ptr [g_dispatchSave1708_00b2d00c], ebp
+        mov      dword ptr [g_dispatchSave1707_00b2d008], eax
         jl       L_1129
         cmp      eax, 1
         jl       L_1129
@@ -188,7 +188,7 @@ __declspec(naked) void ScanlineTexBlitAdditive_004c0e10(void)
         mov      dword ptr [g_dispatchSave1357_00f70f4c], esi
         sub      eax, ebx
         cdq
-        idiv     dword ptr [g_data_00b2d008]
+        idiv     dword ptr [g_dispatchSave1707_00b2d008]
         test     ecx, ecx
         mov      dword ptr [g_dispatchSave1358_00f70f50], eax
         jge      L_0f05
@@ -199,7 +199,7 @@ __declspec(naked) void ScanlineTexBlitAdditive_004c0e10(void)
         add      ebp, ecx
         xor      ecx, ecx
         mov      dword ptr [g_dispatchSave1371_00f70f88], ebx
-        mov      dword ptr [g_data_00b2d00c], ebp
+        mov      dword ptr [g_dispatchSave1708_00b2d00c], ebp
         mov      dword ptr [g_dispatchSave1378_00f70fa8], ecx
     L_0f05:
         test     edi, edi
@@ -207,11 +207,11 @@ __declspec(naked) void ScanlineTexBlitAdditive_004c0e10(void)
         imul     eax, edi
         mov      edx, dword ptr [g_dispatchSave1374_00f70f98]
         sub      edx, eax
-        mov      eax, dword ptr [g_data_00b2d008]
+        mov      eax, dword ptr [g_dispatchSave1707_00b2d008]
         add      eax, edi
         xor      edi, edi
         mov      dword ptr [g_dispatchSave1374_00f70f98], edx
-        mov      dword ptr [g_data_00b2d008], eax
+        mov      dword ptr [g_dispatchSave1707_00b2d008], eax
         mov      dword ptr [g_dispatchSave1381_00f70fb8], edi
     L_0f2e:
         mov      eax, dword ptr [g_viewportW]
@@ -220,14 +220,14 @@ __declspec(naked) void ScanlineTexBlitAdditive_004c0e10(void)
         jl       L_0f47
         sub      eax, ecx
         mov      ebp, eax
-        mov      dword ptr [g_data_00b2d00c], ebp
+        mov      dword ptr [g_dispatchSave1708_00b2d00c], ebp
     L_0f47:
         mov      eax, dword ptr [g_viewportH]
         mov      edx, dword ptr [g_dispatchSave1383_00f70fc0]
         cmp      edx, eax
         jl       L_0f5d
         sub      eax, edi
-        mov      dword ptr [g_data_00b2d008], eax
+        mov      dword ptr [g_dispatchSave1707_00b2d008], eax
     L_0f5d:
         mov      edx, dword ptr [g_viewportY]
         mov      eax, dword ptr [g_viewportX]
@@ -235,7 +235,7 @@ __declspec(naked) void ScanlineTexBlitAdditive_004c0e10(void)
         add      eax, edx
         lea      edx, [eax + ecx*2]
         mov      eax, dword ptr [g_dispatchSave1403_00f85b4c]
-        mov      ecx, dword ptr [g_data_00b2d008]
+        mov      ecx, dword ptr [g_dispatchSave1707_00b2d008]
         and      eax, 0xf
         shl      eax, 0x10
         test     ecx, ecx
@@ -286,7 +286,7 @@ __declspec(naked) void ScanlineTexBlitAdditive_004c0e10(void)
         or       eax, ecx
         and      eax, 0xf7de
         mov      word ptr [edx], ax
-        mov      ebp, dword ptr [g_data_00b2d00c]
+        mov      ebp, dword ptr [g_dispatchSave1708_00b2d00c]
         mov      esi, dword ptr [g_dispatchSave1357_00f70f4c]
         mov      edx, dword ptr [g_dispatchSave1345_00f4d040]
     L_1045:
@@ -324,7 +324,7 @@ __declspec(naked) void ScanlineTexBlitAdditive_004c0e10(void)
         or       eax, ecx
         and      eax, 0x7bde
         mov      word ptr [edx], ax
-        mov      ebp, dword ptr [g_data_00b2d00c]
+        mov      ebp, dword ptr [g_dispatchSave1708_00b2d00c]
         mov      esi, dword ptr [g_dispatchSave1357_00f70f4c]
         mov      edx, dword ptr [g_dispatchSave1345_00f4d040]
     L_10c8:
@@ -341,14 +341,14 @@ __declspec(naked) void ScanlineTexBlitAdditive_004c0e10(void)
     L_10ee:
         mov      edx, dword ptr [g_dispatchSave1358_00f70f50]
         mov      ebx, dword ptr [g_dispatchSave1374_00f70f98]
-        mov      eax, dword ptr [g_data_00b2d008]
+        mov      eax, dword ptr [g_dispatchSave1707_00b2d008]
         mov      edi, dword ptr [g_viewportY]
         add      ebx, edx
         mov      edx, dword ptr [g_dispatchSave1346_00f4d044]
         dec      eax
         add      edx, edi
         test     eax, eax
-        mov      dword ptr [g_data_00b2d008], eax
+        mov      dword ptr [g_dispatchSave1707_00b2d008], eax
         mov      dword ptr [g_dispatchSave1374_00f70f98], ebx
         mov      dword ptr [g_dispatchSave1346_00f4d044], edx
         jg       L_0f96

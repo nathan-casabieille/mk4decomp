@@ -113,9 +113,9 @@ extern unsigned int g_audioStateMachine1_004f3ae8;
 extern unsigned int g_audioCrewState_00541d8c;
 extern unsigned int g_byte_005435a2;
 extern unsigned int g_byte_0054361a;
-extern unsigned int g_data_00600000;
+extern unsigned int g_dispatchSave1701_00600000;
 extern unsigned int g_glideFnTable;
-extern unsigned int g_data_00c00000;
+extern unsigned int g_dispatchSave1710_00c00000;
 extern void AudioChainInit_004a77c0(void);
 extern void AudioInitLoopTriple_004a7840(void);
 extern void ScaledChainStore24_004a7d40(void);
@@ -130,7 +130,7 @@ __declspec(naked) void SpawnLeftRightAudioCrew_004a8080(void)
         lea      ecx, [eax + eax*2]
         push     edi
         shl      ecx, 0x15
-        sub      ecx, OFFSET g_data_00600000
+        sub      ecx, OFFSET g_dispatchSave1701_00600000
         xor      edi, edi
         test     eax, eax
         mov      dword ptr [g_audioCrewState_00541d8c], ecx
@@ -176,7 +176,7 @@ __declspec(naked) void SpawnLeftRightAudioCrew_004a8080(void)
         mov      eax, dword ptr [g_audioStateMachine0_004f3ae4]
         inc      edi
         add      esi, 0x18
-        add      ebp, OFFSET g_data_00c00000
+        add      ebp, OFFSET g_dispatchSave1710_00c00000
         cmp      edi, eax
         jl       L_80b1
     L_8183:
@@ -184,7 +184,7 @@ __declspec(naked) void SpawnLeftRightAudioCrew_004a8080(void)
         xor      edi, edi
         lea      ecx, [eax + eax*2]
         shl      ecx, 0x15
-        sub      ecx, OFFSET g_data_00600000
+        sub      ecx, OFFSET g_dispatchSave1701_00600000
         test     eax, eax
         mov      dword ptr [g_audioCrewState_00541d8c], ecx
         jle      short L_8282
@@ -229,7 +229,7 @@ __declspec(naked) void SpawnLeftRightAudioCrew_004a8080(void)
         mov      eax, dword ptr [g_audioStateMachine1_004f3ae8]
         inc      edi
         add      esi, 0x18
-        add      ebp, OFFSET g_data_00c00000
+        add      ebp, OFFSET g_dispatchSave1710_00c00000
         cmp      edi, eax
         jl       L_81b0
     L_8282:

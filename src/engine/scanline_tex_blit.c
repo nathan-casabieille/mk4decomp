@@ -110,8 +110,8 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_viewportW;
 extern unsigned int g_viewportH;
-extern unsigned int g_data_00b2d008;
-extern unsigned int g_data_00b2d00c;
+extern unsigned int g_dispatchSave1707_00b2d008;
+extern unsigned int g_dispatchSave1708_00b2d00c;
 extern unsigned int g_dispatchSave1346_00f4d044;
 extern unsigned int g_dispatchSave1357_00f70f4c;
 extern unsigned int g_dispatchSave1358_00f70f50;
@@ -157,8 +157,8 @@ __declspec(naked) void ScanlineTexBlit_004c0920(void)
         sub      ecx, edi
         sub      esi, eax
         cmp      ecx, 1
-        mov      dword ptr [g_data_00b2d00c], ecx
-        mov      dword ptr [g_data_00b2d008], esi
+        mov      dword ptr [g_dispatchSave1708_00b2d00c], ecx
+        mov      dword ptr [g_dispatchSave1707_00b2d008], esi
         jl       L_0b63
         cmp      esi, 1
         jl       L_0b63
@@ -193,7 +193,7 @@ __declspec(naked) void ScanlineTexBlit_004c0920(void)
         sub      edx, ebx
         xor      edi, edi
         mov      dword ptr [g_dispatchSave1371_00f70f88], edx
-        mov      dword ptr [g_data_00b2d00c], ecx
+        mov      dword ptr [g_dispatchSave1708_00b2d00c], ecx
         mov      dword ptr [g_dispatchSave1378_00f70fa8], edi
     L_0a13:
         mov      ecx, dword ptr [g_dispatchSave1381_00f70fb8]
@@ -206,14 +206,14 @@ __declspec(naked) void ScanlineTexBlit_004c0920(void)
         add      esi, ecx
         mov      ecx, dword ptr [g_dispatchSave1381_00f70fb8]
         mov      dword ptr [g_dispatchSave1374_00f70f98], edx
-        mov      dword ptr [g_data_00b2d008], esi
+        mov      dword ptr [g_dispatchSave1707_00b2d008], esi
     L_0a46:
         mov      eax, dword ptr [g_viewportW]
         mov      edx, dword ptr [g_dispatchSave1380_00f70fb0]
         cmp      edx, eax
         jl       L_0a5c
         sub      eax, edi
-        mov      dword ptr [g_data_00b2d00c], eax
+        mov      dword ptr [g_dispatchSave1708_00b2d00c], eax
     L_0a5c:
         mov      eax, dword ptr [g_viewportH]
         mov      edx, dword ptr [g_dispatchSave1383_00f70fc0]
@@ -221,7 +221,7 @@ __declspec(naked) void ScanlineTexBlit_004c0920(void)
         jl       L_0a75
         sub      eax, ecx
         mov      esi, eax
-        mov      dword ptr [g_data_00b2d008], esi
+        mov      dword ptr [g_dispatchSave1707_00b2d008], esi
     L_0a75:
         mov      edx, dword ptr [g_viewportY]
         mov      eax, dword ptr [g_viewportX]
@@ -255,9 +255,9 @@ __declspec(naked) void ScanlineTexBlit_004c0920(void)
         shr      ecx, 0x10
         mov      dl, cl
         mov      edi, dword ptr [g_dispatchSave1346_00f4d044]
-        add      edi, dword ptr [g_data_00b2d00c]
-        add      edi, dword ptr [g_data_00b2d00c]
-        mov      esi, dword ptr [g_data_00b2d00c]
+        add      edi, dword ptr [g_dispatchSave1708_00b2d00c]
+        add      edi, dword ptr [g_dispatchSave1708_00b2d00c]
+        mov      esi, dword ptr [g_dispatchSave1708_00b2d00c]
         neg      esi
         mov      ecx, dword ptr [g_dispatchSave1357_00f70f4c]
         rol      ecx, 0x10
@@ -274,14 +274,14 @@ __declspec(naked) void ScanlineTexBlit_004c0920(void)
         jl       L_0b10
         mov      edx, dword ptr [g_dispatchSave1358_00f70f50]
         mov      esi, dword ptr [g_dispatchSave1374_00f70f98]
-        mov      eax, dword ptr [g_data_00b2d008]
+        mov      eax, dword ptr [g_dispatchSave1707_00b2d008]
         mov      ecx, dword ptr [g_viewportY]
         add      esi, edx
         mov      edx, dword ptr [g_dispatchSave1346_00f4d044]
         dec      eax
         add      edx, ecx
         test     eax, eax
-        mov      dword ptr [g_data_00b2d008], eax
+        mov      dword ptr [g_dispatchSave1707_00b2d008], eax
         mov      dword ptr [g_dispatchSave1374_00f70f98], esi
         mov      dword ptr [g_dispatchSave1346_00f4d044], edx
         jg       L_0aa7

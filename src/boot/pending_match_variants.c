@@ -260,7 +260,7 @@ extern u32 g_timerFlag;
 extern u32 g_audioState0C;
 extern unsigned int g_dispatchSave16_00543b68;
 extern unsigned int g_dispatchSave23_00543b6c;
-extern unsigned int g_data_00806000;
+extern unsigned int g_dispatchSave1704_00806000;
 extern unsigned int g_dispatchSave1491_00ab4338;
 extern unsigned int g_dispatchSave1423_00f9f7fc;
 extern unsigned int g_dispatchSave1430_00f9f850;
@@ -1630,7 +1630,7 @@ __declspec(naked) void StageEntityInitCluster_004216a0(void)
 {
     __asm {
         /* H1 */
-        push     OFFSET g_data_00806000
+        push     OFFSET g_dispatchSave1704_00806000
         call     ThreeChanPackClamp_00404cc0
         mov      eax, dword ptr [g_fightGroupHead]
         add      esp, 4

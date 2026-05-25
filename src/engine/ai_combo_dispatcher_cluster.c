@@ -113,7 +113,7 @@ extern unsigned int g_dispatchSave792_004f2100;
 extern unsigned int g_dispatchSave793_004f2158;
 extern unsigned int g_dispatchSave794_004f2168;
 extern unsigned int g_dispatchSave538_004f27f0;
-extern unsigned int g_data_00800000;
+extern unsigned int g_dispatchSave1703_00800000;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ArgSar_Set0_Jmp_0049c6f0(void);
 extern void CallSetPause_0041f830(void);
@@ -243,7 +243,7 @@ __declspec(naked) void AiComboDispatcherCluster_00497470(void)
         pop      esi
         ret
     L_761d:
-        push     OFFSET g_data_00800000
+        push     OFFSET g_dispatchSave1703_00800000
         call     ThreeChanPackClamp_00404cc0
         mov      eax, dword ptr [g_fightGroupHead]
         add      esp, 4

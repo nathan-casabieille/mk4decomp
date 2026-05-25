@@ -110,8 +110,8 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_viewportW;
 extern unsigned int g_viewportH;
-extern unsigned int g_data_00b2d008;
-extern unsigned int g_data_00b2d00c;
+extern unsigned int g_dispatchSave1707_00b2d008;
+extern unsigned int g_dispatchSave1708_00b2d00c;
 extern unsigned int g_dispatchSave1340_00f4d028;
 extern unsigned int g_dispatchSave1345_00f4d040;
 extern unsigned int g_dispatchSave1346_00f4d044;
@@ -163,8 +163,8 @@ __declspec(naked) void ScanlineTexBlitPaletted_004c0360(void)
         sub      esi, ecx
         sub      edi, ebx
         cmp      esi, 1
-        mov      dword ptr [g_data_00b2d00c], esi
-        mov      dword ptr [g_data_00b2d008], edi
+        mov      dword ptr [g_dispatchSave1708_00b2d00c], esi
+        mov      dword ptr [g_dispatchSave1707_00b2d008], edi
         jl       L_05d4
         cmp      edi, 1
         jl       L_05d4
@@ -200,7 +200,7 @@ __declspec(naked) void ScanlineTexBlitPaletted_004c0360(void)
         add      esi, ecx
         xor      ecx, ecx
         mov      dword ptr [g_dispatchSave1371_00f70f88], edx
-        mov      dword ptr [g_data_00b2d00c], esi
+        mov      dword ptr [g_dispatchSave1708_00b2d00c], esi
         mov      dword ptr [g_dispatchSave1378_00f70fa8], ecx
     L_0456:
         test     ebx, ebx
@@ -212,7 +212,7 @@ __declspec(naked) void ScanlineTexBlitPaletted_004c0360(void)
         add      edi, ebx
         xor      ebx, ebx
         mov      dword ptr [g_dispatchSave1374_00f70f98], eax
-        mov      dword ptr [g_data_00b2d008], edi
+        mov      dword ptr [g_dispatchSave1707_00b2d008], edi
         mov      dword ptr [g_dispatchSave1381_00f70fb8], ebx
     L_047b:
         mov      eax, dword ptr [g_viewportW]
@@ -221,7 +221,7 @@ __declspec(naked) void ScanlineTexBlitPaletted_004c0360(void)
         jl       L_0494
         sub      eax, ecx
         mov      esi, eax
-        mov      dword ptr [g_data_00b2d00c], esi
+        mov      dword ptr [g_dispatchSave1708_00b2d00c], esi
     L_0494:
         mov      eax, dword ptr [g_viewportH]
         mov      edx, dword ptr [g_dispatchSave1383_00f70fc0]
@@ -229,7 +229,7 @@ __declspec(naked) void ScanlineTexBlitPaletted_004c0360(void)
         jl       L_04ad
         sub      eax, ebx
         mov      edi, eax
-        mov      dword ptr [g_data_00b2d008], edi
+        mov      dword ptr [g_dispatchSave1707_00b2d008], edi
     L_04ad:
         mov      edx, dword ptr [g_viewportY]
         mov      eax, dword ptr [g_viewportX]
@@ -274,8 +274,8 @@ __declspec(naked) void ScanlineTexBlitPaletted_004c0360(void)
         and      eax, 0xffff
         mov      ax, word ptr [ecx + eax*2]
         mov      word ptr [edx], ax
-        mov      esi, dword ptr [g_data_00b2d00c]
-        mov      edi, dword ptr [g_data_00b2d008]
+        mov      esi, dword ptr [g_dispatchSave1708_00b2d00c]
+        mov      edi, dword ptr [g_dispatchSave1707_00b2d008]
     L_0566:
         mov      eax, dword ptr [g_clipMinScratch]
         mov      edx, dword ptr [g_dispatchSave1357_00f70f4c]
@@ -299,7 +299,7 @@ __declspec(naked) void ScanlineTexBlitPaletted_004c0360(void)
         mov      dword ptr [g_dispatchSave1374_00f70f98], edx
         mov      edx, dword ptr [g_viewportY]
         add      ebx, edx
-        mov      dword ptr [g_data_00b2d008], edi
+        mov      dword ptr [g_dispatchSave1707_00b2d008], edi
         test     edi, edi
         mov      dword ptr [g_dispatchSave1346_00f4d044], ebx
         jg       L_04f7

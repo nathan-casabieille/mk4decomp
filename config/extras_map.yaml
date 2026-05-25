@@ -1779,16 +1779,6 @@ g_currentNodeIdx: 5513308
 g_currentRendererMode: 5196604
 g_data_004d57ac_arr: 0
 g_data_004e4cf8: 5131512
-g_data_00600000: 6291456
-g_data_00606080: 6316160
-g_data_00800000: 8388608
-g_data_00806000: 8413184
-g_data_008c0000: 9175040
-g_data_00b0d000: 11587584
-g_data_00b2d008: 11718664
-g_data_00b2d00c: 11718668
-g_data_00bc0000: 12320768
-g_data_00c00000: 12582912
 g_dbl_004d2bf8: 5057528
 g_demoModeFlag: 5242236
 g_dest_0053a6e4: 5482212
@@ -2481,8 +2471,6 @@ g_word_00f9eb72: 16378738
 g_word_00f9eb7c: 16378748
 g_word_00f9eb7e: 16378750
 g_voicePoolHead_00543748: 5519176
-g_x_00b2d008: 11718664
-g_x_00b2d00c: 11718668
 g_xformChainTable: 0
 g_xformDirtyFlags: 5513356
 g_xformEntityIdx: 5513288

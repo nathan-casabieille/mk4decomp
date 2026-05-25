@@ -111,9 +111,9 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 /*
  * @addr 0x0042fbc0 (116b game) - chain field-test then 2-branch:
  *   walk = walk[+0x40]; g_xformScratch94 = walk & 0x40; if zero exit.
- *   Else: mov eax,ecx (copy old_scaled from ecx to eax); load g_x_538158
+ *   Else: mov eax,ecx (copy old_scaled from ecx to eax); load g_dispatchSave1711_538158
  *   into ecx; cmp eax,ecx; store both (g_xformEntityIdx=eax a3, g_scaledInit=ecx
- *   89 0d) between cmp and jne; conditionally replace with g_x_53815c.
+ *   89 0d) between cmp and jne; conditionally replace with g_dispatchSave1712_53815c.
  *   NON-COAXABLE: orig emits `mov eax,ecx` (2b) + `mov ecx,[g_x]` (6b) to get
  *   old_scaled into eax for a3-form store; MSVC SP3 /O2 instead loads g_x into
  *   eax (a1 5b) and keeps old_scaled in ecx, saving 3 bytes in the cmp block
