@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Thunk E body_ebc0 (+0x100): same as D but state_00542080=9; mstack-push body_ec00. 3-NOP pad.
  *   Thunk F body_ec00 (+0x140): if bit0 jmp FiveEntryAlarmInstallChain_0046ee00; else jmp MStackJmpInstallSelf.
  */
-extern unsigned int g_data_004eb6c8;
+extern unsigned int g_dispatchSave701_004eb6c8;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CallPauseDirtyMStackPushFn_0046e2a0(void);
 extern void FiveEntryAlarmInstallChain_0046ee00(void);
@@ -173,7 +173,7 @@ __declspec(naked) void FiveThunkMStackDispatcher_0046eac0(void) {
         test    eax, eax
         _emit   75h
         _emit   12h
-        mov     eax, offset g_data_004eb6c8
+        mov     eax, offset g_dispatchSave701_004eb6c8
         sar     eax, 2
         mov     dword ptr [g_eventQueueEnd], eax
         jmp     PhaseDispatchListAdvance_004709e0

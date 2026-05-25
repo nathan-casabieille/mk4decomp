@@ -107,8 +107,8 @@ extern unsigned int g_fightAxisNegX_00535e70;
 extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
-extern unsigned int g_data_004ecea0;
-extern unsigned int g_data_004eceb0;
+extern unsigned int g_dispatchSave711_004ecea0;
+extern unsigned int g_dispatchSave712_004eceb0;
 extern unsigned int g_walkCallbackSrc2_00535db0;
 extern unsigned int g_clamp_00537f2c;
 extern unsigned int g_walkCallbackSrc_0053a2d0;
@@ -132,7 +132,7 @@ void MStackBracket6_DualGate_004788e0(void) {
     if (v != 0 && (int)v < 0xccc) {
         g_walkCallback = g_walkCallbackSrc_0053a2d0;
         if (g_walkCallbackSrc_0053a2d0 == 0) {
-            g_fightGroupHead = (unsigned int)&g_data_004ecea0 >> 2;
+            g_fightGroupHead = (unsigned int)&g_dispatchSave711_004ecea0 >> 2;
             VersusSwapCluster_00478a90();
             if (g_framePauseFlag != 0) return;
             g_walkCallbackSrc_0053a2d0 = 1;
@@ -143,7 +143,7 @@ void MStackBracket6_DualGate_004788e0(void) {
     if (v != 0 && (int)v < 0xccc) {
         g_walkCallback = g_walkCallbackSrc2_00535db0;
         if (g_walkCallbackSrc2_00535db0 == 0) {
-            g_fightGroupHead = (unsigned int)&g_data_004eceb0 >> 2;
+            g_fightGroupHead = (unsigned int)&g_dispatchSave712_004eceb0 >> 2;
             VersusSwapCluster_00478a90();
             if (g_framePauseFlag != 0) return;
             g_walkCallback = 1;

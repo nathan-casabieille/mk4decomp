@@ -131,8 +131,8 @@ extern void LeaPlus22StoreSelf_0048e4d0(void);
 extern void DualGatedStateYield_0048fc80(void);
 extern void CallPauseInc_004ab670(void);
 extern void AudioVolumeRescale_004ab690(void);
-extern unsigned int g_data_004e4460;
-extern unsigned int g_data_004e49fc;
+extern unsigned int g_dispatchSave680_004e4460;
+extern unsigned int g_dispatchSave681_004e49fc;
 extern unsigned int g_dispatchState_0053a478;
 
 extern void ScaledMove48to58_00490720(void);
@@ -222,7 +222,7 @@ __declspec(naked) void HitReactionStateCluster_004335f0(void)
         call     ScaledLoadInstallOrCall_00433990
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3897
-        push     OFFSET g_data_004e4460
+        push     OFFSET g_dispatchSave680_004e4460
         call     PackedAdvanceCallTailJmp_004392c0
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -260,7 +260,7 @@ __declspec(naked) void HitReactionStateCluster_004335f0(void)
     L_377d:
         mov      ecx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_walkCallback], edi
-        push     OFFSET g_data_004e49fc
+        push     OFFSET g_dispatchSave681_004e49fc
         mov      dword ptr [ecx*4 + 0x74], edi
         call     QuadBlockArgInstallChain_0043a950
         mov      eax, dword ptr [g_framePauseFlag]

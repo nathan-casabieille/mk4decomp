@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004e7a68;
+extern unsigned int g_dispatchSave688_004e7a68;
 extern void Chain2AxisDiffStoreTailJmp_0044cad0(void);
 extern void DualPushSet7dCallPop_00474290(void);
 extern void DualScaledStore_00452740(void);
@@ -134,7 +134,7 @@ __declspec(naked) void StunDownCluster_00451fc0(void)
         test     eax, eax
         jne      L_2054
         mov      eax, dword ptr [g_eventQueueEnd]
-        mov      edx, OFFSET g_data_004e7a68
+        mov      edx, OFFSET g_dispatchSave688_004e7a68
         shr      edx, 2
         mov      ecx, dword ptr [eax*4]
         inc      eax

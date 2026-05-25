@@ -119,7 +119,7 @@ extern unsigned int g_data_004f61bc;
 extern unsigned int g_data_004f61c8;
 extern unsigned int g_data_004f61d0;
 extern unsigned int g_data_004f61d8;
-extern unsigned int g_data_004f61e0;
+extern unsigned int g_dispatchSave721_004f61e0;
 extern unsigned int g_menuPageDispatch_00543a98;
 extern unsigned int g_menuRestoreD_00543a9c;
 extern unsigned int g_menuRestoreA_00543aa0;
@@ -137,7 +137,7 @@ __declspec(naked) void MenuPageTailDispatch_004b8080(void)
 {
     __asm {
         mov      eax, dword ptr [g_menuPageVar_004f5328]
-        mov      dword ptr [esp + 8], OFFSET g_data_004f61e0
+        mov      dword ptr [esp + 8], OFFSET g_dispatchSave721_004f61e0
         test     eax, eax
         mov      dword ptr [esp + 0xc], OFFSET g_data_004f61d8
         mov      dword ptr [esp + 0x10], OFFSET g_data_004f61d0

@@ -117,7 +117,7 @@ extern void CmpDivJmp_0049d080(void);
 extern void MStackCall_00406600(void);
 extern void IK_ChainPoseUpdate_00444860(void);
 extern unsigned int g_dispatchVar43_004e6070;
-extern unsigned int g_data_004e5cc0;
+extern unsigned int g_dispatchSave683_004e5cc0;
 extern unsigned int g_dispatchVar2_0053a24c;
 extern unsigned int g_dispatchVar8_0053a35c;
 
@@ -265,7 +265,7 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_dispatchVar2_0053a24c], eax
         call     StoreLoadJmp_00404ef0
-        mov      ecx, OFFSET g_data_004e5cc0
+        mov      ecx, OFFSET g_dispatchSave683_004e5cc0
         add      esp, 4
         shr      ecx, 2
         mov      dword ptr [g_dispatchVar8_0053a35c], 0

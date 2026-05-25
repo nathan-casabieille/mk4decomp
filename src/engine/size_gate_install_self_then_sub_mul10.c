@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004ec950;
-extern unsigned int g_data_004ecc38;
+extern unsigned int g_dispatchSave706_004ec950;
+extern unsigned int g_dispatchSave710_004ecc38;
 extern void AudioMixerStep_004ab700(void);
 extern void PendingMatch_00473640(void);
 extern void ScaledStoreThree_00409260(void);
@@ -164,7 +164,7 @@ __declspec(naked) void SizeGateInstallSelfThenSubMul10_00473480(void)
         mov     dword ptr [edx*4 + 0x1c], ecx
         mov     eax, dword ptr [g_currentNodeIdx]
         shl     eax, 2
-        mov     ecx, offset g_data_004ecc38
+        mov     ecx, offset g_dispatchSave710_004ecc38
         shr     ecx, 2
         mov     dword ptr [eax + 0x3c], esi
         mov     dword ptr [eax + 0x40], esi
@@ -174,7 +174,7 @@ __declspec(naked) void SizeGateInstallSelfThenSubMul10_00473480(void)
         cmp     dword ptr [g_framePauseFlag], esi
         jne     short L_sgis_ret
         mov     edx, dword ptr [g_xformEntityIdx]
-        mov     eax, offset g_data_004ec950
+        mov     eax, offset g_dispatchSave706_004ec950
         shr     eax, 2
         mov     dword ptr [edx*4 + 0x10], esi
         mov     ecx, dword ptr [g_xformEntityIdx]

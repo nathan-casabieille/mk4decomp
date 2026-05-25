@@ -116,10 +116,10 @@ extern unsigned int g_counter_0053a51c;
 extern unsigned int g_rangeBase_0053a46c;
 extern unsigned char g_dispatchSave623_004dfd48;
 extern void TablePushAccumTailJmp_00429e30(void);
-extern unsigned int g_data_004d5308;
-extern unsigned int g_data_004d530c;
-extern unsigned int g_data_004d5300;
-extern unsigned int g_data_004d5304;
+extern unsigned int g_dispatchSave658_004d5308;
+extern unsigned int g_dispatchSave659_004d530c;
+extern unsigned int g_dispatchSave656_004d5300;
+extern unsigned int g_dispatchSave657_004d5304;
 extern unsigned int g_particleEmitterNode_00535e6c;
 extern unsigned int g_pendingMatchAudio2_0053a7a8;
 extern void MStackPush8_004ab790(void);
@@ -172,16 +172,16 @@ void ScenePostInitSequencer_00429b70(void) {
         mov      eax, dword ptr [g_cj_00542058]
         mov      ecx, dword ptr [eax*4 + 0x1c]
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_data_004d5308], ecx
+        mov      dword ptr [g_dispatchSave658_004d5308], ecx
         mov      ecx, dword ptr [eax*4 + 0x20]
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_data_004d530c], ecx
+        mov      dword ptr [g_dispatchSave659_004d530c], ecx
         mov      ecx, dword ptr [eax*4 + 0x24]
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_data_004d5300], ecx
+        mov      dword ptr [g_dispatchSave656_004d5300], ecx
         mov      eax, dword ptr [eax*4 + 0x28]
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_004d5304], eax
+        mov      dword ptr [g_dispatchSave657_004d5304], eax
         call     PendingMatch_00429ef0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

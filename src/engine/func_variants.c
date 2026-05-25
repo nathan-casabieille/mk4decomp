@@ -18,9 +18,9 @@ extern unsigned int g_data_004edf68;
 extern unsigned int g_data_004f21d0;
 extern unsigned int g_data_004f2250;
 extern unsigned int g_data_004f2298;
-extern unsigned int g_data_004ed2f0;
-extern unsigned int g_data_004ed2f8;
-extern unsigned int g_data_004ed308;
+extern unsigned int g_dispatchSave714_004ed2f0;
+extern unsigned int g_dispatchSave715_004ed2f8;
+extern unsigned int g_dispatchSave716_004ed308;
 extern unsigned int g_data_004edb98;
 extern unsigned int g_data_004edba8;
 extern unsigned int g_data_004edbf0;
@@ -591,9 +591,9 @@ void func_00498c10(void) {
 
 /* h3 @ 0x0047c3c0 (48b): chained event 004ed2f0 -> 004ed2f8 forwarder. */
 void func_0047c3c0(void) {
-    ((void (*)(void *))IterStepDualStore_00490b40)(&g_data_004ed2f0);
+    ((void (*)(void *))IterStepDualStore_00490b40)(&g_dispatchSave714_004ed2f0);
     if (g_framePauseFlag) return;
-    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004ed2f8);
+    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_dispatchSave715_004ed2f8);
 }
 
 /* h4 @ 0x0047c3f0 (288b naked): pose-fn 2-state. Keep naked: self-ref
@@ -704,7 +704,7 @@ void func_0047c580(void) {
         SevenThunks_0047cc50();
         return;
     }
-    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004ed308);
+    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_dispatchSave716_004ed308);
 }
 
 /* h2 @ 0x00482200 (32b): event 004edb98 forwarder. */

@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004ed590;
-extern unsigned int g_data_004ed5a8;
+extern unsigned int g_dispatchSave717_004ed590;
+extern unsigned int g_dispatchSave718_004ed5a8;
 extern void MStackPushSet0008_004901a0(void);
 extern void MStackPushSet0020_004901d0(void);
 extern void CmpEqInitCallElseJmp_0048d4b0(void);
@@ -149,7 +149,7 @@ __declspec(naked) void Alarm3EntryPhaseChain_0047e1a0(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a3e_e1End
-        push    offset g_data_004ed590
+        push    offset g_dispatchSave717_004ed590
         call    ArgSarStoreJmp_004594f0
         add     esp, 4
     L_a3e_e1End:
@@ -180,7 +180,7 @@ __declspec(naked) void Alarm3EntryPhaseChain_0047e1a0(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a3e_e2End
-        push    offset g_data_004ed5a8
+        push    offset g_dispatchSave718_004ed5a8
         call    ArgSarStoreJmp_004594f0
         add     esp, 4
     L_a3e_e2End:

@@ -125,7 +125,7 @@ extern void TableWalkBoundedCmp_004bd890(int);
 extern void TaggedSceneDispatch_004be690(void);
 extern void QuadCallPhase2_004be800(void);
 extern void RoundCleanupCluster_00427690(void);
-extern unsigned int g_data_004e2868;
+extern unsigned int g_dispatchSave669_004e2868;
 extern unsigned int g_dispatchSave637_004f29c0;
 extern unsigned int g_tickFlagF;
 extern unsigned int g_dispatchSave49_00535e44;
@@ -277,7 +277,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         pop      ebx
         ret      
     L_e0fc:
-        mov      ax, word ptr [g_data_004e2868]
+        mov      ax, word ptr [g_dispatchSave669_004e2868]
         mov      dword ptr [g_tickFlagF], 3
         push     eax
         mov      dword ptr [g_audioInstall2Slot_00537eec], ebx

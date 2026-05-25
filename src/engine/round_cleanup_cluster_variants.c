@@ -119,10 +119,10 @@ extern void RoundCleanupCluster_00427690(void);
  *   g_acc_00542078=0, g_eventQueueNotMask=0xff960000, g_currentNodeFlags=2);
  *   call DispatcherComplex181; pause? ret; call RoundCleanupCluster_00427690.
  */
-extern unsigned int g_data_004e7f40;
-extern unsigned int g_data_004e7f50;
-extern unsigned int g_data_004e7f60;
-extern unsigned int g_data_004e7f70;
+extern unsigned int g_dispatchSave689_004e7f40;
+extern unsigned int g_dispatchSave690_004e7f50;
+extern unsigned int g_dispatchSave691_004e7f60;
+extern unsigned int g_dispatchSave692_004e7f70;
 extern unsigned int g_dispatchSave59_00501250;
 extern unsigned int g_gameCountdown_0053a718;
 extern void ArgSarStoreJmp_004594f0(void);
@@ -359,7 +359,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
     __asm {
         /* === Helper 1 (0x455920): event 004e7f40 forwarder === */
     L_5920:
-        push     OFFSET g_data_004e7f40
+        push     OFFSET g_dispatchSave689_004e7f40
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
         ret
@@ -377,7 +377,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         _emit    0xff
         _emit    0xff
     L_5942:
-        push     OFFSET g_data_004e7f50
+        push     OFFSET g_dispatchSave690_004e7f50
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
         ret
@@ -475,7 +475,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         jne      short L_5b22
         mov      edx, dword ptr [g_eventQueueEnd]
         mov      eax, dword ptr [g_acc_00542078]
-        push     OFFSET g_data_004e7f60
+        push     OFFSET g_dispatchSave691_004e7f60
         mov      dword ptr [edx*4 + 0x54], eax
         mov      ecx, dword ptr [g_eventQueueEnd]
         mov      edx, dword ptr [g_eventQueueNotMask]
@@ -540,7 +540,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5bb4
-        push     OFFSET g_data_004e7f70
+        push     OFFSET g_dispatchSave692_004e7f70
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_5bb4:

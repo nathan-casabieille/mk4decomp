@@ -126,8 +126,8 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     writes 0x28f into [g_fightGroupHead*4+0x4c], calls
  *     InstallSelfThresholdDispatch_0047e310.
  */
-extern unsigned int g_data_004ed590;
-extern unsigned int g_data_004ed5a8;
+extern unsigned int g_dispatchSave717_004ed590;
+extern unsigned int g_dispatchSave718_004ed5a8;
 extern void ArgSarStoreJmp_004594f0(unsigned int *);
 extern void CmpEqInitCallElseJmp_0048d4b0(void);
 extern void EsiEdiAliasDualMul10_004906b0(void);
@@ -144,7 +144,7 @@ void Alarm3EntryPhaseChain_0047e1a0(void) {
     *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74) = 0x1012;
     MStackPushSet0008_004901a0();
     if (g_framePauseFlag == 0)
-        ArgSarStoreJmp_004594f0(&g_data_004ed590);
+        ArgSarStoreJmp_004594f0(&g_dispatchSave717_004ed590);
 }
 
 /* entry 2 (offset 0x40, 67b) */
@@ -153,7 +153,7 @@ void Alarm3PhaseChainEntry2_0047e1e0(void) {
     *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74) = g_walkCallback = 0x201;
     MStackPushSet0020_004901d0();
     if (g_framePauseFlag == 0)
-        ArgSarStoreJmp_004594f0(&g_data_004ed5a8);
+        ArgSarStoreJmp_004594f0(&g_dispatchSave718_004ed5a8);
 }
 
 /* entry 3 / body (offset 0x90, 211b) */

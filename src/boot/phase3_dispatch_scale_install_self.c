@@ -120,9 +120,9 @@ extern void AudioVolumeRescale_004ab690(void);
 extern void InitZeroChainLookupJmp_00494210(void);
 extern void Phase3DispatchScaleInstallSelf_004125e0(void);
 
-extern unsigned int g_data_004f21c0;
+extern unsigned int g_dispatchSave720_004f21c0;
 
 /* h1 @ 0x00498720 (16b): bare event 004f21c0 forwarder. */
 void QuadSubVec2GateInstallSelfPair_00498720(void) {
-    ((void (*)(void *))ArgSar_Set0_Jmp_0049c6f0)(&g_data_004f21c0);
+    ((void (*)(void *))ArgSar_Set0_Jmp_0049c6f0)(&g_dispatchSave720_004f21c0);
 }

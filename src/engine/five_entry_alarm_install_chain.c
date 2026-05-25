@@ -116,7 +116,7 @@ extern void CallPauseDirtyMStackPushFn_0046e2a0(void);
 extern void InstallSelfMStackOverwrite_0046e9a0(void);
 extern void FiveEntryAlarmInstallChain_0046ee00(void);
 extern void MStackJmpInstallSelf_0046ed40(void);
-extern unsigned int g_data_004eb6c8;
+extern unsigned int g_dispatchSave701_004eb6c8;
 
 /* @addr 0x0046eac0 (339b game) - 5-thunk dispatcher with mstack-push chain (state-machine via mstack callback ptrs).
  *   Thunk A (0..0x3f): call ScaledAndAlfe; if pause ret. chain[baseSel*4+0x74]=0x603, g_walkCallback=0x603.
@@ -174,7 +174,7 @@ __declspec(naked) void FiveThunkMStackDispatcher_0046eac0(void) {
         test    eax, eax
         _emit   75h
         _emit   12h
-        mov     eax, offset g_data_004eb6c8
+        mov     eax, offset g_dispatchSave701_004eb6c8
         sar     eax, 2
         mov     dword ptr [g_eventQueueEnd], eax
         jmp     PhaseDispatchListAdvance_004709e0

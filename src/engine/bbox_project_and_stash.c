@@ -108,12 +108,12 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004f6264;
+extern unsigned int g_dispatchSave722_004f6264;
 extern unsigned int g_dispatchSave571_004f63e8;
 extern unsigned int g_dispatchSave570_004f63ea;
-extern unsigned int g_data_004f63ec;
-extern unsigned int g_data_004f63ee;
-extern unsigned int g_data_004f63f0;
+extern unsigned int g_dispatchSave726_004f63ec;
+extern unsigned int g_dispatchSave727_004f63ee;
+extern unsigned int g_dispatchSave728_004f63f0;
 extern unsigned int g_data_007af958[];
 extern s16 g_vtxIn1_y;
 extern s16 g_vtxIn2_y;
@@ -157,7 +157,7 @@ __declspec(naked) void BboxProjectAndStash_004bc5a0(void)
         test     al, al
         jne      L_c7d1
         mov      eax, dword ptr [g_tickCurConfig]
-        cmp      eax, OFFSET g_data_004f6264
+        cmp      eax, OFFSET g_dispatchSave722_004f6264
         jne      L_c5f6
         mov      eax, dword ptr [g_data_00ab51f8]
         test     eax, eax
@@ -170,7 +170,7 @@ __declspec(naked) void BboxProjectAndStash_004bc5a0(void)
         jne      L_c7d1
     L_c60b:
         mov      cx, word ptr [edi + g_dispatchSave570_004f63ea]
-        mov      dx, word ptr [edi + g_data_004f63ee]
+        mov      dx, word ptr [edi + g_dispatchSave727_004f63ee]
         movsx    eax, word ptr [g_mat3x3_007af992]
         movsx    ebp, word ptr [g_mat3x3_007af994]
         movsx    ebx, cx
@@ -220,8 +220,8 @@ __declspec(naked) void BboxProjectAndStash_004bc5a0(void)
         mov      bp, word ptr [g_xformEntityIdx]
         mov      word ptr [eax + g_data_00ab44fa], bp
         mov      word ptr [eax + g_data_00ab44fc], bx
-        mov      bx, word ptr [edi + g_data_004f63ec]
-        mov      di, word ptr [edi + g_data_004f63f0]
+        mov      bx, word ptr [edi + g_dispatchSave726_004f63ec]
+        mov      di, word ptr [edi + g_dispatchSave728_004f63f0]
         mov      word ptr [g_vtxIn1_y], bx
         mov      word ptr [g_vtxIn2_y], di
         movsx    ebx, bx

@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004ffe4c;
+extern unsigned int g_dispatchSave729_004ffe4c;
 extern unsigned int g_dispatchTableArr8_00501970;
 extern u32 g_dlSomeFlag2;
 extern s32 g_dlNalt1;
@@ -196,7 +196,7 @@ __declspec(naked) void DeathAnimCluster_0042eaf0(void)
         mov      dword ptr [eax + 0x5c], 0xfffd0000
         mov      dword ptr [eax + 0x60], 0x4b333
         mov      ecx, dword ptr [g_audioBankSel_00537f94]
-        mov      eax, OFFSET g_data_004ffe4c
+        mov      eax, OFFSET g_dispatchSave729_004ffe4c
         mov      edx, 0xf
         shr      eax, 2
         cmp      ecx, 2

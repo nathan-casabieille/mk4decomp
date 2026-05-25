@@ -113,7 +113,7 @@ extern unsigned int g_data_004f393c;
 extern unsigned int g_data_004f394c;
 extern unsigned int g_data_004f39dc;
 extern unsigned int g_data_004f3a48;
-extern unsigned int g_data_004f6338;
+extern unsigned int g_dispatchSave724_004f6338;
 extern unsigned int g_audioPreloadBase_0050b118;
 extern unsigned int g_dispatchSave128_0050f130;
 extern unsigned int g_dispatchSave127_0050f14c;
@@ -282,7 +282,7 @@ __declspec(naked) void KonquestPortalCluster_004a5290(void)
         cmp      esi, OFFSET g_data_004f3a48
         mov      dword ptr [edx*4], ebp
         jb       short L_547e
-        push     OFFSET g_data_004f6338
+        push     OFFSET g_dispatchSave724_004f6338
         call     AudioBindEntry_004a1e40
         mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET g_audioPreloadBase_0050b118

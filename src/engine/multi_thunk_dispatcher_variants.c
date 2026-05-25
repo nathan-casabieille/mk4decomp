@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Block D (+0xd0): g_walkCallback=0x312; jmp +0x11. (1-NOP)
  *   Block E (+0xe5): g_walkCallback=0x311; jmp +1 (to next fn at 0x004970f0).
  */
-extern unsigned int g_data_004ea000;
+extern unsigned int g_dispatchSave697_004ea000;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ArgSar_Set0_Jmp_0049c6f0(void);
 extern void ArgScaledTestStore_00494140(void);
@@ -286,7 +286,7 @@ __declspec(naked) void MultiThunkDispatcher_00460470(void) {
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   75h
         _emit   45h
-        mov     eax, offset g_data_004ea000
+        mov     eax, offset g_dispatchSave697_004ea000
         shr     eax, 2
         mov     dword ptr [g_eventQueueTotal], eax
         call    NotShrCmp1Store_00460d80

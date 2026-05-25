@@ -129,9 +129,9 @@ extern void InstallSelfChainAccumPath_004752b0(void);
 extern void GameInstall2BodyMul10ScaledInit_00475590(void);
 extern void GatedWordPushCall_00489f90(void);
 extern void PoseChainAdvanceCluster_0044ef50(void);
-extern unsigned int g_data_004e6580;
-extern unsigned int g_data_004e6590;
-extern unsigned int g_data_004e65a0;
+extern unsigned int g_dispatchSave685_004e6580;
+extern unsigned int g_dispatchSave686_004e6590;
+extern unsigned int g_dispatchSave687_004e65a0;
 extern unsigned int g_dispatchSave61_00501070;
 extern unsigned int g_dispatchSave57_005117c4;
 
@@ -230,7 +230,7 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         je       L_d48e
         dec      eax
         je       short L_d3de
-        push     OFFSET g_data_004e6580
+        push     OFFSET g_dispatchSave685_004e6580
         call     ArgSarStoreJmp_004594f0
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -310,7 +310,7 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d535
-        push     OFFSET g_data_004e6590
+        push     OFFSET g_dispatchSave686_004e6590
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_d535:
@@ -331,7 +331,7 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d565
-        push     OFFSET g_data_004e65a0
+        push     OFFSET g_dispatchSave687_004e65a0
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_d565:

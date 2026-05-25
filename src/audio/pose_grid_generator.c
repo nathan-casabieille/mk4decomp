@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004a0370;
+extern unsigned int g_dispatchSave650_004a0370;
 extern unsigned int g_poseGridGenVar_004e2864;
 extern void Ten404c40_404bd0_00426780(void);
 extern void PushCallPauseStorePushDispatch_004a12e0(void);
@@ -163,7 +163,7 @@ __declspec(naked) void AudioPhaseDispatch_004a1150(void)
         test    eax, eax
         jne     L_apd_ret
         push    0x16
-        push    offset g_data_004a0370
+        push    offset g_dispatchSave650_004a0370
         call    StoreTwoCall_0049cb40
         mov     cx, word ptr [g_poseGridGenVar_004e2864]
         add     esp, 8

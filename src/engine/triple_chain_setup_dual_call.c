@@ -122,9 +122,9 @@ extern void TripleChainSetupDualCall_00473da0(void);
  *       if (208c & 1 == 0): packed_ptr=0x4ec9c0 + tail-jmp;
  *       else: packed_ptr=0x4ec990 + tail-jmp.
  */
-extern unsigned int g_data_004ec960;
-extern unsigned int g_data_004ec990;
-extern unsigned int g_data_004ec9c0;
+extern unsigned int g_dispatchSave707_004ec960;
+extern unsigned int g_dispatchSave708_004ec990;
+extern unsigned int g_dispatchSave709_004ec9c0;
 void TriStageDispatchTailJmp_00473c90(void) {
     SetJmp_00405420();
     if (g_framePauseFlag != 0) return;
@@ -140,14 +140,14 @@ void TriStageDispatchTailJmp_00473c90(void) {
         AudioVolumeRescale_004ab690();
         if (g_framePauseFlag != 0) return;
         if ((g_xformDirtyFlags & 1) != 0) {
-            g_walkCallback = (unsigned int)&g_data_004ec9c0 >> 2;
+            g_walkCallback = (unsigned int)&g_dispatchSave709_004ec9c0 >> 2;
             TripleChainSetupDualCall_00473da0();
             return;
         }
-        g_walkCallback = (unsigned int)&g_data_004ec990 >> 2;
+        g_walkCallback = (unsigned int)&g_dispatchSave708_004ec990 >> 2;
         TripleChainSetupDualCall_00473da0();
         return;
     }
-    g_walkCallback = (unsigned int)&g_data_004ec960 >> 2;
+    g_walkCallback = (unsigned int)&g_dispatchSave707_004ec960 >> 2;
     TripleChainSetupDualCall_00473da0();
 }

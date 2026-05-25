@@ -117,7 +117,7 @@ extern void PerSlotPhaseRouter_00460770(void);
 extern void GuardedDispatch_00460cd0(void);
 extern void PerSlotPhaseRouter_004605d0(void);
 extern void GuardedDispatch_00460ca0(void);
-extern unsigned int g_data_004ea000;
+extern unsigned int g_dispatchSave697_004ea000;
 
 /* @addr 0x00460470 (308b game) - multi-thunk: push-call entry + state dispatcher + 6 LeaPlus22 thunks.
  *   Block A (0..0x1c): push 0x00542980; call ArgScaledTestStore; pop; if !pause tail-jmp DualScaledStoreZero; ret.
@@ -161,7 +161,7 @@ __declspec(naked) void MultiThunkDispatcher_00460470(void) {
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   75h
         _emit   45h
-        mov     eax, offset g_data_004ea000
+        mov     eax, offset g_dispatchSave697_004ea000
         shr     eax, 2
         mov     dword ptr [g_eventQueueTotal], eax
         call    NotShrCmp1Store_00460d80

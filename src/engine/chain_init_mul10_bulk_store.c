@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     +0x60=0x1e666, +0x78=0, +0x7c=0x51e, +0x80=0x28f.
  *   g_walkCallback=0x28f. ret.
  */
-extern unsigned int g_data_004e5a00;
+extern unsigned int g_dispatchSave682_004e5a00;
 extern void MStackPush1MagicMod2_004244d0(void);
 extern void MStackPush3CallChainBit2_004431e0(void);
 
@@ -130,7 +130,7 @@ void ChainInitMul10BulkStore_00442740(void) {
         mov     ecx, dword ptr [eax*4 + 0x64]
         mov     dword ptr [g_eventQueueEnd], ecx
         mov     edx, dword ptr [eax*4 + 0x68]
-        mov     eax, offset g_data_004e5a00
+        mov     eax, offset g_dispatchSave682_004e5a00
         mov     dword ptr [g_eventQueueIdx], edx
         shr     eax, 2
         mov     dword ptr [g_eventQueueTotal], eax

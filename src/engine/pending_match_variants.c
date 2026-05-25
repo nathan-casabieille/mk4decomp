@@ -427,20 +427,20 @@ extern void TripleCallPauseJmp_00470500(void);
 extern void ZeroAndDirty4_00405430(void);
 
 extern unsigned int g_const_0044d820;
-extern unsigned int g_data_004d5300;
-extern unsigned int g_data_004d5304;
-extern unsigned int g_data_004d5308;
-extern unsigned int g_data_004d530c;
+extern unsigned int g_dispatchSave656_004d5300;
+extern unsigned int g_dispatchSave657_004d5304;
+extern unsigned int g_dispatchSave658_004d5308;
+extern unsigned int g_dispatchSave659_004d530c;
 extern unsigned int g_pendingMatchVar2_004d531c;
-extern unsigned int g_data_004e2868;
+extern unsigned int g_dispatchSave669_004e2868;
 extern unsigned int g_data_004e51f8;
 extern unsigned int g_data_004e6208;
 extern unsigned int g_data_004e6218;
 extern unsigned int g_data_004e6230;
-extern unsigned int g_data_004e6408;
-extern unsigned int g_data_004e6580;
-extern unsigned int g_data_004e6590;
-extern unsigned int g_data_004e65a0;
+extern unsigned int g_dispatchSave684_004e6408;
+extern unsigned int g_dispatchSave685_004e6580;
+extern unsigned int g_dispatchSave686_004e6590;
+extern unsigned int g_dispatchSave687_004e65a0;
 extern unsigned int g_dispatchSave543_004e65b8;
 extern unsigned int g_dispatchSave542_004e65c8;
 extern unsigned int g_data_004e6f50;
@@ -451,14 +451,14 @@ extern unsigned int g_data_004e7e48;
 extern unsigned int g_data_004e7e58;
 extern unsigned int g_data_004e7e80;
 extern unsigned int g_data_004e7e90;
-extern unsigned int g_data_004e7f40;
-extern unsigned int g_data_004e7f50;
-extern unsigned int g_data_004e7f60;
-extern unsigned int g_data_004e7f70;
-extern unsigned int g_data_004e8190;
+extern unsigned int g_dispatchSave689_004e7f40;
+extern unsigned int g_dispatchSave690_004e7f50;
+extern unsigned int g_dispatchSave691_004e7f60;
+extern unsigned int g_dispatchSave692_004e7f70;
+extern unsigned int g_dispatchSave695_004e8190;
 extern unsigned int g_data_004eb1c8;
-extern unsigned int g_data_004eb938;
-extern unsigned int g_data_004eb958;
+extern unsigned int g_dispatchSave704_004eb938;
+extern unsigned int g_dispatchSave705_004eb958;
 extern unsigned int g_data_004eb998;
 extern unsigned int g_data_004eb9b0;
 extern unsigned int g_data_004eba10;
@@ -468,13 +468,13 @@ extern unsigned int g_dispatchTab_004ec040;
 extern unsigned int g_mul10TableBase_004ec050;
 extern unsigned int g_data_004ec060;
 extern unsigned int g_data_004ec078;
-extern unsigned int g_data_004ec950;
-extern unsigned int g_data_004ecc38;
+extern unsigned int g_dispatchSave706_004ec950;
+extern unsigned int g_dispatchSave710_004ecc38;
 extern unsigned int g_data_004ecf80;
 extern unsigned int g_data_004ed2c8;
-extern unsigned int g_data_004ed2f0;
-extern unsigned int g_data_004ed2f8;
-extern unsigned int g_data_004ed308;
+extern unsigned int g_dispatchSave714_004ed2f0;
+extern unsigned int g_dispatchSave715_004ed2f8;
+extern unsigned int g_dispatchSave716_004ed308;
 extern unsigned int g_dispatchSave597_004ed3d0;
 extern unsigned int g_dispatchSave637_004f29c0;
 extern unsigned int g_dispatchSave151_005007c4;
@@ -2206,7 +2206,7 @@ __declspec(naked) void SizeGateInstallSelfThenSubMul10_00473480(void)
         mov     dword ptr [edx*4 + 0x1c], ecx
         mov     eax, dword ptr [g_currentNodeIdx]
         shl     eax, 2
-        mov     ecx, offset g_data_004ecc38
+        mov     ecx, offset g_dispatchSave710_004ecc38
         shr     ecx, 2
         mov     dword ptr [eax + 0x3c], esi
         mov     dword ptr [eax + 0x40], esi
@@ -2216,7 +2216,7 @@ __declspec(naked) void SizeGateInstallSelfThenSubMul10_00473480(void)
         cmp     dword ptr [g_framePauseFlag], esi
         jne     short L_sgis_ret
         mov     edx, dword ptr [g_xformEntityIdx]
-        mov     eax, offset g_data_004ec950
+        mov     eax, offset g_dispatchSave706_004ec950
         shr     eax, 2
         mov     dword ptr [edx*4 + 0x10], esi
         mov     ecx, dword ptr [g_xformEntityIdx]
@@ -2858,7 +2858,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
     __asm {
         /* === Helper 1 (0x455920): event 004e7f40 forwarder === */
     L_5920:
-        push     OFFSET g_data_004e7f40
+        push     OFFSET g_dispatchSave689_004e7f40
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
         ret
@@ -2876,7 +2876,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         _emit    0xff
         _emit    0xff
     L_5942:
-        push     OFFSET g_data_004e7f50
+        push     OFFSET g_dispatchSave690_004e7f50
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
         ret
@@ -2974,7 +2974,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         jne      short L_5b22
         mov      edx, dword ptr [g_eventQueueEnd]
         mov      eax, dword ptr [g_acc_00542078]
-        push     OFFSET g_data_004e7f60
+        push     OFFSET g_dispatchSave691_004e7f60
         mov      dword ptr [edx*4 + 0x54], eax
         mov      ecx, dword ptr [g_eventQueueEnd]
         mov      edx, dword ptr [g_eventQueueNotMask]
@@ -3039,7 +3039,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5bb4
-        push     OFFSET g_data_004e7f70
+        push     OFFSET g_dispatchSave692_004e7f70
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_5bb4:
@@ -3106,16 +3106,16 @@ void ScenePostInitSequencer_00429b70(void) {
         mov      eax, dword ptr [g_eventQueueIdx]
         mov      ecx, dword ptr [eax*4 + 0x1c]
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_data_004d5308], ecx
+        mov      dword ptr [g_dispatchSave658_004d5308], ecx
         mov      ecx, dword ptr [eax*4 + 0x20]
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_data_004d530c], ecx
+        mov      dword ptr [g_dispatchSave659_004d530c], ecx
         mov      ecx, dword ptr [eax*4 + 0x24]
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_data_004d5300], ecx
+        mov      dword ptr [g_dispatchSave656_004d5300], ecx
         mov      eax, dword ptr [eax*4 + 0x28]
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_004d5304], eax
+        mov      dword ptr [g_dispatchSave657_004d5304], eax
         call     PendingMatch_00429ef0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -3930,7 +3930,7 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         je       L_d48e
         dec      eax
         je       short L_d3de
-        push     OFFSET g_data_004e6580
+        push     OFFSET g_dispatchSave685_004e6580
         call     ArgSarStoreJmp_004594f0
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -4010,7 +4010,7 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d535
-        push     OFFSET g_data_004e6590
+        push     OFFSET g_dispatchSave686_004e6590
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_d535:
@@ -4031,7 +4031,7 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d565
-        push     OFFSET g_data_004e65a0
+        push     OFFSET g_dispatchSave687_004e65a0
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_d565:
@@ -4102,7 +4102,7 @@ __declspec(naked) void CharSelectSetupCluster_004565a0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_6688
-        mov      eax, OFFSET g_data_004e8190
+        mov      eax, OFFSET g_dispatchSave695_004e8190
         shr      eax, 2
         mov      dword ptr [g_walkCallback], eax
         call     ScaledStoreThree_00409260
@@ -4738,7 +4738,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         pop      ebx
         ret      
     L_e0fc:
-        mov      ax, word ptr [g_data_004e2868]
+        mov      ax, word ptr [g_dispatchSave669_004e2868]
         mov      dword ptr [g_tickFlagF], 3
         push     eax
         mov      dword ptr [g_audioInstall2Slot_00537eec], ebx
@@ -5360,7 +5360,7 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         mov      dword ptr [g_eventQueueIdx], eax
         call     StoreLoadJmp_00404ef0
         add      esp, 4
-        push     OFFSET g_data_004e6408
+        push     OFFSET g_dispatchSave684_004e6408
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_a274:
@@ -5865,7 +5865,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8019
-        push     OFFSET g_data_004eb938
+        push     OFFSET g_dispatchSave704_004eb938
         call     ArgSarStoreJmp_004594f0
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -6160,7 +6160,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_83d1
-        push     OFFSET g_data_004eb958
+        push     OFFSET g_dispatchSave705_004eb958
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_83d1:

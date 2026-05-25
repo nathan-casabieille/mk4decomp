@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004eb938;
-extern unsigned int g_data_004eb958;
+extern unsigned int g_dispatchSave704_004eb938;
+extern unsigned int g_dispatchSave705_004eb958;
 extern unsigned int g_tickFlagF;
 extern unsigned int g_byte_00538148;
 extern unsigned int g_audioStreamState_0053a430;
@@ -145,7 +145,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8019
-        push     OFFSET g_data_004eb938
+        push     OFFSET g_dispatchSave704_004eb938
         call     ArgSarStoreJmp_004594f0
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -440,7 +440,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_83d1
-        push     OFFSET g_data_004eb958
+        push     OFFSET g_dispatchSave705_004eb958
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_83d1:

@@ -113,7 +113,7 @@ extern unsigned int g_dispatchSave578_004f3094;
 extern unsigned int g_data_004f313c;
 extern unsigned int g_data_004f31a4;
 extern unsigned int g_data_004f31ac;
-extern unsigned int g_data_004f62f8;
+extern unsigned int g_dispatchSave723_004f62f8;
 extern unsigned int g_dispatchSave120_00515964;
 extern unsigned int g_data_00f00000;
 extern void AudioBindEntry_004a1e40(void);
@@ -143,7 +143,7 @@ __declspec(naked) void VoiceMixerTickDispatch_004a27c0(void)
         add      esi, 0x1c
         cmp      esi, OFFSET g_data_004f31ac
         jb       L_27c9
-        push     OFFSET g_data_004f62f8
+        push     OFFSET g_dispatchSave723_004f62f8
         call     AudioBindEntry_004a1e40
         add      esp, 4
         xor      edi, edi

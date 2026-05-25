@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004f6398;
+extern unsigned int g_dispatchSave725_004f6398;
 extern unsigned int g_sunbeamSpriteVar_004f6580;
 extern u32 g_inLoopStep;
 extern unsigned int g_triStripRingB;
@@ -167,7 +167,7 @@ __declspec(naked) void SunbeamSpriteEmit_004bd270(void)
         mov      dword ptr [g_vtxTransX], ecx
         mov      dword ptr [g_vtxTransY], edx
         mov      dword ptr [g_vtxTransZ], eax
-        add      edi, OFFSET g_data_004f6398
+        add      edi, OFFSET g_dispatchSave725_004f6398
         mov      ebp, 4
     L_d310:
         mov      cx, word ptr [edi + 2]

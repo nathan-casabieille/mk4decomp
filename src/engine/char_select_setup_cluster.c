@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004e8190;
+extern unsigned int g_dispatchSave695_004e8190;
 extern unsigned int g_dispatchSave58_0050b604;
 extern void DispatcherComplex138_00476060(void);
 extern void DualScaledStore_00452740(void);
@@ -163,7 +163,7 @@ __declspec(naked) void CharSelectSetupCluster_004565a0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_6688
-        mov      eax, OFFSET g_data_004e8190
+        mov      eax, OFFSET g_dispatchSave695_004e8190
         shr      eax, 2
         mov      dword ptr [g_walkCallback], eax
         call     ScaledStoreThree_00409260
