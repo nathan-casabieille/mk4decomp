@@ -1754,6 +1754,7 @@ unsigned int g_inLoopStep;
 unsigned int g_data_007af934;
 unsigned int g_data_007af938;
 unsigned int g_data_007af93c;
+unsigned int g_data_007af958;
 unsigned int g_renderer4_active;
 unsigned int g_data_007af944;
 unsigned int g_renderer4_surface;

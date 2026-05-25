@@ -3297,6 +3297,7 @@ g_data_007af938: 8059192
 g_data_007af93c: 8059196
 g_data_007af944: 8059204
 g_data_007af94c: 8059212
+g_data_007af958: 8059224
 g_data_007af9cc: 8059340
 g_data_007af9d0: 8059344
 g_data_007af9d4: 8059348
@@ -4286,7 +4287,6 @@ g_vtxIn1_z: 8059232
 g_vtxIn2_x: 8059226
 g_vtxIn2_y: 8059236
 g_vtxIn2_z: 8059238
-g_vtxIn_x: 8059224
 g_vtxIn_y: 8059234
 g_vtxIn_z: 8059240
 g_vtxLight0_x: 8059352

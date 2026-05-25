@@ -134,7 +134,7 @@ void Helper_RendererPostInit(s32 arg);                   /* 0x004b3e20 */
 /* Input local-space coords (16-bit, packed at +0x6 stride to match
  * the orig - actually they're at base + 0, +6, +12 because the
  * struct layout interleaves with another field). */
-extern s16  g_vtxIn_x;          /* 0x007af958 */
+extern s16  g_vtxIn_x;          /* 0x007af95c */
 extern s16  g_vtxIn_y;          /* 0x007af962 */
 extern s16  g_vtxIn_z;          /* 0x007af968 */
 
