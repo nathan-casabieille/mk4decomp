@@ -129,7 +129,7 @@ extern unsigned int g_data_004e2868;
 extern unsigned int g_data_004f29c0;
 extern unsigned int g_tickFlagF;
 extern unsigned int g_data_00535e44;
-extern unsigned int g_data_00537eec;
+extern unsigned int g_audioInstall2Slot_00537eec;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 extern unsigned int g_data_0053a468;
@@ -280,7 +280,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         mov      ax, word ptr [g_data_004e2868]
         mov      dword ptr [g_tickFlagF], 3
         push     eax
-        mov      dword ptr [g_data_00537eec], ebx
+        mov      dword ptr [g_audioInstall2Slot_00537eec], ebx
         mov      dword ptr [g_data_0053a468], ebx
         mov      dword ptr [g_walkCallback], ebx
         mov      dword ptr [g_data_00535e44], ebx

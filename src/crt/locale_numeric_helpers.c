@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_const_004d2b88;
 extern unsigned int g_data_004d2b60;
 extern unsigned int g_data_004d2b7c;
-extern unsigned int g_data_00522998;
+extern unsigned int g_crtCType_00522998;
 extern unsigned int g_data_00522bb0;
 extern unsigned int g_byte_00522bb4;
 extern unsigned int g_iat_004d2058;
@@ -169,7 +169,7 @@ __declspec(naked) void LocaleNumericHelpers_004c8450(void)
         jmp      short L_84bf
     L_84b1:
         movsx    edx, byte ptr [esi]
-        mov      eax, dword ptr [g_data_00522998]
+        mov      eax, dword ptr [g_crtCType_00522998]
         mov      al, byte ptr [eax + edx*2]
         and      eax, 4
     L_84bf:

@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  *     push 0x004335f0 onto stack[idx*4]; jmp T3;
  *   else: ret; nop; jmp T4.
  */
-extern unsigned int g_state_00535ddc_nn;
+extern unsigned int g_table_00535ddc;
 extern void func_00433b60(void);
 extern void func_00438f30(void);
 extern int func_00439890(void);
@@ -25,7 +25,7 @@ extern void func_00436290(void);
  * block; entries B (call + mstack-push) and C (single tail-jmp) live in
  * func_00436270 / func_004362a0. The 5-byte nop gap is filled by 0x90-fill. */
 void CmpRangeJmpStateInit_00436250(void) {
-    int v = (int)g_state_00535ddc_nn;
+    int v = (int)g_table_00535ddc;
     g_walkCallback = (void (*)(void))v;
     if (v > 0x30000) {
         func_00433b60();

@@ -121,7 +121,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   found: g_walkCallback = chain[scaledInit++]; call SnapshotDispatchMStack;
  *     call ScaledZeroFour_00490740; return 1.
  */
-extern unsigned int g_x_00535ddc;
+extern unsigned int g_table_00535ddc;
 extern void CmpP1GTSetup_00470980(void);
 extern void SnapshotDispatchMStack_00491350(void);
 
@@ -137,7 +137,7 @@ __declspec(naked) void DualGuardedTableSearch_004708c0(void) {
         xor     eax, eax
         pop     esi
         ret
-        mov     eax, dword ptr [g_x_00535ddc]
+        mov     eax, dword ptr [g_table_00535ddc]
         cmp     eax, 0x00010000
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh

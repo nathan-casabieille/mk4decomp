@@ -22,7 +22,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_phaseTimer_00537e94;
 extern unsigned int g_dispatchSave_00537ef4;
 extern unsigned int g_secondary_00538068;
-extern unsigned int g_data_0053a42c;
+extern unsigned int g_phaseInstallSlot_0053a42c;
 extern unsigned int g_data_0053a730;
 extern unsigned int g_data_0053a7b4;
 extern unsigned int g_data_00541d68;
@@ -138,14 +138,14 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         and      eax, 0x80
         mov      dword ptr [g_xformScratch94], eax
         jne      L_9569
-        mov      edx, dword ptr [g_data_0053a42c]
+        mov      edx, dword ptr [g_phaseInstallSlot_0053a42c]
         lea      eax, [edx - 1]
         test     eax, eax
         jge      L_9415
         xor      eax, eax
     L_9415:
         test     eax, eax
-        mov      dword ptr [g_data_0053a42c], eax
+        mov      dword ptr [g_phaseInstallSlot_0053a42c], eax
         jne      L_9569
         mov      edx, dword ptr [g_load_0052ab04]
         mov      edi, dword ptr [g_fightAxisPosX_00535e78]

@@ -107,7 +107,7 @@ extern unsigned int g_fightAxisNegX_00535e70;
 extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
-extern unsigned int g_x_00535ddc;
+extern unsigned int g_table_00535ddc;
 
 /* @addr 0x00434b60 (147b game) - 8-way dispatch on g_walkCallback:
  *   call ScaledChain3c74; pause? ret.
@@ -115,7 +115,7 @@ extern unsigned int g_x_00535ddc;
  *     case 0x20c: jmp Install3StateMStackCounterDispatch_00434c10;
  *     case 0x218: jmp RangeDispatch4_00434ec0; (wait or Thunk_00434eb0?)
  *     ... cascading je-jmp ladder.
- *   default: if (g_x_00535ddc <= 0x30000): jmp Wrapper_00438ee0;
+ *   default: if (g_table_00535ddc <= 0x30000): jmp Wrapper_00438ee0;
  *            else: jmp PrefixThunkInstallSelf3State_00438f80.
  */
 void DispatchWcSwitch_00434b60(void) {
@@ -132,7 +132,7 @@ void DispatchWcSwitch_00434b60(void) {
     if (v == 0x216) { Thunk_00435330(); return; }
     if (v == 0x20e) { InstallSelfStateCountdown_00434db0(); return; }
     if (v == 0x209) { Thunk_00434c00(); return; }
-    x = (int)g_x_00535ddc;
+    x = (int)g_table_00535ddc;
     g_walkCallback = (void (*)(void))x;
     if (x > 0x30000) {
         Wrapper_00438ee0();

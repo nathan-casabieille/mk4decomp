@@ -119,7 +119,7 @@ extern unsigned int g_hitPhase_00537f30;
 extern unsigned int g_audioBank2State_00537f98;
 extern unsigned int g_data_005380d8;
 extern unsigned int g_data_0053a3e4;
-extern unsigned int g_data_0053a42c;
+extern unsigned int g_phaseInstallSlot_0053a42c;
 extern unsigned int g_audioStreamState_0053a430;
 extern unsigned int g_data_0053a474;
 extern u32 g_dlSomeFlag1;
@@ -221,7 +221,7 @@ __declspec(naked) void RoundReset_004223e0(void)
         mov      dword ptr [g_data_0053e34c], ebx
         mov      dword ptr [g_smState4Way_00541dc8], ebx
         mov      dword ptr [g_phaseTimer_00537e94], ebx
-        mov      dword ptr [g_data_0053a42c], ebx
+        mov      dword ptr [g_phaseInstallSlot_0053a42c], ebx
         mov      dword ptr [g_dispatchSave_00537ef4], ebx
         mov      dword ptr [g_audioBankSel_00537f94], ebx
         mov      dword ptr [g_quadEntryGate_0052d724], ebx

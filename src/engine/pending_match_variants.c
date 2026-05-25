@@ -491,12 +491,12 @@ extern unsigned int g_quadEntryGate_0052d724;
 extern unsigned int g_data_00535d58;
 extern unsigned int g_data_00535d60;
 extern unsigned int g_data_00535d68;
-extern unsigned int g_data_00535db0;
+extern unsigned int g_walkCallbackSrc2_00535db0;
 extern unsigned int g_data_00535e44;
 extern unsigned int g_data_00535e4c;
 extern unsigned int g_particleEmitterNode_00535e6c;
 extern unsigned int g_phaseTimer_00537e94;
-extern unsigned int g_data_00537eec;
+extern unsigned int g_audioInstall2Slot_00537eec;
 extern unsigned int g_data_00537ef0;
 extern unsigned int g_clamp_00537f2c;
 extern unsigned int g_byte_00538148;
@@ -4316,7 +4316,7 @@ __declspec(naked) void EnduranceStateInitWalk_004785a0(void)
         mov      dword ptr [g_clamp_0053e348], ecx
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_walkCallbackSrc_0053a2d0], eax
-        mov      dword ptr [g_data_00535db0], eax
+        mov      dword ptr [g_walkCallbackSrc2_00535db0], eax
         call     SetWalkCurCallPauseDirty_00404c70
         add      esp, 8
     L_8665:
@@ -4741,7 +4741,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         mov      ax, word ptr [g_data_004e2868]
         mov      dword ptr [g_tickFlagF], 3
         push     eax
-        mov      dword ptr [g_data_00537eec], ebx
+        mov      dword ptr [g_audioInstall2Slot_00537eec], ebx
         mov      dword ptr [g_data_0053a468], ebx
         mov      dword ptr [g_walkCallback], ebx
         mov      dword ptr [g_data_00535e44], ebx
@@ -7747,7 +7747,7 @@ __declspec(naked) void PendingMatch_004694b0(void)
         mov      ecx, dword ptr [g_dlNalt4]
         mov      dword ptr [g_currentNodeIdx], edx
         mov      edx, dword ptr [g_player1NodeIdx]
-        mov      dword ptr [g_data_00535db0], edi
+        mov      dword ptr [g_walkCallbackSrc2_00535db0], edi
         mov      dword ptr [g_gtPlayerProbe1], eax
         mov      dword ptr [g_player4NodeIdx], edi
         mov      dword ptr [g_eventQueueCurrent], ecx

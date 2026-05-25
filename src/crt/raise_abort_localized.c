@@ -116,7 +116,7 @@ extern unsigned int g_const_004d2f08;
 extern unsigned int g_data_00520064;
 extern unsigned int g_data_00522908;
 extern unsigned int g_data_0052290c;
-extern unsigned int g_data_00522998;
+extern unsigned int g_crtCType_00522998;
 extern unsigned int g_state_00f9f84c_ee;
 extern unsigned int g_arr_00fa0de0;
 extern unsigned int g_iat_004d20a0;
@@ -141,7 +141,7 @@ __declspec(naked) void RaiseAbortLocalized_004cc070(void)
         je       short L_c094
         add      eax, 8
         inc      ebp
-        cmp      eax, OFFSET g_data_00522998
+        cmp      eax, OFFSET g_crtCType_00522998
         jb       short L_c085
     L_c094:
         cmp      ecx, dword ptr [ebp*8 + g_data_00522908]

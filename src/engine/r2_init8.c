@@ -7,14 +7,14 @@
 /* @addr 0x004aec90 (274b engine.install) - DSound primary buffer + format callback pair.
  *   Sub-1 (112b): zero g_installCountdownBase_00544298 (108-byte WAVEFORMAT), call vtbl[0x24]
  *     on g_renderer2_obj with the format callback at L_psn_cb (= 0x4aed00).
- *     If g_data_0054429c stays 0, return 0; else fill format defaults
+ *     If g_dispatchInit1007_0054429c stays 0, return 0; else fill format defaults
  *     (size, frequency 0x100, flags, channels) and return 1.
  *   Sub-2 (162b, "L_psn_cb"): per-format probe; checks mask bits 0xf800 / 0x7c00
  *     and 0x1f matching expected layout, copies caller's struct into our buffer.
  */
 extern unsigned int g_data_004f478c;
 extern unsigned int g_installCountdownBase_00544298;
-extern unsigned int g_data_0054429c;
+extern unsigned int g_dispatchInit1007_0054429c;
 extern unsigned int g_data_005442a0;
 extern unsigned int g_data_005442a4;
 extern unsigned int g_data_005442e0;
@@ -37,7 +37,7 @@ __declspec(naked) void R2_Init8(void) {
         push    eax
         call    dword ptr [ecx + 0x24]
     L_psn_check:
-        mov     eax, dword ptr [g_data_0054429c]
+        mov     eax, dword ptr [g_dispatchInit1007_0054429c]
         test    eax, eax
         jne     short L_psn_fill
         xor     eax, eax
@@ -48,7 +48,7 @@ __declspec(naked) void R2_Init8(void) {
         mov     dword ptr [g_installCountdownBase_00544298], 0x6c
         mov     dword ptr [g_data_005442a4], eax
         mov     dword ptr [g_data_005442a0], eax
-        mov     dword ptr [g_data_0054429c], 0x1007
+        mov     dword ptr [g_dispatchInit1007_0054429c], 0x1007
         mov     dword ptr [g_data_00544300], 0x04005000
         mov     dword ptr [g_data_005442e0], 0x20
         mov     eax, 1
@@ -93,7 +93,7 @@ __declspec(naked) void R2_Init8(void) {
         jne     short L_psn_cb_fail
         cmp     dword ptr [esi + 0x60], ecx
         jne     short L_psn_cb_fail
-        mov     eax, dword ptr [g_data_0054429c]
+        mov     eax, dword ptr [g_dispatchInit1007_0054429c]
         test    eax, eax
         jne     short L_psn_cb_fail
         mov     ecx, 0x1b

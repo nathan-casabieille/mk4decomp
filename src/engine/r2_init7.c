@@ -7,7 +7,7 @@
 extern unsigned int g_comptr_0058c7bc;
 extern unsigned int g_renderer2_obj;
 extern unsigned int g_renderer2_state7_0058c7c4;
-extern unsigned int g_data_0058c7d4;
+extern unsigned int g_renderer2_r7_data_0058c7d4;
 extern int g_renderer2_present_rc;
 
 __declspec(naked) void R2_Init7(void)
@@ -83,7 +83,7 @@ __declspec(naked) void R2_Init7(void)
         je      L_dxic_after_obj4
         mov     ecx, dword ptr [ebx]
         push    0
-        push    offset g_data_0058c7d4
+        push    offset g_renderer2_r7_data_0058c7d4
         push    ebx
         call    dword ptr [ecx + 0x14]
         mov     edx, dword ptr [g_renderer2_state7_0058c7c4]
@@ -94,7 +94,7 @@ __declspec(naked) void R2_Init7(void)
         xor     eax, eax
         lea     edi, [esp + 0x3C]
         rep     stosd
-        mov     eax, dword ptr [g_data_0058c7d4]
+        mov     eax, dword ptr [g_renderer2_r7_data_0058c7d4]
         mov     dword ptr [esp + 0x3C], 0x50
         test    eax, eax
         je      L_dxic_after_obj5
@@ -106,7 +106,7 @@ __declspec(naked) void R2_Init7(void)
         mov     edx, dword ptr [g_renderer2_state7_0058c7c4]
         mov     esi, dword ptr [g_renderer2_obj]
         mov     dword ptr [g_renderer2_present_rc], eax
-        mov     eax, dword ptr [g_data_0058c7d4]
+        mov     eax, dword ptr [g_renderer2_r7_data_0058c7d4]
     L_dxic_after_obj5:
         test    esi, esi
         je      L_dxic_after_obj6
@@ -120,7 +120,7 @@ __declspec(naked) void R2_Init7(void)
         call    dword ptr [edx + 0x14]
         mov     edx, dword ptr [g_renderer2_state7_0058c7c4]
         mov     dword ptr [g_renderer2_present_rc], eax
-        mov     eax, dword ptr [g_data_0058c7d4]
+        mov     eax, dword ptr [g_renderer2_r7_data_0058c7d4]
     L_dxic_after_obj6:
         mov     ecx, dword ptr [esp + 0x0C]
         test    ecx, ecx
@@ -133,7 +133,7 @@ __declspec(naked) void R2_Init7(void)
         call    dword ptr [eax + 0x20]
         mov     edx, dword ptr [g_renderer2_state7_0058c7c4]
         mov     dword ptr [g_renderer2_present_rc], eax
-        mov     eax, dword ptr [g_data_0058c7d4]
+        mov     eax, dword ptr [g_renderer2_r7_data_0058c7d4]
     L_dxic_after_obj7:
         test    edx, edx
         je      L_dxic_fail
