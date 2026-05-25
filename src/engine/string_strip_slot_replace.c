@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     copy from g_crtTimeFmtPrefs_005236e8 into new slot, free old, swap pointers.
  *     Path differs based on flag g_data_00f9fc14.
  */
-extern unsigned int g_data_005236b8;
+extern unsigned int g_dispatchPair_005236b8;
 extern unsigned int g_crtTimeFmtPrefs_005236e8;
 extern unsigned int g_data_00f9fc14;
 extern unsigned int g_data_00f9fc74;
@@ -227,14 +227,14 @@ __declspec(naked) void StringStripSlotReplace_004d0140(void) {
     L_srr_directPath:
         mov     eax, dword ptr [g_crtTimeFmtPrefs_005236e8]
         mov     edx, [eax]
-        mov     dword ptr [g_data_005236b8], edx
+        mov     dword ptr [g_dispatchPair_005236b8], edx
         mov     ecx, [eax + 4]
-        mov     dword ptr [g_data_005236b8 + 4], ecx
+        mov     dword ptr [g_dispatchPair_005236b8 + 4], ecx
         mov     edx, [eax + 8]
         mov     eax, dword ptr [g_data_00f9fc74]
-        mov     dword ptr [g_data_005236b8 + 8], edx
+        mov     dword ptr [g_dispatchPair_005236b8 + 8], edx
         push    eax
-        mov     dword ptr [g_crtTimeFmtPrefs_005236e8], offset g_data_005236b8
+        mov     dword ptr [g_crtTimeFmtPrefs_005236e8], offset g_dispatchPair_005236b8
         call    CrtFreeLocaleInfo_004d0400
         mov     ecx, dword ptr [g_data_00f9fc74]
         add     esp, 4

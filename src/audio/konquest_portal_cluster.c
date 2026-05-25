@@ -120,7 +120,7 @@ extern unsigned int g_data_0050f14c;
 extern unsigned int g_data_0051599c;
 extern unsigned int g_bootInitState_00535de4;
 extern unsigned int g_count_005433b8;
-extern unsigned int g_data_005437f4;
+extern unsigned int g_voicePoolTickFlag_005437f4;
 extern void AudioBindEntry_004a1e40(void);
 extern void AudioByteTable7LoopChainPick_004a5160(void);
 extern void AudioInitArgs3_004a1f20(void);
@@ -154,7 +154,7 @@ __declspec(naked) void KonquestPortalCluster_004a5290(void)
         je       L_5453
         dec      eax
         je       short L_52cd
-        mov      dword ptr [g_data_005437f4], 1
+        mov      dword ptr [g_voicePoolTickFlag_005437f4], 1
         call     PendingMatch_004a2a80
         pop      edi
         pop      esi

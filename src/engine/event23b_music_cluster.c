@@ -112,8 +112,8 @@ extern unsigned int g_data_0052aabc;
 extern unsigned int g_tickFlagF;
 extern unsigned int g_data_0053a318;
 extern unsigned int g_data_00541dd8;
-extern unsigned int g_data_00543564;
-extern unsigned int g_data_00543594;
+extern unsigned int g_dispatchVar3_00543564;
+extern unsigned int g_eventMusicSlot_00543594;
 extern unsigned int g_data_00550000;
 extern unsigned int g_data_008c0000;
 extern void CallSetPause_0041f830(void);
@@ -142,7 +142,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         jne      short L_f57b
         cmp      edx, 2
         jne      short L_f57b
-        mov      ebx, dword ptr [g_data_00543594]
+        mov      ebx, dword ptr [g_eventMusicSlot_00543594]
         test     ebx, ebx
         jl       L_f691
     L_f57b:
@@ -152,7 +152,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         jne      short L_f599
         cmp      edx, ecx
         jne      short L_f612
-        mov      eax, dword ptr [g_data_00543564]
+        mov      eax, dword ptr [g_dispatchVar3_00543564]
         test     eax, eax
         jl       L_f691
     L_f599:

@@ -118,8 +118,8 @@ extern unsigned int g_data_0053a318;
 extern u32 g_dlSomeFlag1;
 extern unsigned int g_zerotriple_00541de8;
 extern unsigned int g_zerotriple_00541dec;
-extern unsigned int g_data_00543564;
-extern unsigned int g_data_00543594;
+extern unsigned int g_dispatchVar3_00543564;
+extern unsigned int g_eventMusicSlot_00543594;
 extern void CallSetPause_0041f830(void);
 extern void Cmp7CondStateUpdate_0042ed90(void);
 extern void GameMusicState4Way_00426d90(void);
@@ -255,7 +255,7 @@ __declspec(naked) void DeathAnimCluster_0042eaf0(void)
         mov      ecx, dword ptr [g_active_00537e88]
         test     ecx, ecx
         jne      short L_ed38
-        mov      ecx, dword ptr [g_data_00543594]
+        mov      ecx, dword ptr [g_eventMusicSlot_00543594]
         test     ecx, ecx
         jge      short L_ed38
         jmp      CallSetPause_0041f830
@@ -271,7 +271,7 @@ __declspec(naked) void DeathAnimCluster_0042eaf0(void)
         jne      short L_ed70
         cmp      dword ptr [g_active_00537e88], 1
         jne      short L_ed70
-        mov      eax, dword ptr [g_data_00543564]
+        mov      eax, dword ptr [g_dispatchVar3_00543564]
         test     eax, eax
         jge      short L_ed70
         jmp      CallSetPause_0041f830

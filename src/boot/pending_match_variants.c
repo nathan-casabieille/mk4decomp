@@ -230,7 +230,7 @@ extern unsigned int g_data_00523ae0;
 extern unsigned int g_data_00523ae4;
 extern unsigned int g_data_00523b18;
 extern unsigned int g_data_00523b1c;
-extern unsigned int g_data_00523b20;
+extern unsigned int g_dispatchSave5_00523b20;
 extern unsigned int g_data_00523b24;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_or_0052ab40;
@@ -248,7 +248,7 @@ extern unsigned int g_counter_005433c8;
 extern unsigned int g_counter_0054359c;
 extern unsigned int g_byte_005435a0;
 extern unsigned int g_data_00543618;
-extern unsigned int g_data_005437f4;
+extern unsigned int g_voicePoolTickFlag_005437f4;
 extern unsigned int g_byte_00543834;
 extern unsigned int g_data_00543888;
 extern u32 g_timerActive;
@@ -2396,7 +2396,7 @@ __declspec(naked) void PendingMatch_004a93c0(void)
         pop      ebx
         ret      
     L_97f8:
-        mov      dword ptr [g_data_005437f4], ebx
+        mov      dword ptr [g_voicePoolTickFlag_005437f4], ebx
         call     PendingMatch_00401b70
     L_9803:
         pop      edi

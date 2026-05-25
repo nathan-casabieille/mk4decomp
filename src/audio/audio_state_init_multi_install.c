@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_byte_00543724;
 extern unsigned int g_byte_0054372c;
 extern unsigned int g_byte_00543730;
-extern unsigned int g_data_005437f4;
+extern unsigned int g_voicePoolTickFlag_005437f4;
 extern void AudioBindEntry_004a1e40(void);
 extern void AudioInitArgs3_004a1f20(void);
 extern void AudioState50b4BitDispatcher_004a32c0(void);
@@ -139,7 +139,7 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
         je      L_asimi_phase0
         dec     eax
         je      short L_asimi_phase1
-        mov     dword ptr [g_data_005437f4], 1
+        mov     dword ptr [g_voicePoolTickFlag_005437f4], 1
         call    PendingMatch_004a2a80
         pop     edi
         pop     esi

@@ -203,7 +203,7 @@ extern unsigned int g_byte_005435b8;
 extern unsigned int g_byte_00543724;
 extern unsigned int g_byte_0054372c;
 extern unsigned int g_byte_00543730;
-extern unsigned int g_data_005437f4;
+extern unsigned int g_voicePoolTickFlag_005437f4;
 extern unsigned int g_audioPreloadState_00543830;
 extern void AudioBindEntry_004a1e40(void);
 extern void AudioInitArgs3_004a1f20(void);
@@ -542,7 +542,7 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
         je      L_asimi_phase0
         dec     eax
         je      short L_asimi_phase1
-        mov     dword ptr [g_data_005437f4], 1
+        mov     dword ptr [g_voicePoolTickFlag_005437f4], 1
         call    PendingMatch_004a2a80
         pop     edi
         pop     esi
@@ -1154,7 +1154,7 @@ __declspec(naked) void PendingMatch_004a3400(void)
         pop      ebx
         ret      
         call     BootInitGuardedCallChain_004265d0
-        mov      dword ptr [g_data_005437f4], 1
+        mov      dword ptr [g_voicePoolTickFlag_005437f4], 1
         call     PendingMatch_00401b70
         pop      edi
         pop      esi

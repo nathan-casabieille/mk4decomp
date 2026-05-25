@@ -489,8 +489,8 @@ extern unsigned int g_data_0050b604;
 extern unsigned int g_data_005117c4;
 extern unsigned int g_quadEntryGate_0052d724;
 extern unsigned int g_data_00535d58;
-extern unsigned int g_data_00535d60;
-extern unsigned int g_data_00535d68;
+extern unsigned int g_walkBoundsLimit_00535d60;
+extern unsigned int g_walkBoundsSlot_00535d68;
 extern unsigned int g_walkCallbackSrc2_00535db0;
 extern unsigned int g_data_00535e44;
 extern unsigned int g_data_00535e4c;
@@ -6733,11 +6733,11 @@ __declspec(naked) void PendingMatch_0043bdd0(void)
         mov      dword ptr [eax*4 + 0x54], ecx
         mov      eax, dword ptr [g_walkCallback]
         mov      dword ptr [g_data_0053a7b4], eax
-        mov      dword ptr [g_data_00535d68], eax
+        mov      dword ptr [g_walkBoundsSlot_00535d68], eax
         mov      eax, 0xffff0000
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_00541d68], eax
-        mov      dword ptr [g_data_00535d60], eax
+        mov      dword ptr [g_walkBoundsLimit_00535d60], eax
         call     PendingMatch_0043c400
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_c197

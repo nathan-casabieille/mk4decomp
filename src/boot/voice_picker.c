@@ -140,7 +140,7 @@ extern unsigned int g_data_00f9f7fc;
 extern unsigned int g_data_00523ae4;
 extern unsigned int g_data_00523ae0;
 extern unsigned int g_data_00523b1c;
-extern unsigned int g_data_00523b20;
+extern unsigned int g_dispatchSave5_00523b20;
 extern unsigned int g_data_00523b24;
 extern unsigned char g_data_00523b18;
 extern void PendingMatch_004013a0(void);

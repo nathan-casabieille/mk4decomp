@@ -11,8 +11,8 @@ extern unsigned int g_data_0052ab50;
 extern unsigned int g_data_0052d720;
 extern unsigned int g_data_0052d738;
 extern unsigned int g_primary_0052d74c;
-extern unsigned int g_data_00535d60;
-extern unsigned int g_data_00535d68;
+extern unsigned int g_walkBoundsLimit_00535d60;
+extern unsigned int g_walkBoundsSlot_00535d68;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_data_00535de8;
 extern unsigned int g_fightAxisNegX_00535e70;
@@ -156,12 +156,12 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      dword ptr [g_eventQueueNotMask], edx
         add      esi, edi
         mov      dword ptr [g_data_0052d738], edx
-        mov      edx, dword ptr [g_data_00535d68]
+        mov      edx, dword ptr [g_walkBoundsSlot_00535d68]
         sub      ecx, edi
         mov      dword ptr [g_eventQueueChild], esi
         mov      dword ptr [g_data_00535de8], eax
         mov      dword ptr [g_data_0052ab50], esi
-        mov      esi, dword ptr [g_data_00535d60]
+        mov      esi, dword ptr [g_walkBoundsLimit_00535d60]
         sub      eax, edx
         mov      dword ptr [g_data_0052d720], ecx
         sub      ecx, esi
@@ -215,8 +215,8 @@ __declspec(naked) void Helper_PerPlayerTick(void)
     L_9531:
         mov      esi, dword ptr [g_load_0052ab08]
         mov      edx, dword ptr [g_load_0052ab04]
-        mov      dword ptr [g_data_00535d60], ecx
-        mov      dword ptr [g_data_00535d68], eax
+        mov      dword ptr [g_walkBoundsLimit_00535d60], ecx
+        mov      dword ptr [g_walkBoundsSlot_00535d68], eax
         sub      ecx, esi
         sub      eax, edx
         mov      dword ptr [g_eventQueueWorkType], edx

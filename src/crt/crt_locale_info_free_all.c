@@ -150,7 +150,7 @@ extern unsigned int g_data_00522e58;
 extern unsigned int g_data_00522e68;
 extern unsigned int g_data_00523600;
 extern unsigned int g_data_005236ac;
-extern unsigned int g_data_005236b8;
+extern unsigned int g_dispatchPair_005236b8;
 extern unsigned int g_crtTimeFmtPrefs_005236e8;
 extern u8 g_renderer2_buf3[];
 extern unsigned int g_installCountdownBase_00544298;

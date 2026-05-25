@@ -109,8 +109,8 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_0053a318;
-extern unsigned int g_data_00543564;
-extern unsigned int g_data_00543594;
+extern unsigned int g_dispatchVar3_00543564;
+extern unsigned int g_eventMusicSlot_00543594;
 extern void Helper_Sprintf(void);
 extern void PushPopPendingTwoCalls_0042f4f0(void);
 extern void ScaledStoreCallEpilogue_0042f4d0(void);
@@ -143,9 +143,9 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         jne      L_f11c
         cmp      dword ptr [g_active_00537e88], esi
         jne      L_f11c
-        mov      eax, dword ptr [g_data_00543564]
+        mov      eax, dword ptr [g_dispatchVar3_00543564]
         dec      eax
-        mov      dword ptr [g_data_00543564], eax
+        mov      dword ptr [g_dispatchVar3_00543564], eax
         /* js 0x42f4e8 (external, raw bytes) */
         _emit    0x0f
         _emit    0x88
@@ -158,7 +158,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         push     0x4d56d0
         push     0x543450
         call     Helper_Sprintf
-        mov      eax, dword ptr [g_data_00543564]
+        mov      eax, dword ptr [g_dispatchVar3_00543564]
         add      esp, 0xc
         cmp      eax, esi
         mov      edi, 0x4d56e8
@@ -369,9 +369,9 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         mov      eax, dword ptr [g_active_00537e88]
         test     eax, eax
         jne      L_f38f
-        mov      eax, dword ptr [g_data_00543594]
+        mov      eax, dword ptr [g_eventMusicSlot_00543594]
         dec      eax
-        mov      dword ptr [g_data_00543594], eax
+        mov      dword ptr [g_eventMusicSlot_00543594], eax
         /* js 0x42f4e8 (external, raw bytes) */
         _emit    0x0f
         _emit    0x88
@@ -384,7 +384,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         push     0x4d56d0
         push     0x543450
         call     Helper_Sprintf
-        mov      eax, dword ptr [g_data_00543594]
+        mov      eax, dword ptr [g_eventMusicSlot_00543594]
         add      esp, 0xc
         cmp      eax, esi
         mov      edi, 0x4d56e8
