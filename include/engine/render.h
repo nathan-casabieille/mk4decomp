@@ -134,7 +134,7 @@ void Helper_RendererPostInit(s32 arg);                   /* 0x004b3e20 */
 /* Input local-space coords (16-bit, packed at +0x6 stride to match
  * the orig - actually they're at base + 0, +6, +12 because the
  * struct layout interleaves with another field). */
-extern s16  g_vtxIn_x;          /* 0x007af95c */
+extern s16  g_vtxIn_x;          /* 0x007af958 */
 extern s16  g_vtxIn_y;          /* 0x007af962 */
 extern s16  g_vtxIn_z;          /* 0x007af968 */
 
@@ -170,10 +170,10 @@ void ProjectTwoVertices(void);                           /* 0x004b2af0 */
 
 /* Inputs / outputs for ProjectTwoVertices. */
 extern s16 g_vtxIn2_x;          /* 0x007af95a */
-extern s16 g_vtxIn2_z;          /* 0x007af960 */
+extern s16 g_vtxIn2_z;          /* 0x007af966 */
 extern s16 g_vtxIn1_y;          /* 0x007af95e */
 extern s16 g_vtxIn2_y;          /* 0x007af964 */
-extern s16 g_vtxIn1_z;          /* 0x007af966 */
+extern s16 g_vtxIn1_z;          /* 0x007af960 */
 
 extern s32 g_vtxOut1_x;         /* 0x007af96c */
 extern s32 g_vtxOut2_x;         /* 0x007af970 */
@@ -210,12 +210,12 @@ extern s32 g_vtxLight1_y;       /* 0x007af9ec */
 
 /* Working color (RGB555). Read at 0x7af9fc, copy at 0x7af9f8. */
 extern u32 g_vtxColorPrev;      /* 0x007af9f0 */
-extern u8  g_vtxRGBScale1_b;    /* 0x007af9f2 */
-extern u8  g_vtxRGBScale1_g;    /* 0x007af9f3 */
+extern u8  g_vtxRGBScale1_b;    /* 0x007af9f3 */
+extern u8  g_vtxRGBScale1_g;    /* 0x007af9f5 */
 extern u8  g_vtxRGBScale0_g;    /* 0x007af9f4 */
-extern u8  g_vtxRGBScale1_r;    /* 0x007af9f5 */
+extern u8  g_vtxRGBScale1_r;    /* 0x007af9f7 */
 extern u8  g_vtxRGBScale0_r;    /* 0x007af9f6 */
-extern u8  g_vtxRGBScale0_b;    /* 0x007af9f7 */
+extern u8  g_vtxRGBScale0_b;    /* 0x007af9f2 */
 extern u16 g_vtxColorCopy;      /* 0x007af9f8 */
 extern u16 g_vtxColorSaved;     /* 0x007af9fa */
 extern u16 g_vtxColor;          /* 0x007af9fc */
@@ -223,7 +223,7 @@ extern u16 g_vtxColor;          /* 0x007af9fc */
 /* === Globals ================================================= */
 
 extern int g_currentRendererMode;    /* 0x004f4b3c */
-extern int g_clampedRendererMode;    /* 0x004f4b38 */
+extern int g_clampedRendererMode;    /* 0x004f4b3c */
 extern int g_viewportX, g_viewportY; /* 0x00f85b50, 0x00f85b54 */
 extern int g_viewportW, g_viewportH; /* 0x004ffd44, 0x004ffd48 */
 
