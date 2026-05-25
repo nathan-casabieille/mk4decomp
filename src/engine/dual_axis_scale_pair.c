@@ -132,6 +132,12 @@ extern unsigned int g_data_00535e7c;
 extern void CopyThreeFields_00404df0(void);
 extern void ThreeChanPackClamp_00404cc0(void);
 
+/*
+ * NON-COAXABLE: g_walkCallback is typed void(*)(void) in scenegraph.h. MSVC /O2
+ * assigns it to esi (callee-saved, pointer heuristic) instead of ecx (volatile),
+ * reversing the SIB index/value roles and replacing the orig's 3-byte base+disp8
+ * stores with 7-byte SIB no-base stores. Register layout not coaxable from C.
+ */
 __declspec(naked) void DualAxisScalePair_0049a0f0(void) {
     __asm {
         mov     eax, dword ptr [g_cj_0054205c]
