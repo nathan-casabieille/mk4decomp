@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   mstack-pop into g_xformEntityIdx, g_acc_00542078.
  */
 extern unsigned int g_dispatchArg_00535e48;
-extern unsigned int g_x_00541fc0;
+extern unsigned int g_audioBitField_00541fc0;
 
 extern unsigned int g_data_004d57ac_arr;
 
@@ -137,7 +137,7 @@ __declspec(naked) void BitSetByIndex_004a07a0(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_data_004d57ac_arr], edx
-        mov     ecx, dword ptr [g_x_00541fc0]
+        mov     ecx, dword ptr [g_audioBitField_00541fc0]
         mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [g_xformEntityIdx], ecx
         add     ecx, eax

@@ -113,7 +113,7 @@ extern unsigned int g_data_004f3ae4;
 extern unsigned int g_data_004f3ae8;
 extern unsigned int g_audioMixerKnob_005433c4;
 extern unsigned int g_counter_005433c8;
-extern unsigned int g_data_00543440;
+extern unsigned int g_audioMixerKnob2_00543440;
 extern unsigned int g_counter_0054359c;
 extern unsigned int g_byte_005435a0;
 extern void ScaledChainStore24_004a7d40(void);
@@ -122,7 +122,7 @@ extern void SetJmp_004a1ad0(void);
 __declspec(naked) void AudioMixerKnobUpdate_004a8aa0(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_00543440]
+        mov      eax, dword ptr [g_audioMixerKnob2_00543440]
         test     eax, eax
         jne      short L_8aea
         test     byte ptr [g_byte_004d50b4], 4
@@ -143,7 +143,7 @@ __declspec(naked) void AudioMixerKnobUpdate_004a8aa0(void)
         call     SetJmp_004a1ad0
         inc      dword ptr [g_counter_0054359c]
     L_8aea:
-        cmp      dword ptr [g_data_00543440], 1
+        cmp      dword ptr [g_audioMixerKnob2_00543440], 1
         jne      L_8b98
         mov      al, byte ptr [g_byte_004d50b4]
         mov      ecx, dword ptr [g_counter_0054359c]

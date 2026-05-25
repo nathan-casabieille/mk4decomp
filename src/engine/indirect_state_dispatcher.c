@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0049f6a0 (259b game) - indirect-call state dispatcher with retry loop.
- *   Init: table = (g_x_00541fc0 + g_dispatchArg_00535e48); load [table*4 + 4]; call eax indirect.
+ *   Init: table = (g_audioBitField_00541fc0 + g_dispatchArg_00535e48); load [table*4 + 4]; call eax indirect.
  *   If pause: ret. If !bit0(0054208c): jmp tail-CallSetPause.
  *   Load state = [g_xformEntityIdx*4 + 0]; if state in {5,0xa,0xf,0x12}: jmp tail-CallSetPause.
  *   Else inc state, call LinkedListIndirectDirtyToggle_0049f7b0; if pause: ret; if bit0 still set & state==5: loop;
@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   else fall to tail-CallSetPause; pop ebx; ret.
  */
 extern unsigned int g_dispatchArg_00535e48;
-extern unsigned int g_x_00541fc0;
+extern unsigned int g_audioBitField_00541fc0;
 extern void CallSetPause_0041f830(void);
 extern void GuardedScaledCall_0048a020(void);
 extern void LinkedListIndirectDirtyToggle_0049f7b0(void);
@@ -125,7 +125,7 @@ extern void RoundWinTransition_0049e7e0(void);
 
 __declspec(naked) void IndirectStateDispatcher_0049f6a0(void) {
     __asm {
-        mov     eax, dword ptr [g_x_00541fc0]
+        mov     eax, dword ptr [g_audioBitField_00541fc0]
         mov     ecx, dword ptr [g_dispatchArg_00535e48]
         mov     dword ptr [g_xformEntityIdx], eax
         add     eax, ecx

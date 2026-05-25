@@ -114,12 +114,12 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   if zero: ret;
  *   eax = g_table_00535ddc; cmp eax,0x30000; g_walkCallback=eax;
  *   if gt: ret;
- *   cmp eax, 0x20000; g_data_0053a478 = ecx; if gt: jmp Thunk_00439e30;
+ *   cmp eax, 0x20000; g_dispatchState_0053a478 = ecx; if gt: jmp Thunk_00439e30;
  *   cmp eax, 0x18000; if gt: jmp 0x439e30 (cluster);
  *   push 0x4e49d0; call Scaled3StorePushCallJmp_00438220; pop esp; if pause: ret;
  *   jmp 0x439e30.
  */
-extern unsigned int g_data_0053a478;
+extern unsigned int g_dispatchState_0053a478;
 extern void IdCascadeBitSet_00439760(void);
 extern void Scaled3StorePushCallJmp_00438220(void);
 
@@ -142,7 +142,7 @@ void TieredCmpDispatch_00439cb0(void) {
         _emit   7fh
         _emit   39h
         cmp     eax, 0x20000
-        mov     dword ptr [g_data_0053a478], ecx
+        mov     dword ptr [g_dispatchState_0053a478], ecx
         _emit   7eh
         _emit   05h
         _emit   0e9h

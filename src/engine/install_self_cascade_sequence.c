@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Call StoreCallPauseDirtyStoreJmp; if pause ret.
  *   If !bit0(0054208c): tail-call GuardedSeq; pop+ret.
  *   g_currentNodeFlags=0x78000; install-self at entry+0x01000000; state=1; call EsiInstallTwoCallCmpInstall; pause=1; ret.
- *   Tail (+0xc0, 1-NOP pad): set g_data_0053a478=0; call InstallSelfCountdownCascade; if pause ret.
+ *   Tail (+0xc0, 1-NOP pad): set g_dispatchState_0053a478=0; call InstallSelfCountdownCascade; if pause ret.
  *     If [0053a478]!=0 ret; call Cmp2CallDirtyCall; if !=0 ret.
  *     If [baseSel*4+0x34]!=0: jmp InstallSelfThreeStateLeaPlus22.
  *     Else: g_walkCallback=0x1f4; call AudioVolumeRescale; if pause ret.
@@ -122,7 +122,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *       Else: g_eventQueueNotMask=0x10028; jmp HitReactionDispatcher_0045f650.
  *   Tail (+0x140 after 6-NOP pad): jmp InstallSelfChainSetB333v2_00437f00.
  */
-extern unsigned int g_data_0053a478;
+extern unsigned int g_dispatchState_0053a478;
 extern void AudioVolumeRescale_004ab690(void);
 extern void EsiInstallTwoCallCmpInstall_00438b10(void);
 extern void GuardedSeq_00433bb0(void);
@@ -186,13 +186,13 @@ __declspec(naked) void InstallSelfCascadeSequence_00434350(void) {
         pop     esi
         ret
         _emit   90h
-        mov     dword ptr [g_data_0053a478], 0
+        mov     dword ptr [g_dispatchState_0053a478], 0
         call    InstallSelfCountdownCascade_00439fd0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   61h
-        mov     eax, dword ptr [g_data_0053a478]
+        mov     eax, dword ptr [g_dispatchState_0053a478]
         test    eax, eax
         _emit   75h
         _emit   58h

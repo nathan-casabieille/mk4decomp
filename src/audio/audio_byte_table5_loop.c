@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 extern unsigned int g_byteTab_004f3d80;
 extern unsigned int g_audioMixerKnob_005433c4;
-extern unsigned int g_x_00543440;
+extern unsigned int g_audioMixerKnob2_00543440;
 extern void GuardedSetupCallTailJmp_004a1fa0(void);
 extern void Helper_Sprintf(void);
 extern void MStackPush2ChainLLInsert_00406790(void);
@@ -158,7 +158,7 @@ __declspec(naked) void AudioByteTable5Loop_004a8970(void)
         push    0x004f4494
         jmp     short L_a89_printf
     L_a89_case3:
-        mov     eax, dword ptr [g_x_00543440]
+        mov     eax, dword ptr [g_audioMixerKnob2_00543440]
         test    eax, eax
         jne     short L_a89_c3_1
         push    0x004f447c

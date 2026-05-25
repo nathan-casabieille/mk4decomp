@@ -130,7 +130,7 @@ extern unsigned int g_data_004f3a38;
 extern unsigned int g_table_004f3ac8;
 extern unsigned int g_tickFlagF;
 extern unsigned int g_load_0052ab10;
-extern unsigned int g_data_00535de4;
+extern unsigned int g_bootInitState_00535de4;
 extern unsigned int g_particleEmitterNode_00535e6c;
 extern s32 g_dlNalt1;
 extern unsigned int g_data_00538088;
@@ -400,7 +400,7 @@ extern void func_004a2080(void);
  *   eax = g_audioBankSel_00537f94; edx = g_counter_0054359c; edi = g_counter_005433c8.
  *   If eax == 1: chain low table [edi*24 + 0x0054361a/19] += 1.
  *   Else: chain high table [edx*24 + 0x005435a2/a1] += 1.
- *   ++g_data_00535de4. esi=1. ecx=g_x_004f3ae4; walk g_byte_005435a2[i*24] for i in [0,ecx);
+ *   ++g_bootInitState_00535de4. esi=1. ecx=g_x_004f3ae4; walk g_byte_005435a2[i*24] for i in [0,ecx);
  *     if any !=0: keep esi=1; else esi=0. If esi: g_data_005433c0=2; tail to cleanup.
  *   Else: ebp=g_x_004f3ae8; esi=1. Walk g_byte_0054361a[i*24] for i in [0,ebp). If esi: g_data_005433c0=1;
  *     cleanup: zero g_counter_0054359c, g_counter_005433c8; call PendingMatch_004a93c0; pop+ret.
@@ -439,10 +439,10 @@ __declspec(naked) void AudioBank2StatePickerWalk_004a9270(void)
         inc     cl
         mov     byte ptr [eax + g_byte_005435a1], cl
     L_a92_afterStore:
-        mov     ecx, dword ptr [g_data_00535de4]
+        mov     ecx, dword ptr [g_bootInitState_00535de4]
         mov     esi, 1
         inc     ecx
-        mov     dword ptr [g_data_00535de4], ecx
+        mov     dword ptr [g_bootInitState_00535de4], ecx
         mov     ecx, dword ptr [g_x_004f3ae4]
         test    ecx, ecx
         jle     short L_a92_checkLow

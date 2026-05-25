@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_state2_0053a1bc;
 extern unsigned int g_state2_0053a354;
 extern u32 g_dlMode;
-extern unsigned int g_x_00541fc0;
+extern unsigned int g_audioBitField_00541fc0;
 extern void MStackCall_004062a0(void);
 extern void SaveCallRestoreOrXor_00404a00(void);
 extern void SaveCallRestore_004049d0(void);
@@ -146,7 +146,7 @@ void DualGuardStateMachine_0049ea30(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_x_00541fc0]
+        mov     eax, dword ptr [g_audioBitField_00541fc0]
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, dword ptr [eax*4 + 0]
         mov     dword ptr [g_scaledInit_00542044], eax
@@ -213,7 +213,7 @@ __declspec(naked) void DualGuardStateMachine_0049eb20(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_x_00541fc0]
+        mov     eax, dword ptr [g_audioBitField_00541fc0]
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, dword ptr [eax*4 + 4]
         mov     dword ptr [g_scaledInit_00542044], eax

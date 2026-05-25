@@ -112,11 +112,11 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   eax = arg0 >> 2 → g_eventQueueTotal; eax = [eax*4] → g_xformEntityIdx;
  *   eax = g_baseSel[*4+0x30]; test+store g_walkCallback; if zero: ret;
  *   g_walkCallback = 4; call ScaledAddDeref_00494800; if pause: ret;
- *   eax = g_data_00541e68; cmp eax,g_scaledInit; g_xformEntityIdx=eax;
+ *   eax = g_scaledArgChain_00541e68; cmp eax,g_scaledInit; g_xformEntityIdx=eax;
  *   if ne: ecx = g_eventQueueTotal; edx = [ecx*4+4]; g_xformEntityIdx=edx; ret.
  *   else: edx = g_eventQueueTotal; eax = [edx*4+8]; g_xformEntityIdx=eax; ret.
  */
-extern unsigned int g_data_00541e68;
+extern unsigned int g_scaledArgChain_00541e68;
 extern void ScaledAddDeref_00494800(void);
 
 void ScaledArgChainCmpCopy_00494180(void) {
@@ -138,7 +138,7 @@ void ScaledArgChainCmpCopy_00494180(void) {
         test    eax, eax
         _emit   75h
         _emit   3ah
-        mov     eax, dword ptr [g_data_00541e68]
+        mov     eax, dword ptr [g_scaledArgChain_00541e68]
         mov     ecx, dword ptr [g_scaledInit_00542044]
         cmp     eax, ecx
         mov     dword ptr [g_xformEntityIdx], eax

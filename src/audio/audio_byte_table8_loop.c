@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  * AudioByteTable8Loop_004a7f50 - 292b audio 8-iter table loop (extended from 0x004a76e0's 6-iter).
  *   For edi in 0..7: esi=(edi*9)*4; index=g_byteTab_004f3c20[esi]; chain=baseSel+index;
  *     g_currentNodeIdx=chain[ecx*4]; call MStackPush2ChainLLInsert_00406790.
- *   Switch on (edi-3): case 0 → use g_x_00543440 (3-way: push 0x4f43f4/0x4f43dc/0x4f43cc);
+ *   Switch on (edi-3): case 0 → use g_audioMixerKnob2_00543440 (3-way: push 0x4f43f4/0x4f43dc/0x4f43cc);
  *                       case 1 → use g_audioMixerKnob_005433c4 (3-way: push 0x4f4434/0x4f441c/0x4f440c).
  *   If case fired: push (0x00543450) and call PrintfStub; restore.
  *   Snapshot esi-table[+0x24] and esi-table[+0xc] (= 0x004f3c2c, 0x004f3c24); call GuardedSetupCallTailJmp;
@@ -122,7 +122,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 extern unsigned int g_byteTab_004f3c20;
 extern unsigned int g_audioMixerKnob_005433c4;
-extern unsigned int g_x_00543440;
+extern unsigned int g_audioMixerKnob2_00543440;
 extern void GuardedSetupCallTailJmp_004a1fa0(void);
 extern void Helper_Sprintf(void);
 extern void MStackPush2ChainLLInsert_00406790(void);
@@ -164,7 +164,7 @@ __declspec(naked) void AudioByteTable8Loop_004a7f50(void)
         push    0x004f440c
         jmp     short L_a7f_printf
     L_a7f_case3:
-        mov     eax, dword ptr [g_x_00543440]
+        mov     eax, dword ptr [g_audioMixerKnob2_00543440]
         test    eax, eax
         jne     short L_a7f_c3_1
         push    0x004f43f4

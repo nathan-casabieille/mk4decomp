@@ -118,7 +118,7 @@ extern unsigned int g_data_0050b118;
 extern unsigned int g_data_0050f130;
 extern unsigned int g_data_0050f14c;
 extern unsigned int g_data_0051599c;
-extern unsigned int g_data_00535de4;
+extern unsigned int g_bootInitState_00535de4;
 extern unsigned int g_count_005433b8;
 extern unsigned int g_data_005437f4;
 extern void AudioBindEntry_004a1e40(void);
@@ -255,7 +255,7 @@ __declspec(naked) void KonquestPortalCluster_004a5290(void)
     L_5453:
         mov      ebx, 1
         push     8
-        mov      dword ptr [g_data_00535de4], ebx
+        mov      dword ptr [g_bootInitState_00535de4], ebx
         call     TableWalkBoundedCmp_004bd890
         add      esp, 4
         call     FiveTableWalkInit_00403c90

@@ -111,11 +111,11 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 /* @addr 0x00422ef0 (199b game) - load g_dlNalt2 + flags, call F1; pause? ret;
  *   prep two-arg state, call F2; pause? ret;
  *   chain[g_fightGroupHead +0x30]=2, +0x54=0x14ccc, +0x5c=0;
- *   chain[+0x34] |= 0x001c0001; chain[+0x3c] = g_x_00541de0.
+ *   chain[+0x34] |= 0x001c0001; chain[+0x3c] = g_particleInitState_00541de0.
  */
 extern u32 g_dlSomeFlag2;
 extern s32 g_dlNalt2;
-extern unsigned int g_x_00541de0;
+extern unsigned int g_particleInitState_00541de0;
 extern void DownloadPlayerChar(void);
 extern void GuardedDualPushTailJmp_004231f0(void);
 
@@ -155,7 +155,7 @@ void DownloadCharSetup_00422ef0(void) {
         mov     ecx, [eax*4 + 0x34]
         or      ecx, 0x001c0001
         mov     [eax*4 + 0x34], ecx
-        mov     eax, dword ptr [g_x_00541de0]
+        mov     eax, dword ptr [g_particleInitState_00541de0]
         mov     edx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_walkCallback], eax
         mov     [edx*4 + 0x3c], eax

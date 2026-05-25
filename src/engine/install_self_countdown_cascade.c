@@ -109,12 +109,12 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00439fd0 (175b game) - install-self with countdown + 3-stage cascade.
- *   Block A install-self path. Then call PendingMatch_0045e640 + bit-1 test, set g_data_0053a478,
+ *   Block A install-self path. Then call PendingMatch_0045e640 + bit-1 test, set g_dispatchState_0053a478,
  *     call PushPop84TripleCall, pause-check, set g_eventQueueChild=0x78, call ScaledChain3c74,
  *     pause-check, if g_walkCallback==0x1009 call TriStageChainGate_004344b0, pop+ret.
  *     Else install-self at +0x08=0x00439fd0, set chain[+0x84]=ebx=1, set 0054204c=1, pause=1; pop+ret.
  */
-extern unsigned int g_data_0053a478;
+extern unsigned int g_dispatchState_0053a478;
 extern void InstallSelfChainSetB333_00437b60(void);
 extern void PendingMatch_0045e640(void);
 extern void PushPop84TripleCall_00438b90(void);
@@ -150,7 +150,7 @@ __declspec(naked) void InstallSelfCountdownCascade_00439fd0(void) {
         test    byte ptr [g_xformDirtyFlags], bl
         _emit   74h
         _emit   59h
-        mov     dword ptr [g_data_0053a478], ebx
+        mov     dword ptr [g_dispatchState_0053a478], ebx
         call    PushPop84TripleCall_00438b90
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

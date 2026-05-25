@@ -114,12 +114,12 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   If bit2 of g_xformDirtyFlags set, skip to final-ret.
  *   Else: scaledInit[+0x54]=0, scaledInit[+0x58]=0xff920000, scaledInit[+0x30]=0x1c.
  *   call MStackPushComplexCallPop_00406430; if pause? final-ret.
- *   g_walkCallback = g_data_00535de4; call StoreIncrMStackPush6_004275c0; if pause? final-ret.
+ *   g_walkCallback = g_bootInitState_00535de4; call StoreIncrMStackPush6_004275c0; if pause? final-ret.
  *   Set 5 fields (g_eventQueueCurrent=1, _74=0x1d, _78=0, _7c=0xffb50000, _84=0).
  *   call DispatcherComplex181_004263d0; if pause? final-ret.
  *   call RoundCleanupCluster_00427690; if pause? final-ret. mstack-pop scaledInit; ret.
  */
-extern unsigned int g_data_00535de4;
+extern unsigned int g_bootInitState_00535de4;
 extern void DispatcherComplex181_004263d0(void);
 extern void MStackPushComplexCallPop_00406430(void);
 extern void RoundCleanupCluster_00427690(void);
@@ -164,7 +164,7 @@ void MStackPushChainDispatchInit5_004925d0(void) {
         test    eax, eax
         _emit   75h
         _emit   7eh
-        mov     eax, dword ptr [g_data_00535de4]
+        mov     eax, dword ptr [g_bootInitState_00535de4]
         mov     dword ptr [g_walkCallback], eax
         call    StoreIncrMStackPush6_004275c0
         mov     eax, dword ptr [g_framePauseFlag]

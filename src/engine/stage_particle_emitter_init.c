@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_particleEmitterNode_00535e6c;
 extern unsigned int g_bootHeavyState_00537f78;
-extern unsigned int g_data_00541de0;
+extern unsigned int g_particleInitState_00541de0;
 extern void BootPhaseGateBracketedInit_004060c0(void);
 extern void InstallSelf5CallVecChain_00464660(void);
 extern void MStackCall_004063e0(void);
@@ -151,7 +151,7 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         test     eax, eax
         jne      L_4551
     L_4400:
-        mov      eax, dword ptr [g_data_00541de0]
+        mov      eax, dword ptr [g_particleInitState_00541de0]
         test     eax, eax
         mov      dword ptr [g_walkCallback], eax
         jne      L_44ab
@@ -164,7 +164,7 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [edx*4 + 0x30], 0x12
         mov      eax, dword ptr [g_currentNodeIdx]
-        mov      dword ptr [g_data_00541de0], eax
+        mov      dword ptr [g_particleInitState_00541de0], eax
         mov      dword ptr [eax*4 + 0x54], 0x4f5c
         mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [eax*4 + 0x58], 0xfffe0000
@@ -242,7 +242,7 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         mov      dword ptr [g_eventQueueIdx], ecx
         je       short L_45d8
         mov      edx, OFFSET g_player2NodeIdx
-        mov      eax, OFFSET g_data_00541de0
+        mov      eax, OFFSET g_particleInitState_00541de0
         shr      edx, 2
         shr      eax, 2
         mov      dword ptr [g_eventQueueEnd], edx
@@ -271,7 +271,7 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         mov      dword ptr [g_eventQueueIdx], ecx
         je       short L_4658
         mov      edx, OFFSET g_player2NodeIdx
-        mov      eax, OFFSET g_data_00541de0
+        mov      eax, OFFSET g_particleInitState_00541de0
         shr      edx, 2
         shr      eax, 2
         mov      dword ptr [g_eventQueueEnd], edx

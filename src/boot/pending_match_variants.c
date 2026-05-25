@@ -234,7 +234,7 @@ extern unsigned int g_data_00523b20;
 extern unsigned int g_data_00523b24;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_or_0052ab40;
-extern unsigned int g_data_00535de4;
+extern unsigned int g_bootInitState_00535de4;
 extern unsigned int g_data_00537efc;
 extern unsigned int g_data_0053813c;
 extern unsigned int g_data_0053a19c;
@@ -2257,7 +2257,7 @@ __declspec(naked) void PendingMatch_004a93c0(void)
         pop      ebx
         ret      
         call     DualAddSar_004ab600
-        mov      eax, dword ptr [g_data_00535de4]
+        mov      eax, dword ptr [g_bootInitState_00535de4]
         mov      ecx, dword ptr [g_walkCallback]
         cdq      
         and      edx, 3

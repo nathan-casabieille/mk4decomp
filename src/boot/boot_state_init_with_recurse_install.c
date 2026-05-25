@@ -113,13 +113,13 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   chain = g_baseSel_00542060<<2; saved = chain->state; chain->state = 0.
  *   If was nonzero: tail-call StackPopDispatchTagged_0041f780; pop+ret.
  *   Else: g_phaseIdx_0053a50c=5; g_walkCallback=0xa; call StorePauseImulShr16; if paused: pop+ret.
- *     g_walkCallback++; g_data_00535de4 = g_walkCallback; call TripleCallCountdown; if paused: pop+ret.
+ *     g_walkCallback++; g_bootInitState_00535de4 = g_walkCallback; call TripleCallCountdown; if paused: pop+ret.
  *     Call TwoStageSelectorInit; if paused: pop+ret. push 8; call TableWalkBoundedCmp;
  *     install-self at entry; chain->state=1; load chain[+4] = g_currentNodeIdx = old cursor;
  *     mstack-push (entry + 0x01000000); g_currentNodeIdx++; chain[+4] = new cursor;
  *     clear g_baseSel*4 + 0x84; call TwoCallStatePauseJmp; g_framePauseFlag=1; pop+ret.
  */
-extern unsigned int g_data_00535de4;
+extern unsigned int g_bootInitState_00535de4;
 extern unsigned int g_phaseIdx_0053a50c;
 extern void StorePauseImulShr16_004ab630(void);
 extern void TableWalkBoundedCmp_004bd890(void);
@@ -151,7 +151,7 @@ __declspec(naked) void BootStateInitWithRecurseInstall_00402de0(void)
         mov     eax, dword ptr [g_walkCallback]
         inc     eax
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_data_00535de4], eax
+        mov     dword ptr [g_bootInitState_00535de4], eax
         call    TripleCallCountdown_00428080
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

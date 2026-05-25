@@ -113,7 +113,7 @@ extern unsigned int g_data_0050d258;
 extern unsigned int g_data_0052ab4c;
 extern unsigned int g_particleEmitterNode_00535e6c;
 extern unsigned int g_bootHeavyState_00537f78;
-extern unsigned int g_data_00541de0;
+extern unsigned int g_particleInitState_00541de0;
 extern void SaveCallRestoreOrXor_00404a00(void);
 extern void ScaledChainInit2Phase_0042e800(void);
 
@@ -194,7 +194,7 @@ void RoundEndAudioCluster_0042e8d0(void) {
         mov      ecx, dword ptr [g_bootHeavyState_00537f78]
         mov      edx, dword ptr [g_currentNodeFlags]
         mov      dword ptr [ecx*4 + 0x3c], edx
-        mov      edx, dword ptr [g_data_00541de0]
+        mov      edx, dword ptr [g_particleInitState_00541de0]
         mov      ecx, dword ptr [g_currentNodeFlags]
         mov      dword ptr [edx*4 + 0x3c], ecx
         mov      ecx, dword ptr [g_particleEmitterNode_00535e6c]

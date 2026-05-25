@@ -128,7 +128,7 @@ extern void GDispatch1_00439c40(void);
 extern void TieredCmpDispatch_00439cb0(void);
 extern void ThreeStageGateCascade_00438340(void);
 
-extern unsigned int g_data_0053a478;
+extern unsigned int g_dispatchState_0053a478;
 extern unsigned int g_data_004e49fc;
 extern unsigned int g_data_004e4460;
 
@@ -262,32 +262,32 @@ __declspec(naked) void HitReactionStateCluster_004335f0(void)
         add      esp, 4
         cmp      eax, edi
         jne      L_3897
-        mov      dword ptr [g_data_0053a478], edi
+        mov      dword ptr [g_dispatchState_0053a478], edi
         call     InstallSelfCountdownCascade_00439fd0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3897
-        cmp      dword ptr [g_data_0053a478], edi
+        cmp      dword ptr [g_dispatchState_0053a478], edi
         jne      L_3897
-        mov      dword ptr [g_data_0053a478], edi
+        mov      dword ptr [g_dispatchState_0053a478], edi
         call     MultiBranchStateFilter_00439a40
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3897
-        cmp      dword ptr [g_data_0053a478], edi
+        cmp      dword ptr [g_dispatchState_0053a478], edi
         jne      L_3897
-        mov      dword ptr [g_data_0053a478], edi
+        mov      dword ptr [g_dispatchState_0053a478], edi
         call     RoundReadyFsmCluster_0043a080
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_3897
-        cmp      dword ptr [g_data_0053a478], edi
+        cmp      dword ptr [g_dispatchState_0053a478], edi
         jne      short L_3897
         call     GDispatch1_00439c40
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_3897
-        mov      dword ptr [g_data_0053a478], edi
+        mov      dword ptr [g_dispatchState_0053a478], edi
         call     TieredCmpDispatch_00439cb0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_3897
-        cmp      dword ptr [g_data_0053a478], edi
+        cmp      dword ptr [g_dispatchState_0053a478], edi
         jne      short L_3897
         mov      dword ptr [esi + 8], OFFSET L_3640
         mov      edx, dword ptr [g_baseSel_00542060]

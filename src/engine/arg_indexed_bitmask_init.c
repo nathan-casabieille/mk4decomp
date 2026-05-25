@@ -113,12 +113,12 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Load g_player1NodeIdx into g_scaledInit. If g_cj_0054205c==ecx (538158): skip second-init, jmp call.
  *   Else load 4 more from [eax*4+0] into same globals. Call NotMaskStorePair.
  *   If pause: ret. Compute (g_walkCallback & g_eventQueueNotMask) and (g_eventQueueCurrent & g_eventQueueChild).
- *   If g_data_005424c0 != 0: jmp set-bit branch (or al,1).
+ *   If g_dispatchVar_005424c0 != 0: jmp set-bit branch (or al,1).
  *   Else: cmp g_eventQueueWorkType with eax (g_walkCallback & 7c).
  *     If equal: cmp g_acc with ecx. If equal: set bit. Else clear bit. Ret.
  *     If first not equal: clear bit, ret.
  */
-extern unsigned int g_data_005424c0;
+extern unsigned int g_dispatchVar_005424c0;
 extern void NotMaskStorePair_0045f440(void);
 
 void ArgIndexedBitmaskInit_0045f310(void) {
@@ -176,7 +176,7 @@ void ArgIndexedBitmaskInit_0045f310(void) {
         mov     ecx, dword ptr [g_eventQueueCurrent]
         mov     dword ptr [g_walkCallback], eax
         and     ecx, edx
-        mov     edx, dword ptr [g_data_005424c0]
+        mov     edx, dword ptr [g_dispatchVar_005424c0]
         test    edx, edx
         mov     dword ptr [g_eventQueueCurrent], ecx
         _emit   75h

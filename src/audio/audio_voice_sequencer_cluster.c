@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_data_004f2dc0;
 extern unsigned int g_dispatchArg_00535e48;
 extern unsigned int g_audioVoiceCounter_00535e50;
-extern unsigned int g_data_00541fc0;
+extern unsigned int g_audioBitField_00541fc0;
 extern unsigned int g_data_00541fc4;
 extern unsigned int g_data_00543320;
 extern void AudioInitChainTag_004a1000(void);
@@ -190,7 +190,7 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
         jne      L_0ff9
         test     byte ptr [g_xformDirtyFlags], bl
         jne      short L_0ed1
-        mov      eax, dword ptr [g_data_00541fc0]
+        mov      eax, dword ptr [g_audioBitField_00541fc0]
         mov      edx, dword ptr [g_dispatchArg_00535e48]
         mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [g_xformEntityIdx], eax

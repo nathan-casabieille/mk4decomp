@@ -114,7 +114,7 @@ extern unsigned int g_dispatchArg_00535e48;
 extern unsigned int g_data_00537e90;
 extern unsigned int g_data_00537f88;
 extern unsigned int g_state2_0053a1bc;
-extern unsigned int g_data_00541fc0;
+extern unsigned int g_audioBitField_00541fc0;
 extern u32 g_dlMode;
 extern void DualPushSetCallDualPop_00404b10(void);
 extern void RoundWinTransition_0049e7e0(void);
@@ -141,7 +141,7 @@ __declspec(naked) void AudioMStackPushHandlerPair_0049ff30(void)
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4], ecx
-        mov     ecx, dword ptr [g_data_00541fc0]
+        mov     ecx, dword ptr [g_audioBitField_00541fc0]
         mov     eax, dword ptr [g_eventQueueNotMask]
         mov     dword ptr [g_xformEntityIdx], ecx
         add     ecx, eax

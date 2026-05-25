@@ -117,7 +117,7 @@ extern unsigned int g_state2_0053a1bc;
 
 /* @addr 0x0049ea30 (216b game) - dual-guard then state-machine init. */
 extern u32 g_dlMode;
-extern unsigned int g_x_00541fc0;
+extern unsigned int g_audioBitField_00541fc0;
 
 void DualGuardStateMachine_0049ea30(void) {
     __asm {
@@ -146,7 +146,7 @@ void DualGuardStateMachine_0049ea30(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_x_00541fc0]
+        mov     eax, dword ptr [g_audioBitField_00541fc0]
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, dword ptr [eax*4 + 0]
         mov     dword ptr [g_scaledInit_00542044], eax
