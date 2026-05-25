@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00422720 (142b game) - 3-branch flag set:
  *   If g_audioMatchStartFlag_00543714 == 1 && g_audioTriEntryFlag_005433ec == 0:
- *     if g_x_0053a408: call ClampTwoToMax_004226a0; goto setB.
+ *     if g_active_0053a408: call ClampTwoToMax_004226a0; goto setB.
  *     else: write 0x10000 to walkCallback/0x53a6dc/0x53a328.
  *     setB: if g_x_00537e88: call ClampTwoToMax_004226e0; ret.
  *     else: write 0x10000 to walkCallback/0x537f2c/0x53e348; ret.
@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_x_00537e88;
 extern unsigned int g_clamp_00537f2c;
 extern unsigned int g_clamp_0053a328;
-extern unsigned int g_x_0053a408;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_clamp_0053a6dc;
 extern unsigned int g_clamp_0053e348;
 extern unsigned int g_audioTriEntryFlag_005433ec;
@@ -138,7 +138,7 @@ __declspec(naked) void TriBranchFlagWrite_00422720(void) {
         test    eax, eax
         _emit   75h
         _emit   4bh
-        mov     eax, dword ptr [g_x_0053a408]
+        mov     eax, dword ptr [g_active_0053a408]
         mov     esi, 0x10000
         test    eax, eax
         _emit   74h

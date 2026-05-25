@@ -108,14 +108,14 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_x_00541eb0;
+extern unsigned int g_bootChainState4_00541eb0;
 extern void LinkedListInsert_004ab440(void);
 
 /*
  * @addr 0x004055b0 (119b boot) - dirty-set + push-call-pop guard:
  *   set state bit 2; if walk is null exit; else clear bit 2 and
  *   re-test walk; if still null exit; push wt onto state stack, load
- *   g_x_00541eb0 into wt, call LinkedListInsert_004ab440; on pause clear pop wt.
+ *   g_bootChainState4_00541eb0 into wt, call LinkedListInsert_004ab440; on pause clear pop wt.
  */
 void DirtyPushCallPop_004055b0(void) {
     g_xformDirtyFlags |= 4;
@@ -124,7 +124,7 @@ void DirtyPushCallPop_004055b0(void) {
     if (g_walkCallback == 0) return;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_eventQueueWorkType;
-    g_eventQueueWorkType = g_x_00541eb0;
+    g_eventQueueWorkType = g_bootChainState4_00541eb0;
     LinkedListInsert_004ab440();
     if (g_framePauseFlag) return;
     g_eventQueueWorkType = *(unsigned int *)(g_matrixStackTop * 4);

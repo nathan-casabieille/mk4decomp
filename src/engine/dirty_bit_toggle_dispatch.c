@@ -108,9 +108,9 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-/* @addr 0x00463390 (150b game) - g_x_0053a408 == 1 ? a:b path; lookup +
+/* @addr 0x00463390 (150b game) - g_active_0053a408 == 1 ? a:b path; lookup +
  *   conditional dirty-bit toggle:
- *   ecx = (g_x_0053a408==1 ? g_dlNalt1 : g_dlNalt2); key = (0x542a08>>2)+ecx;
+ *   ecx = (g_active_0053a408==1 ? g_dlNalt1 : g_dlNalt2); key = (0x542a08>>2)+ecx;
  *   g_scaledInit = key; g_xformEntityIdx = arr[key]; call DispatcherComplex260; pause? ret.
  *   if (g_xformDirtyFlags & 4): skip phase2.
  *   else: chain[scaledInit].slot30 = 0x26d (g_walkCallback=it); call MStackCall;
@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_dispatchSave32_00542a08;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
-extern unsigned int g_x_0053a408;
+extern unsigned int g_active_0053a408;
 extern void MStackCall_00406340(void);
 
 extern unsigned int g_arr_463390;
@@ -128,7 +128,7 @@ extern unsigned int g_chain_disp_30_463390;
 
 void DirtyBitToggleDispatch_00463390(void) {
     __asm {
-        mov     eax, dword ptr [g_x_0053a408]
+        mov     eax, dword ptr [g_active_0053a408]
         mov     ecx, dword ptr [g_dlNalt1]
         cmp     eax, 1
         _emit   74h
