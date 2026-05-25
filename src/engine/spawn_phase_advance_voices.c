@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_data_00535de0;
-extern unsigned int g_data_00541fbc;
+extern unsigned int g_dispatchVar7_00541fbc;
 extern unsigned int g_data_005a0000;
 extern void MStackPush2ChainLLInsert_00406790(void);
 extern void MStackPushTableMatch_0042e720(void);
@@ -147,7 +147,7 @@ __declspec(naked) void SpawnPhaseAdvanceVoices_0042e290(void)
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], ecx
         mov      edx, dword ptr [g_load_0052ab10]
-        mov      eax, dword ptr [g_data_00541fbc]
+        mov      eax, dword ptr [g_dispatchVar7_00541fbc]
         mov      esi, dword ptr [g_matrixStackTop]
         mov      dword ptr [g_pendingNodeType], edx
         mov      dword ptr [g_currentNodeIdx], eax

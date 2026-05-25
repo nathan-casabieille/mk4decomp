@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   chain. mstack-pop 2. ret.
  */
 extern unsigned int g_data_004d57ac_arr;
-extern unsigned int g_data_00541fbc;
+extern unsigned int g_dispatchVar7_00541fbc;
 
 void MStackPushTableMatch_0042e720(void) {
     __asm {
@@ -127,7 +127,7 @@ void MStackPushTableMatch_0042e720(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
-        mov     eax, dword ptr [g_data_00541fbc]
+        mov     eax, dword ptr [g_dispatchVar7_00541fbc]
         mov     dword ptr [g_xformEntityIdx], eax
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax

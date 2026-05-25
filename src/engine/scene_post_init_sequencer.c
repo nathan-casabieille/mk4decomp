@@ -121,7 +121,7 @@ extern unsigned int g_data_004d530c;
 extern unsigned int g_data_004d5300;
 extern unsigned int g_data_004d5304;
 extern unsigned int g_particleEmitterNode_00535e6c;
-extern unsigned int g_data_0053a7a8;
+extern unsigned int g_pendingMatchAudio2_0053a7a8;
 extern void MStackPush8_004ab790(void);
 extern void TwinLoopSlotFinder_00429a40(void);
 extern void *AllocNode(void);
@@ -215,7 +215,7 @@ void ScenePostInitSequencer_00429b70(void) {
         test     eax, eax
         jne      L_9e22
         mov      eax, dword ptr [g_cj_0054205c]
-        mov      dword ptr [g_data_0053a7a8], eax
+        mov      dword ptr [g_pendingMatchAudio2_0053a7a8], eax
         mov      dword ptr [eax*4 + 0x30], 0xb
         mov      eax, dword ptr [g_particleEmitterNode_00535e6c]
         mov      ecx, dword ptr [g_cj_0054205c]

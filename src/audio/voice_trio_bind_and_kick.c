@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_data_004f3220;
 extern unsigned int g_data_004f3a30;
 extern unsigned int g_data_004f3a38;
-extern unsigned int g_data_0050a0f0;
+extern unsigned int g_audioVoiceTrioBase_0050a0f0;
 extern unsigned int g_data_0050c618;
 extern void GuardedSetupCallTailJmp3_004a2000(void);
 extern void MStackPushComplexCallPop_00406430(void);
@@ -122,7 +122,7 @@ __declspec(naked) void VoiceTrioBindAndKick_004a5ea0(void)
     __asm {
         push     ebx
         push     ebp
-        mov      eax, OFFSET g_data_0050a0f0
+        mov      eax, OFFSET g_audioVoiceTrioBase_0050a0f0
         push     esi
         mov      esi, dword ptr [esp + 0x10]
         mov      bl, 1

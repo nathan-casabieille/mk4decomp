@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   call DispatcherComplex260; if paused: ret. chain[g_currentNodeIdx*4 + 0x54] = 0x8bff9b80;
  *   g_walkCallback=0x1f; chain[+0x30]=0x1f; call PushSetCallPop; if paused: ret. Tail-call RegistryPushBindPop.
  */
-extern unsigned int g_data_00506c14;
+extern unsigned int g_assetLoadStateInit_00506c14;
 extern unsigned int g_data_005080bc;
 extern unsigned int g_data_005080d8;
 extern void RegistryPushBindPop_00403c20(void);
@@ -132,7 +132,7 @@ __declspec(naked) void BootMultiAssetLoadStateInit_00403b10(void)
         push    esi
         push    8
         call    TableWalkBoundedCmp_004bd890
-        mov     eax, offset g_data_00506c14
+        mov     eax, offset g_assetLoadStateInit_00506c14
         add     esp, 4
         shr     eax, 2
         mov     dword ptr [g_currentNodeIdx], eax
@@ -140,7 +140,7 @@ __declspec(naked) void BootMultiAssetLoadStateInit_00403b10(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_ml_ret
-        mov     ecx, offset g_data_00506c14
+        mov     ecx, offset g_assetLoadStateInit_00506c14
         shr     ecx, 2
         mov     dword ptr [g_currentNodeIdx], ecx
         call    LoadGeoAsset_Default

@@ -506,12 +506,12 @@ extern unsigned int g_walkCallbackSrc_0053a2d0;
 extern unsigned int g_data_0053a324;
 extern unsigned int g_clamp_0053a328;
 extern unsigned int g_audioStreamState_0053a430;
-extern unsigned int g_data_0053a464;
+extern unsigned int g_dispatchVar6_0053a464;
 extern unsigned int g_data_0053a468;
 extern unsigned int g_clamp_0053a6dc;
 extern unsigned int g_data_0053a730;
 extern unsigned int g_installOwner2_0053a7a0;
-extern unsigned int g_data_0053a7a8;
+extern unsigned int g_pendingMatchAudio2_0053a7a8;
 extern unsigned int g_data_0053a7b4;
 extern unsigned int g_clamp_0053e348;
 extern unsigned int g_data_00541d68;
@@ -521,7 +521,7 @@ extern unsigned int g_data_00542188;
 extern unsigned int g_data_00542a58;
 extern unsigned int g_data_00542b68;
 extern unsigned int g_installSelfCounter_005433e8;
-extern unsigned int g_data_005433ec;
+extern unsigned int g_audioTriEntryFlag_005433ec;
 extern unsigned int g_audioMatchStartFlag_00543714;
 extern u8 g_dlEnabledFlag;
 extern unsigned int g_data_00543728;
@@ -3149,7 +3149,7 @@ void ScenePostInitSequencer_00429b70(void) {
         test     eax, eax
         jne      L_9e22
         mov      eax, dword ptr [g_fightGroupHead]
-        mov      dword ptr [g_data_0053a7a8], eax
+        mov      dword ptr [g_pendingMatchAudio2_0053a7a8], eax
         mov      dword ptr [eax*4 + 0x30], 0xb
         mov      eax, dword ptr [g_particleEmitterNode_00535e6c]
         mov      ecx, dword ptr [g_fightGroupHead]
@@ -4706,7 +4706,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         je       L_e09d
         cmp      dword ptr [g_gtOtherFlag], ebx
         je       L_e09d
-        cmp      dword ptr [g_data_005433ec], ebx
+        cmp      dword ptr [g_audioTriEntryFlag_005433ec], ebx
         je       L_e09d
         mov      al, byte ptr [g_gtModeFlag]
         mov      dword ptr [g_stateCountdown_0053a3c0], ebx
@@ -6580,12 +6580,12 @@ __declspec(naked) void PendingMatch_0043bdd0(void)
         mov      byte ptr [g_byte_00538148], 1
     L_be60:
         mov      eax, dword ptr [g_gtPlayerProbe1]
-        mov      dword ptr [g_data_0053a464], eax
+        mov      dword ptr [g_dispatchVar6_0053a464], eax
         mov      eax, dword ptr [g_audioBankSel_00537f94]
         cmp      eax, 1
         je       L_be80
         mov      ecx, dword ptr [g_gtPlayerProbe2]
-        mov      dword ptr [g_data_0053a464], ecx
+        mov      dword ptr [g_dispatchVar6_0053a464], ecx
     L_be80:
         push     0x4e4e78
         call     ScaledChainCmpDispatch_0048e4f0

@@ -137,7 +137,7 @@ extern unsigned int g_data_00538088;
 extern s32 g_dlNalt2;
 extern unsigned int g_phaseIdx_0053a50c;
 extern unsigned int g_counter_0053a51c;
-extern unsigned int g_data_0053a7a8;
+extern unsigned int g_pendingMatchAudio2_0053a7a8;
 extern unsigned int g_audioCrewState_00541d8c;
 extern unsigned int g_savedNode_00541f98;
 extern unsigned int g_phaseCounter_00541fb0;
@@ -895,9 +895,9 @@ __declspec(naked) void PendingMatch_004a70f0(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         mov      eax, dword ptr [g_currentNodeIdx]
-        mov      dword ptr [g_data_0053a7a8], eax
+        mov      dword ptr [g_pendingMatchAudio2_0053a7a8], eax
         call     ChainInitDoublePushCall_004a47c0
-        mov      ecx, dword ptr [g_data_0053a7a8]
+        mov      ecx, dword ptr [g_pendingMatchAudio2_0053a7a8]
         mov      edx, 0x5063dc
         shr      edx, 2
         mov      dword ptr [ecx*4 + 0x58], 0xfffe8000

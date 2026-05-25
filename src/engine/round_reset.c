@@ -118,10 +118,10 @@ extern unsigned int g_data_00537f04;
 extern unsigned int g_hitPhase_00537f30;
 extern unsigned int g_audioBank2State_00537f98;
 extern unsigned int g_data_005380d8;
-extern unsigned int g_data_0053a3e4;
+extern unsigned int g_roundResetSlot_0053a3e4;
 extern unsigned int g_phaseInstallSlot_0053a42c;
 extern unsigned int g_audioStreamState_0053a430;
-extern unsigned int g_data_0053a474;
+extern unsigned int g_phaseThunkArr_0053a474;
 extern u32 g_dlSomeFlag1;
 extern unsigned int g_dst_0053a6e0;
 extern unsigned int g_data_0053a6f8;
@@ -204,8 +204,8 @@ __declspec(naked) void RoundReset_004223e0(void)
         jne      L_25e9
     L_242f:
         mov      eax, 0x10000
-        mov      dword ptr [g_data_0053a3e4], eax
-        mov      dword ptr [g_data_0053a474], eax
+        mov      dword ptr [g_roundResetSlot_0053a3e4], eax
+        mov      dword ptr [g_phaseThunkArr_0053a474], eax
         mov      eax, dword ptr [g_hitPhase_00537f30]
         cmp      eax, 1
         mov      dword ptr [g_walkCallback], eax

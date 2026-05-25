@@ -120,7 +120,7 @@ extern unsigned int g_data_004f61c8;
 extern unsigned int g_data_004f61d0;
 extern unsigned int g_data_004f61d8;
 extern unsigned int g_data_004f61e0;
-extern unsigned int g_data_00543a98;
+extern unsigned int g_menuPageDispatch_00543a98;
 extern unsigned int g_data_00543a9c;
 extern unsigned int g_data_00543aa0;
 extern unsigned int g_data_00543aac;
@@ -169,7 +169,7 @@ __declspec(naked) void MenuPageTailDispatch_004b8080(void)
         push     eax
         jmp      short L_813b
     L_80fb:
-        mov      eax, dword ptr [g_data_00543a98]
+        mov      eax, dword ptr [g_menuPageDispatch_00543a98]
         test     eax, eax
         mov      eax, OFFSET g_data_004f61a0
         jne      short L_810e

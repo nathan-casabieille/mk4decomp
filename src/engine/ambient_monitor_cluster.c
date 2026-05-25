@@ -134,7 +134,7 @@ extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 extern unsigned int g_data_0053a468;
 extern unsigned int g_phaseCounter_00541fb0;
-extern unsigned int g_data_005433ec;
+extern unsigned int g_audioTriEntryFlag_005433ec;
 extern unsigned int g_audioMatchStartFlag_00543714;
 extern unsigned int g_data_00543728;
 
@@ -245,7 +245,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         je       L_e09d
         cmp      dword ptr [g_gtOtherFlag], ebx
         je       L_e09d
-        cmp      dword ptr [g_data_005433ec], ebx
+        cmp      dword ptr [g_audioTriEntryFlag_005433ec], ebx
         je       L_e09d
         mov      al, byte ptr [g_gtModeFlag]
         mov      dword ptr [g_stateCountdown_0053a3c0], ebx

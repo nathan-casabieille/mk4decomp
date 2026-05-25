@@ -114,7 +114,7 @@ extern unsigned int g_const_004d2964;
 extern unsigned int g_const_004d2968;
 extern unsigned int g_const_004d296c;
 extern unsigned int g_data_004f4790;
-extern unsigned int g_data_0058c7d0;
+extern unsigned int g_renderer2_d3dByte_0058c7d0;
 extern int g_renderer2_active;
 extern int g_renderer2_surface;
 extern int g_renderer2_paused;
@@ -199,7 +199,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         add      eax, 7
         cmp      eax, 0xc00
         jge      L_dd03
-        cmp      bl, byte ptr [g_data_0058c7d0]
+        cmp      bl, byte ptr [g_renderer2_d3dByte_0058c7d0]
         jne      L_dd03
         mov      cl, byte ptr [esp + 0x14]
         mov      al, byte ptr [g_data_004f4790]
@@ -228,7 +228,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         mov      cl, byte ptr [esp + 0x14]
         mov      byte ptr [g_data_004f4790], cl
     L_dd4c:
-        mov      cl, byte ptr [g_data_0058c7d0]
+        mov      cl, byte ptr [g_renderer2_d3dByte_0058c7d0]
         cmp      bl, cl
         je       L_de14
         test     bl, bl
@@ -309,7 +309,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
     L_de09:
         mov      dword ptr [g_renderer2_present_rc], eax
     L_de0e:
-        mov      byte ptr [g_data_0058c7d0], bl
+        mov      byte ptr [g_renderer2_d3dByte_0058c7d0], bl
     L_de14:
         fld      dword ptr [esp + 0x1c]
         fcomp    dword ptr [g_const_004d2964]

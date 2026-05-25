@@ -13,14 +13,14 @@ extern unsigned int g_scaledInit_00542044;
  *   load g_scaledInit's [+0x18] → g_fightGroupHead;
  *   store eax → [g_fightGroupHead*4+0x24]; ret.
  */
-extern unsigned int g_data_0050a0f0;
+extern unsigned int g_audioVoiceTrioBase_0050a0f0;
 void ScaledChainStore24_004a7d40(void) {
     unsigned int p;
     unsigned int sc;
     int v;
     p = (unsigned int)g_walkCallback;
-    p += (unsigned int)&g_data_0050a0f0 >> 2;
-    g_xformEntityIdx = (unsigned int)&g_data_0050a0f0 >> 2;
+    p += (unsigned int)&g_audioVoiceTrioBase_0050a0f0 >> 2;
+    g_xformEntityIdx = (unsigned int)&g_audioVoiceTrioBase_0050a0f0 >> 2;
     sc = g_scaledInit_00542044;
     v = *(int *)(p * 4) & 0xffffff;
     g_xformEntityIdx = (unsigned int)v;

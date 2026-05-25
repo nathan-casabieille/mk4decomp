@@ -28,8 +28,8 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_scaledInit_00542048;
 extern unsigned int g_data_0053a1a0;
 extern unsigned int g_data_0053a518;
-extern unsigned int g_data_0053a3e4;
-extern unsigned int g_data_0053a474;
+extern unsigned int g_roundResetSlot_0053a3e4;
+extern unsigned int g_phaseThunkArr_0053a474;
 
 /* @addr 0x00433d30
  *   NON-COAXABLE: MSVC assigns eax to the later-declared symbol (0x0053a518)
