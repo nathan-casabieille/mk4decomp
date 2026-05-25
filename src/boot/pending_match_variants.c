@@ -259,7 +259,7 @@ extern u32 g_timerLastNow;
 extern u32 g_timerFlag;
 extern u32 g_audioState0C;
 extern unsigned int g_dispatchSave16_00543b68;
-extern unsigned int g_data_00543b6c;
+extern unsigned int g_dispatchSave23_00543b6c;
 extern unsigned int g_data_00806000;
 extern unsigned int g_data_00ab4338;
 extern unsigned int g_data_00f9f7fc;

@@ -124,20 +124,20 @@ extern unsigned int g_glideTriBatchB_0058c7f8;
 extern unsigned int g_glideTriBatchC_0058c7fc;
 extern unsigned int g_glideTriBatchD_0058c800;
 extern unsigned int g_glideTriSave_00543f88;
-extern unsigned int g_data_00543f8c;
-extern unsigned int g_data_00543f90;
-extern unsigned int g_data_00543f94;
-extern unsigned int g_data_00543f98;
-extern unsigned int g_data_00543f9c;
-extern unsigned int g_data_00543fa0;
-extern unsigned int g_data_00543fa4;
-extern unsigned int g_data_00543fa8;
-extern unsigned int g_data_00543fac;
-extern unsigned int g_data_00543fb0;
-extern unsigned int g_data_00543fb4;
-extern unsigned int g_data_00543fb8;
-extern unsigned int g_data_00543fbc;
-extern unsigned int g_data_00543fc0;
+extern unsigned int g_glideDataArr_00543f8c;
+extern unsigned int g_glideDataArr_00543f90;
+extern unsigned int g_glideDataArr_00543f94;
+extern unsigned int g_glideDataArr_00543f98;
+extern unsigned int g_glideDataArr_00543f9c;
+extern unsigned int g_glideDataArr_00543fa0;
+extern unsigned int g_glideDataArr_00543fa4;
+extern unsigned int g_glideDataArr_00543fa8;
+extern unsigned int g_glideDataArr_00543fac;
+extern unsigned int g_glideDataArr_00543fb0;
+extern unsigned int g_glideDataArr_00543fb4;
+extern unsigned int g_glideDataArr_00543fb8;
+extern unsigned int g_glideDataArr_00543fbc;
+extern unsigned int g_glideDataArr_00543fc0;
 extern unsigned int g_glideDataArr_00543fc4;
 extern unsigned int g_glideDataArr_00543fc8;
 extern unsigned int g_glideDataArr_00543fcc;
@@ -567,29 +567,29 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         mov      eax, dword ptr [esp + 0x28]
         fld      dword ptr [edx*4 + g_renderer2_lutTable]
         and      eax, 0xff
-        mov      dword ptr [g_data_00543f8c], ecx
-        fstp     dword ptr [g_data_00543f90]
+        mov      dword ptr [g_glideDataArr_00543f8c], ecx
+        fstp     dword ptr [g_glideDataArr_00543f90]
         fld      dword ptr [eax*4 + g_renderer2_lutTable]
         mov      eax, dword ptr [esp + 0x38]
         mov      ecx, dword ptr [esp + 0x30]
-        fstp     dword ptr [g_data_00543f94]
+        fstp     dword ptr [g_glideDataArr_00543f94]
         mov      edx, dword ptr [esp + 0x34]
         and      eax, 0xff
-        mov      dword ptr [g_data_00543fa4], ecx
+        mov      dword ptr [g_glideDataArr_00543fa4], ecx
         mov      ecx, dword ptr [esp + 0x3c]
         fld      dword ptr [eax*4 + g_renderer2_lutTable]
         mov      eax, dword ptr [esp + 0x48]
         and      ecx, 0xff
-        fstp     dword ptr [g_data_00543fac]
+        fstp     dword ptr [g_glideDataArr_00543fac]
         fld      dword ptr [ecx*4 + g_renderer2_lutTable]
         mov      ecx, dword ptr [esp + 0x4c]
-        mov      dword ptr [g_data_00543fa8], edx
+        mov      dword ptr [g_glideDataArr_00543fa8], edx
         mov      edx, dword ptr [esp + 0x44]
         mov      dword ptr [g_glideDataArr_00543fc4], eax
         movsx    eax, word ptr [esp + 0x2c]
-        fstp     dword ptr [g_data_00543fb0]
+        fstp     dword ptr [g_glideDataArr_00543fb0]
         and      ecx, 0xff
-        mov      dword ptr [g_data_00543fc0], edx
+        mov      dword ptr [g_glideDataArr_00543fc0], edx
         mov      edx, dword ptr [esp + 0x50]
         fld      dword ptr [ecx*4 + g_renderer2_lutTable]
         mov      ecx, eax
@@ -613,18 +613,18 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         mov      cl, byte ptr [eax*8 + g_palette_00544158]
         mov      dword ptr [esp + 0x2c], edx
         movsx    eax, word ptr [esp + 0x40]
-        fstp     dword ptr [g_data_00543f98]
+        fstp     dword ptr [g_glideDataArr_00543f98]
         fild     dword ptr [esp + 0x2c]
         mov      edx, eax
         mov      dword ptr [esp + 0x2c], ecx
         sar      edx, 7
-        fstp     dword ptr [g_data_00543f9c]
+        fstp     dword ptr [g_glideDataArr_00543f9c]
         fild     dword ptr [esp + 0x2c]
         and      edx, 0xf8
         xor      ecx, ecx
         mov      cl, byte ptr [edx + g_palette_00544158]
         mov      edx, eax
-        fstp     dword ptr [g_data_00543fa0]
+        fstp     dword ptr [g_glideDataArr_00543fa0]
         sar      edx, 2
         mov      dword ptr [esp + 0x2c], ecx
         and      edx, 0xf8
@@ -633,15 +633,15 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         and      eax, 0x1f
         mov      cl, byte ptr [edx + g_palette_00544158]
         xor      edx, edx
-        fstp     dword ptr [g_data_00543fb4]
+        fstp     dword ptr [g_glideDataArr_00543fb4]
         mov      dl, byte ptr [eax*8 + g_palette_00544158]
         mov      dword ptr [esp + 0x2c], ecx
         fild     dword ptr [esp + 0x2c]
         mov      dword ptr [esp + 0x2c], edx
-        fstp     dword ptr [g_data_00543fb8]
+        fstp     dword ptr [g_glideDataArr_00543fb8]
         fild     dword ptr [esp + 0x2c]
         movsx    eax, word ptr [esp + 0x54]
-        fstp     dword ptr [g_data_00543fbc]
+        fstp     dword ptr [g_glideDataArr_00543fbc]
         mov      ecx, eax
         xor      edx, edx
         sar      ecx, 7

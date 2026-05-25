@@ -24,9 +24,9 @@ extern unsigned int g_data_004f4e04;
 extern unsigned int g_data_004f4e98;
 extern u32 g_demoModeFlag;
 extern unsigned int g_data_00543368;
-extern unsigned int g_data_0054336c;
-extern unsigned int g_data_00543370;
-extern unsigned int g_data_0054357c;
+extern unsigned int g_dispatchSave26_0054336c;
+extern unsigned int g_dispatchSave25_00543370;
+extern unsigned int g_dispatchVar39_0054357c;
 extern u32 g_appInitFlag1;
 extern void Helper_JoyButtonInit(void);
 extern void InputBitMaskDispatcher_004b5470(void);
@@ -155,9 +155,9 @@ __declspec(naked) void GameStateMachineMaybeRebuild(void)
         mov     dword ptr [g_fightTableC2], eax
         mov     dword ptr [g_fightTableC0], ecx
         mov     dword ptr [g_fightTableC1], edx
-        mov     dword ptr [g_data_0054357c], eax
-        mov     dword ptr [g_data_0054336c], ecx
-        mov     dword ptr [g_data_00543370], edx
+        mov     dword ptr [g_dispatchVar39_0054357c], eax
+        mov     dword ptr [g_dispatchSave26_0054336c], ecx
+        mov     dword ptr [g_dispatchSave25_00543370], edx
         pop     esi
         ret
     }
