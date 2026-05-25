@@ -197,7 +197,7 @@ extern unsigned int g_audioMicroEntry_005433f4;
 extern unsigned int g_data_005433f8;
 extern unsigned int g_counter_0054359c;
 extern unsigned int g_byte_005435a0;
-extern unsigned int g_data_005435a3;
+extern unsigned int g_byteIndexArr_005435a3;
 extern unsigned int g_dispatchVar13_005435a4;
 extern unsigned int g_byte_005435b8;
 extern unsigned int g_byte_00543724;
@@ -1746,10 +1746,10 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         je       L_5d0c
         lea      eax, [esi + esi*2]
         xor      edx, edx
-        mov      cl, byte ptr [eax*8 + g_data_005435a3]
+        mov      cl, byte ptr [eax*8 + g_byteIndexArr_005435a3]
         test     cl, cl
         sete     dl
-        mov      byte ptr [eax*8 + g_data_005435a3], dl
+        mov      byte ptr [eax*8 + g_byteIndexArr_005435a3], dl
         call     SetJmp_004a1ac0
     L_5d0c:
         call     RetZero_004a1c40

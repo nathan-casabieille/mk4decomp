@@ -131,7 +131,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     g_eventQueueCurrent = 0x41, then continues into the phase-1 countdown.
  */
 extern unsigned int g_or_0052ab40;
-extern unsigned int g_data_0054380c;
+extern unsigned int g_tripleEntryFlag_0054380c;
 extern void CallPauseScaledStoreCopyJmp_00461220(void);
 extern void ClearBit2x34_00490130(void);
 extern void HitReactionDispatcher_0045f650(void);
@@ -170,7 +170,7 @@ __declspec(naked) void TripleEntryCountdownInstall_0046a230(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_tec_b1done
-        mov     byte ptr [g_data_0054380c], 1
+        mov     byte ptr [g_tripleEntryFlag_0054380c], 1
         call    Wrapper_00471340
         pop     esi
         ret

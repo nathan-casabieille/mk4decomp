@@ -115,9 +115,9 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   g_eventQueueWorkType = 0x3333; call DualFieldAddSubStore;
  *   if pause: ret; push 0x4ed4b8; call IterStepDualStore; ret.
  */
-extern unsigned int g_data_00500c08;
+extern unsigned int g_dispatchTableArr_00500c08;
 void DualSetCallPair_0047dbc0(void) {
-    g_xformEntityIdx = (unsigned int)&g_data_00500c08 >> 2;
+    g_xformEntityIdx = (unsigned int)&g_dispatchTableArr_00500c08 >> 2;
     ScaledArrStore_004298c0();
     if (g_framePauseFlag != 0) return;
     g_xformScratch2088 = 0xffffb334;

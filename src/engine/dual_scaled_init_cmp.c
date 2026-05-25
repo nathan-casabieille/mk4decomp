@@ -35,13 +35,13 @@ void DualScaledInitCmp_0046dbd0(void) {
 }
 
 /* @addr 0x0046df50 */
-extern unsigned int g_data_00541e44;
-extern unsigned int g_data_0052aa88;
+extern unsigned int g_dispatchSave13_00541e44;
+extern unsigned int g_phaseThunkSlot3_0052aa88;
 void DualScaledInitCmp_0046df50(void) {
     g_pendingNodeType = g_player1NodeIdx;
-    g_scaledInit_00542044 = (unsigned int)&g_data_00541e44 >> 2;
-    g_scaledInit_00542048 = (unsigned int)&g_data_0052aa88 >> 2;
+    g_scaledInit_00542044 = (unsigned int)&g_dispatchSave13_00541e44 >> 2;
+    g_scaledInit_00542048 = (unsigned int)&g_phaseThunkSlot3_0052aa88 >> 2;
     if (g_fightGroupHead != g_player1NodeIdx) {
-        g_scaledInit_00542044 = (unsigned int)&g_data_0052aa88 >> 2;
+        g_scaledInit_00542044 = (unsigned int)&g_phaseThunkSlot3_0052aa88 >> 2;
     }
 }

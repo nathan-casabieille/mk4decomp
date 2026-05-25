@@ -114,8 +114,8 @@ extern unsigned int g_const_004d2ee8;
 extern unsigned int g_const_004d2f04;
 extern unsigned int g_const_004d2f08;
 extern unsigned int g_crtFdCloseSlot_00520064;
-extern unsigned int g_data_00522908;
-extern unsigned int g_data_0052290c;
+extern unsigned int g_crtAbortBase_00522908;
+extern unsigned int g_crtFpuSlot1_0052290c;
 extern unsigned int g_crtCType_00522998;
 extern unsigned int g_state_00f9f84c_ee;
 extern unsigned int g_arr_00fa0de0;
@@ -130,7 +130,7 @@ __declspec(naked) void RaiseAbortLocalized_004cc070(void)
     __asm {
         mov      ecx, dword ptr [esp + 4]
         sub      esp, 0x1a8
-        mov      eax, OFFSET g_data_00522908
+        mov      eax, OFFSET g_crtAbortBase_00522908
         push     ebx
         push     ebp
         push     esi
@@ -144,7 +144,7 @@ __declspec(naked) void RaiseAbortLocalized_004cc070(void)
         cmp      eax, OFFSET g_crtCType_00522998
         jb       short L_c085
     L_c094:
-        cmp      ecx, dword ptr [ebp*8 + g_data_00522908]
+        cmp      ecx, dword ptr [ebp*8 + g_crtAbortBase_00522908]
         jne      L_c23b
         mov      eax, dword ptr [g_state_00f9f84c_ee]
         cmp      eax, 1
@@ -238,7 +238,7 @@ __declspec(naked) void RaiseAbortLocalized_004cc070(void)
         lea      edx, [esp + 0x1c]
         and      ecx, 3
         rep movsb
-        mov      edi, dword ptr [ebp*8 + g_data_0052290c]
+        mov      edi, dword ptr [ebp*8 + g_crtFpuSlot1_0052290c]
         or       ecx, 0xffffffff
         repne scasb
         not      ecx
@@ -277,7 +277,7 @@ __declspec(naked) void RaiseAbortLocalized_004cc070(void)
         call     dword ptr [g_iat_004d2148]
         mov      esi, eax
     L_c218:
-        mov      edx, dword ptr [ebp*8 + g_data_0052290c]
+        mov      edx, dword ptr [ebp*8 + g_crtFpuSlot1_0052290c]
         lea      ecx, [esp + 0x10]
         push     0
         push     ecx

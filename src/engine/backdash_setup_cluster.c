@@ -130,7 +130,7 @@ extern void PreFightInstallCluster_00474390(void);
 
 extern unsigned int g_chain_disp_30_439a40;
 extern unsigned int g_chain_disp_40_439a40;
-extern unsigned int g_x_005380d8;
+extern unsigned int g_fightTickSavedSlot_005380d8;
 extern void TwoStageWalkGate_00439ae0(void);
 extern void TwoConditionalJmp_00439b80(void);
 extern void Thunk_00439c20(void);

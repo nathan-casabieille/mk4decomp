@@ -114,14 +114,14 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   B (+0x80): eax = ++[scaledInit*4 + 0xc]; if eax > g_eventQueueCurrent: set bit-0 in 0054208c;
  *     else clear it. ret.
  */
-extern unsigned int g_state_00541e70;
+extern unsigned int g_vertexInitFlagAlt_00541e70;
 extern unsigned int g_vertexInitFlag_00541e74;
 extern unsigned int g_state_00541e78;
 extern void VertexSlotInitFlagWalk_00409740(void);
 
 __declspec(naked) void DualEntryInitCmp_00425b20(void) {
     __asm {
-        mov     eax, dword ptr [g_state_00541e70]
+        mov     eax, dword ptr [g_vertexInitFlagAlt_00541e70]
         mov     ecx, dword ptr [g_vertexInitFlag_00541e74]
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     dword ptr [g_xformEntityIdx], 0
@@ -133,7 +133,7 @@ __declspec(naked) void DualEntryInitCmp_00425b20(void) {
         test    eax, eax
         _emit   75h
         _emit   37h
-        mov     eax, dword ptr [g_state_00541e70]
+        mov     eax, dword ptr [g_vertexInitFlagAlt_00541e70]
         mov     ecx, 0x000007fc
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     dword ptr [g_walkCallback], ecx

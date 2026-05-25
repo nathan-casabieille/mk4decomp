@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_walkBoundsLimit_00535d60;
 extern unsigned int g_walkBoundsSlot_00535d68;
-extern unsigned int g_data_0053a3cc;
+extern unsigned int g_pendingClear_0053a3cc;
 extern unsigned int g_data_00541fac;
 extern unsigned int g_load_0052ab10;
 
@@ -120,7 +120,7 @@ extern unsigned int g_load_0052ab10;
  *     idx++; chain[+0x58/+0x5c/+0x60/+0x64] = table[+idx]; g_walkCallback=value.
  *   Then idx++; chain[+0x68] = table[+idx] (no g_walkCallback set).
  *   Then idx++ (final increment).
- *   Set g_data_0053a3cc=0, g_walkBoundsSlot_00535d68=0, g_walkCallback=0xffff0000,
+ *   Set g_pendingClear_0053a3cc=0, g_walkBoundsSlot_00535d68=0, g_walkCallback=0xffff0000,
  *   g_walkBoundsLimit_00535d60=0xffff0000; ret.
  */
 void FiveFieldChainCopyTableWalk_00431260(void) {
@@ -143,7 +143,7 @@ void FiveFieldChainCopyTableWalk_00431260(void) {
     g_xformEntityIdx++;
     *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x68) = *(unsigned int *)(g_xformEntityIdx * 4);
     g_xformEntityIdx++;
-    g_data_0053a3cc = 0;
+    g_pendingClear_0053a3cc = 0;
     g_walkBoundsSlot_00535d68 = 0;
     g_walkCallback = 0xffff0000;
     g_walkBoundsLimit_00535d60 = 0xffff0000;

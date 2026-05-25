@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+extern unsigned int *g_dispatchBaseQ_00522150;
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
@@ -112,7 +113,6 @@ extern unsigned int g_virtualHeapBase_00520130;
 extern unsigned int g_iat_004d214c;
 extern unsigned int g_iat_004d2168;
 extern unsigned int g_x_00520140;
-extern unsigned int g_x_00522150;
 extern unsigned int g_x_00fa0ee4;
 
 struct HeapRegion {
@@ -124,8 +124,8 @@ struct HeapRegion {
 
 void HeapRegionTeardown_004c7240(struct HeapRegion *region) {
     ((void (__stdcall *)(void *, unsigned int, unsigned int))g_iat_004d2168)(region->memory_ptr, 0, 0x8000);
-    if ((struct HeapRegion *)g_x_00522150 == region) {
-        g_x_00522150 = (unsigned int *)region->next;
+    if ((struct HeapRegion *)g_dispatchBaseQ_00522150 == region) {
+        g_dispatchBaseQ_00522150 = (unsigned int *)region->next;
     }
     if (region != (struct HeapRegion *)&g_virtualHeapBase_00520130) {
         region->next->prev = region->prev;

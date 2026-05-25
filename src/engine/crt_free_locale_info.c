@@ -143,7 +143,7 @@ extern unsigned int g_data_004f5798;
 extern unsigned int g_data_004f613c;
 extern unsigned int g_data_004ffd4c;
 extern unsigned int g_crtFilbufBase_005222e0;
-extern unsigned int g_data_00522620;
+extern unsigned int g_crtDispatchEnd_00522620;
 extern unsigned int g_crtCType_00522998;
 extern unsigned int g_crtLocaleNumeric_00522bb0;
 extern unsigned int g_crtFpuTbyteVar_00522e58;

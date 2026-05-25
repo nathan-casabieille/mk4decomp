@@ -112,7 +112,7 @@ extern unsigned int g_data_004e86d8;
 extern unsigned int g_dispatchArg_00535e48;
 extern unsigned int g_audioVoiceCounter_00535e50;
 extern unsigned int g_cameraProjSlot_00537eb4;
-extern unsigned int g_data_00542408;
+extern unsigned int g_installCountdownArr3_00542408;
 extern void BootPhaseGateBracketedInit_004060c0(void);
 extern void Chain2CallMul10Accum_00426a30(void);
 extern void FramePauseScaledStore_00406c10(void);
@@ -136,7 +136,7 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         test     eax, eax
         jne      L_8430
         mov      eax, dword ptr [g_walkCallback]
-        mov      edi, OFFSET g_data_00542408
+        mov      edi, OFFSET g_installCountdownArr3_00542408
         shr      edi, 2
         mov      dword ptr [g_currentNodeFlags], eax
         mov      dword ptr [g_pendingNodeType], edi

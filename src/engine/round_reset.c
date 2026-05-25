@@ -117,21 +117,21 @@ extern unsigned int g_dispatchSave_00537ef4;
 extern unsigned int g_dispatchVar11_00537f04;
 extern unsigned int g_hitPhase_00537f30;
 extern unsigned int g_audioBank2State_00537f98;
-extern unsigned int g_data_005380d8;
+extern unsigned int g_fightTickSavedSlot_005380d8;
 extern unsigned int g_roundResetSlot_0053a3e4;
 extern unsigned int g_phaseInstallSlot_0053a42c;
 extern unsigned int g_audioStreamState_0053a430;
 extern unsigned int g_phaseThunkArr_0053a474;
 extern u32 g_dlSomeFlag1;
 extern unsigned int g_dst_0053a6e0;
-extern unsigned int g_data_0053a6f8;
+extern unsigned int g_phaseThunkSlot4_0053a6f8;
 extern unsigned int g_phaseThunkState_0053a730;
 extern unsigned int g_data_0053a788;
 extern unsigned int g_data_0053e34c;
 extern unsigned int g_data_00541d84;
 extern unsigned int g_smState4Way_00541dc8;
 extern unsigned int g_titleDemoState_00541df0;
-extern unsigned int g_data_00541df4;
+extern unsigned int g_titleDemoState2_00541df4;
 extern u32 g_dlState;
 extern u32 g_dlAux;
 extern unsigned int g_data_00541ee8;
@@ -174,7 +174,7 @@ extern unsigned int g_data_00541f78;
 extern unsigned int g_data_00541f7c;
 extern unsigned int g_data_00541f80;
 extern unsigned int g_data_00541f84;
-extern unsigned int g_data_0054380c;
+extern unsigned int g_tripleEntryFlag_0054380c;
 extern void Cmp2DirtyToggle_00423870(void);
 extern void TestCmpZeroFour_004238b0(void);
 extern void TriBranchFlagWrite_00422720(void);
@@ -214,9 +214,9 @@ __declspec(naked) void RoundReset_004223e0(void)
         mov      dword ptr [g_dst_00537ea4], ebx
     L_2459:
         mov      dword ptr [g_titleDemoState_00541df0], ebx
-        mov      dword ptr [g_data_00541df4], ebx
-        mov      byte ptr [g_data_0054380c], bl
-        mov      dword ptr [g_data_0053a6f8], ebx
+        mov      dword ptr [g_titleDemoState2_00541df4], ebx
+        mov      byte ptr [g_tripleEntryFlag_0054380c], bl
+        mov      dword ptr [g_phaseThunkSlot4_0053a6f8], ebx
         mov      dword ptr [g_data_0053a788], ebx
         mov      dword ptr [g_data_0053e34c], ebx
         mov      dword ptr [g_smState4Way_00541dc8], ebx
@@ -234,7 +234,7 @@ __declspec(naked) void RoundReset_004223e0(void)
         mov      dword ptr [g_dlSomeFlag2], ebx
         mov      dword ptr [g_dlState], ebx
         mov      dword ptr [g_dlAux], ebx
-        mov      dword ptr [g_data_005380d8], ebx
+        mov      dword ptr [g_fightTickSavedSlot_005380d8], ebx
         mov      dword ptr [g_data_00541eec], ebx
         mov      dword ptr [g_data_00541ee8], ebx
         mov      dword ptr [g_data_00541ef4], ebx
@@ -280,7 +280,7 @@ __declspec(naked) void RoundReset_004223e0(void)
         jne      short L_25e9
         mov      eax, dword ptr [g_gtFightTickCounter]
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_005380d8], eax
+        mov      dword ptr [g_fightTickSavedSlot_005380d8], eax
     L_25e9:
         pop      ebx
         ret

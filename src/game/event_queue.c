@@ -5,7 +5,7 @@
 #include "engine/scenegraph.h"
 
 /* Base of the 20-entry packed-ptr ring buffer (0x0053a4b8..0x0053a508). */
-extern unsigned int g_data_0053a4b8;
+extern unsigned int g_eventQueueDrainBase_0053a4b8;
 
 /* Drain loop lives in src/engine/misc_matchesQQ.c at 0x0045c840. The
  * linker pads the gap between this function's tail jmp and the loop
@@ -16,7 +16,7 @@ extern void EventQueueDrainLoop_0045c840(void);
 /*
  * Snapshot the active event-queue cursor (g_eventQueueActive) into the
  * working slot (g_xformEntityIdx), pin the buffer-end packed pointer
- * (&g_data_0053a4b8 + 80 == 0x0053a508 >> 2) in g_eventQueueTotal,
+ * (&g_eventQueueDrainBase_0053a4b8 + 80 == 0x0053a508 >> 2) in g_eventQueueTotal,
  * then tail-call into EventQueueDrainLoop_0045c840 to walk the queue.
  *
  * The shr survives const-folding because (&g_data + 80) carries a
@@ -28,7 +28,7 @@ extern void EventQueueDrainLoop_0045c840(void);
  */
 void DispatchEventQueue(void)
 {
-    unsigned int total = ((unsigned int)&g_data_0053a4b8 + 80) >> 2;
+    unsigned int total = ((unsigned int)&g_eventQueueDrainBase_0053a4b8 + 80) >> 2;
     g_xformEntityIdx = g_eventQueueActive;
     g_eventQueueTotal = total;
     EventQueueDrainLoop_0045c840();

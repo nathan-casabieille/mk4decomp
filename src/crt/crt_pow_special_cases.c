@@ -121,7 +121,7 @@ extern void CrtPowSpecialCases_004ca440(void);
 extern unsigned int g_data_0051fff0;
 extern unsigned int g_data_0051fff8;
 extern unsigned int g_data_00522410;
-extern unsigned int g_data_00522470;
+extern unsigned int g_crtFpuTbyte_00522470;
 extern unsigned int g_data_00f9f7f8;
 
 __declspec(naked) void CrtPowCluster_004c6540(void)
@@ -281,7 +281,7 @@ __declspec(naked) void CrtPowCluster_004c6540(void)
         jne      L_65af
         fstp     st(0)
         fstp     st(0)
-        fld      tbyte ptr [g_data_00522470]
+        fld      tbyte ptr [g_crtFpuTbyte_00522470]
         mov      eax, 1
         jmp      L_65da
     L_6735:

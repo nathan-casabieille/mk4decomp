@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_0054380c;
+extern unsigned int g_tripleEntryFlag_0054380c;
 extern unsigned int g_or_0052ab40;
 extern void HitReactionDispatcher_0045f650(void);
 extern void ClearBit2x34_00490130(void);
@@ -171,7 +171,7 @@ __declspec(naked) void TripleEntryCountdownInstall_0046a230(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_tec_b1done
-        mov     byte ptr [g_data_0054380c], 1
+        mov     byte ptr [g_tripleEntryFlag_0054380c], 1
         call    Wrapper_00471340
         pop     esi
         ret
