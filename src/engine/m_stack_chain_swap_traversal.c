@@ -117,17 +117,17 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00493d00 (319b game) - mstack-push 2 + scaledInit traversal + dual call + chain swap.
  *   Push g_scaledInit and g_xformEntityIdx. scaledInit=[cj*4+0x18]; clear [+0x44].
  *   If [+0x1c]!=-10: skip. Else scaledInit=[*4]; g_xformEntityIdx=4; call MStackBracket5_LinkedListUnlink_00409aa0.
  *   Adjust chain, swap pointers, call MStackBracket2_TreeWalkRecursive_00405e70. Mstack-pop 2; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern void MStackBracket2_TreeWalkRecursive_00405e70(void);
 extern void MStackBracket5_LinkedListUnlink_00409aa0(void);
@@ -165,7 +165,7 @@ void MStackChainSwapTraversal_00493d00(void) {
         mov     dword ptr [g_xformEntityIdx], 4
         mov     dword ptr [g_scaledInit_00542044], ecx
         call    MStackBracket5_LinkedListUnlink_00409aa0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -186,7 +186,7 @@ void MStackChainSwapTraversal_00493d00(void) {
         mov     eax, dword ptr [edx*4 + 0x34]
         mov     dword ptr [g_walkCallback], eax
         call    MStackBracket2_TreeWalkRecursive_00405e70
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   50h

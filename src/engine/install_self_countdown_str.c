@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void PopCallBitCmpPushCall_0047cb00(void);
 extern void InstallSelfCountdownStr_0047cb90(void);
@@ -134,7 +134,7 @@ extern void ScaledChain3c7c_0048f930(void);
  *     and g_walkCallback; otherwise call ScaledChain3c7c then 3-way dispatch on g_walkCallback.
  */
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueChild;
 
 __declspec(naked) void InstallSelfCountdown2Stage_0047c8f0(void) {
@@ -154,7 +154,7 @@ __declspec(naked) void InstallSelfCountdown2Stage_0047c8f0(void) {
         _emit   75h
         _emit   13h
         call    PopCallBitCmpPushCall_0047cb00
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   59h
@@ -168,7 +168,7 @@ __declspec(naked) void InstallSelfCountdown2Stage_0047c8f0(void) {
         _emit   05h
         jmp     InstallSelfMStackPackedFlow_0047c990
         call    ScaledChain3c7c_0048f930
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   31h
@@ -181,7 +181,7 @@ __declspec(naked) void InstallSelfCountdown2Stage_0047c8f0(void) {
         mov     dword ptr [eax + 0x08], 0x0047c8f0
         mov     dword ptr [eax + 0x84], ecx
         mov     dword ptr [g_pendingNodeType], ecx
-        mov     dword ptr [g_pause_00541e6c], ecx
+        mov     dword ptr [g_framePauseFlag], ecx
         ret
     }
 }

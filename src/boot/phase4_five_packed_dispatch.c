@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void Phase4FourHelperChain_00413760(void);
 extern void Vec2SumMul10ChainCompute_0049bc60(void);
@@ -130,7 +130,7 @@ extern void PendingMatch_00498eb0(void);
 
 /* @addr 0x00498df0 (180b game) - triple-entry 3-block dispatcher with Mul10Tail and pause-gated paths. */
 extern unsigned int g_data_0053a498;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_fightGroupHead;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_eventQueueWorkType;
@@ -169,12 +169,12 @@ __declspec(naked) void TripleEntry3Block_00498df0(void) {
         _emit   75h
         _emit   0eh
         call    Phase4FourHelperChain_00413760
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   22h
         call    Vec2SumMul10ChainCompute_0049bc60
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   14h
@@ -187,7 +187,7 @@ __declspec(naked) void TripleEntry3Block_00498df0(void) {
         ret
         _emit   90h
         call    Phase4FivePackedDispatch_0040fe40
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h

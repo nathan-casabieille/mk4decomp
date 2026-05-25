@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void MatchPredicateCluster_0045ef50(void);
 extern void Mul10Tail_00404af0(void);
@@ -128,7 +128,7 @@ extern void SixSubdispatchSpan_0045ec10(void);
 
 /* @addr 0x0045ede0 (356b game) - 2-entry packed dual-stream diff+mul wrapper.
  *   Entry 1 (offset 0, 301b): for each of two streams identified by
- *   g_player1NodeIdx and g_data_0053815c, stores into g_currentNodeIdx and
+ *   g_player1NodeIdx and g_player2NodeIdx, stores into g_currentNodeIdx and
  *   calls MatchPredicateCluster_0045ef50. If both succeed and bit 0 of g_xformDirtyFlags is
  *   set on each, computes the per-component (x,y,z) differences between
  *   the two stream slot's +0x54/+0x58/+0x5c fields, multiplies each diff
@@ -142,7 +142,7 @@ extern void SixSubdispatchSpan_0045ec10(void);
  *     and returns; else sets g_eventQueueCurrent=4 and tail-jmp SixSubdispatchSpan_0045ec10.
  */
 extern unsigned int g_player1NodeIdx;
-extern unsigned int g_data_0053815c;
+extern unsigned int g_player2NodeIdx;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_xformEntityIdx;
@@ -162,7 +162,7 @@ __declspec(naked) void DualStreamSqDistThresh_0045ede0(void) {
         jne     L_dsd_skip
         test    byte ptr [g_xformDirtyFlags], 1
         je      L_dsd_skip
-        mov     ecx, dword ptr [g_data_0053815c]
+        mov     ecx, dword ptr [g_player2NodeIdx]
         mov     dword ptr [g_currentNodeIdx], ecx
         call    MatchPredicateCluster_0045ef50
         mov     eax, dword ptr [g_framePauseFlag]
@@ -171,7 +171,7 @@ __declspec(naked) void DualStreamSqDistThresh_0045ede0(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         je      L_dsd_skip
         mov     ecx, dword ptr [g_player1NodeIdx]
-        mov     edx, dword ptr [g_data_0053815c]
+        mov     edx, dword ptr [g_player2NodeIdx]
         mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_xformEntityIdx], edx
         mov     eax, dword ptr [ecx*4 + 0x54]

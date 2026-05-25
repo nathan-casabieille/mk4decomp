@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0049c5a0 (199b game) - dual-cmp swap-and-store with 3 saved regs.
  *   edx = g_fightGroupHead; ebx = [0x538158]; esi = [0x53803c]; edi = [0x538038];
@@ -138,7 +138,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_x_00538038;
 extern unsigned int g_x_0053803c;
 extern unsigned int g_player1NodeIdx;
-extern unsigned int g_x_0053815c;
+extern unsigned int g_player2NodeIdx;
 extern unsigned int g_x_00542010;
 extern unsigned int g_x_00542014;
 extern unsigned int g_x_00542018;
@@ -172,7 +172,7 @@ __declspec(naked) void DualCmpSwapStore_0049c5a0(void) {
         mov     ecx, [eax*4 + 0x68]
         mov     dword ptr [g_currentNodeFlags], ecx
         mov     eax, [eax*4 + 0x6c]
-        mov     ecx, dword ptr [g_x_0053815c]
+        mov     ecx, dword ptr [g_player2NodeIdx]
         mov     dword ptr [g_xformScratch2088], eax
         mov     eax, dword ptr [g_x_00542010]
         cmp     ecx, edx

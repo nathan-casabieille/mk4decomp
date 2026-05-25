@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00450de0 (229b game) - install-self with index-walk loop.
  *   snapshot+clear chain[+0x84]. If was nonzero -> recompute eax = 0x004e7528>>2 + 5
@@ -133,7 +133,7 @@ extern unsigned int g_data_00535e7c;
  *   walk. If non-zero: install-self at [esi+8]=0x00450de0, chain[+0x84]=1, pause=1; ret.
  */
 extern unsigned int g_data_004e7528;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_eventQueueIdx;
@@ -152,7 +152,7 @@ __declspec(naked) void InstallSelfIndexWalk_00450de0(void) {
         test    eax, eax
         jne     L_isw_resume2
         call    DualScaledStore_00452740
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_isw_pop_ret
         mov     edx, dword ptr [g_baseSel_00542060]
@@ -179,7 +179,7 @@ L_isw_after_thunk:
         mov     eax, dword ptr [eax*4 + 0]
         mov     dword ptr [g_scaledInit_00542044], eax
         call    eax
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_isw_pop_ret
         mov     eax, dword ptr [g_eventQueueEnd]
@@ -198,7 +198,7 @@ L_isw_install:
         mov     dword ptr [g_pendingNodeType], ecx
         mov     dword ptr [esi + 8], edi
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_pause_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
 L_isw_pop_ret:
         pop     edi
         pop     esi

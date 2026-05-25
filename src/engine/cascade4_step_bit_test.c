@@ -117,12 +117,12 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void PushScaledIdxBitToggle_0048c2f0(void);
 
 /* @addr 0x0048c370 (144b game) - 4-step cascade with bl=4 bit-test on g_xformDirtyFlags.
@@ -132,19 +132,19 @@ extern void PushScaledIdxBitToggle_0048c2f0(void);
 void Cascade4StepBitTest_0048c370(void) {
     g_walkCallback = 0;
     PushScaledIdxBitToggle_0048c2f0();
-    if (g_pause_00541e6c != 0) return;
+    if (g_framePauseFlag != 0) return;
     if (((unsigned char)g_xformDirtyFlags & 4) != 0) return;
     g_walkCallback = 1;
     PushScaledIdxBitToggle_0048c2f0();
-    if (g_pause_00541e6c != 0) return;
+    if (g_framePauseFlag != 0) return;
     if (((unsigned char)g_xformDirtyFlags & 4) != 0) return;
     g_walkCallback = 2;
     PushScaledIdxBitToggle_0048c2f0();
-    if (g_pause_00541e6c != 0) return;
+    if (g_framePauseFlag != 0) return;
     if (((unsigned char)g_xformDirtyFlags & 4) != 0) return;
     g_walkCallback = 3;
     PushScaledIdxBitToggle_0048c2f0();
-    if (g_pause_00541e6c != 0) return;
+    if (g_framePauseFlag != 0) return;
     if (((unsigned char)g_xformDirtyFlags & 4) != 0) return;
     g_walkCallback = (unsigned int)-1;
 }

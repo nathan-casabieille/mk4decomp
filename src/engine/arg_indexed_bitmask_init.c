@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0045f310 (303b game) - arg-table indexed setup with conditional double-init + bitmask result.
  *   Init: eax=[esp+4]>>2; g_eventQueueTotal=eax. Load 4 from [eax*4+0]: g_eventQueueWorkType, g_acc, g_eventQueueNotMask, g_eventQueueChild.
@@ -133,7 +133,7 @@ extern unsigned int g_data_00535e7c;
  *     If first not equal: clear bit, ret.
  */
 extern unsigned int g_data_005424c0;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueTotal;
 extern unsigned int g_eventQueueWorkType;
 extern void NotMaskStorePair_0045f440(void);
@@ -182,7 +182,7 @@ void ArgIndexedBitmaskInit_0045f310(void) {
         mov     dword ptr [g_eventQueueChild], edx
         mov     dword ptr [g_eventQueueTotal], eax
         call    NotMaskStorePair_0045f440
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   66h

@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /*
  * AudioState50b4BitDispatcher_004a32c0 - 309b 4-bit dispatcher on g_state_004d50b4 (cl/ch).
@@ -131,7 +131,7 @@ extern unsigned int g_data_00535e7c;
  *     call 0x004a1ac0 (sister). Then g_eventQueueChild = edi.
  *   Pop+ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_state_004d50b4;
 extern unsigned int g_currentNodeIdx;
 extern void SetJmp_004a1ac0(void);
@@ -196,7 +196,7 @@ __declspec(naked) void AudioState50b4BitDispatcher_004a32c0(void)
         je      short L_a32_b4_innerSkip
         and     dword ptr [g_xformDirtyFlags], 0xfffffffe
         call    eax
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a32_popRet
         test    byte ptr [g_xformDirtyFlags], 1
@@ -221,7 +221,7 @@ __declspec(naked) void AudioState50b4BitDispatcher_004a32c0(void)
         je      short L_a32_b8_innerSkip
         and     dword ptr [g_xformDirtyFlags], 0xfffffffe
         call    eax
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a32_popRet
         test    byte ptr [g_xformDirtyFlags], 1

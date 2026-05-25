@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void InstallSelfTwoTailJmp_00483f30(void);
 extern void TradePlaceChain_004933d0(void);
@@ -137,7 +137,7 @@ extern void ThrowAnimSetupCluster_00484150(void);
  *     Call CopyJmp; if pause ret. If bit0(0054208c): jmp ThrowAnimSetupCluster_00484150.
  *     Else: push 0x004ee800; call ArgSarStoreJmp; pop; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_eventQueueEnd;
 extern void ArgSarStoreJmp_004594f0(void);
@@ -169,7 +169,7 @@ __declspec(naked) void InstallSelfMultiCascadeChainCopy_00484000(void) {
         pop     esi
         ret
         call    SlotPhaseResetInstallChain_0048e0e0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   72h
@@ -191,18 +191,18 @@ __declspec(naked) void InstallSelfMultiCascadeChainCopy_00484000(void) {
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    CallPauseScaledStoreJmp_00428820
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
         _emit   90h
         mov     dword ptr [g_walkCallback], 3
         call    ByteWordTableTaggedDispatch_0048a050
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   77h
         call    TradePlaceChain_004933d0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   69h
@@ -222,7 +222,7 @@ __declspec(naked) void InstallSelfMultiCascadeChainCopy_00484000(void) {
         mov     dword ptr [g_xformEntityIdx], eax
         mov     dword ptr [ecx*4 + 0x3c], eax
         call    CopyJmp_0048ef90
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   1bh

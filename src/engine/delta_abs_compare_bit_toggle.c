@@ -117,17 +117,17 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0048ea90 (131b) - swap cj if mismatch; load arr[cj].slot54
  *   and arr[cj2].slot54 + arr[cj].slot6c; compute abs(delta1)/abs(delta2);
  *   set/clear bit 0 of g_xformDirtyFlags based on |eax| vs |ecx|.
  */
 extern unsigned int g_player1NodeIdx;
-extern unsigned int g_x_0053815c;
+extern unsigned int g_player2NodeIdx;
 extern unsigned int g_eventQueueWorkType;
 
 extern unsigned int g_arr_chain_54_48ea90;
@@ -141,7 +141,7 @@ void DeltaAbsCompareBitToggle_0048ea90(void) {
         mov     dword ptr [g_scaledInit_00542044], ecx
         _emit   75h
         _emit   0ch
-        mov     ecx, dword ptr [g_x_0053815c]
+        mov     ecx, dword ptr [g_player2NodeIdx]
         mov     dword ptr [g_scaledInit_00542044], ecx
         mov     edx, [ecx*4 + g_arr_chain_54_48ea90]
         mov     dword ptr [g_walkCallback], edx

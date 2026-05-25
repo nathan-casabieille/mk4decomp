@@ -117,14 +117,14 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00433d80 (205b game) - dual-entry chained install-self. */
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_eventQueueCurrent;
 extern void AddDerefJmp_00433e70(void);
@@ -166,12 +166,12 @@ __declspec(naked) void InstallSelfDualChain_00433d80(void) {
         _emit   74h
         _emit   33h
         call    DualCallPauseDirtyJmp_00490c30
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   6bh
         call    WeightedSumClampHelper_00439920
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   5dh
@@ -189,12 +189,12 @@ __declspec(naked) void InstallSelfDualChain_00433d80(void) {
         _emit   75h
         _emit   3dh
         call    ScaledZeroFour_00490740
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   2fh
         call    CallPauseScaledStoreCopyJmp_00461220
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   21h
@@ -202,7 +202,7 @@ __declspec(naked) void InstallSelfDualChain_00433d80(void) {
         mov     dword ptr [esi + 0x08], 0x00433db0
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], 0x0a
-        mov     dword ptr [g_pause_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret
     }

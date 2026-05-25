@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00462980 (265b game) - install-self dual path with init / state setup.
  *   snapshot+clear chain[+0x84].
@@ -133,7 +133,7 @@ extern unsigned int g_data_00535e7c;
  *     [esi+8]=0x00462980; chain[+0x84]=1; scaledInit-chain push 0x00462980+0x01000000.
  *     Call InstallSelfPackedF80_00426000; pause=1; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_state_00537f74;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_eventQueueWorkType;
@@ -153,7 +153,7 @@ __declspec(naked) void InstallSelfBootInit_00462980(void) {
         _emit   74h
         _emit   30h
         call    BootInitGuardedCallChain_004265d0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -177,7 +177,7 @@ __declspec(naked) void InstallSelfBootInit_00462980(void) {
         mov     dword ptr [g_active_00537e88], eax
         mov     dword ptr [g_eventQueueWorkType], 4
         call    Push16Call_00489f50
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   6eh
@@ -198,7 +198,7 @@ __declspec(naked) void InstallSelfBootInit_00462980(void) {
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    InstallSelfPackedF80_00426000
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
     }

@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004904c0 (273b game) - bit-driven dispatch with 2-call cascade + mstack-push.
  *   Negate g_walkCallback -> g_eventQueueCurrent. scaledInit = baseSel[+0x38];
@@ -129,7 +129,7 @@ extern unsigned int g_data_00535e7c;
  *   Both branches: call DoublePushCallDoublePop; if pause? ret. Then conditional
  *   mstack-push, optional GuardedSeq, mstack-pop, tail-jmp MStackFrameCdeclDouble_004903f0.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_xformScratch94;
@@ -151,7 +151,7 @@ __declspec(naked) void BitDispatchDualCallMStackPush_004904c0(void) {
         _emit   75h
         _emit   77h
         call    DoublePushCallDoublePop_004905e0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -174,7 +174,7 @@ __declspec(naked) void BitDispatchDualCallMStackPush_004904c0(void) {
         _emit   74h
         _emit   12h
         call    GuardedSeq_00490c60
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -189,7 +189,7 @@ __declspec(naked) void BitDispatchDualCallMStackPush_004904c0(void) {
         mov     dword ptr [g_state_004d57ac], eax
         jmp     MStackFrameCdeclDouble_004903f0
         call    DoublePushCallDoublePop_004905e0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   57h
@@ -204,7 +204,7 @@ __declspec(naked) void BitDispatchDualCallMStackPush_004904c0(void) {
         mov     dword ptr [g_state_004d57ac], ecx
         mov     dword ptr [ecx*4 + 0], eax
         call    GuardedSeq_00490c60
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   1dh

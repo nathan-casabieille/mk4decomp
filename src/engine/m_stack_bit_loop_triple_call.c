@@ -117,13 +117,13 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0049cc30 (267b game) - mstack-push + bit-gated loop with 3 helper calls. */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_eventQueueWorkType;
@@ -142,7 +142,7 @@ __declspec(naked) void MStackBitLoopTripleCall_0049cc30(void) {
         mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [g_eventQueueWorkType], edx
         call    SetJmp_0049cb90
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -180,7 +180,7 @@ __declspec(naked) void MStackBitLoopTripleCall_0049cc30(void) {
         mov     dword ptr [g_eventQueueCurrent], esi
         mov     dword ptr [g_walkCallback], edx
         call    AndStoreJmp_0049cc10
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   68h
@@ -194,14 +194,14 @@ __declspec(naked) void MStackBitLoopTripleCall_0049cc30(void) {
         _emit   0a4h
         mov     dword ptr [g_pendingNodeType], eax
         call    Thunk_0049cb80
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   39h
         mov     edx, dword ptr [g_eventQueueWorkType]
         mov     dword ptr [g_walkCallback], edx
         call    SetJmp_0049cb90
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   84h

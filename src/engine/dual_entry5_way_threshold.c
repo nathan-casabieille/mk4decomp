@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004366d0 (137b game) - 5-way state threshold dispatcher with two entry points.
  *   Block A (+0x00): threshold checks on g_table_00535ddc; jmp GuardedSeq/MStackPush;
@@ -128,7 +128,7 @@ extern unsigned int g_data_00535e7c;
  *   Block B (+0x30): call Cmp2CallDirtyCall+ScaledChainSignDirtyToggle; if !pause & bit-clear: jmp GuardedSeq;
  *     else cascade 3 state-threshold gates jumping to Wrapper_00436760/70/80 or GuardedSeq.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void CallPauseMStackPushSet2Jmp_00437930(void);
 extern void GuardedSeq_00433bb0(void);
 extern void MultiThunkDispatcher9_00436780(void);
@@ -158,7 +158,7 @@ __declspec(naked) void DualEntry5WayThreshold_004366d0(void) {
         _emit   75h
         _emit   4fh
         call    ScaledChainSignDirtyToggle_00439680
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   41h

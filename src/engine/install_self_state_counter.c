@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00467d40 (280b game) - 3-state install-self with state-dependent dispatch.
  *   state 1: call CopyJmp_00406ba0; if !pause:
@@ -133,7 +133,7 @@ extern unsigned int g_data_00535e7c;
  *     ending with install-self at [esi+8]=0x00467d40, chain[+0x84]=1,
  *     g_pendingNodeType=8, pause=1; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_x_005433e8;
 extern unsigned int g_x_00543590;
@@ -159,7 +159,7 @@ __declspec(naked) void InstallSelfStateCounter_00467d40(void) {
         _emit   75h
         _emit   54h
         call    CopyJmp_00406ba0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -206,29 +206,29 @@ __declspec(naked) void InstallSelfStateCounter_00467d40(void) {
         inc     dword ptr [g_x_005433e8]
         mov     dword ptr [g_walkCallback], 0xac
         call    ScaledLitLoadCall_00480fe0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   4fh
         call    GateDispatch6c_00494580
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   41h
         call    ScaledMove48to58_00490720
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   33h
         call    CallPauseScaledStoreCopyJmp_00461220
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   25h
         mov     dword ptr [esi + 8], 0x00467d40
         mov     dword ptr [esi + 0x84], 1
         mov     dword ptr [g_pendingNodeType], 8
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
     }

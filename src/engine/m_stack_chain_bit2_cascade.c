@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void GuardedWalkSwitchDirty_0048ea40(void);
 extern void MStackChainBit2Cascade_0048e8f0(void);
@@ -132,7 +132,7 @@ extern void MStackChainBit2Cascade_0048e8f0(void);
  *     load g_player1NodeIdx vs g_fightGroupHead; if eq eax=0x200 else eax=2; g_xformScratch94=eax & g_walkCallback;
  *     toggle bit-0; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_fightGroupHead;
 extern unsigned int g_eventQueueCurrent;
@@ -162,7 +162,7 @@ __declspec(naked) void DualEntryBitFlagDispatch_0048e820(void) {
         _emit   90h
         _emit   90h
         call    DirtyToggleByBaseSel_0048f2e0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   7eh
@@ -171,7 +171,7 @@ __declspec(naked) void DualEntryBitFlagDispatch_0048e820(void) {
         _emit   05h
         jmp     GuardedWalkSwitchDirty_0048ea40
         call    MStackChainBit2Cascade_0048e8f0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   62h
@@ -179,7 +179,7 @@ __declspec(naked) void DualEntryBitFlagDispatch_0048e820(void) {
         _emit   74h
         _emit   59h
         call    PushPopState70Mask_00490650
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   4bh

@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00439ba0 (128b game) - dual-entry pause/bit gated.
  *   Block A: call LinkedListDistanceWalker_0045f950; if !pause: cl=g_xformDirtyFlags; if (al=1 & cl): g_data_0053a478=1,
@@ -130,7 +130,7 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_data_0053a478;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void LinkedListDistanceWalker_0045f950(void);
 extern void MStackPushPtr1Jmp_00438ef0(void);
 extern void MstackPopScaledChainPlusThunks_00471250(void);
@@ -140,7 +140,7 @@ extern void SetJmp_00439c30(void);
 __declspec(naked) void DualEntryBitGated_00439ba0(void) {
     __asm {
         call    LinkedListDistanceWalker_0045f950
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   39h
@@ -167,7 +167,7 @@ __declspec(naked) void DualEntryBitGated_00439ba0(void) {
         _emit   90h
         _emit   90h
         call    LinkedListDistanceWalker_0045f950
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   21h
@@ -176,7 +176,7 @@ __declspec(naked) void DualEntryBitGated_00439ba0(void) {
         _emit   05h
         jmp     MStackPushPtr1Jmp_00438ef0
         call    Set0xaCmpEqSet0x26Jmp_0046a1e0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h

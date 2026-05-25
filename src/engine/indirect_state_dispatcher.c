@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0049f6a0 (259b game) - indirect-call state dispatcher with retry loop.
  *   Init: table = (g_x_00541fc0 + g_x_00535e48); load [table*4 + 4]; call eax indirect.
@@ -130,7 +130,7 @@ extern unsigned int g_data_00535e7c;
  *   if bit0 cleared: store, call RoundWinTransition_0049e7e0; if pause ret; load [+8], call GuardedScaledCall;
  *   else fall to tail-CallSetPause; pop ebx; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_x_00535e48;
 extern unsigned int g_x_00541fc0;
 extern unsigned int g_xformEntityIdx;
@@ -151,7 +151,7 @@ __declspec(naked) void IndirectStateDispatcher_0049f6a0(void) {
         mov     eax, dword ptr [eax*4 + 4]
         mov     dword ptr [g_scaledInit_00542044], eax
         call    eax
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -198,7 +198,7 @@ __declspec(naked) void IndirectStateDispatcher_0049f6a0(void) {
         inc     eax
         mov     dword ptr [g_walkCallback], eax
         call    LinkedListIndirectDirtyToggle_0049f7b0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   6ah
@@ -218,7 +218,7 @@ __declspec(naked) void IndirectStateDispatcher_0049f6a0(void) {
         mov     edx, dword ptr [g_x_00535e48]
         mov     dword ptr [g_eventQueueCurrent], edx
         call    RoundWinTransition_0049e7e0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   25h
@@ -226,7 +226,7 @@ __declspec(naked) void IndirectStateDispatcher_0049f6a0(void) {
         mov     ecx, dword ptr [eax*4 + 8]
         mov     dword ptr [g_walkCallback], ecx
         call    GuardedScaledCall_0048a020
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h

@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00427390 (204b game) - 5-step setup if [g_x_004f360c] is set.
  *   call MStackPush8_004ab790; pause-check. Set g_walkCallback = 0x004e2760>>2.
@@ -129,7 +129,7 @@ extern unsigned int g_data_00535e7c;
  *     [+0x58]=0xfffffd71. Set g_walkCallback=0x18000; scaledInit = [chain*4+0x18]; chain[+0x3c]=0x18000.
  *   call MStackCall_004062f0; if !pause jmp MStackPop8_004ab860; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_x_004f360c;
 extern unsigned int g_fightGroupHead;
 extern unsigned int g_acc_00542078;
@@ -150,7 +150,7 @@ __declspec(naked) void GatedScaledChainSetup_00427390(void) {
         _emit   00h
         _emit   00h
         call    MStackPush8_004ab790
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -162,7 +162,7 @@ __declspec(naked) void GatedScaledChainSetup_00427390(void) {
         shr     eax, 2
         mov     dword ptr [g_walkCallback], eax
         call    PushSetXfmMaskCallPop_00407140
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -192,7 +192,7 @@ __declspec(naked) void GatedScaledChainSetup_00427390(void) {
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     dword ptr [eax*4 + 0x3c], ecx
         call    MStackCall_004062f0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h

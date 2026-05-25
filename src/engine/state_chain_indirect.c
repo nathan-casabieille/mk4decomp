@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00494670 (219b game) - 2-call cascade + state-based chain selection + indirect call.
  *   call ScaledLoadCmp0fJmp; if !pause: call MStackBitFlagDispatch; if !pause:
@@ -130,7 +130,7 @@ extern unsigned int g_data_00535e7c;
  *   eax = baseSel[*4+0x30]; scaledInit=eax; ecx=[eax*4+0]; sub 0x60;
  *   eax = ecx + 0x004f1b28>>2; scaledInit=eax; eax=[eax*4+0]; scaledInit=eax; call eax. ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_fightGroupHead;
 extern unsigned int g_eventQueueCurrent;
@@ -140,7 +140,7 @@ extern void ScaledLoadCmp0fJmp_004930e0(void);
 __declspec(naked) void StateChainIndirect_00494670(void) {
     __asm {
         call    ScaledLoadCmp0fJmp_004930e0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -149,7 +149,7 @@ __declspec(naked) void StateChainIndirect_00494670(void) {
         _emit   00h
         _emit   00h
         call    MStackBitFlagDispatch_00494750
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h

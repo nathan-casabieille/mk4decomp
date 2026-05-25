@@ -117,13 +117,13 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00484950 (316b game) - 3-state install-self with tail sibling. */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CallPauseScaledStoreJmp_00428820(void);
 extern void FiveCallGuardSetTail_0046f6b0(void);
@@ -155,7 +155,7 @@ __declspec(naked) void Install3StateSiblingTail_00484950(void) {
         ret
         push    0x00542bb4
         call    GuardedPackedSlotInit_00428760
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         cmp     eax, edi
         _emit   0fh
@@ -180,7 +180,7 @@ __declspec(naked) void Install3StateSiblingTail_00484950(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], edi
         call    CallPauseScaledStoreJmp_00428820
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         pop     esi
         ret
@@ -202,13 +202,13 @@ __declspec(naked) void Install3StateSiblingTail_00484950(void) {
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [edx*4 + 0x84], edi
         call    CallPauseScaledStoreJmp_00428820
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         pop     esi
         ret
         _emit   90h
         call    ScaledAndAl7f_004902f0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0dh

@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /*
  * @addr 0x004818e0 (104b game) - cj snapshot + dispatch + commit:
@@ -133,7 +133,7 @@ extern unsigned int g_player1NodeIdx;
 extern void PendingMatch_0041d770(void);
 
 /*
- * NON-COAXABLE: MSVC /O2 assigns g_x_0053815c to eax (b8) and g_player1NodeIdx
+ * NON-COAXABLE: MSVC /O2 assigns g_player2NodeIdx to eax (b8) and g_player1NodeIdx
  * to ecx (b9), regardless of declaration order. Orig has them reversed:
  * eax=0x538158 (a3 store to g_currentNodeIdx), ecx=0x53815c (89 0d store
  * to g_xformEntityIdx). Register-to-symbol binding is not coaxable from C.

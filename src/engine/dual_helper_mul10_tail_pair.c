@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void DualHelperMul10TailPair_00490ec0(void);
 extern void CjTableThresholdDispatch_00488f00(void);
@@ -136,7 +136,7 @@ extern void GuardedSeq_00488890(void);
  *   Block B (+0x70): g_walkCallback=0; call FlagThunk4EntryDispatcher_0040a470; if !pause: jmp GuardedSeq_00488890.
  */
 extern unsigned int g_load_0052ab10;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueChild;
 extern void CmpP1DualInitStore_00482ab0(void);
 
@@ -154,19 +154,19 @@ __declspec(naked) void DualEntryStateLoadCascade_00488800(void) {
         _emit   90h
         _emit   90h
         call    CjTableThresholdDispatch_00488f00
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   35h
         mov     dword ptr [g_walkCallback], 9
         call    FlagThunk4EntryDispatcher_0040a470
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   1dh
         mov     dword ptr [g_walkCallback], 0x00006666
         call    CmpP1DualInitStore_00482ab0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h
@@ -186,7 +186,7 @@ __declspec(naked) void DualEntryStateLoadCascade_00488800(void) {
         _emit   90h
         mov     dword ptr [g_walkCallback], 0
         call    FlagThunk4EntryDispatcher_0040a470
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h

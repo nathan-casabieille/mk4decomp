@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void PushCallPauseSetMaxThenCallPauseJmp_0048e380(void);
 extern void HandWalkCluster_00475cd0(void);
@@ -140,7 +140,7 @@ extern void PoseStateInitNode_0043cd60(void);
  *     g_walkCallback=0x80. Call PushPopCurrentSetFFFFFFFF; if pause ret.
  *     Call TripleStringPauseChain; if pause ret. Tail-jmp PoseStateInitNode_0043cd60.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_x_0052aac4;
 extern unsigned int g_x_00538148;
 extern unsigned int g_x_0053a430;
@@ -166,12 +166,12 @@ __declspec(naked) void DualBlockChainInitBody_0043cc10(void) {
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [g_x_0053a430], ecx
         call    CallPauseScaledStoreCopyJmp_00461220
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   63h
         call    PushCallPauseSetMaxThenCallPauseJmp_0048e380
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   55h
@@ -187,7 +187,7 @@ __declspec(naked) void DualBlockChainInitBody_0043cc10(void) {
         mov     dword ptr [esi + 8], offset DualBlockChainInitBody_0043cc10
         mov     dword ptr [esi + 0x84], 1
         mov     dword ptr [g_pendingNodeType], 0x64
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
         _emit   90h
@@ -213,30 +213,30 @@ __declspec(naked) void DualBlockChainInitBody_0043cc10(void) {
         mov     eax, dword ptr [g_eventQueueIdx]
         mov     dword ptr [edx*4 + 0x68], eax
         call    HandWalkCluster_00475cd0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   53h
         call    MoveCommitPackedDispatcher_0048d0f0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   45h
         mov     ecx, dword ptr [g_eventQueueEnd]
         mov     dword ptr [g_cj_0054205c], ecx
         call    MoveCommitPackedDispatcher_0048d0f0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   2bh
         mov     dword ptr [g_walkCallback], 0x80
         call    PushPopCurrentSetFFFFFFFF_00473070
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   13h
         call    TripleStringPauseChain_004468c0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h

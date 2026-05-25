@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0049a4e0 (312b game) - dual-block: install-self entry + sibling-tail with Mul10 chain.
  *   Entry (0..0x96): load state; clear. state!=0: tail-jmp FiveCallGuardSetTail.
@@ -132,7 +132,7 @@ extern unsigned int g_data_00535e7c;
  *     g_cj=scaledInit; push 0x23fb23; call ThreeChanPackClamp; push g_cj; call CopyThreeFields;
  *     push 0x004f2410; call ArgSar_Set0_Jmp; pop+ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeFlags;
 extern void ArgSar_Set0_Jmp_0049c6f0(void);
 extern void CopyThreeFields_00404df0(void);
@@ -174,7 +174,7 @@ __declspec(naked) void DualBlockInstallMul10Tail_0049a4e0(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], edx
         call    ScaledLoadJmp_00428d20
-        mov     dword ptr [g_pause_00541e6c], esi
+        mov     dword ptr [g_framePauseFlag], esi
         pop     esi
         pop     edi
         ret
@@ -188,7 +188,7 @@ __declspec(naked) void DualBlockInstallMul10Tail_0049a4e0(void) {
         _emit   90h
         _emit   90h
         call    PendingMatch_0049a670
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h

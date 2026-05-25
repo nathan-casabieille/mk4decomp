@@ -117,11 +117,11 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
+extern unsigned int g_framePauseFlag;
 
 /* @addr 0x00439f70 (83b game) - dual block.
  *   Block1 (0..43): store 500 at g_walkCallback; call audio rescale; if pause? ret;
@@ -136,7 +136,7 @@ extern unsigned int g_pause_00541e6c;
 void StoreCallPauseTestByte_DualCmpStoreClear_00439f70(void) {
     g_walkCallback = 0x1f4;
     AudioVolumeRescale_004ab690();
-    if (g_pause_00541e6c != 0) return;
+    if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 1) != 0) {
         QuadGuardBitGateJmp_00439130();
         return;

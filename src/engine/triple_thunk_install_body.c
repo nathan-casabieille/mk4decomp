@@ -117,14 +117,14 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004551f0 (330b game) - 3-thunk dispatcher + install-self body. */
 extern unsigned int g_data_005012b0;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_currentNodeFlags;
 extern void ArgSarStoreJmp_004594f0(void);
@@ -182,7 +182,7 @@ void TripleThunkInstallBody_004551f0(void) {
         _emit   13h
         push    0x004e7f18
         call    ArgSarStoreJmp_004594f0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         ret
         mov     ecx, offset g_data_005012b0
@@ -204,7 +204,7 @@ void TripleThunkInstallBody_004551f0(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    InstallSelfWithSibling_00475490
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         }
 }
 

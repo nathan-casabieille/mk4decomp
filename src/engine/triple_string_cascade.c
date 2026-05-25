@@ -117,13 +117,13 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004867b0 (174b game) - 3-block string-cascade. */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void Alarm4EntryInstallChain_00481d40(void);
 extern void ArgSarStoreJmp_004594f0(void);
 extern void GateDispatch6c_00494580(void);
@@ -131,7 +131,7 @@ extern void GateDispatch6c_00494580(void);
 __declspec(naked) void TripleStringCascade_004867b0(void) {
     __asm {
         call    GateDispatch6c_00494580
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0dh
@@ -144,13 +144,13 @@ __declspec(naked) void TripleStringCascade_004867b0(void) {
         _emit   90h
         _emit   90h
         call    GateDispatch6c_00494580
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   23h
         push    0x004eedf0
         call    IterStepDualStore_00490b40
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h
@@ -174,12 +174,12 @@ __declspec(naked) void TripleStringCascade_004867b0(void) {
         _emit   90h
         _emit   90h
         call    GateDispatch6c_00494580
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   3fh
         call    CopyJmp_0048ef90
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   31h
@@ -189,7 +189,7 @@ __declspec(naked) void TripleStringCascade_004867b0(void) {
         jmp     Alarm4EntryInstallChain_00481d40
         push    0x004eee1c
         call    IterStepDualStore_00490b40
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h

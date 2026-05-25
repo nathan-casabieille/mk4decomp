@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void CjInstallSelfRouter_00470480(void);
 extern void ScaledChainCallPauseSetJmp_0048f8e0(void);
@@ -135,7 +135,7 @@ extern void StageEventDamageCluster_0042c5a0(void);
  *   Block B (+0x60): call FiveCallScaledChainTailJmp; if !pause: jmp StageEventDamageCluster_0042c5a0; else ret.
  */
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 
 __declspec(naked) void InstallSelfDualEsi_0042c4f0(void) {
@@ -153,7 +153,7 @@ __declspec(naked) void InstallSelfDualEsi_0042c4f0(void) {
         ret
         mov     dword ptr [g_xformEntityIdx], 0x0042b6f0
         call    ScaledChainCallPauseSetJmp_0048f8e0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   1ch
@@ -161,12 +161,12 @@ __declspec(naked) void InstallSelfDualEsi_0042c4f0(void) {
         mov     dword ptr [esi + 0x08], 0x0042c4f0
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], eax
-        mov     dword ptr [g_pause_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret
         _emit   90h
         call    FiveCallScaledChainTailJmp_0045f8d0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h

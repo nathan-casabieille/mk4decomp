@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00461930 (300b game) - triple-block: arg-init thunk + install-self body + tail body.
  *   Block A (0..0x44): push 0x30, push tail_a00 entry; call StoreTwoCall.
@@ -135,7 +135,7 @@ extern unsigned int g_data_00535e7c;
  *   state==0: install-self at tail+0; state=1; g_pendingNodeType=0x78; pause=1; ret.
  */
 extern unsigned int g_data_0053a748;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_pendingNodeType;
 extern void CallPauseInc_004ab670(void);
 extern void InstallSelfTableDispatch_00461a60(void);
@@ -185,7 +185,7 @@ __declspec(naked) void TripleBlockInstallSelfThunk_00461930(void) {
         ret
         mov     dword ptr [g_walkCallback], 0x14
         call    CallPauseInc_004ab670
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   29h
@@ -196,7 +196,7 @@ __declspec(naked) void TripleBlockInstallSelfThunk_00461930(void) {
         mov     eax, 1
         mov     dword ptr [esi + 8], offset body_980
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_pause_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret
         _emit   90h
@@ -217,7 +217,7 @@ __declspec(naked) void TripleBlockInstallSelfThunk_00461930(void) {
         _emit   1dh
         mov     dword ptr [g_walkCallback], 0xf
         call    StorePauseImulShr16_004ab630
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   27h
@@ -226,7 +226,7 @@ __declspec(naked) void TripleBlockInstallSelfThunk_00461930(void) {
         mov     dword ptr [eax + 8], offset tail_a00
         mov     dword ptr [eax + 0x84], ecx
         mov     dword ptr [g_pendingNodeType], 0x78
-        mov     dword ptr [g_pause_00541e6c], ecx
+        mov     dword ptr [g_framePauseFlag], ecx
         ret
     }
 }

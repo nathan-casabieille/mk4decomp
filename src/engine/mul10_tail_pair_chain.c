@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00470390 (232b game) - Mul10Tail pair with chain init + indirect via scaledInit pair.
  *   Pick scaledInit from 0x005380c0>>2 (if g_fightGroupHead==g_player1NodeIdx) or 0x0052d728>>2;
@@ -131,7 +131,7 @@ extern unsigned int g_data_00535e7c;
  *     eax = Mul10Tail(0x27333, g_eventQueueChild); g_eventQueueChild=eax;
  *   accumulate: g_walkCallback += g_eventQueueNotMask, g_eventQueueCurrent += eax; store back to chain[+8/+0xc]. ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_fightGroupHead;
 extern unsigned int g_eventQueueCurrent;
@@ -164,7 +164,7 @@ __declspec(naked) void Mul10TailPairChain_00470390(void) {
         mov     ecx, dword ptr [g_eventQueueCurrent]
         mov     dword ptr [eax*4 + 4], ecx
         call    ScaledChainDouble_004911f0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   72h

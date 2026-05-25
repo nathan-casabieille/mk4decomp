@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004397d0 (221b game) - mstack-push g_fightGroupHead+g_baseSel, walk chain via baseSel[*4+0x38]/+0x3c;
  *   extract byte from [chain*4+0x68]>>8 masked 0x0f, clamp to <= 4 (else zero);
@@ -128,7 +128,7 @@ extern unsigned int g_data_00535e7c;
  *   call IncStoreCallIATDec_00439520; if !pause: mstack-pop g_baseSel, g_fightGroupHead. ret.
  */
 extern unsigned int g_data_004d57ac_arr;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_fightGroupHead;
 extern unsigned int g_eventQueueCurrent;
@@ -172,7 +172,7 @@ void MStackChainExtractCall_004397d0(void) {
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     dword ptr [g_cj_00542058], ecx
         call    IncStoreCallIATDec_00439520
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   2bh

@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0043cb00 (262b game) - guarded cascade then 4-field cj copy with bit-OR.
  *   g_xformEntityIdx = 0x0050d434>>2; call MStackPushDispatchBitGate_00407330; if pause? final-ret.
@@ -131,7 +131,7 @@ extern unsigned int g_data_00535e7c;
  *   cj[+0x34] = (cj[+0x34] & 0xfe) | (g_eventQueueIdx[+0x34] & 1) | 0x81000.
  *   cj[+0x3c] = g_x_00535e6c. cj[+0x54] = g_eventQueueEnd[+0x54].
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_x_00535e6c;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_eventQueueEnd;
@@ -150,7 +150,7 @@ __declspec(naked) void GuardedCascadeCjCopyFieldsBitOr_0043cb00(void) {
         sar     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
         call    MStackPushDispatchBitGate_00407330
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -165,7 +165,7 @@ __declspec(naked) void GuardedCascadeCjCopyFieldsBitOr_0043cb00(void) {
         mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [g_cj_0054205c], ecx
         call    MStackPushTwoEntryChainCall_004058c0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -174,7 +174,7 @@ __declspec(naked) void GuardedCascadeCjCopyFieldsBitOr_0043cb00(void) {
         _emit   00h
         _emit   00h
         call    MStackCall_00406340
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h

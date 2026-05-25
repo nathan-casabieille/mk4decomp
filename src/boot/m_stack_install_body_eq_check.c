@@ -117,12 +117,12 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_x_004d5134;
 extern unsigned int g_x_00541e84;
 extern unsigned int g_currentNodeIdx;
@@ -142,7 +142,7 @@ void MStackInstallBodyEqCheck_00406910(void) {
         mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [g_walkCallback], ecx
         call    Helper_TickAlt
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_install_end
         mov     eax, dword ptr [g_state_004d57ac]
@@ -172,7 +172,7 @@ void MStackInstallBodyEqCheck_00406910(void) {
         cmp     eax, dword ptr [ecx*4 + 0x30]
         jne     short L_pause_check
         call    MStackPush2ChainLLInsert_00406790
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_body_end
     L_pause_check:

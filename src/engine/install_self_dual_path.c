@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00435260 (203b game) - dual-entry install-self with scaledInit-chain push.
  *   chain[+0x84]!=0 path: g_cj_00542054 = 0x004e45a0>>2; call InstallSelfPlusTailThunk_00436a10; mov eax, [g_pause]; ret.
@@ -128,7 +128,7 @@ extern unsigned int g_data_00535e7c;
  *     scaledInit-chain push 0x00435260|0x01000000; call StateGateMStackOverlap_00438690; g_pause=1; ret.
  *   Block B (+0xb0): cmp g_table_00535ddc < 0x10000? jmp InstallSelfThreeStateLeaPlus22_00437970 : jmp InstallSelfChainSet13333_00437880.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_currentNodeFlags;
 extern void InstallSelfChainSet13333_00437880(void);
@@ -149,7 +149,7 @@ __declspec(naked) void InstallSelfDualPath_00435260(void) {
         sar     ecx, 2
         mov     dword ptr [g_cj_00542054], ecx
         call    InstallSelfPlusTailThunk_00436a10
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         ret
         mov     dword ptr [g_currentNodeFlags], 0x00006666
         mov     dword ptr [g_eventQueueChild], 0x0000001e
@@ -168,7 +168,7 @@ __declspec(naked) void InstallSelfDualPath_00435260(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    StateGateMStackOverlap_00438690
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         ret
         _emit   90h
         _emit   90h

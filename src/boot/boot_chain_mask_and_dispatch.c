@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /*
  * BootChainMaskAndDispatch_00416cb0 - 250b boot 2-body chain dispatch.
@@ -134,7 +134,7 @@ extern unsigned int g_data_00535e7c;
  *     MStackInitCallToggle; if paused: ret. If !(g_xformDirtyFlags & 4):
  *       chain[+0x3c] = -0x16666 = g_walkCallback; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern void DirtyDoubleDeref_00408cb0(void);
 extern void MStackBracket2_TreeWalkRecursive_00405e70(void);
@@ -146,7 +146,7 @@ __declspec(naked) void BootChainMaskAndDispatch_00416cb0(void)
     {
         mov     dword ptr [g_walkCallback], 2
         call    DirtyDoubleDeref_00408cb0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_b1_ret
         mov     eax, dword ptr [g_currentNodeIdx]
@@ -157,19 +157,19 @@ __declspec(naked) void BootChainMaskAndDispatch_00416cb0(void)
         mov     dword ptr [eax*4 + 0x20], ecx
         mov     dword ptr [g_walkCallback], 0xffffffec
         call    MStackInitCallToggle_00408ad0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_b1_ret
         test    byte ptr [g_xformDirtyFlags], 4
         jne     short L_b1_callMid
         call    MStackBracket2_TreeWalkRecursive_00405e70
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_b1_ret
     L_b1_callMid:
         mov     dword ptr [g_walkCallback], 0xffffffea
         call    MStackInitCallToggle_00408ad0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_b1_ret
         test    byte ptr [g_xformDirtyFlags], 4
@@ -187,7 +187,7 @@ __declspec(naked) void BootChainMaskAndDispatch_00416cb0(void)
         _emit   90h
         mov     dword ptr [g_walkCallback], 0xffffffec
         call    MStackInitCallToggle_00408ad0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_b2_ret
         test    byte ptr [g_xformDirtyFlags], 4
@@ -197,7 +197,7 @@ __declspec(naked) void BootChainMaskAndDispatch_00416cb0(void)
     L_b2_step2:
         mov     dword ptr [g_walkCallback], 0xffffffeb
         call    MStackInitCallToggle_00408ad0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_b2_ret
         test    byte ptr [g_xformDirtyFlags], 4

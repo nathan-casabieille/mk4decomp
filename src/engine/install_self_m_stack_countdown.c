@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00437020 (183b game) - install-self with mstack-push g_eventQueueChild + bit-0 check + countdown.
  *   chain[+0x84]!=0 path: mstack-push g_eventQueueChild; call GuardedDualAndFlagToggle_0048f020;
@@ -131,7 +131,7 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueChild;
 extern void CallPauseJmpStateInit_004370e0(void);
 extern void GuardedDualAndFlagToggle_0048f020(void);
@@ -151,7 +151,7 @@ __declspec(naked) void InstallSelfMStackCountdown_00437020(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
         call    GuardedDualAndFlagToggle_0048f020
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   5ch
@@ -173,7 +173,7 @@ __declspec(naked) void InstallSelfMStackCountdown_00437020(void) {
         mov     dword ptr [eax + 0x08], 0x00437020
         mov     dword ptr [eax + 0x84], ecx
         mov     dword ptr [g_pendingNodeType], ecx
-        mov     dword ptr [g_pause_00541e6c], ecx
+        mov     dword ptr [g_framePauseFlag], ecx
         ret
         _emit   90h
         mov     eax, dword ptr [g_eventQueueChild]

@@ -117,14 +117,14 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_acc_00542078;
 extern unsigned int g_eventQueueNotMask;
-extern unsigned int g_data_0053815c;
+extern unsigned int g_player2NodeIdx;
 extern void Distance2DSaturationClamp_004300a0(void);
 extern void ChainFieldTest2Branch_0042fbc0(void);
 extern void LoadSetCallPauseStoreJmp_0042fea0(void);
@@ -141,7 +141,7 @@ extern void GuardedSeq_0042fb80(void);
  *   interpolation tails. Phase 0: installs Self at [eax+8] with slot[+0x84]=1
  *   and arms g_framePauseFlag.
  *   Phase 1+ path: chains Distance2DSaturationClamp_004300a0 → load
- *   g_player1NodeIdx → ChainFieldTest2Branch_0042fbc0 → load g_data_0053815c
+ *   g_player1NodeIdx → ChainFieldTest2Branch_0042fbc0 → load g_player2NodeIdx
  *   → ChainFieldTest2Branch_0042fbc0 → LoadSetCallPauseStoreJmp_0042fea0 →
  *   MStackPush4DualCallAbsPop4_00430d30. After the chain:
  *     - if g_acc_00542078 > 0xa3d, tail-call WalkTowardTargetFsm_004301e0.
@@ -183,7 +183,7 @@ __declspec(naked) void PhaseInstall2DInterpDispatch_0042f8a0(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pii_done
-        mov     edx, dword ptr [g_data_0053815c]
+        mov     edx, dword ptr [g_player2NodeIdx]
         mov     dword ptr [g_currentNodeIdx], edx
         call    ChainFieldTest2Branch_0042fbc0
         mov     eax, dword ptr [g_framePauseFlag]
@@ -241,7 +241,7 @@ __declspec(naked) void PhaseInstall2DInterpDispatch_0042f8a0(void) {
         pop     esi
         ret
     L_pii_storeEsi:
-        mov     eax, dword ptr [g_data_0053815c]
+        mov     eax, dword ptr [g_player2NodeIdx]
         mov     dword ptr [g_acc_00542078], esi
         mov     dword ptr [g_currentNodeIdx], eax
         call    SubCmpCallPauseJmp_0042fc40

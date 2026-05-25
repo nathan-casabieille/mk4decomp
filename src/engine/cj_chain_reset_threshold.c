@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00490cc0 (315b game) - cj-chain validate + indirect callback + threshold check + chain reset.
  *   If g_cj==0: ret. If [cj*4+0x44]!=0: indirect call; if pause ret. If [cj*4+0x4c]!=0: add to [cj*4+0x70].
@@ -130,7 +130,7 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_data_00538038;
 extern unsigned int g_data_0053803c;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_eventQueueWorkType;
 extern void ScaledLoadJmpIfNonzero_00490e00(void);
@@ -155,7 +155,7 @@ __declspec(naked) void CjChainResetThreshold_00490cc0(void) {
         _emit   19h
         mov     dword ptr [g_scaledInit_00542044], eax
         call    eax
-        cmp     dword ptr [g_pause_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         _emit   0fh
         _emit   85h
         _emit   03h

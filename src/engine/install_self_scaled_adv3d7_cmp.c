@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0043a830 (286b game) - scaled-step + threshold cmp + install-self.
  *   Load idx=g_baseSel_00542060; entry=ecx=*idx*4; state=[idx*4+0x84]; clear state.
@@ -130,7 +130,7 @@ extern unsigned int g_data_00535e7c;
  *     else: clear scaledInit fields; tail-call StackPopDispatchTagged_0041f780.
  *   install: state=1; [ecx+8]=self; g_pendingNodeType=1; g_pause=1; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueEnd;
 
@@ -186,7 +186,7 @@ __declspec(naked) void InstallSelfScaledAdv3d7Cmp_0043a830(void) {
         mov     dword ptr [ecx + 8], offset InstallSelfScaledAdv3d7Cmp_0043a830
         mov     dword ptr [ecx + 0x84], eax
         mov     dword ptr [g_pendingNodeType], eax
-        mov     dword ptr [g_pause_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret
     }

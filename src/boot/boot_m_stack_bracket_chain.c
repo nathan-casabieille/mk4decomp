@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void BootMStackBracketChain_00413ce0(void);
 
@@ -134,10 +134,10 @@ extern void BootMStackBracketChain_00413ce0(void);
  *     mainloop: g_walkCallback=0x3333; AudioMixerStep; if paused: pop+ret. Else
  *     g_walkCallback += 0xd999; ZeroAndDirty4; if paused: pop+ret. If g_xformDirtyFlags & 4:
  *     call BootMStackBracketChain_00413ce0; if paused: pop+ret. Install-self at body2; chain->state=1;
- *     g_pendingNodeType=1; g_pause_00541e6c=1; pop+ret.
+ *     g_pendingNodeType=1; g_framePauseFlag=1; pop+ret.
  */
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void AudioMixerStep_004ab700(void);
 extern void CallSetPause_0041f830(void);
 extern void ZeroAndDirty4_00405430(void);
@@ -184,18 +184,18 @@ __declspec(naked) void BootInstallPeriodicAudio_00413aa0(void)
     L_mainloop:
         mov     dword ptr [g_walkCallback], 0x3333
         call    AudioMixerStep_004ab700
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_b2_ret
         add     dword ptr [g_walkCallback], 0xd999
         call    ZeroAndDirty4_00405430
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_b2_ret
         test    byte ptr [g_xformDirtyFlags], 4
         je      short L_install_self
         call    BootMStackBracketChain_00413ce0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_b2_ret
     L_install_self:
@@ -203,7 +203,7 @@ __declspec(naked) void BootInstallPeriodicAudio_00413aa0(void)
         mov     dword ptr [esi + 8], offset L_body2
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], eax
-        mov     dword ptr [g_pause_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
     L_b2_ret:
         pop     esi
         ret

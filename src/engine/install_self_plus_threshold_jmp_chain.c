@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004359f0 (257b game) - install-self + sibling threshold dispatcher.
  *   B1 (0..200, +7 NOPs): install-self.
@@ -135,7 +135,7 @@ extern unsigned int g_data_00535e7c;
  *     Compare g_table_00535ddc to 0x34f5c then 0x2cccc; pick one of three jumps:
  *     TwoEntryStateScalar_00435ba0 / InstallSelfStatePush_00435b00 / EntryThenDispatcherPair_00438cd0.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeFlags;
 extern void CallPauseMStackPushSet2Jmp_00437930(void);
 extern void EntryThenDispatcherPair_00438cd0(void);
@@ -155,7 +155,7 @@ __declspec(naked) void InstallSelfPlusThresholdJmpChain_004359f0(void) {
         _emit   74h
         _emit   29h
         call    MStackPush3CmpCall_0048eec0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -193,7 +193,7 @@ __declspec(naked) void InstallSelfPlusThresholdJmpChain_004359f0(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    StateGateMStackOverlap_00438690
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
         nop

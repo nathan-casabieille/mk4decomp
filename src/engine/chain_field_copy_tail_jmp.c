@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00466e70 (325b game) - quad-call chain + chain-field copy (g_eventQueueEnd -> g_cj_0054205c) + tail-jmp.
  *   g_walkCallback=2; call DirtyDoubleDeref. If pause ret.
@@ -131,7 +131,7 @@ extern unsigned int g_data_00535e7c;
  *   chain[+0x34] ^= 1; copy chain[+0x3c]. Load chain[+0x18] into g_scaledInit.
  *   Zero chain[scaledInit*4 + 0x30/+0x34/+0x38]. Tail-jmp SetupVecFsmCluster_0043e3e0. ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_eventQueueEnd;
 extern void DirtyDoubleDeref_00408cb0(void);
@@ -144,7 +144,7 @@ __declspec(naked) void ChainFieldCopyTailJmp_00466e70(void) {
     __asm {
         mov     dword ptr [g_walkCallback], 2
         call    DirtyDoubleDeref_00408cb0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -156,7 +156,7 @@ __declspec(naked) void ChainFieldCopyTailJmp_00466e70(void) {
         mov     ecx, dword ptr [eax*4 + 0x24]
         mov     dword ptr [g_xformEntityIdx], ecx
         call    MStackPushDispatchBitGate_00407330
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -172,7 +172,7 @@ __declspec(naked) void ChainFieldCopyTailJmp_00466e70(void) {
         _emit   00h
         _emit   00h
         call    MStackPushTwoEntryChainCall_004058c0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -181,7 +181,7 @@ __declspec(naked) void ChainFieldCopyTailJmp_00466e70(void) {
         _emit   00h
         _emit   00h
         call    MStackCall_004062f0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h

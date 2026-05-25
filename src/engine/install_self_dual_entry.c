@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00426ae0 (114b game) - dual-entry stub + install-self.
  *   Block A: push 0x241; push 0x00426b00; call BootMstackInit_0041fb10; ret. Stack arg dispatch.
@@ -129,7 +129,7 @@ extern unsigned int g_data_00535e7c;
  *     and 1 to g_pause; ret. Else jmp CallSetPause_0041f830.
  */
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void BootMstackInit_0041fb10(void);
 extern void CallSetPause_0041f830(void);
 extern void Wrapper_0048a270(void);
@@ -162,7 +162,7 @@ __declspec(naked) void InstallSelfDualEntry_00426ae0(void) {
         _emit   74h
         _emit   13h
         call    Wrapper_0048a270
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   27h
@@ -171,7 +171,7 @@ __declspec(naked) void InstallSelfDualEntry_00426ae0(void) {
         mov     dword ptr [eax + 0x08], 0x00426b00
         mov     dword ptr [eax + 0x84], ecx
         mov     dword ptr [g_pendingNodeType], 0x1e
-        mov     dword ptr [g_pause_00541e6c], ecx
+        mov     dword ptr [g_framePauseFlag], ecx
         ret
     }
 }

@@ -117,18 +117,18 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void Mul10Tail_00404af0(void);
 extern void PositionClampCluster_00489a30(void);
 extern unsigned int g_data_0052d74c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_data_00538068;
 extern unsigned int g_data_0054200c;
 
@@ -186,7 +186,7 @@ __declspec(naked) void GeoTransformDispatchAndApply_00489840(void)
         mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_eventQueueWorkType], 0xccc
         mov      ecx, dword ptr [eax*4 + 0x54]
-        mov      eax, dword ptr [g_data_00535e70]
+        mov      eax, dword ptr [g_fightAxisNegX_00535e70]
         push     eax
         push     0xccc
         mov      dword ptr [g_walkCallback], ecx
@@ -202,7 +202,7 @@ __declspec(naked) void GeoTransformDispatchAndApply_00489840(void)
         mov      edx, dword ptr [g_eventQueueWorkType]
         add      esp, 8
         mov      ecx, dword ptr [eax*4 + 0x5c]
-        mov      eax, dword ptr [g_data_00535e74]
+        mov      eax, dword ptr [g_fightAxisNegY_00535e74]
         push     eax
         push     edx
         mov      dword ptr [g_walkCallback], ecx
@@ -216,7 +216,7 @@ __declspec(naked) void GeoTransformDispatchAndApply_00489840(void)
         add      esp, 8
         mov      dword ptr [eax*4 + 0x5c], ecx
         mov      ecx, dword ptr [g_xformEntityIdx]
-        mov      eax, dword ptr [g_data_00535e78]
+        mov      eax, dword ptr [g_fightAxisPosX_00535e78]
         mov      edx, dword ptr [ecx*4 + 0x54]
         mov      dword ptr [g_eventQueueCurrent], eax
         push     eax
@@ -234,7 +234,7 @@ __declspec(naked) void GeoTransformDispatchAndApply_00489840(void)
         mov      edx, dword ptr [g_eventQueueWorkType]
         add      esp, 8
         mov      ecx, dword ptr [eax*4 + 0x5c]
-        mov      eax, dword ptr [g_data_00535e7c]
+        mov      eax, dword ptr [g_fightAxisPosY_00535e7c]
         push     eax
         push     edx
         mov      dword ptr [g_walkCallback], ecx

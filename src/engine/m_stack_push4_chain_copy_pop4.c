@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00472e10 (300b game) - mstack-push 4 + chain calls + chain copy + mstack-pop 4.
  *   Push g_acc_00542078, g_eventQueueNotMask, g_xformEntityIdx, g_cj_0054205c onto mstack.
@@ -131,7 +131,7 @@ extern unsigned int g_data_00535e7c;
  *   Call StoreTwoCallSubMain_00426b60; if pause ret.
  *   Mstack-pop 4: g_cj_0054205c, g_xformEntityIdx, g_eventQueueNotMask, g_acc_00542078; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern void StoreTwoCallSubMain_00426b60(void);
 
@@ -163,7 +163,7 @@ void MStackPush4ChainCopyPop4_00472e10(void) {
         mov     ecx, dword ptr [eax*4 + 0x64]
         mov     dword ptr [g_cj_0054205c], ecx
         call    MStackPush2RunCountdown_004089e0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -172,7 +172,7 @@ void MStackPush4ChainCopyPop4_00472e10(void) {
         _emit   00h
         _emit   00h
         call    MStackBracket7_DispatchAndChain_004b8fa0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -182,7 +182,7 @@ void MStackPush4ChainCopyPop4_00472e10(void) {
         _emit   00h
         mov     dword ptr [g_walkCallback], 3
         call    ChainDirtyBitWalker_00408c10
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   7dh
@@ -192,7 +192,7 @@ void MStackPush4ChainCopyPop4_00472e10(void) {
         mov     eax, dword ptr [eax*4 + 0x44]
         mov     dword ptr [g_eventQueueNotMask], eax
         call    StoreTwoCallSubMain_00426b60
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   51h

@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0042cd30 (294b game) - mstack-push + cj-chain field swap + dual call + sceneglobal swap.
  *   Push g_walkCallback to mstack. scaledInit=[baseSel*4+0x38].
@@ -128,7 +128,7 @@ extern unsigned int g_data_00535e7c;
  *   Call DualCallPauseDirtyJmp; if pause ret. Push 0x004e3698; call IterLoad; pop; if pause ret.
  *   Swap [0x00535e70/74/78/7c] with globals (using esi); mstack pop g_walkCallback; pop esi; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueWorkType;
 extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void IterLoad_0048fd30(void);
@@ -165,31 +165,31 @@ __declspec(naked) void MStackCjChainSwapDualCall_0042cd30(void) {
         mov     eax, dword ptr [g_eventQueueCurrent]
         mov     dword ptr [ecx*4 + 0x5c], eax
         call    DualCallPauseDirtyJmp_00490c30
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   75h
         push    0x004e3698
         call    IterLoad_0048fd30
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h
         _emit   5fh
-        mov     eax, dword ptr [g_data_00535e78]
-        mov     edx, dword ptr [g_data_00535e70]
-        mov     ecx, dword ptr [g_data_00535e7c]
+        mov     eax, dword ptr [g_fightAxisPosX_00535e78]
+        mov     edx, dword ptr [g_fightAxisNegX_00535e70]
+        mov     ecx, dword ptr [g_fightAxisPosY_00535e7c]
         push    esi
-        mov     esi, dword ptr [g_data_00535e74]
+        mov     esi, dword ptr [g_fightAxisNegY_00535e74]
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_data_00535e70], eax
+        mov     dword ptr [g_fightAxisNegX_00535e70], eax
         mov     eax, dword ptr [g_state_004d57ac]
         mov     dword ptr [g_eventQueueCurrent], ecx
         mov     dword ptr [g_eventQueueWorkType], edx
         mov     dword ptr [g_acc_00542078], esi
-        mov     dword ptr [g_data_00535e78], edx
-        mov     dword ptr [g_data_00535e7c], esi
-        mov     dword ptr [g_data_00535e74], ecx
+        mov     dword ptr [g_fightAxisPosX_00535e78], edx
+        mov     dword ptr [g_fightAxisPosY_00535e7c], esi
+        mov     dword ptr [g_fightAxisNegY_00535e74], ecx
         mov     edx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
         mov     dword ptr [g_walkCallback], edx

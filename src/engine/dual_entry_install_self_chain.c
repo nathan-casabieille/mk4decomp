@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00487430 (209b game) - dual-entry install-self.
  *   A: call MStackPushSet0008; if !pause: chain[*4+0x74]=0x1008; call ScaledMove48to58; if !pause:
@@ -128,7 +128,7 @@ extern unsigned int g_data_00535e7c;
  *   B (+0x50): standard install-self via chain[+0x84]==0 path: 0x00487480 self-addr.
  */
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueChild;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void FiveCallGuardSetTail_0046f6b0(void);
@@ -138,7 +138,7 @@ extern void ScaledMove48to58_00490720(void);
 __declspec(naked) void DualEntryInstallSelfChain_00487430(void) {
     __asm {
         call    MStackPushSet0008_004901a0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   32h
@@ -147,7 +147,7 @@ __declspec(naked) void DualEntryInstallSelfChain_00487430(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
         call    ScaledMove48to58_00490720
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0dh
@@ -181,7 +181,7 @@ __declspec(naked) void DualEntryInstallSelfChain_00487430(void) {
         _emit   74h
         _emit   33h
         call    MStackPush3CmpCall_0048eec0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   48h
@@ -205,7 +205,7 @@ __declspec(naked) void DualEntryInstallSelfChain_00487430(void) {
         mov     dword ptr [esi + 0x08], 0x00487480
         mov     dword ptr [esi + 0x84], ebx
         mov     dword ptr [g_pendingNodeType], ebx
-        mov     dword ptr [g_pause_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
         pop     esi
         pop     ebx
         ret

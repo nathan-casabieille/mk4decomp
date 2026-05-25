@@ -117,13 +117,13 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_fightGroupHead;
 extern unsigned int g_eventQueueWorkType;
 extern void DivLongPushCall_004ab320(void);
@@ -173,7 +173,7 @@ __declspec(naked) void ChainDiff3Mul10Install_004730c0(void)
         mov     dword ptr [g_xformScratch2088], eax
         mov     dword ptr [g_walkCallback], ecx
         call    DivLongPushCall_004ab320
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_paused_skip
         mov     edx, dword ptr [g_eventQueueChild]
@@ -208,7 +208,7 @@ __declspec(naked) void ChainDiff3Mul10Install_004730c0(void)
         mov     dword ptr [edi + 8], offset ChainDiff3Mul10Install_004730c0
         mov     dword ptr [edi + 0x84], eax
         add     esp, 8
-        mov     dword ptr [g_pause_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
     L_paused_skip:
         pop     edi
         pop     esi

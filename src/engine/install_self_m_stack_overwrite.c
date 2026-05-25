@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0046e9a0 (206b game) - dual-path install-self with mstack overwrite.
  *   chain[+0x84]!=0 path: esi=g_eventQueueNotMask; call CopyJmp_0048ef90; pause-check; bit-0 test:
@@ -132,7 +132,7 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueNotMask;
 extern void CallPauseDirtyMStackPushFn_0046e2a0(void);
 extern void ScaledArrStore_00429980(void);
@@ -150,7 +150,7 @@ __declspec(naked) void InstallSelfMStackOverwrite_0046e9a0(void) {
         _emit   44h
         mov     esi, dword ptr [g_eventQueueNotMask]
         call    CopyJmp_0048ef90
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -166,7 +166,7 @@ __declspec(naked) void InstallSelfMStackOverwrite_0046e9a0(void) {
         ret
         mov     dword ptr [g_walkCallback], esi
         call    ScaledInit_0048d430
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   6eh
@@ -185,7 +185,7 @@ __declspec(naked) void InstallSelfMStackOverwrite_0046e9a0(void) {
         mov     dword ptr [g_cj_00542058], ecx
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
         call    ScaledArrStore_00429980
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   34h
@@ -198,7 +198,7 @@ __declspec(naked) void InstallSelfMStackOverwrite_0046e9a0(void) {
         mov     dword ptr [esi + 0x08], 0x0046e9a0
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], eax
-        mov     dword ptr [g_pause_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret
     }

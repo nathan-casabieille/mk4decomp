@@ -117,17 +117,17 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00425970 (269b game) - 3-iter call-Mul10Tail-store loop for scaledInit[0/4/8].
  *   For each of 3 indices (0, 4, 8): g_walkCallback = g_eventQueueWorkType - g_eventQueueCurrent;
  *   call AudioMixerStep_004ab700; if pause? ret. Compute eax = g_walkCallback + g_eventQueueCurrent;
  *   Mul10Tail(eax, scaledInit[idx]); store result to scaledInit[idx]. ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_eventQueueWorkType;
 extern void AudioMixerStep_004ab700(void);
@@ -139,7 +139,7 @@ void TripleMul10TailIndexed_00425970(void) {
         sub     eax, ecx
         mov     dword ptr [g_walkCallback], eax
         call    AudioMixerStep_004ab700
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -163,7 +163,7 @@ void TripleMul10TailIndexed_00425970(void) {
         sub     edx, dword ptr [g_eventQueueCurrent]
         mov     dword ptr [g_walkCallback], edx
         call    AudioMixerStep_004ab700
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -187,7 +187,7 @@ void TripleMul10TailIndexed_00425970(void) {
         sub     eax, dword ptr [g_eventQueueCurrent]
         mov     dword ptr [g_walkCallback], eax
         call    AudioMixerStep_004ab700
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   3bh

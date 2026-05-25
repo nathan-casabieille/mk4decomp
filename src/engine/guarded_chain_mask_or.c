@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00446790 (235b game) - triple-call guard then chain bit-mask update.
  *   call MStackBracket4_ListInsertZeroFill_00408600; if pause? ret.
@@ -131,7 +131,7 @@ extern unsigned int g_data_00535e7c;
  *   with 0xf0ffffff, then OR with 0x0b000000; set bit2 of g_xformDirtyFlags;
  *   if scaledInit was 0 clear bit2 again (xor 4); ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void MStackBracket4_ListInsertZeroFill_00408600(void);
 extern void MStackPush3LinkedListWalk_004088b0(void);
 extern void MStackPushTwoEntryChainCall_004058c0(void);
@@ -142,7 +142,7 @@ void GuardedChainMaskOr_00446790(void) {
         mov     ecx, dword ptr [eax*4 + 0x4c]
         mov     dword ptr [g_scaledInit_00542044], ecx
         call    MStackBracket4_ListInsertZeroFill_00408600
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -158,7 +158,7 @@ void GuardedChainMaskOr_00446790(void) {
         _emit   00h
         _emit   00h
         call    MStackPush3LinkedListWalk_004088b0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -167,7 +167,7 @@ void GuardedChainMaskOr_00446790(void) {
         _emit   00h
         _emit   00h
         call    MStackPushTwoEntryChainCall_004058c0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h

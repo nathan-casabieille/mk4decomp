@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void DualBlockThunkPlus3State_0043aed0(void);
 extern void StateGateMStackOverlap_00438690(void);
@@ -135,7 +135,7 @@ extern void CrouchCounterCluster_0043b1d0(void);
  *   Block D (+0x100): call MStackPush3CmpCall; if pause ret. If bit0(0054208c) jmp CrouchCounterCluster_0043b1d0;
  *     else jmp GuardedDispatch_0042b6c0.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueTotal;
 extern unsigned int g_currentNodeFlags;
 extern void PackedAdvanceCallTailJmp_004392c0(void);
@@ -184,7 +184,7 @@ __declspec(naked) void QuadBlockArgInstallChain_0043a950(void) {
         pop     esi
         ret
         call    LeaPlus22StoreSelf_0048e4d0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   73h
@@ -205,7 +205,7 @@ __declspec(naked) void QuadBlockArgInstallChain_0043a950(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    StateGateMStackOverlap_00438690
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
         _emit   90h
@@ -213,7 +213,7 @@ __declspec(naked) void QuadBlockArgInstallChain_0043a950(void) {
         _emit   90h
         _emit   90h
         call    MStackPush3CmpCall_0048eec0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   13h

@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00488dc0 (208b game) - g_x_0052aac4 == 2 && g_state_00537f94 != 0:
  *   call SwapOrPassSet; if !pause: cmp g_fightGroupHead vs g_pendingNodeType; if eq jmp CmpEax1OrSetDirty.
@@ -129,7 +129,7 @@ extern unsigned int g_data_00535e7c;
  *   else xor bit-2 and set bit-0. Multiple ret paths.
  */
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_x_0052aac4;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_fightGroupHead;
@@ -157,7 +157,7 @@ __declspec(naked) void DualCondMatchSet_00488dc0(void) {
         _emit   00h
         _emit   00h
         call    SwapOrPassSet_0048fbf0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -173,7 +173,7 @@ __declspec(naked) void DualCondMatchSet_00488dc0(void) {
         jmp     CmpEax1OrSetDirty_00488e90
         mov     dword ptr [g_walkCallback], 0x00001000
         call    SetJmp_0049cb90
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   6ch

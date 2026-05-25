@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00480f20 (144b game) - dual-entry chain decrement loop.
  *   Block A (+0x00): set [g_xformEntityIdx*4+0x5c]=7; g_walkCallback=0x29; jmp TableLookupCall_00489f60.
@@ -129,7 +129,7 @@ extern unsigned int g_data_00535e7c;
  *     g_walkCallback=1; store back; if g_state_00541dc4!=0 self-jmp. ret.
  *   Block B (+0x80): g_walkCallback=1; g_state_00537e94=1; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_state_00537e94;
 extern unsigned int g_state_00541dc4;
 extern unsigned int g_xformEntityIdx;
@@ -145,12 +145,12 @@ __declspec(naked) void DualEntryDecLoop_00480f20(void) {
         jmp     TableLookupCall_00489f60
         _emit   90h
         call    CallPauseDirtyScaledSet7_00480ef0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   47h
         call    CmpP1GTSetup_00470980
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   39h

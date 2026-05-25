@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_004e27cc;
@@ -129,7 +129,7 @@ extern unsigned int g_data_00537f30;
 extern unsigned int g_data_00537f48;
 extern unsigned int g_data_005380e0;
 extern unsigned int g_player1NodeIdx;
-extern unsigned int g_data_0053815c;
+extern unsigned int g_player2NodeIdx;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_xformEntityIdx;
@@ -265,7 +265,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
     L_c1e5:
         jmp      PendingMatch_00459510
     L_c1ea:
-        cmp      eax, dword ptr [g_data_0053815c]
+        cmp      eax, dword ptr [g_player2NodeIdx]
         jne      L_c21d
         cmp      dword ptr [g_data_005380e0], 9
         jne      L_c218
@@ -296,7 +296,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
     L_c255:
         jmp      PendingMatch_00459510
     L_c25a:
-        cmp      eax, dword ptr [g_data_0053815c]
+        cmp      eax, dword ptr [g_player2NodeIdx]
         jne      L_c28d
         cmp      dword ptr [g_data_005380e0], 9
         jne      L_c288

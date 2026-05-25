@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0047f1a0 (309b game) - 4-state install-self with common merge tail.
  *   Load state at [base*4+0x84]; clear. state==0: cmp g_xformScratch2088 with 1, if eq tail-call ThrowGrabPoseCopyCluster_0047f4e0;
@@ -131,7 +131,7 @@ extern unsigned int g_data_00535e7c;
  *   Merge: [scaledInit*4]=edx; inc scaledInit; chain[esi+4]=scaledInit;
  *     [baseSel*4+0x84]=0; call InstallSelfStateMachine; pause=1; pop edi/esi; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void InstallSelfStateMachine_0047f3f0(void);
 extern void InstallSelfThreeStateScaledLoad_0047f2e0(void);
 extern void ScaledLitLoadCall_00480fe0(void);
@@ -165,7 +165,7 @@ __declspec(naked) void Install4StateMerge_0047f1a0(void) {
         ret
         mov     dword ptr [g_walkCallback], 0x5f
         call    ScaledLitLoadCall_00480fe0
-        cmp     dword ptr [g_pause_00541e6c], edi
+        cmp     dword ptr [g_framePauseFlag], edi
         _emit   0fh
         _emit   85h
         _emit   0e4h
@@ -186,7 +186,7 @@ __declspec(naked) void Install4StateMerge_0047f1a0(void) {
         _emit   00h
         mov     dword ptr [g_walkCallback], 0x5e
         call    ScaledLitLoadCall_00480fe0
-        cmp     dword ptr [g_pause_00541e6c], edi
+        cmp     dword ptr [g_framePauseFlag], edi
         _emit   0fh
         _emit   85h
         _emit   99h
@@ -224,7 +224,7 @@ __declspec(naked) void Install4StateMerge_0047f1a0(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], edi
         call    InstallSelfStateMachine_0047f3f0
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         pop     esi
         ret

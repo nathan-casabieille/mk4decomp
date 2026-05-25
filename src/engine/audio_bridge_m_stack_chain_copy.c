@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00440730 (324b game) - audio bridge: rescale + bit0 gate + mstack-push 3 + scaledInit copy. */
 extern unsigned int g_data_0052d718;
@@ -129,7 +129,7 @@ extern unsigned int g_data_0052d720;
 extern unsigned int g_data_0052d740;
 extern unsigned int g_data_0052d744;
 extern unsigned int g_data_0052d748;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueIdx;
 extern void AudioVolumeRescale_004ab690(void);
@@ -140,7 +140,7 @@ extern unsigned int g_data_004d57ac_arr;
 void AudioBridgeMStackChainCopy_00440730(void) {
     __asm {
         call    AudioVolumeRescale_004ab690
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -196,7 +196,7 @@ void AudioBridgeMStackChainCopy_00440730(void) {
         shr     eax, 2
         mov     dword ptr [g_eventQueueIdx], eax
         call    DoubleStackPushAndJmp7d_00474050
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   3eh

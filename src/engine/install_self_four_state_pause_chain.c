@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0049b000 (276b game) - 4-state install-self.
  *   state 0: install-self chain[+0x84]=1; scaledInit-chain push 0x0049b000+0x01000000;
@@ -130,7 +130,7 @@ extern unsigned int g_data_00535e7c;
  *   state >=3: g_scaledInit = g_cj_0054205c; call MStackPush2ChainLLInsert_00406790; if pause? ret;
  *     else tail-call CallSetPause_0041f830.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void CallSetPause_0041f830(void);
 extern void EsiInstallCounterDispatch_0049b120(void);
 extern void MStackPush2ChainLLInsert_00406790(void);
@@ -160,7 +160,7 @@ __declspec(naked) void InstallSelfFourStatePauseChain_0049b000(void) {
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_scaledInit_00542044], ecx
         call    MStackPush2ChainLLInsert_00406790
-        cmp     dword ptr [g_pause_00541e6c], edi
+        cmp     dword ptr [g_framePauseFlag], edi
         _emit   0fh
         _emit   85h
         _emit   0c9h
@@ -190,7 +190,7 @@ __declspec(naked) void InstallSelfFourStatePauseChain_0049b000(void) {
         _emit   0ebh
         _emit   37h
         call    ScaledZeroFour_00490740
-        cmp     dword ptr [g_pause_00541e6c], edi
+        cmp     dword ptr [g_framePauseFlag], edi
         _emit   75h
         _emit   5bh
         mov     dword ptr [esi + 8], 0x0049b000
@@ -208,7 +208,7 @@ __declspec(naked) void InstallSelfFourStatePauseChain_0049b000(void) {
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [edx*4 + 0x84], edi
         call    EsiInstallCounterDispatch_0049b120
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         pop     esi
         ret

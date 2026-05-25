@@ -117,13 +117,13 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00424200 (321b game) - 3-state install-self with chain pop + audio dispatch. */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_x_00543550;
 extern void AudioInstallSelfStatePush_004aa8a0(void);
@@ -173,7 +173,7 @@ __declspec(naked) void Install3StateAudioChain_00424200(void) {
         mov     dword ptr [esi + 8], offset Install3StateAudioChain_00424200
         mov     dword ptr [esi + 0x84], 2
         mov     dword ptr [g_pendingNodeType], 1
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
         mov     ecx, dword ptr [g_baseSel_00542060]
@@ -202,7 +202,7 @@ __declspec(naked) void Install3StateAudioChain_00424200(void) {
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    AudioInstallSelfStatePush_004aa8a0
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
     }

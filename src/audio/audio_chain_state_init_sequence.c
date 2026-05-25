@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /*
  * AudioChainStateInitSequence_004a1610 - 294b audio multi-stage chain init.
@@ -139,7 +139,7 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_data_0050f1bc;
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_eventQueueTotal;
@@ -158,7 +158,7 @@ __declspec(naked) void AudioChainStateInitSequence_004a1610(void)
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
         call    FramePauseScaledStore_00406c10
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_a16_ret
         test    byte ptr [g_xformDirtyFlags], 4
@@ -171,7 +171,7 @@ __declspec(naked) void AudioChainStateInitSequence_004a1610(void)
         mov     eax, dword ptr [g_eventQueueTotal]
         mov     dword ptr [g_xformEntityIdx], eax
         call    MStackPush2ChainPrepend_00409970
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_a16_ret
         mov     ecx, dword ptr [g_currentNodeIdx]
@@ -188,7 +188,7 @@ __declspec(naked) void AudioChainStateInitSequence_004a1610(void)
         mov     edx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_currentNodeIdx], edx
         call    MStackBracket4_ListInsertZeroFill_00408600
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a16_ret
         test    byte ptr [g_xformDirtyFlags], 4
@@ -196,7 +196,7 @@ __declspec(naked) void AudioChainStateInitSequence_004a1610(void)
         jmp     TestEqJmpInitFightGroup_004a1740
     L_a16_callPush3:
         call    MStackPush3LinkedListWalk_004088b0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a16_ret
         test    byte ptr [g_xformDirtyFlags], 4
@@ -206,7 +206,7 @@ __declspec(naked) void AudioChainStateInitSequence_004a1610(void)
         mov     eax, dword ptr [g_pendingNodeType]
         mov     dword ptr [g_walkCallback], eax
         call    ChainDirtyBitWalker_00408c10
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a16_ret
         mov     ecx, dword ptr [g_xformEntityIdx]

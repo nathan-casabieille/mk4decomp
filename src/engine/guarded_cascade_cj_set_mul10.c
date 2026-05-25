@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00440880 (257b game) - mstack-push then 4-call guarded chain with cj sets.
  *   mstack-push g_eventQueueCurrent; call GuardedCallStoreSlotsCmp_00440990; if pause? final-ret.
@@ -131,7 +131,7 @@ extern unsigned int g_data_00535e7c;
  *   g_eventQueueWorkType=0x3333; call MStackPushVec3Mul10_004767e0; if pause? final-ret.
  *   Else: scaledInit-=0x1b. ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_eventQueueWorkType;
 extern void CameraZoomFsmCluster_00440aa0(void);
@@ -147,7 +147,7 @@ void GuardedCascadeCjSetMul10_00440880(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + 0], ecx
         call    GuardedCallStoreSlotsCmp_00440990
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -167,7 +167,7 @@ void GuardedCascadeCjSetMul10_00440880(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x4c], eax
         call    GDispatch4_004089c0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -183,7 +183,7 @@ void GuardedCascadeCjSetMul10_00440880(void) {
         _emit   00h
         _emit   00h
         call    ThreeCallChainCopy_004409e0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -203,7 +203,7 @@ void GuardedCascadeCjSetMul10_00440880(void) {
         _emit   74h
         _emit   53h
         call    CameraZoomFsmCluster_00440aa0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   45h
@@ -216,7 +216,7 @@ void GuardedCascadeCjSetMul10_00440880(void) {
         mov     dword ptr [g_eventQueueWorkType], 0x3333
         mov     dword ptr [g_scaledInit_00542044], ecx
         call    MStackPushVec3Mul10_004767e0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   07h

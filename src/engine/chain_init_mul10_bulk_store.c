@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00442740 (311b game) - field-setup with chain init + Mul10 ops + multi-field bulk store.
  *   Save [baseSel*4+0x64] to g_eventQueueEnd, [baseSel*4+0x68] to g_eventQueueIdx.
@@ -135,7 +135,7 @@ extern unsigned int g_data_00535e7c;
  *   g_walkCallback=0x28f. ret.
  */
 extern unsigned int g_data_004e5a00;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueTotal;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_eventQueueIdx;
@@ -154,7 +154,7 @@ void ChainInitMul10BulkStore_00442740(void) {
         shr     eax, 2
         mov     dword ptr [g_eventQueueTotal], eax
         call    MStackPush3CallChainBit2_004431e0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -178,7 +178,7 @@ void ChainInitMul10BulkStore_00442740(void) {
         sub     eax, 0x5b333
         mov     dword ptr [g_eventQueueWorkType], eax
         call    MStackPush1MagicMod2_004244d0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h

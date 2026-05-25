@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void DualMul10AccumState88_00431dd0(void);
 
@@ -132,7 +132,7 @@ extern void DualMul10AccumState88_00431dd0(void);
  *     if !pause: install-self at +0x08=0x00431f40, chain[+0x84]=1, g_pendingNodeType=1, pause=1; pop+ret.
  */
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_fightGroupHead;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_acc_00542078;
@@ -171,7 +171,7 @@ __declspec(naked) void InstallSelfState88_00431f40(void) {
         mov     dword ptr [g_xformScratch2088], 0x0003243f
         mov     dword ptr [g_acc_00542078], 0x00070ccc
         call    DualMul10AccumState88_00431dd0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   1ch
@@ -179,7 +179,7 @@ __declspec(naked) void InstallSelfState88_00431f40(void) {
         mov     dword ptr [esi + 0x08], 0x00431f40
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], eax
-        mov     dword ptr [g_pause_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret
     }

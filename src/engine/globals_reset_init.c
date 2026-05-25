@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004222a0 (224b game) - reset/init: clears ~17 globals, sets g_pendingNodeType=0x004200b0,
  *   g_eventQueueWorkType=0x1000, call AllocNode; if !pause: clears more globals and stores eax=0xc
@@ -142,10 +142,10 @@ extern unsigned int g_data_0053a6d8;
 extern unsigned int g_data_0053a6e0;
 extern unsigned int g_data_0053a700;
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_dualA_0053815c;
+extern unsigned int g_player2NodeIdx;
 extern unsigned int g_load_0052ab04;
 extern unsigned int g_load_0052ab08;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_state_00537e94;
 extern unsigned int g_state_00537ea4;
 extern unsigned int g_state_0053a51c;
@@ -163,7 +163,7 @@ __declspec(naked) void GlobalsResetInit_004222a0(void) {
         mov     dword ptr [g_pendingNodeType], 0x004200b0
         mov     dword ptr [g_eventQueueWorkType], 0x00001000
         call    AllocNode
-        cmp     dword ptr [g_pause_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         _emit   0fh
         _emit   85h
         _emit   0aah
@@ -175,7 +175,7 @@ __declspec(naked) void GlobalsResetInit_004222a0(void) {
         mov     dword ptr [g_data_0052ab44], esi
         mov     dword ptr [g_data_0053a6d8], esi
         mov     dword ptr [g_player1NodeIdx], esi
-        mov     dword ptr [g_dualA_0053815c], esi
+        mov     dword ptr [g_player2NodeIdx], esi
         mov     dword ptr [g_state_00537e94], esi
         mov     dword ptr [g_data_00537ef4], esi
         mov     dword ptr [g_data_00535e68], esi
@@ -191,7 +191,7 @@ __declspec(naked) void GlobalsResetInit_004222a0(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_data_0053a3e8], eax
         call    ResetSceneCallbacks_00420090
-        cmp     dword ptr [g_pause_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         _emit   75h
         _emit   24h
         mov     dword ptr [g_walkCallback], esi

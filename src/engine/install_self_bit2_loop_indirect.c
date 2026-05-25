@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0049c710 (305b game) - install-self body with state-machine, bit2-loop, indirect-call dispatch.
  *   Load state; clear. state==0: call TripleBlockChainDiffMStackThunks; if pause ret.
@@ -133,7 +133,7 @@ extern unsigned int g_data_00535e7c;
  *     If eax!=0: toggle bit2 off; call eax; if pause ret.
  *     Install-self at entry; state=1; g_pendingNodeType=1; pause=1; pop esi/ebx; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueEnd;
 extern void AtanDualDeltaThreshold_0049c870(void);
@@ -154,7 +154,7 @@ __declspec(naked) void InstallSelfBit2LoopIndirect_0049c710(void) {
         _emit   75h
         _emit   12h
         call    TripleBlockChainDiffMStackThunks_0049ca10
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -168,7 +168,7 @@ __declspec(naked) void InstallSelfBit2LoopIndirect_0049c710(void) {
         _emit   75h
         _emit   1eh
         call    ScaledChain3c74_0048f910
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -188,7 +188,7 @@ __declspec(naked) void InstallSelfBit2LoopIndirect_0049c710(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], ecx
         call    AtanDualDeltaThreshold_0049c870
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -229,14 +229,14 @@ __declspec(naked) void InstallSelfBit2LoopIndirect_0049c710(void) {
         _emit   74h
         _emit   02h
         call    eax
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   19h
         mov     dword ptr [esi + 8], offset InstallSelfBit2LoopIndirect_0049c710
         mov     dword ptr [esi + 0x84], ebx
         mov     dword ptr [g_pendingNodeType], ebx
-        mov     dword ptr [g_pause_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
         pop     esi
         pop     ebx
         ret

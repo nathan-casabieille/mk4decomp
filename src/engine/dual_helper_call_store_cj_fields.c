@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void ScaledArrStore_00429980(void);
 extern void TripleFieldCopyJmpHi_0048f740(void);
@@ -138,7 +138,7 @@ extern void EsiEdiAliasDualMul10_004906b0(void);
  *   B2 ([+0x84]==2+): set g_eventQueueChild=0x11; call ScaledArrStore_00429980;
  *     if !pause: tail-call StackPopDispatchTagged_0041f780; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueCurrent;
 
@@ -157,7 +157,7 @@ __declspec(naked) void InstallSelfStateMachine_0047f3f0(void) {
         _emit   23h
         mov     dword ptr [g_eventQueueChild], 0x11
         call    ScaledArrStore_00429980
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -169,7 +169,7 @@ __declspec(naked) void InstallSelfStateMachine_0047f3f0(void) {
         pop     esi
         ret
         call    TripleFieldCopyHi_0048f7b0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -179,25 +179,25 @@ __declspec(naked) void InstallSelfStateMachine_0047f3f0(void) {
         _emit   00h
         mov     dword ptr [g_walkCallback], 0xe666
         call    EsiEdiAliasDualMul10_004906b0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   78h
         mov     dword ptr [esi + 8], 0x0047f3f0
         mov     dword ptr [esi + 0x84], 2
         mov     dword ptr [g_pendingNodeType], 4
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
         mov     dword ptr [g_walkCallback], 0x4ccc
         mov     dword ptr [g_eventQueueCurrent], 0xffffb334
         call    DualHelperCallStoreCjFields_0048ff40
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   2fh
         call    TripleFieldCopyJmpHi_0048f740
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   21h
@@ -205,7 +205,7 @@ __declspec(naked) void InstallSelfStateMachine_0047f3f0(void) {
         mov     dword ptr [esi + 8], 0x0047f3f0
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], 4
-        mov     dword ptr [g_pause_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret
     }

@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void IndirectOpcodeDispatch3Entry_0049f3a0(void);
 extern unsigned int g_data_00541d88;
@@ -136,7 +136,7 @@ extern unsigned int g_state_00537ea8;
  *   Tail thunk_1 (+0xe0): if g_data_00541d88!=0 jmp CallSetPause else g_state_00535e48=0; jmp IndirectOpcodeDispatch3Entry_0049f3a0.
  *   Tail thunk_2 (+0x110): if g_state_00537ea8!=0 jmp CallSetPause else g_state_00535e48=1; jmp IndirectOpcodeDispatch3Entry_0049f3a0.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_x_00535e48;
 extern unsigned int g_xformEntityIdx;
 extern void CallSetPause_0041f830(void);
@@ -161,7 +161,7 @@ __declspec(naked) void StateCascadeDualThunkContin_0049f260(void) {
         add     eax, 0xe
         mov     dword ptr [g_walkCallback], eax
         call    LinkedListIndirectDirtyToggle_0049f7b0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -210,7 +210,7 @@ __declspec(naked) void StateCascadeDualThunkContin_0049f260(void) {
         sub     eax, 5
         mov     dword ptr [g_walkCallback], eax
         call    LinkedListIndirectDirtyToggle_0049f7b0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   63h
@@ -234,7 +234,7 @@ __declspec(naked) void StateCascadeDualThunkContin_0049f260(void) {
         mov     edx, dword ptr [g_x_00535e48]
         mov     dword ptr [g_eventQueueCurrent], edx
         call    RoundWinTransition_0049e7e0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   25h
@@ -242,7 +242,7 @@ __declspec(naked) void StateCascadeDualThunkContin_0049f260(void) {
         mov     ecx, dword ptr [eax*4 + 8]
         mov     dword ptr [g_walkCallback], ecx
         call    GuardedScaledCall_0048a020
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h

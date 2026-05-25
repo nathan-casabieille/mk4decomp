@@ -117,15 +117,15 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00421b00 (214b game) - 3-way install-self with countdown. */
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_data_00543438;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_x_007af91c;
@@ -152,7 +152,7 @@ __declspec(naked) void Install3WayCountdownGame_00421b00(void) {
         _emit   75h
         _emit   12h
         call    DecBoundCheckCallJmp_00421be0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -193,7 +193,7 @@ __declspec(naked) void Install3WayCountdownGame_00421b00(void) {
         mov     dword ptr [esi + 0x08], 0x00421b00
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], eax
-        mov     dword ptr [g_pause_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret
     }

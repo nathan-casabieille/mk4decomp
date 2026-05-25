@@ -119,10 +119,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void CallPauseDirtyMStackPush484b40_00484b00(void);
 extern void GuardedDualConst1AndToggle_0048eb20(void);
@@ -176,7 +176,7 @@ void InstallSelfTri_00484a90(void) {
  *   B5 (0x100..0x112): if bit0 of state set: tail-jmp MatchOverCluster_0046ef70.
  *     Else: tail-jmp MStackJmpInstallSelf_0046ed40.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_eventQueueNotMask;
 extern void ArgSarStoreJmp_004594f0(void);
@@ -192,7 +192,7 @@ extern void Wrapper_0048a3c0(void);
 __declspec(naked) void FiveBlockDispatchChain_0046ec20(void) {
     __asm {
         call    ScaledAndAlfe_00490390
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   32h
@@ -201,7 +201,7 @@ __declspec(naked) void FiveBlockDispatchChain_0046ec20(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
         call    TripleCallPauseJmp_00470500
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0dh
@@ -225,7 +225,7 @@ __declspec(naked) void FiveBlockDispatchChain_0046ec20(void) {
         nop
         nop
         call    Wrapper_0048a3c0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   12h

@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void Helper_DownloadSetup(void);
 extern void DispatchSetDirtyToggle_004ac150(void);
@@ -135,7 +135,7 @@ extern void RecursiveMStackByteStream_00406d00(void);
  *   if bit2 of g_xformDirtyFlags clear: load scaledInit[+0x18] -> g_xformEntityIdx.
  *   call RecursiveMStackByteStream_00406d00; if pause? ret. pop pair: g_xformEntityIdx, g_scaledInit_00542044; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_state_00537f48;
 extern unsigned int g_state_005380e0;
 extern unsigned int g_xformEntityIdx;
@@ -165,7 +165,7 @@ void MStackPushPairTriCall_0048ce60(void) {
         mov     edx, dword ptr [g_state_005380e0]
         mov     dword ptr [g_walkCallback], edx
         call    Helper_DownloadSetup
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   74h
@@ -173,7 +173,7 @@ void MStackPushPairTriCall_0048ce60(void) {
         mov     ecx, dword ptr [eax*4 + 0x14]
         mov     dword ptr [g_xformEntityIdx], ecx
         call    DispatchSetDirtyToggle_004ac150
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   54h
@@ -184,7 +184,7 @@ void MStackPushPairTriCall_0048ce60(void) {
         mov     eax, dword ptr [edx*4 + 0x18]
         mov     dword ptr [g_xformEntityIdx], eax
         call    RecursiveMStackByteStream_00406d00
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   2bh

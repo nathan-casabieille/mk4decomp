@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void ThresholdInitInstallSelfChain_00436120(void);
 extern void InstallSelfDecBitCheck_004391d0(void);
@@ -135,7 +135,7 @@ extern void MStackPushSet0Jmp_004384b0(void);
  *     pause=1; ret.
  *   state >=2: tail-call ThresholdInitInstallSelfChain_00436120; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 
 __declspec(naked) void InstallSelfThreeStateDispatch_00436030(void) {
     __asm {
@@ -172,7 +172,7 @@ __declspec(naked) void InstallSelfThreeStateDispatch_00436030(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], edx
         call    InstallSelfDecBitCheck_004391d0
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         pop     esi
         ret
@@ -192,7 +192,7 @@ __declspec(naked) void InstallSelfThreeStateDispatch_00436030(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], edx
         call    MStackPushSet0Jmp_004384b0
-        mov     dword ptr [g_pause_00541e6c], esi
+        mov     dword ptr [g_framePauseFlag], esi
         pop     edi
         pop     esi
         ret

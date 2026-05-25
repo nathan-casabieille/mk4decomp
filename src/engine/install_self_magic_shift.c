@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00472fe0 (137b game) - dual-entry install-self with magic-shift table init.
  *   Block A (+0x00): ecx=scaledInit; eax=0x00538158>>2; g_walkCallback=0; eax = ecx+eax-1;
@@ -130,7 +130,7 @@ extern unsigned int g_data_00535e7c;
  *     chain[+0x84]=1, g_pendingNodeType=3, g_pause=1; pop+ret.
  */
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void ThreeChanPackClamp_00404cc0(void);
 extern void Thunk_0049cbc0(void);
 
@@ -165,7 +165,7 @@ __declspec(naked) void InstallSelfMagicShift_00472fe0(void) {
         mov     dword ptr [esi + 0x08], 0x00473010
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], 3
-        mov     dword ptr [g_pause_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret
     }

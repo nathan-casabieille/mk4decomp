@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004913f0 (271b game) - dual block: thunk + quad-Mul10 cj field accumulator.
  *   B1 (0..0xf, +2 NOPs): push 0x004f12b0; tail-call IterStepDualStore_00490b40.
@@ -130,7 +130,7 @@ extern unsigned int g_data_00535e7c;
  *     If g_eventQueueCurrent > g_walkCallback: ret. Else: call ScaledZero44_00491500;
  *     if pause? ret. Else: cj[+0x6c]/cj[+0x74] = g_walkCallback << 16. ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueCurrent;
 extern void IterStepNoSecond_0048e5e0(void);
 extern void ScaledZero44_00491500(void);
@@ -181,7 +181,7 @@ void ThunkPlusCjMul10Accum_004913f0(void) {
         push    0x004f12b4
         mov     dword ptr [g_eventQueueCurrent], eax
         call    IterStepNoSecond_0048e5e0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h
@@ -192,7 +192,7 @@ void ThunkPlusCjMul10Accum_004913f0(void) {
         _emit   7fh
         _emit   3ah
         call    ScaledZero44_00491500
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   2ch

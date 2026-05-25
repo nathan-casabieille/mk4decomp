@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /*
  * BootMultiAssetLoadStateInit_00403b10 - 258b boot multi-asset loader chain.
@@ -136,7 +136,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_00506c14;
 extern unsigned int g_data_005080bc;
 extern unsigned int g_data_005080d8;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_xformEntityIdx;
 extern void RegistryPushBindPop_00403c20(void);
@@ -154,21 +154,21 @@ __declspec(naked) void BootMultiAssetLoadStateInit_00403b10(void)
         shr     eax, 2
         mov     dword ptr [g_currentNodeIdx], eax
         call    LoadGeoAsset_Default
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_ml_ret
         mov     ecx, offset g_data_00506c14
         shr     ecx, 2
         mov     dword ptr [g_currentNodeIdx], ecx
         call    LoadGeoAsset_Default
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_ml_ret
         mov     edx, offset g_data_005080d8
         shr     edx, 2
         mov     dword ptr [g_xformEntityIdx], edx
         call    DispatcherComplex260_00407400
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_ml_ret
         mov     eax, dword ptr [g_currentNodeIdx]
@@ -178,18 +178,18 @@ __declspec(naked) void BootMultiAssetLoadStateInit_00403b10(void)
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [ecx*4 + 0x30], esi
         call    PushSetCallPop_00406530
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_ml_ret
         call    RegistryPushBindPop_00403c20
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_ml_ret
         mov     edx, offset g_data_005080bc
         shr     edx, 2
         mov     dword ptr [g_xformEntityIdx], edx
         call    DispatcherComplex260_00407400
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_ml_ret
         mov     eax, dword ptr [g_currentNodeIdx]
@@ -198,7 +198,7 @@ __declspec(naked) void BootMultiAssetLoadStateInit_00403b10(void)
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [ecx*4 + 0x30], esi
         call    PushSetCallPop_00406530
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_ml_ret
         call    RegistryPushBindPop_00403c20

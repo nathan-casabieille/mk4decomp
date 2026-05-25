@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void AudioMode2BankSetup_004a6080(void);
 extern unsigned char g_byte_00543840;
@@ -143,7 +143,7 @@ extern unsigned int g_table_00543848;
  *     g_byte_005435b8 = g_byte_0054383c; zero g_byte_005435a3 / g_byte_005435bb;
  *     call AudioMode2BankSetup_004a6080; call TwoStageAudioInit.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_state_00537f48;
 extern unsigned int g_state_005380e0;
 extern void BootInitGuardedCallChain_004265d0(void);
@@ -173,10 +173,10 @@ __declspec(naked) void AudioByteCounterChain_004a9820(void)
         inc     dword ptr [eax*4 + g_table_00543848]
     L_skipInit:
         call    BootInitGuardedCallChain_004265d0
-        cmp     dword ptr [g_pause_00541e6c], ebx
+        cmp     dword ptr [g_framePauseFlag], ebx
         jne     short L_end
         call    FiveTableWalkInit_00403c90
-        cmp     dword ptr [g_pause_00541e6c], ebx
+        cmp     dword ptr [g_framePauseFlag], ebx
         jne     short L_end
         mov     al, byte ptr [g_byte_00543840]
         mov     dword ptr [g_data_0054355c], 1

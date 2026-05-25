@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00461260 (222b game) - 9-entry-point flag dispatcher.
  *   A: call Wrapper_0048a300; if !pause: g_eventQueueChild=0xd; ret.
@@ -134,7 +134,7 @@ extern unsigned int g_data_00535e7c;
  *   I (+0xc0): g_walkCallback=0x2000; call OrDualStore; if !pause jmp Set1JmpSet2Jmp_00461340; ret.
  */
 extern unsigned int g_data_0053a7d8;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_x_00543730;
@@ -146,7 +146,7 @@ extern void Wrapper_0048a300(void);
 __declspec(naked) void NineEntryFlagDispatch_00461260(void) {
     __asm {
         call    Wrapper_0048a300
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0ah
@@ -186,7 +186,7 @@ __declspec(naked) void NineEntryFlagDispatch_00461260(void) {
         _emit   90h
         _emit   90h
         call    FiveSetWalkJmp_00461360
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0fh
@@ -203,7 +203,7 @@ __declspec(naked) void NineEntryFlagDispatch_00461260(void) {
         _emit   90h
         mov     dword ptr [g_walkCallback], 0x00002000
         call    OrDualStore_0048e4b0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h

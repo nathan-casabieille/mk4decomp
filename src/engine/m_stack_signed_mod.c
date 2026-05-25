@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void MStackSignedMod_0042fee0(void);
 extern void SubCmpCallPauseJmp_0042fc40(void);
@@ -134,7 +134,7 @@ extern void Mul10Triple0xd999Interp_0042fa10(void);
  *   tail-jmp SubCmpCallPauseJmp else tail-jmp Mul10Triple0xd999Interp_0042fa10.
  */
 extern unsigned int g_player1NodeIdx;
-extern unsigned int g_x_0053815c;
+extern unsigned int g_player2NodeIdx;
 extern unsigned int g_eventQueueWorkType;
 
 __declspec(naked) void ChainFieldTest2Branch_0042fbc0(void) {
@@ -151,7 +151,7 @@ __declspec(naked) void ChainFieldTest2Branch_0042fbc0(void) {
         mov     dword ptr [g_xformEntityIdx], eax
         mov     dword ptr [g_scaledInit_00542044], ecx
         jne     after
-        mov     eax, dword ptr [g_x_0053815c]
+        mov     eax, dword ptr [g_player2NodeIdx]
         mov     dword ptr [g_scaledInit_00542044], eax
 after:
         call    MStackSignedMod_0042fee0

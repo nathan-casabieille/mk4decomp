@@ -117,17 +117,17 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0047c880 (111b game) - triple-entry dispatcher.
  *   Block A: set g_walkCallback=0x37; call TableLookupCall; if !pause set =0x07; ret.
  *   Block B (+0x30): set baseSel[*4+0x74]=0x408; push 0x004ed320; call ArgSarStoreJmp; ret.
  *   Block C (+0x60): set g_eventQueueChild=0x8; jmp InstallSelfCountdown2Stage_0047c8f0.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueChild;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void InstallSelfCountdown2Stage_0047c8f0(void);
@@ -137,7 +137,7 @@ __declspec(naked) void TripleEntryTblPushJmp_0047c880(void) {
     __asm {
         mov     dword ptr [g_walkCallback], 0x37
         call    TableLookupCall_00489ff0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0ah

@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void InstallSelfHelperGate_00486490(void);
 extern void MStackPushPairTriCall_0048ce60(void);
@@ -132,7 +132,7 @@ extern void MStackPushPairTriCall_0048ce60(void);
  *   call MStackPushPairTriCall_0048ce60; pause-check; g_eventQueueNotMask=0; call CopyJmp_0048ef90; pause-check;
  *   if bit-0 set g_eventQueueNotMask=1; g_eventQueueChild=6; jmp MStackInstallCountdown_00486370.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_eventQueueChild;
@@ -152,7 +152,7 @@ __declspec(naked) void ChainDispatcher4Call_00486290(void) {
         _emit   0ah
         mov     dword ptr [g_walkCallback], 0x00004ccc
         call    CmpP1DualInitStore_00482ab0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -171,24 +171,24 @@ __declspec(naked) void ChainDispatcher4Call_00486290(void) {
         mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [eax*4 + 0x74], edx
         call    MStackPushSet0008_004901a0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   60h
         mov     dword ptr [g_walkCallback], 1
         call    TableLookupCall_00489ff0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   48h
         call    MStackPushPairTriCall_0048ce60
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   3ah
         mov     dword ptr [g_eventQueueNotMask], 0
         call    CopyJmp_0048ef90
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   22h

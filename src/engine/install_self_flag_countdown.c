@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00434690 (154b game) - install-self + countdown loop with global flag.
  *   Block A: standard install-self at 0x00434690; mstack-push 0x004346f0 jmp GameDispatchValidateState_004339c0.
@@ -131,7 +131,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_data_00ab51f8;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_currentNodeFlags;
 extern void ChainDecCondStoreCallJmp_00434880(void);
@@ -155,7 +155,7 @@ __declspec(naked) void InstallSelfFlagCountdown_00434690(void) {
         mov     dword ptr [eax + 0x08], 0x00434690
         mov     dword ptr [eax + 0x84], edx
         mov     dword ptr [g_pendingNodeType], edx
-        mov     dword ptr [g_pause_00541e6c], edx
+        mov     dword ptr [g_framePauseFlag], edx
         ret
         _emit   90h
         _emit   90h

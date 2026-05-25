@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void InstallSelfBranchCascade_00471840(void);
 extern void GuardedSeq_00471670(void);
@@ -135,7 +135,7 @@ extern void TripleCallBitJmp_00471690(void);
  *   chain[+0x84]==0 path: install-self at +0x08=0x00471940, scaledInit-chain push 0x00471940|0x01000000,
  *   call TripleCallBitJmp_00471690; g_pause=1; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_fightGroupHead;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_eventQueueWorkType;
@@ -162,7 +162,7 @@ __declspec(naked) void DualEntryInstall00471920_00471920(void) {
         mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [g_eventQueueWorkType], eax
         call    DualEntryRecursiveInstall_00471710
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   67h
@@ -182,7 +182,7 @@ __declspec(naked) void DualEntryInstall00471920_00471920(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    TripleCallBitJmp_00471690
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         ret
     }
 }

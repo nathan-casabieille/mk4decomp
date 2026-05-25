@@ -117,13 +117,13 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004376f0 (207b game) - install-self with 4-call cascade and scaledInit-chain push. */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void DualBlockPauseAbsDirty_00439560(void);
 extern void DualScaledInitClear_00433c10(void);
 extern void HitReactionStateCluster_004335f0(void);
@@ -144,7 +144,7 @@ __declspec(naked) void InstallSelfChain4Call_004376f0(void) {
         pop     esi
         ret
         call    LeaPlus22StoreSelf_0048e4d0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -153,7 +153,7 @@ __declspec(naked) void InstallSelfChain4Call_004376f0(void) {
         _emit   00h
         _emit   00h
         call    DualBlockPauseAbsDirty_00439560
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -168,7 +168,7 @@ __declspec(naked) void InstallSelfChain4Call_004376f0(void) {
         pop     esi
         ret
         call    DualScaledInitClear_00433c10
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   5fh
@@ -187,7 +187,7 @@ __declspec(naked) void InstallSelfChain4Call_004376f0(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    MStackPushSet4Jmp_004384f0
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
     }

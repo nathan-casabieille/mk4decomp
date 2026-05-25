@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /*
  * BootInstallPeriodicTriple_00414920 - 223b boot 2-body periodic with triple call.
@@ -130,11 +130,11 @@ extern unsigned int g_data_00535e7c;
  *       just snapshot g_fightGroupHead to g_eventQueueEnd. Else: push 0x1392; TableHitOrSchedule;
  *       CallSetPause; pop+ret.
  *     Common: call BootSlotInstallChainTail_00414a00 three times with pause-checks between. If completed unpaused:
- *       install-self at body; chain->state=1; g_pendingNodeType=1; g_pause_00541e6c=1.
+ *       install-self at body; chain->state=1; g_pendingNodeType=1; g_framePauseFlag=1.
  *     Pop+ret.
  */
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_fightGroupHead;
@@ -191,22 +191,22 @@ __declspec(naked) void BootInstallPeriodicTriple_00414920(void)
         mov     dword ptr [g_eventQueueEnd], edx
     L_callTrip:
         call    BootSlotInstallChainTail_00414a00
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_b2_ret
         call    BootSlotInstallChainTail_00414a00
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_b2_ret
         call    BootSlotInstallChainTail_00414a00
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_b2_ret
         mov     eax, 1
         mov     dword ptr [esi + 8], offset L_body2
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], eax
-        mov     dword ptr [g_pause_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
     L_b2_ret:
         pop     esi
         ret

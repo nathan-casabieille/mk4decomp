@@ -117,17 +117,17 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0049bf90 (175b game) - 3-block: A: call MStackCall_00406740; if !pause jmp CallSetPause.
  *   B (+0x20): chain[*4+0x74]=0x30d; call CondPickDualStore; if !pause push 0x004f2660 call ArgSarStoreJmp; ret.
  *   C (+0x60): call CondPickDualStore; if !pause call CopyJmp_0048ef90; if !pause and bit-0 set
  *     jmp FivePackedSubdispatchInstallSelf_0049c040; else chain[*4+0x74]=0x30c; push 0x004f26a8; call ArgSarStoreJmp; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CallSetPause_0041f830(void);
 extern void CondPickDualStore_0049c670(void);
@@ -137,7 +137,7 @@ extern void MStackCall_00406740(void);
 __declspec(naked) void Triple3PathDispatch_0049bf90(void) {
     __asm {
         call    MStackCall_00406740
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h
@@ -160,7 +160,7 @@ __declspec(naked) void Triple3PathDispatch_0049bf90(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
         call    CondPickDualStore_0049c670
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0dh
@@ -182,12 +182,12 @@ __declspec(naked) void Triple3PathDispatch_0049bf90(void) {
         _emit   90h
         _emit   90h
         call    CondPickDualStore_0049c670
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   40h
         call    CopyJmp_0048ef90
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   32h

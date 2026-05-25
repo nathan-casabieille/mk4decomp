@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void Phase1ChainSetupCallScale6_0040ca70(void);
 extern void InstallSelfHelper2_0047e8a0(void);
@@ -135,7 +135,7 @@ extern void InstallSelfCountdown2Stage_0047e910(void);
  *     if (g_xformDirtyFlags & 1): call InstallSelfCountdown2Stage_0047e910; ret.
  *     else: install self, set slot84=1, g_pendingNodeType=1, pause flag.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueChild;
 extern void ArgSarStoreJmp_004594f0(void);
@@ -208,7 +208,7 @@ __declspec(naked) void TripleEntryTblPushJmp_0047c880(void) {
     __asm {
         mov     dword ptr [g_walkCallback], 0x37
         call    TableLookupCall_00489ff0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0ah

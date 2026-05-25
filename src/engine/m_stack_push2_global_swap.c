@@ -117,20 +117,20 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00477400 (167b game) - mstack push 2 + 2-state global swap + pop 2:
  *   push scaledInit, g_xformEntityIdx;
  *   eax = chain[base].slot64; g_xformEntityIdx = g_player1NodeIdx; g_scaledInit = eax;
  *   if (eax == g_player1NodeIdx): g_scaledInit = g_player1NodeIdx = 0.
- *   else: g_xformEntityIdx = g_x_0053815c; if (g_x_0053815c == eax): g_scaledInit = g_x_0053815c = 0.
+ *   else: g_xformEntityIdx = g_player2NodeIdx; if (g_player2NodeIdx == eax): g_scaledInit = g_player2NodeIdx = 0.
  *   Then pop 2 into g_xformEntityIdx, g_scaledInit.
  */
 extern unsigned int g_player1NodeIdx;
-extern unsigned int g_x_0053815c;
+extern unsigned int g_player2NodeIdx;
 extern unsigned int g_xformEntityIdx;
 
 extern unsigned int g_data_004d57ac_arr;
@@ -161,14 +161,14 @@ void MStackPush2GlobalSwap_00477400(void) {
         mov     dword ptr [g_player1NodeIdx], eax
         _emit   0ebh
         _emit   1ch
-        mov     ecx, dword ptr [g_x_0053815c]
+        mov     ecx, dword ptr [g_player2NodeIdx]
         cmp     ecx, eax
         mov     dword ptr [g_xformEntityIdx], ecx
         _emit   75h
         _emit   0ch
         xor     eax, eax
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     dword ptr [g_x_0053815c], eax
+        mov     dword ptr [g_player2NodeIdx], eax
         mov     eax, dword ptr [g_state_004d57ac]
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
         dec     eax

@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00492140 (207b game) - dual-section init.
  *   Section A: g_xformEntityIdx=0x0050f3d0>>2; call DispatcherComplex260; pause-check;
@@ -129,7 +129,7 @@ extern unsigned int g_data_00535e7c;
  *   Section B (+0x70): g_xformEntityIdx=0x0050f3ec>>2; same pattern with chain[+0x54]=0x00630000.
  *   ret with pop esi.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern void RegistryPushBindPop_00403c20(void);
 
@@ -140,7 +140,7 @@ __declspec(naked) void DualSectionInit_00492140(void) {
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
         call    DispatcherComplex260_00407400
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -162,12 +162,12 @@ __declspec(naked) void DualSectionInit_00492140(void) {
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [edx*4 + 0x30], esi
         call    PushSetCallPop_00406530
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   69h
         call    RegistryPushBindPop_00403c20
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   5bh
@@ -175,7 +175,7 @@ __declspec(naked) void DualSectionInit_00492140(void) {
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
         call    DispatcherComplex260_00407400
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   40h
@@ -188,7 +188,7 @@ __declspec(naked) void DualSectionInit_00492140(void) {
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [edx*4 + 0x30], esi
         call    PushSetCallPop_00406530
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h

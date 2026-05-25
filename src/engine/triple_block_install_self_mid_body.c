@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void CmpP1DualInitStore_00482ab0(void);
 extern void GateDispatch6c_00494580(void);
@@ -133,24 +133,24 @@ extern void TripleBlockInstallSelfMidBody_00482f60(void);
  *   [g_baseSel_00542060*4 + 0x74]; push 0x004ee370; call ArgSarStoreJmp; ret.
  *   Second block (+0x60): tail-jmp TripleBlockInstallSelfMidBody_00482f60.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void ArgSarStoreJmp_004594f0(void);
 
 __declspec(naked) void Chain3CallGuarded_00482ef0(void) {
     __asm {
         mov     dword ptr [g_walkCallback], 0x00008000
         call    CmpP1DualInitStore_00482ab0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   40h
         call    GateDispatch6c_00494580
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   32h
         call    CmpDualPatchCallJmp_00482b00
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   24h

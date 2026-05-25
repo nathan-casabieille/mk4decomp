@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0047d560 (231b game) - two blocks (+13 NOPs padding).
  *   B1 (0..66): clear g_eventQueueNotMask; call EntryThunkBodyStateMachine_00457bb0; if !pause: set
@@ -132,7 +132,7 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_data_00538038;
 extern unsigned int g_data_0053803c;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_eventQueueNotMask;
 extern void EntryThunkBodyStateMachine_00457bb0(void);
@@ -145,7 +145,7 @@ __declspec(naked) void GuardedThenCjCascade_0047d560(void) {
     __asm {
         mov     dword ptr [g_eventQueueNotMask], 0
         call    EntryThunkBodyStateMachine_00457bb0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   2ah
@@ -153,7 +153,7 @@ __declspec(naked) void GuardedThenCjCascade_0047d560(void) {
         call    TableLookupCall_00489f60
         push    0x004ed420
         call    ScaledDualPropagateJmp_004287b0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h

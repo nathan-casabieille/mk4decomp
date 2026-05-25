@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void StanceFsmCluster_004871f0(void);
 extern void GatedChainClamp_00486e80(void);
@@ -134,7 +134,7 @@ extern void CjTableThresholdDispatch_00488f00(void);
  *   pause-check. mstack-pop g_eventQueueChild, g_eventQueueNotMask. jmp GatedChainClamp_00486e80.
  */
 extern unsigned int g_data_004d57ac_arr;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_eventQueueNotMask;
@@ -165,18 +165,18 @@ __declspec(naked) void MStackPush3CallCascade_00486d90(void) {
         _emit   74h
         _emit   0eh
         call    StanceFsmCluster_004871f0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   7eh
         call    MStackFrameCdeclDouble_004903f0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   70h
         push    0x004eee48
         call    IterStepDualStore_00490b40
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h
@@ -190,7 +190,7 @@ __declspec(naked) void MStackPush3CallCascade_00486d90(void) {
         _emit   74h
         _emit   13h
         call    CjTableThresholdDispatch_00488f00
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   30h

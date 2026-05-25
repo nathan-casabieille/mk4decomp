@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004809e0 (210b game) - 3-way install-self with chain[+0x84] value dispatch (0, 1, 2+).
  *   Value 0: fresh init via MStackPushSet0008, chain[+0x74]=0x100f, push str, call IterStepNegStore,
@@ -129,7 +129,7 @@ extern unsigned int g_data_00535e7c;
  *   Value 2+: call FiveCallGuardSetTail_0046f6b0, pop+ret.
  */
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void CopyJmp_00406ba0(void);
 extern void FiveCallGuardSetTail_0046f6b0(void);
 extern void IterStepNegStore_00490b10(void);
@@ -152,7 +152,7 @@ __declspec(naked) void Install3WayChainCounter_004809e0(void) {
         pop     esi
         ret
         call    ScaledZeroFour_00490740
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -163,11 +163,11 @@ __declspec(naked) void Install3WayChainCounter_004809e0(void) {
         mov     dword ptr [esi + 0x08], 0x004809e0
         mov     dword ptr [esi + 0x84], 2
         mov     dword ptr [g_pendingNodeType], 8
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
         call    MStackPushSet0008_004901a0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   5ch
@@ -177,13 +177,13 @@ __declspec(naked) void Install3WayChainCounter_004809e0(void) {
         push    0x004ed850
         mov     dword ptr [ecx*4 + 0x74], eax
         call    IterStepNegStore_00490b10
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h
         _emit   2fh
         call    CopyJmp_00406ba0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   21h
@@ -191,7 +191,7 @@ __declspec(naked) void Install3WayChainCounter_004809e0(void) {
         mov     dword ptr [esi + 0x08], 0x004809e0
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], 4
-        mov     dword ptr [g_pause_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret
     }

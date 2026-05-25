@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0049aef0 (225b game) - install-self with countdown.
  *   chain[+0x84]==0 path: install-self at +0x08=0x0049aef0; chain[+0x84]=1; g_pendingNodeType=1; pause=1; ret.
@@ -130,7 +130,7 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_eventQueueChild;
 extern void AtanDualDeltaThreshold_0049c870(void);
@@ -164,7 +164,7 @@ __declspec(naked) void InstallSelfCountdownBit_0049aef0(void) {
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
         mov     dword ptr [g_walkCallback], 6
         call    AtanDualDeltaThreshold_0049c870
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   6ah
@@ -198,7 +198,7 @@ __declspec(naked) void InstallSelfCountdownBit_0049aef0(void) {
         mov     dword ptr [esi + 0x08], 0x0049aef0
         mov     dword ptr [esi + 0x84], ebx
         mov     dword ptr [g_pendingNodeType], ebx
-        mov     dword ptr [g_pause_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
         pop     esi
         pop     ebx
         ret

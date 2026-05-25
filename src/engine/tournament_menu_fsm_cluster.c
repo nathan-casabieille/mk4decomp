@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void InstallSelfCountdown2Stage_0047c8f0(void);
 extern void TournamentMenuFsmCluster_004960e0(void);
@@ -132,7 +132,7 @@ extern void IterStepNegStore_00490b10(void);
  *     call TournamentMenuFsmCluster_004960e0; pause=1; pop+ret.
  *   chain[+0x84]!=0 path: g_eventQueueChild=8; jmp InstallSelfCountdown2Stage_0047c8f0.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueChild;
 
 __declspec(naked) void InstallSelfCountdownStr_0047cb90(void) {
@@ -151,7 +151,7 @@ __declspec(naked) void InstallSelfCountdownStr_0047cb90(void) {
         ret
         push    0x004ed338
         call    IterStepNegStore_00490b10
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h
@@ -172,7 +172,7 @@ __declspec(naked) void InstallSelfCountdownStr_0047cb90(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    TournamentMenuFsmCluster_004960e0
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
     }

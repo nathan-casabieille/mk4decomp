@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void PendingMatch_004a3400(void);
 extern void Thunk_004c48b0(void);
@@ -174,7 +174,7 @@ extern unsigned int g_data_00543590;
 extern unsigned int g_data_0054371c;
 extern unsigned int g_data_005437f8;
 extern unsigned int g_data_005437fc;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_x_004f3ae4;
 extern unsigned int g_x_004f3ae8;
 extern unsigned int g_currentNodeIdx;
@@ -310,7 +310,7 @@ __declspec(naked) void AudioFlagPair3EntryDeinit_004a2720(void)
         call    SixCallSeqPushImm_004a1d80
         mov     dword ptr [g_eventQueueWorkType], 0
         call    Push16Call_00489f50
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_main_ret
         jmp     PendingMatch_004a3400
@@ -364,14 +364,14 @@ __declspec(naked) void AudioInitLoopTriple_004a7840(void)
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
         call    DispatcherComplex260_00407400
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_e0_ret
         push    0x13333
         call    SnapshotDirtyMark_004a1dc0
         add     esp, 4
         call    MStackPushComplexCallPop_00406430
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_e0_ret
         mov     ecx, dword ptr [g_currentNodeIdx]

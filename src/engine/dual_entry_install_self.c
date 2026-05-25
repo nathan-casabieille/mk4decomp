@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00488740 (138b game) - dual-entry install-self.
  *   Block A: call Wrapper_0048a280; if !pause push 0x004ef068 call ArgSarStoreJmp; ret.
@@ -129,7 +129,7 @@ extern unsigned int g_data_00535e7c;
  *     g_pendingNodeType=0x28, g_pause=1; ret. Else: call ScaledMove48to58; if !pause jmp CjInstallSelfRouter.
  */
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_fightGroupHead;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CjInstallSelfRouter_00470480(void);
@@ -139,7 +139,7 @@ extern void Wrapper_0048a280(void);
 __declspec(naked) void DualEntryInstallSelf_00488740(void) {
     __asm {
         call    Wrapper_0048a280
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0dh
@@ -159,7 +159,7 @@ __declspec(naked) void DualEntryInstallSelf_00488740(void) {
         _emit   74h
         _emit   13h
         call    ScaledMove48to58_00490720
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   3fh
@@ -172,7 +172,7 @@ __declspec(naked) void DualEntryInstallSelf_00488740(void) {
         mov     dword ptr [eax + 0x08], 0x00488760
         mov     dword ptr [eax + 0x84], ecx
         mov     dword ptr [g_pendingNodeType], 0x28
-        mov     dword ptr [g_pause_00541e6c], ecx
+        mov     dword ptr [g_framePauseFlag], ecx
         ret
     }
 }

@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void Wrapper_0048a380(void);
 extern void ScaledDecOrZero_00483b50(void);
@@ -135,7 +135,7 @@ extern void DualPushCallPause_00482eb0(void);
  *     baseSel[+0x80] vs g_eventQueueChild (set per state bits): if less, jmp QuadBlockInstallChainThunks_00483c90.
  *     Else if baseSel[+0x34] != 0xf: jmp QuadBlockInstallChainThunks_00483c90. Else: push 0x004ee780, tail-call ArgSarStoreJmp.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void FlagCascadeStateSet_0048ec30(void);
 extern void SixBlockCjCascade_004829b0(void);
@@ -154,7 +154,7 @@ __declspec(naked) void IncThunkPlusCjDispatch_00483b80(void) {
         nop
         nop
         call    Wrapper_0048a380
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -163,7 +163,7 @@ __declspec(naked) void IncThunkPlusCjDispatch_00483b80(void) {
         _emit   00h
         _emit   00h
         call    SixBlockCjCascade_004829b0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -176,7 +176,7 @@ __declspec(naked) void IncThunkPlusCjDispatch_00483b80(void) {
         _emit   05h
         jmp     DualPushCallPause_00482eb0
         call    ScaledDecOrZero_00483b50
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -185,7 +185,7 @@ __declspec(naked) void IncThunkPlusCjDispatch_00483b80(void) {
         _emit   00h
         _emit   00h
         call    ScaledAndAlf7_00490310
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -195,7 +195,7 @@ __declspec(naked) void IncThunkPlusCjDispatch_00483b80(void) {
         _emit   00h
         mov     dword ptr [g_eventQueueChild], 0x3333
         call    FlagCascadeStateSet_0048ec30
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   79h
@@ -204,7 +204,7 @@ __declspec(naked) void IncThunkPlusCjDispatch_00483b80(void) {
         _emit   0ah
         mov     dword ptr [g_eventQueueChild], 0x2666
         call    DirtyToggleByGate_0048f350
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   58h

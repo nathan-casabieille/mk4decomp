@@ -117,13 +117,13 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00483900 (205b game) - 4-entry-point sequencer. */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_fightGroupHead;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_eventQueueNotMask;
@@ -163,23 +163,23 @@ __declspec(naked) void Quad4SequencerInstall_00483900(void) {
         _emit   90h
         _emit   90h
         call    InstallSelfDualEntry_00426ae0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   41h
         mov     dword ptr [g_walkCallback], 0x00006666
         call    CmpP1DualInitStore_00482ab0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   29h
         call    CjTableThresholdDispatch_00488f00
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   1bh
         call    GateDispatch6c_00494580
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0dh
@@ -193,7 +193,7 @@ __declspec(naked) void Quad4SequencerInstall_00483900(void) {
         mov     edx, dword ptr [eax*4 + 0x5c]
         mov     dword ptr [g_eventQueueNotMask], edx
         call    GatedScaledChainSetup_00427390
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0fh

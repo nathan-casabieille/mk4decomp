@@ -117,14 +117,14 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_data_00538038;
 extern unsigned int g_data_0053803c;
 extern unsigned int g_player1NodeIdx;
-extern unsigned int g_x_0053815c;
+extern unsigned int g_player2NodeIdx;
 extern unsigned int g_x_00538160;
 extern unsigned int g_x_00538164;
 extern unsigned int g_x_0053a6dc;
@@ -149,7 +149,7 @@ void DirtyKeyedStateCopy_00421ca0(void) {
     g_cj_0054205c = cj;
     g_eventQueueWorkType = wt;
     if (wt != 0) {
-        wt = g_x_0053815c;
+        wt = g_player2NodeIdx;
         walk = g_data_0053803c;
         g_eventQueueWorkType = wt;
         cj = g_x_00538164;

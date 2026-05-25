@@ -20,14 +20,14 @@ extern packed_ptr g_fightGroupHead;
  */
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_player1NodeIdx;
-extern unsigned int g_data_0053815c;
+extern unsigned int g_player2NodeIdx;
 extern void GuardedSelfRefSet_0048d070(void);
 void GuardedSelfRefSet_0048d070(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
     *(unsigned int *)(base + 0x84) = 0;
     do {
         if (g_fightGroupHead == g_player1NodeIdx) break;
-        if (g_fightGroupHead == g_data_0053815c) break;
+        if (g_fightGroupHead == g_player2NodeIdx) break;
         *(unsigned int *)(base + 8) = (unsigned int)&GuardedSelfRefSet_0048d070;
         *(unsigned int *)(base + 0x84) = 1;
         g_pendingNodeType = 0x0a;

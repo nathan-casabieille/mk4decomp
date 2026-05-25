@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void InstallSelfMStackBranchIndirect_00470b90(void);
 
@@ -135,7 +135,7 @@ extern void InstallSelfMStackBranchIndirect_00470b90(void);
  *   B6 (208..239): g_eventQueueEnd = 0x004ed3a0>>2; tail-jmp InstallSelfMStackBranchIndirect_00470b90.
  *   B7 (240..253): push 0x004ed3c0; tail-call ArgSarStoreJmp.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueEnd;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void MStackBitFlagDispatch_00494750(void);
@@ -143,7 +143,7 @@ extern void MStackBitFlagDispatch_00494750(void);
 __declspec(naked) void SevenThunks_0047cc50(void) {
     __asm {
         call    MStackBitFlagDispatch_00494750
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0dh
@@ -164,7 +164,7 @@ __declspec(naked) void SevenThunks_0047cc50(void) {
         _emit   9fh
         _emit   0f8h
         _emit   0ffh
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0dh
@@ -218,7 +218,7 @@ __declspec(naked) void SevenThunks_0047cc50(void) {
         _emit   9eh
         _emit   0f8h
         _emit   0ffh
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0dh

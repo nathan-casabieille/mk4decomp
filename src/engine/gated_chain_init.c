@@ -117,13 +117,13 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0042f760 (221b game) - gated chain init. */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_x_004f360c;
 extern void MStackCall_00406340(void);
 extern void PushSetXfmMaskCallPop_00407140(void);
@@ -143,7 +143,7 @@ __declspec(naked) void GatedChainInit_0042f760(void) {
         shr     esi, 2
         mov     dword ptr [g_walkCallback], esi
         call    PushSetXfmMaskCallPop_00407140
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -159,7 +159,7 @@ __declspec(naked) void GatedChainInit_0042f760(void) {
         _emit   00h
         _emit   00h
         call    MStackCall_00406340
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -175,7 +175,7 @@ __declspec(naked) void GatedChainInit_0042f760(void) {
         mov     dword ptr [eax + 0x60], 0x0000ca3d
         mov     dword ptr [g_walkCallback], esi
         call    PushSetXfmMaskCallPop_00407140
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   56h
@@ -183,7 +183,7 @@ __declspec(naked) void GatedChainInit_0042f760(void) {
         _emit   75h
         _emit   4dh
         call    MStackCall_00406340
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   3fh

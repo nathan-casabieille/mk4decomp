@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00461a60 (268b game) - install-self with table-walk init dispatch.
  *   If chain[+0x84] was nonzero: g_walkCallback=2 unless was already 2 (then 6);
@@ -130,7 +130,7 @@ extern unsigned int g_data_00535e7c;
  *     chain[+0x84]=1; scaledInit-chain push 0x00461a60+0x01000000;
  *     call InitZeroChainLookupJmp_00494210; pause=1; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_eventQueueEnd;
 extern void CallSetPause_0041f830(void);
@@ -164,7 +164,7 @@ __declspec(naked) void InstallSelfTableDispatch_00461a60(void) {
         mov     edx, dword ptr [eax*4 + 4]
         mov     dword ptr [g_xformEntityIdx], edx
         call    StateMachineInit_00493000
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -198,7 +198,7 @@ __declspec(naked) void InstallSelfTableDispatch_00461a60(void) {
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    InitZeroChainLookupJmp_00494210
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
     }

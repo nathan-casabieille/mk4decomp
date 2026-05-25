@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00439fd0 (175b game) - install-self with countdown + 3-stage cascade.
  *   Block A install-self path. Then call PendingMatch_0045e640 + bit-1 test, set g_data_0053a478,
@@ -130,7 +130,7 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_data_0053a478;
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueChild;
 extern void InstallSelfChainSetB333_00437b60(void);
 extern void PendingMatch_0045e640(void);
@@ -160,7 +160,7 @@ __declspec(naked) void InstallSelfCountdownCascade_00439fd0(void) {
         pop     ebx
         ret
         call    PendingMatch_0045e640
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   61h
@@ -169,13 +169,13 @@ __declspec(naked) void InstallSelfCountdownCascade_00439fd0(void) {
         _emit   59h
         mov     dword ptr [g_data_0053a478], ebx
         call    PushPop84TripleCall_00438b90
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   45h
         mov     dword ptr [g_eventQueueChild], 0x78
         call    ScaledChain3c74_0048f910
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   2dh
@@ -189,7 +189,7 @@ __declspec(naked) void InstallSelfCountdownCascade_00439fd0(void) {
         mov     dword ptr [esi + 0x08], 0x00439fd0
         mov     dword ptr [esi + 0x84], ebx
         mov     dword ptr [g_pendingNodeType], ebx
-        mov     dword ptr [g_pause_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
         pop     esi
         pop     ebx
         ret

@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void AudioInstall2BodyDualSetup_004a0300(void);
 extern void AudioInstallSelf3StateWithSubcall_004a0870(void);
@@ -135,9 +135,9 @@ extern unsigned int g_x_00537eec;
  *   If was zero: g_eventQueueEnd=7; edx=1<<(g_eventQueueWorkType-1); g_eventQueueWorkType--; ecx = g_x_00537eec & edx;
  *     g_eventQueueCurrent=edx; g_walkCallback=ecx; g_x_00537eec=ecx; install-self at entry; chain->state=1;
  *     mstack-push (entry+0x01000000) packed; g_currentNodeIdx++; clear g_baseSel*4+0x84;
- *     call AudioInstallSelf3StateWithSubcall_004a0870; g_pause_00541e6c=1; ret.
+ *     call AudioInstallSelf3StateWithSubcall_004a0870; g_framePauseFlag=1; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_x_00541dd4;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_eventQueueEnd;
@@ -193,7 +193,7 @@ __declspec(naked) void AudioInstallSelfShiftedChainInit_004a0210(void)
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    AudioInstallSelf3StateWithSubcall_004a0870
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         ret
     }
 }

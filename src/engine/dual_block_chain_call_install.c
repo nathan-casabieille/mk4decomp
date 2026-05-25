@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00483de0 (308b game) - dual-block: entry-call chain + install-self body.
  *   Block A (0..0x4d): chain[baseSel*4+0x74] = g_walkCallback.
@@ -135,7 +135,7 @@ extern unsigned int g_data_00535e7c;
  *   state==0 (je from cmp): g_eventQueueChild=0x14; install-self at body+0x01000000.
  *     state=1; call EsiInstallDecCallChain; pause=1; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void EsiInstallDecCallChain_004294a0(void);
 extern void GateDispatch6c_00494580(void);
@@ -151,12 +151,12 @@ __declspec(naked) void DualBlockChainCallInstall_00483de0(void) {
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0x74], ecx
         call    GateDispatch6c_00494580
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   4dh
         call    CopyJmp_0048ef90
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   3fh
@@ -165,13 +165,13 @@ __declspec(naked) void DualBlockChainCallInstall_00483de0(void) {
         _emit   05h
         jmp     TwoCallTail_00481380
         call    ScaledMove48to58_00490720
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   23h
         push    0x004ee7d8
         call    IterStepDualStore_00490b40
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h
@@ -191,7 +191,7 @@ __declspec(naked) void DualBlockChainCallInstall_00483de0(void) {
         _emit   74h
         _emit   3bh
         call    DirtyToggleByGate_0048f350
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -224,7 +224,7 @@ __declspec(naked) void DualBlockChainCallInstall_00483de0(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    EsiInstallDecCallChain_004294a0
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         ret
     }
 }

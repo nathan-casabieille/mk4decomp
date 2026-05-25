@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /*
  * BootStateMachine4Way_00402f60 - 257b boot 4-state install-self machine.
@@ -128,16 +128,16 @@ extern unsigned int g_data_00535e7c;
  *   sub ecx,0 flags branch:
  *     state 0 → init full: g_data_0053a50c=7; g_state_0053a6e0=1; g_walkCallback=0; g_state_00537ea4=0;
  *       install-self; chain->state=1; mstack-push (entry+0x01000000); g_currentNodeIdx++; chain->state=0;
- *       call Phase3InstallSelf_00403170; g_pause_00541e6c=1; pop+ret.
- *     state 1 → install-self; chain->state=2; g_pendingNodeType=0xa0; g_pause_00541e6c=1; pop+ret.
- *     state 2 → install-self; chain->state=3; g_pendingNodeType=0x384; g_pause_00541e6c=1;
+ *       call Phase3InstallSelf_00403170; g_framePauseFlag=1; pop+ret.
+ *     state 1 → install-self; chain->state=2; g_pendingNodeType=0xa0; g_framePauseFlag=1; pop+ret.
+ *     state 2 → install-self; chain->state=3; g_pendingNodeType=0x384; g_framePauseFlag=1;
  *       g_walkCallback=1; g_data_00541dc8=1; pop+ret.
  *     state 3+ → tail-call BootDualStateInstallSelf_00403070; pop+ret.
  */
 extern unsigned int g_data_0053a50c;
 extern unsigned int g_data_00541dc8;
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_state_00537ea4;
 extern unsigned int g_state_0053a6e0;
 extern unsigned int g_currentNodeIdx;
@@ -172,7 +172,7 @@ __declspec(naked) void BootStateMachine4Way_00402f60(void)
         mov     dword ptr [eax + 8], offset BootStateMachine4Way_00402f60
         mov     dword ptr [eax + 0x84], 3
         mov     dword ptr [g_pendingNodeType], 0x384
-        mov     dword ptr [g_pause_00541e6c], esi
+        mov     dword ptr [g_framePauseFlag], esi
         pop     edi
         pop     esi
         ret
@@ -180,7 +180,7 @@ __declspec(naked) void BootStateMachine4Way_00402f60(void)
         mov     dword ptr [eax + 8], offset BootStateMachine4Way_00402f60
         mov     dword ptr [eax + 0x84], 2
         mov     dword ptr [g_pendingNodeType], 0xa0
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         pop     esi
         ret
@@ -205,7 +205,7 @@ __declspec(naked) void BootStateMachine4Way_00402f60(void)
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], edx
         call    Phase3InstallSelf_00403170
-        mov     dword ptr [g_pause_00541e6c], esi
+        mov     dword ptr [g_framePauseFlag], esi
         pop     edi
         pop     esi
         ret

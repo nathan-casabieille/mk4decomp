@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0046cb70 (259b game) - install-self with state-based dispatch.
  *   snapshot+clear chain[+0x84].
@@ -135,7 +135,7 @@ extern unsigned int g_data_00535e7c;
  *     scaledInit = 0x004ec0a8 >> 2; call GuardedDirtyXformFromTable_0048f6d0; if pause? ret.
  *     else: install-self at [esi+8]=0x0046cb70; chain[+0x84]=1; g_pendingNodeType=0xc; pause=1; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_pendingNodeType;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CopyJmp_0048ee80(void);
@@ -168,7 +168,7 @@ __declspec(naked) void InstallSelfChainedDispatch_0046cb70(void) {
         pop     esi
         ret
         call    DirtyTestScaledCmpJmp_0046ea70
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -177,7 +177,7 @@ __declspec(naked) void InstallSelfChainedDispatch_0046cb70(void) {
         _emit   00h
         _emit   00h
         call    ScaledZeroFour_00490740
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -186,7 +186,7 @@ __declspec(naked) void InstallSelfChainedDispatch_0046cb70(void) {
         _emit   00h
         _emit   00h
         call    CopyJmp_0048ee80
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   79h
@@ -195,17 +195,17 @@ __declspec(naked) void InstallSelfChainedDispatch_0046cb70(void) {
         _emit   14h
         push    0x004eb268
         call    ArgSarStoreJmp_004594f0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         pop     esi
         ret
         call    ScaledMove48to58_00490720
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   4bh
         call    MStackPushSet0200_00490140
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   3dh
@@ -213,7 +213,7 @@ __declspec(naked) void InstallSelfChainedDispatch_0046cb70(void) {
         shr     edx, 2
         mov     dword ptr [g_scaledInit_00542044], edx
         call    GuardedDirtyXformFromTable_0048f6d0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   21h
@@ -221,7 +221,7 @@ __declspec(naked) void InstallSelfChainedDispatch_0046cb70(void) {
         mov     dword ptr [esi + 8], 0x0046cb70
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], 0x0c
-        mov     dword ptr [g_pause_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret
     }

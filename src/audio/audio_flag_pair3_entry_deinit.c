@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /*
  * AudioFlagPair3EntryDeinit_004a2720 - 149b audio deinit variant of AudioModeInit_004a2610.
@@ -133,7 +133,7 @@ extern unsigned int g_data_00535e7c;
  *   Pad-aligned tail-jmp Thunk_004c48b0 (0x004a27b0).
  */
 extern unsigned int g_data_00542004;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_eventQueueWorkType;
@@ -171,7 +171,7 @@ __declspec(naked) void AudioFlagPair3EntryDeinit_004a2720(void)
         call    SixCallSeqPushImm_004a1d80
         mov     dword ptr [g_eventQueueWorkType], 0
         call    Push16Call_00489f50
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_main_ret
         jmp     PendingMatch_004a3400

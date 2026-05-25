@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0045f470 (251b game) - cdecl arg-1 + 8-field copy + AND chain + bit toggle.
  *   arg1 = [esp+4]; eax = arg1>>2 -> g_eventQueueTotal.
@@ -132,7 +132,7 @@ extern unsigned int g_data_00535e7c;
  *   if g_eventQueueWorkType == g_walkCallback then: if g_acc_00542078 == g_eventQueueCurrent:
  *     bit0 of g_xformDirtyFlags set, else clear; else clear bit0; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
@@ -169,7 +169,7 @@ void CdeclArgScaledLookupAndStore_0045f470(void) {
         add     eax, 8
         mov     dword ptr [g_eventQueueTotal], eax
         call    NotMaskStorePair_0045f440
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   5ah

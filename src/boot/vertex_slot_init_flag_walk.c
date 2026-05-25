@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_state_00541e70;
 extern unsigned int g_state_00541e74;
@@ -134,7 +134,7 @@ extern void VertexSlotInitFlagWalk_00409740(void);
  *     else clear it. ret.
  */
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_eventQueueCurrent;
 
@@ -148,7 +148,7 @@ __declspec(naked) void DualEntryInitCmp_00425b20(void) {
         mov     dword ptr [g_eventQueueTotal], ecx
         mov     dword ptr [g_cj_00542054], 1
         call    VertexSlotInitFlagWalk_00409740
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   37h

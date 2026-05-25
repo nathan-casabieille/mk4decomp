@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00446680 (272b game) - load baseSel triple + call cascade with bit2 gate.
  *   Load baseSel[+0x30/+0x60/+0x4c] -> scaledInit/g_xformEntityIdx/g_cj_0054205c.
@@ -133,7 +133,7 @@ extern unsigned int g_data_00535e7c;
  *   Call SetupVecFsmCluster_0043e3e0; if pause? ret. Else: state |= 4; if scaledInit was 0 ret;
  *   else: state ^= 4 (clear bit2); ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_eventQueueIdx;
 extern void DispatchSetDirtyToggle_004ac150(void);
@@ -153,7 +153,7 @@ __declspec(naked) void GuardedCascadeBaseSelBit_00446680(void) {
         mov     eax, dword ptr [eax*4 + 0x4c]
         mov     dword ptr [g_cj_0054205c], eax
         call    PushPopScaled1cDoubleCall_00408510
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -189,7 +189,7 @@ __declspec(naked) void GuardedCascadeBaseSelBit_00446680(void) {
         mov     dword ptr [g_cj_0054205c], edx
         mov     dword ptr [g_state_004d57ac], eax
         call    MStackBracket1_TreeWalkRecursive2_00406dd0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   56h
@@ -200,12 +200,12 @@ __declspec(naked) void GuardedCascadeBaseSelBit_00446680(void) {
         mov     ecx, dword ptr [eax*4 + 0x30]
         mov     dword ptr [g_xformEntityIdx], ecx
         call    Thunk_00405ac0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   2eh
         call    SetupVecFsmCluster_0043e3e0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   20h

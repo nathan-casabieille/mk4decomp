@@ -117,13 +117,13 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00495770 (325b game) - 7-block thunk dispatcher with push-call entries. */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void ArgScaledChain_004949b0(void);
 extern void Event112Cluster_00496ad0(void);
 extern void FlagCascadeStateSet_0048ec30(void);
@@ -141,7 +141,7 @@ __declspec(naked) void SevenThunkDispatcher_00495770(void) {
         _emit   90h
         _emit   90h
         call    ThresholdSetMatchDispatch_0046dc10
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0dh
@@ -159,7 +159,7 @@ __declspec(naked) void SevenThunkDispatcher_00495770(void) {
         push    0x004f1490
         mov     dword ptr [ecx*4 + 0x74], eax
         call    StreamInitCountdownBody_00494830
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h
@@ -174,7 +174,7 @@ __declspec(naked) void SevenThunkDispatcher_00495770(void) {
         _emit   90h
         _emit   90h
         call    FlagCascadeStateSet_0048ec30
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   1bh
@@ -193,7 +193,7 @@ __declspec(naked) void SevenThunkDispatcher_00495770(void) {
         _emit   90h
         _emit   90h
         call    FlagCascadeStateSet_0048ec30
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   32h

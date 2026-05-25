@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00474170 (282b game) - mstack-push pair + 3 Mul10Tail for cj fields.
  *   mstack-push g_scaledInit_00542044 and g_cj_0054205c. g_scaledInit_00542044 = 0x7d.
@@ -128,7 +128,7 @@ extern unsigned int g_data_00535e7c;
  *   For each cj field (+0x6c/+0x70/+0x74): push value + 0x1c000, Mul10Tail, store back.
  *   mstack-pop pair (g_cj_0054205c, g_scaledInit_00542044); ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void PreFightInstallCluster_00474390(void);
 
 void MStackPush2CjMul10Triple_00474170(void) {
@@ -145,7 +145,7 @@ void MStackPush2CjMul10Triple_00474170(void) {
         mov     dword ptr [eax*4 + 0], edx
         mov     dword ptr [g_scaledInit_00542044], 0x7d
         call    PreFightInstallCluster_00474390
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h

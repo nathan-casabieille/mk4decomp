@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /*
  * AudioInitInstallSelfPeriodic_004a0610 - 216b audio 2-body install/periodic.
@@ -132,12 +132,12 @@ extern unsigned int g_data_00535e7c;
  *   Entry 0x004a0680 (body): chain = g_baseSel_00542060*4; saved=chain->state; chain->state=0.
  *     If was 0: countdown g_eventQueueEnd; if not yet 0: skip; else tail-jmp CallSetPause.
  *     Else: ecx=g_x_00538090; g_walkCallback=ecx; if 0: tail-jmp InstallSelfStride5_004a06f0.
- *     Else: install-self at body; chain->state=1; g_pendingNodeType=2; g_pause_00541e6c=1; ret.
+ *     Else: install-self at body; chain->state=1; g_pendingNodeType=2; g_framePauseFlag=1; ret.
  */
 extern unsigned int g_data_0053a354;
 extern unsigned int g_data_00542004;
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_state_00537e90;
 extern unsigned int g_x_00537ea8;
 extern unsigned int g_x_00538090;
@@ -169,7 +169,7 @@ __declspec(naked) void AudioInitInstallSelfPeriodic_004a0610(void)
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [eax*4 + 0xc], esi
         call    RoundWinTransition_0049e7e0
-        cmp     dword ptr [g_pause_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         jne     short L_pop_ret
     L_pause:
         call    CallSetPause_0041f830
@@ -210,7 +210,7 @@ __declspec(naked) void AudioInitInstallSelfPeriodic_004a0610(void)
         mov     dword ptr [eax + 8], offset L_body
         mov     dword ptr [eax + 0x84], ecx
         mov     dword ptr [g_pendingNodeType], 2
-        mov     dword ptr [g_pause_00541e6c], ecx
+        mov     dword ptr [g_framePauseFlag], ecx
         ret
     }
 }

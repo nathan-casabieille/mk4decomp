@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004910b0 (259b game) - mstack-push + neg-aware Mul10Tail pair.
  *   mstack-push g_eventQueueCurrent, neg ecx if g_state_0053a730 != 0; reswap+push;
@@ -128,7 +128,7 @@ extern unsigned int g_data_00535e7c;
  *   if eax < 0 and g_eventQueueNotMask < 0: neg both; else: signs unchanged.
  *   Then 2x Mul10Tail (cdecl) feeding cj[+0x6c] and cj[+0x74].
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_state_0053a730;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_eventQueueNotMask;
@@ -155,7 +155,7 @@ void MStackNegAwareMul10Pair_004910b0(void) {
         mov     dword ptr [g_eventQueueCurrent], edx
         mov     dword ptr [eax*4 + 0], ecx
         call    ScaledChainDouble_004911f0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h

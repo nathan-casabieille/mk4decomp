@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004d57ac;
 extern unsigned int g_framePauseFlag;
@@ -146,12 +146,12 @@ __declspec(naked) void PoseBlendDriver_0042fc80(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         mov      eax, dword ptr [g_fightGroupHead]
-        mov      ecx, dword ptr [g_data_00535e7c]
+        mov      ecx, dword ptr [g_fightAxisPosY_00535e7c]
         mov      edx, dword ptr [eax*4 + 0x54]
         mov      dword ptr [g_eventQueueNotMask], edx
         mov      eax, dword ptr [eax*4 + 0x5c]
         mov      dword ptr [g_eventQueueChild], eax
-        mov      eax, dword ptr [g_data_00535e78]
+        mov      eax, dword ptr [g_fightAxisPosX_00535e78]
         push     eax
         push     0x1999
         mov      dword ptr [g_walkCallback], eax
@@ -219,8 +219,8 @@ __declspec(naked) void PoseBlendDriver_0042fc80(void)
         mov      eax, 0x7ae
         mov      dword ptr [g_acc_00542078], eax
     L_fe03:
-        mov      ecx, dword ptr [g_data_00535e78]
-        mov      edx, dword ptr [g_data_00535e7c]
+        mov      ecx, dword ptr [g_fightAxisPosX_00535e78]
+        mov      edx, dword ptr [g_fightAxisPosY_00535e7c]
         push     ecx
         push     eax
         mov      dword ptr [g_eventQueueNotMask], ecx

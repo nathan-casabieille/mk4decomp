@@ -117,17 +117,17 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00495d20 (124b game) - triple-entry chain.
  *   Blocks A/B (+0x00, +0x30): set baseSel[*4+0x74]=eax (0x0302/0x0303) and g_eventQueueNotMask (0x20011/0x20019);
  *     jmp HitReactionDispatcher_0045f650.
  *   Block C (+0x60): push 0x004f1a10; call ArgScaledChain; if !pause: jmp Const111ScaledStoreJmp_00495da0.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueNotMask;
 extern void ArgScaledChain_004949b0(void);
 extern void Const111ScaledStoreJmp_00495da0(void);
@@ -169,7 +169,7 @@ __declspec(naked) void TripleEntry03ChainArg_00495d20(void) {
         _emit   90h
         push    0x004f1a10
         call    ArgScaledChain_004949b0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h

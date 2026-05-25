@@ -117,17 +117,17 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00442dd0 (176b game) - dual sequence: A: esi=0x94, scaledInit=0; loop:
  *   set g_walkCallback=esi; call DispatcherComplex138; pause-check; if bit-2 (bl=4) test fails:
  *   call CameraBounceOverflow_00442f90; pause-check; reset. Block B (+0x58): same shape with esi=0x7e and
  *   ScaledChainAccumThreshold_00442e80; falls through to call ScaledInitOrSelfPtr_00442d90.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void CameraBounceOverflow_00442f90(void);
 extern void DispatcherComplex138_004760f0(void);
 extern void ScaledChainAccumThreshold_00442e80(void);
@@ -141,7 +141,7 @@ __declspec(naked) void DualSeqLoopDispatch_00442dd0(void) {
         mov     dword ptr [g_scaledInit_00542044], 0
         mov     dword ptr [g_walkCallback], esi
         call    DispatcherComplex138_004760f0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -154,13 +154,13 @@ __declspec(naked) void DualSeqLoopDispatch_00442dd0(void) {
         _emit   75h
         _emit   25h
         call    CameraBounceOverflow_00442f90
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   6ch
         mov     dword ptr [g_walkCallback], esi
         call    DispatcherComplex138_004760f0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   74h
         _emit   0d6h
@@ -171,7 +171,7 @@ __declspec(naked) void DualSeqLoopDispatch_00442dd0(void) {
         mov     dword ptr [g_scaledInit_00542044], 0
         mov     dword ptr [g_walkCallback], esi
         call    DispatcherComplex138_004760f0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   32h
@@ -179,13 +179,13 @@ __declspec(naked) void DualSeqLoopDispatch_00442dd0(void) {
         _emit   75h
         _emit   25h
         call    ScaledChainAccumThreshold_00442e80
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   1ch
         mov     dword ptr [g_walkCallback], esi
         call    DispatcherComplex138_004760f0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   74h
         _emit   0d6h

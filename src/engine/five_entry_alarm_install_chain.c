@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void ScaledAndAlfe_00490390(void);
 extern void TripleCallPauseJmp_00470500(void);
@@ -144,7 +144,7 @@ extern unsigned int g_data_004eb6c8;
  *   Thunk E body_ebc0 (+0x100): same as D but state_00542080=9; mstack-push body_ec00. 3-NOP pad.
  *   Thunk F body_ec00 (+0x140): if bit0 jmp FiveEntryAlarmInstallChain_0046ee00; else jmp MStackJmpInstallSelf.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueEnd;
 extern void ArgSarStoreJmp_004594f0(void);
 
@@ -153,7 +153,7 @@ extern unsigned int g_data_004d57ac_arr;
 __declspec(naked) void FiveThunkMStackDispatcher_0046eac0(void) {
     __asm {
         call    ScaledAndAlfe_00490390
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   32h
@@ -162,7 +162,7 @@ __declspec(naked) void FiveThunkMStackDispatcher_0046eac0(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
         call    TripleCallPauseJmp_00470500
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0dh
@@ -186,7 +186,7 @@ __declspec(naked) void FiveThunkMStackDispatcher_0046eac0(void) {
         _emit   90h
         _emit   90h
         call    Wrapper_0048a3c0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   12h

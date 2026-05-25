@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004602b0 (323b game) - 3-state install-self with bit0 dual-arm + state-0 quad-chain.
  *   state==0 (sub-eax-0 je): call SlotPhaseResetInstallChain_0048e0e0; if pause ret. Call ScaledInit_0048f720; if pause ret.
@@ -132,7 +132,7 @@ extern unsigned int g_data_00535e7c;
  *       Install-self at entry+0x02000000; state=2; call Init3333Jmp; pause=ebx=1; ret.
  *   state>=2 (fall): tail-call CjInstallSelfRouter_00470480; pop esi/ebx; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_pendingNodeType;
 extern void CallPauseMStackPushSet0Jmp_0045fcf0(void);
 extern void CallPauseTriCmpJmp_00460910(void);
@@ -178,7 +178,7 @@ __declspec(naked) void Install3StateDualArmQuad_004602b0(void) {
         _emit   00h
         _emit   00h
         call    CjMaskedFlagProbe_0048ecf0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -190,7 +190,7 @@ __declspec(naked) void Install3StateDualArmQuad_004602b0(void) {
         _emit   75h
         _emit   70h
         call    SlotPhaseResetInstallChain_0048e0e0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -213,12 +213,12 @@ __declspec(naked) void Install3StateDualArmQuad_004602b0(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    Init3333Jmp_00460400
-        mov     dword ptr [g_pause_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
         pop     esi
         pop     ebx
         ret
         call    GuardedDualConst2AndToggle_0048eba0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   63h
@@ -230,31 +230,31 @@ __declspec(naked) void Install3StateDualArmQuad_004602b0(void) {
         pop     ebx
         ret
         call    CallPauseTriCmpJmp_00460910
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   45h
         _emit   0ebh
         _emit   2ah
         call    SlotPhaseResetInstallChain_0048e0e0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   35h
         call    ScaledInit_0048f720
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   27h
         call    PushCallStoreClearJmp_00460420
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   19h
         mov     dword ptr [esi + 8], offset Install3StateDualArmQuad_004602b0
         mov     dword ptr [esi + 0x84], ebx
         mov     dword ptr [g_pendingNodeType], ebx
-        mov     dword ptr [g_pause_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
         pop     esi
         pop     ebx
         ret

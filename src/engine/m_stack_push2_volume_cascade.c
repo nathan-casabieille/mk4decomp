@@ -117,17 +117,17 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00444e00 (226b game) - mstack-push g_scaledInit + g_eventQueueWorkType; 3-stage AudioVolumeRescale
  *   cascade with bit-0 tests selecting different shifted-pointer values for tail-jmp to PendingMatch_00444ef0.
  *   Values: 0x004e5df8/0x004e5dc8/0x004e5d90/0x004e5d58 (all >>2 to g_walkCallback).
  */
 extern unsigned int g_data_004d57ac_arr;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueWorkType;
 extern void AudioVolumeRescale_004ab690(void);
 extern void PendingMatch_00444ef0(void);
@@ -146,7 +146,7 @@ __declspec(naked) void MStackPush2VolumeCascade_00444e00(void) {
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
         mov     dword ptr [g_walkCallback], 0x64
         call    AudioVolumeRescale_004ab690
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -163,7 +163,7 @@ __declspec(naked) void MStackPush2VolumeCascade_00444e00(void) {
         jmp     PendingMatch_00444ef0
         mov     dword ptr [g_walkCallback], 0x0000015e
         call    AudioVolumeRescale_004ab690
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   62h
@@ -172,7 +172,7 @@ __declspec(naked) void MStackPush2VolumeCascade_00444e00(void) {
         _emit   47h
         mov     dword ptr [g_walkCallback], 0x00000200
         call    AudioVolumeRescale_004ab690
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   41h

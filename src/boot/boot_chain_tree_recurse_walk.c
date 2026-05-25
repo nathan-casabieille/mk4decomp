@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void BootChainTreeRecurseWalk_00405b80(void);
 
@@ -136,7 +136,7 @@ extern void BootChainTreeRecurseWalk_00405b80(void);
  *   Else: eax = chain[+0x18]; g_walkCallback = eax; if 0: pop+ret. Else g_walkCallback = 0;
  *     chain[+0x18] = 0; pop+ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_fightGroupHead;
@@ -178,7 +178,7 @@ void BootChainBidirRecurseWalk_00405ca0(void) {
         mov     dword ptr [g_walkCallback], ecx
         je      short L_ca0_chain1
         call    BootChainTreeRecurseWalk_00405b80
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_ca0_justRet
         mov     eax, dword ptr [g_currentNodeIdx]
@@ -190,7 +190,7 @@ void BootChainBidirRecurseWalk_00405ca0(void) {
         je      short L_ca0_chain2
         mov     dword ptr [g_xformEntityIdx], 4
         call    MStackBracket5_LinkedListUnlink_00409aa0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         je      short L_ca0_pop2
         ret

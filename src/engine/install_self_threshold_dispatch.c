@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0047e310 (268b game) - 3-state install-self with threshold dispatch.
  *   sub eax, 0; je state-0 path.
@@ -134,7 +134,7 @@ extern unsigned int g_data_00535e7c;
  *   state 0 path (or threshold/sign fall-through): install-self at [esi+8]=0x0047e310;
  *     chain[+0x84]=1; g_pendingNodeType=1; pause=1; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_pendingNodeType;
 extern void CopyJmp_00406ba0(void);
@@ -173,7 +173,7 @@ __declspec(naked) void InstallSelfThresholdDispatch_0047e310(void) {
         _emit   00h
         _emit   00h
         call    TailJmpInstallSelfPair_0047e690
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -189,7 +189,7 @@ __declspec(naked) void InstallSelfThresholdDispatch_0047e310(void) {
         _emit   00h
         _emit   00h
         call    CopyJmp_00406ba0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -215,14 +215,14 @@ __declspec(naked) void InstallSelfThresholdDispatch_0047e310(void) {
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    ScaledArrStore_00429450
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
         mov     eax, 1
         mov     dword ptr [esi + 8], 0x0047e310
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], eax
-        mov     dword ptr [g_pause_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret
     }

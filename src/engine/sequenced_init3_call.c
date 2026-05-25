@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00464190 (173b game) - sequenced init: call BootInitGuardedCallChain_004265d0; pause-check;
  *   call Init4Globals_0042ae10; pause-check; setup scaledInit/0053a734/0053a350 from g_load_0052ab10;
@@ -128,7 +128,7 @@ extern unsigned int g_data_00535e7c;
  *   scaledInit = 0x0050b124>>2; call LoadGeoAsset_Default; pause-check; repeat; ret.
  */
 extern unsigned int g_load_0052ab10;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_state_0053a350;
 extern unsigned int g_state_0053a734;
 extern void BootInitGuardedCallChain_004265d0(void);
@@ -139,7 +139,7 @@ __declspec(naked) void SequencedInit3Call_00464190(void) {
     __asm {
         push    esi
         call    BootInitGuardedCallChain_004265d0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         xor     esi, esi
         cmp     eax, esi
         _emit   0fh
@@ -149,7 +149,7 @@ __declspec(naked) void SequencedInit3Call_00464190(void) {
         _emit   00h
         _emit   00h
         call    Init4Globals_0042ae10
-        cmp     dword ptr [g_pause_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         _emit   0fh
         _emit   85h
         _emit   85h
@@ -172,14 +172,14 @@ __declspec(naked) void SequencedInit3Call_00464190(void) {
         mov     dword ptr [eax + 0x68], edx
         mov     dword ptr [g_walkCallback], esi
         call    CopyGlobal_004ac1f0
-        cmp     dword ptr [g_pause_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         _emit   75h
         _emit   2dh
         mov     eax, 0x0050b124
         shr     eax, 2
         mov     dword ptr [g_scaledInit_00542044], eax
         call    LoadGeoAsset_Default
-        cmp     dword ptr [g_pause_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         _emit   75h
         _emit   13h
         mov     ecx, 0x0050b124

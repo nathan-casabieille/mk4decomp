@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00438060 (249b game) - install-self with state init.
  *   snapshot+clear chain[+0x84]. If was nonzero: call IndirectJmp_00438160; ret.
@@ -132,7 +132,7 @@ extern unsigned int g_data_00535e7c;
  *   scaledInit-chain push 0x00438060+0x01000000;
  *   call StateGateMStackOverlap_00438690; pause=1; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_eventQueueIdx;
 extern unsigned int g_currentNodeFlags;
@@ -154,7 +154,7 @@ __declspec(naked) void InstallSelfWithStateInit_00438060(void) {
         pop     esi
         ret
         call    LeaPlus22StoreSelf_0048e4d0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -164,7 +164,7 @@ __declspec(naked) void InstallSelfWithStateInit_00438060(void) {
         _emit   00h
         mov     dword ptr [g_walkCallback], 5
         call    StorePauseImulShr16_004ab630
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -199,7 +199,7 @@ __declspec(naked) void InstallSelfWithStateInit_00438060(void) {
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    StateGateMStackOverlap_00438690
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
     }

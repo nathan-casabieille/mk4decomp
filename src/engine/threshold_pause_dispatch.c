@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0046fd10 (90b game) - threshold/pause-guarded dispatcher tail-jumping into 0x0046fd70.
  *   g_walkCallback = (g_state_0053a3c0); if <= 1: push lit; call IterStepDualStore; ret.
@@ -128,7 +128,7 @@ extern unsigned int g_data_00535e7c;
  *   call DualGuardedTableSearch; if nonzero ret.
  *   g_walkCallback = (g_table_00535ddc); if > 0x18000 ret; else jmp TimerWindowThreshDispatch_0046fd70.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void CopyJmp_0048ee80(void);
 extern void DualGuardedTableSearch_004708c0(void);
 extern void TimerWindowThreshDispatch_0046fd70(void);
@@ -148,7 +148,7 @@ __declspec(naked) void ThresholdPauseDispatch_0046fd10(void) {
         _emit   90h
         _emit   90h
         call    CopyJmp_0048ee80
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   2bh

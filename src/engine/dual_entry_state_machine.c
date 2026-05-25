@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0045a180 (313b game) - dual-entry: mstack-push prefix + state-machine body.
  *   Prefix (0..0x1f): mstack-push body addr (0x0045a1a0); tail-jmp ComboMoveSelectFsmCluster_0045a2c0.
@@ -134,7 +134,7 @@ extern unsigned int g_data_00535e7c;
  *     Else: g_eventQueueEnd=[g_cj*4+0x24]; g_walkCallback=0x8000; call MStackPushZeroCallPop;
  *       if pause ret. Install-self at body; state=1; g_pendingNodeType=1; pause=1; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueEnd;
 extern void ComboMoveSelectFsmCluster_0045a2c0(void);
@@ -165,7 +165,7 @@ __declspec(naked) void DualEntryStateMachine_0045a180(void) {
         _emit   74h
         _emit   73h
         call    ScaledStoreOrFlagXor_00428560
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -188,7 +188,7 @@ __declspec(naked) void DualEntryStateMachine_0045a180(void) {
         pop     esi
         ret
         call    ScaledStoreOrFlagXor_00428560
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -233,7 +233,7 @@ __declspec(naked) void DualEntryStateMachine_0045a180(void) {
         mov     dword ptr [g_walkCallback], 0x8000
         mov     dword ptr [g_eventQueueEnd], ecx
         call    MStackPushZeroCallPop_00407d00
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   1ch
@@ -241,7 +241,7 @@ __declspec(naked) void DualEntryStateMachine_0045a180(void) {
         mov     dword ptr [esi + 8], offset body_1a0
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], eax
-        mov     dword ptr [g_pause_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret
     }

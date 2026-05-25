@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00470d10 (271b game) - install-self with mstack-pop and indirect-call branch.
  *   If chain[+0x84] nonzero: dec baseSel[+4] (mstack-pop); load scaledInit and g_xformEntityIdx.
@@ -130,7 +130,7 @@ extern unsigned int g_data_00535e7c;
  *   Else: call MStackIndirectCallBit_00470e20; if pause? ret.
  *   Install-self via baseSel[+4] chain push; pause=1; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueEnd;
@@ -167,7 +167,7 @@ __declspec(naked) void InstallSelfBranchIndirect_00470d10(void) {
         pop     esi
         ret
         call    ScaledArrStore_00429980
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -188,7 +188,7 @@ __declspec(naked) void InstallSelfBranchIndirect_00470d10(void) {
         _emit   75h
         _emit   0eh
         call    MStackIndirectCallBit_00470e20
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   52h
@@ -206,7 +206,7 @@ __declspec(naked) void InstallSelfBranchIndirect_00470d10(void) {
         mov     dword ptr [esi + 8], 0x00470d10
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], eax
-        mov     dword ptr [g_pause_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret
     }

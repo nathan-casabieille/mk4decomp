@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00422ef0 (199b game) - load g_x_005380e0 + flags, call F1; pause? ret;
  *   prep two-arg state, call F2; pause? ret;
@@ -129,7 +129,7 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_x_0052aafc;
 extern unsigned int g_x_005380e0;
-extern unsigned int g_x_0053815c;
+extern unsigned int g_player2NodeIdx;
 extern unsigned int g_x_00541de0;
 extern unsigned int g_fightGroupHead;
 extern unsigned int g_eventQueueCurrent;
@@ -162,7 +162,7 @@ void DownloadCharSetup_00422ef0(void) {
         _emit   75h
         _emit   70h
         mov     eax, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_x_0053815c], eax
+        mov     dword ptr [g_player2NodeIdx], eax
         mov     dword ptr [eax*4 + 0x30], 2
         mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [eax*4 + 0x54], 0x00014ccc

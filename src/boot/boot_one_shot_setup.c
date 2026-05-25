@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void Phase1ChainExtendedInitLoop_0040c460(void);
 extern void ScaledIndirectJmp_0049c850(void);
@@ -138,7 +138,7 @@ extern void GuardedSeq_0049c340(void);
  *   B3 (0xf0..0x111): call BootOneShotSetup_0040bde0; if !pause: call PendingMatch_0040a8d0;
  *     if !pause: tail-jmp GuardedSeq_0049c340; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_x_00541dc4;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformScratch2088;
@@ -192,7 +192,7 @@ __declspec(naked) void DualMul10AndDispatchChain_0049c220(void) {
         _emit   75h
         _emit   0eh
         call    Phase1ChainExtendedInitLoop_0040c460
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   21h
@@ -218,12 +218,12 @@ __declspec(naked) void DualMul10AndDispatchChain_0049c220(void) {
         nop
         nop
         call    BootOneShotSetup_0040bde0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   13h
         call    PendingMatch_0040a8d0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h

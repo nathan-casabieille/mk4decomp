@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00430d30 (289b game) - mstack-push 4 + dual call + abs-diff store + pop 4.
  *   Push g_eventQueueChild, g_walkCallback, g_eventQueueCurrent, g_eventQueueWorkType onto mstack.
@@ -129,7 +129,7 @@ extern unsigned int g_data_00535e7c;
  *   Call BootMod6487eClampAndChainMul10_00407510; if pause: ret. Compute |6c - 70|; store to 6c and g_acc_00542078.
  *   Pop 4 entries back: mstack[top..top-3] -> g_eventQueueWorkType, g_eventQueueCurrent, g_walkCallback, g_eventQueueChild.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueWorkType;
 extern void CameraAimSplineDriver_00430e60(void);
 
@@ -158,7 +158,7 @@ void MStackPush4DualCallAbsPop4_00430d30(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], edx
         call    CameraAimSplineDriver_00430e60
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -167,7 +167,7 @@ void MStackPush4DualCallAbsPop4_00430d30(void) {
         _emit   00h
         _emit   00h
         call    BootMod6487eClampAndChainMul10_00407510
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -181,7 +181,7 @@ void MStackPush4DualCallAbsPop4_00430d30(void) {
         mov     edx, dword ptr [ecx*4 + 0x64]
         mov     dword ptr [g_walkCallback], edx
         call    BootMod6487eClampAndChainMul10_00407510
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   71h

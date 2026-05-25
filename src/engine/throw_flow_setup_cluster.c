@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void SaveCallRestore_004049d0(void);
 extern void SaveCallRestoreOrXor_00404a00(void);
@@ -131,7 +131,7 @@ extern unsigned int g_data_0053a1bc;
 
 /* @addr 0x0049ea30 (216b game) - dual-guard then state-machine init. */
 extern unsigned int g_data_00542004;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_x_00541fc0;
 extern unsigned int g_xformEntityIdx;
 
@@ -169,7 +169,7 @@ void DualGuardStateMachine_0049ea30(void) {
         mov     eax, dword ptr [eax*4 + 0x28]
         mov     dword ptr [g_xformEntityIdx], eax
         call    DispatcherComplex260_00407030
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   63h
@@ -177,7 +177,7 @@ void DualGuardStateMachine_0049ea30(void) {
         _emit   75h
         _emit   5ah
         call    MStackCall_004062a0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   4ch
@@ -187,7 +187,7 @@ void DualGuardStateMachine_0049ea30(void) {
         mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_walkCallback], 2
         call    ThrowFlowSetupCluster_0049ed00
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   17h

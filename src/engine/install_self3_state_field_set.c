@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0047a090 (300b game) - 3-state install-self with field-set + sibling-tail.
  *   state==0: call ScaledAndAldf_00490330; if pause ret.
@@ -131,7 +131,7 @@ extern unsigned int g_data_00535e7c;
  *   state>=2: g_walkCallback=0x51e; call ScaledLitLoadCall; if pause ret.
  *     [cj*4+0x4c]=0x51e; tail-call InstallSelf3StateDualChain_0047a1c0; pop+ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void HopBackFsmCluster_0047a2e0(void);
 extern void InstallSelf3StateDualChain_0047a1c0(void);
 extern void MoveSelectorCluster_0047d9a0(void);
@@ -159,7 +159,7 @@ __declspec(naked) void InstallSelf3StateFieldSet_0047a090(void) {
         _emit   3ah
         mov     dword ptr [g_walkCallback], 0x5f
         call    ScaledLitLoadCall_00480fe0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -176,7 +176,7 @@ __declspec(naked) void InstallSelf3StateFieldSet_0047a090(void) {
         ret
         mov     dword ptr [g_walkCallback], 0x5e
         call    ScaledLitLoadCall_00480fe0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -194,7 +194,7 @@ __declspec(naked) void InstallSelf3StateFieldSet_0047a090(void) {
         _emit   0ebh
         _emit   48h
         call    ScaledAndAldf_00490330
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   6fh
@@ -219,7 +219,7 @@ __declspec(naked) void InstallSelf3StateFieldSet_0047a090(void) {
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    HopBackFsmCluster_0047a2e0
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
     }

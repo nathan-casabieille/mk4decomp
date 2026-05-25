@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0049d380 (174b game) - linked-list iteration with field-add via 3 sub-calls.
  *   eax=g_scaledInit; if zero pop+ret. Loop: ecx=g_xformEntityIdx; esi=eax*4; eax=[ecx*4+0];
@@ -128,7 +128,7 @@ extern unsigned int g_data_00535e7c;
  *     non-null operand). Sets [esi+0x4/0x8/0xc] from g_walkCallback. Walk: esi=[esi]; eax=esi;
  *     scaledInit=eax; loop if nonzero. ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_x_00542098;
@@ -156,7 +156,7 @@ __declspec(naked) void LinkedListFieldAdd_0049d380(void) {
         _emit   74h
         _emit   13h
         call    StoreDoubleNegPauseSubStore_004ab750
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   65h
@@ -168,7 +168,7 @@ __declspec(naked) void LinkedListFieldAdd_0049d380(void) {
         _emit   74h
         _emit   13h
         call    StoreDoubleNegPauseSubStore_004ab750
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   43h
@@ -180,7 +180,7 @@ __declspec(naked) void LinkedListFieldAdd_0049d380(void) {
         _emit   74h
         _emit   14h
         call    StoreDoubleNegPauseSubStore_004ab750
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   20h

@@ -117,15 +117,15 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004d5320;
 extern unsigned int g_data_004d59e8;
 extern unsigned int g_data_00512538;
-extern unsigned int g_data_0053815c;
+extern unsigned int g_player2NodeIdx;
 extern unsigned int g_data_0053e35c;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
@@ -221,19 +221,19 @@ __declspec(naked) void Phase1InitModelAdjustChain_00410fb0(void)
         sub     eax, 0x9999
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x58], eax
-        mov     ecx, dword ptr [g_data_00535e7c]
-        mov     edx, dword ptr [g_data_0053815c]
-        mov     eax, dword ptr [g_data_00535e78]
+        mov     ecx, dword ptr [g_fightAxisPosY_00535e7c]
+        mov     edx, dword ptr [g_player2NodeIdx]
+        mov     eax, dword ptr [g_fightAxisPosX_00535e78]
         mov     dword ptr [g_eventQueueWorkType], ecx
         mov     ecx, dword ptr [g_eventQueueEnd]
         mov     dword ptr [g_eventQueueCurrent], eax
         cmp     ecx, edx
         jne     L_p1im_after_special
-        mov     eax, dword ptr [g_data_00535e70]
+        mov     eax, dword ptr [g_fightAxisNegX_00535e70]
         cmp     ecx, edx
         mov     dword ptr [g_eventQueueCurrent], eax
         jne     L_p1im_after_special
-        mov     edx, dword ptr [g_data_00535e74]
+        mov     edx, dword ptr [g_fightAxisNegY_00535e74]
         mov     dword ptr [g_eventQueueWorkType], edx
     L_p1im_after_special:
         push    eax

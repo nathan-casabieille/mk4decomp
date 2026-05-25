@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0042d090 (304b game) - 3D-distance mul10 + scaled chain advance.
  *   Load eax/ecx/edx from globals 0053a1a8/0053a1a4/g_cj. esi = [cj*4+0x54].
@@ -136,7 +136,7 @@ extern unsigned int g_data_0053a1a4;
 extern unsigned int g_data_0053a1a8;
 extern unsigned int g_data_0053a3dc;
 extern unsigned int g_data_0053a41c;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_currentNodeFlags;
 extern void DualCallPauseDirtyJmp_00490c30(void);
@@ -172,7 +172,7 @@ __declspec(naked) void Distance3DMul10Chain_0042d090(void) {
         mov     dword ptr [g_acc_00542078], eax
         mov     dword ptr [g_eventQueueWorkType], ecx
         call    FpuSqrtMul_004ab350
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h

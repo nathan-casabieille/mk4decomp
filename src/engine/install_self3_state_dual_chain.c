@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0047a1c0 (285b game) - 3-state install-self dispatch.
  *   Load g_baseSel_00542060[*4]; state=[idx*4+0x84]; clear it.
@@ -130,7 +130,7 @@ extern unsigned int g_data_00535e7c;
  *   state>=2: tail-call FiveCallGuardSetTail.
  */
 extern unsigned int g_data_004ed0dc;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void FiveCallGuardSetTail_0046f6b0(void);
 extern void InstallSelf3WayChainCmp_00428d80(void);
 extern void ScaledAndAldf_00490330(void);
@@ -168,17 +168,17 @@ __declspec(naked) void InstallSelf3StateDualChain_0047a1c0(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    ScaledLoadJmp_00428d20
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
     case0:
         call    ScaledAndAldf_00490330
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     tail
         push    offset g_data_004ed0dc
         call    IterStepDualStore_00490b40
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         jne     tail
@@ -198,7 +198,7 @@ __declspec(naked) void InstallSelf3StateDualChain_0047a1c0(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    InstallSelf3WayChainCmp_00428d80
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
     tail:
         pop     esi
         ret

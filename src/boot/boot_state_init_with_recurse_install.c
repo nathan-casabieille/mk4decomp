@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /*
  * BootStateInitWithRecurseInstall_00402de0 - 230b boot self-installing state setup.
@@ -131,11 +131,11 @@ extern unsigned int g_data_00535e7c;
  *     Call TwoStageSelectorInit; if paused: pop+ret. push 8; call TableWalkBoundedCmp;
  *     install-self at entry; chain->state=1; load chain[+4] = g_currentNodeIdx = old cursor;
  *     mstack-push (entry + 0x01000000); g_currentNodeIdx++; chain[+4] = new cursor;
- *     clear g_baseSel*4 + 0x84; call TwoCallStatePauseJmp; g_pause_00541e6c=1; pop+ret.
+ *     clear g_baseSel*4 + 0x84; call TwoCallStatePauseJmp; g_framePauseFlag=1; pop+ret.
  */
 extern unsigned int g_data_00535de4;
 extern unsigned int g_data_0053a50c;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern void StorePauseImulShr16_004ab630(void);
 extern void TableWalkBoundedCmp_004bd890(void);
@@ -161,7 +161,7 @@ __declspec(naked) void BootStateInitWithRecurseInstall_00402de0(void)
         mov     dword ptr [g_data_0053a50c], 5
         mov     dword ptr [g_walkCallback], 0xa
         call    StorePauseImulShr16_004ab630
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pop_ret
         mov     eax, dword ptr [g_walkCallback]
@@ -169,11 +169,11 @@ __declspec(naked) void BootStateInitWithRecurseInstall_00402de0(void)
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_data_00535de4], eax
         call    TripleCallCountdown_00428080
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pop_ret
         call    TwoStageSelectorInit_00402ed0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pop_ret
         push    8
@@ -194,7 +194,7 @@ __declspec(naked) void BootStateInitWithRecurseInstall_00402de0(void)
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    TwoCallStatePauseJmp_00491990
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
     L_pop_ret:
         pop     esi
         ret

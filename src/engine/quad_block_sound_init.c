@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0049bb90 (195b game) - 4-block sound init.
  *   A: call MStackCall_00406740; if !pause jmp CallSetPause; ret.
@@ -130,7 +130,7 @@ extern unsigned int g_data_00535e7c;
  *     call CondPickDualStore; same comparison + jmp.
  *   D (+0xa0): call CondPickDualStore; pause-check; same comparison + jmp ScaledIndirectJmp.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_fightGroupHead;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_eventQueueWorkType;
@@ -145,7 +145,7 @@ extern void Vec2SumMul10ChainCompute_0049bc60(void);
 __declspec(naked) void QuadBlockSoundInit_0049bb90(void) {
     __asm {
         call    MStackCall_00406740
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h
@@ -171,7 +171,7 @@ __declspec(naked) void QuadBlockSoundInit_0049bb90(void) {
         call    CopyThreeFields_00404df0
         add     esp, 4
         call    Vec2SumMul10ChainCompute_0049bc60
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   14h
@@ -192,7 +192,7 @@ __declspec(naked) void QuadBlockSoundInit_0049bb90(void) {
         call    CopyThreeFields_00404df0
         add     esp, 4
         call    Vec2SumMul10ChainCompute_0049bc60
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   14h
@@ -206,7 +206,7 @@ __declspec(naked) void QuadBlockSoundInit_0049bb90(void) {
         _emit   90h
         _emit   90h
         call    Vec2SumMul10ChainCompute_0049bc60
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   14h

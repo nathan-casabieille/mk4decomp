@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void StoreTwoCall_0049cb40(void);
 extern void RunBlockFsmCluster_00499c80(void);
@@ -139,7 +139,7 @@ extern void InstallSelfStoreTwoCall_0049a410(void);
  *     calls CondPickDualStore; if !pause: RunBlockFsmCluster_00499c80; if !pause:
  *     push 0x00543318, GuardedPackedSlotInit; if !pause: tail-jmp InstallSelfStoreTwoCall_0049a410; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void GuardedPackedSlotInit_00428760(void);
 
@@ -159,18 +159,18 @@ __declspec(naked) void InstallSelfDualPathInit_0049a2f0(void) {
         add     esp, 8
         push    0x004f2770
         call    ArgSarStoreJmp_004594f0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         pop     esi
         ret
         call    RunBlockFsmCluster_00499c80
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   7fh
         push    0x0054331c
         call    GuardedPackedSlotInit_00428760
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h
@@ -191,7 +191,7 @@ __declspec(naked) void InstallSelfDualPathInit_0049a2f0(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    ScaledClearJmp_00428d40
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
         nop
@@ -207,18 +207,18 @@ __declspec(naked) void InstallSelfDualPathInit_0049a2f0(void) {
         nop
         nop
         call    CondPickDualStore_0049c670
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   29h
         call    RunBlockFsmCluster_00499c80
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   1bh
         push    0x00543318
         call    GuardedPackedSlotInit_00428760
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h

@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void ChainGatedNegAccum_0048b740(void);
 extern void TripleVecAccCallStore_00476880(void);
@@ -129,7 +129,7 @@ extern void ScaledInit_00450ef0(void);
 extern void RosterSetupFsmCluster_00451060(void);
 
 /* @addr 0x00450f10 (324b game) - 3-block: chain-init + ScaledInit dual thunks. */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_eventQueueIdx;
 extern unsigned int g_eventQueueWorkType;
@@ -139,7 +139,7 @@ extern void PushSetXfmMaskCallPop_00407140(void);
 __declspec(naked) void TripleBlockChainScaledInits_00450f10(void) {
     __asm {
         call    PushSetXfmMaskCallPop_00407140
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -155,7 +155,7 @@ __declspec(naked) void TripleBlockChainScaledInits_00450f10(void) {
         _emit   00h
         _emit   00h
         call    MStackCall_00406600
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -173,7 +173,7 @@ __declspec(naked) void TripleBlockChainScaledInits_00450f10(void) {
         mov     eax, dword ptr [eax*4 + 8]
         mov     dword ptr [g_eventQueueNotMask], eax
         call    ChainGatedNegAccum_0048b740
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -197,7 +197,7 @@ __declspec(naked) void TripleBlockChainScaledInits_00450f10(void) {
         add     edx, 0x15
         mov     dword ptr [g_scaledInit_00542044], edx
         call    TripleVecAccCallStore_00476880
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   22h
@@ -224,7 +224,7 @@ __declspec(naked) void TripleBlockChainScaledInits_00450f10(void) {
         _emit   90h
         _emit   90h
         call    ScaledInit_00450ed0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h
@@ -243,7 +243,7 @@ __declspec(naked) void TripleBlockChainScaledInits_00450f10(void) {
         _emit   90h
         _emit   90h
         call    ScaledInit_00450ef0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h

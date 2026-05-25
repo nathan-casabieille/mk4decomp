@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0042c3e0 (169b game) - 4-stage cascade with bit-test on g_xformDirtyFlags and 3-way state-cmp.
  *   A: call ScaledChain3c74; if !pause: if g_walkCallback==0x1003: clear bit-0; ret.
@@ -130,7 +130,7 @@ extern unsigned int g_data_00535e7c;
  *     if not equal: g_walkCallback=g_x_00537f2c. If still zero: clear bit-0; ret.
  *     Else: jmp WeightedSumClampHelper_00439920.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_x_00537f2c;
 extern unsigned int g_x_0053a6dc;
 extern unsigned int g_fightGroupHead;
@@ -141,7 +141,7 @@ extern void WeightedSumClampHelper_00439920(void);
 __declspec(naked) void QuadStageStateDispatch_0042c3e0(void) {
     __asm {
         call    ScaledChain3c74_0048f910
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   18h
@@ -153,7 +153,7 @@ __declspec(naked) void QuadStageStateDispatch_0042c3e0(void) {
         mov     dword ptr [g_xformDirtyFlags], eax
         ret
         call    DirtyToggleByGate_0048f350
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0f1h
@@ -165,7 +165,7 @@ __declspec(naked) void QuadStageStateDispatch_0042c3e0(void) {
         mov     dword ptr [g_xformDirtyFlags], eax
         ret
         call    DirtyToggleByBaseSel_0048f2e0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0cdh

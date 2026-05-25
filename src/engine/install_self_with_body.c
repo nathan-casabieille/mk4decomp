@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void InstallSelfMultiCascade_004388f0(void);
 extern void GuardedPackedSlotInit_00428760(void);
@@ -128,7 +128,7 @@ extern void InstallSelfWithBody_00438780(void);
 
 /* @addr 0x00438690 (226b game) - state-threshold gate + mstack-push with overlap rewrite. */
 extern unsigned int g_data_004d57ac_arr;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_fightGroupHead;
 extern unsigned int g_eventQueueNotMask;
@@ -154,7 +154,7 @@ __declspec(naked) void StateGateMStackOverlap_00438690(void) {
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
         mov     dword ptr [g_walkCallback], 0x00002147
         call    MStackFrameCdeclDouble_004903f0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -185,7 +185,7 @@ __declspec(naked) void StateGateMStackOverlap_00438690(void) {
         mov     dword ptr [ecx*4 + g_data_004d57ac_arr], esi
         mov     dword ptr [g_eventQueueNotMask], 0x0d
         call    GuardedPackedSlotInit_00428760
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h

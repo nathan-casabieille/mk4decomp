@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /*
  * AudioInitLoopTriple_004a7840 - 237b audio 2-entry init + triple-loop body.
@@ -135,7 +135,7 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_data_0050f114;
 extern unsigned int g_data_005433f4;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_eventQueueWorkType;
@@ -154,14 +154,14 @@ __declspec(naked) void AudioInitLoopTriple_004a7840(void)
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
         call    DispatcherComplex260_00407400
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_e0_ret
         push    0x13333
         call    SnapshotDirtyMark_004a1dc0
         add     esp, 4
         call    MStackPushComplexCallPop_00406430
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_e0_ret
         mov     ecx, dword ptr [g_currentNodeIdx]

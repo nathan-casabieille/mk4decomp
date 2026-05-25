@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004334d0 (252b game) - 4-call pattern with bit2 gate.
  *   For each of 4 g_eventQueueIdx fields (+0/+4/+8/+0xc): set g_walkCallback=field;
@@ -128,7 +128,7 @@ extern unsigned int g_data_00535e7c;
  *   g_eventQueueEnd + ret. If bit2 of g_xformDirtyFlags set? clear-bit0-ret.
  *   Save scaledInit to side regs (g_xformEntityIdx/0x4c/g_eventQueueTotal) between calls.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueEnd;
@@ -142,7 +142,7 @@ __declspec(naked) void FourCallBitGateChain_004334d0(void) {
         mov     ecx, dword ptr [eax*4 + 0]
         mov     dword ptr [g_walkCallback], ecx
         call    MStackPush2LLWalkCompare_004069b0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -166,7 +166,7 @@ __declspec(naked) void FourCallBitGateChain_004334d0(void) {
         mov     ecx, dword ptr [eax*4 + 4]
         mov     dword ptr [g_walkCallback], ecx
         call    MStackPush2LLWalkCompare_004069b0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -183,7 +183,7 @@ __declspec(naked) void FourCallBitGateChain_004334d0(void) {
         mov     ecx, dword ptr [eax*4 + 8]
         mov     dword ptr [g_walkCallback], ecx
         call    MStackPush2LLWalkCompare_004069b0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   62h
@@ -196,7 +196,7 @@ __declspec(naked) void FourCallBitGateChain_004334d0(void) {
         mov     ecx, dword ptr [eax*4 + 0x0c]
         mov     dword ptr [g_walkCallback], ecx
         call    MStackPush2LLWalkCompare_004069b0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   2eh

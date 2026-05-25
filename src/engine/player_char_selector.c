@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004636d0 (309b game) - player-char selector with cmp/branch tables.
  *   Call BitShiftExtract; if pause ret.
@@ -137,7 +137,7 @@ extern unsigned int g_data_0053a1d0_arr;
 extern unsigned int g_data_0053a250;
 extern unsigned int g_data_00541ec4;
 extern unsigned int g_data_00541ec8;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueEnd;
 extern void BitShiftExtract_00464090(void);
 extern void DownloadPlayerChar(void);
@@ -146,7 +146,7 @@ __declspec(naked) void PlayerCharSelector_004636d0(void) {
     __asm {
         push    esi
         call    BitShiftExtract_00464090
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         xor     esi, esi
         cmp     eax, esi
         _emit   0fh
@@ -193,7 +193,7 @@ __declspec(naked) void PlayerCharSelector_004636d0(void) {
         mov     dword ptr [g_eventQueueEnd], ecx
         mov     dword ptr [g_eventQueueCurrent], esi
         call    DownloadPlayerChar
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         pop     esi
         ret
         mov     eax, dword ptr [g_data_00537f48]
@@ -227,7 +227,7 @@ __declspec(naked) void PlayerCharSelector_004636d0(void) {
         mov     dword ptr [g_eventQueueEnd], eax
         mov     dword ptr [g_eventQueueCurrent], 1
         call    DownloadPlayerChar
-        cmp     dword ptr [g_pause_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         _emit   75h
         _emit   0ch
         mov     dword ptr [g_walkCallback], esi

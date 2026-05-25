@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void ScaledMove48to58_00490720(void);
 extern void SixEntryYieldThunks_00461090(void);
@@ -150,7 +150,7 @@ extern unsigned int g_eventQueueEnd;
 extern unsigned int g_eventQueueIdx;
 extern unsigned int g_fightGroupHead;
 extern unsigned int g_baseSel_00542060;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueNotMask;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void GatedWordPushCall_00489f90(void);
@@ -162,7 +162,7 @@ extern void Thunk_0049cbc0(void);
 __declspec(naked) void QuadStateHandler_0046c6e0(void) {
     __asm {
         call    ScaledMove48to58_00490720
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h
@@ -181,17 +181,17 @@ __declspec(naked) void QuadStateHandler_0046c6e0(void) {
         nop
         nop
         call    ScaledMove48to58_00490720
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   39h
         call    InstallSelfPlusTrampoline_0046c5d0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   2bh
         call    FlagCascadeStateSet_0048ec30
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   1dh
@@ -218,7 +218,7 @@ __declspec(naked) void QuadStateHandler_0046c6e0(void) {
         _emit   05h
         jmp     QuadEntryChainPush_0046dd00
         call    MStackBitFlagDispatch_00494750
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   24h
@@ -234,7 +234,7 @@ __declspec(naked) void QuadStateHandler_0046c6e0(void) {
         nop
         nop
         call    ScaledMove48to58_00490720
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h

@@ -117,17 +117,17 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0048fd60 (224b game) - mstack-push 4 globals, indirect call via [g_scaledInit], mstack-pop 4.
  *   Push g_cj_00542054, g_cj_00542058, g_fightGroupHead, g_baseSel; eax=baseSel[*4+0x38] → g_fightGroupHead,
  *   baseSel[*4+0x3c] → g_baseSel; call [g_scaledInit]; pause-check; mstack-pop in reverse.
  */
 extern unsigned int g_data_004d57ac_arr;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_fightGroupHead;
 
 void MStackPush4IndirectCall_0048fd60(void) {
@@ -158,7 +158,7 @@ void MStackPush4IndirectCall_0048fd60(void) {
         mov     edx, dword ptr [eax*4 + 0x3c]
         mov     dword ptr [g_baseSel_00542060], edx
         call    dword ptr [g_scaledInit_00542044]
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   51h

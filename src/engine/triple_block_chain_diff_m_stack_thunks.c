@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0049ca10 (302b game) - 3-block: chain-diff mstack-push + push-call thunks.
  *   Block A (0..0x6c): mstack-push g_eventQueueChild. Compute diffs between [baseSel*4+0x38] and g_cj fields.
@@ -132,7 +132,7 @@ extern unsigned int g_data_00535e7c;
  *     If bit2(0054208c): jmp CallSetPause. Else call DualMul10AndDispatchChain; if pause ret.
  *     Push 0x004f27c8; call ArgSar_Set1_Jmp; pop; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueWorkType;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ArgSar_Set1_Jmp_0049c6d0(void);
@@ -169,12 +169,12 @@ __declspec(naked) void TripleBlockChainDiffMStackThunks_0049ca10(void) {
         mov     dword ptr [g_eventQueueWorkType], esi
         mov     dword ptr [g_acc_00542078], eax
         call    Atan2QuadrantLookup_004245b0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   38h
         call    BootMod6487eClampAndChainMul10_00407510
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   2ah
@@ -199,7 +199,7 @@ __declspec(naked) void TripleBlockChainDiffMStackThunks_0049ca10(void) {
         _emit   90h
         _emit   90h
         call    CondPickDualStore_0049c670
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0dh
@@ -212,13 +212,13 @@ __declspec(naked) void TripleBlockChainDiffMStackThunks_0049ca10(void) {
         _emit   90h
         _emit   90h
         call    DualCmpSwapStore_0049c5a0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   3fh
         push    0x004f27b8
         call    ScaledStackCallPause_0049c360
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h
@@ -228,7 +228,7 @@ __declspec(naked) void TripleBlockChainDiffMStackThunks_0049ca10(void) {
         _emit   05h
         jmp     CallSetPause_0041f830
         call    DualMul10AndDispatchChain_0049c220
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0dh

@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00484c90 (248b game) - dual-block install-self pair.
  *   B1 (0..49, +10 NOPs): if chain[+0x84]==0: install-self at [eax+8]=0x00484c90;
@@ -132,7 +132,7 @@ extern unsigned int g_data_00535e7c;
  *     chain[+0x84]=1; scaledInit-chain push 0x00484cf0+0x01000000;
  *     call ScaledLoadIncJmp_00428d00; pause=1; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_pendingNodeType;
 extern void FiveCallGuardSetTail_0046f6b0(void);
 extern void ScaledLoadIncJmp_00428d00(void);
@@ -165,7 +165,7 @@ __declspec(naked) void DualBlockInstallSelfWithSibling_00484c90(void) {
         mov     dword ptr [eax + 8], 0x00484c90
         mov     dword ptr [eax + 0x84], ecx
         mov     dword ptr [g_pendingNodeType], ecx
-        mov     dword ptr [g_pause_00541e6c], ecx
+        mov     dword ptr [g_framePauseFlag], ecx
         ret
         nop
         nop
@@ -212,7 +212,7 @@ __declspec(naked) void DualBlockInstallSelfWithSibling_00484c90(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], edx
         call    ScaledLoadIncJmp_00428d00
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         ret
     }

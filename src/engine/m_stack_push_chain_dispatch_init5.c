@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004925d0 (266b game) - mstack-push scaledInit + multi-call dispatch with 5-field init.
  *   mstack-push g_scaledInit_00542044; g_xformEntityIdx = 0x0050f4e8 >> 2.
@@ -134,7 +134,7 @@ extern unsigned int g_data_00535e7c;
  *   call RoundCleanupCluster_00427690; if pause? final-ret. mstack-pop scaledInit; ret.
  */
 extern unsigned int g_data_00535de4;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_eventQueueWorkType;
@@ -157,7 +157,7 @@ void MStackPushChainDispatchInit5_004925d0(void) {
         mov     dword ptr [eax*4 + 0], ecx
         mov     dword ptr [g_xformEntityIdx], edx
         call    DispatcherComplex260_00407400
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -181,14 +181,14 @@ void MStackPushChainDispatchInit5_004925d0(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x30], eax
         call    MStackPushComplexCallPop_00406430
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   7eh
         mov     eax, dword ptr [g_data_00535de4]
         mov     dword ptr [g_walkCallback], eax
         call    StoreIncrMStackPush6_004275c0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   66h
@@ -198,12 +198,12 @@ void MStackPushChainDispatchInit5_004925d0(void) {
         mov     dword ptr [g_eventQueueNotMask], 0xffb50000
         mov     dword ptr [g_currentNodeFlags], 0
         call    DispatcherComplex181_004263d0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   26h
         call    RoundCleanupCluster_00427690
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   18h

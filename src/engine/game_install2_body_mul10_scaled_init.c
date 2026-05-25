@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /*
  * GameInstall2BodyMul10ScaledInit_00475590 - 347b 2-entry game state init.
@@ -139,7 +139,7 @@ extern unsigned int g_data_00535e7c;
  *       pause=1; ret.
  */
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_fightGroupHead;
@@ -156,7 +156,7 @@ __declspec(naked) void GameInstall2BodyMul10ScaledInit_00475590(void)
         mov     ecx, dword ptr [eax*4 + 0x30]
         mov     dword ptr [g_walkCallback], ecx
         call    SetJmp_0049cb90
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_e1_ret
         mov     edx, dword ptr [g_currentNodeIdx]
@@ -185,7 +185,7 @@ __declspec(naked) void GameInstall2BodyMul10ScaledInit_00475590(void)
         mov     dword ptr [esi + 8], offset L_body2
         mov     dword ptr [esi + 0x84], 2
         mov     dword ptr [g_pendingNodeType], 0x28
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
     L_state0:
@@ -198,7 +198,7 @@ __declspec(naked) void GameInstall2BodyMul10ScaledInit_00475590(void)
         add     eax, 0x15
         mov     dword ptr [g_pendingNodeType], eax
         call    MStackPushMul10TailSqrt_00424a90
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_b2_ret
         mov     eax, dword ptr [g_currentNodeFlags]
@@ -220,14 +220,14 @@ __declspec(naked) void GameInstall2BodyMul10ScaledInit_00475590(void)
         mov     dword ptr [g_currentNodeFlags], eax
         mov     dword ptr [g_walkCallback], eax
         call    Wrapper_0048ff30
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_b2_ret
         mov     eax, 1
         mov     dword ptr [esi + 8], offset L_body2
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], eax
-        mov     dword ptr [g_pause_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
     L_b2_ret:
         pop     esi
         ret

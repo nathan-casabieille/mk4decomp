@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void SetupVecFsmCluster_0043e3e0(void);
 extern void MStackDualDiffSequencer_00477040(void);
@@ -133,7 +133,7 @@ extern void MStackDualDiffSequencer_00477040(void);
  *   g_eventQueueWorkType = 0x20; call MStackDualDiffSequencer_00477040; if pause? final-ret.
  *   mstack-pop g_cj_0054205c; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_x_0052ab10;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_eventQueueEnd;
@@ -154,7 +154,7 @@ __declspec(naked) void HelperCallTripleMul10_0043e2d0(void) {
         mov     ecx, dword ptr [eax*4 + 0x64]
         mov     dword ptr [g_eventQueueEnd], ecx
         call    SetupVecFsmCluster_0043e3e0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -194,7 +194,7 @@ __declspec(naked) void HelperCallTripleMul10_0043e2d0(void) {
         mov     dword ptr [g_xformEntityIdx], eax
         mov     dword ptr [g_eventQueueWorkType], 0x20
         call    MStackDualDiffSequencer_00477040
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   18h

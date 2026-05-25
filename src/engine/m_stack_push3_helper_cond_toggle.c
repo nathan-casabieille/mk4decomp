@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0049cf70 (259b game) - mstack-push triple, call helper, conditional cj update + bit toggle.
  *   mstack-push g_xformEntityIdx, g_pendingNodeType, g_eventQueueTotal.
@@ -132,7 +132,7 @@ extern unsigned int g_data_00535e7c;
  *   mstack-pop triple. g_xformDirtyFlags |= 4; if scaledInit==0 ret;
  *   else g_xformDirtyFlags ^= 4 (clear bit2); ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_pendingNodeType;
 extern void MStackPush3LinkedListZeroWalk_0049ce00(void);
@@ -157,7 +157,7 @@ void MStackPush3HelperCondToggle_0049cf70(void) {
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [g_eventQueueTotal], edx
         call    MStackPush3LinkedListZeroWalk_0049ce00
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h

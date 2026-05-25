@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004829b0 (256b game) - 6 small blocks (80/64/16/16/16/64 byte alignment).
  *   B1 (0..79): cmp baseSel[+0x60] vs 0x2001/0x2002, set/clear bit0 of state, ret.
@@ -133,7 +133,7 @@ extern unsigned int g_data_00535e7c;
  *     push 0x004ee1e8; call CrouchFsmCluster_00482c30+0x1c0 (0x00482df0); pop;
  *     if !pause: push 0x004ee1f0, tail-call ArgSarStoreJmp; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CjTableThresholdDispatch_00488f00(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
@@ -177,7 +177,7 @@ void SixBlockCjCascade_004829b0(void) {
         nop
         nop
         call    DualCallPauseDirtyJmp_00490c30
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   2bh
@@ -215,12 +215,12 @@ void SixBlockCjCascade_004829b0(void) {
         nop
         nop
         call    CjTableThresholdDispatch_00488f00
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   31h
         call    GateDispatch6c_00494580
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   23h
@@ -230,7 +230,7 @@ void SixBlockCjCascade_004829b0(void) {
         _emit   03h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h

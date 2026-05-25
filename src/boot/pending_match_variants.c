@@ -117,13 +117,13 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void PendingMatch_0041d770(void);
-extern unsigned int g_x_0053815c;
+extern unsigned int g_player2NodeIdx;
 
 /*
  * @addr 0x004818e0 (104b game) - cj snapshot + dispatch + commit:
@@ -138,7 +138,7 @@ extern unsigned int g_data_00535e6c;
 extern unsigned int g_data_00537f48;
 extern unsigned int g_data_005380e0;
 extern unsigned int g_player1NodeIdx;
-extern unsigned int g_data_0053815c;
+extern unsigned int g_player2NodeIdx;
 extern unsigned int g_data_0053a1ac;
 extern unsigned int g_data_0053a3e8;
 extern unsigned int g_active_0053a408;
@@ -151,7 +151,7 @@ extern unsigned int g_data_00541f94;
 extern unsigned int g_data_00541f9c;
 extern unsigned int g_iat_004d2240;
 extern unsigned int g_iat_004d2244;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_table_004d57b0;
 extern unsigned int g_player1NodeIdx;
 extern unsigned int g_x_00541dc4;
@@ -618,7 +618,7 @@ __declspec(naked) void DualMul10AndDispatchChain_0049c220(void) {
         _emit   75h
         _emit   0eh
         call    Phase1ChainExtendedInitLoop_0040c460
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   21h
@@ -644,12 +644,12 @@ __declspec(naked) void DualMul10AndDispatchChain_0049c220(void) {
         nop
         nop
         call    BootOneShotSetup_0040bde0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   13h
         call    PendingMatch_0040a8d0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h
@@ -663,7 +663,7 @@ __declspec(naked) void DualMul10AndDispatchChain_0049c220(void) {
 __declspec(naked) void QuadBlockInstallChainThunks_00483c90(void) {
     __asm {
         call    CjTableThresholdDispatch_00488f00
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0dh
@@ -690,7 +690,7 @@ __declspec(naked) void QuadBlockInstallChainThunks_00483c90(void) {
         pop     ebx
         ret
         call    MainTickChain_00481070
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -699,7 +699,7 @@ __declspec(naked) void QuadBlockInstallChainThunks_00483c90(void) {
         _emit   00h
         _emit   00h
         call    PendingMatch_00416e20
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -708,7 +708,7 @@ __declspec(naked) void QuadBlockInstallChainThunks_00483c90(void) {
         _emit   00h
         _emit   00h
         call    CopyJmp_0048ef90
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -729,7 +729,7 @@ __declspec(naked) void QuadBlockInstallChainThunks_00483c90(void) {
         ret
         mov     dword ptr [g_walkCallback], ebx
         call    ByteWordTableTaggedDispatch_0048a050
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   57h
@@ -748,13 +748,13 @@ __declspec(naked) void QuadBlockInstallChainThunks_00483c90(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    GameModeAdvanceCluster_00482000
-        mov     dword ptr [g_pause_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
         pop     esi
         pop     ebx
         ret
         _emit   90h
         call    MainTickChain_00481070
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0fh
@@ -764,7 +764,7 @@ __declspec(naked) void QuadBlockInstallChainThunks_00483c90(void) {
         _emit   90h
         _emit   90h
         call    MainTickChain_00481070
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0fh
@@ -4619,20 +4619,20 @@ __declspec(naked) void PendingMatch_00411210(void)
         sub      eax, 0x170a
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x70], eax
-        mov      edx, dword ptr [g_data_00535e7c]
+        mov      edx, dword ptr [g_fightAxisPosY_00535e7c]
         mov      ecx, dword ptr [g_eventQueueEnd]
-        mov      eax, dword ptr [g_data_00535e78]
+        mov      eax, dword ptr [g_fightAxisPosX_00535e78]
         mov      dword ptr [g_eventQueueWorkType], edx
-        mov      edx, dword ptr [g_data_0053815c]
+        mov      edx, dword ptr [g_player2NodeIdx]
         mov      dword ptr [g_acc_00542078], 0xf5c
         cmp      ecx, edx
         mov      dword ptr [g_eventQueueCurrent], eax
         jne      L_175a
-        mov      eax, dword ptr [g_data_00535e70]
+        mov      eax, dword ptr [g_fightAxisNegX_00535e70]
         cmp      ecx, edx
         mov      dword ptr [g_eventQueueCurrent], eax
         jne      L_175a
-        mov      ecx, dword ptr [g_data_00535e74]
+        mov      ecx, dword ptr [g_fightAxisNegY_00535e74]
         mov      dword ptr [g_eventQueueWorkType], ecx
     L_175a:
         push     eax

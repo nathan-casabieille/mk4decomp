@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00466000 (140b game) - dual-entry chain scaledInit push.
  *   Block A: call MoveStackPipeline_004660d0; if !pause: edx=g_walkCallback; push string; ecx=baseSel[*4+4];
@@ -128,7 +128,7 @@ extern unsigned int g_data_00535e7c;
  *     call ArgSarStoreJmp; ret.
  *   Block B (+0x60): scaledInit=--baseSel[*4+4]; g_walkCallback=[scaledInit*4+0]; jmp DecCallPushCall_00466090.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void DecCallPushCall_00466090(void);
 extern void MoveStackPipeline_004660d0(void);
@@ -136,7 +136,7 @@ extern void MoveStackPipeline_004660d0(void);
 __declspec(naked) void DualScaledChainPush_00466000(void) {
     __asm {
         call    MoveStackPipeline_004660d0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   42h

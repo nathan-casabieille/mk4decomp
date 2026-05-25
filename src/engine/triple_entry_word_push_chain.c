@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004627c0 (168b game) - triple-entry pause-gated chain.
  *   Block A: if g_state_00537f74 != 0: dec g_x_00541fb0 -> g_eventQueueChild; if >= 0:
@@ -130,7 +130,7 @@ extern unsigned int g_data_00535e7c;
  *   Block B (+0x70): g_walkCallback=g_active_0053a408; if zero jmp CallSetPause; else jmp TripleEntryWordChainInc5_00462870.
  *   Block C (+0x90): g_walkCallback=g_active_00537e88; if zero jmp CallSetPause; else jmp TripleEntryWordChainInc5_00462870.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_state_00537f74;
 extern unsigned int g_x_00541fb0;
 extern unsigned int g_eventQueueChild;
@@ -154,19 +154,19 @@ __declspec(naked) void TripleEntryWordPushChain_004627c0(void) {
         _emit   7ch
         _emit   46h
         call    MStackChainOrBitLoop_004635a0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   3dh
         mov     ecx, dword ptr [g_eventQueueChild]
         mov     dword ptr [g_x_00541fb0], ecx
         call    PackedTableWalkChainStore_00463e20
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   23h
         call    MStackPush2ScaledChainLoop_00463430
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   15h

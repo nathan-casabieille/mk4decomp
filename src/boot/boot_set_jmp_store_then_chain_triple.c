@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /*
  * BootSetJmpStoreThenChainTriple_0040b970 - 250b boot SetJmp + StoreTwo + chain triple-step.
@@ -132,7 +132,7 @@ extern unsigned int g_data_00535e7c;
  *     g_eventQueueTotal++. Tail-jmp MStackPop8.
  */
 extern unsigned int g_data_005420e8;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_eventQueueTotal;
@@ -147,13 +147,13 @@ __declspec(naked) void BootSetJmpStoreThenChainTriple_0040b970(void)
     __asm
     {
         call    SetJmp_00405420
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_b970_ret
         test    byte ptr [g_xformDirtyFlags], 4
         je      L_b970_ret
         call    MStackPush8_004ab790
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_b970_ret
         mov     eax, dword ptr [g_currentNodeIdx]
@@ -172,7 +172,7 @@ __declspec(naked) void BootSetJmpStoreThenChainTriple_0040b970(void)
         test    al, 1
         jne     short L_b970_pop8
         call    MStackPushCallPop_0040a830
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_b970_ret
         mov     eax, dword ptr [g_eventQueueTotal]

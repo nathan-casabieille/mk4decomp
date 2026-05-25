@@ -117,14 +117,14 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00493000 (216b game) - state-machine init with cascading calls. */
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_x_00535e6c;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_fightGroupHead;
@@ -140,7 +140,7 @@ void StateMachineInit_00493000(void) {
         mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [g_eventQueueWorkType], eax
         call    MStackPushDispatchBitGate_00407330
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -160,7 +160,7 @@ void StateMachineInit_00493000(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x30], eax
         call    MStackPushTableWalk_00493a20
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -177,7 +177,7 @@ void StateMachineInit_00493000(void) {
         mov     eax, dword ptr [g_xformScratch2088]
         mov     dword ptr [edx*4 + 0x5c], eax
         call    PushSetCallTailJmp_00493e40
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   47h
@@ -186,7 +186,7 @@ void StateMachineInit_00493000(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x3c], eax
         call    MStackCall_004062f0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   22h

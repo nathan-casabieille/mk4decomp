@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void SelfInstallPhaseDispatch_00428990(void);
 
@@ -136,7 +136,7 @@ extern unsigned int g_currentNodeIdx;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_fightGroupHead;
@@ -205,7 +205,7 @@ __declspec(naked) void InstallSelfChainEsi_004753b0(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], edx
         call    SelfInstallPhaseDispatch_00428990
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         ret
     }
@@ -235,7 +235,7 @@ __declspec(naked) void InstallSelf3StateDualEntry_00486ff0(void) {
         _emit   74h
         _emit   19h
         call    ScaledZeroFour_00490740
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -261,12 +261,12 @@ __declspec(naked) void InstallSelf3StateDualEntry_00486ff0(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    ScaledChainJmp_00429470
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
         push    0x00542bc8
         call    ArgScaledTestStore_00494140
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h
@@ -289,7 +289,7 @@ __declspec(naked) void InstallSelf3StateDualEntry_00486ff0(void) {
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    ScaledClearJmp_00428d60
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
     }
@@ -326,7 +326,7 @@ __declspec(naked) void InstallSelfCmdStreamInterp_00494290(void) {
         mov     edx, dword ptr [eax*4 + 0]
         mov     dword ptr [g_walkCallback], edx
         call    TableLookupCall_00489ff0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -350,7 +350,7 @@ __declspec(naked) void InstallSelfCmdStreamInterp_00494290(void) {
         mov     dword ptr [g_scaledInit_00542044], ecx
         mov     dword ptr [g_eventQueueEnd], eax
         call    ecx
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -391,7 +391,7 @@ __declspec(naked) void InstallSelfCmdStreamInterp_00494290(void) {
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    SelfInstallPhaseDispatch_004943f0
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
     }

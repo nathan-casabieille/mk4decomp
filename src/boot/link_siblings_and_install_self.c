@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void MStackCall_00406740(void);
 extern void SetDirty4XorScaledLoad_004147b0(void);
@@ -137,10 +137,10 @@ extern void LinkSiblingsAndInstallSelf_00414670(void);
  *     call SetDirty4XorScaledLoad; if paused: pop+ret. g_currentNodeIdx = g_fightGroupHead;
  *     call SetDirty4XorScaledLoad; if paused: pop+ret. g_eventQueueNotMask = 0x1e.
  *   Final: call LinkSiblingsAndInstallSelf_00414670; if paused: pop+ret. install-self; chain->state=1;
- *     g_pendingNodeType=1; g_pause_00541e6c=1; pop+ret.
+ *     g_pendingNodeType=1; g_framePauseFlag=1; pop+ret.
  */
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_fightGroupHead;
 extern void CallSetPause_0041f830(void);
@@ -166,7 +166,7 @@ __declspec(naked) void BootCountdownPeriodicInstall_00414810(void)
         mov     ecx, dword ptr [g_cj_00542058]
         mov     dword ptr [g_currentNodeIdx], ecx
         call    MStackPush2ChainLLInsert_00406790
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pop_ret
         mov     esi, dword ptr [g_xformDirtyFlags]
@@ -182,7 +182,7 @@ __declspec(naked) void BootCountdownPeriodicInstall_00414810(void)
         mov     dword ptr [g_xformDirtyFlags], edx
         je      short L_callPause
         call    MStackCall_00406740
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pop_ret_short
     L_callPause:
@@ -196,26 +196,26 @@ __declspec(naked) void BootCountdownPeriodicInstall_00414810(void)
         add     esp, 4
         mov     dword ptr [g_currentNodeIdx], edx
         call    SetDirty4XorScaledLoad_004147b0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pop_ret_short
         mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_currentNodeIdx], eax
         call    SetDirty4XorScaledLoad_004147b0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pop_ret_short
         mov     dword ptr [g_eventQueueNotMask], 0x1e
     L_callFinal:
         call    LinkSiblingsAndInstallSelf_00414670
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pop_ret_short
         mov     eax, 1
         mov     dword ptr [esi + 8], offset BootCountdownPeriodicInstall_00414810
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], eax
-        mov     dword ptr [g_pause_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
     L_pop_ret_short:
     L_pop_ret:
         pop     esi

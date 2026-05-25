@@ -117,28 +117,28 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0049c670 (91b)
- *   edx = g_data_00535e7c; eax = g_baseSel;
- *   ecx = g_data_00535e78; push esi; esi = g_player1NodeIdx;
+ *   edx = g_fightAxisPosY_00535e7c; eax = g_baseSel;
+ *   ecx = g_fightAxisPosX_00535e78; push esi; esi = g_player1NodeIdx;
  *   g_eventQueueCurrent = edx; edx = g_cj_0054205c;
  *   g_walkCallback = ecx; eax <<= 2; cmp edx,esi;
- *   if eq: jmp store; ecx = g_data_00535e70; cmp edx,esi;
+ *   if eq: jmp store; ecx = g_fightAxisNegX_00535e70; cmp edx,esi;
  *   g_walkCallback = ecx; if eq: jmp store;
- *   edx = g_data_00535e74; g_eventQueueCurrent = edx;
+ *   edx = g_fightAxisNegY_00535e74; g_eventQueueCurrent = edx;
  *   store: [eax+0x68] = ecx; ecx = g_eventQueueCurrent;
  *          [eax+0x6c] = ecx; pop esi; ret.
  */
 
 __declspec(naked) void CondPickDualStore_0049c670(void) {
     __asm {
-        mov     edx, dword ptr [g_data_00535e7c]
+        mov     edx, dword ptr [g_fightAxisPosY_00535e7c]
         mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [g_data_00535e78]
+        mov     ecx, dword ptr [g_fightAxisPosX_00535e78]
         push    esi
         mov     esi, dword ptr [g_player1NodeIdx]
         mov     dword ptr [g_eventQueueCurrent], edx
@@ -148,12 +148,12 @@ __declspec(naked) void CondPickDualStore_0049c670(void) {
         cmp     edx, esi
         _emit   74h
         _emit   1ch
-        mov     ecx, dword ptr [g_data_00535e70]
+        mov     ecx, dword ptr [g_fightAxisNegX_00535e70]
         cmp     edx, esi
         mov     dword ptr [g_walkCallback], ecx
         _emit   74h
         _emit   0ch
-        mov     edx, dword ptr [g_data_00535e74]
+        mov     edx, dword ptr [g_fightAxisNegY_00535e74]
         mov     dword ptr [g_eventQueueCurrent], edx
         mov     dword ptr [eax + 0x68], ecx
         mov     ecx, dword ptr [g_eventQueueCurrent]

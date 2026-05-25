@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00431360 (100b game) - dual-entry init+dispatch.
  *   entry +0x00: eax = g_fightGroupHead; eax *= 4; zero out 6 fields at offsets 0x6c,0x70,0x74,0x78,0x7c,0x80
@@ -128,7 +128,7 @@ extern unsigned int g_data_00535e7c;
  *   12 NOPs alignment pad.
  *   entry +0x50 (= 0x004313b0): self-call to +0x00 init, then if !g_pause: tail-jmp ScaledInitWithCounterAndType.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_fightGroupHead;
 extern void ScaledInitWithCounterAndType_004314f0(void);
 
@@ -163,7 +163,7 @@ __declspec(naked) void DualEntryInitDispatch_00431360(void) {
         _emit   90h
         _emit   90h
         call    DualEntryInitDispatch_00431360
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h

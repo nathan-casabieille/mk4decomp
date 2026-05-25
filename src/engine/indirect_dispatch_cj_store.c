@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0048ae50 (263b game) - mstack-push pair + indirect dispatch + cj copy.
  *   mstack-push g_currentNodeFlags and g_xformScratch2088. g_eventQueueCurrent = g_currentNodeFlags.
@@ -131,7 +131,7 @@ extern unsigned int g_data_00535e7c;
  *   mstack-pop g_xformScratch2088, g_currentNodeFlags. g_walkCallback = 1; tail-jmp [g_eventQueueChild].
  *   ret. Followed by small tail block: if g_walkCallback == 0, g_eventQueueTotal = 0x00537ec0>>2; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_eventQueueIdx;
@@ -159,7 +159,7 @@ __declspec(naked) void IndirectDispatchCjStore_0048ae50(void) {
         mov     dword ptr [g_xformEntityIdx], eax
         mov     dword ptr [g_walkCallback], 0
         call    dword ptr [g_eventQueueChild]
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -168,7 +168,7 @@ __declspec(naked) void IndirectDispatchCjStore_0048ae50(void) {
         _emit   00h
         _emit   00h
         call    AerialKickComboCluster_0048b090
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   72h

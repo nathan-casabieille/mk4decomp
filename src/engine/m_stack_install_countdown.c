@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00486370 (146b game) - dual-entry mstack-push + install-self with countdown.
  *   Block A (+0x00): mstack-push 0x004863a0; g_currentNodeFlags=0xccc; jmp NegInstallNegSelfTrigPair_00486610.
@@ -130,7 +130,7 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_currentNodeFlags;
 extern void MStackPushWaitChain_00486410(void);
@@ -174,7 +174,7 @@ __declspec(naked) void MStackInstallCountdown_00486370(void) {
         mov     dword ptr [eax + 0x08], 0x004863a0
         mov     dword ptr [eax + 0x84], ecx
         mov     dword ptr [g_pendingNodeType], 0x58
-        mov     dword ptr [g_pause_00541e6c], ecx
+        mov     dword ptr [g_framePauseFlag], ecx
         ret
     }
 }

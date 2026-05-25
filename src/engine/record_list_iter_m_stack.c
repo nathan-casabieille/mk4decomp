@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00422ce0 (318b game) - 0xffff0000-terminated record-list iterator with 3-push call + 3-pop.
  *   For each record from g_eventQueueIdx stream: read 3 fields (g_xformEntityIdx, g_eventQueueWorkType, g_currentNodeFlags).
@@ -130,7 +130,7 @@ extern unsigned int g_data_00535e7c;
  *   Mstack-pop: g_xformEntityIdx, g_eventQueueCurrent, g_eventQueueWorkType. If g_eventQueueWorkType!=0: [g_cj*4+0x58]=g_eventQueueWorkType.
  *   Re-read next field from g_eventQueueIdx stream, if !=0xffff0000 loop. Pop edi/esi; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_eventQueueIdx;
 extern unsigned int g_eventQueueWorkType;
@@ -185,7 +185,7 @@ __declspec(naked) void RecordListIterMStack_00422ce0(void) {
         mov     [eax*4 + g_data_004d57ac_arr], edx
         mov     dword ptr [g_walkCallback], edi
         call    StateMachineInit_00493000
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   7fh

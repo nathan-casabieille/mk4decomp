@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00475490 (250b game) - dual-block install-self + sibling.
  *   B1 (0..221, +1 NOP): snapshot+clear chain[+0x84]. If was zero: cj[+0x24]=g_eventQueueEnd,
@@ -131,7 +131,7 @@ extern unsigned int g_data_00535e7c;
  *     scaledInit-chain push 0x00475490+0x01000000; call SelfInstallPhaseDispatch_00428990; pause=1; ret.
  *   B2 (224..249): cj[+0x58] = cj[+0x48] (sibling at 0x00475570).
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_eventQueueIdx;
 extern unsigned int g_currentNodeFlags;
@@ -179,7 +179,7 @@ __declspec(naked) void InstallSelfWithSibling_00475490(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], edx
         call    SelfInstallPhaseDispatch_00428990
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         ret
         nop

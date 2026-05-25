@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0045feb0 (272b game) - install-self with 4-call chain + cj copy.
  *   baseSel<<2 -> eax; snapshot+clear chain[+0x84].
@@ -134,7 +134,7 @@ extern unsigned int g_data_00535e7c;
  *     scaledInit-chain push 0x0045feb0+0x01000000;
  *     call ScaledStoreEntZeroJmp_00428e40; pause=1; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_eventQueueIdx;
 extern void ArgScaledTestStore_00494140(void);
@@ -154,7 +154,7 @@ __declspec(naked) void InstallSelfChainCascade_0045feb0(void) {
         _emit   70h
         push    0x0054295c
         call    IterStepScaledStore24_00428730
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   0fh
@@ -164,7 +164,7 @@ __declspec(naked) void InstallSelfChainCascade_0045feb0(void) {
         _emit   00h
         _emit   00h
         call    DualCallPauseDirtyJmp_00490c30
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -174,7 +174,7 @@ __declspec(naked) void InstallSelfChainCascade_0045feb0(void) {
         _emit   00h
         push    0x00542960
         call    ArgScaledTestStore_00494140
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   0fh
@@ -184,7 +184,7 @@ __declspec(naked) void InstallSelfChainCascade_0045feb0(void) {
         _emit   00h
         _emit   00h
         call    DualScaledStoreZero_00491080
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -217,7 +217,7 @@ __declspec(naked) void InstallSelfChainCascade_0045feb0(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    ScaledStoreEntZeroJmp_00428e40
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         ret
     }
 }

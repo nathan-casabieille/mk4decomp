@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00480570 (333b game) - 3-state install-self with chain init + long state-0 sequence.
  *   state>=2: tail-call FiveCallGuardSetTail; pop+ret.
@@ -134,7 +134,7 @@ extern unsigned int g_data_00535e7c;
  *     g_walkCallback=0x3e; call TableLookupCall_00489ff0; if pause ret.
  *     Install-self at entry; state=1; g_pendingNodeType=0x33; pause=1; pop+ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_pendingNodeType;
 extern void DispatcherComplex131_00431530(void);
 extern void FiveCallGuardSetTail_0046f6b0(void);
@@ -167,7 +167,7 @@ __declspec(naked) void Install3StateLongSeq_00480570(void) {
         mov     dword ptr [ecx*4 + 0x74], 0
         mov     dword ptr [g_walkCallback], 0x1eb8
         call    SfxAttenuateAndApply_0048dee0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -177,7 +177,7 @@ __declspec(naked) void Install3StateLongSeq_00480570(void) {
         _emit   00h
         mov     dword ptr [g_walkCallback], 8
         call    ScaledIndexConditionalAdd_0048e400
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -188,11 +188,11 @@ __declspec(naked) void Install3StateLongSeq_00480570(void) {
         mov     dword ptr [esi + 8], offset Install3StateLongSeq_00480570
         mov     dword ptr [esi + 0x84], 2
         mov     dword ptr [g_pendingNodeType], 0xe
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
         call    MStackChainBit2Cascade_0048e8f0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -207,13 +207,13 @@ __declspec(naked) void Install3StateLongSeq_00480570(void) {
         pop     esi
         ret
         call    ScaledZeroFour_00490740
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   7eh
         mov     dword ptr [g_walkCallback], 5
         call    DispatcherComplex131_00431530
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   66h
@@ -221,20 +221,20 @@ __declspec(naked) void Install3StateLongSeq_00480570(void) {
         mov     dword ptr [edx*4 + 0x74], 0x1000
         mov     dword ptr [g_walkCallback], 0x62
         call    ScaledLitLoadCall_00480fe0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   3dh
         mov     dword ptr [g_walkCallback], 0x3e
         call    TableLookupCall_00489ff0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   25h
         mov     dword ptr [esi + 8], offset Install3StateLongSeq_00480570
         mov     dword ptr [esi + 0x84], 1
         mov     dword ptr [g_pendingNodeType], 0x33
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
     }

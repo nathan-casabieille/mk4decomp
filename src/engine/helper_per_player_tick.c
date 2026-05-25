@@ -15,15 +15,15 @@ extern unsigned int g_data_00535d60;
 extern unsigned int g_data_00535d68;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_data_00535de8;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_data_00537e94;
 extern unsigned int g_data_00537ef4;
 extern unsigned int g_data_00538068;
 extern unsigned int g_player1NodeIdx;
-extern unsigned int g_data_0053815c;
+extern unsigned int g_player2NodeIdx;
 extern unsigned int g_data_0053a42c;
 extern unsigned int g_data_0053a730;
 extern unsigned int g_data_0053a7b4;
@@ -52,7 +52,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
 {
     __asm {
         mov      eax, dword ptr [g_player1NodeIdx]
-        mov      ecx, dword ptr [g_data_0053815c]
+        mov      ecx, dword ptr [g_player2NodeIdx]
         push     esi
         push     edi
         test     eax, eax
@@ -122,10 +122,10 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         jne      L_983c
         mov      eax, dword ptr [g_walkCallback]
         mov      edx, dword ptr [g_eventQueueChild]
-        mov      dword ptr [g_data_00535e78], eax
+        mov      dword ptr [g_fightAxisPosX_00535e78], eax
         mov      dword ptr [g_walkCallback], edx
         neg      eax
-        mov      dword ptr [g_data_00535e70], eax
+        mov      dword ptr [g_fightAxisNegX_00535e70], eax
         mov      eax, dword ptr [g_currentNodeFlags]
         mov      dword ptr [g_eventQueueCurrent], eax
         call     RangeMulMod_004ab2a0
@@ -137,9 +137,9 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      esi, ecx
         neg      ecx
         mov      eax, ecx
-        mov      dword ptr [g_data_00535e7c], esi
+        mov      dword ptr [g_fightAxisPosY_00535e7c], esi
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_00535e74], eax
+        mov      dword ptr [g_fightAxisNegY_00535e74], eax
         mov      edx, dword ptr [edx*4 + 0x40]
         mov      eax, dword ptr [g_xformEntityIdx]
         mov      dword ptr [g_walkCallback], edx
@@ -159,7 +159,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      dword ptr [g_data_0053a42c], eax
         jne      L_9569
         mov      edx, dword ptr [g_data_0052ab04]
-        mov      edi, dword ptr [g_data_00535e78]
+        mov      edi, dword ptr [g_fightAxisPosX_00535e78]
         lea      eax, [esi + edx]
         mov      esi, dword ptr [g_data_0052ab08]
         add      edx, ecx
@@ -236,7 +236,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      dword ptr [g_data_0053a7b4], eax
         mov      dword ptr [g_data_00541d68], ecx
     L_9569:
-        mov      ecx, dword ptr [g_data_00535e7c]
+        mov      ecx, dword ptr [g_fightAxisPosY_00535e7c]
         mov      eax, dword ptr [g_data_0052ab10]
         test     ecx, ecx
         mov      dword ptr [g_pendingNodeType], eax
@@ -248,7 +248,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      eax, dword ptr [eax*4 + 0x5c]
         jmp      L_9613
     L_959e:
-        mov      ecx, dword ptr [g_data_00535e78]
+        mov      ecx, dword ptr [g_fightAxisPosX_00535e78]
         mov      dword ptr [g_eventQueueCurrent], ecx
         call     RangeMulMod_004ab2a0
         mov      eax, dword ptr [g_framePauseFlag]
@@ -281,7 +281,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
     L_9624:
         mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_data_0053a730], ecx
-        mov      ecx, dword ptr [g_data_00535e78]
+        mov      ecx, dword ptr [g_fightAxisPosX_00535e78]
         xor      edi, edi
         mov      dword ptr [g_eventQueueNotMask], edi
         mov      dword ptr [g_walkCallback], ecx
@@ -289,7 +289,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         test     eax, eax
         mov      dword ptr [g_eventQueueCurrent], eax
         jne      L_9670
-        mov      ecx, dword ptr [g_data_00535e7c]
+        mov      ecx, dword ptr [g_fightAxisPosY_00535e7c]
         mov      dword ptr [g_walkCallback], ecx
         mov      eax, dword ptr [edx*4 + 0x74]
         test     eax, eax
@@ -325,7 +325,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         jge      L_96b8
         mov      edi, 0xffff0000
     L_96b8:
-        mov      ecx, dword ptr [g_data_00535e70]
+        mov      ecx, dword ptr [g_fightAxisNegX_00535e70]
         mov      edx, dword ptr [g_xformEntityIdx]
         mov      dword ptr [g_data_0052d74c], edi
         xor      edi, edi
@@ -335,7 +335,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         test     eax, eax
         mov      dword ptr [g_eventQueueCurrent], eax
         jne      L_9704
-        mov      ecx, dword ptr [g_data_00535e74]
+        mov      ecx, dword ptr [g_fightAxisNegY_00535e74]
         mov      dword ptr [g_walkCallback], ecx
         mov      eax, dword ptr [edx*4 + 0x74]
         test     eax, eax

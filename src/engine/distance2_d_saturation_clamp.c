@@ -117,16 +117,16 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004300a0 (312b game) - distance2D Mul10 clamp / 3-branch saturation.
  *   Sub esi=g_cj. dx=[cj*4+0x54]-g_load_0052ab04; dy=[cj*4+0x5c]-g_load_0052ab08.
  *   Mul10Tail(dx,dx)+Mul10Tail(dy,dy)->g_acc.
  *   If sum > 0x370000: jump to saturation_high.
- *   Else: load g_player1NodeIdx / g_x_0053815c (scaledInit/x_48); a=[scaled[+0x58]], c=[48[+0x58]].
+ *   Else: load g_player1NodeIdx / g_player2NodeIdx (scaledInit/x_48); a=[scaled[+0x58]], c=[48[+0x58]].
  *     if a>c: a=c. If a<=-0x20000: jump to saturation_low. Else jump to high path.
  *   saturation_high: cmp [cj*4+0x58], -0x18000; if >=: store -0x18000, set fields=0, ret.
  *     Else: ecx=0x7ae, store at cj[+0x70]=ecx; pop+ret.
@@ -135,7 +135,7 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_load_0052ab04;
 extern unsigned int g_load_0052ab08;
-extern unsigned int g_x_0053815c;
+extern unsigned int g_player2NodeIdx;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_eventQueueWorkType;
 
@@ -171,7 +171,7 @@ __declspec(naked) void Distance2DSaturationClamp_004300a0(void) {
         _emit   7fh
         _emit   41h
         mov     eax, dword ptr [g_player1NodeIdx]
-        mov     ecx, dword ptr [g_x_0053815c]
+        mov     ecx, dword ptr [g_player2NodeIdx]
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     eax, dword ptr [eax*4 + 0x58]

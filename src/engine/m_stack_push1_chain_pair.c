@@ -117,17 +117,17 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00424080 (227b game) - mstack-push g_walkCallback; advance g_cj_00542058 counter twice;
  *   call DispatcherComplex260_00407400; pause-check; call 0x00406430; pause-check;
  *   load 2 chain values via scaledInit, shift, store; mstack-pop g_walkCallback. ret.
  */
 extern unsigned int g_data_004d57ac_arr;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 
 void MStackPush1ChainPair_00424080(void) {
@@ -143,7 +143,7 @@ void MStackPush1ChainPair_00424080(void) {
         mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_cj_00542058], eax
         call    DispatcherComplex260_00407400
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -156,7 +156,7 @@ void MStackPush1ChainPair_00424080(void) {
         _emit   23h
         _emit   0feh
         _emit   0ffh
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h

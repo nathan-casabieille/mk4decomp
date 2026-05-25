@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004395d0 (161b game) - dual-entry Mul10Tail pair accumulator with bit-flag toggle.
  *   Block A: scaledInit=baseSel[*4+0x38]; g_walkCallback=scaledInit[*4+0x6c]; g_eventQueueCurrent=scaledInit[*4+0x74];
@@ -128,7 +128,7 @@ extern unsigned int g_data_00535e7c;
  *   Block B (+0x70): call ScaledChainSignDirtyToggle; if !pause: if bit (al=1 vs cl) clear, OR bit-0 of state.
  *     Else clear bit-0 and ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueCurrent;
 extern void ScaledChainSignDirtyToggle_00439680(void);
 
@@ -167,7 +167,7 @@ void DualMul10Tail_004395d0(void) {
         _emit   90h
         _emit   90h
         call    ScaledChainSignDirtyToggle_00439680
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   22h

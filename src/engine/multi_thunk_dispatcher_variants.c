@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00496fc0 (303b game) - multi-thunk dispatcher with 5 small blocks.
  *   Block A (0..0x13): call MStackCall; if !pause tail-jmp CallSetPause; ret.
@@ -134,7 +134,7 @@ extern unsigned int g_data_00535e7c;
  *   Block E (+0xe5): g_walkCallback=0x311; jmp +1 (to next fn at 0x004970f0).
  */
 extern unsigned int g_data_004ea000;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueTotal;
 extern unsigned int g_currentNodeFlags;
 extern void ArgSarStoreJmp_004594f0(void);
@@ -157,7 +157,7 @@ extern void ScaledStackCallPause_0049c360(void);
 __declspec(naked) void MultiThunkDispatcher_00496fc0(void) {
     __asm {
         call    MStackCall_00406740
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h
@@ -176,7 +176,7 @@ __declspec(naked) void MultiThunkDispatcher_00496fc0(void) {
         _emit   90h
         _emit   90h
         call    CondPickDualStore_0049c670
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   24h
@@ -202,7 +202,7 @@ __declspec(naked) void MultiThunkDispatcher_00496fc0(void) {
         _emit   90h
         _emit   90h
         call    DualCmpSwapStore_0049c5a0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -212,7 +212,7 @@ __declspec(naked) void MultiThunkDispatcher_00496fc0(void) {
         _emit   00h
         push    0x004f20a0
         call    ScaledStackCallPause_0049c360
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h
@@ -284,7 +284,7 @@ __declspec(naked) void MultiThunkDispatcher_00460470(void) {
     __asm {
         push    0x00542980
         call    ArgScaledTestStore_00494140
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h
@@ -296,7 +296,7 @@ __declspec(naked) void MultiThunkDispatcher_00460470(void) {
         _emit   90h
         _emit   90h
         call    DirtyToggleByGate_0048f350
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   4eh
@@ -307,7 +307,7 @@ __declspec(naked) void MultiThunkDispatcher_00460470(void) {
         shr     eax, 2
         mov     dword ptr [g_eventQueueTotal], eax
         call    NotShrCmp1Store_00460d80
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   2ah
@@ -325,7 +325,7 @@ __declspec(naked) void MultiThunkDispatcher_00460470(void) {
         _emit   90h
         _emit   90h
         call    LeaPlus22StoreSelf_0048e4d0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h
@@ -344,7 +344,7 @@ __declspec(naked) void MultiThunkDispatcher_00460470(void) {
         _emit   90h
         _emit   90h
         call    LeaPlus22StoreSelf_0048e4d0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h
@@ -363,7 +363,7 @@ __declspec(naked) void MultiThunkDispatcher_00460470(void) {
         _emit   90h
         _emit   90h
         call    LeaPlus22StoreSelf_0048e4d0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h
@@ -382,7 +382,7 @@ __declspec(naked) void MultiThunkDispatcher_00460470(void) {
         _emit   90h
         _emit   90h
         call    LeaPlus22StoreSelf_0048e4d0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h
@@ -401,7 +401,7 @@ __declspec(naked) void MultiThunkDispatcher_00460470(void) {
         _emit   90h
         _emit   90h
         call    LeaPlus22StoreSelf_0048e4d0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h
@@ -420,7 +420,7 @@ __declspec(naked) void MultiThunkDispatcher_00460470(void) {
         _emit   90h
         _emit   90h
         call    LeaPlus22StoreSelf_0048e4d0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h

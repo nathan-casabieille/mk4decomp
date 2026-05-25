@@ -117,17 +117,17 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004468c0 (116b game) - dual-entry pause-gated 3-string chain.
  *   Block A: push 3 strings (0x4e5468/70/78) each followed by call PackedAdvance + pause-check ret;
  *     finally call Cmp2OrSet0b; if !pause: g_walkCallback = g_state_00537e94 = 0x0fff; ret.
  *   Block B (+0x60): call GateDispatch6c; if !pause: jmp ScaledInitWithCounterAndType_00446940; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_state_00537e94;
 extern void Cmp2OrSet0b_0048e3e0(void);
 extern void GateDispatch6c_00494580(void);
@@ -138,27 +138,27 @@ __declspec(naked) void TripleStringPauseChain_004468c0(void) {
     __asm {
         push    0x004e5468
         call    PackedAdvanceCallContinue_0048e630
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h
         _emit   49h
         push    0x004e5470
         call    PackedAdvanceCallContinue_0048e630
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h
         _emit   33h
         push    0x004e5478
         call    PackedAdvanceCallContinue_0048e630
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h
         _emit   1dh
         call    Cmp2OrSet0b_0048e3e0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0fh
@@ -167,7 +167,7 @@ __declspec(naked) void TripleStringPauseChain_004468c0(void) {
         mov     dword ptr [g_state_00537e94], eax
         ret
         call    GateDispatch6c_00494580
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h

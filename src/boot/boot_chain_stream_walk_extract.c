@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /*
  * BootChainStreamWalkExtract_00407ae0 - 287b boot mstack-push1 + chain stream walker.
@@ -137,7 +137,7 @@ extern unsigned int g_data_00535e7c;
  *   Pop1 mstack into g_eventQueueTotal; pop esi; ret.
  */
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_state_00542098;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_xformEntityIdx;
@@ -192,7 +192,7 @@ __declspec(naked) void BootChainStreamWalkExtract_00407ae0(void)
         mov     ecx, dword ptr [eax*4]
         mov     dword ptr [g_walkCallback], ecx
         call    ExtractBitsToVec3_00407c00
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_7ae_justRet
         mov     esi, dword ptr [g_eventQueueWorkType]

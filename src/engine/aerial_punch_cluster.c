@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void EntryThunkBodyStateMachine_00457bb0(void);
 extern void AerialPunchCluster_0047bc30(void);
@@ -137,7 +137,7 @@ extern void EsiInstallDecCallChain_004294a0(void);
  *     Else: g_eventQueueChild=6; install-self at entry+0x01000000; call EsiInstallDecCallChain;
  *     pause=1; pop edi/esi/ebx; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void ScaledLitLoadCall_00480fe0(void);
 
 __declspec(naked) void StateMachineSharedTail_0047baf0(void) {
@@ -162,7 +162,7 @@ __declspec(naked) void StateMachineSharedTail_0047baf0(void) {
         mov     dword ptr [ecx*4 + 0x7c], eax
         mov     dword ptr [g_eventQueueNotMask], edi
         call    EntryThunkBodyStateMachine_00457bb0
-        cmp     dword ptr [g_pause_00541e6c], edi
+        cmp     dword ptr [g_framePauseFlag], edi
         _emit   0fh
         _emit   85h
         _emit   0ceh
@@ -171,7 +171,7 @@ __declspec(naked) void StateMachineSharedTail_0047baf0(void) {
         _emit   00h
         mov     dword ptr [g_walkCallback], 0x5f
         call    ScaledLitLoadCall_00480fe0
-        cmp     dword ptr [g_pause_00541e6c], edi
+        cmp     dword ptr [g_framePauseFlag], edi
         _emit   0fh
         _emit   85h
         _emit   0b3h
@@ -185,7 +185,7 @@ __declspec(naked) void StateMachineSharedTail_0047baf0(void) {
         ret
         mov     dword ptr [g_eventQueueNotMask], edi
         call    EntryThunkBodyStateMachine_00457bb0
-        cmp     dword ptr [g_pause_00541e6c], edi
+        cmp     dword ptr [g_framePauseFlag], edi
         _emit   0fh
         _emit   85h
         _emit   93h
@@ -203,7 +203,7 @@ __declspec(naked) void StateMachineSharedTail_0047baf0(void) {
         pop     ebx
         ret
         call    MStackPush3CmpCall_0048eec0
-        cmp     dword ptr [g_pause_00541e6c], edi
+        cmp     dword ptr [g_framePauseFlag], edi
         _emit   75h
         _emit   6fh
         _emit   84h
@@ -235,7 +235,7 @@ __declspec(naked) void StateMachineSharedTail_0047baf0(void) {
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [edx*4 + 0x84], edi
         call    EsiInstallDecCallChain_004294a0
-        mov     dword ptr [g_pause_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
         pop     edi
         pop     esi
         pop     ebx

@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0043aed0 (282b game) - dual block: thunk + 3-state install-self.
  *   B1 (0..0x1f): call FiveCallScaledChainTailJmp_0045f8d0; if !pause: push 0x004e4b28,
@@ -133,7 +133,7 @@ extern unsigned int g_data_00535e7c;
  *       [eax+8]=0x0043aef0; chain[+0x84]=1; scaledInit-chain push 0x0043aef0+0x01000000;
  *       call InstallSelfDoubleMStack_0043b9a0; pause=1; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueNotMask;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void InstallSelfDoubleMStack_0043b9a0(void);
@@ -143,7 +143,7 @@ extern void StateMachine4ArmCascade_0043aab0(void);
 __declspec(naked) void DualBlockThunkPlus3State_0043aed0(void) {
     __asm {
         call    FiveCallScaledChainTailJmp_0045f8d0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0dh
@@ -187,7 +187,7 @@ __declspec(naked) void DualBlockThunkPlus3State_0043aed0(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], edx
         call    ScaledLoadIncJmp_00428d00
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         pop     esi
         ret
@@ -209,7 +209,7 @@ __declspec(naked) void DualBlockThunkPlus3State_0043aed0(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], edx
         call    InstallSelfDoubleMStack_0043b9a0
-        mov     dword ptr [g_pause_00541e6c], esi
+        mov     dword ptr [g_framePauseFlag], esi
         pop     edi
         pop     esi
         ret

@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void TripleMStackPushChainStores_00476180(void);
 extern void StoreFightFieldCallTailJmp_004667a0(void);
@@ -135,7 +135,7 @@ extern void FourPackedSubInitCmpDispatch_004665b0(void);
  *     baseSel[+0x30]=2, baseSel[+0x34]=g_scaledInit, baseSel[+0x38]=g_eventQueueIdx,
  *     baseSel[+0x3c]=g_cj_0054205c. Tail-jmp FourPackedSubInitCmpDispatch_004665b0; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_eventQueueIdx;
@@ -151,7 +151,7 @@ __declspec(naked) void ThunkPlus4FieldCjCopy_00466490(void) {
         nop
         nop
         call    TripleMStackPushChainStores_00476180
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -185,7 +185,7 @@ __declspec(naked) void ThunkPlus4FieldCjCopy_00466490(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x30], eax
         call    MStackCall_00406340
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   5dh

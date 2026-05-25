@@ -117,24 +117,24 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00446b10 (224b game) - 7-entry-point self-recursive dispatcher with table addresses.
  *   A: call BossPunchCluster_00446c50; if !pause: chain[g_xformEntityIdx*4+0x10]=0; ret.
  *   B-G (+0x20..+0xc0): call self; eax = const>>2; chain[*4+0x14]=eax. Constants: 0x004e6080, 0x004e6090,
  *     0x004e60a0, 0x004e60b0, 0x004e60c0, 0x004e60d0.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern void BossPunchCluster_00446c50(void);
 
 void SevenEntrySelfCallTable_00446b10(void) {
     __asm {
         call    BossPunchCluster_00446c50
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   10h

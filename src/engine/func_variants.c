@@ -14,7 +14,7 @@ extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_004e3ac8;
 extern unsigned int g_data_004f2240;
 extern unsigned int g_player1NodeIdx;
-extern unsigned int g_data_0053815c;
+extern unsigned int g_player2NodeIdx;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_xformEntityIdx;
@@ -31,7 +31,7 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_state_004d57ac;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_data_004edf68;
@@ -286,7 +286,7 @@ void func_004613a0(void) {
  * CjInstallSelfRouter. Orphan TCO wrapper. */
 void func_0042ce70(void) {
     GuardedTripleCallSwapJmp_0048fee0();
-    if (g_pause_00541e6c != 0) return;
+    if (g_framePauseFlag != 0) return;
     CjInstallSelfRouter_00470480();
 }
 
@@ -294,9 +294,9 @@ void func_0042ce70(void) {
  * then SetJmp, then tail-jmp CjInstallSelfRouter. Orphan sub-entry. */
 void func_0042ce90(void) {
     GuardedTripleCallSwapJmp_0048fee0();
-    if (g_pause_00541e6c != 0) return;
+    if (g_framePauseFlag != 0) return;
     SetJmp_0042d080();
-    if (g_pause_00541e6c != 0) return;
+    if (g_framePauseFlag != 0) return;
     CjInstallSelfRouter_00470480();
 }
 
@@ -688,7 +688,7 @@ __declspec(naked) void func_0047c530(void)
 {
     __asm {
         /* === h6 (0x47c530): swap-side pose [+0x70] add 0x51e === */
-        mov      eax, dword ptr [g_data_0053815c]
+        mov      eax, dword ptr [g_player2NodeIdx]
         mov      ecx, dword ptr [g_fightGroupHead]
         mov      dword ptr [g_currentNodeIdx], eax
         mov      eax, dword ptr [g_player1NodeIdx]

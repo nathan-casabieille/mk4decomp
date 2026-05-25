@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void SaveStateSnapshot_004aba40(void);
 extern void MStackRestore27_004abd50(void);
@@ -141,7 +141,7 @@ extern unsigned int g_data_004f2980;
 extern unsigned int g_data_0053a1bc;
 extern unsigned int g_data_0053a354;
 extern unsigned int g_data_00542004;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_x_00535e48;
 extern unsigned int g_xformEntityIdx;
 
@@ -186,7 +186,7 @@ __declspec(naked) void LinkedListIndirectDirtyToggle_0049f7b0(void) {
         pop     esi
         ret
         call    edx
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   2dh
@@ -208,7 +208,7 @@ __declspec(naked) void LinkedListIndirectDirtyToggle_0049f7b0(void) {
         _emit   90h
         _emit   90h
         call    DualTestDirtyToggle_004282c0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   4bh

@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0044d0c0 (276b game) - mstack-push 2, 2 calls, conditional field clear.
  *   mstack-push g_xformEntityIdx. call DirtyDoubleDeref_00408cb0; if pause? final-ret.
@@ -131,7 +131,7 @@ extern unsigned int g_data_00535e7c;
  *   Else: drop one more, clear scaledInit[+0x30/+0x34/+0x38/+0x1c], mstack-pop
  *   to g_xformEntityIdx, clear bit2 of state; pop esi; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_pendingNodeType;
 extern void DirtyDoubleDeref_00408cb0(void);
@@ -146,7 +146,7 @@ __declspec(naked) void MStackPush2GuardedFieldClear_0044d0c0(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + 0], ecx
         call    DirtyDoubleDeref_00408cb0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         xor     esi, esi
         cmp     eax, esi
         _emit   0fh
@@ -164,7 +164,7 @@ __declspec(naked) void MStackPush2GuardedFieldClear_0044d0c0(void) {
         mov     ecx, dword ptr [eax*4 + 0x24]
         mov     dword ptr [g_xformEntityIdx], ecx
         call    FramePauseScaledStore_00406c10
-        cmp     dword ptr [g_pause_00541e6c], esi
+        cmp     dword ptr [g_framePauseFlag], esi
         _emit   0fh
         _emit   85h
         _emit   0aah

@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0047ed90 (223b game) - quad-entry chain.
  *   A: push 0x004ed670; call ArgSarStoreJmp; ret.
@@ -129,7 +129,7 @@ extern unsigned int g_data_00535e7c;
  *   C (+0x90): push 0x004ed690, chain[*4+0x68]=0x40c, chain[*4+0x74]=0x207; call ArgSarStoreJmp; ret.
  *   D (+0xd0): g_eventQueueChild=6; jmp InstallSelfCountdownLong_0047ee70.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueChild;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void FiveCallGuardSetTail_0046f6b0(void);
@@ -169,7 +169,7 @@ __declspec(naked) void QuadInstallSelfChainStr_0047ed90(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], edx
         call    SlotEvent3EntryChain_0046fdf0
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         ret
         mov     eax, dword ptr [g_baseSel_00542060]

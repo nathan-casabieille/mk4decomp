@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void ScaledAndAl7f_004902f0(void);
 extern void BootFrameSetup_00408190(void);
@@ -146,7 +146,7 @@ extern void Wrapper_00484d90(void);
  *     tail-jmp Wrapper_00484d90; else g_eventQueueChild=0xd and tail-jmp
  *     DualBlockInstallSelfWithSibling_00484c90.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void DualBlockInstallSelfWithSibling_00484c90(void);
@@ -183,7 +183,7 @@ __declspec(naked) void FiveBlockDispatchChain_00484b70(void) {
         nop
         nop
         call    ScaledAndAl7f_004902f0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0dh
@@ -200,22 +200,22 @@ __declspec(naked) void FiveBlockDispatchChain_00484b70(void) {
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
         call    BootFrameSetup_00408190
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   2fh
         call    GuardedChainCmpDualBitXor_004299a0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   21h
         call    ScaledXorStore_004903b0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   13h
         call    GateDispatch6c_00494580
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h
@@ -233,12 +233,12 @@ __declspec(naked) void FiveBlockDispatchChain_00484b70(void) {
         nop
         nop
         call    GateDispatch6c_00494580
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   29h
         call    CopyJmp_0048ef90
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   1bh
@@ -259,7 +259,7 @@ __declspec(naked) void FiveBlockDispatchChain_00484b70(void) {
         nop
         nop
         call    DirtyToggleByGate_0048f350
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   1dh

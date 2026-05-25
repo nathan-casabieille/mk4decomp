@@ -118,10 +118,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void ScaledArrStore_004298c0(void);
 extern void DualFieldAddSubStore_00470340(void);
@@ -163,10 +163,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00426d30 (81b)
  *   Push g_eventQueueEnd on mstack; replace it with 0x4e2670>>2;
@@ -405,7 +405,7 @@ extern unsigned int g_data_00535e48;
 extern unsigned int g_data_00537f04;
 extern unsigned int g_data_0053a514;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueTotal;
@@ -550,7 +550,7 @@ extern unsigned int g_data_0053803c;
 extern unsigned int g_data_005380e0;
 extern unsigned int g_data_00538148;
 extern unsigned int g_player1NodeIdx;
-extern unsigned int g_data_0053815c;
+extern unsigned int g_player2NodeIdx;
 extern unsigned int g_data_00538160;
 extern unsigned int g_data_00538164;
 extern unsigned int g_data_0053a178;
@@ -908,12 +908,12 @@ __declspec(naked) void TripleEntry3Block_00498df0(void) {
         _emit   75h
         _emit   0eh
         call    Phase4FourHelperChain_00413760
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   22h
         call    Vec2SumMul10ChainCompute_0049bc60
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   14h
@@ -926,7 +926,7 @@ __declspec(naked) void TripleEntry3Block_00498df0(void) {
         ret
         _emit   90h
         call    Phase4FivePackedDispatch_0040fe40
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h
@@ -1063,7 +1063,7 @@ __declspec(naked) void MStackPush2VolumeCascade_00444e00(void) {
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
         mov     dword ptr [g_walkCallback], 0x64
         call    AudioVolumeRescale_004ab690
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -1080,7 +1080,7 @@ __declspec(naked) void MStackPush2VolumeCascade_00444e00(void) {
         jmp     PendingMatch_00444ef0
         mov     dword ptr [g_walkCallback], 0x0000015e
         call    AudioVolumeRescale_004ab690
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   62h
@@ -1089,7 +1089,7 @@ __declspec(naked) void MStackPush2VolumeCascade_00444e00(void) {
         _emit   47h
         mov     dword ptr [g_walkCallback], 0x00000200
         call    AudioVolumeRescale_004ab690
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   41h
@@ -1169,7 +1169,7 @@ __declspec(naked) void InstallSelfFullChainInit_00462470(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], esi
         call    PendingMatch_00432110
-        mov     dword ptr [g_pause_00541e6c], edi
+        mov     dword ptr [g_framePauseFlag], edi
         pop     edi
         pop     esi
         ret
@@ -1197,7 +1197,7 @@ void BootInitGuardedCallChain_004265d0(void) {
         call    Init6Struct_00404e20
         call    ScenegraphWalk_0041f7d0
         call    CallPauseClear3CallTriple_00428030
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -1222,12 +1222,12 @@ void BootInitGuardedCallChain_004265d0(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + 0], edx
         call    SlideAttackEventCluster_00498900
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   56h
         call    AndStorePushCallZero_0048a220
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   48h
@@ -1294,7 +1294,7 @@ __declspec(naked) void FiveBlockDispatchChain_00484b70(void) {
         nop
         nop
         call    ScaledAndAl7f_004902f0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0dh
@@ -1311,22 +1311,22 @@ __declspec(naked) void FiveBlockDispatchChain_00484b70(void) {
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
         call    BootFrameSetup_00408190
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   2fh
         call    GuardedChainCmpDualBitXor_004299a0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   21h
         call    ScaledXorStore_004903b0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   13h
         call    GateDispatch6c_00494580
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h
@@ -1344,12 +1344,12 @@ __declspec(naked) void FiveBlockDispatchChain_00484b70(void) {
         nop
         nop
         call    GateDispatch6c_00494580
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   29h
         call    CopyJmp_0048ef90
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   1bh
@@ -1370,7 +1370,7 @@ __declspec(naked) void FiveBlockDispatchChain_00484b70(void) {
         nop
         nop
         call    DirtyToggleByGate_0048f350
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   1dh
@@ -1445,7 +1445,7 @@ __declspec(naked) void InstallSelfScaledAdv3d7Cmp_0043a830(void) {
         mov     dword ptr [ecx + 8], offset InstallSelfScaledAdv3d7Cmp_0043a830
         mov     dword ptr [ecx + 0x84], eax
         mov     dword ptr [g_pendingNodeType], eax
-        mov     dword ptr [g_pause_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret
     }
@@ -1495,7 +1495,7 @@ __declspec(naked) void DualBlockInstallMul10Tail_0049a4e0(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], edx
         call    ScaledLoadJmp_00428d20
-        mov     dword ptr [g_pause_00541e6c], esi
+        mov     dword ptr [g_framePauseFlag], esi
         pop     esi
         pop     edi
         ret
@@ -1509,7 +1509,7 @@ __declspec(naked) void DualBlockInstallMul10Tail_0049a4e0(void) {
         _emit   90h
         _emit   90h
         call    PendingMatch_0049a670
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -1588,7 +1588,7 @@ __declspec(naked) void DualEntryStateMachine_0045a180(void) {
         _emit   74h
         _emit   73h
         call    ScaledStoreOrFlagXor_00428560
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -1611,7 +1611,7 @@ __declspec(naked) void DualEntryStateMachine_0045a180(void) {
         pop     esi
         ret
         call    ScaledStoreOrFlagXor_00428560
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -1656,7 +1656,7 @@ __declspec(naked) void DualEntryStateMachine_0045a180(void) {
         mov     dword ptr [g_walkCallback], 0x8000
         mov     dword ptr [g_eventQueueEnd], ecx
         call    MStackPushZeroCallPop_00407d00
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   1ch
@@ -1664,7 +1664,7 @@ __declspec(naked) void DualEntryStateMachine_0045a180(void) {
         mov     dword ptr [esi + 8], offset body_1a0
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], eax
-        mov     dword ptr [g_pause_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret
     }
@@ -1694,7 +1694,7 @@ void MStackPush3CallChainBit2_004431e0(void) {
         mov     ecx, dword ptr [eax*4 + 0]
         mov     dword ptr [g_walkCallback], ecx
         call    GuardedCallStoreSlotsCmp_00440990
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -1706,7 +1706,7 @@ void MStackPush3CallChainBit2_004431e0(void) {
         _emit   75h
         _emit   4dh
         call    GDispatch4_004089c0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -1718,7 +1718,7 @@ void MStackPush3CallChainBit2_004431e0(void) {
         _emit   75h
         _emit   32h
         call    ThreeCallChainCopy_004409e0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -1748,7 +1748,7 @@ void MStackPush3CallChainBit2_004431e0(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], edx
         call    CameraZoomFsmCluster_00440aa0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   4fh
@@ -1762,7 +1762,7 @@ void MStackPush3CallChainBit2_004431e0(void) {
         mov     dword ptr [g_eventQueueEnd], edx
         mov     dword ptr [g_state_004d57ac], eax
         call    PendingMatch_00443320
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   16h
@@ -1828,7 +1828,7 @@ __declspec(naked) void StateMachineDualModuloInstall_0043d620(void) {
         _emit   64h
         mov     dword ptr [g_walkCallback], 0xa
         call    GuardedSeq_00472820
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -1839,7 +1839,7 @@ __declspec(naked) void StateMachineDualModuloInstall_0043d620(void) {
         mov     dword ptr [g_walkCallback], 0x91
         mov     dword ptr [g_eventQueueCurrent], 0xffffffff
         call    Thunk_0049cc00
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   64h
@@ -1849,7 +1849,7 @@ __declspec(naked) void StateMachineDualModuloInstall_0043d620(void) {
         add     esp, 8
         push    0x004e5130
         call    ArgSarStoreJmp_004594f0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         pop     esi
         ret
@@ -1857,14 +1857,14 @@ __declspec(naked) void StateMachineDualModuloInstall_0043d620(void) {
         mov     dword ptr [esi + 8], offset StateMachineDualModuloInstall_0043d620
         mov     dword ptr [esi + 0x84], 2
         mov     dword ptr [g_pendingNodeType], eax
-        mov     dword ptr [g_pause_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret
         mov     eax, 1
         mov     dword ptr [esi + 8], offset StateMachineDualModuloInstall_0043d620
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], eax
-        mov     dword ptr [g_pause_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret
         _emit   90h
@@ -3141,7 +3141,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
 /* ------------------------------------------------------------------ */
 /* Scene-node post-init sequencer (691b game): pause-guarded chain of */
 /* 11 sub-init calls (transient setup + scaleInit + 4 sub-flag dispatches  */
-/* + matrix + walker), each gated by g_pause_00541e6c.                */
+/* + matrix + walker), each gated by g_framePauseFlag.                */
 /* ------------------------------------------------------------------ */
 /* extern void AllocNode(void); -- defined elsewhere with diff sig */
 
@@ -7807,7 +7807,7 @@ __declspec(naked) void PendingMatch_004694b0(void)
         mov      dword ptr [g_player1NodeIdx], ecx
         mov      ecx, dword ptr [g_data_0053a178]
         mov      dword ptr [g_currentNodeIdx], edx
-        mov      edx, dword ptr [g_data_0053815c]
+        mov      edx, dword ptr [g_player2NodeIdx]
         mov      dword ptr [g_data_0053a2d0], edi
         mov      dword ptr [g_data_00538038], eax
         mov      dword ptr [g_data_00538160], edi
@@ -7816,11 +7816,11 @@ __declspec(naked) void PendingMatch_004694b0(void)
         mov      dword ptr [g_walkCallback], 1
         jmp      L_9715
     L_96c1:
-        mov      eax, dword ptr [g_data_0053815c]
+        mov      eax, dword ptr [g_player2NodeIdx]
         mov      edx, dword ptr [g_data_00538038]
         mov      dword ptr [g_eventQueueTotal], eax
         mov      eax, dword ptr [g_baseSel_00542060]
-        mov      dword ptr [g_data_0053815c], ecx
+        mov      dword ptr [g_player2NodeIdx], ecx
         mov      ecx, dword ptr [g_data_0053a250]
         mov      dword ptr [g_currentNodeIdx], edx
         mov      edx, dword ptr [g_player1NodeIdx]
@@ -8426,7 +8426,7 @@ __declspec(naked) void PendingMatch_0048c570(void)
         test     eax, eax
         jne      L_cb75
         mov      ecx, dword ptr [g_walkCallback]
-        mov      edx, dword ptr [g_data_0053815c]
+        mov      edx, dword ptr [g_player2NodeIdx]
         mov      dword ptr [g_eventQueueNotMask], ecx
         mov      dword ptr [g_fightGroupHead], edx
         mov      dword ptr [g_eventQueueEnd], 0x12c

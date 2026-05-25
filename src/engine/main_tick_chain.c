@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void CjTableThresholdDispatch_00488f00(void);
 extern void MainTickChain_00481070(void);
@@ -129,7 +129,7 @@ extern void ByteWordTableTaggedDispatch_0048a050(void);
 extern void GameModeAdvanceCluster_00482000(void);
 
 /* @addr 0x00483c90 (334b game) - 4-block: thunk + install-self body + 2 small thunks. */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CjInstallSelfRouter_00470480(void);
 extern void DualBlockChainCallInstall_00483de0(void);
@@ -137,7 +137,7 @@ extern void DualBlockChainCallInstall_00483de0(void);
 __declspec(naked) void QuadBlockInstallChainThunks_00483c90(void) {
     __asm {
         call    CjTableThresholdDispatch_00488f00
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0dh
@@ -164,7 +164,7 @@ __declspec(naked) void QuadBlockInstallChainThunks_00483c90(void) {
         pop     ebx
         ret
         call    MainTickChain_00481070
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -173,7 +173,7 @@ __declspec(naked) void QuadBlockInstallChainThunks_00483c90(void) {
         _emit   00h
         _emit   00h
         call    PendingMatch_00416e20
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -182,7 +182,7 @@ __declspec(naked) void QuadBlockInstallChainThunks_00483c90(void) {
         _emit   00h
         _emit   00h
         call    CopyJmp_0048ef90
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -203,7 +203,7 @@ __declspec(naked) void QuadBlockInstallChainThunks_00483c90(void) {
         ret
         mov     dword ptr [g_walkCallback], ebx
         call    ByteWordTableTaggedDispatch_0048a050
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   57h
@@ -222,13 +222,13 @@ __declspec(naked) void QuadBlockInstallChainThunks_00483c90(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    GameModeAdvanceCluster_00482000
-        mov     dword ptr [g_pause_00541e6c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
         pop     esi
         pop     ebx
         ret
         _emit   90h
         call    MainTickChain_00481070
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0fh
@@ -238,7 +238,7 @@ __declspec(naked) void QuadBlockInstallChainThunks_00483c90(void) {
         _emit   90h
         _emit   90h
         call    MainTickChain_00481070
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0fh

@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00462470 (230b game) - install-self with full chain init.
  *   chain[+0x84]!=0 path: call StackPopDispatchTagged; pop+ret.
@@ -129,7 +129,7 @@ extern unsigned int g_data_00535e7c;
  *   call PendingMatch_00432110; g_pause=1; pop+ret.
  */
 extern unsigned int g_load_0052ab10;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_fightGroupHead;
 extern void PendingMatch_00432110(void);
 
@@ -183,7 +183,7 @@ __declspec(naked) void InstallSelfFullChainInit_00462470(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], esi
         call    PendingMatch_00432110
-        mov     dword ptr [g_pause_00541e6c], edi
+        mov     dword ptr [g_framePauseFlag], edi
         pop     edi
         pop     esi
         ret

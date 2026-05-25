@@ -34,7 +34,7 @@ extern unsigned int g_dualF_00542024;
 extern unsigned int g_dualB_00538038;     /* g_gtPlayerProbe2 */
 extern unsigned int g_dualB_0053803c;     /* g_gtPlayerProbe1 */
 extern unsigned int g_dualA_00538158;     /* g_player1NodeIdx */
-extern unsigned int g_dualA_0053815c;     /* g_player2NodeIdx */
+extern unsigned int g_player2NodeIdx;     /* g_player2NodeIdx */
 
 extern void SqDistThresholdRevertAdvance_00489d10(void);
 extern void CjChainResetThreshold_00490cc0(void);

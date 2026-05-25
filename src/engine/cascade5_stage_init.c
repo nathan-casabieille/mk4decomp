@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00491520 (205b game) - 5-stage cascade init.
  *   call ScaledMove48to58; if !pause: scaledInit=(arg0>>2); call GDispatch1; if !pause: call DirtyToggleByGate;
@@ -129,7 +129,7 @@ extern unsigned int g_data_00535e7c;
  *   call MStackFrameCdeclDouble_004903f0; if !pause: g_xformEntityIdx = [g_cj_00542054*4 + 4],
  *   store to [g_fightGroupHead*4 + 0x24], clear g_walkCallback; jmp StoreGuardedBitInstallJmp_004915f0. ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_fightGroupHead;
 extern void GDispatch1_00488da0(void);
@@ -140,7 +140,7 @@ extern void StoreGuardedBitInstallJmp_004915f0(void);
 __declspec(naked) void Cascade5StageInit_00491520(void) {
     __asm {
         call    ScaledMove48to58_00490720
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -152,7 +152,7 @@ __declspec(naked) void Cascade5StageInit_00491520(void) {
         sar     eax, 2
         mov     dword ptr [g_cj_00542054], eax
         call    GDispatch1_00488da0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -161,7 +161,7 @@ __declspec(naked) void Cascade5StageInit_00491520(void) {
         _emit   00h
         _emit   00h
         call    DirtyToggleByGate_0048f350
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -173,7 +173,7 @@ __declspec(naked) void Cascade5StageInit_00491520(void) {
         _emit   75h
         _emit   1ch
         call    GuardedDualConst2AndToggle_0048eba0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   73h
@@ -189,7 +189,7 @@ __declspec(naked) void Cascade5StageInit_00491520(void) {
         mov     eax, dword ptr [edx*4 + 0]
         mov     dword ptr [g_walkCallback], eax
         call    MStackFrameCdeclDouble_004903f0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   2eh

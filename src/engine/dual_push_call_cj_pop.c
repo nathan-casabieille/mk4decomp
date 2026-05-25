@@ -117,11 +117,11 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
-extern unsigned int g_x_0053815c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
+extern unsigned int g_player2NodeIdx;
 
 /*
  * @addr 0x0048c400 (116b game) - dual-push-call-cj-update-pop:
@@ -136,7 +136,7 @@ void DualPushCallCjPop_0048c400(void) {
     *(unsigned int *)(g_state_004d57ac * 4) = g_cj_0054205c;
     ScaledIncLoopState3_0048c210();
     if (g_framePauseFlag != 0) return;
-    g_cj_0054205c = g_x_0053815c;
+    g_cj_0054205c = g_player2NodeIdx;
     g_cj_0054205c = *(unsigned int *)(g_state_004d57ac * 4);
     g_state_004d57ac--;
     g_scaledInit_00542044 = *(unsigned int *)(g_state_004d57ac * 4);

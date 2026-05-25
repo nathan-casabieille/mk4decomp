@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004f3608;
 extern unsigned int g_data_00537ea4;
@@ -128,7 +128,7 @@ extern unsigned int g_data_00537f2c;
 extern unsigned int g_data_00538038;
 extern unsigned int g_data_0053803c;
 extern unsigned int g_player1NodeIdx;
-extern unsigned int g_data_0053815c;
+extern unsigned int g_player2NodeIdx;
 extern unsigned int g_data_0053a6dc;
 extern unsigned int g_data_0053a6e0;
 extern unsigned int g_framePauseFlag;
@@ -225,7 +225,7 @@ __declspec(naked) void TriDispatchSetupChain_00421500(void)
         nop
         nop
     L_tdsc_sub2:
-        mov     eax, dword ptr [g_data_0053815c]
+        mov     eax, dword ptr [g_player2NodeIdx]
         mov     ecx, dword ptr [g_data_0053803c]
         mov     edx, dword ptr [g_player1NodeIdx]
         mov     dword ptr [g_currentNodeIdx], eax
@@ -251,7 +251,7 @@ __declspec(naked) void TriDispatchSetupChain_00421500(void)
     L_tdsc_sub3:
         mov     eax, dword ptr [g_player1NodeIdx]
         mov     ecx, dword ptr [g_data_00538038]
-        mov     edx, dword ptr [g_data_0053815c]
+        mov     edx, dword ptr [g_player2NodeIdx]
         mov     dword ptr [g_currentNodeIdx], eax
         test    eax, eax
         mov     dword ptr [g_xformEntityIdx], ecx

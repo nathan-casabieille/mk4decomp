@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0044c430 (241b game) - 4-field copy from scaledInit chain to chain via cj alias.
  *   Set cj = baseSel[+0x4c]; call MStackPush2RunCountdown_004089e0; if pause? ret.
@@ -129,7 +129,7 @@ extern unsigned int g_data_00535e7c;
  *     (first iteration also OR's al with 4).
  *   Then call MStackBracket7_DispatchAndChain_004b8fa0; if !pause: g_walkCallback=3, g_acc_00542078=2, tail-jmp GuardedSeq_00473ef0; ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_acc_00542078;
 extern void BootStateTriple_00408d30(void);
@@ -141,7 +141,7 @@ __declspec(naked) void CjFieldCopyCascade_0044c430(void) {
         mov     ecx, dword ptr [eax*4 + 0x4c]
         mov     dword ptr [g_cj_0054205c], ecx
         call    MStackPush2RunCountdown_004089e0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -151,7 +151,7 @@ __declspec(naked) void CjFieldCopyCascade_0044c430(void) {
         _emit   00h
         mov     dword ptr [g_walkCallback], 2
         call    BootStateTriple_00408d30
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -183,7 +183,7 @@ __declspec(naked) void CjFieldCopyCascade_0044c430(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x38], eax
         call    MStackBracket7_DispatchAndChain_004b8fa0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   19h

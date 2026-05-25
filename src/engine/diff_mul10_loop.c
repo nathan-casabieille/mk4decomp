@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00432000 (264b game) - 4-field setup + 2-iter Mul10Tail loop.
  *   diff = g_walkCallback - [g_pendingNodeType*4]; -= [g_eventQueueTotal*4]; shl 16;
@@ -130,7 +130,7 @@ extern unsigned int g_data_00535e7c;
  *     Mul10Tail([g_xformEntityIdx*4], g_walkCallback), store to scaledInit++, ++g_xformEntityIdx, --g_data_0053a1ac.
  *   At end: scaledInit -= 3, g_xformEntityIdx -= 4 (rewind to start), pop esi, ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_x_0053a1ac;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_pendingNodeType;
@@ -156,7 +156,7 @@ __declspec(naked) void DiffMul10Loop_00432000(void) {
         add     eax, ecx
         mov     dword ptr [g_walkCallback], eax
         call    DivLongPushCall_004ab320
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h

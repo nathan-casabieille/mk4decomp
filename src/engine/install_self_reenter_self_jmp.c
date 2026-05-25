@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00483130 (144b game) - install-self with self-jmp on re-entry.
  *   Block A: call DualScaledInitClear; pause-check; call GuardedSeq_004297b0; pause-check;
@@ -129,7 +129,7 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern void DualScaledInitClear_00433c10(void);
 extern void FiveCallGuardSetTail_0046f6b0(void);
 extern void GuardedSeq_004297b0(void);
@@ -137,12 +137,12 @@ extern void GuardedSeq_004297b0(void);
 __declspec(naked) void InstallSelfReenterSelfJmp_00483130(void) {
     __asm {
         call    DualScaledInitClear_00433c10
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   37h
         call    GuardedSeq_004297b0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   29h
@@ -178,7 +178,7 @@ __declspec(naked) void InstallSelfReenterSelfJmp_00483130(void) {
         mov     dword ptr [eax + 0x08], 0x00483180
         mov     dword ptr [eax + 0x84], ecx
         mov     dword ptr [g_pendingNodeType], ecx
-        mov     dword ptr [g_pause_00541e6c], ecx
+        mov     dword ptr [g_framePauseFlag], ecx
         ret
     }
 }

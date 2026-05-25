@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00477300 (241b game) - mstack-push 3 + 2 calls + halve subtract.
  *   mstack-push g_acc_00542078; call RangeMulMod_004ab2a0; if pause? ret.
@@ -129,7 +129,7 @@ extern unsigned int g_data_00535e7c;
  *   g_acc_00542078 = g_walkCallback. mstack-pop; push (ecx, g_eventQueueWorkType) for cdecl call
  *     to Mul10Tail. After call: cdq; eax-=edx; eax>>=1; ecx-=eax. mstack-pop 2.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
@@ -143,7 +143,7 @@ void MStackPush3DualCallHalve_00477300(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + 0], ecx
         call    RangeMulMod_004ab2a0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -166,7 +166,7 @@ void MStackPush3DualCallHalve_00477300(void) {
         mov     dword ptr [g_eventQueueCurrent], edx
         mov     dword ptr [g_walkCallback], eax
         call    RangeMulMod_004ab2a0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   72h

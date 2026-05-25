@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00434350 (325b game) - install-self + cascade-call sequence + tail jmp.
  *   state!=0: tail-call MStackPushPtr1Jmp; pop+ret.
@@ -137,7 +137,7 @@ extern unsigned int g_data_00535e7c;
  *   Tail (+0x140 after 6-NOP pad): jmp InstallSelfChainSetB333v2_00437f00.
  */
 extern unsigned int g_data_0053a478;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeFlags;
 extern void AudioVolumeRescale_004ab690(void);
 extern void EsiInstallTwoCallCmpInstall_00438b10(void);
@@ -172,7 +172,7 @@ __declspec(naked) void InstallSelfCascadeSequence_00434350(void) {
         _emit   00h
         _emit   00h
         call    StoreCallPauseDirtyStoreJmp_004396c0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   79h
@@ -198,13 +198,13 @@ __declspec(naked) void InstallSelfCascadeSequence_00434350(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    EsiInstallTwoCallCmpInstall_00438b10
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
         _emit   90h
         mov     dword ptr [g_data_0053a478], 0
         call    InstallSelfCountdownCascade_00439fd0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   61h
@@ -225,7 +225,7 @@ __declspec(naked) void InstallSelfCascadeSequence_00434350(void) {
         jmp     InstallSelfThreeStateLeaPlus22_00437970
         mov     dword ptr [g_walkCallback], 0x1f4
         call    AudioVolumeRescale_004ab690
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   1dh

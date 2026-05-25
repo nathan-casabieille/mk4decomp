@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00460fa0 (127b game) - dual-entry state-gated.
  *   Block A: g_eventQueueCurrent=0xb; call ScaledChainAndF000DirtyToggle; if !pause and bitfield clear and
@@ -128,7 +128,7 @@ extern unsigned int g_data_00535e7c;
  *     g_eventQueueCurrent=0xb; g_walkCallback=g_eventQueueCurrent; jmp StateDispatchYield_00471190.
  *   Block B (+0x70): g_walkCallback=0x8; jmp StateDispatchYield_00471190.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_eventQueueCurrent;
 extern void ScaledChainAndF000DirtyToggle_0048e740(void);
 extern void StateDispatchYield_00471190(void);
@@ -137,7 +137,7 @@ __declspec(naked) void DualEntryStateGated_00460fa0(void) {
     __asm {
         mov     dword ptr [g_eventQueueCurrent], 0x0b
         call    ScaledChainAndF000DirtyToggle_0048e740
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   54h
@@ -151,7 +151,7 @@ __declspec(naked) void DualEntryStateGated_00460fa0(void) {
         _emit   0ah
         mov     dword ptr [g_eventQueueCurrent], 0x09
         call    MStackPush3CmpCall_0048eec0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   22h

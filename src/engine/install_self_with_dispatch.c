@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00428f70 (215b game) - install-self with countdown-and-dispatch.
  *   chain[+0x84]!=0 path: if bit-0 set call Thunk_004296e0; else call ScaledLoadJmp_24_00429790;
@@ -129,7 +129,7 @@ extern unsigned int g_data_00535e7c;
  *   Else (chain[+0x84]==0): install-self at +0x08=0x00428f70, scaledInit-chain push 0x00428f70|0x01000000;
  *     call Install3WayChainStateAdvance; pause=1. ret.
  */
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_fightGroupHead;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_eventQueueChild;
@@ -154,7 +154,7 @@ __declspec(naked) void InstallSelfWithDispatch_00428f70(void) {
         pop     esi
         ret
         call    ScaledLoadJmp_24_00429790
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
         _emit   85h
@@ -170,7 +170,7 @@ __declspec(naked) void InstallSelfWithDispatch_00428f70(void) {
         _emit   7ch
         _emit   15h
         call    GuardedChainCmpDualBitXor_004299a0
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   67h
@@ -192,7 +192,7 @@ __declspec(naked) void InstallSelfWithDispatch_00428f70(void) {
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    Install3WayChainStateAdvance_00429130
-        mov     dword ptr [g_pause_00541e6c], 1
+        mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
     }

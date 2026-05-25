@@ -117,10 +117,10 @@ extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
-extern unsigned int g_data_00535e70;
-extern unsigned int g_data_00535e74;
-extern unsigned int g_data_00535e78;
-extern unsigned int g_data_00535e7c;
+extern unsigned int g_fightAxisNegX_00535e70;
+extern unsigned int g_fightAxisNegY_00535e74;
+extern unsigned int g_fightAxisPosX_00535e78;
+extern unsigned int g_fightAxisPosY_00535e7c;
 
 /*
  * AudioInstall3StateSubXform_004a17d0 - 245b audio 3-state install-self.
@@ -135,7 +135,7 @@ extern unsigned int g_data_00535e7c;
  *   installSelf: install-self at entry; chain->state=2; g_pendingNodeType=1; pause=1; pop+ret.
  */
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_pause_00541e6c;
+extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_fightGroupHead;
@@ -181,7 +181,7 @@ __declspec(naked) void AudioInstall3StateSubXform_004a17d0(void)
         mov     dword ptr [esi + 8], offset AudioInstall3StateSubXform_004a17d0
         mov     dword ptr [esi + 0x84], 2
         mov     dword ptr [g_pendingNodeType], eax
-        mov     dword ptr [g_pause_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret
     L_a17_state0:
@@ -194,14 +194,14 @@ __declspec(naked) void AudioInstall3StateSubXform_004a17d0(void)
         mov     ecx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_currentNodeIdx], ecx
         call    MStackPushComplexCallPop_00406430
-        mov     eax, dword ptr [g_pause_00541e6c]
+        mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a17_s0_ret
         mov     eax, 1
         mov     dword ptr [esi + 8], offset AudioInstall3StateSubXform_004a17d0
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], 0x1c
-        mov     dword ptr [g_pause_00541e6c], eax
+        mov     dword ptr [g_framePauseFlag], eax
     L_a17_s0_ret:
         pop     esi
         ret
