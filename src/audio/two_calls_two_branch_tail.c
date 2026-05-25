@@ -23,7 +23,7 @@ extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_state_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
@@ -121,7 +121,7 @@ extern unsigned int g_fightAxisNegX_00535e70;
 extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
-extern unsigned int g_x_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueWorkType;
 
@@ -129,9 +129,9 @@ extern unsigned int g_eventQueueWorkType;
  *   g_walkCallback = 0x5b, call F; pause? ret;
  *   g_walkCallback = 0, call F; pause? ret;
  *   g_eventQueueWorkType = 0x26; g_pendingNodeType = 0x421620;
- *   if (g_x_00537f94 == 2): g_eventQueueNotMask = 1; call AllocNode; pause? ret;
+ *   if (g_audioBankSel_00537f94 == 2): g_eventQueueNotMask = 1; call AllocNode; pause? ret;
  *   g_pendingNodeType = 0x421660;
- *   if (g_x_00537f94 == 1): g_eventQueueChild = 1; jmp AllocNode.
+ *   if (g_audioBankSel_00537f94 == 1): g_eventQueueChild = 1; jmp AllocNode.
  *   else: ret.
  */
 void TwoCallsTwoBranchTail_004a3c50(void) {
@@ -142,7 +142,7 @@ void TwoCallsTwoBranchTail_004a3c50(void) {
     g_walkCallback = (void (*)(void))0;
     GatedWordPushCall_00489f90();
     if (g_framePauseFlag != 0) return;
-    v = g_x_00537f94;
+    v = g_audioBankSel_00537f94;
     g_eventQueueWorkType = 0x26;
     g_pendingNodeType = 0x421620;
     if (v == 2) {
@@ -150,7 +150,7 @@ void TwoCallsTwoBranchTail_004a3c50(void) {
         AllocNode();
         if (g_framePauseFlag != 0) return;
     }
-    v = g_x_00537f94;
+    v = g_audioBankSel_00537f94;
     g_pendingNodeType = 0x421660;
     if (v != 1) return;
     g_eventQueueChild = 1;

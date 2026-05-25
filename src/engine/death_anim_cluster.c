@@ -23,7 +23,7 @@ extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_state_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
@@ -129,7 +129,7 @@ extern unsigned int g_data_0052aafc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_data_00537f48;
 extern unsigned int g_data_00537f78;
-extern unsigned int g_data_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned int g_data_005380e0;
 extern unsigned int g_data_0053a318;
 extern unsigned int g_active_0053a408;
@@ -218,7 +218,7 @@ __declspec(naked) void DeathAnimCluster_0042eaf0(void)
         mov      dword ptr [eax + 0x68], esi
         mov      dword ptr [eax + 0x5c], 0xfffd0000
         mov      dword ptr [eax + 0x60], 0x4b333
-        mov      ecx, dword ptr [g_data_00537f94]
+        mov      ecx, dword ptr [g_audioBankSel_00537f94]
         mov      eax, OFFSET g_data_004ffe4c
         mov      edx, 0xf
         shr      eax, 2

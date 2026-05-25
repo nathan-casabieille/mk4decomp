@@ -23,7 +23,7 @@ extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_state_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
@@ -125,7 +125,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_data_004d2320;
 extern unsigned int g_data_004d2330;
 extern unsigned int g_data_004d2340;
-extern unsigned int g_data_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned int g_data_0053a430;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
@@ -223,7 +223,7 @@ __declspec(naked) void BossFight6StateSequencer_004a3ce0(void)
         mov      edi, 1
         add      esp, 8
         mov      dword ptr [eax*4 + 0x30], ecx
-        mov      eax, dword ptr [g_data_00537f94]
+        mov      eax, dword ptr [g_audioBankSel_00537f94]
         cmp      eax, edi
         mov      eax, OFFSET g_data_004d2330
         je       short L_3e82

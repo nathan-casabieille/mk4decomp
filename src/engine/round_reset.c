@@ -23,7 +23,7 @@ extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_state_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
@@ -130,7 +130,7 @@ extern unsigned int g_data_00537ea4;
 extern unsigned int g_data_00537ef4;
 extern unsigned int g_data_00537f04;
 extern unsigned int g_data_00537f30;
-extern unsigned int g_data_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned int g_data_00537f98;
 extern unsigned int g_data_005380d8;
 extern unsigned int g_data_0053a3e4;
@@ -241,7 +241,7 @@ __declspec(naked) void RoundReset_004223e0(void)
         mov      dword ptr [g_data_00537e94], ebx
         mov      dword ptr [g_data_0053a42c], ebx
         mov      dword ptr [g_data_00537ef4], ebx
-        mov      dword ptr [g_data_00537f94], ebx
+        mov      dword ptr [g_audioBankSel_00537f94], ebx
         mov      dword ptr [g_data_0052d724], ebx
         mov      dword ptr [g_data_00537f98], ebx
         mov      dword ptr [g_data_0053a730], ebx

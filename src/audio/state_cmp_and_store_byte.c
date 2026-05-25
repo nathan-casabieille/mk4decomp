@@ -16,11 +16,11 @@ extern u32 g_pendingNodeType;
 extern u32 g_eventQueueNotMask;
 
 /* @addr 0x004a98f0 (70b)
- *   load g_state_00537f94; cmp 1; if !=, load g_state_00537f48 → walk;
+ *   load g_audioBankSel_00537f94; cmp 1; if !=, load g_state_00537f48 → walk;
  *   else load walk; cmp 2; jne skip; load g_state_005380e0 → walk;
  *   if walk==7 set byte g_byte_0054372c=dl; if walk==6 set g_byte_00543724=dl.
  */
-extern unsigned int g_state_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned int g_state_00537f48_ll;
 extern unsigned int g_state_005380e0_ll;
 extern unsigned char g_byte_0054372c;
@@ -28,7 +28,7 @@ extern unsigned char g_byte_00543724;
 
 void StateCmpAndStoreByte_004a98f0(void) {
     __asm {
-        mov     ecx, dword ptr [g_state_00537f94]
+        mov     ecx, dword ptr [g_audioBankSel_00537f94]
         mov     edx, 1
         cmp     ecx, edx
         _emit   75h

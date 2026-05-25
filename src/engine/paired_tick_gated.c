@@ -23,7 +23,7 @@ extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_state_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
@@ -123,7 +123,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_x_0052aac4;
-extern unsigned int g_x_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned char g_x_00538148;
 extern unsigned int g_x_005433e8;
 extern unsigned int g_x_00543590;
@@ -139,7 +139,7 @@ void PairedTickGated_00467e60(void) {
     unsigned char a;
     unsigned int c;
     a = g_x_00543590;
-    c = g_x_00537f94;
+    c = g_audioBankSel_00537f94;
     if (a == 1 && c == 1) g_x_005433e8++;
     if (a == 2 && c == 2) g_x_005433e8++;
     Wrapper_0041fcf0();

@@ -23,7 +23,7 @@ extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_state_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
@@ -125,7 +125,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_data_004d56d8;
 extern unsigned int g_data_0052d724;
 extern unsigned int g_data_00537f2c;
-extern unsigned int g_data_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned int g_data_00538038;
 extern unsigned int g_data_0053803c;
 extern unsigned int g_data_00538160;
@@ -179,7 +179,7 @@ __declspec(naked) void MkIntroFsm_004218b0(void)
     L_1920:
         mov      eax, 2
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_00537f94], eax
+        mov      dword ptr [g_audioBankSel_00537f94], eax
     L_192f:
         call     StackPopDispatchTagged_0041f780
         pop      esi
@@ -274,7 +274,7 @@ __declspec(naked) void MkIntroFsm_004218b0(void)
         jne      L_1920
     L_1ae4:
         mov      dword ptr [g_walkCallback], ebx
-        mov      dword ptr [g_data_00537f94], ebx
+        mov      dword ptr [g_audioBankSel_00537f94], ebx
         call     StackPopDispatchTagged_0041f780
         pop      esi
         pop      ebx

@@ -23,7 +23,7 @@ extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_state_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
@@ -122,7 +122,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned int g_data_004ffe04;
 extern void Set200dCallPauseJmp_0047c5e0(void);
 extern void StageEventExitCluster_0047cd50(void);
@@ -131,7 +131,7 @@ extern void ScaledChainJmp_00429470(void);
 
 /* @addr 0x0047c990 (357b game) - install-self w/ MStack snapshot + packed_ptr.
  *   On phase != 0 tail-calls Set200dCallPauseJmp_0047c5e0. Then if
- *   g_data_00537f94 != 0 tail-calls StageEventExitCluster_0047cd50.
+ *   g_audioBankSel_00537f94 != 0 tail-calls StageEventExitCluster_0047cd50.
  *   Otherwise pushes g_eventQueueChild onto the mstack and sets
  *   g_walkCallback=0xb333, calls EsiEdiAliasDualMul10_004906b0. On
  *   no-error sets g_xformScratch2088=0x11999, calls PunchAnimCluster_00496d80. Pops
@@ -170,7 +170,7 @@ __declspec(naked) void InstallSelfMStackPackedFlow_0047c990(void) {
         pop     esi
         ret
     L_ism_check2:
-        mov     eax, dword ptr [g_data_00537f94]
+        mov     eax, dword ptr [g_audioBankSel_00537f94]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         je      short L_ism_push

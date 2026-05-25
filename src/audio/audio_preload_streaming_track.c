@@ -23,7 +23,7 @@ extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_state_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
@@ -140,7 +140,7 @@ extern unsigned int g_data_004f3a70;
 extern unsigned int g_data_004f3a98;
 extern unsigned int g_data_004f3aa8;
 extern unsigned int g_data_0050b118;
-extern unsigned int g_data_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned int g_data_005433b8;
 extern unsigned int g_data_005435a0;
 extern unsigned int g_data_005435b8;
@@ -189,7 +189,7 @@ __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
         call     TripleCallSetCopy_004a4880
         mov      eax, dword ptr [g_data_005433b8]
         cmp      eax, 4
-        mov      eax, dword ptr [g_data_00537f94]
+        mov      eax, dword ptr [g_audioBankSel_00537f94]
         jne      short L_6f3d
         mov      edx, dword ptr [g_data_00543830]
         cmp      eax, 1

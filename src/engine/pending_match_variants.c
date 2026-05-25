@@ -23,7 +23,7 @@ extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_state_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 extern unsigned int g_x_0052aac4;
@@ -544,7 +544,7 @@ extern unsigned int g_data_00537ef0;
 extern unsigned int g_data_00537f2c;
 extern unsigned int g_data_00537f30;
 extern unsigned int g_data_00537f48;
-extern unsigned int g_data_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned int g_data_00538038;
 extern unsigned int g_data_0053803c;
 extern unsigned int g_data_005380e0;
@@ -5969,7 +5969,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         ret
     L_7f81:
         mov      al, byte ptr [g_data_00543590]
-        mov      ecx, dword ptr [g_data_00537f94]
+        mov      ecx, dword ptr [g_audioBankSel_00537f94]
         cmp      al, 1
         jne      L_7f9b
         cmp      ecx, 1
@@ -6617,7 +6617,7 @@ __declspec(naked) void PendingMatch_0043bdd0(void)
 {
     __asm {
         mov      al, byte ptr [g_data_00543590]
-        mov      ecx, dword ptr [g_data_00537f94]
+        mov      ecx, dword ptr [g_audioBankSel_00537f94]
         cmp      al, 1
         jne      L_bdea
         cmp      ecx, 1
@@ -6658,7 +6658,7 @@ __declspec(naked) void PendingMatch_0043bdd0(void)
     L_be60:
         mov      eax, dword ptr [g_data_0053803c]
         mov      dword ptr [g_data_0053a464], eax
-        mov      eax, dword ptr [g_data_00537f94]
+        mov      eax, dword ptr [g_audioBankSel_00537f94]
         cmp      eax, 1
         je       L_be80
         mov      ecx, dword ptr [g_data_00538038]

@@ -23,7 +23,7 @@ extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_state_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
@@ -123,7 +123,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0048c510 (83b)
- *   eax = g_state_00537f94 → g_walkCallback;
+ *   eax = g_audioBankSel_00537f94 → g_walkCallback;
  *   if eax: jmp clear_and_ret;
  *   call CopyJmp_0048ef90; if pause: ret;
  *   cl = byte [g_xformDirtyFlags]; eax = 1;
@@ -135,7 +135,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 void GuardedBitMaskFlagOrClear_0048c510(void) {
     __asm {
-        mov     eax, dword ptr [g_state_00537f94]
+        mov     eax, dword ptr [g_audioBankSel_00537f94]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         _emit   75h

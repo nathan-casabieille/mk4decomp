@@ -23,7 +23,7 @@ extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_state_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
@@ -136,7 +136,7 @@ extern void PunchAnimCluster_00496d80(void);
 extern unsigned int g_data_004ffe28;
 
 extern unsigned int g_data_0052d74c;
-extern unsigned int g_data_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned int g_data_00538068;
 extern unsigned int g_player1NodeIdx;
 extern unsigned int g_framePauseFlag;
@@ -165,7 +165,7 @@ __declspec(naked) void StageEventComplexFsm_0047c680(void)
         mov      ebx, 0x18000
         mov      ebp, 0x10000
     L_c6b0:
-        mov      eax, dword ptr [g_data_00537f94]
+        mov      eax, dword ptr [g_audioBankSel_00537f94]
         cmp      eax, edi
         mov      dword ptr [g_walkCallback], eax
         jne      L_c82f

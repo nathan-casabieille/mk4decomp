@@ -23,7 +23,7 @@ extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_state_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
@@ -128,7 +128,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     g_walkCallback=mapped++. Fall through to common tail.
  *   state >= 2: skip to common tail.
  *   Common tail: call Wrapper_0041fcf0; tail-call DualBlockChainInitBody_0043cc10.
- *   state 0: dual-equal byte tests (g_x_00543590 vs g_state_00537f94 for 1 and 2)
+ *   state 0: dual-equal byte tests (g_x_00543590 vs g_audioBankSel_00537f94 for 1 and 2)
  *     increment g_x_005433e8 on each match. g_walkCallback=0xac. 4-call chain
  *     ending with install-self at [esi+8]=0x00467d40, chain[+0x84]=1,
  *     g_pendingNodeType=8, pause=1; ret.
@@ -189,7 +189,7 @@ __declspec(naked) void InstallSelfStateCounter_00467d40(void) {
         pop     esi
         ret
         mov     al, byte ptr [g_x_00543590]
-        mov     ecx, dword ptr [g_state_00537f94]
+        mov     ecx, dword ptr [g_audioBankSel_00537f94]
         cmp     al, 1
         _emit   75h
         _emit   0bh

@@ -23,8 +23,8 @@ extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_state_00537f94;
-extern unsigned int g_x_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -141,7 +141,7 @@ void InstallSelfTri_00484a90(void) {
     unsigned int v = *(unsigned int *)(base + 0x84);
     *(unsigned int *)(base + 0x84) = 0;
     if (v != 0) {
-        unsigned int wt = g_x_00537f94;
+        unsigned int wt = g_audioBankSel_00537f94;
         g_walkCallback = (void (*)(void))wt;
         if (wt != 0) {
             CallPauseDirtyMStackPush484b40_00484b00();

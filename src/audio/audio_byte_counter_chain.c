@@ -23,7 +23,7 @@ extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_state_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
@@ -125,7 +125,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 /*
  * AudioByteCounterChain_004a9820 - 204b audio counter+state machine.
  *   chain = g_baseSel_00542060<<2; saved = chain->state; chain->state = 0.
- *   If was 0: dispatch on g_state_00537f94 == 1/2 to increment indexed slots in g_table_00543848;
+ *   If was 0: dispatch on g_audioBankSel_00537f94 == 1/2 to increment indexed slots in g_table_00543848;
  *     call BootInitGuardedCallChain; if paused: ret.
  *     Call FiveTableWalkInit; if paused: ret.
  *     Inc g_byte_00543840; g_data_0054355c=1; g_data_00543838=1;
@@ -160,7 +160,7 @@ __declspec(naked) void AudioByteCounterChain_004a9820(void)
         mov     dword ptr [eax*4 + 0x84], ebx
         cmp     ecx, ebx
         jne     short L_skipInit
-        mov     eax, dword ptr [g_state_00537f94]
+        mov     eax, dword ptr [g_audioBankSel_00537f94]
         cmp     eax, 1
         jne     short L_check2
         mov     ecx, dword ptr [g_state_00537f48]

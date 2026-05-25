@@ -23,7 +23,7 @@ extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_state_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
@@ -123,7 +123,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned char g_byte_0054389c;
 extern unsigned int g_x_00537f48;
-extern unsigned int g_x_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned int g_x_005380e0;
 extern unsigned int g_player1NodeIdx;
 extern unsigned int g_fightGroupHead;
@@ -153,7 +153,7 @@ void State6Latch_0048e240(void) {
     chain_34 = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x34);
     g_eventQueueCurrent = chain_34;
     if (chain_34 == 6) return;
-    if (g_x_00537f94 == 0) {
+    if (g_audioBankSel_00537f94 == 0) {
         g_walkCallback = 5;
         CmpCondIdxArrLookup_0048e450();
         if (g_framePauseFlag != 0) return;

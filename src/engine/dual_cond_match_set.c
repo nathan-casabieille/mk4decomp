@@ -23,7 +23,7 @@ extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_state_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
@@ -122,7 +122,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-/* @addr 0x00488dc0 (208b game) - g_x_0052aac4 == 2 && g_state_00537f94 != 0:
+/* @addr 0x00488dc0 (208b game) - g_x_0052aac4 == 2 && g_audioBankSel_00537f94 != 0:
  *   call SwapOrPassSet; if !pause: cmp g_fightGroupHead vs g_pendingNodeType; if eq jmp CmpEax1OrSetDirty.
  *   else set g_walkCallback=0x1000; call SetJmp_0049cb90; if !pause: set bit-2 of state;
  *   if scaledInit nonzero: load chain[*4+8] = 0x00421f40 store; if !=0x00421f40: clear bit-0;
@@ -147,7 +147,7 @@ __declspec(naked) void DualCondMatchSet_00488dc0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_state_00537f94]
+        mov     eax, dword ptr [g_audioBankSel_00537f94]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         _emit   0fh

@@ -23,7 +23,7 @@ extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_state_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
@@ -125,14 +125,14 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 /*
  * AudioBank2StatePickerWalk_004a9270 - 324b audio 2-bank state picker and roundrobin walk.
  *   g_walkCallback=0; CopyGlobal_004ac1f0; func_004a2080.
- *   eax = g_state_00537f94; edx = g_data_0054359c; edi = g_x_005433c8.
+ *   eax = g_audioBankSel_00537f94; edx = g_data_0054359c; edi = g_x_005433c8.
  *   If eax == 1: chain low table [edi*24 + 0x0054361a/19] += 1.
  *   Else: chain high table [edx*24 + 0x005435a2/a1] += 1.
  *   ++g_data_00535de4. esi=1. ecx=g_x_004f3ae4; walk g_byte_005435a2[i*24] for i in [0,ecx);
  *     if any !=0: keep esi=1; else esi=0. If esi: g_data_005433c0=2; tail to cleanup.
  *   Else: ebp=g_x_004f3ae8; esi=1. Walk g_byte_0054361a[i*24] for i in [0,ebp). If esi: g_data_005433c0=1;
  *     cleanup: zero g_data_0054359c, g_x_005433c8; call PendingMatch_004a93c0; pop+ret.
- *   Else (both banks have something nonzero): eax = g_state_00537f94 again.
+ *   Else (both banks have something nonzero): eax = g_audioBankSel_00537f94 again.
  *     If eax==2: roundrobin edx through ecx slots looking for g_byte_005435a2[edx*24]!=0; store to g_data_0054359c.
  *     If eax==1: roundrobin edi through ebp slots looking for g_byte_0054361a[edi*24]!=0; store to g_x_005433c8.
  *     call PendingMatch_004a93c0; pop+ret.
@@ -161,7 +161,7 @@ __declspec(naked) void AudioBank2StatePickerWalk_004a9270(void)
         mov     dword ptr [g_walkCallback], 0
         call    CopyGlobal_004ac1f0
         call    func_004a2080
-        mov     eax, dword ptr [g_state_00537f94]
+        mov     eax, dword ptr [g_audioBankSel_00537f94]
         mov     edx, dword ptr [g_data_0054359c]
         mov     edi, dword ptr [g_x_005433c8]
         cmp     eax, 1
@@ -230,7 +230,7 @@ __declspec(naked) void AudioBank2StatePickerWalk_004a9270(void)
         pop     ebp
         ret
     L_a92_walkPicks:
-        mov     eax, dword ptr [g_state_00537f94]
+        mov     eax, dword ptr [g_audioBankSel_00537f94]
         cmp     eax, 2
         jne     short L_a92_checkLowPick
     L_a92_rrHigh:

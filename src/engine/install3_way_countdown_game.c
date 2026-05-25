@@ -23,7 +23,7 @@ extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_state_00537f94;
+extern unsigned int g_audioBankSel_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
@@ -168,7 +168,7 @@ __declspec(naked) void Install3WayCountdownGame_00421b00(void) {
         call    StackPopDispatchTagged_0041f780
         pop     esi
         ret
-        mov     eax, dword ptr [g_state_00537f94]
+        mov     eax, dword ptr [g_audioBankSel_00537f94]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         _emit   74h
