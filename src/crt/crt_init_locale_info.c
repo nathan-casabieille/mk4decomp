@@ -167,7 +167,7 @@ extern unsigned int g_comptr_0058c7ac;
 extern unsigned int g_renderer2_obj;
 extern unsigned int g_990_iface;
 extern int g_renderer2_present_rc;
-extern unsigned int g_data_0058c7dc_2;
+extern unsigned int g_dispatchTab60_0058c7dc;
 extern unsigned int g_dd3SurfaceCreate_0058c858;
 extern unsigned int g_dd3SurfaceSlot_0058c85c;
 extern unsigned int g_dsmi_b70_main;

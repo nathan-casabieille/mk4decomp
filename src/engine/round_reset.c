@@ -141,29 +141,29 @@ extern unsigned int g_data_00541ef4;
 extern unsigned int g_data_00541ef8;
 extern unsigned int g_data_00541efc;
 extern unsigned int g_data_00541f00;
-extern unsigned int g_data_00541f04;
-extern unsigned int g_data_00541f08;
-extern unsigned int g_data_00541f0c;
-extern unsigned int g_data_00541f10;
-extern unsigned int g_data_00541f14;
-extern unsigned int g_data_00541f18;
-extern unsigned int g_data_00541f1c;
-extern unsigned int g_data_00541f20;
-extern unsigned int g_data_00541f24;
-extern unsigned int g_data_00541f28;
-extern unsigned int g_data_00541f2c;
-extern unsigned int g_data_00541f30;
-extern unsigned int g_data_00541f34;
-extern unsigned int g_data_00541f38;
-extern unsigned int g_data_00541f3c;
-extern unsigned int g_data_00541f40;
-extern unsigned int g_data_00541f44;
-extern unsigned int g_data_00541f48;
-extern unsigned int g_data_00541f4c;
-extern unsigned int g_data_00541f50;
-extern unsigned int g_data_00541f54;
-extern unsigned int g_data_00541f58;
-extern unsigned int g_data_00541f5c;
+extern unsigned int g_clusterArr541f60_10;
+extern unsigned int g_clusterArr541f60_11;
+extern unsigned int g_clusterArr541f60_12;
+extern unsigned int g_clusterArr541f60_13;
+extern unsigned int g_clusterArr541f60_14;
+extern unsigned int g_clusterArr541f60_15;
+extern unsigned int g_clusterArr541f60_16;
+extern unsigned int g_clusterArr541f60_17;
+extern unsigned int g_clusterArr541f60_18;
+extern unsigned int g_clusterArr541f60_19;
+extern unsigned int g_clusterArr541f60_20;
+extern unsigned int g_clusterArr541f60_21;
+extern unsigned int g_clusterArr541f60_22;
+extern unsigned int g_clusterArr541f60_23;
+extern unsigned int g_clusterArr541f60_24;
+extern unsigned int g_clusterArr541f60_25;
+extern unsigned int g_clusterArr541f60_26;
+extern unsigned int g_clusterArr541f60_27;
+extern unsigned int g_clusterArr541f60_28;
+extern unsigned int g_clusterArr541f60_29;
+extern unsigned int g_clusterArr541f60_30;
+extern unsigned int g_clusterArr541f60_31;
+extern unsigned int g_clusterArr541f60_32;
 extern unsigned int g_clusterArr541f60_0;
 extern unsigned int g_clusterArr541f60_1;
 extern unsigned int g_clusterArr541f60_2;
@@ -241,30 +241,30 @@ __declspec(naked) void RoundReset_004223e0(void)
         mov      dword ptr [g_data_00541ef0], ebx
         mov      dword ptr [g_data_00541efc], ebx
         mov      dword ptr [g_data_00541ef8], ebx
-        mov      dword ptr [g_data_00541f04], ebx
+        mov      dword ptr [g_clusterArr541f60_10], ebx
         mov      dword ptr [g_data_00541f00], ebx
-        mov      dword ptr [g_data_00541f0c], ebx
-        mov      dword ptr [g_data_00541f08], ebx
-        mov      dword ptr [g_data_00541f14], ebx
-        mov      dword ptr [g_data_00541f10], ebx
-        mov      dword ptr [g_data_00541f1c], ebx
-        mov      dword ptr [g_data_00541f18], ebx
-        mov      dword ptr [g_data_00541f24], ebx
-        mov      dword ptr [g_data_00541f20], ebx
-        mov      dword ptr [g_data_00541f2c], ebx
-        mov      dword ptr [g_data_00541f28], ebx
-        mov      dword ptr [g_data_00541f34], ebx
-        mov      dword ptr [g_data_00541f30], ebx
-        mov      dword ptr [g_data_00541f3c], ebx
-        mov      dword ptr [g_data_00541f38], ebx
-        mov      dword ptr [g_data_00541f44], ebx
-        mov      dword ptr [g_data_00541f40], ebx
-        mov      dword ptr [g_data_00541f4c], ebx
-        mov      dword ptr [g_data_00541f48], ebx
-        mov      dword ptr [g_data_00541f54], ebx
-        mov      dword ptr [g_data_00541f50], ebx
-        mov      dword ptr [g_data_00541f5c], ebx
-        mov      dword ptr [g_data_00541f58], ebx
+        mov      dword ptr [g_clusterArr541f60_12], ebx
+        mov      dword ptr [g_clusterArr541f60_11], ebx
+        mov      dword ptr [g_clusterArr541f60_14], ebx
+        mov      dword ptr [g_clusterArr541f60_13], ebx
+        mov      dword ptr [g_clusterArr541f60_16], ebx
+        mov      dword ptr [g_clusterArr541f60_15], ebx
+        mov      dword ptr [g_clusterArr541f60_18], ebx
+        mov      dword ptr [g_clusterArr541f60_17], ebx
+        mov      dword ptr [g_clusterArr541f60_20], ebx
+        mov      dword ptr [g_clusterArr541f60_19], ebx
+        mov      dword ptr [g_clusterArr541f60_22], ebx
+        mov      dword ptr [g_clusterArr541f60_21], ebx
+        mov      dword ptr [g_clusterArr541f60_24], ebx
+        mov      dword ptr [g_clusterArr541f60_23], ebx
+        mov      dword ptr [g_clusterArr541f60_26], ebx
+        mov      dword ptr [g_clusterArr541f60_25], ebx
+        mov      dword ptr [g_clusterArr541f60_28], ebx
+        mov      dword ptr [g_clusterArr541f60_27], ebx
+        mov      dword ptr [g_clusterArr541f60_30], ebx
+        mov      dword ptr [g_clusterArr541f60_29], ebx
+        mov      dword ptr [g_clusterArr541f60_32], ebx
+        mov      dword ptr [g_clusterArr541f60_31], ebx
         mov      dword ptr [g_clusterArr541f60_1], ebx
         mov      dword ptr [g_clusterArr541f60_0], ebx
         mov      dword ptr [g_clusterArr541f60_3], ebx

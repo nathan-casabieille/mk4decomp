@@ -143,8 +143,8 @@ extern unsigned int g_chain_disp_64_40a690_fwd;
 extern void GuardedClampStoreJmp_00428bd0(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 
-extern unsigned int g_x_0053a51c_v2;
-#define g_counter_0053a51c g_x_0053a51c_v2
+extern unsigned int g_counter_0053a51c;
+#define g_counter_0053a51c g_counter_0053a51c
 extern void SixCallSeqPushImm_004a1d80(void);
 extern unsigned int g_phaseTimer_00537e94;
 #define g_phaseTimer_00537e94 g_phaseTimer_00537e94
