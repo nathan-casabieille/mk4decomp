@@ -132,6 +132,12 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_x_00538158;
 extern void PendingMatch_0041d770(void);
 
+/*
+ * NON-COAXABLE: MSVC /O2 assigns g_x_0053815c to eax (b8) and g_x_00538158
+ * to ecx (b9), regardless of declaration order. Orig has them reversed:
+ * eax=0x538158 (a3 store to g_currentNodeIdx), ecx=0x53815c (89 0d store
+ * to g_xformEntityIdx). Register-to-symbol binding is not coaxable from C.
+ */
 __declspec(naked) void CjDispatchCommit_004818e0(void) {
     __asm {
         mov     eax, dword ptr [g_cj_0054205c]
