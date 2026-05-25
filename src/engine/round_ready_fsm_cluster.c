@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -151,10 +151,10 @@ extern unsigned int g_data_0053a3c0;
 extern unsigned int g_data_0053a478;
 
 extern unsigned int g_data_004d57ac;
-extern unsigned int g_data_00535ddc;
+extern unsigned int g_table_00535ddc;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_xformDirtyFlags;
 extern void ScaledMove48to58_00490720(void);
@@ -198,7 +198,7 @@ __declspec(naked) void HitReactionStateCluster_004335f0(void)
         nop
         /* === Helper 2 (0x433640): hit-reaction FSM === */
     L_3640:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         push     edi
         xor      edi, edi
@@ -218,7 +218,7 @@ __declspec(naked) void HitReactionStateCluster_004335f0(void)
         test     byte ptr [g_xformDirtyFlags], 1
         jne      short L_36f2
     L_3695:
-        mov      eax, dword ptr [g_data_00535ddc]
+        mov      eax, dword ptr [g_table_00535ddc]
         cmp      eax, 0x10000
         mov      dword ptr [g_walkCallback], eax
         jge      short L_36ae
@@ -263,7 +263,7 @@ __declspec(naked) void HitReactionStateCluster_004335f0(void)
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_eventQueueChild], eax
         mov      dword ptr [esi + 8], OFFSET L_3640
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [ecx*4 + 0x84], 2
         mov      eax, dword ptr [esi + 4]
         mov      dword ptr [g_currentNodeIdx], eax
@@ -272,7 +272,7 @@ __declspec(naked) void HitReactionStateCluster_004335f0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     CmpJmpConstStoreJmp_004389e0
         mov      dword ptr [g_framePauseFlag], 1
@@ -280,7 +280,7 @@ __declspec(naked) void HitReactionStateCluster_004335f0(void)
         pop      esi
         ret
     L_377d:
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_walkCallback], edi
         push     OFFSET g_data_004e49fc
         mov      dword ptr [ecx*4 + 0x74], edi
@@ -317,7 +317,7 @@ __declspec(naked) void HitReactionStateCluster_004335f0(void)
         cmp      dword ptr [g_data_0053a478], edi
         jne      short L_3897
         mov      dword ptr [esi + 8], OFFSET L_3640
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET L_3640
         mov      dword ptr [edx*4 + 0x84], 1
         mov      eax, dword ptr [esi + 4]
@@ -328,7 +328,7 @@ __declspec(naked) void HitReactionStateCluster_004335f0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     ThreeStageGateCascade_00438340
         mov      dword ptr [g_framePauseFlag], 1

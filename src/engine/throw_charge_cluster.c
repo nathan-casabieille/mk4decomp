@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -129,7 +129,7 @@ extern unsigned int g_currentNodeIdx;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_eventQueueIdx;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_xformDirtyFlags;
 extern void AudioMixerStep_004ab700(void);
@@ -249,7 +249,7 @@ __declspec(naked) void ThrowChargeCluster_0044e750(void)
         nop
         nop
     L_e8f0:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     ebx
         push     ebp
         push     esi
@@ -334,7 +334,7 @@ __declspec(naked) void ThrowChargeCluster_0044e750(void)
         nop
         nop
     L_ea20:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -362,10 +362,10 @@ __declspec(naked) void ThrowChargeCluster_0044e750(void)
         pop      esi
         ret      
     L_ea94:
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [ecx*4 + 0x64], edx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_eventQueueIdx]
         mov      dword ptr [eax*4 + 0x68], ecx
         call     ThrowFsmCluster_0044eaf0

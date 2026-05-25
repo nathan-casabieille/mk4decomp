@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -125,7 +125,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_eventQueueEnd;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueNotMask;
 extern void CjInstallSelfRouter_00470480(void);
 extern void EsiInstallClampAddCall_0048fe40(void);
@@ -137,7 +137,7 @@ __declspec(naked) void TwoEntryPhasePair_004952e0(void)
 {
     __asm
     {
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         xor     edx, edx
         shl     eax, 2
         mov     ecx, dword ptr [eax + 0x84]
@@ -147,7 +147,7 @@ __declspec(naked) void TwoEntryPhasePair_004952e0(void)
         jmp     FiveCallGuardSetTail_0046f6b0
     L_tepp_install1:
         mov     dword ptr [eax + 8], offset TwoEntryPhasePair_004952e0
-        mov     ecx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_baseSel_00542060]
         push    edi
         mov     edi, offset TwoEntryPhasePair_004952e0
         mov     dword ptr [ecx*4 + 0x84], 1
@@ -159,14 +159,14 @@ __declspec(naked) void TwoEntryPhasePair_004952e0(void)
         inc     ecx
         mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], edx
         call    ScaledLoadJmp_00428d20
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         ret
     L_tepp_entry2:
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         push    esi
         push    edi
         xor     edi, edi
@@ -190,7 +190,7 @@ __declspec(naked) void TwoEntryPhasePair_004952e0(void)
         mov     dword ptr [g_eventQueueEnd], ecx
         mov     dword ptr [g_eventQueueNotMask], edi
         mov     dword ptr [esi + 8], offset L_tepp_entry2
-        mov     edx, dword ptr [g_data_00542060]
+        mov     edx, dword ptr [g_baseSel_00542060]
         mov     ecx, offset L_tepp_entry2
         mov     dword ptr [edx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
@@ -201,7 +201,7 @@ __declspec(naked) void TwoEntryPhasePair_004952e0(void)
         inc     eax
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
-        mov     edx, dword ptr [g_data_00542060]
+        mov     edx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [edx*4 + 0x84], edi
         call    EsiInstallClampAddCall_0048fe40
         mov     dword ptr [g_framePauseFlag], 1
@@ -210,7 +210,7 @@ __declspec(naked) void TwoEntryPhasePair_004952e0(void)
         ret
     L_tepp_phase0:
         mov     dword ptr [esi + 8], offset L_tepp_entry2
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         mov     ecx, offset L_tepp_entry2
         mov     dword ptr [eax*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
@@ -221,7 +221,7 @@ __declspec(naked) void TwoEntryPhasePair_004952e0(void)
         inc     eax
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
-        mov     edx, dword ptr [g_data_00542060]
+        mov     edx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [edx*4 + 0x84], edi
         call    ScaledLoadJmp_00428d20
         mov     dword ptr [g_framePauseFlag], 1

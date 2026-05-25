@@ -13,7 +13,7 @@ extern unsigned int g_data_0052d738;
 extern unsigned int g_data_0052d74c;
 extern unsigned int g_data_00535d60;
 extern unsigned int g_data_00535d68;
-extern unsigned int g_data_00535ddc;
+extern unsigned int g_table_00535ddc;
 extern unsigned int g_data_00535de8;
 extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
@@ -35,7 +35,7 @@ extern unsigned int g_xformEntityIdx;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_data_00542078;
+extern unsigned int g_acc_00542078;
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_currentNodeFlags;
@@ -79,20 +79,20 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         push     eax
         mov      dword ptr [g_data_0052ab08], edi
         mov      dword ptr [g_eventQueueWorkType], eax
-        mov      dword ptr [g_data_00542078], ecx
+        mov      dword ptr [g_acc_00542078], ecx
         mov      dword ptr [g_eventQueueNotMask], eax
         mov      dword ptr [g_eventQueueChild], ecx
         call     Mul10Tail_00404af0
         add      esp, 8
         mov      dword ptr [g_eventQueueWorkType], eax
-        mov      eax, dword ptr [g_data_00542078]
+        mov      eax, dword ptr [g_acc_00542078]
         push     eax
         push     eax
         call     Mul10Tail_00404af0
         mov      ecx, dword ptr [g_eventQueueWorkType]
         add      esp, 8
         add      ecx, eax
-        mov      dword ptr [g_data_00542078], eax
+        mov      dword ptr [g_acc_00542078], eax
         mov      dword ptr [g_eventQueueWorkType], ecx
         call     FpuSqrtMul_004ab350
         mov      eax, dword ptr [g_framePauseFlag]
@@ -100,7 +100,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         jne      L_983c
         mov      edx, dword ptr [g_walkCallback]
         test     edx, edx
-        mov      dword ptr [g_data_00535ddc], edx
+        mov      dword ptr [g_table_00535ddc], edx
         je       L_9569
         mov      eax, dword ptr [g_currentNodeIdx]
         mov      ecx, dword ptr [eax*4 + 0x40]
@@ -181,18 +181,18 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [g_eventQueueCurrent], esi
         mov      dword ptr [g_eventQueueWorkType], eax
-        mov      dword ptr [g_data_00542078], ecx
+        mov      dword ptr [g_acc_00542078], ecx
         call     Mul10Tail_00404af0
         add      esp, 8
         mov      dword ptr [g_eventQueueWorkType], eax
-        mov      eax, dword ptr [g_data_00542078]
+        mov      eax, dword ptr [g_acc_00542078]
         push     eax
         push     eax
         call     Mul10Tail_00404af0
         mov      ecx, dword ptr [g_eventQueueWorkType]
         mov      edi, dword ptr [g_walkCallback]
         mov      esi, dword ptr [g_eventQueueChild]
-        mov      dword ptr [g_data_00542078], eax
+        mov      dword ptr [g_acc_00542078], eax
         add      ecx, eax
         mov      eax, dword ptr [g_eventQueueNotMask]
         add      esp, 8
@@ -231,7 +231,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         sub      ecx, esi
         sub      eax, edx
         mov      dword ptr [g_eventQueueWorkType], edx
-        mov      dword ptr [g_data_00542078], esi
+        mov      dword ptr [g_acc_00542078], esi
         mov      dword ptr [g_eventQueueCurrent], ecx
         mov      dword ptr [g_data_0053a7b4], eax
         mov      dword ptr [g_data_00541d68], ecx
@@ -259,7 +259,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      ecx, dword ptr [eax*4 + 0x54]
         mov      dword ptr [g_eventQueueWorkType], ecx
         mov      edx, dword ptr [eax*4 + 0x5c]
-        mov      dword ptr [g_data_00542078], edx
+        mov      dword ptr [g_acc_00542078], edx
         mov      eax, dword ptr [esi*4 + 0x54]
         mov      dword ptr [g_eventQueueNotMask], eax
         mov      esi, dword ptr [esi*4 + 0x5c]
@@ -311,7 +311,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
     L_968e:
         add      edx, esi
         add      eax, ecx
-        mov      dword ptr [g_data_00542078], edx
+        mov      dword ptr [g_acc_00542078], edx
         mov      dword ptr [g_eventQueueCurrent], eax
         jns      L_96a6
         neg      eax
@@ -357,7 +357,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
     L_9722:
         add      edx, esi
         add      eax, ecx
-        mov      dword ptr [g_data_00542078], edx
+        mov      dword ptr [g_acc_00542078], edx
         mov      dword ptr [g_eventQueueCurrent], eax
         jns      L_973a
         neg      eax
@@ -391,7 +391,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_983c
-        mov      eax, dword ptr [g_data_00535ddc]
+        mov      eax, dword ptr [g_table_00535ddc]
         cmp      eax, 0x60000
         mov      dword ptr [g_walkCallback], eax
         jle      L_97ba
@@ -426,7 +426,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         test     ecx, ecx
         mov      dword ptr [g_data_00537e94], eax
         jge      L_9837
-        mov      eax, dword ptr [g_data_00535ddc]
+        mov      eax, dword ptr [g_table_00535ddc]
         cmp      eax, 0x8000
         mov      dword ptr [g_walkCallback], eax
         jge      L_9837

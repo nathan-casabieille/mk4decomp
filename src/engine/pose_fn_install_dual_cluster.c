@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -128,9 +128,9 @@ extern unsigned int g_currentNodeIdx;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_eventQueueIdx;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_data_00542078;
+extern unsigned int g_acc_00542078;
 extern unsigned int g_xformDirtyFlags;
 extern void CallSetPause_0041f830(void);
 extern void MStackChainCountdownLoop_00463fb0(void);
@@ -143,7 +143,7 @@ __declspec(naked) void PoseFnInstallDualCluster_00463090(void)
     __asm {
         /* === h1 (0x463090): pose-fn 1-state install w/ 463fb0 + 432110 === */
     L_3090:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         push     edi
         xor      edi, edi
@@ -157,7 +157,7 @@ __declspec(naked) void PoseFnInstallDualCluster_00463090(void)
         pop      esi
         ret
     L_30b9:
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_eventQueueIdx]
         mov      dword ptr [ecx*4 + 0x30], edx
         mov      eax, dword ptr [g_eventQueueEnd]
@@ -165,7 +165,7 @@ __declspec(naked) void PoseFnInstallDualCluster_00463090(void)
         call     MStackChainCountdownLoop_00463fb0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_321c
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_eventQueueCurrent]
         mov      dword ptr [edx*4 + 0x34], ecx
         mov      dword ptr [g_walkCallback], 0x6978
@@ -176,33 +176,33 @@ __declspec(naked) void PoseFnInstallDualCluster_00463090(void)
         mov      eax, dword ptr [g_eventQueueWorkType]
         mov      ecx, dword ptr [g_walkCallback]
         sub      eax, ecx
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_eventQueueWorkType], eax
         mov      dword ptr [ecx*4 + 0x38], eax
         mov      dword ptr [g_walkCallback], edi
         call     MStackChainCountdownLoop_00463fb0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_321c
-        mov      eax, dword ptr [g_data_00542078]
-        mov      edx, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_acc_00542078]
+        mov      edx, dword ptr [g_baseSel_00542060]
         sub      eax, 0x20000
-        mov      dword ptr [g_data_00542078], eax
+        mov      dword ptr [g_acc_00542078], eax
         mov      dword ptr [edx*4 + 0x3c], eax
         mov      eax, dword ptr [g_data_0052ab10]
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_fightGroupHead], eax
         mov      eax, dword ptr [eax*4 + 0x60]
         mov      dword ptr [ecx*4 + 0x40], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_walkCallback], edi
         mov      dword ptr [edx*4 + 0x44], edi
         mov      eax, dword ptr [g_fightGroupHead]
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [eax*4 + 0x68]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x48], eax
         mov      dword ptr [esi + 8], OFFSET L_3090
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET L_3090
         mov      dword ptr [edx*4 + 0x84], 1
         mov      eax, dword ptr [esi + 4]
@@ -213,7 +213,7 @@ __declspec(naked) void PoseFnInstallDualCluster_00463090(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     PendingMatch_00432110
         mov      dword ptr [g_framePauseFlag], 1
@@ -224,7 +224,7 @@ __declspec(naked) void PoseFnInstallDualCluster_00463090(void)
         nop
         /* === h2 (0x463220): pose-fn 1-state install w/ bit-4 abort === */
     L_3220:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         push     edi
         xor      edi, edi
@@ -233,7 +233,7 @@ __declspec(naked) void PoseFnInstallDualCluster_00463090(void)
         mov      dword ptr [esi + 0x84], edi
         cmp      eax, edi
         jne      short L_326a
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_eventQueueIdx]
         push     0x26d
         mov      dword ptr [ecx*4 + 0x30], edx
@@ -256,33 +256,33 @@ __declspec(naked) void PoseFnInstallDualCluster_00463090(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3388
         mov      eax, dword ptr [g_eventQueueCurrent]
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         sub      eax, 0x3d70
         mov      dword ptr [g_eventQueueCurrent], eax
         mov      dword ptr [edx*4 + 0x34], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_eventQueueWorkType]
         mov      dword ptr [eax*4 + 0x38], ecx
-        mov      eax, dword ptr [g_data_00542078]
-        mov      edx, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_acc_00542078]
+        mov      edx, dword ptr [g_baseSel_00542060]
         sub      eax, 0x51e
-        mov      dword ptr [g_data_00542078], eax
+        mov      dword ptr [g_acc_00542078], eax
         mov      dword ptr [edx*4 + 0x3c], eax
         mov      eax, dword ptr [g_fightGroupHead]
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [eax*4 + 0x60]
         mov      dword ptr [edx*4 + 0x40], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_walkCallback], edi
         mov      dword ptr [eax*4 + 0x44], edi
         mov      ecx, dword ptr [g_fightGroupHead]
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [ecx*4 + 0x68]
         mov      ecx, OFFSET L_3220
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x48], eax
         mov      dword ptr [esi + 8], OFFSET L_3220
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         add      ecx, 0x1000000
         mov      dword ptr [eax*4 + 0x84], 1
         mov      eax, dword ptr [esi + 4]
@@ -292,7 +292,7 @@ __declspec(naked) void PoseFnInstallDualCluster_00463090(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     PendingMatch_00432110
         mov      dword ptr [g_framePauseFlag], 1

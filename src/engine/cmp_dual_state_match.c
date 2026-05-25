@@ -18,8 +18,8 @@ extern packed_ptr g_fightGroupHead;
  */
 extern unsigned int g_state_0053a6dc;
 extern unsigned int g_state_00537f2c;
-extern unsigned int g_state_0053a408;
-extern unsigned int g_state_00537e88;
+extern unsigned int g_active_0053a408;
+extern unsigned int g_active_00537e88;
 extern void func_00420060(void);
 int CmpDualStateMatch_00421c50(void) {
     unsigned int v;
@@ -30,8 +30,8 @@ int CmpDualStateMatch_00421c50(void) {
     g_walkCallback = (void (*)(void))v;
     if (v != 0x10000) return 0;
     g_walkCallback = 0;
-    g_state_0053a408 = 0;
-    g_state_00537e88 = 0;
+    g_active_0053a408 = 0;
+    g_active_00537e88 = 0;
     func_00420060();
     return 1;
 }

@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -141,7 +141,7 @@ extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_eventQueueIdx;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_xformDirtyFlags;
@@ -168,7 +168,7 @@ __declspec(naked) void RoundStartCluster_0047b900(void)
 {
     __asm {
         /* H1: 3-state FSM */
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         push     edi
         xor      edi, edi
@@ -195,7 +195,7 @@ __declspec(naked) void RoundStartCluster_0047b900(void)
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      dword ptr [g_currentNodeFlags], 0xccc
         mov      dword ptr [esi + 8], OFFSET RoundStartCluster_0047b900
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET RoundStartCluster_0047b900
         mov      dword ptr [edx*4 + 0x84], 2
         mov      eax, dword ptr [esi + 4]
@@ -206,7 +206,7 @@ __declspec(naked) void RoundStartCluster_0047b900(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     EsiInstallClampAddCall_0048fe40
         mov      dword ptr [g_framePauseFlag], 1
@@ -217,12 +217,12 @@ __declspec(naked) void RoundStartCluster_0047b900(void)
         call     MStackPushSet0008_004901a0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_ba4d
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x100e
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x74], eax
         mov      dword ptr [esi + 8], OFFSET RoundStartCluster_0047b900
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET RoundStartCluster_0047b900
         add      ecx, 0x1000000
         mov      dword ptr [edx*4 + 0x84], 1
@@ -233,7 +233,7 @@ __declspec(naked) void RoundStartCluster_0047b900(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     ScaledLoadIncJmp_00428d00
         mov      dword ptr [g_framePauseFlag], 1
@@ -242,7 +242,7 @@ __declspec(naked) void RoundStartCluster_0047b900(void)
         pop      esi
         ret
         /* H2: chime trigger */
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x211
         mov      dword ptr [g_walkCallback], eax
         push     OFFSET g_data_004ed1d8
@@ -297,7 +297,7 @@ __declspec(naked) void RoundStartCluster_0047b900(void)
 __declspec(naked) void RoundStartCluster_004919c0(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     ebx
         push     esi
         push     edi
@@ -376,7 +376,7 @@ __declspec(naked) void RoundStartCluster_004919c0(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_1c08
         mov      dword ptr [esi + 8], OFFSET RoundStartCluster_004919c0
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, OFFSET RoundStartCluster_004919c0
         mov      dword ptr [ecx*4 + 0x84], 4
         mov      eax, dword ptr [esi + 4]
@@ -387,7 +387,7 @@ __declspec(naked) void RoundStartCluster_004919c0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     AudioInstallSelfStatePush_004aa8a0
         mov      dword ptr [g_framePauseFlag], ebx
@@ -447,7 +447,7 @@ __declspec(naked) void RoundStartCluster_004919c0(void)
         nop
         nop
     L_1c20:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     ebx
         push     esi
         push     edi

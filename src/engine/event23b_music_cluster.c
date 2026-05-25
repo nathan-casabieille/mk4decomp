@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -124,16 +124,16 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_0052aabc;
 extern unsigned int g_data_0052aac4;
-extern unsigned int g_data_00537e88;
+extern unsigned int g_active_00537e88;
 extern unsigned int g_data_0053a318;
-extern unsigned int g_data_0053a408;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_data_00541dd8;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_data_00542078;
+extern unsigned int g_acc_00542078;
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_data_00543564;
@@ -156,9 +156,9 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         push     ebx
         push     0x23b
         call     SaveCallRestore_004049d0
-        mov      eax, dword ptr [g_data_0053a408]
+        mov      eax, dword ptr [g_active_0053a408]
         mov      edx, dword ptr [g_data_0053a318]
-        mov      ecx, dword ptr [g_data_00537e88]
+        mov      ecx, dword ptr [g_active_00537e88]
         add      esp, 4
         cmp      eax, 1
         jne      short L_f57b
@@ -190,7 +190,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         jne      L_f691
         mov      dword ptr [g_eventQueueCurrent], 4
         mov      dword ptr [g_eventQueueWorkType], 0x23b
-        mov      dword ptr [g_data_00542078], OFFSET g_data_00550000
+        mov      dword ptr [g_acc_00542078], OFFSET g_data_00550000
         mov      dword ptr [g_eventQueueNotMask], OFFSET g_data_008c0000
         mov      dword ptr [g_currentNodeFlags], 1
         call     DispatcherComplex181_00426310
@@ -211,7 +211,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         jne      short L_f691
         mov      dword ptr [g_eventQueueCurrent], 4
         mov      dword ptr [g_eventQueueWorkType], 0x23b
-        mov      dword ptr [g_data_00542078], 0xff920000
+        mov      dword ptr [g_acc_00542078], 0xff920000
         mov      dword ptr [g_eventQueueNotMask], OFFSET g_data_008c0000
         mov      dword ptr [g_currentNodeFlags], 1
         call     DispatcherComplex181_00426310
@@ -261,7 +261,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         nop
         /* === Helper 3 (0x42f6d0): callback handler === */
     L_f6d0:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     ebx
         push     esi
         mov      ebx, 1

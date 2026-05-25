@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -126,7 +126,7 @@ extern unsigned int g_x_00538158;
 /*
  * @addr 0x0048f2e0 (111b game) - twin of DirtyToggleByGate_0048f350
  *   but keyed off baseSel[+0x38] (not cj). Same set-bit-2 / xor-if-
- *   mismatch / helper-tail pattern with secondary g_state_00537e88
+ *   mismatch / helper-tail pattern with secondary g_active_00537e88
  *   guarded toggle.
  */
 void DirtyToggleByBaseSel_0048f2e0(void) {
@@ -145,7 +145,7 @@ void DirtyToggleByBaseSel_0048f2e0(void) {
         return;
     }
     g_xformDirtyFlags |= 4;
-    v = g_state_00537e88;
+    v = g_active_00537e88;
     g_walkCallback = (void(*)(void))v;
     if (v == 0) return;
     g_xformDirtyFlags ^= 4;

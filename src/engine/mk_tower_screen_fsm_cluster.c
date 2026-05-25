@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -122,8 +122,8 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern unsigned int g_data_00537e88;
-extern unsigned int g_data_0053a408;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541fb0;
 extern unsigned int g_data_00541fb4;
@@ -132,7 +132,7 @@ extern unsigned int g_currentNodeIdx;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_eventQueueIdx;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_xformDirtyFlags;
 extern void CallSetPause_0041f830(void);
 extern void MStackChainOrBitLoop_004635a0(void);
@@ -226,7 +226,7 @@ __declspec(naked) void MkTowerScreenFsmCluster_00462560(void)
         nop
         /* === Helper 2 (0x462660): wait-2-tier countdown === */
     L_2660:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         shl      eax, 2
         mov      ecx, dword ptr [eax + 0x84]
         mov      dword ptr [eax + 0x84], 0
@@ -269,7 +269,7 @@ __declspec(naked) void MkTowerScreenFsmCluster_00462560(void)
         nop
         /* === Helper 3 (0x4626f0): 2-state init dispatcher === */
     L_26f0:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -306,7 +306,7 @@ __declspec(naked) void MkTowerScreenFsmCluster_00462560(void)
         nop
         nop
         /* === Helper 4: flag-gated jmp 004627c0 (path A) === */
-        mov      eax, dword ptr [g_data_0053a408]
+        mov      eax, dword ptr [g_active_0053a408]
         test     eax, eax
         mov      dword ptr [g_walkCallback], eax
         jne      short L_2793
@@ -322,7 +322,7 @@ __declspec(naked) void MkTowerScreenFsmCluster_00462560(void)
         nop
         nop
         /* === Helper 5: flag-gated jmp 004627c0 (path B) === */
-        mov      eax, dword ptr [g_data_00537e88]
+        mov      eax, dword ptr [g_active_00537e88]
         test     eax, eax
         mov      dword ptr [g_walkCallback], eax
         jne      short L_27b3

@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -135,8 +135,8 @@ extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_eventQueueIdx;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542078;
+extern unsigned int g_baseSel_00542060;
+extern unsigned int g_acc_00542078;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_data_00543320;
 extern void AudioInitChainTag_004a1000(void);
@@ -156,14 +156,14 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
-        mov      eax, dword ptr [g_data_00542078]
+        mov      eax, dword ptr [g_acc_00542078]
         mov      edx, dword ptr [g_data_00541fc4]
         lea      eax, [eax + eax*4 - 5]
-        mov      dword ptr [g_data_00542078], eax
+        mov      dword ptr [g_acc_00542078], eax
         add      eax, edx
         mov      dword ptr [g_currentNodeIdx], eax
         mov      eax, dword ptr [eax*4]
-        mov      dword ptr [g_data_00542078], eax
+        mov      dword ptr [g_acc_00542078], eax
         mov      eax, dword ptr [g_data_004d57ac]
         mov      ecx, dword ptr [eax*4]
         dec      eax
@@ -180,7 +180,7 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
         nop
         /* === Helper 2 (0x4a0dc0): sequence list walker === */
     L_0dc0:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     ebx
         push     ebp
         push     esi
@@ -198,7 +198,7 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
         inc      dword ptr [g_data_00535e50]
         jmp      L_0f19
     L_0e03:
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_eventQueueEnd]
         mov      ebp, 0xf
         mov      dword ptr [edx*4 + 0x30], ecx
@@ -250,7 +250,7 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
         ret
     L_0eed:
         mov      ecx, dword ptr [g_xformEntityIdx]
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, OFFSET g_data_004f2dc0
         shr      eax, 2
         mov      dword ptr [g_eventQueueTotal], eax
@@ -272,7 +272,7 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
         pop      ebx
         ret
     L_0f40:
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x34], eax
         mov      ecx, dword ptr [g_eventQueueIdx]
         mov      eax, dword ptr [g_walkCallback]
@@ -280,7 +280,7 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
         call     RoundWinTransition_0049e7e0
         cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_0ff9
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_xformEntityIdx]
         mov      eax, dword ptr [edx*4 + 0x38]
         mov      dword ptr [g_walkCallback], eax

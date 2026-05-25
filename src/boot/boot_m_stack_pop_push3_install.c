@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -127,7 +127,7 @@ extern unsigned int g_currentNodeIdx;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_eventQueueIdx;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueWorkType;
 extern void Eleven404b90_404c00_004266d0(void);
 extern void InstallSelfCountedAccum_0042e1d0(void);
@@ -137,7 +137,7 @@ __declspec(naked) void BootMStackPopPush3Install_004046d0(void)
 {
     __asm
     {
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         push    esi
         lea     esi, [eax*4]
         mov     eax, dword ptr [eax*4 + 0x84]
@@ -148,21 +148,21 @@ __declspec(naked) void BootMStackPopPush3Install_004046d0(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_bmpp3i_ret
-        mov     ecx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, dword ptr [ecx*4 + 4]
         dec     eax
         mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4]
         mov     dword ptr [g_fightGroupHead], edx
         mov     dword ptr [ecx*4 + 4], eax
-        mov     ecx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, dword ptr [ecx*4 + 4]
         dec     eax
         mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4]
         mov     dword ptr [g_eventQueueIdx], edx
         mov     dword ptr [ecx*4 + 4], eax
-        mov     ecx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, dword ptr [ecx*4 + 4]
         dec     eax
         mov     dword ptr [g_currentNodeIdx], eax
@@ -173,7 +173,7 @@ __declspec(naked) void BootMStackPopPush3Install_004046d0(void)
         pop     esi
         ret
     L_bmpp3i_phase0:
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         mov     edx, dword ptr [g_eventQueueEnd]
         mov     ecx, dword ptr [eax*4 + 4]
         lea     eax, [eax*4 + 4]
@@ -183,7 +183,7 @@ __declspec(naked) void BootMStackPopPush3Install_004046d0(void)
         inc     ecx
         mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax], ecx
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         mov     edx, dword ptr [g_eventQueueIdx]
         mov     ecx, dword ptr [eax*4 + 4]
         lea     eax, [eax*4 + 4]
@@ -193,7 +193,7 @@ __declspec(naked) void BootMStackPopPush3Install_004046d0(void)
         inc     ecx
         mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax], ecx
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         mov     edx, dword ptr [g_fightGroupHead]
         mov     ecx, dword ptr [eax*4 + 4]
         lea     eax, [eax*4 + 4]
@@ -213,7 +213,7 @@ __declspec(naked) void BootMStackPopPush3Install_004046d0(void)
         test    eax, eax
         jne     short L_bmpp3i_ret
         mov     dword ptr [esi + 8], offset BootMStackPopPush3Install_004046d0
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         mov     ecx, offset BootMStackPopPush3Install_004046d0
         mov     dword ptr [eax*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
@@ -224,7 +224,7 @@ __declspec(naked) void BootMStackPopPush3Install_004046d0(void)
         inc     eax
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
-        mov     edx, dword ptr [g_data_00542060]
+        mov     edx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    InstallSelfCountedAccum_0042e1d0
         mov     dword ptr [g_framePauseFlag], 1

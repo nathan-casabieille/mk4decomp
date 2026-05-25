@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -127,7 +127,7 @@ extern unsigned int g_data_0052ab10;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_fightGroupHead;
 extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_data_00542078;
+extern unsigned int g_acc_00542078;
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_xformScratch2088;
@@ -152,7 +152,7 @@ void SaveRestore7CameraTransform_004267f0(void) {
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      edx, dword ptr [g_data_00542078]
+        mov      edx, dword ptr [g_acc_00542078]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], edx
@@ -197,11 +197,11 @@ void SaveRestore7CameraTransform_004267f0(void) {
         sub      eax, 0x1921f
         push     edx
         mov      dword ptr [g_xformScratch2088], eax
-        mov      eax, dword ptr [g_data_00542078]
+        mov      eax, dword ptr [g_acc_00542078]
         push     eax
         call     Mul10Tail_00404af0
         mov      ecx, dword ptr [g_walkCallback]
-        mov      edx, dword ptr [g_data_00542078]
+        mov      edx, dword ptr [g_acc_00542078]
         add      esp, 8
         mov      dword ptr [g_eventQueueNotMask], eax
         push     ecx
@@ -241,7 +241,7 @@ void SaveRestore7CameraTransform_004267f0(void) {
         mov      dword ptr [g_data_004d57ac], eax
         mov      edx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542078], edx
+        mov      dword ptr [g_acc_00542078], edx
         mov      dword ptr [g_data_004d57ac], eax
         mov      ecx, dword ptr [eax*4]
         dec      eax

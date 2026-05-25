@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -139,7 +139,7 @@ extern unsigned int g_currentNodeIdx;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_xformScratch2088;
 extern void ScaledLoadIncJmp_00429840(void);
@@ -149,7 +149,7 @@ __declspec(naked) void MoveDispatch4StateFsm_00494a60(void)
 {
     __asm {
     L_4a60:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -233,7 +233,7 @@ __declspec(naked) void MoveDispatch4StateFsm_00494a60(void)
         mov      cl, byte ptr [edx*4 + 6]
         mov      dword ptr [g_eventQueueChild], ecx
         mov      dword ptr [esi + 8], OFFSET L_4a60
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET L_4a60
         add      ecx, 0x2000000
         mov      dword ptr [eax*4 + 0x84], 2
@@ -244,7 +244,7 @@ __declspec(naked) void MoveDispatch4StateFsm_00494a60(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
         call     InstallSelf3WayChainCmp_00428d80
         mov      dword ptr [g_framePauseFlag], 1
@@ -252,13 +252,13 @@ __declspec(naked) void MoveDispatch4StateFsm_00494a60(void)
         ret
     L_4c20:
         mov      eax, dword ptr [g_eventQueueEnd]
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [eax*4 + 8]
         and      eax, 0xff
         add      eax, 0x300
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x68], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x10e
         mov      dword ptr [g_eventQueueCurrent], eax
         mov      ecx, dword ptr [edx*4 + 0x74]
@@ -301,7 +301,7 @@ __declspec(naked) void MoveDispatch4StateFsm_00494a60(void)
         shr      eax, 0x18
         mov      dword ptr [g_eventQueueChild], eax
         mov      dword ptr [esi + 8], OFFSET L_4a60
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         add      edx, 0x1000000
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      eax, dword ptr [esi + 4]
@@ -311,7 +311,7 @@ __declspec(naked) void MoveDispatch4StateFsm_00494a60(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     InstallSelf3WayChainCmp_00428d80
         mov      dword ptr [g_framePauseFlag], 1

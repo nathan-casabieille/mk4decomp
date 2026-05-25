@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -138,7 +138,7 @@ extern unsigned int g_data_00541e20;
  *     Else: g_walkCallback=[0x00541e20]; cmp 0x78; if >: jmp body.
  *   state!=0 / >0x78: call DualGatedStateYield; if !=0 ret. Call LeaPlus22StoreSelf; if pause ret.
  *     Call DualCallPauseDirtyJmp; if pause ret.
- *     Cascade g_state_00535ddc: <0x10000 -> Wrapper_0043abf0 -> ret; <0x20000 -> Wrapper_0043ac00 -> ret;
+ *     Cascade g_table_00535ddc: <0x10000 -> Wrapper_0043abf0 -> ret; <0x20000 -> Wrapper_0043ac00 -> ret;
  *       <0x30000 -> EnduranceRoundMsgCluster_0043ac10 -> ret; else push 0x004e4a38, call PackedAdvanceCallTailJmp, pop, ret.
  *   Branch 0x78 path: call CallPauseScaledStoreCopyJmp; if pause ret. Install-self at entry;
  *     state=1; g_pendingNodeType=5; pause=1; pop+ret.
@@ -162,8 +162,8 @@ __declspec(naked) void StateMachine4ArmCascade_0043aab0(void) {
         _emit   6bh
         mov     edx, dword ptr [g_cj_0054205c]
         mov     edi, dword ptr [g_state_00538158]
-        mov     eax, offset g_state_0053a408
-        mov     ecx, offset g_state_00537e88
+        mov     eax, offset g_active_0053a408
+        mov     ecx, offset g_active_00537e88
         shr     eax, 2
         shr     ecx, 2
         cmp     edx, edi
@@ -218,7 +218,7 @@ __declspec(naked) void StateMachine4ArmCascade_0043aab0(void) {
         test    eax, eax
         _emit   75h
         _emit   7bh
-        mov     eax, dword ptr [g_state_00535ddc]
+        mov     eax, dword ptr [g_table_00535ddc]
         cmp     eax, 0x10000
         mov     dword ptr [g_walkCallback], eax
         _emit   7dh

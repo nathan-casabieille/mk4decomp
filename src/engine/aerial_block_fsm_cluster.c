@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -136,14 +136,14 @@ extern unsigned int g_data_0050b8dc;
 
 extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_0052ab10;
-extern unsigned int g_data_00535ddc;
+extern unsigned int g_table_00535ddc;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_xformDirtyFlags;
@@ -187,15 +187,15 @@ __declspec(naked) void ThrowGrabPoseCopyCluster_0047f4e0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_f72f
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x74], 0x406
-        mov      eax, dword ptr [g_data_00535ddc]
+        mov      eax, dword ptr [g_table_00535ddc]
         cmp      eax, 0x10000
         mov      dword ptr [g_walkCallback], eax
         jge      short L_f572
         jmp      AerialBlockFsmCluster_0047f730
     L_f572:
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x405
         mov      dword ptr [g_walkCallback], eax
         mov      edx, OFFSET g_data_0050b8dc
@@ -270,7 +270,7 @@ __declspec(naked) void ThrowGrabPoseCopyCluster_0047f4e0(void)
         mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [eax + 0x3c], ecx
         mov      eax, dword ptr [g_currentNodeIdx]
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_eventQueueEnd], eax
         mov      dword ptr [g_eventQueueWorkType], 0x45
         mov      eax, dword ptr [ecx*4 + 0xc]

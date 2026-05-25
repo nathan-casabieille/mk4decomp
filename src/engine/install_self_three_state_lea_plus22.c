@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -131,7 +131,7 @@ extern void InstallSelfChainSet13333_00437880(void);
  *   chain[+0x84]!=0 path: g_cj_00542054 = 0x004e45a0>>2; call InstallSelfPlusTailThunk_00436a10; mov eax, [g_pause]; ret.
  *   chain[+0x84]==0 path: g_currentNodeFlags=0x6666; g_eventQueueChild=0x1e; install-self at +0x08=0x00435260,
  *     scaledInit-chain push 0x00435260|0x01000000; call StateGateMStackOverlap_00438690; g_pause=1; ret.
- *   Block B (+0xb0): cmp g_state_00535ddc < 0x10000? jmp InstallSelfThreeStateLeaPlus22_00437970 : jmp InstallSelfChainSet13333_00437880.
+ *   Block B (+0xb0): cmp g_table_00535ddc < 0x10000? jmp InstallSelfThreeStateLeaPlus22_00437970 : jmp InstallSelfChainSet13333_00437880.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_eventQueueChild;
@@ -175,7 +175,7 @@ __declspec(naked) void InstallSelfDualPath_00435260(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        mov     eax, dword ptr [g_state_00535ddc]
+        mov     eax, dword ptr [g_table_00535ddc]
         cmp     eax, 0x00010000
         mov     dword ptr [g_walkCallback], eax
         _emit   7dh

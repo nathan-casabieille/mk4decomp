@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -140,7 +140,7 @@ extern unsigned int g_data_004f4310;
 extern unsigned int g_data_004f4320;
 extern unsigned int g_data_004f432c;
 extern unsigned int g_currentNodeIdx;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_data_00543450;
 extern unsigned int g_data_005437f8;
 extern unsigned int g_data_005437fc;
@@ -157,7 +157,7 @@ __declspec(naked) void VoiceBankTickDispatch_004a3120(void)
         mov      esi, OFFSET g_data_004f3264
     L_3129:
         movsx    eax, byte ptr [esi - 4]
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         add      ecx, eax
         mov      edx, dword ptr [ecx*4]
         mov      dword ptr [g_currentNodeIdx], edx
@@ -221,7 +221,7 @@ __declspec(naked) void VoiceBankTickDispatch_004a3120(void)
         mov      eax, dword ptr [g_currentNodeIdx]
         mov      edx, dword ptr [eax*4 + 0x54]
         mov      dword ptr [esi - 0x20], edx
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         movsx    ecx, byte ptr [esi - 0x28]
         mov      dword ptr [g_eventQueueCurrent], ecx
         add      ecx, edx

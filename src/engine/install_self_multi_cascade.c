@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -127,7 +127,7 @@ extern unsigned int g_data_00535e7c;
  *     Continuing: esi=g_eventQueueChild; call Push84CallTestInstallJmp_00460940; if !pause:
  *     call DecJneSetCallSetJmp_004389b0; if !pause: mstack-push 0x00438990; jmp GameDispatchValidateState_004339c0; ret.
  *   chain[+0x84]==0 path: install-self at +0x08=0x004388f0, g_pendingNodeType=1, pause=1; pop+ret.
- *   Block B (+0xa0): cmp g_state_00535ddc vs g_currentNodeFlags; if le jmp self; else jmp GuardedSeq_00438630.
+ *   Block B (+0xa0): cmp g_table_00535ddc vs g_currentNodeFlags; if le jmp self; else jmp GuardedSeq_00438630.
  */
 extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_pendingNodeType;
@@ -186,7 +186,7 @@ __declspec(naked) void InstallSelfMultiCascade_004388f0(void) {
         mov     dword ptr [g_pause_00541e6c], ecx
         pop     esi
         ret
-        mov     eax, dword ptr [g_state_00535ddc]
+        mov     eax, dword ptr [g_table_00535ddc]
         mov     ecx, dword ptr [g_currentNodeFlags]
         cmp     eax, ecx
         mov     dword ptr [g_walkCallback], eax

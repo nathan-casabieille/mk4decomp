@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -133,7 +133,7 @@ extern unsigned int g_currentNodeIdx;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_eventQueueChild;
@@ -159,7 +159,7 @@ extern void ScaledLoadJmp_00428d20(void);
 __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -180,7 +180,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         ret
     L_7f20:
         mov      dword ptr [esi + 8], OFFSET StoryCharIntroFsmCluster_00467ed0
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, OFFSET StoryCharIntroFsmCluster_00467ed0
         mov      dword ptr [ecx*4 + 0x84], 2
         mov      eax, dword ptr [esi + 4]
@@ -191,7 +191,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     PendingMatch_0046b670
         mov      dword ptr [g_framePauseFlag], 1
@@ -244,7 +244,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         nop
         nop
     L_8020:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         push     edi
         mov      ecx, 3
@@ -258,7 +258,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
     L_8050:
         mov      dword ptr [g_eventQueueChild], 8
         mov      dword ptr [esi + 8], OFFSET L_8020
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, OFFSET L_8020
         add      edx, 0x2000000
         mov      dword ptr [ecx*4 + 0x84], 2
@@ -269,7 +269,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     InstallSelf3WayChainCmp_00428d80
         mov      dword ptr [g_framePauseFlag], 1
@@ -282,7 +282,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         mov      dword ptr [g_eventQueueNotMask], eax
         jne      L_8163
         mov      dword ptr [esi + 8], OFFSET L_8020
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], ecx
         mov      eax, dword ptr [esi + 4]
         mov      ecx, OFFSET L_8020
@@ -293,7 +293,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     ScaledLoadJmp_00428d20
         mov      dword ptr [g_framePauseFlag], 1
@@ -316,7 +316,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
     L_8163:
         mov      dword ptr [g_eventQueueChild], 6
         mov      dword ptr [esi + 8], OFFSET L_8020
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET L_8020
         add      ecx, 0x1000000
         mov      dword ptr [eax*4 + 0x84], 1
@@ -327,7 +327,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     EsiInstallChainCmpDualCall_00429300
         mov      dword ptr [g_framePauseFlag], 1
@@ -386,7 +386,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_83d1
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [eax*4 + 0x44]
         mov      dword ptr [g_eventQueueWorkType], ecx
         call     MStackPush1MagicMod2_004244d0
@@ -423,7 +423,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         mov      dword ptr [g_eventQueueChild], ecx
         neg      eax
         mov      dword ptr [g_eventQueueNotMask], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         add      esp, 8
         mov      edx, dword ptr [eax*4 + 0x34]
         add      esi, edx
@@ -441,18 +441,18 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         push     ecx
         push     0x14ccc
         call     Mul10Tail_00404af0
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_eventQueueCurrent], eax
         mov      eax, dword ptr [g_walkCallback]
         add      esp, 8
         mov      dword ptr [edx*4 + 0x30], eax
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_eventQueueCurrent]
         mov      dword ptr [ecx*4 + 0x34], edx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_currentNodeFlags]
         mov      dword ptr [eax*4 + 0x38], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_xformScratch2088]
         mov      dword ptr [eax*4 + 0x3c], edx
         call     DualWalkRange_00468440

@@ -11,7 +11,7 @@ extern unsigned int g_acc_00542078;
 extern packed_ptr g_xformEntityIdx;
 
 /* @addr 0x004390b0 (56b)
- *   mov     eax, [g_state_00535ddc]
+ *   mov     eax, [g_table_00535ddc]
  *   cmp     eax, 0xcccc
  *   mov     [g_walkCallback], eax
  *   jle     +5
@@ -26,13 +26,13 @@ extern packed_ptr g_xformEntityIdx;
  *   jmp     +9
  *   ret
  */
-extern unsigned int g_state_00535ddc;
+extern unsigned int g_table_00535ddc;
 extern void func_0048ec10(void);
 extern void func_00439183(void);
 extern void func_004390e9(void);
 extern void func_004390cf(void);
 void CmpccccCallPauseDirtyJmp_004390b0(void) {
-    unsigned int v = g_state_00535ddc;
+    unsigned int v = g_table_00535ddc;
     g_walkCallback = (void (*)(void))v;
     if ((int)v > 0xcccc) {
         func_00439183();

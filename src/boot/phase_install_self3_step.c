@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -139,13 +139,13 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern void BootInitGuardedCallChain_004265d0(void);
 
 __declspec(naked) void PhaseInstallSelf3Step_00402350(void)
 {
     __asm {
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         push    ebx
         push    esi
         lea     esi, [eax*4]
@@ -162,7 +162,7 @@ __declspec(naked) void PhaseInstallSelf3Step_00402350(void)
     L_pis3_phase1:
         mov     dword ptr [g_eventQueueCurrent], 4
         mov     dword ptr [esi + 8], offset PhaseInstallSelf3Step_00402350
-        mov     ecx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_baseSel_00542060]
         mov     edx, offset PhaseInstallSelf3Step_00402350
         add     edx, 0x02000000
         mov     dword ptr [ecx*4 + 0x84], 2
@@ -173,7 +173,7 @@ __declspec(naked) void PhaseInstallSelf3Step_00402350(void)
         inc     eax
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    InstallSelfPackedF80_00426000
         mov     dword ptr [g_framePauseFlag], 1

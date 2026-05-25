@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -152,7 +152,7 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_data_00542094;
 extern void CallSetPause_0041f830(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
@@ -169,7 +169,7 @@ __declspec(naked) void MainTickChain_00481070(void)
         xor      esi, esi
         cmp      eax, esi
         jne      L_1336
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [eax*4 + 0x30]
         cmp      eax, esi
         mov      dword ptr [g_currentNodeIdx], eax
@@ -213,7 +213,7 @@ __declspec(naked) void MainTickChain_00481070(void)
         call     ScaledLoadCmp1003JmpDispatch_00486530
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [ecx*4 + 0x34]
         cmp      eax, 0x10
         mov      dword ptr [g_walkCallback], eax
@@ -232,7 +232,7 @@ __declspec(naked) void MainTickChain_00481070(void)
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
     L_11a8:
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [edx*4 + 0x74]
         lea      eax, [edx*4]
         mov      dword ptr [eax + 0x60], ecx
@@ -276,7 +276,7 @@ __declspec(naked) void MainTickChain_00481070(void)
         and      eax, 0x2000
         mov      dword ptr [g_data_00542094], eax
         jne      L_1336
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [eax*4 + 0x80]
         cmp      eax, 0x6666
         mov      dword ptr [g_walkCallback], eax
@@ -284,7 +284,7 @@ __declspec(naked) void MainTickChain_00481070(void)
         call     PoseChainInstallCluster_00427b60
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [ecx*4 + 0x7c]
         cmp      eax, 3
         mov      dword ptr [g_walkCallback], eax
@@ -293,21 +293,21 @@ __declspec(naked) void MainTickChain_00481070(void)
         cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_1336
     L_12cb:
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         push     0x31
         push     OFFSET L_1340
         mov      dword ptr [edx*4 + 0x80], esi
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_walkCallback], esi
         mov      dword ptr [eax*4 + 0x7c], esi
         call     StoreTwoCall_0049cb40
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_currentNodeIdx]
         add      esp, 8
         mov      eax, dword ptr [ecx*4 + 0x3c]
         mov      dword ptr [g_xformEntityIdx], eax
         mov      dword ptr [edx*4 + 0x3c], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [eax*4 + 0x38]
         mov      dword ptr [g_xformEntityIdx], eax

@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -132,8 +132,8 @@ extern void StanceEntryCluster_00433f50(void);
  *   A: call ScaledCmp200eCallBool; if nonzero: g_walkCallback=0x004e4d40; g_eventQueueCurrent = (eax & 0xff) >> 2;
  *     g_xformEntityIdx = same; jmp AddDerefJmp_00433e70; else ret.
  *   B (+0x30): scaledInit=baseSel[*4+0x3c]; g_walkCallback=[*4+0x30]; if zero jmp GuardedSeq_00433bb0;
- *     else g_state_00535ddc<=0x30000? jmp Wrapper_00438ee0 else jmp InstallSelfChainSet13333Alt_004377d0.
- *   C (+0x80): threshold-dispatch g_state_00535ddc → GuardedSeq / CallPauseTestByteJmpCalls / InstallSelfChainSetB333v2.
+ *     else g_table_00535ddc<=0x30000? jmp Wrapper_00438ee0 else jmp InstallSelfChainSet13333Alt_004377d0.
+ *   C (+0x80): threshold-dispatch g_table_00535ddc → GuardedSeq / CallPauseTestByteJmpCalls / InstallSelfChainSetB333v2.
  *   D (+0xb0): jmp StanceEntryCluster_00433f50.
  */
 extern unsigned int g_xformEntityIdx;
@@ -168,7 +168,7 @@ __declspec(naked) void FiveBlockDispatch_00433e90(void) {
         _emit   75h
         _emit   05h
         jmp     GuardedSeq_00433bb0
-        mov     eax, dword ptr [g_state_00535ddc]
+        mov     eax, dword ptr [g_table_00535ddc]
         cmp     eax, 0x00030000
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh
@@ -190,7 +190,7 @@ __declspec(naked) void FiveBlockDispatch_00433e90(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        mov     eax, dword ptr [g_state_00535ddc]
+        mov     eax, dword ptr [g_table_00535ddc]
         cmp     eax, 0x00020000
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh

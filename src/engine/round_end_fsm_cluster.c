@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -124,12 +124,12 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004e9068;
 extern unsigned int g_data_0052aac4;
-extern unsigned int g_data_00537e88;
-extern unsigned int g_data_0053a408;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_data_0054355c;
 extern unsigned int g_data_00543568;
@@ -152,7 +152,7 @@ __declspec(naked) void RoundEndFsmCluster_0045d680(void)
     __asm {
         /* === Helper 1 (0x45d680): round-end FSM === */
     L_d680:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     ebx
         push     esi
         push     edi
@@ -176,7 +176,7 @@ __declspec(naked) void RoundEndFsmCluster_0045d680(void)
         ret
     L_d6d4:
         call     SixCallSeqPushImm_004a1d80
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x1000
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0xc], eax
@@ -188,13 +188,13 @@ __declspec(naked) void RoundEndFsmCluster_0045d680(void)
     L_d6f9:
         mov      ebx, 2
         mov      dword ptr [g_walkCallback], ebx
-        mov      dword ptr [g_data_0053a408], ebx
-        mov      dword ptr [g_data_00537e88], ebx
+        mov      dword ptr [g_active_0053a408], ebx
+        mov      dword ptr [g_active_00537e88], ebx
         call     BootInitGuardedCallChain_004265d0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_d82c
         mov      dword ptr [esi + 8], OFFSET L_d680
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET L_d680
         mov      dword ptr [edx*4 + 0x84], ebx
         mov      eax, dword ptr [esi + 4]
@@ -205,7 +205,7 @@ __declspec(naked) void RoundEndFsmCluster_0045d680(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     AudioInstallSelfStatePush_004aa8a0
         mov      dword ptr [g_framePauseFlag], 1
@@ -221,8 +221,8 @@ __declspec(naked) void RoundEndFsmCluster_0045d680(void)
         add      esp, 4
         mov      dword ptr [eax*4], edi
         mov      dword ptr [g_walkCallback], edi
-        mov      dword ptr [g_data_0053a408], edi
-        mov      dword ptr [g_data_00537e88], edi
+        mov      dword ptr [g_active_0053a408], edi
+        mov      dword ptr [g_active_00537e88], edi
         call     ScenegraphWalk_0041f7d0
         mov      dword ptr [g_eventQueueWorkType], 4
         call     Push16Call_00489f50
@@ -230,7 +230,7 @@ __declspec(naked) void RoundEndFsmCluster_0045d680(void)
         jne      short L_d82c
         mov      dword ptr [g_eventQueueCurrent], 0xa
         mov      dword ptr [esi + 8], OFFSET L_d680
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      ebx, 1
         mov      edx, OFFSET L_d680
         mov      dword ptr [ecx*4 + 0x84], ebx
@@ -242,7 +242,7 @@ __declspec(naked) void RoundEndFsmCluster_0045d680(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     InstallSelfPackedF80_00426000
         mov      dword ptr [g_framePauseFlag], ebx

@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -122,10 +122,10 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern unsigned int g_data_00535ddc;
+extern unsigned int g_table_00535ddc;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern void EntryThenDispatcherPair_00438cd0(void);
 extern void EsiInstallTwoCallCmpInstall_00438b10(void);
 extern void GuardedSeq_00433bb0(void);
@@ -140,7 +140,7 @@ __declspec(naked) void TriEntryGateMain_00435440(void)
 {
     __asm
     {
-        mov     eax, dword ptr [g_data_00535ddc]
+        mov     eax, dword ptr [g_table_00535ddc]
         cmp     eax, 0x20000
         mov     dword ptr [g_walkCallback], eax
         jle     short L_tegm_jmp2
@@ -161,7 +161,7 @@ __declspec(naked) void TriEntryGateMain_00435440(void)
         add     esp, 4
         ret
     L_tegm_main:
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         push    esi
         lea     esi, [eax*4]
         mov     eax, dword ptr [eax*4 + 0x84]
@@ -176,7 +176,7 @@ __declspec(naked) void TriEntryGateMain_00435440(void)
     L_tegm_phase1:
         mov     dword ptr [g_currentNodeFlags], 0x70000
         mov     dword ptr [esi + 8], offset L_tegm_main
-        mov     ecx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_baseSel_00542060]
         mov     edx, offset L_tegm_main
         add     edx, 0x2000000
         mov     dword ptr [ecx*4 + 0x84], 2
@@ -187,7 +187,7 @@ __declspec(naked) void TriEntryGateMain_00435440(void)
         inc     eax
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    EsiInstallTwoCallCmpInstall_00438b10
         mov     dword ptr [g_framePauseFlag], 1
@@ -203,7 +203,7 @@ __declspec(naked) void TriEntryGateMain_00435440(void)
         call    Cmp2CallDirtyCall_004398b0
         test    eax, eax
         jne     L_tegm_ret
-        mov     ecx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, dword ptr [ecx*4 + 0x74]
         cmp     eax, 0x200e
         mov     dword ptr [g_walkCallback], eax
@@ -212,7 +212,7 @@ __declspec(naked) void TriEntryGateMain_00435440(void)
         pop     esi
         ret
     L_tegm_cmp2:
-        mov     eax, dword ptr [g_data_00535ddc]
+        mov     eax, dword ptr [g_table_00535ddc]
         cmp     eax, 0x20000
         mov     dword ptr [g_walkCallback], eax
         jge     short L_tegm_cmp3
@@ -227,7 +227,7 @@ __declspec(naked) void TriEntryGateMain_00435440(void)
         ret
     L_tegm_install0:
         mov     dword ptr [esi + 8], offset L_tegm_main
-        mov     edx, dword ptr [g_data_00542060]
+        mov     edx, dword ptr [g_baseSel_00542060]
         mov     ecx, offset L_tegm_main
         mov     dword ptr [edx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
@@ -238,7 +238,7 @@ __declspec(naked) void TriEntryGateMain_00435440(void)
         inc     eax
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
-        mov     edx, dword ptr [g_data_00542060]
+        mov     edx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    InstallSelfBitGate_00438aa0
         mov     dword ptr [g_framePauseFlag], 1

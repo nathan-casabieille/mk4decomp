@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -144,7 +144,7 @@ extern unsigned int g_data_004f3ae4;
 extern unsigned int g_data_004f3ae8;
 extern unsigned int g_data_00541dc4;
 extern unsigned int g_currentNodeIdx;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_data_005433c8;
 extern void CallSetMultiGlobalsJmp_004a9230(void);
@@ -191,7 +191,7 @@ __declspec(naked) void Audio4EntryScopeDispatch_004a7e00(void) {
         and     al, 0xfe
         mov     dword ptr [g_xformDirtyFlags], eax
         call    DecOrDirty_004a7de0
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         cmp     dword ptr [eax*4 + 0x30], 3
         jne     short L_a4s_e2End
         mov     ecx, dword ptr [g_data_00541dc4]
@@ -216,7 +216,7 @@ __declspec(naked) void Audio4EntryScopeDispatch_004a7e00(void) {
         and     al, 0xfe
         mov     dword ptr [g_xformDirtyFlags], eax
         call    Audio4EntryScopeDispatch_004a7e00
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         cmp     dword ptr [eax*4 + 0x30], 3
         jne     short L_a4s_e3End
         mov     ecx, dword ptr [g_data_00541dc4]
@@ -241,7 +241,7 @@ __declspec(naked) void Audio4EntryScopeDispatch_004a7e00(void) {
         mov     esi, 0x004f3c20
     L_a4s_loop1:
         movsx   eax, byte ptr [esi]
-        mov     ecx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_baseSel_00542060]
         add     ecx, eax
         mov     edx, dword ptr [ecx*4]
         mov     dword ptr [g_currentNodeIdx], edx
@@ -254,7 +254,7 @@ __declspec(naked) void Audio4EntryScopeDispatch_004a7e00(void) {
         test    eax, eax
         jle     short L_a4s_skip2
     L_a4s_loop2:
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         lea     ecx, [esi + eax]
         mov     edx, dword ptr [ecx*4 + 0x34]
         mov     dword ptr [g_currentNodeIdx], edx
@@ -269,7 +269,7 @@ __declspec(naked) void Audio4EntryScopeDispatch_004a7e00(void) {
         test    eax, eax
         jle     short L_a4s_skip3
     L_a4s_loop3:
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         lea     ecx, [esi + eax]
         mov     edx, dword ptr [ecx*4 + 0x48]
         mov     dword ptr [g_currentNodeIdx], edx

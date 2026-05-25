@@ -12,7 +12,7 @@ extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueTotal;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_currentNodeFlags;
@@ -468,7 +468,7 @@ __declspec(naked) void RenderSceneNode(void)
         mov      edx, dword ptr [g_fightGroupHead]
     L_acfd:
         add      eax, 4
-        mov      dword ptr [g_data_00542060], 0x1fff
+        mov      dword ptr [g_baseSel_00542060], 0x1fff
         mov      dword ptr [g_pendingNodeType], eax
         mov      eax, edx
         and      eax, 1

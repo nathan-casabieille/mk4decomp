@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -126,13 +126,13 @@ extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_004ffe4c;
 extern unsigned int g_data_00501970;
 extern unsigned int g_data_0052aafc;
-extern unsigned int g_data_00537e88;
+extern unsigned int g_active_00537e88;
 extern unsigned int g_data_00537f48;
 extern unsigned int g_data_00537f78;
 extern unsigned int g_data_00537f94;
 extern unsigned int g_data_005380e0;
 extern unsigned int g_data_0053a318;
-extern unsigned int g_data_0053a408;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_data_0053a510;
 extern unsigned int g_data_00541de8;
 extern unsigned int g_data_00541dec;
@@ -271,11 +271,11 @@ __declspec(naked) void DeathAnimCluster_0042eaf0(void)
         nop
         nop
         /* === Helper 2: p1 death gate → 0042ed90 === */
-        mov      ecx, dword ptr [g_data_0053a408]
+        mov      ecx, dword ptr [g_active_0053a408]
         mov      eax, 1
         cmp      ecx, eax
         jne      short L_ed38
-        mov      ecx, dword ptr [g_data_00537e88]
+        mov      ecx, dword ptr [g_active_00537e88]
         test     ecx, ecx
         jne      short L_ed38
         mov      ecx, dword ptr [g_data_00543594]
@@ -283,23 +283,23 @@ __declspec(naked) void DeathAnimCluster_0042eaf0(void)
         jge      short L_ed38
         jmp      CallSetPause_0041f830
     L_ed38:
-        mov      ecx, OFFSET g_data_0053a408
+        mov      ecx, OFFSET g_active_0053a408
         mov      dword ptr [g_eventQueueCurrent], eax
         shr      ecx, 2
         mov      dword ptr [g_currentNodeIdx], ecx
         jmp      Cmp7CondStateUpdate_0042ed90
         /* === Helper 3: p2 death gate → 0042ed90 === */
-        mov      eax, dword ptr [g_data_0053a408]
+        mov      eax, dword ptr [g_active_0053a408]
         test     eax, eax
         jne      short L_ed70
-        cmp      dword ptr [g_data_00537e88], 1
+        cmp      dword ptr [g_active_00537e88], 1
         jne      short L_ed70
         mov      eax, dword ptr [g_data_00543564]
         test     eax, eax
         jge      short L_ed70
         jmp      CallSetPause_0041f830
     L_ed70:
-        mov      eax, OFFSET g_data_00537e88
+        mov      eax, OFFSET g_active_00537e88
         mov      dword ptr [g_eventQueueCurrent], 2
         shr      eax, 2
         mov      dword ptr [g_currentNodeIdx], eax

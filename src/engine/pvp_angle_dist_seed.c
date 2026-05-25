@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -138,9 +138,9 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_data_00542078;
+extern unsigned int g_acc_00542078;
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_eventQueueChild;
 extern void CallPauseLoadAndDispatch_004235f0(void);
@@ -157,7 +157,7 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [g_xformEntityIdx], edx
         mov      esi, dword ptr [ecx*4 + 0x54]
-        mov      dword ptr [g_data_00542078], esi
+        mov      dword ptr [g_acc_00542078], esi
         mov      eax, dword ptr [edx*4 + 0x54]
         mov      dword ptr [g_eventQueueWorkType], eax
         mov      ecx, dword ptr [ecx*4 + 0x5c]
@@ -223,22 +223,22 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         nop
         /* === h2 (0x4233f0): p1→p2 seed → 4235f0 === */
         mov      eax, dword ptr [g_data_00538158]
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_fightGroupHead], eax
         mov      eax, dword ptr [g_data_00537f48]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [g_data_0053815c]
         mov      dword ptr [edx*4 + 0x38], eax
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_data_0053803c]
         mov      eax, OFFSET g_data_00535e78
         mov      dword ptr [ecx*4 + 0x3c], edx
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         shr      eax, 2
         mov      dword ptr [ecx*4 + 0x40], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, OFFSET g_data_00535e7c
         shr      eax, 2
         mov      dword ptr [g_currentNodeIdx], eax
@@ -252,22 +252,22 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         nop
         /* === h3 (0x423470): p2→p1 seed → 4235f0 === */
         mov      eax, dword ptr [g_data_0053815c]
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_fightGroupHead], eax
         mov      eax, dword ptr [g_data_005380e0]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [g_data_00538158]
         mov      dword ptr [edx*4 + 0x38], eax
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_data_00538038]
         mov      eax, OFFSET g_data_00535e70
         mov      dword ptr [ecx*4 + 0x3c], edx
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         shr      eax, 2
         mov      dword ptr [ecx*4 + 0x40], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, OFFSET g_data_00535e74
         shr      eax, 2
         mov      dword ptr [g_currentNodeIdx], eax
@@ -281,22 +281,22 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         nop
         /* === h4 (0x4234f0): p3→p4 seed → 423630 === */
         mov      eax, dword ptr [g_data_00538160]
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_fightGroupHead], eax
         mov      eax, dword ptr [g_data_0053a178]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [g_data_00538164]
         mov      dword ptr [edx*4 + 0x38], eax
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_data_00538044]
         mov      eax, OFFSET g_data_00535e78
         mov      dword ptr [ecx*4 + 0x3c], edx
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         shr      eax, 2
         mov      dword ptr [ecx*4 + 0x40], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, OFFSET g_data_00535e7c
         shr      eax, 2
         mov      dword ptr [g_currentNodeIdx], eax
@@ -310,22 +310,22 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         nop
         /* === h5 (0x423570): p4→p3 seed → 423630 === */
         mov      eax, dword ptr [g_data_00538164]
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_fightGroupHead], eax
         mov      eax, dword ptr [g_data_0053a250]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [g_data_00538160]
         mov      dword ptr [edx*4 + 0x38], eax
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_data_00538040]
         mov      eax, OFFSET g_data_00535e70
         mov      dword ptr [ecx*4 + 0x3c], edx
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         shr      eax, 2
         mov      dword ptr [ecx*4 + 0x40], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, OFFSET g_data_00535e74
         shr      eax, 2
         mov      dword ptr [g_currentNodeIdx], eax

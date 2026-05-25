@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -125,27 +125,27 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x0049e360 (83b)
  *   call DualTestDirtyToggle_004282c0; if pause: ret;
  *   test [g_xformDirtyFlags]&1; if zero: ret;
- *   eax = g_state_0053a408; ecx = 2; cmp eax,1;
+ *   eax = g_active_0053a408; ecx = 2; cmp eax,1;
  *   g_walkCallback = eax; if !=: skip;
- *     g_walkCallback = 2; g_state_0053a408 = 2;
- *   eax = g_state_00537e88; cmp eax,1; g_eventQueueCurrent = eax;
+ *     g_walkCallback = 2; g_active_0053a408 = 2;
+ *   eax = g_active_00537e88; cmp eax,1; g_eventQueueCurrent = eax;
  *   if !=: ret;
- *   g_walkCallback = 2; g_state_00537e88 = 2; ret.
+ *   g_walkCallback = 2; g_active_00537e88 = 2; ret.
  */
 void GuardedCmpDualToggle_0049e360(void) {
     unsigned int v;
     DualTestDirtyToggle_004282c0();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 1) == 0) return;
-    v = g_state_0053a408;
+    v = g_active_0053a408;
     g_walkCallback = (void (*)(void))v;
     if (v == 1) {
         g_walkCallback = (void (*)(void))2;
-        g_state_0053a408 = 2;
+        g_active_0053a408 = 2;
     }
-    v = g_state_00537e88;
+    v = g_active_00537e88;
     g_eventQueueCurrent = v;
     if (v != 1) return;
     g_walkCallback = (void (*)(void))2;
-    g_state_00537e88 = 2;
+    g_active_00537e88 = 2;
 }

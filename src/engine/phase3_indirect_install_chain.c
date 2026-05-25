@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0045a010 (360b game) - 4-entry packed phase-state with indirect.
- *   Entry 1 (offset 0, 187b): phase from [scaled g_data_00542060+0x84].
+ *   Entry 1 (offset 0, 187b): phase from [scaled g_baseSel_00542060+0x84].
  *     phase 2: tail-call PendingMatch_00459510.
  *     phase 1: indirect-call [g_eventQueueEnd].
  *     phase 0: pop mstack into g_eventQueueEnd (saving the prior
@@ -145,7 +145,7 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_table_004d57b0;
@@ -157,7 +157,7 @@ extern void ScaledIterStep_0045c020(void);
 
 __declspec(naked) void Phase3IndirectInstallChain_0045a010(void) {
     __asm {
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         push    esi
         lea     esi, [eax*4]
         mov     eax, dword ptr [eax*4 + 0x84]

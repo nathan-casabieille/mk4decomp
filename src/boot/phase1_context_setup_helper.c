@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -150,7 +150,7 @@ extern void MStackCall_00406740(void);
  *     calls multiplying g_currentNodeFlags / 00542088 by 0x3333 (interp
  *     factor) then stores results back. Writes them into [esi+0x6c]
  *     and [esi+0x74], writes g_currentNodeIdx → g_fightGroupHead, sets
- *     [g_data_00542060*4+0x5c]=0x30, pushes 0x4f2650 → ArgSar_Set0_Jmp_0049c6f0.
+ *     [g_baseSel_00542060*4+0x5c]=0x30, pushes 0x4f2650 → ArgSar_Set0_Jmp_0049c6f0.
  *   2b NOP pad.
  *   Entry 4 (offset 0xf0, 40b): Vec2SumMul10ChainCompute_0049bc60 → on no-error compare
  *     g_eventQueueCurrent vs g_eventQueueWorkType: if le tail-jmp Phase1ChainSetupCallScale6_0040ca70,
@@ -162,7 +162,7 @@ extern void MStackCall_00406740(void);
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformDirtyFlags;
@@ -193,7 +193,7 @@ __declspec(naked) void Alarm5EntryScopedChain_0049be10(void) {
         nop
         /* entry 2 (offset 0x20) */
     L_a5e_entry2:
-        mov     ecx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x305
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
@@ -257,7 +257,7 @@ __declspec(naked) void Alarm5EntryScopedChain_0049be10(void) {
         add     esp, 8
         mov     dword ptr [esi + 0x74], ecx
         mov     edx, dword ptr [g_currentNodeIdx]
-        mov     ecx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x30
         mov     dword ptr [g_fightGroupHead], edx
         mov     dword ptr [g_walkCallback], eax

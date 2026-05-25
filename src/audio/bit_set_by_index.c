@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -123,28 +123,28 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004a07a0 (196b audio) - mstack-push 2; sample bit-update by index.
- *   Push g_x_00542078, g_xformEntityIdx.
+ *   Push g_acc_00542078, g_xformEntityIdx.
  *   ecx = [0x541fc0]; eax = g_walkCallback; g_xformEntityIdx = ecx;
  *   [0x535e48] = eax (= g_walkCallback snapshot); ecx += eax;
  *   eax = chain[ecx]; g_xformEntityIdx = eax;
  *   edx = chain[eax + 0x10]; g_xformEntityIdx = edx; esi = chain[edx];
- *   g_x_00542078--; g_walkCallback = esi;
- *   if (g_x_00542078 > 0 before decrement, i.e., decremented value >= 0):
- *     g_eventQueueCurrent = (1 << g_x_00542078) | esi; chain[edx] = same.
- *   mstack-pop into g_xformEntityIdx, g_x_00542078.
+ *   g_acc_00542078--; g_walkCallback = esi;
+ *   if (g_acc_00542078 > 0 before decrement, i.e., decremented value >= 0):
+ *     g_eventQueueCurrent = (1 << g_acc_00542078) | esi; chain[edx] = same.
+ *   mstack-pop into g_xformEntityIdx, g_acc_00542078.
  */
 extern unsigned int g_x_00535e48;
 extern unsigned int g_x_00541fc0;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_x_00542078;
+extern unsigned int g_acc_00542078;
 
 extern unsigned int g_data_004d57ac_arr;
 
 __declspec(naked) void BitSetByIndex_004a07a0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_x_00542078]
+        mov     ecx, dword ptr [g_acc_00542078]
         inc     eax
         push    esi
         mov     dword ptr [g_state_004d57ac], eax
@@ -162,15 +162,15 @@ __declspec(naked) void BitSetByIndex_004a07a0(void) {
         mov     eax, [ecx*4 + g_data_004d57ac_arr]
         mov     dword ptr [g_xformEntityIdx], eax
         mov     edx, [eax*4 + 0x10]
-        mov     eax, dword ptr [g_x_00542078]
+        mov     eax, dword ptr [g_acc_00542078]
         mov     dword ptr [g_xformEntityIdx], edx
         dec     eax
         mov     esi, [edx*4 + g_data_004d57ac_arr]
-        mov     dword ptr [g_x_00542078], eax
+        mov     dword ptr [g_acc_00542078], eax
         mov     dword ptr [g_walkCallback], esi
         _emit   78h
         _emit   1bh
-        mov     ecx, dword ptr [g_x_00542078]
+        mov     ecx, dword ptr [g_acc_00542078]
         mov     eax, 1
         shl     eax, cl
         or      eax, esi
@@ -184,7 +184,7 @@ __declspec(naked) void BitSetByIndex_004a07a0(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     edx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
-        mov     dword ptr [g_x_00542078], edx
+        mov     dword ptr [g_acc_00542078], edx
         mov     dword ptr [g_state_004d57ac], eax
         ret
     }

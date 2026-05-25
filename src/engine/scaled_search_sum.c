@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -133,7 +133,7 @@ extern unsigned int g_data_00535e7c;
  *         if (eax != 0): loop_outer.
  *         else: ecx=0; edi=0; jmp skip-loop.
  *       } else: ebx -= eax; edi += ebx; ecx=0; esi++; fall to skip-loop.
- *   skip-loop: edx = esi + ebp; g_x_00542078 = ecx;
+ *   skip-loop: edx = esi + ebp; g_acc_00542078 = ecx;
  *     while (chain[edx] != ecx): esi++; edx = esi + ebp;
  *     esi += edi + ebp; g_xformEntityIdx = chain[esi*4 + 8];
  *     restore: g_eventQueueCurrent = saved; g_scaledInit = [g_scaledInit] (no-op).
@@ -141,7 +141,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_x_00542078;
+extern unsigned int g_acc_00542078;
 
 extern unsigned int g_data_004d57ac_arr;
 
@@ -192,7 +192,7 @@ __declspec(naked) void ScaledSearchSum_00457830(void) {
         xor     ecx, ecx
         inc     esi
         lea     edx, [esi + ebp]
-        mov     dword ptr [g_x_00542078], ecx
+        mov     dword ptr [g_acc_00542078], ecx
         cmp     [edx*4 + g_data_004d57ac_arr], ecx
         _emit   75h
         _emit   0edh

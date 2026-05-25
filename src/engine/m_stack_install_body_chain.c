@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -159,7 +159,7 @@ extern void MStackInstallBodyChain_0046a3a0(void);
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern void State6Latch_0048e240(void);
 
 __declspec(naked) void TripleEntryCountdownInstall_0046a230(void) {
@@ -168,7 +168,7 @@ __declspec(naked) void TripleEntryCountdownInstall_0046a230(void) {
         jmp     HitReactionDispatcher_0045f650
         nop
     L_tec_body1:
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         push    esi
         lea     esi, [eax*4]
         mov     eax, dword ptr [eax*4 + 0x84]
@@ -212,7 +212,7 @@ __declspec(naked) void TripleEntryCountdownInstall_0046a230(void) {
         ret
         nop
     L_tec_body2:
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         shl     eax, 2
         mov     ecx, dword ptr [eax + 0x84]
         mov     dword ptr [eax + 0x84], 0

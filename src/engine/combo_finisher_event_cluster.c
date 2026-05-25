@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -129,7 +129,7 @@ extern unsigned int g_data_00538158;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_xformScratch2088;
@@ -164,10 +164,10 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         nop
         nop
         /* === h2 (0x495dd0): event 004f1628 forwarder === */
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     OFFSET g_data_004f1628
         mov      dword ptr [eax*4 + 0x74], 0x404
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x314
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x68], eax
@@ -187,7 +187,7 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         nop
         /* === h3 (0x495e10): pose-fn 3-state combo handler === */
     L_5e10:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     ebx
         push     esi
         push     edi
@@ -260,7 +260,7 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         jne      L_60d0
         mov      dword ptr [g_eventQueueChild], 6
         mov      dword ptr [esi + 8], OFFSET L_5e10
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET L_5e10
         add      ecx, 0x2000000
         mov      dword ptr [edx*4 + 0x84], 2
@@ -271,7 +271,7 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     ScaledClearJmp_00428d40
         mov      dword ptr [g_framePauseFlag], 1
@@ -295,7 +295,7 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         jne      L_60d0
         mov      dword ptr [g_eventQueueChild], 8
         mov      dword ptr [esi + 8], OFFSET L_5e10
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET L_5e10
         add      ecx, 0x3000000
         mov      dword ptr [eax*4 + 0x84], 3
@@ -306,7 +306,7 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     TournamentMenuFsmCluster_004960e0
         mov      dword ptr [g_framePauseFlag], ebx
@@ -322,7 +322,7 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_60d0
         mov      dword ptr [esi + 8], OFFSET L_5e10
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET L_5e10
         mov      dword ptr [eax*4 + 0x84], ebx
         mov      eax, dword ptr [esi + 4]
@@ -333,7 +333,7 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     ScaledLoadJmp_00428d20
         mov      dword ptr [g_framePauseFlag], ebx

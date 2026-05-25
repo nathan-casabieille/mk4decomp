@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -141,7 +141,7 @@ extern void ScaledClearJmp_00428d60(void);
  *   packed_ptr select. Sets g_walkCallback=0x52, calls
  *   TableLookupCall_00489ff0; on no-error sets 0x54206c=0xa, calls
  *   ScaledIndexConditionalAdd_0048e400. Then dispatches on
- *   g_data_00542060:
+ *   g_baseSel_00542060:
  *     - matches g_data_00538038: if g_data_0054388c is set, picks
  *       &g_data_004ec050>>2 (state 1) or &g_data_004ec040>>2 (other)
  *       into g_eventQueueTotal, clears g_data_0054388c, jumps to next.
@@ -160,7 +160,7 @@ extern void ScaledClearJmp_00428d60(void);
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_xformDirtyFlags;
 extern void GuardedPackedSlotInit_00428760(void);
@@ -179,7 +179,7 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_sfp_done
-        mov     ecx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, dword ptr [g_data_00538038]
         cmp     ecx, eax
         jne     short L_sfp_check2

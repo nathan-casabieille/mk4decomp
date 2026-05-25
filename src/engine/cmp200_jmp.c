@@ -15,11 +15,11 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T1
  *   jmp     +5
  */
-extern unsigned int g_state_00535ddc;
+extern unsigned int g_table_00535ddc;
 extern void func_00408f80(void);
 extern void func_0043bd5b(void);
 void Cmp200Jmp_0043bd30(void) {
-    unsigned int v = g_state_00535ddc;
+    unsigned int v = g_table_00535ddc;
     g_walkCallback = (void (*)(void))v;
     if ((int)v < 0x20000) {
         func_00408f80();

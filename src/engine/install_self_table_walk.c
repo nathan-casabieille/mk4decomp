@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -136,18 +136,18 @@ extern void InstallSelfTableWalk_004200d0(void);
  *   g_data_00542004=1, call SixCallSeqPushImm; clear g_eventQueueWorkType;
  *   call Push16Call; if pause clear tail-jmp InstallSelfTableWalk_004200d0.
  */
-extern unsigned int g_data_0053a408;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_data_0053a3e0;
-extern unsigned int g_data_00537e88;
+extern unsigned int g_active_00537e88;
 extern unsigned int g_data_0053a700;
 extern unsigned int g_eventQueueWorkType;
 extern unsigned char g_x_00543590;
 void AudioModeInit_004a2610(void) {
     if (g_x_00543590 == 1) {
-        g_currentNodeIdx = (unsigned int)&g_data_0053a408 >> 2;
+        g_currentNodeIdx = (unsigned int)&g_active_0053a408 >> 2;
         g_xformEntityIdx = (unsigned int)&g_data_0053a3e0 >> 2;
     } else {
-        g_currentNodeIdx = (unsigned int)&g_data_00537e88 >> 2;
+        g_currentNodeIdx = (unsigned int)&g_active_00537e88 >> 2;
         g_xformEntityIdx = (unsigned int)&g_data_0053a700 >> 2;
     }
     DualScaledStoreConst_004a22c0();

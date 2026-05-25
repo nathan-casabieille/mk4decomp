@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -127,7 +127,7 @@ extern void JumpTableDispatch_0043a550(void);
 extern void DualCallTestPauseRange_004353f0(void);
 
 /* @addr 0x00435340 (165b game) - 5-block dispatcher.
- *   Block A: gate g_state_00535ddc>0x20000? jmp Wrapper_00438ee0 : jmp InstallSelfPacked0x2005_00437a90.
+ *   Block A: gate g_table_00535ddc>0x20000? jmp Wrapper_00438ee0 : jmp InstallSelfPacked0x2005_00437a90.
  *   Block B (+0x20): jmp GuardedSeq_00433bb0.
  *   Block C (+0x30): g_walkCallback=g_walkCallback & 0xff; push 0x004e45b0; call JumpTableDispatch_0043a550; ret.
  *   Block D (+0x50): call Cmp2CallDirtyCall; if nonzero ret; threshold-dispatch.
@@ -139,7 +139,7 @@ extern void Wrapper_00438ee0(void);
 
 __declspec(naked) void FiveBlockDispatch_00435340(void) {
     __asm {
-        mov     eax, dword ptr [g_state_00535ddc]
+        mov     eax, dword ptr [g_table_00535ddc]
         cmp     eax, 0x00020000
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh
@@ -174,7 +174,7 @@ __declspec(naked) void FiveBlockDispatch_00435340(void) {
         test    eax, eax
         _emit   75h
         _emit   1bh
-        mov     eax, dword ptr [g_state_00535ddc]
+        mov     eax, dword ptr [g_table_00535ddc]
         cmp     eax, 0x00029999
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh

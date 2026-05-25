@@ -11,7 +11,7 @@ extern packed_ptr g_fightGroupHead;
 extern u32 g_pendingNodeType;
 
 /* @addr 0x00436250 (85b)
- *   load g_state_00535ddc; if <= 0x30000 jmp T1 else jmp T2;
+ *   load g_table_00535ddc; if <= 0x30000 jmp T1 else jmp T2;
  *   nop * 5; call F; if zero: inc g_state_004d57ac; set walk=2;
  *     push 0x004335f0 onto stack[idx*4]; jmp T3;
  *   else: ret; nop; jmp T4.

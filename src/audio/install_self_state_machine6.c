@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -130,7 +130,7 @@ extern unsigned int g_currentNodeIdx;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueIdx;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_data_00543550;
 extern unsigned int g_data_00543734;
 extern unsigned int g_data_00543738;
@@ -147,7 +147,7 @@ extern void SceneFrameStepWithInputs_004be250(void);
 __declspec(naked) void InstallSelfStateMachine6_004a48e0(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     ebx
         push     esi
         push     edi
@@ -165,7 +165,7 @@ __declspec(naked) void InstallSelfStateMachine6_004a48e0(void)
         mov      dword ptr [g_data_00543550], 0x100
         call     PushPopScaledInit343c_004aa940
         mov      dword ptr [esi + 8], 0x4a48e0
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, 0x4a48e0
         mov      dword ptr [edx*4 + 0x84], 3
         mov      eax, dword ptr [esi + 4]
@@ -176,7 +176,7 @@ __declspec(naked) void InstallSelfStateMachine6_004a48e0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     AudioInstallSelfStatePush_004aa8a0
         mov      dword ptr [g_framePauseFlag], 1
@@ -192,7 +192,7 @@ __declspec(naked) void InstallSelfStateMachine6_004a48e0(void)
         je       L_4a51
         call     PushPopScaledInit343c_004aa940
         mov      dword ptr [esi + 8], 0x4a48e0
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, 0x4a48e0
         mov      dword ptr [eax*4 + 0x84], 4
         mov      eax, dword ptr [esi + 4]
@@ -207,7 +207,7 @@ __declspec(naked) void InstallSelfStateMachine6_004a48e0(void)
         je       L_4a51
         call     PushPopScaledInit343c_004aa940
         mov      dword ptr [esi + 8], 0x4a48e0
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, 0x4a48e0
         mov      dword ptr [eax*4 + 0x84], 5
         mov      eax, dword ptr [esi + 4]
@@ -219,7 +219,7 @@ __declspec(naked) void InstallSelfStateMachine6_004a48e0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     AudioInstallSelfStatePush_004aa8a0
         mov      dword ptr [g_framePauseFlag], ebx
@@ -239,7 +239,7 @@ __declspec(naked) void InstallSelfStateMachine6_004a48e0(void)
         pop      esi
         pop      ebx
         ret      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_data_0052aac4], 2
         mov      dword ptr [g_data_0053a50c], 0x10
         mov      dword ptr [eax*4 + 0x30], edi
@@ -252,7 +252,7 @@ __declspec(naked) void InstallSelfStateMachine6_004a48e0(void)
         call     LoadGeoAsset_Default
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_4b66
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [edx*4 + 0x30]
         mov      ecx, dword ptr [eax*4 + g_data_004f3808]
         shr      ecx, 2

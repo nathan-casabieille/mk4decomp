@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -123,11 +123,11 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_00535cfc;
-extern unsigned int g_data_00537e88;
+extern unsigned int g_active_00537e88;
 extern unsigned int g_data_00537f48;
 extern unsigned int g_data_005380e0;
 extern unsigned int g_data_0053a3e0;
-extern unsigned int g_data_0053a408;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_data_0053a51c;
 extern unsigned int g_data_0053a700;
 extern unsigned int g_framePauseFlag;
@@ -135,7 +135,7 @@ extern unsigned int g_data_00542004;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_eventQueueEnd;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_data_005433ec;
@@ -159,7 +159,7 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
     __asm {
         /* === Helper 1 (0x4a23c0): match init === */
         mov      edx, dword ptr [g_xformDirtyFlags]
-        mov      eax, OFFSET g_data_0053a408
+        mov      eax, OFFSET g_active_0053a408
         mov      ecx, OFFSET g_data_0053a3e0
         and      edx, 0xfffffffe
         shr      eax, 2
@@ -168,7 +168,7 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [g_xformEntityIdx], ecx
         call     DualScaledStoreConst_004a22c0
-        mov      edx, OFFSET g_data_00537e88
+        mov      edx, OFFSET g_active_00537e88
         mov      eax, OFFSET g_data_0053a700
         shr      edx, 2
         shr      eax, 2
@@ -203,7 +203,7 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         nop
         /* === Helper 2 (0x4a2450): round-start FSM step === */
     L_2450:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     ebx
         push     esi
         push     edi
@@ -254,7 +254,7 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         and      ebx, 0xfffffffe
         mov      dword ptr [g_xformDirtyFlags], ebx
         call     TableWalkBoundedCmp_004bd890
-        mov      edx, OFFSET g_data_0053a408
+        mov      edx, OFFSET g_active_0053a408
         mov      eax, OFFSET g_data_0053a3e0
         mov      ebx, 1
         add      esp, 4
@@ -266,7 +266,7 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         mov      dword ptr [g_currentNodeIdx], edx
         mov      dword ptr [g_xformEntityIdx], eax
         call     DualScaledStoreConst_004a22c0
-        mov      ecx, OFFSET g_data_00537e88
+        mov      ecx, OFFSET g_active_00537e88
         mov      edx, OFFSET g_data_0053a700
         shr      ecx, 2
         shr      edx, 2
@@ -280,7 +280,7 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         call     IncOrZero9_00422080
         call     SixCallSeqPushImm_004a1d80
         mov      dword ptr [esi + 8], OFFSET L_2450
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET L_2450
         mov      dword ptr [eax*4 + 0x84], ebx
         mov      eax, dword ptr [esi + 4]
@@ -291,7 +291,7 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     AudioInstallSelfStatePush_004aa8a0
         mov      dword ptr [g_framePauseFlag], ebx

@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -125,8 +125,8 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x0043bd50 (123b game) - quad-entry sequence:
  *   A: push str, call PackedAdvanceCallTailJmp, ret.
  *   B (+0x10): call Cmp2CallDirtyCall; if !pause: push str, call PackedAdvanceCallTailJmp; ret.
- *   C (+0x30): call Cmp2CallDirtyCall; if !pause: gate g_state_00535ddc<=0x30000? jmp GuardedSeq else jmp PrefixThunkInstallSelf3State_00438f80; ret.
- *   D (+0x60): gate g_state_00535ddc>=0x18000? jmp CallPauseTestByteJmpCalls else jmp PrefixThunkInstallSelf3State_00438f80.
+ *   C (+0x30): call Cmp2CallDirtyCall; if !pause: gate g_table_00535ddc<=0x30000? jmp GuardedSeq else jmp PrefixThunkInstallSelf3State_00438f80; ret.
+ *   D (+0x60): gate g_table_00535ddc>=0x18000? jmp CallPauseTestByteJmpCalls else jmp PrefixThunkInstallSelf3State_00438f80.
  */
 extern unsigned int g_pause_00541e6c;
 extern void GuardedSeq_00433bb0(void);
@@ -159,7 +159,7 @@ __declspec(naked) void QuadStringStateGate_0043bd50(void) {
         test    eax, eax
         _emit   75h
         _emit   1bh
-        mov     eax, dword ptr [g_state_00535ddc]
+        mov     eax, dword ptr [g_table_00535ddc]
         cmp     eax, 0x00030000
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh
@@ -173,7 +173,7 @@ __declspec(naked) void QuadStringStateGate_0043bd50(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        mov     eax, dword ptr [g_state_00535ddc]
+        mov     eax, dword ptr [g_table_00535ddc]
         cmp     eax, 0x00018000
         mov     dword ptr [g_walkCallback], eax
         _emit   7dh

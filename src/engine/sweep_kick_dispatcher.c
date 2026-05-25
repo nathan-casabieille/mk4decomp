@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -133,7 +133,7 @@ extern unsigned int g_currentNodeIdx;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_xformScratch2088;
@@ -160,7 +160,7 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
 {
     __asm {
         /* === h1 (0x4970f0): event 004f20c0 forwarder === */
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [eax*4 + 0x74], ecx
         call     CondPickDualStore_0049c670
@@ -272,7 +272,7 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x48], eax
         mov      eax, dword ptr [g_pendingNodeType]
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_currentNodeIdx], eax
         lea      esi, [eax*4]
         mov      eax, dword ptr [ecx*4 + 0x5c]
@@ -301,7 +301,7 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
         push     eax
         call     CopyThreeFields_00404df0
         mov      ecx, dword ptr [g_currentNodeIdx]
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         add      esp, 4
         mov      eax, 0x30
         mov      dword ptr [g_fightGroupHead], ecx

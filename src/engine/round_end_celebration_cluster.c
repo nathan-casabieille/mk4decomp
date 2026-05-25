@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -128,7 +128,7 @@ extern unsigned int g_data_004ed1b8;
 extern unsigned int g_data_00537f98;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_xformScratch2088;
 extern void ArgSarStoreJmp_004594f0(void);
@@ -151,7 +151,7 @@ __declspec(naked) void RoundEndCelebrationCluster_0047b6e0(void)
         nop
         nop
         /* H2 */
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x213
         mov      dword ptr [g_walkCallback], eax
         push     OFFSET g_data_004ed1b8
@@ -172,7 +172,7 @@ __declspec(naked) void RoundEndCelebrationCluster_0047b6e0(void)
         nop
         /* H3 (L_b720): 2-state FSM */
     L_b720:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         push     edi
         lea      esi, [eax*4]
@@ -218,7 +218,7 @@ __declspec(naked) void RoundEndCelebrationCluster_0047b6e0(void)
     L_b7cd:
         mov      dword ptr [g_walkCallback], 0x12
         mov      dword ptr [esi + 8], OFFSET L_b720
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET L_b720
         add      ecx, 0x2000000
         mov      dword ptr [edx*4 + 0x84], 2
@@ -229,7 +229,7 @@ __declspec(naked) void RoundEndCelebrationCluster_0047b6e0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
         call     ScaledLoadIncJmp_00428d00
         mov      dword ptr [g_framePauseFlag], edi
@@ -262,7 +262,7 @@ __declspec(naked) void RoundEndCelebrationCluster_0047b6e0(void)
     L_b892:
         mov      dword ptr [g_eventQueueChild], 6
         mov      dword ptr [esi + 8], OFFSET L_b720
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET L_b720
         add      ecx, 0x1000000
         mov      dword ptr [eax*4 + 0x84], edi
@@ -273,7 +273,7 @@ __declspec(naked) void RoundEndCelebrationCluster_0047b6e0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
         call     EsiInstallDecCallChain_004294a0
         mov      dword ptr [g_framePauseFlag], edi

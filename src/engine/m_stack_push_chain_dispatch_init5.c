@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -138,7 +138,7 @@ extern unsigned int g_pause_00541e6c;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_x_00542078;
+extern unsigned int g_acc_00542078;
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_currentNodeFlags;
 extern void DispatcherComplex181_004263d0(void);
@@ -194,7 +194,7 @@ void MStackPushChainDispatchInit5_004925d0(void) {
         _emit   66h
         mov     dword ptr [g_eventQueueCurrent], 1
         mov     dword ptr [g_eventQueueWorkType], 0x1d
-        mov     dword ptr [g_x_00542078], 0
+        mov     dword ptr [g_acc_00542078], 0
         mov     dword ptr [g_eventQueueNotMask], 0xffb50000
         mov     dword ptr [g_currentNodeFlags], 0
         call    DispatcherComplex181_004263d0

@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -125,7 +125,7 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x00464660 (386b game) - install-self with 5-call vec/slot chain.
  *   Always installs Self at end (no phase check). Sets:
  *     - g_xformEntityIdx = g_data_00541f8c (vec0 base)
- *     - g_pendingNodeType = g_data_00542060 + 0xc (slot pointer+0xc)
+ *     - g_pendingNodeType = g_baseSel_00542060 + 0xc (slot pointer+0xc)
  *     - g_eventQueueTotal = [g_eventQueueEnd*4] (deref scope)
  *   If 0x542050 is non-zero AND [g_eventQueueIdx*4] is non-zero, runs a
  *   5-step chain through scaled-buffer indices: QuadInterpolatorV2_004255b0 (+0x15) →
@@ -145,7 +145,7 @@ extern unsigned int g_xformEntityIdx;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_eventQueueIdx;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern void QuadInterpolatorV2_004255b0(void);
 extern void ThreeClampLoop_00425a80(void);
 extern void ThreeMul10Stores_004252c0(void);
@@ -154,10 +154,10 @@ extern void TripleSubVec3_004250f0(void);
 
 __declspec(naked) void InstallSelf5CallVecChain_00464660(void) {
     __asm {
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         push    esi
         mov     dword ptr [eax*4 + 0x84], 0
-        mov     edx, dword ptr [g_data_00542060]
+        mov     edx, dword ptr [g_baseSel_00542060]
         mov     ecx, dword ptr [g_data_00541f8c]
         lea     esi, [eax*4]
         mov     eax, dword ptr [g_eventQueueEnd]

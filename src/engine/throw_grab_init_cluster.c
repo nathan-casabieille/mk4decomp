@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -123,11 +123,11 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004d57ac;
-extern unsigned int g_data_00535ddc;
+extern unsigned int g_table_00535ddc;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_xformDirtyFlags;
 extern void CallPauseScaledStoreCopyJmp_00461220(void);
@@ -169,7 +169,7 @@ __declspec(naked) void ThrowGrabInitCluster_00436b30(void)
         nop
         /* === h2 (0x436b70): pose-fn install state 1 w/ 0x21999 === */
     L_6b70:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -187,7 +187,7 @@ __declspec(naked) void ThrowGrabInitCluster_00436b30(void)
         mov      dword ptr [g_currentNodeFlags], 0x21999
         mov      dword ptr [g_eventQueueChild], 0x1e
         mov      dword ptr [esi + 8], OFFSET L_6b70
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, OFFSET L_6b70
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      eax, dword ptr [esi + 4]
@@ -198,7 +198,7 @@ __declspec(naked) void ThrowGrabInitCluster_00436b30(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     StateGateMStackOverlap_00438690
         mov      dword ptr [g_framePauseFlag], 1
@@ -211,7 +211,7 @@ __declspec(naked) void ThrowGrabInitCluster_00436b30(void)
         nop
         /* === h3 (0x436c20): pose-fn install state 1 w/ 0x16666 === */
     L_6c20:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -229,7 +229,7 @@ __declspec(naked) void ThrowGrabInitCluster_00436b30(void)
         mov      dword ptr [g_currentNodeFlags], 0x16666
         mov      dword ptr [g_eventQueueChild], 0x1e
         mov      dword ptr [esi + 8], OFFSET L_6c20
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, OFFSET L_6c20
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      eax, dword ptr [esi + 4]
@@ -240,7 +240,7 @@ __declspec(naked) void ThrowGrabInitCluster_00436b30(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     StateGateMStackOverlap_00438690
         mov      dword ptr [g_framePauseFlag], 1
@@ -253,7 +253,7 @@ __declspec(naked) void ThrowGrabInitCluster_00436b30(void)
         nop
         /* === h4 (0x436cd0): pose-fn 2-state w/ wait counter === */
     L_6cd0:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     ebx
         push     esi
         mov      ebx, 1
@@ -311,7 +311,7 @@ __declspec(naked) void ThrowGrabInitCluster_00436b30(void)
         nop
         /* === h5 (0x436d80): pose-fn state-1 install if dist>=0x20000 === */
     L_6d80:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -326,7 +326,7 @@ __declspec(naked) void ThrowGrabInitCluster_00436b30(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_6e46
-        mov      eax, dword ptr [g_data_00535ddc]
+        mov      eax, dword ptr [g_table_00535ddc]
         cmp      eax, 0x20000
         mov      dword ptr [g_walkCallback], eax
         jge      short L_6dd3
@@ -337,7 +337,7 @@ __declspec(naked) void ThrowGrabInitCluster_00436b30(void)
         mov      dword ptr [g_currentNodeFlags], 0x20000
         mov      dword ptr [g_eventQueueChild], 0x1e
         mov      dword ptr [esi + 8], OFFSET L_6d80
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, OFFSET L_6d80
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      eax, dword ptr [esi + 4]
@@ -348,7 +348,7 @@ __declspec(naked) void ThrowGrabInitCluster_00436b30(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     StateGateMStackOverlap_00438690
         mov      dword ptr [g_framePauseFlag], 1

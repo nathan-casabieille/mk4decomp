@@ -10,7 +10,7 @@ extern u32 g_eventQueueWorkType;
 extern packed_ptr g_xformEntityIdx;
 
 /* @addr 0x0045e590 (55b)
- *   mov     eax, [g_state_00535ddc]
+ *   mov     eax, [g_table_00535ddc]
  *   cmp     eax, 0x1cccc
  *   mov     [g_walkCallback], eax
  *   jge     +0x0d

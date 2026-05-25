@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -128,7 +128,7 @@ extern void InstallSelfThreeStateDispatch_00436030(void);
 
 /* @addr 0x00435f50 (209b game) - 4-block dual-Mul10Tail + thresholded state dispatcher.
  *   A: Mul10Tail pair on cj[+0x6c]/[+0x74]; if sum zero call CmpRangeJmpStateInit_00436250.
- *     Else threshold checks on g_state_00535ddc: <0x13333 jmp PrefixThunkInstallSelf3State_00438f80, >0x28000 jmp GuardedSeq_00433bb0,
+ *     Else threshold checks on g_table_00535ddc: <0x13333 jmp PrefixThunkInstallSelf3State_00438f80, >0x28000 jmp GuardedSeq_00433bb0,
  *     else jmp PrefixThunkInstallSelf3State_00438f80.
  *   B/C (+0x80/+0x90): jmp DualCallPauseDirtyJmp_00435f20.
  *   D (+0xa0): call Cmp2CallDirtyCall; if nz ret; threshold dispatch state_00535ddc: <0x2b333 jmp Wrapper_00438ee0,
@@ -164,7 +164,7 @@ __declspec(naked) void Mul10ThresholdQuad_00435f50(void) {
         _emit   74h
         _emit   05h
         jmp     CmpRangeJmpStateInit_00436250
-        mov     eax, dword ptr [g_state_00535ddc]
+        mov     eax, dword ptr [g_table_00535ddc]
         cmp     eax, 0x00013333
         mov     dword ptr [g_walkCallback], eax
         _emit   7dh
@@ -211,7 +211,7 @@ __declspec(naked) void Mul10ThresholdQuad_00435f50(void) {
         test    eax, eax
         _emit   75h
         _emit   27h
-        mov     eax, dword ptr [g_state_00535ddc]
+        mov     eax, dword ptr [g_table_00535ddc]
         cmp     eax, 0x0002b333
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh

@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -131,7 +131,7 @@ extern unsigned int g_currentNodeIdx;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CinematicCFsmCluster_004884a0(void);
 extern void FlagThunk4EntryDispatcher_0040a470(void);
@@ -170,7 +170,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         nop
         /* === Helper 2 (0x488250): 3-state FSM === */
     L_8250:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -202,7 +202,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x4c], eax
         mov      dword ptr [esi + 8], OFFSET L_8250
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET L_8250
         add      ecx, 0x2000000
         mov      dword ptr [edx*4 + 0x84], 2
@@ -213,7 +213,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
         call     InstallSelfOrCmpJmp_0048f570
         mov      dword ptr [g_framePauseFlag], 1
@@ -243,7 +243,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         nop
         /* === Helper 3 (0x488370): callback continuation === */
     L_8370:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         shl      eax, 2
         mov      ecx, dword ptr [eax + 0x84]
         mov      dword ptr [eax + 0x84], 0
@@ -259,7 +259,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         mov      dword ptr [eax*4], OFFSET L_8410
         jmp      InstallSelfIndirectJmp_0048f3f0
     L_83be:
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, 0xffffee15
         mov      dword ptr [edx*4 + 0x74], 0x1002
         mov      edx, dword ptr [g_fightGroupHead]

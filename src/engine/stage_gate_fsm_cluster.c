@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -141,7 +141,7 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_xformDirtyFlags;
@@ -179,7 +179,7 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         nop
         nop
         /* === h2 (0x47b040): event 004ed160 forwarder w/ 0x20d store === */
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x20d
         mov      dword ptr [g_walkCallback], eax
         push     OFFSET g_data_004ed160
@@ -200,7 +200,7 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         nop
         /* === h3 (0x47b070): pose-fn 6-case FSM === */
     L_b070:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         push     edi
         xor      edi, edi
@@ -246,7 +246,7 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         /* case 4: install state 5 via EsiInstallChainCmpDualCall_00429300 */
         mov      dword ptr [g_eventQueueChild], 0x13
         mov      dword ptr [esi + 8], OFFSET L_b070
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, OFFSET L_b070
         add      edx, 0x5000000
         mov      dword ptr [ecx*4 + 0x84], 5
@@ -257,7 +257,7 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     EsiInstallChainCmpDualCall_00429300
         mov      dword ptr [g_framePauseFlag], 1
@@ -273,7 +273,7 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
     L_b19a:
         /* install state 4 via ScaledLoadIncJmp_00428d00 */
         mov      dword ptr [esi + 8], OFFSET L_b070
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, OFFSET L_b070
         mov      dword ptr [ecx*4 + 0x84], 4
         mov      eax, dword ptr [esi + 4]
@@ -284,7 +284,7 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     ScaledLoadIncJmp_00428d00
         mov      dword ptr [g_framePauseFlag], 1
@@ -294,7 +294,7 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
     L_b1f8:
         /* install state 6 via ScaledLoadJmp_00429390 */
         mov      dword ptr [esi + 8], OFFSET L_b070
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, OFFSET L_b070
         mov      dword ptr [ecx*4 + 0x84], 6
         mov      eax, dword ptr [esi + 4]
@@ -305,7 +305,7 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     ScaledLoadJmp_00429390
         mov      dword ptr [g_framePauseFlag], 1

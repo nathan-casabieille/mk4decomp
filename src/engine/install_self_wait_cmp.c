@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00438190 (144b game) - install-self + countdown wait.
  *   Block A (+0x00): standard install-self pattern as above; mstack-push 0x004381f0 jmp GameDispatchValidateState_004339c0.
- *   Block B (+0x60): if g_state_00535ddc > g_currentNodeFlags jmp GuardedSeq_00438630; else countdown
+ *   Block B (+0x60): if g_table_00535ddc > g_currentNodeFlags jmp GuardedSeq_00438630; else countdown
  *     g_eventQueueChild; if not zero, self-jmp; else jmp StackPopDispatchTagged.
  */
 extern unsigned int g_data_004d57ac_arr;
@@ -164,7 +164,7 @@ __declspec(naked) void InstallSelfWaitCmp_00438190(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        mov     eax, dword ptr [g_state_00535ddc]
+        mov     eax, dword ptr [g_table_00535ddc]
         mov     ecx, dword ptr [g_currentNodeFlags]
         cmp     eax, ecx
         mov     dword ptr [g_walkCallback], eax

@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -129,7 +129,7 @@ extern unsigned int g_data_00535e7c;
  *   the scaled g_currentNodeIdx base via unrolled 4-store loop with rep stosd
  *   tail; advances 0x542044 by 6, sets g_data_0053a1ac=0xd, bursts 13 dwords
  *   of 0 at the new scaled base (using a 12+remainder pattern); then restores
- *   from g_currentNodeIdx-6 storing g_data_00542060 at offset +0x14.
+ *   from g_currentNodeIdx-6 storing g_baseSel_00542060 at offset +0x14.
  *   Always: pops the 2 mstack entries back, sets bit 2 of 0x54208c then
  *   clears it again (with a do-while-0 style fork on the eq flag) and exits.
  */
@@ -138,7 +138,7 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541eb0;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_xformEntityIdx;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_table_004d57b0;
 extern void MStackPushChainStepIndex_004ab510(void);
@@ -213,7 +213,7 @@ __declspec(naked) void MStackPush2Burst6Init_00405450(void) {
         rep stosd
     L_mpb_after2:
         mov     eax, dword ptr [g_currentNodeIdx]
-        mov     ecx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_baseSel_00542060]
         sub     eax, 6
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0x14], ecx

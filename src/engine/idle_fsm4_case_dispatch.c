@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -125,7 +125,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueEnd;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern void DualConstJmp_00453480(void);
 extern void DualConstJmp_004534a0(void);
 extern void DualConstJmp_004534c0(void);
@@ -160,7 +160,7 @@ __declspec(naked) void IdleFsm4CaseDispatch_004531d0(void)
         nop
         /* === Helper 2 (0x453200): main 4-case dispatcher === */
     L_3200:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]

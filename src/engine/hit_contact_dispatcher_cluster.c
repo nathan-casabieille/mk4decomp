@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -124,15 +124,15 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_004ed818;
-extern unsigned int g_data_00535ddc;
+extern unsigned int g_table_00535ddc;
 extern unsigned int g_data_00538158;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_data_00542078;
+extern unsigned int g_acc_00542078;
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_xformScratch2088;
@@ -167,7 +167,7 @@ __declspec(naked) void HitContactDispatcherCluster_00480240(void)
         push     edx
         push     eax
         call     Mul10Tail_00404af0
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_eventQueueChild], eax
         mov      esi, dword ptr [g_eventQueueNotMask]
         add      esp, 8
@@ -190,11 +190,11 @@ __declspec(naked) void HitContactDispatcherCluster_00480240(void)
         push     eax
         push     eax
         mov      dword ptr [g_eventQueueWorkType], eax
-        mov      dword ptr [g_data_00542078], edx
+        mov      dword ptr [g_acc_00542078], edx
         call     Mul10Tail_00404af0
         add      esp, 8
         mov      dword ptr [g_eventQueueWorkType], eax
-        mov      eax, dword ptr [g_data_00542078]
+        mov      eax, dword ptr [g_acc_00542078]
         push     eax
         push     eax
         call     Mul10Tail_00404af0
@@ -203,10 +203,10 @@ __declspec(naked) void HitContactDispatcherCluster_00480240(void)
         add      eax, ecx
         mov      ecx, dword ptr [g_data_0053a180]
         cmp      eax, ecx
-        mov      dword ptr [g_data_00542078], eax
+        mov      dword ptr [g_acc_00542078], eax
         mov      dword ptr [g_eventQueueWorkType], ecx
         jle      short L_036c
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [eax*4 + 0x38]
         mov      dword ptr [g_currentNodeIdx], eax
         mov      ecx, dword ptr [eax*4 + 0x54]
@@ -231,7 +231,7 @@ __declspec(naked) void HitContactDispatcherCluster_00480240(void)
         mov      eax, dword ptr [g_data_004d57ac]
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542060], ecx
+        mov      dword ptr [g_baseSel_00542060], ecx
         mov      dword ptr [g_data_004d57ac], eax
         call     ScaledZero44_00491500
     L_03af:
@@ -253,7 +253,7 @@ __declspec(naked) void HitContactDispatcherCluster_00480240(void)
         nop
         nop
         /* === h2 (0x4803c0): event 004ed818 forwarder w/ 0x20a === */
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x20a
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x74], eax
@@ -281,7 +281,7 @@ __declspec(naked) void HitContactDispatcherCluster_00480240(void)
         nop
         /* === h3 (0x480400): pose-fn 2-state hit-contact === */
     L_0400:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         push     edi
         mov      edi, 1
@@ -302,7 +302,7 @@ __declspec(naked) void HitContactDispatcherCluster_00480240(void)
         pop      esi
         ret
     L_0454:
-        mov      eax, dword ptr [g_data_00535ddc]
+        mov      eax, dword ptr [g_table_00535ddc]
         cmp      eax, 0x10000
         mov      dword ptr [g_walkCallback], eax
         jge      short L_046d
@@ -357,7 +357,7 @@ __declspec(naked) void HitContactDispatcherCluster_00480240(void)
         pop      esi
         ret
     L_0537:
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x28
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x68], eax

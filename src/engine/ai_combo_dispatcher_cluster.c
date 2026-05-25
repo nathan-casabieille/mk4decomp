@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -131,7 +131,7 @@ extern unsigned int g_data_004f27f0;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_xformScratch2088;
@@ -155,10 +155,10 @@ __declspec(naked) void AiComboDispatcherCluster_00497470(void)
 {
     __asm {
         /* === h1 (0x497470): main combo install === */
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_currentNodeFlags]
         mov      dword ptr [eax*4 + 0x5c], ecx
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [g_xformScratch2088]
         mov      dword ptr [edx*4 + 0x60], eax
         mov      eax, dword ptr [g_data_004d57ac]
@@ -226,7 +226,7 @@ __declspec(naked) void AiComboDispatcherCluster_00497470(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_75d2
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x310
         mov      dword ptr [g_walkCallback], eax
         push     OFFSET g_data_004f2100
@@ -306,11 +306,11 @@ __declspec(naked) void AiComboDispatcherCluster_00497470(void)
         mov      eax, dword ptr [g_xformScratch2088]
         mov      dword ptr [esi + 0x74], eax
         mov      ecx, dword ptr [g_currentNodeIdx]
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_fightGroupHead], ecx
         add      esp, 8
         mov      dword ptr [edx*4 + 0x5c], 0x30
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_walkCallback], 1
         push     OFFSET g_data_004f2168
         mov      dword ptr [eax*4 + 0x74], 1
@@ -327,7 +327,7 @@ __declspec(naked) void AiComboDispatcherCluster_00497470(void)
         add      esp, 4
         push     eax
         call     CopyThreeFields_00404df0
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         add      esp, 4
         mov      eax, dword ptr [ecx*4 + 0x74]
         dec      eax
@@ -345,7 +345,7 @@ __declspec(naked) void AiComboDispatcherCluster_00497470(void)
         test     eax, eax
         jne      short L_7789
     L_7768:
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [ecx*4 + 0x5c]
         dec      eax
         mov      dword ptr [g_walkCallback], eax

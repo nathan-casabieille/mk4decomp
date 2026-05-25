@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -147,9 +147,9 @@ extern unsigned int g_currentNodeIdx;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueIdx;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_data_00542078;
+extern unsigned int g_acc_00542078;
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_xformScratch2088;
@@ -209,7 +209,7 @@ __declspec(naked) void CinematicFsmCluster_0047aaf0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_abac
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x215
         mov      dword ptr [g_walkCallback], eax
         push     OFFSET g_data_004ed138
@@ -223,7 +223,7 @@ __declspec(naked) void CinematicFsmCluster_0047aaf0(void)
         nop
         /* === Helper 4 (0x47abb0): cinematic dispatcher === */
     L_abb0:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -253,7 +253,7 @@ __declspec(naked) void CinematicFsmCluster_0047aaf0(void)
         test     eax, eax
         jne      short L_ad1e
         mov      dword ptr [esi + 8], OFFSET L_abb0
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, OFFSET L_abb0
         mov      dword ptr [ecx*4 + 0x84], 2
         mov      eax, dword ptr [esi + 4]
@@ -264,7 +264,7 @@ __declspec(naked) void CinematicFsmCluster_0047aaf0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     ScaledChainJmp_00429470
         mov      dword ptr [g_framePauseFlag], 1
@@ -330,7 +330,7 @@ __declspec(naked) void RoundFsmCluster_004308a0(void)
         mov      dword ptr [g_walkCallback], ecx
         mov      eax, dword ptr [eax*4 + 0x58]
         sub      eax, ecx
-        mov      dword ptr [g_data_00542078], eax
+        mov      dword ptr [g_acc_00542078], eax
         mov      dword ptr [g_eventQueueNotMask], eax
         call     Atan2QuadrantLookup_004245b0
         mov      eax, dword ptr [g_framePauseFlag]
@@ -354,7 +354,7 @@ __declspec(naked) void RoundFsmCluster_004308a0(void)
         mov      dword ptr [g_walkCallback], eax
         mov      ecx, dword ptr [ecx + 0x54]
         sub      ecx, eax
-        mov      dword ptr [g_data_00542078], ecx
+        mov      dword ptr [g_acc_00542078], ecx
         call     Atan2QuadrantLookup_004245b0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -386,7 +386,7 @@ __declspec(naked) void RoundFsmCluster_004308a0(void)
         nop
         nop
     L_09a0:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -533,7 +533,7 @@ __declspec(naked) void RoundFsmCluster_004308a0(void)
         nop
         nop
     L_0bd0:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]

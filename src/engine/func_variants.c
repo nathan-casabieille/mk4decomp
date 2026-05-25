@@ -22,17 +22,17 @@ extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_eventQueueIdx;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_data_00542078;
+extern unsigned int g_acc_00542078;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_state_004d57ac;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_state_00535ddc;
+extern unsigned int g_table_00535ddc;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_data_004edf68;
 extern unsigned int g_data_004f21d0;
@@ -304,7 +304,7 @@ void func_0042ce90(void) {
  * if < clear bit 0 of state_208c and ret; if >= tail-jmp IdCascadeBitSet.
  * Orphan sub-entry of the original packed block. */
 void func_00439fa0(void) {
-    unsigned int v = g_state_00535ddc;
+    unsigned int v = g_table_00535ddc;
     g_walkCallback = v;
     if ((int)v < 0x13333) {
         g_xformDirtyFlags &= 0xfffffffeu;
@@ -340,7 +340,7 @@ __declspec(naked) void func_00498790(void)
     __asm
     {
     L_qsv_main:
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         push    ebx
         push    esi
         lea     esi, [eax*4]
@@ -384,7 +384,7 @@ __declspec(naked) void func_00498790(void)
         jne     short L_qsv_install2
     L_qsv_install1:
         mov     dword ptr [esi + 8], offset L_qsv_main
-        mov     edx, dword ptr [g_data_00542060]
+        mov     edx, dword ptr [g_baseSel_00542060]
         mov     ecx, offset L_qsv_main
         mov     dword ptr [edx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
@@ -395,7 +395,7 @@ __declspec(naked) void func_00498790(void)
         inc     eax
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
-        mov     edx, dword ptr [g_data_00542060]
+        mov     edx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    InitZeroChainLookupJmp_00494210
         mov     dword ptr [g_framePauseFlag], ebx
@@ -404,7 +404,7 @@ __declspec(naked) void func_00498790(void)
         ret
     L_qsv_install2:
         mov     dword ptr [esi + 8], offset L_qsv_main
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         mov     ecx, offset L_qsv_main
         mov     dword ptr [eax*4 + 0x84], ebx
         mov     eax, dword ptr [esi + 4]
@@ -415,7 +415,7 @@ __declspec(naked) void func_00498790(void)
         inc     eax
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
-        mov     edx, dword ptr [g_data_00542060]
+        mov     edx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    Phase3DispatchScaleInstallSelf_004125e0
         mov     dword ptr [g_framePauseFlag], ebx
@@ -437,7 +437,7 @@ void func_00498930(void) {
     if (g_framePauseFlag) return;
     v = 0x30b;
     g_walkCallback = v;
-    *(unsigned int *)(g_data_00542060 * 4 + 0x74) = v;
+    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74) = v;
     ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004f21d0);
 }
 
@@ -544,7 +544,7 @@ __declspec(naked) void func_00498b20(void)
     __asm {
         /* === h5 (0x498b20): pose-fn 2-state w/ 489ff0 + 406740 === */
     L_8b20:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -596,7 +596,7 @@ void func_00498bd0(void) {
     if (g_framePauseFlag) return;
     v = 0x309;
     g_walkCallback = v;
-    *(unsigned int *)(g_data_00542060 * 4 + 0x74) = v;
+    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74) = v;
     ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004f2250);
 }
 
@@ -625,7 +625,7 @@ __declspec(naked) void func_0047c3f0(void)
     __asm {
         /* === h4 (0x47c3f0): pose-fn 2-state w/ 0xfffc0000 + 48f3f0 === */
     L_c3f0:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         shl      eax, 2
         mov      ecx, dword ptr [eax + 0x84]
         mov      dword ptr [eax + 0x84], 0
@@ -635,7 +635,7 @@ __declspec(naked) void func_0047c3f0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c50e
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, 0xfffc0000
         mov      edx, dword ptr [ecx*4 + 0x38]
         mov      ecx, dword ptr [g_fightGroupHead]
@@ -660,7 +660,7 @@ __declspec(naked) void func_0047c3f0(void)
     L_c4a2:
         mov      dword ptr [g_eventQueueNotMask], 0x30000
         mov      dword ptr [eax + 8], OFFSET L_c3f0
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, OFFSET L_c3f0
         add      edx, 0x1000000
         mov      dword ptr [ecx*4 + 0x84], 1
@@ -671,7 +671,7 @@ __declspec(naked) void func_0047c3f0(void)
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     InstallSelfCmpJlJmp_00480b20
         mov      dword ptr [g_framePauseFlag], 1
@@ -718,7 +718,7 @@ void func_0047c580(void) {
     if (g_framePauseFlag) return;
     v = 0x200d;
     g_walkCallback = v;
-    *(unsigned int *)(g_data_00542060 * 4 + 0x74) = v;
+    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74) = v;
     ScaledChainAndF000DirtyToggle_0048e740();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 1) {
@@ -782,7 +782,7 @@ __declspec(naked) void func_004822e0(void)
     __asm {
         /* === h8 (0x4822e0): pose-fn install state 1 w/ 00489080 === */
     L_22e0:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         xor      edx, edx
         shl      eax, 2
         mov      ecx, dword ptr [eax + 0x84]
@@ -792,7 +792,7 @@ __declspec(naked) void func_004822e0(void)
         jmp      FiveCallGuardSetTail_0046f6b0
     L_22ff:
         mov      dword ptr [eax + 8], OFFSET L_22e0
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         push     edi
         mov      edi, OFFSET L_22e0
         mov      dword ptr [ecx*4 + 0x84], 1
@@ -804,7 +804,7 @@ __declspec(naked) void func_004822e0(void)
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], edx
         call     GuardedDispatch4_00489080
         mov      dword ptr [g_framePauseFlag], 1
@@ -1017,7 +1017,7 @@ __declspec(naked) void func_00432710(void) {
         mov      ebx, 4
         mov      dword ptr [g_eventQueueWorkType], 0x23e
         mov      dword ptr [g_eventQueueCurrent], ebx
-        mov      dword ptr [g_data_00542078], 0xfe9d0000
+        mov      dword ptr [g_acc_00542078], 0xfe9d0000
         mov      dword ptr [g_eventQueueNotMask], 0xff9c0000
         mov      dword ptr [g_currentNodeFlags], 1
         call     DispatcherComplex181_00426490
@@ -1043,7 +1043,7 @@ __declspec(naked) void func_00432710(void) {
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
         mov      dword ptr [g_eventQueueCurrent], ebx
-        mov      dword ptr [g_data_00542078], 0xfecf0000
+        mov      dword ptr [g_acc_00542078], 0xfecf0000
         mov      dword ptr [g_eventQueueNotMask], 0xff9c0000
         call     Push70CallScaleArith2_00457b40
         mov      eax, dword ptr [g_framePauseFlag]
@@ -1071,7 +1071,7 @@ __declspec(naked) void func_00432710(void) {
         jne      L_2a6a
         mov      dword ptr [g_eventQueueCurrent], ebx
         mov      dword ptr [g_eventQueueWorkType], 0x240
-        mov      dword ptr [g_data_00542078], 0xfe540000
+        mov      dword ptr [g_acc_00542078], 0xfe540000
         mov      dword ptr [g_eventQueueNotMask], 0xffb00000
         mov      dword ptr [g_currentNodeFlags], 1
         call     DispatcherComplex181_00426490
@@ -1096,7 +1096,7 @@ __declspec(naked) void func_00432710(void) {
         shr      ecx, 2
         mov      dword ptr [g_xformEntityIdx], ecx
         mov      dword ptr [g_eventQueueCurrent], ebx
-        mov      dword ptr [g_data_00542078], 0xfecf0000
+        mov      dword ptr [g_acc_00542078], 0xfecf0000
         mov      dword ptr [g_eventQueueNotMask], 0xffb00000
         call     Push70CallScaleArith2_00457b40
         mov      eax, dword ptr [g_framePauseFlag]
@@ -1191,7 +1191,7 @@ __declspec(naked) void func_00432710(void) {
         mov      esi, 0xffa00000
         mov      dword ptr [g_eventQueueCurrent], ebx
         mov      dword ptr [g_eventQueueWorkType], 0x242
-        mov      dword ptr [g_data_00542078], 0x1310000
+        mov      dword ptr [g_acc_00542078], 0x1310000
         mov      dword ptr [g_eventQueueNotMask], esi
         mov      dword ptr [g_currentNodeFlags], 1
         call     DispatcherComplex181_00426310
@@ -1219,7 +1219,7 @@ __declspec(naked) void func_00432710(void) {
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
         mov      dword ptr [g_eventQueueCurrent], ebx
-        mov      dword ptr [g_data_00542078], 0x14d0000
+        mov      dword ptr [g_acc_00542078], 0x14d0000
         mov      dword ptr [g_eventQueueNotMask], esi
         call     StreamChainStringInstall_00457900
         mov      eax, dword ptr [g_framePauseFlag]
@@ -1242,7 +1242,7 @@ __declspec(naked) void func_00432710(void) {
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
         mov      dword ptr [g_eventQueueCurrent], ebx
-        mov      dword ptr [g_data_00542078], 0x1430000
+        mov      dword ptr [g_acc_00542078], 0x1430000
         mov      dword ptr [g_eventQueueNotMask], esi
         call     StreamChainStringInstall_00457900
         mov      eax, dword ptr [g_framePauseFlag]
@@ -1272,7 +1272,7 @@ __declspec(naked) void func_00432710(void) {
         mov      esi, 0xffb40000
         mov      dword ptr [g_eventQueueCurrent], ebx
         mov      dword ptr [g_eventQueueWorkType], 0x244
-        mov      dword ptr [g_data_00542078], 0x1310000
+        mov      dword ptr [g_acc_00542078], 0x1310000
         mov      dword ptr [g_eventQueueNotMask], esi
         mov      dword ptr [g_currentNodeFlags], 1
         call     DispatcherComplex181_00426310
@@ -1300,7 +1300,7 @@ __declspec(naked) void func_00432710(void) {
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
         mov      dword ptr [g_eventQueueCurrent], ebx
-        mov      dword ptr [g_data_00542078], 0x14a0000
+        mov      dword ptr [g_acc_00542078], 0x14a0000
         mov      dword ptr [g_eventQueueNotMask], esi
         call     StreamChainStringInstall_00457900
         mov      eax, dword ptr [g_framePauseFlag]
@@ -1323,7 +1323,7 @@ __declspec(naked) void func_00432710(void) {
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
         mov      dword ptr [g_eventQueueCurrent], ebx
-        mov      dword ptr [g_data_00542078], 0x1400000
+        mov      dword ptr [g_acc_00542078], 0x1400000
         mov      dword ptr [g_eventQueueNotMask], esi
         call     StreamChainStringInstall_00457900
         mov      eax, dword ptr [g_framePauseFlag]
@@ -1423,7 +1423,7 @@ void func_00448950(void) {
  * setup, and constant register caching make pure-C conversion impractical. */
 __declspec(naked) void func_00448990(void) {
     __asm {
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -1462,7 +1462,7 @@ __declspec(naked) void func_00448990(void) {
         jne      L_8b40
         mov      dword ptr [g_eventQueueChild], 0x133
         mov      dword ptr [esi + 8], 0x448990
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, 0x448990
         add      ecx, 0x2000000
         mov      dword ptr [edx*4 + 0x84], 2
@@ -1477,7 +1477,7 @@ __declspec(naked) void func_00448990(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8b40
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     0x448b50
         mov      ecx, dword ptr [eax*4 + 0x64]
         mov      dword ptr [g_eventQueueEnd], ecx
@@ -1486,7 +1486,7 @@ __declspec(naked) void func_00448990(void) {
         call     StoreLoadJmp_00404ef0
         mov      dword ptr [g_eventQueueChild], 0x115
         mov      dword ptr [esi + 8], 0x448990
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, 0x448990
         add      esp, 4
         add      ecx, 0x1000000
@@ -1499,7 +1499,7 @@ __declspec(naked) void func_00448990(void) {
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
         call     InstallSelf3WayChainCmp_00428d80
         mov      dword ptr [g_framePauseFlag], 1
@@ -1520,10 +1520,10 @@ __declspec(naked) void func_00448990(void) {
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [eax*4 + 0x64], ecx
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [g_eventQueueIdx]
         mov      dword ptr [edx*4 + 0x68], eax
         mov      dword ptr [g_walkCallback], 0xc
@@ -1566,7 +1566,7 @@ __declspec(naked) void func_00448990(void) {
         mov      eax, dword ptr [g_currentNodeIdx]
         push     0x4745e0
         mov      dword ptr [g_fightGroupHead], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [eax*4 + 0x64]
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      edx, dword ptr [eax*4 + 0x68]
@@ -1609,7 +1609,7 @@ __declspec(naked) void func_00448990(void) {
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         shl      eax, 2
         mov      ecx, dword ptr [eax + 0x84]
         mov      dword ptr [eax + 0x84], 0
@@ -1623,7 +1623,7 @@ __declspec(naked) void func_00448990(void) {
     L_8d0f:
         mov      dword ptr [g_eventQueueChild], 0x6d
         mov      dword ptr [eax + 8], 0x448ce0
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, 0x448ce0
         add      edx, 0x1000000
         mov      dword ptr [ecx*4 + 0x84], 1
@@ -1634,7 +1634,7 @@ __declspec(naked) void func_00448990(void) {
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     InstallSelfWithDispatch_00428f70
         mov      dword ptr [g_framePauseFlag], 1
@@ -1679,7 +1679,7 @@ __declspec(naked) void func_00448990(void) {
         ret      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -1731,13 +1731,13 @@ __declspec(naked) void func_00448990(void) {
         pop      esi
         ret      
     L_8eec:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [eax*4 + 0x64], ecx
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [g_eventQueueIdx]
         mov      dword ptr [edx*4 + 0x68], eax
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_fightGroupHead]
         mov      dword ptr [ecx*4 + 0x4c], edx
         mov      dword ptr [g_eventQueueEnd], 0x64

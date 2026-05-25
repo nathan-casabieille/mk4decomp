@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -126,12 +126,12 @@ extern unsigned int g_data_00514d78;
 extern unsigned int g_data_00514de8;
 extern unsigned int g_data_0052ab48;
 extern unsigned int g_data_0053a3e0;
-extern unsigned int g_data_0053a408;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_data_00542078;
+extern unsigned int g_acc_00542078;
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_xformDirtyFlags;
 extern void BootMstackInit_0041fb10(void);
@@ -143,7 +143,7 @@ extern void StoreIncrMStackPush6_004275c0(void);
 
 void DualSeqBranchInit_00477a20(void) {
     __asm {
-        mov     eax, dword ptr [g_data_0053a408]
+        mov     eax, dword ptr [g_active_0053a408]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         je      L_dsbi_secondPath
@@ -181,7 +181,7 @@ void DualSeqBranchInit_00477a20(void) {
         jne     L_dsbi_ret
         mov     dword ptr [g_eventQueueCurrent], 3
         mov     dword ptr [g_eventQueueWorkType], 0x25
-        mov     dword ptr [g_data_00542078], 0xff780000
+        mov     dword ptr [g_acc_00542078], 0xff780000
         mov     dword ptr [g_eventQueueNotMask], 0xff970000
         mov     dword ptr [g_currentNodeFlags], 2
         call    DispatcherComplex181_00426310

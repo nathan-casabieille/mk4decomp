@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -146,7 +146,7 @@ extern unsigned int g_data_0052d724;
 extern unsigned int g_data_00537f30;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_data_00542094;
 extern void CallPauseClear3CallTriple_00428030(void);
 extern void CopyJmp_00406ba0(void);
@@ -164,7 +164,7 @@ extern void TwinMStackPushScaledChain_00422110(void);
 
 __declspec(naked) void Phase3InstallSelfChain_00421380(void) {
     __asm {
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         push    esi
         lea     esi, [eax*4]
         mov     eax, dword ptr [eax*4 + 0x84]
@@ -211,7 +211,7 @@ __declspec(naked) void Phase3InstallSelfChain_00421380(void) {
         jne     short L_pis2_done
     L_pis2_skipCall:
         mov     dword ptr [esi + 8], offset Phase3InstallSelfChain_00421380
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         mov     ecx, offset Phase3InstallSelfChain_00421380
         mov     dword ptr [eax*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
@@ -222,7 +222,7 @@ __declspec(naked) void Phase3InstallSelfChain_00421380(void) {
         inc     eax
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
-        mov     edx, dword ptr [g_data_00542060]
+        mov     edx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    RoundEndFsm_0042b2f0
         mov     dword ptr [g_framePauseFlag], 1

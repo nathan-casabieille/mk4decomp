@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -125,7 +125,7 @@ extern unsigned int g_data_00535e7c;
 /*
  * @addr 0x00438340 (108b game) - 3-stage call gate cascade:
  *   call DualEntryBitFlagDispatch_0048e820; if pause unset & bit0 set jmp StackPopDispatchTagged;
- *   else if g_state_00535ddc > 0x30000 jmp ScaledPopSaveJmp; else set
+ *   else if g_table_00535ddc > 0x30000 jmp ScaledPopSaveJmp; else set
  *   walk=0x28a, call AudioVolumeRescale; if pause unset & bit0 set jmp
  *   MStackPushSet4Jmp; call PushPop84TripleCall; if pause clear jmp InstallSelfPathSelfLoop_004383b0.
  */
@@ -137,7 +137,7 @@ void ThreeStageGateCascade_00438340(void) {
         StackPopDispatchTagged_0041f780();
         return;
     }
-    v = g_state_00535ddc;
+    v = g_table_00535ddc;
     g_walkCallback = (void (*)(void))v;
     if ((int)v > 0x30000) {
         ScaledPopSaveJmp_00438440();

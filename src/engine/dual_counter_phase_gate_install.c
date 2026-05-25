@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -127,7 +127,7 @@ extern unsigned int g_data_0053a430;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_xformEntityIdx;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueChild;
 extern void InstallSelfStackReset_00421f40(void);
 extern void ScaledInitOrSelfPtr_00421f00(void);
@@ -136,7 +136,7 @@ __declspec(naked) void DualCounterPhaseGateInstall_00421d50(void)
 {
     __asm
     {
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         xor     edx, edx
         shl     eax, 2
         push    esi
@@ -181,7 +181,7 @@ __declspec(naked) void DualCounterPhaseGateInstall_00421d50(void)
         mov     dword ptr [g_eventQueueChild], 0xf0
     L_dcpgi_setup:
         mov     dword ptr [eax + 8], offset DualCounterPhaseGateInstall_00421d50
-        mov     ecx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_baseSel_00542060]
         mov     esi, offset DualCounterPhaseGateInstall_00421d50
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     ecx, dword ptr [eax + 4]
@@ -192,7 +192,7 @@ __declspec(naked) void DualCounterPhaseGateInstall_00421d50(void)
         inc     ecx
         mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], edx
         call    ScaledInitOrSelfPtr_00421f00
         mov     dword ptr [g_framePauseFlag], 1
@@ -204,7 +204,7 @@ __declspec(naked) void DualCounterPhaseGateInstall_00421d50(void)
         mov     esi, dword ptr [ecx*4]
         dec     ecx
         mov     dword ptr [g_state_004d57ac], ecx
-        mov     ecx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [g_xformEntityIdx], esi
         mov     edi, dword ptr [ecx*4 + 4]
         lea     ecx, [ecx*4 + 4]
@@ -219,7 +219,7 @@ __declspec(naked) void DualCounterPhaseGateInstall_00421d50(void)
         mov     dword ptr [g_eventQueueChild], 0x3c
     L_dcpgi_install2:
         mov     dword ptr [eax + 8], offset DualCounterPhaseGateInstall_00421d50
-        mov     ecx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_baseSel_00542060]
         mov     esi, 1
         mov     edi, offset DualCounterPhaseGateInstall_00421d50
         mov     dword ptr [ecx*4 + 0x84], esi
@@ -231,7 +231,7 @@ __declspec(naked) void DualCounterPhaseGateInstall_00421d50(void)
         inc     ecx
         mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], edx
         call    ScaledInitOrSelfPtr_00421f00
         mov     dword ptr [g_framePauseFlag], esi

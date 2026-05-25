@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -126,7 +126,7 @@ extern unsigned int g_data_004f3ae4;
 extern unsigned int g_data_004f3ae8;
 extern unsigned int g_data_00541d8c;
 extern unsigned int g_currentNodeIdx;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_data_005435a2;
 extern unsigned int g_data_0054361a;
 extern unsigned int g_data_00600000;
@@ -157,7 +157,7 @@ __declspec(naked) void SpawnLeftRightAudioCrew_004a8080(void)
     L_80b1:
         mov      dword ptr [g_walkCallback], 0x10
         call     AudioChainInit_004a77c0
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_currentNodeIdx]
         lea      eax, [edi + edx]
         mov      edx, ebp
@@ -210,7 +210,7 @@ __declspec(naked) void SpawnLeftRightAudioCrew_004a8080(void)
     L_81b0:
         mov      dword ptr [g_walkCallback], 0x10
         call     AudioChainInit_004a77c0
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_currentNodeIdx]
         lea      eax, [edi + edx]
         mov      edx, ebp

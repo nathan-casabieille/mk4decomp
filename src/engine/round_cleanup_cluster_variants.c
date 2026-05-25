@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -130,7 +130,7 @@ extern void RoundCleanupCluster_00427690(void);
  *   poll: SaveCallRestore(0x22); SaveCallRestoreOrXor(0x22); while (state & 4): retry.
  *   walkCallback = max(g_x_0053a718, 0); call StoreIncrMStackPush6_004275c0; pause? ret.
  *   set fixed state (walkCallback=2, g_eventQueueWorkType=0x22, g_eventQueueCurrent=2,
- *   g_x_00542078=0, g_eventQueueNotMask=0xff960000, g_currentNodeFlags=2);
+ *   g_acc_00542078=0, g_eventQueueNotMask=0xff960000, g_currentNodeFlags=2);
  *   call DispatcherComplex181; pause? ret; call RoundCleanupCluster_00427690.
  */
 extern unsigned int g_data_004d57ac;
@@ -145,9 +145,9 @@ extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_eventQueueIdx;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_data_00542078;
+extern unsigned int g_acc_00542078;
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_x_0053a718;
@@ -237,7 +237,7 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
 {
     __asm {
         /* H1: installer */
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, 1
         shl      eax, 2
         mov      dword ptr [eax + 0x84], 0
@@ -305,7 +305,7 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
         nop
         /* H4 (L_75d0): big state dispatcher */
     L_75d0:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     ebx
         push     esi
         lea      esi, [eax*4]
@@ -344,7 +344,7 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
         pop      ebx
         ret
     L_765f:
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [ecx*4 + 0x60]
         cmp      eax, 0x10a
         mov      dword ptr [g_walkCallback], eax
@@ -411,7 +411,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         ret
         /* === Helper 3 (0x455950): main FSM w/ jump table === */
     L_5950:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         push     edi
         xor      edi, edi
@@ -438,7 +438,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         mov      ecx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [g_fightGroupHead], ecx
         mov      dword ptr [esi + 8], OFFSET L_5950
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET L_5950
         add      ecx, 0x3000000
         mov      dword ptr [edx*4 + 0x84], 3
@@ -449,7 +449,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     InstallSelfPackedTailJmp_004751f0
         mov      dword ptr [g_framePauseFlag], 1
@@ -463,7 +463,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         shr      eax, 2
         mov      dword ptr [g_eventQueueEnd], eax
         mov      dword ptr [esi + 8], OFFSET L_5950
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         add      edx, 0x4000000
         mov      dword ptr [ecx*4 + 0x84], 4
         mov      eax, dword ptr [esi + 4]
@@ -473,7 +473,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     SetJmp_004753a0
         mov      dword ptr [g_framePauseFlag], 1
@@ -495,14 +495,14 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         ret
     L_5abd:
         mov      ecx, dword ptr [g_eventQueueIdx]
-        mov      dword ptr [g_data_00542078], 0x16666
+        mov      dword ptr [g_acc_00542078], 0x16666
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [g_eventQueueNotMask], edi
         call     ChainGatedNegAccum_0048b740
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_5b22
         mov      edx, dword ptr [g_eventQueueEnd]
-        mov      eax, dword ptr [g_data_00542078]
+        mov      eax, dword ptr [g_acc_00542078]
         push     OFFSET g_data_004e7f60
         mov      dword ptr [edx*4 + 0x54], eax
         mov      ecx, dword ptr [g_eventQueueEnd]
@@ -552,7 +552,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [edx*4 + 0x64]
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      eax, dword ptr [ecx*4 + 0x34]

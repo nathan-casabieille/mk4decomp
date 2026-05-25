@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -126,9 +126,9 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueEnd;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_data_00542078;
+extern unsigned int g_acc_00542078;
 extern void AudioMixerStep_004ab700(void);
 extern void CallSetPause_0041f830(void);
 extern void DirtyToggleScaledTest_0043a630(void);
@@ -188,7 +188,7 @@ __declspec(naked) void QuadFieldEarlyJmpThenInstall_0043a670(void)
         nop
         nop
     L_qfeji_sub2:
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         push    esi
         lea     esi, [eax*4]
         mov     eax, dword ptr [eax*4 + 0x84]
@@ -201,9 +201,9 @@ __declspec(naked) void QuadFieldEarlyJmpThenInstall_0043a670(void)
         pop     esi
         ret
     L_qfeji_sub2_phase1:
-        mov     dword ptr [g_data_00542078], 0xffffeb86
+        mov     dword ptr [g_acc_00542078], 0xffffeb86
         mov     dword ptr [esi + 8], offset L_qfeji_sub2
-        mov     ecx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_baseSel_00542060]
         mov     edx, offset L_qfeji_sub2
         add     edx, 0x2000000
         mov     dword ptr [ecx*4 + 0x84], 2
@@ -221,9 +221,9 @@ __declspec(naked) void QuadFieldEarlyJmpThenInstall_0043a670(void)
         sub     eax, edx
         mov     edx, offset L_qfeji_sub2
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_data_00542078], eax
+        mov     dword ptr [g_acc_00542078], eax
         mov     dword ptr [esi + 8], offset L_qfeji_sub2
-        mov     ecx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_baseSel_00542060]
         add     edx, 0x1000000
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
@@ -234,7 +234,7 @@ __declspec(naked) void QuadFieldEarlyJmpThenInstall_0043a670(void)
         inc     eax
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    InstallSelfScaledAdv3d7Cmp_0043a830
         mov     dword ptr [g_framePauseFlag], 1

@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -126,7 +126,7 @@ extern unsigned int g_data_004d57ac;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_fightGroupHead;
 extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_data_00542078;
+extern unsigned int g_acc_00542078;
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_eventQueueChild;
 extern void MStackSignedMod_0042fee0(void);
@@ -173,10 +173,10 @@ __declspec(naked) void PoseBlendDriver_0042fc80(void)
         add      ecx, edi
         add      esi, eax
         mov      dword ptr [g_eventQueueWorkType], ecx
-        mov      dword ptr [g_data_00542078], esi
+        mov      dword ptr [g_acc_00542078], esi
         mov      dword ptr [edx*4 + 0x54], ecx
         mov      eax, dword ptr [g_fightGroupHead]
-        mov      ecx, dword ptr [g_data_00542078]
+        mov      ecx, dword ptr [g_acc_00542078]
         mov      dword ptr [eax*4 + 0x5c], ecx
         call     MStackSignedMod_0042fee0
         mov      eax, dword ptr [g_framePauseFlag]
@@ -204,20 +204,20 @@ __declspec(naked) void PoseBlendDriver_0042fc80(void)
         mov      ecx, dword ptr [g_walkCallback]
         lea      eax, [ecx - 0x4ccc]
         test     eax, eax
-        mov      dword ptr [g_data_00542078], eax
+        mov      dword ptr [g_acc_00542078], eax
         jge      short L_fddf
         neg      eax
-        mov      dword ptr [g_data_00542078], eax
+        mov      dword ptr [g_acc_00542078], eax
     L_fddf:
         push     eax
         push     0x44924
         call     Mul10Tail_00404af0
         add      esp, 8
         cmp      eax, 0x7ae
-        mov      dword ptr [g_data_00542078], eax
+        mov      dword ptr [g_acc_00542078], eax
         jge      short L_fe03
         mov      eax, 0x7ae
-        mov      dword ptr [g_data_00542078], eax
+        mov      dword ptr [g_acc_00542078], eax
     L_fe03:
         mov      ecx, dword ptr [g_data_00535e78]
         mov      edx, dword ptr [g_data_00535e7c]
@@ -226,7 +226,7 @@ __declspec(naked) void PoseBlendDriver_0042fc80(void)
         mov      dword ptr [g_eventQueueNotMask], ecx
         mov      dword ptr [g_eventQueueChild], edx
         call     Mul10Tail_00404af0
-        mov      ecx, dword ptr [g_data_00542078]
+        mov      ecx, dword ptr [g_acc_00542078]
         add      esp, 8
         mov      dword ptr [g_eventQueueNotMask], eax
         mov      eax, dword ptr [g_eventQueueChild]

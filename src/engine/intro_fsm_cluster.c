@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -132,7 +132,7 @@ extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_eventQueueIdx;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void DoubleScaledCrossStore_00475750(void);
 extern void GatedWordPushCall_00489f90(void);
@@ -185,7 +185,7 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
         nop
         /* H3 (L_d5c0): 4-state FSM */
     L_d5c0:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         shl      eax, 2
         mov      ecx, dword ptr [eax + 0x84]
         mov      dword ptr [eax + 0x84], 0
@@ -211,7 +211,7 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
         shr      edx, 2
         mov      dword ptr [g_eventQueueEnd], edx
         mov      dword ptr [eax + 8], OFFSET L_d5c0
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, OFFSET L_d5c0
         add      edx, 0x3000000
         mov      dword ptr [ecx*4 + 0x84], 3
@@ -222,14 +222,14 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     SetJmp_004753a0
         mov      dword ptr [g_framePauseFlag], 1
         ret
     L_d68d:
         mov      dword ptr [eax + 8], OFFSET L_d5c0
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, OFFSET L_d5c0
         mov      dword ptr [ecx*4 + 0x84], 2
         mov      ecx, dword ptr [eax + 4]
@@ -240,16 +240,16 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     InstallSelfPackedTailJmp_004751f0
         mov      dword ptr [g_framePauseFlag], 1
         ret
     L_d6f0:
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [ecx*4 + 0x64], edx
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_eventQueueIdx]
         mov      dword ptr [ecx*4 + 0x68], edx
         mov      ecx, 1
@@ -267,7 +267,7 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
         nop
         nop
         /* H4 */
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     OFFSET g_const_0044d820
         mov      ecx, dword ptr [eax*4 + 0x64]
         mov      dword ptr [g_eventQueueEnd], ecx

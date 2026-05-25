@@ -14,7 +14,7 @@ extern packed_ptr g_fightGroupHead;
  *   call F1; test eax → jne ret
  *   call F2; pause → jne ret
  *   load g_walkCallback; test → jge skip → jmp T_inner
- *   load g_state_00535ddc; cmp 0x30000; store; jle → jmp T1; jmp T2
+ *   load g_table_00535ddc; cmp 0x30000; store; jle → jmp T1; jmp T2
  *   ret
  */
 extern void Cmp2CallDirtyCall_004398b0(void);

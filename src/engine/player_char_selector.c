@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004636d0 (309b game) - player-char selector with cmp/branch tables.
  *   Call BitShiftExtract; if pause ret.
- *   If g_state_0053a408==0: setup player1 (537f48). g_eventQueueEnd = (0x00535cfc>>2). Call DownloadPlayerChar; ret.
+ *   If g_active_0053a408==0: setup player1 (537f48). g_eventQueueEnd = (0x00535cfc>>2). Call DownloadPlayerChar; ret.
  *   Else: setup player2 (005380e0). g_eventQueueEnd = (0x0053a1d0>>2). Call DownloadPlayerChar; ret.
  *   Both arms normalize g_walkCallback via cmp on 0xf/6/8 and write to g_data_00535d10.
  */
@@ -155,7 +155,7 @@ __declspec(naked) void PlayerCharSelector_004636d0(void) {
         _emit   01h
         _emit   00h
         _emit   00h
-        cmp     dword ptr [g_state_0053a408], esi
+        cmp     dword ptr [g_active_0053a408], esi
         _emit   0fh
         _emit   85h
         _emit   80h
@@ -231,7 +231,7 @@ __declspec(naked) void PlayerCharSelector_004636d0(void) {
         _emit   75h
         _emit   0ch
         mov     dword ptr [g_walkCallback], esi
-        mov     dword ptr [g_state_00537e88], esi
+        mov     dword ptr [g_active_00537e88], esi
         pop     esi
         ret
     }

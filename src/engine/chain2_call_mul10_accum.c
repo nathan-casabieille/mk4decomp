@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -123,13 +123,13 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00426a30 (173b game) - mstack-push g_eventQueueWorkType, dispatch Mul10Index/MStackMagicModMul10_00424410,
- *   then two Mul10Tail double-pushes accumulating into g_walkCallback (via g_x_00542078) and
+ *   then two Mul10Tail double-pushes accumulating into g_walkCallback (via g_acc_00542078) and
  *   g_eventQueueCurrent (via g_eventQueueNotMask), with pause-aborts after each callee. mstack-pop g_eventQueueWorkType.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_x_00542078;
+extern unsigned int g_acc_00542078;
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_eventQueueChild;
 extern void MStackMagicModMul10_00424410(void);
@@ -172,7 +172,7 @@ void Chain2CallMul10Accum_00426a30(void) {
         push    edx
         push    eax
         call    Mul10Tail_00404af0
-        mov     ecx, dword ptr [g_x_00542078]
+        mov     ecx, dword ptr [g_acc_00542078]
         mov     edx, dword ptr [g_eventQueueCurrent]
         add     eax, ecx
         mov     ecx, dword ptr [g_eventQueueNotMask]

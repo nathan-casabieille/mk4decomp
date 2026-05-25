@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -133,7 +133,7 @@ extern void GuardedSeq_00428480(void);
 extern void GuardedPackedSlotInit_00428760(void);
 
 /* @addr 0x0046ff80 (350b game) - 3-phase install-self via packed_ptr tag.
- *   Reads phase from [g_data_00542060*4 + 0x84], zeroes it, then dispatches:
+ *   Reads phase from [g_baseSel_00542060*4 + 0x84], zeroes it, then dispatches:
  *     - phase 2 (eax-2=0): writes g_xformScratch2088 into [g_fightGroupHead*4+0x78]
  *       and tail-calls ThrowFsmCluster_004700e0.
  *     - phase 1 (eax-1=0): loads &g_data_004ec0c0>>2 (the reloc-survives-shr
@@ -157,7 +157,7 @@ extern unsigned int g_currentNodeIdx;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_eventQueueIdx;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_xformDirtyFlags;
@@ -175,7 +175,7 @@ extern void Thunk_0049cbc0(void);
 
 __declspec(naked) void Phase3PackedInstallSelf_0046ff80(void) {
     __asm {
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         push    esi
         lea     esi, [eax*4]
         mov     eax, dword ptr [eax*4 + 0x84]
@@ -200,7 +200,7 @@ __declspec(naked) void Phase3PackedInstallSelf_0046ff80(void) {
         jne     L_pis_done
         mov     dword ptr [g_eventQueueChild], 4
         mov     dword ptr [esi + 8], offset Phase3PackedInstallSelf_0046ff80
-        mov     ecx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_baseSel_00542060]
         mov     edx, offset Phase3PackedInstallSelf_0046ff80
         add     edx, 0x02000000
         mov     dword ptr [ecx*4 + 0x84], 2
@@ -211,7 +211,7 @@ __declspec(naked) void Phase3PackedInstallSelf_0046ff80(void) {
         inc     eax
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
         call    GuardedSeq_00428480
         mov     dword ptr [g_framePauseFlag], 1
@@ -229,7 +229,7 @@ __declspec(naked) void Phase3PackedInstallSelf_0046ff80(void) {
         shr     ecx, 2
         mov     dword ptr [g_eventQueueIdx], ecx
         mov     dword ptr [esi + 8], offset Phase3PackedInstallSelf_0046ff80
-        mov     edx, dword ptr [g_data_00542060]
+        mov     edx, dword ptr [g_baseSel_00542060]
         mov     ecx, offset Phase3PackedInstallSelf_0046ff80
         add     ecx, 0x01000000
         mov     dword ptr [edx*4 + 0x84], 1
@@ -240,7 +240,7 @@ __declspec(naked) void Phase3PackedInstallSelf_0046ff80(void) {
         inc     eax
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
-        mov     edx, dword ptr [g_data_00542060]
+        mov     edx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    GuardedSeq_00428480
         mov     dword ptr [g_framePauseFlag], 1
@@ -358,7 +358,7 @@ __declspec(naked) void ThrowChargeCluster_0044e750(void)
         nop
         nop
     L_e8f0:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     ebx
         push     ebp
         push     esi
@@ -443,7 +443,7 @@ __declspec(naked) void ThrowChargeCluster_0044e750(void)
         nop
         nop
     L_ea20:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -471,10 +471,10 @@ __declspec(naked) void ThrowChargeCluster_0044e750(void)
         pop      esi
         ret      
     L_ea94:
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [ecx*4 + 0x64], edx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_eventQueueIdx]
         mov      dword ptr [eax*4 + 0x68], ecx
         call     ThrowFsmCluster_0044eaf0

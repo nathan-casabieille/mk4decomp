@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -130,7 +130,7 @@ extern unsigned int g_data_0053a430;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern void AudioInitInstallerPair_004a2140(void);
 extern void BootInitGuardedCallChain_004265d0(void);
 extern void GuardedSetupCallTailJmp_004a1fa0(void);
@@ -140,7 +140,7 @@ __declspec(naked) void BossFight6StateSequencer_004a3ce0(void)
 {
     __asm {
     L_3ce0:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         push     edi
         xor      edi, edi
@@ -152,7 +152,7 @@ __declspec(naked) void BossFight6StateSequencer_004a3ce0(void)
         jmp      dword ptr [eax*4 + L_jmptbl_3f30]
     L_3d0d:
         /* case 1: kick off if state == 0 then check 0053a430 flag */
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [ecx*4 + 0x30]
         mov      dword ptr [edx*4 + 0x74], edi
         mov      eax, dword ptr [g_data_0053a430]
@@ -170,10 +170,10 @@ __declspec(naked) void BossFight6StateSequencer_004a3ce0(void)
         ret
     L_3d63:
         /* case 2: arm slot-0x34 velocity */
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [eax*4 + 0x34]
         mov      dword ptr [ecx*4 + 0x58], 0x140000
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [edx*4 + 0x34]
         mov      dword ptr [eax*4 + 0x74], 0xffffc000
         mov      dword ptr [esi + 8], OFFSET L_3ce0
@@ -185,7 +185,7 @@ __declspec(naked) void BossFight6StateSequencer_004a3ce0(void)
         ret
     L_3dba:
         /* case 3: reset slot-0x34 velocity to 0 */
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [ecx*4 + 0x34]
         mov      dword ptr [edx*4 + 0x74], edi
         mov      dword ptr [esi + 8], OFFSET L_3ce0
@@ -218,7 +218,7 @@ __declspec(naked) void BossFight6StateSequencer_004a3ce0(void)
         push     0xffec0000
         push     OFFSET g_data_004d2320
         call     GuardedSetupCallTailJmp_004a1fa0
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      edi, 1
         add      esp, 8
@@ -233,21 +233,21 @@ __declspec(naked) void BossFight6StateSequencer_004a3ce0(void)
         push     eax
         mov      dword ptr [g_currentNodeIdx], eax
         call     GuardedSetupCallTailJmp_004a1fa0
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [g_currentNodeIdx]
         add      esp, 8
         mov      dword ptr [edx*4 + 0x34], eax
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, 0xa0000
         mov      edx, dword ptr [ecx*4 + 0x30]
         mov      dword ptr [edx*4 + 0x5c], eax
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [ecx*4 + 0x34]
         mov      dword ptr [edx*4 + 0x5c], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [eax*4 + 0x34]
         mov      dword ptr [ecx*4 + 0x58], 0xf0600000
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [edx*4 + 0x30]
         mov      dword ptr [eax*4 + 0x74], 0xffffc000
         mov      dword ptr [esi + 8], OFFSET L_3ce0

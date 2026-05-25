@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -137,7 +137,7 @@ extern unsigned int g_data_004d55d8;
 extern unsigned int g_x_00537e98;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_x_00542078;
+extern unsigned int g_acc_00542078;
 extern unsigned int g_eventQueueNotMask;
 void TriplePackedTagged_004580a0(void) {
     if (g_x_00537e98 == 0) {
@@ -147,7 +147,7 @@ void TriplePackedTagged_004580a0(void) {
     }
     g_walkCallback = 0x0a;
     g_eventQueueCurrent = 4;
-    g_x_00542078 = 0;
+    g_acc_00542078 = 0;
     g_eventQueueNotMask = 0xff9c0000;
     Push70CallScaleArith_00457ad0();
     if (g_framePauseFlag != 0) return;

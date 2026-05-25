@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004662e0 (384b game) - 4-entry packed: alarm + packed_ptr +
  *   phase-install + alarm.
- *   Entry 1 (offset 0, 96b): copies [g_data_00542060*4 + 0x34/0x38/0x3c]
+ *   Entry 1 (offset 0, 96b): copies [g_baseSel_00542060*4 + 0x34/0x38/0x3c]
  *     into g_eventQueueEnd/00542058/0054205c, then writes
  *     g_eventQueueEnd = 0x5c-arg, g_eventQueueWorkType = 0x267,
  *     g_pendingNodeType = 0x44ea20. Calls AllocNode; on no-error pushes
@@ -150,7 +150,7 @@ extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_eventQueueIdx;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueWorkType;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ScaledDecBranch_00466460(void);
@@ -158,7 +158,7 @@ extern void TripleStageRollback_00404a50(void);
 
 __declspec(naked) void FourEntryAlarmInstall_004662e0(void) {
     __asm {
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         mov     ecx, dword ptr [eax*4 + 0x34]
         mov     dword ptr [g_eventQueueEnd], ecx
         mov     edx, dword ptr [eax*4 + 0x38]
@@ -197,7 +197,7 @@ __declspec(naked) void FourEntryAlarmInstall_004662e0(void) {
         nop
         /* entry 3 / body (offset 0x90) */
     L_fea2_body:
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         push    esi
         lea     esi, [eax*4]
         mov     eax, dword ptr [eax*4 + 0x84]
@@ -208,7 +208,7 @@ __declspec(naked) void FourEntryAlarmInstall_004662e0(void) {
         pop     esi
         ret
     L_fea2_phase0:
-        mov     ecx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_baseSel_00542060]
         push    0x267
         mov     eax, dword ptr [ecx*4 + 0x30]
         cmp     eax, 1
@@ -232,7 +232,7 @@ __declspec(naked) void FourEntryAlarmInstall_004662e0(void) {
         pop     esi
         ret
     L_fea2_entry4:
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         mov     ecx, dword ptr [eax*4 + 0x34]
         mov     dword ptr [g_eventQueueEnd], ecx
         mov     edx, dword ptr [eax*4 + 0x38]

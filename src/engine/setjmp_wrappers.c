@@ -11,7 +11,7 @@
 #include "engine/scenegraph.h"
 
 /* New globals referenced by these wrappers. */
-extern unsigned int g_setjmp_00542078;   /* 0x00542078 */
+extern unsigned int g_acc_00542078;   /* 0x00542078 */
 extern unsigned int g_setjmp_00ab5750;   /* 0x00ab5750 */
 
 /* Externs for jump targets. */
@@ -149,7 +149,7 @@ void SetJmp_00451ac0(void) {
 
 /* @addr 0x00451ad0 */
 void SetJmp_00451ad0(void) {
-    g_setjmp_00542078 = 0x00000006;
+    g_acc_00542078 = 0x00000006;
     GuardedSeq_00473f10();
 }
 
@@ -173,7 +173,7 @@ void SetJmp_00451b00(void) {
 
 /* @addr 0x00451b10 */
 void SetJmp_00451b10(void) {
-    g_setjmp_00542078 = 0x00000005;
+    g_acc_00542078 = 0x00000005;
     GuardedSeq_00473f10();
 }
 
@@ -197,7 +197,7 @@ void SetJmp_00451b40(void) {
 
 /* @addr 0x00451b50 */
 void SetJmp_00451b50(void) {
-    g_setjmp_00542078 = 0x0000000c;
+    g_acc_00542078 = 0x0000000c;
     GuardedSeq_00473f10();
 }
 
@@ -281,7 +281,7 @@ void SetJmp_00483f20(void) {
 
 /* @addr 0x00485d60 */
 void SetJmp_00485d60(void) {
-    g_setjmp_00542078 = 0x00010000;
+    g_acc_00542078 = 0x00010000;
     DualLoadDualStoreJmp_00485d70();
 }
 

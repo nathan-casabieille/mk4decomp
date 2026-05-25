@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -151,8 +151,8 @@ extern unsigned int g_xformEntityIdx;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueIdx;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542078;
+extern unsigned int g_baseSel_00542060;
+extern unsigned int g_acc_00542078;
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_xformDirtyFlags;
 extern void ArgSarStoreJmp_004594f0(void);
@@ -244,7 +244,7 @@ __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
         nop
         /* === h2 (0x455730): pose-fn 2-state w/ throw setup === */
     L_5730:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -279,14 +279,14 @@ __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
         mov      eax, dword ptr [g_eventQueueIdx]
         add      esp, 4
         mov      dword ptr [g_currentNodeIdx], eax
-        mov      dword ptr [g_data_00542078], 0x16666
+        mov      dword ptr [g_acc_00542078], 0x16666
         mov      dword ptr [g_eventQueueNotMask], 0
         call     ChainGatedNegAccum_0048b740
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_58ff
         mov      ecx, dword ptr [g_fightGroupHead]
-        mov      edx, dword ptr [g_data_00542078]
+        mov      edx, dword ptr [g_acc_00542078]
         push     OFFSET g_data_004e7f28
         mov      dword ptr [ecx*4 + 0x54], edx
         mov      eax, dword ptr [g_fightGroupHead]

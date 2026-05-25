@@ -11,7 +11,7 @@ extern unsigned int g_scaledInit_00542044;
  *   call    F
  *   test    eax, eax
  *   jne     +0x27
- *   mov     eax, [g_state_00535ddc]
+ *   mov     eax, [g_table_00535ddc]
  *   cmp     eax, 0x00030000
  *   mov     [g_walkCallback], eax
  *   jle     +5
@@ -22,7 +22,7 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T2
  *   ret
  */
-extern unsigned int g_state_00535ddc;
+extern unsigned int g_table_00535ddc;
 extern int func_00436090(void);
 extern void func_00430b96(void);
 extern void func_00436324(void);
@@ -30,7 +30,7 @@ extern void func_004362cf(void);
 void Cmp30000And18000_004362b0(void) {
     unsigned int v;
     if (func_00436090() != 0) return;
-    v = g_state_00535ddc;
+    v = g_table_00535ddc;
     g_walkCallback = (void (*)(void))v;
     if ((int)v > 0x30000) {
         func_00430b96();

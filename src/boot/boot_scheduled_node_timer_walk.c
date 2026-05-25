@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -129,7 +129,7 @@ extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_eventQueueIdx;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_xformScratch2088;
@@ -163,7 +163,7 @@ __declspec(naked) void BootScheduledNodeTimerWalk_0041f570(void)
         jg      L_bsntw_checkDead
         mov     eax, esi
         sar     eax, 2
-        mov     dword ptr [g_data_00542060], eax
+        mov     dword ptr [g_baseSel_00542060], eax
         mov     ecx, dword ptr [eax*4 + 0x14]
         mov     dword ptr [g_eventQueueNotMask], ecx
         mov     edx, dword ptr [eax*4 + 0x18]
@@ -191,10 +191,10 @@ __declspec(naked) void BootScheduledNodeTimerWalk_0041f570(void)
         je      short L_bsntw_checkDead
         cmp     eax, ebx
         jbe     short L_bsntw_checkDead
-        mov     edx, dword ptr [g_data_00542060]
+        mov     edx, dword ptr [g_baseSel_00542060]
         mov     eax, dword ptr [edx*4 + 8]
         mov     dword ptr [esi + 0xd8], eax
-        mov     ecx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_baseSel_00542060]
         mov     edx, dword ptr [g_eventQueueNotMask]
         lea     eax, [ecx*4]
         mov     dword ptr [eax + 0x14], edx

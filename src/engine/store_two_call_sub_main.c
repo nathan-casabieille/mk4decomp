@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -133,7 +133,7 @@ extern unsigned int g_chain_arr_485cc0;
  *   Wrapper_0048a280 -> pause? ret;
  *   g_eventQueueNotMask = 0; EntryThunkBodyStateMachine_00457bb0 -> pause? ret;
  *   g_walkCallback = 6; ByteWordTableTaggedDispatch_0048a050 -> pause? ret;
- *   g_x_00542078 = chain[cj].slot54; g_eventQueueNotMask = chain[cj].slot5c;
+ *   g_acc_00542078 = chain[cj].slot54; g_eventQueueNotMask = chain[cj].slot5c;
  *   StoreTwoCallSubMain_00426b60 -> pause? ret.
  *   g_walkCallback = chain[cj].slot48; chain[cj].slot58 = walkCallback.
  */

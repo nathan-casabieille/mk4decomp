@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -126,7 +126,7 @@ extern unsigned int g_pause_00541e6c;
 /* @addr 0x00439f70 (83b game) - dual block.
  *   Block1 (0..43): store 500 at g_walkCallback; call audio rescale; if pause? ret;
  *     else test bit0 of g_xformDirtyFlags: set => jmp QuadGuardBitGateJmp; clear => jmp CallPauseTestByteJmpCalls.
- *   Block2 (48..82, +4 NOP pad): cmp g_state_00535ddc with 0x13333 and store; if <  clear bit0 of g_xformDirtyFlags, ret; if >= tail-jmp IdCascadeBitSet.
+ *   Block2 (48..82, +4 NOP pad): cmp g_table_00535ddc with 0x13333 and store; if <  clear bit0 of g_xformDirtyFlags, ret; if >= tail-jmp IdCascadeBitSet.
  */
 /* @addr 0x00439f70 (44b): store 0x1f4 at g_walkCallback; call AudioVolumeRescale;
  * if !pause, bit-test state_208c: if set jmp QuadGuardBitGateJmp, else jmp

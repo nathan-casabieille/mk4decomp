@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00460fa0 (127b game) - dual-entry state-gated.
  *   Block A: g_eventQueueCurrent=0xb; call ScaledChainAndF000DirtyToggle; if !pause and bitfield clear and
- *     g_state_00535ddc<=0xcccc: g_eventQueueCurrent=0x9. Then call MStackPush3CmpCall_0048eec0; if !pause: if bitfield set
+ *     g_table_00535ddc<=0xcccc: g_eventQueueCurrent=0x9. Then call MStackPush3CmpCall_0048eec0; if !pause: if bitfield set
  *     g_eventQueueCurrent=0xb; g_walkCallback=g_eventQueueCurrent; jmp StateDispatchYield_00471190.
  *   Block B (+0x70): g_walkCallback=0x8; jmp StateDispatchYield_00471190.
  */
@@ -144,7 +144,7 @@ __declspec(naked) void DualEntryStateGated_00460fa0(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   75h
         _emit   3ch
-        mov     eax, dword ptr [g_state_00535ddc]
+        mov     eax, dword ptr [g_table_00535ddc]
         cmp     eax, 0x0000cccc
         mov     dword ptr [g_walkCallback], eax
         _emit   7fh

@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -123,23 +123,23 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0048a1c0 (89b)
- *   if g_state_00541fa4==0 and (g_state_0053a7b0&1)!=0:
+ *   if g_zero_00541fa4==0 and (g_state_0053a7b0&1)!=0:
  *     g_eventQueueWorkType=0x1f9; call Push16Call_00489f50;
- *     g_state_00541fa4 = g_data_0053a770;
- *   if g_state_00541fa8==0 and (g_state_0053a7b0&2)!=0:
+ *     g_zero_00541fa4 = g_data_0053a770;
+ *   if g_zero_00541fa8==0 and (g_state_0053a7b0&2)!=0:
  *     g_eventQueueWorkType=0x1fe; call Push16Call_00489f50;
- *     g_state_00541fa8 = g_data_0053a770;
+ *     g_zero_00541fa8 = g_data_0053a770;
  *   ret.
  */
 void DualBitGateInitCall_0048a1c0(void) {
-    if (g_state_00541fa4 == 0 && (g_state_0053a7b0 & 1) != 0) {
+    if (g_zero_00541fa4 == 0 && (g_state_0053a7b0 & 1) != 0) {
         g_eventQueueWorkType = 0x1f9;
         Push16Call_00489f50();
-        g_state_00541fa4 = g_data_0053a770;
+        g_zero_00541fa4 = g_data_0053a770;
     }
-    if (g_state_00541fa8 == 0 && (g_state_0053a7b0 & 2) != 0) {
+    if (g_zero_00541fa8 == 0 && (g_state_0053a7b0 & 2) != 0) {
         g_eventQueueWorkType = 0x1fe;
         Push16Call_00489f50();
-        g_state_00541fa8 = g_data_0053a770;
+        g_zero_00541fa8 = g_data_0053a770;
     }
 }

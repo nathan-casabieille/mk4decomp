@@ -38,8 +38,8 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state1_0053a408;
-extern unsigned int g_state1_00537e88;
+extern unsigned int g_active_0053a408;
+extern unsigned int g_active_00537e88;
 extern unsigned int g_state2_00541d88;
 extern unsigned int g_state2_00537ea8;
 extern unsigned int g_state4_0053a3e0;
@@ -63,7 +63,7 @@ __declspec(naked) void DispatcherComplex115_0049f900(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   5bh
-        mov     eax, dword ptr [g_state1_0053a408]
+        mov     eax, dword ptr [g_active_0053a408]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         _emit   75h
@@ -73,7 +73,7 @@ __declspec(naked) void DispatcherComplex115_0049f900(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   3fh
-        mov     dword ptr [g_state1_0053a408], 2
+        mov     dword ptr [g_active_0053a408], 2
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_state4_0053a3e0], eax
         call    RoundWinTransition_0049e7e0
@@ -105,7 +105,7 @@ __declspec(naked) void DispatcherComplex115_0049f980(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   5bh
-        mov     eax, dword ptr [g_state1_00537e88]
+        mov     eax, dword ptr [g_active_00537e88]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         _emit   75h
@@ -115,7 +115,7 @@ __declspec(naked) void DispatcherComplex115_0049f980(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   3fh
-        mov     dword ptr [g_state1_00537e88], 2
+        mov     dword ptr [g_active_00537e88], 2
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_state4_0053a700], eax
         call    RoundWinTransition_0049e7e0

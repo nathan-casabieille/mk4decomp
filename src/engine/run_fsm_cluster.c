@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -128,12 +128,12 @@ extern void RunFsmCluster_004846b0(void);
 
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 
 __declspec(naked) void GameStateLinearAdvance4Way_00484480(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         xor      ecx, ecx
         shl      eax, 2
         push     esi
@@ -145,7 +145,7 @@ __declspec(naked) void GameStateLinearAdvance4Way_00484480(void)
         jmp      dword ptr [edx*4 + L_480_jmptbl]
     L_44a8:
         mov      dword ptr [eax + 8], OFFSET GameStateLinearAdvance4Way_00484480
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      esi, OFFSET GameStateLinearAdvance4Way_00484480
         mov      dword ptr [edx*4 + 0x84], 2
         mov      edx, dword ptr [eax + 4]
@@ -156,7 +156,7 @@ __declspec(naked) void GameStateLinearAdvance4Way_00484480(void)
         inc      edx
         mov      dword ptr [g_currentNodeIdx], edx
         mov      dword ptr [eax + 4], edx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], ecx
         call     RunFsmCluster_004846b0
         mov      dword ptr [g_framePauseFlag], 1
@@ -165,7 +165,7 @@ __declspec(naked) void GameStateLinearAdvance4Way_00484480(void)
         ret
     L_4509:
         mov      dword ptr [eax + 8], OFFSET GameStateLinearAdvance4Way_00484480
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      esi, OFFSET GameStateLinearAdvance4Way_00484480
         mov      dword ptr [edx*4 + 0x84], 3
         mov      edx, dword ptr [eax + 4]
@@ -176,7 +176,7 @@ __declspec(naked) void GameStateLinearAdvance4Way_00484480(void)
         inc      edx
         mov      dword ptr [g_currentNodeIdx], edx
         mov      dword ptr [eax + 4], edx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], ecx
         call     RunFsmCluster_004846b0
         mov      dword ptr [g_framePauseFlag], 1
@@ -185,7 +185,7 @@ __declspec(naked) void GameStateLinearAdvance4Way_00484480(void)
         ret
     L_456a:
         mov      dword ptr [eax + 8], OFFSET GameStateLinearAdvance4Way_00484480
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      esi, OFFSET GameStateLinearAdvance4Way_00484480
         mov      dword ptr [edx*4 + 0x84], 4
         mov      edx, dword ptr [eax + 4]
@@ -196,7 +196,7 @@ __declspec(naked) void GameStateLinearAdvance4Way_00484480(void)
         inc      edx
         mov      dword ptr [g_currentNodeIdx], edx
         mov      dword ptr [eax + 4], edx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], ecx
         call     RunFsmCluster_004846b0
         mov      dword ptr [g_framePauseFlag], 1
@@ -205,7 +205,7 @@ __declspec(naked) void GameStateLinearAdvance4Way_00484480(void)
         ret
     L_45cb:
         mov      dword ptr [eax + 8], OFFSET GameStateLinearAdvance4Way_00484480
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      esi, 1
         mov      edi, OFFSET GameStateLinearAdvance4Way_00484480
         mov      dword ptr [edx*4 + 0x84], esi
@@ -217,7 +217,7 @@ __declspec(naked) void GameStateLinearAdvance4Way_00484480(void)
         inc      edx
         mov      dword ptr [g_currentNodeIdx], edx
         mov      dword ptr [eax + 4], edx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], ecx
         call     RunFsmCluster_004846b0
         mov      dword ptr [g_framePauseFlag], esi

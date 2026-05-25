@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -132,7 +132,7 @@ extern unsigned int g_data_004eece8;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_xformDirtyFlags;
 extern void ArgSarStoreJmp_004594f0(void);
@@ -169,7 +169,7 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5efc
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [eax*4 + 0x80]
         cmp      ecx, 0x3333
         mov      dword ptr [g_walkCallback], ecx
@@ -202,7 +202,7 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5f54
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [eax*4 + 0x80]
         cmp      eax, 0x3333
         mov      dword ptr [g_walkCallback], eax
@@ -264,7 +264,7 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5fe2
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x100a
         mov      dword ptr [g_walkCallback], eax
         push     OFFSET g_data_004eec90
@@ -332,7 +332,7 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         nop
         nop
     L_6060:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         xor      edx, edx
         shl      eax, 2
         push     edi
@@ -361,7 +361,7 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
     L_60c5:
         mov      dword ptr [g_currentNodeFlags], 0x147a
         mov      dword ptr [eax + 8], OFFSET L_6060
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edi, OFFSET L_6060
         add      edi, 0x1000000
         mov      dword ptr [ecx*4 + 0x84], 1
@@ -372,7 +372,7 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], edx
         call     Phase3Packed3EntryDispatch_00486130
         mov      dword ptr [g_framePauseFlag], 1

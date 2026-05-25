@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -143,19 +143,19 @@ extern unsigned int g_data_004e2868;
 extern unsigned int g_data_004f29c0;
 extern unsigned int g_data_0052aac4;
 extern unsigned int g_data_00535e44;
-extern unsigned int g_data_00537e88;
+extern unsigned int g_active_00537e88;
 extern unsigned int g_data_00537eec;
 extern unsigned int g_data_00537f48;
 extern unsigned int g_data_005380e0;
 extern unsigned int g_data_0053a3c0;
-extern unsigned int g_data_0053a408;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_data_0053a468;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541fb0;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_data_005433ec;
@@ -167,7 +167,7 @@ extern unsigned int g_data_00543728;
 __declspec(naked) void SceneEvalFsm_0049dea0(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     ebx
         push     esi
         xor      ebx, ebx
@@ -250,7 +250,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         test     byte ptr [g_xformDirtyFlags], 1
         jne      L_e010
         mov      dword ptr [g_walkCallback], 1
-        mov      dword ptr [g_data_0053a408], 1
+        mov      dword ptr [g_active_0053a408], 1
     L_e010:
         call     AmbientMonitorCluster_0049e3c0
         cmp      dword ptr [g_framePauseFlag], ebx
@@ -260,9 +260,9 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         jne      L_e1aa
         cmp      dword ptr [g_data_0053a3c0], ebx
         je       L_e0fc
-        cmp      dword ptr [g_data_0053a408], 2
+        cmp      dword ptr [g_active_0053a408], 2
         je       L_e0fc
-        mov      eax, dword ptr [g_data_00537e88]
+        mov      eax, dword ptr [g_active_00537e88]
         cmp      eax, 2
         mov      dword ptr [g_walkCallback], eax
         je       L_e0fc
@@ -284,7 +284,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         mov      dword ptr [g_data_00537f48], ebx
     L_e09d:
         mov      dword ptr [esi + 8], OFFSET SceneEvalFsm_0049dea0
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET SceneEvalFsm_0049dea0
         mov      dword ptr [edx*4 + 0x84], 4
         mov      eax, dword ptr [esi + 4]
@@ -295,7 +295,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], ebx
         call     PendingMatch_00461ca0
         mov      dword ptr [g_framePauseFlag], 1
@@ -316,7 +316,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_e1aa
         mov      dword ptr [esi + 8], OFFSET SceneEvalFsm_0049dea0
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, OFFSET SceneEvalFsm_0049dea0
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      eax, dword ptr [esi + 4]
@@ -327,7 +327,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], ebx
         call     PhaseClampInstallSlot_0049e1c0
         mov      dword ptr [g_framePauseFlag], 1

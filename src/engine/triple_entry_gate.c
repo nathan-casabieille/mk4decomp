@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0045e5d0 (111b game) - 3-entry threshold/state-check gates.
- *   Block A: if g_state_00535ddc > 0x10000: jmp PendingMatch_0045e640; else clear bit 0 of g_xformDirtyFlags, ret.
+ *   Block A: if g_table_00535ddc > 0x10000: jmp PendingMatch_0045e640; else clear bit 0 of g_xformDirtyFlags, ret.
  *   Block B (+0x30): if g_state_0053a51c == 8: ret (no flag clear); else clear bit 0, ret.
  *   Block C (+0x4c): same as A but inlined (no jmp), then jmp PendingMatch_0045e640 at end.
  */
@@ -132,7 +132,7 @@ extern void PendingMatch_0045e640(void);
 
 __declspec(naked) void TripleEntryGate_0045e5d0(void) {
     __asm {
-        mov     eax, dword ptr [g_state_00535ddc]
+        mov     eax, dword ptr [g_table_00535ddc]
         cmp     eax, 0x00010000
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh
@@ -164,7 +164,7 @@ __declspec(naked) void TripleEntryGate_0045e5d0(void) {
         and     al, 0xfe
         mov     dword ptr [g_xformDirtyFlags], eax
         ret
-        mov     eax, dword ptr [g_state_00535ddc]
+        mov     eax, dword ptr [g_table_00535ddc]
         cmp     eax, 0x00010000
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh

@@ -20,8 +20,8 @@ extern packed_ptr g_fightGroupHead;
  */
 extern unsigned int g_data_0054355c;
 extern unsigned int g_data_00543714;
-extern unsigned int g_data_0053a408;
-extern unsigned int g_data_00537e88;
+extern unsigned int g_active_0053a408;
+extern unsigned int g_active_00537e88;
 extern void DualSeqBranchInit_00477a20(void);
 extern void YRiseSpawnerCluster_00477bd0(void);
 __declspec(naked) void MultiGateDispatchCallJmp_004779d0(void) {
@@ -34,7 +34,7 @@ __declspec(naked) void MultiGateDispatchCallJmp_004779d0(void) {
         test    eax, eax
         _emit   74h
         _emit   2bh
-        mov     eax, dword ptr [g_data_0053a408]
+        mov     eax, dword ptr [g_active_0053a408]
         test    eax, eax
         _emit   74h
         _emit   0eh
@@ -43,7 +43,7 @@ __declspec(naked) void MultiGateDispatchCallJmp_004779d0(void) {
         test    eax, eax
         _emit   75h
         _emit   13h
-        mov     eax, dword ptr [g_data_00537e88]
+        mov     eax, dword ptr [g_active_00537e88]
         test    eax, eax
         _emit   74h
         _emit   0ah

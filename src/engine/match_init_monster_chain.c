@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -137,7 +137,7 @@ extern void StoreTwoCall_0049cb40(void);
 extern void MatchInitMonsterChain_004228b0(void);
 
 /* @addr 0x00403170 (348b boot) - 3-state install-self phase dispatcher.
- *   Reads phase from [g_data_00542060*4 + 0x84], zeroes it, then dispatches
+ *   Reads phase from [g_baseSel_00542060*4 + 0x84], zeroes it, then dispatches
  *   on phase = 0, 1, 2, 3.
  *     - phase 0 / 1: jump to the heavy "first-time init" path that pushes 4
  *       on TableWalkBoundedCmp_004bd890, calls BootInitGuardedCallChain_004265d0,
@@ -160,11 +160,11 @@ extern unsigned int g_data_00541dc8;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_pendingNodeType;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 
 __declspec(naked) void Phase3InstallSelf_00403170(void) {
     __asm {
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         push    esi
         push    edi
         xor     edi, edi
@@ -228,7 +228,7 @@ __declspec(naked) void Phase3InstallSelf_00403170(void) {
         push    offset g_data_004a2180
         call    StoreTwoCall_0049cb40
         mov     dword ptr [esi + 8], offset Phase3InstallSelf_00403170
-        mov     ecx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_baseSel_00542060]
         mov     edx, offset Phase3InstallSelf_00403170
         add     esp, 8
         mov     dword ptr [ecx*4 + 0x84], 2
@@ -240,7 +240,7 @@ __declspec(naked) void Phase3InstallSelf_00403170(void) {
         inc     eax
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], edi
         call    MatchInitMonsterChain_004228b0
         mov     dword ptr [g_framePauseFlag], 1

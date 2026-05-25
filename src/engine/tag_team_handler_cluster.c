@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -145,7 +145,7 @@ extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_eventQueueIdx;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern void MStackAngleRatioSubchain_00476af0(void);
 extern void Thunk_0049cbc0(void);
 
@@ -198,7 +198,7 @@ __declspec(naked) void ThrowEventCluster_0043e960(void)
         nop
         /* === h2 (0x43ea00): pose-fn 4-case dispatch === */
     L_ea00:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         push     edi
         xor      edi, edi
@@ -214,7 +214,7 @@ __declspec(naked) void ThrowEventCluster_0043e960(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_ebc3
         mov      dword ptr [esi + 8], OFFSET L_ea00
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, OFFSET L_ea00
         mov      dword ptr [ecx*4 + 0x84], 2
         mov      eax, dword ptr [esi + 4]
@@ -225,7 +225,7 @@ __declspec(naked) void ThrowEventCluster_0043e960(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     ComboMenuFsmCluster_0043f3a0
         mov      dword ptr [g_framePauseFlag], 1
@@ -240,7 +240,7 @@ __declspec(naked) void ThrowEventCluster_0043e960(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_ebc3
         mov      dword ptr [esi + 8], OFFSET L_ea00
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET L_ea00
         mov      dword ptr [edx*4 + 0x84], 3
         mov      eax, dword ptr [esi + 4]
@@ -251,7 +251,7 @@ __declspec(naked) void ThrowEventCluster_0043e960(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     TagTeamHandlerCluster_0043ede0
         mov      dword ptr [g_framePauseFlag], 1
@@ -261,7 +261,7 @@ __declspec(naked) void ThrowEventCluster_0043e960(void)
     L_eb18:
         /* case 3: install state 4 + 43f2c0 */
         mov      dword ptr [esi + 8], OFFSET L_ea00
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET L_ea00
         mov      dword ptr [eax*4 + 0x84], 4
         mov      eax, dword ptr [esi + 4]
@@ -272,7 +272,7 @@ __declspec(naked) void ThrowEventCluster_0043e960(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     InstallSelfChainStateInit_0043f2c0
         mov      dword ptr [g_framePauseFlag], 1
@@ -281,10 +281,10 @@ __declspec(naked) void ThrowEventCluster_0043e960(void)
         ret
     L_eb76:
         /* case 0: copy params, install state 1 */
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [eax*4 + 0x64], ecx
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [g_eventQueueIdx]
         mov      dword ptr [edx*4 + 0x68], eax
         mov      eax, 1
@@ -333,7 +333,7 @@ __declspec(naked) void ThrowEventCluster_0043e960(void)
         nop
         /* === h3 (0x43ebe0): pose-fn 2-state w/ 0x7ae inc === */
     L_ebe0:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -343,10 +343,10 @@ __declspec(naked) void ThrowEventCluster_0043e960(void)
         add      dword ptr [g_currentNodeFlags], 0x7ae
         jmp      short L_ec49
     L_ec0e:
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [ecx*4 + 0x64], edx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_eventQueueIdx]
         mov      dword ptr [eax*4 + 0x68], ecx
         mov      edx, dword ptr [g_data_0052ab10]

@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -129,9 +129,9 @@ extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_eventQueueIdx;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_data_00542078;
+extern unsigned int g_acc_00542078;
 extern unsigned int g_xformScratch2088;
 extern void Chain2AxisDiffStoreTailJmp_0044cad0(void);
 extern void DualPushAddCallDualPopJmp_0044cc50(void);
@@ -145,7 +145,7 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
 {
     __asm {
         /* === h1 (0x449010): pre-fade init → tail-jmp 473f50 === */
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [eax*4 + 0x64]
         mov      dword ptr [g_fightGroupHead], ecx
         call     MStackPush2RunCountdown_004089e0
@@ -170,7 +170,7 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         test     eax, eax
         jne      short L_909c
         mov      dword ptr [g_walkCallback], 2
-        mov      dword ptr [g_data_00542078], 4
+        mov      dword ptr [g_acc_00542078], 4
         jmp      GuardedSeq_00473f50
     L_909c:
         ret
@@ -179,7 +179,7 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         nop
         /* === h2 (0x4490a0): pose-fn 4-case FSM === */
     L_90a0:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -191,7 +191,7 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         /* case 1: install state 2 */
         mov      dword ptr [g_eventQueueCurrent], 0xfffeb334
         mov      dword ptr [esi + 8], OFFSET L_90a0
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, OFFSET L_90a0
         add      edx, 0x2000000
         mov      dword ptr [ecx*4 + 0x84], 2
@@ -202,7 +202,7 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     PendingMatch_004492f0
         mov      dword ptr [g_framePauseFlag], 1
@@ -218,7 +218,7 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         ret
     L_9160:
         /* case 3: store fade params, call 44cc50, install state 4 */
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_eventQueueWorkType], 0xfffee667
         mov      edx, dword ptr [ecx*4 + 0x68]
         mov      dword ptr [g_eventQueueIdx], edx
@@ -232,7 +232,7 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         mov      dword ptr [g_xformScratch2088], ecx
         mov      dword ptr [g_eventQueueCurrent], 0xfffed99a
         mov      dword ptr [esi + 8], OFFSET L_90a0
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET L_90a0
         add      ecx, 0x4000000
         mov      dword ptr [edx*4 + 0x84], 4
@@ -243,7 +243,7 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
         call     PendingMatch_004492f0
         mov      dword ptr [g_framePauseFlag], 1
@@ -251,11 +251,11 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         ret
     L_9211:
         /* case 0: full init - call 4493e0 helper via push/call, then chain */
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_eventQueueEnd]
         push     0x4493e0
         mov      dword ptr [eax*4 + 0x64], ecx
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [g_eventQueueIdx]
         mov      dword ptr [edx*4 + 0x68], eax
         call     StoreLoadJmp_00404ef0

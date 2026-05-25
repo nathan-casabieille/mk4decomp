@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -126,7 +126,7 @@ extern unsigned int g_data_004d50b4;
 extern unsigned int g_data_004f3ae4;
 extern unsigned int g_data_004f3ae8;
 extern unsigned int g_currentNodeIdx;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_data_005433c4;
 extern unsigned int g_data_005433c8;
 extern unsigned int g_data_00543440;
@@ -187,7 +187,7 @@ __declspec(naked) void AudioMixerKnobUpdate_004a8aa0(void)
         jne      short L_8b68
         mov      byte ptr [eax*8 + g_data_005435a0], 0
     L_8b68:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         lea      ecx, [ecx + ecx*2]
         movsx    edx, byte ptr [ecx*8 + g_data_005435a0]
         mov      ecx, dword ptr [g_data_0054359c]
@@ -251,7 +251,7 @@ __declspec(naked) void AudioMixerKnobUpdate_004a8aa0(void)
         mov      byte ptr [eax*8 + g_data_005435a0], 0
     L_8c67:
         lea      edx, [ecx + ecx*2]
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         movsx    eax, byte ptr [edx*8 + g_data_005435a0]
         mov      edx, dword ptr [g_data_005433c8]
         mov      dword ptr [g_walkCallback], eax

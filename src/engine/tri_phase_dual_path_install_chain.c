@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -134,7 +134,7 @@ extern void EsiEdiAliasDualMul10_004906b0(void);
 extern void InstallSelfThresholdDispatch_0047e310(void);
 
 /* @addr 0x0047e1a0 (355b game) - 3-entry packed phase chain w/ alarms.
- *   Entry 1 (offset 0, 51b): writes 0x1012 into [g_data_00542060*4+0x74]
+ *   Entry 1 (offset 0, 51b): writes 0x1012 into [g_baseSel_00542060*4+0x74]
  *     (mirrored 0x54206c), calls MStackPushSet0008_004901a0, on no-error
  *     pushes 0x4ed590 (alarm string) and calls ArgSarStoreJmp_004594f0.
  *   13b NOP align pad.
@@ -154,13 +154,13 @@ extern void InstallSelfThresholdDispatch_0047e310(void);
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_xformDirtyFlags;
 extern void ArgSarStoreJmp_004594f0(void);
 
 __declspec(naked) void Alarm3EntryPhaseChain_0047e1a0(void) {
     __asm {
-        mov     ecx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x1012
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
@@ -189,9 +189,9 @@ __declspec(naked) void Alarm3EntryPhaseChain_0047e1a0(void) {
         nop
         /* entry 2 (offset 0x40) */
     L_a3e_entry2:
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x68], 0x402
-        mov     ecx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x201
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
@@ -220,7 +220,7 @@ __declspec(naked) void Alarm3EntryPhaseChain_0047e1a0(void) {
         nop
         /* entry 3 / body (offset 0x90) */
     L_a3e_body:
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         push    ebx
         push    esi
         mov     ebx, 1

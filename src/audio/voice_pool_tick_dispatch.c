@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -122,7 +122,7 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_data_005437f4;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_framePauseFlag;
@@ -150,7 +150,7 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
 {
     __asm
     {
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         push    ebx
         push    esi
         push    edi
@@ -179,7 +179,7 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
         test    eax, eax
         mov     ebx, 1
         je      short L_asimi_skipDispatch
-        mov     ecx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, dword ptr [ecx*4 + 0x30]
         lea     edx, [eax + eax*8]
         mov     eax, dword ptr [edx*4 + 0x4f383c]
@@ -203,7 +203,7 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
         call    VoicePoolTickDispatch_004a4c10
         mov     dword ptr [g_eventQueueCurrent], 0x20
         mov     dword ptr [edi + 8], offset AudioStateInitMultiInstall_004a4d20
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         mov     ecx, offset AudioStateInitMultiInstall_004a4d20
         add     ecx, 0x2000000
         mov     dword ptr [eax*4 + 0x84], 2
@@ -214,7 +214,7 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
         inc     eax
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [edi + 4], eax
-        mov     edx, dword ptr [g_data_00542060]
+        mov     edx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    InstallSelfPackedF80_00426000
         mov     dword ptr [g_framePauseFlag], ebx
@@ -243,7 +243,7 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
         push    0x5159b8
         call    AudioInitArgs3_004a1f20
         movsx   edx, byte ptr [esi - 0xc]
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         add     esi, 0x24
         add     edx, eax
         add     esp, 0x10
@@ -252,7 +252,7 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
         jb      short L_asimi_loop
         push    0x4f6358
         call    AudioBindEntry_004a1e40
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         add     esp, 4
         mov     dword ptr [eax*4 + 0x30], 5
     L_asimi_install2:

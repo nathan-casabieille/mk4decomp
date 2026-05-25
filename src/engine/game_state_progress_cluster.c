@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -125,7 +125,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004e4b48;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_eventQueueChild;
@@ -159,7 +159,7 @@ __declspec(naked) void GameStateProgressCluster_0043aff0(void)
         nop
         /* H2 (L_b020): dual-state advance */
     L_b020:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         xor      edx, edx
         shl      eax, 2
         push     esi
@@ -176,7 +176,7 @@ __declspec(naked) void GameStateProgressCluster_0043aff0(void)
         ret
     L_b047:
         mov      dword ptr [eax + 8], OFFSET L_b020
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      esi, OFFSET L_b020
         mov      dword ptr [ecx*4 + 0x84], 2
         mov      ecx, dword ptr [eax + 4]
@@ -187,7 +187,7 @@ __declspec(naked) void GameStateProgressCluster_0043aff0(void)
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], edx
         call     ScaledLoadIncJmp_00428d00
         mov      dword ptr [g_framePauseFlag], 1
@@ -198,7 +198,7 @@ __declspec(naked) void GameStateProgressCluster_0043aff0(void)
         mov      dword ptr [g_eventQueueNotMask], 3
         mov      dword ptr [g_eventQueueChild], 0x20
         mov      dword ptr [eax + 8], OFFSET L_b020
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      esi, 1
         mov      edi, OFFSET L_b020
         mov      dword ptr [ecx*4 + 0x84], esi
@@ -210,7 +210,7 @@ __declspec(naked) void GameStateProgressCluster_0043aff0(void)
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], edx
         call     InstallSelfDoubleMStack_0043b9a0
         mov      dword ptr [g_framePauseFlag], esi
@@ -225,7 +225,7 @@ __declspec(naked) void GameStateProgressCluster_0043aff0(void)
         nop
         /* H3 (L_b120): per-entity clear + advance */
     L_b120:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -243,7 +243,7 @@ __declspec(naked) void GameStateProgressCluster_0043aff0(void)
         mov      dword ptr [g_currentNodeFlags], 0x18000
         mov      dword ptr [g_eventQueueChild], 0x78
         mov      dword ptr [esi + 8], OFFSET L_b120
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, OFFSET L_b120
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      eax, dword ptr [esi + 4]
@@ -254,7 +254,7 @@ __declspec(naked) void GameStateProgressCluster_0043aff0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     CmpDispatchPushCallPop_00438530
         mov      dword ptr [g_framePauseFlag], 1

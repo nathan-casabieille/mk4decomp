@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -72,8 +72,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -537,7 +537,7 @@ extern unsigned int g_data_00535db0;
 extern unsigned int g_data_00535e44;
 extern unsigned int g_data_00535e4c;
 extern unsigned int g_data_00535e6c;
-extern unsigned int g_data_00537e88;
+extern unsigned int g_active_00537e88;
 extern unsigned int g_data_00537e94;
 extern unsigned int g_data_00537eec;
 extern unsigned int g_data_00537ef0;
@@ -560,7 +560,7 @@ extern unsigned int g_data_0053a2d0;
 extern unsigned int g_data_0053a324;
 extern unsigned int g_data_0053a328;
 extern unsigned int g_data_0053a3c0;
-extern unsigned int g_data_0053a408;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_data_0053a430;
 extern unsigned int g_data_0053a464;
 extern unsigned int g_data_0053a468;
@@ -582,10 +582,10 @@ extern unsigned int g_eventQueueTotal;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_eventQueueIdx;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_data_00542078;
+extern unsigned int g_acc_00542078;
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_currentNodeFlags;
@@ -1893,7 +1893,7 @@ __declspec(naked) void StateMachineDualModuloInstall_0043d620(void) {
  *   packed_ptr select. Sets g_walkCallback=0x52, calls
  *   TableLookupCall_00489ff0; on no-error sets 0x54206c=0xa, calls
  *   ScaledIndexConditionalAdd_0048e400. Then dispatches on
- *   g_data_00542060:
+ *   g_baseSel_00542060:
  *     - matches g_data_00538038: if g_data_0054388c is set, picks
  *       &g_data_004ec050>>2 (state 1) or &g_data_004ec040>>2 (other)
  *       into g_eventQueueTotal, clears g_data_0054388c, jumps to next.
@@ -1921,7 +1921,7 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_sfp_done
-        mov     ecx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, dword ptr [g_data_00538038]
         cmp     ecx, eax
         jne     short L_sfp_check2
@@ -2031,7 +2031,7 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
  */
 __declspec(naked) void Phase3InstallSelfChain_00421380(void) {
     __asm {
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         push    esi
         lea     esi, [eax*4]
         mov     eax, dword ptr [eax*4 + 0x84]
@@ -2078,7 +2078,7 @@ __declspec(naked) void Phase3InstallSelfChain_00421380(void) {
         jne     short L_pis2_done
     L_pis2_skipCall:
         mov     dword ptr [esi + 8], offset Phase3InstallSelfChain_00421380
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         mov     ecx, offset Phase3InstallSelfChain_00421380
         mov     dword ptr [eax*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
@@ -2089,7 +2089,7 @@ __declspec(naked) void Phase3InstallSelfChain_00421380(void) {
         inc     eax
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
-        mov     edx, dword ptr [g_data_00542060]
+        mov     edx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
         call    RoundEndFsm_0042b2f0
         mov     dword ptr [g_framePauseFlag], 1
@@ -2164,7 +2164,7 @@ void DualWalkRange_00468440(void) {
         mov     eax, dword ptr [g_eventQueueIdx]
         mov     edx, dword ptr [g_xformScratch2088]
         mov     dword ptr [eax*4 + 0x5c], edx
-        mov     dword ptr [g_data_00542078], 3
+        mov     dword ptr [g_acc_00542078], 3
         call    PendingMatch_004685d0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -2183,9 +2183,9 @@ void DualWalkRange_00468440(void) {
         mov     ecx, dword ptr [g_eventQueueIdx]
         mov     eax, dword ptr [g_xformScratch2088]
         mov     dword ptr [ecx*4 + 0x5c], eax
-        mov     eax, dword ptr [g_data_00542078]
+        mov     eax, dword ptr [g_acc_00542078]
         dec     eax
-        mov     dword ptr [g_data_00542078], eax
+        mov     dword ptr [g_acc_00542078], eax
         je      short L_dwr_fwd_done
         call    PendingMatch_004685d0
         mov     eax, dword ptr [g_framePauseFlag]
@@ -2202,7 +2202,7 @@ void DualWalkRange_00468440(void) {
         dec     eax
         mov     dword ptr [g_currentNodeFlags], ecx
         mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [g_data_00542078], 3
+        mov     dword ptr [g_acc_00542078], 3
         call    PendingMatch_004685d0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -2221,9 +2221,9 @@ void DualWalkRange_00468440(void) {
         mov     eax, dword ptr [g_eventQueueIdx]
         mov     edx, dword ptr [g_xformScratch2088]
         mov     dword ptr [eax*4 + 0x5c], edx
-        mov     eax, dword ptr [g_data_00542078]
+        mov     eax, dword ptr [g_acc_00542078]
         dec     eax
-        mov     dword ptr [g_data_00542078], eax
+        mov     dword ptr [g_acc_00542078], eax
         je      short L_dwr_ret
         call    PendingMatch_004685d0
         mov     eax, dword ptr [g_framePauseFlag]
@@ -2239,7 +2239,7 @@ __declspec(naked) void SizeGateInstallSelfThenSubMul10_00473480(void)
     __asm
     {
         mov     eax, dword ptr [g_currentNodeIdx]
-        mov     edx, dword ptr [g_data_00542078]
+        mov     edx, dword ptr [g_acc_00542078]
         push    esi
         xor     esi, esi
         mov     ecx, dword ptr [eax*4 + 0x1c]
@@ -2349,7 +2349,7 @@ __declspec(naked) void FourPackedSubInitCmpDispatch_004665b0(void)
 {
     __asm
     {
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         mov     ecx, dword ptr [eax*4 + 0x30]
         mov     dword ptr [g_pendingNodeType], ecx
         mov     edx, dword ptr [eax*4 + 0x34]
@@ -2395,7 +2395,7 @@ __declspec(naked) void FourPackedSubInitCmpDispatch_004665b0(void)
         nop
         nop
     L_fpsicd_sub3:
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         push    esi
         lea     esi, [eax*4]
         mov     eax, dword ptr [eax*4 + 0x84]
@@ -2406,7 +2406,7 @@ __declspec(naked) void FourPackedSubInitCmpDispatch_004665b0(void)
         pop     esi
         ret
     L_fpsicd_sub3_phase0:
-        mov     ecx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, dword ptr [ecx*4 + 0x30]
         cmp     eax, 1
         mov     dword ptr [g_walkCallback], eax
@@ -2443,7 +2443,7 @@ __declspec(naked) void FourPackedSubInitCmpDispatch_004665b0(void)
         nop
         nop
     L_fpsicd_sub4:
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         mov     ecx, dword ptr [eax*4 + 0x38]
         mov     dword ptr [g_eventQueueIdx], ecx
         mov     edx, dword ptr [eax*4 + 0x3c]
@@ -2458,7 +2458,7 @@ __declspec(naked) void FourPackedSubInitCmpDispatch_004665b0(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_fpsicd_sub4_ret
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         push    0x4eaa48
         mov     ecx, dword ptr [eax*4 + 0x34]
         mov     dword ptr [g_fightGroupHead], ecx
@@ -2482,7 +2482,7 @@ __declspec(naked) void StageEventExitCluster_0047cd50(void)
         nop
         /* H2 (L_cd60): 4-state FSM */
     L_cd60:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -2565,7 +2565,7 @@ __declspec(naked) void StageEventExitCluster_0047cd50(void)
         test     eax, eax
         jne      short L_cf58
     L_ceda:
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x20c
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x74], eax
@@ -2642,7 +2642,7 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
         nop
         /* H3 (L_d5c0): 4-state FSM */
     L_d5c0:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         shl      eax, 2
         mov      ecx, dword ptr [eax + 0x84]
         mov      dword ptr [eax + 0x84], 0
@@ -2668,7 +2668,7 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
         shr      edx, 2
         mov      dword ptr [g_eventQueueEnd], edx
         mov      dword ptr [eax + 8], OFFSET L_d5c0
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, OFFSET L_d5c0
         add      edx, 0x3000000
         mov      dword ptr [ecx*4 + 0x84], 3
@@ -2679,14 +2679,14 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     SetJmp_004753a0
         mov      dword ptr [g_framePauseFlag], 1
         ret
     L_d68d:
         mov      dword ptr [eax + 8], OFFSET L_d5c0
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, OFFSET L_d5c0
         mov      dword ptr [ecx*4 + 0x84], 2
         mov      ecx, dword ptr [eax + 4]
@@ -2697,16 +2697,16 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     InstallSelfPackedTailJmp_004751f0
         mov      dword ptr [g_framePauseFlag], 1
         ret
     L_d6f0:
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [ecx*4 + 0x64], edx
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_eventQueueIdx]
         mov      dword ptr [ecx*4 + 0x68], edx
         mov      ecx, 1
@@ -2724,7 +2724,7 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
         nop
         nop
         /* H4 */
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     OFFSET g_const_0044d820
         mov      ecx, dword ptr [eax*4 + 0x64]
         mov      dword ptr [g_eventQueueEnd], ecx
@@ -2764,7 +2764,7 @@ __declspec(naked) void VersusScreenFsmCluster_0044f670(void)
         nop
         /* === Helper 2 (0x44f680): counter-driven step + 0x44f680 self === */
     L_f680:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -2796,7 +2796,7 @@ __declspec(naked) void VersusScreenFsmCluster_0044f670(void)
         shr      ecx, 2
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      dword ptr [esi + 8], OFFSET L_f680
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET L_f680
         add      ecx, 0x1000000
         mov      dword ptr [edx*4 + 0x84], 1
@@ -2807,7 +2807,7 @@ __declspec(naked) void VersusScreenFsmCluster_0044f670(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
         call     InstallSelfChainAccumPath_004752b0
         mov      dword ptr [g_framePauseFlag], 1
@@ -2816,7 +2816,7 @@ __declspec(naked) void VersusScreenFsmCluster_0044f670(void)
         ret
         /* === Helper 3 (0x44f750): 3-state dispatch === */
     L_f750:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -2959,7 +2959,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         ret
         /* === Helper 3 (0x455950): main FSM w/ jump table === */
     L_5950:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         push     edi
         xor      edi, edi
@@ -2986,7 +2986,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         mov      ecx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [g_fightGroupHead], ecx
         mov      dword ptr [esi + 8], OFFSET L_5950
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET L_5950
         add      ecx, 0x3000000
         mov      dword ptr [edx*4 + 0x84], 3
@@ -2997,7 +2997,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     InstallSelfPackedTailJmp_004751f0
         mov      dword ptr [g_framePauseFlag], 1
@@ -3011,7 +3011,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         shr      eax, 2
         mov      dword ptr [g_eventQueueEnd], eax
         mov      dword ptr [esi + 8], OFFSET L_5950
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         add      edx, 0x4000000
         mov      dword ptr [ecx*4 + 0x84], 4
         mov      eax, dword ptr [esi + 4]
@@ -3021,7 +3021,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     SetJmp_004753a0
         mov      dword ptr [g_framePauseFlag], 1
@@ -3043,14 +3043,14 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         ret
     L_5abd:
         mov      ecx, dword ptr [g_eventQueueIdx]
-        mov      dword ptr [g_data_00542078], 0x16666
+        mov      dword ptr [g_acc_00542078], 0x16666
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [g_eventQueueNotMask], edi
         call     ChainGatedNegAccum_0048b740
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_5b22
         mov      edx, dword ptr [g_eventQueueEnd]
-        mov      eax, dword ptr [g_data_00542078]
+        mov      eax, dword ptr [g_acc_00542078]
         push     OFFSET g_data_004e7f60
         mov      dword ptr [edx*4 + 0x54], eax
         mov      ecx, dword ptr [g_eventQueueEnd]
@@ -3100,7 +3100,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [edx*4 + 0x64]
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      eax, dword ptr [ecx*4 + 0x34]
@@ -3368,7 +3368,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         nop
         /* === h3 (0x431710): 3-case pose-fn dispatcher === */
     L_1710:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         push     edi
         xor      edi, edi
@@ -3386,7 +3386,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         pop      esi
         ret
     L_1747:
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_data_0052ab10]
         mov      dword ptr [g_fightGroupHead], ecx
         mov      dword ptr [g_walkCallback], edi
@@ -3397,7 +3397,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         call     CameraAimSplineDriver_00430e60
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_191d
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [edx*4 + 0x44], ecx
         lea      eax, [edx*4]
@@ -3410,7 +3410,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [eax + 0x30], ecx
         mov      dword ptr [esi + 8], OFFSET L_1710
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET L_1710
         add      ecx, 0x3000000
         mov      dword ptr [edx*4 + 0x84], 3
@@ -3421,7 +3421,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     PendingMatch_00432110
         mov      dword ptr [g_framePauseFlag], 1
@@ -3429,7 +3429,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         pop      esi
         ret
     L_1823:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [eax*4 + 0x78]
         mov      dword ptr [g_pendingNodeType], ecx
         mov      dword ptr [esi + 8], OFFSET L_1710
@@ -3462,7 +3462,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_191d
         mov      dword ptr [esi + 8], OFFSET L_1710
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, OFFSET L_1710
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      eax, dword ptr [esi + 4]
@@ -3473,7 +3473,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     PendingMatch_00432110
         mov      dword ptr [g_framePauseFlag], 1
@@ -3495,7 +3495,7 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
 {
     __asm {
         /* === h1 (0x449010): pre-fade init → tail-jmp 473f50 === */
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [eax*4 + 0x64]
         mov      dword ptr [g_fightGroupHead], ecx
         call     MStackPush2RunCountdown_004089e0
@@ -3520,7 +3520,7 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         test     eax, eax
         jne      short L_909c
         mov      dword ptr [g_walkCallback], 2
-        mov      dword ptr [g_data_00542078], 4
+        mov      dword ptr [g_acc_00542078], 4
         jmp      GuardedSeq_00473f50
     L_909c:
         ret
@@ -3529,7 +3529,7 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         nop
         /* === h2 (0x4490a0): pose-fn 4-case FSM === */
     L_90a0:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -3541,7 +3541,7 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         /* case 1: install state 2 */
         mov      dword ptr [g_eventQueueCurrent], 0xfffeb334
         mov      dword ptr [esi + 8], OFFSET L_90a0
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, OFFSET L_90a0
         add      edx, 0x2000000
         mov      dword ptr [ecx*4 + 0x84], 2
@@ -3552,7 +3552,7 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     PendingMatch_004492f0
         mov      dword ptr [g_framePauseFlag], 1
@@ -3568,7 +3568,7 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         ret
     L_9160:
         /* case 3: store fade params, call 44cc50, install state 4 */
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_eventQueueWorkType], 0xfffee667
         mov      edx, dword ptr [ecx*4 + 0x68]
         mov      dword ptr [g_eventQueueIdx], edx
@@ -3582,7 +3582,7 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         mov      dword ptr [g_xformScratch2088], ecx
         mov      dword ptr [g_eventQueueCurrent], 0xfffed99a
         mov      dword ptr [esi + 8], OFFSET L_90a0
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET L_90a0
         add      ecx, 0x4000000
         mov      dword ptr [edx*4 + 0x84], 4
@@ -3593,7 +3593,7 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
         call     PendingMatch_004492f0
         mov      dword ptr [g_framePauseFlag], 1
@@ -3601,11 +3601,11 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         ret
     L_9211:
         /* case 0: full init - call 4493e0 helper via push/call, then chain */
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_eventQueueEnd]
         push     0x4493e0
         mov      dword ptr [eax*4 + 0x64], ecx
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [g_eventQueueIdx]
         mov      dword ptr [edx*4 + 0x68], eax
         call     StoreLoadJmp_00404ef0
@@ -3682,7 +3682,7 @@ __declspec(naked) void ComboMoveSelectFsmCluster_0045a2c0(void)
     __asm {
         /* === h1 (0x45a2c0): wait + indirect call OR install state 1 === */
     L_a2c0:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -3747,7 +3747,7 @@ __declspec(naked) void ComboMoveSelectFsmCluster_0045a2c0(void)
         nop
         /* === h2 (0x45a390): pose-fn install state 1 w/ 4294a0 === */
     L_a390:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         xor      edx, edx
         shl      eax, 2
         push     edi
@@ -3769,7 +3769,7 @@ __declspec(naked) void ComboMoveSelectFsmCluster_0045a2c0(void)
         mov      edi, OFFSET L_a390
         mov      dword ptr [g_eventQueueChild], ecx
         mov      dword ptr [eax + 8], OFFSET L_a390
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         add      edi, 0x1000000
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      ecx, dword ptr [eax + 4]
@@ -3779,7 +3779,7 @@ __declspec(naked) void ComboMoveSelectFsmCluster_0045a2c0(void)
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], edx
         call     EsiInstallDecCallChain_004294a0
         mov      dword ptr [g_framePauseFlag], 1
@@ -3798,7 +3798,7 @@ __declspec(naked) void ComboMoveSelectFsmCluster_0045a2c0(void)
         nop
         /* === h3 (0x45a440): pose-fn install state 1 w/ 45c020 + 4283b0 === */
     L_a440:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -3818,7 +3818,7 @@ __declspec(naked) void ComboMoveSelectFsmCluster_0045a2c0(void)
         mov      dword ptr [g_eventQueueIdx], eax
         mov      dword ptr [ecx*4 + 0x24], eax
         mov      dword ptr [esi + 8], OFFSET L_a440
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET L_a440
         add      ecx, 0x1000000
         mov      dword ptr [edx*4 + 0x84], 1
@@ -3829,7 +3829,7 @@ __declspec(naked) void ComboMoveSelectFsmCluster_0045a2c0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
         call     TripleBranchInstall_004283b0
         mov      dword ptr [g_framePauseFlag], 1
@@ -3998,7 +3998,7 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         nop
         /* === h2 (0x44d3a0): pose-fn 2-state intro === */
     L_d3a0:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -4031,7 +4031,7 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         shr      ecx, 2
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      dword ptr [esi + 8], OFFSET L_d3a0
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET L_d3a0
         add      ecx, 0x2000000
         mov      dword ptr [edx*4 + 0x84], 2
@@ -4042,7 +4042,7 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
         call     InstallSelfChainAccumPath_004752b0
         mov      dword ptr [g_framePauseFlag], 1
@@ -4200,7 +4200,7 @@ __declspec(naked) void CharSelectSetupCluster_004565a0(void)
         nop
         /* === h2 (0x456690): pose-fn 4-state status FSM === */
     L_6690:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -4268,7 +4268,7 @@ __declspec(naked) void CharSelectSetupCluster_004565a0(void)
         nop
         /* === h3 (0x4567b0): counter walk loop + 476060 polling === */
     L_67b0:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     ebx
         push     esi
         push     edi
@@ -4410,7 +4410,7 @@ __declspec(naked) void EnduranceStateInitWalk_004785a0(void)
         nop
         /* === h2 (0x478670): pose-fn 2-state w/ clamp/copy walk === */
     L_8670:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     ebx
         push     ebp
         push     esi
@@ -4582,7 +4582,7 @@ __declspec(naked) void AerialHitDispatcher_0047c290(void)
     __asm {
         /* === h1 (0x47c290): pose-fn install state 1 === */
     L_c290:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     ebx
         push     esi
         mov      ebx, 1
@@ -4679,7 +4679,7 @@ __declspec(naked) void AerialHitDispatcher_0047c290(void)
 __declspec(naked) void SceneEvalFsm_0049dea0(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     ebx
         push     esi
         xor      ebx, ebx
@@ -4762,7 +4762,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         test     byte ptr [g_xformDirtyFlags], 1
         jne      L_e010
         mov      dword ptr [g_walkCallback], 1
-        mov      dword ptr [g_data_0053a408], 1
+        mov      dword ptr [g_active_0053a408], 1
     L_e010:
         call     AmbientMonitorCluster_0049e3c0
         cmp      dword ptr [g_framePauseFlag], ebx
@@ -4772,9 +4772,9 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         jne      L_e1aa
         cmp      dword ptr [g_data_0053a3c0], ebx
         je       L_e0fc
-        cmp      dword ptr [g_data_0053a408], 2
+        cmp      dword ptr [g_active_0053a408], 2
         je       L_e0fc
-        mov      eax, dword ptr [g_data_00537e88]
+        mov      eax, dword ptr [g_active_00537e88]
         cmp      eax, 2
         mov      dword ptr [g_walkCallback], eax
         je       L_e0fc
@@ -4796,7 +4796,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         mov      dword ptr [g_data_00537f48], ebx
     L_e09d:
         mov      dword ptr [esi + 8], OFFSET SceneEvalFsm_0049dea0
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET SceneEvalFsm_0049dea0
         mov      dword ptr [edx*4 + 0x84], 4
         mov      eax, dword ptr [esi + 4]
@@ -4807,7 +4807,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], ebx
         call     PendingMatch_00461ca0
         mov      dword ptr [g_framePauseFlag], 1
@@ -4828,7 +4828,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_e1aa
         mov      dword ptr [esi + 8], OFFSET SceneEvalFsm_0049dea0
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, OFFSET SceneEvalFsm_0049dea0
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      eax, dword ptr [esi + 4]
@@ -4839,7 +4839,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], ebx
         call     PhaseClampInstallSlot_0049e1c0
         mov      dword ptr [g_framePauseFlag], 1
@@ -4942,7 +4942,7 @@ __declspec(naked) void BossPunchCluster_00446c50(void)
         nop
         nop
     L_6d60:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -4960,7 +4960,7 @@ __declspec(naked) void BossPunchCluster_00446c50(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_6fc5
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [ecx*4 + 0x64]
         mov      dword ptr [g_eventQueueEnd], edx
         call     GuardedScaled_00475000
@@ -4974,7 +4974,7 @@ __declspec(naked) void BossPunchCluster_00446c50(void)
         shr      eax, 2
         mov      dword ptr [g_eventQueueEnd], eax
         mov      dword ptr [esi + 8], OFFSET L_6d60
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         add      edx, 0x2000000
         mov      dword ptr [ecx*4 + 0x84], 2
         mov      eax, dword ptr [esi + 4]
@@ -4984,7 +4984,7 @@ __declspec(naked) void BossPunchCluster_00446c50(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     InstallSelfChainAccumPath_004752b0
         mov      dword ptr [g_framePauseFlag], 1
@@ -5012,7 +5012,7 @@ __declspec(naked) void BossPunchCluster_00446c50(void)
         shr      edx, 2
         mov      dword ptr [g_eventQueueEnd], edx
         mov      dword ptr [esi + 8], OFFSET L_6d60
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         add      ecx, 0x4000000
         mov      dword ptr [eax*4 + 0x84], 4
         mov      eax, dword ptr [esi + 4]
@@ -5022,7 +5022,7 @@ __declspec(naked) void BossPunchCluster_00446c50(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
         call     InstallSelfChainAccumPath_004752b0
         mov      dword ptr [g_framePauseFlag], 1
@@ -5234,7 +5234,7 @@ __declspec(naked) void BackdashSetupCluster_00440dc0(void)
         nop
         nop
     L_1020:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -5243,7 +5243,7 @@ __declspec(naked) void BackdashSetupCluster_00440dc0(void)
         je       L_1126
         dec      eax
         je       L_10a5
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [eax*4 + 0x64]
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      eax, dword ptr [eax*4 + 0x68]
@@ -5273,7 +5273,7 @@ __declspec(naked) void BackdashSetupCluster_00440dc0(void)
         shr      edx, 2
         mov      dword ptr [g_eventQueueEnd], edx
         mov      dword ptr [esi + 8], OFFSET L_1020
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         add      ecx, 0x2000000
         mov      dword ptr [eax*4 + 0x84], 2
         mov      eax, dword ptr [esi + 4]
@@ -5283,7 +5283,7 @@ __declspec(naked) void BackdashSetupCluster_00440dc0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
         call     InstallSelfChainAccumPath_004752b0
         mov      dword ptr [g_framePauseFlag], 1
@@ -5338,7 +5338,7 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
 {
     __asm {
     L_a090:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [eax*4 + 0x4c]
         mov      dword ptr [g_fightGroupHead], ecx
         call     MStackPush2RunCountdown_004089e0
@@ -5350,7 +5350,7 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         test     eax, eax
         jne      L_a0d7
         mov      dword ptr [g_walkCallback], 3
-        mov      dword ptr [g_data_00542078], 4
+        mov      dword ptr [g_acc_00542078], 4
         jmp      GuardedSeq_00473f10
     L_a0d7:
         ret      
@@ -5362,10 +5362,10 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [eax*4 + 0x64], ecx
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [g_eventQueueIdx]
         mov      dword ptr [edx*4 + 0x68], eax
         mov      ecx, dword ptr [g_eventQueueEnd]
@@ -5429,7 +5429,7 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a274
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     OFFSET L_a290
         mov      edx, dword ptr [eax*4 + 0x64]
         mov      dword ptr [g_eventQueueEnd], edx
@@ -5466,7 +5466,7 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         nop
         nop
     L_a290:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -5481,7 +5481,7 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         dec      eax
         mov      dword ptr [g_eventQueueIdx], eax
         jns      L_a38f
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [ecx*4 + 0x64]
         mov      dword ptr [g_walkCallback], 8
         mov      dword ptr [g_fightGroupHead], edx
@@ -5510,7 +5510,7 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         mov      eax, 4
         test     cl, al
         jne      L_a385
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [ecx*4 + 0x4c]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_fightGroupHead], edx
@@ -5570,13 +5570,13 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         pop      esi
         ret      
     L_a45f:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [eax*4 + 0x64], ecx
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [g_eventQueueIdx]
         mov      dword ptr [edx*4 + 0x68], eax
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_fightGroupHead]
         mov      dword ptr [ecx*4 + 0x4c], edx
         mov      dword ptr [g_eventQueueIdx], 0x29
@@ -5615,7 +5615,7 @@ __declspec(naked) void JuggleSetupCluster_004539d0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     EsiInstallSetCbChainExtend_0048a970
         mov      dword ptr [g_framePauseFlag], 1
@@ -5635,7 +5635,7 @@ __declspec(naked) void JuggleSetupCluster_004539d0(void)
         nop
         nop
     L_3a10:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -5659,7 +5659,7 @@ __declspec(naked) void JuggleSetupCluster_004539d0(void)
         shr      ecx, 2
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      dword ptr [esi + 8], OFFSET L_3a10
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET L_3a10
         add      ecx, 0x2000000
         mov      dword ptr [edx*4 + 0x84], 2
@@ -5670,7 +5670,7 @@ __declspec(naked) void JuggleSetupCluster_004539d0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
         call     InstallSelfChainAccumPath_004752b0
         mov      dword ptr [g_framePauseFlag], 1
@@ -5789,7 +5789,7 @@ __declspec(naked) void JuggleSetupCluster_004539d0(void)
         nop
         nop
     L_3c50:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     ebx
         push     esi
         lea      esi, [eax*4]
@@ -5929,7 +5929,7 @@ __declspec(naked) void JuggleSetupCluster_004539d0(void)
 __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -5950,7 +5950,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         ret
     L_7f20:
         mov      dword ptr [esi + 8], OFFSET StoryCharIntroFsmCluster_00467ed0
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, OFFSET StoryCharIntroFsmCluster_00467ed0
         mov      dword ptr [ecx*4 + 0x84], 2
         mov      eax, dword ptr [esi + 4]
@@ -5961,7 +5961,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     PendingMatch_0046b670
         mov      dword ptr [g_framePauseFlag], 1
@@ -6014,7 +6014,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         nop
         nop
     L_8020:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         push     edi
         mov      ecx, 3
@@ -6028,7 +6028,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
     L_8050:
         mov      dword ptr [g_eventQueueChild], 8
         mov      dword ptr [esi + 8], OFFSET L_8020
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, OFFSET L_8020
         add      edx, 0x2000000
         mov      dword ptr [ecx*4 + 0x84], 2
@@ -6039,7 +6039,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     InstallSelf3WayChainCmp_00428d80
         mov      dword ptr [g_framePauseFlag], 1
@@ -6052,7 +6052,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         mov      dword ptr [g_eventQueueNotMask], eax
         jne      L_8163
         mov      dword ptr [esi + 8], OFFSET L_8020
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], ecx
         mov      eax, dword ptr [esi + 4]
         mov      ecx, OFFSET L_8020
@@ -6063,7 +6063,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     ScaledLoadJmp_00428d20
         mov      dword ptr [g_framePauseFlag], 1
@@ -6086,7 +6086,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
     L_8163:
         mov      dword ptr [g_eventQueueChild], 6
         mov      dword ptr [esi + 8], OFFSET L_8020
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET L_8020
         add      ecx, 0x1000000
         mov      dword ptr [eax*4 + 0x84], 1
@@ -6097,7 +6097,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     EsiInstallChainCmpDualCall_00429300
         mov      dword ptr [g_framePauseFlag], 1
@@ -6156,7 +6156,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_83d1
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [eax*4 + 0x44]
         mov      dword ptr [g_eventQueueWorkType], ecx
         call     MStackPush1MagicMod2_004244d0
@@ -6193,7 +6193,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         mov      dword ptr [g_eventQueueChild], ecx
         neg      eax
         mov      dword ptr [g_eventQueueNotMask], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         add      esp, 8
         mov      edx, dword ptr [eax*4 + 0x34]
         add      esi, edx
@@ -6211,18 +6211,18 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         push     ecx
         push     0x14ccc
         call     Mul10Tail_00404af0
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_eventQueueCurrent], eax
         mov      eax, dword ptr [g_walkCallback]
         add      esp, 8
         mov      dword ptr [edx*4 + 0x30], eax
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_eventQueueCurrent]
         mov      dword ptr [ecx*4 + 0x34], edx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_currentNodeFlags]
         mov      dword ptr [eax*4 + 0x38], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_xformScratch2088]
         mov      dword ptr [eax*4 + 0x3c], edx
         call     DualWalkRange_00468440
@@ -6250,11 +6250,11 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
 __declspec(naked) void IntroSettingsFsmCluster_0046bea0(void)
 {
     __asm {
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x108
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x74], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [edx*4 + 0x34]
         cmp      ecx, 0x10
         mov      dword ptr [g_walkCallback], ecx
@@ -6297,7 +6297,7 @@ __declspec(naked) void IntroSettingsFsmCluster_0046bea0(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     ebx
         push     esi
         push     edi
@@ -6349,7 +6349,7 @@ __declspec(naked) void IntroSettingsFsmCluster_0046bea0(void)
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x28], eax
         mov      dword ptr [esi + 8], 0x46bf70
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, 0x46bf70
         add      ecx, 0x6000000
         mov      dword ptr [edx*4 + 0x84], 6
@@ -6360,7 +6360,7 @@ __declspec(naked) void IntroSettingsFsmCluster_0046bea0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     ScaledLoadJmp_00429390
         mov      dword ptr [g_framePauseFlag], 1
@@ -6391,7 +6391,7 @@ __declspec(naked) void IntroSettingsFsmCluster_0046bea0(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_c207
         mov      dword ptr [esi + 8], 0x46bf70
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, 0x46bf70
         mov      dword ptr [eax*4 + 0x84], 4
         mov      eax, dword ptr [esi + 4]
@@ -6402,7 +6402,7 @@ __declspec(naked) void IntroSettingsFsmCluster_0046bea0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     ScaledLoadIncJmp_00428d00
         mov      dword ptr [g_framePauseFlag], ebx
@@ -6424,7 +6424,7 @@ __declspec(naked) void IntroSettingsFsmCluster_0046bea0(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_c207
         mov      dword ptr [esi + 8], 0x46bf70
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, 0x46bf70
         mov      dword ptr [ecx*4 + 0x84], ebx
         mov      eax, dword ptr [esi + 4]
@@ -6435,7 +6435,7 @@ __declspec(naked) void IntroSettingsFsmCluster_0046bea0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     ScaledLoadIncJmp_00428d00
         mov      dword ptr [g_framePauseFlag], ebx
@@ -6507,7 +6507,7 @@ __declspec(naked) void IntroSettingsFsmCluster_0046bea0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c2e3
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [ecx*4 + 0x30]
         test     eax, eax
         mov      dword ptr [g_eventQueueNotMask], eax
@@ -6565,7 +6565,7 @@ __declspec(naked) void IntroSettingsFsmCluster_0046bea0(void)
         ret      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -6630,7 +6630,7 @@ __declspec(naked) void PendingMatch_0043bdd0(void)
         jne      L_bdf9
         inc      dword ptr [g_data_005433e8]
     L_bdf9:
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [ecx*4 + 0x34]
         cmp      eax, 0x10
         mov      dword ptr [g_walkCallback], eax
@@ -6671,7 +6671,7 @@ __declspec(naked) void PendingMatch_0043bdd0(void)
         ret      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [eax*4 + 0x3c]
         mov      dword ptr [g_currentNodeIdx], eax
         mov      ecx, dword ptr [eax*4 + 0x34]
@@ -6708,7 +6708,7 @@ __declspec(naked) void PendingMatch_0043bdd0(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         shl      eax, 2
         mov      ecx, dword ptr [eax + 0x84]
         mov      dword ptr [eax + 0x84], 0
@@ -6725,7 +6725,7 @@ __declspec(naked) void PendingMatch_0043bdd0(void)
         ret      
     L_bf3d:
         mov      dword ptr [eax + 8], 0x43bf00
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, 0x43bf00
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      ecx, dword ptr [eax + 4]
@@ -6736,13 +6736,13 @@ __declspec(naked) void PendingMatch_0043bdd0(void)
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     InstallSelfMStackPush_0041aaf0
         mov      dword ptr [g_framePauseFlag], 1
     L_bf9f:
         ret      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         shl      eax, 2
         mov      ecx, dword ptr [eax + 0x84]
         mov      dword ptr [eax + 0x84], 0
@@ -6755,7 +6755,7 @@ __declspec(naked) void PendingMatch_0043bdd0(void)
         ret      
     L_bfcf:
         mov      dword ptr [eax + 8], 0x43bfa0
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, 0x43bfa0
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      ecx, dword ptr [eax + 4]
@@ -6766,7 +6766,7 @@ __declspec(naked) void PendingMatch_0043bdd0(void)
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     InstallSelfMStackPush_0041aaf0
         mov      dword ptr [g_framePauseFlag], 1
@@ -6785,7 +6785,7 @@ __declspec(naked) void PendingMatch_0043bdd0(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         shl      eax, 2
         xor      esi, esi
@@ -6836,7 +6836,7 @@ __declspec(naked) void PendingMatch_0043bdd0(void)
         ret      
     L_c139:
         mov      dword ptr [eax + 8], 0x43c040
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, 0x43c040
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      ecx, dword ptr [eax + 4]
@@ -6847,7 +6847,7 @@ __declspec(naked) void PendingMatch_0043bdd0(void)
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], esi
         call     InstallSelfMStackPush_0041aaf0
         mov      dword ptr [g_framePauseFlag], 1
@@ -6861,7 +6861,7 @@ __declspec(naked) void PendingMatch_0043bdd0(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -6924,7 +6924,7 @@ __declspec(naked) void PendingMatch_0043bdd0(void)
         mov      dword ptr [g_fightGroupHead], eax
         mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [eax*4 + 0x68], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [eax*4 + 0x38]
         mov      dword ptr [g_eventQueueEnd], eax
         mov      ecx, dword ptr [eax*4 + 0x54]
@@ -7037,7 +7037,7 @@ __declspec(naked) void PendingMatch_0044f8d0(void)
         pop      ebx
         ret      
     L_f9d6:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     0x91
         push     0x44fe90
         mov      eax, dword ptr [eax*4 + 0x64]
@@ -7062,7 +7062,7 @@ __declspec(naked) void PendingMatch_0044f8d0(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -7095,7 +7095,7 @@ __declspec(naked) void PendingMatch_0044f8d0(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     ebx
         push     esi
         push     edi
@@ -7224,13 +7224,13 @@ __declspec(naked) void PendingMatch_0044f8d0(void)
         mov      ecx, dword ptr [g_eventQueueIdx]
         mov      dword ptr [g_fightGroupHead], eax
         mov      dword ptr [g_currentNodeIdx], ecx
-        mov      dword ptr [g_data_00542078], 0xccc
+        mov      dword ptr [g_acc_00542078], 0xccc
         mov      dword ptr [g_eventQueueNotMask], edi
         call     ChainGatedNegAccum_0048b740
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_fe34
         mov      edx, dword ptr [g_fightGroupHead]
-        mov      eax, dword ptr [g_data_00542078]
+        mov      eax, dword ptr [g_acc_00542078]
         mov      dword ptr [edx*4 + 0x54], eax
         mov      ecx, dword ptr [g_fightGroupHead]
         mov      edx, dword ptr [g_eventQueueNotMask]
@@ -7239,7 +7239,7 @@ __declspec(naked) void PendingMatch_0044f8d0(void)
         mov      ecx, dword ptr [g_fightGroupHead]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x58], eax
-        mov      dword ptr [g_data_00542078], edi
+        mov      dword ptr [g_acc_00542078], edi
         mov      dword ptr [g_eventQueueNotMask], edi
         call     ChainGatedNegAccum_0048b740
         cmp      dword ptr [g_framePauseFlag], edi
@@ -7250,23 +7250,23 @@ __declspec(naked) void PendingMatch_0044f8d0(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], edx
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_00542078]
+        mov      ecx, dword ptr [g_acc_00542078]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
-        mov      dword ptr [g_data_00542078], 0x3333
+        mov      dword ptr [g_acc_00542078], 0x3333
         mov      dword ptr [g_eventQueueNotMask], edi
         call     ChainGatedNegAccum_0048b740
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_fe34
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      edx, dword ptr [g_data_00542078]
+        mov      edx, dword ptr [g_acc_00542078]
         mov      ecx, dword ptr [eax*4]
         dec      eax
         sub      edx, ecx
         mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_004d57ac], eax
-        mov      dword ptr [g_data_00542078], edx
+        mov      dword ptr [g_acc_00542078], edx
         mov      ecx, dword ptr [eax*4]
         dec      eax
         mov      dword ptr [g_data_004d57ac], eax
@@ -7301,7 +7301,7 @@ __declspec(naked) void PendingMatch_0044f8d0(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         shl      eax, 2
         mov      ecx, dword ptr [eax + 0x84]
         mov      dword ptr [eax + 0x84], 0
@@ -7342,7 +7342,7 @@ __declspec(naked) void PendingMatch_00432ed0(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     ebx
         push     esi
         lea      esi, [eax*4]
@@ -7625,7 +7625,7 @@ __declspec(naked) void PendingMatch_00432ed0(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         push     edi
         xor      edi, edi
@@ -7634,7 +7634,7 @@ __declspec(naked) void PendingMatch_00432ed0(void)
         mov      dword ptr [ecx + 0x84], edi
         cmp      eax, edi
         je       L_3461
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      esi, dword ptr [g_eventQueueEnd]
         mov      edx, dword ptr [edx*4 + 0x30]
         mov      dword ptr [g_eventQueueCurrent], edx
@@ -7672,13 +7672,13 @@ __declspec(naked) void PendingMatch_00432ed0(void)
         mov      dword ptr [g_fightGroupHead], eax
         mov      eax, dword ptr [eax*4 + 0x1c]
         mov      dword ptr [g_eventQueueCurrent], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [eax*4 + 0x30]
         mov      dword ptr [g_eventQueueEnd], edx
         mov      eax, dword ptr [eax*4 + 0x34]
         mov      dword ptr [g_eventQueueIdx], eax
     L_3495:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_eventQueueCurrent]
         pop      edi
         pop      esi
@@ -7699,7 +7699,7 @@ __declspec(naked) void PendingMatch_004694b0(void)
         mov      dword ptr [g_walkCallback], 0x4ccc
         jmp      EsiEdiAliasDualMul10_004906b0
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         push     edi
         xor      edi, edi
@@ -7747,7 +7747,7 @@ __declspec(naked) void PendingMatch_004694b0(void)
         mov      dword ptr [g_eventQueueWorkType], 0xb9
         call     Push16Call_00489f50
         call     DualBitGateInitCall_0048a1c0
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [eax*4 + 0x34]
         cmp      eax, 0xf
         mov      dword ptr [g_walkCallback], eax
@@ -7776,7 +7776,7 @@ __declspec(naked) void PendingMatch_004694b0(void)
         ret      
     L_95f6:
         mov      dword ptr [esi + 8], 0x4694c0
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, 0x4694c0
         mov      dword ptr [ecx*4 + 0x84], 3
         mov      eax, dword ptr [esi + 4]
@@ -7787,7 +7787,7 @@ __declspec(naked) void PendingMatch_004694b0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     AudioInstallSelfStatePush_004aa8a0
         mov      dword ptr [g_framePauseFlag], 1
@@ -7801,7 +7801,7 @@ __declspec(naked) void PendingMatch_004694b0(void)
         mov      dword ptr [g_fightGroupHead], ecx
         jne      L_96c1
         mov      edx, dword ptr [g_data_00538158]
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_eventQueueTotal], edx
         mov      edx, dword ptr [g_data_0053803c]
         mov      dword ptr [g_data_00538158], ecx
@@ -7819,7 +7819,7 @@ __declspec(naked) void PendingMatch_004694b0(void)
         mov      eax, dword ptr [g_data_0053815c]
         mov      edx, dword ptr [g_data_00538038]
         mov      dword ptr [g_eventQueueTotal], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_data_0053815c], ecx
         mov      ecx, dword ptr [g_data_0053a250]
         mov      dword ptr [g_currentNodeIdx], edx
@@ -7833,10 +7833,10 @@ __declspec(naked) void PendingMatch_004694b0(void)
     L_9715:
         mov      dword ptr [g_xformEntityIdx], edx
         mov      dword ptr [eax*4 + 0x34], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [eax*4 + 0x3c], ecx
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [g_xformEntityIdx]
         mov      dword ptr [edx*4 + 0x38], eax
         mov      ecx, dword ptr [g_fightGroupHead]
@@ -7846,9 +7846,9 @@ __declspec(naked) void PendingMatch_004694b0(void)
         mov      ecx, dword ptr [g_fightGroupHead]
         mov      dword ptr [eax*4 + 0x38], ecx
         mov      eax, dword ptr [g_currentNodeIdx]
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x3c], edx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [eax*4 + 0x5c]
         mov      dword ptr [g_walkCallback], ecx
         mov      edx, dword ptr [eax*4 + 0x60]
@@ -7882,7 +7882,7 @@ __declspec(naked) void PendingMatch_004694b0(void)
         pop      esi
         ret      
     L_9832:
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_walkCallback], edi
         mov      dword ptr [edx*4 + 0x30], edi
         mov      dword ptr [esi + 8], 0x4694c0
@@ -7946,7 +7946,7 @@ __declspec(naked) void PendingMatch_004694b0(void)
         ret      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -7967,7 +7967,7 @@ __declspec(naked) void PendingMatch_004694b0(void)
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
         mov      dword ptr [esi + 8], 0x469910
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [ecx*4 + 0x84], 2
         mov      eax, dword ptr [esi + 4]
         mov      dword ptr [g_currentNodeIdx], eax
@@ -7976,7 +7976,7 @@ __declspec(naked) void PendingMatch_004694b0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     ScaledLoadIncJmp_00428d00
         mov      dword ptr [g_framePauseFlag], 1
@@ -7996,7 +7996,7 @@ __declspec(naked) void PendingMatch_004694b0(void)
         jne      L_9a52
         mov      dword ptr [g_eventQueueChild], 0x28
         mov      dword ptr [esi + 8], 0x469910
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, 0x469910
         add      ecx, 0x1000000
         mov      dword ptr [edx*4 + 0x84], 1
@@ -8007,7 +8007,7 @@ __declspec(naked) void PendingMatch_004694b0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
         call     InstallSelf3WayChainCmp_00428d80
         mov      dword ptr [g_framePauseFlag], 1
@@ -8074,7 +8074,7 @@ __declspec(naked) void PendingMatch_004694b0(void)
 __declspec(naked) void PendingMatch_0048c570(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     ebx
         push     esi
         mov      ebx, 1
@@ -8091,21 +8091,21 @@ __declspec(naked) void PendingMatch_0048c570(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_ca97
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [ecx*4 + 0x30], edx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_fightGroupHead]
         mov      dword ptr [eax*4 + 0x34], ecx
         call     ScaledShrAnd_0048bb40
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_ca97
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_walkCallback]
         mov      dword ptr [eax*4 + 0x3c], edx
         mov      eax, dword ptr [g_walkCallback]
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_eventQueueCurrent], eax
         mov      dword ptr [ecx*4 + 0x40], eax
         mov      eax, dword ptr [g_data_004d57ac]
@@ -8160,7 +8160,7 @@ __declspec(naked) void PendingMatch_0048c570(void)
         test     byte ptr [g_xformDirtyFlags], 4
         jne      L_ca5f
         mov      ecx, dword ptr [g_eventQueueIdx]
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [ecx*4]
         mov      dword ptr [eax*4 + 0x38], edx
         mov      edx, dword ptr [g_eventQueueIdx]
@@ -8169,7 +8169,7 @@ __declspec(naked) void PendingMatch_0048c570(void)
         mov      eax, dword ptr [g_eventQueueNotMask]
         mov      ecx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [g_walkCallback], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [ecx*4]
         mov      dword ptr [g_eventQueueWorkType], edx
         mov      ecx, dword ptr [eax*4 + 0x3c]
@@ -8179,7 +8179,7 @@ __declspec(naked) void PendingMatch_0048c570(void)
         test     eax, eax
         jne      L_ca97
         mov      al, byte ptr [g_xformDirtyFlags]
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         test     al, 4
         jne      L_ca46
         mov      eax, dword ptr [edx*4 + 0x40]
@@ -8188,7 +8188,7 @@ __declspec(naked) void PendingMatch_0048c570(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_ca97
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_eventQueueIdx]
         mov      esi, 4
         mov      eax, dword ptr [ecx*4 + 0x30]
@@ -8197,7 +8197,7 @@ __declspec(naked) void PendingMatch_0048c570(void)
         mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [eax*4 + 0x34], ecx
         mov      eax, dword ptr [g_fightGroupHead]
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [eax*4 + 0x18]
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      eax, dword ptr [edx*4 + 0x34]
@@ -8352,7 +8352,7 @@ __declspec(naked) void PendingMatch_0048c570(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     ebx
         push     esi
         mov      ebx, 1
@@ -8383,7 +8383,7 @@ __declspec(naked) void PendingMatch_0048c570(void)
         mov      dword ptr [g_fightGroupHead], ecx
         mov      dword ptr [g_eventQueueEnd], 0x12c
         mov      dword ptr [esi + 8], 0x48caa0
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, 0x48caa0
         add      ecx, 0x1000000
         mov      dword ptr [edx*4 + 0x84], ebx
@@ -8395,7 +8395,7 @@ __declspec(naked) void PendingMatch_0048c570(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
         call     PendingMatch_0048c570
         mov      dword ptr [g_framePauseFlag], ebx
@@ -8431,7 +8431,7 @@ __declspec(naked) void PendingMatch_0048c570(void)
         mov      dword ptr [g_fightGroupHead], edx
         mov      dword ptr [g_eventQueueEnd], 0x12c
         mov      dword ptr [esi + 8], 0x48caa0
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, 0x48caa0
         add      ecx, 0x2000000
         mov      dword ptr [eax*4 + 0x84], 2
@@ -8444,7 +8444,7 @@ __declspec(naked) void PendingMatch_0048c570(void)
 __declspec(naked) void PendingMatch_0046e2e0(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         xor      edx, edx
         shl      eax, 2
         mov      ecx, dword ptr [eax + 0x84]
@@ -8454,7 +8454,7 @@ __declspec(naked) void PendingMatch_0046e2e0(void)
         jmp      FiveCallGuardSetTail_0046f6b0
     L_e2ff:
         mov      dword ptr [eax + 8], 0x46e2e0
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         push     edi
         mov      edi, 0x46e2e0
         mov      dword ptr [ecx*4 + 0x84], 1
@@ -8466,7 +8466,7 @@ __declspec(naked) void PendingMatch_0046e2e0(void)
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], edx
         call     SlotEvent3EntryChain_0046fdf0
         mov      dword ptr [g_framePauseFlag], 1
@@ -8506,7 +8506,7 @@ __declspec(naked) void PendingMatch_0046e2e0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e420
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x602
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x74], eax
@@ -8590,7 +8590,7 @@ __declspec(naked) void PendingMatch_0046e2e0(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         xor      edx, edx
         shl      eax, 2
         mov      ecx, dword ptr [eax + 0x84]
@@ -8600,7 +8600,7 @@ __declspec(naked) void PendingMatch_0046e2e0(void)
         jmp      FiveCallGuardSetTail_0046f6b0
     L_e4cf:
         mov      dword ptr [eax + 8], 0x46e4b0
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         push     edi
         mov      edi, 0x46e4b0
         mov      dword ptr [ecx*4 + 0x84], 1
@@ -8612,7 +8612,7 @@ __declspec(naked) void PendingMatch_0046e2e0(void)
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], edx
         call     SlotEvent3EntryChain_0046fdf0
         mov      dword ptr [g_framePauseFlag], 1
@@ -8667,7 +8667,7 @@ __declspec(naked) void PendingMatch_0046e2e0(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         xor      edx, edx
         shl      eax, 2
         mov      ecx, dword ptr [eax + 0x84]
@@ -8677,7 +8677,7 @@ __declspec(naked) void PendingMatch_0046e2e0(void)
         jmp      FiveCallGuardSetTail_0046f6b0
     L_e5bf:
         mov      dword ptr [eax + 8], 0x46e5a0
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         push     edi
         mov      edi, 0x46e5a0
         mov      dword ptr [ecx*4 + 0x84], 1
@@ -8689,7 +8689,7 @@ __declspec(naked) void PendingMatch_0046e2e0(void)
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], edx
         call     SlotEvent3EntryChain_0046fdf0
         mov      dword ptr [g_framePauseFlag], 1
@@ -8744,7 +8744,7 @@ __declspec(naked) void PendingMatch_0046e2e0(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         xor      edx, edx
         shl      eax, 2
         mov      ecx, dword ptr [eax + 0x84]
@@ -8754,7 +8754,7 @@ __declspec(naked) void PendingMatch_0046e2e0(void)
         jmp      FiveCallGuardSetTail_0046f6b0
     L_e6af:
         mov      dword ptr [eax + 8], 0x46e690
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         push     edi
         mov      edi, 0x46e690
         mov      dword ptr [ecx*4 + 0x84], 1
@@ -8766,7 +8766,7 @@ __declspec(naked) void PendingMatch_0046e2e0(void)
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], edx
         call     SlotEvent3EntryChain_0046fdf0
         mov      dword ptr [g_framePauseFlag], 1
@@ -8782,11 +8782,11 @@ __declspec(naked) void PendingMatch_0046e2e0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e789
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x603
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x74], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [edx*4 + 0x30]
         test     eax, eax
         mov      dword ptr [g_walkCallback], eax
@@ -8875,7 +8875,7 @@ __declspec(naked) void PendingMatch_0046e2e0(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     ebx
         push     esi
         lea      esi, [eax*4]
@@ -9033,7 +9033,7 @@ __declspec(naked) void PendingMatch_004506c0(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -9146,7 +9146,7 @@ __declspec(naked) void PendingMatch_004506c0(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         push     edi
         xor      edi, edi
@@ -9260,14 +9260,14 @@ __declspec(naked) void PendingMatch_004506c0(void)
         mov      dword ptr [ecx*4 + 0x24], eax
         mov      dword ptr [g_eventQueueChild], 0x9f
         mov      dword ptr [esi + 8], 0x450990
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, 0x450990
         mov      dword ptr [edx*4 + 0x84], 4
         mov      eax, dword ptr [esi + 4]
         mov      dword ptr [g_currentNodeIdx], eax
         add      ecx, 0x4000000
         jmp      L_0cf2
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     0x451360
         mov      ecx, dword ptr [eax*4 + 0x64]
         mov      dword ptr [g_eventQueueEnd], ecx
@@ -9310,7 +9310,7 @@ __declspec(naked) void PendingMatch_004506c0(void)
         mov      dword ptr [ecx*4 + 0x28], eax
         mov      dword ptr [g_eventQueueChild], 0x206
         mov      dword ptr [esi + 8], 0x450990
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, 0x450990
         mov      dword ptr [edx*4 + 0x84], 5
         mov      eax, dword ptr [esi + 4]
@@ -9322,7 +9322,7 @@ __declspec(naked) void PendingMatch_004506c0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     InstallSelf3WayChainCmp_00428d80
         mov      dword ptr [g_framePauseFlag], 1
@@ -9357,7 +9357,7 @@ __declspec(naked) void PendingMatch_004506c0(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         shl      eax, 2
         mov      ecx, dword ptr [eax + 0x84]
         mov      dword ptr [eax + 0x84], 0
@@ -9476,7 +9476,7 @@ __declspec(naked) void PendingMatch_00471e00(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     ebx
         push     esi
         lea      ebx, [eax*4]
@@ -9598,7 +9598,7 @@ __declspec(naked) void PendingMatch_00471e00(void)
         ret      
     L_2118:
         mov      dword ptr [ebx + 8], 0x471f00
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      esi, 1
         mov      edx, 0x471f00
         mov      dword ptr [ecx*4 + 0x84], esi
@@ -9610,7 +9610,7 @@ __declspec(naked) void PendingMatch_00471e00(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [ebx + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     TripleCallBitJmp_00471690
         mov      dword ptr [g_framePauseFlag], esi
@@ -9627,7 +9627,7 @@ __declspec(naked) void PendingMatch_00471e00(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     ebx
         push     esi
         lea      ebx, [eax*4]
@@ -9749,7 +9749,7 @@ __declspec(naked) void PendingMatch_00471e00(void)
         ret      
     L_2398:
         mov      dword ptr [ebx + 8], 0x472180
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      esi, 1
         mov      edx, 0x472180
         mov      dword ptr [ecx*4 + 0x84], esi
@@ -9761,7 +9761,7 @@ __declspec(naked) void PendingMatch_00471e00(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [ebx + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     TripleCallBitJmp_00471690
         mov      dword ptr [g_framePauseFlag], esi
@@ -9778,7 +9778,7 @@ __declspec(naked) void PendingMatch_00471e00(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         shl      eax, 2
         mov      ecx, dword ptr [eax + 0x84]
         mov      dword ptr [eax + 0x84], 0
@@ -9793,7 +9793,7 @@ __declspec(naked) void PendingMatch_00471e00(void)
         jmp      FsmPoseDualEntry_00472560
     L_2443:
         mov      dword ptr [eax + 8], 0x472400
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, 0x472400
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      ecx, dword ptr [eax + 4]
@@ -9804,7 +9804,7 @@ __declspec(naked) void PendingMatch_00471e00(void)
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     TripleCallBitJmp_00471690
         mov      dword ptr [g_framePauseFlag], 1
@@ -9820,7 +9820,7 @@ __declspec(naked) void PendingMatch_00471e00(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         shl      eax, 2
         mov      ecx, dword ptr [eax + 0x84]
         mov      dword ptr [eax + 0x84], 0
@@ -9835,7 +9835,7 @@ __declspec(naked) void PendingMatch_00471e00(void)
         jmp      FsmPoseDualEntry_00472560
     L_24f3:
         mov      dword ptr [eax + 8], 0x4724b0
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, 0x4724b0
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      ecx, dword ptr [eax + 4]
@@ -9846,7 +9846,7 @@ __declspec(naked) void PendingMatch_00471e00(void)
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     TripleCallBitJmp_00471690
         mov      dword ptr [g_framePauseFlag], 1
@@ -9858,7 +9858,7 @@ __declspec(naked) void PendingMatch_00471e00(void)
 __declspec(naked) void PendingMatch_00466fc0(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     ebx
         push     esi
         xor      esi, esi
@@ -9949,7 +9949,7 @@ __declspec(naked) void PendingMatch_00466fc0(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     ebx
         push     ebp
         push     esi
@@ -9971,7 +9971,7 @@ __declspec(naked) void PendingMatch_00466fc0(void)
         mov      eax, 0x78
         jmp      L_730c
     L_7155:
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [ecx*4 + 0x48]
         mov      dword ptr [g_walkCallback], ebp
         mov      dword ptr [g_fightGroupHead], edx
@@ -9980,7 +9980,7 @@ __declspec(naked) void PendingMatch_00466fc0(void)
         test     eax, eax
         jne      L_75ec
         mov      eax, dword ptr [g_xformEntityIdx]
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_pendingNodeType], eax
         mov      edx, dword ptr [ecx*4 + 0x50]
         mov      dword ptr [g_walkCallback], ebp
@@ -10005,7 +10005,7 @@ __declspec(naked) void PendingMatch_00466fc0(void)
         mov      eax, dword ptr [g_pendingNodeType]
         mov      edx, dword ptr [g_walkCallback]
         mov      dword ptr [eax*4 + 8], edx
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [ecx*4 + 0x4c]
         mov      dword ptr [g_walkCallback], ebp
         mov      dword ptr [g_fightGroupHead], edx
@@ -10014,7 +10014,7 @@ __declspec(naked) void PendingMatch_00466fc0(void)
         test     eax, eax
         jne      L_75ec
         mov      eax, dword ptr [g_xformEntityIdx]
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_pendingNodeType], eax
         mov      edx, dword ptr [ecx*4 + 0x3c]
         mov      dword ptr [g_walkCallback], ebp
@@ -10039,7 +10039,7 @@ __declspec(naked) void PendingMatch_00466fc0(void)
         mov      edx, dword ptr [g_pendingNodeType]
         mov      eax, dword ptr [g_walkCallback]
         mov      dword ptr [edx*4 + 8], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [eax*4 + 0x64]
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      edx, dword ptr [eax*4 + 0x68]
@@ -10056,7 +10056,7 @@ __declspec(naked) void PendingMatch_00466fc0(void)
     L_7311:
         shr      eax, 2
         mov      dword ptr [g_eventQueueChild], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [eax*4 + 0x40]
         add      ecx, 0xf
         mov      dword ptr [g_xformEntityIdx], ecx
@@ -10081,7 +10081,7 @@ __declspec(naked) void PendingMatch_00466fc0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_75ec
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      edx, 0x4ec1a0
         sar      edx, 2
         mov      ecx, dword ptr [eax*4 + 0x44]
@@ -10114,10 +10114,10 @@ __declspec(naked) void PendingMatch_00466fc0(void)
         pop      ebx
         ret      
     L_7415:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [eax*4 + 0x64], ecx
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [g_eventQueueIdx]
         mov      dword ptr [edx*4 + 0x68], eax
         mov      ecx, dword ptr [g_eventQueueEnd]
@@ -10135,7 +10135,7 @@ __declspec(naked) void PendingMatch_00466fc0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_75ec
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [g_xformEntityIdx]
         mov      ebx, 4
         mov      dword ptr [edx*4 + 0x40], eax
@@ -10144,7 +10144,7 @@ __declspec(naked) void PendingMatch_00466fc0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_75ec
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_xformEntityIdx]
         mov      dword ptr [ecx*4 + 0x44], edx
         call     ScaledAddrInit_004677e0
@@ -10160,7 +10160,7 @@ __declspec(naked) void PendingMatch_00466fc0(void)
         pop      ebx
         ret      
     L_74eb:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [eax*4 + 0x48], ecx
         call     ScaledAddrInit_004677c0
@@ -10176,10 +10176,10 @@ __declspec(naked) void PendingMatch_00466fc0(void)
         pop      ebx
         ret      
     L_7521:
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [edx*4 + 0x4c], eax
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [ecx*4 + 0x40]
         mov      dword ptr [g_xformEntityIdx], edx
         call     ScaledAddrInit_004677e0
@@ -10199,7 +10199,7 @@ __declspec(naked) void PendingMatch_00466fc0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_75ec
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [eax*4 + 0x50], ecx
         call     ScaledAddrInit_004677c0
@@ -10219,7 +10219,7 @@ __declspec(naked) void PendingMatch_00466fc0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_75ec
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [g_currentNodeIdx]
         mov      ebp, 1
         mov      dword ptr [edx*4 + 0x3c], eax
@@ -10248,7 +10248,7 @@ __declspec(naked) void PendingMatch_00466fc0(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -10268,10 +10268,10 @@ __declspec(naked) void PendingMatch_00466fc0(void)
         pop      esi
         ret      
     L_7667:
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [ecx*4 + 0x64], edx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_eventQueueIdx]
         mov      dword ptr [eax*4 + 0x68], ecx
         mov      dword ptr [g_walkCallback], 0xc
@@ -10303,7 +10303,7 @@ __declspec(naked) void PendingMatch_00466fc0(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         mov      dword ptr [eax*4 + 0x84], 0
         mov      dword ptr [g_walkCallback], 3
@@ -10339,7 +10339,7 @@ __declspec(naked) void PendingMatch_00466fc0(void)
 __declspec(naked) void PendingMatch_00448750(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         shl      eax, 2
         mov      ecx, dword ptr [eax + 0x84]
         mov      dword ptr [eax + 0x84], 0
@@ -10361,7 +10361,7 @@ __declspec(naked) void PendingMatch_00448750(void)
         shr      edx, 2
         mov      dword ptr [g_eventQueueEnd], edx
         mov      dword ptr [eax + 8], 0x448750
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, 0x448750
         add      edx, 0x1000000
         mov      dword ptr [ecx*4 + 0x84], 1
@@ -10372,7 +10372,7 @@ __declspec(naked) void PendingMatch_00448750(void)
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     SetJmp_004753a0
         mov      dword ptr [g_framePauseFlag], 1
@@ -10385,7 +10385,7 @@ __declspec(naked) void PendingMatch_00448750(void)
 __declspec(naked) void PendingMatch_0044baa0(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [eax*4 + 0x64]
         mov      dword ptr [g_fightGroupHead], ecx
         call     MStackPush2RunCountdown_004089e0
@@ -10410,7 +10410,7 @@ __declspec(naked) void PendingMatch_0044baa0(void)
         test     eax, eax
         jne      L_bb27
         mov      dword ptr [g_walkCallback], 2
-        mov      dword ptr [g_data_00542078], 3
+        mov      dword ptr [g_acc_00542078], 3
     L_bb27:
         ret      
         nop      
@@ -10421,7 +10421,7 @@ __declspec(naked) void PendingMatch_0044baa0(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -10458,10 +10458,10 @@ __declspec(naked) void PendingMatch_0044baa0(void)
         pop      esi
         ret      
     L_bbcc:
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [ecx*4 + 0x64], edx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_eventQueueIdx]
         mov      dword ptr [eax*4 + 0x68], ecx
         call     Chain2AxisDiffStoreTailJmp_0044cad0
@@ -10494,7 +10494,7 @@ __declspec(naked) void PendingMatch_0044baa0(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         xor      edx, edx
         shl      eax, 2
         push     esi
@@ -10516,7 +10516,7 @@ __declspec(naked) void PendingMatch_0044baa0(void)
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      dword ptr [g_xformScratch2088], 0x7ae
         mov      dword ptr [eax + 8], 0x44bc50
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      esi, 0x44bc50
         mov      dword ptr [ecx*4 + 0x84], 2
         mov      ecx, dword ptr [eax + 4]
@@ -10527,7 +10527,7 @@ __declspec(naked) void PendingMatch_0044baa0(void)
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], edx
         call     EsiInstallSetCbChainExtend_0048a970
         mov      dword ptr [g_framePauseFlag], 1
@@ -10550,7 +10550,7 @@ __declspec(naked) void PendingMatch_0044baa0(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -10577,7 +10577,7 @@ __declspec(naked) void PendingMatch_0044baa0(void)
         shr      edx, 2
         mov      dword ptr [g_eventQueueEnd], edx
         mov      dword ptr [esi + 8], 0x44bd30
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         add      ecx, 0x2000000
         mov      dword ptr [eax*4 + 0x84], 2
         mov      eax, dword ptr [esi + 4]
@@ -10587,7 +10587,7 @@ __declspec(naked) void PendingMatch_0044baa0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
         call     InstallSelfChainAccumPath_004752b0
         mov      dword ptr [g_framePauseFlag], 1
@@ -10734,7 +10734,7 @@ __declspec(naked) void PendingMatch_0044baa0(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         shl      eax, 2
         mov      ecx, dword ptr [eax + 0x84]
         mov      dword ptr [eax + 0x84], 0
@@ -10760,7 +10760,7 @@ __declspec(naked) void PendingMatch_0044baa0(void)
         shr      edx, 2
         mov      dword ptr [g_eventQueueEnd], edx
         mov      dword ptr [eax + 8], 0x44bfc0
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, 0x44bfc0
         add      edx, 0x3000000
         mov      dword ptr [ecx*4 + 0x84], 3
@@ -10771,7 +10771,7 @@ __declspec(naked) void PendingMatch_0044baa0(void)
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     SetJmp_004753a0
         mov      dword ptr [g_framePauseFlag], 1
@@ -10780,7 +10780,7 @@ __declspec(naked) void PendingMatch_0044baa0(void)
         mov      ecx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [g_fightGroupHead], ecx
         mov      dword ptr [eax + 8], 0x44bfc0
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], 2
         mov      ecx, dword ptr [eax + 4]
         mov      edx, 0x44bfc0
@@ -10791,16 +10791,16 @@ __declspec(naked) void PendingMatch_0044baa0(void)
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     InstallSelfPackedTailJmp_004751f0
         mov      dword ptr [g_framePauseFlag], 1
         ret      
     L_c0fc:
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [ecx*4 + 0x64], edx
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_eventQueueIdx]
         mov      dword ptr [ecx*4 + 0x68], edx
         mov      ecx, 1
@@ -10821,10 +10821,10 @@ __declspec(naked) void PendingMatch_0044baa0(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [eax*4 + 0x64], ecx
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [g_eventQueueIdx]
         mov      dword ptr [edx*4 + 0x68], eax
         mov      dword ptr [g_walkCallback], 0
@@ -10883,7 +10883,7 @@ __declspec(naked) void PendingMatch_0044baa0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c2d1
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     0x44c2e0
         mov      edx, dword ptr [eax*4 + 0x64]
         mov      dword ptr [g_eventQueueEnd], edx
@@ -10910,7 +10910,7 @@ __declspec(naked) void PendingMatch_0044baa0(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     ebx
         push     esi
         lea      esi, [eax*4]
@@ -10940,14 +10940,14 @@ __declspec(naked) void PendingMatch_0044baa0(void)
         pop      ebx
         ret      
     L_c35d:
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_eventQueueEnd]
         push     0x4745e0
         mov      dword ptr [ecx*4 + 0x64], edx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_eventQueueIdx]
         mov      dword ptr [eax*4 + 0x68], ecx
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [g_fightGroupHead]
         mov      dword ptr [edx*4 + 0x4c], eax
         call     StoreLoadJmp_00404ef0
@@ -11083,7 +11083,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         push     edi
         xor      edi, edi
@@ -11097,10 +11097,10 @@ __declspec(naked) void PendingMatch_00443320(void)
         pop      esi
         ret      
     L_34a9:
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [ecx*4 + 0x64], edx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_eventQueueIdx]
         mov      dword ptr [eax*4 + 0x68], ecx
         call     Chain2AxisDiffStoreTailJmp_0044cad0
@@ -11119,7 +11119,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         mov      dword ptr [g_eventQueueNotMask], edi
         mov      dword ptr [g_xformScratch2088], 0x28f
         mov      dword ptr [esi + 8], 0x443480
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, 0x443480
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      eax, dword ptr [esi + 4]
@@ -11130,7 +11130,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     EsiInstallSetCbChainExtend_0048a970
         mov      dword ptr [g_framePauseFlag], 1
@@ -11148,7 +11148,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         xor      edx, edx
         shl      eax, 2
         mov      ecx, dword ptr [eax + 0x84]
@@ -11157,12 +11157,12 @@ __declspec(naked) void PendingMatch_00443320(void)
         je       L_35af
         jmp      Thunk_0049cbc0
     L_35af:
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         push     edi
         push     esi
         mov      esi, dword ptr [g_eventQueueEnd]
         mov      dword ptr [ecx*4 + 0x64], esi
-        mov      esi, dword ptr [g_data_00542060]
+        mov      esi, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_eventQueueIdx]
         mov      edi, 0x443590
         mov      dword ptr [esi*4 + 0x68], ecx
@@ -11173,7 +11173,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      dword ptr [g_currentNodeFlags], 0x40000
         mov      dword ptr [eax + 8], 0x443590
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      esi, 1
         add      edi, 0x1000000
         mov      dword ptr [ecx*4 + 0x84], esi
@@ -11184,7 +11184,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], edx
         call     InitStateDualCall48ac70_0048ac70
         mov      dword ptr [g_framePauseFlag], esi
@@ -11198,7 +11198,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         push     edi
         xor      edi, edi
@@ -11226,7 +11226,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         mov      dword ptr [g_eventQueueNotMask], edi
         mov      dword ptr [g_xformScratch2088], 0xf5c
         mov      dword ptr [esi + 8], 0x443660
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, 0x443660
         add      esp, 4
         mov      dword ptr [eax*4 + 0x84], 3
@@ -11238,7 +11238,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     EsiInstallSetCbChainExtend_0048a970
         mov      dword ptr [g_framePauseFlag], 1
@@ -11254,10 +11254,10 @@ __declspec(naked) void PendingMatch_00443320(void)
         pop      esi
         ret      
     L_3754:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [eax*4 + 0x64], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_eventQueueIdx]
         mov      ecx, 0x4e5b18
         mov      dword ptr [eax*4 + 0x68], edx
@@ -11267,7 +11267,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         mov      dword ptr [g_eventQueueEnd], edx
         mov      dword ptr [g_currentNodeFlags], 0x40000
         mov      dword ptr [esi + 8], 0x443660
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, 0x443660
         add      ecx, 0x1000000
         mov      dword ptr [eax*4 + 0x84], 1
@@ -11278,7 +11278,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     InitStateDualCall48ac70_0048ac70
         pop      edi
@@ -11291,7 +11291,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         shl      eax, 2
         mov      ecx, dword ptr [eax + 0x84]
         mov      dword ptr [eax + 0x84], 0
@@ -11336,7 +11336,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -11370,7 +11370,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         mov      dword ptr [g_fightGroupHead], ecx
         mov      dword ptr [g_eventQueueEnd], edx
         mov      dword ptr [esi + 8], 0x4438a0
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, 0x4438a0
         mov      dword ptr [eax*4 + 0x84], 1
         mov      eax, dword ptr [esi + 4]
@@ -11381,7 +11381,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
         call     InstallSelfChainAccumPath_004752b0
         mov      dword ptr [g_framePauseFlag], 1
@@ -11488,7 +11488,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         shl      eax, 2
         mov      ecx, dword ptr [eax + 0x84]
         mov      dword ptr [eax + 0x84], 0
@@ -11508,7 +11508,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         mov      dword ptr [g_xformScratch2088], 0x1999
         mov      dword ptr [g_eventQueueIdx], 0
         mov      dword ptr [eax + 8], 0x443ad0
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], 1
         mov      ecx, dword ptr [eax + 4]
         mov      edx, 0x443ad0
@@ -11519,7 +11519,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     InstallSelfAccumOverflow_00428b20
         mov      dword ptr [g_framePauseFlag], 1
@@ -11532,7 +11532,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         shl      eax, 2
         mov      ecx, dword ptr [eax + 0x84]
         mov      dword ptr [eax + 0x84], 0
@@ -11552,7 +11552,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         mov      dword ptr [g_xformScratch2088], 0x1333
         mov      dword ptr [g_eventQueueIdx], 0
         mov      dword ptr [eax + 8], 0x443ba0
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], 1
         mov      ecx, dword ptr [eax + 4]
         mov      edx, 0x443ba0
@@ -11563,7 +11563,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     InstallSelfAccumOverflow_00428b20
         mov      dword ptr [g_framePauseFlag], 1
@@ -11576,7 +11576,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         shl      eax, 2
         mov      ecx, dword ptr [eax + 0x84]
         mov      dword ptr [eax + 0x84], 0
@@ -11592,7 +11592,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         shr      ecx, 2
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      dword ptr [eax + 8], 0x443c70
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], 1
         mov      ecx, dword ptr [eax + 4]
         mov      edx, 0x443c70
@@ -11603,7 +11603,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     InstallSelfChainAccumPath_004752b0
         mov      dword ptr [g_framePauseFlag], 1
@@ -11698,7 +11698,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         je       L_b716
         jmp      MoveListCursorCluster_0045b420
     L_b6e9:
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [ecx*4 + 0x38]
         mov      dword ptr [g_currentNodeIdx], eax
         mov      eax, dword ptr [eax*4 + 0x40]
@@ -11721,7 +11721,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         xor      edx, edx
         shl      eax, 2
         mov      ecx, dword ptr [eax + 0x84]
@@ -11731,7 +11731,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         jmp      PendingMatch_00459510
     L_b74f:
         mov      dword ptr [eax + 8], 0x45b730
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         push     edi
         mov      edi, 0x45b730
         mov      dword ptr [ecx*4 + 0x84], 1
@@ -11743,13 +11743,13 @@ __declspec(naked) void PendingMatch_0045b620(void)
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], edx
         call     InstallSelfBitGated_00428eb0
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         ret      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -11771,7 +11771,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         mov      dword ptr [g_eventQueueCurrent], eax
         mov      dword ptr [g_eventQueueChild], eax
         mov      dword ptr [esi + 8], 0x45b7b0
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      eax, dword ptr [esi + 4]
         mov      dword ptr [g_currentNodeIdx], eax
@@ -11780,7 +11780,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     ScaledClearJmp_00428e90
         mov      dword ptr [g_framePauseFlag], 1
@@ -11791,7 +11791,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -11813,7 +11813,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         mov      dword ptr [g_eventQueueCurrent], eax
         mov      dword ptr [g_eventQueueChild], eax
         mov      dword ptr [esi + 8], 0x45b860
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      eax, dword ptr [esi + 4]
         mov      dword ptr [g_currentNodeIdx], eax
@@ -11822,7 +11822,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     InstallSelfDualCountdown_00429050
         mov      dword ptr [g_framePauseFlag], 1
@@ -11833,7 +11833,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -11855,7 +11855,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         mov      dword ptr [g_eventQueueCurrent], eax
         mov      dword ptr [g_eventQueueChild], eax
         mov      dword ptr [esi + 8], 0x45b910
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      eax, dword ptr [esi + 4]
         mov      dword ptr [g_currentNodeIdx], eax
@@ -11864,7 +11864,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     ScaledClearJmp_00428d40
         mov      dword ptr [g_framePauseFlag], 1
@@ -11875,7 +11875,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -11891,7 +11891,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         test     eax, eax
         jne      L_ba56
         mov      dword ptr [esi + 8], 0x45b9c0
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, 0x45b9c0
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      eax, dword ptr [esi + 4]
@@ -11902,7 +11902,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
         call     ScaledClearJmp_00428d60
         mov      dword ptr [g_framePauseFlag], 1
@@ -11942,7 +11942,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         xor      edx, edx
         shl      eax, 2
         push     edi
@@ -11964,7 +11964,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         mov      edi, 0x45baa0
         mov      dword ptr [g_eventQueueChild], ecx
         mov      dword ptr [eax + 8], 0x45baa0
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         add      edi, 0x1000000
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      ecx, dword ptr [eax + 4]
@@ -11974,7 +11974,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         inc      ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], edx
         call     EsiInstallChainCmpDualCall_00429300
         mov      dword ptr [g_framePauseFlag], 1
@@ -12007,7 +12007,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -12063,7 +12063,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -12119,7 +12119,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         lea      esi, [eax*4]
         mov      eax, dword ptr [eax*4 + 0x84]
@@ -12137,7 +12137,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      dword ptr [esi + 8], 0x45bcd0
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, 0x45bcd0
         add      ecx, 0x1000000
         mov      dword ptr [edx*4 + 0x84], 1
@@ -12148,7 +12148,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
         call     InstallSelfMidPush_0045bd80
         mov      dword ptr [g_framePauseFlag], 1

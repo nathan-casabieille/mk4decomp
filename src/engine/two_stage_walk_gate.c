@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 /*
  * @addr 0x00439ae0 (107b game) - two-stage gate: set walk=0xe, call
- *   helper; if pause unset and walk>=0xf0, snapshot g_state_00535ddc;
+ *   helper; if pause unset and walk>=0xf0, snapshot g_table_00535ddc;
  *   if >=0x20000 && walk<=0x258 fall through, else jmp _00439b50.
  *   Then set walk=0xc8, call AudioVolumeRescale, gate again, and if
  *   state-bit 0 set jmp Thunk_00439c20.
@@ -137,7 +137,7 @@ void TwoStageWalkGate_00439ae0(void) {
     if (g_framePauseFlag != 0) return;
     walk = (int)(unsigned int)g_walkCallback;
     if (walk < 0xf0) return;
-    state_val = (int)g_state_00535ddc;
+    state_val = (int)g_table_00535ddc;
     g_eventQueueCurrent = (unsigned int)state_val;
     if (state_val < 0x20000) return;
     if (walk > 0x258) {

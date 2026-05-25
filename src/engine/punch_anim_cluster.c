@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -132,7 +132,7 @@ extern void Install3WayChainCounter_004809e0(void);
 extern void FiveCallGuardSetTail_0046f6b0(void);
 
 /* @addr 0x00480840 (356b game) - countdown loop install-self w/ 3-way tails.
- *   On phase = [scaled g_data_00542060+0x84] == 0 jumps direct to install
+ *   On phase = [scaled g_baseSel_00542060+0x84] == 0 jumps direct to install
  *   tail. Else runs a polling loop:
  *     DualGatedStateYield_0048fc80 → on success decrement g_eventQueueChild
  *     and update g_data_00542098 (sete on dec result), if <= 0 sets it
@@ -152,7 +152,7 @@ extern unsigned int g_data_00538158;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_xformScratch2088;
@@ -161,7 +161,7 @@ extern void EsiEdiAliasDualMul10_004906b0(void);
 
 __declspec(naked) void CountdownInstallSelfMultiTail_00480840(void) {
     __asm {
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         push    ebx
         push    ebp
         push    esi
@@ -227,7 +227,7 @@ __declspec(naked) void CountdownInstallSelfMultiTail_00480840(void) {
         and     eax, dword ptr [g_eventQueueCurrent]
         mov     dword ptr [g_data_00542094], eax
         je      short L_cis_call6b0
-        mov     edx, dword ptr [g_data_00542060]
+        mov     edx, dword ptr [g_baseSel_00542060]
         mov     ecx, dword ptr [edx*4 + 0x84]
         lea     eax, [edx*4]
         cmp     ecx, edi

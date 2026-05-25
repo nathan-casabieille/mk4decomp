@@ -19,7 +19,7 @@ extern packed_ptr g_fightGroupHead;
  *   else → T4.
  */
 extern unsigned int g_data_004e4a04;
-extern unsigned int g_data_00535ddc;
+extern unsigned int g_table_00535ddc;
 extern void QuadBlockArgInstallChain_0043a950(void);
 extern void InstallSelfChainSet84_80Call_00434f90(void);
 extern void InstallSelfStdChain_00435030(void);
@@ -31,7 +31,7 @@ void RangeDispatch4_00434ec0(void) {
     if (g_framePauseFlag != 0) {
         return;
     }
-    v = (int)g_data_00535ddc;
+    v = (int)g_table_00535ddc;
     g_walkCallback = (void (*)(void))v;
     if (v > 0x20000) {
         InstallSelfChainSet84_80Call_00434f90();

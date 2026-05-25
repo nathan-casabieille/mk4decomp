@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -127,7 +127,7 @@ extern unsigned int g_data_00535e7c;
  *     state=1; call ScaledLoadIncJmp_00428d00; pause=1; pop edi; ret.
  *   Thunk B (+0x80): call ScaledMove48to58; if pause ret. g_eventQueueNotMask=[baseSel*4+0x30].
  *     If nonzero: jmp CallPauseTripleScaledJmp. Else call MStackPush3CmpCall; if pause ret.
- *     If bit0(0054208c): jmp DualEntryStateGated. Else cmp g_state_00535ddc<=0xcccc;
+ *     If bit0(0054208c): jmp DualEntryStateGated. Else cmp g_table_00535ddc<=0xcccc;
  *     if yes: jmp IntroSettingsFsmCluster_0046bea0; else jmp DualEntryStateGated. Ret.
  *   Thunk C (+0xe0): call ScaledMove48to58; if pause ret. Same state_0054207c gate.
  *     If nonzero jmp CallPauseTripleScaledJmp; else jmp DualEntryStateGated.
@@ -194,7 +194,7 @@ __declspec(naked) void InstallSelfMultiThunkDispatch_0046c3d0(void) {
         _emit   74h
         _emit   05h
         jmp     DualEntryStateGated_00460fa0
-        mov     eax, dword ptr [g_state_00535ddc]
+        mov     eax, dword ptr [g_table_00535ddc]
         cmp     eax, 0xcccc
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh

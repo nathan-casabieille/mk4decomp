@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -128,7 +128,7 @@ extern unsigned int g_currentNodeIdx;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_xformScratch2088;
@@ -213,7 +213,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         nop
         /* === h3 (0x431710): 3-case pose-fn dispatcher === */
     L_1710:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         push     edi
         xor      edi, edi
@@ -231,7 +231,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         pop      esi
         ret
     L_1747:
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_data_0052ab10]
         mov      dword ptr [g_fightGroupHead], ecx
         mov      dword ptr [g_walkCallback], edi
@@ -242,7 +242,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         call     CameraAimSplineDriver_00430e60
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_191d
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [edx*4 + 0x44], ecx
         lea      eax, [edx*4]
@@ -255,7 +255,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [eax + 0x30], ecx
         mov      dword ptr [esi + 8], OFFSET L_1710
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET L_1710
         add      ecx, 0x3000000
         mov      dword ptr [edx*4 + 0x84], 3
@@ -266,7 +266,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     PendingMatch_00432110
         mov      dword ptr [g_framePauseFlag], 1
@@ -274,7 +274,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         pop      esi
         ret
     L_1823:
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [eax*4 + 0x78]
         mov      dword ptr [g_pendingNodeType], ecx
         mov      dword ptr [esi + 8], OFFSET L_1710
@@ -307,7 +307,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_191d
         mov      dword ptr [esi + 8], OFFSET L_1710
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, OFFSET L_1710
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      eax, dword ptr [esi + 4]
@@ -318,7 +318,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
         call     PendingMatch_00432110
         mov      dword ptr [g_framePauseFlag], 1

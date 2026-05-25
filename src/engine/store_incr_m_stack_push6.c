@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -130,7 +130,7 @@ extern void RoundCleanupCluster_00427690(void);
  *   poll: SaveCallRestore(0x22); SaveCallRestoreOrXor(0x22); while (state & 4): retry.
  *   walkCallback = max(g_x_0053a718, 0); call StoreIncrMStackPush6_004275c0; pause? ret.
  *   set fixed state (walkCallback=2, g_eventQueueWorkType=0x22, g_eventQueueCurrent=2,
- *   g_x_00542078=0, g_eventQueueNotMask=0xff960000, g_currentNodeFlags=2);
+ *   g_acc_00542078=0, g_eventQueueNotMask=0xff960000, g_currentNodeFlags=2);
  *   call DispatcherComplex181; pause? ret; call RoundCleanupCluster_00427690.
  */
 extern unsigned int g_x_0053a718;

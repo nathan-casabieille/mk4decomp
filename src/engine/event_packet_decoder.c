@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -132,13 +132,13 @@ extern unsigned int g_state_0053a730;
  *   3 nested tests; if min/max swap; check eax<>g_eventQueueChild.
  *   If lo: g_xformScratch2088 = 1.
  *   Store g_eventQueueTotal to [baseSel*4+0x64]; eax = arg0>>2; g_eventQueueEnd store at [baseSel*4+0x68];
- *   g_pendingNodeType=eax+0xf; scaledInit=eax+g_x_00542078; eax=[scaledInit*4+0]; jmp 0x0045de60.
+ *   g_pendingNodeType=eax+0xf; scaledInit=eax+g_acc_00542078; eax=[scaledInit*4+0]; jmp 0x0045de60.
  */
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_fightGroupHead;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_x_00542078;
+extern unsigned int g_acc_00542078;
 extern unsigned int g_eventQueueChild;
 
 __declspec(naked) void ChainPickArgScaledInit_0045dd90(void) {
@@ -184,7 +184,7 @@ __declspec(naked) void ChainPickArgScaledInit_0045dd90(void) {
         mov     dword ptr [ecx*4 + 0x68], edx
         lea     ecx, [eax + 0x0f]
         mov     dword ptr [g_pendingNodeType], ecx
-        mov     ecx, dword ptr [g_x_00542078]
+        mov     ecx, dword ptr [g_acc_00542078]
         add     eax, ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     edx, dword ptr [eax*4 + 0]

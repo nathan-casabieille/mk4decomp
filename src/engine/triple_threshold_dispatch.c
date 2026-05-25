@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004362f0 (149b game) - 3-block: A: jmp 0x00439e40. B: Cmp2CallDirtyCall;
- *   threshold-dispatch on g_state_00535ddc to {0x00437c10, Wrapper_00438ee0, PrefixThunkInstallSelf3State_00438f80}.
+ *   threshold-dispatch on g_table_00535ddc to {0x00437c10, Wrapper_00438ee0, PrefixThunkInstallSelf3State_00438f80}.
  *   C: similar threshold-dispatch with diff thresholds to {0x00438ee0, SetJmp_00438f70, PrefixThunkInstallSelf3State_00438f80}.
  *   D (+0x90): jmp ThresholdedTailJmps_00436390.
  */
@@ -152,7 +152,7 @@ __declspec(naked) void TripleThresholdDispatch_004362f0(void) {
         test    eax, eax
         _emit   75h
         _emit   27h
-        mov     eax, dword ptr [g_state_00535ddc]
+        mov     eax, dword ptr [g_table_00535ddc]
         cmp     eax, 0x00014ccc
         mov     dword ptr [g_walkCallback], eax
         _emit   7dh
@@ -183,7 +183,7 @@ __declspec(naked) void TripleThresholdDispatch_004362f0(void) {
         test    eax, eax
         _emit   75h
         _emit   27h
-        mov     eax, dword ptr [g_state_00535ddc]
+        mov     eax, dword ptr [g_table_00535ddc]
         cmp     eax, 0x00020000
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh

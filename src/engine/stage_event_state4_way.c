@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -136,7 +136,7 @@ extern unsigned int g_data_005432f0;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueChild;
 extern void FiveCallGuardSetTail_0046f6b0(void);
 extern void GuardedPackedSlotInit_00428760(void);
@@ -145,7 +145,7 @@ extern void ScaledLoadIncJmp_00428d00(void);
 __declspec(naked) void StageEventState4Way_004982f0(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         push     esi
         push     edi
         xor      edi, edi
@@ -180,7 +180,7 @@ __declspec(naked) void StageEventState4Way_004982f0(void)
         mov      dword ptr [ecx*4 + 0x28], edx
     L_8370:
         mov      dword ptr [esi + 8], OFFSET StageEventState4Way_004982f0
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET StageEventState4Way_004982f0
         mov      dword ptr [eax*4 + 0x84], 3
         mov      eax, dword ptr [esi + 4]
@@ -191,7 +191,7 @@ __declspec(naked) void StageEventState4Way_004982f0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     ScaledLoadIncJmp_00428d00
         mov      dword ptr [g_framePauseFlag], 1
@@ -201,7 +201,7 @@ __declspec(naked) void StageEventState4Way_004982f0(void)
     L_83ce:
         mov      dword ptr [g_eventQueueChild], 0x14
         mov      dword ptr [esi + 8], OFFSET StageEventState4Way_004982f0
-        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET StageEventState4Way_004982f0
         add      ecx, 0x2000000
         mov      dword ptr [eax*4 + 0x84], 2
@@ -212,7 +212,7 @@ __declspec(naked) void StageEventState4Way_004982f0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     InstallSelf3WayChainCmp_00428d80
         mov      dword ptr [g_framePauseFlag], 1
@@ -223,7 +223,7 @@ __declspec(naked) void StageEventState4Way_004982f0(void)
         call     CondPickDualStore_0049c670
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_84da
-        mov      ecx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x30f
         mov      dword ptr [g_walkCallback], eax
         push     OFFSET g_data_005432f0
@@ -235,7 +235,7 @@ __declspec(naked) void StageEventState4Way_004982f0(void)
         jne      short L_84da
         mov      dword ptr [g_eventQueueChild], 0xa
         mov      dword ptr [esi + 8], OFFSET StageEventState4Way_004982f0
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      ecx, OFFSET StageEventState4Way_004982f0
         add      ecx, 0x1000000
         mov      dword ptr [edx*4 + 0x84], 1
@@ -246,7 +246,7 @@ __declspec(naked) void StageEventState4Way_004982f0(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
         call     ScaledClearJmp_00428d40
         mov      dword ptr [g_framePauseFlag], 1

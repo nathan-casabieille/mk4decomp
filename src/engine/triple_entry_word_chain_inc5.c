@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -133,8 +133,8 @@ extern void TripleEntryWordChainInc5_00462870(void);
  *     call MStackChainOrBitLoop_004635a0, pause-check, sync 80→fb0; call PackedTableWalkChainStore, pause-check;
  *     call MStackPush2ScaledChainLoop_00463430, pause-check; push (word)[0x004e2858], call TaggedSceneDispatch_004be690.
  *     Fall-through to jmp CallSetPause_0041f830.
- *   Block B (+0x70): g_walkCallback=g_state_0053a408; if zero jmp CallSetPause; else jmp TripleEntryWordChainInc5_00462870.
- *   Block C (+0x90): g_walkCallback=g_state_00537e88; if zero jmp CallSetPause; else jmp TripleEntryWordChainInc5_00462870.
+ *   Block B (+0x70): g_walkCallback=g_active_0053a408; if zero jmp CallSetPause; else jmp TripleEntryWordChainInc5_00462870.
+ *   Block C (+0x90): g_walkCallback=g_active_00537e88; if zero jmp CallSetPause; else jmp TripleEntryWordChainInc5_00462870.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00541fb0;
@@ -190,7 +190,7 @@ __declspec(naked) void TripleEntryWordPushChain_004627c0(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        mov     eax, dword ptr [g_state_0053a408]
+        mov     eax, dword ptr [g_active_0053a408]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         _emit   75h
@@ -205,7 +205,7 @@ __declspec(naked) void TripleEntryWordPushChain_004627c0(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        mov     eax, dword ptr [g_state_00537e88]
+        mov     eax, dword ptr [g_active_00537e88]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         _emit   75h

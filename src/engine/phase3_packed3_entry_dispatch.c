@@ -20,9 +20,9 @@ extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
-extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_00537e88;
-extern unsigned int g_state_0053a408;
+extern unsigned int g_table_00535ddc;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_active_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
@@ -71,8 +71,8 @@ extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
-extern unsigned int g_state_00541fa4;
-extern unsigned int g_state_00541fa8;
+extern unsigned int g_zero_00541fa4;
+extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00486130 (352b game) - 3-entry packed phase-state install w/ tails.
- *   Entry 1 (offset 0, 247b): phase from [scaled g_data_00542060 + 0x84].
+ *   Entry 1 (offset 0, 247b): phase from [scaled g_baseSel_00542060 + 0x84].
  *     phase 0: tail-calls StackPopDispatchTagged_0041f780.
  *     phase 1: add g_currentNodeFlags into [g_fightGroupHead*4 + 0x58] AND into
  *              [g_eventQueueEnd*4 + 0x58] (both mirrored through 0x54206c),
@@ -137,7 +137,7 @@ extern unsigned int g_data_00535e7c;
  *     g_xformDirtyFlags set, tail-jmp TwoCallTail_00481380; else push 0x4eed08
  *     and call ArgSarStoreJmp_004594f0.
  *   (8-byte NOP align pad.)
- *   Entry 3 (offset 0x140, 36b): if [scaled g_data_00542060 + 0x7c] > 3
+ *   Entry 3 (offset 0x140, 36b): if [scaled g_baseSel_00542060 + 0x7c] > 3
  *     tail-jmp BattleEndCluster_00483650; else fall through to the next adjacent
  *     function ChainDispatcher4Call_00486290 via jmp.
  */
@@ -146,7 +146,7 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00542060;
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_xformDirtyFlags;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void BattleEndCluster_00483650(void);
@@ -156,7 +156,7 @@ extern void TwoCallTail_00481380(void);
 
 __declspec(naked) void Phase3Packed3EntryDispatch_00486130(void) {
     __asm {
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         push    esi
         shl     eax, 2
         mov     ecx, dword ptr [eax + 0x84]
@@ -245,7 +245,7 @@ __declspec(naked) void Phase3Packed3EntryDispatch_00486130(void) {
         nop
         /* entry 3 (offset 0x140) */
     L_p3p_entry3:
-        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_baseSel_00542060]
         mov     eax, dword ptr [eax*4 + 0x7c]
         cmp     eax, 3
         mov     dword ptr [g_walkCallback], eax
