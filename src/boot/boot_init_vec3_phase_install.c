@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_00506d7c;
-extern unsigned int g_data_00535e6c;
+extern unsigned int g_particleEmitterNode_00535e6c;
 extern unsigned int g_data_0053a50c;
 extern void BootMultiAssetLoadStateInit_00403b10(void);
 extern void FiveTableWalkInit_00403c90(void);
@@ -193,7 +193,7 @@ __declspec(naked) void BootInitVec3PhaseInstall_00402c10(void)
         call    MStackCall_00406340
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_bivpi_pop
-        mov     eax, dword ptr [g_data_00535e6c]
+        mov     eax, dword ptr [g_particleEmitterNode_00535e6c]
         mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_fightGroupHead], edx

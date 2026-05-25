@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_00511fa4;
 extern unsigned int g_load_0052ab10;
-extern unsigned int g_data_00535e6c;
+extern unsigned int g_particleEmitterNode_00535e6c;
 extern unsigned int g_data_0053e35c;
 extern void AudioMixerStep_004ab700(void);
 extern void BootSetJmpStoreThenChainTriple_0040b970(void);
@@ -147,7 +147,7 @@ __declspec(naked) void Phase4SlotInitPackedHelper_00416040(void)
         mov     ecx, dword ptr [g_fightGroupHead]
         lea     eax, [ecx*4]
         mov     dword ptr [ecx*4 + 0x30], 0xA3
-        mov     ecx, dword ptr [g_data_00535e6c]
+        mov     ecx, dword ptr [g_particleEmitterNode_00535e6c]
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax + 0x3C], ecx
         mov     ecx, dword ptr [eax + 0x34]

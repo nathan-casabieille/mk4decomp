@@ -116,12 +116,12 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   >= 0 wrap cursor to 0 and retry, else commit (cj += ecx),
  *   pop state stack back.
  */
-extern unsigned int g_x_00535e48;
+extern unsigned int g_dispatchArg_00535e48;
 
 void TwinLoopSlotFinder_00429a40(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_x_00535e48]
+        mov     ecx, dword ptr [g_dispatchArg_00535e48]
         inc     eax
         mov     edx, 0x004e2948
         mov     dword ptr [g_matrixStackTop], eax
@@ -129,7 +129,7 @@ void TwinLoopSlotFinder_00429a40(void) {
         mov     ecx, dword ptr [g_walkCallback]
         shl     ecx, 4
         shr     edx, 2
-        mov     dword ptr [g_x_00535e48], ecx
+        mov     dword ptr [g_dispatchArg_00535e48], ecx
         mov     dword ptr [g_cj_00542058], edx
 loopTop:
         lea     eax, [edx + ecx]
@@ -138,12 +138,12 @@ loopTop:
         mov     dword ptr [g_walkCallback], eax
         jne     foundOrWrap
         add     ecx, 0x10
-        mov     dword ptr [g_x_00535e48], ecx
+        mov     dword ptr [g_dispatchArg_00535e48], ecx
         jmp     loopTop
 foundOrWrap:
         jge     commit
         xor     ecx, ecx
-        mov     dword ptr [g_x_00535e48], ecx
+        mov     dword ptr [g_dispatchArg_00535e48], ecx
         jmp     loopTop
 commit:
         mov     eax, dword ptr [g_matrixStackTop]
@@ -151,7 +151,7 @@ commit:
         mov     dword ptr [g_cj_00542058], edx
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_x_00535e48], ecx
+        mov     dword ptr [g_dispatchArg_00535e48], ecx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }

@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   g_scaledInit = [0x52ab10]; push 0x4f3040, g_scaledInit; call AudioStoreXfer3SelfInstall_004a2060; add esp, 8.
  */
 extern unsigned int g_load_0052ab10;
-extern unsigned int g_x_00535e6c;
+extern unsigned int g_particleEmitterNode_00535e6c;
 extern void AudioStoreXfer3SelfInstall_004a2060(void);
 extern void MStackCall_00406340(void);
 
@@ -144,7 +144,7 @@ void ChainInitDoublePushCall_004a47c0(void) {
         mov     eax, dword ptr [g_scaledInit_00542044]
         mov     ecx, 0x0000e666
         mov     dword ptr [g_fightGroupHead], eax
-        mov     eax, dword ptr [g_x_00535e6c]
+        mov     eax, dword ptr [g_particleEmitterNode_00535e6c]
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     dword ptr [g_walkCallback], ecx
         mov     [eax*4 + 0x3c], ecx

@@ -115,7 +115,7 @@ extern unsigned int g_data_004f00d0;
 extern unsigned int g_load_0052ab04;
 extern unsigned int g_load_0052ab08;
 extern unsigned int g_counter_0053a51c;
-extern unsigned int g_data_0053a7a0;
+extern unsigned int g_installOwner2_0053a7a0;
 extern unsigned int g_data_00542ce8;
 extern void AudioMixerStep_004ab700(void);
 extern void CallSetPause_0041f830(void);
@@ -158,7 +158,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
         mov     dword ptr [g_installOwnerNode_00535cf8], eax
         mov     dword ptr [eax*4 + 0x64], 0x0004B65F
         mov     eax, dword ptr [g_currentNodeIdx]
-        mov     dword ptr [g_data_0053a7a0], eax
+        mov     dword ptr [g_installOwner2_0053a7a0], eax
         mov     dword ptr [g_walkCallback], edi
         mov     dword ptr [eax*4 + 0x54], edi
         mov     eax, dword ptr [g_currentNodeIdx]
@@ -195,7 +195,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
         shr     ecx, 2
         mov     dword ptr [g_eventQueueIdx], ecx
     L_p4tpis_A_after_3:
-        mov     edx, dword ptr [g_data_0053a7a0]
+        mov     edx, dword ptr [g_installOwner2_0053a7a0]
         mov     dword ptr [g_eventQueueNotMask], edi
         mov     dword ptr [g_eventQueueEnd], edx
         mov     dword ptr [g_walkCallback], 0xC4

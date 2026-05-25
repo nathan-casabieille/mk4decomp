@@ -112,15 +112,15 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Multi-cmp on eax: ==ebx → branch_A; ==2/3/4 → +0xe then call LinkedListIndirectDirtyToggle_0049f7b0; ==5 → use esi.
  *     <5 → CallSetPause; ==0xa/0xf → -5; ==0x12 → -4; >0x12 → CallSetPause.
  *   After call LinkedListIndirectDirtyToggle_0049f7b0: if pause CallSetPause; if !bit0(0054208c) loop to start.
- *   Else: chain[scaledInit*4]=g_walkCallback; copy g_state_00535e48 to g_eventQueueCurrent;
+ *   Else: chain[scaledInit*4]=g_walkCallback; copy g_dispatchArg_00535e48 to g_eventQueueCurrent;
  *     call RoundWinTransition_0049e7e0; if pause CallSetPause; load chain[g_xformEntityIdx*4+8];
  *     call GuardedScaledCall; if !pause CallSetPause; pop esi/ebx; ret.
- *   Tail thunk_1 (+0xe0): if g_state2_00541d88!=0 jmp CallSetPause else g_state_00535e48=0; jmp IndirectOpcodeDispatch3Entry_0049f3a0.
- *   Tail thunk_2 (+0x110): if g_state2_00537ea8!=0 jmp CallSetPause else g_state_00535e48=1; jmp IndirectOpcodeDispatch3Entry_0049f3a0.
+ *   Tail thunk_1 (+0xe0): if g_state2_00541d88!=0 jmp CallSetPause else g_dispatchArg_00535e48=0; jmp IndirectOpcodeDispatch3Entry_0049f3a0.
+ *   Tail thunk_2 (+0x110): if g_state2_00537ea8!=0 jmp CallSetPause else g_dispatchArg_00535e48=1; jmp IndirectOpcodeDispatch3Entry_0049f3a0.
  */
 extern unsigned int g_state2_00541d88;
 extern unsigned int g_state2_00537ea8;
-extern unsigned int g_x_00535e48;
+extern unsigned int g_dispatchArg_00535e48;
 extern void CallSetPause_0041f830(void);
 extern void GuardedScaledCall_0048a020(void);
 extern void IndirectOpcodeDispatch3Entry_0049f3a0(void);
@@ -214,7 +214,7 @@ __declspec(naked) void StateCascadeDualThunkContin_0049f260(void) {
         mov     eax, dword ptr [g_scaledInit_00542044]
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0], ecx
-        mov     edx, dword ptr [g_x_00535e48]
+        mov     edx, dword ptr [g_dispatchArg_00535e48]
         mov     dword ptr [g_eventQueueCurrent], edx
         call    RoundWinTransition_0049e7e0
         mov     eax, dword ptr [g_framePauseFlag]
@@ -241,7 +241,7 @@ __declspec(naked) void StateCascadeDualThunkContin_0049f260(void) {
         _emit   74h
         _emit   05h
         jmp     CallSetPause_0041f830
-        mov     dword ptr [g_x_00535e48], 0
+        mov     dword ptr [g_dispatchArg_00535e48], 0
         jmp     IndirectOpcodeDispatch3Entry_0049f3a0
         _emit   90h
         _emit   90h
@@ -263,7 +263,7 @@ __declspec(naked) void StateCascadeDualThunkContin_0049f260(void) {
         _emit   74h
         _emit   05h
         jmp     CallSetPause_0041f830
-        mov     dword ptr [g_x_00535e48], 1
+        mov     dword ptr [g_dispatchArg_00535e48], 1
         _emit   0e9h
         _emit   0eh
         _emit   00h

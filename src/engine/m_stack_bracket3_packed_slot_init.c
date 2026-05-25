@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004d5324;
 extern unsigned int g_data_004ec898;
-extern unsigned int g_data_00535e6c;
+extern unsigned int g_particleEmitterNode_00535e6c;
 extern void AudioMixerStep_004ab700(void);
 extern void MStackCall_00406340(void);
 extern void PushSetXfmMaskCallPop_00407140(void);
@@ -161,7 +161,7 @@ __declspec(naked) void MStackBracket3PackedSlotInit_004757c0(void)
         ret
     L_mb3p_doBody:
         mov     edx, dword ptr [g_fightGroupHead]
-        mov     eax, dword ptr [g_data_00535e6c]
+        mov     eax, dword ptr [g_particleEmitterNode_00535e6c]
         mov     dword ptr [edx*4 + 0x3c], eax
         mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, 0x7f

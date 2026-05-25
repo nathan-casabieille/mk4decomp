@@ -109,21 +109,21 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0049cd40 (178b game) - init scaledInit chain with -7 offset and table accumulator loop. */
-extern unsigned int g_data_00535e48;
+extern unsigned int g_dispatchArg_00535e48;
 extern unsigned int g_x_00537f24;
 extern unsigned int g_x_00541f98;
 
 void ScaledChainAccumLoop_0049cd40(void) {
     __asm {
         mov     eax, 0x0052d718
-        mov     dword ptr [g_data_00535e48], 0xfffffff9
+        mov     dword ptr [g_dispatchArg_00535e48], 0xfffffff9
         shr     eax, 2
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, dword ptr [g_x_00541f98]
         mov     dword ptr [g_xformEntityIdx], eax
         mov     dword ptr [eax*4 + 0], 0xfffffff9
         mov     eax, dword ptr [g_scaledInit_00542044]
-        add     eax, dword ptr [g_data_00535e48]
+        add     eax, dword ptr [g_dispatchArg_00535e48]
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     dword ptr [eax*4 + 0], 0
         mov     eax, dword ptr [g_scaledInit_00542044]
@@ -133,7 +133,7 @@ void ScaledChainAccumLoop_0049cd40(void) {
         _emit   0ebh
         _emit   05h
         mov     eax, dword ptr [g_scaledInit_00542044]
-        add     eax, dword ptr [g_data_00535e48]
+        add     eax, dword ptr [g_dispatchArg_00535e48]
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     edx, dword ptr [g_xformEntityIdx]

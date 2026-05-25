@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00535e6c;
+extern unsigned int g_particleEmitterNode_00535e6c;
 extern unsigned int g_data_00537f78;
 extern unsigned int g_data_00541de0;
 extern void BootPhaseGateBracketedInit_004060c0(void);
@@ -181,7 +181,7 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         test     eax, eax
         jne      L_4551
     L_44ab:
-        mov      eax, dword ptr [g_data_00535e6c]
+        mov      eax, dword ptr [g_particleEmitterNode_00535e6c]
         test     eax, eax
         mov      dword ptr [g_walkCallback], eax
         jne      L_4551
@@ -194,7 +194,7 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [eax*4 + 0x30], 0x13
         mov      eax, dword ptr [g_currentNodeIdx]
-        mov      dword ptr [g_data_00535e6c], eax
+        mov      dword ptr [g_particleEmitterNode_00535e6c], eax
         mov      dword ptr [eax*4 + 0x54], 0xffe80000
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [ecx*4 + 0x58], 0xffd00000

@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_x_00535e48;
+extern unsigned int g_dispatchArg_00535e48;
 extern unsigned int g_x_00541fc0;
 extern unsigned int g_data_004f2980;
 extern u32 g_dlMode;
@@ -205,7 +205,7 @@ __declspec(naked) void LinkedListIndirectDirtyToggle_0049f7b0(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   1ch
-        mov     eax, dword ptr [g_x_00535e48]
+        mov     eax, dword ptr [g_dispatchArg_00535e48]
         test    eax, eax
         mov     eax, dword ptr [g_state2_0053a1bc]
         _emit   74h

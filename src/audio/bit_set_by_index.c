@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     g_eventQueueCurrent = (1 << g_acc_00542078) | esi; chain[edx] = same.
  *   mstack-pop into g_xformEntityIdx, g_acc_00542078.
  */
-extern unsigned int g_x_00535e48;
+extern unsigned int g_dispatchArg_00535e48;
 extern unsigned int g_x_00541fc0;
 
 extern unsigned int g_data_004d57ac_arr;
@@ -141,7 +141,7 @@ __declspec(naked) void BitSetByIndex_004a07a0(void) {
         mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [g_xformEntityIdx], ecx
         add     ecx, eax
-        mov     dword ptr [g_x_00535e48], eax
+        mov     dword ptr [g_dispatchArg_00535e48], eax
         mov     eax, [ecx*4 + g_data_004d57ac_arr]
         mov     dword ptr [g_xformEntityIdx], eax
         mov     edx, [eax*4 + 0x10]

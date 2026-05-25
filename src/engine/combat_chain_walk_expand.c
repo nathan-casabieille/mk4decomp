@@ -113,7 +113,7 @@ extern unsigned int g_data_0050cab0;
 extern unsigned int g_data_0050cb3c;
 extern unsigned int g_data_005108dc;
 extern unsigned int g_load_0052ab10;
-extern unsigned int g_data_00535e48;
+extern unsigned int g_dispatchArg_00535e48;
 extern unsigned int g_data_00542a08;
 extern void DirtyDoubleDeref_00408cb0(void);
 extern void InstallSelfDispatch_00407620(void);
@@ -282,7 +282,7 @@ __declspec(naked) void CombatChainWalkExpand_00463870(void)
     L_3b89:
         and      eax, dword ptr [g_eventQueueCurrent]
         cmp      eax, 0x10
-        mov      dword ptr [g_data_00535e48], eax
+        mov      dword ptr [g_dispatchArg_00535e48], eax
         ja       L_3c6e
         add      ecx, eax
         mov      edx, dword ptr [ecx*4]

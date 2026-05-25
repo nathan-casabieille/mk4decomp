@@ -111,11 +111,11 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 /* @addr 0x0042e800 (206b game) - scaledInit chain init with 2 phases.
  *   Phase 1: scaledInit[+0x54] = 0; +0x58 = 0; +0x5c += 0x41999; +0x68 = 0x62978;
  *   +0x74 = 0xffffaaab; +0x30 = arg1; g_walkCallback = arg1.
- *   call MStackCall_00406340; if !pause: phase 2: g_pendingNodeType = g_x_00535e6c;
+ *   call MStackCall_00406340; if !pause: phase 2: g_pendingNodeType = g_particleEmitterNode_00535e6c;
  *   second chain at g_pendingNodeType[+0x54/0x58/0x5c]=0/0xfffc0000/0;
  *   g_scaledInit[+0x3c] = g_pendingNodeType. pop+ret.
  */
-extern unsigned int g_x_00535e6c;
+extern unsigned int g_particleEmitterNode_00535e6c;
 extern void MStackCall_00406340(void);
 
 __declspec(naked) void ScaledChainInit2Phase_0042e800(void) {
@@ -144,7 +144,7 @@ __declspec(naked) void ScaledChainInit2Phase_0042e800(void) {
         cmp     dword ptr [g_framePauseFlag], esi
         _emit   75h
         _emit   47h
-        mov     eax, dword ptr [g_x_00535e6c]
+        mov     eax, dword ptr [g_particleEmitterNode_00535e6c]
         mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [eax*4 + 0x54], esi
         mov     edx, dword ptr [g_pendingNodeType]

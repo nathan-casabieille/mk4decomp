@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Calls BootInitGuardedCallChain_004265d0 first. On no-error: reads the
  *   slot index from g_load_0052ab10 into g_currentNodeIdx, calls
  *   ZeroThreeFields_00404ed0 then writes (0, 0, 0xfffc0000) into
- *   [slot+0x54/+0x58/+0x5c]. Mirrors with g_data_00535e6c slot getting
+ *   [slot+0x54/+0x58/+0x5c]. Mirrors with g_particleEmitterNode_00535e6c slot getting
  *   (0, 0, 0x10000, 0). Then sets globals: 0x535de0=0, 0x541dd8=0,
  *   0x53a170=2, and 0x53a1ac=0xa (loop counter).
  *
@@ -133,7 +133,7 @@ extern unsigned int g_data_0050b214;
 extern unsigned int g_data_0052aabc;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_data_00535de0;
-extern unsigned int g_data_00535e6c;
+extern unsigned int g_particleEmitterNode_00535e6c;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 extern unsigned int g_data_0053a170;
@@ -163,7 +163,7 @@ __declspec(naked) void BootInitClearSlotSeed_0042ee40(void) {
         mov     dword ptr [esi + 0x54], ebx
         mov     dword ptr [esi + 0x58], ebx
         mov     dword ptr [esi + 0x5c], 0xfffc0000
-        mov     eax, dword ptr [g_data_00535e6c]
+        mov     eax, dword ptr [g_particleEmitterNode_00535e6c]
         mov     dword ptr [g_eventQueueEnd], eax
         shl     eax, 2
         mov     dword ptr [eax + 0x54], ebx

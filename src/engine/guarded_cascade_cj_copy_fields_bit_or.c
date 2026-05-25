@@ -115,9 +115,9 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   call MStackCall_00406340; if pause? final-ret.
  *   Clear cj[+0x5c] and g_eventQueueNotMask. cj[+0x64] = g_eventQueueIdx[+0x64].
  *   cj[+0x34] = (cj[+0x34] & 0xfe) | (g_eventQueueIdx[+0x34] & 1) | 0x81000.
- *   cj[+0x3c] = g_x_00535e6c. cj[+0x54] = g_eventQueueEnd[+0x54].
+ *   cj[+0x3c] = g_particleEmitterNode_00535e6c. cj[+0x54] = g_eventQueueEnd[+0x54].
  */
-extern unsigned int g_x_00535e6c;
+extern unsigned int g_particleEmitterNode_00535e6c;
 extern void MStackCall_00406340(void);
 extern void MStackPushDispatchBitGate_00407330(void);
 extern void MStackPushTwoEntryChainCall_004058c0(void);
@@ -182,7 +182,7 @@ __declspec(naked) void GuardedCascadeCjCopyFieldsBitOr_0043cb00(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x34], eax
         mov     eax, dword ptr [g_cj_0054205c]
-        mov     ecx, dword ptr [g_x_00535e6c]
+        mov     ecx, dword ptr [g_particleEmitterNode_00535e6c]
         mov     dword ptr [eax*4 + 0x3c], ecx
         mov     edx, dword ptr [g_eventQueueEnd]
         mov     ecx, dword ptr [g_cj_0054205c]

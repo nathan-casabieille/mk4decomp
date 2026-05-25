@@ -109,20 +109,20 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00427ad0 (138b)
- *   Push g_data_00535e48 on mstack; eax = g_eventQueueEnd + g_data_00535e50;
- *   [eax*4] = 0xc; eax = g_data_00535e48 + g_eventQueueTotal;
- *   [eax*4] = 0; eax = g_data_00535e48 + 1; g_walkCallback = 3;
+ *   Push g_dispatchArg_00535e48 on mstack; eax = g_eventQueueEnd + g_data_00535e50;
+ *   [eax*4] = 0xc; eax = g_dispatchArg_00535e48 + g_eventQueueTotal;
+ *   [eax*4] = 0; eax = g_dispatchArg_00535e48 + 1; g_walkCallback = 3;
  *   [(g_eventQueueTotal+old_g_data_00535e48+1)*4] = 3;
- *   pop g_data_00535e48; ret.
+ *   pop g_dispatchArg_00535e48; ret.
  *   Hmm let me re-read.
  */
-extern unsigned int g_data_00535e48;
+extern unsigned int g_dispatchArg_00535e48;
 extern unsigned int g_data_00535e50;
 
 void Push48PreSetTwoStores_00427ad0(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_data_00535e48]
+        mov     ecx, dword ptr [g_dispatchArg_00535e48]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
@@ -130,21 +130,21 @@ void Push48PreSetTwoStores_00427ad0(void) {
         mov     eax, dword ptr [g_data_00535e50]
         add     edx, eax
         mov     dword ptr [edx*4 + 0], 0x0c
-        mov     ecx, dword ptr [g_data_00535e48]
+        mov     ecx, dword ptr [g_dispatchArg_00535e48]
         mov     edx, dword ptr [g_eventQueueTotal]
         add     edx, ecx
         mov     dword ptr [edx*4 + 0], 0
-        mov     eax, dword ptr [g_data_00535e48]
+        mov     eax, dword ptr [g_dispatchArg_00535e48]
         mov     ecx, dword ptr [g_eventQueueTotal]
         inc     eax
         add     ecx, eax
-        mov     dword ptr [g_data_00535e48], eax
+        mov     dword ptr [g_dispatchArg_00535e48], eax
         mov     dword ptr [g_walkCallback], 3
         mov     dword ptr [ecx*4 + 0], 3
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_data_00535e48], edx
+        mov     dword ptr [g_dispatchArg_00535e48], edx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }

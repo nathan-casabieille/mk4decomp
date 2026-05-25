@@ -14,7 +14,7 @@ extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_x_00535e6c;
+extern unsigned int g_particleEmitterNode_00535e6c;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 /*
  * @addr 0x00403c20 (102b boot) - registry slot fixup:
  *   pushes current eventQueueWorkType onto state stack, replaces with
- *   value from g_x_00535e6c. Zero-clears base[+0x54]/+0x58, sets
+ *   value from g_particleEmitterNode_00535e6c. Zero-clears base[+0x54]/+0x58, sets
  *   base[+0x5c]/g_walkCallback to 0xfff68000, then stores eventQueue
  *   ID into walk[+0x3c]. Pops the stack entry back into eventQueue
  *   and decrements.
@@ -123,8 +123,8 @@ void RegistryPushBindPop_00403c20(void) {
     top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_xformEntityIdx;
-    g_xformEntityIdx = g_x_00535e6c;
-    base = (unsigned char *)(g_x_00535e6c * 4);
+    g_xformEntityIdx = g_particleEmitterNode_00535e6c;
+    base = (unsigned char *)(g_particleEmitterNode_00535e6c * 4);
     *(unsigned int *)(base + 0x54) = 0;
     *(unsigned int *)(base + 0x58) = 0;
     g_walkCallback = 0xfff68000;

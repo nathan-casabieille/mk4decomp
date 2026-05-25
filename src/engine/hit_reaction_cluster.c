@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004e27cc;
-extern unsigned int g_data_00535e48;
+extern unsigned int g_dispatchArg_00535e48;
 extern unsigned int g_data_00537f30;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
@@ -416,7 +416,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         lea      ecx, [edx - 1]
         mov      dword ptr [g_currentNodeIdx], eax
         cmp      ecx, 2
-        mov      dword ptr [g_data_00535e48], ecx
+        mov      dword ptr [g_dispatchArg_00535e48], ecx
         jg       L_c570
         add      eax, ecx
         mov      eax, dword ptr [eax*4]

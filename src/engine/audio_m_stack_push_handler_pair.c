@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_word_004e2860;
 extern unsigned int g_data_004e2864;
-extern unsigned int g_data_00535e48;
+extern unsigned int g_dispatchArg_00535e48;
 extern unsigned int g_data_00537e90;
 extern unsigned int g_data_00537f88;
 extern unsigned int g_state2_0053a1bc;
@@ -137,7 +137,7 @@ __declspec(naked) void AudioMStackPushHandlerPair_0049ff30(void)
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4], edx
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_data_00535e48]
+        mov     ecx, dword ptr [g_dispatchArg_00535e48]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4], ecx
@@ -145,7 +145,7 @@ __declspec(naked) void AudioMStackPushHandlerPair_0049ff30(void)
         mov     eax, dword ptr [g_eventQueueNotMask]
         mov     dword ptr [g_xformEntityIdx], ecx
         add     ecx, eax
-        mov     dword ptr [g_data_00535e48], eax
+        mov     dword ptr [g_dispatchArg_00535e48], eax
         mov     ecx, dword ptr [ecx*4]
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     ecx, dword ptr [ecx*4 + 0x18]
@@ -182,7 +182,7 @@ __declspec(naked) void AudioMStackPushHandlerPair_0049ff30(void)
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [eax*4]
         dec     eax
-        mov     dword ptr [g_data_00535e48], edx
+        mov     dword ptr [g_dispatchArg_00535e48], edx
         mov     dword ptr [g_matrixStackTop], eax
         mov     ecx, dword ptr [eax*4]
         dec     eax

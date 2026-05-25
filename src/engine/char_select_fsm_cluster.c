@@ -129,7 +129,7 @@ extern unsigned int g_data_004e8158;
 extern unsigned int g_data_0050d434;
 
 extern unsigned int g_data_004d5324;
-extern unsigned int g_data_00535e6c;
+extern unsigned int g_particleEmitterNode_00535e6c;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void AudioMixerStep_004ab700(void);
 extern void DualScaledStore_00452740(void);
@@ -294,7 +294,7 @@ __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x34], eax
         mov      eax, dword ptr [g_fightGroupHead]
-        mov      ecx, dword ptr [g_data_00535e6c]
+        mov      ecx, dword ptr [g_particleEmitterNode_00535e6c]
         mov      dword ptr [eax*4 + 0x3c], ecx
         call     ArgSarStoreJmp_004594f0
         mov      eax, dword ptr [g_framePauseFlag]

@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004ece38;
-extern unsigned int g_data_00535e6c;
+extern unsigned int g_particleEmitterNode_00535e6c;
 extern void AudioMixerStep_004ab700(void);
 extern void MStackCall_00406340(void);
 extern void PushSetXfmMaskCallPop_00407140(void);
@@ -156,7 +156,7 @@ void MStackBracketedScaledStores_00475b30(void) {
         ret
     L_mbss_doBody:
         mov     eax, dword ptr [g_fightGroupHead]
-        mov     edx, dword ptr [g_data_00535e6c]
+        mov     edx, dword ptr [g_particleEmitterNode_00535e6c]
         mov     dword ptr [eax*4 + 0x3c], edx
         mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, 0xa7

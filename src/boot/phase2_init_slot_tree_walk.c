@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00535e6c;
+extern unsigned int g_particleEmitterNode_00535e6c;
 extern unsigned int g_data_00542378;
 extern void FlagThunk4EntryDispatcher_0040a470(void);
 extern void DirtyDoubleDeref_00408cb0(void);
@@ -148,7 +148,7 @@ __declspec(naked) void Phase2InitSlotTreeWalk_0041ad60(void)
     L_p2is_continue:
         mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [edx*4 + 0x30], 0x80
-        mov     eax, dword ptr [g_data_00535e6c]
+        mov     eax, dword ptr [g_particleEmitterNode_00535e6c]
         mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x3C], eax

@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004f2dc0;
-extern unsigned int g_data_00535e48;
+extern unsigned int g_dispatchArg_00535e48;
 extern unsigned int g_data_00535e50;
 extern unsigned int g_data_00541fc0;
 extern unsigned int g_data_00541fc4;
@@ -178,7 +178,7 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
         mov      ebp, 0xf
         mov      dword ptr [edx*4 + 0x30], ecx
         mov      eax, dword ptr [g_eventQueueEnd]
-        mov      dword ptr [g_data_00535e48], eax
+        mov      dword ptr [g_dispatchArg_00535e48], eax
         mov      dword ptr [g_walkCallback], ebp
         call     StorePauseImulShr16_004ab630
         cmp      dword ptr [g_framePauseFlag], esi
@@ -191,7 +191,7 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
         test     byte ptr [g_xformDirtyFlags], bl
         jne      short L_0ed1
         mov      eax, dword ptr [g_data_00541fc0]
-        mov      edx, dword ptr [g_data_00535e48]
+        mov      edx, dword ptr [g_dispatchArg_00535e48]
         mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [g_xformEntityIdx], eax
         add      eax, edx

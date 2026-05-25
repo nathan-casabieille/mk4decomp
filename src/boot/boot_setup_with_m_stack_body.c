@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Entry 1 (offset 0, 194b): sets g_walkCallback = &g_data_004d75e0>>2,
  *     calls PushSetXfmMaskCallPop_00407140. On no-error AND bit 2 of
  *     g_xformDirtyFlags clear: writes [g_fightGroupHead*4+0x30]=0xa9,
- *     +0x3c=g_data_00535e6c, +0x70=0xffffaaab, +0x80=0xffffb334. Calls
+ *     +0x3c=g_particleEmitterNode_00535e6c, +0x70=0xffffaaab, +0x80=0xffffb334. Calls
  *     SetJmp_00408d20. On no-error writes the body label at
  *     [g_xformEntityIdx*4+0x10] and calls ScaledTripleCopy54_004ac040.
  *     On no-error writes g_eventQueueNotMask → +0x58 and tail-jmps
@@ -127,7 +127,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 extern unsigned int g_data_004d75e0;
 extern unsigned int g_load_0052ab10;
-extern unsigned int g_data_00535e6c;
+extern unsigned int g_particleEmitterNode_00535e6c;
 extern unsigned int g_table_004d57b0;
 extern void ChainWalkPushPop_00405a40(void);
 extern void MStackCall_004062f0(void);
@@ -149,7 +149,7 @@ __declspec(naked) void BootSetupWithMStackBody_00418e00(void) {
         mov     ecx, dword ptr [g_fightGroupHead]
         mov     dword ptr [ecx*4 + 0x30], 0xa9
         mov     edx, dword ptr [g_fightGroupHead]
-        mov     eax, dword ptr [g_data_00535e6c]
+        mov     eax, dword ptr [g_particleEmitterNode_00535e6c]
         mov     dword ptr [edx*4 + 0x3c], eax
         mov     ecx, dword ptr [g_fightGroupHead]
         mov     eax, 0xffffb334

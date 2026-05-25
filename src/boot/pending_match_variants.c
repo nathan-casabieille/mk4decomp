@@ -119,7 +119,7 @@ extern void PendingMatch_0041d770(void);
  */
 extern unsigned int g_byte_004f360c;
 extern unsigned int g_state_0052aac4_aa;
-extern unsigned int g_data_00535e6c;
+extern unsigned int g_particleEmitterNode_00535e6c;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 extern unsigned int g_data_0053a3e8;
@@ -1137,7 +1137,7 @@ __declspec(naked) void Phase2InitSlotTreeWalk_0041ad60(void)
     L_p2is_continue:
         mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [edx*4 + 0x30], 0x80
-        mov     eax, dword ptr [g_data_00535e6c]
+        mov     eax, dword ptr [g_particleEmitterNode_00535e6c]
         mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x3C], eax
@@ -2488,7 +2488,7 @@ __declspec(naked) void PendingMatch_0040cd50(void)
         jne      L_d0ff
         mov      ecx, dword ptr [g_fightGroupHead]
         mov      dword ptr [ecx*4 + 0x30], esi
-        mov      eax, dword ptr [g_data_00535e6c]
+        mov      eax, dword ptr [g_particleEmitterNode_00535e6c]
         mov      edx, dword ptr [g_fightGroupHead]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x3c], eax
@@ -4532,7 +4532,7 @@ __declspec(naked) void PendingMatch_00411210(void)
         jne      L_185f
         mov      edx, dword ptr [g_fightGroupHead]
         mov      dword ptr [edx*4 + 0x30], 0xc2
-        mov      ecx, dword ptr [g_data_00535e6c]
+        mov      ecx, dword ptr [g_particleEmitterNode_00535e6c]
         lea      eax, [edx*4]
         mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [eax + 0x3c], ecx
@@ -7204,7 +7204,7 @@ __declspec(naked) void PendingMatch_00419c90(void)
         mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_eventQueueEnd], eax
         mov      dword ptr [eax*4 + 0x30], 0x80
-        mov      eax, dword ptr [g_data_00535e6c]
+        mov      eax, dword ptr [g_particleEmitterNode_00535e6c]
         mov      ecx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x3c], eax

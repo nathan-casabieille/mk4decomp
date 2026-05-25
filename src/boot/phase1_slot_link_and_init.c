@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00535e6c;
+extern unsigned int g_particleEmitterNode_00535e6c;
 extern void BootChainBidirRecurseWalk_00405ca0(void);
 extern void BootPhaseGateBracketedInit_004060c0(void);
 extern void GuardedChainPushSetCallPop_00406bb0(void);
@@ -154,7 +154,7 @@ __declspec(naked) void Phase1SlotLinkAndInit_00419470(void)
         mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_eventQueueEnd], eax
         mov     dword ptr [eax*4 + 0x30], 0x85
-        mov     eax, dword ptr [g_data_00535e6c]
+        mov     eax, dword ptr [g_particleEmitterNode_00535e6c]
         mov     edx, dword ptr [g_eventQueueEnd]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x3C], eax

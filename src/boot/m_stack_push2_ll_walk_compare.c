@@ -112,7 +112,7 @@ extern void ScaledPushArg_00404b90(void);
 extern void ScaledPushArg_00404c00(void);
 extern void ScaledLoadGuardedJmp_004066d0(void);
 extern void MStackPush2LLWalkCompare_004069b0(void);
-extern unsigned int g_data_00535e48;
+extern unsigned int g_dispatchArg_00535e48;
 extern unsigned int g_data_00535e50;
 
 /* @addr 0x004266d0 (162b) - 11x ScaledPushArg pattern (6x to 0x404b90,
@@ -128,6 +128,6 @@ void Eleven404b90_404c00_004266d0(void) {
     ((void (*)(unsigned int))ScaledPushArg_00404c00)(g_xformEntityIdx);
     ((void (*)(unsigned int))ScaledPushArg_00404c00)(g_pendingNodeType);
     ((void (*)(unsigned int))ScaledPushArg_00404c00)(g_eventQueueTotal);
-    ((void (*)(unsigned int))ScaledPushArg_00404c00)(g_data_00535e48);
+    ((void (*)(unsigned int))ScaledPushArg_00404c00)(g_dispatchArg_00535e48);
     ((void (*)(unsigned int))ScaledPushArg_00404c00)(g_data_00535e50);
 }

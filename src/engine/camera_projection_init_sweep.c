@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004e86d8;
-extern unsigned int g_data_00535e48;
+extern unsigned int g_dispatchArg_00535e48;
 extern unsigned int g_data_00535e50;
 extern unsigned int g_data_00537eb4;
 extern unsigned int g_data_00542408;
@@ -173,7 +173,7 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         mov      dword ptr [g_eventQueueNotMask], 0
         mov      dword ptr [g_xformScratch2088], 0x3243f
         mov      dword ptr [g_eventQueueChild], 0x50000
-        mov      dword ptr [g_data_00535e48], 1
+        mov      dword ptr [g_dispatchArg_00535e48], 1
     L_8267:
         mov      eax, dword ptr [g_pendingNodeType]
         mov      ecx, dword ptr [eax*4]
@@ -232,12 +232,12 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8430
-        mov      eax, dword ptr [g_data_00535e48]
+        mov      eax, dword ptr [g_dispatchArg_00535e48]
         mov      edx, dword ptr [g_walkCallback]
         mov      ecx, dword ptr [g_currentNodeIdx]
         inc      eax
         mov      dword ptr [g_xformScratch2088], edx
-        mov      dword ptr [g_data_00535e48], eax
+        mov      dword ptr [g_dispatchArg_00535e48], eax
         mov      dword ptr [ecx*4 + 0x1c], eax
         mov      eax, dword ptr [g_data_00535e50]
         dec      eax

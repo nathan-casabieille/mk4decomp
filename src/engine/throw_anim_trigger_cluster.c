@@ -110,8 +110,8 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_0050a0f0;
 extern unsigned int g_data_0050c0bc;
-extern unsigned int g_data_00535e48;
-extern unsigned int g_data_00535e6c;
+extern unsigned int g_dispatchArg_00535e48;
+extern unsigned int g_particleEmitterNode_00535e6c;
 extern unsigned int g_state2_00537ea8;
 extern unsigned int g_state2_00541d88;
 extern void CallSetPause_0041f830(void);
@@ -190,7 +190,7 @@ __declspec(naked) void ThrowAnimTriggerCluster_0049efa0(void)
         mov      dword ptr [ecx*4 + 0x34], eax
         mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_pendingNodeType], eax
-        mov      eax, dword ptr [g_data_00535e6c]
+        mov      eax, dword ptr [g_particleEmitterNode_00535e6c]
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [eax*4 + 0x54], edx
         mov      ecx, dword ptr [g_currentNodeIdx]
@@ -241,7 +241,7 @@ __declspec(naked) void ThrowAnimTriggerCluster_0049efa0(void)
         je       short L_f1a3
         jmp      CallSetPause_0041f830
     L_f1a3:
-        mov      dword ptr [g_data_00535e48], 0
+        mov      dword ptr [g_dispatchArg_00535e48], 0
         jmp      GameStateTick_0049f1f0
         nop
         nop
@@ -264,7 +264,7 @@ __declspec(naked) void ThrowAnimTriggerCluster_0049efa0(void)
         je       short L_f1d3
         jmp      CallSetPause_0041f830
     L_f1d3:
-        mov      dword ptr [g_data_00535e48], 1
+        mov      dword ptr [g_dispatchArg_00535e48], 1
         jmp      GameStateTick_0049f1f0
     }
 }

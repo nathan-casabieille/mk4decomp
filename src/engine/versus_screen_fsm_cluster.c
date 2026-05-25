@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_0053a7a0;
+extern unsigned int g_installOwner2_0053a7a0;
 extern unsigned int g_data_00501094;
 extern void Thunk_0049cbc0(void);
 extern void EsiInstallSetCbChainExtend_0048a970(void);
@@ -133,7 +133,7 @@ __declspec(naked) void DualSubInstallChain_0044f4b0(void)
         je      short L_dsic_install1
         jmp     Thunk_0049cbc0
     L_dsic_install1:
-        mov     ecx, dword ptr [g_data_0053a7a0]
+        mov     ecx, dword ptr [g_installOwner2_0053a7a0]
         mov     dword ptr [g_eventQueueNotMask], edx
         mov     dword ptr [g_eventQueueEnd], ecx
         mov     dword ptr [eax + 8], offset DualSubInstallChain_0044f4b0

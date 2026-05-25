@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00535e48;
+extern unsigned int g_dispatchArg_00535e48;
 extern unsigned int g_data_00541fc0;
 extern void func_0049f336(void);
 extern void func_0049f33b(void);
@@ -117,7 +117,7 @@ __declspec(naked) void GameStateTick_0049f1f0(void)
 {
     __asm {
         mov      eax, dword ptr [g_data_00541fc0]
-        mov      ecx, dword ptr [g_data_00535e48]
+        mov      ecx, dword ptr [g_dispatchArg_00535e48]
         mov      dword ptr [g_xformEntityIdx], eax
         add      eax, ecx
         push     ebx

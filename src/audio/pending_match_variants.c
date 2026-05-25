@@ -131,7 +131,7 @@ extern unsigned int g_table_004f3ac8;
 extern unsigned int g_state_0052aac4_aa;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_data_00535de4;
-extern unsigned int g_data_00535e6c;
+extern unsigned int g_particleEmitterNode_00535e6c;
 extern s32 g_dlNalt1;
 extern unsigned int g_data_00538088;
 extern s32 g_dlNalt2;
@@ -980,7 +980,7 @@ __declspec(naked) void PendingMatch_004a70f0(void)
         mov      eax, dword ptr [g_fightGroupHead]
         mov      dword ptr [g_data_00538088], eax
         mov      dword ptr [eax*4 + 0x5c], 0xfffe8000
-        mov      eax, dword ptr [g_data_00535e6c]
+        mov      eax, dword ptr [g_particleEmitterNode_00535e6c]
         mov      ecx, dword ptr [g_fightGroupHead]
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [ecx*4 + 0x3c], eax

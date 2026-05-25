@@ -121,7 +121,7 @@ extern void func_00453a01(void);
 extern void Thunk_0049cbc0(void);
 extern unsigned int g_data_004e7fd0;
 extern unsigned int g_data_004e8020;
-extern unsigned int g_data_0053a7a0;
+extern unsigned int g_installOwner2_0053a7a0;
 
 
 __declspec(naked) void PoseCopyIdleCluster_004537a0(void)
@@ -215,7 +215,7 @@ __declspec(naked) void PoseCopyIdleCluster_004537a0(void)
         pop      esi
         ret
     L_38dc:
-        mov      edx, dword ptr [g_data_0053a7a0]
+        mov      edx, dword ptr [g_installOwner2_0053a7a0]
         mov      ecx, OFFSET g_data_004e8020
         shr      ecx, 2
         mov      dword ptr [g_eventQueueIdx], ecx
@@ -242,7 +242,7 @@ __declspec(naked) void PoseCopyIdleCluster_004537a0(void)
         call     MStackPush3SideStore_0044cb80
         cmp      dword ptr [g_framePauseFlag], edi
         jne      func_00453a01
-        mov      ecx, dword ptr [g_data_0053a7a0]
+        mov      ecx, dword ptr [g_installOwner2_0053a7a0]
         mov      eax, OFFSET g_data_004e7fd0
         shr      eax, 2
         mov      dword ptr [g_eventQueueIdx], eax

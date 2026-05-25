@@ -373,7 +373,7 @@ extern unsigned int g_or_0052ab40;
 extern unsigned int g_data_0052d750;
 extern unsigned int g_data_0052d754;
 extern unsigned int g_data_0052d758;
-extern unsigned int g_data_00535e48;
+extern unsigned int g_dispatchArg_00535e48;
 extern unsigned int g_data_00537f04;
 extern unsigned int g_data_0053a514;
 extern void ArgSar_Set0_Jmp_0049c6f0(void);
@@ -494,7 +494,7 @@ extern unsigned int g_data_00535d68;
 extern unsigned int g_data_00535db0;
 extern unsigned int g_data_00535e44;
 extern unsigned int g_data_00535e4c;
-extern unsigned int g_data_00535e6c;
+extern unsigned int g_particleEmitterNode_00535e6c;
 extern unsigned int g_x_00537e94_v2;
 extern unsigned int g_data_00537eec;
 extern unsigned int g_data_00537ef0;
@@ -510,7 +510,7 @@ extern unsigned int g_data_0053a464;
 extern unsigned int g_data_0053a468;
 extern unsigned int g_clamp_0053a6dc;
 extern unsigned int g_data_0053a730;
-extern unsigned int g_data_0053a7a0;
+extern unsigned int g_installOwner2_0053a7a0;
 extern unsigned int g_data_0053a7a8;
 extern unsigned int g_data_0053a7b4;
 extern unsigned int g_clamp_0053e348;
@@ -3120,7 +3120,7 @@ void ScenePostInitSequencer_00429b70(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_9e22
-        mov      eax, dword ptr [g_data_00535e6c]
+        mov      eax, dword ptr [g_particleEmitterNode_00535e6c]
         mov      ecx, dword ptr [g_eventQueueIdx]
         mov      dword ptr [g_currentNodeIdx], eax
         mov      ecx, dword ptr [ecx*4 + 0x2c]
@@ -3151,7 +3151,7 @@ void ScenePostInitSequencer_00429b70(void) {
         mov      eax, dword ptr [g_fightGroupHead]
         mov      dword ptr [g_data_0053a7a8], eax
         mov      dword ptr [eax*4 + 0x30], 0xb
-        mov      eax, dword ptr [g_data_00535e6c]
+        mov      eax, dword ptr [g_particleEmitterNode_00535e6c]
         mov      ecx, dword ptr [g_fightGroupHead]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x3c], eax
@@ -4363,7 +4363,7 @@ __declspec(naked) void EnduranceStateInitWalk_004785a0(void)
         shr      edi, 2
     L_86c1:
         mov      ecx, edi
-        mov      dword ptr [g_data_00535e48], eax
+        mov      dword ptr [g_dispatchArg_00535e48], eax
         mov      dword ptr [g_currentNodeIdx], ecx
         add      ecx, eax
         mov      ecx, dword ptr [ecx*4]
@@ -10361,7 +10361,7 @@ __declspec(naked) void PendingMatch_0044baa0(void)
         pop      esi
         ret      
     L_bb6a:
-        mov      ecx, dword ptr [g_data_0053a7a0]
+        mov      ecx, dword ptr [g_installOwner2_0053a7a0]
         mov      dword ptr [g_eventQueueEnd], 0x23
         mov      dword ptr [g_fightGroupHead], ecx
         jmp      L_bb88
@@ -10435,7 +10435,7 @@ __declspec(naked) void PendingMatch_0044baa0(void)
         mov      dword ptr [g_eventQueueNotMask], edx
         shr      ecx, 2
         mov      dword ptr [g_eventQueueIdx], ecx
-        mov      ecx, dword ptr [g_data_0053a7a0]
+        mov      ecx, dword ptr [g_installOwner2_0053a7a0]
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      dword ptr [g_xformScratch2088], 0x7ae
         mov      dword ptr [eax + 8], 0x44bc50
@@ -11034,7 +11034,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         call     MStackPush3SideStore_0044cb80
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3583
-        mov      eax, dword ptr [g_data_0053a7a0]
+        mov      eax, dword ptr [g_installOwner2_0053a7a0]
         mov      edx, 0x4e5a48
         shr      edx, 2
         mov      dword ptr [g_eventQueueIdx], edx
@@ -11092,7 +11092,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         mov      ecx, 0x4e5ab0
         shr      ecx, 2
         mov      dword ptr [g_eventQueueIdx], ecx
-        mov      ecx, dword ptr [g_data_0053a7a0]
+        mov      ecx, dword ptr [g_installOwner2_0053a7a0]
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      dword ptr [g_currentNodeFlags], 0x40000
         mov      dword ptr [eax + 8], 0x443590
@@ -11141,7 +11141,7 @@ __declspec(naked) void PendingMatch_00443320(void)
     L_3697:
         push     0x443800
         call     StoreLoadJmp_00404ef0
-        mov      edx, dword ptr [g_data_0053a7a0]
+        mov      edx, dword ptr [g_installOwner2_0053a7a0]
         mov      ecx, 0x4e5b80
         shr      ecx, 2
         mov      dword ptr [g_eventQueueIdx], ecx
@@ -11184,7 +11184,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         mov      edx, dword ptr [g_eventQueueIdx]
         mov      ecx, 0x4e5b18
         mov      dword ptr [eax*4 + 0x68], edx
-        mov      edx, dword ptr [g_data_0053a7a0]
+        mov      edx, dword ptr [g_installOwner2_0053a7a0]
         shr      ecx, 2
         mov      dword ptr [g_eventQueueIdx], ecx
         mov      dword ptr [g_eventQueueEnd], edx
@@ -11220,7 +11220,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         mov      dword ptr [eax + 0x84], 0
         test     ecx, ecx
         jne      L_382a
-        mov      edx, dword ptr [g_data_0053a7a0]
+        mov      edx, dword ptr [g_installOwner2_0053a7a0]
         mov      dword ptr [g_eventQueueEnd], edx
         jmp      L_3830
     L_382a:

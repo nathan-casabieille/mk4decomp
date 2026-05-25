@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 /* Cousin of SkelAnimUpdaterCluster_0049d940 - uses [g_eventQueueChild] instead of         */
 /* [g_eventQueueTotal+8] for the segment-count.                          */
 /* ------------------------------------------------------------------ */
-extern unsigned int g_data_00535e6c;
+extern unsigned int g_particleEmitterNode_00535e6c;
 extern void CmpDivJmp_0049d080(void);
 extern void LinkedListFieldAdd_0049d380(void);
 extern void MStackCall_00406340(void);
@@ -149,7 +149,7 @@ __declspec(naked) void SkelAnimUpdaterClusterV2_0049dbf0(void)
         mov      edx, dword ptr [g_eventQueueNotMask]
         mov      dword ptr [ecx*4 + 0x30], edx
         call     SixCrossStores_0049d8e0
-        mov      eax, dword ptr [g_data_00535e6c]
+        mov      eax, dword ptr [g_particleEmitterNode_00535e6c]
         mov      ecx, dword ptr [g_fightGroupHead]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x3c], eax

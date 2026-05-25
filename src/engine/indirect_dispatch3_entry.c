@@ -110,25 +110,25 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0049f530 (354b game) - 3-entry indirect dispatcher with state walk.
  *   Entry 1 (offset 0, 260b): cache [g_data_00541fc0] into g_xformEntityIdx,
- *     index it by [g_data_00535e48] base, deref once, save in 0x542048
+ *     index it by [g_dispatchArg_00535e48] base, deref once, save in 0x542048
  *     and [edx*4+4] in g_currentNodeIdx then `call eax` (indirect). On
  *     no-error AND bit 0 of g_xformDirtyFlags set: walks an outer state
  *     loop comparing eax to {1,6,11,16} (each takes the install path);
  *     other values get dec'd, call LinkedListIndirectDirtyToggle_0049f7b0,
  *     and on bit 0 still set may re-enter the loop. Else writes ecx into
- *     [eax*4], copies g_data_00535e48 into g_eventQueueCurrent, calls
+ *     [eax*4], copies g_dispatchArg_00535e48 into g_eventQueueCurrent, calls
  *     RoundWinTransition_0049e7e0 then GuardedScaledCall_0048a020 with [scaled+8] prep.
  *     Both successful tails fall through to CallSetPause_0041f830.
  *   (12b NOP align pad.)
  *   Entry 2 (offset 0x110, 34b): if g_state2_00541d88 != 0 tail-jmp
- *     CallSetPause_0041f830; else zero g_data_00535e48 and tail-jmp
+ *     CallSetPause_0041f830; else zero g_dispatchArg_00535e48 and tail-jmp
  *     IndirectStateDispatcher_0049f6a0.
  *   (14b NOP align pad.)
  *   Entry 3 (offset 0x140, 34b): mirror of entry 2 on g_state2_00537ea8.
- *     If non-zero tail-jmp CallSetPause_0041f830; else set g_data_00535e48
+ *     If non-zero tail-jmp CallSetPause_0041f830; else set g_dispatchArg_00535e48
  *     to 1 and tail-jmp IndirectStateDispatcher_0049f6a0.
  */
-extern unsigned int g_data_00535e48;
+extern unsigned int g_dispatchArg_00535e48;
 extern unsigned int g_state2_00537ea8;
 extern unsigned int g_state2_00541d88;
 extern unsigned int g_data_00541fc0;
@@ -141,7 +141,7 @@ extern void RoundWinTransition_0049e7e0(void);
 __declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
     __asm {
         mov     eax, dword ptr [g_data_00541fc0]
-        mov     ecx, dword ptr [g_data_00535e48]
+        mov     ecx, dword ptr [g_dispatchArg_00535e48]
         mov     dword ptr [g_xformEntityIdx], eax
         add     eax, ecx
         push    ebx
@@ -189,7 +189,7 @@ __declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
         mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4], ecx
-        mov     edx, dword ptr [g_data_00535e48]
+        mov     edx, dword ptr [g_dispatchArg_00535e48]
         mov     dword ptr [g_eventQueueCurrent], edx
         call    RoundWinTransition_0049e7e0
         mov     eax, dword ptr [g_framePauseFlag]
@@ -228,7 +228,7 @@ __declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
         je      short L_id3_e2zero
         jmp     CallSetPause_0041f830
     L_id3_e2zero:
-        mov     dword ptr [g_data_00535e48], 0
+        mov     dword ptr [g_dispatchArg_00535e48], 0
         jmp     IndirectStateDispatcher_0049f6a0
         /* 14b NOP align pad */
         nop
@@ -253,7 +253,7 @@ __declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
         je      short L_id3_e3one
         jmp     CallSetPause_0041f830
     L_id3_e3one:
-        mov     dword ptr [g_data_00535e48], 1
+        mov     dword ptr [g_dispatchArg_00535e48], 1
         jmp     IndirectStateDispatcher_0049f6a0
     }
 }

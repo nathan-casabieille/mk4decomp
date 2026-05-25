@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     arr[g_eventQueueEnd + i] = g_walkCallback; }
  */
 extern unsigned int g_data_005380b0;
-extern unsigned int g_x_00535e48;
+extern unsigned int g_dispatchArg_00535e48;
 extern void LinearSearchByEsi_00459290(void);
 
 extern unsigned int g_arr_459200;
@@ -128,7 +128,7 @@ __declspec(naked) void ThreeCharNormalize_00459200(void) {
         xor     esi, esi
         xor     eax, eax
         mov     dword ptr [g_eventQueueEnd], ecx
-        mov     dword ptr [g_x_00535e48], eax
+        mov     dword ptr [g_dispatchArg_00535e48], eax
         _emit   0ebh
         _emit   06h
         mov     ecx, dword ptr [g_eventQueueEnd]
@@ -156,14 +156,14 @@ __declspec(naked) void ThreeCharNormalize_00459200(void) {
         _emit   75h
         _emit   2ah
         mov     eax, dword ptr [g_eventQueueEnd]
-        mov     ecx, dword ptr [g_x_00535e48]
+        mov     ecx, dword ptr [g_dispatchArg_00535e48]
         mov     edx, dword ptr [g_walkCallback]
         add     eax, ecx
         mov     [eax*4 + g_arr_459200], edx
-        mov     eax, dword ptr [g_x_00535e48]
+        mov     eax, dword ptr [g_dispatchArg_00535e48]
         inc     eax
         cmp     eax, 3
-        mov     dword ptr [g_x_00535e48], eax
+        mov     dword ptr [g_dispatchArg_00535e48], eax
         _emit   72h
         _emit   97h
         pop     esi

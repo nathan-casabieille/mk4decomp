@@ -127,7 +127,7 @@ extern unsigned int g_data_004f2980;
 extern unsigned int g_state2_0053a1bc;
 extern unsigned int g_state2_0053a354;
 extern u32 g_dlMode;
-extern unsigned int g_x_00535e48;
+extern unsigned int g_dispatchArg_00535e48;
 
 __declspec(naked) void LinkedListIndirectDirtyToggle_0049f7b0(void) {
     __asm {
@@ -206,7 +206,7 @@ __declspec(naked) void LinkedListIndirectDirtyToggle_0049f7b0(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   1ch
-        mov     eax, dword ptr [g_x_00535e48]
+        mov     eax, dword ptr [g_dispatchArg_00535e48]
         test    eax, eax
         mov     eax, dword ptr [g_state2_0053a1bc]
         _emit   74h
