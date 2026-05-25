@@ -110,11 +110,11 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0047d650 (128b) - install chain[sel].slot68=4, chain[sel].slot74=0x202,
  *   g_walkCallback=0x2666; call F1; pause? ret; call F2; pause? ret;
- *   eax=0xa -> g_walkCallback, g_x_00537e94; call F3; pause? ret;
+ *   eax=0xa -> g_walkCallback, g_phaseTimer_00537e94; call F3; pause? ret;
  *   if (g_xformDirtyFlags & 1): push 0x4ed428, call F4, ret; else: jmp Wrapper_47d6d0.
  */
 extern unsigned int g_str_004ed428;
-extern unsigned int g_x_00537e94;
+extern unsigned int g_phaseTimer_00537e94;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void TripleFieldCopyJmpHi_0048f740(void);
 extern void Wrapper_0047d6d0(void);
@@ -141,7 +141,7 @@ __declspec(naked) void ChainSetCallPauseDispatch_0047d650(void) {
         _emit   38h
         mov     eax, 0xa
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_x_00537e94], eax
+        mov     dword ptr [g_phaseTimer_00537e94], eax
         call    CopyJmp_0048ef90
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

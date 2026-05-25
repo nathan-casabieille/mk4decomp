@@ -125,7 +125,7 @@ extern void ZeroSixStores6080_00490e40(void);
 extern void ScaledZero44_00491500(void);
 extern unsigned int g_data_004ed490;
 extern unsigned int g_data_004ed4a0;
-extern unsigned int g_x_00537e94_v2;
+extern unsigned int g_phaseTimer_00537e94;
 
 extern void ArgSarStoreJmp_004594f0(void);
 
@@ -141,7 +141,7 @@ __declspec(naked) void MoveSelectorCluster_0047d9a0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_dac7
-        mov      dword ptr [g_x_00537e94_v2], 5
+        mov      dword ptr [g_phaseTimer_00537e94], 5
         mov      dword ptr [g_walkCallback], 0x8000
         mov      dword ptr [g_eventQueueCurrent], 0
         call     Wrapper_0048ff30

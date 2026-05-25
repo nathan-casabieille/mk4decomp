@@ -108,10 +108,10 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_state_0052aac4_aa;
+extern unsigned int g_tickFlagF;
 extern u32 g_dlSomeFlag2;
 extern unsigned int g_data_0052d724;
-extern unsigned int g_x_00537e94_v2;
+extern unsigned int g_phaseTimer_00537e94;
 extern unsigned int g_dst_00537ea4;
 extern unsigned int g_data_00537ef4;
 extern unsigned int g_data_00537f04;
@@ -195,7 +195,7 @@ __declspec(naked) void RoundReset_004223e0(void)
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_25e9
     L_240f:
-        mov      eax, dword ptr [g_state_0052aac4_aa]
+        mov      eax, dword ptr [g_tickFlagF]
         cmp      eax, 2
         mov      dword ptr [g_walkCallback], eax
         jne      short L_242f
@@ -220,7 +220,7 @@ __declspec(naked) void RoundReset_004223e0(void)
         mov      dword ptr [g_data_0053a788], ebx
         mov      dword ptr [g_data_0053e34c], ebx
         mov      dword ptr [g_data_00541dc8], ebx
-        mov      dword ptr [g_x_00537e94_v2], ebx
+        mov      dword ptr [g_phaseTimer_00537e94], ebx
         mov      dword ptr [g_data_0053a42c], ebx
         mov      dword ptr [g_data_00537ef4], ebx
         mov      dword ptr [g_audioBankSel_00537f94], ebx

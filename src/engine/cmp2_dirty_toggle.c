@@ -25,12 +25,12 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_xformDirtyFlags], eax
  *   ret
  */
-extern unsigned int g_state_0052aac4_s;
+extern unsigned int g_tickFlagF;
 extern u32 g_dlMode;
 void Cmp2DirtyToggle_00423870(void) {
     unsigned int state;
     unsigned int mode;
-    state = g_state_0052aac4_s;
+    state = g_tickFlagF;
     g_walkCallback = (void (*)(void))state;
     if (state == 2) goto clear_bit;
     mode = g_dlMode;

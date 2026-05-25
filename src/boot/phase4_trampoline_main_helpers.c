@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004d77b0;
-extern unsigned int g_state_0052aac4_aa;
+extern unsigned int g_tickFlagF;
 extern void CallPauseInc_004ab670(void);
 extern void CallSetPause_0041f830(void);
 extern void ChainNodeAdvanceCallback_00408e70(void);
@@ -171,7 +171,7 @@ __declspec(naked) void Phase4TrampolineMainHelpers_00414b90(void)
         mov     dword ptr [g_eventQueueEnd], eax
         jns     L_p4tmh2_M_call_4ab670
     L_p4tmh2_M_phase1_alt:
-        cmp     dword ptr [g_state_0052aac4_aa], 4
+        cmp     dword ptr [g_tickFlagF], 4
         jne     L_p4tmh2_M_set_54_4
         call    Wrapper_0048a260
         mov     eax, dword ptr [g_framePauseFlag]

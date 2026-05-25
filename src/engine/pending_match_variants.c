@@ -14,7 +14,7 @@ extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_state_0052aac4_aa;
+extern unsigned int g_tickFlagF;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -344,7 +344,7 @@ void TriStageChainGate_004344b0(void) {
         Thunk_004344a0();
         return;
     }
-    v = g_state_0052aac4_aa;
+    v = g_tickFlagF;
     g_walkCallback = (void (*)(void))v;
     if (v == 2) {
         FlagInitTableSelector_00434560();
@@ -495,7 +495,7 @@ extern unsigned int g_data_00535db0;
 extern unsigned int g_data_00535e44;
 extern unsigned int g_data_00535e4c;
 extern unsigned int g_particleEmitterNode_00535e6c;
-extern unsigned int g_x_00537e94_v2;
+extern unsigned int g_phaseTimer_00537e94;
 extern unsigned int g_data_00537eec;
 extern unsigned int g_data_00537ef0;
 extern unsigned int g_clamp_00537f2c;
@@ -4580,7 +4580,7 @@ __declspec(naked) void AerialHitDispatcher_0047c290(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_c3b9
-        mov      dword ptr [g_x_00537e94_v2], 0x5a
+        mov      dword ptr [g_phaseTimer_00537e94], 0x5a
         mov      dword ptr [g_walkCallback], 8
         call     ScaledLitLoadCall_00481020
         mov      eax, dword ptr [g_framePauseFlag]
@@ -4739,7 +4739,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         ret      
     L_e0fc:
         mov      ax, word ptr [g_data_004e2868]
-        mov      dword ptr [g_state_0052aac4_aa], 3
+        mov      dword ptr [g_tickFlagF], 3
         push     eax
         mov      dword ptr [g_data_00537eec], ebx
         mov      dword ptr [g_data_0053a468], ebx
@@ -5916,7 +5916,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8019
-        cmp      dword ptr [g_state_0052aac4_aa], 2
+        cmp      dword ptr [g_tickFlagF], 2
         jne      L_7fe5
         mov      byte ptr [g_byte_00538148], 1
     L_7fe5:
@@ -6575,7 +6575,7 @@ __declspec(naked) void PendingMatch_0043bdd0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_be8d
-        cmp      dword ptr [g_state_0052aac4_aa], 2
+        cmp      dword ptr [g_tickFlagF], 2
         jne      L_be60
         mov      byte ptr [g_byte_00538148], 1
     L_be60:

@@ -112,7 +112,7 @@ extern void QuadCallPauseJmp_00457ff0(void);
 extern void SequencedInit3CallB_00458ae0(void);
 extern void HealthBarTickDriver_00458cc0(void);
 extern unsigned int g_data_004e8698;
-extern unsigned int g_state_0052aac4_aa;
+extern unsigned int g_tickFlagF;
 extern unsigned int g_data_00537e98;
 extern s32 g_dlNalt1;
 extern unsigned int g_counter_0053a51c;
@@ -210,7 +210,7 @@ __declspec(naked) void RoundEndHandlerCluster_00457de0(void)
         add      esp, 0x10
         mov      dword ptr [g_data_00537e98], ecx
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_state_0052aac4_aa], eax
+        mov      dword ptr [g_tickFlagF], eax
         call     SequencedInit3CallB_00458ae0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004eb938;
 extern unsigned int g_data_004eb958;
-extern unsigned int g_state_0052aac4_aa;
+extern unsigned int g_tickFlagF;
 extern unsigned int g_byte_00538148;
 extern unsigned int g_data_0053a430;
 extern unsigned int g_data_005433e8;
@@ -196,7 +196,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8019
-        cmp      dword ptr [g_state_0052aac4_aa], 2
+        cmp      dword ptr [g_tickFlagF], 2
         jne      L_7fe5
         mov      byte ptr [g_byte_00538148], 1
     L_7fe5:

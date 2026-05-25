@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_0052aabc;
-extern unsigned int g_state_0052aac4_aa;
+extern unsigned int g_tickFlagF;
 extern unsigned int g_data_0053a318;
 extern unsigned int g_data_00541dd8;
 extern unsigned int g_data_00543564;
@@ -246,7 +246,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         mov      dword ptr [esi + 0x84], 0
         test     eax, eax
         je       short L_f733
-        mov      eax, dword ptr [g_state_0052aac4_aa]
+        mov      eax, dword ptr [g_tickFlagF]
         cmp      eax, 7
         mov      dword ptr [g_walkCallback], eax
         jne      short L_f72b

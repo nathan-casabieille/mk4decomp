@@ -25,12 +25,12 @@ extern unsigned int g_acc_00542078;
  *   xor     eax, eax
  *   ret
  */
-extern unsigned int g_state_0052aac4_v;
+extern unsigned int g_tickFlagF;
 extern void func_004399a3(void);
 extern void func_00439902(void);
 extern void func_00439986(void);
 int Cmp2CallDirtyCall_004398b0(void) {
-    unsigned int v = g_state_0052aac4_v;
+    unsigned int v = g_tickFlagF;
     g_walkCallback = (void (*)(void))v;
     if (v == 2) {
         func_004399a3();

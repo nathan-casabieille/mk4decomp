@@ -18,9 +18,9 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_scaledInit_00542044], eax
  *   jmp     eax
  */
-extern unsigned int g_state_0052aac4_k;
+extern unsigned int g_tickFlagF;
 void ArgSarAddDerefJmp_0048e710(int arg) {
-    unsigned int c = g_state_0052aac4_k;
+    unsigned int c = g_tickFlagF;
     unsigned int v = (unsigned int)(arg >> 2) + c;
     g_walkCallback = (void (*)(void))c;
     g_scaledInit_00542044 = v;

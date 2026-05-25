@@ -107,7 +107,7 @@ extern unsigned int g_fightAxisNegX_00535e70;
 extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
-extern unsigned int g_state_0052aac4_aa;
+extern unsigned int g_tickFlagF;
 
 /*
  * @addr 0x004344b0 (114b game) - 3-stage gated chain with two
@@ -126,7 +126,7 @@ void TriStageChainGate_004344b0(void) {
         Thunk_004344a0();
         return;
     }
-    v = g_state_0052aac4_aa;
+    v = g_tickFlagF;
     g_walkCallback = (void (*)(void))v;
     if (v == 2) {
         FlagInitTableSelector_00434560();

@@ -17,11 +17,11 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [0x0052aac4], eax
  *   ret
  */
-extern unsigned int g_state_0052aac4_j;
+extern unsigned int g_tickFlagF;
 void Cmp2OrSet0b_0048e3e0(void) {
-    unsigned int v = g_state_0052aac4_j;
+    unsigned int v = g_tickFlagF;
     g_walkCallback = (void (*)(void))v;
     if (v == 2) return;
     g_walkCallback = (void (*)(void))0x0b;
-    g_state_0052aac4_j = 0x0b;
+    g_tickFlagF = 0x0b;
 }

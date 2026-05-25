@@ -118,7 +118,7 @@ extern void PendingMatch_0041d770(void);
  *   store [cj*4 + reloc] = walk.
  */
 extern unsigned int g_byte_004f360c;
-extern unsigned int g_state_0052aac4_aa;
+extern unsigned int g_tickFlagF;
 extern unsigned int g_particleEmitterNode_00535e6c;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
@@ -5969,7 +5969,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      eax, 2
         mov      dword ptr [g_data_0053a50c], ebp
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_state_0052aac4_aa], eax
+        mov      dword ptr [g_tickFlagF], eax
         mov      dword ptr [g_eventQueueWorkType], ebp
         call     Push16Call_00489f50
         cmp      dword ptr [g_framePauseFlag], ebp

@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00487dd0 (166b game) - snapshot + dispatch + accumulator update:
- *   walkCallback=2; g_x_00537e94=2; g_eventQueueWorkType = g_xformScratch2088;
+ *   walkCallback=2; g_phaseTimer_00537e94=2; g_eventQueueWorkType = g_xformScratch2088;
  *   g_eventQueueChild = g_currentNodeFlags;
  *   g_acc_00542078 = chain[g_eventQueueIdx].slot54;
  *   g_eventQueueNotMask = chain[g_eventQueueIdx].slot5c;
@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   chain[cj].slot54 = g_eventQueueCurrent; chain[cj].slot5c = walkCallback;
  *   g_xformScratch2088 += 0x4ccc; g_currentNodeFlags += 0x28f; if > 0x30000: = 0x50000.
  */
-extern unsigned int g_x_00537e94;
+extern unsigned int g_phaseTimer_00537e94;
 extern void BossSpinCluster_00487e80(void);
 
 extern unsigned int g_chain_arr_4348f0;
@@ -127,7 +127,7 @@ void SnapshotDispatchAccum_00487dd0(void) {
         mov     ecx, dword ptr [g_xformScratch2088]
         mov     eax, 2
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_x_00537e94], eax
+        mov     dword ptr [g_phaseTimer_00537e94], eax
         mov     eax, dword ptr [g_currentNodeFlags]
         mov     dword ptr [g_eventQueueWorkType], ecx
         mov     dword ptr [g_eventQueueChild], eax

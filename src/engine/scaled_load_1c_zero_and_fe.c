@@ -6,7 +6,7 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_x_00537e94_v2;
+extern unsigned int g_phaseTimer_00537e94;
 
 /* @addr 0x00446640 (61b)
  *   mov     eax, [g_baseSel_00542060]

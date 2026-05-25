@@ -35,7 +35,7 @@ extern void CallPauseScaledStoreCopyJmp_00461220(void);
 extern void ScaledArrStore_00429980(void);
 extern void MStackPushComplexCallPop_00406430(void);
 extern unsigned int g_counter_0053a51c;
-extern unsigned int g_state_0052aac4_aa;
+extern unsigned int g_tickFlagF;
 extern unsigned int g_data_00537f30;
 extern void StreamChainStringInstall_00457900(void);
 extern void StorePauseImulShr16_004ab630(void);

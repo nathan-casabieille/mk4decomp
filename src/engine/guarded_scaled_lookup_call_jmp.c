@@ -112,14 +112,14 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   ecx = g_counter_0053a51c; eax = 0x4dfd18>>2 + ecx;
  *   g_walkCallback = ecx; g_scaledInit = eax;
  *   eax = [eax*4]; g_eventQueueWorkType = eax;
- *   eax = g_state_0052aac4_aa; cmp eax,2; g_walkCallback = eax;
+ *   eax = g_tickFlagF; cmp eax,2; g_walkCallback = eax;
  *   if ne: jmp branch; else: call Push16Call; load pause; ret;
  *   branch: ecx = g_data_00537f30; eax = ecx-1; cmp eax,1;
  *           g_eventQueueCurrent = eax; if gt: clamp eax=1; jmp Push16Call.
  */
 extern unsigned int g_data_004dfd18;
 extern unsigned int g_counter_0053a51c;
-extern unsigned int g_state_0052aac4_aa;
+extern unsigned int g_tickFlagF;
 extern unsigned int g_data_00537f30;
 int GuardedScaledLookupCallJmp_004220a0(void) {
     unsigned int idx;
@@ -131,7 +131,7 @@ int GuardedScaledLookupCallJmp_004220a0(void) {
     g_walkCallback = (void (*)(void))idx;
     g_scaledInit_00542044 = scaled;
     g_eventQueueWorkType = *(unsigned int *)(scaled * 4);
-    st = g_state_0052aac4_aa;
+    st = g_tickFlagF;
     g_walkCallback = (void (*)(void))st;
     if (st == 2) {
         Push16Call_00489f50();

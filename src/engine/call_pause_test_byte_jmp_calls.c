@@ -6,7 +6,7 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_x_00537e94_v2;
+extern unsigned int g_phaseTimer_00537e94;
 
 /* @addr 0x004390f0 (62b)
  *   call F1; pause-test → ret

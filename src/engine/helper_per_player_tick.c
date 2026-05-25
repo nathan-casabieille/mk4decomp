@@ -19,7 +19,7 @@ extern unsigned int g_fightAxisNegX_00535e70;
 extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
-extern unsigned int g_x_00537e94_v2;
+extern unsigned int g_phaseTimer_00537e94;
 extern unsigned int g_data_00537ef4;
 extern unsigned int g_secondary_00538068;
 extern unsigned int g_data_0053a42c;
@@ -402,7 +402,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
     L_97ea:
         cmp      eax, 0xb333
         jg       L_9837
-        mov      eax, dword ptr [g_x_00537e94_v2]
+        mov      eax, dword ptr [g_phaseTimer_00537e94]
         dec      eax
         mov      ecx, eax
         mov      dword ptr [g_eventQueueWorkType], eax
@@ -413,7 +413,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      dword ptr [g_eventQueueWorkType], eax
     L_980f:
         test     ecx, ecx
-        mov      dword ptr [g_x_00537e94_v2], eax
+        mov      dword ptr [g_phaseTimer_00537e94], eax
         jge      L_9837
         mov      eax, dword ptr [g_table_00535ddc]
         cmp      eax, 0x8000

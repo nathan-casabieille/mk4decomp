@@ -124,7 +124,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     ScaledChainStore24_004a7d40 and falls through to install tail.
  */
 extern unsigned int g_byte_004d50b4;
-extern unsigned int g_state_0052aac4_aa;
+extern unsigned int g_tickFlagF;
 extern unsigned int g_data_0053a50c;
 extern unsigned int g_counter_005433c8;
 extern unsigned int g_counter_0054359c;
@@ -230,7 +230,7 @@ __declspec(naked) void Phase3InstallVolToggle_004a8310(void) {
         call    ScaledChainStore24_004a7d40
         jmp     short L_p3v_installTail
     L_p3v_phase0:
-        mov     dword ptr [g_state_0052aac4_aa], 2
+        mov     dword ptr [g_tickFlagF], 2
         mov     dword ptr [g_data_0053a50c], 0xe
     L_p3v_installTail:
         mov     eax, 1

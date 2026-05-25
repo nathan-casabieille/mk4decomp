@@ -184,8 +184,8 @@ extern void MStackPushZeroCallPop_00407d00(void);
 extern unsigned int g_x_0053a51c_v2;
 #define g_counter_0053a51c g_x_0053a51c_v2
 extern void SixCallSeqPushImm_004a1d80(void);
-extern unsigned int g_x_00537e94_v2;
-#define g_x_00537e94 g_x_00537e94_v2
+extern unsigned int g_phaseTimer_00537e94;
+#define g_phaseTimer_00537e94 g_phaseTimer_00537e94
 extern void BossSpinCluster_00487e80(void);
 
 extern unsigned int g_x_00537f24;

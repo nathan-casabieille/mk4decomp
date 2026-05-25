@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004e9068;
-extern unsigned int g_state_0052aac4_aa;
+extern unsigned int g_tickFlagF;
 extern unsigned int g_state_0054355c_hh;
 extern unsigned int g_data_00543568;
 extern unsigned int g_data_00543714;
@@ -195,7 +195,7 @@ __declspec(naked) void RoundEndFsmCluster_0045d680(void)
         push     0x4000
         call     TripleStageRollback_00404a50
         mov      eax, dword ptr [g_currentNodeIdx]
-        mov      dword ptr [g_state_0052aac4_aa], edi
+        mov      dword ptr [g_tickFlagF], edi
         add      esp, 4
         mov      dword ptr [eax*4], edi
         mov      dword ptr [g_walkCallback], edi

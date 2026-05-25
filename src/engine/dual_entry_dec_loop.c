@@ -113,9 +113,9 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Block A2 (+0x20): call CallPauseDirtyScaledSet7; if !pause: call CmpP1GTSetup; if !pause:
  *     ecx=g_xformEntityIdx; eax = --[ecx*4+0x5c]; g_walkCallback=eax; g_state_00541dc4=eax; if eax<0 set
  *     g_walkCallback=1; store back; if g_state_00541dc4!=0 self-jmp. ret.
- *   Block B (+0x80): g_walkCallback=1; g_x_00537e94_v2=1; ret.
+ *   Block B (+0x80): g_walkCallback=1; g_phaseTimer_00537e94=1; ret.
  */
-extern unsigned int g_x_00537e94_v2;
+extern unsigned int g_phaseTimer_00537e94;
 extern unsigned int g_state_00541dc4;
 extern void CallPauseDirtyScaledSet7_00480ef0(void);
 extern void CmpP1GTSetup_00470980(void);
@@ -166,7 +166,7 @@ __declspec(naked) void DualEntryDecLoop_00480f20(void) {
         _emit   90h
         mov     eax, 1
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_x_00537e94_v2], eax
+        mov     dword ptr [g_phaseTimer_00537e94], eax
         ret
     }
 }

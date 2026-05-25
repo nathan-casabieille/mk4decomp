@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_x_005433e8;
-extern unsigned int g_state_0052aac4_aa;
+extern unsigned int g_tickFlagF;
 extern unsigned char g_byte_00538148;
 extern void Wrapper_0041fcf0(void);
 extern void PushCallPauseSetMaxThenCallPauseJmp_0048e380(void);
@@ -130,7 +130,7 @@ void PairedTickGated_00467e60(void) {
     if (a == 1 && c == 1) g_x_005433e8++;
     if (a == 2 && c == 2) g_x_005433e8++;
     Wrapper_0041fcf0();
-    if (g_state_0052aac4_aa == 2) g_byte_00538148 = 1;
+    if (g_tickFlagF == 2) g_byte_00538148 = 1;
     PushCallPauseSetMaxThenCallPauseJmp_0048e380();
     if (g_framePauseFlag != 0) return;
     g_cj_00542058 = g_cj_0054205c;

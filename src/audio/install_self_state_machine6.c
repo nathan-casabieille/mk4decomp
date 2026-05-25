@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004f3808;
-extern unsigned int g_state_0052aac4_aa;
+extern unsigned int g_tickFlagF;
 extern unsigned int g_data_0053a50c;
 extern unsigned int g_data_00543734;
 extern unsigned int g_data_00543738;
@@ -219,7 +219,7 @@ __declspec(naked) void InstallSelfStateMachine6_004a48e0(void)
         pop      ebx
         ret      
         mov      eax, dword ptr [g_baseSel_00542060]
-        mov      dword ptr [g_state_0052aac4_aa], 2
+        mov      dword ptr [g_tickFlagF], 2
         mov      dword ptr [g_data_0053a50c], 0x10
         mov      dword ptr [eax*4 + 0x30], edi
         call     BootInitGuardedCallChain_004265d0
@@ -261,7 +261,7 @@ __declspec(naked) void InstallSelfStateMachine6_004a48e0(void)
         pop      ebx
         ret      
     L_4b51:
-        mov      dword ptr [g_state_0052aac4_aa], 2
+        mov      dword ptr [g_tickFlagF], 2
         mov      dword ptr [g_data_0053a50c], ebx
         call     StackPopDispatchTagged_0041f780
     L_4b66:

@@ -116,7 +116,7 @@ extern void TripleStringPauseChain_004468c0(void);
 extern void PoseStateInitNode_0043cd60(void);
 
 /* @addr 0x0043cc10 (326b game) - dual-block: state-0 chain-init + state-1 body.
- *   state==0: if g_state_0052aac4_aa==2: set byte g_byte_00538148=1. g_x_0053a430=g_walkCallback.
+ *   state==0: if g_tickFlagF==2: set byte g_byte_00538148=1. g_x_0053a430=g_walkCallback.
  *     Call CallPauseScaledStoreCopyJmp; if pause ret. Call PushCallPauseSetMaxThenCallPauseJmp_0048e380; if pause ret.
  *     g_eventQueueIdx=g_cj; push 0x90, push body addr; g_eventQueueEnd=[baseSel*4+0x38]; call StoreTwoCall.
  *     Install-self at entry; state=1; g_pendingNodeType=0x64; pause=1; pop+ret. 15-NOP pad.
@@ -126,7 +126,7 @@ extern void PoseStateInitNode_0043cd60(void);
  *     g_walkCallback=0x80. Call PushPopCurrentSetFFFFFFFF; if pause ret.
  *     Call TripleStringPauseChain; if pause ret. Tail-jmp PoseStateInitNode_0043cd60.
  */
-extern unsigned int g_state_0052aac4_aa;
+extern unsigned int g_tickFlagF;
 extern unsigned int g_byte_00538148;
 extern unsigned int g_x_0053a430;
 extern void CallPauseScaledStoreCopyJmp_00461220(void);
@@ -141,7 +141,7 @@ __declspec(naked) void DualBlockChainInitBody_0043cc10(void) {
         test    eax, eax
         _emit   75h
         _emit   68h
-        cmp     dword ptr [g_state_0052aac4_aa], 2
+        cmp     dword ptr [g_tickFlagF], 2
         _emit   75h
         _emit   07h
         mov     byte ptr [g_byte_00538148], 1

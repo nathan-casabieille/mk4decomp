@@ -12,7 +12,7 @@ extern unsigned int g_scaledInit_00542044;
  *   eax = 2; [0x543800] = -1; walk = eax; [0x52aac4] = eax;
  *   eventQueueWorkType = 0; jmp T.
  */
-extern unsigned int g_state_0052aac4_aa;
+extern unsigned int g_tickFlagF;
 extern void *AllocNode(void);
 extern void Push16Call_00489f50(void);
 void InitDispatchersJmp_004a4260(void) {
@@ -24,7 +24,7 @@ void InitDispatchersJmp_004a4260(void) {
     }
     g_gameMode = 0xffffffff;
     g_walkCallback = (void (*)(void))2;
-    g_state_0052aac4_aa = 2;
+    g_tickFlagF = 2;
     g_eventQueueWorkType = 0;
     Push16Call_00489f50();
 }

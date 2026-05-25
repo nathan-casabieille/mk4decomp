@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   push 0x1000, 0x004202c0; call StoreTwoCall_0049cb40; add esp, 8.
  *   [0x543800] = -1; g_walkCallback = 0; [0x52aac4] = 0.
  */
-extern unsigned int g_state_0052aac4_aa;
+extern unsigned int g_tickFlagF;
 extern unsigned int g_x_00537ea0;
 extern unsigned int g_x_00537edc;
 extern s32 g_dlNalt1;
@@ -174,7 +174,7 @@ void AudioInitSequence_004a41a0(void) {
         add     esp, 8
         mov     dword ptr [g_gameMode], 0xffffffff
         mov     dword ptr [g_walkCallback], 0
-        mov     dword ptr [g_state_0052aac4_aa], 0
+        mov     dword ptr [g_tickFlagF], 0
         }
 }
 

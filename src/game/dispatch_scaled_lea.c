@@ -15,13 +15,13 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_data_00ab4e30;
 extern unsigned int g_data_0053a50c;
-extern unsigned int g_state_0052aac4_aa;
+extern unsigned int g_tickFlagF;
 
 void DispatchScaledLEA_004b8f50(void) {
     __asm {
         mov     ecx, dword ptr [g_tickCurConfig]
         mov     edx, dword ptr [g_data_00ab4e30]
-        mov     eax, dword ptr [g_state_0052aac4_aa]
+        mov     eax, dword ptr [g_tickFlagF]
         cmp     ecx, edx
         _emit   74h
         _emit   06h

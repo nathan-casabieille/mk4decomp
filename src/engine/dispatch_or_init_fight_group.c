@@ -11,14 +11,14 @@ extern unsigned int g_scaledInit_00542044;
  *   else: mov fightGroupHead = [0x52ab10]; call F1; pause → ret;
  *   mov [g_baseSel*4 + 0x64] = walk; jmp T2.
  */
-extern unsigned int g_state_0052aac4_aa;
+extern unsigned int g_tickFlagF;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_baseSel_00542060;
 extern void StoreByteJmp_0042f840(void);
 extern void CameraAimSplineDriver_00430e60(void);
 extern void PhaseInstall2DInterpDispatch_0042f8a0(void);
 void DispatchOrInitFightGroup_0042f850(void) {
-    unsigned int v = g_state_0052aac4_aa;
+    unsigned int v = g_tickFlagF;
     g_walkCallback = (void(*)(void))v;
     if (v == 2) {
         StoreByteJmp_0042f840();

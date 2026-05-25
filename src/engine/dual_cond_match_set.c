@@ -108,19 +108,19 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-/* @addr 0x00488dc0 (208b game) - g_state_0052aac4_aa == 2 && g_audioBankSel_00537f94 != 0:
+/* @addr 0x00488dc0 (208b game) - g_tickFlagF == 2 && g_audioBankSel_00537f94 != 0:
  *   call SwapOrPassSet; if !pause: cmp g_fightGroupHead vs g_pendingNodeType; if eq jmp CmpEax1OrSetDirty.
  *   else set g_walkCallback=0x1000; call SetJmp_0049cb90; if !pause: set bit-2 of state;
  *   if scaledInit nonzero: load chain[*4+8] = 0x00421f40 store; if !=0x00421f40: clear bit-0;
  *   else xor bit-2 and set bit-0. Multiple ret paths.
  */
-extern unsigned int g_state_0052aac4_aa;
+extern unsigned int g_tickFlagF;
 extern void CmpEax1OrSetDirty_00488e90(void);
 extern void SwapOrPassSet_0048fbf0(void);
 
 __declspec(naked) void DualCondMatchSet_00488dc0(void) {
     __asm {
-        mov     eax, dword ptr [g_state_0052aac4_aa]
+        mov     eax, dword ptr [g_tickFlagF]
         cmp     eax, 2
         mov     dword ptr [g_walkCallback], eax
         _emit   0fh

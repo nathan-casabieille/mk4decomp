@@ -128,7 +128,7 @@ extern unsigned int g_data_004f3220;
 extern unsigned int g_data_004f3a30;
 extern unsigned int g_data_004f3a38;
 extern unsigned int g_table_004f3ac8;
-extern unsigned int g_state_0052aac4_aa;
+extern unsigned int g_tickFlagF;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_data_00535de4;
 extern unsigned int g_particleEmitterNode_00535e6c;
@@ -867,7 +867,7 @@ __declspec(naked) void PendingMatch_004a70f0(void)
         pop      ebp
         ret      
     L_72fd:
-        mov      dword ptr [g_state_0052aac4_aa], 2
+        mov      dword ptr [g_tickFlagF], 2
         mov      dword ptr [g_data_0053a50c], 1
         call     BootInitGuardedCallChain_004265d0
         call     FiveTableWalkInit_00403c90
@@ -1234,7 +1234,7 @@ __declspec(naked) void PendingMatch_004a3400(void)
         movsx    eax, byte ptr [g_gtModeFlag]
         mov      ebp, 1
         mov      dword ptr [g_gtState438], ebx
-        mov      dword ptr [g_state_0052aac4_aa], 2
+        mov      dword ptr [g_tickFlagF], 2
         mov      dword ptr [g_data_0053a50c], ebp
         mov      dword ptr [g_data_005433f8], eax
         call     TripleCallSetCopy_004a4880
@@ -1305,7 +1305,7 @@ __declspec(naked) void PendingMatch_004a3400(void)
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_38b1
         mov      byte ptr [g_dlEnabledFlag], bl
-        mov      dword ptr [g_state_0052aac4_aa], ebp
+        mov      dword ptr [g_tickFlagF], ebp
         mov      dword ptr [g_gtState438], esi
         call     ScaledClearTripleCallJmp_004202c0
     L_38b1:
@@ -1766,7 +1766,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         ret      
     L_5d35:
         mov      ebp, 1
-        mov      dword ptr [g_state_0052aac4_aa], 2
+        mov      dword ptr [g_tickFlagF], 2
         mov      dword ptr [g_data_0053a50c], 0xd
         mov      dword ptr [g_state_0054355c_hh], ebp
         call     DrainQueueCallEach_004a1ec0

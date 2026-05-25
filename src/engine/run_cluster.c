@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_x_00537e94_v2;
+extern unsigned int g_phaseTimer_00537e94;
 extern void CallDualStoreXorBit_004285e0(void);
 extern void DualHelperCallStoreCjFields_0048ff40(void);
 extern void DualMul10AccCj_00491230(void);
@@ -156,7 +156,7 @@ __declspec(naked) void RunCluster_0047d6e0(void)
         /* === Helper 2 (0x47d740): ev0x14 trigger === */
         mov      eax, 2
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_x_00537e94_v2], eax
+        mov      dword ptr [g_phaseTimer_00537e94], eax
         call     CallDualStoreXorBit_004285e0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -306,7 +306,7 @@ __declspec(naked) void RunCluster_0047d6e0(void)
     L_d954:
         mov      eax, 3
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_x_00537e94_v2], eax
+        mov      dword ptr [g_phaseTimer_00537e94], eax
         mov      dword ptr [esi + 8], OFFSET L_d850
         mov      dword ptr [esi + 0x84], edi
         mov      dword ptr [g_pendingNodeType], edi

@@ -6,7 +6,7 @@
  *   test    eax, eax
  *   mov     [g_eventQueueCurrent], eax
  *   jne     .check_x
- *   mov     eax, [g_X_0052aac4]
+ *   mov     eax, [g_tickFlagF]
  *   cmp     eax, 2
  *   mov     [g_eventQueueCurrent], eax
  *   je      .ret
@@ -42,7 +42,7 @@
 
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_state_0053a430;
-extern unsigned int g_X_0052aac4;
+extern unsigned int g_tickFlagF;
 extern void *g_lit_004e39d8;
 extern void *g_lit_004e3a28;
 extern int  PackedAdvanceCallContinue_0048e630(void *p);
@@ -56,7 +56,7 @@ void DispatcherComplex131_00431530(void) {
     v = g_state_0053a430;
     g_eventQueueCurrent = v;
     if (v == 0) {
-        v = g_X_0052aac4;
+        v = g_tickFlagF;
         g_eventQueueCurrent = v;
         if (v == 2) return;
     }
@@ -87,7 +87,7 @@ void DispatcherComplex131_004315c0(void) {
     v = g_state_0053a430;
     g_eventQueueCurrent = v;
     if (v == 0) {
-        v = g_X_0052aac4;
+        v = g_tickFlagF;
         g_eventQueueCurrent = v;
         if (v == 2) return;
     }

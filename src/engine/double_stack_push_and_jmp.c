@@ -6,7 +6,7 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_x_00537e94_v2;
+extern unsigned int g_phaseTimer_00537e94;
 
 /* @addr 0x00474010 (63b)
  *   inc g_matrixStackTop twice, push g_scaledInit_00542044 and g_fightGroupHead
