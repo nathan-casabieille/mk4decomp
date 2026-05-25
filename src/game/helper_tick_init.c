@@ -5,23 +5,23 @@
 #include "game/tick.h"
 
 /* @addr 0x004b8ec0 (92b)
- *   eax = arg0; g_data_00ab4d9c = eax;
+ *   eax = arg0; g_dispatchSave1559_00ab4d9c = eax;
  *   ecx = eax + 0x200; edx = eax + 0x400;
- *   g_data_00ab4da0 = ecx; g_data_00ab4da4 = edx;
+ *   g_dispatchSave1560_00ab4da0 = ecx; g_dispatchSave1561_00ab4da4 = edx;
  *   ecx = eax + 0x580; edx = eax + 0x680;
- *   g_data_00ab4da8 = ecx; g_data_00ab4dac = edx;
+ *   g_dispatchSave1562_00ab4da8 = ecx; g_dispatchSave1563_00ab4dac = edx;
  *   ecx = eax + 0x720; edx = eax + 0x780;
- *   eax += 0x7c0; g_data_00ab4db0=ecx; g_data_00ab4db4=edx;
- *   g_data_00ab4db8=eax; ret.
+ *   eax += 0x7c0; g_dispatchSave1564_00ab4db0=ecx; g_dispatchSave1565_00ab4db4=edx;
+ *   g_dispatchSave1566_00ab4db8=eax; ret.
  */
-extern unsigned int g_state_00ab4d9c;
-extern unsigned int g_state_00ab4da0;
-extern unsigned int g_state_00ab4da4;
-extern unsigned int g_state_00ab4da8;
-extern unsigned int g_state_00ab4dac;
-extern unsigned int g_state_00ab4db0;
-extern unsigned int g_state_00ab4db4;
-extern unsigned int g_state_00ab4db8;
+extern unsigned int g_dispatchSave1559_00ab4d9c;
+extern unsigned int g_dispatchSave1560_00ab4da0;
+extern unsigned int g_dispatchSave1561_00ab4da4;
+extern unsigned int g_dispatchSave1562_00ab4da8;
+extern unsigned int g_dispatchSave1563_00ab4dac;
+extern unsigned int g_dispatchSave1564_00ab4db0;
+extern unsigned int g_dispatchSave1565_00ab4db4;
+extern unsigned int g_dispatchSave1566_00ab4db8;
 extern void MStackBracket5_LinkedListUnlink_00409aa0(void);
 extern void CountdownClampWalk_00422810(void);
 extern void DownloadPlayerChar(void);
@@ -154,13 +154,13 @@ extern s32 g_dlNalt2;
 extern unsigned int g_dataArr_00535cfc;
 extern unsigned int g_dataArr_0053a1d0;
 void Helper_TickInit(unsigned int base) {
-    g_state_00ab4d9c = base;
-    g_state_00ab4da0 = base + 0x200;
-    g_state_00ab4da4 = base + 0x400;
-    g_state_00ab4da8 = base + 0x580;
-    g_state_00ab4dac = base + 0x680;
-    g_state_00ab4db0 = base + 0x720;
-    g_state_00ab4db4 = base + 0x780;
-    g_state_00ab4db8 = base + 0x7c0;
+    g_dispatchSave1559_00ab4d9c = base;
+    g_dispatchSave1560_00ab4da0 = base + 0x200;
+    g_dispatchSave1561_00ab4da4 = base + 0x400;
+    g_dispatchSave1562_00ab4da8 = base + 0x580;
+    g_dispatchSave1563_00ab4dac = base + 0x680;
+    g_dispatchSave1564_00ab4db0 = base + 0x720;
+    g_dispatchSave1565_00ab4db4 = base + 0x780;
+    g_dispatchSave1566_00ab4db8 = base + 0x7c0;
 }
 

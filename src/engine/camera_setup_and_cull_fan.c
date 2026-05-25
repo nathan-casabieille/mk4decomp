@@ -115,41 +115,41 @@ extern unsigned int g_mat3x3_007af994;
 extern unsigned int g_mat3x3_007af998;
 extern unsigned int g_mat3x3_007af99c;
 extern unsigned int g_mat3x3_007af9a0;
-extern unsigned int g_data_00ab44d8;
-extern unsigned int g_data_00ab44da;
-extern unsigned int g_data_00ab44dc;
-extern unsigned int g_data_00ab44de;
-extern unsigned int g_data_00ab44e0;
-extern unsigned int g_data_00ab44e2;
-extern unsigned int g_data_00ab44e4;
-extern unsigned int g_data_00ab44e6;
-extern unsigned int g_data_00ab44e8;
+extern unsigned int g_dispatchSave1504_00ab44d8;
+extern unsigned int g_dispatchSave1505_00ab44da;
+extern unsigned int g_dispatchSave1506_00ab44dc;
+extern unsigned int g_dispatchSave1507_00ab44de;
+extern unsigned int g_dispatchSave1508_00ab44e0;
+extern unsigned int g_dispatchSave1509_00ab44e2;
+extern unsigned int g_dispatchSave1510_00ab44e4;
+extern unsigned int g_dispatchSave1511_00ab44e6;
+extern unsigned int g_dispatchSave1512_00ab44e8;
 extern unsigned int g_word_00ab47f8;
 extern unsigned int g_word_00ab47fa;
 extern unsigned int g_word_00ab47fc;
-extern unsigned int g_data_00ab47fe;
-extern unsigned int g_data_00ab4800;
-extern unsigned int g_data_00ab4802;
-extern unsigned int g_data_00ab4804;
-extern unsigned int g_data_00ab4806;
-extern unsigned int g_data_00ab4808;
-extern unsigned int g_data_00ab4838;
-extern unsigned int g_data_00ab483c;
-extern unsigned int g_data_00ab4840;
-extern unsigned int g_data_00ab4cd8;
-extern unsigned int g_data_00ab4d58;
-extern unsigned int g_data_00ab4d5c;
-extern unsigned int g_data_00ab4d60;
-extern unsigned int g_data_00ab4d64;
-extern unsigned int g_data_00ab4d68;
-extern unsigned int g_data_00ab4dc4;
-extern unsigned int g_data_00ab4e3c;
+extern unsigned int g_dispatchSave1519_00ab47fe;
+extern unsigned int g_dispatchSave1520_00ab4800;
+extern unsigned int g_dispatchSave1521_00ab4802;
+extern unsigned int g_dispatchSave1522_00ab4804;
+extern unsigned int g_dispatchSave1523_00ab4806;
+extern unsigned int g_dispatchSave1524_00ab4808;
+extern unsigned int g_dispatchSave1525_00ab4838;
+extern unsigned int g_dispatchSave1526_00ab483c;
+extern unsigned int g_dispatchSave1527_00ab4840;
+extern unsigned int g_dispatchSave1550_00ab4cd8;
+extern unsigned int g_dispatchSave1554_00ab4d58;
+extern unsigned int g_dispatchSave1555_00ab4d5c;
+extern unsigned int g_dispatchSave1556_00ab4d60;
+extern unsigned int g_dispatchSave1557_00ab4d64;
+extern unsigned int g_dispatchSave1558_00ab4d68;
+extern unsigned int g_dispatchSave1567_00ab4dc4;
+extern unsigned int g_dispatchSave1574_00ab4e3c;
 extern unsigned int g_struct_00ab4e50;
 extern unsigned int g_struct_00ab4e54;
 extern unsigned int g_struct_00ab4e58;
-extern unsigned int g_data_00ab4e5c;
-extern unsigned int g_data_00ab4e60;
-extern unsigned int g_data_00ab4e6c;
+extern unsigned int g_dispatchSave1575_00ab4e5c;
+extern unsigned int g_dispatchSave1576_00ab4e60;
+extern unsigned int g_dispatchSave1577_00ab4e6c;
 extern void AltCamMatrixProject_004b9840(void);
 extern void Color15BitPacker_004b3030(void);
 extern void DoubleToInt64_004c57d0(void);
@@ -174,10 +174,10 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         push     edi
         mov      edi, dword ptr [g_xformEntityIdx]
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_00ab4e5c], eax
+        mov      dword ptr [g_dispatchSave1575_00ab4e5c], eax
         mov      eax, dword ptr [g_tickW1]
         mov      dword ptr [esp + 0x20], edx
-        mov      dword ptr [g_data_00ab4e60], eax
+        mov      dword ptr [g_dispatchSave1576_00ab4e60], eax
         mov      ecx, dword ptr [edi*4 + 0x3c]
         sar      ecx, 8
         cmp      ecx, 0x60
@@ -203,52 +203,52 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
     L_9a3f:
         imul     eax, ecx
         sar      eax, 8
-        mov      word ptr [g_data_00ab44d8], si
-        mov      word ptr [g_data_00ab44de], si
-        mov      word ptr [g_data_00ab44e4], si
-        mov      dword ptr [g_data_00ab4e6c], eax
+        mov      word ptr [g_dispatchSave1504_00ab44d8], si
+        mov      word ptr [g_dispatchSave1507_00ab44de], si
+        mov      word ptr [g_dispatchSave1510_00ab44e4], si
+        mov      dword ptr [g_dispatchSave1577_00ab4e6c], eax
         sar      esi, 1
         mov      eax, esi
         lea      ecx, [edx + 0x15]
         neg      eax
-        mov      word ptr [g_data_00ab44da], ax
-        mov      word ptr [g_data_00ab44e0], ax
-        mov      word ptr [g_data_00ab44e6], ax
+        mov      word ptr [g_dispatchSave1505_00ab44da], ax
+        mov      word ptr [g_dispatchSave1508_00ab44e0], ax
+        mov      word ptr [g_dispatchSave1511_00ab44e6], ax
         lea      eax, [edi + 0x15]
         mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_xformEntityIdx], ecx
         mov      edx, dword ptr [ecx*4]
         mov      edi, dword ptr [eax*4]
         sub      edx, edi
-        push     OFFSET g_data_00ab4838
+        push     OFFSET g_dispatchSave1525_00ab4838
         sar      edx, 8
-        mov      dword ptr [g_data_00ab4838], edx
+        mov      dword ptr [g_dispatchSave1525_00ab4838], edx
         mov      edx, dword ptr [ecx*4 + 4]
         mov      ebx, dword ptr [eax*4 + 4]
-        push     OFFSET g_data_00ab4838
+        push     OFFSET g_dispatchSave1525_00ab4838
         sub      edx, ebx
         sar      edx, 8
-        mov      dword ptr [g_data_00ab483c], edx
+        mov      dword ptr [g_dispatchSave1526_00ab483c], edx
         mov      ecx, dword ptr [ecx*4 + 8]
         mov      edx, dword ptr [eax*4 + 8]
-        mov      eax, dword ptr [g_data_00ab4d5c]
+        mov      eax, dword ptr [g_dispatchSave1555_00ab4d5c]
         sub      ecx, edx
-        mov      edx, dword ptr [g_data_00ab4d58]
+        mov      edx, dword ptr [g_dispatchSave1554_00ab4d58]
         sar      ecx, 8
-        mov      dword ptr [g_data_00ab4840], ecx
-        mov      ecx, dword ptr [g_data_00ab4d60]
+        mov      dword ptr [g_dispatchSave1527_00ab4840], ecx
+        mov      ecx, dword ptr [g_dispatchSave1556_00ab4d60]
         mov      dword ptr [g_vtxMat], edx
-        mov      edx, dword ptr [g_data_00ab4d64]
+        mov      edx, dword ptr [g_dispatchSave1557_00ab4d64]
         mov      dword ptr [g_mat3x3_007af994], eax
-        mov      ax, word ptr [g_data_00ab4d68]
+        mov      ax, word ptr [g_dispatchSave1558_00ab4d68]
         mov      dword ptr [g_mat3x3_007af998], ecx
         mov      dword ptr [g_mat3x3_007af99c], edx
         mov      word ptr [g_mat3x3_007af9a0], ax
         call     Mat3x3VecMul6Bit_004b3590
-        mov      edi, dword ptr [g_data_00ab4838]
-        mov      ecx, dword ptr [g_data_00ab483c]
-        mov      ebx, dword ptr [g_data_00ab4840]
-        mov      word ptr [g_data_00ab4800], cx
+        mov      edi, dword ptr [g_dispatchSave1525_00ab4838]
+        mov      ecx, dword ptr [g_dispatchSave1526_00ab483c]
+        mov      ebx, dword ptr [g_dispatchSave1527_00ab4840]
+        mov      word ptr [g_dispatchSave1520_00ab4800], cx
         movsx    eax, di
         movsx    ecx, cx
         mov      ebp, eax
@@ -264,9 +264,9 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         add      ebp, ecx
         add      esp, 8
         mov      dword ptr [esp + 0x1c], ebp
-        mov      word ptr [g_data_00ab47fe], di
+        mov      word ptr [g_dispatchSave1519_00ab47fe], di
         fild     dword ptr [esp + 0x1c]
-        mov      word ptr [g_data_00ab4802], bx
+        mov      word ptr [g_dispatchSave1521_00ab4802], bx
         mov      dword ptr [esp + 0x18], edx
         fsqrt
         fcom     qword ptr [g_const_004d2a20]
@@ -279,21 +279,21 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         call     DoubleToInt64_004c57d0
         fild     dword ptr [esp + 0x14]
         mov      di, ax
-        mov      word ptr [g_data_00ab47fe], di
+        mov      word ptr [g_dispatchSave1519_00ab47fe], di
         fmul     st, st(1)
         call     DoubleToInt64_004c57d0
         fild     dword ptr [esp + 0x18]
-        mov      word ptr [g_data_00ab4800], ax
+        mov      word ptr [g_dispatchSave1520_00ab4800], ax
         fmul     st, st(1)
         call     DoubleToInt64_004c57d0
         mov      bx, ax
         fstp     st(0)
-        mov      word ptr [g_data_00ab4802], bx
+        mov      word ptr [g_dispatchSave1521_00ab4802], bx
         jmp      L_9bcc
     L_9bca:
         fstp     st(0)
     L_9bcc:
-        mov      eax, dword ptr [g_data_00ab4800]
+        mov      eax, dword ptr [g_dispatchSave1520_00ab4800]
         mov      dx, di
         neg      dx
         mov      word ptr [g_word_00ab47f8], dx
@@ -303,7 +303,7 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         neg      cx
         mov      word ptr [g_word_00ab47fa], ax
         mov      word ptr [g_word_00ab47fc], cx
-        movsx    eax, word ptr [g_data_00ab4800]
+        movsx    eax, word ptr [g_dispatchSave1520_00ab4800]
         neg      edx
         movsx    ecx, di
         push     edx
@@ -330,11 +330,11 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         sub      ecx, edi
         mov      edi, dword ptr [g_struct_00ab4e58]
         sar      ecx, 8
-        mov      dword ptr [g_data_00ab4838], ecx
+        mov      dword ptr [g_dispatchSave1525_00ab4838], ecx
         mov      edx, dword ptr [eax*4 + 4]
         sub      esi, edx
         sar      esi, 8
-        mov      dword ptr [g_data_00ab483c], esi
+        mov      dword ptr [g_dispatchSave1526_00ab483c], esi
         mov      ebx, dword ptr [eax*4 + 8]
         sub      edi, ebx
         mov      edx, esi
@@ -347,7 +347,7 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         sar      ebx, 0xc
         sar      edx, 0xc
         add      ebx, edx
-        mov      dword ptr [g_data_00ab4840], edi
+        mov      dword ptr [g_dispatchSave1527_00ab4840], edi
         sar      eax, 0xc
         add      ebx, eax
         je       L_9df0
@@ -355,10 +355,10 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         mov      bp, cx
         cdq
         idiv     ebx
-        mov      word ptr [g_data_00ab4808], di
-        mov      word ptr [g_data_00ab4804], bp
+        mov      word ptr [g_dispatchSave1524_00ab4808], di
+        mov      word ptr [g_dispatchSave1522_00ab4804], bp
         movsx    edx, di
-        mov      word ptr [g_data_00ab4806], si
+        mov      word ptr [g_dispatchSave1523_00ab4806], si
         mov      dword ptr [esp + 0x18], edx
         mov      ebx, eax
         movsx    eax, cx
@@ -387,16 +387,16 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         call     DoubleToInt64_004c57d0
         fild     dword ptr [esp + 0x14]
         mov      bp, ax
-        mov      word ptr [g_data_00ab4804], bp
+        mov      word ptr [g_dispatchSave1522_00ab4804], bp
         fmul     st, st(1)
         call     DoubleToInt64_004c57d0
         fild     dword ptr [esp + 0x18]
         mov      si, ax
-        mov      word ptr [g_data_00ab4806], si
+        mov      word ptr [g_dispatchSave1523_00ab4806], si
         fmul     st, st(1)
         call     DoubleToInt64_004c57d0
         fstp     st(0)
-        mov      word ptr [g_data_00ab4808], ax
+        mov      word ptr [g_dispatchSave1524_00ab4808], ax
         jmp      L_9d44
     L_9d42:
         fstp     st(0)
@@ -422,10 +422,10 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         sar      ecx, 8
         imul     eax, ebx
         imul     ecx, ebx
-        mov      word ptr [g_data_00ab44dc], dx
-        mov      word ptr [g_data_00ab44e2], ax
-        movsx    edx, word ptr [g_data_00ab4808]
-        mov      word ptr [g_data_00ab44e8], cx
+        mov      word ptr [g_dispatchSave1506_00ab44dc], dx
+        mov      word ptr [g_dispatchSave1509_00ab44e2], ax
+        movsx    edx, word ptr [g_dispatchSave1524_00ab4808]
+        mov      word ptr [g_dispatchSave1512_00ab44e8], cx
         push     edx
         movsx    eax, si
         movsx    ecx, bp
@@ -433,9 +433,9 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         push     ecx
         push     1
         call     Vec3NormalizeScaleStore_004b3130
-        movsx    edx, word ptr [g_data_00ab44e8]
-        movsx    eax, word ptr [g_data_00ab44e2]
-        movsx    ecx, word ptr [g_data_00ab44dc]
+        movsx    edx, word ptr [g_dispatchSave1512_00ab44e8]
+        movsx    eax, word ptr [g_dispatchSave1509_00ab44e2]
+        movsx    ecx, word ptr [g_dispatchSave1506_00ab44dc]
         add      esp, 0x10
         push     edx
         push     eax
@@ -450,15 +450,15 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         mov      ecx, dword ptr [g_tickFlagZ]
         test     ecx, ecx
         je       L_9e10
-        add      dword ptr [g_data_00ab4dc4], 0x2b85
+        add      dword ptr [g_dispatchSave1567_00ab4dc4], 0x2b85
     L_9e10:
         test     ah, 0x10
         je       L_9e2d
-        mov      eax, dword ptr [g_data_00ab4e3c]
+        mov      eax, dword ptr [g_dispatchSave1574_00ab4e3c]
         test     eax, eax
         jl       L_9e2d
         push     0
-        push     OFFSET g_data_00ab4cd8
+        push     OFFSET g_dispatchSave1550_00ab4cd8
         call     AltCamMatrixProject_004b9840
         add      esp, 8
     L_9e2d:

@@ -132,11 +132,11 @@ extern s16 g_vtxScreenP2X;
 extern s16 g_vtxScreenP2Y;
 extern s16 g_vtxScreenX;
 extern s16 g_vtxScreenY;
-extern unsigned int g_data_00ab4398;
-extern unsigned int g_data_00ab439c;
-extern unsigned int g_data_00ab43a0;
-extern unsigned int g_data_00ab4d9c;
-extern unsigned int g_data_00ab4e60;
+extern unsigned int g_dispatchSave1501_00ab4398;
+extern unsigned int g_dispatchSave1502_00ab439c;
+extern unsigned int g_dispatchSave1503_00ab43a0;
+extern unsigned int g_dispatchSave1559_00ab4d9c;
+extern unsigned int g_dispatchSave1576_00ab4e60;
 extern void CopyArgs16ToGlobals_004b2ff0(void);
 extern void Helper_DrawCursor(void);
 extern void MaxOfThree_004b3d90(void);
@@ -154,7 +154,7 @@ __declspec(naked) void BillboardSheetDualEmit_004bbda0(void)
         push     esi
         push     edi
         jne      L_c45f
-        mov      eax, dword ptr [g_data_00ab4e60]
+        mov      eax, dword ptr [g_dispatchSave1576_00ab4e60]
         cmp      eax, 0x10
         jl       L_bdca
         cdq
@@ -174,22 +174,22 @@ __declspec(naked) void BillboardSheetDualEmit_004bbda0(void)
         mov      cl, byte ptr [g_fightGroupHead]
         test     cl, 0x60
         je       L_be12
-        mov      edx, dword ptr [g_data_00ab4398]
-        mov      ecx, dword ptr [g_data_00ab439c]
+        mov      edx, dword ptr [g_dispatchSave1501_00ab4398]
+        mov      ecx, dword ptr [g_dispatchSave1502_00ab439c]
         sar      edx, 0x10
         mov      dword ptr [g_vtxTransX], edx
-        mov      edx, dword ptr [g_data_00ab43a0]
+        mov      edx, dword ptr [g_dispatchSave1503_00ab43a0]
         sar      ecx, 0x10
         sar      edx, 7
         mov      dword ptr [g_vtxTransY], ecx
         mov      dword ptr [g_vtxTransZ], edx
         jmp      L_be3f
     L_be12:
-        mov      ecx, dword ptr [g_data_00ab4398]
-        mov      edx, dword ptr [g_data_00ab439c]
+        mov      ecx, dword ptr [g_dispatchSave1501_00ab4398]
+        mov      edx, dword ptr [g_dispatchSave1502_00ab439c]
         sar      ecx, 7
         mov      dword ptr [g_vtxTransX], ecx
-        mov      ecx, dword ptr [g_data_00ab43a0]
+        mov      ecx, dword ptr [g_dispatchSave1503_00ab43a0]
         sar      edx, 7
         sar      ecx, 7
         mov      dword ptr [g_vtxTransY], edx
@@ -267,7 +267,7 @@ __declspec(naked) void BillboardSheetDualEmit_004bbda0(void)
         test     ax, ax
         jne      L_bf84
         call     MaxOfThree_004b3d90
-        mov      ecx, dword ptr [g_data_00ab4d9c]
+        mov      ecx, dword ptr [g_dispatchSave1559_00ab4d9c]
         movsx    eax, ax
         cdq
         sub      eax, edx

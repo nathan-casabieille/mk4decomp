@@ -15,10 +15,10 @@
  */
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_load_0052ab10;
-extern unsigned int g_x_00ab4d18;
-extern unsigned int g_x_00ab4d1c;
-extern unsigned int g_x_00ab4d20;
-extern unsigned int g_x_00ab4e24;
+extern unsigned int g_dispatchSave1551_00ab4d18;
+extern unsigned int g_dispatchSave1552_00ab4d1c;
+extern unsigned int g_dispatchSave1553_00ab4d20;
+extern unsigned int g_dispatchSave1569_00ab4e24;
 extern void DispatchScaledLEA_004b8f50(void);
 extern void Word9Reorder_004b3b30(void);
 
@@ -70,13 +70,13 @@ void Helper_PreTick(void) {
         lea     eax, [ecx + 0x15]
         mov     dword ptr [g_xformEntityIdx], eax
         mov     edx, [eax*4 + g_data_004d57ac_arr]
-        mov     dword ptr [g_x_00ab4d18], edx
+        mov     dword ptr [g_dispatchSave1551_00ab4d18], edx
         mov     edx, [eax*4 + 4]
-        mov     dword ptr [g_x_00ab4d1c], edx
+        mov     dword ptr [g_dispatchSave1552_00ab4d1c], edx
         mov     eax, [eax*4 + 8]
-        mov     dword ptr [g_x_00ab4d20], eax
+        mov     dword ptr [g_dispatchSave1553_00ab4d20], eax
         mov     ecx, [ecx*4 + 0x58]
-        mov     dword ptr [g_x_00ab4e24], ecx
+        mov     dword ptr [g_dispatchSave1569_00ab4e24], ecx
         }
 }
 

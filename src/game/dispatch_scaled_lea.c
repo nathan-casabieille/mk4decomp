@@ -13,19 +13,19 @@ extern unsigned int g_scaledInit_00542044;
  *     store ecx → [0xab4e2c]; ret.
  *   else: edx = eax*3; eax = edx*2 + 0x4f62a8; store → [0xab4e2c]; ret.
  */
-extern unsigned int g_data_00ab4e30;
+extern unsigned int g_dispatchSave1571_00ab4e30;
 extern unsigned int g_phaseIdx_0053a50c;
 extern unsigned int g_tickFlagF;
 
 void DispatchScaledLEA_004b8f50(void) {
     __asm {
         mov     ecx, dword ptr [g_tickCurConfig]
-        mov     edx, dword ptr [g_data_00ab4e30]
+        mov     edx, dword ptr [g_dispatchSave1571_00ab4e30]
         mov     eax, dword ptr [g_tickFlagF]
         cmp     ecx, edx
         _emit   74h
         _emit   06h
-        mov     dword ptr [g_data_00ab4e30], ecx
+        mov     dword ptr [g_dispatchSave1571_00ab4e30], ecx
         cmp     eax, 2
         _emit   75h
         _emit   16h

@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   On arg [esp+8] non-zero (use-alt-matrix flag): snapshots current
  *   camera matrix at g_vtxMat..7af9a0 into local stack 0x10/0x14/
  *   0x18/0x1c (and high-bytes), loads alternate camera matrix from
- *   g_data_00ab4d58/5c/60/64/68 into g_vtxMat..7af9a0, then calls
+ *   g_dispatchSave1554_00ab4d58/5c/60/64/68 into g_vtxMat..7af9a0, then calls
  *   Mat3x3VecMul6Bit_004b3590(arg, &local_vec) to project the vertex
  *   buffer at [esp+0x40] through it.
  *
@@ -133,16 +133,16 @@ extern unsigned int g_mat3x3_007af998;
 extern unsigned int g_mat3x3_007af99c;
 extern unsigned int g_mat3x3_007af9a0;
 extern unsigned int g_table_00ab4878;
-extern unsigned int g_data_00ab487c;
-extern unsigned int g_data_00ab4880;
-extern unsigned int g_data_00ab4884;
-extern unsigned int g_data_00ab4888;
-extern unsigned int g_data_00ab4d58;
-extern unsigned int g_data_00ab4d5c;
-extern unsigned int g_data_00ab4d60;
-extern unsigned int g_data_00ab4d64;
-extern unsigned int g_data_00ab4d68;
-extern unsigned int g_data_00ab4e24;
+extern unsigned int g_dispatchSave1530_00ab487c;
+extern unsigned int g_dispatchSave1531_00ab4880;
+extern unsigned int g_dispatchSave1532_00ab4884;
+extern unsigned int g_dispatchSave1533_00ab4888;
+extern unsigned int g_dispatchSave1554_00ab4d58;
+extern unsigned int g_dispatchSave1555_00ab4d5c;
+extern unsigned int g_dispatchSave1556_00ab4d60;
+extern unsigned int g_dispatchSave1557_00ab4d64;
+extern unsigned int g_dispatchSave1558_00ab4d68;
+extern unsigned int g_dispatchSave1569_00ab4e24;
 extern void Mat3x3VecMul6Bit_004b3590(void);
 
 __declspec(naked) void AltCamMatrixProject_004b9840(void) {
@@ -156,22 +156,22 @@ __declspec(naked) void AltCamMatrixProject_004b9840(void) {
         push    edi
         je      short L_acm_noAlt
         mov     eax, dword ptr [g_vtxMat]
-        mov     ecx, dword ptr [g_data_00ab4d58]
+        mov     ecx, dword ptr [g_dispatchSave1554_00ab4d58]
         mov     ebx, dword ptr [g_mat3x3_007af998]
         mov     edi, dword ptr [g_mat3x3_007af99c]
-        mov     edx, dword ptr [g_data_00ab4d5c]
+        mov     edx, dword ptr [g_dispatchSave1555_00ab4d5c]
         mov     ebp, dword ptr [g_mat3x3_007af994]
         mov     si, word ptr [g_mat3x3_007af9a0]
         mov     dword ptr [esp + 0x1c], eax
-        mov     eax, dword ptr [g_data_00ab4d60]
+        mov     eax, dword ptr [g_dispatchSave1556_00ab4d60]
         mov     dword ptr [g_vtxMat], ecx
-        mov     ecx, dword ptr [g_data_00ab4d64]
+        mov     ecx, dword ptr [g_dispatchSave1557_00ab4d64]
         mov     dword ptr [g_mat3x3_007af998], eax
         mov     dword ptr [g_mat3x3_007af99c], ecx
         mov     ecx, dword ptr [esp + 0x40]
         lea     eax, [esp + 0x10]
         mov     dword ptr [g_mat3x3_007af994], edx
-        mov     dx, word ptr [g_data_00ab4d68]
+        mov     dx, word ptr [g_dispatchSave1558_00ab4d68]
         push    eax
         push    ecx
         mov     word ptr [g_mat3x3_007af9a0], dx
@@ -189,16 +189,16 @@ __declspec(naked) void AltCamMatrixProject_004b9840(void) {
         mov     dword ptr [esp + 0x10], edx
         mov     dword ptr [esp + 0x18], eax
     L_acm_postCall:
-        mov     ecx, dword ptr [g_data_00ab4e24]
+        mov     ecx, dword ptr [g_dispatchSave1569_00ab4e24]
         mov     edx, dword ptr [g_table_00ab4878]
-        mov     eax, dword ptr [g_data_00ab487c]
+        mov     eax, dword ptr [g_dispatchSave1530_00ab487c]
         mov     dword ptr [g_vtxMat], edx
-        mov     edx, dword ptr [g_data_00ab4884]
+        mov     edx, dword ptr [g_dispatchSave1532_00ab4884]
         mov     dword ptr [g_mat3x3_007af994], eax
         neg     ecx
-        mov     ax, word ptr [g_data_00ab4888]
+        mov     ax, word ptr [g_dispatchSave1533_00ab4888]
         mov     dword ptr [esp + 0x14], ecx
-        mov     ecx, dword ptr [g_data_00ab4880]
+        mov     ecx, dword ptr [g_dispatchSave1531_00ab4880]
         mov     dword ptr [g_mat3x3_007af99c], edx
         mov     dword ptr [g_mat3x3_007af998], ecx
         lea     ecx, [esp + 0x10]

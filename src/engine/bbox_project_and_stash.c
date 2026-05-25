@@ -129,13 +129,13 @@ extern unsigned int g_mat3x3_007af9a0;
 extern s32 g_vtxTransX;
 extern s32 g_vtxTransY;
 extern s32 g_vtxTransZ;
-extern unsigned int g_data_00ab44f8;
-extern unsigned int g_data_00ab44fa;
-extern unsigned int g_data_00ab44fc;
-extern unsigned int g_data_00ab44fe;
-extern unsigned int g_data_00ab4500;
-extern unsigned int g_data_00ab4502;
-extern unsigned int g_data_00ab51f8;
+extern unsigned int g_dispatchSave1513_00ab44f8;
+extern unsigned int g_dispatchSave1514_00ab44fa;
+extern unsigned int g_dispatchSave1515_00ab44fc;
+extern unsigned int g_dispatchSave1516_00ab44fe;
+extern unsigned int g_dispatchSave1517_00ab4500;
+extern unsigned int g_dispatchSave1518_00ab4502;
+extern unsigned int g_dispatchSave1580_00ab51f8;
 
 __declspec(naked) void BboxProjectAndStash_004bc5a0(void)
 {
@@ -159,12 +159,12 @@ __declspec(naked) void BboxProjectAndStash_004bc5a0(void)
         mov      eax, dword ptr [g_tickCurConfig]
         cmp      eax, OFFSET g_dispatchSave722_004f6264
         jne      L_c5f6
-        mov      eax, dword ptr [g_data_00ab51f8]
+        mov      eax, dword ptr [g_dispatchSave1580_00ab51f8]
         test     eax, eax
         jne      L_c7d1
         jmp      L_c60b
     L_c5f6:
-        mov      dword ptr [g_data_00ab51f8], 0
+        mov      dword ptr [g_dispatchSave1580_00ab51f8], 0
         mov      cl, byte ptr [eax]
         cmp      cl, 1
         jne      L_c7d1
@@ -216,10 +216,10 @@ __declspec(naked) void BboxProjectAndStash_004bc5a0(void)
         movsx    ebx, bx
         lea      eax, [eax + eax*2]
         shl      eax, 1
-        mov      word ptr [eax + g_data_00ab44f8], bp
+        mov      word ptr [eax + g_dispatchSave1513_00ab44f8], bp
         mov      bp, word ptr [g_xformEntityIdx]
-        mov      word ptr [eax + g_data_00ab44fa], bp
-        mov      word ptr [eax + g_data_00ab44fc], bx
+        mov      word ptr [eax + g_dispatchSave1514_00ab44fa], bp
+        mov      word ptr [eax + g_dispatchSave1515_00ab44fc], bx
         mov      bx, word ptr [edi + g_dispatchSave726_004f63ec]
         mov      di, word ptr [edi + g_dispatchSave728_004f63f0]
         mov      word ptr [g_vtxIn1_y], bx
@@ -263,10 +263,10 @@ __declspec(naked) void BboxProjectAndStash_004bc5a0(void)
         mov      dword ptr [g_triStripRingB], ecx
         mov      dword ptr [g_eventQueueCurrent], ecx
         mov      cx, word ptr [g_vtxOut1_x]
-        mov      word ptr [eax + g_data_00ab44fe], cx
+        mov      word ptr [eax + g_dispatchSave1516_00ab44fe], cx
         mov      cx, word ptr [g_triStripRingB]
-        mov      word ptr [eax + g_data_00ab4500], dx
-        mov      word ptr [eax + g_data_00ab4502], cx
+        mov      word ptr [eax + g_dispatchSave1517_00ab4500], dx
+        mov      word ptr [eax + g_dispatchSave1518_00ab4502], cx
         mov      eax, dword ptr [g_tickX2]
         mov      dword ptr [g_xformEntityIdx], esi
         add      eax, 2

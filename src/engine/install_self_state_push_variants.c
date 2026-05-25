@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Same shape as InstallSelfStatePush_004348f0, but writes 0x10041 instead
  *   of 0x10042 to g_eventQueueNotMask and installs self at 0x00434990.
  */
-extern unsigned int g_x_00ab51f8;
+extern unsigned int g_dispatchSave1580_00ab51f8;
 extern void CallPauseConstStoreJmp_00438170(void);
 extern void HitReactionDispatcher_0045f650(void);
 extern void InstallSelf3StateDualBody_00434a30(void);
@@ -124,7 +124,7 @@ extern void FiveCallGuardSetTail_0046f6b0(void);
 __declspec(naked) void InstallSelfStatePush_00434990(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
-        mov     dword ptr [g_x_00ab51f8], 1
+        mov     dword ptr [g_dispatchSave1580_00ab51f8], 1
         shl     eax, 2
         xor     edx, edx
         mov     ecx, dword ptr [eax + 0x84]
@@ -232,7 +232,7 @@ __declspec(naked) void InstallSelfStatePush_00435b00(void) {
 }
 
 /* @addr 0x004348f0 (148b) - install-self with state push:
- *   g_x_00ab51f8 = 1; if chain[sel].slot84 != 0: g_eventQueueNotMask = 0x10042; jmp F.
+ *   g_dispatchSave1580_00ab51f8 = 1; if chain[sel].slot84 != 0: g_eventQueueNotMask = 0x10042; jmp F.
  *   Else: install self at chain[sel]+8, slot84=1, slot4=newIdx; push 0x14348f0
  *   into mstack-like arr at scaledInit; clear chain[sel].slot84 in g_x array;
  *   call F2; g_framePauseFlag = 1; ret.
@@ -240,7 +240,7 @@ __declspec(naked) void InstallSelfStatePush_00435b00(void) {
 __declspec(naked) void InstallSelfStatePush_004348f0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
-        mov     dword ptr [g_x_00ab51f8], 1
+        mov     dword ptr [g_dispatchSave1580_00ab51f8], 1
         shl     eax, 2
         xor     edx, edx
         mov     ecx, dword ptr [eax + 0x84]

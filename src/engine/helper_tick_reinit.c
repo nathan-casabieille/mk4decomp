@@ -33,19 +33,19 @@ extern s16 g_vtxScreenP2X;
 extern s16 g_vtxScreenP2Y;
 extern s16 g_vtxScreenX;
 extern s16 g_vtxScreenY;
-extern unsigned int g_data_00ab44f8;
+extern unsigned int g_dispatchSave1513_00ab44f8;
 extern unsigned int g_word_00ab47f8;
 extern unsigned int g_word_00ab47fc;
 extern unsigned int g_table_00ab4878;
-extern unsigned int g_data_00ab487c;
-extern unsigned int g_data_00ab4880;
-extern unsigned int g_data_00ab4884;
-extern unsigned int g_data_00ab4888;
-extern unsigned int g_data_00ab4d58;
-extern unsigned int g_data_00ab4d5c;
-extern unsigned int g_data_00ab4d60;
-extern unsigned int g_data_00ab4d64;
-extern unsigned int g_data_00ab4d68;
+extern unsigned int g_dispatchSave1530_00ab487c;
+extern unsigned int g_dispatchSave1531_00ab4880;
+extern unsigned int g_dispatchSave1532_00ab4884;
+extern unsigned int g_dispatchSave1533_00ab4888;
+extern unsigned int g_dispatchSave1554_00ab4d58;
+extern unsigned int g_dispatchSave1555_00ab4d5c;
+extern unsigned int g_dispatchSave1556_00ab4d60;
+extern unsigned int g_dispatchSave1557_00ab4d64;
+extern unsigned int g_dispatchSave1558_00ab4d68;
 extern void AdvanceTriStripRing(void);
 extern void Helper_DrawCursor(void);
 extern void Init16BitFields_004bcc50(void);
@@ -72,13 +72,13 @@ __declspec(naked) void Helper_TickReinit(void)
         mov      ecx, dword ptr [g_table_00ab4878]
         cdq
         mov      dword ptr [g_vtxMat], ecx
-        mov      ecx, dword ptr [g_data_00ab4880]
+        mov      ecx, dword ptr [g_dispatchSave1531_00ab4880]
         sub      eax, edx
-        mov      edx, dword ptr [g_data_00ab487c]
+        mov      edx, dword ptr [g_dispatchSave1530_00ab487c]
         mov      dword ptr [g_mat3x3_007af998], ecx
-        mov      cx, word ptr [g_data_00ab4888]
+        mov      cx, word ptr [g_dispatchSave1533_00ab4888]
         mov      dword ptr [g_mat3x3_007af994], edx
-        mov      edx, dword ptr [g_data_00ab4884]
+        mov      edx, dword ptr [g_dispatchSave1532_00ab4884]
         mov      word ptr [g_mat3x3_007af9a0], cx
         mov      ecx, dword ptr [g_load_0052ab10]
         mov      dword ptr [g_mat3x3_007af99c], edx
@@ -90,7 +90,7 @@ __declspec(naked) void Helper_TickReinit(void)
         shl      edi, 8
         sar      edi, 0x10
         mov      ecx, edi
-        mov      ebx, OFFSET g_data_00ab44f8
+        mov      ebx, OFFSET g_dispatchSave1513_00ab44f8
         neg      ecx
         mov      dword ptr [esp + 0xc], ecx
         mov      cl, 0x1c
@@ -113,17 +113,17 @@ __declspec(naked) void Helper_TickReinit(void)
     L_c8c1:
         mov      edi, dword ptr [esp + 0x1c]
     L_c8c5:
-        mov      edx, dword ptr [g_data_00ab4d58]
-        mov      ecx, dword ptr [g_data_00ab4d60]
-        mov      eax, dword ptr [g_data_00ab4d5c]
+        mov      edx, dword ptr [g_dispatchSave1554_00ab4d58]
+        mov      ecx, dword ptr [g_dispatchSave1556_00ab4d60]
+        mov      eax, dword ptr [g_dispatchSave1555_00ab4d5c]
         mov      dword ptr [g_vtxMat], edx
-        mov      edx, dword ptr [g_data_00ab4d64]
+        mov      edx, dword ptr [g_dispatchSave1557_00ab4d64]
         mov      dword ptr [g_mat3x3_007af998], ecx
         movsx    ecx, word ptr [ebx]
         mov      dword ptr [g_mat3x3_007af99c], edx
         mov      dword ptr [g_mat3x3_007af994], eax
         movsx    edx, word ptr [ebx + 2]
-        mov      ax, word ptr [g_data_00ab4d68]
+        mov      ax, word ptr [g_dispatchSave1558_00ab4d68]
         mov      dword ptr [esp + 0x24], ecx
         mov      word ptr [g_mat3x3_007af9a0], ax
         mov      dword ptr [esp + 0x28], edx
@@ -221,13 +221,13 @@ __declspec(naked) void Helper_TickReinit(void)
         mov      word ptr [g_triStripX0], cx
         mov      ecx, dword ptr [g_table_00ab4878]
         lea      eax, [ebp + edx]
-        mov      edx, dword ptr [g_data_00ab487c]
+        mov      edx, dword ptr [g_dispatchSave1530_00ab487c]
         mov      word ptr [g_triStripX2], ax
-        mov      eax, dword ptr [g_data_00ab4880]
+        mov      eax, dword ptr [g_dispatchSave1531_00ab4880]
         mov      dword ptr [g_vtxMat], ecx
-        mov      ecx, dword ptr [g_data_00ab4884]
+        mov      ecx, dword ptr [g_dispatchSave1532_00ab4884]
         mov      dword ptr [g_mat3x3_007af994], edx
-        mov      dx, word ptr [g_data_00ab4888]
+        mov      dx, word ptr [g_dispatchSave1533_00ab4888]
         mov      dword ptr [g_mat3x3_007af998], eax
         mov      dword ptr [g_mat3x3_007af99c], ecx
         mov      word ptr [g_mat3x3_007af9a0], dx

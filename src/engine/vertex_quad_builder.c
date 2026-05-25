@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   `ebp` times copying UV (3 u16) + reading color index (byte) -> palette
  *   byte, masking into output.
  */
-extern unsigned int g_data_00ab4e34;
+extern unsigned int g_dispatchSave1572_00ab4e34;
 extern void LeaScaledCall_004bd510(void);
 extern void Mem_Malloc(void);
 
@@ -138,7 +138,7 @@ __declspec(naked) void VertexQuadBuilder_004bc470(void) {
         mov     [esp + 0x10], ecx
         jz      L_vqb_freeRet
         mov     esi, dword ptr [g_fightGroupHead]
-        mov     edx, dword ptr [g_data_00ab4e34]
+        mov     edx, dword ptr [g_dispatchSave1572_00ab4e34]
         mov     eax, dword ptr [g_currentNodeIdx]
         mov     edi, ebp
         sar     esi, 0x10

@@ -20,14 +20,14 @@
  *   pop     edi
  *   ret
  */
-extern unsigned int g_data_00ab4e78;
-extern unsigned int g_data_00ab4e00;
-extern unsigned int g_data_00ab44f8;
+extern unsigned int g_dispatchSave1578_00ab4e78;
+extern unsigned int g_dispatchSave1568_00ab4e00;
+extern unsigned int g_dispatchSave1513_00ab44f8;
 extern void *memset(void *, int, unsigned int);
 #pragma intrinsic(memset)
 void AppInit_Misc4(void) {
-    memset(&g_data_00ab4e78, 0, 0x6f * 4);
-    memset(&g_data_00ab4e00, 0, 7 * 4 + 2);
-    memset(&g_data_00ab44f8, 0, 0xc0 * 4);
+    memset(&g_dispatchSave1578_00ab4e78, 0, 0x6f * 4);
+    memset(&g_dispatchSave1568_00ab4e00, 0, 7 * 4 + 2);
+    memset(&g_dispatchSave1513_00ab44f8, 0, 0xc0 * 4);
 }
 

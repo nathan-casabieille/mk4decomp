@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern u8 g_memHeapStart[];
 extern unsigned int g_state_007b41a8;
-extern unsigned int g_data_00ab5034;
+extern unsigned int g_dispatchSave1579_00ab5034;
 extern unsigned int g_table_004ab4e78;
 extern void LoadGeoAsset_Default(void);
 
@@ -52,5 +52,5 @@ void TableWalkPause_004bd850(void) {
             if (g_framePauseFlag != 0) return;
         }
         p++;
-    } while ((int)p < (int)&g_data_00ab5034);
+    } while ((int)p < (int)&g_dispatchSave1579_00ab5034);
 }

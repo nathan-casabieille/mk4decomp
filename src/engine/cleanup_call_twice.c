@@ -13,8 +13,8 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern u8 g_memHeapStart[];
 extern unsigned int g_state_007b41a8;
-extern unsigned int g_data_00ab5204;
-extern unsigned int g_state_00ab5200;
+extern unsigned int g_dispatchSave1583_00ab5204;
+extern unsigned int g_dispatchSave1582_00ab5200;
 extern void SetHi6_004b5ae0(void);
 extern void StoreAtMinus8_004b5b00(void);
 
@@ -38,15 +38,15 @@ __declspec(naked) void AppInit_Misc2(void) {
 
 /* @addr 0x004bd530 (56b)
  *   if (arg && *arg) {
- *     call free([*arg], 4); call free([*arg], &g_state_00ab5204);
- *     g_state_00ab5200 = 1; *arg = 0;
+ *     call free([*arg], 4); call free([*arg], &g_dispatchSave1583_00ab5204);
+ *     g_dispatchSave1582_00ab5200 = 1; *arg = 0;
  *   }
  */
 void CleanupCallTwice_004bd530(int *arg) {
     if (*arg != 0) {
         SetHi6_004b5ae0(*arg, 4);
-        StoreAtMinus8_004b5b00(*arg, (int)&g_data_00ab5204);
-        g_state_00ab5200 = 1;
+        StoreAtMinus8_004b5b00(*arg, (int)&g_dispatchSave1583_00ab5204);
+        g_dispatchSave1582_00ab5200 = 1;
         *arg = 0;
     }
 }

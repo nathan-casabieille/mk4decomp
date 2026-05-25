@@ -132,18 +132,18 @@ extern s16 g_vtxScreenP2X;
 extern s16 g_vtxScreenP2Y;
 extern s16 g_vtxScreenX;
 extern s16 g_vtxScreenY;
-extern unsigned int g_data_00ab48b8;
-extern unsigned int g_data_00ab48bc;
-extern unsigned int g_data_00ab48c0;
-extern unsigned int g_data_00ab48c4;
-extern unsigned int g_data_00ab48c5;
-extern unsigned int g_data_00ab48c6;
-extern unsigned int g_data_00ab48c7;
-extern unsigned int g_data_00ab48c8;
-extern unsigned int g_data_00ab48c9;
-extern unsigned int g_data_00ab48ca;
-extern unsigned int g_data_00ab48cc;
-extern unsigned int g_data_00ab48d2;
+extern unsigned int g_dispatchSave1534_00ab48b8;
+extern unsigned int g_dispatchSave1536_00ab48bc;
+extern unsigned int g_dispatchSave1538_00ab48c0;
+extern unsigned int g_dispatchSave1540_00ab48c4;
+extern unsigned int g_dispatchSave1541_00ab48c5;
+extern unsigned int g_dispatchSave1542_00ab48c6;
+extern unsigned int g_dispatchSave1543_00ab48c7;
+extern unsigned int g_dispatchSave1544_00ab48c8;
+extern unsigned int g_dispatchSave1545_00ab48c9;
+extern unsigned int g_dispatchSave1546_00ab48ca;
+extern unsigned int g_dispatchSave1547_00ab48cc;
+extern unsigned int g_dispatchSave1548_00ab48d2;
 extern void GamepadSeqRecord_004bcc70(void);
 extern void Helper_DrawCursor(void);
 extern void ProjectTwoVertices(void);
@@ -201,22 +201,22 @@ __declspec(naked) void MovesPanelEmit_004bcf60(void)
         sbb      ecx, ecx
         mov      dx, word ptr [g_tickCurMask]
         and      ecx, 0xfffffff4
-        mov      word ptr [g_data_00ab48ca], dx
+        mov      word ptr [g_dispatchSave1546_00ab48ca], dx
         add      ecx, 0x16
-        mov      word ptr [g_data_00ab48d2], 0xf
-        mov      byte ptr [g_data_00ab48c6], cl
-        mov      byte ptr [g_data_00ab48c8], cl
-        mov      byte ptr [g_data_00ab48c4], cl
+        mov      word ptr [g_dispatchSave1548_00ab48d2], 0xf
+        mov      byte ptr [g_dispatchSave1542_00ab48c6], cl
+        mov      byte ptr [g_dispatchSave1544_00ab48c8], cl
+        mov      byte ptr [g_dispatchSave1540_00ab48c4], cl
         mov      cl, 0x64
-        mov      byte ptr [g_data_00ab48c7], cl
-        mov      byte ptr [g_data_00ab48c9], cl
-        mov      byte ptr [g_data_00ab48c5], cl
+        mov      byte ptr [g_dispatchSave1543_00ab48c7], cl
+        mov      byte ptr [g_dispatchSave1545_00ab48c9], cl
+        mov      byte ptr [g_dispatchSave1541_00ab48c5], cl
         mov      ecx, eax
         shl      ecx, 5
         or       ecx, eax
         shl      ecx, 5
         or       ecx, eax
-        mov      word ptr [g_data_00ab48cc], cx
+        mov      word ptr [g_dispatchSave1547_00ab48cc], cx
         mov      eax, dword ptr [esi + 4]
         mov      ecx, eax
         mov      word ptr [g_vtxIn2_y], di
@@ -260,19 +260,19 @@ __declspec(naked) void MovesPanelEmit_004bcf60(void)
         sub      edx, ebx
         test     edx, edx
         mov      edx, dword ptr [g_vtxScreenP2X]
-        mov      dword ptr [g_data_00ab48b8], ecx
-        mov      cx, word ptr [g_data_00ab48d2]
-        mov      dword ptr [g_data_00ab48bc], edx
+        mov      dword ptr [g_dispatchSave1534_00ab48b8], ecx
+        mov      cx, word ptr [g_dispatchSave1548_00ab48d2]
+        mov      dword ptr [g_dispatchSave1536_00ab48bc], edx
         setle    al
         mov      dword ptr [g_vtxValid], eax
         mov      dl, byte ptr [g_vtxValid]
         mov      eax, dword ptr [g_vtxScreenX]
         and      edx, 1
         and      ecx, 0xfbff
-        mov      dword ptr [g_data_00ab48c0], eax
+        mov      dword ptr [g_dispatchSave1538_00ab48c0], eax
         shl      edx, 0xa
         or       ecx, edx
-        mov      word ptr [g_data_00ab48d2], cx
+        mov      word ptr [g_dispatchSave1548_00ab48d2], cx
         mov      eax, dword ptr [g_eventQueueTotal]
         lea      ecx, [eax*4]
         push     ecx
@@ -285,7 +285,7 @@ __declspec(naked) void MovesPanelEmit_004bcf60(void)
         jle      L_d172
         cmp      dword ptr [g_vtxOut_z], edi
         jle      L_d172
-        push     OFFSET g_data_00ab48b8
+        push     OFFSET g_dispatchSave1534_00ab48b8
         call     Helper_DrawCursor
         add      esp, 4
     L_d172:
@@ -316,20 +316,20 @@ __declspec(naked) void MovesPanelEmit_004bcf60(void)
         sub      edx, esi
         test     edx, edx
         mov      edx, dword ptr [g_vtxScreenP2X]
-        mov      dword ptr [g_data_00ab48b8], ecx
-        mov      cx, word ptr [g_data_00ab48d2]
-        mov      dword ptr [g_data_00ab48bc], edx
+        mov      dword ptr [g_dispatchSave1534_00ab48b8], ecx
+        mov      cx, word ptr [g_dispatchSave1548_00ab48d2]
+        mov      dword ptr [g_dispatchSave1536_00ab48bc], edx
         setle    al
         mov      dword ptr [g_vtxValid], eax
         mov      dl, byte ptr [g_vtxValid]
         mov      eax, dword ptr [g_vtxScreenX]
         and      edx, 1
         and      ecx, 0xfbff
-        mov      dword ptr [g_data_00ab48c0], eax
+        mov      dword ptr [g_dispatchSave1538_00ab48c0], eax
         mov      eax, dword ptr [g_eventQueueTotal]
         shl      edx, 0xa
         or       ecx, edx
-        mov      word ptr [g_data_00ab48d2], cx
+        mov      word ptr [g_dispatchSave1548_00ab48d2], cx
         lea      ecx, [eax*4]
         push     ecx
         call     GamepadSeqRecord_004bcc70
@@ -341,7 +341,7 @@ __declspec(naked) void MovesPanelEmit_004bcf60(void)
         jle      L_d260
         cmp      dword ptr [g_vtxOut_z], edi
         jle      L_d260
-        push     OFFSET g_data_00ab48b8
+        push     OFFSET g_dispatchSave1534_00ab48b8
         call     Helper_DrawCursor
         add      esp, 4
     L_d260:

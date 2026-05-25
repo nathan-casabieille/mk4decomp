@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern void ScaledNegThreeWords_004be210(void);
 extern void ChainStreamMatMulVecAdd_004bd9a0(void);
 extern void RegionFlushChain_004b9250(void);
-extern unsigned int g_data_00ab48d8;
+extern unsigned int g_dispatchSave1549_00ab48d8;
 
 
 __declspec(naked) void MStackBracket7_DispatchAndChain_004b8fa0(void)
@@ -133,7 +133,7 @@ __declspec(naked) void MStackBracket7_DispatchAndChain_004b8fa0(void)
         mov     ecx, dword ptr [g_pendingNodeType]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     esi, offset g_data_00ab48d8
+        mov     esi, offset g_dispatchSave1549_00ab48d8
         mov     dword ptr [eax*4], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_eventQueueTotal]

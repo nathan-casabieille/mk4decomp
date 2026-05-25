@@ -197,7 +197,7 @@ extern int g_renderer4_active;
 extern unsigned int g_data_007af944;
 extern int g_renderer4_surface;
 extern unsigned int g_data_007af94c;
-extern unsigned int g_data_00ab4e34;
+extern unsigned int g_dispatchSave1572_00ab4e34;
 extern u16 g_texStripeBuf[];
 extern unsigned int g_dispatchSave1348_00f6ce50;
 extern unsigned int g_dispatchSave1400_00f85b34;

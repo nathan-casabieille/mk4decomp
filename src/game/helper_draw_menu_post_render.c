@@ -17,10 +17,10 @@ extern unsigned int g_word_00ab41b2;
 extern unsigned int g_word_00ab41ba;
 extern unsigned int g_word_00ab41bc;
 extern unsigned int g_word_00ab41c2;
-extern unsigned int g_x_00ab41b4;
-extern unsigned int g_x_00ab41b5;
-extern unsigned int g_x_00ab41b8;
-extern unsigned int g_x_00ab41b9;
+extern unsigned int g_dispatchSave1474_00ab41b4;
+extern unsigned int g_dispatchSave1475_00ab41b5;
+extern unsigned int g_dispatchSave1476_00ab41b8;
+extern unsigned int g_dispatchSave1477_00ab41b9;
 extern void Helper_DrawCursor(void);
 
 void Helper_DrawMenu_PostRender(void) {
@@ -39,12 +39,12 @@ void Helper_DrawMenu_PostRender(void) {
         mov     word ptr [g_word_00ab41b0], dx
         mov     word ptr [g_word_00ab41b2], ax
         mov     al, 0x7e
-        mov     byte ptr [g_x_00ab41b4], al
-        mov     byte ptr [g_x_00ab41b5], al
+        mov     byte ptr [g_dispatchSave1474_00ab41b4], al
+        mov     byte ptr [g_dispatchSave1475_00ab41b5], al
         mov     al, 0xfe
         mov     word ptr [g_word_00ab41c2], 0x22f
-        mov     byte ptr [g_x_00ab41b8], al
-        mov     byte ptr [g_x_00ab41b9], al
+        mov     byte ptr [g_dispatchSave1476_00ab41b8], al
+        mov     byte ptr [g_dispatchSave1477_00ab41b9], al
         mov     word ptr [g_word_00ab41bc], 0x7fff
         call    Helper_DrawCursor
         add     esp, 4

@@ -4,9 +4,9 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_data_00ab4db8;
-extern unsigned int g_data_00ab4e5c;
-extern unsigned int g_data_00ab4e60;
+extern unsigned int g_dispatchSave1566_00ab4db8;
+extern unsigned int g_dispatchSave1575_00ab4e5c;
+extern unsigned int g_dispatchSave1576_00ab4e60;
 extern void ZeroEightFields_004b8f20(void);
 
 __declspec(naked) void Helper_TickAlt(void)
@@ -88,9 +88,9 @@ __declspec(naked) void Helper_TickAlt(void)
         mov     edi, dword ptr [g_eventQueueIdx]
         sub     eax, edx
         mov     ecx, dword ptr [edi*4 + 0x64]
-        mov     dword ptr [g_data_00ab4e60], ebx
+        mov     dword ptr [g_dispatchSave1576_00ab4e60], ebx
         sar     eax, 1
-        mov     dword ptr [g_data_00ab4e5c], eax
+        mov     dword ptr [g_dispatchSave1575_00ab4e5c], eax
         lea     eax, [esi + esi*4]
         mov     dword ptr [g_tickDecay], 2
         lea     edx, [eax + eax*4]
@@ -138,7 +138,7 @@ __declspec(naked) void Helper_TickAlt(void)
         jl      short L_amw_setNeg
         cmp     ecx, 0x330cf
         jge     short L_amw_setNeg
-        mov     eax, dword ptr [g_data_00ab4db8]
+        mov     eax, dword ptr [g_dispatchSave1566_00ab4db8]
         test    eax, eax
         je      short L_amw_skipCall
         call    ZeroEightFields_004b8f20

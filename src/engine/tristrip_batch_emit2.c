@@ -128,8 +128,8 @@ extern s16 g_vtxScreenP2X;
 extern s16 g_vtxScreenP2Y;
 extern s16 g_vtxScreenX;
 extern s16 g_vtxScreenY;
-extern unsigned int g_data_00ab4d9c;
-extern unsigned int g_data_00ab4e60;
+extern unsigned int g_dispatchSave1559_00ab4d9c;
+extern unsigned int g_dispatchSave1576_00ab4e60;
 extern void AdvanceTriStripRing(void);
 extern void Helper_DrawCursor(void);
 extern void MaxOfThree_004b3d90(void);
@@ -155,7 +155,7 @@ __declspec(naked) void TristripBatchEmit2_004bb930(void)
         mov      edx, dword ptr [g_pendingNodeType]
         lea      ecx, [ecx + edi + 8]
         lea      edi, [edi + eax + 4]
-        mov      eax, dword ptr [g_data_00ab4e60]
+        mov      eax, dword ptr [g_dispatchSave1576_00ab4e60]
         lea      esi, [edx + 4]
         cmp      eax, 0x10
         jl       L_b97d
@@ -274,7 +274,7 @@ __declspec(naked) void TristripBatchEmit2_004bb930(void)
         add      eax, 0x7d0
         mov      dx, word ptr [esi + 0x1a]
         mov      word ptr [esi + 0x12], ax
-        mov      ecx, dword ptr [g_data_00ab4d9c]
+        mov      ecx, dword ptr [g_dispatchSave1559_00ab4d9c]
         shl      ecx, 5
         add      ecx, eax
         mov      al, byte ptr [esp + 0x20]

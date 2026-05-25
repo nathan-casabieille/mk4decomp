@@ -261,7 +261,7 @@ extern u32 g_audioState0C;
 extern unsigned int g_dispatchSave16_00543b68;
 extern unsigned int g_dispatchSave23_00543b6c;
 extern unsigned int g_data_00806000;
-extern unsigned int g_data_00ab4338;
+extern unsigned int g_dispatchSave1491_00ab4338;
 extern unsigned int g_dispatchSave1423_00f9f7fc;
 extern unsigned int g_dispatchSave1430_00f9f850;
 extern unsigned int g_dispatchSave1460_00f9fc94;

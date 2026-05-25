@@ -14,26 +14,26 @@ extern unsigned int g_mat3x3_007af9a0;
 extern s32 g_vtxTransX;
 extern s32 g_vtxTransY;
 extern s32 g_vtxTransZ;
-extern unsigned int g_data_00ab4398;
-extern unsigned int g_data_00ab439c;
-extern unsigned int g_data_00ab43a0;
-extern unsigned int g_data_00ab4838;
-extern unsigned int g_data_00ab483c;
-extern unsigned int g_data_00ab4840;
-extern unsigned int g_data_00ab4844;
-extern unsigned int g_data_00ab4848;
-extern unsigned int g_data_00ab4d58;
-extern unsigned int g_data_00ab4d5c;
-extern unsigned int g_data_00ab4d60;
-extern unsigned int g_data_00ab4d64;
-extern unsigned int g_data_00ab4d68;
-extern unsigned int g_data_00ab4d9c;
-extern unsigned int g_data_00ab4e28;
-extern unsigned int g_data_00ab4e34;
-extern unsigned int g_data_00ab4e38;
-extern unsigned int g_data_00ab4e5c;
-extern unsigned int g_data_00ab4e60;
-extern unsigned int g_data_00ab4e6c;
+extern unsigned int g_dispatchSave1501_00ab4398;
+extern unsigned int g_dispatchSave1502_00ab439c;
+extern unsigned int g_dispatchSave1503_00ab43a0;
+extern unsigned int g_dispatchSave1525_00ab4838;
+extern unsigned int g_dispatchSave1526_00ab483c;
+extern unsigned int g_dispatchSave1527_00ab4840;
+extern unsigned int g_dispatchSave1528_00ab4844;
+extern unsigned int g_dispatchSave1529_00ab4848;
+extern unsigned int g_dispatchSave1554_00ab4d58;
+extern unsigned int g_dispatchSave1555_00ab4d5c;
+extern unsigned int g_dispatchSave1556_00ab4d60;
+extern unsigned int g_dispatchSave1557_00ab4d64;
+extern unsigned int g_dispatchSave1558_00ab4d68;
+extern unsigned int g_dispatchSave1559_00ab4d9c;
+extern unsigned int g_dispatchSave1570_00ab4e28;
+extern unsigned int g_dispatchSave1572_00ab4e34;
+extern unsigned int g_dispatchSave1573_00ab4e38;
+extern unsigned int g_dispatchSave1575_00ab4e5c;
+extern unsigned int g_dispatchSave1576_00ab4e60;
+extern unsigned int g_dispatchSave1577_00ab4e6c;
 extern unsigned int g_dispatchSave1333_00f00004;
 extern void BboxProjectAndStash_004bc5a0(void);
 extern void BillboardChainRender_004bb030(void);
@@ -59,7 +59,7 @@ __declspec(naked) void RenderSceneNode(void)
 {
     __asm {
     L_a720:
-        mov      eax, dword ptr [g_data_00ab4e38]
+        mov      eax, dword ptr [g_dispatchSave1573_00ab4e38]
         sub      esp, 0x20
         test     eax, eax
         push     ebx
@@ -155,7 +155,7 @@ __declspec(naked) void RenderSceneNode(void)
         test     eax, eax
         jne      L_ae73
     L_a89b:
-        mov      eax, OFFSET g_data_00ab4398
+        mov      eax, OFFSET g_dispatchSave1501_00ab4398
         lea      edx, [ebx + 0xc]
         sar      eax, 2
         mov      dword ptr [g_pendingNodeType], edx
@@ -168,22 +168,22 @@ __declspec(naked) void RenderSceneNode(void)
         test     eax, OFFSET g_dispatchSave1333_00f00004
         jne      L_a97c
         mov      ecx, dword ptr [g_fightGroupHead]
-        mov      edx, dword ptr [g_data_00ab4398]
+        mov      edx, dword ptr [g_dispatchSave1501_00ab4398]
         test     cl, 0x60
         je       L_a8f8
         sar      edx, 0x11
         mov      dword ptr [g_vtxTransX], edx
-        mov      edx, dword ptr [g_data_00ab439c]
+        mov      edx, dword ptr [g_dispatchSave1502_00ab439c]
         sar      edx, 0x11
         jmp      L_a90a
     L_a8f8:
         sar      edx, 8
         mov      dword ptr [g_vtxTransX], edx
-        mov      edx, dword ptr [g_data_00ab439c]
+        mov      edx, dword ptr [g_dispatchSave1502_00ab439c]
         sar      edx, 8
     L_a90a:
         mov      dword ptr [g_vtxTransY], edx
-        mov      edx, dword ptr [g_data_00ab43a0]
+        mov      edx, dword ptr [g_dispatchSave1503_00ab43a0]
         sar      edx, 8
         mov      dword ptr [g_vtxTransZ], edx
         mov      edx, dword ptr [g_eventQueueEnd]
@@ -252,20 +252,20 @@ __declspec(naked) void RenderSceneNode(void)
         test     byte ptr [g_fightGroupHead], 2
         jne      L_aab4
         mov      cl, byte ptr [g_xformDirtyFlags]
-        mov      dword ptr [g_currentNodeIdx], OFFSET g_data_00ab4838
+        mov      dword ptr [g_currentNodeIdx], OFFSET g_dispatchSave1525_00ab4838
         test     cl, 0x30
         je       L_aa7d
-        mov      edx, dword ptr [g_data_00ab4d5c]
-        mov      ecx, dword ptr [g_data_00ab4d58]
+        mov      edx, dword ptr [g_dispatchSave1555_00ab4d5c]
+        mov      ecx, dword ptr [g_dispatchSave1554_00ab4d58]
         mov      dword ptr [g_mat3x3_007af994], edx
-        mov      edx, dword ptr [g_data_00ab4d64]
+        mov      edx, dword ptr [g_dispatchSave1557_00ab4d64]
         mov      dword ptr [g_vtxMat], ecx
-        mov      ecx, dword ptr [g_data_00ab4d60]
+        mov      ecx, dword ptr [g_dispatchSave1556_00ab4d60]
         mov      dword ptr [g_mat3x3_007af99c], edx
         mov      dword ptr [g_mat3x3_007af998], ecx
-        mov      cx, word ptr [g_data_00ab4d68]
+        mov      cx, word ptr [g_dispatchSave1558_00ab4d68]
         lea      edx, [eax*4]
-        push     OFFSET g_data_00ab4838
+        push     OFFSET g_dispatchSave1525_00ab4838
         push     edx
         mov      word ptr [g_mat3x3_007af9a0], cx
         call     MatrixTransform3x3Q12_004b3b80
@@ -273,28 +273,28 @@ __declspec(naked) void RenderSceneNode(void)
         jmp      L_aa9b
     L_aa7d:
         xor      eax, eax
-        mov      dword ptr [g_data_00ab4838], esi
-        mov      dword ptr [g_data_00ab483c], eax
-        mov      dword ptr [g_data_00ab4840], esi
-        mov      dword ptr [g_data_00ab4844], eax
-        mov      dword ptr [g_data_00ab4848], esi
+        mov      dword ptr [g_dispatchSave1525_00ab4838], esi
+        mov      dword ptr [g_dispatchSave1526_00ab483c], eax
+        mov      dword ptr [g_dispatchSave1527_00ab4840], esi
+        mov      dword ptr [g_dispatchSave1528_00ab4844], eax
+        mov      dword ptr [g_dispatchSave1529_00ab4848], esi
     L_aa9b:
         mov      eax, dword ptr [g_xformDirtyFlags]
         or       al, 0x30
         mov      dword ptr [g_xformDirtyFlags], eax
     L_aaa7:
-        mov      eax, OFFSET g_data_00ab4838
+        mov      eax, OFFSET g_dispatchSave1525_00ab4838
         sar      eax, 2
         mov      dword ptr [g_pendingNodeType], eax
     L_aab4:
         mov      edx, dword ptr [g_tickW1]
-        mov      ecx, dword ptr [g_data_00ab4e6c]
-        mov      dword ptr [g_data_00ab4e60], edx
+        mov      ecx, dword ptr [g_dispatchSave1577_00ab4e6c]
+        mov      dword ptr [g_dispatchSave1576_00ab4e60], edx
         mov      edx, dword ptr [g_tickDecay]
         test     edx, edx
-        mov      dword ptr [g_data_00ab4e5c], ecx
+        mov      dword ptr [g_dispatchSave1575_00ab4e5c], ecx
         je       L_aadc
-        mov      dword ptr [g_data_00ab4e60], ecx
+        mov      dword ptr [g_dispatchSave1576_00ab4e60], ecx
     L_aadc:
         mov      dword ptr [g_currentNodeIdx], ebx
         mov      ecx, dword ptr [ebx*4 + 0x28]
@@ -315,7 +315,7 @@ __declspec(naked) void RenderSceneNode(void)
         jne      L_ab40
     L_ab22:
         mov      eax, dword ptr [g_xformDirtyFlags]
-        mov      dword ptr [g_data_00ab4e38], 0
+        mov      dword ptr [g_dispatchSave1573_00ab4e38], 0
         and      al, 0xfe
         mov      dword ptr [g_xformDirtyFlags], eax
         pop      edi
@@ -395,7 +395,7 @@ __declspec(naked) void RenderSceneNode(void)
         xor      ecx, ecx
         mov      cl, byte ptr [esi]
         test     cl, 0x80
-        mov      dword ptr [g_data_00ab4e34], ecx
+        mov      dword ptr [g_dispatchSave1572_00ab4e34], ecx
         je       L_ac7f
         test     cl, 1
         je       L_ac6c
@@ -445,7 +445,7 @@ __declspec(naked) void RenderSceneNode(void)
         test     eax, eax
         je       L_adaf
         mov      edx, dword ptr [g_fightGroupHead]
-        mov      ecx, dword ptr [g_data_00ab4e34]
+        mov      ecx, dword ptr [g_dispatchSave1572_00ab4e34]
         jmp      L_acfd
     L_acf3:
         mov      ebx, dword ptr [esp + 0x14]
@@ -459,7 +459,7 @@ __declspec(naked) void RenderSceneNode(void)
         mov      ebp, edx
         test     cl, 0x40
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_xformEntityIdx], OFFSET g_data_00ab4d9c
+        mov      dword ptr [g_xformEntityIdx], OFFSET g_dispatchSave1559_00ab4d9c
         je       L_ad3c
         mov      ecx, dword ptr [edi]
         xor      edx, edx
@@ -475,7 +475,7 @@ __declspec(naked) void RenderSceneNode(void)
         test     cl, 1
         je       L_ad87
         and      edx, 0x1000
-        mov      dword ptr [g_data_00ab4e28], edx
+        mov      dword ptr [g_dispatchSave1570_00ab4e28], edx
         mov      ecx, dword ptr [edi]
         xor      edx, edx
         mov      dx, word ptr [ecx + 8]
@@ -484,7 +484,7 @@ __declspec(naked) void RenderSceneNode(void)
         push     esi
         call     DrawMeshBlock
         add      esp, 0xc
-        mov      dword ptr [g_data_00ab4e28], 0
+        mov      dword ptr [g_dispatchSave1570_00ab4e28], 0
         test     ebp, 0x40000
         je       L_adaf
         mov      dword ptr [g_xformEntityIdx], ebx
@@ -518,9 +518,9 @@ __declspec(naked) void RenderSceneNode(void)
         test     eax, eax
         mov      dword ptr [g_walkCallback], eax
         je       L_ae4a
-        mov      ecx, dword ptr [g_data_00ab439c]
-        mov      eax, dword ptr [g_data_00ab4398]
-        mov      edx, dword ptr [g_data_00ab43a0]
+        mov      ecx, dword ptr [g_dispatchSave1502_00ab439c]
+        mov      eax, dword ptr [g_dispatchSave1501_00ab4398]
+        mov      edx, dword ptr [g_dispatchSave1503_00ab43a0]
         mov      dword ptr [esp + 0x28], ecx
         mov      ecx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [esp + 0x24], eax

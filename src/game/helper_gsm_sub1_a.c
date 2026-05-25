@@ -8,8 +8,8 @@
 extern unsigned int g_byte_00ab42ec;
 extern unsigned int g_gsmVar2_004f5050;
 extern unsigned int g_dispatchSave868_004f5054;
-extern unsigned int g_data_00ab4304;
-extern unsigned int g_data_00ab436c;
+extern unsigned int g_dispatchSave1486_00ab4304;
+extern unsigned int g_dispatchSave1496_00ab436c;
 extern void DrawMenu(void);
 extern void MenuInputPoll_004b7020(void);
 extern void TableSearchAsc_004b6300(void);
@@ -31,19 +31,19 @@ __declspec(naked) void Helper_GSM_Sub1A(void)
         mov     byte ptr [g_byte_00ab42ec], bl
         call    TableSearchAsc_004b6300
         add     esp, 8
-        mov     dword ptr [g_data_00ab4304], eax
+        mov     dword ptr [g_dispatchSave1486_00ab4304], eax
         jmp     short L_b83_afterFirst
     L_b83_skipSet:
-        mov     eax, dword ptr [g_data_00ab4304]
+        mov     eax, dword ptr [g_dispatchSave1486_00ab4304]
     L_b83_afterFirst:
-        mov     ecx, dword ptr [g_data_00ab436c]
+        mov     ecx, dword ptr [g_dispatchSave1496_00ab436c]
         sub     ecx, 0
         je      L_b83_case0
         sub     ecx, 2
         je      short L_b83_case2
         sub     ecx, 0x43
         jne     L_b83_drawMenu
-        mov     dword ptr [g_data_00ab436c], 0
+        mov     dword ptr [g_dispatchSave1496_00ab436c], 0
         jmp     L_b83_drawMenu
     L_b83_case2:
         push    1
@@ -55,15 +55,15 @@ __declspec(naked) void Helper_GSM_Sub1A(void)
         jne     short L_b83_skipDesc
         test    bl, 1
         je      short L_b83_skipDesc
-        mov     eax, dword ptr [g_data_00ab4304]
+        mov     eax, dword ptr [g_dispatchSave1486_00ab4304]
         push    offset g_gsmVar2_004f5050
         push    eax
         call    TableSearchDesc_004b62c0
         add     esp, 8
-        mov     dword ptr [g_data_00ab4304], eax
+        mov     dword ptr [g_dispatchSave1486_00ab4304], eax
         jmp     short L_b83_checkBit2
     L_b83_skipDesc:
-        mov     eax, dword ptr [g_data_00ab4304]
+        mov     eax, dword ptr [g_dispatchSave1486_00ab4304]
     L_b83_checkBit2:
         test    esi, esi
         jne     short L_b83_drawMenu
@@ -73,28 +73,28 @@ __declspec(naked) void Helper_GSM_Sub1A(void)
         push    eax
         call    TableSearchAsc_004b6300
         add     esp, 8
-        mov     dword ptr [g_data_00ab4304], eax
+        mov     dword ptr [g_dispatchSave1486_00ab4304], eax
     L_b83_checkBit4:
         test    esi, esi
         jne     short L_b83_drawMenu
         test    bl, 0x10
         je      short L_b83_checkBit5
         movsx   ecx, word ptr [eax*8 + g_dispatchSave868_004f5054]
-        mov     dword ptr [g_data_00ab436c], ecx
+        mov     dword ptr [g_dispatchSave1496_00ab436c], ecx
     L_b83_checkBit5:
         test    esi, esi
         jne     short L_b83_drawMenu
         test    bl, 0x20
         je      short L_b83_drawMenu
-        mov     dword ptr [g_data_00ab436c], 0x45
+        mov     dword ptr [g_dispatchSave1496_00ab436c], 0x45
         jmp     short L_b83_drawMenu
     L_b83_case0:
-        mov     dword ptr [g_data_00ab436c], 2
+        mov     dword ptr [g_dispatchSave1496_00ab436c], 2
     L_b83_drawMenu:
         push    eax
         push    offset g_gsmVar2_004f5050
         call    DrawMenu
-        mov     eax, dword ptr [g_data_00ab436c]
+        mov     eax, dword ptr [g_dispatchSave1496_00ab436c]
         add     esp, 8
         pop     esi
         pop     ebx

@@ -119,10 +119,10 @@ extern s32 g_vtxTransY;
 extern s32 g_vtxTransZ;
 extern s16 g_vtxScreenX;
 extern s16 g_vtxScreenY;
-extern unsigned int g_data_00ab4398;
-extern unsigned int g_data_00ab439c;
-extern unsigned int g_data_00ab43a0;
-extern unsigned int g_data_00ab51fc;
+extern unsigned int g_dispatchSave1501_00ab4398;
+extern unsigned int g_dispatchSave1502_00ab439c;
+extern unsigned int g_dispatchSave1503_00ab43a0;
+extern unsigned int g_dispatchSave1581_00ab51fc;
 extern void AdvanceTriStripRing(void);
 extern void Helper_DrawCursor(void);
 extern void ProjectVertex(void);
@@ -131,7 +131,7 @@ __declspec(naked) void SunbeamSpriteEmit_004bd270(void)
 {
     __asm {
         mov      eax, dword ptr [g_sunbeamSpriteVar_004f6580]
-        mov      edx, dword ptr [g_data_00ab51fc]
+        mov      edx, dword ptr [g_dispatchSave1581_00ab51fc]
         sub      esp, 0x2c
         add      eax, edx
         mov      dword ptr [g_sunbeamSpriteVar_004f6580], eax
@@ -143,23 +143,23 @@ __declspec(naked) void SunbeamSpriteEmit_004bd270(void)
         push     edi
         jge      L_d2a3
         mov      eax, ebx
-        mov      dword ptr [g_data_00ab51fc], 0x10
+        mov      dword ptr [g_dispatchSave1581_00ab51fc], 0x10
         mov      dword ptr [g_sunbeamSpriteVar_004f6580], eax
     L_d2a3:
         cmp      eax, 0x100
         jle      L_d2be
         mov      dword ptr [g_sunbeamSpriteVar_004f6580], 0x100
-        mov      dword ptr [g_data_00ab51fc], 0xfffffff8
+        mov      dword ptr [g_dispatchSave1581_00ab51fc], 0xfffffff8
     L_d2be:
         mov      eax, dword ptr [g_inLoopStep]
         test     eax, eax
         jne      L_d48f
         mov      eax, dword ptr [g_xformEntityIdx]
-        mov      ecx, dword ptr [g_data_00ab4398]
-        mov      edx, dword ptr [g_data_00ab439c]
+        mov      ecx, dword ptr [g_dispatchSave1501_00ab4398]
+        mov      edx, dword ptr [g_dispatchSave1502_00ab439c]
         lea      esi, [esp + 0x12]
         lea      edi, [eax - 1]
-        mov      eax, dword ptr [g_data_00ab43a0]
+        mov      eax, dword ptr [g_dispatchSave1503_00ab43a0]
         sar      ecx, 0x10
         sar      edx, 0x10
         sar      eax, 7

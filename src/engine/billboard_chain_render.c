@@ -129,10 +129,10 @@ extern s32 g_vtxValid;
 extern unsigned int g_triStripRingA;
 extern s16 g_vtxScreenP2X;
 extern s16 g_vtxScreenX;
-extern unsigned int g_data_00ab4398;
-extern unsigned int g_data_00ab439c;
-extern unsigned int g_data_00ab43a0;
-extern unsigned int g_data_00ab4e60;
+extern unsigned int g_dispatchSave1501_00ab4398;
+extern unsigned int g_dispatchSave1502_00ab439c;
+extern unsigned int g_dispatchSave1503_00ab43a0;
+extern unsigned int g_dispatchSave1576_00ab4e60;
 extern void Helper_DrawCursor(void);
 extern void ProjectTwoVertices(void);
 
@@ -146,14 +146,14 @@ __declspec(naked) void BillboardChainRender_004bb030(void)
         cmp      eax, ebx
         jne      L_b24a
         mov      eax, dword ptr [g_currentNodeIdx]
-        mov      ecx, dword ptr [g_data_00ab4398]
-        mov      edx, dword ptr [g_data_00ab439c]
+        mov      ecx, dword ptr [g_dispatchSave1501_00ab4398]
+        mov      edx, dword ptr [g_dispatchSave1502_00ab439c]
         push     edi
         mov      edi, dword ptr [eax*4 + 0x2c]
-        mov      eax, dword ptr [g_data_00ab43a0]
+        mov      eax, dword ptr [g_dispatchSave1503_00ab43a0]
         sar      eax, 7
         mov      dword ptr [g_vtxTransZ], eax
-        mov      eax, dword ptr [g_data_00ab4e60]
+        mov      eax, dword ptr [g_dispatchSave1576_00ab4e60]
         sar      ecx, 0x10
         sar      edx, 0x10
         cmp      eax, 0x10
