@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00535cfc_arr;
+extern unsigned int g_dataArr_00535cfc;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 extern unsigned int g_state4_0053a3e0;
@@ -203,7 +203,7 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_260c
         mov      eax, dword ptr [g_dlNalt1]
-        mov      edx, OFFSET g_data_00535cfc_arr
+        mov      edx, OFFSET g_dataArr_00535cfc
         shr      edx, 2
         mov      ebx, 1
         mov      dword ptr [g_eventQueueEnd], edx

@@ -11,7 +11,7 @@
  *   if the device was created, calls CreateDevice via the 0x4d28f0
  *   GUID; returns 1 on full success, 0 otherwise.
  */
-extern unsigned int g_x_00544298;
+extern unsigned int g_installCountdownBase_00544298;
 extern unsigned int g_comptr_0058c7ac;
 extern unsigned int g_x_0058c7c8;
 extern unsigned int g_x_0058c7cc;
@@ -24,7 +24,7 @@ __declspec(naked) void R2_Init9(void) {
         push    esi
         push    edi
         mov     ecx, 0x1b
-        mov     esi, offset g_x_00544298
+        mov     esi, offset g_installCountdownBase_00544298
         lea     edi, [esp + 8]
         rep     movsd
         test    eax, eax

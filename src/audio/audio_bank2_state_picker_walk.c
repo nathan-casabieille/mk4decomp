@@ -115,8 +115,8 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   If eax == 1: chain low table [edi*24 + 0x0054361a/19] += 1.
  *   Else: chain high table [edx*24 + 0x005435a2/a1] += 1.
  *   ++g_bootInitState_00535de4. esi=1. ecx=g_x_004f3ae4; walk g_byte_005435a2[i*24] for i in [0,ecx);
- *     if any !=0: keep esi=1; else esi=0. If esi: g_data_005433c0=2; tail to cleanup.
- *   Else: ebp=g_x_004f3ae8; esi=1. Walk g_byte_0054361a[i*24] for i in [0,ebp). If esi: g_data_005433c0=1;
+ *     if any !=0: keep esi=1; else esi=0. If esi: g_audioBankPick_005433c0=2; tail to cleanup.
+ *   Else: ebp=g_x_004f3ae8; esi=1. Walk g_byte_0054361a[i*24] for i in [0,ebp). If esi: g_audioBankPick_005433c0=1;
  *     cleanup: zero g_counter_0054359c, g_counter_005433c8; call PendingMatch_004a93c0; pop+ret.
  *   Else (both banks have something nonzero): eax = g_audioBankSel_00537f94 again.
  *     If eax==2: roundrobin edx through ecx slots looking for g_byte_005435a2[edx*24]!=0; store to g_counter_0054359c.
@@ -128,7 +128,7 @@ extern unsigned int g_byte_005435a2;
 extern unsigned int g_byte_00543619;
 extern unsigned int g_byte_0054361a;
 extern unsigned int g_bootInitState_00535de4;
-extern unsigned int g_data_005433c0;
+extern unsigned int g_audioBankPick_005433c0;
 extern unsigned int g_counter_0054359c;
 extern unsigned int g_x_004f3ae4;
 extern unsigned int g_x_004f3ae8;
@@ -186,7 +186,7 @@ __declspec(naked) void AudioBank2StatePickerWalk_004a9270(void)
     L_a92_checkLow:
         test    esi, esi
         je      short L_a92_lowBankCheck
-        mov     dword ptr [g_data_005433c0], 2
+        mov     dword ptr [g_audioBankPick_005433c0], 2
         jmp     short L_a92_cleanup
     L_a92_lowBankCheck:
         mov     ebp, dword ptr [g_x_004f3ae8]
@@ -206,7 +206,7 @@ __declspec(naked) void AudioBank2StatePickerWalk_004a9270(void)
     L_a92_decideSet:
         test    esi, esi
         je      short L_a92_walkPicks
-        mov     dword ptr [g_data_005433c0], 1
+        mov     dword ptr [g_audioBankPick_005433c0], 1
     L_a92_cleanup:
         mov     dword ptr [g_counter_0054359c], 0
         mov     dword ptr [g_counter_005433c8], 0

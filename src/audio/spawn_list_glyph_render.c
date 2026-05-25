@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004f3ee0;
 extern unsigned int g_data_005157a4;
-extern unsigned int g_data_00543398;
+extern unsigned int g_audioFlagAggBase2_00543398;
 extern unsigned int g_audioFlagAggBase_005433d8;
 extern void AudioFlagDispatchAggregatorAH_004aa520(void);
 extern void AudioFlagDispatchAggregator_004aa430(void);
@@ -227,7 +227,7 @@ __declspec(naked) void SpawnListGlyphRender_004aa610(void)
     L_a77f:
         cmp      ecx, edx
         jne      short L_a78b
-        mov      dword ptr [eax + g_data_00543398], esi
+        mov      dword ptr [eax + g_audioFlagAggBase2_00543398], esi
         jmp      short L_a791
     L_a78b:
         mov      dword ptr [eax + g_audioFlagAggBase_005433d8], esi
@@ -267,7 +267,7 @@ __declspec(naked) void SpawnListGlyphRender_004aa610(void)
         mov      eax, dword ptr [g_gtPlayerProbe2]
         cmp      edx, eax
         jne      short L_a827
-        mov      eax, dword ptr [esi + g_data_00543398]
+        mov      eax, dword ptr [esi + g_audioFlagAggBase2_00543398]
         push     eax
         jmp      short L_a82e
     L_a827:

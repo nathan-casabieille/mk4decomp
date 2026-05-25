@@ -243,7 +243,7 @@ extern unsigned int g_savedNode_00541f98;
 extern unsigned int g_phaseCounter_00541fb0;
 extern unsigned int g_data_005420c8;
 extern unsigned int g_data_00542378;
-extern unsigned int g_data_005433c0;
+extern unsigned int g_audioBankPick_005433c0;
 extern unsigned int g_counter_005433c8;
 extern unsigned int g_counter_0054359c;
 extern unsigned int g_byte_005435a0;
@@ -2327,7 +2327,7 @@ __declspec(naked) void PendingMatch_004a93c0(void)
     L_96d1:
         call     SpawnLeftRightAudioCrew_004a8080
         call     DualListInit_004a8290
-        cmp      dword ptr [g_data_005433c0], ebx
+        cmp      dword ptr [g_audioBankPick_005433c0], ebx
         je       L_9454
         mov      dword ptr [g_eventQueueWorkType], 0x4a
         call     Push16Call_00489f50
@@ -2362,7 +2362,7 @@ __declspec(naked) void PendingMatch_004a93c0(void)
         push     0xff9c0000
         push     0x4d2748
         call     GuardedSetupCallTailJmp_004a1fa0
-        mov      eax, dword ptr [g_data_005433c0]
+        mov      eax, dword ptr [g_audioBankPick_005433c0]
         add      esp, 8
         cmp      eax, edi
         push     0xffb50000

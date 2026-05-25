@@ -110,14 +110,14 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 /*
  * MStackPush2ChainInsert_00409870 - 243b boot linked-list insert with mstack push2.
- *   Push g_x_0053a168, g_pendingNodeType to mstack. base=g_xformEntityIdx (packed_ptr).
+ *   Push g_chainInsertSlot_0053a168, g_pendingNodeType to mstack. base=g_xformEntityIdx (packed_ptr).
  *   esi = base[+8]; ecx = g_currentNodeIdx + esi; chain[ecx*4 + 4] = base; g_walkCallback = 0;
  *   chain[ecx*4 + 8] = 0; esi = base[0]; g_walkCallback = esi; chain[ecx*4] = esi.
  *   If base[0] == 0: base[+4] = g_currentNodeIdx; else walk: g_pendingNodeType = base->key + esi;
  *     chain[g_pendingNodeType*4 + 8] = g_currentNodeIdx. base[0] = g_currentNodeIdx. base[+0xc]++.
- *   Pop2 mstack into g_pendingNodeType and g_x_0053a168; ret.
+ *   Pop2 mstack into g_pendingNodeType and g_chainInsertSlot_0053a168; ret.
  */
-extern unsigned int g_x_0053a168;
+extern unsigned int g_chainInsertSlot_0053a168;
 
 __declspec(naked) void MStackPush2ChainInsert_00409870(void)
 {
@@ -127,7 +127,7 @@ __declspec(naked) void MStackPush2ChainInsert_00409870(void)
         mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_xformEntityIdx]
         push    esi
-        mov     esi, dword ptr [g_x_0053a168]
+        mov     esi, dword ptr [g_chainInsertSlot_0053a168]
         inc     ecx
         mov     dword ptr [g_matrixStackTop], ecx
         mov     dword ptr [ecx*4], esi
@@ -169,7 +169,7 @@ __declspec(naked) void MStackPush2ChainInsert_00409870(void)
         mov     dword ptr [g_matrixStackTop], eax
         mov     edx, dword ptr [eax*4]
         dec     eax
-        mov     dword ptr [g_x_0053a168], edx
+        mov     dword ptr [g_chainInsertSlot_0053a168], edx
         mov     dword ptr [g_matrixStackTop], eax
         ret
     }

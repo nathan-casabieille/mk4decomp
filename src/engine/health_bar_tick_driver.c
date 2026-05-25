@@ -116,7 +116,7 @@ extern unsigned int g_tickFlagF;
 extern unsigned int g_stateFlag_00537e98;
 extern s32 g_dlNalt1;
 extern unsigned int g_counter_0053a51c;
-extern unsigned int g_data_00541d6c;
+extern unsigned int g_stateChangePair_00541d6c;
 extern unsigned int g_const_00427780;
 extern void func_00427780(void);
 
@@ -144,7 +144,7 @@ __declspec(naked) void RoundEndHandlerCluster_00457de0(void)
         je       L_7ed2
         dec      eax
         jne      short L_7e38
-        mov      eax, dword ptr [g_data_00541d6c]
+        mov      eax, dword ptr [g_stateChangePair_00541d6c]
         test     eax, eax
         mov      dword ptr [g_walkCallback], eax
         je       L_7f6d
@@ -257,7 +257,7 @@ __declspec(naked) void RoundEndHandlerCluster_00457de0(void)
         je       short L_7fc2
         mov      ecx, 1
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_data_00541d6c], ecx
+        mov      dword ptr [g_stateChangePair_00541d6c], ecx
         jmp      CallSetPause_0041f830
     L_7fc2:
         mov      ecx, 1

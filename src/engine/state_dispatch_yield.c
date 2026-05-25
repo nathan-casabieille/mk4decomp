@@ -255,8 +255,8 @@ extern unsigned int g_load_0052ab08;
 extern unsigned int g_load_0052ab10;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
-extern unsigned int g_state_00535cfc;
-extern unsigned int g_state_0053a1d0;
+extern unsigned int g_dataArr_00535cfc;
+extern unsigned int g_dataArr_0053a1d0;
 void Helper_TickInit(unsigned int base) {
     g_state_00ab4d9c = base;
     g_state_00ab4da0 = base + 0x200;

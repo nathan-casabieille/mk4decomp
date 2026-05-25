@@ -114,7 +114,7 @@ extern unsigned int g_stateFlag_00537e98;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 extern unsigned int g_counter_0053a51c;
-extern unsigned int g_data_00541d6c;
+extern unsigned int g_stateChangePair_00541d6c;
 extern void BootInitGuardedCallChain_004265d0(void);
 extern void CallSetPause_0041f830(void);
 extern void DualPushSetCallDualPop_00404b10(void);
@@ -142,7 +142,7 @@ __declspec(naked) void RoundEndHandlerCluster_00457de0(void)
         je       L_7ed2
         dec      eax
         jne      short L_7e38
-        mov      eax, dword ptr [g_data_00541d6c]
+        mov      eax, dword ptr [g_stateChangePair_00541d6c]
         test     eax, eax
         mov      dword ptr [g_walkCallback], eax
         je       L_7f6d
@@ -255,7 +255,7 @@ __declspec(naked) void RoundEndHandlerCluster_00457de0(void)
         je       short L_7fc2
         mov      ecx, 1
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_data_00541d6c], ecx
+        mov      dword ptr [g_stateChangePair_00541d6c], ecx
         jmp      CallSetPause_0041f830
     L_7fc2:
         mov      ecx, 1

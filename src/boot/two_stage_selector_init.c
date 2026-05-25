@@ -107,8 +107,8 @@ extern unsigned int g_fightAxisNegX_00535e70;
 extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
-extern unsigned int g_data_00535cfc_arr;
-extern unsigned int g_data_0053a1d0_arr;
+extern unsigned int g_dataArr_00535cfc;
+extern unsigned int g_dataArr_0053a1d0;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 extern u8 g_dlEnabledFlag;
@@ -125,7 +125,7 @@ void TwoStageSelectorInit_00402ed0(void) {
     TableWalkBoundedCmp_004bd890(6);
     TripleCallCountdown_00428080();
     if (g_framePauseFlag != 0) return;
-    g_eventQueueEnd = (unsigned int)&g_data_00535cfc_arr >> 2;
+    g_eventQueueEnd = (unsigned int)&g_dataArr_00535cfc >> 2;
     g_dlEnabledFlag = 1;
     g_walkCallback = (void (*)(void))g_dlNalt1;
     g_eventQueueCurrent = 0;
@@ -133,7 +133,7 @@ void TwoStageSelectorInit_00402ed0(void) {
     if (g_framePauseFlag != 0) return;
     {
         unsigned int wv = g_dlNalt2;
-        g_eventQueueEnd = (unsigned int)&g_data_0053a1d0_arr >> 2;
+        g_eventQueueEnd = (unsigned int)&g_dataArr_0053a1d0 >> 2;
         g_walkCallback = (void (*)(void))wv;
         g_eventQueueCurrent = 1;
     }

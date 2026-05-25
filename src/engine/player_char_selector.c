@@ -114,12 +114,12 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Else: setup player2 (005380e0). g_eventQueueEnd = (0x0053a1d0>>2). Call DownloadPlayerChar; ret.
  *   Both arms normalize g_walkCallback via cmp on 0xf/6/8 and write to g_installState_00535d10.
  */
-extern unsigned int g_data_00535cfc_arr;
+extern unsigned int g_dataArr_00535cfc;
 extern unsigned int g_installState_00535d10;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 extern s32 g_dlNalt3;
-extern unsigned int g_data_0053a1d0_arr;
+extern unsigned int g_dataArr_0053a1d0;
 extern s32 g_dlNalt4;
 extern s32 g_dlChar13;
 extern s32 g_dlChar24;
@@ -171,7 +171,7 @@ __declspec(naked) void PlayerCharSelector_004636d0(void) {
         _emit   0ah
         mov     dword ptr [g_installState_00535d10], 0xa
         mov     eax, dword ptr [g_installState_00535d10]
-        mov     ecx, offset g_data_00535cfc_arr
+        mov     ecx, offset g_dataArr_00535cfc
         shr     ecx, 2
         mov     dword ptr [g_dlNalt3], eax
         mov     dword ptr [g_eventQueueEnd], ecx
@@ -205,7 +205,7 @@ __declspec(naked) void PlayerCharSelector_004636d0(void) {
         _emit   0ah
         mov     dword ptr [g_installState_00535d10], 0xa
         mov     edx, dword ptr [g_installState_00535d10]
-        mov     eax, offset g_data_0053a1d0_arr
+        mov     eax, offset g_dataArr_0053a1d0
         shr     eax, 2
         mov     dword ptr [g_dlNalt4], edx
         mov     dword ptr [g_eventQueueEnd], eax

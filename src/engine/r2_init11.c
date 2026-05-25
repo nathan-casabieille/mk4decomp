@@ -6,12 +6,12 @@
 
 /* @addr 0x004af020 (263b engine.install) - DSound slot init: per-slot capture/buffer setup.
  *   arg0 byte: slot index (0..0x10). If slot already has buffer ptr, return 1.
- *   Else: copy WAVEFORMAT template from g_data_00544298 (108 bytes); create a
+ *   Else: copy WAVEFORMAT template from g_installCountdownBase_00544298 (108 bytes); create a
  *   capture buffer via vtbl[+0x18]; query 8-byte interface via [+0x74]; query
  *   for GUID g_iid_004d28f0 via vtbl[0]; if global init succeeded and slot
  *   has valid pointers, register via [+0x0c]. Return 1 if all slots valid, 0 else.
  */
-extern unsigned int g_data_00544298;
+extern unsigned int g_installCountdownBase_00544298;
 extern u8 g_renderer2_buf1[];
 extern unsigned int g_comptr_0058c7ac;
 extern unsigned int g_renderer2_obj;
@@ -47,7 +47,7 @@ __declspec(naked) void R2_Init11(void) {
     L_dss_setup:
         mov     eax, dword ptr [g_comptr_0058c7ac]
         mov     ecx, 0x1b
-        mov     esi, offset g_data_00544298
+        mov     esi, offset g_installCountdownBase_00544298
         lea     edi, [esp + 0x18]
         rep     movsd
         lea     esi, [ebx + g_renderer2_buf2]

@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004e9068;
 extern unsigned int g_tickFlagF;
-extern unsigned int g_state_0054355c_hh;
+extern unsigned int g_audioPathFlag_0054355c;
 extern unsigned int g_data_00543568;
 extern unsigned int g_data_00543714;
 extern void ArgSarAddDerefJmp_0048e710(void);
@@ -286,7 +286,7 @@ __declspec(naked) void RoundEndFsmCluster_0045d680(void)
         jne      short L_d890
         jmp      CallSetPause_0041f830
     L_d890:
-        mov      eax, dword ptr [g_state_0054355c_hh]
+        mov      eax, dword ptr [g_audioPathFlag_0054355c]
         test     eax, eax
         je       short L_d89e
         jmp      CallSetPause_0041f830

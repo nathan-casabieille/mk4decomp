@@ -118,13 +118,13 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 extern unsigned int g_data_004e8860;
 extern unsigned int g_data_004e8948;
-extern unsigned int g_data_005380b0;
+extern unsigned int g_stateChangeBase_005380b0;
 extern void StorePauseImulShr16_004ab630(void);
 
 __declspec(naked) void TableWalkMatchInsert_00459030(void) {
     __asm {
         mov     eax, offset g_data_004e8860
-        mov     edx, offset g_data_005380b0
+        mov     edx, offset g_stateChangeBase_005380b0
         shr     eax, 2
         shr     edx, 2
         mov     dword ptr [g_scaledInit_00542044], eax

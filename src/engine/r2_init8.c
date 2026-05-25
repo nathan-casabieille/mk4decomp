@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 /* @addr 0x004aec90 (274b engine.install) - DSound primary buffer + format callback pair.
- *   Sub-1 (112b): zero g_data_00544298 (108-byte WAVEFORMAT), call vtbl[0x24]
+ *   Sub-1 (112b): zero g_installCountdownBase_00544298 (108-byte WAVEFORMAT), call vtbl[0x24]
  *     on g_renderer2_obj with the format callback at L_psn_cb (= 0x4aed00).
  *     If g_data_0054429c stays 0, return 0; else fill format defaults
  *     (size, frequency 0x100, flags, channels) and return 1.
@@ -13,7 +13,7 @@
  *     and 0x1f matching expected layout, copies caller's struct into our buffer.
  */
 extern unsigned int g_data_004f478c;
-extern unsigned int g_data_00544298;
+extern unsigned int g_installCountdownBase_00544298;
 extern unsigned int g_data_0054429c;
 extern unsigned int g_data_005442a0;
 extern unsigned int g_data_005442a4;
@@ -26,7 +26,7 @@ __declspec(naked) void R2_Init8(void) {
         push    edi
         mov     ecx, 0x1b
         xor     eax, eax
-        mov     edi, offset g_data_00544298
+        mov     edi, offset g_installCountdownBase_00544298
         rep     stosd
         mov     eax, dword ptr [g_renderer2_obj]
         test    eax, eax
@@ -45,7 +45,7 @@ __declspec(naked) void R2_Init8(void) {
         ret
     L_psn_fill:
         mov     eax, 0x100
-        mov     dword ptr [g_data_00544298], 0x6c
+        mov     dword ptr [g_installCountdownBase_00544298], 0x6c
         mov     dword ptr [g_data_005442a4], eax
         mov     dword ptr [g_data_005442a0], eax
         mov     dword ptr [g_data_0054429c], 0x1007
@@ -79,7 +79,7 @@ __declspec(naked) void R2_Init8(void) {
         cmp     dword ptr [esi + 0x60], ecx
         jne     short L_psn_cb_alt
         mov     ecx, 0x1b
-        mov     edi, offset g_data_00544298
+        mov     edi, offset g_installCountdownBase_00544298
         rep     movsd
         mov     dword ptr [g_data_004f478c], 1
         mov     eax, 1
@@ -97,7 +97,7 @@ __declspec(naked) void R2_Init8(void) {
         test    eax, eax
         jne     short L_psn_cb_fail
         mov     ecx, 0x1b
-        mov     edi, offset g_data_00544298
+        mov     edi, offset g_installCountdownBase_00544298
         rep     movsd
         mov     dword ptr [g_data_004f478c], 0
     L_psn_cb_fail:

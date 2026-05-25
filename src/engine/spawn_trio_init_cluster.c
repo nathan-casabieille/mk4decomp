@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00541d6c;
+extern unsigned int g_stateChangePair_00541d6c;
 extern unsigned int g_data_0053a278;
 extern unsigned int g_data_005380a4;
 extern unsigned int g_stateFlag_00537e98;
@@ -116,14 +116,14 @@ extern void SpawnTrioInitCluster_00458440(void);
 extern void MStackPush2ClampLookup_00459160(void);
 extern void TripleEntryDispatch_00458810(void);
 
-extern unsigned int g_data_005380b0;
+extern unsigned int g_stateChangeBase_005380b0;
 extern void CallSetPause_0041f830(void);
 
 __declspec(naked) void GuardedStateChangePair_00458630(void)
 {
     __asm
     {
-        mov     eax, dword ptr [g_data_00541d6c]
+        mov     eax, dword ptr [g_stateChangePair_00541d6c]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         je      short L_gscp_check27
@@ -134,7 +134,7 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
         mov     dword ptr [g_walkCallback], edx
         je      L_gscp_dec
         mov     ecx, dword ptr [g_data_005380a4]
-        mov     eax, offset g_data_005380b0
+        mov     eax, offset g_stateChangeBase_005380b0
         shr     eax, 2
         cmp     ecx, 2
         mov     dword ptr [g_currentNodeIdx], eax
@@ -165,7 +165,7 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
         push    0
         push    offset L_gscp_sub2
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_data_00541d6c], eax
+        mov     dword ptr [g_stateChangePair_00541d6c], eax
         call    StoreTwoCall_0049cb40
         add     esp, 8
         jmp     CallSetPause_0041f830
@@ -188,7 +188,7 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
         jge     short L_gscp_decOk
         jmp     CallSetPause_0041f830
     L_gscp_decOk:
-        mov     eax, offset g_data_005380b0
+        mov     eax, offset g_stateChangeBase_005380b0
         mov     dword ptr [g_data_005380a4], ecx
         shr     eax, 2
         add     eax, ecx
