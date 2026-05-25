@@ -6,7 +6,7 @@
 
 extern unsigned int g_load_0052ab10;
 extern u32 g_inLoopStep;
-extern s16 g_vtxIn_x;
+extern unsigned int g_data_007af958[];
 extern s16 g_vtxIn2_x;
 extern unsigned int g_triStripX0;
 extern s16 g_vtxIn1_y;
@@ -203,7 +203,7 @@ __declspec(naked) void Helper_TickReinit(void)
         sar      eax, 2
         sub      edx, eax
         mov      dword ptr [esp + 0x20], eax
-        mov      word ptr [g_vtxIn_x], dx
+        mov      word ptr [g_data_007af958], dx
         mov      dx, word ptr [esp + 0x10]
         mov      word ptr [g_vtxIn1_y], dx
         lea      edx, [ebp + ecx]

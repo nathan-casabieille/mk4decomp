@@ -64,7 +64,7 @@ extern packed_ptr g_player4NodeIdx;   /* 0x00538164 */
 
 /* Three entity sub-trees iterated by FightFrameStep. Each row is a
  * (head_a, head_b) packed-ptr pair into 0x5453a4a0..0x5453a4b7. */
-extern u32 g_fightGroupHeads[6];      /* 0x005453a4a0 (3 pairs of u32) */
+extern u32 g_fightGroupHeads[6];      /* 0x0053a4a0 (3 pairs of u32) */
 
 /* Three matching arrays indexed by g_fightGroupHeads slot - the
  * fixed-address sources from .rdata / .data that get packed and

@@ -114,7 +114,7 @@ extern unsigned int g_data_004f63ea;
 extern unsigned int g_data_004f63ec;
 extern unsigned int g_data_004f63ee;
 extern unsigned int g_data_004f63f0;
-extern s16 g_vtxIn_x;
+extern unsigned int g_data_007af958[];
 extern s16 g_vtxIn1_y;
 extern s16 g_vtxIn2_y;
 extern s32 g_vtxOut1_x;
@@ -179,7 +179,7 @@ __declspec(naked) void BboxProjectAndStash_004bc5a0(void)
         mov      dword ptr [esp + 0x14], ecx
         imul     ebx, eax
         mov      eax, dword ptr [esp + 0x14]
-        mov      word ptr [g_vtxIn_x], 0
+        mov      word ptr [g_data_007af958], 0
         imul     eax, ebp
         movsx    ecx, word ptr [g_mat3x3_007af998]
         movsx    esi, word ptr [g_mat3x3_007af99a]

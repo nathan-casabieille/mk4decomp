@@ -113,7 +113,7 @@ extern unsigned int g_data_004ed020;
 extern unsigned int g_data_004ed040;
 extern unsigned int g_data_004ed060;
 extern u32 g_inLoopStep;
-extern s16 g_vtxIn_x;
+extern unsigned int g_data_007af958[];
 extern s16 g_vtxIn2_x;
 extern unsigned int g_triStripX0;
 extern s16 g_vtxIn1_y;
@@ -223,7 +223,7 @@ __declspec(naked) void MovesPanelEmit_004bcf60(void)
         shl      ecx, 0x10
         sar      ecx, 0x13
         sar      eax, 0x13
-        mov      word ptr [g_vtxIn_x], cx
+        mov      word ptr [g_data_007af958], cx
         mov      word ptr [g_vtxIn1_y], ax
         mov      eax, dword ptr [esi + 0xc]
         mov      word ptr [g_vtxIn2_z], di

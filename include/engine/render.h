@@ -223,9 +223,11 @@ extern u16 g_vtxColor;          /* 0x007af9fc */
 /* === Globals ================================================= */
 
 extern int g_currentRendererMode;    /* 0x004f4b3c */
-extern int g_clampedRendererMode;    /* 0x004f4b3c */
-extern int g_viewportX, g_viewportY; /* 0x00f85b50, 0x00f85b54 */
-extern int g_viewportW, g_viewportH; /* 0x004ffd44, 0x004ffd48 */
+extern int g_clampedRendererMode;    /* 0x004f4b38 */
+extern int g_viewportX;             /* 0x00f85b50 */
+extern int g_viewportY;             /* 0x00f85b54 */
+extern int g_viewportW;             /* 0x004ffd44 */
+extern int g_viewportH;             /* 0x004ffd48 */
 
 /* Per-renderer state. Each EndScene_* checks "is this renderer
  * active and does it own a presentable surface" before clearing. */

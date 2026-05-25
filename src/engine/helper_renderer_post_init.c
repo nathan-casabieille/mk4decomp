@@ -5,12 +5,12 @@
 #include "game/tick.h"
 
 /*
- * @addr 0x004b3e20 (108b): 5-way switch on g_clampedRendererMode - 1.
+ * @addr 0x004b3e20 (108b): 5-way switch on g_currentRendererMode - 1.
  *   Each case is a single-arg forward to a different per-mode helper.
  *   Jump table at +0x58 swaps entries 4/5 (the mode-3 slot routes to
  *   the last code block).
  */
-extern int g_clampedRendererMode;
+extern int g_currentRendererMode;
 extern void func_004a2870(void);
 extern void func_004ad5d0(void);
 extern void func_004af6a0(void);
@@ -19,7 +19,7 @@ extern void func_004b44d0(void);
 
 __declspec(naked) void Helper_RendererPostInit(void) {
     __asm {
-        mov     eax, dword ptr [g_clampedRendererMode]
+        mov     eax, dword ptr [g_currentRendererMode]
         dec     eax
         cmp     eax, 4
         _emit   77h

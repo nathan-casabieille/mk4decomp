@@ -5,11 +5,11 @@
 #include "game/tick.h"
 
 /*
- * @addr 0x004b3dc0 (96b): screen-size lookup keyed by g_clampedRendererMode.
+ * @addr 0x004b3dc0 (96b): screen-size lookup keyed by g_currentRendererMode.
  *   Two code blocks (640x480 vs 320x240) selected via a 5-entry jump
  *   table; out-of-range and null-arg cases fall through to early ret.
  */
-extern int g_clampedRendererMode;
+extern int g_currentRendererMode;
 
 __declspec(naked) void Helper_GetMenuExtents(void) {
     __asm {
@@ -21,7 +21,7 @@ __declspec(naked) void Helper_GetMenuExtents(void) {
         je      done
         mov     dword ptr [eax], 0
         mov     dword ptr [ecx], 0
-        mov     edx, dword ptr [g_clampedRendererMode]
+        mov     edx, dword ptr [g_currentRendererMode]
         dec     edx
         cmp     edx, 4
         _emit   77h
