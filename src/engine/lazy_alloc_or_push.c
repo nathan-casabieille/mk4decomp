@@ -112,7 +112,7 @@ extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
 extern unsigned int g_player1NodeIdx;
-extern unsigned int g_data_00535cf8;
+extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
@@ -123,12 +123,12 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0048abe0 (142b game) - lazy alloc + setup chain or fall back to push/call:
- *   If g_currentNodeFlags (= g_currentNodeFlags) < 0x30000: snapshot cj+0x18, g_x_00535cf8+0x15, cj+0x15
+ *   If g_currentNodeFlags (= g_currentNodeFlags) < 0x30000: snapshot cj+0x18, g_installOwnerNode_00535cf8+0x15, cj+0x15
  *   to scaledInit/g_xformEntityIdx/g_pendingNodeType; tail-jmp PushStackAllocCall.
  *   Else: mstack-push g_currentNodeFlags; sar g_currentNodeFlags by 1 after adding 0xffff0000;
- *   g_xformEntityIdx = g_x_00535cf8; call MStackAngleRatioSubchain_00476af0; pause? ret; mstack-pop into g_currentNodeFlags.
+ *   g_xformEntityIdx = g_installOwnerNode_00535cf8; call MStackAngleRatioSubchain_00476af0; pause? ret; mstack-pop into g_currentNodeFlags.
  */
-extern unsigned int g_x_00535cf8;
+extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_pendingNodeType;
 extern void MStackAngleRatioSubchain_00476af0(void);
@@ -143,7 +143,7 @@ __declspec(naked) void LazyAllocOrPush_0048abe0(void) {
         _emit   7ch
         _emit   2ah
         mov     eax, dword ptr [g_cj_0054205c]
-        mov     edx, dword ptr [g_x_00535cf8]
+        mov     edx, dword ptr [g_installOwnerNode_00535cf8]
         add     edx, 0x15
         lea     ecx, [eax + 0x18]
         add     eax, 0x15
@@ -156,7 +156,7 @@ __declspec(naked) void LazyAllocOrPush_0048abe0(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], ecx
         mov     eax, dword ptr [g_currentNodeFlags]
-        mov     ecx, dword ptr [g_x_00535cf8]
+        mov     ecx, dword ptr [g_installOwnerNode_00535cf8]
         add     eax, 0xffff0000
         sar     eax, 1
         mov     dword ptr [g_currentNodeFlags], eax

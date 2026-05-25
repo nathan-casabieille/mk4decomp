@@ -112,7 +112,7 @@ extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
 extern unsigned int g_player1NodeIdx;
-extern unsigned int g_data_00535cf8;
+extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
@@ -155,7 +155,7 @@ __declspec(naked) void InstallSelfChainStateInit_0043f2c0(void) {
         jmp     StackPopDispatchTagged_0041f780
         mov     ecx, dword ptr [g_cj_00542058]
         mov     dword ptr [g_eventQueueNotMask], edx
-        mov     dword ptr [g_data_00535cf8], ecx
+        mov     dword ptr [g_installOwnerNode_00535cf8], ecx
         mov     ecx, dword ptr [g_x_00537e9c]
         mov     dword ptr [g_cj_00542054], ecx
         mov     ecx, 0x004e55f8

@@ -112,7 +112,7 @@ extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
 extern unsigned int g_player1NodeIdx;
-extern unsigned int g_data_00535cf8;
+extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
@@ -179,7 +179,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
     L_p4tpis_A_continue:
         mov     eax, dword ptr [g_currentNodeIdx]
         push    0x0041A7D0
-        mov     dword ptr [g_data_00535cf8], eax
+        mov     dword ptr [g_installOwnerNode_00535cf8], eax
         mov     dword ptr [eax*4 + 0x64], 0x0004B65F
         mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_data_0053a7a0], eax
@@ -259,7 +259,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
         push    esi
         mov     dword ptr [eax*4 + 0x84], 0
         lea     esi, [eax*4]
-        mov     eax, dword ptr [g_data_00535cf8]
+        mov     eax, dword ptr [g_installOwnerNode_00535cf8]
         mov     dword ptr [g_eventQueueIdx], eax
         mov     eax, dword ptr [eax*4 + 0x54]
         push    eax

@@ -112,7 +112,7 @@ extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
 extern unsigned int g_player1NodeIdx;
-extern unsigned int g_data_00535cf8;
+extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
 extern unsigned int g_data_00543598;
@@ -124,7 +124,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0044ccf0 (91b)
  *   call MStackPushVec3Mul10_004767e0; if pause: ret;
- *   eax = g_data_00535cf8; ecx = g_cj_00542058; edx = g_baseSel;
+ *   eax = g_installOwnerNode_00535cf8; ecx = g_cj_00542058; edx = g_baseSel;
  *   g_scaledInit = eax; eax = [ecx*4 + 0x54]; push esi;
  *   g_eventQueueCurrent = eax; esi = [edx*4 + 0x3c]; eax += esi;
  *   pop esi; g_eventQueueCurrent = eax;
@@ -135,7 +135,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 void GuardedChainDualAdd_0044ccf0(void) {
     MStackPushVec3Mul10_004767e0();
     if (g_framePauseFlag) return;
-    g_scaledInit_00542044 = g_data_00535cf8;
+    g_scaledInit_00542044 = g_installOwnerNode_00535cf8;
     g_eventQueueCurrent = *(unsigned int *)(g_cj_00542058 * 4 + 0x54);
     g_eventQueueCurrent += *(unsigned int *)(g_baseSel_00542060 * 4 + 0x3c);
     g_eventQueueWorkType = *(unsigned int *)(g_cj_00542058 * 4 + 0x5c);
