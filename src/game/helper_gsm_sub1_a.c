@@ -7,7 +7,7 @@
 /* Helper_GSM_Sub1A - sister of 0x4b8630 for 0x004f5050 menu. */
 extern unsigned int g_byte_00ab42ec;
 extern unsigned int g_gsmVar2_004f5050;
-extern unsigned int g_data_004f5054;
+extern unsigned int g_dispatchSave868_004f5054;
 extern unsigned int g_data_00ab4304;
 extern unsigned int g_data_00ab436c;
 extern void DrawMenu(void);
@@ -79,7 +79,7 @@ __declspec(naked) void Helper_GSM_Sub1A(void)
         jne     short L_b83_drawMenu
         test    bl, 0x10
         je      short L_b83_checkBit5
-        movsx   ecx, word ptr [eax*8 + g_data_004f5054]
+        movsx   ecx, word ptr [eax*8 + g_dispatchSave868_004f5054]
         mov     dword ptr [g_data_00ab436c], ecx
     L_b83_checkBit5:
         test    esi, esi

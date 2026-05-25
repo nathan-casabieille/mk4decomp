@@ -4,10 +4,10 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_data_004f48af;
-extern unsigned int g_data_004f48cf;
-extern unsigned int g_data_004f49f0;
-extern unsigned int g_data_004f4a30;
+extern unsigned int g_dispatchSave831_004f48af;
+extern unsigned int g_dispatchSave832_004f48cf;
+extern unsigned int g_dispatchSave833_004f49f0;
+extern unsigned int g_dispatchSave834_004f4a30;
 extern void Helper_ChkStk(void);
 
 __declspec(naked) void ECM_DecodeFrame_Huffman(void)
@@ -672,7 +672,7 @@ __declspec(naked) void ECM_DecodeFrame_Huffman(void)
         jmp      L_194e
     L_19da:
         je       L_1b68
-        mov      al, byte ptr [ebx + g_data_004f48cf]
+        mov      al, byte ptr [ebx + g_dispatchSave832_004f48cf]
         xor      esi, esi
         test     al, al
         je       L_1a43
@@ -712,7 +712,7 @@ __declspec(naked) void ECM_DecodeFrame_Huffman(void)
     L_1a43:
         xor      ecx, ecx
         cmp      ebp, 0xf
-        mov      cl, byte ptr [ebx + g_data_004f48af]
+        mov      cl, byte ptr [ebx + g_dispatchSave831_004f48af]
         lea      eax, [ecx + esi + 3]
         mov      dword ptr [esp + 0x10], eax
         jge      L_1a62
@@ -762,7 +762,7 @@ __declspec(naked) void ECM_DecodeFrame_Huffman(void)
     L_1ac4:
         shr      ebx, 7
         xor      eax, eax
-        mov      cl, byte ptr [ebx + g_data_004f4a30]
+        mov      cl, byte ptr [ebx + g_dispatchSave834_004f4a30]
         test     cl, cl
         je       L_1b28
         movsx    esi, cl
@@ -801,7 +801,7 @@ __declspec(naked) void ECM_DecodeFrame_Huffman(void)
     L_1b28:
         mov      esi, dword ptr [esp + 0x2c]
         xor      ecx, ecx
-        mov      cx, word ptr [ebx*2 + g_data_004f49f0]
+        mov      cx, word ptr [ebx*2 + g_dispatchSave833_004f49f0]
         add      ecx, eax
         mov      eax, esi
         sub      eax, ecx

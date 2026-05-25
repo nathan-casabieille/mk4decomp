@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004eee3c;
+extern unsigned int g_dispatchSave773_004eee3c;
 extern void GatedChainClamp_00486e80(void);
 extern void MStackPush3CallCascade_00486d90(void);
 extern void Phase2InitDispatchInstallSelf_0040ba70(void);
@@ -166,7 +166,7 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         mov      dword ptr [edx*4 + 4], eax
         mov      edx, dword ptr [g_currentNodeIdx]
         mov      ecx, dword ptr [g_eventQueueCurrent]
-        mov      eax, OFFSET g_data_004eee3c
+        mov      eax, OFFSET g_dispatchSave773_004eee3c
         shr      eax, 2
         mov      dword ptr [edx*4 + 8], ecx
         mov      dword ptr [g_xformEntityIdx], eax

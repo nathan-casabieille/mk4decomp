@@ -18,7 +18,7 @@
  *   DrawMenu(0x4f4fd0, g_data_00ab42d0) and returns the current state.
  */
 extern unsigned int g_gsmVar4_004f4fd0;
-extern unsigned int g_data_004f4fd4;
+extern unsigned int g_dispatchSave866_004f4fd4;
 extern u32 g_demoModeFlag;
 extern unsigned int g_data_00ab42d0;
 extern unsigned int g_data_00ab431c;
@@ -90,7 +90,7 @@ __declspec(naked) void Helper_GSM_Sub_Other2(void) {
         mov     dword ptr [g_data_00ab4388], 0x45
     L_mps_skipDesc:
         mov     edx, dword ptr [g_data_00ab42d0]
-        movsx   eax, word ptr [edx*8 + g_data_004f4fd4]
+        movsx   eax, word ptr [edx*8 + g_dispatchSave866_004f4fd4]
         sub     eax, 0x11
         je      short L_mps_type11
         dec     eax

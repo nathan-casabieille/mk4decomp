@@ -130,7 +130,7 @@ extern void MultiThunkDispatcher_00460470(void);
 extern void ScaledAndAlfe_00490390(void);
 extern void TableLookupCall_00489ff0(void);
 
-extern unsigned int g_data_004f1a20;
+extern unsigned int g_dispatchSave787_004f1a20;
 extern void ArgScaledTestStore_00494140(void);
 extern void ScaledChainJmp_00429470(void);
 extern void ScaledClearJmp_00428d60(void);
@@ -290,7 +290,7 @@ __declspec(naked) void InstallSelfCmdStreamInterp_00494290(void) {
         _emit   74h
         _emit   44h
         mov     ecx, dword ptr [g_cj_0054205c]
-        mov     eax, offset g_data_004f1a20
+        mov     eax, offset g_dispatchSave787_004f1a20
         shr     eax, 2
         mov     ecx, dword ptr [ecx*4 + 0x30]
         sub     ecx, 0x60

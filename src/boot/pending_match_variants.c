@@ -222,8 +222,8 @@ extern unsigned int g_data_004d7ce8;
 extern unsigned int g_data_004d7d00;
 extern unsigned int g_dispatchSave606_004ded68;
 extern unsigned int g_dispatchSave505_004e3ac8;
-extern unsigned int g_data_004f2020;
-extern unsigned int g_data_004f2068;
+extern unsigned int g_dispatchSave788_004f2020;
+extern unsigned int g_dispatchSave789_004f2068;
 extern unsigned int g_dispatchSave510_004f2880;
 extern unsigned int g_crtHeapMaxPtr_00522154;
 extern unsigned int g_dispatchSave12_00523ae0;
@@ -1836,7 +1836,7 @@ __declspec(naked) void PunchAnimCluster_00496d80(void)
         mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x315
         mov      dword ptr [g_walkCallback], eax
-        push     OFFSET g_data_004f2020
+        push     OFFSET g_dispatchSave788_004f2020
         mov      dword ptr [ecx*4 + 0x74], eax
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
@@ -1903,7 +1903,7 @@ __declspec(naked) void PunchAnimCluster_00496d80(void)
         add      esp, 8
         mov      dword ptr [esi + 0x74], eax
         mov      ecx, dword ptr [g_currentNodeIdx]
-        push     OFFSET g_data_004f2068
+        push     OFFSET g_dispatchSave789_004f2068
         mov      dword ptr [g_fightGroupHead], ecx
         call     ArgSar_Set0_Jmp_0049c6f0
         add      esp, 4

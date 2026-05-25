@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004f47bc;
+extern unsigned int g_dispatchSave830_004f47bc;
 extern void Helper_FClose(void);
 extern void Helper_FOpen(void);
 extern void WrapThreeDispatch_004c5f80(void);
@@ -158,7 +158,7 @@ __declspec(naked) void BmpScreenshotWriter_004c4600(void)
         jg       L_485e
         cmp      esi, 1
         jl       L_485e
-        push     OFFSET g_data_004f47bc
+        push     OFFSET g_dispatchSave830_004f47bc
         push     eax
         call     Helper_FOpen
         add      esp, 8

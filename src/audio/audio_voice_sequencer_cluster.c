@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004f2dc0;
+extern unsigned int g_dispatchSave803_004f2dc0;
 extern unsigned int g_dispatchArg_00535e48;
 extern unsigned int g_audioVoiceCounter_00535e50;
 extern unsigned int g_audioBitField_00541fc0;
@@ -226,7 +226,7 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
     L_0eed:
         mov      ecx, dword ptr [g_xformEntityIdx]
         mov      edx, dword ptr [g_baseSel_00542060]
-        mov      eax, OFFSET g_data_004f2dc0
+        mov      eax, OFFSET g_dispatchSave803_004f2dc0
         shr      eax, 2
         mov      dword ptr [g_eventQueueTotal], eax
         mov      eax, dword ptr [ecx*4 + 8]

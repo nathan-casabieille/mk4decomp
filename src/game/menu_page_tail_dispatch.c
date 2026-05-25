@@ -108,17 +108,17 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004f42d8;
-extern unsigned int g_data_004f42dc;
+extern unsigned int g_dispatchSave820_004f42d8;
+extern unsigned int g_dispatchSave821_004f42dc;
 extern unsigned int g_menuPageVar_004f5328;
-extern unsigned int g_data_004f6164;
-extern unsigned int g_data_004f6190;
-extern unsigned int g_data_004f61a0;
-extern unsigned int g_data_004f61b0;
-extern unsigned int g_data_004f61bc;
-extern unsigned int g_data_004f61c8;
-extern unsigned int g_data_004f61d0;
-extern unsigned int g_data_004f61d8;
+extern unsigned int g_dispatchSave872_004f6164;
+extern unsigned int g_dispatchSave873_004f6190;
+extern unsigned int g_dispatchSave874_004f61a0;
+extern unsigned int g_dispatchSave875_004f61b0;
+extern unsigned int g_dispatchSave876_004f61bc;
+extern unsigned int g_dispatchSave877_004f61c8;
+extern unsigned int g_dispatchSave878_004f61d0;
+extern unsigned int g_dispatchSave879_004f61d8;
 extern unsigned int g_dispatchSave721_004f61e0;
 extern unsigned int g_menuPageDispatch_00543a98;
 extern unsigned int g_menuRestoreD_00543a9c;
@@ -139,11 +139,11 @@ __declspec(naked) void MenuPageTailDispatch_004b8080(void)
         mov      eax, dword ptr [g_menuPageVar_004f5328]
         mov      dword ptr [esp + 8], OFFSET g_dispatchSave721_004f61e0
         test     eax, eax
-        mov      dword ptr [esp + 0xc], OFFSET g_data_004f61d8
-        mov      dword ptr [esp + 0x10], OFFSET g_data_004f61d0
-        mov      dword ptr [esp + 0x14], OFFSET g_data_004f61c8
-        mov      dword ptr [esp + 0x18], OFFSET g_data_004f61bc
-        mov      dword ptr [esp + 0x1c], OFFSET g_data_004f61b0
+        mov      dword ptr [esp + 0xc], OFFSET g_dispatchSave879_004f61d8
+        mov      dword ptr [esp + 0x10], OFFSET g_dispatchSave878_004f61d0
+        mov      dword ptr [esp + 0x14], OFFSET g_dispatchSave877_004f61c8
+        mov      dword ptr [esp + 0x18], OFFSET g_dispatchSave876_004f61bc
+        mov      dword ptr [esp + 0x1c], OFFSET g_dispatchSave875_004f61b0
         je       L_8152
         mov      esi, OFFSET g_menuPageVar_004f5328
     L_80c2:
@@ -163,17 +163,17 @@ __declspec(naked) void MenuPageTailDispatch_004b8080(void)
         mov      eax, dword ptr [g_byte_00543ab4]
     L_80ea:
         test     eax, eax
-        mov      eax, OFFSET g_data_004f42d8
+        mov      eax, OFFSET g_dispatchSave820_004f42d8
         jne      short L_810e
-        mov      eax, OFFSET g_data_004f42dc
+        mov      eax, OFFSET g_dispatchSave821_004f42dc
         push     eax
         jmp      short L_813b
     L_80fb:
         mov      eax, dword ptr [g_menuPageDispatch_00543a98]
         test     eax, eax
-        mov      eax, OFFSET g_data_004f61a0
+        mov      eax, OFFSET g_dispatchSave874_004f61a0
         jne      short L_810e
-        mov      eax, OFFSET g_data_004f6190
+        mov      eax, OFFSET g_dispatchSave873_004f6190
     L_810e:
         push     eax
         jmp      short L_813b
@@ -181,7 +181,7 @@ __declspec(naked) void MenuPageTailDispatch_004b8080(void)
         mov      eax, dword ptr [g_menuRestoreA_00543aa0]
         push     eax
     L_8117:
-        push     OFFSET g_data_004f6164
+        push     OFFSET g_dispatchSave872_004f6164
         push     OFFSET g_data_00ab41c8
         call     Helper_Sprintf
         add      esp, 0xc

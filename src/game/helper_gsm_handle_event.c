@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_gsmEventBase_004f5128;
-extern unsigned int g_data_004f512c;
+extern unsigned int g_dispatchSave870_004f512c;
 extern unsigned int g_data_00ab41c4;
 extern unsigned int g_data_00ab42f4;
 extern unsigned int g_data_00ab4360;
@@ -77,7 +77,7 @@ __declspec(naked) void Helper_GSM_HandleEvent(void)
         jne      short L_85ba
         test     bl, 0x10
         je       short L_859b
-        movsx    ecx, word ptr [eax*8 + g_data_004f512c]
+        movsx    ecx, word ptr [eax*8 + g_dispatchSave870_004f512c]
         mov      dword ptr [g_data_00ab4360], ecx
     L_859b:
         test     esi, esi

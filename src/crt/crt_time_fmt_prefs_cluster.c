@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004f5924;
+extern unsigned int g_dispatchSave871_004f5924;
 extern unsigned int g_byte_00522bb4;
 extern unsigned int g_dispatchSave111_00522bb8;
 extern unsigned int g_dispatchSave110_005236b0;
@@ -361,7 +361,7 @@ __declspec(naked) void CrtTimeFmtPrefsCluster_004cfe40(void)
         pop      ebx
         ret
     L_00bc:
-        mov      cx, word ptr [g_data_004f5924]
+        mov      cx, word ptr [g_dispatchSave871_004f5924]
         push     2
         mov      word ptr [eax], cx
         call     LoadArgPushCall_004c54b0

@@ -6,8 +6,8 @@
 
 extern unsigned int g_renderer2_d3dInitByte_004f4790;
 extern unsigned int g_dispatchSave555_004f4794;
-extern unsigned int g_data_004f4798;
-extern unsigned int g_data_004f479c;
+extern unsigned int g_dispatchSave828_004f4798;
+extern unsigned int g_dispatchSave829_004f479c;
 extern u8 g_renderer2_buf2[];
 extern unsigned int g_renderer2_baseB_0058c760;
 extern unsigned int g_comptr_0058c7b0;
@@ -120,7 +120,7 @@ __declspec(naked) void Renderer2_BeginFrame_D3D(void)
         mov      eax, dword ptr [g_renderer2_obj]
         test     eax, eax
         je       L_dc15
-        mov      esi, dword ptr [g_data_004f479c]
+        mov      esi, dword ptr [g_dispatchSave829_004f479c]
         mov      ecx, dword ptr [eax]
         xor      edx, edx
         test     esi, esi
@@ -171,7 +171,7 @@ __declspec(naked) void Renderer2_BeginFrame_D3D(void)
         mov      eax, dword ptr [g_renderer2_obj]
         test     eax, eax
         je       L_dc15
-        mov      ecx, dword ptr [g_data_004f4798]
+        mov      ecx, dword ptr [g_dispatchSave828_004f4798]
         mov      edx, dword ptr [eax]
         push     ecx
         push     0x1a

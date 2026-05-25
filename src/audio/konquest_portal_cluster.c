@@ -109,10 +109,10 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_dispatchSave556_004f3930;
-extern unsigned int g_data_004f393c;
-extern unsigned int g_data_004f394c;
-extern unsigned int g_data_004f39dc;
-extern unsigned int g_data_004f3a48;
+extern unsigned int g_dispatchSave815_004f393c;
+extern unsigned int g_dispatchSave816_004f394c;
+extern unsigned int g_dispatchSave817_004f39dc;
+extern unsigned int g_dispatchSave818_004f3a48;
 extern unsigned int g_dispatchSave724_004f6338;
 extern unsigned int g_audioPreloadBase_0050b118;
 extern unsigned int g_dispatchSave128_0050f130;
@@ -211,7 +211,7 @@ __declspec(naked) void KonquestPortalCluster_004a5290(void)
         mov      eax, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [eax*4 + 0x30]
         lea      ecx, [eax + eax*8]
-        mov      eax, dword ptr [ecx*4 + g_data_004f393c]
+        mov      eax, dword ptr [ecx*4 + g_dispatchSave815_004f393c]
         cmp      eax, ebp
         mov      dword ptr [g_currentNodeIdx], eax
         je       short L_53c3
@@ -261,9 +261,9 @@ __declspec(naked) void KonquestPortalCluster_004a5290(void)
         call     FiveTableWalkInit_00403c90
         cmp      dword ptr [g_framePauseFlag], ebp
         jne      L_552f
-        mov      esi, OFFSET g_data_004f394c
+        mov      esi, OFFSET g_dispatchSave816_004f394c
     L_547e:
-        cmp      esi, OFFSET g_data_004f39dc
+        cmp      esi, OFFSET g_dispatchSave817_004f39dc
         jge      short L_54a1
         mov      ecx, dword ptr [esi]
         mov      eax, dword ptr [esi + 4]
@@ -279,7 +279,7 @@ __declspec(naked) void KonquestPortalCluster_004a5290(void)
         mov      eax, dword ptr [g_baseSel_00542060]
         add      esi, 0x24
         add      edx, eax
-        cmp      esi, OFFSET g_data_004f3a48
+        cmp      esi, OFFSET g_dispatchSave818_004f3a48
         mov      dword ptr [edx*4], ebp
         jb       short L_547e
         push     OFFSET g_dispatchSave724_004f6338

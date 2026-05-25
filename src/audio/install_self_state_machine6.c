@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004f3808;
+extern unsigned int g_dispatchSave814_004f3808;
 extern unsigned int g_tickFlagF;
 extern unsigned int g_phaseIdx_0053a50c;
 extern unsigned int g_audioSavedGlobal0_00543734;
@@ -233,7 +233,7 @@ __declspec(naked) void InstallSelfStateMachine6_004a48e0(void)
         jne      L_4b66
         mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [edx*4 + 0x30]
-        mov      ecx, dword ptr [eax*4 + g_data_004f3808]
+        mov      ecx, dword ptr [eax*4 + g_dispatchSave814_004f3808]
         shr      ecx, 2
         mov      dword ptr [g_xformEntityIdx], ecx
         call     DispatcherComplex260_00407400

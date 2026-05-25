@@ -118,8 +118,8 @@ extern void MStackPushSet0008_004901a0(void);
 extern void IterStepDualStore_00490b40(void);
 extern void CmpEqInitCallElseJmp_0048d4b0(void);
 extern void ScaledIndexConditionalAdd_0048e400(void);
-extern unsigned int g_data_004ed138;
-extern unsigned int g_data_004ed15c;
+extern unsigned int g_dispatchSave735_004ed138;
+extern unsigned int g_dispatchSave736_004ed15c;
 extern unsigned int g_bootInitSaveSlot_00541dc4;
 
 extern unsigned int g_data_004e39c0;
@@ -182,7 +182,7 @@ __declspec(naked) void CinematicFsmCluster_0047aaf0(void)
         mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x215
         mov      dword ptr [g_walkCallback], eax
-        push     OFFSET g_data_004ed138
+        push     OFFSET g_dispatchSave735_004ed138
         mov      dword ptr [ecx*4 + 0x74], eax
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
@@ -241,7 +241,7 @@ __declspec(naked) void CinematicFsmCluster_0047aaf0(void)
         pop      esi
         ret
     L_ac89:
-        push     OFFSET g_data_004ed15c
+        push     OFFSET g_dispatchSave736_004ed15c
         call     IterStepDualStore_00490b40
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4

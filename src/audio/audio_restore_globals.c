@@ -123,7 +123,7 @@ extern unsigned int g_audioStateMachineVar6_004f31cc;
 extern unsigned int g_audioStateMachineVar5_004f31d0;
 extern unsigned int g_audioStateMachineVar3_004f3404;
 extern unsigned int g_loaded_004f3608;
-extern unsigned int g_data_004f361c;
+extern unsigned int g_dispatchSave813_004f361c;
 extern unsigned int g_dispatchSave577_004f3814;
 extern unsigned int g_dispatchSave576_004f3818;
 extern unsigned int g_dispatchSave575_004f381c;
@@ -246,7 +246,7 @@ __declspec(naked) void AudioRestoreGlobals_004acce0(void)
         pop     edi
         mov     dword ptr [g_audioStateMachineVar3_004f3404], eax
         mov     dword ptr [g_audioRestoreSlot3_0053a1f0], ecx
-        mov     dword ptr [g_data_004f361c], edx
+        mov     dword ptr [g_dispatchSave813_004f361c], edx
         pop     esi
         ret
     }

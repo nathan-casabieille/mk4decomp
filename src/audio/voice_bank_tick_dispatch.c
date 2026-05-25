@@ -109,21 +109,21 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_audioStateMachineVar7_004f2fc0;
-extern unsigned int g_data_004f31a0;
+extern unsigned int g_dispatchSave807_004f31a0;
 extern unsigned int g_audioStateMachineVar6_004f31cc;
 extern unsigned int g_audioStateMachineVar5_004f31d0;
 extern unsigned int g_dispatchSave557_004f31d8;
 extern unsigned int g_audioStateMachineVar4_004f3220;
 extern unsigned int g_byte_004f3238;
-extern unsigned int g_data_004f3240;
-extern unsigned int g_data_004f3264;
-extern unsigned int g_data_004f33cc;
-extern unsigned int g_data_004f42e0;
-extern unsigned int g_data_004f42f4;
-extern unsigned int g_data_004f4304;
-extern unsigned int g_data_004f4310;
-extern unsigned int g_data_004f4320;
-extern unsigned int g_data_004f432c;
+extern unsigned int g_dispatchSave810_004f3240;
+extern unsigned int g_dispatchSave811_004f3264;
+extern unsigned int g_dispatchSave812_004f33cc;
+extern unsigned int g_dispatchSave822_004f42e0;
+extern unsigned int g_dispatchSave823_004f42f4;
+extern unsigned int g_dispatchSave824_004f4304;
+extern unsigned int g_dispatchSave825_004f4310;
+extern unsigned int g_dispatchSave826_004f4320;
+extern unsigned int g_dispatchSave827_004f432c;
 extern unsigned int g_voiceBankTickBase_00543450;
 extern unsigned int g_audioSavedGlobal4_005437f8;
 extern unsigned int g_audioSavedGlobal5_005437fc;
@@ -137,7 +137,7 @@ __declspec(naked) void VoiceBankTickDispatch_004a3120(void)
         push     esi
         push     edi
         xor      edi, edi
-        mov      esi, OFFSET g_data_004f3264
+        mov      esi, OFFSET g_dispatchSave811_004f3264
     L_3129:
         movsx    eax, byte ptr [esi - 4]
         mov      ecx, dword ptr [g_baseSel_00542060]
@@ -153,37 +153,37 @@ __declspec(naked) void VoiceBankTickDispatch_004a3120(void)
         mov      eax, dword ptr [g_audioStateMachineVar6_004f31cc]
         mov      ecx, dword ptr [eax*4 + g_dispatchSave557_004f31d8]
         push     ecx
-        push     OFFSET g_data_004f432c
+        push     OFFSET g_dispatchSave827_004f432c
         jmp      L_31d5
     L_316e:
         mov      edx, dword ptr [g_audioStateMachineVar5_004f31d0]
         mov      eax, dword ptr [edx*4 + g_dispatchSave557_004f31d8]
         push     eax
-        push     OFFSET g_data_004f4320
+        push     OFFSET g_dispatchSave826_004f4320
         jmp      L_31d5
     L_3183:
         mov      ecx, dword ptr [g_audioSavedGlobal5_005437fc]
         mov      edx, dword ptr [ecx*4 + g_audioStateMachineVar4_004f3220]
         push     edx
-        push     OFFSET g_data_004f4310
+        push     OFFSET g_dispatchSave825_004f4310
         jmp      L_31d5
     L_3198:
         mov      eax, dword ptr [g_gtConfig4f]
-        mov      ecx, dword ptr [eax*4 + g_data_004f3240]
+        mov      ecx, dword ptr [eax*4 + g_dispatchSave810_004f3240]
         push     ecx
-        push     OFFSET g_data_004f4304
+        push     OFFSET g_dispatchSave824_004f4304
         jmp      L_31d5
     L_31ac:
         mov      edx, dword ptr [g_audioSavedGlobal4_005437f8]
-        mov      eax, dword ptr [edx*4 + g_data_004f31a0]
+        mov      eax, dword ptr [edx*4 + g_dispatchSave807_004f31a0]
         push     eax
-        push     OFFSET g_data_004f42f4
+        push     OFFSET g_dispatchSave823_004f42f4
         jmp      L_31d5
     L_31c1:
         movsx    ecx, byte ptr [g_byte_004f3238]
         mov      edx, dword ptr [ecx*4 + g_audioStateMachineVar7_004f2fc0]
         push     edx
-        push     OFFSET g_data_004f42e0
+        push     OFFSET g_dispatchSave822_004f42e0
     L_31d5:
         push     OFFSET g_voiceBankTickBase_00543450
         call     Helper_Sprintf
@@ -209,7 +209,7 @@ __declspec(naked) void VoiceBankTickDispatch_004a3120(void)
         mov      dword ptr [g_eventQueueCurrent], ecx
         add      ecx, edx
         inc      edi
-        cmp      esi, OFFSET g_data_004f33cc
+        cmp      esi, OFFSET g_dispatchSave812_004f33cc
         mov      dword ptr [ecx*4], eax
         jb       L_3129
         pop      edi

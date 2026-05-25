@@ -11,29 +11,29 @@ extern unsigned int g_scaledInit_00542044;
  * jmp from a different call site. Uses _emit jne for the back-jump
  * into Block A and a forward tail-jmp. */
 extern unsigned int g_dispatchSave505_004e3ac8;
-extern unsigned int g_data_004f2240;
+extern unsigned int g_dispatchSave796_004f2240;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_data_004edf68;
-extern unsigned int g_data_004f21d0;
-extern unsigned int g_data_004f2250;
-extern unsigned int g_data_004f2298;
+extern unsigned int g_dispatchSave795_004f21d0;
+extern unsigned int g_dispatchSave797_004f2250;
+extern unsigned int g_dispatchSave798_004f2298;
 extern unsigned int g_dispatchSave714_004ed2f0;
 extern unsigned int g_dispatchSave715_004ed2f8;
 extern unsigned int g_dispatchSave716_004ed308;
-extern unsigned int g_data_004edb98;
-extern unsigned int g_data_004edba8;
-extern unsigned int g_data_004edbf0;
-extern unsigned int g_data_004edc18;
-extern unsigned int g_data_004edc60;
-extern unsigned int g_data_004edc80;
-extern unsigned int g_data_004edca8;
-extern unsigned int g_data_004edcf0;
-extern unsigned int g_data_004edd20;
-extern unsigned int g_data_004edd58;
-extern unsigned int g_data_004edd90;
-extern unsigned int g_data_004eddb8;
-extern unsigned int g_data_004ede00;
+extern unsigned int g_dispatchSave747_004edb98;
+extern unsigned int g_dispatchSave748_004edba8;
+extern unsigned int g_dispatchSave749_004edbf0;
+extern unsigned int g_dispatchSave750_004edc18;
+extern unsigned int g_dispatchSave751_004edc60;
+extern unsigned int g_dispatchSave752_004edc80;
+extern unsigned int g_dispatchSave753_004edca8;
+extern unsigned int g_dispatchSave754_004edcf0;
+extern unsigned int g_dispatchSave755_004edd20;
+extern unsigned int g_dispatchSave756_004edd58;
+extern unsigned int g_dispatchSave757_004edd90;
+extern unsigned int g_dispatchSave758_004eddb8;
+extern unsigned int g_dispatchSave759_004ede00;
 extern unsigned int g_data_004e6cd8;
 extern unsigned int g_data_004e6d30;
 extern unsigned int g_data_004e6d88;
@@ -417,7 +417,7 @@ void func_00498930(void) {
     v = 0x30b;
     g_walkCallback = v;
     *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74) = v;
-    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004f21d0);
+    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_dispatchSave795_004f21d0);
 }
 
 /* h3 @ 0x00498980 (368b naked): pose copy + 0x23d7 ratio + event
@@ -493,7 +493,7 @@ __declspec(naked) void func_00498980(void)
         mov      dword ptr [edx*4 + 0x6c], eax
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      edx, dword ptr [g_xformScratch2088]
-        push     OFFSET g_data_004f2240
+        push     OFFSET g_dispatchSave796_004f2240
         mov      dword ptr [ecx*4 + 0x74], edx
         mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_fightGroupHead], eax
@@ -576,7 +576,7 @@ void func_00498bd0(void) {
     v = 0x309;
     g_walkCallback = v;
     *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74) = v;
-    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004f2250);
+    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_dispatchSave797_004f2250);
 }
 
 /* h8 @ 0x00498c10 (42b): chained DualCmpSwapStore +
@@ -586,7 +586,7 @@ void func_00498c10(void) {
     if (g_framePauseFlag) return;
     MstackPushPackChainInit_00498c40();
     if (g_framePauseFlag) return;
-    ((void (*)(void *))ArgSar_Set0_Jmp_0049c6f0)(&g_data_004f2298);
+    ((void (*)(void *))ArgSar_Set0_Jmp_0049c6f0)(&g_dispatchSave798_004f2298);
 }
 
 /* h3 @ 0x0047c3c0 (48b): chained event 004ed2f0 -> 004ed2f8 forwarder. */
@@ -711,14 +711,14 @@ void func_0047c580(void) {
 void func_00482200(void) {
     GateDispatch6c_00494580();
     if (g_framePauseFlag) return;
-    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004edb98);
+    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_dispatchSave747_004edb98);
 }
 
 /* h3 @ 0x00482220 (32b): event 004edba8 forwarder. */
 void func_00482220(void) {
     GateDispatch6c_00494580();
     if (g_framePauseFlag) return;
-    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004edba8);
+    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_dispatchSave748_004edba8);
 }
 
 /* h4 @ 0x00482240 (80b): 0x1b333 + ScaledMove48to58 + event 004edbf0. */
@@ -731,7 +731,7 @@ void func_00482240(void) {
     if (g_framePauseFlag) return;
     ScaledMove48to58_00490720();
     if (g_framePauseFlag) return;
-    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004edbf0);
+    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_dispatchSave749_004edbf0);
 }
 
 /* h5 @ 0x00482290 (48b): 488f00 + 494580 + event 004edc18. */
@@ -740,17 +740,17 @@ void func_00482290(void) {
     if (g_framePauseFlag) return;
     GateDispatch6c_00494580();
     if (g_framePauseFlag) return;
-    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004edc18);
+    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_dispatchSave750_004edc18);
 }
 
 /* h6 @ 0x004822c0 (16b): bare event 004edc60 forwarder. */
 void func_004822c0(void) {
-    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004edc60);
+    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_dispatchSave751_004edc60);
 }
 
 /* h7 @ 0x004822d0 (16b): bare event 004edc80 forwarder. */
 void func_004822d0(void) {
-    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004edc80);
+    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_dispatchSave752_004edc80);
 }
 
 /* h8 @ 0x004822e0 (128b naked): pose-fn install state 1.
@@ -802,7 +802,7 @@ void func_00482360(void) {
     if (g_framePauseFlag) return;
     GateDispatch6c_00494580();
     if (g_framePauseFlag) return;
-    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004edca8);
+    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_dispatchSave753_004edca8);
 }
 
 /* h10 @ 0x004823b0 (48b): 488f00 + 494580 + event 004edcf0. */
@@ -811,7 +811,7 @@ void func_004823b0(void) {
     if (g_framePauseFlag) return;
     GateDispatch6c_00494580();
     if (g_framePauseFlag) return;
-    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004edcf0);
+    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_dispatchSave754_004edcf0);
 }
 
 /* h11 @ 0x004823e0 (64b): event 004edd20 + tail-jmp Wrapper_00488c60. */
@@ -820,7 +820,7 @@ void func_004823e0(void) {
     if (g_framePauseFlag) return;
     GateDispatch6c_00494580();
     if (g_framePauseFlag) return;
-    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004edd20);
+    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_dispatchSave755_004edd20);
     if (g_framePauseFlag) return;
     Wrapper_00488c60();
 }
@@ -835,14 +835,14 @@ void func_00482420(void) {
     if (g_framePauseFlag) return;
     GateDispatch6c_00494580();
     if (g_framePauseFlag) return;
-    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004edd58);
+    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_dispatchSave756_004edd58);
     if (g_framePauseFlag) return;
     Wrapper_00488c60();
 }
 
 /* h12b @ 0x00482470 (16b): bare event 004edd90 forwarder. */
 void func_00482470(void) {
-    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004edd90);
+    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_dispatchSave757_004edd90);
 }
 
 /* h13 @ 0x00482480 (48b): 488f00 + 494580 + event 004eddb8. */
@@ -851,7 +851,7 @@ void func_00482480(void) {
     if (g_framePauseFlag) return;
     GateDispatch6c_00494580();
     if (g_framePauseFlag) return;
-    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004eddb8);
+    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_dispatchSave758_004eddb8);
 }
 
 /* h14 @ 0x004824b0 (48b): 488f00 + 494580 + event 004ede00. */
@@ -860,7 +860,7 @@ void func_004824b0(void) {
     if (g_framePauseFlag) return;
     GateDispatch6c_00494580();
     if (g_framePauseFlag) return;
-    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004ede00);
+    ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_dispatchSave759_004ede00);
 }
 
 /* h15 @ 0x004824e0 (30b): wait 6 + EntryThunkBodyStateMachine -> tail

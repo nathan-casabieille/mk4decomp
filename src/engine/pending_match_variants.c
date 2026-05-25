@@ -470,8 +470,8 @@ extern unsigned int g_data_004ec060;
 extern unsigned int g_data_004ec078;
 extern unsigned int g_dispatchSave706_004ec950;
 extern unsigned int g_dispatchSave710_004ecc38;
-extern unsigned int g_data_004ecf80;
-extern unsigned int g_data_004ed2c8;
+extern unsigned int g_dispatchSave734_004ecf80;
+extern unsigned int g_dispatchSave738_004ed2c8;
 extern unsigned int g_dispatchSave714_004ed2f0;
 extern unsigned int g_dispatchSave715_004ed2f8;
 extern unsigned int g_dispatchSave716_004ed308;
@@ -4273,7 +4273,7 @@ __declspec(naked) void EnduranceStateInitWalk_004785a0(void)
 {
     __asm {
         /* === h1 (0x4785a0): 16-iter list copy + timer install === */
-        mov      eax, OFFSET g_data_004ecf80
+        mov      eax, OFFSET g_dispatchSave734_004ecf80
         mov      dword ptr [g_xformLoopCounter], 0xf
         shr      eax, 2
         mov      dword ptr [g_pendingNodeType], eax
@@ -4590,7 +4590,7 @@ __declspec(naked) void AerialHitDispatcher_0047c290(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_c3b9
-        push     OFFSET g_data_004ed2c8
+        push     OFFSET g_dispatchSave738_004ed2c8
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_c3b9:

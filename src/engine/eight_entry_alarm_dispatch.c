@@ -134,12 +134,12 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Entry 8 (offset 0x160, 30b): 0x54206c=8 → TableLookupCall_00489ff0
  *     → tail-jmp TripleGuardSetTailJmp_00482680.
  */
-extern unsigned int g_data_004ede38;
-extern unsigned int g_data_004ede68;
-extern unsigned int g_data_004ede90;
-extern unsigned int g_data_004edec4;
-extern unsigned int g_data_004edec8;
-extern unsigned int g_data_004edef8;
+extern unsigned int g_dispatchSave760_004ede38;
+extern unsigned int g_dispatchSave761_004ede68;
+extern unsigned int g_dispatchSave762_004ede90;
+extern unsigned int g_dispatchSave763_004edec4;
+extern unsigned int g_dispatchSave764_004edec8;
+extern unsigned int g_dispatchSave765_004edef8;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CjTableThresholdDispatch_00488f00(void);
 extern void CmpP1DualInitStore_00482ab0(void);
@@ -169,7 +169,7 @@ __declspec(naked) void EightEntryAlarmDispatch_00482500(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eae_e1End
-        push    offset g_data_004ede38
+        push    offset g_dispatchSave760_004ede38
         call    ArgSarStoreJmp_004594f0
         add     esp, 4
     L_eae_e1End:
@@ -187,7 +187,7 @@ __declspec(naked) void EightEntryAlarmDispatch_00482500(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eae_e2End
-        push    offset g_data_004ede68
+        push    offset g_dispatchSave761_004ede68
         call    ArgSarStoreJmp_004594f0
         add     esp, 4
     L_eae_e2End:
@@ -229,7 +229,7 @@ __declspec(naked) void EightEntryAlarmDispatch_00482500(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eae_e4End
-        push    offset g_data_004ede90
+        push    offset g_dispatchSave762_004ede90
         call    ArgSarStoreJmp_004594f0
         add     esp, 4
     L_eae_e4End:
@@ -244,13 +244,13 @@ __declspec(naked) void EightEntryAlarmDispatch_00482500(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eae_e5End
-        push    offset g_data_004edec4
+        push    offset g_dispatchSave763_004edec4
         call    IterStepDualStore_00490b40
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         jne     short L_eae_e5End
-        push    offset g_data_004edec8
+        push    offset g_dispatchSave764_004edec8
         call    ArgSarStoreJmp_004594f0
         add     esp, 4
     L_eae_e5End:
@@ -275,7 +275,7 @@ __declspec(naked) void EightEntryAlarmDispatch_00482500(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eae_e6End
-        push    offset g_data_004edef8
+        push    offset g_dispatchSave765_004edef8
         call    ArgSarStoreJmp_004594f0
         add     esp, 4
     L_eae_e6End:

@@ -108,11 +108,11 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004f308c;
+extern unsigned int g_dispatchSave804_004f308c;
 extern unsigned int g_dispatchSave578_004f3094;
-extern unsigned int g_data_004f313c;
-extern unsigned int g_data_004f31a4;
-extern unsigned int g_data_004f31ac;
+extern unsigned int g_dispatchSave806_004f313c;
+extern unsigned int g_dispatchSave808_004f31a4;
+extern unsigned int g_dispatchSave809_004f31ac;
 extern unsigned int g_dispatchSave723_004f62f8;
 extern unsigned int g_dispatchSave120_00515964;
 extern unsigned int g_data_00f00000;
@@ -129,7 +129,7 @@ __declspec(naked) void VoiceMixerTickDispatch_004a27c0(void)
         push     edi
         mov      esi, OFFSET g_dispatchSave578_004f3094
     L_27c9:
-        cmp      esi, OFFSET g_data_004f313c
+        cmp      esi, OFFSET g_dispatchSave806_004f313c
         jae      L_27ed
         mov      eax, dword ptr [esi]
         push     0x10000
@@ -141,13 +141,13 @@ __declspec(naked) void VoiceMixerTickDispatch_004a27c0(void)
         add      esp, 0x10
     L_27ed:
         add      esi, 0x1c
-        cmp      esi, OFFSET g_data_004f31ac
+        cmp      esi, OFFSET g_dispatchSave809_004f31ac
         jb       L_27c9
         push     OFFSET g_dispatchSave723_004f62f8
         call     AudioBindEntry_004a1e40
         add      esp, 4
         xor      edi, edi
-        mov      esi, OFFSET g_data_004f308c
+        mov      esi, OFFSET g_dispatchSave804_004f308c
         mov      ebp, 0xff100000
         mov      ebx, OFFSET g_data_00f00000
     L_2816:
@@ -187,7 +187,7 @@ __declspec(naked) void VoiceMixerTickDispatch_004a27c0(void)
         mov      dword ptr [g_eventQueueCurrent], ecx
         add      ecx, edx
         inc      edi
-        cmp      esi, OFFSET g_data_004f31a4
+        cmp      esi, OFFSET g_dispatchSave808_004f31a4
         mov      dword ptr [ecx*4], eax
         jb       L_2816
         pop      edi

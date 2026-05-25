@@ -108,9 +108,9 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004f1610;
-extern unsigned int g_data_004f1628;
-extern unsigned int g_data_004f163c;
+extern unsigned int g_dispatchSave780_004f1610;
+extern unsigned int g_dispatchSave781_004f1628;
+extern unsigned int g_dispatchSave782_004f163c;
 extern unsigned int g_dispatchTab69_005431b8;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void DualGatedStateYield_0048fc80(void);
@@ -134,7 +134,7 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
 {
     __asm {
         /* === h1 (0x495dc0): event 004f1610 forwarder === */
-        push     OFFSET g_data_004f1610
+        push     OFFSET g_dispatchSave780_004f1610
         call     ScaledLookupGuardJmpIndirect_004949f0
         add      esp, 4
         ret
@@ -142,7 +142,7 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         nop
         /* === h2 (0x495dd0): event 004f1628 forwarder === */
         mov      eax, dword ptr [g_baseSel_00542060]
-        push     OFFSET g_data_004f1628
+        push     OFFSET g_dispatchSave781_004f1628
         mov      dword ptr [eax*4 + 0x74], 0x404
         mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x314
@@ -264,7 +264,7 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         cmp      dword ptr [g_xformScratch2088], ebx
         jne      short L_6067
     L_5fe8:
-        push     OFFSET g_data_004f163c
+        push     OFFSET g_dispatchSave782_004f163c
         call     IterStepNegStore_00490b10
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4

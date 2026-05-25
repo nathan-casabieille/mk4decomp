@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004ed818;
+extern unsigned int g_dispatchSave745_004ed818;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void EsiEdiAliasDualMul10_004906b0(void);
 extern void FiveCallGuardSetTail_0046f6b0(void);
@@ -233,7 +233,7 @@ __declspec(naked) void HitContactDispatcherCluster_00480240(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_03f2
-        push     OFFSET g_data_004ed818
+        push     OFFSET g_dispatchSave745_004ed818
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_03f2:

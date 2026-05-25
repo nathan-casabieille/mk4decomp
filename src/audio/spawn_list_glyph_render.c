@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004f3ee0;
+extern unsigned int g_dispatchSave819_004f3ee0;
 extern unsigned int g_dispatchSave121_005157a4;
 extern unsigned int g_audioFlagAggBase2_00543398;
 extern unsigned int g_audioFlagAggBase_005433d8;
@@ -279,7 +279,7 @@ __declspec(naked) void SpawnListGlyphRender_004aa610(void)
         mov      ecx, dword ptr [g_currentNodeIdx]
         add      esi, 4
         add      esp, 4
-        mov      eax, dword ptr [edx*4 + g_data_004f3ee0]
+        mov      eax, dword ptr [edx*4 + g_dispatchSave819_004f3ee0]
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
         mov      dword ptr [ecx*4 + 0xc], eax

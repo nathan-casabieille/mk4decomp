@@ -11,7 +11,7 @@
  */
 extern unsigned int g_byte_00ab4300;
 extern unsigned int g_gsmVar3_004f5018;
-extern unsigned int g_data_004f501c;
+extern unsigned int g_dispatchSave867_004f501c;
 extern unsigned int g_data_00ab4320;
 extern unsigned int g_data_00ab4368;
 extern void DrawMenu(void);
@@ -83,7 +83,7 @@ __declspec(naked) void Helper_GSM_Sub19(void)
         jne     short L_b73_drawMenu
         test    bl, 0x10
         je      short L_b73_checkBit5
-        movsx   ecx, word ptr [eax*8 + g_data_004f501c]
+        movsx   ecx, word ptr [eax*8 + g_dispatchSave867_004f501c]
         mov     dword ptr [g_data_00ab4368], ecx
     L_b73_checkBit5:
         test    esi, esi

@@ -123,8 +123,8 @@ extern void TripleScaledChainStore_004908f0(int);
 extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void ZeroSixStores6080_00490e40(void);
 extern void ScaledZero44_00491500(void);
-extern unsigned int g_data_004ed490;
-extern unsigned int g_data_004ed4a0;
+extern unsigned int g_dispatchSave739_004ed490;
+extern unsigned int g_dispatchSave740_004ed4a0;
 extern unsigned int g_phaseTimer_00537e94;
 
 extern void ArgSarStoreJmp_004594f0(void);
@@ -148,7 +148,7 @@ __declspec(naked) void MoveSelectorCluster_0047d9a0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_dac7
-        push     OFFSET g_data_004ed490
+        push     OFFSET g_dispatchSave739_004ed490
         call     TripleScaledChainStore_004908f0
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -250,7 +250,7 @@ __declspec(naked) void MoveSelectorCluster_0047d9a0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_db37
-        push     OFFSET g_data_004ed4a0
+        push     OFFSET g_dispatchSave740_004ed4a0
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_db37:

@@ -108,9 +108,9 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004ed518;
-extern unsigned int g_data_004ed550;
-extern unsigned int g_data_004ed560;
+extern unsigned int g_dispatchSave741_004ed518;
+extern unsigned int g_dispatchSave742_004ed550;
+extern unsigned int g_dispatchSave743_004ed560;
 extern unsigned int g_dispatchSave69_00542ba0;
 extern void Alarm3EntryPhaseChain_0047e1a0(void);
 extern void ArgSarStoreJmp_004594f0(void);
@@ -132,7 +132,7 @@ __declspec(naked) void AggressorModeCluster_0047df30(void)
 {
     __asm {
         /* === Helper 1 (0x47df30): tiny event 004ed518 forwarder === */
-        push     OFFSET g_data_004ed518
+        push     OFFSET g_dispatchSave741_004ed518
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
         ret
@@ -182,7 +182,7 @@ __declspec(naked) void AggressorModeCluster_0047df30(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e0fd
-        push     OFFSET g_data_004ed560
+        push     OFFSET g_dispatchSave743_004ed560
         call     ArgSarStoreJmp_004594f0
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -191,7 +191,7 @@ __declspec(naked) void AggressorModeCluster_0047df30(void)
     L_e004:
         mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x203
-        push     OFFSET g_data_004ed550
+        push     OFFSET g_dispatchSave742_004ed550
         mov      dword ptr [ecx*4 + 0x68], 0x403
         mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_walkCallback], eax

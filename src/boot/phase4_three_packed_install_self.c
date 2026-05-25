@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_pendingMatchVar_004d5324;
 extern unsigned int g_data_004d7b88;
 extern unsigned int g_phase4ThreePackedBase_004ec8f8;
-extern unsigned int g_data_004f00d0;
+extern unsigned int g_dispatchSave778_004f00d0;
 extern unsigned int g_load_0052ab04;
 extern unsigned int g_load_0052ab08;
 extern unsigned int g_counter_0053a51c;
@@ -191,7 +191,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
         mov     eax, dword ptr [g_counter_0053a51c]
         cmp     eax, 3
         jne     L_p4tpis_A_after_3
-        mov     ecx, offset g_data_004f00d0
+        mov     ecx, offset g_dispatchSave778_004f00d0
         shr     ecx, 2
         mov     dword ptr [g_eventQueueIdx], ecx
     L_p4tpis_A_after_3:

@@ -117,7 +117,7 @@ extern void NodeWalkPoseUpdate_00474630(void);
 extern void MStackPushVec3Mul10_004767e0(void);
 extern void TripleVecAccCallStore_00476880(void);
 extern void DoublePushAddCallDoublePop_00476930(void);
-extern unsigned int g_data_004eca50;
+extern unsigned int g_dispatchSave731_004eca50;
 extern unsigned int g_dispatchSave136_0050b268;
 
 extern void AudioMixerStep_004ab700(void);
@@ -174,7 +174,7 @@ __declspec(naked) void PreFightInstallCluster_00474390(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_45d4
-        mov      ecx, OFFSET g_data_004eca50
+        mov      ecx, OFFSET g_dispatchSave731_004eca50
         shr      ecx, 2
         mov      dword ptr [g_walkCallback], ecx
         call     PushSetXfmMaskCallPop_00407140
