@@ -119,12 +119,12 @@ extern unsigned int g_data_00535e80;
 extern unsigned int g_dispatchSave_00537ef4;
 extern unsigned int g_dispatchVar38_00538128;
 extern unsigned int g_extra_0053a280;
-extern unsigned int g_data_0053a2d8;
-extern unsigned int g_data_0053a2dc;
-extern unsigned int g_data_0053a358;
+extern unsigned int g_dispatchSave94_0053a2d8;
+extern unsigned int g_dispatchSave93_0053a2dc;
+extern unsigned int g_dispatchSave91_0053a358;
 extern unsigned int g_state4_0053a3e0;
 extern unsigned int g_pendingMatchAcc_0053a3e8;
-extern unsigned int g_data_0053a6d8;
+extern unsigned int g_dispatchSave84_0053a6d8;
 extern unsigned int g_dst_0053a6e0;
 extern unsigned int g_state4_0053a700;
 extern unsigned int g_load_0052ab04;
@@ -155,7 +155,7 @@ __declspec(naked) void GlobalsResetInit_004222a0(void) {
         mov     eax, 0x0c
         mov     dword ptr [g_counter_0053a51c], esi
         mov     dword ptr [g_data_0052ab44], esi
-        mov     dword ptr [g_data_0053a6d8], esi
+        mov     dword ptr [g_dispatchSave84_0053a6d8], esi
         mov     dword ptr [g_player1NodeIdx], esi
         mov     dword ptr [g_player2NodeIdx], esi
         mov     dword ptr [g_phaseTimer_00537e94], esi
@@ -168,7 +168,7 @@ __declspec(naked) void GlobalsResetInit_004222a0(void) {
         mov     dword ptr [g_state4_0053a700], esi
         mov     dword ptr [g_dst_0053a6e0], esi
         mov     dword ptr [g_dst_00537ea4], esi
-        mov     dword ptr [g_data_0053a358], esi
+        mov     dword ptr [g_dispatchSave91_0053a358], esi
         mov     dword ptr [g_data_0052aab4], 8
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_pendingMatchAcc_0053a3e8], eax
@@ -178,8 +178,8 @@ __declspec(naked) void GlobalsResetInit_004222a0(void) {
         _emit   24h
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [g_nodeUnlinkSlot_00541e4c], esi
-        mov     dword ptr [g_data_0053a2d8], esi
-        mov     dword ptr [g_data_0053a2dc], esi
+        mov     dword ptr [g_dispatchSave94_0053a2d8], esi
+        mov     dword ptr [g_dispatchSave93_0053a2dc], esi
         mov     dword ptr [g_load_0052ab04], esi
         mov     dword ptr [g_load_0052ab08], esi
         pop     esi

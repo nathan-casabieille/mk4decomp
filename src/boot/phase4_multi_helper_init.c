@@ -112,7 +112,7 @@ extern unsigned int g_byte_004d5714;
 extern unsigned int g_data_004d74d8;
 extern unsigned int g_data_004d75a0;
 extern unsigned int g_data_004d7610;
-extern unsigned int g_data_0053a29c;
+extern unsigned int g_dispatchSave95_0053a29c;
 extern unsigned int g_phase4HelperSlot_0053a400;
 extern void BootSetupWithMStackBody_00418e00(void);
 extern void CallSetPause_0041f830(void);
@@ -290,7 +290,7 @@ __declspec(naked) void Phase4MultiHelperInit_00418af0(void)
         mov     ecx, dword ptr [eax*4]
         inc     eax
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_data_0053a29c], ecx
+        mov     dword ptr [g_dispatchSave95_0053a29c], ecx
         mov     dword ptr [g_eventQueueEnd], eax
         mov     edx, dword ptr [eax*4]
         inc     eax

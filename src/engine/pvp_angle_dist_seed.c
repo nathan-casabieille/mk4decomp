@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern s32 g_dlNalt1;
 extern unsigned int g_data_00538040;
-extern unsigned int g_data_00538044;
+extern unsigned int g_dispatchSave98_00538044;
 extern s32 g_dlNalt2;
 extern s32 g_dlNalt3;
 extern s32 g_dlNalt4;
@@ -261,7 +261,7 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         mov      eax, dword ptr [g_player4NodeIdx]
         mov      dword ptr [edx*4 + 0x38], eax
         mov      ecx, dword ptr [g_baseSel_00542060]
-        mov      edx, dword ptr [g_data_00538044]
+        mov      edx, dword ptr [g_dispatchSave98_00538044]
         mov      eax, OFFSET g_fightAxisPosX_00535e78
         mov      dword ptr [ecx*4 + 0x3c], edx
         mov      ecx, dword ptr [g_baseSel_00542060]

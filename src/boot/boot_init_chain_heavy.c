@@ -115,7 +115,7 @@ extern unsigned int g_bootChainSlot3_00537e8c;
 extern unsigned int g_bootHeavyState_00537f78;
 extern unsigned int g_phaseThunkSlot8_0053a520;
 extern unsigned int g_particleInitState_00541de0;
-extern unsigned int g_data_00541e7c;
+extern unsigned int g_dispatchSave82_00541e7c;
 extern unsigned int g_bootChainPair0_00541e80;
 extern unsigned int g_bootChainPair1_00541e84;
 extern unsigned int g_bootChainScaled1_00541e88;
@@ -125,9 +125,9 @@ extern unsigned int g_lit_00541e94;
 extern unsigned int g_bootChainState3_00541e98;
 extern unsigned int g_bootChainScaled4_00541e9c;
 extern unsigned int g_bootChainScaled3_00541ea0;
-extern unsigned int g_data_00541ea4;
+extern unsigned int g_dispatchSave81_00541ea4;
 extern unsigned int g_bootChainSlot2_00541ea8;
-extern unsigned int g_data_00541eac;
+extern unsigned int g_dispatchSave80_00541eac;
 extern unsigned int g_bootChainState4_00541eb0;
 extern unsigned int g_audioInitScaled_0054343c;
 extern void AndShlStore_00409280(void);
@@ -151,7 +151,7 @@ __declspec(naked) void BootInitChainHeavy_00404f20(void)
         call    Thunk_004bd8d0
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
-        mov     eax, dword ptr [g_data_00541e7c]
+        mov     eax, dword ptr [g_dispatchSave82_00541e7c]
         mov     ecx, dword ptr [g_bootChainPair0_00541e80]
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_xformEntityIdx], esi
@@ -210,7 +210,7 @@ __declspec(naked) void BootInitChainHeavy_00404f20(void)
         call    VertexSlotInitFlagWalk_00409740
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
-        mov     ecx, dword ptr [g_data_00541ea4]
+        mov     ecx, dword ptr [g_dispatchSave81_00541ea4]
         mov     edx, dword ptr [g_bootChainSlot2_00541ea8]
         mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_xformEntityIdx], 4
@@ -220,7 +220,7 @@ __declspec(naked) void BootInitChainHeavy_00404f20(void)
         call    LinkedListBuilder_004ab380
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
-        mov     eax, dword ptr [g_data_00541eac]
+        mov     eax, dword ptr [g_dispatchSave80_00541eac]
         mov     ecx, dword ptr [g_bootChainState4_00541eb0]
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_xformEntityIdx], esi

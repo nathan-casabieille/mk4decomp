@@ -375,7 +375,7 @@ extern unsigned int g_dispatchVar17_0052d754;
 extern unsigned int g_dispatchVar16_0052d758;
 extern unsigned int g_dispatchArg_00535e48;
 extern unsigned int g_dispatchVar11_00537f04;
-extern unsigned int g_data_0053a514;
+extern unsigned int g_dispatchSave88_0053a514;
 extern void ArgSar_Set0_Jmp_0049c6f0(void);
 extern void CallPauseDirtyMStackPushFn_0046e2a0(void);
 extern void ChainListVecAdd_0049d200(void);
@@ -503,7 +503,7 @@ extern unsigned int g_byte_00538148;
 extern s32 g_dlNalt3;
 extern s32 g_dlNalt4;
 extern unsigned int g_walkCallbackSrc_0053a2d0;
-extern unsigned int g_data_0053a324;
+extern unsigned int g_dispatchSave92_0053a324;
 extern unsigned int g_clamp_0053a328;
 extern unsigned int g_audioStreamState_0053a430;
 extern unsigned int g_dispatchVar6_0053a464;
@@ -4302,7 +4302,7 @@ __declspec(naked) void EnduranceStateInitWalk_004785a0(void)
         mov      edx, dword ptr [g_audioMatchStartFlag_00543714]
         mov      dword ptr [g_data_00535d58], eax
         cmp      edx, eax
-        mov      dword ptr [g_data_0053a324], eax
+        mov      dword ptr [g_dispatchSave92_0053a324], eax
         mov      dword ptr [g_data_00535e4c], eax
         mov      dword ptr [g_data_00537ef0], eax
         mov      ecx, 0x10000
@@ -10215,7 +10215,7 @@ __declspec(naked) void PendingMatch_00466fc0(void)
         jne      L_770b
         mov      edx, dword ptr [g_eventArmReload_0053a770]
         mov      eax, 1
-        mov      dword ptr [g_data_0053a514], edx
+        mov      dword ptr [g_dispatchSave88_0053a514], edx
         mov      dword ptr [esi + 8], 0x467600
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_pendingNodeType], 0xd3

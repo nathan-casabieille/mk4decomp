@@ -135,12 +135,12 @@ extern unsigned int g_titleDemoState2_00541df4;
 extern u32 g_dlState;
 extern u32 g_dlAux;
 extern unsigned int g_dispatchSave37_00541ee8;
-extern unsigned int g_data_00541eec;
-extern unsigned int g_data_00541ef0;
-extern unsigned int g_data_00541ef4;
-extern unsigned int g_data_00541ef8;
-extern unsigned int g_data_00541efc;
-extern unsigned int g_data_00541f00;
+extern unsigned int g_clusterArr541f60_n6;
+extern unsigned int g_clusterArr541f60_n5;
+extern unsigned int g_clusterArr541f60_n4;
+extern unsigned int g_clusterArr541f60_n3;
+extern unsigned int g_clusterArr541f60_n2;
+extern unsigned int g_clusterArr541f60_n1;
 extern unsigned int g_clusterArr541f60_10;
 extern unsigned int g_clusterArr541f60_11;
 extern unsigned int g_clusterArr541f60_12;
@@ -235,14 +235,14 @@ __declspec(naked) void RoundReset_004223e0(void)
         mov      dword ptr [g_dlState], ebx
         mov      dword ptr [g_dlAux], ebx
         mov      dword ptr [g_fightTickSavedSlot_005380d8], ebx
-        mov      dword ptr [g_data_00541eec], ebx
+        mov      dword ptr [g_clusterArr541f60_n6], ebx
         mov      dword ptr [g_dispatchSave37_00541ee8], ebx
-        mov      dword ptr [g_data_00541ef4], ebx
-        mov      dword ptr [g_data_00541ef0], ebx
-        mov      dword ptr [g_data_00541efc], ebx
-        mov      dword ptr [g_data_00541ef8], ebx
+        mov      dword ptr [g_clusterArr541f60_n4], ebx
+        mov      dword ptr [g_clusterArr541f60_n5], ebx
+        mov      dword ptr [g_clusterArr541f60_n2], ebx
+        mov      dword ptr [g_clusterArr541f60_n3], ebx
         mov      dword ptr [g_clusterArr541f60_10], ebx
-        mov      dword ptr [g_data_00541f00], ebx
+        mov      dword ptr [g_clusterArr541f60_n1], ebx
         mov      dword ptr [g_clusterArr541f60_12], ebx
         mov      dword ptr [g_clusterArr541f60_11], ebx
         mov      dword ptr [g_clusterArr541f60_14], ebx

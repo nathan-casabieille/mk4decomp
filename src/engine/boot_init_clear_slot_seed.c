@@ -136,7 +136,7 @@ extern unsigned int g_phaseThunkVar4_00535de0;
 extern unsigned int g_particleEmitterNode_00535e6c;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
-extern unsigned int g_data_0053a170;
+extern unsigned int g_dispatchSave96_0053a170;
 extern unsigned int g_eventMusicVar_00541dd8;
 extern unsigned int g_dispatchVar7_00541fbc;
 extern u8 g_dlEnabledFlag;
@@ -175,7 +175,7 @@ __declspec(naked) void BootInitClearSlotSeed_0042ee40(void) {
         mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, 0xa
         mov     dword ptr [g_eventMusicVar_00541dd8], ebx
-        mov     dword ptr [g_data_0053a170], 2
+        mov     dword ptr [g_dispatchSave96_0053a170], 2
         mov     dword ptr [g_walkCallback], ebx
         mov     dword ptr [g_xformLoopCounter], eax
     L_bic_zeroLoop:

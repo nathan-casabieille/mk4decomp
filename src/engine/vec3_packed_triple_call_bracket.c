@@ -110,10 +110,10 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_vec3TripleSlot_00538098;
-extern unsigned int g_data_005380a0;
+extern unsigned int g_dispatchSave97_005380a0;
 extern unsigned int g_packedTripleSlot_0053a420;
-extern unsigned int g_data_0053a424;
-extern unsigned int g_data_0053a428;
+extern unsigned int g_dispatchSave90_0053a424;
+extern unsigned int g_dispatchSave89_0053a428;
 extern unsigned int g_packedTripleSlot2_00541f88;
 extern void QuadInterpolator_00425380(void);
 
@@ -161,7 +161,7 @@ __declspec(naked) void Vec3PackedTripleCallBracket_004764d0(void)
         mov     ecx, dword ptr [eax*4 + 0x58]
         sub     ecx, esi
         mov     dword ptr [g_eventQueueWorkType], ecx
-        mov     dword ptr [g_data_0053a424], ecx
+        mov     dword ptr [g_dispatchSave90_0053a424], ecx
         mov     edx, dword ptr [edx*4 + 8]
         mov     ecx, offset g_vec3TripleSlot_00538098
         mov     dword ptr [g_walkCallback], edx
@@ -169,7 +169,7 @@ __declspec(naked) void Vec3PackedTripleCallBracket_004764d0(void)
         sub     eax, edx
         mov     edx, offset g_packedTripleSlot_0053a420
         mov     dword ptr [g_eventQueueWorkType], eax
-        mov     dword ptr [g_data_0053a428], eax
+        mov     dword ptr [g_dispatchSave89_0053a428], eax
         mov     eax, dword ptr [g_packedTripleSlot2_00541f88]
         shr     edx, 2
         shr     ecx, 2
@@ -180,7 +180,7 @@ __declspec(naked) void Vec3PackedTripleCallBracket_004764d0(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_v3ptcb_ret
-        mov     edx, dword ptr [g_data_005380a0]
+        mov     edx, dword ptr [g_dispatchSave97_005380a0]
         mov     eax, dword ptr [g_matrixStackTop]
         mov     dword ptr [g_walkCallback], edx
         mov     ecx, dword ptr [eax*4]
