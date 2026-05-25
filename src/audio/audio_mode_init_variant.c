@@ -116,18 +116,18 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   SixCallSeqPushImm with constants; on pause clear, tail-jmp
  *   InstallSelfTableWalk_004200d0.
  */
-extern unsigned int g_data_0053a408_avm;
-extern unsigned int g_data_0053a3e0_avm;
-extern unsigned int g_data_00537e88_avm;
-extern unsigned int g_data_0053a700_avm;
+extern unsigned int g_active_0053a408;
+extern unsigned int g_state4_0053a3e0;
+extern unsigned int g_active_00537e88;
+extern unsigned int g_state4_0053a700;
 extern u32 g_dlMode;
 void AudioModeInitVariant_004a2690(void) {
     g_xformDirtyFlags &= 0xfffffffeu;
-    g_currentNodeIdx = (unsigned int)&g_data_0053a408_avm >> 2;
-    g_xformEntityIdx = (unsigned int)&g_data_0053a3e0_avm >> 2;
+    g_currentNodeIdx = (unsigned int)&g_active_0053a408 >> 2;
+    g_xformEntityIdx = (unsigned int)&g_state4_0053a3e0 >> 2;
     DualScaledStoreConst_004a22c0();
-    g_currentNodeIdx = (unsigned int)&g_data_00537e88_avm >> 2;
-    g_xformEntityIdx = (unsigned int)&g_data_0053a700_avm >> 2;
+    g_currentNodeIdx = (unsigned int)&g_active_00537e88 >> 2;
+    g_xformEntityIdx = (unsigned int)&g_state4_0053a700 >> 2;
     DualScaledStoreConst_004a22c0();
     ClearTwoCallSetStore_004a2270();
     g_dlMode = 1;

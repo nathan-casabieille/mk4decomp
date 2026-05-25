@@ -15,7 +15,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void BootInitChainHeavy_00404f20(void);
 extern unsigned int g_player1NodeIdx;
-extern unsigned int g_state_0053815c_kk;
+extern unsigned int g_player2NodeIdx;
 extern void DualEntryInitCmp_00425b20(void);
 extern void StageParticleEmitterInit_00464350(void);
 extern void func_00431230(void);
@@ -24,7 +24,7 @@ void CallPauseClear3CallTriple_00428030(void) {
     if (g_framePauseFlag != 0) return;
     g_walkCallback = 0;
     g_player1NodeIdx = 0;
-    g_state_0053815c_kk = 0;
+    g_player2NodeIdx = 0;
     DualEntryInitCmp_00425b20();
     if (g_framePauseFlag != 0) return;
     StageParticleEmitterInit_00464350();

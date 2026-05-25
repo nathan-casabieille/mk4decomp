@@ -117,20 +117,20 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     g_walkCallback = g_dlNalt2; g_eventQueueEnd = 0x53a1d0>>2;
  *     g_eventQueueCurrent = 1; jmp DownloadPlayerChar.
  */
-extern unsigned int g_data_00535cfc_pdc;
-extern unsigned int g_data_0053a1d0_pdc;
+extern unsigned int g_dataArr_00535cfc;
+extern unsigned int g_dataArr_0053a1d0;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 int DualPathDownloadChar_00463810(void) {
     if (g_active_0053a408 != 0) {
         g_walkCallback = (void (*)(void))g_dlNalt1;
-        g_eventQueueEnd = (unsigned int)&g_data_00535cfc_pdc >> 2;
+        g_eventQueueEnd = (unsigned int)&g_dataArr_00535cfc >> 2;
         g_eventQueueCurrent = 0;
         DownloadPlayerChar();
         return g_framePauseFlag;
     }
     g_walkCallback = (void (*)(void))g_dlNalt2;
-    g_eventQueueEnd = (unsigned int)&g_data_0053a1d0_pdc >> 2;
+    g_eventQueueEnd = (unsigned int)&g_dataArr_0053a1d0 >> 2;
     g_eventQueueCurrent = 1;
     return ((int (*)(void))DownloadPlayerChar)();
 }

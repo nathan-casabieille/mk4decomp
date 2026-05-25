@@ -25,15 +25,15 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_xformDirtyFlags], eax
  *   ret
  */
-extern unsigned int g_state_0053a408_s;
-extern unsigned int g_state_00537e88_s;
+extern unsigned int g_active_0053a408;
+extern unsigned int g_active_00537e88;
 void DualTestDirtyToggle_00427ea0(void) {
     unsigned int s1;
     unsigned int s2;
-    s1 = g_state_0053a408_s;
+    s1 = g_active_0053a408;
     g_walkCallback = (void (*)(void))s1;
     if (s1 != 0) goto set_bit;
-    s2 = g_state_00537e88_s;
+    s2 = g_active_00537e88;
     g_walkCallback = (void (*)(void))s2;
     if (s2 != 0) goto set_bit;
     g_xformDirtyFlags &= 0xfffffffe;
@@ -46,10 +46,10 @@ set_bit:
 void DualTestDirtyToggle_004282c0(void) {
     unsigned int s1;
     unsigned int s2;
-    s1 = g_state_0053a408_s;
+    s1 = g_active_0053a408;
     g_walkCallback = (void (*)(void))s1;
     if (s1 == 0) goto clear_bit;
-    s2 = g_state_00537e88_s;
+    s2 = g_active_00537e88;
     g_walkCallback = (void (*)(void))s2;
     if (s2 == 0) goto clear_bit;
     g_xformDirtyFlags |= 1;
