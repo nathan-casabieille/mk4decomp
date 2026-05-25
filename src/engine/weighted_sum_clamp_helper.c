@@ -110,7 +110,7 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_state_0053a3c0;
+extern unsigned int g_stateCountdown_0053a3c0;
 extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
@@ -135,7 +135,7 @@ extern unsigned int g_x_004f3818;
 extern unsigned int g_x_004f381c;
 extern unsigned int g_x_004f3820;
 extern unsigned int g_x_0053a1f0;
-extern unsigned int g_x_0053a3c0;
+extern unsigned int g_stateCountdown_0053a3c0;
 extern unsigned int g_x_00541fb0;
 extern unsigned int g_x_005433f0;
 extern unsigned int g_x_00543444;
@@ -152,7 +152,7 @@ extern void AudioVolumeRescale_004ab690(void);
  */
 __declspec(naked) void WeightedSumClampHelper_00439920(void) {
     __asm {
-        mov     eax, dword ptr [g_x_0053a3c0]
+        mov     eax, dword ptr [g_stateCountdown_0053a3c0]
         mov     edx, dword ptr [g_x_004f3814]
         imul    eax, dword ptr [g_x_004f381c]
         mov     ecx, dword ptr [g_x_0054355c]

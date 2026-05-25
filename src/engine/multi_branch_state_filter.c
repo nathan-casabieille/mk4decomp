@@ -110,7 +110,7 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_state_0053a3c0;
+extern unsigned int g_stateCountdown_0053a3c0;
 extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
@@ -122,14 +122,14 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_x_005380d8;
-extern unsigned int g_x_0053a3c0;
+extern unsigned int g_stateCountdown_0053a3c0;
 extern unsigned int g_x_0053a498;
 extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_chain_disp_30_439a40;
 extern unsigned int g_chain_disp_40_439a40;
 
 /* @addr 0x00439a40 (152b game) - multi-branch state filter:
- *   if g_x_0053a3c0 == 1: ret.
+ *   if g_stateCountdown_0053a3c0 == 1: ret.
  *   if chain[base].slot30 != 0: jmp TwoStageWalkGate.
  *   v = chain[cj].slot40; if (v & 2): jmp TwoConditionalJmp.
  *   delta = g_x_0053a498 - g_x_005380d8; if delta < 0x1e0: jmp TwoConditionalJmp.
@@ -140,7 +140,7 @@ void MultiBranchStateFilter_00439a40(void) {
     unsigned int v;
     int delta;
     unsigned int x40;
-    v = g_x_0053a3c0;
+    v = g_stateCountdown_0053a3c0;
     g_walkCallback = (void (*)(void))v;
     if (v == 1) return;
     v = ((unsigned int *)&g_chain_disp_30_439a40)[g_baseSel_00542060];

@@ -110,7 +110,7 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_state_0053a3c0;
+extern unsigned int g_stateCountdown_0053a3c0;
 extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
@@ -147,7 +147,7 @@ extern unsigned int g_data_004d57ac;
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_currentNodeIdx;
-extern unsigned int g_data_0053a3c0;
+extern unsigned int g_stateCountdown_0053a3c0;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_data_0053a478;
@@ -204,7 +204,7 @@ __declspec(naked) void HitReactionStateCluster_004335f0(void)
         je       L_377d
         dec      eax
         jne      short L_3695
-        cmp      dword ptr [g_data_0053a3c0], 2
+        cmp      dword ptr [g_stateCountdown_0053a3c0], 2
         jg       short L_3695
         mov      dword ptr [g_walkCallback], 0x1f4
         call     AudioVolumeRescale_004ab690

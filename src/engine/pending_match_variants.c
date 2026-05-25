@@ -111,7 +111,7 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_state_0053a3c0;
+extern unsigned int g_stateCountdown_0053a3c0;
 extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
@@ -156,7 +156,7 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_state_0053a3c0;
+extern unsigned int g_stateCountdown_0053a3c0;
 extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
@@ -559,7 +559,7 @@ extern unsigned int g_data_0053a250;
 extern unsigned int g_data_0053a2d0;
 extern unsigned int g_data_0053a324;
 extern unsigned int g_data_0053a328;
-extern unsigned int g_data_0053a3c0;
+extern unsigned int g_stateCountdown_0053a3c0;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_data_0053a430;
 extern unsigned int g_data_0053a464;
@@ -4770,7 +4770,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         call     GuardedCmpDualToggle_0049e360
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_e1aa
-        cmp      dword ptr [g_data_0053a3c0], ebx
+        cmp      dword ptr [g_stateCountdown_0053a3c0], ebx
         je       L_e0fc
         cmp      dword ptr [g_active_0053a408], 2
         je       L_e0fc
@@ -4786,7 +4786,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         cmp      dword ptr [g_data_005433ec], ebx
         je       L_e09d
         mov      al, byte ptr [g_data_00543590]
-        mov      dword ptr [g_data_0053a3c0], ebx
+        mov      dword ptr [g_stateCountdown_0053a3c0], ebx
         cmp      al, 1
         mov      dword ptr [g_data_00541fb0], 4
         jne      L_e097

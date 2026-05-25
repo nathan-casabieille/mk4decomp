@@ -110,7 +110,7 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_state_0053a3c0;
+extern unsigned int g_stateCountdown_0053a3c0;
 extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
@@ -153,7 +153,7 @@ extern unsigned int g_active_00537e88;
 extern unsigned int g_data_00537f48;
 extern unsigned int g_data_00538088;
 extern unsigned int g_data_005380e0;
-extern unsigned int g_data_0053a3c0;
+extern unsigned int g_stateCountdown_0053a3c0;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_data_0053a498;
 extern unsigned int g_data_0053a50c;
@@ -1220,7 +1220,7 @@ __declspec(naked) void PendingMatch_004a3400(void)
         mov      dword ptr [g_data_0053a51c], eax
         mov      eax, dword ptr [g_data_005437fc]
         mov      esi, 1
-        mov      dword ptr [g_data_0053a3c0], eax
+        mov      dword ptr [g_stateCountdown_0053a3c0], eax
         mov      dword ptr [g_data_00541fb0], eax
         mov      eax, dword ptr [g_data_004f3234]
         mov      dword ptr [g_data_00537f48], ecx

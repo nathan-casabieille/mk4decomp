@@ -110,7 +110,7 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_state_0053a3c0;
+extern unsigned int g_stateCountdown_0053a3c0;
 extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
@@ -123,7 +123,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0046fd10 (90b game) - threshold/pause-guarded dispatcher tail-jumping into 0x0046fd70.
- *   g_walkCallback = (g_state_0053a3c0); if <= 1: push lit; call IterStepDualStore; ret.
+ *   g_walkCallback = (g_stateCountdown_0053a3c0); if <= 1: push lit; call IterStepDualStore; ret.
  *   else: call CopyJmp; if pause or g_walkCallback < 0xcccc: ret.
  *   call DualGuardedTableSearch; if nonzero ret.
  *   g_walkCallback = (g_table_00535ddc); if > 0x18000 ret; else jmp TimerWindowThreshDispatch_0046fd70.
@@ -135,7 +135,7 @@ extern void TimerWindowThreshDispatch_0046fd70(void);
 
 __declspec(naked) void ThresholdPauseDispatch_0046fd10(void) {
     __asm {
-        mov     eax, dword ptr [g_state_0053a3c0]
+        mov     eax, dword ptr [g_stateCountdown_0053a3c0]
         cmp     eax, 1
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh

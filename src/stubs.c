@@ -981,7 +981,7 @@ unsigned int g_state_00538158_dd;
 unsigned int g_state_00538158_kk;
 unsigned int g_state_00538158_ll;
 unsigned int g_state_0053815c_kk;
-unsigned int g_state_0053a3c0_v;
+unsigned int g_stateCountdown_0053a3c0;
 unsigned int g_state_0053a408_s;
 unsigned int g_state_0054355c_hh;
 unsigned int g_state_00543710_hh;

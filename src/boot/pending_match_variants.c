@@ -110,7 +110,7 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_state_0053a3c0;
+extern unsigned int g_stateCountdown_0053a3c0;
 extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
@@ -267,7 +267,7 @@ extern unsigned int g_data_00537efc;
 extern unsigned int g_data_0053813c;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_data_0053a19c;
-extern unsigned int g_data_0053a3c0;
+extern unsigned int g_stateCountdown_0053a3c0;
 extern unsigned int g_data_0053a498;
 extern unsigned int g_data_00541dc0;
 extern unsigned int g_framePauseFlag;
@@ -2318,7 +2318,7 @@ __declspec(naked) void PendingMatch_004a93c0(void)
         cmp      eax, 4
         mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_00541fb0], eax
-        mov      dword ptr [g_data_0053a3c0], ecx
+        mov      dword ptr [g_stateCountdown_0053a3c0], ecx
         jle      L_95e3
         mov      dword ptr [g_data_00541fb0], 4
     L_95e3:

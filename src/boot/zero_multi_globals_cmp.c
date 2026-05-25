@@ -17,7 +17,7 @@ extern u32 g_pendingNodeType;
  *   g_state_00535de4 if g_state_0054355c == 0 && g_state_00543710 == 0.
  */
 extern unsigned int g_state_0054355c_hh;
-extern unsigned int g_state_0053a3c0;
+extern unsigned int g_stateCountdown_0053a3c0;
 extern unsigned int g_state_00537f10;
 extern unsigned int g_state_00543710_hh;
 extern unsigned int g_state_00535de4;
@@ -29,7 +29,7 @@ extern unsigned int g_state_0053a700;
 extern unsigned int g_state_00535e44;
 void ZeroMultiGlobalsCmp_00404680(void) {
     g_walkCallback = 0;
-    g_state_0053a3c0 = 0;
+    g_stateCountdown_0053a3c0 = 0;
     g_state_00537f10 = 0;
     if (g_state_0054355c_hh == 0 && g_state_00543710_hh == 0) {
         g_state_00535de4 = 0;

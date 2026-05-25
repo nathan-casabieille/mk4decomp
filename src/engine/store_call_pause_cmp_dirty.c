@@ -29,10 +29,10 @@ extern packed_ptr g_xformEntityIdx;
  *   mov     [g_xformDirtyFlags], eax
  *   ret
  */
-extern unsigned int g_state_0053a3c0_v;
+extern unsigned int g_stateCountdown_0053a3c0;
 extern void func_00463ec0(void);
 void StoreCallPauseCmpDirty_00464240(void) {
-    g_eventQueueCurrent = g_state_0053a3c0_v;
+    g_eventQueueCurrent = g_stateCountdown_0053a3c0;
     func_00463ec0();
     if (g_framePauseFlag != 0) return;
     if (g_eventQueueCurrent > (unsigned int)g_walkCallback) {

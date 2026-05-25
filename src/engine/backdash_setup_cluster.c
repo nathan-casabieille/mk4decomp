@@ -110,7 +110,7 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_state_0053a3c0;
+extern unsigned int g_stateCountdown_0053a3c0;
 extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
@@ -143,7 +143,7 @@ extern unsigned int g_x_0053a748;
 
 extern void PreFightInstallCluster_00474390(void);
 
-extern unsigned int g_x_0053a3c0;
+extern unsigned int g_stateCountdown_0053a3c0;
 extern unsigned int g_chain_disp_30_439a40;
 extern unsigned int g_chain_disp_40_439a40;
 extern unsigned int g_x_0053a498;
