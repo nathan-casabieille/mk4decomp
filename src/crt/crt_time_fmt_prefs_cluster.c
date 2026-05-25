@@ -110,8 +110,8 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004f5924;
 extern unsigned int g_byte_00522bb4;
-extern unsigned int g_data_00522bb8;
-extern unsigned int g_data_005236b0;
+extern unsigned int g_dispatchSave111_00522bb8;
+extern unsigned int g_dispatchSave110_005236b0;
 extern unsigned int g_crtTimeFmtPrefs_005236e8;
 extern unsigned int g_data_00f9fc18;
 extern unsigned int g_data_00f9fc68;
@@ -304,7 +304,7 @@ __declspec(naked) void CrtTimeFmtPrefsCluster_004cfe40(void)
     L_ffee:
         mov      ecx, dword ptr [g_crtTimeFmtPrefs_005236e8]
         mov      eax, dword ptr [ecx]
-        cmp      eax, OFFSET g_data_005236b0
+        cmp      eax, OFFSET g_dispatchSave110_005236b0
         je       short L_002a
         push     eax
         call     FreeImpl_004c55f0
@@ -403,7 +403,7 @@ __declspec(naked) void CrtTimeFmtPrefsCluster_004cfe40(void)
         mov      ecx, dword ptr [eax]
         xor      eax, eax
         mov      dl, byte ptr [ecx]
-        mov      dword ptr [g_data_00522bb8], 1
+        mov      dword ptr [g_dispatchSave111_00522bb8], 1
         mov      byte ptr [g_byte_00522bb4], dl
         ret
     }

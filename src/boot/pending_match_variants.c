@@ -235,7 +235,7 @@ extern unsigned int g_phaseThunkSave_00523b24;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_or_0052ab40;
 extern unsigned int g_bootInitState_00535de4;
-extern unsigned int g_data_00537efc;
+extern unsigned int g_dispatchSave100_00537efc;
 extern unsigned int g_alarmTriState_0053813c;
 extern unsigned int g_pendingMatchSlot_0053a19c;
 extern unsigned int g_pendingMatchSlot2_00541dc0;
@@ -3968,7 +3968,7 @@ __declspec(naked) void PendingMatch_00417840(void)
         mov      dword ptr [eax + 0x84], 0
         test     ecx, ecx
         je       L_796e
-        mov      ecx, dword ptr [g_data_00537efc]
+        mov      ecx, dword ptr [g_dispatchSave100_00537efc]
         test     ecx, ecx
         mov      dword ptr [g_walkCallback], ecx
         je       L_796e

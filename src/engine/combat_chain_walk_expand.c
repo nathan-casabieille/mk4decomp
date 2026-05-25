@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_data_0050a49c;
 extern unsigned int g_data_0050cab0;
 extern unsigned int g_data_0050cb3c;
-extern unsigned int g_data_005108dc;
+extern unsigned int g_dispatchSave123_005108dc;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_dispatchArg_00535e48;
 extern unsigned int g_dispatchSave32_00542a08;
@@ -221,7 +221,7 @@ __declspec(naked) void CombatChainWalkExpand_00463870(void)
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [ecx*4 + 0x3c], eax
-        mov      eax, OFFSET g_data_005108dc
+        mov      eax, OFFSET g_dispatchSave123_005108dc
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
         mov      edx, dword ptr [eax*4]

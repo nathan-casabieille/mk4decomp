@@ -112,10 +112,10 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   g_eventQueueWorkType=0x1000, call AllocNode; if !pause: clears more globals and stores eax=0xc
  *   to g_walkCallback/0x0053a3e8; call ResetSceneCallbacks_00420090; if !pause: clears 6 more globals; ret.
  */
-extern unsigned int g_data_0052aab4;
-extern unsigned int g_data_0052ab44;
+extern unsigned int g_dispatchSave109_0052aab4;
+extern unsigned int g_dispatchSave108_0052ab44;
 extern unsigned int g_extra_00535e68;
-extern unsigned int g_data_00535e80;
+extern unsigned int g_dispatchSave102_00535e80;
 extern unsigned int g_dispatchSave_00537ef4;
 extern unsigned int g_dispatchVar38_00538128;
 extern unsigned int g_extra_0053a280;
@@ -154,7 +154,7 @@ __declspec(naked) void GlobalsResetInit_004222a0(void) {
         _emit   00h
         mov     eax, 0x0c
         mov     dword ptr [g_counter_0053a51c], esi
-        mov     dword ptr [g_data_0052ab44], esi
+        mov     dword ptr [g_dispatchSave108_0052ab44], esi
         mov     dword ptr [g_dispatchSave84_0053a6d8], esi
         mov     dword ptr [g_player1NodeIdx], esi
         mov     dword ptr [g_player2NodeIdx], esi
@@ -162,14 +162,14 @@ __declspec(naked) void GlobalsResetInit_004222a0(void) {
         mov     dword ptr [g_dispatchSave_00537ef4], esi
         mov     dword ptr [g_extra_00535e68], esi
         mov     dword ptr [g_extra_0053a280], esi
-        mov     dword ptr [g_data_00535e80], esi
+        mov     dword ptr [g_dispatchSave102_00535e80], esi
         mov     dword ptr [g_dispatchVar38_00538128], esi
         mov     dword ptr [g_state4_0053a3e0], esi
         mov     dword ptr [g_state4_0053a700], esi
         mov     dword ptr [g_dst_0053a6e0], esi
         mov     dword ptr [g_dst_00537ea4], esi
         mov     dword ptr [g_dispatchSave91_0053a358], esi
-        mov     dword ptr [g_data_0052aab4], 8
+        mov     dword ptr [g_dispatchSave109_0052aab4], 8
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_pendingMatchAcc_0053a3e8], eax
         call    ResetSceneCallbacks_00420090

@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004f3ee0;
-extern unsigned int g_data_005157a4;
+extern unsigned int g_dispatchSave121_005157a4;
 extern unsigned int g_audioFlagAggBase2_00543398;
 extern unsigned int g_audioFlagAggBase_005433d8;
 extern void AudioFlagDispatchAggregatorAH_004aa520(void);
@@ -148,7 +148,7 @@ __declspec(naked) void SpawnListGlyphRender_004aa610(void)
         mov      dword ptr [g_walkCallback], ebx
         call     MStackPush3HelperCondToggle_0049cf70
         mov      eax, dword ptr [g_currentNodeIdx]
-        mov      ecx, OFFSET g_data_005157a4
+        mov      ecx, OFFSET g_dispatchSave121_005157a4
         shr      ecx, 2
         mov      dword ptr [g_eventQueueCurrent], 0xffffe667
         mov      dword ptr [g_xformEntityIdx], ecx

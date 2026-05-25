@@ -118,9 +118,9 @@ extern void func_004ca2f5(void);
 extern void func_004ca34e(void);
 extern void func_004ca399(void);
 extern void CrtPowSpecialCases_004ca440(void);
-extern unsigned int g_data_0051fff0;
+extern unsigned int g_dispatchSave118_0051fff0;
 extern unsigned int g_crtPowConstBase_0051fff8;
-extern unsigned int g_data_00522410;
+extern unsigned int g_dispatchSave113_00522410;
 extern unsigned int g_crtFpuTbyte_00522470;
 extern unsigned int g_data_00f9f7f8;
 
@@ -250,7 +250,7 @@ __declspec(naked) void CrtPowCluster_004c6540(void)
         shr      ch, 7
         test     dword ptr [esp + 0x17], 0x80
         je       short L_66e4
-        fld      tbyte ptr [g_data_00522410]
+        fld      tbyte ptr [g_dispatchSave113_00522410]
         test     cl, ch
         je       short L_66da
         fchs
@@ -293,7 +293,7 @@ __declspec(naked) void CrtPowCluster_004c6540(void)
         fnstsw   ax
         sahf
         jne      short L_675a
-        fmul     qword ptr [g_data_0051fff0]
+        fmul     qword ptr [g_dispatchSave118_0051fff0]
         inc      cl
         fld      st(0)
         frndint

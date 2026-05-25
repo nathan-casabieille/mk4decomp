@@ -117,7 +117,7 @@ extern unsigned int g_data_004f6338;
 extern unsigned int g_audioPreloadBase_0050b118;
 extern unsigned int g_data_0050f130;
 extern unsigned int g_data_0050f14c;
-extern unsigned int g_data_0051599c;
+extern unsigned int g_dispatchSave119_0051599c;
 extern unsigned int g_bootInitState_00535de4;
 extern unsigned int g_count_005433b8;
 extern unsigned int g_voicePoolTickFlag_005437f4;
@@ -271,7 +271,7 @@ __declspec(naked) void KonquestPortalCluster_004a5290(void)
         push     eax
         push     ecx
         push     ebp
-        push     OFFSET g_data_0051599c
+        push     OFFSET g_dispatchSave119_0051599c
         call     AudioInitArgs3_004a1f20
         add      esp, 0x10
     L_54a1:

@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00535d14;
+extern unsigned int g_dispatchSave105_00535d14;
 extern void NodeUnlink_0041f710(void);
 
 __declspec(naked) void BootScheduledNodeTimerWalk_0041f570(void)
@@ -159,7 +159,7 @@ __declspec(naked) void BootScheduledNodeTimerWalk_0041f570(void)
         mov     dword ptr [esi + 0xd8], eax
         mov     dword ptr [g_framePauseFlag], ebx
         mov     ecx, dword ptr [esi + 0xd8]
-        mov     dword ptr [g_data_00535d14], ecx
+        mov     dword ptr [g_dispatchSave105_00535d14], ecx
         call    dword ptr [esi + 0xd8]
         mov     eax, dword ptr [esi + 0xd8]
         cmp     eax, ebp

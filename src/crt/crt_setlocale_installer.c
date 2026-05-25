@@ -108,10 +108,10 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00522308;
-extern unsigned int g_data_00522310;
+extern unsigned int g_dispatchSave117_00522308;
+extern unsigned int g_dispatchSave116_00522310;
 extern unsigned int g_crtLocaleEnvVarTbl_00522314;
-extern unsigned int g_data_00522318;
+extern unsigned int g_dispatchSave115_00522318;
 extern unsigned int g_crtTlsSlot_00522400;
 extern unsigned int g_data_00f9f8c0;
 extern unsigned int g_byte_00f9f8c1;
@@ -130,7 +130,7 @@ extern void Lock_004c6f50(void);
 extern void TableLookupIatCall_004c6fd0(void);
 extern void TranslateMsgId_004c97a0(void);
 
-extern unsigned int g_data_00522320;
+extern unsigned int g_dispatchSave114_00522320;
 
 __declspec(naked) void CrtSetlocaleInstaller_004c9520(void)
 {
@@ -179,7 +179,7 @@ __declspec(naked) void CrtSetlocaleInstaller_004c9520(void)
         ret
     L_9583:
         xor      edx, edx
-        mov      eax, OFFSET g_data_00522310
+        mov      eax, OFFSET g_dispatchSave116_00522310
     L_958a:
         cmp      dword ptr [eax], ecx
         je       L_96a0
@@ -291,7 +291,7 @@ __declspec(naked) void CrtSetlocaleInstaller_004c9520(void)
         stosb
         xor      edi, edi
         shl      ebx, 4
-        lea      ebp, [ebx + g_data_00522320]
+        lea      ebp, [ebx + g_dispatchSave114_00522320]
     L_96bd:
         mov      al, byte ptr [ebp]
         mov      esi, ebp
@@ -306,7 +306,7 @@ __declspec(naked) void CrtSetlocaleInstaller_004c9520(void)
         mov      al, byte ptr [esi]
         cmp      eax, ecx
         ja       short L_96ec
-        mov      dl, byte ptr [edi + g_data_00522308]
+        mov      dl, byte ptr [edi + g_dispatchSave117_00522308]
     L_96e1:
         or       byte ptr [eax + g_byte_00f9f8c1], dl
         inc      eax
@@ -328,7 +328,7 @@ __declspec(naked) void CrtSetlocaleInstaller_004c9520(void)
         mov      dword ptr [g_data_00f9fac8], eax
         call     TranslateMsgId_004c97a0
         mov      ecx, dword ptr [ebx + g_crtLocaleEnvVarTbl_00522314]
-        mov      edx, dword ptr [ebx + g_data_00522318]
+        mov      edx, dword ptr [ebx + g_dispatchSave115_00522318]
         mov      dword ptr [g_data_00f9facc], eax
         lea      eax, [ebx + g_crtLocaleEnvVarTbl_00522314]
         add      esp, 4

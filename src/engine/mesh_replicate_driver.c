@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004ecb58;
-extern unsigned int g_data_00514950;
+extern unsigned int g_dispatchSave122_00514950;
 extern void DirtyDoubleDeref_00408cb0(void);
 extern void MStackBracket1_TreeWalkRecursive2_00406dd0(void);
 extern void MStackBracket4_ListInsertZeroFill_00408600(void);
@@ -151,7 +151,7 @@ __declspec(naked) void MeshReplicateDriver_00473220(void)
         test     eax, eax
         jne      L_3440
         mov      ecx, dword ptr [g_currentNodeIdx]
-        mov      edx, OFFSET g_data_00514950
+        mov      edx, OFFSET g_dispatchSave122_00514950
         shr      edx, 2
         mov      dword ptr [g_eventQueueTotal], ecx
         mov      dword ptr [g_xformEntityIdx], edx

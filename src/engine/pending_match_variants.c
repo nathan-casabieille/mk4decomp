@@ -488,16 +488,16 @@ extern unsigned int g_dispatchSave59_00501250;
 extern unsigned int g_dispatchSave58_0050b604;
 extern unsigned int g_dispatchSave57_005117c4;
 extern unsigned int g_quadEntryGate_0052d724;
-extern unsigned int g_data_00535d58;
+extern unsigned int g_dispatchSave104_00535d58;
 extern unsigned int g_walkBoundsLimit_00535d60;
 extern unsigned int g_walkBoundsSlot_00535d68;
 extern unsigned int g_walkCallbackSrc2_00535db0;
 extern unsigned int g_dispatchSave49_00535e44;
-extern unsigned int g_data_00535e4c;
+extern unsigned int g_dispatchSave103_00535e4c;
 extern unsigned int g_particleEmitterNode_00535e6c;
 extern unsigned int g_phaseTimer_00537e94;
 extern unsigned int g_audioInstall2Slot_00537eec;
-extern unsigned int g_data_00537ef0;
+extern unsigned int g_dispatchSave101_00537ef0;
 extern unsigned int g_clamp_00537f2c;
 extern unsigned int g_byte_00538148;
 extern s32 g_dlNalt3;
@@ -4300,11 +4300,11 @@ __declspec(naked) void EnduranceStateInitWalk_004785a0(void)
         cmp      ecx, eax
         jne      short L_8665
         mov      edx, dword ptr [g_audioMatchStartFlag_00543714]
-        mov      dword ptr [g_data_00535d58], eax
+        mov      dword ptr [g_dispatchSave104_00535d58], eax
         cmp      edx, eax
         mov      dword ptr [g_dispatchSave92_0053a324], eax
-        mov      dword ptr [g_data_00535e4c], eax
-        mov      dword ptr [g_data_00537ef0], eax
+        mov      dword ptr [g_dispatchSave103_00535e4c], eax
+        mov      dword ptr [g_dispatchSave101_00537ef0], eax
         mov      ecx, 0x10000
         jne      short L_8638
         mov      dword ptr [g_clamp_0053a6dc], ecx
