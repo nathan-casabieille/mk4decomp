@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00520130;
+extern unsigned int g_virtualHeapBase_00520130;
 extern unsigned int g_data_00520134;
 extern unsigned int g_data_00520140;
 extern unsigned int g_data_00fa0ee4;
@@ -126,7 +126,7 @@ __declspec(naked) void VirtualHeapAlloc_004c70d0(void)
         cmp      eax, -1
         push     edi
         jne      short L_70e4
-        mov      ebp, OFFSET g_data_00520130
+        mov      ebp, OFFSET g_virtualHeapBase_00520130
         jmp      short L_7101
     L_70e4:
         mov      eax, dword ptr [g_data_00fa0ee4]
@@ -154,20 +154,20 @@ __declspec(naked) void VirtualHeapAlloc_004c70d0(void)
         call     edi
         test     eax, eax
         je       L_7207
-        cmp      ebp, OFFSET g_data_00520130
+        cmp      ebp, OFFSET g_virtualHeapBase_00520130
         jne      short L_7168
-        mov      eax, dword ptr [g_data_00520130]
+        mov      eax, dword ptr [g_virtualHeapBase_00520130]
         test     eax, eax
         jne      short L_7153
-        mov      dword ptr [g_data_00520130], OFFSET g_data_00520130
+        mov      dword ptr [g_virtualHeapBase_00520130], OFFSET g_virtualHeapBase_00520130
     L_7153:
         mov      eax, dword ptr [g_data_00520134]
         test     eax, eax
         jne      short L_7183
-        mov      dword ptr [g_data_00520134], OFFSET g_data_00520130
+        mov      dword ptr [g_data_00520134], OFFSET g_virtualHeapBase_00520130
         jmp      short L_7183
     L_7168:
-        mov      dword ptr [ebp], OFFSET g_data_00520130
+        mov      dword ptr [ebp], OFFSET g_virtualHeapBase_00520130
         mov      ecx, dword ptr [g_data_00520134]
         mov      dword ptr [ebp + 4], ecx
         mov      dword ptr [g_data_00520134], ebp
@@ -228,7 +228,7 @@ __declspec(naked) void VirtualHeapAlloc_004c70d0(void)
         push     esi
         call     dword ptr [g_iat_004d2168]
     L_7215:
-        cmp      ebp, OFFSET g_data_00520130
+        cmp      ebp, OFFSET g_virtualHeapBase_00520130
         je       short L_722c
         mov      eax, dword ptr [g_data_00fa0ee4]
         push     ebp

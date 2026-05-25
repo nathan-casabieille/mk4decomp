@@ -112,7 +112,7 @@ extern unsigned int g_data_0050d23c;
 extern unsigned int g_data_0050d258;
 extern unsigned int g_data_0052ab4c;
 extern unsigned int g_particleEmitterNode_00535e6c;
-extern unsigned int g_data_00537f78;
+extern unsigned int g_bootHeavyState_00537f78;
 extern unsigned int g_data_00541de0;
 extern void SaveCallRestoreOrXor_00404a00(void);
 extern void ScaledChainInit2Phase_0042e800(void);
@@ -191,7 +191,7 @@ void RoundEndAudioCluster_0042e8d0(void) {
         jne      short L_e9d6
         mov      dword ptr [g_currentNodeFlags], 0xe666
     L_e9d6:
-        mov      ecx, dword ptr [g_data_00537f78]
+        mov      ecx, dword ptr [g_bootHeavyState_00537f78]
         mov      edx, dword ptr [g_currentNodeFlags]
         mov      dword ptr [ecx*4 + 0x3c], edx
         mov      edx, dword ptr [g_data_00541de0]

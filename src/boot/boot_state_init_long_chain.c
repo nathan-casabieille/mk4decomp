@@ -121,8 +121,7 @@ extern void BackdashSetupCluster_00440dc0(void);
 extern void Thunk_0049cb70(void);
 extern void Thunk_0049cb80(void);
 
-extern unsigned int g_x_00542058_v2;
-#define g_eventQueueIdx g_x_00542058_v2
+extern unsigned int g_eventQueueIdx;
 
 extern unsigned char g_data_004ded70;
 extern unsigned char g_data_004ded80;

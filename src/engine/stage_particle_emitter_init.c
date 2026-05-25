@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_particleEmitterNode_00535e6c;
-extern unsigned int g_data_00537f78;
+extern unsigned int g_bootHeavyState_00537f78;
 extern unsigned int g_data_00541de0;
 extern void BootPhaseGateBracketedInit_004060c0(void);
 extern void InstallSelf5CallVecChain_00464660(void);
@@ -119,7 +119,7 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
 {
     __asm {
         /* === h1 (0x464350): 3-stage particle spawn === */
-        mov      eax, dword ptr [g_data_00537f78]
+        mov      eax, dword ptr [g_bootHeavyState_00537f78]
         push     esi
         test     eax, eax
         mov      dword ptr [g_walkCallback], eax
@@ -134,7 +134,7 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [ecx*4 + 0x30], 0x11
         mov      eax, dword ptr [g_currentNodeIdx]
-        mov      dword ptr [g_data_00537f78], eax
+        mov      dword ptr [g_bootHeavyState_00537f78], eax
         mov      dword ptr [eax*4 + 0x54], 0xffffb0a4
         mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [edx*4 + 0x58], 0xfffe0000
@@ -231,7 +231,7 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         mov      dword ptr [ecx*4 + 0x34], 0xffff6667
         mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_walkCallback], eax
-        mov      ecx, OFFSET g_data_00537f78
+        mov      ecx, OFFSET g_bootHeavyState_00537f78
         mov      dword ptr [edx*4 + 0x38], eax
         mov      eax, OFFSET g_player1NodeIdx
         shr      eax, 2
@@ -260,7 +260,7 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         mov      dword ptr [ecx*4 + 0x34], 0x12b85
         mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_walkCallback], eax
-        mov      ecx, OFFSET g_data_00537f78
+        mov      ecx, OFFSET g_bootHeavyState_00537f78
         mov      dword ptr [edx*4 + 0x38], eax
         mov      eax, OFFSET g_player1NodeIdx
         shr      eax, 2

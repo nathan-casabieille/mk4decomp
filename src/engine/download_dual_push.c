@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   chain[+0x3c] = [0x537f78]; g_walkCallback = same.
  */
 extern s32 g_dlNalt1;
-extern unsigned int g_x_00537f78;
+extern unsigned int g_bootHeavyState_00537f78;
 extern u32 g_dlSomeFlag1;
 extern void DownloadPlayerChar(void);
 extern void GuardedDualPushTailJmp_004231f0(void);
@@ -160,7 +160,7 @@ void DownloadDualPush_00422e20(void) {
         mov     dword ptr [eax*4 + 0x54], 0xfffeb334
         mov     ecx, dword ptr [g_fightGroupHead]
         mov     dword ptr [ecx*4 + 0x5c], 0
-        mov     eax, dword ptr [g_x_00537f78]
+        mov     eax, dword ptr [g_bootHeavyState_00537f78]
         mov     edx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_walkCallback], eax
         mov     [edx*4 + 0x3c], eax

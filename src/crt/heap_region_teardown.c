@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00520130;
+extern unsigned int g_virtualHeapBase_00520130;
 extern unsigned int g_iat_004d214c;
 extern unsigned int g_iat_004d2168;
 extern unsigned int g_x_00520140;
@@ -127,7 +127,7 @@ void HeapRegionTeardown_004c7240(struct HeapRegion *region) {
     if ((struct HeapRegion *)g_x_00522150 == region) {
         g_x_00522150 = (unsigned int *)region->next;
     }
-    if (region != (struct HeapRegion *)&g_data_00520130) {
+    if (region != (struct HeapRegion *)&g_virtualHeapBase_00520130) {
         region->next->prev = region->prev;
         region->prev->next = region->next;
         ((void (__stdcall *)(unsigned int, unsigned int, void *))g_iat_004d214c)(g_x_00fa0ee4, 0, region);

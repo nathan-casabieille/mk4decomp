@@ -112,7 +112,7 @@ extern unsigned int g_data_004ffe4c;
 extern unsigned int g_data_00501970;
 extern u32 g_dlSomeFlag2;
 extern s32 g_dlNalt1;
-extern unsigned int g_data_00537f78;
+extern unsigned int g_bootHeavyState_00537f78;
 extern s32 g_dlNalt2;
 extern unsigned int g_data_0053a318;
 extern u32 g_dlSomeFlag1;
@@ -224,7 +224,7 @@ __declspec(naked) void DeathAnimCluster_0042eaf0(void)
         call     ScaledLoadOrSetJmp_00406b20
         cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_ed0b
-        mov      eax, dword ptr [g_data_00537f78]
+        mov      eax, dword ptr [g_bootHeavyState_00537f78]
         mov      dword ptr [g_xformEntityIdx], eax
         mov      dword ptr [eax*4 + 0x54], esi
         mov      edx, dword ptr [g_xformEntityIdx]

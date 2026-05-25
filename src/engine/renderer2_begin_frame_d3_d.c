@@ -13,7 +13,7 @@ extern unsigned int g_data_0058c760;
 extern unsigned int g_comptr_0058c7b0;
 extern unsigned int g_comptr_0058c7b4;
 extern unsigned int g_renderer2_obj;
-extern unsigned int g_data_0058c7c4;
+extern unsigned int g_renderer2_state7_0058c7c4;
 extern unsigned int g_data_0058c7d0;
 extern int g_renderer2_present_rc;
 extern int g_renderer2_active;
@@ -81,7 +81,7 @@ __declspec(naked) void Renderer2_BeginFrame_D3D(void)
         mov      eax, dword ptr [esp + 0x18]
         test     eax, eax
         je       L_daed
-        mov      eax, dword ptr [g_data_0058c7c4]
+        mov      eax, dword ptr [g_renderer2_state7_0058c7c4]
         mov      dword ptr [esp + 4], 0
         test     eax, eax
         mov      dword ptr [esp + 8], 0

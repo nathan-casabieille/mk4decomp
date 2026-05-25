@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   g_pendingNodeType = arr[key]; install self; g_framePauseFlag=1; ret.
  */
 extern unsigned int g_data_004dfc98;
-extern unsigned int g_x_00537f98;
+extern unsigned int g_audioBank2State_00537f98;
 extern unsigned int g_audioStreamState_0053a430;
 
 extern unsigned int g_arr_421f40;
@@ -132,7 +132,7 @@ __declspec(naked) void InstallSelfStackReset_00421f40(void) {
         _emit   74h
         _emit   23h
         mov     dword ptr [g_walkCallback], 0
-        mov     dword ptr [g_x_00537f98], 0
+        mov     dword ptr [g_audioBank2State_00537f98], 0
         mov     dword ptr [g_eventQueueChild], 1
         jmp     StackPopDispatchTagged_0041f780
         mov     eax, dword ptr [g_audioStreamState_0053a430]

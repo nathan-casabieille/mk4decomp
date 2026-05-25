@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_byte_004d50b4;
 extern unsigned int g_data_004f3ae4;
 extern unsigned int g_data_004f3ae8;
-extern unsigned int g_data_005433c4;
+extern unsigned int g_audioMixerKnob_005433c4;
 extern unsigned int g_counter_005433c8;
 extern unsigned int g_data_00543440;
 extern unsigned int g_counter_0054359c;
@@ -181,7 +181,7 @@ __declspec(naked) void AudioMixerKnobUpdate_004a8aa0(void)
         mov      dword ptr [g_currentNodeIdx], edx
         call     ScaledChainStore24_004a7d40
     L_8b98:
-        mov      eax, dword ptr [g_data_005433c4]
+        mov      eax, dword ptr [g_audioMixerKnob_005433c4]
         test     eax, eax
         jne      short L_8be4
         mov      eax, dword ptr [g_byte_004d50b4]
@@ -204,7 +204,7 @@ __declspec(naked) void AudioMixerKnobUpdate_004a8aa0(void)
         call     SetJmp_004a1ad0
         inc      dword ptr [g_counter_005433c8]
     L_8be4:
-        cmp      dword ptr [g_data_005433c4], 1
+        cmp      dword ptr [g_audioMixerKnob_005433c4], 1
         jne      L_8c96
         mov      ecx, dword ptr [g_counter_005433c8]
         mov      eax, dword ptr [g_byte_004d50b4]

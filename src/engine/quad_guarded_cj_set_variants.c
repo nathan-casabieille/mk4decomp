@@ -113,11 +113,11 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   call GuardedDualPushTailJmp_004231f0; if pause? ret.
  *   mstack-push g_scaledInit_00542044, call ScaledOr4DirtyClear_00409320, mstack-pop.
  *   cj[+0x30]=3, cj[+0x34] |= 0x1c0000.
- *   call TwoStateLookupDirty_004237d0; if !pause: cj[+0x3c] = g_data_00537f78; ret.
+ *   call TwoStateLookupDirty_004237d0; if !pause: cj[+0x3c] = g_bootHeavyState_00537f78; ret.
  */
 extern u32 g_dlState;
 extern u32 g_dlAux;
-extern unsigned int g_x_00537f78;
+extern unsigned int g_bootHeavyState_00537f78;
 extern s32 g_dlNalt3;
 extern s32 g_dlNalt4;
 extern unsigned int g_x_00541de0;
@@ -189,7 +189,7 @@ void QuadGuardedCjSet_00422fc0(void) {
         test    eax, eax
         _emit   75h
         _emit   17h
-        mov     eax, dword ptr [g_x_00537f78]
+        mov     eax, dword ptr [g_bootHeavyState_00537f78]
         mov     edx, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x3c], eax

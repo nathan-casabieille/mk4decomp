@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00537f98;
+extern unsigned int g_audioBank2State_00537f98;
 extern unsigned int g_audioStreamState_0053a430;
 extern void InstallSelfStackReset_00421f40(void);
 extern void ScaledInitOrSelfPtr_00421f00(void);
@@ -128,7 +128,7 @@ __declspec(naked) void DualCounterPhaseGateInstall_00421d50(void)
         je      L_dcpgi_phase0
         dec     ecx
         je      short L_dcpgi_phase1
-        mov     ecx, dword ptr [g_data_00537f98]
+        mov     ecx, dword ptr [g_audioBank2State_00537f98]
         cmp     ecx, edx
         mov     dword ptr [g_walkCallback], ecx
         je      short L_dcpgi_call40
@@ -158,7 +158,7 @@ __declspec(naked) void DualCounterPhaseGateInstall_00421d50(void)
         ret
     L_dcpgi_resetSetup:
         mov     dword ptr [g_walkCallback], edx
-        mov     dword ptr [g_data_00537f98], edx
+        mov     dword ptr [g_audioBank2State_00537f98], edx
         mov     dword ptr [g_eventQueueChild], 0xf0
     L_dcpgi_setup:
         mov     dword ptr [eax + 8], offset DualCounterPhaseGateInstall_00421d50
@@ -196,7 +196,7 @@ __declspec(naked) void DualCounterPhaseGateInstall_00421d50(void)
         mov     dword ptr [g_currentNodeIdx], esi
         mov     dword ptr [ecx], esi
         mov     dword ptr [g_walkCallback], edx
-        mov     dword ptr [g_data_00537f98], edx
+        mov     dword ptr [g_audioBank2State_00537f98], edx
         mov     dword ptr [g_eventQueueChild], 0x3c
     L_dcpgi_install2:
         mov     dword ptr [eax + 8], offset DualCounterPhaseGateInstall_00421d50

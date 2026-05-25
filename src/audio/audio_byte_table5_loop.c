@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   strings 0x004f44c4/a8/94 (case 4) and 0x004f447c/60/4c (case 3) in the printf.
  */
 extern unsigned int g_byteTab_004f3d80;
-extern unsigned int g_x_005433c4;
+extern unsigned int g_audioMixerKnob_005433c4;
 extern unsigned int g_x_00543440;
 extern void GuardedSetupCallTailJmp_004a1fa0(void);
 extern void Helper_Sprintf(void);
@@ -142,7 +142,7 @@ __declspec(naked) void AudioByteTable5Loop_004a8970(void)
         je      short L_a89_case3
         dec     eax
         jne     short L_a89_skipCase
-        mov     eax, dword ptr [g_x_005433c4]
+        mov     eax, dword ptr [g_audioMixerKnob_005433c4]
         test    eax, eax
         jne     short L_a89_c4_1
         push    0x004f44c4

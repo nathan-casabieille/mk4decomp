@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004ed1b0;
 extern unsigned int g_data_004ed1b8;
-extern unsigned int g_data_00537f98;
+extern unsigned int g_audioBank2State_00537f98;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CmpEqInitCallElseJmp_0048d4b0(void);
 extern void EsiInstallDecCallChain_004294a0(void);
@@ -172,7 +172,7 @@ __declspec(naked) void RoundEndCelebrationCluster_0047b6e0(void)
         test     eax, eax
         jne      L_b8f3
         mov      eax, dword ptr [g_matrixStackTop]
-        mov      ecx, dword ptr [g_data_00537f98]
+        mov      ecx, dword ptr [g_audioBank2State_00537f98]
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], ecx
@@ -189,7 +189,7 @@ __declspec(naked) void RoundEndCelebrationCluster_0047b6e0(void)
         mov      eax, dword ptr [g_xformScratch2088]
         cmp      eax, edi
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_data_00537f98], ecx
+        mov      dword ptr [g_audioBank2State_00537f98], ecx
         jne      short L_b7cd
         call     RoundStartCluster_0047b900
         pop      edi

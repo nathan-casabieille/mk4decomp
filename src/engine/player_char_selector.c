@@ -112,10 +112,10 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Call BitShiftExtract; if pause ret.
  *   If g_active_0053a408==0: setup player1 (537f48). g_eventQueueEnd = (0x00535cfc>>2). Call DownloadPlayerChar; ret.
  *   Else: setup player2 (005380e0). g_eventQueueEnd = (0x0053a1d0>>2). Call DownloadPlayerChar; ret.
- *   Both arms normalize g_walkCallback via cmp on 0xf/6/8 and write to g_data_00535d10.
+ *   Both arms normalize g_walkCallback via cmp on 0xf/6/8 and write to g_installState_00535d10.
  */
 extern unsigned int g_data_00535cfc_arr;
-extern unsigned int g_data_00535d10;
+extern unsigned int g_installState_00535d10;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 extern s32 g_dlNalt3;
@@ -161,16 +161,16 @@ __declspec(naked) void PlayerCharSelector_004636d0(void) {
         mov     dword ptr [g_dlNalt1], eax
         _emit   75h
         _emit   0ah
-        mov     dword ptr [g_data_00535d10], 8
+        mov     dword ptr [g_installState_00535d10], 8
         cmp     eax, 0xf
         _emit   75h
         _emit   0ah
-        mov     dword ptr [g_data_00535d10], 0xe
+        mov     dword ptr [g_installState_00535d10], 0xe
         cmp     eax, 8
         _emit   75h
         _emit   0ah
-        mov     dword ptr [g_data_00535d10], 0xa
-        mov     eax, dword ptr [g_data_00535d10]
+        mov     dword ptr [g_installState_00535d10], 0xa
+        mov     eax, dword ptr [g_installState_00535d10]
         mov     ecx, offset g_data_00535cfc_arr
         shr     ecx, 2
         mov     dword ptr [g_dlNalt3], eax
@@ -195,16 +195,16 @@ __declspec(naked) void PlayerCharSelector_004636d0(void) {
         mov     dword ptr [g_dlNalt2], eax
         _emit   75h
         _emit   0ah
-        mov     dword ptr [g_data_00535d10], 8
+        mov     dword ptr [g_installState_00535d10], 8
         cmp     eax, 0xf
         _emit   75h
         _emit   0ah
-        mov     dword ptr [g_data_00535d10], 0xe
+        mov     dword ptr [g_installState_00535d10], 0xe
         cmp     eax, 8
         _emit   75h
         _emit   0ah
-        mov     dword ptr [g_data_00535d10], 0xa
-        mov     edx, dword ptr [g_data_00535d10]
+        mov     dword ptr [g_installState_00535d10], 0xa
+        mov     edx, dword ptr [g_installState_00535d10]
         mov     eax, offset g_data_0053a1d0_arr
         shr     eax, 2
         mov     dword ptr [g_dlNalt4], edx

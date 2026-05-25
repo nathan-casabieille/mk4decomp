@@ -112,7 +112,7 @@ extern unsigned int g_data_004d5140;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_particleEmitterNode_00535e6c;
 extern unsigned int g_data_00537e8c;
-extern unsigned int g_data_00537f78;
+extern unsigned int g_bootHeavyState_00537f78;
 extern unsigned int g_data_0053a520;
 extern unsigned int g_data_00541de0;
 extern unsigned int g_data_00541e7c;
@@ -247,7 +247,7 @@ __declspec(naked) void BootInitChainHeavy_00404f20(void)
         jne     L_boot_init_exit
         mov     dword ptr [g_data_0053a520], esi
         mov     dword ptr [g_data_00537e8c], esi
-        mov     dword ptr [g_data_00537f78], esi
+        mov     dword ptr [g_bootHeavyState_00537f78], esi
         mov     dword ptr [g_data_00541de0], esi
         mov     dword ptr [g_particleEmitterNode_00535e6c], esi
         mov     dword ptr [g_data_004d5140], 0x7F000000

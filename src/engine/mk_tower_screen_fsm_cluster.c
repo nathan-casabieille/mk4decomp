@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_phaseCounter_00541fb0;
 extern unsigned int g_data_00541fb4;
-extern unsigned int g_data_00541fb8;
+extern unsigned int g_dispatchAcc_00541fb8;
 extern void CallSetPause_0041f830(void);
 extern void MStackChainOrBitLoop_004635a0(void);
 extern void MStackPush2LLWalkCompare_004069b0(void);
@@ -132,7 +132,7 @@ __declspec(naked) void MkTowerScreenFsmCluster_00462560(void)
         test     ecx, ecx
         mov      dword ptr [g_eventQueueCurrent], ecx
         je       L_264f
-        mov      edx, dword ptr [g_data_00541fb8]
+        mov      edx, dword ptr [g_dispatchAcc_00541fb8]
         shl      eax, 2
         mov      dword ptr [g_walkCallback], eax
         add      eax, edx

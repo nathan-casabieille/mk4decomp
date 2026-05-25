@@ -110,18 +110,18 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00464090 (250b game) - bit-shift extraction sequence.
  *   mstack-push g_eventQueueCurrent and g_scaledInit_00542044. g_eventQueueCurrent=4.
- *   eax = g_phaseCounter_00541fb0*4 -> g_walkCallback; eax += g_data_00541fb8.
+ *   eax = g_phaseCounter_00541fb0*4 -> g_walkCallback; eax += g_dispatchAcc_00541fb8.
  *   edx = g_stateCountdown_0053a3c0 - 1; eax = [eax+0x0c]; eax += edx.
  *   ecx = g_phaseCounter_00541fb0 + g_data_00541fb4; esi = [ecx*4]; edx = eax;
  *   shift = ((esi-2)&3)<<3; sar edx,cl; ecx = esi*8; sar eax,cl;
- *   mask to 8 bits; store edx to g_data_00535d5c and g_data_00535d10;
+ *   mask to 8 bits; store edx to g_data_00535d5c and g_installState_00535d10;
  *   store eax to g_eventQueueCurrent / g_walkCallback.
  *   mstack-pop pair.
  */
-extern unsigned int g_data_00535d10;
+extern unsigned int g_installState_00535d10;
 extern unsigned int g_data_00535d5c;
 extern unsigned int g_data_00541fb4;
-extern unsigned int g_data_00541fb8;
+extern unsigned int g_dispatchAcc_00541fb8;
 extern unsigned int g_phaseCounter_00541fb0;
 
 __declspec(naked) void BitShiftExtract_00464090(void) {
@@ -138,7 +138,7 @@ __declspec(naked) void BitShiftExtract_00464090(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], edx
         mov     ecx, dword ptr [g_phaseCounter_00541fb0]
-        mov     edx, dword ptr [g_data_00541fb8]
+        mov     edx, dword ptr [g_dispatchAcc_00541fb8]
         mov     dword ptr [g_eventQueueCurrent], 4
         lea     eax, [ecx*4 + 0]
         mov     dword ptr [g_walkCallback], eax
@@ -166,7 +166,7 @@ __declspec(naked) void BitShiftExtract_00464090(void) {
         sar     eax, cl
         and     edx, 0xff
         mov     dword ptr [g_data_00535d5c], edx
-        mov     dword ptr [g_data_00535d10], edx
+        mov     dword ptr [g_installState_00535d10], edx
         and     eax, 0xff
         mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [g_walkCallback], eax
