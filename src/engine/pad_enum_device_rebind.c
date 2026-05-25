@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004f478c;
+extern unsigned int g_renderer2_initVar_004f478c;
 extern u8 g_renderer2_buf3[];
 extern u8 g_renderer2_buf2[];
 extern u8 g_renderer2_buf1[];
@@ -193,7 +193,7 @@ __declspec(naked) void PadEnumDeviceRebind_004ad850(void)
         je       L_d999
         mov      dword ptr [esp + 0x80], 0x100
     L_d931:
-        mov      eax, dword ptr [g_data_004f478c]
+        mov      eax, dword ptr [g_renderer2_initVar_004f478c]
         test     eax, eax
         je       L_d964
         mov      edx, ebx

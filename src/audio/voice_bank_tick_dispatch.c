@@ -108,12 +108,12 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004f2fc0;
+extern unsigned int g_audioStateMachineVar7_004f2fc0;
 extern unsigned int g_data_004f31a0;
-extern unsigned int g_data_004f31cc;
-extern unsigned int g_data_004f31d0;
+extern unsigned int g_audioStateMachineVar6_004f31cc;
+extern unsigned int g_audioStateMachineVar5_004f31d0;
 extern unsigned int g_data_004f31d8;
-extern unsigned int g_data_004f3220;
+extern unsigned int g_audioStateMachineVar4_004f3220;
 extern unsigned int g_byte_004f3238;
 extern unsigned int g_data_004f3240;
 extern unsigned int g_data_004f3264;
@@ -150,20 +150,20 @@ __declspec(naked) void VoiceBankTickDispatch_004a3120(void)
         ja       L_31e2
         jmp      dword ptr [eax*4 + L_120_jmptbl]
     L_315a:
-        mov      eax, dword ptr [g_data_004f31cc]
+        mov      eax, dword ptr [g_audioStateMachineVar6_004f31cc]
         mov      ecx, dword ptr [eax*4 + g_data_004f31d8]
         push     ecx
         push     OFFSET g_data_004f432c
         jmp      L_31d5
     L_316e:
-        mov      edx, dword ptr [g_data_004f31d0]
+        mov      edx, dword ptr [g_audioStateMachineVar5_004f31d0]
         mov      eax, dword ptr [edx*4 + g_data_004f31d8]
         push     eax
         push     OFFSET g_data_004f4320
         jmp      L_31d5
     L_3183:
         mov      ecx, dword ptr [g_audioSavedGlobal5_005437fc]
-        mov      edx, dword ptr [ecx*4 + g_data_004f3220]
+        mov      edx, dword ptr [ecx*4 + g_audioStateMachineVar4_004f3220]
         push     edx
         push     OFFSET g_data_004f4310
         jmp      L_31d5
@@ -181,7 +181,7 @@ __declspec(naked) void VoiceBankTickDispatch_004a3120(void)
         jmp      L_31d5
     L_31c1:
         movsx    ecx, byte ptr [g_byte_004f3238]
-        mov      edx, dword ptr [ecx*4 + g_data_004f2fc0]
+        mov      edx, dword ptr [ecx*4 + g_audioStateMachineVar7_004f2fc0]
         push     edx
         push     OFFSET g_data_004f42e0
     L_31d5:

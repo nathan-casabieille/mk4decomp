@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_pendingMatchVar3_004d5320;
 extern unsigned int g_pendingMatchVar_004d5324;
-extern unsigned int g_state_004d532c;
+extern unsigned int g_pendingMatchVar5_004d532c;
 __declspec(naked) void ModuloMagic_0042afc0(void) {
     __asm {
         mov     ecx, dword ptr [esp + 4]
@@ -27,7 +27,7 @@ sub_loop:
         cmp     ecx, eax
         _emit   7fh
         _emit   0fah
-        mov     edx, dword ptr [g_state_004d532c]
+        mov     edx, dword ptr [g_pendingMatchVar5_004d532c]
         cmp     ecx, edx
         _emit   7fh
         _emit   1ah

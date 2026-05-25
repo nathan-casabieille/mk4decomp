@@ -8,7 +8,7 @@
  *   with ECM-group state globals. Same shape as 0x4aeae0/0x4afd10.
  *   Calls DialogProbeDispatch640_004b0670.
  */
-extern unsigned int g_data_004f47b0;
+extern unsigned int g_renderer2_initVar3_004f47b0;
 extern unsigned int g_renderer4_ifaceBase_0058c8d8;
 extern unsigned int g_renderer4_dispatchSlot_0058c8dc;
 extern unsigned int g_dsmi_3a0_main;
@@ -21,7 +21,7 @@ extern void DialogProbeDispatch640_004b0670(void);
 
 __declspec(naked) void DDraw5_CreateSurface(void) {
     __asm {
-        mov     ecx, dword ptr [g_data_004f47b0]
+        mov     ecx, dword ptr [g_renderer2_initVar3_004f47b0]
         mov     eax, [esp + 4]
         sub     esp, 0x6c
         cmp     ecx, eax
@@ -33,7 +33,7 @@ __declspec(naked) void DDraw5_CreateSurface(void) {
         jz      L_dms3_okRet
     L_dms3_doSwitch:
         test    eax, eax
-        mov     dword ptr [g_data_004f47b0], eax
+        mov     dword ptr [g_renderer2_initVar3_004f47b0], eax
         jz      L_dms3_release
         push    offset g_renderer4_ifaceBase_0058c8d8
         call    dword ptr [g_iat_004d21ac]

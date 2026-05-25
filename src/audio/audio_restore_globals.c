@@ -119,9 +119,9 @@ extern unsigned int g_byte_00543a3c;
 extern unsigned int g_byte_00543a3d;
 extern unsigned int g_byte_00543a3e;
 extern unsigned int g_byte_00543ab4;
-extern unsigned int g_data_004f31cc;
-extern unsigned int g_data_004f31d0;
-extern unsigned int g_data_004f3404;
+extern unsigned int g_audioStateMachineVar6_004f31cc;
+extern unsigned int g_audioStateMachineVar5_004f31d0;
+extern unsigned int g_audioStateMachineVar3_004f3404;
 extern unsigned int g_loaded_004f3608;
 extern unsigned int g_data_004f361c;
 extern unsigned int g_data_004f3814;
@@ -198,9 +198,9 @@ __declspec(naked) void AudioRestoreGlobals_004acce0(void)
         mov     ecx, dword ptr [g_audioSavedReg_00543a28]
         mov     byte ptr [g_byte_004f3238], al
         mov     eax, dword ptr [g_audioSavedReg_00543a30]
-        mov     dword ptr [g_data_004f31cc], ecx
+        mov     dword ptr [g_audioStateMachineVar6_004f31cc], ecx
         mov     ecx, dword ptr [g_audioSavedReg_00543a34]
-        mov     dword ptr [g_data_004f31d0], edx
+        mov     dword ptr [g_audioStateMachineVar5_004f31d0], edx
         mov     edx, dword ptr [g_audioSavedReg_00543a38]
         mov     dword ptr [g_audioSavedGlobal4_005437f8], eax
         mov     al, byte ptr [g_byte_00543a3c]
@@ -244,7 +244,7 @@ __declspec(naked) void AudioRestoreGlobals_004acce0(void)
         mov     dword ptr [g_loaded_004f3608], edx
         mov     edx, dword ptr [g_menuRestoreA_00543aa0]
         pop     edi
-        mov     dword ptr [g_data_004f3404], eax
+        mov     dword ptr [g_audioStateMachineVar3_004f3404], eax
         mov     dword ptr [g_audioRestoreSlot3_0053a1f0], ecx
         mov     dword ptr [g_data_004f361c], edx
         pop     esi

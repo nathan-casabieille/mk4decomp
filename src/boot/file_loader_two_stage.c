@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004d5040;
 extern unsigned int g_data_004d504c;
-extern unsigned int g_data_004d505c;
+extern unsigned int g_dispatchVar40_004d505c;
 extern unsigned int g_data_004d5060;
 extern unsigned int g_data_004d506c;
 extern unsigned int g_fileLoaderArr_00524158;
@@ -146,7 +146,7 @@ __declspec(naked) void FileLoaderTwoStage_00401120(void)
         call    Helper_Sprintf
         add     esp, 0x10
         lea     ecx, [esp + 0x10]
-        push    offset g_data_004d505c
+        push    offset g_dispatchVar40_004d505c
         push    ecx
         call    FSYS_fopen
         mov     ebx, eax
@@ -201,7 +201,7 @@ __declspec(naked) void FileLoaderTwoStage_00401120(void)
         call    Helper_Sprintf
         add     esp, 0x10
         lea     eax, [esp + 0x90]
-        push    offset g_data_004d505c
+        push    offset g_dispatchVar40_004d505c
         push    eax
         call    FSYS_fopen
         mov     esi, eax

@@ -126,9 +126,9 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *       - store result back
  *     Then clamps the scaled +0x58 field at -0x2666 (0xffffd99a) and
  *     zeroes +0x70 when clamped. Sets g_xformEntityIdx-pointed slot's
- *     +0x10=0, +0x14=&g_data_004e6070>>2. Pops mstack and returns.
+ *     +0x10=0, +0x14=&g_dispatchVar43_004e6070>>2. Pops mstack and returns.
  */
-extern unsigned int g_data_004e6070;
+extern unsigned int g_dispatchVar43_004e6070;
 extern unsigned int g_table_004d57b0;
 extern void AudioVolumeRescale_004ab690(void);
 extern void ChainWalkPushPop_00405a40(void);
@@ -220,7 +220,7 @@ __declspec(naked) void VecScaleMStackTripleCall_00446980(void) {
         mov     dword ptr [eax*4 + 0x70], 0
     L_vsm_skipClamp:
         mov     ecx, dword ptr [g_xformEntityIdx]
-        mov     eax, offset g_data_004e6070
+        mov     eax, offset g_dispatchVar43_004e6070
         shr     eax, 2
         mov     dword ptr [ecx*4 + 0x10], 0
         mov     edx, dword ptr [g_xformEntityIdx]

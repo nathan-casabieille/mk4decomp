@@ -10,7 +10,7 @@
  *   Pushed table addresses are 0x004f5018 / 0x004f501c.
  */
 extern unsigned int g_byte_00ab4300;
-extern unsigned int g_data_004f5018;
+extern unsigned int g_gsmVar3_004f5018;
 extern unsigned int g_data_004f501c;
 extern unsigned int g_data_00ab4320;
 extern unsigned int g_data_00ab4368;
@@ -29,7 +29,7 @@ __declspec(naked) void Helper_GSM_Sub19(void)
         push    esi
         jne     short L_b73_skipSet
         mov     bl, al
-        push    offset g_data_004f5018
+        push    offset g_gsmVar3_004f5018
         or      bl, 1
         push    0
         mov     byte ptr [g_byte_00ab4300], bl
@@ -60,7 +60,7 @@ __declspec(naked) void Helper_GSM_Sub19(void)
         test    bl, 1
         je      short L_b73_skipDesc
         mov     eax, dword ptr [g_data_00ab4320]
-        push    offset g_data_004f5018
+        push    offset g_gsmVar3_004f5018
         push    eax
         call    TableSearchDesc_004b62c0
         add     esp, 8
@@ -73,7 +73,7 @@ __declspec(naked) void Helper_GSM_Sub19(void)
         jne     short L_b73_drawMenu
         test    bl, 2
         je      short L_b73_checkBit4
-        push    offset g_data_004f5018
+        push    offset g_gsmVar3_004f5018
         push    eax
         call    TableSearchAsc_004b6300
         add     esp, 8
@@ -96,7 +96,7 @@ __declspec(naked) void Helper_GSM_Sub19(void)
         mov     dword ptr [g_data_00ab4368], 2
     L_b73_drawMenu:
         push    eax
-        push    offset g_data_004f5018
+        push    offset g_gsmVar3_004f5018
         call    DrawMenu
         mov     eax, dword ptr [g_data_00ab4368]
         add     esp, 8

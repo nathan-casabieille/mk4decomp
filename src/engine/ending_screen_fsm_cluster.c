@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004e5cc0;
-extern unsigned int g_data_004e6070;
+extern unsigned int g_dispatchVar43_004e6070;
 extern unsigned int g_dispatchVar2_0053a24c;
 extern unsigned int g_dispatchVar8_0053a35c;
 extern void AudioVolumeRescale_004ab690(void);
@@ -184,7 +184,7 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
         mov      eax, dword ptr [g_xformEntityIdx]
         mov      dword ptr [eax*4 + 0x10], 0
         mov      ecx, dword ptr [g_xformEntityIdx]
-        mov      eax, OFFSET g_data_004e6070
+        mov      eax, OFFSET g_dispatchVar43_004e6070
         shr      eax, 2
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x14], eax

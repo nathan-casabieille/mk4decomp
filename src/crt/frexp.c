@@ -110,19 +110,19 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004cdee0 (259b crt) - _frexp-like double mantissa/exponent split.
  *   Arg: double x at [esp+4], int* exp at [esp+0x18].
- *   Compares x to 0.0 (g_data_004d2f28). If equal: *exp = 0, return 0.0.
+ *   Compares x to 0.0 (g_crtMemMoveVar_004d2f28). If equal: *exp = 0, return 0.0.
  *   Else: extract exponent bits; if 0 (denormal/zero): denormal-renormalize
  *     loop, then compute fresh mantissa via PackDoubleFromInts; *exp = computed.
  *   Normal: pack 64-bit mantissa via PackDoubleFromInts, extract biased exp,
  *     store *exp = biased_exp - 0x3fe, return mantissa as double.
  */
-extern unsigned int g_data_004d2f28;
+extern unsigned int g_crtMemMoveVar_004d2f28;
 extern void PackDoubleFromInts_004cde40(void);
 
 __declspec(naked) void Frexp_004cdee0(void) {
     __asm {
         fld     qword ptr [esp + 4]
-        fcomp   qword ptr [g_data_004d2f28]
+        fcomp   qword ptr [g_crtMemMoveVar_004d2f28]
         push    ebx
         push    esi
         push    edi
@@ -151,7 +151,7 @@ __declspec(naked) void Frexp_004cdee0(void) {
         jz      L_fx_normal
     L_fx_denorm:
         fld     qword ptr [esp + 0x10]
-        fcomp   qword ptr [g_data_004d2f28]
+        fcomp   qword ptr [g_crtMemMoveVar_004d2f28]
         mov     esi, -0x3fd
         fnstsw  ax
         test    ah, 1

@@ -10,7 +10,7 @@
  */
 extern unsigned int g_data_004d29f8;
 extern unsigned int g_data_004d29fc;
-extern unsigned int g_data_004d505c;
+extern unsigned int g_dispatchVar40_004d505c;
 extern unsigned int g_data_004f5398;
 extern unsigned int g_data_004f5798;
 extern unsigned int g_data_004f613c;
@@ -49,7 +49,7 @@ __declspec(naked) void AppInit_Misc1(void) {
         inc     edi
         cmp     esi, offset g_data_004f5798
         jl      short L_hfp_namelp
-        push    offset g_data_004d505c
+        push    offset g_dispatchVar40_004d505c
         push    offset g_data_004f613c
         call    FSYS_fopen
         add     esp, 8

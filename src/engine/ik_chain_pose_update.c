@@ -116,7 +116,7 @@ extern void PushSetXfmMaskCallPop_00407140(void);
 extern void CmpDivJmp_0049d080(void);
 extern void MStackCall_00406600(void);
 extern void IK_ChainPoseUpdate_00444860(void);
-extern unsigned int g_data_004e6070;
+extern unsigned int g_dispatchVar43_004e6070;
 extern unsigned int g_data_004e5cc0;
 extern unsigned int g_dispatchVar2_0053a24c;
 extern unsigned int g_dispatchVar8_0053a35c;
@@ -186,7 +186,7 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
         mov      eax, dword ptr [g_xformEntityIdx]
         mov      dword ptr [eax*4 + 0x10], 0
         mov      ecx, dword ptr [g_xformEntityIdx]
-        mov      eax, OFFSET g_data_004e6070
+        mov      eax, OFFSET g_dispatchVar43_004e6070
         shr      eax, 2
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x14], eax

@@ -17,7 +17,7 @@
  *   g_demoModeFlag non-zero transition to state 0x45. Tail-calls
  *   DrawMenu(0x4f4fd0, g_data_00ab42d0) and returns the current state.
  */
-extern unsigned int g_data_004f4fd0;
+extern unsigned int g_gsmVar4_004f4fd0;
 extern unsigned int g_data_004f4fd4;
 extern u32 g_demoModeFlag;
 extern unsigned int g_data_00ab42d0;
@@ -38,7 +38,7 @@ __declspec(naked) void Helper_GSM_Sub_Other2(void) {
         push    esi
         jne     short L_mps_haveInit
         mov     bl, al
-        push    offset g_data_004f4fd0
+        push    offset g_gsmVar4_004f4fd0
         or      bl, 1
         push    0
         mov     byte ptr [g_data_00ab431c], bl
@@ -66,7 +66,7 @@ __declspec(naked) void Helper_GSM_Sub_Other2(void) {
         test    bl, 1
         je      short L_mps_skipAsc
         mov     eax, dword ptr [g_data_00ab42d0]
-        push    offset g_data_004f4fd0
+        push    offset g_gsmVar4_004f4fd0
         push    eax
         call    TableSearchDesc_004b62c0
         add     esp, 8
@@ -77,7 +77,7 @@ __declspec(naked) void Helper_GSM_Sub_Other2(void) {
         test    bl, 2
         je      short L_mps_skipDescCall
         mov     ecx, dword ptr [g_data_00ab42d0]
-        push    offset g_data_004f4fd0
+        push    offset g_gsmVar4_004f4fd0
         push    ecx
         call    TableSearchAsc_004b6300
         add     esp, 8
@@ -125,7 +125,7 @@ __declspec(naked) void Helper_GSM_Sub_Other2(void) {
     L_mps_drawTail:
         mov     eax, dword ptr [g_data_00ab42d0]
         push    eax
-        push    offset g_data_004f4fd0
+        push    offset g_gsmVar4_004f4fd0
         call    DrawMenu
         mov     eax, dword ptr [g_data_00ab4388]
         add     esp, 8

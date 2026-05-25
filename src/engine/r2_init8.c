@@ -12,7 +12,7 @@
  *   Sub-2 (162b, "L_psn_cb"): per-format probe; checks mask bits 0xf800 / 0x7c00
  *     and 0x1f matching expected layout, copies caller's struct into our buffer.
  */
-extern unsigned int g_data_004f478c;
+extern unsigned int g_renderer2_initVar_004f478c;
 extern unsigned int g_installCountdownBase_00544298;
 extern unsigned int g_dispatchInit1007_0054429c;
 extern unsigned int g_dispatchSave15_005442a0;
@@ -81,7 +81,7 @@ __declspec(naked) void R2_Init8(void) {
         mov     ecx, 0x1b
         mov     edi, offset g_installCountdownBase_00544298
         rep     movsd
-        mov     dword ptr [g_data_004f478c], 1
+        mov     dword ptr [g_renderer2_initVar_004f478c], 1
         mov     eax, 1
         pop     edi
         pop     esi
@@ -99,7 +99,7 @@ __declspec(naked) void R2_Init8(void) {
         mov     ecx, 0x1b
         mov     edi, offset g_installCountdownBase_00544298
         rep     movsd
-        mov     dword ptr [g_data_004f478c], 0
+        mov     dword ptr [g_renderer2_initVar_004f478c], 0
     L_psn_cb_fail:
         pop     edi
         mov     eax, 1

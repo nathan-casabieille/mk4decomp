@@ -108,9 +108,9 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004f3220;
+extern unsigned int g_audioStateMachineVar4_004f3220;
 extern unsigned int g_data_004f3a30;
-extern unsigned int g_data_004f3a38;
+extern unsigned int g_audioStateMachineVar_004f3a38;
 extern unsigned int g_audioVoiceTrioBase_0050a0f0;
 extern unsigned int g_voiceTrioBaseB_0050c618;
 extern void GuardedSetupCallTailJmp3_004a2000(void);
@@ -203,7 +203,7 @@ __declspec(naked) void VoiceTrioBindAndKick_004a5ea0(void)
         push     ecx
         movsx    edx, byte ptr [esi + 1]
         push     ebx
-        mov      eax, dword ptr [edx*4 + g_data_004f3a38]
+        mov      eax, dword ptr [edx*4 + g_audioStateMachineVar_004f3a38]
         push     eax
         mov      dword ptr [g_currentNodeIdx], eax
         call     GuardedSetupCallTailJmp3_004a2000
@@ -229,7 +229,7 @@ __declspec(naked) void VoiceTrioBindAndKick_004a5ea0(void)
         movsx    edx, byte ptr [esi + 4]
         mov      dword ptr [esi + 0x10], ecx
         push     edi
-        mov      eax, dword ptr [edx*4 + g_data_004f3220]
+        mov      eax, dword ptr [edx*4 + g_audioStateMachineVar4_004f3220]
         push     ebx
         push     eax
         mov      dword ptr [g_currentNodeIdx], eax

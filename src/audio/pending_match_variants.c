@@ -122,11 +122,11 @@ extern void Thunk_004c48b0(void);
  *   Pad-aligned tail-jmp Thunk_004c48b0 (0x004a27b0).
  */
 extern unsigned int g_byte_004d50b4;
-extern unsigned int g_data_004f31cc;
-extern unsigned int g_data_004f31d0;
-extern unsigned int g_data_004f3220;
+extern unsigned int g_audioStateMachineVar6_004f31cc;
+extern unsigned int g_audioStateMachineVar5_004f31d0;
+extern unsigned int g_audioStateMachineVar4_004f3220;
 extern unsigned int g_data_004f3a30;
-extern unsigned int g_data_004f3a38;
+extern unsigned int g_audioStateMachineVar_004f3a38;
 extern unsigned int g_table_004f3ac8;
 extern unsigned int g_tickFlagF;
 extern unsigned int g_load_0052ab10;
@@ -957,7 +957,7 @@ __declspec(naked) void PendingMatch_004a70f0(void)
         mov      dword ptr [ecx*4 + 0x5c], 0x18000
         push     0x410000
         movsx    edx, byte ptr [esi + 1]
-        mov      eax, dword ptr [edx*4 + g_data_004f3a38]
+        mov      eax, dword ptr [edx*4 + g_audioStateMachineVar_004f3a38]
         push     eax
         mov      dword ptr [g_currentNodeIdx], eax
         call     GuardedSetupCallTailJmp_004a1fa0
@@ -1172,10 +1172,10 @@ __declspec(naked) void PendingMatch_004a3400(void)
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_38b1
         mov      al, byte ptr [g_audioPendingByte_005433f8]
-        mov      ecx, dword ptr [g_data_004f31cc]
+        mov      ecx, dword ptr [g_audioStateMachineVar6_004f31cc]
         mov      byte ptr [g_gtModeFlag], al
         mov      eax, dword ptr [g_audioSavedGlobal4_005437f8]
-        mov      edx, dword ptr [g_data_004f31d0]
+        mov      edx, dword ptr [g_audioStateMachineVar5_004f31d0]
         mov      dword ptr [g_counter_0053a51c], eax
         mov      eax, dword ptr [g_audioSavedGlobal5_005437fc]
         mov      esi, 1
@@ -1560,7 +1560,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         mov      dword ptr [esi + 8], eax
         movsx    ecx, byte ptr [esi - 4]
         add      edx, 0x280000
-        mov      eax, dword ptr [ecx*4 + g_data_004f3220]
+        mov      eax, dword ptr [ecx*4 + g_audioStateMachineVar4_004f3220]
         push     edx
         push     eax
         mov      dword ptr [g_currentNodeIdx], eax

@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 /* @addr 0x0042ae40 (208b game) - 3-element range-clamp loop in-place at arg0 array. */
 extern unsigned int g_pendingMatchVar3_004d5320;
 extern unsigned int g_pendingMatchVar_004d5324;
-extern unsigned int g_state_004d532c;
+extern unsigned int g_pendingMatchVar5_004d532c;
 
 __declspec(naked) void RangeClampThree_0042ae40(void) {
     __asm {
@@ -129,7 +129,7 @@ __declspec(naked) void RangeClampThree_0042ae40(void) {
         _emit   7fh
         _emit   0fah
         mov     dword ptr [g_walkCallback], eax
-        mov     edx, dword ptr [g_state_004d532c]
+        mov     edx, dword ptr [g_pendingMatchVar5_004d532c]
         cmp     eax, edx
         _emit   7fh
         _emit   0bh
@@ -151,7 +151,7 @@ __declspec(naked) void RangeClampThree_0042ae40(void) {
         _emit   7fh
         _emit   0fah
         mov     dword ptr [g_walkCallback], eax
-        mov     edx, dword ptr [g_state_004d532c]
+        mov     edx, dword ptr [g_pendingMatchVar5_004d532c]
         cmp     eax, edx
         _emit   7fh
         _emit   0bh
@@ -173,7 +173,7 @@ __declspec(naked) void RangeClampThree_0042ae40(void) {
         _emit   7fh
         _emit   0fah
         mov     dword ptr [g_walkCallback], eax
-        mov     edx, dword ptr [g_state_004d532c]
+        mov     edx, dword ptr [g_pendingMatchVar5_004d532c]
         cmp     eax, edx
         _emit   7fh
         _emit   0bh

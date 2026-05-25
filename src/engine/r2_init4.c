@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 /* @addr 0x004aeae0 (297b engine.install) - DSound mode-switch / window state setter.
- *   If new mode == current g_data_004f47a0 → no-op success path.
+ *   If new mode == current g_renderer2_initVar2_004f47a0 → no-op success path.
  *   If current is -1 and new is 0 → no-op success.
  *   Update mode. If new != 0 (set up): GetSysColorBrush(0x58c760), ShowCursor(0),
  *     call DSoundSetAxisPan123, set DSound cooperative level (vtbl+0x50, 0x55),
@@ -14,7 +14,7 @@
  *   If new == 0 (release): release vtbl+0x4c, set cooperative back (vtbl+0x50, 0xc),
  *     restore cursor position via SetCursorPos, ShowCursor(1).
  */
-extern unsigned int g_data_004f47a0;
+extern unsigned int g_renderer2_initVar2_004f47a0;
 extern unsigned int g_renderer2_baseB_0058c760;
 extern unsigned int g_renderer2_var3_0058c764;
 extern unsigned int g_comptr_0058c7ac;
@@ -27,7 +27,7 @@ extern void DSoundSetAxisPan123_004aec10(void);
 
 __declspec(naked) void R2_Init4(void) {
     __asm {
-        mov     ecx, dword ptr [g_data_004f47a0]
+        mov     ecx, dword ptr [g_renderer2_initVar2_004f47a0]
         mov     eax, [esp + 4]
         sub     esp, 0x6c
         cmp     ecx, eax
@@ -39,7 +39,7 @@ __declspec(naked) void R2_Init4(void) {
         jz      L_dms_okRet
     L_dms_doSwitch:
         test    eax, eax
-        mov     dword ptr [g_data_004f47a0], eax
+        mov     dword ptr [g_renderer2_initVar2_004f47a0], eax
         jz      L_dms_release
         push    offset g_renderer2_baseB_0058c760
         call    dword ptr [g_iat_004d21ac]

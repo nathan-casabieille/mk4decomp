@@ -13,15 +13,15 @@ extern unsigned int g_data_004f4dd8;
 extern unsigned int g_data_004f4ddc;
 extern unsigned int g_data_004f4de0;
 extern unsigned int g_data_004f4de4;
-extern unsigned int g_data_004f4de8;
-extern unsigned int g_data_004f4dec;
+extern unsigned int g_renderer2_var7_004f4de8;
+extern unsigned int g_renderer2_var6_004f4dec;
 extern unsigned int g_data_004f4df0;
 extern unsigned int g_data_004f4df4;
 extern unsigned int g_data_004f4df8;
 extern unsigned int g_data_004f4dfc;
 extern unsigned int g_data_004f4e00;
 extern unsigned int g_data_004f4e04;
-extern unsigned int g_data_004f4e98;
+extern unsigned int g_renderer2_var5_004f4e98;
 extern u32 g_demoModeFlag;
 extern unsigned int g_dispatchSave27_00543368;
 extern unsigned int g_dispatchSave26_0054336c;
@@ -57,7 +57,7 @@ __declspec(naked) void GameStateMachineMaybeRebuild(void)
         add     esp, 4
         push    1
         call    InputBitMaskDispatcher_004b5470
-        mov     eax, dword ptr [g_data_004f4e98]
+        mov     eax, dword ptr [g_renderer2_var5_004f4e98]
         add     esp, 4
         cmp     eax, esi
         je      L_idep_pause_gate2
@@ -84,7 +84,7 @@ __declspec(naked) void GameStateMachineMaybeRebuild(void)
         add     esp, 4
         test    eax, eax
         jne     L_idep_clear_loop
-        mov     dword ptr [g_data_004f4e98], esi
+        mov     dword ptr [g_renderer2_var5_004f4e98], esi
     L_idep_clear_loop:
         mov     dword ptr [g_fightTableC2], esi
         mov     dword ptr [g_fightTableC0], esi
@@ -93,8 +93,8 @@ __declspec(naked) void GameStateMachineMaybeRebuild(void)
     L_idep_pause_gate2:
         cmp     dword ptr [g_appInitFlag1], esi
         je      L_idep_after_clear_masks
-        mov     eax, dword ptr [g_data_004f4dec]
-        mov     ecx, dword ptr [g_data_004f4de8]
+        mov     eax, dword ptr [g_renderer2_var6_004f4dec]
+        mov     ecx, dword ptr [g_renderer2_var7_004f4de8]
         not     ecx
         mov     edx, dword ptr [eax]
         and     edx, ecx
@@ -124,8 +124,8 @@ __declspec(naked) void GameStateMachineMaybeRebuild(void)
         not     edx
         and     dword ptr [eax], edx
     L_idep_skip2:
-        mov     ecx, dword ptr [g_data_004f4dec]
-        mov     eax, dword ptr [g_data_004f4de8]
+        mov     ecx, dword ptr [g_renderer2_var6_004f4dec]
+        mov     eax, dword ptr [g_renderer2_var7_004f4de8]
         test    dword ptr [ecx], eax
         je      L_idep_skip3
         mov     eax, dword ptr [g_data_004f4dfc]
