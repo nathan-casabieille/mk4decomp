@@ -12,7 +12,7 @@ extern unsigned int g_scaledInit_00542044;
  *   threshold 0x4d2b58. Returns 1 if result is precise (not zero,
  *   not C0/C2/C3 conditions in fnstsw ax bits 0x41), else 0.
  */
-extern double g_data_004d2b58;
+extern double g_dispatchSave1160_004d2b58;
 void FPUPrecisionCheck_004c8400(void) {
     __asm {
         push    ebp
@@ -28,7 +28,7 @@ void FPUPrecisionCheck_004c8400(void) {
         fsubr   qword ptr [ebp - 0x10]
         fstp    qword ptr [ebp - 0x18]
         fld     qword ptr [ebp - 0x18]
-        fcomp   qword ptr [g_data_004d2b58]
+        fcomp   qword ptr [g_dispatchSave1160_004d2b58]
         fnstsw  ax
         test    ah, 0x41
         _emit   75h

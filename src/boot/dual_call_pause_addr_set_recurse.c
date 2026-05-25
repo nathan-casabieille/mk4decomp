@@ -16,18 +16,18 @@ extern void func_00419840_jj(void);
 extern void func_00419980_jj(void);
 extern void func_00419a40_jj(void);
 extern void func_00419b00_jj(void);
-extern unsigned int g_data_004d7918;
-extern unsigned int g_data_004d78e8;
-extern unsigned int g_data_004d7ac8;
-extern unsigned int g_data_004d7b58;
-extern unsigned int g_data_004d79d8;
-extern unsigned int g_data_004d79a8;
-extern unsigned int g_data_004d7978;
-extern unsigned int g_data_004d7948;
-extern unsigned int g_data_004d7a98;
-extern unsigned int g_data_004d7a68;
-extern unsigned int g_data_004d7a38;
-extern unsigned int g_data_004d7a08;
+extern unsigned int g_dispatchSave1185_004d7918;
+extern unsigned int g_dispatchSave1184_004d78e8;
+extern unsigned int g_dispatchSave1194_004d7ac8;
+extern unsigned int g_dispatchSave1197_004d7b58;
+extern unsigned int g_dispatchSave1189_004d79d8;
+extern unsigned int g_dispatchSave1188_004d79a8;
+extern unsigned int g_dispatchSave1187_004d7978;
+extern unsigned int g_dispatchSave1186_004d7948;
+extern unsigned int g_dispatchSave1193_004d7a98;
+extern unsigned int g_dispatchSave1192_004d7a68;
+extern unsigned int g_dispatchSave1191_004d7a38;
+extern unsigned int g_dispatchSave1190_004d7a08;
 
 /* @addr 0x00419720 (95b): addr1=0x4d7918/0xa, recurse 0x4196c0, addr2=0x4d78e8/9 */
 void DualCallPauseAddrSetRecurse_00419720(void) {
@@ -36,11 +36,11 @@ void DualCallPauseAddrSetRecurse_00419720(void) {
     MStackBracket7_DispatchAndChain_004b8fa0();
     if (g_framePauseFlag) return;
     g_eventQueueWorkType = 0x0a;
-    g_pendingNodeType = (unsigned int)&g_data_004d7918 >> 2;
+    g_pendingNodeType = (unsigned int)&g_dispatchSave1185_004d7918 >> 2;
     func_004196c0_jj();
     if (g_framePauseFlag) return;
     g_eventQueueWorkType = 0x09;
-    g_pendingNodeType = (unsigned int)&g_data_004d78e8 >> 2;
+    g_pendingNodeType = (unsigned int)&g_dispatchSave1184_004d78e8 >> 2;
     func_004196c0_jj();
 }
 
@@ -51,11 +51,11 @@ void DualCallPauseAddrSetRecurse_004197e0(void) {
     MStackBracket7_DispatchAndChain_004b8fa0();
     if (g_framePauseFlag) return;
     g_eventQueueWorkType = 0x06;
-    g_pendingNodeType = (unsigned int)&g_data_004d7ac8 >> 2;
+    g_pendingNodeType = (unsigned int)&g_dispatchSave1194_004d7ac8 >> 2;
     func_00419780_jj();
     if (g_framePauseFlag) return;
     g_eventQueueWorkType = 0x05;
-    g_pendingNodeType = (unsigned int)&g_data_004d7b58 >> 2;
+    g_pendingNodeType = (unsigned int)&g_dispatchSave1197_004d7b58 >> 2;
     func_00419780_jj();
 }
 
@@ -66,11 +66,11 @@ void DualCallPauseAddrSetRecurse_004198a0(void) {
     MStackBracket7_DispatchAndChain_004b8fa0();
     if (g_framePauseFlag) return;
     g_eventQueueWorkType = 0x0c;
-    g_pendingNodeType = (unsigned int)&g_data_004d79d8 >> 2;
+    g_pendingNodeType = (unsigned int)&g_dispatchSave1189_004d79d8 >> 2;
     func_00419840_jj();
     if (g_framePauseFlag) return;
     g_eventQueueWorkType = 0x0b;
-    g_pendingNodeType = (unsigned int)&g_data_004d79a8 >> 2;
+    g_pendingNodeType = (unsigned int)&g_dispatchSave1188_004d79a8 >> 2;
     func_00419840_jj();
 }
 
@@ -81,11 +81,11 @@ void DualCallPauseAddrSetRecurse_004199e0(void) {
     MStackBracket7_DispatchAndChain_004b8fa0();
     if (g_framePauseFlag) return;
     g_eventQueueWorkType = 0x0e;
-    g_pendingNodeType = (unsigned int)&g_data_004d7978 >> 2;
+    g_pendingNodeType = (unsigned int)&g_dispatchSave1187_004d7978 >> 2;
     func_00419980_jj();
     if (g_framePauseFlag) return;
     g_eventQueueWorkType = 0x0d;
-    g_pendingNodeType = (unsigned int)&g_data_004d7948 >> 2;
+    g_pendingNodeType = (unsigned int)&g_dispatchSave1186_004d7948 >> 2;
     func_00419980_jj();
 }
 
@@ -96,11 +96,11 @@ void DualCallPauseAddrSetRecurse_00419aa0(void) {
     MStackBracket7_DispatchAndChain_004b8fa0();
     if (g_framePauseFlag) return;
     g_eventQueueWorkType = 0x08;
-    g_pendingNodeType = (unsigned int)&g_data_004d7a98 >> 2;
+    g_pendingNodeType = (unsigned int)&g_dispatchSave1193_004d7a98 >> 2;
     func_00419a40_jj();
     if (g_framePauseFlag) return;
     g_eventQueueWorkType = 0x07;
-    g_pendingNodeType = (unsigned int)&g_data_004d7a68 >> 2;
+    g_pendingNodeType = (unsigned int)&g_dispatchSave1192_004d7a68 >> 2;
     func_00419a40_jj();
 }
 
@@ -111,10 +111,10 @@ void DualCallPauseAddrSetRecurse_00419b60(void) {
     MStackBracket7_DispatchAndChain_004b8fa0();
     if (g_framePauseFlag) return;
     g_eventQueueWorkType = 0x10;
-    g_pendingNodeType = (unsigned int)&g_data_004d7a38 >> 2;
+    g_pendingNodeType = (unsigned int)&g_dispatchSave1191_004d7a38 >> 2;
     func_00419b00_jj();
     if (g_framePauseFlag) return;
     g_eventQueueWorkType = 0x0f;
-    g_pendingNodeType = (unsigned int)&g_data_004d7a08 >> 2;
+    g_pendingNodeType = (unsigned int)&g_dispatchSave1190_004d7a08 >> 2;
     func_00419b00_jj();
 }

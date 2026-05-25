@@ -22,7 +22,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void DualCondMatchSet_00488dc0(void);
 extern int func_00459500(void *);
-extern void *g_data_004ef1d0;
+extern void *g_dispatchSave1313_004ef1d0;
 extern void func_00488bd9(void);
 void CallPauseDirtyPushCall_00488ba0(void) {
     DualCondMatchSet_00488dc0();
@@ -31,5 +31,5 @@ void CallPauseDirtyPushCall_00488ba0(void) {
         func_00488bd9();
         return;
     }
-    func_00459500(&g_data_004ef1d0);
+    func_00459500(&g_dispatchSave1313_004ef1d0);
 }

@@ -110,10 +110,10 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00407c60 (152b boot) - 3 11-bit channel pack + Mul10Tail:
  *   For each of g_walkCallback bits [0..10], [11..21], [22..31]:
- *     v = (bits) << 16; r = Mul10Tail(g_x_004d510c or 4d5108, v); dst[+i] = r.
+ *     v = (bits) << 16; r = Mul10Tail(g_dispatchSave1166_004d510c or 4d5108, v); dst[+i] = r.
  */
-extern unsigned int g_x_004d5108;
-extern unsigned int g_x_004d510c;
+extern unsigned int g_dispatchSave1165_004d5108;
+extern unsigned int g_dispatchSave1166_004d510c;
 
 extern unsigned int g_arr_407c60;
 
@@ -124,14 +124,14 @@ void ThreeChan11BitPack_00407c60(void) {
         shl     eax, 16
         mov     dword ptr [g_eventQueueCurrent], eax
         push    eax
-        mov     eax, dword ptr [g_x_004d510c]
+        mov     eax, dword ptr [g_dispatchSave1166_004d510c]
         push    eax
         call    Mul10Tail_00404af0
         mov     ecx, dword ptr [g_pendingNodeType]
         add     esp, 8
         mov     [ecx*4 + g_arr_407c60], eax
         mov     eax, dword ptr [g_walkCallback]
-        mov     edx, dword ptr [g_x_004d510c]
+        mov     edx, dword ptr [g_dispatchSave1166_004d510c]
         shr     eax, 0x0b
         and     eax, 0x7ff
         shl     eax, 16
@@ -144,7 +144,7 @@ void ThreeChan11BitPack_00407c60(void) {
         add     esp, 8
         mov     [ecx*4 + g_arr_407c60 + 0x04], eax
         mov     eax, dword ptr [g_walkCallback]
-        mov     edx, dword ptr [g_x_004d5108]
+        mov     edx, dword ptr [g_dispatchSave1165_004d5108]
         shr     eax, 0x16
         shl     eax, 16
         push    eax

@@ -26,14 +26,14 @@ extern unsigned int g_acc_00542078;
  *   ret
  */
 extern int func_004594ec(void *);
-extern void *g_data_004eafb8;
+extern void *g_dispatchSave1281_004eafb8;
 extern void ScaledAndAlfe_00490390(void);
 extern void func_0046b687(void);
-/* @addr 0x0046b630 (14b): cdecl call func_004594ec(&g_data_004eafb8) + ret.
+/* @addr 0x0046b630 (14b): cdecl call func_004594ec(&g_dispatchSave1281_004eafb8) + ret.
  * Entry A of the original 59-byte packed block; entry B at +0x10 lives in
  * func_0046b640. The 2-byte nop gap is filled by 0x90-fill. */
 void DualEntryPushCall_0046b630(void) {
-    func_004594ec(&g_data_004eafb8);
+    func_004594ec(&g_dispatchSave1281_004eafb8);
 }
 
 /* @addr 0x0046b640 (43b): orphan sub-entry - set walkCallback and

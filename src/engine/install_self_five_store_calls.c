@@ -113,11 +113,11 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Else: 5 calls to StoreTwoCall_0049cb40(str_x, 0x267) for different str_x,
  *   then install self at +8, slot84=1, g_pendingNodeType=0xa0, pause flag=1.
  */
-extern unsigned int g_data_0044dec0;
-extern unsigned int g_data_0044e0f0;
-extern unsigned int g_data_0044e1c0;
-extern unsigned int g_data_0044e280;
-extern unsigned int g_data_0044ea20;
+extern unsigned int g_dispatchSave1141_0044dec0;
+extern unsigned int g_dispatchSave1142_0044e0f0;
+extern unsigned int g_dispatchSave1143_0044e1c0;
+extern unsigned int g_dispatchSave1144_0044e280;
+extern unsigned int g_dispatchSave1145_0044ea20;
 
 extern void FiveCallGuardSetTail_0046f6b0(void);
 
@@ -135,23 +135,23 @@ __declspec(naked) void InstallSelfFiveStoreCalls_00489170(void) {
         pop     esi
         ret
         push    0x267
-        push    offset g_data_0044dec0
+        push    offset g_dispatchSave1141_0044dec0
         call    StoreTwoCall_0049cb40
         add     esp, 8
         push    0x267
-        push    offset g_data_0044e0f0
+        push    offset g_dispatchSave1142_0044e0f0
         call    StoreTwoCall_0049cb40
         add     esp, 8
         push    0x267
-        push    offset g_data_0044e280
+        push    offset g_dispatchSave1144_0044e280
         call    StoreTwoCall_0049cb40
         add     esp, 8
         push    0x267
-        push    offset g_data_0044e1c0
+        push    offset g_dispatchSave1143_0044e1c0
         call    StoreTwoCall_0049cb40
         add     esp, 8
         push    0x267
-        push    offset g_data_0044ea20
+        push    offset g_dispatchSave1145_0044ea20
         call    StoreTwoCall_0049cb40
         add     esp, 8
         mov     eax, 1

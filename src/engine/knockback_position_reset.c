@@ -124,12 +124,12 @@ extern void Thunk_0049cb80(void);
 extern unsigned int g_eventQueueIdx;
 #define g_eventQueueIdx g_eventQueueIdx
 
-extern unsigned char g_data_004ded70;
-extern unsigned char g_data_004ded80;
+extern unsigned char g_dispatchSave1198_004ded70;
+extern unsigned char g_dispatchSave1199_004ded80;
 extern unsigned int g_arr_4237d0;
 extern void Cmp2DirtyToggle_00423870(void);
 
-extern unsigned char g_data_004ea070;
+extern unsigned char g_dispatchSave1277_004ea070;
 extern unsigned int g_arr_461640;
 extern unsigned char g_str_00461980;
 

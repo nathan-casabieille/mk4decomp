@@ -107,7 +107,7 @@ extern unsigned int g_fightAxisNegX_00535e70;
 extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
-extern unsigned int g_data_004d5888;
+extern unsigned int g_dispatchSave1179_004d5888;
 extern unsigned int g_byte_004f360c;
 
 /*
@@ -124,6 +124,6 @@ void GatedDoubleSetupJmp_00412450(void) {
     *(unsigned int *)(g_matrixStackTop * 4) = g_cj_0054205c;
     _set_eqwt(g_scaledInit_00542044);
     _set_x74(g_walkCallback);
-    _set_wc(((unsigned int)&g_data_004d5888) >> 2);
+    _set_wc(((unsigned int)&g_dispatchSave1179_004d5888) >> 2);
     BootChainBuildAndStep_004124c0();
 }

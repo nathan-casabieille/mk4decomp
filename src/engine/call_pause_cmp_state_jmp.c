@@ -25,7 +25,7 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_table_00535ddc;
 extern void func_0046c740(void);
 extern void func_004594c8(void *p);
-extern void *g_data_004eabb0;
+extern void *g_dispatchSave1280_004eabb0;
 extern void func_0046a542(void);
 void CallPauseCmpStateJmp_0046a520(void) {
     unsigned int v;
@@ -37,5 +37,5 @@ void CallPauseCmpStateJmp_0046a520(void) {
         func_0046a542();
         return;
     }
-    func_004594c8(&g_data_004eabb0);
+    func_004594c8(&g_dispatchSave1280_004eabb0);
 }

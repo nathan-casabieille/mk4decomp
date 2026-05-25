@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   walkCallback = max(eax-1, 0); key = (0x4dfc98>>2) + edx; g_scaledInit=key;
  *   g_pendingNodeType = arr[key]; install self; g_framePauseFlag=1; ret.
  */
-extern unsigned int g_data_004dfc98;
+extern unsigned int g_dispatchSave1203_004dfc98;
 extern unsigned int g_audioBank2State_00537f98;
 extern unsigned int g_audioStreamState_0053a430;
 
@@ -147,7 +147,7 @@ __declspec(naked) void InstallSelfStackReset_00421f40(void) {
         _emit   08h
         xor     edx, edx
         mov     dword ptr [g_walkCallback], edx
-        mov     eax, offset g_data_004dfc98
+        mov     eax, offset g_dispatchSave1203_004dfc98
         shr     eax, 2
         add     eax, edx
         mov     dword ptr [g_scaledInit_00542044], eax

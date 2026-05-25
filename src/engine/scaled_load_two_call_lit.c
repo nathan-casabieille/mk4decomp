@@ -29,25 +29,25 @@ extern void MStackBracket7_DispatchAndChain_004b8fa0(void);
 extern void StunDownCluster_00451fc0(void);
 
 /* @addr 0x00451f20 */
-extern unsigned int g_data_004e7ae8;
+extern unsigned int g_dispatchSave1259_004e7ae8;
 void ScaledLoadTwoCallLit_00451f20(void) {
     g_fightGroupHead = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x64);
     MStackPush2RunCountdown_004089e0();
     if (g_framePauseFlag != 0) return;
     MStackBracket7_DispatchAndChain_004b8fa0();
     if (g_framePauseFlag != 0) return;
-    g_eventQueueEnd = (unsigned int)&g_data_004e7ae8 >> 2;
+    g_eventQueueEnd = (unsigned int)&g_dispatchSave1259_004e7ae8 >> 2;
     StunDownCluster_00451fc0();
 }
 
 /* @addr 0x00451f70 */
-extern unsigned int g_data_004e7a78;
+extern unsigned int g_dispatchSave1258_004e7a78;
 void ScaledLoadTwoCallLit_00451f70(void) {
     g_fightGroupHead = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x64);
     MStackPush2RunCountdown_004089e0();
     if (g_framePauseFlag != 0) return;
     MStackBracket7_DispatchAndChain_004b8fa0();
     if (g_framePauseFlag != 0) return;
-    g_eventQueueEnd = (unsigned int)&g_data_004e7a78 >> 2;
+    g_eventQueueEnd = (unsigned int)&g_dispatchSave1258_004e7a78 >> 2;
     StunDownCluster_00451fc0();
 }

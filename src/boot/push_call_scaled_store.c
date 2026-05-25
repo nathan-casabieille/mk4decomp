@@ -18,8 +18,8 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern int func_0049cb38(int, void *);
-extern void *g_data_004146d0;
+extern void *g_dispatchSave1134_004146d0;
 void PushCallScaledStore_004143c0(void) {
-    func_0049cb38((int)&g_data_004146d0, 0x8f);
+    func_0049cb38((int)&g_dispatchSave1134_004146d0, 0x8f);
     *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x34) = g_baseSel_00542060;
 }

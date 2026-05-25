@@ -13,13 +13,13 @@ extern unsigned int g_scaledInit_00542044;
  * The 12-byte nop gap is filled by 0x90-fill. */
 extern int func_004907bc(void *);
 extern int func_00459500(void *);
-extern void *g_data_004ee340;
-extern void *g_data_004ee348;
+extern void *g_dispatchSave1310_004ee340;
+extern void *g_dispatchSave1311_004ee348;
 extern void func_00482eec(void);
 void DualPushCallPause_00482eb0(void) {
-    func_004907bc(&g_data_004ee340);
+    func_004907bc(&g_dispatchSave1310_004ee340);
     if (g_framePauseFlag != 0) return;
-    func_00459500(&g_data_004ee348);
+    func_00459500(&g_dispatchSave1311_004ee348);
 }
 
 /* @addr 0x00482ee0 (5b): tail-jmp into func_00482eec sub-entry. */

@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   set g_walkCallback=0x63, g_gameCountdown_0053a718=0x63;
  *   set g_scaledInit_00542044 = 0x4ece68>>2; jmp SpawnListBatchLoader_00477710.
  */
-extern unsigned int g_data_004ece68;
+extern unsigned int g_dispatchSave1303_004ece68;
 void DoublePushWalkInitJmp_004776b0(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_scaledInit_00542044;
@@ -121,6 +121,6 @@ void DoublePushWalkInitJmp_004776b0(void) {
     *(unsigned int *)(g_matrixStackTop * 4) = g_cj_0054205c;
     g_walkCallback = (void (*)(void))0x63;
     g_gameCountdown_0053a718 = 0x63;
-    g_scaledInit_00542044 = (unsigned int)&g_data_004ece68 >> 2;
+    g_scaledInit_00542044 = (unsigned int)&g_dispatchSave1303_004ece68 >> 2;
     SpawnListBatchLoader_00477710();
 }

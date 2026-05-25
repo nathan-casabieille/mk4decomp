@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   v = arr[key]; if v < 0x19: --v; g_eventQueueWorkType = v.
  *   call Push16Call; pause? ret; pop into g_currentNodeIdx, g_eventQueueWorkType.
  */
-extern unsigned int g_data_004e87c0;
+extern unsigned int g_dispatchSave1264_004e87c0;
 
 extern unsigned int g_arr_459160_main;
 extern unsigned int g_data_004d57ac_arr;
@@ -131,7 +131,7 @@ void MStackPush2ClampLookup_00459160(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_data_004d57ac_arr], edx
         mov     edx, dword ptr [g_walkCallback]
-        mov     eax, offset g_data_004e87c0
+        mov     eax, offset g_dispatchSave1264_004e87c0
         shr     eax, 2
         add     eax, edx
         mov     dword ptr [g_scaledInit_00542044], eax

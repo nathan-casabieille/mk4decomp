@@ -17,7 +17,7 @@
 extern unsigned int g_stateCountdown_0053a3c0;
 extern void func_00433901(void);
 extern int func_004392a0(void *);
-extern void *g_data_004e44c0;
+extern void *g_dispatchSave1226_004e44c0;
 void Cmp3JmpOrPushCall_004338e0(void) {
     int v = (int)g_stateCountdown_0053a3c0;
     g_walkCallback = (void (*)(void))v;
@@ -25,5 +25,5 @@ void Cmp3JmpOrPushCall_004338e0(void) {
         func_00433901();
         return;
     }
-    func_004392a0(&g_data_004e44c0);
+    func_004392a0(&g_dispatchSave1226_004e44c0);
 }

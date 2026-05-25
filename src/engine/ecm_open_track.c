@@ -107,7 +107,7 @@ extern unsigned int g_fightAxisNegX_00535e70;
 extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
-extern unsigned char g_x_004ffd40;
+extern unsigned char g_dispatchSave1328_004ffd40;
 extern unsigned int g_x_00ab5348;
 extern unsigned int g_x_00ab574c;
 extern unsigned int g_setjmp_00ab5750;
@@ -119,7 +119,7 @@ void ECM_OpenTrack_004be9c0(const char *name, unsigned int a, unsigned int b, vo
     g_setjmp_00ab5750 = 0;
     strcpy((char *)&g_x_00ab5348, name);
     g_x_00ab574c = a;
-    g_x_004ffd40 = (unsigned char)b;
+    g_dispatchSave1328_004ffd40 = (unsigned char)b;
     g_x_00ab5758 = (unsigned int)c;
     g_x_00ab5754 = ECM_Open(name, (void *)a, b, (unsigned int)c);
     g_titleAudioState = g_x_00ab5754;

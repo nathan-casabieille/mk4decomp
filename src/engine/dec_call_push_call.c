@@ -17,7 +17,7 @@ extern unsigned int g_dispatchVar15_0053a238;
 extern void TripleBlockInstallSelf_00465ef0(void);
 extern void AndShlStore_00409280(void);
 extern int ArgSarStoreJmp_004594f0(void *);
-extern unsigned int g_data_004ea990;
+extern unsigned int g_dispatchSave1278_004ea990;
 
 __declspec(naked) void DecCallPushCall_00466090(void) {
     __asm {
@@ -33,7 +33,7 @@ L_dcpc_body:
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_dcpc_ret
-        push    OFFSET g_data_004ea990
+        push    OFFSET g_dispatchSave1278_004ea990
         call    ArgSarStoreJmp_004594f0
         add     esp, 4
 L_dcpc_ret:

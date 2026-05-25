@@ -22,12 +22,12 @@
 extern void *g_iface_0058c7ac;
 extern int g_renderer2_present_rc;
 extern void *g_iface_0058c7bc;
-extern void *g_data_004d2870;
+extern void *g_dispatchSave1158_004d2870;
 extern void *g_comptr_0058c7bc;
 int R2_Init2(void) {
     void *p = g_iface_0058c7ac;
     if (p != 0) {
-        g_renderer2_present_rc = ((unsigned int (__stdcall **)(void *, void *, void *))(*(void **)p))[0](p, &g_data_004d2870, &g_comptr_0058c7bc);
+        g_renderer2_present_rc = ((unsigned int (__stdcall **)(void *, void *, void *))(*(void **)p))[0](p, &g_dispatchSave1158_004d2870, &g_comptr_0058c7bc);
     }
     return g_iface_0058c7bc != 0;
 }

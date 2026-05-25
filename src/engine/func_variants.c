@@ -14,7 +14,7 @@ extern unsigned int g_dispatchSave505_004e3ac8;
 extern unsigned int g_dispatchSave796_004f2240;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_table_00535ddc;
-extern unsigned int g_data_004edf68;
+extern unsigned int g_dispatchSave1308_004edf68;
 extern unsigned int g_dispatchSave795_004f21d0;
 extern unsigned int g_dispatchSave797_004f2250;
 extern unsigned int g_dispatchSave798_004f2298;
@@ -204,7 +204,7 @@ void func_00482700(void) {
     if (g_framePauseFlag != 0) return;
     ScaledChainCmp61_00482740();
     if (g_framePauseFlag != 0) return;
-    ArgSarStoreJmp_004594f0(&g_data_004edf68);
+    ArgSarStoreJmp_004594f0(&g_dispatchSave1308_004edf68);
     if (g_framePauseFlag != 0) return;
     LiteralPushCallEntZero_00488c00();
 }

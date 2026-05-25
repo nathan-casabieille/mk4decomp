@@ -18,9 +18,9 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  */
 extern void func_0048f8be(void);
-extern int g_data_004ef4d0;
+extern int g_dispatchSave1315_004ef4d0;
 void ScaledLitAddJmp_00480fb0(void) {
-    unsigned int v = (((unsigned int)&g_data_004ef4d0) >> 2) + (unsigned int)g_walkCallback;
+    unsigned int v = (((unsigned int)&g_dispatchSave1315_004ef4d0) >> 2) + (unsigned int)g_walkCallback;
     g_scaledInit_00542044 = v;
     g_xformEntityIdx = *(unsigned int *)(v * 4);
     func_0048f8be();

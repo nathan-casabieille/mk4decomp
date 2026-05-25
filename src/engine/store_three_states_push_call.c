@@ -19,7 +19,7 @@
  *   ret
  */
 extern int func_004acabc(void *p, int n);
-extern void *g_data_00450790;
+extern void *g_dispatchSave1147_00450790;
 extern unsigned int g_dispatchVar18_0052d750;
 extern unsigned int g_dispatchVar17_0052d754;
 extern unsigned int g_dispatchVar16_0052d758;
@@ -27,5 +27,5 @@ void StoreThreeStatesPushCall_00450680(void) {
     g_dispatchVar18_0052d750 = (unsigned int)g_walkCallback;
     g_dispatchVar17_0052d754 = g_eventQueueCurrent;
     g_dispatchVar16_0052d758 = g_eventQueueWorkType;
-    func_004acabc(&g_data_00450790, 0x93);
+    func_004acabc(&g_dispatchSave1147_00450790, 0x93);
 }

@@ -12,12 +12,12 @@ extern unsigned int g_scaledInit_00542044;
  * of the original 50-byte packed block; sub-entry at +0x20 (func_004111f0)
  * referenced from data table at g_dispatchSave904_004d5818 in data.c. */
 extern unsigned char g_byte_004f360c;
-extern unsigned int g_data_004d5c20;
-extern unsigned int g_data_004d5c38;
+extern unsigned int g_dispatchSave1180_004d5c20;
+extern unsigned int g_dispatchSave1181_004d5c38;
 extern void func_004111fa(void);
 extern void func_00411202(void);
 void TestByteSelectInit_004111d0(void) {
     if (g_byte_004f360c == 0) return;
-    g_eventQueueIdx = (unsigned int)&g_data_004d5c38 >> 2;
+    g_eventQueueIdx = (unsigned int)&g_dispatchSave1181_004d5c38 >> 2;
     func_004111fa();
 }

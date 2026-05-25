@@ -13,14 +13,14 @@ extern unsigned int g_phaseTimer_00537e94;
  * and state_00537e94 to 0xfff. Entry A of the original 84-byte packed
  * block; entry B (call+pause+tail-jmp) lives in func_0048e3c0. The
  * 2-byte nop gap is filled by 0x90-fill. */
-extern void *g_data_004f12f8;
+extern void *g_dispatchSave1317_004f12f8;
 extern int PackedAdvanceCallContinue_0048e630(void *);
 extern void func_00489fd0(void);
 extern void func_004312e0(void);
 extern void func_00431470(void);
 void PushCallPauseSetMaxThenCallPauseJmp_0048e380(void) {
     int v;
-    PackedAdvanceCallContinue_0048e630(&g_data_004f12f8);
+    PackedAdvanceCallContinue_0048e630(&g_dispatchSave1317_004f12f8);
     if (g_framePauseFlag != 0) return;
     g_eventQueueWorkType = 0x3c;
     func_00489fd0();

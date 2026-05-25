@@ -209,7 +209,7 @@ extern void TripleChainTailJmp_00419900(void);
 extern void TripleMul10TailIndexed_00425970(void);
 extern void TripleSubVec3_004250f0(void);
 
-extern unsigned int g_data_00408000;
+extern unsigned int g_dispatchSave1130_00408000;
 extern unsigned int g_pendingMatchVar2_004d531c;
 extern unsigned int g_pendingMatchVar_004d5324;
 extern unsigned int g_dispatchSave564_004d5354;
@@ -454,7 +454,7 @@ done:
 __declspec(naked) void SoundSetupLoop_00413ea0(void) {
     __asm {
         push    ebx
-        push    offset g_data_00408000
+        push    offset g_dispatchSave1130_00408000
         call    ThreeChanPackClamp_00404cc0
         mov     eax, dword ptr [g_cj_0054205c]
         add     esp, 4

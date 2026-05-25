@@ -115,10 +115,10 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   pick of multiplier (0x5433f0 if baseSel==0x538038, else 0x543444);
  *   call func_004ab620.
  */
-extern unsigned int g_x_004f3814;
-extern unsigned int g_x_004f3818;
-extern unsigned int g_x_004f381c;
-extern unsigned int g_x_004f3820;
+extern unsigned int g_dispatchSave1319_004f3814;
+extern unsigned int g_dispatchSave1320_004f3818;
+extern unsigned int g_dispatchSave1321_004f381c;
+extern unsigned int g_dispatchSave1322_004f3820;
 extern unsigned int g_audioRestoreSlot3_0053a1f0;
 extern unsigned int g_phaseCounter_00541fb0;
 extern unsigned int g_audioInstallSlot2_005433f0;
@@ -127,7 +127,7 @@ extern unsigned int g_audioPathFlag_0054355c;
 extern void AudioVolumeRescale_004ab690(void);
 
 /*
- * NON-COAXABLE: orig keeps d (g_x_004f3818) in ecx (volatile) across the entire
+ * NON-COAXABLE: orig keeps d (g_dispatchSave1320_004f3818) in ecx (volatile) across the entire
  * dispatch branch, and reuses esi as scratch for two different short-lived values
  * (ref in dispatch branch, then f intermediate after noScale). MSVC /O2 instead
  * promotes d to edi (extra callee-saved push), giving two-register prologue
@@ -137,12 +137,12 @@ extern void AudioVolumeRescale_004ab690(void);
 __declspec(naked) void WeightedSumClampHelper_00439920(void) {
     __asm {
         mov     eax, dword ptr [g_stateCountdown_0053a3c0]
-        mov     edx, dword ptr [g_x_004f3814]
-        imul    eax, dword ptr [g_x_004f381c]
+        mov     edx, dword ptr [g_dispatchSave1319_004f3814]
+        imul    eax, dword ptr [g_dispatchSave1321_004f381c]
         mov     ecx, dword ptr [g_audioPathFlag_0054355c]
         add     eax, edx
         test    ecx, ecx
-        mov     ecx, dword ptr [g_x_004f3818]
+        mov     ecx, dword ptr [g_dispatchSave1320_004f3818]
         push    esi
         je      noScale
         mov     edx, dword ptr [g_baseSel_00542060]
@@ -159,7 +159,7 @@ after:
 noScale:
         mov     esi, dword ptr [g_phaseCounter_00541fb0]
         mov     edx, dword ptr [g_audioRestoreSlot3_0053a1f0]
-        imul    edx, dword ptr [g_x_004f3820]
+        imul    edx, dword ptr [g_dispatchSave1322_004f3820]
         imul    esi, ecx
         add     esi, eax
         lea     eax, [esi + edx]

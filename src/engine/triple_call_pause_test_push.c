@@ -15,7 +15,7 @@ extern void CjTableThresholdDispatch_00488f00(void);
 extern void func_00484572(void);
 extern void func_004ae794(void);
 extern void ArgSarStoreJmp_004594f0(void);
-extern unsigned int g_data_004ee2f0;
+extern unsigned int g_dispatchSave1309_004ee2f0;
 
 void TripleCallPauseTestPush_00482e60(void) {
     __asm {
@@ -42,7 +42,7 @@ void TripleCallPauseTestPush_00482e60(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        push    OFFSET g_data_004ee2f0
+        push    OFFSET g_dispatchSave1309_004ee2f0
         call    ArgSarStoreJmp_004594f0
         add     esp, 4
         }
