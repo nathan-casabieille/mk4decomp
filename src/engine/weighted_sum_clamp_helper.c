@@ -142,6 +142,14 @@ extern unsigned int g_x_00543444;
 extern unsigned int g_x_0054355c;
 extern void AudioVolumeRescale_004ab690(void);
 
+/*
+ * NON-COAXABLE: orig keeps d (g_x_004f3818) in ecx (volatile) across the entire
+ * dispatch branch, and reuses esi as scratch for two different short-lived values
+ * (ref in dispatch branch, then f intermediate after noScale). MSVC /O2 instead
+ * promotes d to edi (extra callee-saved push), giving two-register prologue
+ * (push esi/edi) vs orig's single push esi. The volatile-register-survives-
+ * branch + register-reuse pattern is not coaxable from pure C.
+ */
 __declspec(naked) void WeightedSumClampHelper_00439920(void) {
     __asm {
         mov     eax, dword ptr [g_x_0053a3c0]
