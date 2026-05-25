@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_005420c8;
+extern unsigned int g_dispatchTableArr2_005420c8;
 extern unsigned int g_savedNode_00541f98;
 extern void VoicePicker_00401000(void);
 extern void ChainNodeAdvanceCallback_00408e70(void);
@@ -141,7 +141,7 @@ extern unsigned int g_data_00523ae4;
 extern unsigned int g_dispatchSave12_00523ae0;
 extern unsigned int g_dispatchSave11_00523b1c;
 extern unsigned int g_dispatchSave5_00523b20;
-extern unsigned int g_data_00523b24;
+extern unsigned int g_phaseThunkSave_00523b24;
 extern unsigned char g_data_00523b18;
 extern void PendingMatch_004013a0(void);
 extern void StoreTwoCall_0049cb40(void);

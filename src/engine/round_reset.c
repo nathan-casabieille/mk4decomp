@@ -127,7 +127,7 @@ extern unsigned int g_dst_0053a6e0;
 extern unsigned int g_phaseThunkSlot4_0053a6f8;
 extern unsigned int g_phaseThunkState_0053a730;
 extern unsigned int g_data_0053a788;
-extern unsigned int g_data_0053e34c;
+extern unsigned int g_dispatchClr1_0053e34c;
 extern unsigned int g_data_00541d84;
 extern unsigned int g_smState4Way_00541dc8;
 extern unsigned int g_titleDemoState_00541df0;
@@ -218,7 +218,7 @@ __declspec(naked) void RoundReset_004223e0(void)
         mov      byte ptr [g_tripleEntryFlag_0054380c], bl
         mov      dword ptr [g_phaseThunkSlot4_0053a6f8], ebx
         mov      dword ptr [g_data_0053a788], ebx
-        mov      dword ptr [g_data_0053e34c], ebx
+        mov      dword ptr [g_dispatchClr1_0053e34c], ebx
         mov      dword ptr [g_smState4Way_00541dc8], ebx
         mov      dword ptr [g_phaseTimer_00537e94], ebx
         mov      dword ptr [g_phaseInstallSlot_0053a42c], ebx

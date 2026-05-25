@@ -153,7 +153,7 @@ extern unsigned int g_data_00543a5c;
 extern unsigned int g_data_00543a60;
 extern unsigned int g_data_00543a64;
 extern unsigned int g_data_00543a68;
-extern unsigned int g_data_00543a9c;
+extern unsigned int g_menuRestoreD_00543a9c;
 extern unsigned int g_menuRestoreA_00543aa0;
 extern unsigned int g_menuRestoreB_00543aac;
 extern unsigned int g_menuRestoreC_00543ab0;
@@ -237,7 +237,7 @@ __declspec(naked) void AudioRestoreGlobals_004acce0(void)
     L_arg_tail:
         mov     al, byte ptr [g_byte_00543ab4]
         mov     edx, dword ptr [g_menuRestoreC_00543ab0]
-        mov     ecx, dword ptr [g_data_00543a9c]
+        mov     ecx, dword ptr [g_menuRestoreD_00543a9c]
         mov     byte ptr [g_byte_004f360c], al
         mov     byte ptr [g_byte_004f3610], al
         mov     eax, dword ptr [g_menuRestoreB_00543aac]

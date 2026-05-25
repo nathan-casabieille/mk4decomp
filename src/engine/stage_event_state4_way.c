@@ -116,7 +116,7 @@ extern void CondPickDualStore_0049c670(void);
 extern void StoreTwoCall_0049cb40(void);
 extern unsigned int g_or_0052ab40;
 extern unsigned int g_const_004985b0;
-extern unsigned int g_data_005432f0;
+extern unsigned int g_sweepClusterBase_005432f0;
 
 extern void FiveCallGuardSetTail_0046f6b0(void);
 extern void GuardedPackedSlotInit_00428760(void);
@@ -206,7 +206,7 @@ __declspec(naked) void StageEventState4Way_004982f0(void)
         mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x30f
         mov      dword ptr [g_walkCallback], eax
-        push     OFFSET g_data_005432f0
+        push     OFFSET g_sweepClusterBase_005432f0
         mov      dword ptr [ecx*4 + 0x74], eax
         call     GuardedPackedSlotInit_00428760
         mov      eax, dword ptr [g_framePauseFlag]

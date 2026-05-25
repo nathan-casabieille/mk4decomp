@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_phaseThunkVar2_0052aabc;
 extern unsigned int g_tickFlagF;
 extern unsigned int g_eventMusicSlot2_0053a318;
-extern unsigned int g_data_00541dd8;
+extern unsigned int g_eventMusicVar_00541dd8;
 extern unsigned int g_dispatchVar3_00543564;
 extern unsigned int g_eventMusicSlot_00543594;
 extern unsigned int g_data_00550000;
@@ -267,7 +267,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         ret
     L_f733:
         mov      dword ptr [g_walkCallback], ebx
-        mov      dword ptr [g_data_00541dd8], ebx
+        mov      dword ptr [g_eventMusicVar_00541dd8], ebx
         mov      dword ptr [esi + 8], OFFSET L_f6d0
         mov      dword ptr [esi + 0x84], ebx
         mov      dword ptr [g_pendingNodeType], 0xa

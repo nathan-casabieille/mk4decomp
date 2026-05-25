@@ -121,7 +121,7 @@ extern unsigned int g_data_004f61d0;
 extern unsigned int g_data_004f61d8;
 extern unsigned int g_data_004f61e0;
 extern unsigned int g_menuPageDispatch_00543a98;
-extern unsigned int g_data_00543a9c;
+extern unsigned int g_menuRestoreD_00543a9c;
 extern unsigned int g_menuRestoreA_00543aa0;
 extern unsigned int g_menuRestoreB_00543aac;
 extern unsigned int g_menuRestoreC_00543ab0;
@@ -188,7 +188,7 @@ __declspec(naked) void MenuPageTailDispatch_004b8080(void)
         push     OFFSET g_data_00ab41c8
         jmp      short L_813b
     L_8130:
-        mov      ecx, dword ptr [g_data_00543a9c]
+        mov      ecx, dword ptr [g_menuRestoreD_00543a9c]
         mov      edx, dword ptr [esp + ecx*4 + 8]
         push     edx
     L_813b:

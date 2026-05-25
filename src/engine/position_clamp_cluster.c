@@ -112,7 +112,7 @@ extern void Mul10Tail_00404af0(void);
 extern void PositionClampCluster_00489a30(void);
 extern unsigned int g_primary_0052d74c;
 extern unsigned int g_secondary_00538068;
-extern unsigned int g_data_0054200c;
+extern unsigned int g_dispatchVar20_0054200c;
 
 extern unsigned int g_secondary_00535d04;
 extern unsigned int g_primary_0053a774;
@@ -141,7 +141,7 @@ __declspec(naked) void GeoTransformDispatchAndApply_00489840(void)
         inc      eax
         mov      dword ptr [g_walkCallback], eax
     L_9889:
-        mov      edx, dword ptr [g_data_0054200c]
+        mov      edx, dword ptr [g_dispatchVar20_0054200c]
         add      eax, edx
         mov      dword ptr [g_pendingNodeType], eax
         mov      eax, dword ptr [eax*4]
