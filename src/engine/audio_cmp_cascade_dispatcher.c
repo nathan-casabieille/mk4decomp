@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004e2864;
-extern unsigned int g_data_00537e90;
+extern unsigned int g_audioInitPeriodic_00537e90;
 extern unsigned int g_state2_00537ea8;
 extern unsigned int g_audioInstall2State_00537f88;
 extern void AudioMStackPushHandlerPair_0049ff30(void);
@@ -142,7 +142,7 @@ __declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         jne     L_acsd_ret
-        mov     eax, dword ptr [g_data_00537e90]
+        mov     eax, dword ptr [g_audioInitPeriodic_00537e90]
         mov     dword ptr [g_eventQueueNotMask], ebx
         cmp     eax, 0xf
         mov     dword ptr [g_acc_00542078], eax

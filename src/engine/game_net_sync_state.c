@@ -113,7 +113,7 @@ extern unsigned int g_const_004a0b00;
 extern unsigned int g_const_004a0dc0;
 extern unsigned int g_const_004a10d0;
 extern unsigned int g_word_004e2860;
-extern unsigned int g_data_00537e90;
+extern unsigned int g_audioInitPeriodic_00537e90;
 extern unsigned int g_audioInstall2State_00537f88;
 extern unsigned int g_state2_00541d88;
 extern void AudioMStackPushHandlerPair_0049ff30(void);
@@ -198,7 +198,7 @@ __declspec(naked) void GameNetSyncState_0049fb70(void)
         test     al, bl
         je       short L_fc9e
         mov      edx, dword ptr [g_acc_00542078]
-        mov      eax, dword ptr [g_data_00537e90]
+        mov      eax, dword ptr [g_audioInitPeriodic_00537e90]
         cmp      edx, eax
         je       short L_fd46
     L_fc9e:

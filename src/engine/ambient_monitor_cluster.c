@@ -135,7 +135,7 @@ extern s32 g_dlNalt2;
 extern unsigned int g_data_0053a468;
 extern unsigned int g_phaseCounter_00541fb0;
 extern unsigned int g_data_005433ec;
-extern unsigned int g_data_00543714;
+extern unsigned int g_audioMatchStartFlag_00543714;
 extern unsigned int g_data_00543728;
 
 __declspec(naked) void SceneEvalFsm_0049dea0(void)
@@ -241,7 +241,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         mov      dword ptr [g_walkCallback], eax
         je       L_e0fc
     L_e05e:
-        cmp      dword ptr [g_data_00543714], ebx
+        cmp      dword ptr [g_audioMatchStartFlag_00543714], ebx
         je       L_e09d
         cmp      dword ptr [g_gtOtherFlag], ebx
         je       L_e09d

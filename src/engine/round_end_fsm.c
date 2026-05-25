@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_hitPhase_00537f30;
-extern unsigned int g_data_0052d724;
+extern unsigned int g_quadEntryGate_0052d724;
 extern void PendingMatch_0042d240(void);
 extern void ScenegraphWalk_0041f7d0(void);
 extern void PendingMatch_00420300(void);
@@ -130,7 +130,7 @@ extern void ScaledInitWithCounterAndType_004314f0(void);
  *       PendingMatch_0042d240. Else bumps g_hitPhase_00537f30 by 1, calls
  *       CallPauseClear3CallTriple_00428030, then chains
  *       ScenegraphWalk_0041f7d0 + PendingMatch_00420300.
- *     Phase 0: g_data_0052d724=1, reads g_or_0052ab40 and tests
+ *     Phase 0: g_quadEntryGate_0052d724=1, reads g_or_0052ab40 and tests
  *       bit 3; if clear calls TwinMStackPushScaledChain_00422110. Either way installs Self
  *       at body with slot[+0x84]=1, packs (Self + 0x01000000) at the
  *       bumped scaled slot, calls RoundEndFsm_0042b2f0, arms 0x541e6c=1.
@@ -183,7 +183,7 @@ __declspec(naked) void Phase3InstallSelfChain_00421380(void) {
         ret
     L_pis2_phase0:
         mov     eax, dword ptr [g_or_0052ab40]
-        mov     dword ptr [g_data_0052d724], 1
+        mov     dword ptr [g_quadEntryGate_0052d724], 1
         mov     dword ptr [g_walkCallback], eax
         and     eax, 8
         mov     dword ptr [g_xformScratch94], eax

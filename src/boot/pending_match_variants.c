@@ -237,7 +237,7 @@ extern unsigned int g_or_0052ab40;
 extern unsigned int g_bootInitState_00535de4;
 extern unsigned int g_data_00537efc;
 extern unsigned int g_alarmTriState_0053813c;
-extern unsigned int g_data_0053a19c;
+extern unsigned int g_pendingMatchSlot_0053a19c;
 extern unsigned int g_data_00541dc0;
 extern unsigned int g_savedNode_00541f98;
 extern unsigned int g_phaseCounter_00541fb0;
@@ -5920,10 +5920,10 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      dword ptr [esi + 0x84], ebp
         jbe      L_1ba3
     L_1c1e:
-        mov      ecx, dword ptr [g_data_0053a19c]
+        mov      ecx, dword ptr [g_pendingMatchSlot_0053a19c]
         lea      eax, [ecx + 1]
         cmp      eax, 3
-        mov      dword ptr [g_data_0053a19c], eax
+        mov      dword ptr [g_pendingMatchSlot_0053a19c], eax
         jbe      L_1c37
         mov      dword ptr [g_data_00541dc0], ebx
     L_1c37:
@@ -5979,7 +5979,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         jne      L_1cb3
         mov      dword ptr [g_walkCallback], ebp
         mov      dword ptr [g_data_00541dc0], ebp
-        mov      dword ptr [g_data_0053a19c], ebp
+        mov      dword ptr [g_pendingMatchSlot_0053a19c], ebp
         mov      dword ptr [g_active_0053a408], ebp
         mov      dword ptr [g_active_00537e88], ebp
         mov      dword ptr [esi + 8], edi

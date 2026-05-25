@@ -117,7 +117,7 @@ extern unsigned int g_state4_0053a700;
 extern u32 g_dlMode;
 extern unsigned int g_data_005433ec;
 extern unsigned int g_data_00543568;
-extern unsigned int g_data_00543714;
+extern unsigned int g_audioMatchStartFlag_00543714;
 extern u8 g_dlEnabledFlag;
 extern void AudioInstallSelfStatePush_004aa8a0(void);
 extern void ClearTwoCallSetStore_004a2270(void);
@@ -237,7 +237,7 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         add      esp, 4
         shr      edx, 2
         shr      eax, 2
-        mov      dword ptr [g_data_00543714], ebx
+        mov      dword ptr [g_audioMatchStartFlag_00543714], ebx
         mov      dword ptr [g_data_005433ec], ebx
         mov      dword ptr [g_data_00543568], ebx
         mov      dword ptr [g_currentNodeIdx], edx

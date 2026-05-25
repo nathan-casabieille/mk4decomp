@@ -114,7 +114,7 @@ extern unsigned int g_load_0052ab10;
 extern unsigned int g_stateChangeBase_005380b0;
 extern unsigned int g_data_005380b4;
 extern unsigned int g_data_005380b8;
-extern unsigned int g_data_005380a4;
+extern unsigned int g_stateChangePair2_005380a4;
 extern unsigned int g_stateChangePair_00541d6c;
 extern unsigned int g_state_0053a278;
 extern unsigned char g_data_0050b130;
@@ -144,7 +144,7 @@ void SequencedInit3CallB_00458ae0(void) {
     g_stateChangeBase_005380b0 = 0x27;
     g_data_005380b4 = 0x27;
     g_data_005380b8 = 0x27;
-    g_data_005380a4 = 0;
+    g_stateChangePair2_005380a4 = 0;
     g_stateChangePair_00541d6c = 0;
     g_state_0053a278 = 0;
 }

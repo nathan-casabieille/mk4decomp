@@ -193,7 +193,7 @@ extern unsigned int g_count_005433b8;
 extern unsigned int g_data_005433bc;
 extern unsigned int g_audioBankPick_005433c0;
 extern unsigned int g_data_005433cc;
-extern unsigned int g_data_005433f4;
+extern unsigned int g_audioMicroEntry_005433f4;
 extern unsigned int g_data_005433f8;
 extern unsigned int g_counter_0054359c;
 extern unsigned int g_byte_005435a0;
@@ -380,7 +380,7 @@ __declspec(naked) void AudioInitLoopTriple_004a7840(void)
         cmp     esi, 5
         jl      short L_loop3
         call    DrainQueueCallEach_004a1ec0
-        cmp     dword ptr [g_data_005433f4], 2
+        cmp     dword ptr [g_audioMicroEntry_005433f4], 2
         jne     short L_tail85c0
         call    PendingMatch_004a8ca0
         pop     esi

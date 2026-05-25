@@ -487,7 +487,7 @@ extern unsigned int g_data_0050122c;
 extern unsigned int g_data_00501250;
 extern unsigned int g_data_0050b604;
 extern unsigned int g_data_005117c4;
-extern unsigned int g_data_0052d724;
+extern unsigned int g_quadEntryGate_0052d724;
 extern unsigned int g_data_00535d58;
 extern unsigned int g_data_00535d60;
 extern unsigned int g_data_00535d68;
@@ -502,7 +502,7 @@ extern unsigned int g_clamp_00537f2c;
 extern unsigned int g_byte_00538148;
 extern s32 g_dlNalt3;
 extern s32 g_dlNalt4;
-extern unsigned int g_data_0053a2d0;
+extern unsigned int g_walkCallbackSrc_0053a2d0;
 extern unsigned int g_data_0053a324;
 extern unsigned int g_clamp_0053a328;
 extern unsigned int g_audioStreamState_0053a430;
@@ -522,11 +522,11 @@ extern unsigned int g_data_00542a58;
 extern unsigned int g_data_00542b68;
 extern unsigned int g_installSelfCounter_005433e8;
 extern unsigned int g_data_005433ec;
-extern unsigned int g_data_00543714;
+extern unsigned int g_audioMatchStartFlag_00543714;
 extern u8 g_dlEnabledFlag;
 extern unsigned int g_data_00543728;
 extern unsigned int g_mul10SumState_0054388c;
-extern unsigned int g_data_00543890;
+extern unsigned int g_mul10SumState2_00543890;
 extern void AiAngleDistComputation_00431920(void);
 extern void AmbientMonitorCluster_0049e3c0(void);
 extern void AndStorePushCallZero_0048a220(void);
@@ -1820,7 +1820,7 @@ __declspec(naked) void StateMachineDualModuloInstall_0043d620(void) {
  *     - matches g_gtPlayerProbe2: if g_mul10SumState_0054388c is set, picks
  *       &g_data_004ec050>>2 (state 1) or &g_data_004ec040>>2 (other)
  *       into g_eventQueueTotal, clears g_mul10SumState_0054388c, jumps to next.
- *     - matches g_gtPlayerProbe1: mirror with g_data_00543890.
+ *     - matches g_gtPlayerProbe1: mirror with g_mul10SumState2_00543890.
  *     - default: both g_eventQueueTotal and 0x54204c set to the two
  *       packed_ptrs, zeroes g_eventQueueChild, calls
  *       GuardedDualConst2AndToggle_0048eba0. If bit 0 of 0x54208c set,
@@ -1863,7 +1863,7 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
     L_sfp_check2:
         cmp     ecx, dword ptr [g_gtPlayerProbe1]
         jne     short L_sfp_defaultPath
-        mov     eax, dword ptr [g_data_00543890]
+        mov     eax, dword ptr [g_mul10SumState2_00543890]
         test    eax, eax
         je      short L_sfp_defaultPath
         cmp     eax, 1
@@ -1873,7 +1873,7 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
     L_sfp_useEax2:
         shr     eax, 2
         mov     dword ptr [g_eventQueueTotal], eax
-        mov     dword ptr [g_data_00543890], 0
+        mov     dword ptr [g_mul10SumState2_00543890], 0
         jmp     short L_sfp_callBlock
     L_sfp_defaultPath:
         mov     eax, offset g_data_004ec040
@@ -1941,7 +1941,7 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
  *       PendingMatch_0042d240. Else bumps g_hitPhase_00537f30 by 1, calls
  *       CallPauseClear3CallTriple_00428030, then chains
  *       ScenegraphWalk_0041f7d0 + PendingMatch_00420300.
- *     Phase 0: g_data_0052d724=1, reads g_or_0052ab40 and tests
+ *     Phase 0: g_quadEntryGate_0052d724=1, reads g_or_0052ab40 and tests
  *       bit 3; if clear calls TwinMStackPushScaledChain_00422110. Either way installs Self
  *       at body with slot[+0x84]=1, packs (Self + 0x01000000) at the
  *       bumped scaled slot, calls RoundEndFsm_0042b2f0, arms 0x541e6c=1.
@@ -1990,7 +1990,7 @@ __declspec(naked) void Phase3InstallSelfChain_00421380(void) {
         ret
     L_pis2_phase0:
         mov     eax, dword ptr [g_or_0052ab40]
-        mov     dword ptr [g_data_0052d724], 1
+        mov     dword ptr [g_quadEntryGate_0052d724], 1
         mov     dword ptr [g_walkCallback], eax
         and     eax, 8
         mov     dword ptr [g_xformScratch94], eax
@@ -4299,7 +4299,7 @@ __declspec(naked) void EnduranceStateInitWalk_004785a0(void)
         xor      eax, eax
         cmp      ecx, eax
         jne      short L_8665
-        mov      edx, dword ptr [g_data_00543714]
+        mov      edx, dword ptr [g_audioMatchStartFlag_00543714]
         mov      dword ptr [g_data_00535d58], eax
         cmp      edx, eax
         mov      dword ptr [g_data_0053a324], eax
@@ -4315,7 +4315,7 @@ __declspec(naked) void EnduranceStateInitWalk_004785a0(void)
         mov      dword ptr [g_clamp_0053a328], ecx
         mov      dword ptr [g_clamp_0053e348], ecx
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_0053a2d0], eax
+        mov      dword ptr [g_walkCallbackSrc_0053a2d0], eax
         mov      dword ptr [g_data_00535db0], eax
         call     SetWalkCurCallPauseDirty_00404c70
         add      esp, 8
@@ -4702,7 +4702,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         mov      dword ptr [g_walkCallback], eax
         je       L_e0fc
     L_e05e:
-        cmp      dword ptr [g_data_00543714], ebx
+        cmp      dword ptr [g_audioMatchStartFlag_00543714], ebx
         je       L_e09d
         cmp      dword ptr [g_gtOtherFlag], ebx
         je       L_e09d
@@ -7731,7 +7731,7 @@ __declspec(naked) void PendingMatch_004694b0(void)
         mov      ecx, dword ptr [g_dlNalt3]
         mov      dword ptr [g_currentNodeIdx], edx
         mov      edx, dword ptr [g_player2NodeIdx]
-        mov      dword ptr [g_data_0053a2d0], edi
+        mov      dword ptr [g_walkCallbackSrc_0053a2d0], edi
         mov      dword ptr [g_gtPlayerProbe2], eax
         mov      dword ptr [g_player3NodeIdx], edi
         mov      dword ptr [g_eventQueueCurrent], ecx

@@ -117,13 +117,13 @@ extern int g_data_004f3af0;
  * AudioMicroEntries_004a7600 - 222b audio function with six small entry points (16b-aligned).
  *   Entry 0x004a7600: g_eventQueueWorkType = table[arg1]; tail-jmp Push16Call.
  *   Entry 0x004a7620: dispatch on g_byte_00543590 == 1: set (g_data_004f3aec=1, g_data_004f3af0=0)
- *     else (g_data_004f3aec=0, g_data_004f3af0=1); g_data_005433f4=1; tail-jmp AudioStateMachineMulti_004a7930.
+ *     else (g_data_004f3aec=0, g_data_004f3af0=1); g_audioMicroEntry_005433f4=1; tail-jmp AudioStateMachineMulti_004a7930.
  *   Entry 0x004a7660: countdown helper on g_x_004f3ae4 (decrements; sets g_xformDirtyFlags|=1 at end).
  *   Entry 0x004a7680: countup helper on g_x_004f3ae4 (increments; sets g_xformDirtyFlags|=1 at end).
  *   Entry 0x004a76a0: same countdown helper but on g_x_004f3ae8.
  *   Entry 0x004a76c0: same countup helper but on g_x_004f3ae8.
  */
-extern unsigned int g_data_005433f4;
+extern unsigned int g_audioMicroEntry_005433f4;
 extern unsigned int g_x_004f3ae4;
 extern unsigned int g_x_004f3ae8;
 
@@ -148,7 +148,7 @@ __declspec(naked) void AudioMicroEntries_004a7600(void)
         mov     cl, byte ptr [g_gtModeFlag]
         mov     eax, 1
         cmp     cl, al
-        mov     dword ptr [g_data_005433f4], eax
+        mov     dword ptr [g_audioMicroEntry_005433f4], eax
         jne     short L_e2_elseBranch
         mov     dword ptr [g_data_004f3aec], eax
         mov     dword ptr [g_data_004f3af0], 0

@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  *   if [0x537e88] != 0: tail-call F2.
  */
 extern unsigned int g_audioPathFlag_0054355c;
-extern unsigned int g_data_00543714;
+extern unsigned int g_audioMatchStartFlag_00543714;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_active_00537e88;
 extern void DualSeqBranchInit_00477a20(void);
@@ -24,7 +24,7 @@ __declspec(naked) void MultiGateDispatchCallJmp_004779d0(void) {
         test    eax, eax
         _emit   75h
         _emit   33h
-        mov     eax, dword ptr [g_data_00543714]
+        mov     eax, dword ptr [g_audioMatchStartFlag_00543714]
         test    eax, eax
         _emit   74h
         _emit   2bh

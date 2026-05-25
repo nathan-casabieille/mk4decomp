@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_tickFlagF;
 extern u32 g_dlSomeFlag2;
-extern unsigned int g_data_0052d724;
+extern unsigned int g_quadEntryGate_0052d724;
 extern unsigned int g_phaseTimer_00537e94;
 extern unsigned int g_dst_00537ea4;
 extern unsigned int g_dispatchSave_00537ef4;
@@ -224,7 +224,7 @@ __declspec(naked) void RoundReset_004223e0(void)
         mov      dword ptr [g_data_0053a42c], ebx
         mov      dword ptr [g_dispatchSave_00537ef4], ebx
         mov      dword ptr [g_audioBankSel_00537f94], ebx
-        mov      dword ptr [g_data_0052d724], ebx
+        mov      dword ptr [g_quadEntryGate_0052d724], ebx
         mov      dword ptr [g_audioBank2State_00537f98], ebx
         mov      dword ptr [g_data_0053a730], ebx
         mov      dword ptr [g_data_00541d84], ebx

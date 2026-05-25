@@ -111,15 +111,15 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 /*
  * AudioTriEntryFlagPairInit_004a22f0 - 207b audio 3-entry init variant of AudioModeInit_004a2610.
  *   Entry 0x004a22f0: same FlagPair logic, but g_dlMode=0 and tail-jmp InstallSelfTableWalk_004200d0.
- *   Entry 0x004a2370: push 6; TableWalkBoundedCmp; g_x_00543714=1, g_x_005433ec=1; jmp entry1.
- *   Entry 0x004a2390: push 6; TableWalkBoundedCmp; g_x_00543714=1, g_x_005433ec=1, g_gtOtherFlag=1;
+ *   Entry 0x004a2370: push 6; TableWalkBoundedCmp; g_audioMatchStartFlag_00543714=1, g_x_005433ec=1; jmp entry1.
+ *   Entry 0x004a2390: push 6; TableWalkBoundedCmp; g_audioMatchStartFlag_00543714=1, g_x_005433ec=1, g_gtOtherFlag=1;
  *     g_x_005433a8=0, g_installSelfCounter_005433e8=0; jmp entry1.
  */
 extern u32 g_dlMode;
 extern unsigned int g_x_005433a8;
 extern unsigned int g_installSelfCounter_005433e8;
 extern unsigned int g_x_005433ec;
-extern unsigned int g_x_00543714;
+extern unsigned int g_audioMatchStartFlag_00543714;
 extern void ClearTwoCallSetStore_004a2270(void);
 extern void DualScaledStoreConst_004a22c0(void);
 extern void InstallSelfTableWalk_004200d0(void);
@@ -171,7 +171,7 @@ __declspec(naked) void AudioTriEntryFlagPairInit_004a22f0(void)
         call    TableWalkBoundedCmp_004bd890
         mov     eax, 1
         add     esp, 4
-        mov     dword ptr [g_x_00543714], eax
+        mov     dword ptr [g_audioMatchStartFlag_00543714], eax
         mov     dword ptr [g_x_005433ec], eax
         jmp     AudioTriEntryFlagPairInit_004a22f0
         _emit   90h
@@ -180,7 +180,7 @@ __declspec(naked) void AudioTriEntryFlagPairInit_004a22f0(void)
         call    TableWalkBoundedCmp_004bd890
         mov     eax, 1
         add     esp, 4
-        mov     dword ptr [g_x_00543714], eax
+        mov     dword ptr [g_audioMatchStartFlag_00543714], eax
         mov     dword ptr [g_x_005433ec], eax
         mov     dword ptr [g_gtOtherFlag], eax
         xor     eax, eax

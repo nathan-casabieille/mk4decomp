@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     - matches g_gtPlayerProbe2: if g_mul10SumState_0054388c is set, picks
  *       &g_data_004ec050>>2 (state 1) or &g_data_004ec040>>2 (other)
  *       into g_eventQueueTotal, clears g_mul10SumState_0054388c, jumps to next.
- *     - matches g_gtPlayerProbe1: mirror with g_data_00543890.
+ *     - matches g_gtPlayerProbe1: mirror with g_mul10SumState2_00543890.
  *     - default: both g_eventQueueTotal and 0x54204c set to the two
  *       packed_ptrs, zeroes g_eventQueueChild, calls
  *       GuardedDualConst2AndToggle_0048eba0. If bit 0 of 0x54208c set,
@@ -132,7 +132,7 @@ extern unsigned int g_data_004ec040;
 extern unsigned int g_data_004ec050;
 extern unsigned int g_data_00542a58;
 extern unsigned int g_mul10SumState_0054388c;
-extern unsigned int g_data_00543890;
+extern unsigned int g_mul10SumState2_00543890;
 extern void GuardedPackedSlotInit_00428760(void);
 extern void Mul10SumStoreNegCommit_00490970(void);
 extern void PendingMatch_004694b0(void);
@@ -172,7 +172,7 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
     L_sfp_check2:
         cmp     ecx, dword ptr [g_gtPlayerProbe1]
         jne     short L_sfp_defaultPath
-        mov     eax, dword ptr [g_data_00543890]
+        mov     eax, dword ptr [g_mul10SumState2_00543890]
         test    eax, eax
         je      short L_sfp_defaultPath
         cmp     eax, 1
@@ -182,7 +182,7 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
     L_sfp_useEax2:
         shr     eax, 2
         mov     dword ptr [g_eventQueueTotal], eax
-        mov     dword ptr [g_data_00543890], 0
+        mov     dword ptr [g_mul10SumState2_00543890], 0
         jmp     short L_sfp_callBlock
     L_sfp_defaultPath:
         mov     eax, offset g_data_004ec040

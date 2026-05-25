@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_stateChangePair_00541d6c;
 extern unsigned int g_data_0053a278;
-extern unsigned int g_data_005380a4;
+extern unsigned int g_stateChangePair2_005380a4;
 extern unsigned int g_stateFlag_00537e98;
 extern void SpawnTrioInitCluster_00458440(void);
 extern void MStackPush2ClampLookup_00459160(void);
@@ -133,7 +133,7 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
         cmp     edx, 0x27
         mov     dword ptr [g_walkCallback], edx
         je      L_gscp_dec
-        mov     ecx, dword ptr [g_data_005380a4]
+        mov     ecx, dword ptr [g_stateChangePair2_005380a4]
         mov     eax, offset g_stateChangeBase_005380b0
         shr     eax, 2
         cmp     ecx, 2
@@ -170,7 +170,7 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
         add     esp, 8
         jmp     CallSetPause_0041f830
     L_gscp_setSlot:
-        mov     dword ptr [g_data_005380a4], eax
+        mov     dword ptr [g_stateChangePair2_005380a4], eax
         call    SpawnTrioInitCluster_00458440
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -181,7 +181,7 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
         add     esp, 8
         jmp     CallSetPause_0041f830
     L_gscp_dec:
-        mov     edx, dword ptr [g_data_005380a4]
+        mov     edx, dword ptr [g_stateChangePair2_005380a4]
         lea     ecx, [edx - 1]
         test    ecx, ecx
         mov     dword ptr [g_eventQueueCurrent], ecx
@@ -189,7 +189,7 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
         jmp     CallSetPause_0041f830
     L_gscp_decOk:
         mov     eax, offset g_stateChangeBase_005380b0
-        mov     dword ptr [g_data_005380a4], ecx
+        mov     dword ptr [g_stateChangePair2_005380a4], ecx
         shr     eax, 2
         add     eax, ecx
         mov     dword ptr [g_walkCallback], 0x27

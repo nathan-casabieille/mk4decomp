@@ -115,7 +115,7 @@ extern void DrainQueueCallEach_004a1ec0(void);
 extern void PendingMatch_004a8ca0(void);
 extern void AudioInstallSelfStateMachine2_004a85c0(void);
 extern unsigned int g_data_0050f114;
-extern unsigned int g_data_005433f4;
+extern unsigned int g_audioMicroEntry_005433f4;
 
 /*
  * AudioInitLoopTriple_004a7840 - 237b audio 2-entry init + triple-loop body.
@@ -195,7 +195,7 @@ __declspec(naked) void AudioInitLoopTriple_004a7840(void)
         cmp     esi, 5
         jl      short L_loop3
         call    DrainQueueCallEach_004a1ec0
-        cmp     dword ptr [g_data_005433f4], 2
+        cmp     dword ptr [g_audioMicroEntry_005433f4], 2
         jne     short L_tail85c0
         call    PendingMatch_004a8ca0
         pop     esi

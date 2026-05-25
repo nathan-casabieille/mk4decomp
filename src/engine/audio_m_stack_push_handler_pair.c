@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_word_004e2860;
 extern unsigned int g_data_004e2864;
 extern unsigned int g_dispatchArg_00535e48;
-extern unsigned int g_data_00537e90;
+extern unsigned int g_audioInitPeriodic_00537e90;
 extern unsigned int g_audioInstall2State_00537f88;
 extern unsigned int g_state2_0053a1bc;
 extern unsigned int g_audioBitField_00541fc0;
@@ -218,7 +218,7 @@ __declspec(naked) void AudioMStackPushHandlerPair_0049ff30(void)
         test    cl, al
         je      short L_amspp_sub2_check
         mov     edx, dword ptr [g_eventQueueEnd]
-        mov     ecx, dword ptr [g_data_00537e90]
+        mov     ecx, dword ptr [g_audioInitPeriodic_00537e90]
         cmp     edx, ecx
         je      short L_amspp_sub2_install
     L_amspp_sub2_check:

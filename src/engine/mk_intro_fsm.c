@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004d56d8;
-extern unsigned int g_data_0052d724;
+extern unsigned int g_quadEntryGate_0052d724;
 extern unsigned int g_clamp_00537f2c;
 extern unsigned int g_clamp_0053a6dc;
 extern void Cmp2DirtyToggle_00423870(void);
@@ -190,7 +190,7 @@ __declspec(naked) void MkIntroFsm_004218b0(void)
         mov      ecx, dword ptr [g_gtPlayerProbe2]
         mov      ebx, 1
         mov      dword ptr [g_walkCallback], ebx
-        mov      dword ptr [g_data_0052d724], ebx
+        mov      dword ptr [g_quadEntryGate_0052d724], ebx
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [g_xformEntityIdx], OFFSET func_004214a0
         call     Thunk_0049cbd0
