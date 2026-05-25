@@ -124,7 +124,7 @@ extern void AiAngleDistComputation_00431920(void);
 extern void PendingMatch_00432110(void);
 extern void PendingMatch_004326a0(void);
 extern unsigned int g_load_0052ab10;
-extern unsigned int g_data_00542188;
+extern unsigned int g_dispatchArr_00542188;
 
 
 __declspec(naked) void PoseFsmTriHelpers_00431650(void)
@@ -132,7 +132,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
     __asm {
         /* === h1 (0x431650): table-index wrapper, tail-jmp 31920 === */
         mov      ecx, dword ptr [g_eventQueueChild]
-        mov      eax, OFFSET g_data_00542188
+        mov      eax, OFFSET g_dispatchArr_00542188
         shr      eax, 2
         add      eax, ecx
         mov      dword ptr [g_currentNodeIdx], eax
@@ -164,7 +164,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         mov      dword ptr [g_xformScratch2088], 0xffff0000
     L_16bd:
         mov      ecx, dword ptr [g_eventQueueChild]
-        mov      eax, OFFSET g_data_00542188
+        mov      eax, OFFSET g_dispatchArr_00542188
         shr      eax, 2
         add      eax, ecx
         mov      dword ptr [g_currentNodeIdx], eax
@@ -282,7 +282,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         mov      dword ptr [g_xformScratch2088], 0xffff0000
     L_1894:
         mov      ecx, dword ptr [g_eventQueueChild]
-        mov      eax, OFFSET g_data_00542188
+        mov      eax, OFFSET g_dispatchArr_00542188
         shr      eax, 2
         add      eax, ecx
         mov      dword ptr [g_currentNodeIdx], eax

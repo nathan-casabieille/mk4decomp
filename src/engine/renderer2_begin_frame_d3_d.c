@@ -9,7 +9,7 @@ extern unsigned int g_data_004f4794;
 extern unsigned int g_data_004f4798;
 extern unsigned int g_data_004f479c;
 extern u8 g_renderer2_buf2[];
-extern unsigned int g_data_0058c760;
+extern unsigned int g_renderer2_baseB_0058c760;
 extern unsigned int g_comptr_0058c7b0;
 extern unsigned int g_comptr_0058c7b4;
 extern unsigned int g_renderer2_obj;
@@ -76,7 +76,7 @@ __declspec(naked) void Renderer2_BeginFrame_D3D(void)
         call     dword ptr [edx + 0x6c]
     L_da9d:
         add      esi, 4
-        cmp      esi, OFFSET g_data_0058c760
+        cmp      esi, OFFSET g_renderer2_baseB_0058c760
         jl       L_da82
         mov      eax, dword ptr [esp + 0x18]
         test     eax, eax

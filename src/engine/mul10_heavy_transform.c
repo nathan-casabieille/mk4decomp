@@ -118,7 +118,7 @@ extern void MStackPush8_004ab790(void);
 extern void MStackPop8_004ab860(void);
 extern unsigned int g_dispatchSave6_00541f94;
 extern unsigned int g_savedNode_00541f98;
-extern unsigned int g_data_00541f9c;
+extern unsigned int g_mul10TransformVar_00541f9c;
 
 extern void QuadInterpolator_00425380(void);
 extern void StoreDoubleNegPauseSubStore_004ab750(void);
@@ -137,7 +137,7 @@ __declspec(naked) void PoseTreeBlendWalker_0049d680(void)
         mov      eax, dword ptr [g_currentNodeIdx]
         mov      edx, dword ptr [g_savedNode_00541f98]
         mov      dword ptr [g_eventQueueIdx], ecx
-        mov      ecx, dword ptr [g_data_00541f9c]
+        mov      ecx, dword ptr [g_mul10TransformVar_00541f9c]
         mov      dword ptr [g_eventQueueEnd], eax
         test     eax, eax
         mov      dword ptr [g_pendingNodeType], edx

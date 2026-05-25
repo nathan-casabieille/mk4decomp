@@ -116,7 +116,7 @@ extern unsigned int g_data_005380b4;
 extern unsigned int g_data_005380b8;
 extern unsigned int g_stateChangePair2_005380a4;
 extern unsigned int g_stateChangePair_00541d6c;
-extern unsigned int g_state_0053a278;
+extern unsigned int g_stateChangePair3_0053a278;
 extern unsigned char g_data_0050b130;
 
 /* @addr 0x00458ae0 (181b game) - sequenced init w/ multiple global stores. */
@@ -146,5 +146,5 @@ void SequencedInit3CallB_00458ae0(void) {
     g_data_005380b8 = 0x27;
     g_stateChangePair2_005380a4 = 0;
     g_stateChangePair_00541d6c = 0;
-    g_state_0053a278 = 0;
+    g_stateChangePair3_0053a278 = 0;
 }

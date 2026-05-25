@@ -129,7 +129,7 @@ extern unsigned int g_zerotriple_00541dec;
 extern unsigned int g_data_00541df0;
 extern unsigned int g_data_00541df4;
 extern unsigned int g_dispatchSave6_00541f94;
-extern unsigned int g_data_00541f9c;
+extern unsigned int g_mul10TransformVar_00541f9c;
 extern unsigned int g_iat_004d2240;
 extern unsigned int g_iat_004d2244;
 extern unsigned int g_table_004d57b0;
@@ -238,7 +238,7 @@ extern unsigned int g_bootInitState_00535de4;
 extern unsigned int g_data_00537efc;
 extern unsigned int g_alarmTriState_0053813c;
 extern unsigned int g_pendingMatchSlot_0053a19c;
-extern unsigned int g_data_00541dc0;
+extern unsigned int g_pendingMatchSlot2_00541dc0;
 extern unsigned int g_savedNode_00541f98;
 extern unsigned int g_phaseCounter_00541fb0;
 extern unsigned int g_data_005420c8;
@@ -5535,7 +5535,7 @@ __declspec(naked) void PendingMatch_0040a8d0(void)
         call     ScaledTripleCopy54_004ac040
         cmp      dword ptr [g_framePauseFlag], ebp
         jne      L_acd2
-        mov      eax, dword ptr [g_data_00541f9c]
+        mov      eax, dword ptr [g_mul10TransformVar_00541f9c]
         mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [eax*4], ebp
         mov      ecx, dword ptr [g_pendingNodeType]
@@ -5925,7 +5925,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         cmp      eax, 3
         mov      dword ptr [g_pendingMatchSlot_0053a19c], eax
         jbe      L_1c37
-        mov      dword ptr [g_data_00541dc0], ebx
+        mov      dword ptr [g_pendingMatchSlot2_00541dc0], ebx
     L_1c37:
         push     -1
         push     -1
@@ -5978,7 +5978,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         cmp      dword ptr [g_framePauseFlag], ebp
         jne      L_1cb3
         mov      dword ptr [g_walkCallback], ebp
-        mov      dword ptr [g_data_00541dc0], ebp
+        mov      dword ptr [g_pendingMatchSlot2_00541dc0], ebp
         mov      dword ptr [g_pendingMatchSlot_0053a19c], ebp
         mov      dword ptr [g_active_0053a408], ebp
         mov      dword ptr [g_active_00537e88], ebp

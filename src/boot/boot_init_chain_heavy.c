@@ -116,8 +116,8 @@ extern unsigned int g_bootHeavyState_00537f78;
 extern unsigned int g_data_0053a520;
 extern unsigned int g_particleInitState_00541de0;
 extern unsigned int g_data_00541e7c;
-extern unsigned int g_data_00541e80;
-extern unsigned int g_data_00541e84;
+extern unsigned int g_bootChainPair0_00541e80;
+extern unsigned int g_bootChainPair1_00541e84;
 extern unsigned int g_data_00541e88;
 extern unsigned int g_data_00541e8c;
 extern unsigned int g_lit_00541e90;
@@ -152,7 +152,7 @@ __declspec(naked) void BootInitChainHeavy_00404f20(void)
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         mov     eax, dword ptr [g_data_00541e7c]
-        mov     ecx, dword ptr [g_data_00541e80]
+        mov     ecx, dword ptr [g_bootChainPair0_00541e80]
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_xformEntityIdx], esi
         mov     dword ptr [g_pendingNodeType], 0x21
@@ -161,7 +161,7 @@ __declspec(naked) void BootInitChainHeavy_00404f20(void)
         call    LinkedListBuilder_004ab380
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
-        mov     edx, dword ptr [g_data_00541e84]
+        mov     edx, dword ptr [g_bootChainPair1_00541e84]
         mov     dword ptr [g_eventQueueEnd], esi
         mov     dword ptr [g_eventQueueTotal], edx
         call    VertexSlotInitFlagWalk_00409740

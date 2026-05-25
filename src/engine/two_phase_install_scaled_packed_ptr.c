@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00500c74;
+extern unsigned int g_installCountdownArr_00500c74;
 extern void CallDualStoreXorBit_004285e0(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void FiveCallGuardSetTail_0046f6b0(void);
@@ -145,7 +145,7 @@ __declspec(naked) void TwoPhaseInstallScaledPackedPtr_00480d50(void)
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x28], eax
         mov     edx, dword ptr [g_fightGroupHead]
-        mov     eax, offset g_data_00500c74
+        mov     eax, offset g_installCountdownArr_00500c74
         mov     ecx, offset TwoPhaseInstallScaledPackedPtr_00480d50
         shr     eax, 2
         mov     dword ptr [g_eventQueueIdx], eax
@@ -184,7 +184,7 @@ __declspec(naked) void TwoPhaseInstallScaledPackedPtr_00480d50(void)
         test    eax, eax
         jne     short L_tpisp_ret
         mov     edx, dword ptr [g_fightGroupHead]
-        mov     eax, offset g_data_00500c74
+        mov     eax, offset g_installCountdownArr_00500c74
         shr     eax, 2
         mov     dword ptr [g_eventQueueIdx], eax
         mov     dword ptr [edx*4 + 0x24], eax

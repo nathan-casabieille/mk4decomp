@@ -18,11 +18,11 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_eventQueueEnd], 1
  *   jmp     T
  */
-extern unsigned int g_state_0053a278;
+extern unsigned int g_stateChangePair3_0053a278;
 extern unsigned int g_acc_00542078;
 extern void func_00458886(void);
 void IncCmp28StoreOrJmp_00458880(void) {
-    int v = (int)g_state_0053a278;
+    int v = (int)g_stateChangePair3_0053a278;
     g_acc_00542078 = (unsigned int)v;
     v++;
     g_walkCallback = (void (*)(void))v;

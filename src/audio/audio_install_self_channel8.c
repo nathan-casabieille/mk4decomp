@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_x_0053a2e8;
+extern unsigned int g_audioPeriodicSlot_0053a2e8;
 extern s32 g_dlNalt2;
 extern void AudioInstallSelfChannel8_004a0520(void);
 
@@ -125,7 +125,7 @@ extern unsigned int g_byte_00543730;
 
 __declspec(naked) void AudioStateRemapB_004a04a0(void) {
     __asm {
-        mov     ecx, dword ptr [g_x_0053a2e8]
+        mov     ecx, dword ptr [g_audioPeriodicSlot_0053a2e8]
         mov     eax, dword ptr [g_acc_00542078]
         test    ecx, ecx
         mov     dword ptr [g_dlNalt2], eax

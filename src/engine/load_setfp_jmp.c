@@ -3,7 +3,7 @@
  */
 #include "engine/scenegraph.h"
 
-extern unsigned int g_data_00541e84;   /* 0x00541e84 */
+extern unsigned int g_bootChainPair1_00541e84;   /* 0x00541e84 */
 extern unsigned int g_data_00541e88;   /* 0x00541e88 */
 extern unsigned int g_data_00541e8c;   /* 0x00541e8c */
 extern unsigned int g_lit_00541e90;   /* 0x00541e90 */
@@ -30,7 +30,7 @@ void LoadSetFpJmp_004093a0(void) {
 
 /* @addr 0x004093c0 */
 void LoadSetFpJmp_004093c0(void) {
-    unsigned int v = g_data_00541e84;
+    unsigned int v = g_bootChainPair1_00541e84;
     g_walkCallback = ScaledOr4DirtyClear_00409320;
     g_currentNodeIdx = v;
     Helper_TickAlt();

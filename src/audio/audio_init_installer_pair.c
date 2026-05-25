@@ -112,7 +112,7 @@ extern void SixCallSeqPushImm_004a1d80(void);
 extern void SceneFrameStepWithInputs_004be250(void);
 extern void ScenegraphWalk_0041f7d0(void);
 extern void AudioInitInstallerPair_004a2140(void);
-extern unsigned int g_x_00541d90;
+extern unsigned int g_installSelfCounter2_00541d90;
 
 /* @addr 0x00404920 (160b boot) - install-self with counter mod 0x10 + arg=cnt+3 dispatch + 3-call cleanup.
  *   esi = base*4; flag = [esi+0x84]; clear.
@@ -140,15 +140,15 @@ __declspec(naked) void InstallSelfCounter_00404920(void) {
         call    StackPopDispatchTagged_0041f780
         pop     esi
         ret
-        mov     edx, dword ptr [g_x_00541d90]
+        mov     edx, dword ptr [g_installSelfCounter2_00541d90]
         lea     eax, [edx + 1]
         cmp     eax, 0x10
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_x_00541d90], eax
+        mov     dword ptr [g_installSelfCounter2_00541d90], eax
         _emit   7ch
         _emit   0ch
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_x_00541d90], ecx
+        mov     dword ptr [g_installSelfCounter2_00541d90], ecx
         call    SixCallSeqPushImm_004a1d80
         mov     eax, dword ptr [g_walkCallback]
         push    1

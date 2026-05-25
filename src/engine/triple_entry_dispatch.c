@@ -109,20 +109,20 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00458810 (104b game) - 3-entry-point dispatcher.
- *   Block A (+0x00): g_acc_00542078=g_state_0053a278; g_walkCallback=eax-1; if (eax-1) < 0 g_walkCallback=0x27;
+ *   Block A (+0x00): g_acc_00542078=g_stateChangePair3_0053a278; g_walkCallback=eax-1; if (eax-1) < 0 g_walkCallback=0x27;
  *     g_cj_00542054 = 0xffffffff; jmp CinematicStageCluster_004588b0.
  *   Block B (+0x30): g_walkCallback=g_stateFlag_00537e98; if zero jmp IncCmp28StoreOrJmp_00458880 else jmp CallSetPause_0041f830.
  *   Block C (+0x50): g_walkCallback=g_stateFlag_00537e98; if nonzero jmp IncCmp28StoreOrJmp else jmp CallSetPause.
  */
 extern unsigned int g_stateFlag_00537e98;
-extern unsigned int g_state_0053a278;
+extern unsigned int g_stateChangePair3_0053a278;
 extern void CallSetPause_0041f830(void);
 extern void CinematicStageCluster_004588b0(void);
 extern void IncCmp28StoreOrJmp_00458880(void);
 
 __declspec(naked) void TripleEntryDispatch_00458810(void) {
     __asm {
-        mov     eax, dword ptr [g_state_0053a278]
+        mov     eax, dword ptr [g_stateChangePair3_0053a278]
         mov     dword ptr [g_acc_00542078], eax
         dec     eax
         test    eax, eax

@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   of 0x04 in the second gate; tail-jmp AudioInstallSelfChannel8_004a0520.
  */
 extern s32 g_dlNalt2;
-extern unsigned int g_x_0053a2e8;
+extern unsigned int g_audioPeriodicSlot_0053a2e8;
 extern unsigned int g_byte_00543724;
 extern unsigned int g_x_00543728;
 extern unsigned int g_byte_0054372c;
@@ -131,7 +131,7 @@ extern void AudioInstallSelfChannel8_004a0520(void);
  */
 __declspec(naked) void AudioStateRemapB_004a04a0(void) {
     __asm {
-        mov     ecx, dword ptr [g_x_0053a2e8]
+        mov     ecx, dword ptr [g_audioPeriodicSlot_0053a2e8]
         mov     eax, dword ptr [g_acc_00542078]
         test    ecx, ecx
         mov     dword ptr [g_dlNalt2], eax

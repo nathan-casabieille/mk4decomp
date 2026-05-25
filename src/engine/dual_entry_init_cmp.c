@@ -115,14 +115,14 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     else clear it. ret.
  */
 extern unsigned int g_state_00541e70;
-extern unsigned int g_state_00541e74;
+extern unsigned int g_vertexInitFlag_00541e74;
 extern unsigned int g_state_00541e78;
 extern void VertexSlotInitFlagWalk_00409740(void);
 
 __declspec(naked) void DualEntryInitCmp_00425b20(void) {
     __asm {
         mov     eax, dword ptr [g_state_00541e70]
-        mov     ecx, dword ptr [g_state_00541e74]
+        mov     ecx, dword ptr [g_vertexInitFlag_00541e74]
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     dword ptr [g_xformEntityIdx], 0
         mov     dword ptr [g_pendingNodeType], 0x00000800

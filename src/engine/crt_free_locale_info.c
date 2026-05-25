@@ -160,7 +160,7 @@ extern unsigned int g_data_005442a4;
 extern unsigned int g_data_005442e0;
 extern unsigned int g_data_00544300;
 extern u8 g_renderer2_buf2[];
-extern unsigned int g_data_0058c760;
+extern unsigned int g_renderer2_baseB_0058c760;
 extern unsigned int g_data_0058c764;
 extern u8 g_renderer2_buf1[];
 extern unsigned int g_comptr_0058c7ac;

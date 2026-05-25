@@ -112,7 +112,7 @@ extern void ZeroMultiGlobalsCmp_00404680(void);
 extern void TitleDemoStateMachine_004032d0(void);
 extern void PendingMatch_00403d60(void);
 extern unsigned int g_pendingMatchSlot_0053a19c;
-extern unsigned int g_data_00541dc0;
+extern unsigned int g_pendingMatchSlot2_00541dc0;
 
 extern unsigned int g_tickFlagF;
 extern unsigned int g_pendingMatchAcc_0053a3e8;
@@ -193,7 +193,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         cmp      eax, 3
         mov      dword ptr [g_pendingMatchSlot_0053a19c], eax
         jbe      L_1c37
-        mov      dword ptr [g_data_00541dc0], ebx
+        mov      dword ptr [g_pendingMatchSlot2_00541dc0], ebx
     L_1c37:
         push     -1
         push     -1
@@ -246,7 +246,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         cmp      dword ptr [g_framePauseFlag], ebp
         jne      L_1cb3
         mov      dword ptr [g_walkCallback], ebp
-        mov      dword ptr [g_data_00541dc0], ebp
+        mov      dword ptr [g_pendingMatchSlot2_00541dc0], ebp
         mov      dword ptr [g_pendingMatchSlot_0053a19c], ebp
         mov      dword ptr [g_active_0053a408], ebp
         mov      dword ptr [g_active_00537e88], ebp

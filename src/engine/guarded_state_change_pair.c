@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_stateFlag_00537e98;
 extern unsigned int g_stateChangePair2_005380a4;
 extern unsigned int g_stateChangeBase_005380b0;
-extern unsigned int g_data_0053a278;
+extern unsigned int g_stateChangePair3_0053a278;
 extern unsigned int g_stateChangePair_00541d6c;
 extern void CallSetPause_0041f830(void);
 extern void MStackPush2ClampLookup_00459160(void);
@@ -128,7 +128,7 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
         je      short L_gscp_check27
         jmp     CallSetPause_0041f830
     L_gscp_check27:
-        mov     edx, dword ptr [g_data_0053a278]
+        mov     edx, dword ptr [g_stateChangePair3_0053a278]
         cmp     edx, 0x27
         mov     dword ptr [g_walkCallback], edx
         je      L_gscp_dec

@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00541e74;
+extern unsigned int g_vertexInitFlag_00541e74;
 extern unsigned int g_data_00541e78;
 extern void MStackBracket5_LinkedListUnlink_00409aa0(void);
 extern void MStackPush2ChainInsert_00409870(void);
@@ -135,7 +135,7 @@ __declspec(naked) void MStackBracket2InitChainSplitInsert_00425be0(void)
         jae     short L_mbsi_skip1
         mov     dword ptr [g_eventQueueCurrent], ebx
     L_mbsi_skip1:
-        mov     eax, dword ptr [g_data_00541e74]
+        mov     eax, dword ptr [g_vertexInitFlag_00541e74]
         mov     dword ptr [g_walkCallback], 0x425ba0
         mov     dword ptr [g_currentNodeIdx], eax
         call    Helper_TickAlt
@@ -178,7 +178,7 @@ __declspec(naked) void MStackBracket2InitChainSplitInsert_00425be0(void)
         mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [eax*4 + 4], 0
-        mov     ecx, dword ptr [g_data_00541e74]
+        mov     ecx, dword ptr [g_vertexInitFlag_00541e74]
         mov     dword ptr [g_xformEntityIdx], ecx
         call    MStackPush2ChainInsert_00409870
         mov     eax, dword ptr [g_framePauseFlag]
