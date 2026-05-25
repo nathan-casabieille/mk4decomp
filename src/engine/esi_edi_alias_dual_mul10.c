@@ -136,6 +136,11 @@ extern unsigned int g_data_00535e7c;
  *   [edi] = edx; pop edi; pop esi; ret.
  */
 
+/*
+ * NON-COAXABLE: MSVC /O2 loads g_cj into ecx (8b 0d, 6b) instead of eax
+ * (a1, 5b) as orig does. The push esi/edi order and LEA-based address
+ * computation pattern cannot be coaxed from pure C with this register layout.
+ */
 __declspec(naked) void EsiEdiAliasDualMul10_004906b0(void) {
     __asm {
         mov     eax, dword ptr [g_cj_0054205c]
