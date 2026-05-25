@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_data_00538098;
 extern unsigned int g_data_005380a0;
-extern unsigned int g_data_0053a420;
+extern unsigned int g_packedTripleSlot_0053a420;
 extern unsigned int g_data_0053a424;
 extern unsigned int g_data_0053a428;
 extern unsigned int g_data_00541f88;
@@ -155,7 +155,7 @@ __declspec(naked) void Vec3PackedTripleCallBracket_004764d0(void)
         mov     ecx, dword ptr [eax*4 + 0x54]
         sub     ecx, esi
         mov     dword ptr [g_eventQueueWorkType], ecx
-        mov     dword ptr [g_data_0053a420], ecx
+        mov     dword ptr [g_packedTripleSlot_0053a420], ecx
         mov     esi, dword ptr [edx*4 + 4]
         mov     dword ptr [g_walkCallback], esi
         mov     ecx, dword ptr [eax*4 + 0x58]
@@ -167,7 +167,7 @@ __declspec(naked) void Vec3PackedTripleCallBracket_004764d0(void)
         mov     dword ptr [g_walkCallback], edx
         mov     eax, dword ptr [eax*4 + 0x5c]
         sub     eax, edx
-        mov     edx, offset g_data_0053a420
+        mov     edx, offset g_packedTripleSlot_0053a420
         mov     dword ptr [g_eventQueueWorkType], eax
         mov     dword ptr [g_data_0053a428], eax
         mov     eax, dword ptr [g_data_00541f88]

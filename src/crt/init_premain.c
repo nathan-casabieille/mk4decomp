@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 
 /* @addr 0x004c67f0 (48b)
- *   if (g_state_0051ffd8) (*g_state_0051ffd8)();
+ *   if (g_iat_0051ffd8) (*g_iat_0051ffd8)();
  *   call 0x4c6940(0x4d501c, 0x4d5024); add esp 8;
  *   call 0x4c6940(0x4d5000, 0x4d5018); add esp 8; ret.
  */

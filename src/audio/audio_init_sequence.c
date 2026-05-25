@@ -119,19 +119,19 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   [0x543800] = -1; g_walkCallback = 0; [0x52aac4] = 0.
  */
 extern unsigned int g_tickFlagF;
-extern unsigned int g_x_00537ea0;
-extern unsigned int g_x_00537edc;
+extern unsigned int g_audioInitState6_00537ea0;
+extern unsigned int g_audioInitState5_00537edc;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 extern s32 g_dlNalt3;
-extern unsigned int g_x_0053a1cc;
+extern unsigned int g_audioInitState4_0053a1cc;
 extern s32 g_dlNalt4;
 extern unsigned int g_counter_0053a51c;
-extern unsigned int g_x_0053a790;
+extern unsigned int g_audioInitState3_0053a790;
 extern s32 g_dlChar13;
 extern s32 g_dlChar24;
-extern unsigned int g_x_00541ecc;
-extern unsigned int g_x_00541ed0;
+extern unsigned int g_audioInitState2_00541ecc;
+extern unsigned int g_audioInitState1_00541ed0;
 extern unsigned int g_byte_00542040;
 extern void BootInitGuardedCallChain_004265d0(void);
 extern void CopyGlobal_004ac1f0(void);
@@ -144,15 +144,15 @@ void AudioInitSequence_004a41a0(void) {
         mov     dword ptr [g_walkCallback], 0
         call    CopyGlobal_004ac1f0
         call    BootInitGuardedCallChain_004265d0
-        mov     eax, dword ptr [g_x_00541ecc]
-        mov     ecx, dword ptr [g_x_00541ed0]
-        mov     edx, dword ptr [g_x_0053a790]
+        mov     eax, dword ptr [g_audioInitState2_00541ecc]
+        mov     ecx, dword ptr [g_audioInitState1_00541ed0]
+        mov     edx, dword ptr [g_audioInitState3_0053a790]
         mov     dword ptr [g_dlChar13], eax
-        mov     eax, dword ptr [g_x_00537ea0]
+        mov     eax, dword ptr [g_audioInitState6_00537ea0]
         mov     dword ptr [g_dlChar24], ecx
-        mov     ecx, dword ptr [g_x_00537edc]
+        mov     ecx, dword ptr [g_audioInitState5_00537edc]
         mov     dword ptr [g_dlNalt1], edx
-        mov     edx, dword ptr [g_x_0053a1cc]
+        mov     edx, dword ptr [g_audioInitState4_0053a1cc]
         mov     dword ptr [g_dlNalt2], eax
         mov     eax, dword ptr [g_counter_0053a51c]
         mov     dword ptr [g_dlNalt3], ecx

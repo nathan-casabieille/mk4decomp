@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00464660 (386b game) - install-self with 5-call vec/slot chain.
  *   Always installs Self at end (no phase check). Sets:
- *     - g_xformEntityIdx = g_data_00541f8c (vec0 base)
+ *     - g_xformEntityIdx = g_installVecChainVar_00541f8c (vec0 base)
  *     - g_pendingNodeType = g_baseSel_00542060 + 0xc (slot pointer+0xc)
  *     - g_eventQueueTotal = [g_eventQueueEnd*4] (deref scope)
  *   If 0x542050 is non-zero AND [g_eventQueueIdx*4] is non-zero, runs a
@@ -123,7 +123,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Tail unconditionally installs Self with slot[+0x84]=1,
  *   g_pendingNodeType=2, arms 0x541e6c=1.
  */
-extern unsigned int g_data_00541f8c;
+extern unsigned int g_installVecChainVar_00541f8c;
 extern unsigned int g_savedNode_00541f98;
 extern void QuadInterpolatorV2_004255b0(void);
 extern void ThreeClampLoop_00425a80(void);
@@ -137,7 +137,7 @@ __declspec(naked) void InstallSelf5CallVecChain_00464660(void) {
         push    esi
         mov     dword ptr [eax*4 + 0x84], 0
         mov     edx, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [g_data_00541f8c]
+        mov     ecx, dword ptr [g_installVecChainVar_00541f8c]
         lea     esi, [eax*4]
         mov     eax, dword ptr [g_eventQueueEnd]
         add     edx, 0xc

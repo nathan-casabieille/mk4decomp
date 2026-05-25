@@ -113,19 +113,19 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   four state slots into their mirror locations, zeros two scratch
  *   words, and sets two "active" flags to 1.
  */
-extern unsigned int g_x_00537ea0;
-extern unsigned int g_x_00537edc;
+extern unsigned int g_audioInitState6_00537ea0;
+extern unsigned int g_audioInitState5_00537edc;
 extern unsigned int g_hitPhase_00537f30;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 extern s32 g_dlNalt3;
-extern unsigned int g_x_0053a1cc;
+extern unsigned int g_audioInitState4_0053a1cc;
 extern s32 g_dlNalt4;
-extern unsigned int g_x_0053a790;
+extern unsigned int g_audioInitState3_0053a790;
 extern s32 g_dlChar13;
 extern s32 g_dlChar24;
-extern unsigned int g_x_00541ecc;
-extern unsigned int g_x_00541ed0;
+extern unsigned int g_audioInitState2_00541ecc;
+extern unsigned int g_audioInitState1_00541ed0;
 extern unsigned int g_x_00543894;
 extern unsigned int g_x_00543898;
 
@@ -134,19 +134,19 @@ void StateInitShuffle_00422380(void) {
         mov     ecx, dword ptr [g_dlNalt2]
         mov     edx, dword ptr [g_dlNalt3]
         xor     eax, eax
-        mov     dword ptr [g_x_00537ea0], ecx
+        mov     dword ptr [g_audioInitState6_00537ea0], ecx
         mov     ecx, dword ptr [g_dlChar13]
         mov     dword ptr [g_x_00543894], eax
         mov     dword ptr [g_x_00543898], eax
         mov     eax, dword ptr [g_dlNalt1]
-        mov     dword ptr [g_x_0053a790], eax
+        mov     dword ptr [g_audioInitState3_0053a790], eax
         mov     eax, dword ptr [g_dlNalt4]
-        mov     dword ptr [g_x_00537edc], edx
+        mov     dword ptr [g_audioInitState5_00537edc], edx
         mov     edx, dword ptr [g_dlChar24]
-        mov     dword ptr [g_x_0053a1cc], eax
+        mov     dword ptr [g_audioInitState4_0053a1cc], eax
         mov     eax, 1
-        mov     dword ptr [g_x_00541ecc], ecx
-        mov     dword ptr [g_x_00541ed0], edx
+        mov     dword ptr [g_audioInitState2_00541ecc], ecx
+        mov     dword ptr [g_audioInitState1_00541ed0], edx
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_hitPhase_00537f30], eax
         }

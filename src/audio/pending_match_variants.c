@@ -194,7 +194,7 @@ extern unsigned int g_audioPendingBcSlot_005433bc;
 extern unsigned int g_audioBankPick_005433c0;
 extern unsigned int g_audioPendingCcSlot_005433cc;
 extern unsigned int g_audioMicroEntry_005433f4;
-extern unsigned int g_data_005433f8;
+extern unsigned int g_audioPendingByte_005433f8;
 extern unsigned int g_counter_0054359c;
 extern unsigned int g_byte_005435a0;
 extern unsigned int g_byteIndexArr_005435a3;
@@ -1171,7 +1171,7 @@ __declspec(naked) void PendingMatch_004a3400(void)
         call     FiveTableWalkInit_00403c90
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_38b1
-        mov      al, byte ptr [g_data_005433f8]
+        mov      al, byte ptr [g_audioPendingByte_005433f8]
         mov      ecx, dword ptr [g_data_004f31cc]
         mov      byte ptr [g_gtModeFlag], al
         mov      eax, dword ptr [g_audioSavedGlobal4_005437f8]
@@ -1236,7 +1236,7 @@ __declspec(naked) void PendingMatch_004a3400(void)
         mov      dword ptr [g_gtState438], ebx
         mov      dword ptr [g_tickFlagF], 2
         mov      dword ptr [g_phaseIdx_0053a50c], ebp
-        mov      dword ptr [g_data_005433f8], eax
+        mov      dword ptr [g_audioPendingByte_005433f8], eax
         call     TripleCallSetCopy_004a4880
         mov      dword ptr [g_eventQueueWorkType], 9
         call     Push16Call_00489f50

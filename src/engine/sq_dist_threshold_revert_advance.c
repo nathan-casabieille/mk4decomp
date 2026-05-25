@@ -124,10 +124,10 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   bytes at [scaled+0x6c]/+0x74 if bit 7 of [scaled+0x40] is clear.
  */
 extern unsigned int g_data_00543554;
-extern unsigned int g_data_00543558;
-extern unsigned int g_data_00543560;
-extern unsigned int g_data_00543580;
-extern unsigned int g_data_00543584;
+extern unsigned int g_dispatchVar32_00543558;
+extern unsigned int g_installCountdownVar2_00543560;
+extern unsigned int g_installCountdownVar_00543580;
+extern unsigned int g_dispatchVar31_00543584;
 extern unsigned int g_data_00543588;
 
 __declspec(naked) void SqDistThresholdRevertAdvance_00489d10(void) {
@@ -167,15 +167,15 @@ __declspec(naked) void SqDistThresholdRevertAdvance_00489d10(void) {
         cmp     edx, edi
         mov     edx, dword ptr [esi + 0x54]
         jne     short L_sdt_stashAlt
-        mov     dword ptr [g_data_00543560], edx
+        mov     dword ptr [g_installCountdownVar2_00543560], edx
         mov     edx, dword ptr [esi + 0x5c]
-        mov     dword ptr [g_data_00543558], edx
+        mov     dword ptr [g_dispatchVar32_00543558], edx
         mov     dword ptr [g_data_00543554], ecx
         jmp     short L_sdt_cmpRadius
     L_sdt_stashAlt:
-        mov     dword ptr [g_data_00543580], edx
+        mov     dword ptr [g_installCountdownVar_00543580], edx
         mov     edx, dword ptr [esi + 0x5c]
-        mov     dword ptr [g_data_00543584], edx
+        mov     dword ptr [g_dispatchVar31_00543584], edx
         mov     dword ptr [g_data_00543588], ecx
     L_sdt_cmpRadius:
         cmp     ecx, eax
@@ -213,15 +213,15 @@ __declspec(naked) void SqDistThresholdRevertAdvance_00489d10(void) {
         mov     ecx, dword ptr [g_player1NodeIdx]
         cmp     eax, ecx
         jne     short L_sdt_restoreAlt
-        mov     ecx, dword ptr [g_data_00543560]
+        mov     ecx, dword ptr [g_installCountdownVar2_00543560]
         mov     dword ptr [esi + 0x54], ecx
-        mov     edx, dword ptr [g_data_00543558]
+        mov     edx, dword ptr [g_dispatchVar32_00543558]
         mov     dword ptr [esi + 0x5c], edx
         jmp     short L_sdt_checkBit
     L_sdt_restoreAlt:
-        mov     eax, dword ptr [g_data_00543580]
+        mov     eax, dword ptr [g_installCountdownVar_00543580]
         mov     dword ptr [esi + 0x54], eax
-        mov     ecx, dword ptr [g_data_00543584]
+        mov     ecx, dword ptr [g_dispatchVar31_00543584]
         mov     dword ptr [esi + 0x5c], ecx
     L_sdt_checkBit:
         mov     eax, dword ptr [esi + 0x40]

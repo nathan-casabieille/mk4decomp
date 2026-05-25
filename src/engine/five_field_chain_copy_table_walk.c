@@ -110,11 +110,11 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_walkBoundsLimit_00535d60;
 extern unsigned int g_walkBoundsSlot_00535d68;
 extern unsigned int g_pendingClear_0053a3cc;
-extern unsigned int g_data_00541fac;
+extern unsigned int g_xformEntityIdxSrc_00541fac;
 extern unsigned int g_load_0052ab10;
 
 /* @addr 0x00431260 (256b game) - 5-field copy from indexed table to chain.
- *   eax = g_load_0052ab10 (chain base); ecx = g_data_00541fac (table idx).
+ *   eax = g_load_0052ab10 (chain base); ecx = g_xformEntityIdxSrc_00541fac (table idx).
  *   g_scaledInit_00542044 = eax; g_xformEntityIdx = ecx.
  *   Initial: chain[+0x54] = table[+0]. Then 4 more iterations:
  *     idx++; chain[+0x58/+0x5c/+0x60/+0x64] = table[+idx]; g_walkCallback=value.
@@ -125,7 +125,7 @@ extern unsigned int g_load_0052ab10;
  */
 void FiveFieldChainCopyTableWalk_00431260(void) {
     g_scaledInit_00542044 = g_load_0052ab10;
-    g_xformEntityIdx = g_data_00541fac;
+    g_xformEntityIdx = g_xformEntityIdxSrc_00541fac;
     g_walkCallback = *(unsigned int *)(g_xformEntityIdx * 4);
     *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x54) = g_walkCallback;
     g_xformEntityIdx++;

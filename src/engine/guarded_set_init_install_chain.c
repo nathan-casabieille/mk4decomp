@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004ec710;
-extern unsigned int g_data_00543384;
+extern unsigned int g_dispatchVar33_00543384;
 extern unsigned int g_phaseThunkSlot2_00543570;
 extern void GatedWordPushCall_00489f90(void);
 extern void StorePauseImulShr16_004ab630(void);
@@ -120,7 +120,7 @@ __declspec(naked) void GuardedSetInitInstallChain_004728c0(void)
     __asm
     {
         mov     eax, dword ptr [g_gtFightTickCounter]
-        mov     ecx, dword ptr [g_data_00543384]
+        mov     ecx, dword ptr [g_dispatchVar33_00543384]
         cmp     ecx, eax
         jne     short L_gsiic_diff
         mov     eax, dword ptr [g_phaseThunkSlot2_00543570]
@@ -130,7 +130,7 @@ __declspec(naked) void GuardedSetInitInstallChain_004728c0(void)
         jg      L_gsiic_ret
         jmp     short L_gsiic_chain
     L_gsiic_diff:
-        mov     dword ptr [g_data_00543384], eax
+        mov     dword ptr [g_dispatchVar33_00543384], eax
         mov     dword ptr [g_phaseThunkSlot2_00543570], 0
     L_gsiic_chain:
         mov     dword ptr [g_walkCallback], 4

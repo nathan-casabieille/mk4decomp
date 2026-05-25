@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 /* @addr 0x0043d5a0 (123b) - decrement counter; if nonzero tail-jmp to 0x43d510.
  *   Else: write (0x501160 >> 2) into table_24[g_cj_0054205c],
  *   write 0x45 into table_28[g_cj_0054205c], call StoreTwoCall(0x43d8c0, 0x91),
- *   then push (g_x_0053a3a0 + 0x44ccc), store in g_currentNodeFlags,
+ *   then push (g_throwEventTime_0053a3a0 + 0x44ccc), store in g_currentNodeFlags,
  *   call F(arg), restore g_currentNodeFlags = result, tail-jmp to 0x43d620.
  */
 extern unsigned int g_arr_005d83a4_indexed_24;
@@ -119,7 +119,7 @@ extern unsigned int g_arr_005d83a4_indexed_28;
 extern unsigned int g_str_0043d8c0;
 extern unsigned int g_x_00501160;
 extern unsigned int g_x_0053a2d4;
-extern unsigned int g_x_0053a3a0;
+extern unsigned int g_throwEventTime_0053a3a0;
 extern void DualEntryStub_0043d510(void);
 extern void StateMachineDualModuloInstall_0043d620(void);
 extern void WorldCellSetupCluster_0042b000(void);
@@ -145,7 +145,7 @@ L_csc_body:
         push    offset g_str_0043d8c0
         mov     dword ptr [ecx*4 + g_arr_005d83a4_indexed_28], eax
         call    StoreTwoCall_0049cb40
-        mov     edx, dword ptr [g_x_0053a3a0]
+        mov     edx, dword ptr [g_throwEventTime_0053a3a0]
         add     esp, 8
         lea     eax, [edx + 0x44ccc]
         push    eax
