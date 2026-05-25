@@ -374,7 +374,7 @@ extern unsigned int g_data_0052d750;
 extern unsigned int g_data_0052d754;
 extern unsigned int g_data_0052d758;
 extern unsigned int g_dispatchArg_00535e48;
-extern unsigned int g_data_00537f04;
+extern unsigned int g_dispatchVar11_00537f04;
 extern unsigned int g_data_0053a514;
 extern void ArgSar_Set0_Jmp_0049c6f0(void);
 extern void CallPauseDirtyMStackPushFn_0046e2a0(void);
@@ -11916,7 +11916,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         nop      
         mov      eax, 1
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_00537f04], eax
+        mov      dword ptr [g_dispatchVar11_00537f04], eax
         jmp      PendingMatch_00459510
         nop      
         nop      

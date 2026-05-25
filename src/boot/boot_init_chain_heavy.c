@@ -118,11 +118,11 @@ extern unsigned int g_particleInitState_00541de0;
 extern unsigned int g_data_00541e7c;
 extern unsigned int g_bootChainPair0_00541e80;
 extern unsigned int g_bootChainPair1_00541e84;
-extern unsigned int g_data_00541e88;
-extern unsigned int g_data_00541e8c;
+extern unsigned int g_bootChainScaled1_00541e88;
+extern unsigned int g_bootChainScaled2_00541e8c;
 extern unsigned int g_lit_00541e90;
 extern unsigned int g_lit_00541e94;
-extern unsigned int g_data_00541e98;
+extern unsigned int g_bootChainState3_00541e98;
 extern unsigned int g_data_00541e9c;
 extern unsigned int g_data_00541ea0;
 extern unsigned int g_data_00541ea4;
@@ -167,19 +167,19 @@ __declspec(naked) void BootInitChainHeavy_00404f20(void)
         call    VertexSlotInitFlagWalk_00409740
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
-        mov     eax, dword ptr [g_data_00541e88]
+        mov     eax, dword ptr [g_bootChainScaled1_00541e88]
         mov     dword ptr [g_eventQueueEnd], esi
         mov     dword ptr [g_eventQueueTotal], eax
         call    VertexSlotInitFlagWalk_00409740
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
-        mov     ecx, dword ptr [g_data_00541e8c]
+        mov     ecx, dword ptr [g_bootChainScaled2_00541e8c]
         mov     dword ptr [g_eventQueueEnd], esi
         mov     dword ptr [g_eventQueueTotal], ecx
         call    VertexSlotInitFlagWalk_00409740
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
-        mov     edx, dword ptr [g_data_00541e98]
+        mov     edx, dword ptr [g_bootChainState3_00541e98]
         mov     dword ptr [g_eventQueueEnd], esi
         mov     dword ptr [g_eventQueueTotal], edx
         call    VertexSlotInitFlagWalk_00409740

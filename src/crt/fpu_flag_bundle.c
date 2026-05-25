@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     flag bits 1, 8, 0x10, 4, 0x20. Sub-2 (174b): per-thread slot management.
  *   For consolidation, both bundled into one 270-byte symbol entry.
  */
-extern unsigned int g_data_00522e58;
+extern unsigned int g_crtFpuTbyteVar_00522e58;
 extern unsigned int g_data_00522e68;
 extern unsigned int g_data_00523600;
 extern unsigned int g_data_005236ac;
@@ -133,7 +133,7 @@ __declspec(naked) void FpuFlagBundle_004cf770(void) {
         mov     cl, byte ptr [ebp + 8]
         test    cl, 1
         jz      short L_fp1
-        fld     tbyte ptr [g_data_00522e58]
+        fld     tbyte ptr [g_crtFpuTbyteVar_00522e58]
         fistp   dword ptr [ebp + 8]
         fwait
     L_fp1:
@@ -141,7 +141,7 @@ __declspec(naked) void FpuFlagBundle_004cf770(void) {
         jz      short L_fp2
         fwait
         fnstsw  ax
-        fld     tbyte ptr [g_data_00522e58]
+        fld     tbyte ptr [g_crtFpuTbyteVar_00522e58]
         fstp    qword ptr [ebp - 8]
         fwait
         fwait

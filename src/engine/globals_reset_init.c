@@ -132,7 +132,7 @@ extern unsigned int g_load_0052ab08;
 extern unsigned int g_phaseTimer_00537e94;
 extern unsigned int g_dst_00537ea4;
 extern unsigned int g_counter_0053a51c;
-extern unsigned int g_x_00541dc0;
+extern unsigned int g_dispatchVar9_00541dc0;
 extern unsigned int g_x_00541e4c;
 extern void ResetSceneCallbacks_00420090(void);
 
@@ -141,7 +141,7 @@ __declspec(naked) void GlobalsResetInit_004222a0(void) {
         push    esi
         xor     esi, esi
         mov     dword ptr [g_walkCallback], esi
-        mov     dword ptr [g_x_00541dc0], esi
+        mov     dword ptr [g_dispatchVar9_00541dc0], esi
         mov     dword ptr [g_pendingNodeType], 0x004200b0
         mov     dword ptr [g_eventQueueWorkType], 0x00001000
         call    AllocNode

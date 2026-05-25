@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   and raise framePause.
  */
 extern void InstallSelfPairedGate_004048b0(void);
-extern unsigned int g_x_00542068;
+extern unsigned int g_pendingNodeTypeSrc_00542068;
 void InstallSelfPairedGate_004048b0(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
     unsigned int prev = *(unsigned int *)(base + 0x84);
@@ -128,7 +128,7 @@ void InstallSelfPairedGate_004048b0(void) {
     }
     Eleven404b90_404c00_004266d0();
     if (g_framePauseFlag != 0) return;
-    g_pendingNodeType = g_x_00542068;
+    g_pendingNodeType = g_pendingNodeTypeSrc_00542068;
     *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfPairedGate_004048b0;
     *(unsigned int *)(base + 0x84) = 1;
     g_framePauseFlag = 1;

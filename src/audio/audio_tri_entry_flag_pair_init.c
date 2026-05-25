@@ -113,10 +113,10 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Entry 0x004a22f0: same FlagPair logic, but g_dlMode=0 and tail-jmp InstallSelfTableWalk_004200d0.
  *   Entry 0x004a2370: push 6; TableWalkBoundedCmp; g_audioMatchStartFlag_00543714=1, g_audioTriEntryFlag_005433ec=1; jmp entry1.
  *   Entry 0x004a2390: push 6; TableWalkBoundedCmp; g_audioMatchStartFlag_00543714=1, g_audioTriEntryFlag_005433ec=1, g_gtOtherFlag=1;
- *     g_x_005433a8=0, g_installSelfCounter_005433e8=0; jmp entry1.
+ *     g_audioTriEntryFlag2_005433a8=0, g_installSelfCounter_005433e8=0; jmp entry1.
  */
 extern u32 g_dlMode;
-extern unsigned int g_x_005433a8;
+extern unsigned int g_audioTriEntryFlag2_005433a8;
 extern unsigned int g_installSelfCounter_005433e8;
 extern unsigned int g_audioTriEntryFlag_005433ec;
 extern unsigned int g_audioMatchStartFlag_00543714;
@@ -184,7 +184,7 @@ __declspec(naked) void AudioTriEntryFlagPairInit_004a22f0(void)
         mov     dword ptr [g_audioTriEntryFlag_005433ec], eax
         mov     dword ptr [g_gtOtherFlag], eax
         xor     eax, eax
-        mov     dword ptr [g_x_005433a8], eax
+        mov     dword ptr [g_audioTriEntryFlag2_005433a8], eax
         mov     dword ptr [g_installSelfCounter_005433e8], eax
         jmp     AudioTriEntryFlagPairInit_004a22f0
     }

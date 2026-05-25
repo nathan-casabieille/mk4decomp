@@ -114,7 +114,7 @@ extern unsigned int g_quadEntryGate_0052d724;
 extern unsigned int g_phaseTimer_00537e94;
 extern unsigned int g_dst_00537ea4;
 extern unsigned int g_dispatchSave_00537ef4;
-extern unsigned int g_data_00537f04;
+extern unsigned int g_dispatchVar11_00537f04;
 extern unsigned int g_hitPhase_00537f30;
 extern unsigned int g_audioBank2State_00537f98;
 extern unsigned int g_data_005380d8;
@@ -229,7 +229,7 @@ __declspec(naked) void RoundReset_004223e0(void)
         mov      dword ptr [g_phaseThunkState_0053a730], ebx
         mov      dword ptr [g_data_00541d84], ebx
         mov      dword ptr [g_audioStreamState_0053a430], ebx
-        mov      dword ptr [g_data_00537f04], ebx
+        mov      dword ptr [g_dispatchVar11_00537f04], ebx
         mov      dword ptr [g_dlSomeFlag1], ebx
         mov      dword ptr [g_dlSomeFlag2], ebx
         mov      dword ptr [g_dlState], ebx
