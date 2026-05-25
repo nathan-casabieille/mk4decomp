@@ -138,6 +138,12 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_load_0052ab04;
 extern unsigned int g_load_0052ab08;
 
+/*
+ * NON-COAXABLE: orig emits `mov esi, [esi*4+0x5c]` reusing esi as both SIB
+ * index and destination. MSVC /O2 instead hoists `sub eax, ecx` first (freeing
+ * ecx) then loads b into ecx via `mov ecx, [esi*4+0x5c]`. The index-equals-
+ * destination SIB pattern cannot be coaxed from pure C.
+ */
 __declspec(naked) void DualMul10ChainAcc7C_00430020(void) {
     __asm {
         mov     ecx, dword ptr [g_load_0052ab04]
