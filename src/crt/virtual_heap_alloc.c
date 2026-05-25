@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_virtualHeapBase_00520130;
 extern unsigned int g_heapShrinkPtr_00520134;
-extern unsigned int g_data_00520140;
+extern unsigned int g_heapTeardownSentinel_00520140;
 extern unsigned int g_data_00fa0ee4;
 extern unsigned int g_iat_004d20b4;
 extern unsigned int g_iat_004d2144;
@@ -120,7 +120,7 @@ extern unsigned int g_iat_004d2168;
 __declspec(naked) void VirtualHeapAlloc_004c70d0(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_00520140]
+        mov      eax, dword ptr [g_heapTeardownSentinel_00520140]
         push     ebp
         push     esi
         cmp      eax, -1

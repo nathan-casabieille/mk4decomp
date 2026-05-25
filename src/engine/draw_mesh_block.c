@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_data_004f623c;
-extern unsigned int g_data_00543aa8;
+extern unsigned int g_menuRestoreSlot_00543aa8;
 extern u32 g_inLoopStep;
 extern unsigned int g_data_007af958[];
 extern s16 g_vtxIn2_x;
@@ -56,7 +56,7 @@ __declspec(naked) void DrawMeshBlock(void)
         push     esi
         push     edi
         jne      L_b280
-        mov      eax, dword ptr [g_data_00543aa8]
+        mov      eax, dword ptr [g_menuRestoreSlot_00543aa8]
         test     eax, eax
         jne      L_b288
         mov      eax, dword ptr [esp + 0x28]

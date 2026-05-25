@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0046b360 (374b game) - 3-entry packed: state-remap + install +
  *   state-remap-call.
- *   Entry 1 (offset 0, 80b): sets g_xformEntityIdx = &g_data_005019d0>>2,
+ *   Entry 1 (offset 0, 80b): sets g_xformEntityIdx = &g_dispatchTableArr7_005019d0>>2,
  *     reads [g_baseSel_00542060*4 + 0x34] as state code; if 0x10 → 2, if
  *     0x11 → 7. If != 0xf, pushes 0x542a70 → ArgScaledTestStore_00494140.
  *   Entry 2 (offset 0x50, 219b): phase-state install. Phase != 0 tail-jmps
@@ -126,7 +126,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     0x4eaee0 → ArgSarStoreJmp_004594f0.
  */
 extern unsigned int g_data_004eaee0;
-extern unsigned int g_data_005019d0;
+extern unsigned int g_dispatchTableArr7_005019d0;
 extern unsigned int g_data_00542a70;
 extern unsigned int g_data_00542a78;
 extern void ArgSarStoreJmp_004594f0(void);
@@ -138,7 +138,7 @@ extern void ScaledClearJmp_00428d60(void);
 __declspec(naked) void StateRemapPackedInstall_0046b360(void) {
     __asm {
         mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     eax, offset g_data_005019d0
+        mov     eax, offset g_dispatchTableArr7_005019d0
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
         mov     eax, dword ptr [ecx*4 + 0x34]

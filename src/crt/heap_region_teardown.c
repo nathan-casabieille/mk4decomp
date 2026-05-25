@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_virtualHeapBase_00520130;
 extern unsigned int g_iat_004d214c;
 extern unsigned int g_iat_004d2168;
-extern unsigned int g_x_00520140;
+extern unsigned int g_heapTeardownSentinel_00520140;
 extern unsigned int g_x_00fa0ee4;
 
 struct HeapRegion {
@@ -133,5 +133,5 @@ void HeapRegionTeardown_004c7240(struct HeapRegion *region) {
         ((void (__stdcall *)(unsigned int, unsigned int, void *))g_iat_004d214c)(g_x_00fa0ee4, 0, region);
         return;
     }
-    g_x_00520140 = 0xffffffff;
+    g_heapTeardownSentinel_00520140 = 0xffffffff;
 }

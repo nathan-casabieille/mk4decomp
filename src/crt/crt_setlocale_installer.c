@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_00522308;
 extern unsigned int g_data_00522310;
-extern unsigned int g_data_00522314;
+extern unsigned int g_crtLocaleEnvVarTbl_00522314;
 extern unsigned int g_data_00522318;
 extern unsigned int g_crtTlsSlot_00522400;
 extern unsigned int g_data_00f9f8c0;
@@ -327,10 +327,10 @@ __declspec(naked) void CrtSetlocaleInstaller_004c9520(void)
         push     eax
         mov      dword ptr [g_data_00f9fac8], eax
         call     TranslateMsgId_004c97a0
-        mov      ecx, dword ptr [ebx + g_data_00522314]
+        mov      ecx, dword ptr [ebx + g_crtLocaleEnvVarTbl_00522314]
         mov      edx, dword ptr [ebx + g_data_00522318]
         mov      dword ptr [g_data_00f9facc], eax
-        lea      eax, [ebx + g_data_00522314]
+        lea      eax, [ebx + g_crtLocaleEnvVarTbl_00522314]
         add      esp, 4
         mov      dword ptr [g_data_00f9fad0], ecx
         mov      eax, dword ptr [eax + 8]

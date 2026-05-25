@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004ffe4c;
-extern unsigned int g_data_00501970;
+extern unsigned int g_dispatchTableArr8_00501970;
 extern u32 g_dlSomeFlag2;
 extern s32 g_dlNalt1;
 extern unsigned int g_bootHeavyState_00537f78;
@@ -204,7 +204,7 @@ __declspec(naked) void DeathAnimCluster_0042eaf0(void)
         jne      short L_ec66
         cmp      dword ptr [g_dlNalt1], edx
         jne      short L_ec66
-        mov      eax, OFFSET g_data_00501970
+        mov      eax, OFFSET g_dispatchTableArr8_00501970
         shr      eax, 2
         mov      dword ptr [g_walkCallback], eax
     L_ec66:
@@ -212,7 +212,7 @@ __declspec(naked) void DeathAnimCluster_0042eaf0(void)
         jne      short L_ec80
         cmp      dword ptr [g_dlNalt2], edx
         jne      short L_ec80
-        mov      eax, OFFSET g_data_00501970
+        mov      eax, OFFSET g_dispatchTableArr8_00501970
         shr      eax, 2
         mov      dword ptr [g_walkCallback], eax
     L_ec80:

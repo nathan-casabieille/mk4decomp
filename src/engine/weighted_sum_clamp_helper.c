@@ -121,8 +121,8 @@ extern unsigned int g_x_004f381c;
 extern unsigned int g_x_004f3820;
 extern unsigned int g_x_0053a1f0;
 extern unsigned int g_phaseCounter_00541fb0;
-extern unsigned int g_x_005433f0;
-extern unsigned int g_x_00543444;
+extern unsigned int g_audioInstallSlot2_005433f0;
+extern unsigned int g_phaseThunkSave2_00543444;
 extern unsigned int g_audioPathFlag_0054355c;
 extern void AudioVolumeRescale_004ab690(void);
 
@@ -150,10 +150,10 @@ __declspec(naked) void WeightedSumClampHelper_00439920(void) {
         cmp     edx, esi
         mov     edx, ecx
         jne     useB
-        imul    edx, dword ptr [g_x_005433f0]
+        imul    edx, dword ptr [g_audioInstallSlot2_005433f0]
         jmp     after
 useB:
-        imul    edx, dword ptr [g_x_00543444]
+        imul    edx, dword ptr [g_phaseThunkSave2_00543444]
 after:
         add     eax, edx
 noScale:

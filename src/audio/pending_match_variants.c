@@ -133,7 +133,7 @@ extern unsigned int g_load_0052ab10;
 extern unsigned int g_bootInitState_00535de4;
 extern unsigned int g_particleEmitterNode_00535e6c;
 extern s32 g_dlNalt1;
-extern unsigned int g_data_00538088;
+extern unsigned int g_pendingMatchAudio3_00538088;
 extern s32 g_dlNalt2;
 extern unsigned int g_phaseIdx_0053a50c;
 extern unsigned int g_counter_0053a51c;
@@ -773,7 +773,7 @@ __declspec(naked) void PendingMatch_004a70f0(void)
         mov      dword ptr [ebp + 0x84], edi
         cmp      eax, edi
         je       L_72fd
-        mov      ecx, dword ptr [g_data_00538088]
+        mov      ecx, dword ptr [g_pendingMatchAudio3_00538088]
         mov      dword ptr [g_fightGroupHead], ecx
         call     CallDualStoreXorBit_004285e0
         cmp      dword ptr [g_framePauseFlag], edi
@@ -978,7 +978,7 @@ __declspec(naked) void PendingMatch_004a70f0(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         mov      eax, dword ptr [g_fightGroupHead]
-        mov      dword ptr [g_data_00538088], eax
+        mov      dword ptr [g_pendingMatchAudio3_00538088], eax
         mov      dword ptr [eax*4 + 0x5c], 0xfffe8000
         mov      eax, dword ptr [g_particleEmitterNode_00535e6c]
         mov      ecx, dword ptr [g_fightGroupHead]

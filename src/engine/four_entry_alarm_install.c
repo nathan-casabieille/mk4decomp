@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     g_eventQueueEnd = 0x5c-arg, g_eventQueueWorkType = 0x267,
  *     g_pendingNodeType = 0x44ea20. Calls AllocNode; on no-error pushes
  *     0x4ea9c0 + ArgSarStoreJmp_004594f0.
- *   Entry 2 (offset 0x60, 40b): packs &g_data_00501838>>2 into
+ *   Entry 2 (offset 0x60, 40b): packs &g_dispatchTableArr9_00501838>>2 into
  *     [g_fightGroupHead*4 + 0x24], pushes 0x4ea9d8 → ArgSarStoreJmp.
  *   8b NOP pad.
  *   Entry 3 / body (offset 0x90, 144b): phase-state install.
@@ -130,7 +130,7 @@ extern unsigned int g_data_004ea9c0;
 extern unsigned int g_data_004ea9d8;
 extern unsigned int g_data_004ea9e8;
 extern unsigned int g_data_004ea9f8;
-extern unsigned int g_data_00501838;
+extern unsigned int g_dispatchTableArr9_00501838;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ScaledDecBranch_00466460(void);
 extern void TripleStageRollback_00404a50(void);
@@ -158,7 +158,7 @@ __declspec(naked) void FourEntryAlarmInstall_004662e0(void) {
         ret
     L_fea2_entry2:
         mov     ecx, dword ptr [g_fightGroupHead]
-        mov     eax, offset g_data_00501838
+        mov     eax, offset g_dispatchTableArr9_00501838
         sar     eax, 2
         mov     dword ptr [g_walkCallback], eax
         push    offset g_data_004ea9d8
