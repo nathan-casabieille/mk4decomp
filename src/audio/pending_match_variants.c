@@ -144,8 +144,8 @@ extern unsigned int g_phaseCounter_00541fb0;
 extern u32 g_dlMode;
 extern unsigned int g_audioPathFlag_0054355c;
 extern u8 g_dlEnabledFlag;
-extern unsigned int g_data_005437f8;
-extern unsigned int g_data_005437fc;
+extern unsigned int g_audioSavedGlobal4_005437f8;
+extern unsigned int g_audioSavedGlobal5_005437fc;
 extern unsigned int g_x_004f3ae4;
 extern unsigned int g_x_004f3ae8;
 extern unsigned int g_counter_005433c8;
@@ -190,9 +190,9 @@ extern unsigned int g_data_004f3aa8;
 extern unsigned int g_audioPreloadBase_0050b118;
 extern unsigned int g_data_0050f114;
 extern unsigned int g_count_005433b8;
-extern unsigned int g_data_005433bc;
+extern unsigned int g_audioPendingBcSlot_005433bc;
 extern unsigned int g_audioBankPick_005433c0;
-extern unsigned int g_data_005433cc;
+extern unsigned int g_audioPendingCcSlot_005433cc;
 extern unsigned int g_audioMicroEntry_005433f4;
 extern unsigned int g_data_005433f8;
 extern unsigned int g_counter_0054359c;
@@ -1050,10 +1050,10 @@ __declspec(naked) void PendingMatch_004a3400(void)
         mov      ecx, dword ptr [g_baseSel_00542060]
         cmp      dword ptr [ecx*4 + 0x30], esi
         jne      L_349b
-        mov      eax, dword ptr [g_data_005433bc]
+        mov      eax, dword ptr [g_audioPendingBcSlot_005433bc]
         inc      eax
         cmp      eax, 0x258
-        mov      dword ptr [g_data_005433bc], eax
+        mov      dword ptr [g_audioPendingBcSlot_005433bc], eax
         jle      L_3483
         mov      dword ptr [g_eventQueueWorkType], 0xcc6
         call     Push16Call_00489f50
@@ -1070,7 +1070,7 @@ __declspec(naked) void PendingMatch_004a3400(void)
         call     Push16Call_00489f50
         jmp      L_34a1
     L_349b:
-        mov      dword ptr [g_data_005433bc], ebx
+        mov      dword ptr [g_audioPendingBcSlot_005433bc], ebx
     L_34a1:
         call     CmpByteJmp_004a4180
         call     VoiceBankTickDispatch_004a3120
@@ -1174,10 +1174,10 @@ __declspec(naked) void PendingMatch_004a3400(void)
         mov      al, byte ptr [g_data_005433f8]
         mov      ecx, dword ptr [g_data_004f31cc]
         mov      byte ptr [g_gtModeFlag], al
-        mov      eax, dword ptr [g_data_005437f8]
+        mov      eax, dword ptr [g_audioSavedGlobal4_005437f8]
         mov      edx, dword ptr [g_data_004f31d0]
         mov      dword ptr [g_counter_0053a51c], eax
-        mov      eax, dword ptr [g_data_005437fc]
+        mov      eax, dword ptr [g_audioSavedGlobal5_005437fc]
         mov      esi, 1
         mov      dword ptr [g_stateCountdown_0053a3c0], eax
         mov      dword ptr [g_phaseCounter_00541fb0], eax
@@ -1264,7 +1264,7 @@ __declspec(naked) void PendingMatch_004a3400(void)
         mov      ecx, dword ptr [g_baseSel_00542060]
         add      esp, 4
         mov      dword ptr [ecx*4 + 0x30], 7
-        mov      dword ptr [g_data_005433bc], ebx
+        mov      dword ptr [g_audioPendingBcSlot_005433bc], ebx
         jmp      L_37ff
     L_37fa:
         mov      ebp, 1
@@ -1480,7 +1480,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         mov      eax, edx
         shr      eax, 0x1f
         lea      edx, [edx + eax - 0x100000]
-        mov      eax, dword ptr [g_data_005433cc]
+        mov      eax, dword ptr [g_audioPendingCcSlot_005433cc]
         mov      dword ptr [g_audioCrewState_00541d8c], edx
         mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_currentNodeIdx], eax
@@ -1718,10 +1718,10 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         je       L_5ce6
         mov      dword ptr [g_eventQueueWorkType], 0x32a
         call     Push16Call_00489f50
-        mov      eax, dword ptr [g_data_005433cc]
+        mov      eax, dword ptr [g_audioPendingCcSlot_005433cc]
         mov      dword ptr [g_currentNodeIdx], eax
         call     MStackPush2ChainLLInsert_00406790
-        mov      dword ptr [g_data_005433cc], ebp
+        mov      dword ptr [g_audioPendingCcSlot_005433cc], ebp
         mov      esi, 0x543408
     L_5cb1:
         mov      ecx, dword ptr [esi]
@@ -1835,7 +1835,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         test     eax, eax
         jne      L_5e93
         mov      eax, dword ptr [g_currentNodeIdx]
-        mov      dword ptr [g_data_005433cc], eax
+        mov      dword ptr [g_audioPendingCcSlot_005433cc], eax
         call     ScaledOr4DirtyClear_00409320
         mov      ecx, dword ptr [g_baseSel_00542060]
         mov      ebx, dword ptr [esp + 0x14]

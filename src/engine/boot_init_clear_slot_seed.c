@@ -125,12 +125,12 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   TableWalkBoundedCmp_004bd890, sets byte 0x54371c=1, sets 0x54206c
  *   from g_dlNalt1, calls DownloadPlayerChar; on no-error sets
  *   0x542070=1 and 0x54206c from g_dlNalt2, calls DownloadPlayerChar
- *   again; on no-error sets 0x542044 = &g_data_0050b214>>2 (packed_ptr),
+ *   again; on no-error sets 0x542044 = &g_installCountdownArr2_0050b214>>2 (packed_ptr),
  *   clears 0x54371c, calls LoadGeoAsset_Default; on no-error reloads
- *   &g_data_0050b214>>2 and calls LoadGeoAsset_Default a second time.
+ *   &g_installCountdownArr2_0050b214>>2 and calls LoadGeoAsset_Default a second time.
  */
-extern unsigned int g_data_0050b214;
-extern unsigned int g_data_0052aabc;
+extern unsigned int g_installCountdownArr2_0050b214;
+extern unsigned int g_phaseThunkVar2_0052aabc;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_data_00535de0;
 extern unsigned int g_particleEmitterNode_00535e6c;
@@ -189,7 +189,7 @@ __declspec(naked) void BootInitClearSlotSeed_0042ee40(void) {
         mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_xformLoopCounter], ecx
         jns     short L_bic_zeroLoop
-        mov     dword ptr [g_data_0052aabc], eax
+        mov     dword ptr [g_phaseThunkVar2_0052aabc], eax
         mov     dword ptr [g_walkCallback], ebx
         call    CopyGlobal_004ac1f0
         cmp     dword ptr [g_framePauseFlag], ebx
@@ -212,7 +212,7 @@ __declspec(naked) void BootInitClearSlotSeed_0042ee40(void) {
         call    DownloadPlayerChar
         cmp     dword ptr [g_framePauseFlag], ebx
         jne     short L_bic_done
-        mov     edx, offset g_data_0050b214
+        mov     edx, offset g_installCountdownArr2_0050b214
         mov     byte ptr [g_dlEnabledFlag], bl
         shr     edx, 2
         mov     dword ptr [g_walkCallback], esi
@@ -221,7 +221,7 @@ __declspec(naked) void BootInitClearSlotSeed_0042ee40(void) {
         call    LoadGeoAsset_Default
         cmp     dword ptr [g_framePauseFlag], ebx
         jne     short L_bic_done
-        mov     eax, offset g_data_0050b214
+        mov     eax, offset g_installCountdownArr2_0050b214
         shr     eax, 2
         mov     dword ptr [g_currentNodeIdx], eax
         call    LoadGeoAsset_Default

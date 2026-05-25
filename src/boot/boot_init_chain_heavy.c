@@ -126,7 +126,7 @@ extern unsigned int g_data_00541e98;
 extern unsigned int g_data_00541e9c;
 extern unsigned int g_data_00541ea0;
 extern unsigned int g_data_00541ea4;
-extern unsigned int g_data_00541ea8;
+extern unsigned int g_bootChainSlot2_00541ea8;
 extern unsigned int g_data_00541eac;
 extern unsigned int g_data_00541eb0;
 extern unsigned int g_data_0054343c;
@@ -211,7 +211,7 @@ __declspec(naked) void BootInitChainHeavy_00404f20(void)
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         mov     ecx, dword ptr [g_data_00541ea4]
-        mov     edx, dword ptr [g_data_00541ea8]
+        mov     edx, dword ptr [g_bootChainSlot2_00541ea8]
         mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_xformEntityIdx], 4
         mov     dword ptr [g_pendingNodeType], 0x13

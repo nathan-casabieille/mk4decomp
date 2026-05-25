@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_data_004e5cc0;
 extern unsigned int g_data_004e6070;
 extern unsigned int g_dispatchVar2_0053a24c;
-extern unsigned int g_data_0053a35c;
+extern unsigned int g_dispatchVar8_0053a35c;
 extern void AudioVolumeRescale_004ab690(void);
 extern void CmpDivJmp_0049d080(void);
 extern void GatedWordPushCall_00489f90(void);
@@ -266,7 +266,7 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
         mov      ecx, OFFSET g_data_004e5cc0
         add      esp, 4
         shr      ecx, 2
-        mov      dword ptr [g_data_0053a35c], 0
+        mov      dword ptr [g_dispatchVar8_0053a35c], 0
         mov      dword ptr [g_walkCallback], ecx
         call     PushSetXfmMaskCallPop_00407140
         mov      eax, dword ptr [g_framePauseFlag]
@@ -276,7 +276,7 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
         jne      L_46e6
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      edx, dword ptr [g_eventQueueIdx]
-        mov      dword ptr [g_data_0053a35c], ecx
+        mov      dword ptr [g_dispatchVar8_0053a35c], ecx
         mov      eax, dword ptr [edx*4 + 0x34]
         and      eax, 1
         mov      dword ptr [g_walkCallback], eax

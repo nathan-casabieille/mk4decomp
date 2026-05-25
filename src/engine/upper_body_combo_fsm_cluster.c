@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004ea440;
 extern unsigned int g_zero_0053a470;
-extern unsigned int g_data_00543140;
+extern unsigned int g_dispatchTableBase_00543140;
 extern void CallSetPause_0041f830(void);
 extern void MStackPushComplexCallPop_00406430(void);
 
@@ -184,7 +184,7 @@ __declspec(naked) void UpperBodyComboFsmCluster_00492aa0(void)
         mov      dword ptr [g_xformEntityIdx], ecx
         mov      dword ptr [g_eventQueueEnd], eax
         jne      L_2bcc
-        mov      edx, OFFSET g_data_00543140
+        mov      edx, OFFSET g_dispatchTableBase_00543140
         shr      edx, 2
     L_2bae:
         mov      eax, edx
@@ -200,7 +200,7 @@ __declspec(naked) void UpperBodyComboFsmCluster_00492aa0(void)
         mov      dword ptr [edx*4 + 0x24], ecx
         jmp      L_2c78
     L_2bde:
-        mov      eax, OFFSET g_data_00543140
+        mov      eax, OFFSET g_dispatchTableBase_00543140
         shr      eax, 2
         mov      dword ptr [g_eventQueueEnd], eax
         mov      ecx, dword ptr [eax*4]
@@ -279,7 +279,7 @@ __declspec(naked) void UpperBodyComboFsmCluster_00492aa0(void)
         mov      dword ptr [g_xformEntityIdx], ecx
         mov      dword ptr [g_eventQueueEnd], eax
         jne      L_2d3c
-        mov      edx, OFFSET g_data_00543140
+        mov      edx, OFFSET g_dispatchTableBase_00543140
         shr      edx, 2
     L_2d1e:
         mov      eax, edx
@@ -295,7 +295,7 @@ __declspec(naked) void UpperBodyComboFsmCluster_00492aa0(void)
         mov      dword ptr [edx*4 + 0x24], ecx
         jmp      L_2e03
     L_2d4e:
-        mov      eax, OFFSET g_data_00543140
+        mov      eax, OFFSET g_dispatchTableBase_00543140
         shr      eax, 2
         mov      dword ptr [g_eventQueueEnd], eax
         mov      ecx, dword ptr [eax*4]

@@ -112,7 +112,7 @@ extern unsigned int g_const_004d2b88;
 extern unsigned int g_data_004d2b60;
 extern unsigned int g_data_004d2b7c;
 extern unsigned int g_crtCType_00522998;
-extern unsigned int g_data_00522bb0;
+extern unsigned int g_crtLocaleNumeric_00522bb0;
 extern unsigned int g_byte_00522bb4;
 extern unsigned int g_iat_004d2058;
 extern unsigned int g_iat_004d212c;
@@ -157,7 +157,7 @@ __declspec(naked) void LocaleNumericHelpers_004c8450(void)
         cmp      eax, 0x65
         je       short L_84c3
     L_8496:
-        mov      eax, dword ptr [g_data_00522bb0]
+        mov      eax, dword ptr [g_crtLocaleNumeric_00522bb0]
         inc      esi
         cmp      eax, 1
         jle      short L_84b1

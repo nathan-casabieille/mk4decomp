@@ -145,7 +145,7 @@ extern unsigned int g_data_004ffd4c;
 extern unsigned int g_data_005222e0;
 extern unsigned int g_data_00522620;
 extern unsigned int g_crtCType_00522998;
-extern unsigned int g_data_00522bb0;
+extern unsigned int g_crtLocaleNumeric_00522bb0;
 extern unsigned int g_data_00522e58;
 extern unsigned int g_data_00522e68;
 extern unsigned int g_data_00523600;

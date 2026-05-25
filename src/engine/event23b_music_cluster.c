@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_0052aabc;
+extern unsigned int g_phaseThunkVar2_0052aabc;
 extern unsigned int g_tickFlagF;
 extern unsigned int g_data_0053a318;
 extern unsigned int g_data_00541dd8;
@@ -158,7 +158,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
     L_f599:
         cmp      edx, 1
         jne      short L_f612
-        mov      eax, dword ptr [g_data_0052aabc]
+        mov      eax, dword ptr [g_phaseThunkVar2_0052aabc]
         mov      dword ptr [g_walkCallback], eax
         call     StoreIncrMStackPush6_004275c0
         mov      eax, dword ptr [g_framePauseFlag]
@@ -179,7 +179,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         jne      short L_f691
         jmp      short L_f67a
     L_f612:
-        mov      edx, dword ptr [g_data_0052aabc]
+        mov      edx, dword ptr [g_phaseThunkVar2_0052aabc]
         mov      dword ptr [g_walkCallback], edx
         call     StoreIncrMStackPush6_004275c0
         mov      eax, dword ptr [g_framePauseFlag]
@@ -250,7 +250,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         cmp      eax, 7
         mov      dword ptr [g_walkCallback], eax
         jne      short L_f72b
-        mov      eax, dword ptr [g_data_0052aabc]
+        mov      eax, dword ptr [g_phaseThunkVar2_0052aabc]
         test     eax, eax
         mov      dword ptr [g_walkCallback], eax
         je       short L_f72b

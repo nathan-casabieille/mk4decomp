@@ -112,7 +112,7 @@ extern unsigned int g_data_00522308;
 extern unsigned int g_data_00522310;
 extern unsigned int g_data_00522314;
 extern unsigned int g_data_00522318;
-extern unsigned int g_data_00522400;
+extern unsigned int g_crtTlsSlot_00522400;
 extern unsigned int g_data_00f9f8c0;
 extern unsigned int g_byte_00f9f8c1;
 extern unsigned int g_data_00f9fac8;
@@ -185,7 +185,7 @@ __declspec(naked) void CrtSetlocaleInstaller_004c9520(void)
         je       L_96a0
         add      eax, 0x30
         inc      edx
-        cmp      eax, OFFSET g_data_00522400
+        cmp      eax, OFFSET g_crtTlsSlot_00522400
         jb       short L_958a
         lea      edx, [esp + 0x10]
         push     edx

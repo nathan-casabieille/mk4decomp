@@ -125,8 +125,8 @@ extern unsigned int g_data_004f4310;
 extern unsigned int g_data_004f4320;
 extern unsigned int g_data_004f432c;
 extern unsigned int g_voiceBankTickBase_00543450;
-extern unsigned int g_data_005437f8;
-extern unsigned int g_data_005437fc;
+extern unsigned int g_audioSavedGlobal4_005437f8;
+extern unsigned int g_audioSavedGlobal5_005437fc;
 extern void GuardedSetupCallTailJmp_004a1fa0(void);
 extern void Helper_Sprintf(void);
 extern void MStackPush2ChainLLInsert_00406790(void);
@@ -162,7 +162,7 @@ __declspec(naked) void VoiceBankTickDispatch_004a3120(void)
         push     OFFSET g_data_004f4320
         jmp      L_31d5
     L_3183:
-        mov      ecx, dword ptr [g_data_005437fc]
+        mov      ecx, dword ptr [g_audioSavedGlobal5_005437fc]
         mov      edx, dword ptr [ecx*4 + g_data_004f3220]
         push     edx
         push     OFFSET g_data_004f4310
@@ -174,7 +174,7 @@ __declspec(naked) void VoiceBankTickDispatch_004a3120(void)
         push     OFFSET g_data_004f4304
         jmp      L_31d5
     L_31ac:
-        mov      edx, dword ptr [g_data_005437f8]
+        mov      edx, dword ptr [g_audioSavedGlobal4_005437f8]
         mov      eax, dword ptr [edx*4 + g_data_004f31a0]
         push     eax
         push     OFFSET g_data_004f42f4
