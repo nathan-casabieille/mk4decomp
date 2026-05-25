@@ -113,12 +113,12 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   handle != -1, scans its 2KB page-state array (1024 entries × 8 bytes)
  *   at +0x2010, looking for entries marked 0xf0 (free). Decommit each via
  *   IAT[0x4d2168] (VirtualFree); on success, mark slot 0xffffffff, decrement
- *   counter [g_data_00f9f8b8], update head ptr at [region+0xc]. Decrement
+ *   counter [g_dispatchSave1432_00f9f8b8], update head ptr at [region+0xc]. Decrement
  *   target count [esp+0x14]; if region fully empty (all -1), call
  *   HeapRegionTeardown_004c7240(region).
  */
 extern unsigned int g_heapShrinkPtr_00520134;
-extern unsigned int g_data_00f9f8b8;
+extern unsigned int g_dispatchSave1432_00f9f8b8;
 extern unsigned int g_iat_004d2168;
 extern void HeapRegionTeardown_004c7240(void);
 
@@ -147,9 +147,9 @@ __declspec(naked) void HeapShrinkDecommit_004c72a0(void) {
         test    eax, eax
         jz      short L_hs_nextpage
         mov     dword ptr [esi], 0xffffffff
-        mov     edx, dword ptr [g_data_00f9f8b8]
+        mov     edx, dword ptr [g_dispatchSave1432_00f9f8b8]
         dec     edx
-        mov     dword ptr [g_data_00f9f8b8], edx
+        mov     dword ptr [g_dispatchSave1432_00f9f8b8], edx
         mov     eax, [edi + 0xc]
         test    eax, eax
         jz      short L_hs_setHead

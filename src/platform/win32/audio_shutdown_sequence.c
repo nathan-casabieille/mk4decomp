@@ -113,8 +113,8 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     base = (*iat)(); Audio_UpdateChannels(); VtableArgClamp(i);
  *     used = (*iat)(); delta = 10 - used; total = base + delta;
  *     if total > 0: SleepEx(total).
- *   Then: g_x_00f9eff0 = 1; Loop1cBitMask; IterateCallSkip;
- *   Helper_DSI_post1(0); g_x_00f9eff0 = 0;
+ *   Then: g_dispatchSave1417_00f9eff0 = 1; Loop1cBitMask; IterateCallSkip;
+ *   Helper_DSI_post1(0); g_dispatchSave1417_00f9eff0 = 0;
  *   if g_dsoundPrimary: vtbl[+8](.); clear. Same for g_dsoundContext.
  */
 extern unsigned int g_byte_00f9efec;
@@ -122,7 +122,7 @@ extern unsigned int g_iat_004d2074;
 extern unsigned int g_iat_004d2240;
 extern void * g_dsoundContext;
 extern void * g_dsoundPrimary;
-extern unsigned int g_x_00f9eff0;
+extern unsigned int g_dispatchSave1417_00f9eff0;
 extern void Audio_UpdateChannels(void);
 extern void BuildMaskFromArray_004c38d0(void);
 extern void Helper_DSI_post1(void);
@@ -164,11 +164,11 @@ loopShutdown:
         test    edi, edi
         _emit   7fh
         _emit   0cah
-        mov     dword ptr [g_x_00f9eff0], 1
+        mov     dword ptr [g_dispatchSave1417_00f9eff0], 1
         call    Loop1cBitMask_004c4450
         call    IterateCallSkip_004c4210
         push    0
-        mov     dword ptr [g_x_00f9eff0], 0
+        mov     dword ptr [g_dispatchSave1417_00f9eff0], 0
         call    Helper_DSI_post1
         mov     eax, dword ptr [g_dsoundPrimary]
         add     esp, 4

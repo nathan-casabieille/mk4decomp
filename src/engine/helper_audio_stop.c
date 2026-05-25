@@ -18,10 +18,10 @@
  */
 extern unsigned int g_flags_00f8fade;
 extern unsigned int g_flags_00f8fadf;
-extern unsigned int g_x_00f9efd8;
+extern unsigned int g_dispatchSave1415_00f9efd8;
 extern u32 g_dsoundFieldE4;
 extern u32 g_dsoundFieldE8;
-extern unsigned int g_x_00f9eff0;
+extern unsigned int g_dispatchSave1417_00f9eff0;
 
 extern unsigned int g_obj_size_00f8fad8;
 extern unsigned int g_obj_table_00f8fac8;
@@ -54,7 +54,7 @@ __declspec(naked) void Helper_AudioStop(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_x_00f9eff0]
+        mov     eax, dword ptr [g_dispatchSave1417_00f9eff0]
         test    eax, eax
         _emit   75h
         _emit   25h
@@ -97,12 +97,12 @@ __declspec(naked) void Helper_AudioStop(void) {
         mov     edx, dword ptr [g_dsoundFieldE4]
         mov     ecx, dword ptr [g_dsoundFieldE8]
         sub     edx, eax
-        mov     eax, dword ptr [g_x_00f9efd8]
+        mov     eax, dword ptr [g_dispatchSave1415_00f9efd8]
         dec     ecx
         inc     eax
         mov     dword ptr [g_dsoundFieldE4], edx
         mov     dword ptr [g_dsoundFieldE8], ecx
-        mov     dword ptr [g_x_00f9efd8], eax
+        mov     dword ptr [g_dispatchSave1415_00f9efd8], eax
         pop     edi
         pop     esi
         pop     ebx

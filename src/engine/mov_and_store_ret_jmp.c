@@ -15,13 +15,13 @@ extern unsigned int g_scaledInit_00542044;
  * Keep naked: MSVC SP3 constant-folds `0x00b4d00f & 0xfffe0000`
  * into a single `mov [g], imm32` (10b), losing the load+and form.
  */
-extern unsigned int g_state_00f85b38;
+extern unsigned int g_dispatchSave1401_00f85b38;
 extern void func_004bf088(void);
 __declspec(naked) void MovAndStoreRetJmp_004bf070(void) {
     __asm {
         mov     eax, 0x00b4d00f
         and     eax, 0xfffe0000
-        mov     dword ptr [g_state_00f85b38], eax
+        mov     dword ptr [g_dispatchSave1401_00f85b38], eax
         ret
     }
 }

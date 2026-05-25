@@ -109,13 +109,13 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004d0f50 (304b other) - CRT mbstowcs / mb-to-wide convert dispatcher.
- *   Caches result of GetCPInfo (or similar) in g_data_00f9fd9c (1/2 state).
+ *   Caches result of GetCPInfo (or similar) in g_dispatchSave1462_00f9fd9c (1/2 state).
  *   If state=1: simple passthrough call. If state=2: full conversion via
- *     IAT[0x4d2134] + IAT[0x4d20e4] (MultiByteToWideChar). Uses g_data_00f9fc20
+ *     IAT[0x4d2134] + IAT[0x4d20e4] (MultiByteToWideChar). Uses g_dispatchSave1448_00f9fc20
  *     as default codepage when arg is 0.
  */
-extern unsigned int g_data_00f9fc20;
-extern unsigned int g_data_00f9fd9c;
+extern unsigned int g_dispatchSave1448_00f9fc20;
+extern unsigned int g_dispatchSave1462_00f9fd9c;
 extern unsigned int g_iat_004d20e4;
 extern unsigned int g_iat_004d2130;
 extern unsigned int g_iat_004d2134;
@@ -124,7 +124,7 @@ extern void LoadArgPushCall_004c54b0(void);
 
 __declspec(naked) void MbToWcsDispatcher_004d0f50(void) {
     __asm {
-        mov     eax, dword ptr [g_data_00f9fd9c]
+        mov     eax, dword ptr [g_dispatchSave1462_00f9fd9c]
         push    ebx
         push    ebp
         push    esi
@@ -151,7 +151,7 @@ __declspec(naked) void MbToWcsDispatcher_004d0f50(void) {
         jz      L_mw_returnZero
         mov     eax, 2
     L_mw_setState:
-        mov     dword ptr [g_data_00f9fd9c], eax
+        mov     dword ptr [g_dispatchSave1462_00f9fd9c], eax
     L_mw_haveState:
         cmp     eax, 1
         jne     short L_mw_state2
@@ -175,7 +175,7 @@ __declspec(naked) void MbToWcsDispatcher_004d0f50(void) {
         mov     eax, [esp + 0x24]
         test    eax, eax
         jne     short L_mw_haveCP
-        mov     ecx, dword ptr [g_data_00f9fc20]
+        mov     ecx, dword ptr [g_dispatchSave1448_00f9fc20]
         mov     [esp + 0x24], ecx
     L_mw_haveCP:
         mov     ebx, [esp + 0x18]

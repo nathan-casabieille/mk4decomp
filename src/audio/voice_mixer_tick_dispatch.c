@@ -115,7 +115,7 @@ extern unsigned int g_dispatchSave808_004f31a4;
 extern unsigned int g_dispatchSave809_004f31ac;
 extern unsigned int g_dispatchSave723_004f62f8;
 extern unsigned int g_dispatchSave120_00515964;
-extern unsigned int g_data_00f00000;
+extern unsigned int g_dispatchSave1332_00f00000;
 extern void AudioBindEntry_004a1e40(void);
 extern void AudioInitArgs3_004a1f20(void);
 extern void GuardedSetupCallTailJmp_004a1fa0(void);
@@ -149,7 +149,7 @@ __declspec(naked) void VoiceMixerTickDispatch_004a27c0(void)
         xor      edi, edi
         mov      esi, OFFSET g_dispatchSave804_004f308c
         mov      ebp, 0xff100000
-        mov      ebx, OFFSET g_data_00f00000
+        mov      ebx, OFFSET g_dispatchSave1332_00f00000
     L_2816:
         mov      eax, dword ptr [esi + 8]
         mov      ecx, dword ptr [esi]

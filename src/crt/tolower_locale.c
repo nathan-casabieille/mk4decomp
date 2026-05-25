@@ -116,16 +116,16 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 extern unsigned int g_iat_004d20cc;
 extern unsigned int g_iat_004d20d0;
-extern unsigned int g_x_00f9fc10;
-extern unsigned int g_x_00f9fdac;
-extern unsigned int g_x_00f9fdb0;
+extern unsigned int g_dispatchSave1444_00f9fc10;
+extern unsigned int g_dispatchSave1463_00f9fdac;
+extern unsigned int g_dispatchSave1464_00f9fdb0;
 extern void Lock_004c6f50(void);
 extern void TableLookupIatCall_004c6fd0(void);
 extern void Tolower_004cc780(void);
 
 __declspec(naked) void TolowerLocale_004cc6f0(void) {
     __asm {
-        mov     eax, dword ptr [g_x_00f9fc10]
+        mov     eax, dword ptr [g_dispatchSave1444_00f9fc10]
         test    eax, eax
         jne     localePath
         mov     eax, dword ptr [esp + 4]
@@ -139,13 +139,13 @@ localePath:
         push    edi
         push    esi
         push    ebx
-        push    offset g_x_00f9fdb0
+        push    offset g_dispatchSave1464_00f9fdb0
         call    dword ptr [g_iat_004d20cc]
-        mov     eax, dword ptr [g_x_00f9fdac]
+        mov     eax, dword ptr [g_dispatchSave1463_00f9fdac]
         mov     edi, dword ptr [g_iat_004d20d0]
         test    eax, eax
         je      noLock
-        push    offset g_x_00f9fdb0
+        push    offset g_dispatchSave1464_00f9fdb0
         call    edi
         push    0x13
         call    Lock_004c6f50
@@ -171,7 +171,7 @@ callInner:
         pop     edi
         ret
 directLeave:
-        push    offset g_x_00f9fdb0
+        push    offset g_dispatchSave1464_00f9fdb0
         call    edi
         mov     eax, ebx
         pop     ebx

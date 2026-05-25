@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00f9fae0;
-extern unsigned int g_data_00f9fc00;
+extern unsigned int g_dispatchSave1441_00f9fae0;
+extern unsigned int g_dispatchSave1443_00f9fc00;
 extern void CrtFileOpenImpl_004cd350(void);
 
 __declspec(naked) void FopenMode_004c9270(void)
@@ -123,7 +123,7 @@ __declspec(naked) void FopenMode_004c9270(void)
         xor      edx, edx
         xor      ebp, ebp
         push     edi
-        mov      edi, dword ptr [g_data_00f9fc00]
+        mov      edi, dword ptr [g_dispatchSave1443_00f9fc00]
         cmp      al, 0x61
         je       short L_92a5
         cmp      al, 0x72
@@ -244,9 +244,9 @@ __declspec(naked) void FopenMode_004c9270(void)
         pop      ebx
         ret
     L_9396:
-        mov      eax, dword ptr [g_data_00f9fae0]
+        mov      eax, dword ptr [g_dispatchSave1441_00f9fae0]
         inc      eax
-        mov      dword ptr [g_data_00f9fae0], eax
+        mov      dword ptr [g_dispatchSave1441_00f9fae0], eax
         mov      eax, dword ptr [esp + 0x20]
         mov      dword ptr [eax + 0xc], edi
         pop      edi

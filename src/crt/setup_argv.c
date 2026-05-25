@@ -121,9 +121,9 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 extern unsigned int g_GetModuleFileNameA_004d20a0;
 extern unsigned int g_buf_00f9faf0;
-extern unsigned int g_x_00f9f814;
-extern unsigned int g_x_00f9f818;
-extern unsigned int g_x_00f9f830;
+extern unsigned int g_dispatchSave1424_00f9f814;
+extern unsigned int g_dispatchSave1425_00f9f818;
+extern unsigned int g_dispatchSave1427_00f9f830;
 extern char * g_cmdline;
 extern void CmpCallPushIATCall_004c6e60(void);
 extern void CrtParseCommandLine_004cbcc0(void);
@@ -139,7 +139,7 @@ __declspec(naked) void SetupArgv_004cbc20(void) {
         push    0
         call    dword ptr [g_GetModuleFileNameA_004d20a0]
         mov     edi, dword ptr [g_cmdline]
-        mov     dword ptr [g_x_00f9f830], offset g_buf_00f9faf0
+        mov     dword ptr [g_dispatchSave1427_00f9f830], offset g_buf_00f9faf0
         cmp     byte ptr [edi], 0
         _emit   75h
         _emit   05h
@@ -179,9 +179,9 @@ __declspec(naked) void SetupArgv_004cbc20(void) {
         mov     eax, [esp + 0x1c]
         add     esp, 0x14
         dec     eax
-        mov     dword ptr [g_x_00f9f818], esi
+        mov     dword ptr [g_dispatchSave1425_00f9f818], esi
         pop     edi
-        mov     dword ptr [g_x_00f9f814], eax
+        mov     dword ptr [g_dispatchSave1424_00f9f814], eax
         pop     esi
         add     esp, 8
         ret

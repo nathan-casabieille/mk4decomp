@@ -45,14 +45,14 @@ void _init_premain(void) {
  */
 extern void * (__stdcall *g_iat_004d216c)(int, int, int);
 extern void (__stdcall *g_iat_004d2158)(void *);
-extern void * g_state_00fa0ee4;
+extern void * g_dispatchSave1470_00fa0ee4;
 extern int VirtualHeapAlloc_004c70d0(void);
 int CallIATIfThenCall_004c6ee0(void) {
     void *p = g_iat_004d216c(0, 0x1000, 0);
-    g_state_00fa0ee4 = p;
+    g_dispatchSave1470_00fa0ee4 = p;
     if (p == 0) return 0;
     if (VirtualHeapAlloc_004c70d0() == 0) {
-        g_iat_004d2158(g_state_00fa0ee4);
+        g_iat_004d2158(g_dispatchSave1470_00fa0ee4);
         return 0;
     }
     return 1;

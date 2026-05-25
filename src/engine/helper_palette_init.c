@@ -5,24 +5,24 @@
 #include "game/tick.h"
 
 extern unsigned int g_texturedTriVar_004ffd4c;
-extern unsigned int g_data_00f4d028;
-extern unsigned int g_data_00f6e058;
-extern unsigned int g_data_00f6e05c;
-extern unsigned int g_data_00f6e060;
-extern unsigned int g_data_00f6e064;
-extern unsigned int g_data_00f85b34;
+extern unsigned int g_dispatchSave1340_00f4d028;
+extern unsigned int g_dispatchSave1352_00f6e058;
+extern unsigned int g_dispatchSave1353_00f6e05c;
+extern unsigned int g_dispatchSave1354_00f6e060;
+extern unsigned int g_dispatchSave1355_00f6e064;
+extern unsigned int g_dispatchSave1400_00f85b34;
 
 __declspec(naked) void Helper_PaletteInit(void)
 {
     __asm {
         mov     eax, 0x01010101
         sub     esp, 0xD4
-        mov     dword ptr [g_data_00f6e058], eax
-        mov     dword ptr [g_data_00f6e05c], eax
+        mov     dword ptr [g_dispatchSave1352_00f6e058], eax
+        mov     dword ptr [g_dispatchSave1353_00f6e05c], eax
         push    esi
         mov     esi, dword ptr [esp + 0xDC]
-        mov     dword ptr [g_data_00f6e060], eax
-        mov     dword ptr [g_data_00f6e064], eax
+        mov     dword ptr [g_dispatchSave1354_00f6e060], eax
+        mov     dword ptr [g_dispatchSave1355_00f6e064], eax
         mov     eax, dword ptr [g_texturedTriVar_004ffd4c]
         cmp     esi, eax
         je      L_ptb_eq_skip
@@ -33,7 +33,7 @@ __declspec(naked) void Helper_PaletteInit(void)
         je      L_ptb_5bit
         xor     ecx, ecx
     L_ptb_6bit_loop:
-        mov     edx, dword ptr [g_data_00f85b34]
+        mov     edx, dword ptr [g_dispatchSave1400_00f85b34]
         add     ecx, 2
         mov     ax, word ptr [edx + ecx - 2]
         mov     edi, eax
@@ -52,7 +52,7 @@ __declspec(naked) void Helper_PaletteInit(void)
     L_ptb_5bit:
         xor     ecx, ecx
     L_ptb_5bit_loop:
-        mov     edx, dword ptr [g_data_00f85b34]
+        mov     edx, dword ptr [g_dispatchSave1400_00f85b34]
         add     ecx, 2
         mov     ax, word ptr [edx + ecx - 2]
         mov     edi, eax
@@ -127,7 +127,7 @@ __declspec(naked) void Helper_PaletteInit(void)
         shl     bx, 5
     L_ptb_inner_combine:
         add     bp, bx
-        mov     ebx, dword ptr [g_data_00f4d028]
+        mov     ebx, dword ptr [g_dispatchSave1340_00f4d028]
         shl     ebp, 5
         add     bp, word ptr [eax]
         add     edi, ecx

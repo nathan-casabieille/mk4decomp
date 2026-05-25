@@ -7,10 +7,10 @@
 extern unsigned int g_dispatchSave569_004ffd50;
 extern u8 g_audioChannelTable[];
 extern unsigned int g_obj_size_00f8fad8;
-extern unsigned int g_data_00f8fadc;
+extern unsigned int g_dispatchSave1408_00f8fadc;
 extern unsigned int g_flags_00f8fade;
 extern void * g_dsoundContext;
-extern unsigned int g_data_00f9efd8;
+extern unsigned int g_dispatchSave1415_00f9efd8;
 extern u32 g_dsoundFieldE4;
 extern u32 g_dsoundFieldE8;
 extern void ESF_Close(void);
@@ -19,7 +19,7 @@ extern void ESF_ReadData(void);
 extern void Helper_AudioStop(void);
 extern void Helper_Sprintf(void);
 
-extern unsigned int g_data_00f8facc;
+extern unsigned int g_dispatchSave1407_00f8facc;
 
 __declspec(naked) void Helper_AudioRelease(void)
 {
@@ -60,10 +60,10 @@ __declspec(naked) void Helper_AudioRelease(void)
         xor      eax, eax
         mov      edi, ebp
         rep stosd
-        cmp      dword ptr [g_data_00f9efd8], 0x64
+        cmp      dword ptr [g_dispatchSave1415_00f9efd8], 0x64
         jle      L_351d
         mov      eax, dword ptr [g_dsoundContext]
-        mov      dword ptr [g_data_00f9efd8], edx
+        mov      dword ptr [g_dispatchSave1415_00f9efd8], edx
         cmp      eax, edx
         je       L_351d
         mov      ecx, dword ptr [eax]
@@ -88,7 +88,7 @@ __declspec(naked) void Helper_AudioRelease(void)
         call     ESF_Open
         mov      edx, dword ptr [esp + 0x3c]
         mov      dword ptr [esi + g_obj_size_00f8fad8], eax
-        mov      word ptr [esi + g_data_00f8fadc], 0
+        mov      word ptr [esi + g_dispatchSave1408_00f8fadc], 0
         mov      al, byte ptr [esi + g_flags_00f8fade]
         add      esp, 0x10
         and      al, 0xf9
@@ -195,7 +195,7 @@ __declspec(naked) void Helper_AudioRelease(void)
         push     ecx
         push     eax
         call     dword ptr [edx + 0x4c]
-        lea      edi, [esi + g_data_00f8facc]
+        lea      edi, [esi + g_dispatchSave1407_00f8facc]
     L_36a6:
         mov      eax, dword ptr [g_dsoundContext]
         mov      edx, dword ptr [ebp]

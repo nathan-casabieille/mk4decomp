@@ -113,11 +113,11 @@ extern unsigned int g_byte_00522bb4;
 extern unsigned int g_dispatchSave111_00522bb8;
 extern unsigned int g_dispatchSave110_005236b0;
 extern unsigned int g_crtTimeFmtPrefs_005236e8;
-extern unsigned int g_data_00f9fc18;
-extern unsigned int g_data_00f9fc68;
-extern unsigned int g_data_00f9fc6c;
-extern unsigned int g_data_00f9fc70;
-extern unsigned int g_data_00f9fc9a;
+extern unsigned int g_dispatchSave1446_00f9fc18;
+extern unsigned int g_dispatchSave1456_00f9fc68;
+extern unsigned int g_dispatchSave1457_00f9fc6c;
+extern unsigned int g_dispatchSave1458_00f9fc70;
+extern unsigned int g_dispatchSave1461_00f9fc9a;
 extern void CrtGetLocaleInfo_004d0bc0(void);
 extern void FreeImpl_004c55f0(void);
 extern void LoadArgPushCall_004c54b0(void);
@@ -245,57 +245,57 @@ __declspec(naked) void CrtTimeFmtPrefsCluster_004cfe40(void)
         nop
         nop
         /* === h2 (0x4cff60): prefs save/reload === */
-        mov      eax, dword ptr [g_data_00f9fc18]
+        mov      eax, dword ptr [g_dispatchSave1446_00f9fc18]
         push     ebx
         push     esi
         xor      ebx, ebx
         xor      esi, esi
         cmp      eax, ebx
-        mov      si, word ptr [g_data_00f9fc9a]
+        mov      si, word ptr [g_dispatchSave1461_00f9fc9a]
         push     edi
         je       L_0059
-        push     OFFSET g_data_00f9fc68
+        push     OFFSET g_dispatchSave1456_00f9fc68
         push     0xe
         push     esi
         push     1
         call     CrtGetLocaleInfo_004d0bc0
         add      esp, 0x10
         mov      edi, eax
-        push     OFFSET g_data_00f9fc6c
+        push     OFFSET g_dispatchSave1457_00f9fc6c
         push     0xf
         push     esi
         push     1
         call     CrtGetLocaleInfo_004d0bc0
         add      esp, 0x10
         or       edi, eax
-        push     OFFSET g_data_00f9fc70
+        push     OFFSET g_dispatchSave1458_00f9fc70
         push     0x10
         push     esi
         push     1
         call     CrtGetLocaleInfo_004d0bc0
         add      esp, 0x10
         or       edi, eax
-        mov      eax, dword ptr [g_data_00f9fc70]
+        mov      eax, dword ptr [g_dispatchSave1458_00f9fc70]
         push     eax
         call     StringStripSlotReplace_004d0140
         add      esp, 4
         cmp      edi, ebx
         je       short L_ffee
-        mov      ecx, dword ptr [g_data_00f9fc68]
+        mov      ecx, dword ptr [g_dispatchSave1456_00f9fc68]
         push     ecx
         call     FreeImpl_004c55f0
-        mov      edx, dword ptr [g_data_00f9fc6c]
+        mov      edx, dword ptr [g_dispatchSave1457_00f9fc6c]
         add      esp, 4
         push     edx
         call     FreeImpl_004c55f0
-        mov      eax, dword ptr [g_data_00f9fc70]
+        mov      eax, dword ptr [g_dispatchSave1458_00f9fc70]
         add      esp, 4
         push     eax
         call     FreeImpl_004c55f0
         add      esp, 4
-        mov      dword ptr [g_data_00f9fc68], ebx
-        mov      dword ptr [g_data_00f9fc6c], ebx
-        mov      dword ptr [g_data_00f9fc70], ebx
+        mov      dword ptr [g_dispatchSave1456_00f9fc68], ebx
+        mov      dword ptr [g_dispatchSave1457_00f9fc6c], ebx
+        mov      dword ptr [g_dispatchSave1458_00f9fc70], ebx
         or       eax, 0xffffffff
         pop      edi
         pop      esi
@@ -321,31 +321,31 @@ __declspec(naked) void CrtTimeFmtPrefsCluster_004cfe40(void)
         add      esp, 4
     L_002a:
         mov      ecx, dword ptr [g_crtTimeFmtPrefs_005236e8]
-        mov      eax, dword ptr [g_data_00f9fc68]
+        mov      eax, dword ptr [g_dispatchSave1456_00f9fc68]
         mov      dword ptr [ecx], eax
         mov      edx, dword ptr [g_crtTimeFmtPrefs_005236e8]
-        mov      eax, dword ptr [g_data_00f9fc6c]
+        mov      eax, dword ptr [g_dispatchSave1457_00f9fc6c]
         mov      dword ptr [edx + 4], eax
         mov      ecx, dword ptr [g_crtTimeFmtPrefs_005236e8]
-        mov      edx, dword ptr [g_data_00f9fc70]
+        mov      edx, dword ptr [g_dispatchSave1458_00f9fc70]
         mov      dword ptr [ecx + 8], edx
         jmp      L_0117
     L_0059:
-        mov      eax, dword ptr [g_data_00f9fc68]
+        mov      eax, dword ptr [g_dispatchSave1456_00f9fc68]
         push     eax
         call     FreeImpl_004c55f0
-        mov      ecx, dword ptr [g_data_00f9fc6c]
+        mov      ecx, dword ptr [g_dispatchSave1457_00f9fc6c]
         add      esp, 4
         push     ecx
         call     FreeImpl_004c55f0
-        mov      edx, dword ptr [g_data_00f9fc70]
+        mov      edx, dword ptr [g_dispatchSave1458_00f9fc70]
         add      esp, 4
         push     edx
         call     FreeImpl_004c55f0
         add      esp, 4
-        mov      dword ptr [g_data_00f9fc68], ebx
-        mov      dword ptr [g_data_00f9fc6c], ebx
-        mov      dword ptr [g_data_00f9fc70], ebx
+        mov      dword ptr [g_dispatchSave1456_00f9fc68], ebx
+        mov      dword ptr [g_dispatchSave1457_00f9fc6c], ebx
+        mov      dword ptr [g_dispatchSave1458_00f9fc70], ebx
         push     2
         call     LoadArgPushCall_004c54b0
         mov      ecx, dword ptr [g_crtTimeFmtPrefs_005236e8]

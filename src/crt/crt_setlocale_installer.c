@@ -113,15 +113,15 @@ extern unsigned int g_dispatchSave116_00522310;
 extern unsigned int g_crtLocaleEnvVarTbl_00522314;
 extern unsigned int g_dispatchSave115_00522318;
 extern unsigned int g_crtTlsSlot_00522400;
-extern unsigned int g_data_00f9f8c0;
+extern unsigned int g_dispatchSave1433_00f9f8c0;
 extern unsigned int g_byte_00f9f8c1;
-extern unsigned int g_data_00f9fac8;
-extern unsigned int g_data_00f9facc;
-extern unsigned int g_data_00f9fad0;
-extern unsigned int g_data_00f9fad4;
-extern unsigned int g_data_00f9fad8;
-extern unsigned int g_data_00f9fadc;
-extern unsigned int g_data_00fa0dc4;
+extern unsigned int g_dispatchSave1435_00f9fac8;
+extern unsigned int g_dispatchSave1436_00f9facc;
+extern unsigned int g_dispatchSave1437_00f9fad0;
+extern unsigned int g_dispatchSave1438_00f9fad4;
+extern unsigned int g_dispatchSave1439_00f9fad8;
+extern unsigned int g_dispatchSave1440_00f9fadc;
+extern unsigned int g_dispatchSave1467_00fa0dc4;
 extern unsigned int g_iat_004d2114;
 extern void BuildCharacterCaseTables_004c9840(void);
 extern void CRTSignalDispatch_004c9750(void);
@@ -147,7 +147,7 @@ __declspec(naked) void CrtSetlocaleInstaller_004c9520(void)
         push     eax
         call     CRTSignalDispatch_004c9750
         mov      ecx, eax
-        mov      eax, dword ptr [g_data_00f9fac8]
+        mov      eax, dword ptr [g_dispatchSave1435_00f9fac8]
         add      esp, 4
         cmp      ecx, eax
         mov      dword ptr [esp + 0x28], ecx
@@ -196,15 +196,15 @@ __declspec(naked) void CrtSetlocaleInstaller_004c9520(void)
         jne      L_9664
         mov      ecx, 0x40
         xor      eax, eax
-        mov      edi, OFFSET g_data_00f9f8c0
+        mov      edi, OFFSET g_dispatchSave1433_00f9f8c0
         rep stosd
         mov      ecx, dword ptr [esp + 0x10]
         stosb
         mov      edi, dword ptr [esp + 0x28]
         xor      eax, eax
         cmp      ecx, esi
-        mov      dword ptr [g_data_00f9fac8], edi
-        mov      dword ptr [g_data_00f9facc], eax
+        mov      dword ptr [g_dispatchSave1435_00f9fac8], edi
+        mov      dword ptr [g_dispatchSave1436_00f9facc], eax
         jbe      short L_964c
         mov      al, byte ptr [esp + 0x16]
         test     al, al
@@ -243,19 +243,19 @@ __declspec(naked) void CrtSetlocaleInstaller_004c9520(void)
         push     edi
         call     TranslateMsgId_004c97a0
         add      esp, 4
-        mov      dword ptr [g_data_00f9facc], eax
-        mov      dword ptr [g_data_00fa0dc4], esi
+        mov      dword ptr [g_dispatchSave1436_00f9facc], eax
+        mov      dword ptr [g_dispatchSave1467_00fa0dc4], esi
         jmp      short L_9651
     L_964c:
-        mov      dword ptr [g_data_00fa0dc4], eax
+        mov      dword ptr [g_dispatchSave1467_00fa0dc4], eax
     L_9651:
         xor      eax, eax
-        mov      dword ptr [g_data_00f9fad0], eax
-        mov      dword ptr [g_data_00f9fad4], eax
-        mov      dword ptr [g_data_00f9fad8], eax
+        mov      dword ptr [g_dispatchSave1437_00f9fad0], eax
+        mov      dword ptr [g_dispatchSave1438_00f9fad4], eax
+        mov      dword ptr [g_dispatchSave1439_00f9fad8], eax
         jmp      short L_9672
     L_9664:
-        mov      eax, dword ptr [g_data_00f9fadc]
+        mov      eax, dword ptr [g_dispatchSave1440_00f9fadc]
         test     eax, eax
         je       short L_968b
         call     InitGlobalsAndZero_004c9800
@@ -285,7 +285,7 @@ __declspec(naked) void CrtSetlocaleInstaller_004c9520(void)
     L_96a0:
         mov      ecx, 0x40
         xor      eax, eax
-        mov      edi, OFFSET g_data_00f9f8c0
+        mov      edi, OFFSET g_dispatchSave1433_00f9f8c0
         lea      ebx, [edx + edx*2]
         rep stosd
         stosb
@@ -323,19 +323,19 @@ __declspec(naked) void CrtSetlocaleInstaller_004c9520(void)
         cmp      edi, 4
         jb       short L_96bd
         mov      eax, dword ptr [esp + 0x28]
-        mov      dword ptr [g_data_00fa0dc4], 1
+        mov      dword ptr [g_dispatchSave1467_00fa0dc4], 1
         push     eax
-        mov      dword ptr [g_data_00f9fac8], eax
+        mov      dword ptr [g_dispatchSave1435_00f9fac8], eax
         call     TranslateMsgId_004c97a0
         mov      ecx, dword ptr [ebx + g_crtLocaleEnvVarTbl_00522314]
         mov      edx, dword ptr [ebx + g_dispatchSave115_00522318]
-        mov      dword ptr [g_data_00f9facc], eax
+        mov      dword ptr [g_dispatchSave1436_00f9facc], eax
         lea      eax, [ebx + g_crtLocaleEnvVarTbl_00522314]
         add      esp, 4
-        mov      dword ptr [g_data_00f9fad0], ecx
+        mov      dword ptr [g_dispatchSave1437_00f9fad0], ecx
         mov      eax, dword ptr [eax + 8]
-        mov      dword ptr [g_data_00f9fad4], edx
-        mov      dword ptr [g_data_00f9fad8], eax
+        mov      dword ptr [g_dispatchSave1438_00f9fad4], edx
+        mov      dword ptr [g_dispatchSave1439_00f9fad8], eax
         jmp      L_9672
     }
 }

@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_x_00f9fdb0;
-extern unsigned int g_x_00f9fdac;
+extern unsigned int g_dispatchSave1464_00f9fdb0;
+extern unsigned int g_dispatchSave1463_00f9fdac;
 /* g_iat_004d20cc/d0 declared as unsigned int below */
 extern int  Wctomb_004cc350(int, int);
 
@@ -129,13 +129,13 @@ __declspec(naked) void CritSecWrap350_004cc2e0(void) {
         push    ebx
         push    esi
         push    edi
-        push    offset g_x_00f9fdb0
+        push    offset g_dispatchSave1464_00f9fdb0
         call    dword ptr [g_iat_004d20cc]
-        mov     eax, dword ptr [g_x_00f9fdac]
+        mov     eax, dword ptr [g_dispatchSave1463_00f9fdac]
         mov     edi, dword ptr [g_iat_004d20d0]
         test    eax, eax
         je      noLock
-        push    offset g_x_00f9fdb0
+        push    offset g_dispatchSave1464_00f9fdb0
         call    edi
         push    0x13
         call    Lock_004c6f50
@@ -163,7 +163,7 @@ skip:
         pop     ebx
         ret
 direct:
-        push    offset g_x_00f9fdb0
+        push    offset g_dispatchSave1464_00f9fdb0
         call    edi
         pop     edi
         mov     eax, ebx

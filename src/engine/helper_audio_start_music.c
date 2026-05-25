@@ -21,13 +21,13 @@
  *   the cursor byte at [cursor + +0x17] = 1, advances cursor (mod 4).
  */
 extern unsigned int g_table_00f85b60;
-extern unsigned int g_data_00f85b62;
+extern unsigned int g_dispatchSave1405_00f85b62;
 extern u8 g_audioChannelTable[];
-extern unsigned int g_data_00f8fadc;
+extern unsigned int g_dispatchSave1408_00f8fadc;
 extern unsigned int g_flags_00f8fade;
 extern unsigned int g_flags_00f8fadf;
 extern u16 g_audioChannelQueue[];
-extern unsigned int g_data_00f9eb82;
+extern unsigned int g_dispatchSave1412_00f9eb82;
 extern u8 g_audioMute;
 extern void FreeSlotFinder_004c3900(void);
 
@@ -53,7 +53,7 @@ __declspec(naked) void Helper_AudioStartMusic(void) {
         test    byte ptr [ebp + g_flags_00f8fade], 1
         je      L_tsa_failNeg
     L_tsa_skipFlag:
-        movsx   eax, word ptr [ebp + g_data_00f8fadc]
+        movsx   eax, word ptr [ebp + g_dispatchSave1408_00f8fadc]
         mov     cl, byte ptr [eax + ebp + g_flags_00f8fadf]
         test    cl, cl
         jne     L_tsa_failNeg
@@ -62,11 +62,11 @@ __declspec(naked) void Helper_AudioStartMusic(void) {
         cmp     cl, 0xff
         mov     byte ptr [esp + 0x14], cl
         je      L_tsa_failNeg
-        mov     di, word ptr [ebp + g_data_00f8fadc]
+        mov     di, word ptr [ebp + g_dispatchSave1408_00f8fadc]
         movsx   eax, cl
         shl     eax, 2
         mov     word ptr [eax + g_audioChannelQueue], si
-        mov     word ptr [eax + g_data_00f9eb82], di
+        mov     word ptr [eax + g_dispatchSave1412_00f9eb82], di
         mov     al, byte ptr [esp + 0x18]
         cmp     al, 0x64
         ja      short L_tsa_skipPairCalls
@@ -91,8 +91,8 @@ __declspec(naked) void Helper_AudioStartMusic(void) {
         push    edx
         push    ecx
         call    dword ptr [eax + 0x3c]
-        movsx   eax, word ptr [ebp + g_data_00f8fadc]
-        movsx   edx, word ptr [edi + g_data_00f85b62]
+        movsx   eax, word ptr [ebp + g_dispatchSave1408_00f8fadc]
+        movsx   edx, word ptr [edi + g_dispatchSave1405_00f85b62]
         add     esi, eax
         push    edx
         mov     esi, dword ptr [esi*4 + g_audioChannelTable]
@@ -104,7 +104,7 @@ __declspec(naked) void Helper_AudioStartMusic(void) {
         mov     al, byte ptr [g_audioMute]
         test    al, al
         jne     short L_tsa_markCursor
-        movsx   ecx, word ptr [ebp + g_data_00f8fadc]
+        movsx   ecx, word ptr [ebp + g_dispatchSave1408_00f8fadc]
         lea     eax, [ebx*8]
         sub     eax, ebx
         add     eax, ecx
@@ -119,9 +119,9 @@ __declspec(naked) void Helper_AudioStartMusic(void) {
         call    dword ptr [edx + 0x30]
         mov     cl, byte ptr [esp + 0x14]
     L_tsa_markCursor:
-        movsx   edx, word ptr [ebp + g_data_00f8fadc]
+        movsx   edx, word ptr [ebp + g_dispatchSave1408_00f8fadc]
         mov     byte ptr [edx + ebp + g_flags_00f8fadf], 1
-        movsx   eax, word ptr [ebp + g_data_00f8fadc]
+        movsx   eax, word ptr [ebp + g_dispatchSave1408_00f8fadc]
         inc     eax
         cdq
         xor     eax, edx
@@ -129,7 +129,7 @@ __declspec(naked) void Helper_AudioStartMusic(void) {
         and     eax, 3
         xor     eax, edx
         sub     eax, edx
-        mov     word ptr [ebp + g_data_00f8fadc], ax
+        mov     word ptr [ebp + g_dispatchSave1408_00f8fadc], ax
         mov     al, cl
         pop     edi
         pop     esi

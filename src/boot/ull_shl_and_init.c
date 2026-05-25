@@ -21,7 +21,7 @@ extern unsigned int g_scaledInit_00542044;
 extern void func_004c5790_hh(void);
 extern int LocaleNumericHelpers_004c8450(void);
 extern void Push3000010000Call_004c83e0(void);
-extern unsigned int g_state_00f9f7fc;
+extern unsigned int g_dispatchSave1423_00f9f7fc;
 void UllShlAndInit_004c5740(void) {
     __asm {
         cmp     cl, 0x40
@@ -44,7 +44,7 @@ void UllShlAndInit_004c5740(void) {
         _emit   0cch
         call    func_004c5790_hh
         call    LocaleNumericHelpers_004c8450
-        mov     dword ptr [g_state_00f9f7fc], eax
+        mov     dword ptr [g_dispatchSave1423_00f9f7fc], eax
         call    Push3000010000Call_004c83e0
         fnclex
         ret

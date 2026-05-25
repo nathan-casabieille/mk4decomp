@@ -122,13 +122,13 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 extern unsigned int g_GetModuleHandleA;
 extern unsigned int g_GetProcAddress;
-extern unsigned int g_x_00f9fc34;
-extern unsigned int g_x_00f9fc38;
-extern unsigned int g_x_00f9fc3c;
+extern unsigned int g_dispatchSave1452_00f9fc34;
+extern unsigned int g_dispatchSave1453_00f9fc38;
+extern unsigned int g_dispatchSave1454_00f9fc3c;
 
 __declspec(naked) void LazyLoadInvoke_004ce150(void) {
     __asm {
-        mov     eax, dword ptr [g_x_00f9fc34]
+        mov     eax, dword ptr [g_dispatchSave1452_00f9fc34]
         push    ebx
         xor     ebx, ebx
         push    esi
@@ -147,7 +147,7 @@ __declspec(naked) void LazyLoadInvoke_004ce150(void) {
         push    esi
         call    edi
         test    eax, eax
-        mov     dword ptr [g_x_00f9fc34], eax
+        mov     dword ptr [g_dispatchSave1452_00f9fc34], eax
         _emit   74h
         _emit   53h
         push    0x004d2f54
@@ -155,10 +155,10 @@ __declspec(naked) void LazyLoadInvoke_004ce150(void) {
         call    edi
         push    0x004d2f40
         push    esi
-        mov     dword ptr [g_x_00f9fc38], eax
+        mov     dword ptr [g_dispatchSave1453_00f9fc38], eax
         call    edi
-        mov     dword ptr [g_x_00f9fc3c], eax
-        mov     eax, dword ptr [g_x_00f9fc38]
+        mov     dword ptr [g_dispatchSave1454_00f9fc3c], eax
+        mov     eax, dword ptr [g_dispatchSave1453_00f9fc38]
         test    eax, eax
         _emit   74h
         _emit   04h
@@ -167,7 +167,7 @@ __declspec(naked) void LazyLoadInvoke_004ce150(void) {
         test    ebx, ebx
         _emit   74h
         _emit   0eh
-        mov     eax, dword ptr [g_x_00f9fc3c]
+        mov     eax, dword ptr [g_dispatchSave1454_00f9fc3c]
         test    eax, eax
         _emit   74h
         _emit   05h
@@ -181,7 +181,7 @@ __declspec(naked) void LazyLoadInvoke_004ce150(void) {
         push    ecx
         push    edx
         push    ebx
-        call    dword ptr [g_x_00f9fc34]
+        call    dword ptr [g_dispatchSave1452_00f9fc34]
         pop     edi
         pop     esi
         pop     ebx

@@ -115,7 +115,7 @@ extern unsigned int g_const_004d2c18;
 extern unsigned int g_const_004d2c20;
 extern unsigned int g_const_004d2c28;
 extern unsigned int g_crtFpuExceptionMask_00522e50;
-extern unsigned int g_data_00f9f7f8;
+extern unsigned int g_dispatchSave1422_00f9f7f8;
 extern void Crt_fpieee_flt_004cdd20(void);
 extern void FpExceptionFilter_004ca080(void);
 extern void func_004ca0e7(void);
@@ -191,7 +191,7 @@ __declspec(naked) void CrtFtolMatherrCluster_004ca700(void)
     L_a7c3:
         and      byte ptr [ebp - 0x2c8], 0xfe
     L_a7ca:
-        cmp      dword ptr [g_data_00f9f7f8], 0
+        cmp      dword ptr [g_dispatchSave1422_00f9f7f8], 0
         jne      short L_a81f
         fst      qword ptr [ebp - 0x2d0]
         mov      al, byte ptr [ebp - 0x90]

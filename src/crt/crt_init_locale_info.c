@@ -199,32 +199,32 @@ extern int g_renderer4_surface;
 extern unsigned int g_data_007af94c;
 extern unsigned int g_data_00ab4e34;
 extern u16 g_texStripeBuf[];
-extern unsigned int g_data_00f6ce50;
-extern unsigned int g_data_00f85b34;
+extern unsigned int g_dispatchSave1348_00f6ce50;
+extern unsigned int g_dispatchSave1400_00f85b34;
 extern unsigned int g_table_00f85b60;
-extern unsigned int g_data_00f8fac4;
+extern unsigned int g_dispatchSave1406_00f8fac4;
 extern u8 g_audioChannelTable[];
 extern unsigned int g_flags_00f8fade;
 extern unsigned int g_flags_00f8fadf;
-extern unsigned int g_data_00f9eb68;
+extern unsigned int g_dispatchSave1409_00f9eb68;
 extern u16 g_audioChannelQueue[];
-extern unsigned int g_data_00f9ebc0;
-extern unsigned int g_data_00f9ebc8;
+extern unsigned int g_dispatchSave1413_00f9ebc0;
+extern unsigned int g_dispatchSave1414_00f9ebc8;
 extern void * g_dsoundPrimary;
-extern unsigned int g_data_00f9eff4;
-extern unsigned int g_data_00f9eff8;
-extern unsigned int g_data_00f9effc;
-extern unsigned int g_data_00f9f000;
-extern unsigned int g_data_00f9f820;
+extern unsigned int g_dispatchSave1418_00f9eff4;
+extern unsigned int g_dispatchSave1419_00f9eff8;
+extern unsigned int g_dispatchSave1420_00f9effc;
+extern unsigned int g_dispatchSave1421_00f9f000;
+extern unsigned int g_dispatchSave1426_00f9f820;
 extern u32 g_initRet;
-extern unsigned int g_data_00f9fc10;
-extern unsigned int g_data_00f9fc14;
-extern unsigned int g_data_00f9fc1c;
-extern unsigned int g_data_00f9fc20;
-extern unsigned int g_data_00f9fc30;
-extern unsigned int g_data_00f9fc64;
-extern unsigned int g_data_00f9fc74;
-extern unsigned int g_data_00f9fd9c;
+extern unsigned int g_dispatchSave1444_00f9fc10;
+extern unsigned int g_dispatchSave1445_00f9fc14;
+extern unsigned int g_dispatchSave1447_00f9fc1c;
+extern unsigned int g_dispatchSave1448_00f9fc20;
+extern unsigned int g_dispatchSave1451_00f9fc30;
+extern unsigned int g_dispatchSave1455_00f9fc64;
+extern unsigned int g_dispatchSave1459_00f9fc74;
+extern unsigned int g_dispatchSave1462_00f9fd9c;
 extern unsigned int g_arr_00fa0de0;
 extern unsigned int g_iid_004d28f0;
 extern void Calloc_004c6110(void);
@@ -324,7 +324,7 @@ extern void *g_iat_004d2134;
 /* g_iat_004d20e4/bc/b8 declared as unsigned int in common block above */
 
 /* @addr 0x004cdae0 (312b crt) - WideCharToMultiByte dispatcher (mbslen/wcsstr style).
- *   Caches state in g_data_00f9fc30 (1/2). Probes via IAT[0x4d20b8] with ".A"/".A0"
+ *   Caches state in g_dispatchSave1451_00f9fc30 (1/2). Probes via IAT[0x4d20b8] with ".A"/".A0"
  *   buffers (0x4d2f20/0x4d2f24). State 2 fast path: direct IAT[0x4d20bc] call.
  *   State 1 conversion path: allocate via Calloc_004c6110, WideCharToMultiByte via
  *   IAT[0x4d20e4], MultiByteToWideChar(?) via IAT[0x4d20b8], free temp via FreeImpl.
@@ -332,7 +332,7 @@ extern void *g_iat_004d2134;
 __declspec(naked) void WcToMbDispatcher_004cdae0(void) {
     __asm {
         push    ecx
-        mov     eax, dword ptr [g_data_00f9fc30]
+        mov     eax, dword ptr [g_dispatchSave1451_00f9fc30]
         push    ebx
         push    ebp
         push    esi
@@ -350,14 +350,14 @@ __declspec(naked) void WcToMbDispatcher_004cdae0(void) {
         test    eax, eax
         jz      L_wm_tryAlt
         mov     eax, 1
-        mov     dword ptr [g_data_00f9fc30], eax
+        mov     dword ptr [g_dispatchSave1451_00f9fc30], eax
     L_wm_haveState:
         cmp     eax, 2
         jne     short L_wm_state1
         mov     eax, [esp + 0x2c]
         cmp     eax, edi
         jne     short L_wm_haveCP1
-        mov     eax, dword ptr [g_data_00f9fc10]
+        mov     eax, dword ptr [g_dispatchSave1444_00f9fc10]
     L_wm_haveCP1:
         mov     edx, [esp + 0x24]
         mov     ecx, [esp + 0x20]
@@ -382,7 +382,7 @@ __declspec(naked) void WcToMbDispatcher_004cdae0(void) {
         mov     [esp + 0x2c], edi
         cmp     ebx, edi
         jne     short L_wm_haveCP2
-        mov     ebx, dword ptr [g_data_00f9fc20]
+        mov     ebx, dword ptr [g_dispatchSave1448_00f9fc20]
     L_wm_haveCP2:
         mov     eax, [esp + 0x30]
         mov     ebp, [esp + 0x20]
@@ -460,7 +460,7 @@ __declspec(naked) void WcToMbDispatcher_004cdae0(void) {
         test    eax, eax
         jz      short L_wm_returnZero
         mov     eax, 2
-        mov     dword ptr [g_data_00f9fc30], eax
+        mov     dword ptr [g_dispatchSave1451_00f9fc30], eax
         jmp     L_wm_haveState
     L_wm_returnZero:
         pop     edi

@@ -113,12 +113,12 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     if digit '0'..'9': subtract '0'; if ';': skip (shift rest down).
  *   sub-2 (~239b at 0x4d0180): slot replace - allocate 0x30 bytes via Calloc_004c6110,
  *     copy from g_crtTimeFmtPrefs_005236e8 into new slot, free old, swap pointers.
- *     Path differs based on flag g_data_00f9fc14.
+ *     Path differs based on flag g_dispatchSave1445_00f9fc14.
  */
 extern unsigned int g_dispatchPair_005236b8;
 extern unsigned int g_crtTimeFmtPrefs_005236e8;
-extern unsigned int g_data_00f9fc14;
-extern unsigned int g_data_00f9fc74;
+extern unsigned int g_dispatchSave1445_00f9fc14;
+extern unsigned int g_dispatchSave1459_00f9fc74;
 extern void Calloc_004c6110(void);
 extern void CrtFreeLocaleInfo_004d0400(void);
 extern void FreeImpl_004c55f0(void);
@@ -172,7 +172,7 @@ __declspec(naked) void StringStripSlotReplace_004d0140(void) {
         _emit   90h
         _emit   90h
         /* sub-2 (slot replace) */
-        mov     eax, dword ptr [g_data_00f9fc14]
+        mov     eax, dword ptr [g_dispatchSave1445_00f9fc14]
         push    esi
         test    eax, eax
         jz      L_srr_directPath
@@ -211,16 +211,16 @@ __declspec(naked) void StringStripSlotReplace_004d0140(void) {
         mov     ecx, dword ptr [g_crtTimeFmtPrefs_005236e8]
         mov     edx, [ecx + 8]
         mov     [esi + 8], edx
-        mov     eax, dword ptr [g_data_00f9fc74]
+        mov     eax, dword ptr [g_dispatchSave1459_00f9fc74]
         push    eax
         mov     dword ptr [g_crtTimeFmtPrefs_005236e8], esi
         call    CrtFreeLocaleInfo_004d0400
-        mov     ecx, dword ptr [g_data_00f9fc74]
+        mov     ecx, dword ptr [g_dispatchSave1459_00f9fc74]
         add     esp, 4
         push    ecx
         call    FreeImpl_004c55f0
         add     esp, 4
-        mov     dword ptr [g_data_00f9fc74], esi
+        mov     dword ptr [g_dispatchSave1459_00f9fc74], esi
         xor     eax, eax
         pop     esi
         ret
@@ -231,17 +231,17 @@ __declspec(naked) void StringStripSlotReplace_004d0140(void) {
         mov     ecx, [eax + 4]
         mov     dword ptr [g_dispatchPair_005236b8 + 4], ecx
         mov     edx, [eax + 8]
-        mov     eax, dword ptr [g_data_00f9fc74]
+        mov     eax, dword ptr [g_dispatchSave1459_00f9fc74]
         mov     dword ptr [g_dispatchPair_005236b8 + 8], edx
         push    eax
         mov     dword ptr [g_crtTimeFmtPrefs_005236e8], offset g_dispatchPair_005236b8
         call    CrtFreeLocaleInfo_004d0400
-        mov     ecx, dword ptr [g_data_00f9fc74]
+        mov     ecx, dword ptr [g_dispatchSave1459_00f9fc74]
         add     esp, 4
         push    ecx
         call    FreeImpl_004c55f0
         add     esp, 4
-        mov     dword ptr [g_data_00f9fc74], 0
+        mov     dword ptr [g_dispatchSave1459_00f9fc74], 0
         xor     eax, eax
         pop     esi
         ret

@@ -34,7 +34,7 @@ extern unsigned int g_data_00ab4e38;
 extern unsigned int g_data_00ab4e5c;
 extern unsigned int g_data_00ab4e60;
 extern unsigned int g_data_00ab4e6c;
-extern unsigned int g_data_00f00004;
+extern unsigned int g_dispatchSave1333_00f00004;
 extern void BboxProjectAndStash_004bc5a0(void);
 extern void BillboardChainRender_004bb030(void);
 extern void BillboardSheetDualEmit_004bbda0(void);
@@ -165,7 +165,7 @@ __declspec(naked) void RenderSceneNode(void)
         test     eax, eax
         jne      L_ae73
         mov      eax, dword ptr [g_currentNodeFlags]
-        test     eax, OFFSET g_data_00f00004
+        test     eax, OFFSET g_dispatchSave1333_00f00004
         jne      L_a97c
         mov      ecx, dword ptr [g_fightGroupHead]
         mov      edx, dword ptr [g_data_00ab4398]

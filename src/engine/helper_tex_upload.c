@@ -13,7 +13,7 @@
  *   Else: bulk rep movsd/movsb copy [0xf4d050] → [0xf85b34], rows of 0x200 bytes.
  */
 extern unsigned int g_texturedTriVar_004ffd4c;
-extern unsigned int g_data_00f85b34;
+extern unsigned int g_dispatchSave1400_00f85b34;
 
 __declspec(naked) void Helper_TexUpload(void) {
     __asm {
@@ -54,7 +54,7 @@ __declspec(naked) void Helper_TexUpload(void) {
         add     edx, 2
         shl     ebp, 1
         or      ebp, eax
-        mov     eax, dword ptr [g_data_00f85b34]
+        mov     eax, dword ptr [g_dispatchSave1400_00f85b34]
         dec     esi
         mov     word ptr [eax + edx - 2], bp
         jne     short L_sb_inner
@@ -87,7 +87,7 @@ __declspec(naked) void Helper_TexUpload(void) {
         shl     eax, 1
     L_sb_bulkRow:
         mov     ecx, [esp + 0x20]
-        mov     edi, dword ptr [g_data_00f85b34]
+        mov     edi, dword ptr [g_dispatchSave1400_00f85b34]
         mov     ebp, ecx
         mov     esi, edx
         add     edi, eax

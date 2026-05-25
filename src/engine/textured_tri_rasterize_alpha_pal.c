@@ -111,48 +111,48 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_viewportW;
 extern unsigned int g_viewportH;
 extern unsigned int g_texturedTriVar_004ffd4c;
-extern unsigned int g_data_00f4d018;
-extern unsigned int g_data_00f4d01c;
-extern unsigned int g_data_00f4d020;
-extern unsigned int g_data_00f4d024;
-extern unsigned int g_data_00f4d030;
-extern unsigned int g_data_00f4d034;
-extern unsigned int g_data_00f4d040;
-extern unsigned int g_data_00f4d044;
-extern unsigned int g_data_00f70f54;
-extern unsigned int g_data_00f70f5c;
-extern unsigned int g_data_00f70f60;
-extern unsigned int g_data_00f70f64;
-extern unsigned int g_data_00f70f68;
-extern unsigned int g_data_00f70f6c;
+extern unsigned int g_dispatchSave1336_00f4d018;
+extern unsigned int g_dispatchSave1337_00f4d01c;
+extern unsigned int g_dispatchSave1338_00f4d020;
+extern unsigned int g_dispatchSave1339_00f4d024;
+extern unsigned int g_dispatchSave1342_00f4d030;
+extern unsigned int g_dispatchSave1343_00f4d034;
+extern unsigned int g_dispatchSave1345_00f4d040;
+extern unsigned int g_dispatchSave1346_00f4d044;
+extern unsigned int g_dispatchSave1359_00f70f54;
+extern unsigned int g_dispatchSave1361_00f70f5c;
+extern unsigned int g_dispatchSave1362_00f70f60;
+extern unsigned int g_dispatchSave1363_00f70f64;
+extern unsigned int g_dispatchSave1364_00f70f68;
+extern unsigned int g_dispatchSave1365_00f70f6c;
 extern s32 g_clipMinScratch;
-extern unsigned int g_data_00f70f74;
+extern unsigned int g_dispatchSave1366_00f70f74;
 extern s32 g_clipMaxScratch;
-extern unsigned int g_data_00f70f84;
-extern unsigned int g_data_00f70f88;
-extern unsigned int g_data_00f70f8c;
-extern unsigned int g_data_00f70f90;
-extern unsigned int g_data_00f70f98;
-extern unsigned int g_data_00f70f9c;
-extern unsigned int g_data_00f70fa0;
-extern unsigned int g_data_00f70fa8;
-extern unsigned int g_data_00f70fac;
-extern unsigned int g_data_00f70fb0;
-extern unsigned int g_data_00f70fb8;
-extern unsigned int g_data_00f70fbc;
-extern unsigned int g_data_00f70fc0;
-extern unsigned int g_data_00f70fc8;
-extern unsigned int g_data_00f70fcc;
-extern unsigned int g_data_00f70fd8;
-extern unsigned int g_data_00f70fda;
-extern unsigned int g_data_00f70fdc;
-extern unsigned int g_data_00f712f8;
-extern unsigned int g_data_00f712fc;
-extern unsigned int g_data_00f85b34;
-extern unsigned int g_data_00f85b4c;
+extern unsigned int g_dispatchSave1370_00f70f84;
+extern unsigned int g_dispatchSave1371_00f70f88;
+extern unsigned int g_dispatchSave1372_00f70f8c;
+extern unsigned int g_dispatchSave1373_00f70f90;
+extern unsigned int g_dispatchSave1374_00f70f98;
+extern unsigned int g_dispatchSave1376_00f70f9c;
+extern unsigned int g_dispatchSave1377_00f70fa0;
+extern unsigned int g_dispatchSave1378_00f70fa8;
+extern unsigned int g_dispatchSave1379_00f70fac;
+extern unsigned int g_dispatchSave1380_00f70fb0;
+extern unsigned int g_dispatchSave1381_00f70fb8;
+extern unsigned int g_dispatchSave1382_00f70fbc;
+extern unsigned int g_dispatchSave1383_00f70fc0;
+extern unsigned int g_dispatchSave1384_00f70fc8;
+extern unsigned int g_dispatchSave1385_00f70fcc;
+extern unsigned int g_dispatchSave1387_00f70fd8;
+extern unsigned int g_dispatchSave1388_00f70fda;
+extern unsigned int g_dispatchSave1389_00f70fdc;
+extern unsigned int g_dispatchSave1393_00f712f8;
+extern unsigned int g_dispatchSave1394_00f712fc;
+extern unsigned int g_dispatchSave1400_00f85b34;
+extern unsigned int g_dispatchSave1403_00f85b4c;
 extern unsigned int g_viewportX;
 extern unsigned int g_viewportY;
-extern unsigned int g_data_00f85b58;
+extern unsigned int g_dispatchSave1404_00f85b58;
 
 __declspec(naked) void TexturedTriRasterizeAlphaPal_004c1fe0(void)
 {
@@ -164,12 +164,12 @@ __declspec(naked) void TexturedTriRasterizeAlphaPal_004c1fe0(void)
         test     eax, eax
         push     edi
         je       L_2641
-        mov      edi, dword ptr [g_data_00f70fc0]
-        mov      ebp, dword ptr [g_data_00f70fb8]
-        mov      ebx, dword ptr [g_data_00f70fbc]
-        mov      edx, dword ptr [g_data_00f70fb0]
-        mov      eax, dword ptr [g_data_00f70fa8]
-        mov      ecx, dword ptr [g_data_00f70fac]
+        mov      edi, dword ptr [g_dispatchSave1383_00f70fc0]
+        mov      ebp, dword ptr [g_dispatchSave1381_00f70fb8]
+        mov      ebx, dword ptr [g_dispatchSave1382_00f70fbc]
+        mov      edx, dword ptr [g_dispatchSave1380_00f70fb0]
+        mov      eax, dword ptr [g_dispatchSave1378_00f70fa8]
+        mov      ecx, dword ptr [g_dispatchSave1379_00f70fac]
         sub      edi, ebp
         sub      ebx, ebp
         sub      edx, eax
@@ -180,9 +180,9 @@ __declspec(naked) void TexturedTriRasterizeAlphaPal_004c1fe0(void)
         test     ecx, ecx
         mov      dword ptr [g_clipMinScratch], ecx
         jle      L_2641
-        mov      edx, dword ptr [g_data_00f70f90]
-        mov      eax, dword ptr [g_data_00f70f88]
-        mov      esi, dword ptr [g_data_00f70f8c]
+        mov      edx, dword ptr [g_dispatchSave1373_00f70f90]
+        mov      eax, dword ptr [g_dispatchSave1371_00f70f88]
+        mov      esi, dword ptr [g_dispatchSave1372_00f70f8c]
         sub      edx, eax
         sub      esi, eax
         imul     edx, ebx
@@ -206,10 +206,10 @@ __declspec(naked) void TexturedTriRasterizeAlphaPal_004c1fe0(void)
         idiv     ecx
         shl      eax, 7
     L_2073:
-        mov      edx, dword ptr [g_data_00f70fa0]
-        mov      esi, dword ptr [g_data_00f70f9c]
-        mov      dword ptr [g_data_00f4d030], eax
-        mov      eax, dword ptr [g_data_00f70f98]
+        mov      edx, dword ptr [g_dispatchSave1377_00f70fa0]
+        mov      esi, dword ptr [g_dispatchSave1376_00f70f9c]
+        mov      dword ptr [g_dispatchSave1342_00f4d030], eax
+        mov      eax, dword ptr [g_dispatchSave1374_00f70f98]
         sub      edx, eax
         sub      esi, eax
         imul     edx, ebx
@@ -233,213 +233,213 @@ __declspec(naked) void TexturedTriRasterizeAlphaPal_004c1fe0(void)
         idiv     ecx
         shl      eax, 7
     L_20b9:
-        mov      ecx, dword ptr [g_data_00f70fbc]
-        mov      dword ptr [g_data_00f4d034], eax
+        mov      ecx, dword ptr [g_dispatchSave1382_00f70fbc]
+        mov      dword ptr [g_dispatchSave1343_00f4d034], eax
         xor      esi, esi
         xor      eax, eax
         mov      edx, ebp
         cmp      ecx, ebp
-        mov      dword ptr [g_data_00f70f54], eax
-        mov      dword ptr [g_data_00f70f6c], edx
-        mov      dword ptr [g_data_00f712fc], ebp
+        mov      dword ptr [g_dispatchSave1359_00f70f54], eax
+        mov      dword ptr [g_dispatchSave1365_00f70f6c], edx
+        mov      dword ptr [g_dispatchSave1394_00f712fc], ebp
         jge      L_20f8
-        mov      dword ptr [g_data_00f70f54], 1
-        mov      eax, dword ptr [g_data_00f70f54]
-        mov      dword ptr [g_data_00f70f6c], ecx
+        mov      dword ptr [g_dispatchSave1359_00f70f54], 1
+        mov      eax, dword ptr [g_dispatchSave1359_00f70f54]
+        mov      dword ptr [g_dispatchSave1365_00f70f6c], ecx
         mov      edx, ecx
         jmp      L_20fe
     L_20f8:
-        mov      dword ptr [g_data_00f712fc], ecx
+        mov      dword ptr [g_dispatchSave1394_00f712fc], ecx
     L_20fe:
-        mov      ecx, dword ptr [g_data_00f70fc0]
+        mov      ecx, dword ptr [g_dispatchSave1383_00f70fc0]
         cmp      ecx, edx
         jge      L_211f
-        mov      dword ptr [g_data_00f70f54], 2
-        mov      eax, dword ptr [g_data_00f70f54]
-        mov      dword ptr [g_data_00f70f6c], ecx
+        mov      dword ptr [g_dispatchSave1359_00f70f54], 2
+        mov      eax, dword ptr [g_dispatchSave1359_00f70f54]
+        mov      dword ptr [g_dispatchSave1365_00f70f6c], ecx
         mov      edx, ecx
     L_211f:
-        cmp      ecx, dword ptr [g_data_00f712fc]
+        cmp      ecx, dword ptr [g_dispatchSave1394_00f712fc]
         jle      L_212d
-        mov      dword ptr [g_data_00f712fc], ecx
+        mov      dword ptr [g_dispatchSave1394_00f712fc], ecx
     L_212d:
         cmp      edx, esi
         jge      L_2139
-        mov      dword ptr [g_data_00f70f6c], esi
+        mov      dword ptr [g_dispatchSave1365_00f70f6c], esi
         mov      edx, esi
     L_2139:
         mov      ecx, dword ptr [g_viewportH]
-        mov      edi, dword ptr [g_data_00f712fc]
+        mov      edi, dword ptr [g_dispatchSave1394_00f712fc]
         cmp      edi, ecx
         jle      L_214f
-        mov      dword ptr [g_data_00f712fc], ecx
+        mov      dword ptr [g_dispatchSave1394_00f712fc], ecx
     L_214f:
-        mov      ecx, dword ptr [g_data_00f85b4c]
-        mov      ebx, dword ptr [g_data_00f85b34]
+        mov      ecx, dword ptr [g_dispatchSave1403_00f85b4c]
+        mov      ebx, dword ptr [g_dispatchSave1400_00f85b34]
         and      ecx, 0xf
         mov      edi, dword ptr [g_viewportX]
         shl      ecx, 0x11
         add      ecx, ebx
-        mov      dword ptr [g_data_00f70f74], eax
-        mov      dword ptr [g_data_00f85b58], ecx
+        mov      dword ptr [g_dispatchSave1366_00f70f74], eax
+        mov      dword ptr [g_dispatchSave1404_00f85b58], ecx
         mov      ecx, dword ptr [g_viewportY]
         imul     ecx, edx
         add      ecx, edi
-        mov      dword ptr [g_data_00f70fcc], esi
-        mov      dword ptr [g_data_00f4d044], ecx
-        mov      ecx, dword ptr [g_data_00f712fc]
+        mov      dword ptr [g_dispatchSave1385_00f70fcc], esi
+        mov      dword ptr [g_dispatchSave1346_00f4d044], ecx
+        mov      ecx, dword ptr [g_dispatchSave1394_00f712fc]
         cmp      edx, ecx
-        mov      dword ptr [g_data_00f70f68], esi
+        mov      dword ptr [g_dispatchSave1364_00f70f68], esi
         jge      L_2641
         jmp      L_21ac
     L_21a1:
-        mov      edx, dword ptr [g_data_00f70f6c]
-        mov      eax, dword ptr [g_data_00f70f54]
+        mov      edx, dword ptr [g_dispatchSave1365_00f70f6c]
+        mov      eax, dword ptr [g_dispatchSave1359_00f70f54]
     L_21ac:
         cmp      esi, edx
         jg       L_22c7
         jmp      L_21bb
     L_21b6:
-        mov      eax, dword ptr [g_data_00f70f54]
+        mov      eax, dword ptr [g_dispatchSave1359_00f70f54]
     L_21bb:
         lea      esi, [eax - 1]
         test     esi, esi
         jge      L_21c7
         mov      esi, 2
     L_21c7:
-        mov      ebx, dword ptr [esi*4 + g_data_00f70fb8]
-        mov      edi, dword ptr [eax*4 + g_data_00f70fb8]
+        mov      ebx, dword ptr [esi*4 + g_dispatchSave1381_00f70fb8]
+        mov      edi, dword ptr [eax*4 + g_dispatchSave1381_00f70fb8]
         mov      ecx, ebx
         sub      ecx, edi
         je       L_2240
-        mov      edx, dword ptr [g_data_00f70f54]
-        mov      eax, dword ptr [esi*4 + g_data_00f70fa8]
-        mov      ebp, dword ptr [edx*4 + g_data_00f70fa8]
+        mov      edx, dword ptr [g_dispatchSave1359_00f70f54]
+        mov      eax, dword ptr [esi*4 + g_dispatchSave1378_00f70fa8]
+        mov      ebp, dword ptr [edx*4 + g_dispatchSave1378_00f70fa8]
         sub      eax, ebp
-        mov      ebp, dword ptr [g_data_00f70f54]
+        mov      ebp, dword ptr [g_dispatchSave1359_00f70f54]
         shl      eax, 0x10
         cdq
         idiv     ecx
-        mov      edx, dword ptr [ebp*4 + g_data_00f70f88]
-        mov      dword ptr [g_data_00f4d020], eax
-        mov      eax, dword ptr [esi*4 + g_data_00f70f88]
+        mov      edx, dword ptr [ebp*4 + g_dispatchSave1371_00f70f88]
+        mov      dword ptr [g_dispatchSave1338_00f4d020], eax
+        mov      eax, dword ptr [esi*4 + g_dispatchSave1371_00f70f88]
         sub      eax, edx
         shl      eax, 0x10
         cdq
         idiv     ecx
-        mov      edx, dword ptr [ebp*4 + g_data_00f70f98]
-        mov      dword ptr [g_data_00f4d018], eax
-        mov      eax, dword ptr [esi*4 + g_data_00f70f98]
+        mov      edx, dword ptr [ebp*4 + g_dispatchSave1374_00f70f98]
+        mov      dword ptr [g_dispatchSave1336_00f4d018], eax
+        mov      eax, dword ptr [esi*4 + g_dispatchSave1374_00f70f98]
         sub      eax, edx
         shl      eax, 0x10
         cdq
         idiv     ecx
-        mov      edx, dword ptr [g_data_00f70f6c]
-        mov      dword ptr [g_data_00f4d01c], eax
+        mov      edx, dword ptr [g_dispatchSave1365_00f70f6c]
+        mov      dword ptr [g_dispatchSave1337_00f4d01c], eax
         mov      eax, ebp
     L_2240:
-        mov      ecx, dword ptr [eax*4 + g_data_00f70fa8]
-        mov      ebp, dword ptr [eax*4 + g_data_00f70f88]
-        mov      eax, dword ptr [eax*4 + g_data_00f70f98]
+        mov      ecx, dword ptr [eax*4 + g_dispatchSave1378_00f70fa8]
+        mov      ebp, dword ptr [eax*4 + g_dispatchSave1371_00f70f88]
+        mov      eax, dword ptr [eax*4 + g_dispatchSave1374_00f70f98]
         shl      eax, 0x10
-        mov      dword ptr [g_data_00f70f60], eax
+        mov      dword ptr [g_dispatchSave1362_00f70f60], eax
         mov      eax, edx
         shl      ecx, 0x10
         shl      ebp, 0x10
         sub      eax, edi
-        mov      dword ptr [g_data_00f70f64], ecx
-        mov      dword ptr [g_data_00f70f5c], ebp
+        mov      dword ptr [g_dispatchSave1363_00f70f64], ecx
+        mov      dword ptr [g_dispatchSave1361_00f70f5c], ebp
         mov      dword ptr [g_clipMaxScratch], eax
         je       L_22b1
         mov      edi, eax
-        imul     edi, dword ptr [g_data_00f4d020]
+        imul     edi, dword ptr [g_dispatchSave1338_00f4d020]
         add      ecx, edi
-        mov      dword ptr [g_data_00f70f64], ecx
+        mov      dword ptr [g_dispatchSave1363_00f70f64], ecx
         mov      ecx, eax
-        imul     ecx, dword ptr [g_data_00f4d018]
-        imul     eax, dword ptr [g_data_00f4d01c]
+        imul     ecx, dword ptr [g_dispatchSave1336_00f4d018]
+        imul     eax, dword ptr [g_dispatchSave1337_00f4d01c]
         add      ebp, ecx
-        mov      ecx, dword ptr [g_data_00f70f60]
+        mov      ecx, dword ptr [g_dispatchSave1362_00f70f60]
         add      ecx, eax
-        mov      dword ptr [g_data_00f70f5c], ebp
-        mov      dword ptr [g_data_00f70f60], ecx
+        mov      dword ptr [g_dispatchSave1361_00f70f5c], ebp
+        mov      dword ptr [g_dispatchSave1362_00f70f60], ecx
     L_22b1:
         cmp      ebx, edx
-        mov      dword ptr [g_data_00f70f54], esi
-        mov      dword ptr [g_data_00f70f68], ebx
+        mov      dword ptr [g_dispatchSave1359_00f70f54], esi
+        mov      dword ptr [g_dispatchSave1364_00f70f68], ebx
         jle      L_21b6
         jmp      L_22cd
     L_22c7:
-        mov      ebp, dword ptr [g_data_00f70f5c]
+        mov      ebp, dword ptr [g_dispatchSave1361_00f70f5c]
     L_22cd:
-        cmp      dword ptr [g_data_00f70fcc], edx
+        cmp      dword ptr [g_dispatchSave1385_00f70fcc], edx
         jg       L_2364
     L_22d9:
-        mov      eax, dword ptr [g_data_00f70f74]
+        mov      eax, dword ptr [g_dispatchSave1366_00f70f74]
         lea      esi, [eax + 1]
         cmp      esi, 2
         jle      L_22e8
         xor      esi, esi
     L_22e8:
-        mov      ebx, dword ptr [esi*4 + g_data_00f70fb8]
-        mov      edi, dword ptr [eax*4 + g_data_00f70fb8]
+        mov      ebx, dword ptr [esi*4 + g_dispatchSave1381_00f70fb8]
+        mov      edi, dword ptr [eax*4 + g_dispatchSave1381_00f70fb8]
         mov      ecx, ebx
         sub      ecx, edi
         je       L_2326
-        mov      edx, dword ptr [g_data_00f70f74]
-        mov      eax, dword ptr [esi*4 + g_data_00f70fa8]
-        sub      eax, dword ptr [edx*4 + g_data_00f70fa8]
+        mov      edx, dword ptr [g_dispatchSave1366_00f70f74]
+        mov      eax, dword ptr [esi*4 + g_dispatchSave1378_00f70fa8]
+        sub      eax, dword ptr [edx*4 + g_dispatchSave1378_00f70fa8]
         shl      eax, 0x10
         cdq
         idiv     ecx
-        mov      edx, dword ptr [g_data_00f70f6c]
-        mov      dword ptr [g_data_00f4d024], eax
-        mov      eax, dword ptr [g_data_00f70f74]
+        mov      edx, dword ptr [g_dispatchSave1365_00f70f6c]
+        mov      dword ptr [g_dispatchSave1339_00f4d024], eax
+        mov      eax, dword ptr [g_dispatchSave1366_00f70f74]
     L_2326:
-        mov      ecx, dword ptr [eax*4 + g_data_00f70fa8]
+        mov      ecx, dword ptr [eax*4 + g_dispatchSave1378_00f70fa8]
         mov      eax, edx
         shl      ecx, 0x10
         sub      eax, edi
-        mov      dword ptr [g_data_00f70fc8], ecx
+        mov      dword ptr [g_dispatchSave1384_00f70fc8], ecx
         mov      dword ptr [g_clipMaxScratch], eax
         je       L_2350
-        imul     eax, dword ptr [g_data_00f4d024]
+        imul     eax, dword ptr [g_dispatchSave1339_00f4d024]
         add      ecx, eax
-        mov      dword ptr [g_data_00f70fc8], ecx
+        mov      dword ptr [g_dispatchSave1384_00f70fc8], ecx
     L_2350:
         cmp      ebx, edx
-        mov      dword ptr [g_data_00f70f74], esi
-        mov      dword ptr [g_data_00f70fcc], ebx
+        mov      dword ptr [g_dispatchSave1366_00f70f74], esi
+        mov      dword ptr [g_dispatchSave1385_00f70fcc], ebx
         jle      L_22d9
     L_2364:
-        mov      eax, dword ptr [g_data_00f70fcc]
-        mov      esi, dword ptr [g_data_00f70f68]
+        mov      eax, dword ptr [g_dispatchSave1385_00f70fcc]
+        mov      esi, dword ptr [g_dispatchSave1364_00f70f68]
         cmp      esi, eax
         jge      L_2375
         mov      eax, esi
     L_2375:
-        mov      ecx, dword ptr [g_data_00f712fc]
+        mov      ecx, dword ptr [g_dispatchSave1394_00f712fc]
         mov      ebx, eax
         sub      ebx, edx
         cmp      eax, ecx
         mov      dword ptr [g_clipMinScratch], eax
-        mov      dword ptr [g_data_00f712f8], ebx
-        mov      dword ptr [g_data_00f70f6c], eax
+        mov      dword ptr [g_dispatchSave1393_00f712f8], ebx
+        mov      dword ptr [g_dispatchSave1365_00f70f6c], eax
         jle      L_239f
         mov      edx, ecx
         sub      edx, eax
         add      ebx, edx
-        mov      dword ptr [g_data_00f712f8], ebx
+        mov      dword ptr [g_dispatchSave1393_00f712f8], ebx
     L_239f:
         test     ebx, ebx
         jle      L_2635
     L_23a7:
-        mov      ecx, dword ptr [g_data_00f70fc8]
-        mov      eax, dword ptr [g_data_00f70f64]
+        mov      ecx, dword ptr [g_dispatchSave1384_00f70fc8]
+        mov      eax, dword ptr [g_dispatchSave1363_00f70f64]
         sar      ecx, 0x10
         sar      eax, 0x10
         mov      edi, ecx
-        mov      dword ptr [g_data_00f70f84], ecx
+        mov      dword ptr [g_dispatchSave1370_00f70f84], ecx
         sub      edi, eax
         mov      dword ptr [g_clipMinScratch], eax
         test     edi, edi
@@ -450,28 +450,28 @@ __declspec(naked) void TexturedTriRasterizeAlphaPal_004c1fe0(void)
         mov      ecx, dword ptr [g_viewportW]
         cmp      eax, ecx
         jge      L_25bf
-        mov      esi, dword ptr [g_data_00f70f60]
+        mov      esi, dword ptr [g_dispatchSave1362_00f70f60]
         add      edi, eax
         test     eax, eax
-        mov      dword ptr [g_data_00f70fd8], ebp
-        mov      dword ptr [g_data_00f70fdc], esi
+        mov      dword ptr [g_dispatchSave1387_00f70fd8], ebp
+        mov      dword ptr [g_dispatchSave1389_00f70fdc], esi
         mov      dword ptr [g_clipMaxScratch], edi
         jge      L_2433
         mov      esi, eax
-        imul     eax, dword ptr [g_data_00f4d034]
-        imul     esi, dword ptr [g_data_00f4d030]
+        imul     eax, dword ptr [g_dispatchSave1343_00f4d034]
+        imul     esi, dword ptr [g_dispatchSave1342_00f4d030]
         mov      edx, ebp
         sub      edx, esi
-        mov      esi, dword ptr [g_data_00f70f60]
+        mov      esi, dword ptr [g_dispatchSave1362_00f70f60]
         sub      esi, eax
-        mov      dword ptr [g_data_00f70fd8], edx
-        mov      dword ptr [g_data_00f70fdc], esi
+        mov      dword ptr [g_dispatchSave1387_00f70fd8], edx
+        mov      dword ptr [g_dispatchSave1389_00f70fdc], esi
         xor      eax, eax
     L_2433:
-        mov      edx, dword ptr [g_data_00f4d044]
+        mov      edx, dword ptr [g_dispatchSave1346_00f4d044]
         cmp      edi, ecx
         lea      edx, [edx + eax*2]
-        mov      dword ptr [g_data_00f4d040], edx
+        mov      dword ptr [g_dispatchSave1345_00f4d040], edx
         jle      L_244e
         mov      edi, ecx
         mov      dword ptr [g_clipMaxScratch], edi
@@ -484,9 +484,9 @@ __declspec(naked) void TexturedTriRasterizeAlphaPal_004c1fe0(void)
         test     eax, eax
         je       L_251a
     L_246b:
-        mov      ebx, dword ptr [g_data_00f85b58]
+        mov      ebx, dword ptr [g_dispatchSave1404_00f85b58]
         xor      ecx, ecx
-        mov      ch, byte ptr [g_data_00f70fda]
+        mov      ch, byte ptr [g_dispatchSave1388_00f70fda]
         mov      eax, esi
         and      eax, 0xff0000
         or       ecx, eax
@@ -513,27 +513,27 @@ __declspec(naked) void TexturedTriRasterizeAlphaPal_004c1fe0(void)
         and      eax, 0xf7de
         mov      word ptr [edx], ax
         mov      edi, dword ptr [g_clipMinScratch]
-        mov      esi, dword ptr [g_data_00f70fdc]
-        mov      edx, dword ptr [g_data_00f4d040]
+        mov      esi, dword ptr [g_dispatchSave1389_00f70fdc]
+        mov      edx, dword ptr [g_dispatchSave1345_00f4d040]
     L_24dc:
-        mov      eax, dword ptr [g_data_00f4d030]
-        mov      ebp, dword ptr [g_data_00f70fd8]
-        mov      ebx, dword ptr [g_data_00f4d034]
+        mov      eax, dword ptr [g_dispatchSave1342_00f4d030]
+        mov      ebp, dword ptr [g_dispatchSave1387_00f70fd8]
+        mov      ebx, dword ptr [g_dispatchSave1343_00f4d034]
         dec      edi
         add      ebp, eax
         add      esi, ebx
         add      edx, 2
         mov      dword ptr [g_clipMinScratch], edi
         test     edi, edi
-        mov      dword ptr [g_data_00f70fd8], ebp
-        mov      dword ptr [g_data_00f70fdc], esi
-        mov      dword ptr [g_data_00f4d040], edx
+        mov      dword ptr [g_dispatchSave1387_00f70fd8], ebp
+        mov      dword ptr [g_dispatchSave1389_00f70fdc], esi
+        mov      dword ptr [g_dispatchSave1345_00f4d040], edx
         jg       L_246b
         jmp      L_25b3
     L_251a:
-        mov      ebx, dword ptr [g_data_00f85b58]
+        mov      ebx, dword ptr [g_dispatchSave1404_00f85b58]
         xor      ecx, ecx
-        mov      ch, byte ptr [g_data_00f70fda]
+        mov      ch, byte ptr [g_dispatchSave1388_00f70fda]
         mov      eax, esi
         and      eax, 0xff0000
         or       ecx, eax
@@ -555,53 +555,53 @@ __declspec(naked) void TexturedTriRasterizeAlphaPal_004c1fe0(void)
         and      eax, 0x7bde
         mov      word ptr [edx], ax
         mov      edi, dword ptr [g_clipMinScratch]
-        mov      esi, dword ptr [g_data_00f70fdc]
-        mov      edx, dword ptr [g_data_00f4d040]
+        mov      esi, dword ptr [g_dispatchSave1389_00f70fdc]
+        mov      edx, dword ptr [g_dispatchSave1345_00f4d040]
     L_2579:
-        mov      ecx, dword ptr [g_data_00f4d030]
-        mov      ebp, dword ptr [g_data_00f70fd8]
-        mov      ebx, dword ptr [g_data_00f4d034]
+        mov      ecx, dword ptr [g_dispatchSave1342_00f4d030]
+        mov      ebp, dword ptr [g_dispatchSave1387_00f70fd8]
+        mov      ebx, dword ptr [g_dispatchSave1343_00f4d034]
         dec      edi
         add      ebp, ecx
         add      esi, ebx
         add      edx, 2
         mov      dword ptr [g_clipMinScratch], edi
         test     edi, edi
-        mov      dword ptr [g_data_00f70fd8], ebp
-        mov      dword ptr [g_data_00f70fdc], esi
-        mov      dword ptr [g_data_00f4d040], edx
+        mov      dword ptr [g_dispatchSave1387_00f70fd8], ebp
+        mov      dword ptr [g_dispatchSave1389_00f70fdc], esi
+        mov      dword ptr [g_dispatchSave1345_00f4d040], edx
         jg       L_251a
     L_25b3:
-        mov      ebx, dword ptr [g_data_00f712f8]
-        mov      ebp, dword ptr [g_data_00f70f5c]
+        mov      ebx, dword ptr [g_dispatchSave1393_00f712f8]
+        mov      ebp, dword ptr [g_dispatchSave1361_00f70f5c]
     L_25bf:
         mov      edx, dword ptr [g_viewportY]
-        mov      eax, dword ptr [g_data_00f4d044]
-        mov      ecx, dword ptr [g_data_00f4d024]
-        mov      esi, dword ptr [g_data_00f70fc8]
-        mov      edi, dword ptr [g_data_00f70f64]
+        mov      eax, dword ptr [g_dispatchSave1346_00f4d044]
+        mov      ecx, dword ptr [g_dispatchSave1339_00f4d024]
+        mov      esi, dword ptr [g_dispatchSave1384_00f70fc8]
+        mov      edi, dword ptr [g_dispatchSave1363_00f70f64]
         add      eax, edx
-        mov      edx, dword ptr [g_data_00f4d018]
-        mov      dword ptr [g_data_00f4d044], eax
-        mov      eax, dword ptr [g_data_00f4d020]
+        mov      edx, dword ptr [g_dispatchSave1336_00f4d018]
+        mov      dword ptr [g_dispatchSave1346_00f4d044], eax
+        mov      eax, dword ptr [g_dispatchSave1338_00f4d020]
         add      esi, ecx
-        mov      ecx, dword ptr [g_data_00f70f60]
+        mov      ecx, dword ptr [g_dispatchSave1362_00f70f60]
         add      ebp, edx
-        mov      edx, dword ptr [g_data_00f4d01c]
+        mov      edx, dword ptr [g_dispatchSave1337_00f4d01c]
         dec      ebx
         add      edi, eax
         add      ecx, edx
         test     ebx, ebx
-        mov      dword ptr [g_data_00f712f8], ebx
-        mov      dword ptr [g_data_00f70f64], edi
-        mov      dword ptr [g_data_00f70fc8], esi
-        mov      dword ptr [g_data_00f70f5c], ebp
-        mov      dword ptr [g_data_00f70f60], ecx
+        mov      dword ptr [g_dispatchSave1393_00f712f8], ebx
+        mov      dword ptr [g_dispatchSave1363_00f70f64], edi
+        mov      dword ptr [g_dispatchSave1384_00f70fc8], esi
+        mov      dword ptr [g_dispatchSave1361_00f70f5c], ebp
+        mov      dword ptr [g_dispatchSave1362_00f70f60], ecx
         jg       L_23a7
-        mov      ecx, dword ptr [g_data_00f712fc]
-        mov      esi, dword ptr [g_data_00f70f68]
+        mov      ecx, dword ptr [g_dispatchSave1394_00f712fc]
+        mov      esi, dword ptr [g_dispatchSave1364_00f70f68]
     L_2635:
-        cmp      dword ptr [g_data_00f70f6c], ecx
+        cmp      dword ptr [g_dispatchSave1365_00f70f6c], ecx
         jl       L_21a1
     L_2641:
         pop      edi

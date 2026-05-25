@@ -125,7 +125,7 @@ extern unsigned int g_iat_004d213c;
 extern unsigned int g_iat_004d2140;
 extern unsigned int g_iat_004d215c;
 extern unsigned int g_arr_00fa0de0;
-extern unsigned int g_data_00fa0ee0;
+extern unsigned int g_dispatchSave1469_00fa0ee0;
 extern void CritSecLazyEnter_004cd2b0(void);
 extern void LoadArgPushCall_004c54b0(void);
 extern void Lock_004c6f50(void);
@@ -218,12 +218,12 @@ __declspec(naked) void FileTableExtendOrFind_004ccfa0(void) {
         add     esp, 4
         cmp     eax, edx
         je      short L_fte_doneFound
-        mov     ebx, dword ptr [g_data_00fa0ee0]
+        mov     ebx, dword ptr [g_dispatchSave1469_00fa0ee0]
         lea     ecx, [eax + 0x480]
         add     ebx, 0x20
         cmp     eax, ecx
         mov     dword ptr [edi*4 + g_arr_00fa0de0], eax
-        mov     dword ptr [g_data_00fa0ee0], ebx
+        mov     dword ptr [g_dispatchSave1469_00fa0ee0], ebx
         jae     short L_fte_postSeed
         mov     cl, 0xa
     L_fte_seedLoop:

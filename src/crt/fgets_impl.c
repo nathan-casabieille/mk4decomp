@@ -117,14 +117,14 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Unlock(0x19) (TableLookupIatCall_004c6fd0); return dst.
  */
 extern unsigned int g_byte_00f9f8c1;
-extern unsigned int g_x_00f9fac8;
+extern unsigned int g_dispatchSave1435_00f9fac8;
 extern void Lock_004c6f50(void);
 extern void Strncpy_004cdc20(void);
 extern void TableLookupIatCall_004c6fd0(void);
 
 __declspec(naked) void FgetsImpl_004c9a30(void) {
     __asm {
-        mov     eax, dword ptr [g_x_00f9fac8]
+        mov     eax, dword ptr [g_dispatchSave1435_00f9fac8]
         push    esi
         push    edi
         mov     edi, [esp + 0x0c]

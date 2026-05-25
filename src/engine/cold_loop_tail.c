@@ -115,26 +115,26 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 extern unsigned int g_x_00b2d008;
 extern unsigned int g_x_00b2d00c;
-extern unsigned int g_x_00f4d044;
-extern unsigned int g_x_00f70f50;
-extern unsigned int g_x_00f70f98;
+extern unsigned int g_dispatchSave1346_00f4d044;
+extern unsigned int g_dispatchSave1358_00f70f50;
+extern unsigned int g_dispatchSave1374_00f70f98;
 extern unsigned int g_viewportY;
 
 __declspec(naked) void ColdLoopTail_004c08d0(void) {
     __asm {
         mov     edi, dword ptr [g_x_00b2d00c]
-        mov     ecx, dword ptr [g_x_00f70f50]
-        mov     edx, dword ptr [g_x_00f70f98]
+        mov     ecx, dword ptr [g_dispatchSave1358_00f70f50]
+        mov     edx, dword ptr [g_dispatchSave1374_00f70f98]
         mov     eax, dword ptr [g_x_00b2d008]
         mov     esi, dword ptr [g_viewportY]
         add     edx, ecx
-        mov     ecx, dword ptr [g_x_00f4d044]
+        mov     ecx, dword ptr [g_dispatchSave1346_00f4d044]
         dec     eax
         add     ecx, esi
         test    eax, eax
         mov     dword ptr [g_x_00b2d008], eax
-        mov     dword ptr [g_x_00f70f98], edx
-        mov     dword ptr [g_x_00f4d044], ecx
+        mov     dword ptr [g_dispatchSave1374_00f70f98], edx
+        mov     dword ptr [g_dispatchSave1346_00f4d044], ecx
         _emit   0fh
         _emit   8fh
         _emit   6ah

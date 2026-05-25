@@ -121,7 +121,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 extern unsigned int g_SetStdHandle_004d20d4;
 extern unsigned int g_crtFdCloseSlot_00520064;
-extern unsigned int g_x_00fa0ee0;
+extern unsigned int g_dispatchSave1469_00fa0ee0;
 extern void Crt_doserrno_004c8bb0(void);
 extern void Crt_errno_004c8ba0(void);
 
@@ -130,7 +130,7 @@ extern unsigned int g_arr_00fa0de0;
 __declspec(naked) void SetFdMode_004cd110(void) {
     __asm {
         mov     ecx, [esp + 4]
-        mov     eax, dword ptr [g_x_00fa0ee0]
+        mov     eax, dword ptr [g_dispatchSave1469_00fa0ee0]
         push    ebx
         push    esi
         cmp     ecx, eax

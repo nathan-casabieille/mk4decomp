@@ -110,19 +110,19 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004c6860 (178b boot) - CRT abort/exit dispatcher with re-entry guard.
  *   Args: ebp=arg0 (push-thru), [esp+0x14]=arg1 flag, [esp+0x18] bl=arg2 flag.
- *   Calls PushConstCall_004c6920 to do beep/header msg, then on g_data_00f9f840==1:
+ *   Calls PushConstCall_004c6920 to do beep/header msg, then on g_dispatchSave1429_00f9f840==1:
  *     ![0x4d2060](arg0); ![0x4d20a4](rv).
- *   Sets g_data_00f9f83c=1, g_byte_00f9f838 = bl.
- *   If arg1 == 0: walk fnptr-stack [g_data_00fa0eec..g_data_00fa0ef0] calling each non-null fn,
+ *   Sets g_dispatchSave1428_00f9f83c=1, g_byte_00f9f838 = bl.
+ *   If arg1 == 0: walk fnptr-stack [g_dispatchSave1471_00fa0eec..g_dispatchSave1472_00fa0ef0] calling each non-null fn,
  *     reloading head each iter; then push pair (0x4d5028, 0x4d5030) and IterFnPtrs.
  *   Push pair (0x4d5034, 0x4d5038), IterFnPtrs; if bl != 0 also call PushConstCall_004c6930.
- *   Tail: pop esi/ebp/ebx; ret. Re-entry tail: push ebp; g_data_00f9f840 = 1; ![0x4d2154]; pop+ret.
+ *   Tail: pop esi/ebp/ebx; ret. Re-entry tail: push ebp; g_dispatchSave1429_00f9f840 = 1; ![0x4d2154]; pop+ret.
  */
 extern unsigned int g_byte_00f9f838;
-extern unsigned int g_data_00f9f83c;
-extern unsigned int g_data_00f9f840;
-extern unsigned int g_data_00fa0eec;
-extern unsigned int g_data_00fa0ef0;
+extern unsigned int g_dispatchSave1428_00f9f83c;
+extern unsigned int g_dispatchSave1429_00f9f840;
+extern unsigned int g_dispatchSave1471_00fa0eec;
+extern unsigned int g_dispatchSave1472_00fa0ef0;
 extern unsigned int g_iat_004d2060;
 extern unsigned int g_iat_004d20a4;
 extern unsigned int g_iat_004d2154;
@@ -136,7 +136,7 @@ __declspec(naked) void BootFatalAbortHandler_004c6860(void) {
         push    ebp
         push    esi
         call    PushConstCall_004c6920
-        mov     eax, dword ptr [g_data_00f9f840]
+        mov     eax, dword ptr [g_dispatchSave1429_00f9f840]
         mov     ebp, dword ptr [esp + 0x10]
         cmp     eax, 1
         jne     short L_ab_set
@@ -148,13 +148,13 @@ __declspec(naked) void BootFatalAbortHandler_004c6860(void) {
         mov     eax, dword ptr [esp + 0x14]
         mov     ebx, dword ptr [esp + 0x18]
         test    eax, eax
-        mov     dword ptr [g_data_00f9f83c], 1
+        mov     dword ptr [g_dispatchSave1428_00f9f83c], 1
         mov     byte ptr [g_byte_00f9f838], bl
         jne     short L_ab_skipwalk
-        mov     ecx, dword ptr [g_data_00fa0ef0]
+        mov     ecx, dword ptr [g_dispatchSave1472_00fa0ef0]
         test    ecx, ecx
         jz      short L_ab_msg1
-        mov     esi, dword ptr [g_data_00fa0eec]
+        mov     esi, dword ptr [g_dispatchSave1471_00fa0eec]
         sub     esi, 4
         cmp     esi, ecx
         jb      short L_ab_msg1
@@ -163,7 +163,7 @@ __declspec(naked) void BootFatalAbortHandler_004c6860(void) {
         test    eax, eax
         jz      short L_ab_nextiter
         call    eax
-        mov     ecx, dword ptr [g_data_00fa0ef0]
+        mov     ecx, dword ptr [g_dispatchSave1472_00fa0ef0]
     L_ab_nextiter:
         sub     esi, 4
         cmp     esi, ecx
@@ -187,7 +187,7 @@ __declspec(naked) void BootFatalAbortHandler_004c6860(void) {
         ret
     L_ab_reentry:
         push    ebp
-        mov     dword ptr [g_data_00f9f840], 1
+        mov     dword ptr [g_dispatchSave1429_00f9f840], 1
         call    dword ptr [g_iat_004d2154]
         pop     esi
         pop     ebp

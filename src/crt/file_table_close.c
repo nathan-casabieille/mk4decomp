@@ -112,10 +112,10 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_iat_004d209c;
 extern unsigned int g_dispatchSave882_004d20f0;
 extern unsigned int g_byte_00f9f838;
-extern unsigned int g_data_00f9fdb4;
-extern unsigned int g_data_00fa0dc0;
+extern unsigned int g_dispatchSave1465_00f9fdb4;
+extern unsigned int g_dispatchSave1466_00fa0dc0;
 extern unsigned int g_arr_00fa0de0;
-extern unsigned int g_data_00fa0ee0;
+extern unsigned int g_dispatchSave1469_00fa0ee0;
 extern void CRTHandleLookup_004cd260(void);
 extern void Calloc_004c6110(void);
 extern void CmpCallPushIATCall_004c6e60(void);
@@ -128,7 +128,7 @@ extern void StreamCleanupLoop_004ce0b0(void);
 
 __declspec(naked) void FileTableClose_004cb700(void) {
     __asm {
-        mov     eax, dword ptr [g_data_00fa0ee0]
+        mov     eax, dword ptr [g_dispatchSave1469_00fa0ee0]
         push    ebp
         push    esi
         push    edi
@@ -193,7 +193,7 @@ __declspec(naked) void FileTableClose_004cb700(void) {
         nop
         /* entry 2 (offset 0xa0) */
     L_ftc_entry2:
-        mov     eax, dword ptr [g_data_00fa0dc0]
+        mov     eax, dword ptr [g_dispatchSave1466_00fa0dc0]
         push    esi
         test    eax, eax
         jne     short L_ftc_haveSize
@@ -204,33 +204,33 @@ __declspec(naked) void FileTableClose_004cb700(void) {
         jge     short L_ftc_skipClamp
         mov     eax, 0x14
     L_ftc_doAlloc:
-        mov     dword ptr [g_data_00fa0dc0], eax
+        mov     dword ptr [g_dispatchSave1466_00fa0dc0], eax
     L_ftc_skipClamp:
         push    4
         push    eax
         call    Calloc_004c6110
         add     esp, 8
-        mov     dword ptr [g_data_00f9fdb4], eax
+        mov     dword ptr [g_dispatchSave1465_00f9fdb4], eax
         test    eax, eax
         jne     short L_ftc_initTable
         push    4
         push    0x14
-        mov     dword ptr [g_data_00fa0dc0], 0x14
+        mov     dword ptr [g_dispatchSave1466_00fa0dc0], 0x14
         call    Calloc_004c6110
         add     esp, 8
-        mov     dword ptr [g_data_00f9fdb4], eax
+        mov     dword ptr [g_dispatchSave1465_00f9fdb4], eax
         test    eax, eax
         jne     short L_ftc_initTable
         push    0x1a
         call    CmpCallPushIATCall_004c6e60
-        mov     eax, dword ptr [g_data_00f9fdb4]
+        mov     eax, dword ptr [g_dispatchSave1465_00f9fdb4]
         add     esp, 4
     L_ftc_initTable:
         xor     edx, edx
         mov     ecx, 0x522600
         jmp     short L_ftc_writeFirst
     L_ftc_writePtr:
-        mov     eax, dword ptr [g_data_00f9fdb4]
+        mov     eax, dword ptr [g_dispatchSave1465_00f9fdb4]
     L_ftc_writeFirst:
         mov     dword ptr [eax + edx], ecx
         add     ecx, 0x20

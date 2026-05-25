@@ -15,7 +15,7 @@ extern unsigned int g_dispatchSave526_004f5398;
 extern unsigned int g_dispatchSave525_004f5798;
 extern unsigned int g_dispatchSave524_004f613c;
 extern u16 g_texStripeBuf[];
-extern unsigned int g_data_00f6ce50;
+extern unsigned int g_dispatchSave1348_00f6ce50;
 extern unsigned int g_iat_004d21c4;
 extern void FSYS_fclose(void);
 extern void FSYS_fopen(void);
@@ -59,7 +59,7 @@ __declspec(naked) void AppInit_Misc1(void) {
         push    edi
         call    FSYS_fseek
         add     esp, 0xc
-        mov     esi, offset g_data_00f6ce50
+        mov     esi, offset g_dispatchSave1348_00f6ce50
     L_hfp_readlp:
         push    edi
         push    1

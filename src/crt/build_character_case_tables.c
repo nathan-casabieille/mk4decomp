@@ -109,9 +109,9 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_byte_00f9f8c1;
-extern unsigned int g_data_00f9f9c8;
-extern unsigned int g_data_00f9fac8;
-extern unsigned int g_data_00f9facc;
+extern unsigned int g_dispatchSave1434_00f9f9c8;
+extern unsigned int g_dispatchSave1435_00f9fac8;
+extern unsigned int g_dispatchSave1436_00f9facc;
 extern unsigned int g_iat_004d2114;
 extern void CrtCodepageDispatcher_004cd6f0(void);
 extern void WcToMbDispatcher_004cdae0(void);
@@ -119,7 +119,7 @@ extern void WcToMbDispatcher_004cdae0(void);
 __declspec(naked) void BuildCharacterCaseTables_004c9840(void)
 {
     __asm {
-        mov      ecx, dword ptr [g_data_00f9fac8]
+        mov      ecx, dword ptr [g_dispatchSave1435_00f9fac8]
         sub      esp, 0x514
         /* MASM emits 3-byte `8d 04 24` for lea eax,[esp]; orig uses
          * 4-byte disp8=0 form `8d 44 24 00`. */
@@ -168,8 +168,8 @@ __declspec(naked) void BuildCharacterCaseTables_004c9840(void)
         test     al, al
         jne      short L_9883
     L_98b4:
-        mov      edx, dword ptr [g_data_00f9facc]
-        mov      eax, dword ptr [g_data_00f9fac8]
+        mov      edx, dword ptr [g_dispatchSave1436_00f9facc]
+        mov      eax, dword ptr [g_dispatchSave1435_00f9fac8]
         push     0
         push     edx
         lea      ecx, [esp + 0x328]
@@ -180,13 +180,13 @@ __declspec(naked) void BuildCharacterCaseTables_004c9840(void)
         push     edx
         push     1
         call     WcToMbDispatcher_004cdae0
-        mov      eax, dword ptr [g_data_00f9fac8]
+        mov      eax, dword ptr [g_dispatchSave1435_00f9fac8]
         add      esp, 0x1c
         lea      ecx, [esp + 0x120]
         lea      edx, [esp + 0x20]
         push     0
         push     eax
-        mov      eax, dword ptr [g_data_00f9facc]
+        mov      eax, dword ptr [g_dispatchSave1436_00f9facc]
         push     0x100
         push     ecx
         push     0x100
@@ -194,13 +194,13 @@ __declspec(naked) void BuildCharacterCaseTables_004c9840(void)
         push     0x100
         push     eax
         call     CrtCodepageDispatcher_004cd6f0
-        mov      ecx, dword ptr [g_data_00f9fac8]
+        mov      ecx, dword ptr [g_dispatchSave1435_00f9fac8]
         add      esp, 0x20
         lea      edx, [esp + 0x220]
         lea      eax, [esp + 0x20]
         push     0
         push     ecx
-        mov      ecx, dword ptr [g_data_00f9facc]
+        mov      ecx, dword ptr [g_dispatchSave1436_00f9facc]
         push     0x100
         push     edx
         push     0x100
@@ -220,7 +220,7 @@ __declspec(naked) void BuildCharacterCaseTables_004c9840(void)
         or       cl, bl
         mov      byte ptr [eax + g_byte_00f9f8c1], cl
         mov      cl, byte ptr [esp + eax + 0x120]
-        mov      byte ptr [eax + g_data_00f9f9c8], cl
+        mov      byte ptr [eax + g_dispatchSave1434_00f9f9c8], cl
         jmp      short L_999f
     L_9975:
         test     cl, 2
@@ -229,10 +229,10 @@ __declspec(naked) void BuildCharacterCaseTables_004c9840(void)
         or       cl, 0x20
         mov      byte ptr [eax + g_byte_00f9f8c1], cl
         mov      cl, byte ptr [esp + eax + 0x220]
-        mov      byte ptr [eax + g_data_00f9f9c8], cl
+        mov      byte ptr [eax + g_dispatchSave1434_00f9f9c8], cl
         jmp      short L_999f
     L_9998:
-        mov      byte ptr [eax + g_data_00f9f9c8], 0
+        mov      byte ptr [eax + g_dispatchSave1434_00f9f9c8], 0
     L_999f:
         inc      eax
         add      edx, 2
@@ -256,7 +256,7 @@ __declspec(naked) void BuildCharacterCaseTables_004c9840(void)
         mov      byte ptr [eax + g_byte_00f9f8c1], dl
         mov      dl, al
         add      dl, 0x20
-        mov      byte ptr [eax + g_data_00f9f9c8], dl
+        mov      byte ptr [eax + g_dispatchSave1434_00f9f9c8], dl
         jmp      short L_9a0a
     L_99dd:
         cmp      eax, 0x61
@@ -268,10 +268,10 @@ __declspec(naked) void BuildCharacterCaseTables_004c9840(void)
         mov      byte ptr [eax + g_byte_00f9f8c1], cl
         mov      cl, al
         sub      cl, 0x20
-        mov      byte ptr [eax + g_data_00f9f9c8], cl
+        mov      byte ptr [eax + g_dispatchSave1434_00f9f9c8], cl
         jmp      short L_9a0a
     L_9a03:
-        mov      byte ptr [eax + g_data_00f9f9c8], 0
+        mov      byte ptr [eax + g_dispatchSave1434_00f9f9c8], 0
     L_9a0a:
         inc      eax
         cmp      eax, 0x100

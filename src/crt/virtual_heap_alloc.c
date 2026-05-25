@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_virtualHeapBase_00520130;
 extern unsigned int g_heapShrinkPtr_00520134;
 extern unsigned int g_heapTeardownSentinel_00520140;
-extern unsigned int g_data_00fa0ee4;
+extern unsigned int g_dispatchSave1470_00fa0ee4;
 extern unsigned int g_iat_004d20b4;
 extern unsigned int g_iat_004d2144;
 extern unsigned int g_iat_004d214c;
@@ -129,7 +129,7 @@ __declspec(naked) void VirtualHeapAlloc_004c70d0(void)
         mov      ebp, OFFSET g_virtualHeapBase_00520130
         jmp      short L_7101
     L_70e4:
-        mov      eax, dword ptr [g_data_00fa0ee4]
+        mov      eax, dword ptr [g_dispatchSave1470_00fa0ee4]
         push     0x2020
         push     0
         push     eax
@@ -230,7 +230,7 @@ __declspec(naked) void VirtualHeapAlloc_004c70d0(void)
     L_7215:
         cmp      ebp, OFFSET g_virtualHeapBase_00520130
         je       short L_722c
-        mov      eax, dword ptr [g_data_00fa0ee4]
+        mov      eax, dword ptr [g_dispatchSave1470_00fa0ee4]
         push     ebp
         push     0
         push     eax

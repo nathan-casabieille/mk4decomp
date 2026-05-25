@@ -114,15 +114,15 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   success populates a 28-byte stream struct (buffer 0x1000 bytes,
  *   flags |= 8); on failure inits to small inline buffer at +0x14.
  */
-extern unsigned int g_x_00f9fae0;
+extern unsigned int g_dispatchSave1441_00f9fae0;
 extern void LoadArgPushCall_004c54b0(void);
 
 void StreamAllocInit_004cc250(void) {
     __asm {
-        mov     eax, dword ptr [g_x_00f9fae0]
+        mov     eax, dword ptr [g_dispatchSave1441_00f9fae0]
         push    0x1000
         inc     eax
-        mov     dword ptr [g_x_00f9fae0], eax
+        mov     dword ptr [g_dispatchSave1441_00f9fae0], eax
         call    LoadArgPushCall_004c54b0
         mov     ecx, dword ptr [esp + 8]
         add     esp, 4

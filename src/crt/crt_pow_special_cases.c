@@ -122,7 +122,7 @@ extern unsigned int g_dispatchSave118_0051fff0;
 extern unsigned int g_crtPowConstBase_0051fff8;
 extern unsigned int g_dispatchSave113_00522410;
 extern unsigned int g_crtFpuTbyte_00522470;
-extern unsigned int g_data_00f9f7f8;
+extern unsigned int g_dispatchSave1422_00f9f7f8;
 
 __declspec(naked) void CrtPowCluster_004c6540(void)
 {
@@ -165,13 +165,13 @@ __declspec(naked) void CrtPowCluster_004c6540(void)
         jne      short L_65bd
         fchs
     L_65bd:
-        cmp      dword ptr [g_data_00f9f7f8], 0
+        cmp      dword ptr [g_dispatchSave1422_00f9f7f8], 0
         jne      func_004ca34e
         lea      ecx, [g_crtPowConstBase_0051fff8]
         mov      edx, 0x1d
         jmp      func_004ca399
     L_65da:
-        cmp      dword ptr [g_data_00f9f7f8], 0
+        cmp      dword ptr [g_dispatchSave1422_00f9f7f8], 0
         jne      func_004ca34e
         lea      ecx, [g_crtPowConstBase_0051fff8]
         mov      edx, 0x1d

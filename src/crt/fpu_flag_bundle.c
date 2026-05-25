@@ -117,8 +117,8 @@ extern unsigned int g_crtFpuTbyteVar_00522e58;
 extern unsigned int g_crtFpuTbyteVar2_00522e68;
 extern unsigned int g_crtFpuStateBuf_00523600;
 extern unsigned int g_crtFpuStack_005236ac;
-extern unsigned int g_data_00f9fc1c;
-extern unsigned int g_data_00f9fc64;
+extern unsigned int g_dispatchSave1447_00f9fc1c;
+extern unsigned int g_dispatchSave1455_00f9fc64;
 extern void Calloc_004c6110(void);
 extern void CrtInitLocaleInfo_004cf880(void);
 extern void CrtLocaleInfoFreeAll_004cfc00(void);
@@ -178,7 +178,7 @@ __declspec(naked) void FpuFlagBundle_004cf770(void) {
         _emit   90h
         _emit   90h
         /* sub-2: slot management (0x4cf7d0..0x4cf87d) */
-        mov     eax, dword ptr [g_data_00f9fc1c]
+        mov     eax, dword ptr [g_dispatchSave1447_00f9fc1c]
         push    esi
         test    eax, eax
         jz      short L_sm_clearPath
@@ -208,30 +208,30 @@ __declspec(naked) void FpuFlagBundle_004cf770(void) {
         pop     esi
         ret
     L_sm_storePath:
-        mov     eax, dword ptr [g_data_00f9fc64]
+        mov     eax, dword ptr [g_dispatchSave1455_00f9fc64]
         mov     dword ptr [g_crtFpuStack_005236ac], esi
         push    eax
         call    CrtLocaleInfoFreeAll_004cfc00
-        mov     ecx, dword ptr [g_data_00f9fc64]
+        mov     ecx, dword ptr [g_dispatchSave1455_00f9fc64]
         add     esp, 4
         push    ecx
         call    FreeImpl_004c55f0
         add     esp, 4
-        mov     dword ptr [g_data_00f9fc64], esi
+        mov     dword ptr [g_dispatchSave1455_00f9fc64], esi
         xor     eax, eax
         pop     esi
         ret
     L_sm_clearPath:
-        mov     edx, dword ptr [g_data_00f9fc64]
+        mov     edx, dword ptr [g_dispatchSave1455_00f9fc64]
         mov     dword ptr [g_crtFpuStack_005236ac], offset g_crtFpuStateBuf_00523600
         push    edx
         call    CrtLocaleInfoFreeAll_004cfc00
-        mov     eax, dword ptr [g_data_00f9fc64]
+        mov     eax, dword ptr [g_dispatchSave1455_00f9fc64]
         add     esp, 4
         push    eax
         call    FreeImpl_004c55f0
         add     esp, 4
-        mov     dword ptr [g_data_00f9fc64], 0
+        mov     dword ptr [g_dispatchSave1455_00f9fc64], 0
         xor     eax, eax
         pop     esi
         ret
