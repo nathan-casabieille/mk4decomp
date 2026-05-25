@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern void DispatcherChainRampClamp_004260d0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern void DivBy_004ab300(void);
-extern unsigned int g_x_0053a384;
+extern unsigned int g_phaseThunkScratch_0053a384;
 
 /* @addr 0x00426000 (199b game) - install-self gate with three-way exit:
  *   esi = base*4; snapshot [esi+0x84]; clear.
@@ -139,7 +139,7 @@ __declspec(naked) void InstallSelfPackedF80_00426000(void) {
         _emit   75h
         _emit   27h
         mov     ecx, dword ptr [g_eventQueueCurrent]
-        mov     dword ptr [g_x_0053a384], ecx
+        mov     dword ptr [g_phaseThunkScratch_0053a384], ecx
         call    DispatcherChainRampClamp_004260d0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -161,7 +161,7 @@ __declspec(naked) void InstallSelfPackedF80_00426000(void) {
         mov     dword ptr [edx*4 + 0x10], 0x00426190
         mov     ecx, dword ptr [g_xformEntityIdx]
         mov     [ecx*4 + 0x14], eax
-        mov     edx, dword ptr [g_x_0053a384]
+        mov     edx, dword ptr [g_phaseThunkScratch_0053a384]
         mov     dword ptr [g_eventQueueCurrent], edx
         mov     dword ptr [g_walkCallback], eax
         call    DivBy_004ab300

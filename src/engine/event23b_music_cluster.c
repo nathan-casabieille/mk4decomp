@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_phaseThunkVar2_0052aabc;
 extern unsigned int g_tickFlagF;
-extern unsigned int g_data_0053a318;
+extern unsigned int g_eventMusicSlot2_0053a318;
 extern unsigned int g_data_00541dd8;
 extern unsigned int g_dispatchVar3_00543564;
 extern unsigned int g_eventMusicSlot_00543594;
@@ -133,7 +133,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         push     0x23b
         call     SaveCallRestore_004049d0
         mov      eax, dword ptr [g_active_0053a408]
-        mov      edx, dword ptr [g_data_0053a318]
+        mov      edx, dword ptr [g_eventMusicSlot2_0053a318]
         mov      ecx, dword ptr [g_active_00537e88]
         add      esp, 4
         cmp      eax, 1

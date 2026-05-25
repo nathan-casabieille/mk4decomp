@@ -514,7 +514,7 @@ extern unsigned int g_installOwner2_0053a7a0;
 extern unsigned int g_pendingMatchAudio2_0053a7a8;
 extern unsigned int g_data_0053a7b4;
 extern unsigned int g_clamp_0053e348;
-extern unsigned int g_data_00541d68;
+extern unsigned int g_scenegraphWalkEnd_00541d68;
 extern unsigned int g_savedNode_00541f98;
 extern unsigned int g_phaseCounter_00541fb0;
 extern unsigned int g_dispatchArr_00542188;
@@ -6736,7 +6736,7 @@ __declspec(naked) void PendingMatch_0043bdd0(void)
         mov      dword ptr [g_walkBoundsSlot_00535d68], eax
         mov      eax, 0xffff0000
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_00541d68], eax
+        mov      dword ptr [g_scenegraphWalkEnd_00541d68], eax
         mov      dword ptr [g_walkBoundsLimit_00535d60], eax
         call     PendingMatch_0043c400
         cmp      dword ptr [g_framePauseFlag], esi

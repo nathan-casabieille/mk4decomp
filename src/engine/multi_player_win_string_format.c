@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_0053a318;
+extern unsigned int g_eventMusicSlot2_0053a318;
 extern unsigned int g_dispatchVar3_00543564;
 extern unsigned int g_eventMusicSlot_00543594;
 extern void Helper_Sprintf(void);
@@ -131,7 +131,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         _emit    0x05
         _emit    0x00
         _emit    0x00
-        mov      eax, dword ptr [g_data_0053a318]
+        mov      eax, dword ptr [g_eventMusicSlot2_0053a318]
         mov      esi, 1
         mov      dword ptr [g_walkCallback], eax
         cmp      eax, esi

@@ -113,7 +113,7 @@ extern u8 g_renderer2_buf3[];
 extern u8 g_renderer2_buf2[];
 extern u8 g_renderer2_buf1[];
 extern unsigned int g_renderer2_state9_0058c7c8;
-extern unsigned int g_data_0058c7cc;
+extern unsigned int g_renderer2_var2_0058c7cc;
 extern int g_renderer2_present_rc;
 extern int g_renderer2_active;
 extern void R2_Init11(void);
@@ -236,7 +236,7 @@ __declspec(naked) void PadEnumDeviceRebind_004ad850(void)
         call     dword ptr [eax + 0x80]
         mov      dword ptr [g_renderer2_present_rc], eax
     L_d9ad:
-        mov      ecx, dword ptr [g_data_0058c7cc]
+        mov      ecx, dword ptr [g_renderer2_var2_0058c7cc]
         test     ecx, ecx
         je       L_d9cd
         mov      eax, dword ptr [esi + g_renderer2_buf3]

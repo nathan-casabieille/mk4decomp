@@ -129,7 +129,7 @@ extern void ScaledAndAldf_00490330(void);
 extern void ScaledAndAlbf_00490350(void);
 extern void ScaledAndAlfe_00490390(void);
 extern unsigned int g_or_0052ab40;
-extern unsigned int g_data_00543888;
+extern unsigned int g_pendingMatchCmp_00543888;
 
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
@@ -182,13 +182,13 @@ __declspec(naked) void MainTickChain_00481070(void)
         call     MStackPushSet0004_00490230
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
-        cmp      dword ptr [g_data_00543888], esi
+        cmp      dword ptr [g_pendingMatchCmp_00543888], esi
         jne      short L_114c
         call     DualCallPauseDirtyJmp_00490c30
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
     L_114c:
-        mov      dword ptr [g_data_00543888], esi
+        mov      dword ptr [g_pendingMatchCmp_00543888], esi
         call     ScaledLoadCmp1003JmpDispatch_00486530
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336

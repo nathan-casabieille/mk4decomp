@@ -10,7 +10,7 @@
  *   Calls DialogProbeDispatch_004afe40 (sister helper).
  */
 extern unsigned int g_data_004f47a8;
-extern unsigned int g_data_0058c858;
+extern unsigned int g_dd3SurfaceCreate_0058c858;
 extern unsigned int g_data_0058c85c;
 extern unsigned int g_dsmi_b70_main;
 extern unsigned int g_dsmi_b70_ret;
@@ -36,7 +36,7 @@ __declspec(naked) void DDraw3_CreateSurface(void) {
         test    eax, eax
         mov     dword ptr [g_data_004f47a8], eax
         jz      L_dms2_release
-        push    offset g_data_0058c858
+        push    offset g_dd3SurfaceCreate_0058c858
         call    dword ptr [g_iat_004d21ac]
         push    0
         call    dword ptr [g_iat_004d219c]
@@ -107,7 +107,7 @@ __declspec(naked) void DDraw3_CreateSurface(void) {
         mov     dword ptr [g_dsmi_b70_ret], eax
     L_dms2_restoreCursor:
         mov     eax, dword ptr [g_data_0058c85c]
-        mov     ecx, dword ptr [g_data_0058c858]
+        mov     ecx, dword ptr [g_dd3SurfaceCreate_0058c858]
         push    eax
         push    ecx
         call    dword ptr [g_iat_004d21a4]

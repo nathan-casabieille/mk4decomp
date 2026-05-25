@@ -130,7 +130,7 @@ extern unsigned int g_data_0053a788;
 extern unsigned int g_data_0053e34c;
 extern unsigned int g_data_00541d84;
 extern unsigned int g_smState4Way_00541dc8;
-extern unsigned int g_data_00541df0;
+extern unsigned int g_titleDemoState_00541df0;
 extern unsigned int g_data_00541df4;
 extern u32 g_dlState;
 extern u32 g_dlAux;
@@ -213,7 +213,7 @@ __declspec(naked) void RoundReset_004223e0(void)
         mov      dword ptr [g_dst_0053a6e0], ebx
         mov      dword ptr [g_dst_00537ea4], ebx
     L_2459:
-        mov      dword ptr [g_data_00541df0], ebx
+        mov      dword ptr [g_titleDemoState_00541df0], ebx
         mov      dword ptr [g_data_00541df4], ebx
         mov      byte ptr [g_data_0054380c], bl
         mov      dword ptr [g_data_0053a6f8], ebx

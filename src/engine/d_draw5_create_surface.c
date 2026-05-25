@@ -9,7 +9,7 @@
  *   Calls DialogProbeDispatch640_004b0670.
  */
 extern unsigned int g_data_004f47b0;
-extern unsigned int g_data_0058c8d8;
+extern unsigned int g_renderer4_ifaceBase_0058c8d8;
 extern unsigned int g_data_0058c8dc;
 extern unsigned int g_dsmi_3a0_main;
 extern unsigned int g_dsmi_3a0_ret;
@@ -35,7 +35,7 @@ __declspec(naked) void DDraw5_CreateSurface(void) {
         test    eax, eax
         mov     dword ptr [g_data_004f47b0], eax
         jz      L_dms3_release
-        push    offset g_data_0058c8d8
+        push    offset g_renderer4_ifaceBase_0058c8d8
         call    dword ptr [g_iat_004d21ac]
         push    0
         call    dword ptr [g_iat_004d219c]
@@ -106,7 +106,7 @@ __declspec(naked) void DDraw5_CreateSurface(void) {
         mov     dword ptr [g_dsmi_3a0_ret], eax
     L_dms3_restoreCursor:
         mov     eax, dword ptr [g_data_0058c8dc]
-        mov     ecx, dword ptr [g_data_0058c8d8]
+        mov     ecx, dword ptr [g_renderer4_ifaceBase_0058c8d8]
         push    eax
         push    ecx
         call    dword ptr [g_iat_004d21a4]

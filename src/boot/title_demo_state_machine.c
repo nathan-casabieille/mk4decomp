@@ -119,7 +119,7 @@ extern unsigned int g_pendingMatchAcc_0053a3e8;
 extern unsigned int g_phaseIdx_0053a50c;
 extern unsigned int g_zerotriple_00541de8;
 extern unsigned int g_zerotriple_00541dec;
-extern unsigned int g_data_00541df0;
+extern unsigned int g_titleDemoState_00541df0;
 extern unsigned int g_data_00541df4;
 extern void AudioVolumeRescale_004ab690(void);
 extern void BootInitVec3PhaseInstall_00402c10(void);
@@ -202,7 +202,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      dword ptr [g_walkCallback], ebp
         mov      dword ptr [g_zerotriple_00541de8], ebp
         mov      dword ptr [g_zerotriple_00541dec], ebp
-        mov      dword ptr [g_data_00541df0], ebp
+        mov      dword ptr [g_titleDemoState_00541df0], ebp
         mov      dword ptr [g_data_00541df4], ebp
         call     QuadCallPhase2_004be800
         mov      dword ptr [esi + 8], edi

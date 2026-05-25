@@ -5,12 +5,12 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_data_0053a404;
+extern unsigned int g_dispatchWalkVar_0053a404;
 
 void DispatchSetWalk4_00492780(void) {
     unsigned int v;
     if (g_gtOtherFlag) return;
-    v = g_data_0053a404;
+    v = g_dispatchWalkVar_0053a404;
     g_walkCallback = (void(*)(void))v;
     if (v) return;
     g_eventQueueCurrent = v;

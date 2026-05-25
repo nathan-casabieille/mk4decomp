@@ -114,7 +114,7 @@ extern u32 g_dlSomeFlag2;
 extern s32 g_dlNalt1;
 extern unsigned int g_bootHeavyState_00537f78;
 extern s32 g_dlNalt2;
-extern unsigned int g_data_0053a318;
+extern unsigned int g_eventMusicSlot2_0053a318;
 extern u32 g_dlSomeFlag1;
 extern unsigned int g_zerotriple_00541de8;
 extern unsigned int g_zerotriple_00541dec;
@@ -149,7 +149,7 @@ __declspec(naked) void DeathAnimCluster_0042eaf0(void)
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], edx
-        mov      eax, dword ptr [g_data_0053a318]
+        mov      eax, dword ptr [g_eventMusicSlot2_0053a318]
         cmp      eax, 1
         mov      dword ptr [g_zerotriple_00541de8], esi
         mov      dword ptr [g_zerotriple_00541dec], esi

@@ -126,7 +126,7 @@ extern unsigned int g_pendingMatchAcc_0053a3e8;
 extern unsigned int g_phaseIdx_0053a50c;
 extern unsigned int g_zerotriple_00541de8;
 extern unsigned int g_zerotriple_00541dec;
-extern unsigned int g_data_00541df0;
+extern unsigned int g_titleDemoState_00541df0;
 extern unsigned int g_data_00541df4;
 extern unsigned int g_dispatchSave6_00541f94;
 extern unsigned int g_mul10TransformVar_00541f9c;
@@ -250,7 +250,7 @@ extern unsigned int g_byte_005435a0;
 extern unsigned int g_data_00543618;
 extern unsigned int g_voicePoolTickFlag_005437f4;
 extern unsigned int g_byte_00543834;
-extern unsigned int g_data_00543888;
+extern unsigned int g_pendingMatchCmp_00543888;
 extern u32 g_timerActive;
 extern u32 g_timerStartSec;
 extern u32 g_timerEndSec;
@@ -2004,13 +2004,13 @@ __declspec(naked) void MainTickChain_00481070(void)
         call     MStackPushSet0004_00490230
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
-        cmp      dword ptr [g_data_00543888], esi
+        cmp      dword ptr [g_pendingMatchCmp_00543888], esi
         jne      short L_114c
         call     DualCallPauseDirtyJmp_00490c30
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
     L_114c:
-        mov      dword ptr [g_data_00543888], esi
+        mov      dword ptr [g_pendingMatchCmp_00543888], esi
         call     ScaledLoadCmp1003JmpDispatch_00486530
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
@@ -5934,7 +5934,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      dword ptr [g_walkCallback], ebp
         mov      dword ptr [g_zerotriple_00541de8], ebp
         mov      dword ptr [g_zerotriple_00541dec], ebp
-        mov      dword ptr [g_data_00541df0], ebp
+        mov      dword ptr [g_titleDemoState_00541df0], ebp
         mov      dword ptr [g_data_00541df4], ebp
         call     QuadCallPhase2_004be800
         mov      dword ptr [esi + 8], edi
