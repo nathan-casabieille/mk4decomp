@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern s32 g_dlNalt2;
 extern unsigned int g_audioPeriodicSlot_0053a2e8;
 extern unsigned int g_byte_00543724;
-extern unsigned int g_x_00543728;
+extern unsigned int g_audioStateRemapByte_00543728;
 extern unsigned int g_byte_0054372c;
 extern unsigned int g_byte_00543730;
 extern void AudioInstallSelfChannel8_004a0520(void);
@@ -146,11 +146,11 @@ __declspec(naked) void AudioStateRemapB_004a04a0(void) {
         je      skip6
         cmp     eax, 6
         jne     skip6
-        mov     cl, byte ptr [g_x_00543728]
+        mov     cl, byte ptr [g_audioStateRemapByte_00543728]
         test    cl, cl
         jne     skip6
         mov     eax, 0xf
-        mov     byte ptr [g_x_00543728], 1
+        mov     byte ptr [g_audioStateRemapByte_00543728], 1
         mov     dword ptr [g_dlNalt2], eax
 skip6:
         mov     cl, byte ptr [g_byte_0054372c]

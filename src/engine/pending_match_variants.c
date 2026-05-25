@@ -524,7 +524,7 @@ extern unsigned int g_installSelfCounter_005433e8;
 extern unsigned int g_audioTriEntryFlag_005433ec;
 extern unsigned int g_audioMatchStartFlag_00543714;
 extern u8 g_dlEnabledFlag;
-extern unsigned int g_data_00543728;
+extern unsigned int g_audioStateRemapByte_00543728;
 extern unsigned int g_mul10SumState_0054388c;
 extern unsigned int g_mul10SumState2_00543890;
 extern void AiAngleDistComputation_00431920(void);
@@ -4664,7 +4664,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         je       L_e05e
         jmp      L_e198
         push     6
-        mov      byte ptr [g_data_00543728], bl
+        mov      byte ptr [g_audioStateRemapByte_00543728], bl
         call     TableWalkBoundedCmp_004bd890
         add      esp, 4
         push     2

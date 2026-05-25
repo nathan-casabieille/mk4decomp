@@ -136,7 +136,7 @@ extern unsigned int g_phaseThunkSlot5_0053a468;
 extern unsigned int g_phaseCounter_00541fb0;
 extern unsigned int g_audioTriEntryFlag_005433ec;
 extern unsigned int g_audioMatchStartFlag_00543714;
-extern unsigned int g_data_00543728;
+extern unsigned int g_audioStateRemapByte_00543728;
 
 __declspec(naked) void SceneEvalFsm_0049dea0(void)
 {
@@ -203,7 +203,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         je       L_e05e
         jmp      L_e198
         push     6
-        mov      byte ptr [g_data_00543728], bl
+        mov      byte ptr [g_audioStateRemapByte_00543728], bl
         call     TableWalkBoundedCmp_004bd890
         add      esp, 4
         push     2

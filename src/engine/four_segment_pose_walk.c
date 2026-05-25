@@ -108,10 +108,10 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_0050b3d4;
-extern unsigned int g_data_0050b3f0;
-extern unsigned int g_data_0050b40c;
-extern unsigned int g_data_0050b428;
+extern unsigned int g_phase4SlotArr4_0050b3d4;
+extern unsigned int g_phase4SlotArr3_0050b3f0;
+extern unsigned int g_segPoseArr_0050b40c;
+extern unsigned int g_phase4SlotArr2_0050b428;
 extern void SetJmp_00405420(void);
 extern void Vec3SetupQuadrupleMul10Sub_00442bc0(void);
 
@@ -181,7 +181,7 @@ __declspec(naked) void FourSegmentPoseWalk_00442880(void)
         jne      short L_29be
         mov      dword ptr [g_eventQueueIdx], 1
     L_29be:
-        mov      esi, OFFSET g_data_0050b3d4
+        mov      esi, OFFSET g_phase4SlotArr4_0050b3d4
         shr      esi, 2
         mov      dword ptr [g_xformEntityIdx], esi
         call     DispatcherComplex260_00407030
@@ -217,7 +217,7 @@ __declspec(naked) void FourSegmentPoseWalk_00442880(void)
         jne      short L_2a4e
         mov      dword ptr [g_eventQueueIdx], 1
     L_2a4e:
-        mov      esi, OFFSET g_data_0050b3f0
+        mov      esi, OFFSET g_phase4SlotArr3_0050b3f0
         shr      esi, 2
         mov      dword ptr [g_xformEntityIdx], esi
         call     DispatcherComplex260_00407030
@@ -253,7 +253,7 @@ __declspec(naked) void FourSegmentPoseWalk_00442880(void)
         jne      short L_2ada
         mov      dword ptr [g_eventQueueIdx], 2
     L_2ada:
-        mov      esi, OFFSET g_data_0050b40c
+        mov      esi, OFFSET g_segPoseArr_0050b40c
         shr      esi, 2
         mov      dword ptr [g_xformEntityIdx], esi
         call     DispatcherComplex260_00407030
@@ -289,7 +289,7 @@ __declspec(naked) void FourSegmentPoseWalk_00442880(void)
         jne      short L_2b66
         mov      dword ptr [g_eventQueueIdx], 1
     L_2b66:
-        mov      esi, OFFSET g_data_0050b428
+        mov      esi, OFFSET g_phase4SlotArr2_0050b428
         shr      esi, 2
         mov      dword ptr [g_xformEntityIdx], esi
         call     DispatcherComplex260_00407030

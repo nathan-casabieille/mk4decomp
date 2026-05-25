@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 extern unsigned int g_vertexInitFlagAlt_00541e70;
 extern unsigned int g_vertexInitFlag_00541e74;
-extern unsigned int g_state_00541e78;
+extern unsigned int g_vertexInitVar_00541e78;
 extern void VertexSlotInitFlagWalk_00409740(void);
 
 __declspec(naked) void DualEntryInitCmp_00425b20(void) {
@@ -138,7 +138,7 @@ __declspec(naked) void DualEntryInitCmp_00425b20(void) {
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x0c], ecx
-        mov     edx, dword ptr [g_state_00541e78]
+        mov     edx, dword ptr [g_vertexInitVar_00541e78]
         mov     dword ptr [g_eventQueueTotal], edx
         mov     dword ptr [g_cj_00542054], 0
         jmp     VertexSlotInitFlagWalk_00409740

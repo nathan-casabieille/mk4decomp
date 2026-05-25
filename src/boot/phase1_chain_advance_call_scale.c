@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004d5364;
-extern unsigned int g_data_00507118;
+extern unsigned int g_phase1ChainArr_00507118;
 extern void AudioVolumeRescale_004ab690(void);
 extern void ChainWalkPushPop_00405a40(void);
 extern void DirtyDoubleDeref_00408cb0(void);
@@ -120,7 +120,7 @@ extern void PushPopScaled1cDoubleCall_00408510(void);
 __declspec(naked) void Phase1ChainAdvanceCallScale_00418f80(void)
 {
     __asm {
-        mov     eax, offset g_data_00507118
+        mov     eax, offset g_phase1ChainArr_00507118
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
         call    MStackBracket1_TreeWalkRecursive2_00406dd0

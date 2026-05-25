@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   g_walkCallback = 9; call DirtyDoubleDeref; pause? -> end;
  *   g_xformEntityIdx = g_scaledInit; mstack-pop into g_scaledInit; jmp PushPopScaled1cDoubleCall.
  */
-extern unsigned int g_x_0053a3a8;
+extern unsigned int g_installChainTailSlot_0053a3a8;
 extern void DirtyDoubleDeref_00408cb0(void);
 extern void MStackBracket1_TreeWalkRecursive2_00406dd0(void);
 extern void PushPopScaled1cDoubleCall_00408510(void);
@@ -147,7 +147,7 @@ __declspec(naked) void InstallChainInitTailJmp_004a7030(void) {
         mov     ecx, dword ptr [g_matrixStackTop]
         mov     eax, dword ptr [g_scaledInit_00542044]
         inc     ecx
-        mov     dword ptr [g_x_0053a3a8], eax
+        mov     dword ptr [g_installChainTailSlot_0053a3a8], eax
         mov     dword ptr [g_matrixStackTop], ecx
         mov     [ecx*4 + g_data_004d57ac_arr], eax
         mov     ecx, dword ptr [g_scaledInit_00542044]

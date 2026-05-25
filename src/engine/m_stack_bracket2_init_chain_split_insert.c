@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_vertexInitFlag_00541e74;
-extern unsigned int g_data_00541e78;
+extern unsigned int g_vertexInitVar_00541e78;
 extern void MStackBracket5_LinkedListUnlink_00409aa0(void);
 extern void MStackPush2ChainInsert_00409870(void);
 
@@ -149,7 +149,7 @@ __declspec(naked) void MStackBracket2InitChainSplitInsert_00425be0(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mbsi_pop
-        mov     ecx, dword ptr [g_data_00541e78]
+        mov     ecx, dword ptr [g_vertexInitVar_00541e78]
         mov     dword ptr [g_xformEntityIdx], ecx
         call    MStackPush2ChainInsert_00409870
         mov     eax, dword ptr [g_framePauseFlag]
