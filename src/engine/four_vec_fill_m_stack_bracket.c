@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00541fec;
+extern unsigned int g_dispatchSave20_00541fec;
 extern unsigned int g_packedDispatchSlot3_00541ff0;
 extern unsigned int g_packedDispatchSlot2_00541ff4;
 extern unsigned int g_packedDispatchSlot1_00541ff8;
@@ -129,7 +129,7 @@ __declspec(naked) void FourVecFillMStackBracket_00428130(void)
         mov     dword ptr [g_matrixStackTop], eax
         mov     ecx, 7
         mov     dword ptr [eax*4], edx
-        mov     eax, dword ptr [g_data_00541fec]
+        mov     eax, dword ptr [g_dispatchSave20_00541fec]
         xor     edx, edx
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_walkCallback], edx

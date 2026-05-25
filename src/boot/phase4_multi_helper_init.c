@@ -113,7 +113,7 @@ extern unsigned int g_data_004d74d8;
 extern unsigned int g_data_004d75a0;
 extern unsigned int g_data_004d7610;
 extern unsigned int g_data_0053a29c;
-extern unsigned int g_data_0053a400;
+extern unsigned int g_phase4HelperSlot_0053a400;
 extern void BootSetupWithMStackBody_00418e00(void);
 extern void CallSetPause_0041f830(void);
 extern void ClampMulShiftStore_004ba0e0(void);
@@ -234,7 +234,7 @@ __declspec(naked) void Phase4MultiHelperInit_00418af0(void)
         pop     esi
         ret
     L_p4mh_C_phase1:
-        mov     eax, dword ptr [g_data_0053a400]
+        mov     eax, dword ptr [g_phase4HelperSlot_0053a400]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         je      L_p4mh_C_set_install

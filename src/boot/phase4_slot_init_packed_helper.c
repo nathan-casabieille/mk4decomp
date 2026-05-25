@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00511fa4;
+extern unsigned int g_phase4SlotArr_00511fa4;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_particleEmitterNode_00535e6c;
 extern unsigned int g_phase1ModelChain_0053e35c;
@@ -134,7 +134,7 @@ __declspec(naked) void Phase4SlotInitPackedHelper_00416040(void)
         test    eax, eax
         jne     L_p4sip_A_ret
         mov     eax, dword ptr [g_currentNodeIdx]
-        mov     ecx, offset g_data_00511fa4
+        mov     ecx, offset g_phase4SlotArr_00511fa4
         shr     ecx, 2
         mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_xformEntityIdx], ecx

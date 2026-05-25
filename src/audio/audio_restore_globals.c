@@ -129,7 +129,7 @@ extern unsigned int g_data_004f3818;
 extern unsigned int g_data_004f381c;
 extern unsigned int g_data_004f3820;
 extern unsigned int g_or_0052ab40;
-extern unsigned int g_data_0053a1f0;
+extern unsigned int g_audioRestoreSlot3_0053a1f0;
 extern unsigned int g_audioSavedGlobal0_00543734;
 extern unsigned int g_audioSavedGlobal1_00543738;
 extern unsigned int g_audioSavedGlobal2_0054373c;
@@ -245,7 +245,7 @@ __declspec(naked) void AudioRestoreGlobals_004acce0(void)
         mov     edx, dword ptr [g_menuRestoreA_00543aa0]
         pop     edi
         mov     dword ptr [g_data_004f3404], eax
-        mov     dword ptr [g_data_0053a1f0], ecx
+        mov     dword ptr [g_audioRestoreSlot3_0053a1f0], ecx
         mov     dword ptr [g_data_004f361c], edx
         pop     esi
         ret

@@ -114,7 +114,7 @@ extern void MStackPushComplexCallPop_00406430(void);
 extern void DrainQueueCallEach_004a1ec0(void);
 extern void PendingMatch_004a8ca0(void);
 extern void AudioInstallSelfStateMachine2_004a85c0(void);
-extern unsigned int g_data_0050f114;
+extern unsigned int g_audioInstallArr_0050f114;
 extern unsigned int g_audioMicroEntry_005433f4;
 
 /*
@@ -134,7 +134,7 @@ __declspec(naked) void AudioInitLoopTriple_004a7840(void)
 {
     __asm
     {
-        mov     eax, offset g_data_0050f114
+        mov     eax, offset g_audioInstallArr_0050f114
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
         call    DispatcherComplex260_00407400

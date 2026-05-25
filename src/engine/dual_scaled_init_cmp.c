@@ -24,10 +24,10 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_scaledInit_00542048;
 
 /* @addr 0x0046dbd0 */
-extern unsigned int g_data_00541e24;
+extern unsigned int g_installCountdownSlot_00541e24;
 void DualScaledInitCmp_0046dbd0(void) {
     g_pendingNodeType = g_player1NodeIdx;
-    g_scaledInit_00542044 = (unsigned int)&g_data_00541e24 >> 2;
+    g_scaledInit_00542044 = (unsigned int)&g_installCountdownSlot_00541e24 >> 2;
     g_scaledInit_00542048 = (unsigned int)&g_nodeSlotsHdr_end >> 2;
     if (g_fightGroupHead != g_player1NodeIdx) {
         g_scaledInit_00542044 = (unsigned int)&g_nodeSlotsHdr_end >> 2;

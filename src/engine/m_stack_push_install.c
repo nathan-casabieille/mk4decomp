@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   scaledInit; key = (0x541d70 >> 2) + walkCallback; g_walkCallback=1;
  *   install[key] = 1; pop scaledInit, walkCallback.
  */
-extern unsigned int g_data_00541d70;
+extern unsigned int g_scaledIncLoopBase_00541d70;
 
 extern unsigned int g_data_004d57ac_arr;
 
@@ -132,7 +132,7 @@ void MStackPushInstall_0048c260(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_data_004d57ac_arr], ecx
         mov     ecx, dword ptr [g_walkCallback]
-        mov     eax, offset g_data_00541d70
+        mov     eax, offset g_scaledIncLoopBase_00541d70
         mov     dword ptr [g_walkCallback], 1
         shr     eax, 2
         add     eax, ecx

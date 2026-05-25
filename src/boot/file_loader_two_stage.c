@@ -113,7 +113,7 @@ extern unsigned int g_data_004d504c;
 extern unsigned int g_data_004d505c;
 extern unsigned int g_data_004d5060;
 extern unsigned int g_data_004d506c;
-extern unsigned int g_data_00524158;
+extern unsigned int g_fileLoaderArr_00524158;
 extern unsigned int g_fileLoaderState_00524358;
 extern void FSYS_fclose(void);
 extern void FSYS_fopen(void);
@@ -252,7 +252,7 @@ __declspec(naked) void FileLoaderTwoStage_00401120(void)
         add     esp, 4
         push    0x200
         push    edx
-        push    offset g_data_00524158
+        push    offset g_fileLoaderArr_00524158
         call    MemcpyByteN_004a5680
         add     esp, 0xC
         call    ListInitLoop_00401310

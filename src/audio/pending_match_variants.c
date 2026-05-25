@@ -188,7 +188,7 @@ extern unsigned int g_data_004f3a70;
 extern unsigned int g_data_004f3a98;
 extern unsigned int g_data_004f3aa8;
 extern unsigned int g_audioPreloadBase_0050b118;
-extern unsigned int g_data_0050f114;
+extern unsigned int g_audioInstallArr_0050f114;
 extern unsigned int g_count_005433b8;
 extern unsigned int g_audioPendingBcSlot_005433bc;
 extern unsigned int g_audioBankPick_005433c0;
@@ -319,7 +319,7 @@ __declspec(naked) void AudioInitLoopTriple_004a7840(void)
 {
     __asm
     {
-        mov     eax, offset g_data_0050f114
+        mov     eax, offset g_audioInstallArr_0050f114
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
         call    DispatcherComplex260_00407400

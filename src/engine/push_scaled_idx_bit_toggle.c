@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   if zero: skip; eax=edx; eax^=4; g_xformDirtyFlags=eax;
  *   skip: pop g_scaledInit; ret.
  */
-extern unsigned char g_data_00541d70;
+extern unsigned char g_scaledIncLoopBase_00541d70;
 void PushScaledIdxBitToggle_0048c2f0(void) {
     unsigned int top;
     unsigned int p;
@@ -125,7 +125,7 @@ void PushScaledIdxBitToggle_0048c2f0(void) {
     top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_scaledInit_00542044;
-    p = ((unsigned int)&g_data_00541d70 >> 2) + (unsigned int)g_walkCallback;
+    p = ((unsigned int)&g_scaledIncLoopBase_00541d70 >> 2) + (unsigned int)g_walkCallback;
     g_scaledInit_00542044 = p;
     dirty = g_xformDirtyFlags | 4;
     v = *(unsigned int *)(p * 4);

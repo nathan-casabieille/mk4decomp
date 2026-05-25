@@ -112,7 +112,7 @@ extern unsigned int g_data_004f2dc0;
 extern unsigned int g_dispatchArg_00535e48;
 extern unsigned int g_audioVoiceCounter_00535e50;
 extern unsigned int g_audioBitField_00541fc0;
-extern unsigned int g_data_00541fc4;
+extern unsigned int g_audioSequencerSlot_00541fc4;
 extern unsigned int g_data_00543320;
 extern void AudioInitChainTag_004a1000(void);
 extern void Eleven404b90_404c00_004266d0(void);
@@ -132,7 +132,7 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], ecx
         mov      eax, dword ptr [g_acc_00542078]
-        mov      edx, dword ptr [g_data_00541fc4]
+        mov      edx, dword ptr [g_audioSequencerSlot_00541fc4]
         lea      eax, [eax + eax*4 - 5]
         mov      dword ptr [g_acc_00542078], eax
         add      eax, edx

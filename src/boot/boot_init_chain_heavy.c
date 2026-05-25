@@ -111,9 +111,9 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_data_004d5140;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_particleEmitterNode_00535e6c;
-extern unsigned int g_data_00537e8c;
+extern unsigned int g_bootChainSlot3_00537e8c;
 extern unsigned int g_bootHeavyState_00537f78;
-extern unsigned int g_data_0053a520;
+extern unsigned int g_phaseThunkSlot8_0053a520;
 extern unsigned int g_particleInitState_00541de0;
 extern unsigned int g_data_00541e7c;
 extern unsigned int g_bootChainPair0_00541e80;
@@ -245,8 +245,8 @@ __declspec(naked) void BootInitChainHeavy_00404f20(void)
         call    MStackCall_004063e0
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
-        mov     dword ptr [g_data_0053a520], esi
-        mov     dword ptr [g_data_00537e8c], esi
+        mov     dword ptr [g_phaseThunkSlot8_0053a520], esi
+        mov     dword ptr [g_bootChainSlot3_00537e8c], esi
         mov     dword ptr [g_bootHeavyState_00537f78], esi
         mov     dword ptr [g_particleInitState_00541de0], esi
         mov     dword ptr [g_particleEmitterNode_00535e6c], esi

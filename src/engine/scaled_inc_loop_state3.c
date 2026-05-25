@@ -12,9 +12,9 @@ extern unsigned int g_scaledInit_00542044;
  *   set g_xformLoopCounter=3; load walk → ecx; store at [eax*4 + 0];
  *   load g_scaledInit, g_xformLoopCounter; inc both, store back; if not zero loop back.
  */
-extern unsigned int g_data_00541d70;
+extern unsigned int g_scaledIncLoopBase_00541d70;
 void ScaledIncLoopState3_0048c210(void) {
-    unsigned int p = (unsigned int)&g_data_00541d70 >> 2;
+    unsigned int p = (unsigned int)&g_scaledIncLoopBase_00541d70 >> 2;
     g_walkCallback = (void (*)(void))0;
     g_scaledInit_00542044 = p;
     g_xformLoopCounter = 3;

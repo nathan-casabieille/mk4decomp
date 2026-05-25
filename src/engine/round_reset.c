@@ -128,7 +128,7 @@ extern unsigned int g_phaseThunkSlot4_0053a6f8;
 extern unsigned int g_phaseThunkState_0053a730;
 extern unsigned int g_data_0053a788;
 extern unsigned int g_dispatchClr1_0053e34c;
-extern unsigned int g_data_00541d84;
+extern unsigned int g_installCountdownSlot2_00541d84;
 extern unsigned int g_smState4Way_00541dc8;
 extern unsigned int g_titleDemoState_00541df0;
 extern unsigned int g_titleDemoState2_00541df4;
@@ -227,7 +227,7 @@ __declspec(naked) void RoundReset_004223e0(void)
         mov      dword ptr [g_quadEntryGate_0052d724], ebx
         mov      dword ptr [g_audioBank2State_00537f98], ebx
         mov      dword ptr [g_phaseThunkState_0053a730], ebx
-        mov      dword ptr [g_data_00541d84], ebx
+        mov      dword ptr [g_installCountdownSlot2_00541d84], ebx
         mov      dword ptr [g_audioStreamState_0053a430], ebx
         mov      dword ptr [g_dispatchVar11_00537f04], ebx
         mov      dword ptr [g_dlSomeFlag1], ebx
