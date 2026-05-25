@@ -73,7 +73,7 @@ extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
-extern unsigned int g_state_0053a7b0;
+extern unsigned int g_dualBitGate_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
 
@@ -123,7 +123,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004d57ac;
-extern unsigned int g_data_0053a7b0;
+extern unsigned int g_dualBitGate_0053a7b0;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_xformEntityIdx;
@@ -184,7 +184,7 @@ __declspec(naked) void AnimEventUpdateCluster_00493ef0(void)
         mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_xformEntityIdx], eax
         mov      dword ptr [eax*4 + 0x10], ecx
-        mov      al, byte ptr [g_data_0053a7b0]
+        mov      al, byte ptr [g_dualBitGate_0053a7b0]
         test     al, bl
         jne      short L_3fef
         mov      dword ptr [g_walkCallback], ebx

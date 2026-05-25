@@ -73,7 +73,7 @@ extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
-extern unsigned int g_state_0053a7b0;
+extern unsigned int g_dualBitGate_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
 
@@ -123,7 +123,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004d57ac;
-extern unsigned int g_data_0053a7b0;
+extern unsigned int g_dualBitGate_0053a7b0;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_xformEntityIdx;
@@ -164,7 +164,7 @@ void SpecialAnimBuilder_004937b0(void) {
         cmp      eax, 0x62
         mov      dword ptr [g_eventQueueChild], eax
         jne      L_38c8
-        mov      al, byte ptr [g_data_0053a7b0]
+        mov      al, byte ptr [g_dualBitGate_0053a7b0]
         mov      ecx, 1
         test     al, cl
         jne      L_38c8

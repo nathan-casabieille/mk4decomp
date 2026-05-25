@@ -73,7 +73,7 @@ extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
-extern unsigned int g_state_0053a7b0;
+extern unsigned int g_dualBitGate_0053a7b0;
 extern unsigned int g_data_0053a770;
 extern unsigned int g_data_0053a46c;
 
@@ -137,7 +137,7 @@ extern void AndStorePushCallZero_0048a220(void);
  *   8 setup calls (DrainQueueCallEach_004a1ec0, PendingMatch_0045c8e0, Init0AndMax_00401370,
  *     g_walkCallback=0, CopyGlobal_004ac1f0, Init6Struct_00404e20, ScenegraphWalk_0041f7d0,
  *     CallPauseClear3CallTriple_00428030). If pause? ret.
- *   mstack-push 3 (0, g_eventQueueCurrent, g_eventQueueWorkType); clear g_state_0053a7b0;
+ *   mstack-push 3 (0, g_eventQueueCurrent, g_eventQueueWorkType); clear g_dualBitGate_0053a7b0;
  *   call SlideAttackEventCluster_00498900; if pause? ret. call AndStorePushCallZero_0048a220; if pause? ret.
  *   mstack-pop 3 into g_eventQueueWorkType, g_eventQueueCurrent, g_walkCallback.
  *   set g_x_00543550 = 0x100; ret.
@@ -168,7 +168,7 @@ void BootInitGuardedCallChain_004265d0(void) {
         mov     eax, dword ptr [g_state_004d57ac]
         mov     dword ptr [g_walkCallback], 0
         inc     eax
-        mov     dword ptr [g_state_0053a7b0], 0
+        mov     dword ptr [g_dualBitGate_0053a7b0], 0
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + 0], 0
         mov     eax, dword ptr [g_state_004d57ac]
