@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     pause? ret.
  *   Then: set bit 2 of g_xformDirtyFlags; if (scaledInit != 0): xor that bit off.
  */
-extern unsigned int g_data_00542a08;
+extern unsigned int g_dispatchSave32_00542a08;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 extern unsigned int g_x_0053a408;
@@ -134,7 +134,7 @@ void DirtyBitToggleDispatch_00463390(void) {
         _emit   74h
         _emit   06h
         mov     ecx, dword ptr [g_dlNalt2]
-        mov     eax, offset g_data_00542a08
+        mov     eax, offset g_dispatchSave32_00542a08
         mov     dword ptr [g_walkCallback], ecx
         shr     eax, 2
         add     eax, ecx

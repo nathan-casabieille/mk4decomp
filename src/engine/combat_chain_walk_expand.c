@@ -114,7 +114,7 @@ extern unsigned int g_data_0050cb3c;
 extern unsigned int g_data_005108dc;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_dispatchArg_00535e48;
-extern unsigned int g_data_00542a08;
+extern unsigned int g_dispatchSave32_00542a08;
 extern void DirtyDoubleDeref_00408cb0(void);
 extern void InstallSelfDispatch_00407620(void);
 extern void MStackBracket4_ListInsertZeroFill_00408600(void);
@@ -271,7 +271,7 @@ __declspec(naked) void CombatChainWalkExpand_00463870(void)
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [g_eventQueueWorkType]
         mov      dword ptr [g_fightGroupHead], ecx
-        mov      ecx, OFFSET g_data_00542a08
+        mov      ecx, OFFSET g_dispatchSave32_00542a08
         shr      ecx, 2
         mov      dword ptr [g_walkCallback], ebp
         mov      dword ptr [g_eventQueueCurrent], 0xff

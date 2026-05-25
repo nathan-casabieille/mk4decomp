@@ -492,7 +492,7 @@ extern unsigned int g_data_00535d58;
 extern unsigned int g_walkBoundsLimit_00535d60;
 extern unsigned int g_walkBoundsSlot_00535d68;
 extern unsigned int g_walkCallbackSrc2_00535db0;
-extern unsigned int g_data_00535e44;
+extern unsigned int g_dispatchSave49_00535e44;
 extern unsigned int g_data_00535e4c;
 extern unsigned int g_particleEmitterNode_00535e6c;
 extern unsigned int g_phaseTimer_00537e94;
@@ -4744,7 +4744,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         mov      dword ptr [g_audioInstall2Slot_00537eec], ebx
         mov      dword ptr [g_phaseThunkSlot5_0053a468], ebx
         mov      dword ptr [g_walkCallback], ebx
-        mov      dword ptr [g_data_00535e44], ebx
+        mov      dword ptr [g_dispatchSave49_00535e44], ebx
         call     TaggedSceneDispatch_004be690
         add      esp, 4
         call     ThrowAnimTriggerCluster_0049efa0

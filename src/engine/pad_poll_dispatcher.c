@@ -129,7 +129,7 @@ extern unsigned int g_data_004f4df8;
 extern unsigned int g_data_004f4dfc;
 extern unsigned int g_data_004f4e00;
 extern unsigned int g_data_004f4e04;
-extern unsigned int g_data_00543368;
+extern unsigned int g_dispatchSave27_00543368;
 extern unsigned int g_dispatchSave26_0054336c;
 extern unsigned int g_dispatchSave25_00543370;
 extern unsigned int g_dispatchVar39_0054357c;
@@ -257,7 +257,7 @@ __declspec(naked) void GameStateMachineMaybeRebuild(void)
         not     ecx
         not     edx
         mov     dword ptr [g_data_004d50ac], esi
-        mov     dword ptr [g_data_00543368], esi
+        mov     dword ptr [g_dispatchSave27_00543368], esi
         mov     dword ptr [g_fightTableC2], eax
         mov     dword ptr [g_fightTableC0], ecx
         mov     dword ptr [g_fightTableC1], edx

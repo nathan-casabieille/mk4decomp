@@ -125,7 +125,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 extern unsigned int g_data_004ec0c0;
 extern unsigned int g_dispatchTableArr_00500c08;
-extern unsigned int g_data_00542aac;
+extern unsigned int g_dispatchSave31_00542aac;
 extern void GuardedDirtyXformFromTable_0048f6d0(void);
 extern void GuardedPackedSlotInit_00428760(void);
 extern void GuardedSeq_00428480(void);
@@ -176,7 +176,7 @@ __declspec(naked) void Phase3PackedInstallSelf_0046ff80(void) {
         pop     esi
         ret
     L_pis_phase0:
-        push    offset g_data_00542aac
+        push    offset g_dispatchSave31_00542aac
         call    GuardedPackedSlotInit_00428760
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4

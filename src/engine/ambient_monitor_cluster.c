@@ -128,7 +128,7 @@ extern void RoundCleanupCluster_00427690(void);
 extern unsigned int g_data_004e2868;
 extern unsigned int g_data_004f29c0;
 extern unsigned int g_tickFlagF;
-extern unsigned int g_data_00535e44;
+extern unsigned int g_dispatchSave49_00535e44;
 extern unsigned int g_audioInstall2Slot_00537eec;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
@@ -283,7 +283,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         mov      dword ptr [g_audioInstall2Slot_00537eec], ebx
         mov      dword ptr [g_phaseThunkSlot5_0053a468], ebx
         mov      dword ptr [g_walkCallback], ebx
-        mov      dword ptr [g_data_00535e44], ebx
+        mov      dword ptr [g_dispatchSave49_00535e44], ebx
         call     TaggedSceneDispatch_004be690
         add      esp, 4
         call     ThrowAnimTriggerCluster_0049efa0

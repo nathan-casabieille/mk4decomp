@@ -117,12 +117,12 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   pop esi; eax = [eax*4]; ecx -= eax;
  *   g_eventQueueCurrent = eax; g_walkCallback = ecx; ret.
  */
-extern unsigned int g_data_00541ee8;
+extern unsigned int g_dispatchSave37_00541ee8;
 void CmpCondIdxArrLookup_0048e450(void) {
     unsigned int idx;
     unsigned int adj;
     unsigned int v;
-    idx = ((unsigned int)&g_data_00541ee8 >> 2) + (unsigned int)g_walkCallback * 2;
+    idx = ((unsigned int)&g_dispatchSave37_00541ee8 >> 2) + (unsigned int)g_walkCallback * 2;
     adj = 0;
     g_walkCallback = (void(*)(void))0;
     if (g_cj_0054205c != g_player1NodeIdx) {
