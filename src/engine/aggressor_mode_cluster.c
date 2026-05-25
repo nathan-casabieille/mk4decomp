@@ -128,7 +128,6 @@ extern unsigned int g_data_004ed560;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542080;
 extern unsigned int g_data_00542088;
@@ -168,7 +167,7 @@ __declspec(naked) void AggressorModeCluster_0047df30(void)
         mov      dword ptr [esi + 0x84], 0
         test     eax, eax
         je       L_e004
-        mov      dword ptr [g_data_0054206c], 3
+        mov      dword ptr [g_walkCallback], 3
         call     CmpEqInitCallElseJmp_0048d4b0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -215,14 +214,14 @@ __declspec(naked) void AggressorModeCluster_0047df30(void)
         push     OFFSET g_data_004ed550
         mov      dword ptr [ecx*4 + 0x68], 0x403
         mov      edx, dword ptr [g_data_00542060]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x74], eax
         call     StreamInitCountdownBody_00494830
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         test     eax, eax
         jne      L_e0fd
-        mov      dword ptr [g_data_0054206c], 9
+        mov      dword ptr [g_walkCallback], 9
         call     TableLookupCall_00489ff0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -233,7 +232,7 @@ __declspec(naked) void AggressorModeCluster_0047df30(void)
         add      esp, 4
         test     eax, eax
         jne      short L_e0fd
-        mov      dword ptr [g_data_0054206c], 0xf
+        mov      dword ptr [g_walkCallback], 0xf
         call     TableLookupCall_0048a130
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

@@ -130,7 +130,6 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_byteTab_004f3d80;
 extern unsigned int g_x_00542044;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_005433c4;
 extern unsigned int g_x_00543440;
 extern void GuardedSetupCallTailJmp_004a1fa0(void);
@@ -197,7 +196,7 @@ __declspec(naked) void AudioByteTable5Loop_004a8970(void)
         mov     ecx, dword ptr [esi + 0x004f3d84]
         push    eax
         push    ecx
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_x_00542044], ecx
         call    GuardedSetupCallTailJmp_004a1fa0
         mov     ecx, dword ptr [g_x_00542044]

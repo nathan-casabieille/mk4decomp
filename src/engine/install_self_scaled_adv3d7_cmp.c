@@ -133,7 +133,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0054204c;
 extern unsigned int g_x_00542054;
-extern unsigned int g_x_0054206c;
 
 __declspec(naked) void InstallSelfScaledAdv3d7Cmp_0043a830(void) {
     __asm {
@@ -147,28 +146,28 @@ __declspec(naked) void InstallSelfScaledAdv3d7Cmp_0043a830(void) {
         mov     edx, dword ptr [g_x_00542054]
         mov     eax, dword ptr [edx*4 + 0x70]
         add     eax, 0x3d7
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x70], eax
         mov     esi, dword ptr [g_x_00542054]
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     eax, dword ptr [esi*4 + 0x58]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     edx, dword ptr [edx*4 + 0x5c]
         cmp     eax, edx
         mov     dword ptr [g_data_00542070], edx
         jl      install
-        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [esi*4 + 0x6c], 0
         mov     ecx, dword ptr [g_x_00542054]
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [ecx*4 + 0x70], eax
         mov     eax, dword ptr [g_x_00542054]
-        mov     edx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0x74], edx
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     edx, dword ptr [g_x_00542054]
         mov     eax, dword ptr [ecx*4 + 0x5c]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x58], eax
         call    StackPopDispatchTagged_0041f780
         pop     esi
@@ -177,7 +176,7 @@ __declspec(naked) void InstallSelfScaledAdv3d7Cmp_0043a830(void) {
         mov     eax, dword ptr [g_x_00542054]
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     eax, dword ptr [eax*4 + 0x58]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x5c], eax
         mov     eax, dword ptr [g_x_00542054]
         mov     edx, dword ptr [g_acc_00542078]

@@ -128,7 +128,6 @@ extern unsigned int g_x_00537f24;
 extern unsigned int g_x_0053a1ac;
 extern unsigned int g_x_00541f98;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 
 void ScaledChainAccumLoop_0049cd40(void) {
     __asm {
@@ -146,7 +145,7 @@ void ScaledChainAccumLoop_0049cd40(void) {
         mov     eax, dword ptr [g_scaledInit_00542044]
         mov     ecx, eax
         mov     dword ptr [g_x_0053a1ac], 0x0000018e
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         _emit   0ebh
         _emit   05h
         mov     eax, dword ptr [g_scaledInit_00542044]
@@ -154,18 +153,18 @@ void ScaledChainAccumLoop_0049cd40(void) {
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     edx, dword ptr [g_x_00542048]
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     eax, dword ptr [edx*4 + 0]
         add     ecx, eax
         mov     eax, dword ptr [g_x_0053a1ac]
         dec     eax
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_x_0053a1ac], eax
         _emit   79h
         _emit   0c1h
         mov     eax, 0x0052ab58
         shr     eax, 2
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_x_00537f24], eax
         }
 }

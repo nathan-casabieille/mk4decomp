@@ -124,11 +124,10 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00444e00 (226b game) - mstack-push g_scaledInit + g_x_00542074; 3-stage AudioVolumeRescale
  *   cascade with bit-0 tests selecting different shifted-pointer values for tail-jmp to PendingMatch_00444ef0.
- *   Values: 0x004e5df8/0x004e5dc8/0x004e5d90/0x004e5d58 (all >>2 to g_x_0054206c).
+ *   Values: 0x004e5df8/0x004e5dc8/0x004e5d90/0x004e5d58 (all >>2 to g_walkCallback).
  */
 extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542074;
 extern void AudioVolumeRescale_004ab690(void);
 extern void PendingMatch_00444ef0(void);
@@ -145,7 +144,7 @@ __declspec(naked) void MStackPush2VolumeCascade_00444e00(void) {
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
-        mov     dword ptr [g_x_0054206c], 0x64
+        mov     dword ptr [g_walkCallback], 0x64
         call    AudioVolumeRescale_004ab690
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -160,9 +159,9 @@ __declspec(naked) void MStackPush2VolumeCascade_00444e00(void) {
         _emit   12h
         mov     eax, 0x004e5df8
         shr     eax, 2
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jmp     PendingMatch_00444ef0
-        mov     dword ptr [g_x_0054206c], 0x0000015e
+        mov     dword ptr [g_walkCallback], 0x0000015e
         call    AudioVolumeRescale_004ab690
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -171,7 +170,7 @@ __declspec(naked) void MStackPush2VolumeCascade_00444e00(void) {
         test    byte ptr [g_state_0054208c], 1
         _emit   75h
         _emit   47h
-        mov     dword ptr [g_x_0054206c], 0x00000200
+        mov     dword ptr [g_walkCallback], 0x00000200
         call    AudioVolumeRescale_004ab690
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -182,15 +181,15 @@ __declspec(naked) void MStackPush2VolumeCascade_00444e00(void) {
         _emit   13h
         mov     ecx, 0x004e5dc8
         shr     ecx, 2
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         jmp     PendingMatch_00444ef0
         mov     edx, 0x004e5d90
         shr     edx, 2
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         jmp     PendingMatch_00444ef0
         mov     eax, 0x004e5d58
         shr     eax, 2
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jmp     PendingMatch_00444ef0
         ret
     }

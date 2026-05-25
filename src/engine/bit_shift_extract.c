@@ -124,12 +124,12 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00464090 (250b game) - bit-shift extraction sequence.
  *   mstack-push g_x_00542070 and g_scaledInit_00542044. g_x_00542070=4.
- *   eax = g_data_00541fb0*4 -> g_x_0054206c; eax += g_data_00541fb8.
+ *   eax = g_data_00541fb0*4 -> g_walkCallback; eax += g_data_00541fb8.
  *   edx = g_x_0053a3c0 - 1; eax = [eax+0x0c]; eax += edx.
  *   ecx = g_x_00541fb0 + g_data_00541fb4; esi = [ecx*4]; edx = eax;
  *   shift = ((esi-2)&3)<<3; sar edx,cl; ecx = esi*8; sar eax,cl;
  *   mask to 8 bits; store edx to g_data_00535d5c and g_data_00535d10;
- *   store eax to g_x_00542070 / g_x_0054206c.
+ *   store eax to g_x_00542070 / g_walkCallback.
  *   mstack-pop pair.
  */
 extern unsigned int g_data_00535d10;
@@ -138,7 +138,6 @@ extern unsigned int g_data_00541fb4;
 extern unsigned int g_data_00541fb8;
 extern unsigned int g_x_0053a3c0;
 extern unsigned int g_x_00541fb0;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 
 __declspec(naked) void BitShiftExtract_00464090(void) {
@@ -158,13 +157,13 @@ __declspec(naked) void BitShiftExtract_00464090(void) {
         mov     edx, dword ptr [g_data_00541fb8]
         mov     dword ptr [g_x_00542070], 4
         lea     eax, [ecx*4 + 0]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         add     eax, edx
         mov     edx, dword ptr [g_x_0053a3c0]
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, dword ptr [eax*4 + 0x0c]
         dec     edx
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         add     eax, edx
         mov     edx, dword ptr [g_data_00541fb4]
         mov     dword ptr [g_scaledInit_00542044], eax
@@ -186,7 +185,7 @@ __declspec(naked) void BitShiftExtract_00464090(void) {
         mov     dword ptr [g_data_00535d10], edx
         and     eax, 0xff
         mov     dword ptr [g_x_00542070], eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     eax, dword ptr [g_state_004d57ac]
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax

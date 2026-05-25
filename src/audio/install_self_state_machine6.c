@@ -131,7 +131,6 @@ extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00543550;
 extern unsigned int g_data_00543734;
 extern unsigned int g_data_00543738;
@@ -265,7 +264,7 @@ __declspec(naked) void InstallSelfStateMachine6_004a48e0(void)
         mov      eax, 0x1f
         mov      dword ptr [edx*4 + 0x54], edi
         mov      ecx, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x30], eax
         call     MStackPushComplexCallPop_00406430
         cmp      dword ptr [g_framePauseFlag], edi

@@ -125,15 +125,14 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x00494670 (219b game) - 2-call cascade + state-based chain selection + indirect call.
  *   call ScaledLoadCmp0fJmp; if !pause: call MStackBitFlagDispatch; if !pause:
  *   pick chain from 0x0053a3e4>>2 or 0x0053a474>>2 based on g_x_0054205c==g_state_00538158;
- *   g_x_0054206c=[chain*4+0]; scaledInit=baseSel[*4+0x3c]; g_x_00542070=[scaledInit*4+0x7c];
- *   if > 3: ecx=0x4ccc, g_x_0054206c=ecx; store ecx to [chain*4+0].
+ *   g_walkCallback=[chain*4+0]; scaledInit=baseSel[*4+0x3c]; g_x_00542070=[scaledInit*4+0x7c];
+ *   if > 3: ecx=0x4ccc, g_walkCallback=ecx; store ecx to [chain*4+0].
  *   eax = baseSel[*4+0x30]; scaledInit=eax; ecx=[eax*4+0]; sub 0x60;
  *   eax = ecx + 0x004f1b28>>2; scaledInit=eax; eax=[eax*4+0]; scaledInit=eax; call eax. ret.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern void MStackBitFlagDispatch_00494750(void);
 extern void ScaledLoadCmp0fJmp_004930e0(void);
@@ -174,7 +173,7 @@ __declspec(naked) void StateChainIndirect_00494670(void) {
         mov     dword ptr [g_x_00542048], eax
         mov     ecx, dword ptr [eax*4 + 0]
         mov     edx, dword ptr [g_baseSel_00542060]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [edx*4 + 0x3c]
         mov     dword ptr [g_scaledInit_00542044], edx
         mov     edx, dword ptr [edx*4 + 0x7c]
@@ -183,7 +182,7 @@ __declspec(naked) void StateChainIndirect_00494670(void) {
         _emit   7eh
         _emit   0bh
         mov     ecx, 0x00004ccc
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0], ecx
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     eax, dword ptr [eax*4 + 0x30]
@@ -193,7 +192,7 @@ __declspec(naked) void StateChainIndirect_00494670(void) {
         sub     ecx, 0x60
         shr     eax, 2
         add     eax, ecx
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, dword ptr [eax*4 + 0]
         mov     dword ptr [g_scaledInit_00542044], eax

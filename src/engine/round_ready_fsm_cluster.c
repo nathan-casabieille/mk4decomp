@@ -155,7 +155,6 @@ extern unsigned int g_data_00535ddc;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542080;
 extern unsigned int g_data_0054208c;
 extern void ScaledMove48to58_00490720(void);
@@ -212,7 +211,7 @@ __declspec(naked) void HitReactionStateCluster_004335f0(void)
         jne      short L_3695
         cmp      dword ptr [g_data_0053a3c0], 2
         jg       short L_3695
-        mov      dword ptr [g_data_0054206c], 0x1f4
+        mov      dword ptr [g_walkCallback], 0x1f4
         call     AudioVolumeRescale_004ab690
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3897
@@ -221,7 +220,7 @@ __declspec(naked) void HitReactionStateCluster_004335f0(void)
     L_3695:
         mov      eax, dword ptr [g_data_00535ddc]
         cmp      eax, 0x10000
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jge      short L_36ae
         call     Cmp3JmpOrPushCall_004338e0
         pop      edi
@@ -253,15 +252,15 @@ __declspec(naked) void HitReactionStateCluster_004335f0(void)
         pop      esi
         ret
     L_36f2:
-        mov      dword ptr [g_data_0054206c], 0xb4
+        mov      dword ptr [g_walkCallback], 0xb4
         call     CallPauseInc_004ab670
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3897
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         mov      edx, OFFSET L_3640
         add      eax, 0x3c
         add      edx, 0x2000000
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_00542080], eax
         mov      dword ptr [esi + 8], OFFSET L_3640
         mov      ecx, dword ptr [g_data_00542060]
@@ -282,7 +281,7 @@ __declspec(naked) void HitReactionStateCluster_004335f0(void)
         ret
     L_377d:
         mov      ecx, dword ptr [g_data_00542060]
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         push     OFFSET g_data_004e49fc
         mov      dword ptr [ecx*4 + 0x74], edi
         call     QuadBlockArgInstallChain_0043a950

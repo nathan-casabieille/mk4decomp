@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0041f8f0 (194b boot) - linked-list search by bit-mask flag.
- *   Push g_x_00542074; ecx = [0x52ab3c]; edx = g_x_0054206c & g_x_00542070; g_x_0054206c = edx.
+ *   Push g_x_00542074; ecx = [0x52ab3c]; edx = g_walkCallback & g_x_00542070; g_walkCallback = edx.
  *   if (ecx == 0): bit_set_exit.
  *   loop: if ([ecx+0xd8] != 0) {
  *     g_scaledInit = ecx >> 2; g_x_00542074 = chain[g_scaledInit + 0xc];
@@ -136,7 +136,6 @@ extern unsigned int g_data_00535e7c;
  *     g_state_0054208c = (orig & ~4) | 1; ret.
  */
 extern unsigned int g_x_0052ab3c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542074;
 
@@ -150,10 +149,10 @@ void LinkedListBitMaskSearch_0041f8f0(void) {
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], edx
-        mov     edx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         and     edx, dword ptr [g_x_00542070]
         test    ecx, ecx
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         _emit   74h
         _emit   2eh
         mov     eax, [ecx + 0xd8]

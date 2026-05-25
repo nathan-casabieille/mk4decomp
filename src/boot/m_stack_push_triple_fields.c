@@ -126,7 +126,6 @@ extern unsigned int g_data_00542060;
 extern unsigned int g_data_00542088;
 extern unsigned int g_data_00542084;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_state_004d57ac;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542048;
@@ -168,7 +167,7 @@ __declspec(naked) void SelfInstallPhaseDispatch_00428990(void)
         mov     eax, dword ptr [ecx*4 + 0x24]
         mov     ecx, dword ptr [g_state_004d57ac]
         inc     ecx
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_state_004d57ac], ecx
         mov     dword ptr [ecx*4], eax
         mov     edx, dword ptr [g_data_0054205c]
@@ -178,7 +177,7 @@ __declspec(naked) void SelfInstallPhaseDispatch_00428990(void)
         mov     dword ptr [g_state_004d57ac], ecx
         mov     dword ptr [ecx*4], eax
         mov     eax, dword ptr [g_data_00542054]
-        mov     dword ptr [g_data_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [g_data_00542048], eax
         call    BootFrameSetup_00408190
         mov     eax, dword ptr [g_framePauseFlag]
@@ -188,7 +187,7 @@ __declspec(naked) void SelfInstallPhaseDispatch_00428990(void)
         mov     edx, dword ptr [g_data_0054205c]
         mov     ecx, dword ptr [eax*4]
         dec     eax
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [edx*4 + 0x28], ecx
         mov     eax, dword ptr [g_state_004d57ac]
@@ -196,7 +195,7 @@ __declspec(naked) void SelfInstallPhaseDispatch_00428990(void)
         dec     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     eax, dword ptr [g_data_0054205c]
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x24], ecx
         mov     ecx, dword ptr [g_data_0054205c]
         mov     edx, dword ptr [ecx*4 + 0x2c]
@@ -211,7 +210,7 @@ __declspec(naked) void SelfInstallPhaseDispatch_00428990(void)
         mov     dword ptr [g_data_00542044], ecx
     L_sipd3_common:
         mov     edx, dword ptr [g_data_00542080]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     eax, dword ptr [g_data_0054207c]
         mov     dword ptr [g_data_00542070], edx
         mov     dword ptr [g_data_00542050], eax

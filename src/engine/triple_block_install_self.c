@@ -131,7 +131,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_0053a238;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0054204c;
-extern unsigned int g_x_0054206c;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void DecCallPushCall_00466090(void);
 extern void DualScaledChainPush_00466000(void);
@@ -147,7 +146,7 @@ __declspec(naked) void TripleBlockInstallSelf_00465ef0(void) {
         nop
         mov     eax, dword ptr [g_data_0053a238]
         cmp     eax, 1
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   05h
         jmp     DualScaledChainPush_00466000
@@ -182,20 +181,20 @@ __declspec(naked) void TripleBlockInstallSelf_00465ef0(void) {
         dec     eax
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     edx, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [ecx*4 + 4], eax
         call    DecCallPushCall_00466090
         pop     esi
         ret
         mov     eax, dword ptr [g_data_0053a238]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    MoveStackPipeline_004660d0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         _emit   75h
         _emit   57h
         mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     edx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         lea     eax, [ecx*4 + 4]
         mov     ecx, dword ptr [ecx*4 + 4]
         mov     dword ptr [g_scaledInit_00542044], ecx

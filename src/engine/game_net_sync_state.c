@@ -133,7 +133,6 @@ extern unsigned int g_data_0053a408;
 extern unsigned int g_data_00541d88;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542054;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_0054207c;
@@ -165,11 +164,11 @@ __declspec(naked) void GameNetSyncState_0049fb70(void)
         je       L_fd46
         mov      eax, dword ptr [g_data_0053a408]
         cmp      eax, 2
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jne      L_fd46
         mov      eax, dword ptr [g_data_00541d88]
         cmp      eax, esi
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jne      L_fd46
         mov      eax, dword ptr [g_data_00537f88]
         mov      dword ptr [g_data_0054207c], esi
@@ -192,7 +191,7 @@ __declspec(naked) void GameNetSyncState_0049fb70(void)
     L_fc0c:
         push     0x15
         push     OFFSET g_const_004a0060
-        mov      dword ptr [g_data_0054206c], ebx
+        mov      dword ptr [g_walkCallback], ebx
         mov      dword ptr [g_data_00541d88], ebx
         call     SetWalkCurCallPauseDirty_00404c70
         add      esp, 8
@@ -226,7 +225,7 @@ __declspec(naked) void GameNetSyncState_0049fb70(void)
         cmp      edx, eax
         je       short L_fd46
     L_fc9e:
-        mov      dword ptr [g_data_0054206c], esi
+        mov      dword ptr [g_walkCallback], esi
         call     BitSetByIndex_004a07a0
         cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_fd46
@@ -247,7 +246,7 @@ __declspec(naked) void GameNetSyncState_0049fb70(void)
         mov      dword ptr [g_data_00542054], esi
         call     SetWalkCurCallPauseDirty_00404c70
         add      esp, 8
-        mov      dword ptr [g_data_0054206c], ebx
+        mov      dword ptr [g_walkCallback], ebx
         mov      dword ptr [g_data_00541d88], ebx
         pop      esi
         pop      ebx
@@ -264,7 +263,7 @@ __declspec(naked) void GameNetSyncState_0049fb70(void)
         push     OFFSET g_const_004a10d0
         call     SetWalkCurCallPauseDirty_00404c70
         add      esp, 8
-        mov      dword ptr [g_data_0054206c], ebx
+        mov      dword ptr [g_walkCallback], ebx
         mov      dword ptr [g_data_00541d88], ebx
         pop      esi
         pop      ebx

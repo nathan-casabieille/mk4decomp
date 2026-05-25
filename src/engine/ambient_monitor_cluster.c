@@ -156,7 +156,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_0054208c;
 extern unsigned int g_data_005433ec;
@@ -250,7 +249,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         jne      L_e1aa
         test     byte ptr [g_data_0054208c], 1
         jne      L_e010
-        mov      dword ptr [g_data_0054206c], 1
+        mov      dword ptr [g_walkCallback], 1
         mov      dword ptr [g_data_0053a408], 1
     L_e010:
         call     AmbientMonitorCluster_0049e3c0
@@ -265,7 +264,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         je       L_e0fc
         mov      eax, dword ptr [g_data_00537e88]
         cmp      eax, 2
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       L_e0fc
     L_e05e:
         cmp      dword ptr [g_data_00543714], ebx
@@ -309,7 +308,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         push     eax
         mov      dword ptr [g_data_00537eec], ebx
         mov      dword ptr [g_data_0053a468], ebx
-        mov      dword ptr [g_data_0054206c], ebx
+        mov      dword ptr [g_walkCallback], ebx
         mov      dword ptr [g_data_00535e44], ebx
         call     TaggedSceneDispatch_004be690
         add      esp, 4

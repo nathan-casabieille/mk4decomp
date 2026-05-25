@@ -126,7 +126,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_005012b0;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542054;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542084;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void InstallSelfWithSibling_00475490(void);
@@ -148,7 +147,7 @@ void TripleThunkInstallBody_004551f0(void) {
         _emit   90h
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     eax, 0x13
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    0x004554c0
         mov     dword ptr [ecx*4 + 0x28], eax
         mov     eax, dword ptr [g_cj_0054205c]
@@ -159,7 +158,7 @@ void TripleThunkInstallBody_004551f0(void) {
         mov     eax, 0xffffd99a
         mov     dword ptr [edx*4 + 0x4c], 0x28f
         mov     ecx, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x70], eax
         call    StoreLoadJmp_00404ef0
         add     esp, 4

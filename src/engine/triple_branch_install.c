@@ -126,13 +126,12 @@ extern unsigned int g_data_00535e7c;
  *   esi = base*4; snapshot [esi+0x84], clear.
  *   if (snap == 0): go to setup path; if (snap == 1): skip first call; else: call F1 (PopDispatch); ret.
  *   Setup: call F2 (~0x406ba0); pause? ret;
- *   chain[g_x_0054205c+0x28] = 0; g_x_0054206c = 0; call F3 (~0x4285c0); pause? ret;
+ *   chain[g_x_0054205c+0x28] = 0; g_walkCallback = 0; call F3 (~0x4285c0); pause? ret;
  *   if (208c & 4): install with [esi+0x84]=1 (via eax); else: install with [esi+0x84]=2 (const).
  *   Both paths: g_x_0054204c = 1; g_framePauseFlag = 1.
  */
 extern unsigned int g_x_0054204c;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern void CopyJmp_00406ba0(void);
 extern void ScaledArrStore_004285c0(void);
 
@@ -164,7 +163,7 @@ __declspec(naked) void TripleBranchInstall_004283b0(void) {
         _emit   00h
         _emit   00h
         mov     ecx, dword ptr [g_x_0054205c]
-        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [ecx*4 + 0x28], 0
         call    ScaledArrStore_004285c0
         mov     eax, dword ptr [g_framePauseFlag]

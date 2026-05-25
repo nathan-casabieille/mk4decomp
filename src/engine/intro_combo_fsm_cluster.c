@@ -131,7 +131,6 @@ extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_0054208c;
 extern void AudioVolumeRescale_004ab690(void);
@@ -155,7 +154,7 @@ __declspec(naked) void IntroComboFsmCluster_00467800(void)
         jne      L_78a1
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, 0x91
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x30], eax
         call     MStackCall_00406340
         mov      eax, dword ptr [g_framePauseFlag]
@@ -164,17 +163,17 @@ __declspec(naked) void IntroComboFsmCluster_00467800(void)
         mov      edx, dword ptr [g_data_00542048]
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, dword ptr [edx*4 + 0x3c]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x54], eax
         mov      edx, dword ptr [g_data_00542048]
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, dword ptr [edx*4 + 0x40]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x58], eax
         mov      edx, dword ptr [g_data_00542048]
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, dword ptr [edx*4 + 0x44]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x5c], eax
     L_78a1:
         ret
@@ -280,7 +279,7 @@ __declspec(naked) void IntroComboFsmCluster_00467800(void)
         mov      ebx, 1
         test     al, 4
         jne      L_7a5f
-        mov      dword ptr [g_data_0054206c], 0x190
+        mov      dword ptr [g_walkCallback], 0x190
         call     AudioVolumeRescale_004ab690
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -332,7 +331,7 @@ __declspec(naked) void IntroComboFsmCluster_00467800(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7c07
-        mov      dword ptr [g_data_0054206c], 3
+        mov      dword ptr [g_walkCallback], 3
         call     ChainDirtyBitWalker_00408c10
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -352,7 +351,7 @@ __declspec(naked) void IntroComboFsmCluster_00467800(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7c07
-        mov      dword ptr [g_data_0054206c], 3
+        mov      dword ptr [g_walkCallback], 3
         call     ChainDirtyBitWalker_00408c10
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

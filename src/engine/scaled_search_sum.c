@@ -126,7 +126,7 @@ extern unsigned int g_data_00535e7c;
  *   Save g_x_00542070 to [esp+0xc]. ebp = g_x_0054204c (offset).
  *   eax = chain[ebp]; edx = &chain[ebp]; ecx=0; edi=0; esi=0.
  *   if (chain[ebp] == 0) skip-loop.
- *   else: ebx = g_x_0054206c (target value).
+ *   else: ebx = g_walkCallback (target value).
  *     loop_outer: ecx = chain[edx+4]; edx += 4; esi++.
  *       if (ebx < eax || ebx > ecx) { edx += 4; ecx -= eax; esi++; eax = [edx];
  *         edi += ecx + 1; g_x_00542070 = eax;
@@ -140,7 +140,6 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_0054204c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542078;
 
@@ -165,7 +164,7 @@ __declspec(naked) void ScaledSearchSum_00457830(void) {
         mov     dword ptr [g_x_00542070], eax
         _emit   74h
         _emit   2ch
-        mov     ebx, dword ptr [g_x_0054206c]
+        mov     ebx, dword ptr [g_walkCallback]
         mov     ecx, [edx + 4]
         add     edx, 4
         inc     esi

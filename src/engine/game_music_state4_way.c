@@ -130,7 +130,6 @@ extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern void GuardedSelfRefSet_0048d070(void);
 extern void MStackBitLoopTripleCall_0049cc30(void);
@@ -141,7 +140,7 @@ __declspec(naked) void GameMusicState4Way_00426d90(void)
 {
     __asm {
         /* H1: trampoline */
-        mov      dword ptr [g_data_0054206c], 0x23c
+        mov      dword ptr [g_walkCallback], 0x23c
         jmp      MStackBitLoopTripleCall_0049cc30
         nop
         /* H2 (L_6da0): 4-state FSM */
@@ -167,7 +166,7 @@ __declspec(naked) void GameMusicState4Way_00426d90(void)
         mov      ecx, dword ptr [eax*4]
         inc      eax
         test     ecx, ecx
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_00542054], eax
         jne      short L_6e34
         mov      edx, OFFSET g_data_004e2670
@@ -178,7 +177,7 @@ __declspec(naked) void GameMusicState4Way_00426d90(void)
         mov      ecx, dword ptr [eax*4]
         inc      eax
         test     ecx, ecx
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_00542054], eax
         je       short L_6e16
     L_6e34:
@@ -201,7 +200,7 @@ __declspec(naked) void GameMusicState4Way_00426d90(void)
         pop      esi
         ret
     L_6e91:
-        mov      dword ptr [g_data_0054206c], 0xd999
+        mov      dword ptr [g_walkCallback], 0xd999
         call     SetJmp_00405420
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

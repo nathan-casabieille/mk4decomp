@@ -124,14 +124,13 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0044c430 (241b game) - 4-field copy from scaledInit chain to chain via cj alias.
  *   Set cj = baseSel[+0x4c]; call MStackPush2RunCountdown_004089e0; if pause? ret.
- *   g_x_0054206c=2; call BootStateTriple_00408d30; if pause? ret.
+ *   g_walkCallback=2; call BootStateTriple_00408d30; if pause? ret.
  *   Then for k in {0, 0x30, 0x34, 0x38}: copy scaledInit[k] to g_x_00542048[k]
  *     (first iteration also OR's al with 4).
- *   Then call MStackBracket7_DispatchAndChain_004b8fa0; if !pause: g_x_0054206c=3, g_x_00542078=2, tail-jmp GuardedSeq_00473ef0; ret.
+ *   Then call MStackBracket7_DispatchAndChain_004b8fa0; if !pause: g_walkCallback=3, g_x_00542078=2, tail-jmp GuardedSeq_00473ef0; ret.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542078;
 extern void BootStateTriple_00408d30(void);
 extern void GuardedSeq_00473ef0(void);
@@ -150,7 +149,7 @@ __declspec(naked) void CjFieldCopyCascade_0044c430(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     dword ptr [g_x_0054206c], 2
+        mov     dword ptr [g_walkCallback], 2
         call    BootStateTriple_00408d30
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -166,29 +165,29 @@ __declspec(naked) void CjFieldCopyCascade_0044c430(void) {
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, dword ptr [ecx*4 + 0]
         or      al, 4
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0], eax
         mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     edx, dword ptr [g_x_00542048]
         mov     eax, dword ptr [ecx*4 + 0x30]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x30], eax
         mov     eax, dword ptr [g_scaledInit_00542044]
         mov     ecx, dword ptr [g_x_00542048]
         mov     eax, dword ptr [eax*4 + 0x34]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x34], eax
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     ecx, dword ptr [g_x_00542048]
         mov     eax, dword ptr [edx*4 + 0x38]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x38], eax
         call    MStackBracket7_DispatchAndChain_004b8fa0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         _emit   75h
         _emit   19h
-        mov     dword ptr [g_x_0054206c], 3
+        mov     dword ptr [g_walkCallback], 3
         mov     dword ptr [g_x_00542078], 2
         jmp     GuardedSeq_00473ef0
         ret

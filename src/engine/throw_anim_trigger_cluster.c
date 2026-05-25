@@ -134,7 +134,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern void CallSetPause_0041f830(void);
 extern void GameStateTick_0049f1f0(void);
@@ -188,17 +187,17 @@ __declspec(naked) void ThrowAnimTriggerCluster_0049efa0(void)
         test     eax, eax
         jne      short L_f183
         mov      ecx, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_0054206c], 0
+        mov      dword ptr [g_walkCallback], 0
         mov      dword ptr [ecx*4 + 0x54], 0
         mov      eax, dword ptr [g_data_00542044]
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         mov      dword ptr [eax*4 + 0x58], edx
         mov      edx, dword ptr [g_data_00542044]
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      eax, 6
         mov      dword ptr [edx*4 + 0x5c], ecx
         mov      ecx, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x30], eax
         call     MStackCall_00406340
         mov      eax, dword ptr [g_framePauseFlag]
@@ -219,7 +218,7 @@ __declspec(naked) void ThrowAnimTriggerCluster_0049efa0(void)
         mov      eax, 0xffff8000
         mov      dword ptr [ecx*4 + 0x58], 0
         mov      edx, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x5c], eax
         mov      ecx, dword ptr [g_data_0054204c]
         mov      eax, dword ptr [g_data_00542044]
@@ -259,7 +258,7 @@ __declspec(naked) void ThrowAnimTriggerCluster_0049efa0(void)
         /* === Helper 2: flag-gated 535e48=0 trampoline === */
         mov      eax, dword ptr [g_data_00541d88]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       short L_f1a3
         jmp      CallSetPause_0041f830
     L_f1a3:
@@ -282,7 +281,7 @@ __declspec(naked) void ThrowAnimTriggerCluster_0049efa0(void)
         /* === Helper 3: flag-gated 535e48=1 trampoline === */
         mov      eax, dword ptr [g_data_00537ea8]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       short L_f1d3
         jmp      CallSetPause_0041f830
     L_f1d3:

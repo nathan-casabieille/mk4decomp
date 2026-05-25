@@ -134,7 +134,6 @@ extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054207c;
 extern void CallSetPause_0041f830(void);
 extern void LinkedListFieldAdd_0049d450(void);
@@ -166,7 +165,7 @@ __declspec(naked) void Phase4InitWithChainCallback_0040e860(void)
         mov     eax, offset g_data_004d62e8
         mov     dword ptr [g_data_00542054], edx
         shr     eax, 2
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_data_0053813c], eax
         mov     eax, offset g_data_004d62a8
         mov     dword ptr [g_data_0054207c], 0xC1
@@ -226,7 +225,7 @@ __declspec(naked) void Phase4InitWithChainCallback_0040e860(void)
         mov     edx, dword ptr [g_data_0054205c]
         mov     eax, 0x5C
         mov     dword ptr [g_data_00542048], ecx
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x30], eax
         mov     eax, dword ptr [g_data_0054205c]
         mov     dword ptr [g_data_00542044], eax
@@ -239,17 +238,17 @@ __declspec(naked) void Phase4InitWithChainCallback_0040e860(void)
         test    eax, eax
         jne     L_p4iwcc_B_exit
         mov     dword ptr [g_data_0054207c], 0x2E14
-        mov     dword ptr [g_data_0054206c], 0x4CCC
+        mov     dword ptr [g_walkCallback], 0x4CCC
         call    StoreDoubleNegPauseSubStore_004ab750
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4iwcc_B_exit
-        mov     eax, dword ptr [g_data_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     ecx, dword ptr [g_data_0054207c]
         add     eax, 0x10000
         push    ecx
         push    eax
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    Mul10Tail_00404af0
         mov     edx, dword ptr [g_data_00542048]
         add     esp, 8
@@ -262,7 +261,7 @@ __declspec(naked) void Phase4InitWithChainCallback_0040e860(void)
         mov     edx, dword ptr [g_data_0054205c]
         add     esp, 8
         inc     ecx
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_data_00542048], ecx
         mov     dword ptr [edx*4 + 0x70], eax
         mov     eax, dword ptr [g_data_00542048]
@@ -274,14 +273,14 @@ __declspec(naked) void Phase4InitWithChainCallback_0040e860(void)
         mov     ecx, dword ptr [g_data_00542048]
         add     esp, 8
         inc     ecx
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_data_00542048], ecx
         call    MStackPushNegMul10Var_0040a730
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4iwcc_B_exit
         mov     eax, dword ptr [g_data_0054205c]
-        mov     ecx, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0x6C], ecx
         mov     edx, dword ptr [g_data_0054205c]
         mov     eax, dword ptr [g_data_00542070]
@@ -296,7 +295,7 @@ __declspec(naked) void Phase4InitWithChainCallback_0040e860(void)
         add     eax, 0x4B5C2
         mov     dword ptr [g_data_00542048], ecx
         mov     dword ptr [g_data_0053813c], ecx
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x44], eax
         mov     edx, dword ptr [g_data_00542044]
         mov     eax, dword ptr [edx*4 + 0x28]
@@ -310,7 +309,7 @@ __declspec(naked) void Phase4InitWithChainCallback_0040e860(void)
         mov     eax, 0x0040E840
         mov     dword ptr [ecx*4 + 0x14], 0xFF
         mov     edx, dword ptr [g_data_00542048]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x10], eax
         mov     eax, dword ptr [g_data_00542044]
         mov     edx, dword ptr [g_data_0054205c]

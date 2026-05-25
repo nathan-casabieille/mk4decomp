@@ -146,7 +146,7 @@ extern void InstallSelfThresholdDispatch_0047e310(void);
  *     install Self body at [esi+8], slot[+0x84]=1, arms 0x541e6c. Phase 1 →
  *     CmpEqInitCallElseJmp_0048d4b0, on no-error: if bit 0 of 0x54208c set
  *     tail-call TriPhaseDualPathInstallChain_0047e420; else call TailJmpInstallSelfPair_0047e690.
- *     If g_data_0054206c < 0x26666 (threshold) tail-installs Self.
+ *     If g_walkCallback < 0x26666 (threshold) tail-installs Self.
  *     Else chains ScaledAndAldf_00490330 → EsiEdiAliasDualMul10_004906b0,
  *     writes 0x28f into [g_data_0054205c*4+0x4c], calls
  *     InstallSelfThresholdDispatch_0047e310.
@@ -155,7 +155,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern void ArgSarStoreJmp_004594f0(void);
 
@@ -163,7 +162,7 @@ __declspec(naked) void Alarm3EntryPhaseChain_0047e1a0(void) {
     __asm {
         mov     ecx, dword ptr [g_data_00542060]
         mov     eax, 0x1012
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
         call    MStackPushSet0008_004901a0
         mov     eax, dword ptr [g_framePauseFlag]
@@ -194,7 +193,7 @@ __declspec(naked) void Alarm3EntryPhaseChain_0047e1a0(void) {
         mov     dword ptr [eax*4 + 0x68], 0x402
         mov     ecx, dword ptr [g_data_00542060]
         mov     eax, 0x201
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
         call    MStackPushSet0020_004901d0
         mov     eax, dword ptr [g_framePauseFlag]
@@ -230,7 +229,7 @@ __declspec(naked) void Alarm3EntryPhaseChain_0047e1a0(void) {
         mov     dword ptr [esi + 0x84], 0
         test    eax, eax
         je      L_a3e_installPhase0
-        mov     dword ptr [g_data_0054206c], 2
+        mov     dword ptr [g_walkCallback], 2
         call    CmpEqInitCallElseJmp_0048d4b0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -246,20 +245,20 @@ __declspec(naked) void Alarm3EntryPhaseChain_0047e1a0(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a3e_doneNoPop
-        cmp     dword ptr [g_data_0054206c], 0x26666
+        cmp     dword ptr [g_walkCallback], 0x26666
         jl      short L_a3e_installPhase0
         call    ScaledAndAldf_00490330
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a3e_doneNoPop
-        mov     dword ptr [g_data_0054206c], 0x4ccc
+        mov     dword ptr [g_walkCallback], 0x4ccc
         call    EsiEdiAliasDualMul10_004906b0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a3e_doneNoPop
         mov     ecx, dword ptr [g_data_0054205c]
         mov     eax, 0x28f
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x4c], eax
         call    InstallSelfThresholdDispatch_0047e310
         pop     esi

@@ -151,7 +151,6 @@ extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ScaledDecBranch_00466460(void);
@@ -182,7 +181,7 @@ __declspec(naked) void FourEntryAlarmInstall_004662e0(void) {
         mov     ecx, dword ptr [g_data_0054205c]
         mov     eax, offset g_data_00501838
         sar     eax, 2
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    offset g_data_004ea9d8
         mov     dword ptr [ecx*4 + 0x24], eax
         call    ArgSarStoreJmp_004594f0
@@ -213,7 +212,7 @@ __declspec(naked) void FourEntryAlarmInstall_004662e0(void) {
         push    0x267
         mov     eax, dword ptr [ecx*4 + 0x30]
         cmp     eax, 1
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jne     short L_fea2_install
         call    TripleStageRollback_00404a50
         add     esp, 4

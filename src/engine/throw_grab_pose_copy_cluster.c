@@ -129,14 +129,13 @@ extern void InstallSelfStateMachine_0047f3f0(void);
 /* @addr 0x0047f1a0 (309b game) - 4-state install-self with common merge tail.
  *   Load state at [base*4+0x84]; clear. state==0: cmp g_state_00542088 with 1, if eq tail-call ThrowGrabPoseCopyCluster_0047f4e0;
  *     else install-self at entry+0x01000000, jmp merge.
- *   state==1: g_x_0054206c=0x5e; call ScaledLitLoadCall; if pause ret. Install at entry+0x02000000; jmp merge.
- *   state==2: g_x_0054206c=0x5f; call ScaledLitLoadCall; if pause ret. Install at entry+0x03000000; jmp merge.
+ *   state==1: g_walkCallback=0x5e; call ScaledLitLoadCall; if pause ret. Install at entry+0x02000000; jmp merge.
+ *   state==2: g_walkCallback=0x5f; call ScaledLitLoadCall; if pause ret. Install at entry+0x03000000; jmp merge.
  *   state>=3: tail-call InstallSelfThreeStateScaledLoad; pop edi/esi; ret.
  *   Merge: [scaledInit*4]=edx; inc scaledInit; chain[esi+4]=scaledInit;
  *     [baseSel*4+0x84]=0; call InstallSelfStateMachine; pause=1; pop edi/esi; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern void ScaledLitLoadCall_00480fe0(void);
 
 __declspec(naked) void Install4StateMerge_0047f1a0(void) {
@@ -165,7 +164,7 @@ __declspec(naked) void Install4StateMerge_0047f1a0(void) {
         pop     edi
         pop     esi
         ret
-        mov     dword ptr [g_x_0054206c], 0x5f
+        mov     dword ptr [g_walkCallback], 0x5f
         call    ScaledLitLoadCall_00480fe0
         cmp     dword ptr [g_pause_00541e6c], edi
         _emit   0fh
@@ -186,7 +185,7 @@ __declspec(naked) void Install4StateMerge_0047f1a0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     dword ptr [g_x_0054206c], 0x5e
+        mov     dword ptr [g_walkCallback], 0x5e
         call    ScaledLitLoadCall_00480fe0
         cmp     dword ptr [g_pause_00541e6c], edi
         _emit   0fh

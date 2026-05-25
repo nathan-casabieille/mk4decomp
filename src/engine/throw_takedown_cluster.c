@@ -145,7 +145,6 @@ extern unsigned int g_data_004d57ac;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern void ArgSarStoreJmp_004594f0(void);
 
 __declspec(naked) void MoveSelectorCluster_0047d9a0(void)
@@ -154,14 +153,14 @@ __declspec(naked) void MoveSelectorCluster_0047d9a0(void)
         /* === Main: move-selector dispatch === */
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, 0x1010
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x74], eax
         call     ScaledZero44_00491500
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_dac7
         mov      dword ptr [g_data_00537e94], 5
-        mov      dword ptr [g_data_0054206c], 0x8000
+        mov      dword ptr [g_walkCallback], 0x8000
         mov      dword ptr [g_data_00542070], 0
         call     Wrapper_0048ff30
         mov      eax, dword ptr [g_framePauseFlag]
@@ -176,15 +175,15 @@ __declspec(naked) void MoveSelectorCluster_0047d9a0(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      eax, dword ptr [edx*4 + 0x34]
         cmp      eax, 0x10
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jne      short L_da34
         mov      eax, 2
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
     L_da34:
         cmp      eax, 0x11
         jne      short L_da43
         mov      eax, 7
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
     L_da43:
         cmp      eax, 7
         jne      short L_da5b
@@ -192,7 +191,7 @@ __declspec(naked) void MoveSelectorCluster_0047d9a0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_dac7
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
     L_da5b:
         cmp      eax, 0xe
         jne      short L_da73
@@ -200,7 +199,7 @@ __declspec(naked) void MoveSelectorCluster_0047d9a0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_dac7
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
     L_da73:
         cmp      eax, 0xc
         jne      short L_da8b
@@ -208,7 +207,7 @@ __declspec(naked) void MoveSelectorCluster_0047d9a0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_dac7
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
     L_da8b:
         cmp      eax, 9
         jne      short L_da9e

@@ -128,14 +128,13 @@ extern unsigned int g_data_00535e7c;
  *   Block C (+0x4c): same as A but inlined (no jmp), then jmp PendingMatch_0045e640 at end.
  */
 extern unsigned int g_state_0053a51c;
-extern unsigned int g_x_0054206c;
 extern void PendingMatch_0045e640(void);
 
 __declspec(naked) void TripleEntryGate_0045e5d0(void) {
     __asm {
         mov     eax, dword ptr [g_state_00535ddc]
         cmp     eax, 0x00010000
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   0dh
         mov     eax, dword ptr [g_state_0054208c]
@@ -158,7 +157,7 @@ __declspec(naked) void TripleEntryGate_0045e5d0(void) {
         _emit   90h
         mov     eax, dword ptr [g_state_0053a51c]
         cmp     eax, 8
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   0dh
         mov     eax, dword ptr [g_state_0054208c]
@@ -167,7 +166,7 @@ __declspec(naked) void TripleEntryGate_0045e5d0(void) {
         ret
         mov     eax, dword ptr [g_state_00535ddc]
         cmp     eax, 0x00010000
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   0dh
         mov     eax, dword ptr [g_state_0054208c]

@@ -132,7 +132,6 @@ extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CinematicCFsmCluster_004884a0(void);
 extern void FlagThunk4EntryDispatcher_0040a470(void);
@@ -148,7 +147,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         /* === Helper 1 (0x488210): set 0x83 + push 488250 continuation === */
         mov      ecx, dword ptr [g_data_0054205c]
         mov      eax, 0x83
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x4c], eax
         mov      eax, dword ptr [g_data_004d57ac]
         inc      eax
@@ -193,14 +192,14 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         pop      esi
         ret
     L_82ab:
-        mov      dword ptr [g_data_0054206c], 0x40
+        mov      dword ptr [g_walkCallback], 0x40
         call     TableLookupCall_00489ff0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_8361
         mov      ecx, dword ptr [g_data_0054205c]
         mov      eax, 0xffffff7d
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x4c], eax
         mov      dword ptr [esi + 8], OFFSET L_8250
         mov      edx, dword ptr [g_data_00542060]
@@ -252,7 +251,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         je       short L_83be
         mov      ecx, dword ptr [g_data_0054205c]
         mov      eax, 0xf5c
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x4c], eax
         mov      eax, dword ptr [g_data_004d57ac]
         inc      eax
@@ -264,7 +263,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         mov      ecx, 0xffffee15
         mov      dword ptr [edx*4 + 0x74], 0x1002
         mov      edx, dword ptr [g_data_0054205c]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [edx*4 + 0x4c], ecx
         mov      ecx, 1
         mov      dword ptr [eax + 8], OFFSET L_8370
@@ -313,7 +312,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         nop
         nop
         /* === Helper 6: 0xf event + jmp 004884a0 === */
-        mov      dword ptr [g_data_0054206c], 0xf
+        mov      dword ptr [g_walkCallback], 0xf
         call     FlagThunk4EntryDispatcher_0040a470
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -324,7 +323,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         nop
         nop
         /* === Helper 7: 9 event + jmp 004884a0 === */
-        mov      dword ptr [g_data_0054206c], 9
+        mov      dword ptr [g_walkCallback], 9
         call     FlagThunk4EntryDispatcher_0040a470
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

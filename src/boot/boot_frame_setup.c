@@ -132,7 +132,7 @@ extern void PendingMatch_00484da0(void);
 extern void Wrapper_00484d90(void);
 
 /* @addr 0x00484b70 (284b game) - 5 adjacent dispatch blocks.
- *   B1 (0..0x24, +11 NOPs): mstack-push 0x00470480 with g_x_0054206c=2; tail-jmp
+ *   B1 (0..0x24, +11 NOPs): mstack-push 0x00470480 with g_walkCallback=2; tail-jmp
  *     MstackPopScaledChainPlusThunks_00471250.
  *   B2 (0x30..0x4b, +4 NOPs): call ScaledAndAl7f_004902f0; if !pause: push 0x004ee8f8,
  *     tail-call ArgSarStoreJmp.
@@ -148,7 +148,6 @@ extern void Wrapper_00484d90(void);
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void DualBlockInstallSelfWithSibling_00484c90(void);
 extern void GateDispatch6c_00494580(void);
@@ -157,7 +156,7 @@ extern void MstackPopScaledChainPlusThunks_00471250(void);
 __declspec(naked) void FiveBlockDispatchChain_00484b70(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     dword ptr [g_x_0054206c], 2
+        mov     dword ptr [g_walkCallback], 2
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         _emit   0c7h
@@ -197,7 +196,7 @@ __declspec(naked) void FiveBlockDispatchChain_00484b70(void) {
         nop
         nop
         mov     eax, 0x00500698
-        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         shr     eax, 2
         mov     dword ptr [g_x_00542048], eax
         call    BootFrameSetup_00408190

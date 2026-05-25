@@ -128,7 +128,7 @@ extern unsigned int g_data_00535e7c;
  *     if paused: ret. Snapshot g_x_00542044 → g_x_00542054; g_x_00542048 → g_x_00542050;
  *     g_cj_00542058 = (0x005420e8 >> 2); g_state_0054207c = 0xc1; push (0xc0, 0x0049db40);
  *     call StoreTwoCall. If al bit 0: tail-jmp MStackPop8. Else call MStackPushCallPop;
- *     if paused: ret. Three iterations: g_x_0054206c = stream[++cursor]; chain[+0x44/+0x48/+0x4c] = it.
+ *     if paused: ret. Three iterations: g_walkCallback = stream[++cursor]; chain[+0x44/+0x48/+0x4c] = it.
  *     g_x_00542050++. Tail-jmp MStackPop8.
  */
 extern unsigned int g_data_005420e8;
@@ -137,7 +137,6 @@ extern unsigned int g_x_00542044;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_00542050;
 extern unsigned int g_x_00542054;
-extern unsigned int g_x_0054206c;
 extern void MStackPop8_004ab860(void);
 extern void MStackPush8_004ab790(void);
 extern void MStackPushCallPop_0040a830(void);
@@ -179,21 +178,21 @@ __declspec(naked) void BootSetJmpStoreThenChainTriple_0040b970(void)
         mov     eax, dword ptr [g_x_00542050]
         mov     ecx, dword ptr [g_x_00542044]
         mov     eax, dword ptr [eax*4]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x44], eax
         mov     eax, dword ptr [g_x_00542050]
         mov     edx, dword ptr [g_x_00542044]
         inc     eax
         mov     dword ptr [g_x_00542050], eax
         mov     eax, dword ptr [eax*4]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x48], eax
         mov     eax, dword ptr [g_x_00542050]
         mov     ecx, dword ptr [g_x_00542044]
         inc     eax
         mov     dword ptr [g_x_00542050], eax
         mov     eax, dword ptr [eax*4]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x4c], eax
         inc     dword ptr [g_x_00542050]
     L_b970_pop8:

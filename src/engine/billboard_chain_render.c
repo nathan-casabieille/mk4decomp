@@ -125,7 +125,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004f6238;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_007af92c;
 extern unsigned int g_data_007af958;
 extern unsigned int g_data_007af95a;
@@ -199,7 +198,7 @@ __declspec(naked) void BillboardChainRender_004bb030(void)
     L_b0b9:
         mov      eax, dword ptr [edi*4 + 0xc]
         cmp      eax, ebx
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       L_b233
         mov      edx, dword ptr [eax*4 + 4]
         mov      dword ptr [g_data_00542048], edx

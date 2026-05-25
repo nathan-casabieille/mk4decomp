@@ -135,7 +135,6 @@ extern unsigned int g_x_004d5320;
 extern unsigned int g_x_0053a1ac;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_0054204c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542098;
 
@@ -169,11 +168,11 @@ loop_004251fd:
         setle   dl
         test    eax, eax
         mov     dword ptr [g_x_00542098], edx
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         _emit   7ch
         _emit   0ch
         mov     ecx, dword ptr [g_data_004d5328]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         test    edx, edx
         _emit   75h
         _emit   07h

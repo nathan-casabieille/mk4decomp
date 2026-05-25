@@ -131,7 +131,6 @@ extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542088;
 extern unsigned int g_data_00542094;
 extern void CallPauseJmpThenSetChild_00497b10(void);
@@ -160,7 +159,7 @@ __declspec(naked) void PostStepDispatcher_00497790(void)
         mov      ecx, dword ptr [ecx*4 + 0x18]
         mov      dword ptr [g_data_00542044], ecx
         mov      ecx, dword ptr [ecx*4 + 0x20]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         and      ecx, 0x2000
         mov      dword ptr [g_data_00542094], ecx
         je       L_77f4
@@ -169,17 +168,17 @@ __declspec(naked) void PostStepDispatcher_00497790(void)
         pop      esi
         ret      
     L_77f4:
-        mov      dword ptr [g_data_0054206c], 0x168
+        mov      dword ptr [g_walkCallback], 0x168
         mov      ecx, dword ptr [eax + 0x70]
         add      ecx, 0x168
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [eax + 0x70], ecx
         mov      ecx, dword ptr [eax + 0x58]
         mov      esi, dword ptr [g_data_00542054]
         sub      ecx, 0x1999
         dec      esi
         test     ecx, ecx
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_00542054], esi
         jge      L_783e
         mov      edx, esi
@@ -190,7 +189,7 @@ __declspec(naked) void PostStepDispatcher_00497790(void)
     L_783e:
         mov      ecx, 0xffffe667
         mov      dword ptr [eax + 0x70], 0xfffff0a4
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [eax + 0x58], ecx
         mov      eax, dword ptr [g_data_0054205c]
         lea      edx, [eax + 0x15]
@@ -216,26 +215,26 @@ __declspec(naked) void PostStepDispatcher_00497790(void)
         ret      
     L_78a7:
         mov      eax, dword ptr [g_data_0054205c]
-        mov      dword ptr [g_data_0054206c], 0x1999
+        mov      dword ptr [g_walkCallback], 0x1999
         lea      esi, [eax*4]
         call     StoreDoubleNegPauseSubStore_004ab750
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_793c
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [esi + 0x6c], ecx
-        mov      dword ptr [g_data_0054206c], 0x1999
+        mov      dword ptr [g_walkCallback], 0x1999
         call     StoreDoubleNegPauseSubStore_004ab750
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_793c
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         mov      eax, 0x28f
         mov      dword ptr [esi + 0x74], edx
         mov      dword ptr [esi + 0x70], 0xffffdc29
         mov      dword ptr [esi + 0x80], 0x4ccc
         mov      dword ptr [esi + 0x7c], eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [esi + 0x78], eax
         mov      dword ptr [g_data_00542054], 0x5a
     L_7920:
@@ -280,7 +279,7 @@ __declspec(naked) void PostStepDispatcher_00497790(void)
         pop      esi
         ret      
     L_79b5:
-        mov      dword ptr [g_data_0054206c], 8
+        mov      dword ptr [g_walkCallback], 8
         call     TableLookupCall_00489ff0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -292,7 +291,7 @@ __declspec(naked) void PostStepDispatcher_00497790(void)
         mov      dword ptr [eax*4], ecx
         mov      edx, dword ptr [g_data_00542060]
         mov      eax, dword ptr [edx*4 + 0x38]
-        mov      dword ptr [g_data_0054206c], 5
+        mov      dword ptr [g_walkCallback], 5
         mov      dword ptr [g_data_0054205c], eax
         call     FlagThunk4EntryDispatcher_0040a470
         mov      eax, dword ptr [g_framePauseFlag]
@@ -309,13 +308,13 @@ __declspec(naked) void PostStepDispatcher_00497790(void)
         mov      dword ptr [g_data_00542058], eax
     L_7a4b:
         mov      ecx, dword ptr [g_data_0054205c]
-        mov      dword ptr [g_data_0054206c], 0xfffe0000
+        mov      dword ptr [g_walkCallback], 0xfffe0000
         push     0xfffe0000
         mov      edx, dword ptr [ecx*4 + 0x6c]
         push     edx
         call     Mul10Tail_00404af0
         mov      ecx, dword ptr [g_data_00542058]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         add      esp, 8
         mov      edx, dword ptr [ecx*4 + 0x54]
         add      edx, eax
@@ -323,17 +322,17 @@ __declspec(naked) void PostStepDispatcher_00497790(void)
         push     0xfffe0000
         mov      dword ptr [eax*4 + 0x54], edx
         mov      ecx, dword ptr [g_data_0054205c]
-        mov      dword ptr [g_data_0054206c], 0xfffe0000
+        mov      dword ptr [g_walkCallback], 0xfffe0000
         mov      edx, dword ptr [ecx*4 + 0x74]
         push     edx
         call     Mul10Tail_00404af0
         mov      ecx, dword ptr [g_data_00542058]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         add      esp, 8
         mov      edx, dword ptr [ecx*4 + 0x5c]
         add      eax, edx
         mov      edx, dword ptr [g_data_0054205c]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x5c], eax
         mov      dword ptr [esi + 8], OFFSET L_7940
         mov      dword ptr [esi + 0x84], 1

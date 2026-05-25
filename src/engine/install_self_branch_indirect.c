@@ -134,7 +134,6 @@ extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_0054204c;
 extern unsigned int g_x_00542054;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542084;
 extern void MStackIndirectCallBit_00470e20(void);
 extern void ScaledArrStore_00429980(void);
@@ -181,7 +180,7 @@ __declspec(naked) void InstallSelfBranchIndirect_00470d10(void) {
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, dword ptr [eax*4 + 0x74]
         cmp     eax, 0x2001
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   17h
         mov     eax, dword ptr [g_x_00542084]

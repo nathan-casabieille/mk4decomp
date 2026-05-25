@@ -125,13 +125,12 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x00488800 (142b game) - dual-entry state-load + cascade.
  *   Block A (+0x00): eax = g_load_0052ab10; g_x_00542080 = 0x4ccc; g_cj_00542058 = eax;
  *     jmp DualHelperMul10TailPair_00490ec0.
- *   Block A2 (+0x20): call CjTableThresholdDispatch_00488f00; if !pause: g_x_0054206c=9; call FlagThunk4EntryDispatcher_0040a470;
- *     if !pause: g_x_0054206c=0x6666; call CmpP1DualInitStore_00482ab0; if !pause: jmp RoundTextMenuEventCluster_004888b0.
- *   Block B (+0x70): g_x_0054206c=0; call FlagThunk4EntryDispatcher_0040a470; if !pause: jmp GuardedSeq_00488890.
+ *   Block A2 (+0x20): call CjTableThresholdDispatch_00488f00; if !pause: g_walkCallback=9; call FlagThunk4EntryDispatcher_0040a470;
+ *     if !pause: g_walkCallback=0x6666; call CmpP1DualInitStore_00482ab0; if !pause: jmp RoundTextMenuEventCluster_004888b0.
+ *   Block B (+0x70): g_walkCallback=0; call FlagThunk4EntryDispatcher_0040a470; if !pause: jmp GuardedSeq_00488890.
  */
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542080;
 extern void CjTableThresholdDispatch_00488f00(void);
 extern void CmpP1DualInitStore_00482ab0(void);
@@ -158,13 +157,13 @@ __declspec(naked) void DualEntryStateLoadCascade_00488800(void) {
         test    eax, eax
         _emit   75h
         _emit   35h
-        mov     dword ptr [g_x_0054206c], 9
+        mov     dword ptr [g_walkCallback], 9
         call    FlagThunk4EntryDispatcher_0040a470
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         _emit   75h
         _emit   1dh
-        mov     dword ptr [g_x_0054206c], 0x00006666
+        mov     dword ptr [g_walkCallback], 0x00006666
         call    CmpP1DualInitStore_00482ab0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -184,7 +183,7 @@ __declspec(naked) void DualEntryStateLoadCascade_00488800(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         call    FlagThunk4EntryDispatcher_0040a470
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

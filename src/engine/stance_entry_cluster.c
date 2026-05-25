@@ -129,15 +129,14 @@ extern void InstallSelfChainSet13333Alt_004377d0(void);
 extern void StanceEntryCluster_00433f50(void);
 
 /* @addr 0x00433e90 (181b game) - 5-block dispatcher.
- *   A: call ScaledCmp200eCallBool; if nonzero: g_x_0054206c=0x004e4d40; g_x_00542070 = (eax & 0xff) >> 2;
+ *   A: call ScaledCmp200eCallBool; if nonzero: g_walkCallback=0x004e4d40; g_x_00542070 = (eax & 0xff) >> 2;
  *     g_x_00542048 = same; jmp AddDerefJmp_00433e70; else ret.
- *   B (+0x30): scaledInit=baseSel[*4+0x3c]; g_x_0054206c=[*4+0x30]; if zero jmp GuardedSeq_00433bb0;
+ *   B (+0x30): scaledInit=baseSel[*4+0x3c]; g_walkCallback=[*4+0x30]; if zero jmp GuardedSeq_00433bb0;
  *     else g_state_00535ddc<=0x30000? jmp Wrapper_00438ee0 else jmp InstallSelfChainSet13333Alt_004377d0.
  *   C (+0x80): threshold-dispatch g_state_00535ddc → GuardedSeq / CallPauseTestByteJmpCalls / InstallSelfChainSetB333v2.
  *   D (+0xb0): jmp StanceEntryCluster_00433f50.
  */
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern void GuardedSeq_00433bb0(void);
 extern void Wrapper_00438ee0(void);
@@ -148,7 +147,7 @@ __declspec(naked) void FiveBlockDispatch_00433e90(void) {
         test    eax, eax
         _emit   75h
         _emit   22h
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     ecx, 0x004e4d40
         and     eax, 0xff
         shr     ecx, 2
@@ -165,13 +164,13 @@ __declspec(naked) void FiveBlockDispatch_00433e90(void) {
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, dword ptr [eax*4 + 0x30]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   05h
         jmp     GuardedSeq_00433bb0
         mov     eax, dword ptr [g_state_00535ddc]
         cmp     eax, 0x00030000
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   05h
         jmp     Wrapper_00438ee0
@@ -193,7 +192,7 @@ __declspec(naked) void FiveBlockDispatch_00433e90(void) {
         _emit   90h
         mov     eax, dword ptr [g_state_00535ddc]
         cmp     eax, 0x00020000
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   05h
         jmp     GuardedSeq_00433bb0

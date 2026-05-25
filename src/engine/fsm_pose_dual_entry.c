@@ -128,7 +128,6 @@ extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_0054208c;
 extern unsigned int g_data_00542094;
@@ -172,50 +171,50 @@ __declspec(naked) void FsmPoseDualEntry_00472560(void)
     L_25cc:
         mov      ecx, dword ptr [eax*4 + 0x20]
         or       ecx, 0x40
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [eax*4 + 0x20], ecx
         mov      edx, dword ptr [g_data_00542044]
         mov      eax, dword ptr [edx*4 + 0x2c]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       L_26b4
         mov      dword ptr [g_data_00542048], eax
         mov      ecx, dword ptr [eax*4 + 0x14]
         lea      eax, [eax*4 + 0x14]
         mov      edx, 0x1ca
         add      ecx, edx
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [g_data_00542070], ecx
         mov      dword ptr [eax], ecx
         mov      ecx, dword ptr [g_data_00542048]
         mov      edi, dword ptr [g_data_0054205c]
         mov      eax, dword ptr [ecx*4 + 8]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      ebx, dword ptr [edi*4 + 0x58]
         add      eax, ebx
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      eax, dword ptr [ecx*4]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       short L_26b4
     L_265b:
         mov      dword ptr [g_data_00542048], eax
         mov      ecx, dword ptr [eax*4 + 0x14]
         lea      eax, [eax*4 + 0x14]
         add      ecx, edx
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [g_data_00542070], ecx
         mov      dword ptr [eax], ecx
         mov      ecx, dword ptr [g_data_00542048]
         mov      edi, dword ptr [g_data_0054205c]
         mov      eax, dword ptr [ecx*4 + 8]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      ebx, dword ptr [edi*4 + 0x58]
         add      eax, ebx
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      eax, dword ptr [ecx*4]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jne      short L_265b
     L_26b4:
         mov      eax, dword ptr [g_data_0054205c]
@@ -224,24 +223,24 @@ __declspec(naked) void FsmPoseDualEntry_00472560(void)
         mov      eax, dword ptr [eax*4 + 0x28]
         mov      dword ptr [g_data_00542048], eax
         mov      eax, dword ptr [eax*4]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         and      eax, 0x400
         mov      dword ptr [g_data_00542094], eax
         je       short L_270e
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, dword ptr [ecx*4 + 0x38]
         sub      eax, 0x33
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jns      short L_2707
         xor      eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
     L_2707:
         mov      dword ptr [ecx*4 + 0x38], eax
     L_270e:
         mov      ecx, dword ptr [g_data_0054205c]
         mov      eax, dword ptr [ecx*4 + 0x18]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jne      short L_272d
     L_2724:
         call     GuardedSeq_00471670

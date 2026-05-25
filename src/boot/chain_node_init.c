@@ -126,12 +126,11 @@ extern unsigned int g_data_00535e7c;
  *   ecx = g_scaledInit; eax = ecx*4 (chain ptr); if (ecx == 0): mstack pop+ret.
  *   mstack-push g_x_00542048.
  *   chain[+0x84] = 0; chain[+8] = g_x_00542048; chain[eax+0xd8] = chain[+8];
- *   chain[+0x10] = 1; g_x_0054206c = 1; chain[eax+0xdc] = (word)1;
- *   ecx = g_scaledInit + 0x22; g_x_0054206c = ecx; chain[+4] = ecx;
+ *   chain[+0x10] = 1; g_walkCallback = 1; chain[eax+0xdc] = (word)1;
+ *   ecx = g_scaledInit + 0x22; g_walkCallback = ecx; chain[+4] = ecx;
  *   mstack-pop into g_x_00542048.
  */
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 
 extern unsigned int g_data_004d57ac_arr;
 
@@ -161,13 +160,13 @@ void ChainNodeInit_0041fa50(void) {
         mov     [eax + 0xd8], ecx
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     ecx, 1
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     [edx*4 + 0x10], ecx
-        mov     cx, word ptr [g_x_0054206c]
+        mov     cx, word ptr [g_walkCallback]
         mov     word ptr [eax + 0xdc], cx
         mov     eax, dword ptr [g_scaledInit_00542044]
         lea     ecx, [eax + 0x22]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     [eax*4 + 4], ecx
         mov     eax, dword ptr [g_state_004d57ac]
         mov     edx, [eax*4 + g_data_004d57ac_arr]

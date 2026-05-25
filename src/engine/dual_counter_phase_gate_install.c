@@ -128,7 +128,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542080;
 extern void InstallSelfStackReset_00421f40(void);
 extern void ScaledInitOrSelfPtr_00421f00(void);
@@ -150,7 +149,7 @@ __declspec(naked) void DualCounterPhaseGateInstall_00421d50(void)
         je      short L_dcpgi_phase1
         mov     ecx, dword ptr [g_data_00537f98]
         cmp     ecx, edx
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         je      short L_dcpgi_call40
         call    InstallSelfStackReset_00421f40
         pop     edi
@@ -169,7 +168,7 @@ __declspec(naked) void DualCounterPhaseGateInstall_00421d50(void)
         jne     L_dcpgi_install2
         mov     ecx, dword ptr [g_data_0053a430]
         cmp     ecx, edx
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         je      short L_dcpgi_resetSetup
     L_dcpgi_install:
         call    StackPopDispatchTagged_0041f780
@@ -177,7 +176,7 @@ __declspec(naked) void DualCounterPhaseGateInstall_00421d50(void)
         pop     esi
         ret
     L_dcpgi_resetSetup:
-        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [g_data_00537f98], edx
         mov     dword ptr [g_data_00542080], 0xf0
     L_dcpgi_setup:
@@ -215,7 +214,7 @@ __declspec(naked) void DualCounterPhaseGateInstall_00421d50(void)
         inc     esi
         mov     dword ptr [g_data_00542044], esi
         mov     dword ptr [ecx], esi
-        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [g_data_00537f98], edx
         mov     dword ptr [g_data_00542080], 0x3c
     L_dcpgi_install2:

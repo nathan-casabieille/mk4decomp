@@ -135,7 +135,6 @@ extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void GatedWordPushCall_00489f90(void);
 extern void PendingMatch_00452770(void);
@@ -153,7 +152,7 @@ __declspec(naked) void StageTransitionCluster_00455340(void)
         push     OFFSET L_5530
         call     StoreLoadJmp_00404ef0
         add      esp, 4
-        mov      dword ptr [g_data_0054206c], 0x5c
+        mov      dword ptr [g_walkCallback], 0x5c
         call     GatedWordPushCall_00489f90
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -175,7 +174,7 @@ __declspec(naked) void StageTransitionCluster_00455340(void)
         push     OFFSET g_data_004e7fc0
         mov      eax, dword ptr [ecx*4 + 0x34]
         or       al, 4
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
@@ -222,27 +221,27 @@ __declspec(naked) void StageTransitionCluster_00455340(void)
         mov      edx, dword ptr [g_data_0054205c]
         mov      ecx, dword ptr [edx*4 + 0x4c]
         cmp      ecx, esi
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         je       short L_5495
         add      ecx, dword ptr [edx*4 + 0x70]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [edx*4 + 0x70], ecx
         mov      edx, dword ptr [g_data_0054205c]
         mov      ecx, dword ptr [edx*4 + 0x58]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      edi, dword ptr [edx*4 + 0x48]
         sub      ecx, edi
         cmp      ecx, esi
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         jle      short L_5495
-        mov      dword ptr [g_data_0054206c], esi
+        mov      dword ptr [g_walkCallback], esi
         mov      dword ptr [edx*4 + 0x70], esi
         mov      edx, dword ptr [g_data_0054205c]
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [edx*4 + 0x4c], ecx
         mov      ecx, dword ptr [g_data_0054205c]
         mov      edx, dword ptr [ecx*4 + 0x48]
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [ecx*4 + 0x58], edx
     L_5495:
         mov      ecx, 1
@@ -274,9 +273,9 @@ __declspec(naked) void StageTransitionCluster_00455340(void)
         mov      ecx, dword ptr [g_data_0054205c]
         mov      ecx, dword ptr [ecx*4 + 0x4c]
         test     ecx, ecx
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         jne      short L_5510
-        mov      dword ptr [g_data_0054206c], 0x47
+        mov      dword ptr [g_walkCallback], 0x47
         call     GatedWordPushCall_00489f90
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -310,7 +309,7 @@ __declspec(naked) void StageTransitionCluster_00455340(void)
         pop      esi
         ret
     L_556a:
-        mov      dword ptr [g_data_0054206c], 0x4c
+        mov      dword ptr [g_walkCallback], 0x4c
         call     GatedWordPushCall_00489f90
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

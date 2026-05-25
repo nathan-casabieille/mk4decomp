@@ -132,7 +132,6 @@ extern void RosterSetupFsmCluster_00451060(void);
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542054;
 extern unsigned int g_x_00542058;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542074;
 extern void MStackCall_00406600(void);
 extern void PushSetXfmMaskCallPop_00407140(void);
@@ -191,7 +190,7 @@ __declspec(naked) void TripleBlockChainScaledInits_00450f10(void) {
         mov     edx, dword ptr [g_x_00542054]
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     eax, dword ptr [edx*4 + 0xc]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x58], eax
         mov     edx, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_x_00542074], 0x1999

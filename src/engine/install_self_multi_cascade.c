@@ -132,7 +132,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542080;
 extern unsigned int g_x_00542084;
 extern void DecJneSetCallSetJmp_004389b0(void);
@@ -190,7 +189,7 @@ __declspec(naked) void InstallSelfMultiCascade_004388f0(void) {
         mov     eax, dword ptr [g_state_00535ddc]
         mov     ecx, dword ptr [g_x_00542084]
         cmp     eax, ecx
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   05h
         jmp     InstallSelfMultiCascade_004388f0

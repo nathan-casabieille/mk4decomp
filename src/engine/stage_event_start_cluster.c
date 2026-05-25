@@ -133,7 +133,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void DualSetCallPair_0047dbc0(void);
@@ -252,7 +251,7 @@ __declspec(naked) void StageEventStartCluster_0047ff80(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_019a
-        cmp      dword ptr [g_data_0054206c], 0x5999
+        cmp      dword ptr [g_walkCallback], 0x5999
         jle      short L_00d0
         call     PushPlayerSwapCallClamp_004801a0
         pop      esi
@@ -274,7 +273,7 @@ __declspec(naked) void StageEventStartCluster_0047ff80(void)
         mov      ecx, dword ptr [g_data_0053a180]
         mov      eax, dword ptr [eax*4]
         add      ecx, 0xfffb0000
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         cmp      eax, ecx
         mov      dword ptr [g_data_00542070], ecx
         jle      short L_012b
@@ -285,14 +284,14 @@ __declspec(naked) void StageEventStartCluster_0047ff80(void)
         mov      eax, dword ptr [g_data_00535ddc]
         mov      dword ptr [g_data_00542070], 0x5e667
         cmp      eax, 0x5e667
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jl       short L_014d
         call     PushPlayerSwapCallClamp_004801a0
         pop      esi
         ret
     L_014d:
         mov      eax, dword ptr [edx*4 + 0x6c]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      ecx, dword ptr [edx*4 + 0x74]
         add      ecx, eax
         mov      dword ptr [g_data_00542070], ecx
@@ -304,7 +303,7 @@ __declspec(naked) void StageEventStartCluster_0047ff80(void)
         mov      eax, dword ptr [edx*4 + 0x24]
         mov      dword ptr [g_data_00542044], eax
         mov      edx, dword ptr [edx*4 + 0x28]
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      ecx, dword ptr [eax*4 + 4]
         cmp      edx, ecx
         jg       short L_019a

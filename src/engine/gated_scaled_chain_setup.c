@@ -123,16 +123,15 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00427390 (204b game) - 5-step setup if [g_x_004f360c] is set.
- *   call MStackPush8_004ab790; pause-check. Set g_x_0054206c = 0x004e2760>>2.
+ *   call MStackPush8_004ab790; pause-check. Set g_walkCallback = 0x004e2760>>2.
  *   call PushSetXfmMaskCallPop; pause-check.
  *   If bit-2 not set: setup chain[+0x30]=0x25c, [+0x54]=g_x_00542078, [+0x5c]=g_x_0054207c,
- *     [+0x58]=0xfffffd71. Set g_x_0054206c=0x18000; scaledInit = [chain*4+0x18]; chain[+0x3c]=0x18000.
+ *     [+0x58]=0xfffffd71. Set g_walkCallback=0x18000; scaledInit = [chain*4+0x18]; chain[+0x3c]=0x18000.
  *   call MStackCall_004062f0; if !pause jmp MStackPop8_004ab860; ret.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_004f360c;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542078;
 extern unsigned int g_x_0054207c;
 extern void MStackCall_004062f0(void);
@@ -161,7 +160,7 @@ __declspec(naked) void GatedScaledChainSetup_00427390(void) {
         _emit   00h
         mov     eax, 0x004e2760
         shr     eax, 2
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    PushSetXfmMaskCallPop_00407140
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -184,12 +183,12 @@ __declspec(naked) void GatedScaledChainSetup_00427390(void) {
         mov     eax, 0xfffffd71
         mov     dword ptr [ecx*4 + 0x5c], edx
         mov     ecx, dword ptr [g_x_0054205c]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x58], eax
         mov     edx, dword ptr [g_x_0054205c]
         mov     ecx, 0x00018000
         mov     eax, dword ptr [edx*4 + 0x18]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     dword ptr [eax*4 + 0x3c], ecx
         call    MStackCall_004062f0

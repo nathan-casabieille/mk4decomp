@@ -124,19 +124,18 @@ extern unsigned int g_data_00535e7c;
 
 /*
  * BootChainMaskAndDispatch_00416cb0 - 250b boot 2-body chain dispatch.
- *   Entry 0x00416cb0: g_x_0054206c=2; DirtyDoubleDeref; if paused or g_x_00542044==0: ret.
- *     chain[+0x20] &= 0xfffffffb; g_x_0054206c=-0x14; MStackInitCallToggle; if paused: ret.
+ *   Entry 0x00416cb0: g_walkCallback=2; DirtyDoubleDeref; if paused or g_x_00542044==0: ret.
+ *     chain[+0x20] &= 0xfffffffb; g_walkCallback=-0x14; MStackInitCallToggle; if paused: ret.
  *     If !(g_state_0054208c & 4): MStackBracket2_TreeWalkRecursive_00405e70; if paused: ret.
- *     g_x_0054206c=-0x16; MStackInitCallToggle; if paused: ret. If !(g_state_0054208c & 4):
+ *     g_walkCallback=-0x16; MStackInitCallToggle; if paused: ret. If !(g_state_0054208c & 4):
  *       tail-jmp MStackBracket2_TreeWalkRecursive_00405e70. Ret.
- *   Entry 0x00416d40 (16b-aligned): g_x_0054206c=-0x14; MStackInitCallToggle; if paused: ret.
- *     If !(g_state_0054208c & 4): chain[+0x3c] = 0x00800000. g_x_0054206c=-0x15;
+ *   Entry 0x00416d40 (16b-aligned): g_walkCallback=-0x14; MStackInitCallToggle; if paused: ret.
+ *     If !(g_state_0054208c & 4): chain[+0x3c] = 0x00800000. g_walkCallback=-0x15;
  *     MStackInitCallToggle; if paused: ret. If !(g_state_0054208c & 4):
- *       chain[+0x3c] = -0x16666 = g_x_0054206c; ret.
+ *       chain[+0x3c] = -0x16666 = g_walkCallback; ret.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542044;
-extern unsigned int g_x_0054206c;
 extern void DirtyDoubleDeref_00408cb0(void);
 extern void MStackBracket2_TreeWalkRecursive_00405e70(void);
 extern void MStackInitCallToggle_00408ad0(void);
@@ -145,7 +144,7 @@ __declspec(naked) void BootChainMaskAndDispatch_00416cb0(void)
 {
     __asm
     {
-        mov     dword ptr [g_x_0054206c], 2
+        mov     dword ptr [g_walkCallback], 2
         call    DirtyDoubleDeref_00408cb0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -156,7 +155,7 @@ __declspec(naked) void BootChainMaskAndDispatch_00416cb0(void)
         mov     ecx, dword ptr [eax*4 + 0x20]
         and     ecx, 0xfffffffb
         mov     dword ptr [eax*4 + 0x20], ecx
-        mov     dword ptr [g_x_0054206c], 0xffffffec
+        mov     dword ptr [g_walkCallback], 0xffffffec
         call    MStackInitCallToggle_00408ad0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -168,7 +167,7 @@ __declspec(naked) void BootChainMaskAndDispatch_00416cb0(void)
         test    eax, eax
         jne     short L_b1_ret
     L_b1_callMid:
-        mov     dword ptr [g_x_0054206c], 0xffffffea
+        mov     dword ptr [g_walkCallback], 0xffffffea
         call    MStackInitCallToggle_00408ad0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -186,7 +185,7 @@ __declspec(naked) void BootChainMaskAndDispatch_00416cb0(void)
         _emit   90h
         _emit   90h
         _emit   90h
-        mov     dword ptr [g_x_0054206c], 0xffffffec
+        mov     dword ptr [g_walkCallback], 0xffffffec
         call    MStackInitCallToggle_00408ad0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -196,7 +195,7 @@ __declspec(naked) void BootChainMaskAndDispatch_00416cb0(void)
         mov     eax, dword ptr [g_x_00542044]
         mov     dword ptr [eax*4 + 0x3c], 0x00008000
     L_b2_step2:
-        mov     dword ptr [g_x_0054206c], 0xffffffeb
+        mov     dword ptr [g_walkCallback], 0xffffffeb
         call    MStackInitCallToggle_00408ad0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -205,7 +204,7 @@ __declspec(naked) void BootChainMaskAndDispatch_00416cb0(void)
         jne     short L_b2_ret
         mov     ecx, dword ptr [g_x_00542044]
         mov     eax, 0xfffe999a
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x3c], eax
     L_b2_ret:
         ret

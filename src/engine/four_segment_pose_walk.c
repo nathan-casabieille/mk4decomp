@@ -132,7 +132,6 @@ extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern void SetJmp_00405420(void);
 extern void Vec3SetupQuadrupleMul10Sub_00442bc0(void);
@@ -154,13 +153,13 @@ __declspec(naked) void FourSegmentPoseWalk_00442880(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2bb9
-        mov      dword ptr [g_data_0054206c], 0xa
+        mov      dword ptr [g_walkCallback], 0xa
         call     ChainDirtyBitWalker_00408c10
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2bb9
         mov      ecx, dword ptr [g_data_00542048]
-        mov      dword ptr [g_data_0054206c], 9
+        mov      dword ptr [g_walkCallback], 9
         mov      dword ptr [g_data_00542054], ecx
         call     ChainDirtyBitWalker_00408c10
         mov      eax, dword ptr [g_framePauseFlag]
@@ -169,28 +168,28 @@ __declspec(naked) void FourSegmentPoseWalk_00442880(void)
         mov      edx, dword ptr [g_data_00542048]
         mov      ecx, dword ptr [g_data_00542054]
         mov      eax, dword ptr [edx*4 + 0x3c]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      ebx, dword ptr [ecx*4 + 0x3c]
         add      eax, ebx
         sar      eax, 1
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x3c], eax
         mov      eax, dword ptr [g_data_00542048]
         mov      ecx, dword ptr [g_data_00542054]
         mov      eax, dword ptr [eax*4 + 0x40]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      edx, dword ptr [ecx*4 + 0x40]
         add      eax, edx
         sar      eax, 1
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x40], eax
         mov      ecx, dword ptr [g_data_00542048]
         mov      eax, dword ptr [ecx*4 + 0x44]
         mov      ecx, dword ptr [g_data_00542054]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         add      eax, dword ptr [ecx*4 + 0x44]
         sar      eax, 1
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x44], eax
         mov      dword ptr [g_data_00542058], 2
         call     SetJmp_00405420

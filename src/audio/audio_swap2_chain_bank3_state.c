@@ -125,16 +125,15 @@ extern unsigned int g_data_00535e7c;
 /*
  * AudioSwap2ChainBank3State_004a8490 - 293b audio chain double-zero + 3-state setup.
  *   chain1 = base[+0x7c]: zero chain1[+0x54], +0x58, +0x5c. chain2 = base[+0x80]: zero same fields.
- *   Switch on base[+0x30] - 3: case 0 → g_x_0054206c = g_x_0054359c+0xd; edx=base[+0x7c].
- *                              case 1 → g_x_0054206c = g_x_005433c8+0x12; edx=base[+0x80].
+ *   Switch on base[+0x30] - 3: case 0 → g_walkCallback = g_x_0054359c+0xd; edx=base[+0x7c].
+ *                              case 1 → g_walkCallback = g_x_005433c8+0x12; edx=base[+0x80].
  *                              default → ret.
- *   g_cj_00542058 = edx. If g_byte_0053a498 & 8: chain3 = base[g_x_0054206c]; g_x_00542044=chain3;
- *   copy chain3[+0x54/+0x58/+0x5c] → g_x_0054206c/g_data_00542070/g_x_00542074 → chain2[+0x54/+0x58/+0x5c].
+ *   g_cj_00542058 = edx. If g_byte_0053a498 & 8: chain3 = base[g_walkCallback]; g_x_00542044=chain3;
+ *   copy chain3[+0x54/+0x58/+0x5c] → g_walkCallback/g_data_00542070/g_x_00542074 → chain2[+0x54/+0x58/+0x5c].
  *   Pop+ret.
  */
 extern unsigned int g_byte_0053a498;
 extern unsigned int g_x_00542044;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542074;
 extern unsigned int g_x_005433c8;
 extern unsigned int g_x_0054359c;
@@ -170,13 +169,13 @@ __declspec(naked) void AudioSwap2ChainBank3State_004a8490(void)
         jne     L_a84_ret
         mov     edx, dword ptr [g_x_005433c8]
         lea     ecx, [edx + 0x12]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [eax*4 + 0x80]
         jmp     short L_a84_common
     L_a84_case3:
         mov     ecx, dword ptr [g_x_0054359c]
         add     ecx, 0xd
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [eax*4 + 0x7c]
     L_a84_common:
         mov     bl, byte ptr [g_byte_0053a498]
@@ -187,7 +186,7 @@ __declspec(naked) void AudioSwap2ChainBank3State_004a8490(void)
         mov     eax, dword ptr [ecx*4]
         mov     dword ptr [g_x_00542044], eax
         mov     ecx, dword ptr [eax*4 + 0x54]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     esi, dword ptr [eax*4 + 0x58]
         mov     dword ptr [g_data_00542070], esi
         mov     eax, dword ptr [eax*4 + 0x5c]

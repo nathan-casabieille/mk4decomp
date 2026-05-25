@@ -128,7 +128,6 @@ extern unsigned int g_data_00535df0;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern void MStackCall_00406340(void);
 extern void MStackPush2ChainLLInsert_00406790(void);
@@ -165,7 +164,7 @@ __declspec(naked) void NetEntityScanAndPunish_00474b50(void)
         mov      dword ptr [g_data_00542070], ecx
         jne      short L_4b6c
         mov      ecx, dword ptr [eax*4 + 0x70]
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         add      ecx, edi
         mov      dword ptr [g_data_00542070], ecx
         mov      dword ptr [eax*4 + 0x70], ecx
@@ -179,14 +178,14 @@ __declspec(naked) void NetEntityScanAndPunish_00474b50(void)
         mov      ecx, dword ptr [g_data_004d57ac]
         mov      eax, dword ptr [eax*4 + 0x54]
         inc      ecx
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_004d57ac], ecx
         mov      dword ptr [ecx*4], eax
         mov      edx, dword ptr [g_data_00542044]
         mov      ecx, dword ptr [g_data_004d57ac]
         mov      eax, dword ptr [edx*4 + 0x5c]
         inc      ecx
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_004d57ac], ecx
         mov      dword ptr [ecx*4], eax
         call     MStackPush2ChainLLInsert_00406790
@@ -195,7 +194,7 @@ __declspec(naked) void NetEntityScanAndPunish_00474b50(void)
         jne      L_4d31
         mov      eax, OFFSET g_data_004ecac8
         shr      eax, 2
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         call     PushSetXfmMaskCallPop_00407140
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -205,17 +204,17 @@ __declspec(naked) void NetEntityScanAndPunish_00474b50(void)
         mov      eax, dword ptr [g_data_004d57ac]
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_004d57ac], eax
         mov      edx, dword ptr [eax*4]
         dec      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      eax, dword ptr [g_data_00542048]
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         jmp      L_4b73
     L_4cac:
         mov      eax, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_0054206c], ebx
+        mov      dword ptr [g_walkCallback], ebx
         mov      dword ptr [eax*4 + 0x30], ebx
         call     MStackCall_00406340
         mov      eax, dword ptr [g_framePauseFlag]
@@ -225,7 +224,7 @@ __declspec(naked) void NetEntityScanAndPunish_00474b50(void)
         mov      edx, dword ptr [g_data_00542044]
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [edx*4 + 0x5c], ecx
         mov      eax, dword ptr [g_data_004d57ac]
@@ -235,7 +234,7 @@ __declspec(naked) void NetEntityScanAndPunish_00474b50(void)
         mov      eax, dword ptr [g_data_00542044]
         mov      dword ptr [eax*4 + 0x54], ecx
         mov      ecx, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_0054206c], esi
+        mov      dword ptr [g_walkCallback], esi
         mov      dword ptr [ecx*4 + 0x58], esi
         mov      eax, dword ptr [g_data_00542048]
         jmp      L_4b73

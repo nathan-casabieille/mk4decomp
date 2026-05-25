@@ -132,7 +132,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern void FramePauseScaledStore_00406c10(void);
 extern void MStackCall_00406250(void);
@@ -148,7 +147,7 @@ __declspec(naked) void Phase1InitModelAdjustChain_00410fb0(void)
     __asm {
         mov     eax, offset g_data_004d59e8
         shr     eax, 2
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    PushSetXfmMaskCallPop_00407140
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -169,7 +168,7 @@ __declspec(naked) void Phase1InitModelAdjustChain_00410fb0(void)
         mov     ecx, dword ptr [g_data_00542044]
         mov     eax, dword ptr [ecx*4 + 0x20]
         or      ah, 6
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x20], eax
         call    ScaledTestPauseStore_00408860
         mov     eax, dword ptr [g_framePauseFlag]
@@ -184,7 +183,7 @@ __declspec(naked) void Phase1InitModelAdjustChain_00410fb0(void)
         or      ecx, 8
         mov     dword ptr [eax*4], ecx
         mov     eax, dword ptr [g_data_00542048]
-        mov     dword ptr [g_data_0054206c], 0xB333
+        mov     dword ptr [g_walkCallback], 0xB333
         mov     dword ptr [eax*4 + 0x48], 0xB333
         mov     ecx, dword ptr [g_data_0054205c]
         mov     edx, dword ptr [ecx*4 + 0x18]
@@ -195,7 +194,7 @@ __declspec(naked) void Phase1InitModelAdjustChain_00410fb0(void)
         jne     L_p1im_ret
         mov     eax, dword ptr [g_data_004d5320]
         mov     ecx, dword ptr [g_data_00542044]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x44], eax
     L_p1im_after_4e50:
         call    ScaledChainOr8_00404e50
@@ -207,10 +206,10 @@ __declspec(naked) void Phase1InitModelAdjustChain_00410fb0(void)
         mov     ecx, dword ptr [g_data_0054205c]
         shr     eax, 0x10
         and     eax, 1
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     edx, dword ptr [ecx*4 + 0x34]
         or      eax, edx
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x34], eax
         call    ScaledTripleCopy54_004ac040
         mov     eax, dword ptr [g_framePauseFlag]
@@ -220,7 +219,7 @@ __declspec(naked) void Phase1InitModelAdjustChain_00410fb0(void)
         mov     edx, dword ptr [g_data_0054205c]
         mov     eax, dword ptr [ecx*4 + 0x58]
         sub     eax, 0x9999
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x58], eax
         mov     ecx, dword ptr [g_data_00535e7c]
         mov     edx, dword ptr [g_data_0053815c]

@@ -132,12 +132,11 @@ extern void CopyGlobal_004ac1f0(void);
  *   call BootInitGuardedCallChain_004265d0; if (pause != 0) -> end clears.
  *   g_scaledInit = packed_ptr(0x00506c20); call LoadGeoAsset_Default; if (pause != 0) skip;
  *   ... (same again); call AudioStateClearAndChainStep_004a10b0; pause? skip;
- *   g_x_0054206c = 0; call CopyGlobal; pause? skip;
- *   g_scaledInit = [0x52ab10]; g_x_0054206c = 0xfff88000;
+ *   g_walkCallback = 0; call CopyGlobal; pause? skip;
+ *   g_scaledInit = [0x52ab10]; g_walkCallback = 0xfff88000;
  *   chain[g_scaledInit*4 + 0x54/0x58/0x5c/0x60/0x64/0x68] = 0 (or 0xfff88000 for +0x5c).
  */
 extern unsigned int g_x_0052ab10;
-extern unsigned int g_x_0054206c;
 extern void TableWalkBoundedCmp_004bd890(void);
 
 __declspec(naked) void FiveTableWalkInit_00403c90(void) {
@@ -182,7 +181,7 @@ __declspec(naked) void FiveTableWalkInit_00403c90(void) {
         cmp     dword ptr [g_framePauseFlag], esi
         _emit   75h
         _emit   3dh
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         call    CopyGlobal_004ac1f0
         cmp     dword ptr [g_framePauseFlag], esi
         _emit   75h
@@ -196,7 +195,7 @@ __declspec(naked) void FiveTableWalkInit_00403c90(void) {
         mov     [eax + 0x68], esi
         mov     [eax + 0x54], esi
         mov     [eax + 0x58], esi
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     [eax + 0x5c], ecx
         pop     esi
         ret

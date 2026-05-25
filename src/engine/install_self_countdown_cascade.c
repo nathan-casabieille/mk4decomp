@@ -125,13 +125,12 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x00439fd0 (175b game) - install-self with countdown + 3-stage cascade.
  *   Block A install-self path. Then call PendingMatch_0045e640 + bit-1 test, set g_data_0053a478,
  *     call PushPop84TripleCall, pause-check, set g_x_00542080=0x78, call ScaledChain3c74,
- *     pause-check, if g_x_0054206c==0x1009 call TriStageChainGate_004344b0, pop+ret.
+ *     pause-check, if g_walkCallback==0x1009 call TriStageChainGate_004344b0, pop+ret.
  *     Else install-self at +0x08=0x00439fd0, set chain[+0x84]=ebx=1, set 0054204c=1, pause=1; pop+ret.
  */
 extern unsigned int g_data_0053a478;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542080;
 extern void InstallSelfChainSetB333_00437b60(void);
 extern void PendingMatch_0045e640(void);
@@ -180,7 +179,7 @@ __declspec(naked) void InstallSelfCountdownCascade_00439fd0(void) {
         test    eax, eax
         _emit   75h
         _emit   2dh
-        cmp     dword ptr [g_x_0054206c], 0x00001009
+        cmp     dword ptr [g_walkCallback], 0x00001009
         _emit   75h
         _emit   08h
         call    TriStageChainGate_004344b0

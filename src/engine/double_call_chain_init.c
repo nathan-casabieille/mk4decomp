@@ -123,17 +123,16 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0043d780 (169b game) - init + 2-stage loop call sequence with chain[+0x30/+0x6c/+0x70/+0x74] init.
- *   g_x_0054206c=0x83; g_x_00542070=-1; call Thunk; pause? -> ret.
- *   esi=0; ebx=0x45; g_x_0054206c=ebx; call MStackPush2LLWalkCompare_004069b0; pause? -> ret.
+ *   g_walkCallback=0x83; g_x_00542070=-1; call Thunk; pause? -> ret.
+ *   esi=0; ebx=0x45; g_walkCallback=ebx; call MStackPush2LLWalkCompare_004069b0; pause? -> ret.
  *   ebp=0x7a; edi=0xffffeb86; loop_top:
  *     if (208c & 4): ret;
  *     chain[g_scaledInit+0x30]=ebp; chain[+0x70]=edi;
- *     g_x_0054206c=esi=0; chain[+0x6c]=esi;
- *     chain[+0x74]=g_x_0054206c (=0);
- *     g_x_0054206c=ebx=0x45; call MStackPush2LLWalkCompare_004069b0;
+ *     g_walkCallback=esi=0; chain[+0x6c]=esi;
+ *     chain[+0x74]=g_walkCallback (=0);
+ *     g_walkCallback=ebx=0x45; call MStackPush2LLWalkCompare_004069b0;
  *     if (pause == 0): loop;
  */
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern void MStackPush2LLWalkCompare_004069b0(void);
 extern void Thunk_0049cc00(void);
@@ -144,7 +143,7 @@ __declspec(naked) void DoubleCallChainInit_0043d780(void) {
         push    ebp
         push    esi
         push    edi
-        mov     dword ptr [g_x_0054206c], 0x83
+        mov     dword ptr [g_walkCallback], 0x83
         mov     dword ptr [g_x_00542070], 0xffffffff
         call    Thunk_0049cc00
         mov     eax, dword ptr [g_framePauseFlag]
@@ -153,7 +152,7 @@ __declspec(naked) void DoubleCallChainInit_0043d780(void) {
         _emit   75h
         _emit   7ch
         mov     ebx, 0x45
-        mov     dword ptr [g_x_0054206c], ebx
+        mov     dword ptr [g_walkCallback], ebx
         call    MStackPush2LLWalkCompare_004069b0
         cmp     dword ptr [g_framePauseFlag], esi
         _emit   75h
@@ -168,12 +167,12 @@ __declspec(naked) void DoubleCallChainInit_0043d780(void) {
         mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     [ecx*4 + 0x70], edi
         mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         mov     [edx*4 + 0x6c], esi
         mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     [ecx*4 + 0x74], eax
-        mov     dword ptr [g_x_0054206c], ebx
+        mov     dword ptr [g_walkCallback], ebx
         call    MStackPush2LLWalkCompare_004069b0
         cmp     dword ptr [g_framePauseFlag], esi
         _emit   74h

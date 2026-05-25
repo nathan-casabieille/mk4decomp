@@ -131,7 +131,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CjInstallSelfRouter_00470480(void);
 extern void ScaledMove48to58_00490720(void);
@@ -167,7 +166,7 @@ __declspec(naked) void DualEntryInstallSelf_00488740(void) {
         jmp     CjInstallSelfRouter_00470480
         mov     edx, dword ptr [g_x_0054205c]
         mov     ecx, 0x00000ccc
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [edx*4 + 0x70], ecx
         mov     ecx, 1
         mov     dword ptr [eax + 0x08], 0x00488760

@@ -133,7 +133,6 @@ extern unsigned int g_data_00541f88;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542078;
 extern void QuadInterpolator_00425380(void);
@@ -172,20 +171,20 @@ __declspec(naked) void Vec3PackedTripleCallBracket_004764d0(void)
         mov     edx, dword ptr [g_data_0054204c]
         mov     dword ptr [g_data_00542044], eax
         mov     esi, dword ptr [edx*4]
-        mov     dword ptr [g_data_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         mov     ecx, dword ptr [eax*4 + 0x54]
         sub     ecx, esi
         mov     dword ptr [g_data_00542074], ecx
         mov     dword ptr [g_data_0053a420], ecx
         mov     esi, dword ptr [edx*4 + 4]
-        mov     dword ptr [g_data_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         mov     ecx, dword ptr [eax*4 + 0x58]
         sub     ecx, esi
         mov     dword ptr [g_data_00542074], ecx
         mov     dword ptr [g_data_0053a424], ecx
         mov     edx, dword ptr [edx*4 + 8]
         mov     ecx, offset g_data_00538098
-        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     eax, dword ptr [eax*4 + 0x5c]
         sub     eax, edx
         mov     edx, offset g_data_0053a420
@@ -203,7 +202,7 @@ __declspec(naked) void Vec3PackedTripleCallBracket_004764d0(void)
         jne     short L_v3ptcb_ret
         mov     edx, dword ptr [g_data_005380a0]
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     ecx, dword ptr [eax*4]
         dec     eax
         mov     dword ptr [g_data_00542078], ecx

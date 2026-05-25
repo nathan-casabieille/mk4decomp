@@ -128,7 +128,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern void MStackCall_00406340(void);
 extern void MStackPushDispatchBitGate_00407330(void);
 extern void MStackPushTwoEntryChainCall_004058c0(void);
@@ -168,10 +167,10 @@ void MStackBracket3_ChainSwapAdvance_0041d560(void) {
         mov     eax, dword ptr [ecx*4 + 0x34]
         mov     ecx, dword ptr [g_data_00542044]
         and     eax, 1
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     edx, dword ptr [ecx*4 + 0x34]
         or      eax, edx
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x34], eax
         call    MStackPushTwoEntryChainCall_004058c0
         mov     eax, dword ptr [g_framePauseFlag]
@@ -187,13 +186,13 @@ void MStackBracket3_ChainSwapAdvance_0041d560(void) {
         jne     L_msb3csa_abort
         mov     eax, dword ptr [g_data_0054205c]
         mov     ecx, dword ptr [eax*4 + 0x58]
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x48], ecx
         mov     eax, dword ptr [g_data_00542044]
         mov     edx, dword ptr [g_data_00542054]
         mov     dword ptr [g_data_0054205c], eax
         mov     ecx, dword ptr [edx*4 + 0x3C]
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x3C], ecx
         mov     eax, dword ptr [g_data_0054205c]
         or      dword ptr [eax*4 + 0x34], 0x00180000
@@ -204,14 +203,14 @@ void MStackBracket3_ChainSwapAdvance_0041d560(void) {
         mov     eax, dword ptr [g_data_00542054]
         mov     ecx, dword ptr [g_data_0054205c]
         mov     eax, dword ptr [eax*4 + 0x64]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x64], eax
         mov     edx, dword ptr [g_data_00542054]
         mov     ecx, dword ptr [g_data_00542044]
         mov     eax, dword ptr [edx*4 + 0x24]
         mov     dword ptr [ecx*4 + 0x24], eax
         mov     edx, dword ptr [g_data_00542044]
-        mov     dword ptr [g_data_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [edx*4 + 0x28], 0
         call    MStackCall_00406340
         mov     eax, dword ptr [g_framePauseFlag]

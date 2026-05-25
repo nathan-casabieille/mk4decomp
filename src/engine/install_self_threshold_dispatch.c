@@ -126,7 +126,7 @@ extern unsigned int g_data_00535e7c;
  *   sub eax, 0; je state-0 path.
  *   state >= 2: tail-call FiveCallGuardSetTail.
  *   state 1: load cj[+0x70] (must >= 0 else jmp state-0 install path); call TailJmpInstallSelfPair_0047e690;
- *     if pause? final-ret. If g_x_0054206c > 0x18ccc, jmp install path.
+ *     if pause? final-ret. If g_walkCallback > 0x18ccc, jmp install path.
  *     Else: call CopyJmp_00406ba0; if pause? final-ret.
  *     g_x_00542048 = 0x0050014c >> 2; install-self at [esi+8]=0x0047e310;
  *     chain[+0x84]=2; scaledInit-chain push 0x0047e310+0x02000000;
@@ -137,7 +137,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_0054204c;
-extern unsigned int g_x_0054206c;
 extern void CopyJmp_00406ba0(void);
 extern void FiveCallGuardSetTail_0046f6b0(void);
 extern void ScaledArrStore_00429450(void);
@@ -166,7 +165,7 @@ __declspec(naked) void InstallSelfThresholdDispatch_0047e310(void) {
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     eax, dword ptr [ecx*4 + 0x70]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   0fh
         _emit   8ch
         _emit   0a3h
@@ -182,7 +181,7 @@ __declspec(naked) void InstallSelfThresholdDispatch_0047e310(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        cmp     dword ptr [g_x_0054206c], 0x00018ccc
+        cmp     dword ptr [g_walkCallback], 0x00018ccc
         _emit   0fh
         _emit   8fh
         _emit   81h

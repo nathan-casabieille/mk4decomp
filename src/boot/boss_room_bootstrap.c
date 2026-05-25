@@ -149,7 +149,6 @@ extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_0054208c;
 extern void MStackCall_004062f0(void);
@@ -160,14 +159,14 @@ __declspec(naked) void BossRoomInitCluster_00410340(void)
     __asm {
         /* === Helper 1 (0x410340): pack-hi16 into 004d5814[0] === */
     L_0340:
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         mov      eax, OFFSET g_data_004d5814
         shr      eax, 2
         mov      dword ptr [g_data_00542044], eax
         mov      ecx, dword ptr [eax*4]
         shl      edx, 0x10
         and      ecx, 0xffff
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         or       ecx, edx
         mov      dword ptr [g_data_00542070], ecx
         mov      dword ptr [eax*4], ecx
@@ -209,7 +208,7 @@ __declspec(naked) void BossRoomInitCluster_00410340(void)
         call     MStackBracket7_DispatchAndChain_004b8fa0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      func_004107b4
-        mov      dword ptr [g_data_0054206c], 0xa
+        mov      dword ptr [g_walkCallback], 0xa
         call     ChainDirtyBitWalker_00408c10
         cmp      dword ptr [g_framePauseFlag], edi
         jne      func_004107b4
@@ -224,7 +223,7 @@ __declspec(naked) void BossRoomInitCluster_00410340(void)
         mov      dword ptr [eax*4], edx
         mov      eax, OFFSET g_data_004d6990
         shr      eax, 2
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         call     PushSetXfmMaskCallPop_00407140
         cmp      dword ptr [g_framePauseFlag], edi
         jne      func_004107b4
@@ -232,13 +231,13 @@ __declspec(naked) void BossRoomInitCluster_00410340(void)
         jne      short L_04ae
         mov      ecx, dword ptr [g_data_0054205c]
         mov      eax, 0x9a
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x30], eax
         call     Copy3Fields3c4044_00404e90
         call     ScaledChainOr8_00404e50
         mov      edx, dword ptr [g_data_00542048]
         mov      eax, 0x14ccc
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x48], eax
         call     MStackCall_004062f0
         cmp      dword ptr [g_framePauseFlag], edi
@@ -249,7 +248,7 @@ __declspec(naked) void BossRoomInitCluster_00410340(void)
         dec      eax
         mov      dword ptr [g_data_0054205c], ecx
         mov      dword ptr [g_data_004d57ac], eax
-        mov      dword ptr [g_data_0054206c], 0x19
+        mov      dword ptr [g_walkCallback], 0x19
         call     TableLookupCall_00489ff0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      func_004107b4
@@ -257,7 +256,7 @@ __declspec(naked) void BossRoomInitCluster_00410340(void)
         mov      edx, dword ptr [g_data_0054205c]
         mov      ecx, 0xfd70
         mov      eax, dword ptr [edx*4 + 0x3c]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_00542054], eax
         mov      dword ptr [eax*4 + 0x3c], ecx
         mov      eax, dword ptr [g_data_00542054]
@@ -266,19 +265,19 @@ __declspec(naked) void BossRoomInitCluster_00410340(void)
         mov      dword ptr [g_data_0054207c], 3
         jmp      BossRoomBootstrap_004105c0
         mov      eax, OFFSET g_data_004d57c8
-        mov      dword ptr [g_data_0054206c], 0x707070
+        mov      dword ptr [g_walkCallback], 0x707070
         shr      eax, 2
         mov      dword ptr [g_data_00542044], eax
         mov      dword ptr [eax*4], 0x707070
         mov      ecx, dword ptr [g_data_00542058]
         mov      edx, dword ptr [ecx*4]
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         call     L_0340
         cmp      dword ptr [g_framePauseFlag], edi
         jne      func_004107b4
         mov      ecx, dword ptr [g_data_00542054]
         mov      eax, 0x10000
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x3c], eax
         mov      dword ptr [esi + 8], OFFSET L_0390
         mov      dword ptr [esi + 0x84], 3

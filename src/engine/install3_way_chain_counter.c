@@ -130,7 +130,6 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_data_0054204c;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern void CopyJmp_00406ba0(void);
 extern void FiveCallGuardSetTail_0046f6b0(void);
 extern void IterStepNegStore_00490b10(void);
@@ -174,7 +173,7 @@ __declspec(naked) void Install3WayChainCounter_004809e0(void) {
         _emit   5ch
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x0000100f
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    0x004ed850
         mov     dword ptr [ecx*4 + 0x74], eax
         call    IterStepNegStore_00490b10

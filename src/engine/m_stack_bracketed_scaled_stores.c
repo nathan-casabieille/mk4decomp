@@ -127,7 +127,6 @@ extern unsigned int g_data_00535e6c;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_0054208c;
 extern void AudioMixerStep_004ab700(void);
@@ -142,7 +141,7 @@ void MStackBracketedScaledStores_00475b30(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], ecx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_data_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], edx
@@ -153,7 +152,7 @@ void MStackBracketedScaledStores_00475b30(void) {
         mov     dword ptr [g_state_004d57ac], eax
         shr     edx, 2
         mov     dword ptr [eax*4], ecx
-        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         call    PushSetXfmMaskCallPop_00407140
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -167,7 +166,7 @@ void MStackBracketedScaledStores_00475b30(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     edx, dword ptr [eax*4]
         dec     eax
-        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [g_state_004d57ac], eax
         mov     ecx, dword ptr [eax*4]
         dec     eax
@@ -180,7 +179,7 @@ void MStackBracketedScaledStores_00475b30(void) {
         mov     dword ptr [eax*4 + 0x3c], edx
         mov     ecx, dword ptr [g_data_00542044]
         mov     eax, 0xa7
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x30], eax
         call    MStackCall_00406340
         mov     eax, dword ptr [g_framePauseFlag]
@@ -189,7 +188,7 @@ void MStackBracketedScaledStores_00475b30(void) {
         mov     ecx, dword ptr [g_data_00542044]
         mov     eax, dword ptr [ecx*4 + 0x34]
         or      ah, 4
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x34], eax
         mov     edx, dword ptr [g_data_00542044]
         mov     eax, dword ptr [g_data_00542074]
@@ -198,7 +197,7 @@ void MStackBracketedScaledStores_00475b30(void) {
         mov     edx, dword ptr [g_data_00542044]
         mov     ecx, dword ptr [eax*4]
         dec     eax
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [edx*4 + 0x58], ecx
         mov     eax, dword ptr [g_state_004d57ac]
@@ -207,13 +206,13 @@ void MStackBracketedScaledStores_00475b30(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     eax, dword ptr [g_data_00542044]
         mov     dword ptr [eax*4 + 0x54], ecx
-        mov     dword ptr [g_data_0054206c], 0x6487e
+        mov     dword ptr [g_walkCallback], 0x6487e
         call    AudioMixerStep_004ab700
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_mbss_ret
         mov     ecx, dword ptr [g_data_00542044]
-        mov     edx, dword ptr [g_data_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [ecx*4 + 0x68], edx
         mov     eax, dword ptr [g_state_004d57ac]
         mov     ecx, dword ptr [eax*4]

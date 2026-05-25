@@ -128,7 +128,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern void AudioMixerStep_004ab700(void);
 extern void CmpDivJmp_0049d080(void);
@@ -170,7 +169,7 @@ __declspec(naked) void Phase1ChainExtendedInitLoop2_0040c760(void)
         mov     edx, offset g_data_004d5fa0
         shr     edx, 2
         mov     dword ptr [g_data_00542058], ecx
-        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         call    PushSetXfmMaskCallPop_00407140
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -179,17 +178,17 @@ __declspec(naked) void Phase1ChainExtendedInitLoop2_0040c760(void)
         jne     L_p1cei2_tailjmp
         mov     eax, dword ptr [g_data_0054205c]
         mov     dword ptr [eax*4 + 0x30], 0x42
-        mov     dword ptr [g_data_0054206c], 0x60000
+        mov     dword ptr [g_walkCallback], 0x60000
         call    AudioMixerStep_004ab700
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1cei2_ret
         mov     ecx, dword ptr [g_data_0054205c]
-        mov     edx, dword ptr [g_data_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [ecx*4 + 0x68], edx
         mov     eax, dword ptr [g_data_0054205c]
         mov     dword ptr [eax*4 + 0x80], 0x1999
-        mov     dword ptr [g_data_0054206c], 0x41
+        mov     dword ptr [g_walkCallback], 0x41
         call    MStackPushNegMul10_0040a690
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -198,18 +197,18 @@ __declspec(naked) void Phase1ChainExtendedInitLoop2_0040c760(void)
         mov     edx, dword ptr [g_data_00542058]
         shl     edx, 2
         lea     eax, [ecx*4]
-        mov     ecx, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax + 0x6C], ecx
         mov     ecx, dword ptr [g_data_00542070]
         mov     dword ptr [eax + 0x74], ecx
-        mov     ecx, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         lea     ecx, [ecx + ecx*2]
         lea     ecx, [ecx + ecx*4]
         shl     ecx, 3
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     esi, dword ptr [edx + 0x54]
         add     ecx, esi
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax + 0x54], ecx
         mov     ecx, dword ptr [g_data_00542070]
         lea     ecx, [ecx + ecx*2]
@@ -222,7 +221,7 @@ __declspec(naked) void Phase1ChainExtendedInitLoop2_0040c760(void)
         mov     dword ptr [eax + 0x5C], ecx
         mov     edx, dword ptr [edx + 0x58]
         sub     edx, 0x3333
-        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [eax + 0x58], edx
         call    SetJmp_00408d20
         mov     eax, dword ptr [g_framePauseFlag]
@@ -238,13 +237,13 @@ __declspec(naked) void Phase1ChainExtendedInitLoop2_0040c760(void)
         mov     dword ptr [eax*4 + 0x14], 0xFF
         mov     ecx, dword ptr [g_data_00542048]
         mov     eax, 0x004BA0E0
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x10], eax
         mov     eax, dword ptr [g_data_00542044]
         mov     ecx, dword ptr [eax*4 + 0x20]
         or      ch, 0x40
         mov     dword ptr [eax*4 + 0x20], ecx
-        mov     dword ptr [g_data_0054206c], 1
+        mov     dword ptr [g_walkCallback], 1
         call    CmpDivJmp_0049d080
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -256,7 +255,7 @@ __declspec(naked) void Phase1ChainExtendedInitLoop2_0040c760(void)
         mov     esi, 0xFFFE8000
     L_p1cei2_loop_top:
         mov     edx, dword ptr [g_data_00542058]
-        mov     dword ptr [g_data_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         push    esi
         mov     eax, dword ptr [edx*4 + 0x6C]
         push    eax
@@ -266,13 +265,13 @@ __declspec(naked) void Phase1ChainExtendedInitLoop2_0040c760(void)
         add     edx, eax
         add     esp, 8
         mov     dword ptr [g_data_00542070], edx
-        mov     dword ptr [g_data_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         mov     edx, dword ptr [ecx*4 + 0x74]
         push    esi
         push    edx
         call    Mul10Tail_00404af0
         mov     ecx, dword ptr [g_data_00542074]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         add     ecx, eax
         mov     eax, dword ptr [g_data_00542044]
         mov     dword ptr [g_data_00542074], ecx

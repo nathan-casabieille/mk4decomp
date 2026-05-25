@@ -123,14 +123,13 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00458810 (104b game) - 3-entry-point dispatcher.
- *   Block A (+0x00): g_acc_00542078=g_state_0053a278; g_x_0054206c=eax-1; if (eax-1) < 0 g_x_0054206c=0x27;
+ *   Block A (+0x00): g_acc_00542078=g_state_0053a278; g_walkCallback=eax-1; if (eax-1) < 0 g_walkCallback=0x27;
  *     g_cj_00542054 = 0xffffffff; jmp CinematicStageCluster_004588b0.
- *   Block B (+0x30): g_x_0054206c=g_state_00537e98; if zero jmp IncCmp28StoreOrJmp_00458880 else jmp CallSetPause_0041f830.
- *   Block C (+0x50): g_x_0054206c=g_state_00537e98; if nonzero jmp IncCmp28StoreOrJmp else jmp CallSetPause.
+ *   Block B (+0x30): g_walkCallback=g_state_00537e98; if zero jmp IncCmp28StoreOrJmp_00458880 else jmp CallSetPause_0041f830.
+ *   Block C (+0x50): g_walkCallback=g_state_00537e98; if nonzero jmp IncCmp28StoreOrJmp else jmp CallSetPause.
  */
 extern unsigned int g_state_00537e98;
 extern unsigned int g_state_0053a278;
-extern unsigned int g_x_0054206c;
 extern void CallSetPause_0041f830(void);
 extern void CinematicStageCluster_004588b0(void);
 extern void IncCmp28StoreOrJmp_00458880(void);
@@ -141,10 +140,10 @@ __declspec(naked) void TripleEntryDispatch_00458810(void) {
         mov     dword ptr [g_acc_00542078], eax
         dec     eax
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7dh
         _emit   0ah
-        mov     dword ptr [g_x_0054206c], 0x27
+        mov     dword ptr [g_walkCallback], 0x27
         mov     dword ptr [g_cj_00542054], 0xffffffff
         jmp     CinematicStageCluster_004588b0
         _emit   90h
@@ -152,7 +151,7 @@ __declspec(naked) void TripleEntryDispatch_00458810(void) {
         _emit   90h
         mov     eax, dword ptr [g_state_00537e98]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   05h
         jmp     CallSetPause_0041f830
@@ -167,7 +166,7 @@ __declspec(naked) void TripleEntryDispatch_00458810(void) {
         _emit   90h
         mov     eax, dword ptr [g_state_00537e98]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   05h
         jmp     CallSetPause_0041f830

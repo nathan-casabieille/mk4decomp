@@ -124,13 +124,12 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00477300 (241b game) - mstack-push 3 + 2 calls + halve subtract.
  *   mstack-push g_x_00542078; call RangeMulMod_004ab2a0; if pause? ret.
- *   mstack-push g_x_0054206c twice. g_x_00542070 = g_x_0054206c; g_x_0054206c =
+ *   mstack-push g_walkCallback twice. g_x_00542070 = g_walkCallback; g_walkCallback =
  *     g_x_00542078; call RangeMulMod again; if pause? ret.
- *   g_x_00542078 = g_x_0054206c. mstack-pop; push (ecx, g_x_00542074) for cdecl call
+ *   g_x_00542078 = g_walkCallback. mstack-pop; push (ecx, g_x_00542074) for cdecl call
  *     to Mul10Tail. After call: cdq; eax-=edx; eax>>=1; ecx-=eax. mstack-pop 2.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542074;
 extern unsigned int g_x_00542078;
@@ -153,25 +152,25 @@ void MStackPush3DualCallHalve_00477300(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + 0], edx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     edx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     eax, dword ptr [g_x_00542078]
         mov     dword ptr [g_x_00542070], edx
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    RangeMulMod_004ab2a0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         _emit   75h
         _emit   72h
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     eax, dword ptr [g_state_004d57ac]
         mov     edx, dword ptr [g_x_00542074]
         mov     dword ptr [g_x_00542078], ecx
@@ -179,7 +178,7 @@ void MStackPush3DualCallHalve_00477300(void) {
         dec     eax
         push    ecx
         push    edx
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_state_004d57ac], eax
         call    Mul10Tail_00404af0
         mov     ecx, dword ptr [g_x_00542078]
@@ -189,7 +188,7 @@ void MStackPush3DualCallHalve_00477300(void) {
         sar     eax, 1
         sub     ecx, eax
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [eax*4 + 0]
         dec     eax
         mov     dword ptr [g_x_00542070], edx

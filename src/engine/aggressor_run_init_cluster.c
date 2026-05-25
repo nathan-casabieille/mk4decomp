@@ -137,7 +137,6 @@ extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542088;
 extern unsigned int g_data_00542be8;
@@ -171,7 +170,7 @@ __declspec(naked) void AggressorRunInitCluster_004813b0(void)
         jne      L_1475
         mov      eax, 0x258
         push     OFFSET g_data_00542be8
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_00537ef4], eax
         call     IterLoad_00491050
         mov      eax, dword ptr [g_framePauseFlag]
@@ -182,7 +181,7 @@ __declspec(naked) void AggressorRunInitCluster_004813b0(void)
         mov      dword ptr [g_data_00542048], ecx
         mov      eax, dword ptr [ecx*4 + 0x58]
         add      eax, 0x18000
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x58], eax
         mov      ecx, dword ptr [g_data_00542048]
         mov      dword ptr [g_data_00542070], 0x3333
@@ -197,7 +196,7 @@ __declspec(naked) void AggressorRunInitCluster_004813b0(void)
         mov      dword ptr [g_data_00542048], ecx
         mov      eax, dword ptr [ecx*4 + 0x58]
         sub      eax, 0x18000
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x58], eax
         jmp      ScaledInitWithCounterAndType_004314f0
     L_1475:

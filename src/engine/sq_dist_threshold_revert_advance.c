@@ -139,7 +139,6 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_data_00538158;
 extern unsigned int g_data_0054204c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_0054207c;
@@ -158,7 +157,7 @@ __declspec(naked) void SqDistThresholdRevertAdvance_00489d10(void) {
         push    edi
         lea     esi, [eax*4]
         mov     eax, dword ptr [eax*4 + 0x54]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     ecx, dword ptr [esi + 0x5c]
         push    eax
         push    eax
@@ -167,19 +166,19 @@ __declspec(naked) void SqDistThresholdRevertAdvance_00489d10(void) {
         mov     dword ptr [g_data_0054207c], ecx
         call    Mul10Tail_00404af0
         add     esp, 8
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     eax, dword ptr [g_data_00542070]
         push    eax
         push    eax
         call    Mul10Tail_00404af0
-        mov     ecx, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     edx, dword ptr [g_data_00542050]
         add     ecx, eax
         add     esp, 8
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [edx*4], ecx
         mov     eax, dword ptr [g_data_0053a180]
-        mov     ecx, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         cmp     ecx, eax
         mov     dword ptr [g_data_00542070], eax
         jge     short L_sdt_advance
@@ -224,7 +223,7 @@ __declspec(naked) void SqDistThresholdRevertAdvance_00489d10(void) {
         push    eax
         call    Mul10Tail_00404af0
         mov     edx, dword ptr [g_data_0054207c]
-        mov     ecx, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         add     eax, edx
         add     esp, 8
         cmp     eax, ecx

@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 /*
  * AudioBank2StatePickerWalk_004a9270 - 324b audio 2-bank state picker and roundrobin walk.
- *   g_x_0054206c=0; CopyGlobal_004ac1f0; func_004a2080.
+ *   g_walkCallback=0; CopyGlobal_004ac1f0; func_004a2080.
  *   eax = g_state_00537f94; edx = g_data_0054359c; edi = g_x_005433c8.
  *   If eax == 1: chain low table [edi*24 + 0x0054361a/19] += 1.
  *   Else: chain high table [edx*24 + 0x005435a2/a1] += 1.
@@ -146,7 +146,6 @@ extern unsigned int g_data_005433c0;
 extern unsigned int g_data_0054359c;
 extern unsigned int g_x_004f3ae4;
 extern unsigned int g_x_004f3ae8;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_005433c8;
 extern void CopyGlobal_004ac1f0(void);
 extern void PendingMatch_004a93c0(void);
@@ -159,7 +158,7 @@ __declspec(naked) void AudioBank2StatePickerWalk_004a9270(void)
         push    ebp
         push    esi
         push    edi
-        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         call    CopyGlobal_004ac1f0
         call    func_004a2080
         mov     eax, dword ptr [g_state_00537f94]

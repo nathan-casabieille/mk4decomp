@@ -128,7 +128,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00543800;
 extern void AudioVolumeRescale_004ab690(void);
 extern void ChainWalkPushPop_00405a40(void);
@@ -160,7 +159,7 @@ __declspec(naked) void Phase1ChainAdvanceCallScale_00418f80(void)
         lea     eax, [edx*4]
         mov     dword ptr [eax + 0x44], 0x4CCC
         mov     dword ptr [eax + 0x30], 0xFFFFEB03
-        mov     dword ptr [g_data_0054206c], 0x0A
+        mov     dword ptr [g_walkCallback], 0x0A
         call    DirtyDoubleDeref_00408cb0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -203,16 +202,16 @@ __declspec(naked) void Phase1ChainAdvanceCallScale_00418f80(void)
         mov     ecx, dword ptr [g_data_0054205c]
         mov     eax, dword ptr [g_data_004d5364]
         add     eax, dword ptr [ecx*4 + 0x70]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x70], eax
         js      L_p1c2_helper_skip_block
         mov     edx, dword ptr [g_data_0054205c]
         mov     eax, dword ptr [edx*4 + 0x58]
         add     eax, 0x1999
         test    eax, eax
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jle     L_p1c2_helper_skip_block
-        mov     dword ptr [g_data_0054206c], 0x28A
+        mov     dword ptr [g_walkCallback], 0x28A
         call    AudioVolumeRescale_004ab690
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -224,9 +223,9 @@ __declspec(naked) void Phase1ChainAdvanceCallScale_00418f80(void)
         mov     eax, dword ptr [eax*4 + 0x70]
         push    eax
         push    0xFFFF4CCD
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    Mul10Tail_00404af0
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         add     esp, 8
         mov     dword ptr [esi], eax
     L_p1c2_helper_skip_block:
@@ -235,25 +234,25 @@ __declspec(naked) void Phase1ChainAdvanceCallScale_00418f80(void)
         lea     esi, [ecx*4]
         push    eax
         push    0xFD70
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    Mul10Tail_00404af0
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         add     esp, 8
         mov     dword ptr [esi + 0x78], eax
         mov     eax, dword ptr [esi + 0x7C]
         push    eax
         push    0xFD70
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    Mul10Tail_00404af0
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         add     esp, 8
         mov     dword ptr [esi + 0x7C], eax
         mov     eax, dword ptr [esi + 0x80]
         push    eax
         push    0xFD70
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    Mul10Tail_00404af0
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         add     esp, 8
         mov     dword ptr [esi + 0x80], eax
         jmp     L_p1c2_helper_pop1

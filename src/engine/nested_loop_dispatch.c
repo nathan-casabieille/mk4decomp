@@ -126,13 +126,12 @@ extern unsigned int g_data_00535e7c;
  *   mstack-push g_x_00542074, g_x_0054204c. esi=3.
  *   g_x_0054204c=(0x0053a53c>>2); outer g_x_00542070=0xf; inner g_x_00542074=esi=3.
  *   LOOP_HEAD: call ScaledMaskByte_004774d0; if pause exit.
- *   compare g_x_0054206c to {0x20, 0x7b/c/d, 0x5f}; dispatch one path.
+ *   compare g_walkCallback to {0x20, 0x7b/c/d, 0x5f}; dispatch one path.
  *   inner inc-dec; if !=0 LOOP_HEAD; else dec outer; if 0 -> FINAL_OK; else reset inner.
  *   FINAL_OK: call BitmapBlitRunLength_004592f0; if !pause: mstack-pop pair; ret.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0054204c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542074;
 extern void BitmapBlitRunLength_004592f0(void);
@@ -166,7 +165,7 @@ __declspec(naked) void NestedLoopDispatch_00458f40(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         cmp     eax, 0x20
         _emit   72h
         _emit   44h

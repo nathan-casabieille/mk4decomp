@@ -131,7 +131,6 @@ extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_0054207c;
 extern unsigned int g_x_00542080;
 extern unsigned int g_x_00542084;
@@ -142,7 +141,7 @@ __declspec(naked) void StateGateMStackOverlap_00438690(void) {
         mov     ecx, dword ptr [g_x_00542084]
         cmp     eax, ecx
         push    esi
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7dh
         _emit   07h
         call    StackPopDispatchTagged_0041f780
@@ -153,7 +152,7 @@ __declspec(naked) void StateGateMStackOverlap_00438690(void) {
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
-        mov     dword ptr [g_x_0054206c], 0x00002147
+        mov     dword ptr [g_walkCallback], 0x00002147
         call    MStackFrameCdeclDouble_004903f0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

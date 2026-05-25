@@ -145,7 +145,6 @@ extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542088;
 extern unsigned int g_data_0054208c;
 
@@ -168,12 +167,12 @@ __declspec(naked) void StageEventComplexFsm_0047c680(void)
     L_c6b0:
         mov      eax, dword ptr [g_data_00537f94]
         cmp      eax, edi
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jne      L_c82f
         call     NotShrCmp1Store_00460d80
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_c855
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         mov      ecx, eax
         and      ecx, 9
         cmp      ecx, 9
@@ -183,7 +182,7 @@ __declspec(naked) void StageEventComplexFsm_0047c680(void)
         cmp      eax, 5
         mov      dword ptr [g_data_00542070], eax
         je       L_c864
-        mov      dword ptr [g_data_0054206c], 0xb333
+        mov      dword ptr [g_walkCallback], 0xb333
         call     EsiEdiAliasDualMul10_004906b0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_c855
@@ -195,10 +194,10 @@ __declspec(naked) void StageEventComplexFsm_0047c680(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_c855
         mov      al, byte ptr [g_data_0054208c]
-        mov      dword ptr [g_data_0054206c], ebp
+        mov      dword ptr [g_walkCallback], ebp
         test     al, 1
         jne      short L_c759
-        mov      dword ptr [g_data_0054206c], 0x8000
+        mov      dword ptr [g_walkCallback], 0x8000
     L_c759:
         call     EsiEdiAliasDualMul10_004906b0
         cmp      dword ptr [g_framePauseFlag], edi
@@ -218,7 +217,7 @@ __declspec(naked) void StageEventComplexFsm_0047c680(void)
     L_c79c:
         mov      eax, dword ptr [eax*4]
         cmp      eax, edi
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       short L_c86e
         mov      eax, OFFSET g_data_004ffe28
         shr      eax, 2
@@ -227,12 +226,12 @@ __declspec(naked) void StageEventComplexFsm_0047c680(void)
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, dword ptr [ecx*4 + 0x68]
         dec      eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jne      short L_c7eb
         call     TripleEntryTblPushJmp_0047c880
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_c855
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
     L_c7eb:
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x68], eax

@@ -132,7 +132,6 @@ extern void FivePackedSubdispatchInstallSelf_0049c040(void);
  *     jmp FivePackedSubdispatchInstallSelf_0049c040; else chain[*4+0x74]=0x30c; push 0x004f26a8; call ArgSarStoreJmp; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CallSetPause_0041f830(void);
 
@@ -159,7 +158,7 @@ __declspec(naked) void Triple3PathDispatch_0049bf90(void) {
         _emit   90h
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x0000030d
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
         call    CondPickDualStore_0049c670
         mov     eax, dword ptr [g_pause_00541e6c]
@@ -199,7 +198,7 @@ __declspec(naked) void Triple3PathDispatch_0049bf90(void) {
         jmp     FivePackedSubdispatchInstallSelf_0049c040
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x0000030c
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    0x004f26a8
         mov     dword ptr [ecx*4 + 0x74], eax
         call    ArgSarStoreJmp_004594f0

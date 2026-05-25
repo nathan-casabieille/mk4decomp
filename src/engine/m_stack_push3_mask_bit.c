@@ -123,13 +123,12 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00492920 (182b game) - same pattern as MStackPush3MaskBit0_004929e0 but with mask 0x01.
- *   Push g_x_0054206c, g_x_00542070, g_x_00542074; call MStackPush2TableNot_00426230; pause? -> end.
- *   edx = g_x_0054206c & 1; eax = g_state_0054208c; g_x_00542094 = edx;
+ *   Push g_walkCallback, g_x_00542070, g_x_00542074; call MStackPush2TableNot_00426230; pause? -> end.
+ *   edx = g_walkCallback & 1; eax = g_state_0054208c; g_x_00542094 = edx;
  *   if (edx != 0): or al, 1; else: and al, 0xfe.
  *   g_state_0054208c = eax.
- *   mstack-pop into g_x_00542074, g_x_00542070, g_x_0054206c.
+ *   mstack-pop into g_x_00542074, g_x_00542070, g_walkCallback.
  */
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542074;
 extern unsigned int g_x_00542094;
@@ -139,7 +138,7 @@ extern unsigned int g_data_004d57ac_arr;
 void MStackPush3MaskBit_00492920(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], ecx
@@ -158,7 +157,7 @@ void MStackPush3MaskBit_00492920(void) {
         test    eax, eax
         _emit   75h
         _emit   5fh
-        mov     edx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     eax, dword ptr [g_state_0054208c]
         and     edx, 1
         mov     dword ptr [g_x_00542094], edx
@@ -180,7 +179,7 @@ void MStackPush3MaskBit_00492920(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_state_004d57ac], eax
         }
 }

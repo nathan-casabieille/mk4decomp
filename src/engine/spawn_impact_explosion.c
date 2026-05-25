@@ -132,7 +132,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_0054208c;
 extern void StoreDoubleNegPauseSubStore_004ab750(void);
@@ -162,7 +161,7 @@ __declspec(naked) void SpawnImpactExplosion_00471be0(void)
         mov      dword ptr [g_data_00542054], edx
         shr      eax, 2
         mov      dword ptr [g_data_00542058], eax
-        mov      dword ptr [g_data_0054206c], 0xc000
+        mov      dword ptr [g_walkCallback], 0xc000
         call     ZeroAndDirty4_00405430
         mov      eax, dword ptr [g_framePauseFlag]
         xor      esi, esi
@@ -171,7 +170,7 @@ __declspec(naked) void SpawnImpactExplosion_00471be0(void)
         test     byte ptr [g_data_0054208c], 4
         jne      short L_1ca9
         mov      ecx, OFFSET g_data_004ec270
-        mov      dword ptr [g_data_0054206c], 0xd999
+        mov      dword ptr [g_walkCallback], 0xd999
         shr      ecx, 2
         mov      dword ptr [g_data_00542058], ecx
         call     ZeroAndDirty4_00405430
@@ -192,32 +191,32 @@ __declspec(naked) void SpawnImpactExplosion_00471be0(void)
         test     al, 1
         jne      L_1dbc
         mov      dword ptr [g_data_00542070], esi
-        mov      dword ptr [g_data_0054206c], 0xc28f
+        mov      dword ptr [g_walkCallback], 0xc28f
         call     StoreDoubleNegPauseSubStore_004ab750
         cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_1dfa
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         mov      ecx, dword ptr [g_data_00542070]
         mov      edx, dword ptr [g_data_00542044]
         add      ecx, eax
         mov      dword ptr [edx*4 + 0x38], ecx
         mov      dword ptr [g_data_00542070], 0xfffe0000
-        mov      dword ptr [g_data_0054206c], 0xdc28
+        mov      dword ptr [g_walkCallback], 0xdc28
         call     StoreDoubleNegPauseSubStore_004ab750
         cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_1dfa
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         mov      ecx, dword ptr [g_data_00542070]
         mov      edx, dword ptr [g_data_00542044]
         add      ecx, eax
         mov      dword ptr [edx*4 + 0x3c], ecx
         mov      dword ptr [g_data_00542070], 0xc4000
-        mov      dword ptr [g_data_0054206c], 0x5c28
+        mov      dword ptr [g_walkCallback], 0x5c28
         call     StoreDoubleNegPauseSubStore_004ab750
         cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_1dfa
         mov      eax, dword ptr [g_data_00542070]
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         add      eax, ecx
         mov      ecx, dword ptr [g_data_00542044]
         mov      dword ptr [g_data_00542070], eax
@@ -227,7 +226,7 @@ __declspec(naked) void SpawnImpactExplosion_00471be0(void)
         mov      eax, dword ptr [g_data_00542044]
         mov      dword ptr [eax*4 + 0x48], esi
         mov      ecx, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_0054206c], esi
+        mov      dword ptr [g_walkCallback], esi
         mov      dword ptr [ecx*4 + 0x4c], esi
     L_1dbc:
         mov      eax, dword ptr [g_data_004d57ac]

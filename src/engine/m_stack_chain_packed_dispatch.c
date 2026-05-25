@@ -130,7 +130,6 @@ extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern void InstallSelfDispatch_00407620(void);
 extern void MStackBracket4_ListInsertZeroFill_00408600(void);
@@ -199,7 +198,7 @@ void MStackChainPackedDispatch_00463c80(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     eax, 0x250
         mov     dword ptr [g_data_00542044], ecx
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x30], eax
         mov     edx, dword ptr [g_data_00542044]
         mov     dword ptr [edx*4 + 0x58], 0x6666

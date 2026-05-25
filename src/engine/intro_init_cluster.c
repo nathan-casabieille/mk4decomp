@@ -143,7 +143,6 @@ extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 
 __declspec(naked) void PreFight4StageSequencer_0044a590(void)
@@ -161,14 +160,14 @@ __declspec(naked) void PreFight4StageSequencer_0044a590(void)
         mov      eax, dword ptr [g_data_00542050]
         mov      ecx, 1
         mov      eax, dword ptr [eax*4 + 0x18]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_00542044], eax
         mov      dword ptr [eax*4 + 0x1c], ecx
         call     MStackPushTyped_0044cf50
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a7ee
-        mov      dword ptr [g_data_0054206c], 9
+        mov      dword ptr [g_walkCallback], 9
         call     MStackPush2GuardedFieldClear_0044d0c0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -177,7 +176,7 @@ __declspec(naked) void PreFight4StageSequencer_0044a590(void)
         jne      L_a7ee
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, 2
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x1c], eax
         call     MStackPushTyped_0044cf80
         mov      eax, dword ptr [g_framePauseFlag]
@@ -193,7 +192,7 @@ __declspec(naked) void PreFight4StageSequencer_0044a590(void)
         mov      ecx, dword ptr [g_data_00542050]
         mov      eax, dword ptr [g_data_0054204c]
         mov      edx, dword ptr [ecx*4 + 0x18]
-        mov      dword ptr [g_data_0054206c], 7
+        mov      dword ptr [g_walkCallback], 7
         mov      dword ptr [g_data_00542048], edx
         mov      dword ptr [g_data_00542054], eax
         call     MStackPush2GuardedFieldClear_0044d0c0
@@ -220,7 +219,7 @@ __declspec(naked) void PreFight4StageSequencer_0044a590(void)
         jne      L_a7ee
         mov      edx, dword ptr [g_data_00542044]
         mov      eax, 3
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x1c], eax
         call     MStackPushTyped_0044cfb0
         mov      eax, dword ptr [g_framePauseFlag]
@@ -233,7 +232,7 @@ __declspec(naked) void PreFight4StageSequencer_0044a590(void)
         mov      eax, dword ptr [g_data_00542044]
         mov      ecx, dword ptr [g_data_0054204c]
         mov      dword ptr [g_data_00542048], eax
-        mov      dword ptr [g_data_0054206c], 5
+        mov      dword ptr [g_walkCallback], 5
         mov      dword ptr [g_data_00542054], ecx
         call     MStackPush2GuardedFieldClear_0044d0c0
         mov      eax, dword ptr [g_framePauseFlag]
@@ -261,7 +260,7 @@ __declspec(naked) void PreFight4StageSequencer_0044a590(void)
         mov      dword ptr [eax*4 + 0x1c], ebx
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, 0x3243f
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x3c], eax
         call     MStackCall_0044d230
         mov      eax, dword ptr [g_framePauseFlag]

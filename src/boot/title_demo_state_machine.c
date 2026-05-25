@@ -141,7 +141,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_0054208c;
 extern void AudioVolumeRescale_004ab690(void);
@@ -222,7 +221,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         push     -1
         push     -1
         push     0x1e
-        mov      dword ptr [g_data_0054206c], ebp
+        mov      dword ptr [g_walkCallback], ebp
         mov      dword ptr [g_data_00541de8], ebp
         mov      dword ptr [g_data_00541dec], ebp
         mov      dword ptr [g_data_00541df0], ebp
@@ -259,7 +258,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         jne      L_1cb3
         mov      eax, 2
         mov      dword ptr [g_data_0053a50c], ebp
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_0052aac4], eax
         mov      dword ptr [g_data_00542074], ebp
         call     Push16Call_00489f50
@@ -268,7 +267,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         call     ZeroMultiGlobalsCmp_00404680
         cmp      dword ptr [g_framePauseFlag], ebp
         jne      L_1cb3
-        mov      dword ptr [g_data_0054206c], ebp
+        mov      dword ptr [g_walkCallback], ebp
         mov      dword ptr [g_data_00541dc0], ebp
         mov      dword ptr [g_data_0053a19c], ebp
         mov      dword ptr [g_data_0053a408], ebp
@@ -333,7 +332,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         pop      ebp
         pop      ebx
         ret      
-        mov      dword ptr [g_data_0054206c], 0x64
+        mov      dword ptr [g_walkCallback], 0x64
         call     AudioVolumeRescale_004ab690
         mov      al, byte ptr [g_data_0054208c]
         mov      dword ptr [esi + 8], edi
@@ -637,7 +636,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         pop      ebp
         pop      ebx
         ret      
-        mov      dword ptr [g_data_0054206c], ebp
+        mov      dword ptr [g_walkCallback], ebp
         call     CopyGlobal_004ac1f0
         mov      dword ptr [esi + 8], edi
         mov      dword ptr [esi + 0x84], ebx

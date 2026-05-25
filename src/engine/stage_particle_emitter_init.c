@@ -132,7 +132,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054207c;
 extern void BootPhaseGateBracketedInit_004060c0(void);
 extern void InstallSelf5CallVecChain_00464660(void);
@@ -145,7 +144,7 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         mov      eax, dword ptr [g_data_00537f78]
         push     esi
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      esi, 0xffffae15
         jne      L_4400
         call     BootPhaseGateBracketedInit_004060c0
@@ -162,12 +161,12 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         mov      edx, dword ptr [g_data_00542044]
         mov      dword ptr [edx*4 + 0x58], 0xfffe0000
         mov      eax, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_0054206c], esi
+        mov      dword ptr [g_walkCallback], esi
         mov      dword ptr [eax*4 + 0x5c], esi
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, dword ptr [ecx*4 + 0x34]
         or       al, 8
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
         call     MStackCall_004063e0
         mov      eax, dword ptr [g_framePauseFlag]
@@ -176,7 +175,7 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
     L_4400:
         mov      eax, dword ptr [g_data_00541de0]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jne      L_44ab
         call     BootPhaseGateBracketedInit_004060c0
         mov      eax, dword ptr [g_framePauseFlag]
@@ -192,12 +191,12 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         mov      eax, dword ptr [g_data_00542044]
         mov      dword ptr [eax*4 + 0x58], 0xfffe0000
         mov      ecx, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_0054206c], esi
+        mov      dword ptr [g_walkCallback], esi
         mov      dword ptr [ecx*4 + 0x5c], esi
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, dword ptr [ecx*4 + 0x34]
         or       al, 8
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
         call     MStackCall_004063e0
         mov      eax, dword ptr [g_framePauseFlag]
@@ -206,7 +205,7 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
     L_44ab:
         mov      eax, dword ptr [g_data_00535e6c]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jne      L_4551
         call     BootPhaseGateBracketedInit_004060c0
         mov      eax, dword ptr [g_framePauseFlag]
@@ -222,12 +221,12 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         mov      ecx, dword ptr [g_data_00542044]
         mov      dword ptr [ecx*4 + 0x58], 0xffd00000
         mov      edx, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_0054206c], 0
+        mov      dword ptr [g_walkCallback], 0
         mov      dword ptr [edx*4 + 0x5c], 0
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, dword ptr [ecx*4 + 0x34]
         or       al, 8
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
         call     MStackCall_004063e0
     L_4551:
@@ -253,7 +252,7 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         mov      eax, 0xffffd1ec
         mov      dword ptr [ecx*4 + 0x34], 0xffff6667
         mov      edx, dword ptr [g_data_00542060]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      ecx, OFFSET g_data_00537f78
         mov      dword ptr [edx*4 + 0x38], eax
         mov      eax, OFFSET g_data_00538158
@@ -282,7 +281,7 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         mov      eax, 0xffffd99a
         mov      dword ptr [ecx*4 + 0x34], 0x12b85
         mov      edx, dword ptr [g_data_00542060]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      ecx, OFFSET g_data_00537f78
         mov      dword ptr [edx*4 + 0x38], eax
         mov      eax, OFFSET g_data_00538158

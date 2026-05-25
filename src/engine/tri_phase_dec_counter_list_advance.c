@@ -127,7 +127,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_00542080;
 extern unsigned int g_data_00542088;
@@ -155,7 +154,7 @@ __declspec(naked) void TriPhaseDecCounterListAdvance_0047ad20(void)
         je      L_tpdcla_phase0
         dec     eax
         je      short L_tpdcla_phase1
-        mov     dword ptr [g_data_0054206c], 0x9d
+        mov     dword ptr [g_walkCallback], 0x9d
         call    ScaledLitLoadCall_00480fe0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -180,7 +179,7 @@ __declspec(naked) void TriPhaseDecCounterListAdvance_0047ad20(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_tpdcla_abort
-        mov     dword ptr [g_data_0054206c], 0xe666
+        mov     dword ptr [g_walkCallback], 0xe666
         call    EsiEdiAliasDualMul10_004906b0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -214,10 +213,10 @@ __declspec(naked) void TriPhaseDecCounterListAdvance_0047ad20(void)
         mov     ecx, dword ptr [g_data_0054205c]
         mov     eax, dword ptr [ecx*4 + 0x28]
         cmp     eax, 0x18
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jg      short L_tpdcla_storeBack
         mov     eax, 0x18
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
     L_tpdcla_storeBack:
         mov     dword ptr [ecx*4 + 0x28], eax
         mov     dword ptr [g_data_00542080], 2

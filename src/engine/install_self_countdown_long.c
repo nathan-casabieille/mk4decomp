@@ -127,14 +127,13 @@ extern unsigned int g_data_00535e7c;
  *   B (+0x20): standard install-self.  chain[+0x84]!=0 path: load [g_x_0054205c*4+0x4c];
  *     if nonzero: g_x_00542080 = ax (after decrement?), jmp 0x80; else push 0x004ed6b8, call ArgSarStoreJmp, pop+ret.
  *     +0x6c countdown: dec g_x_00542080; if zero proceed; else self-call jmp.
- *     g_x_0054206c=0xc, call CmpEqInitCallElseJmp; pause-check; bit-0 test; if set call DirtyGuardLitOrJmp;
+ *     g_walkCallback=0xc, call CmpEqInitCallElseJmp; pause-check; bit-0 test; if set call DirtyGuardLitOrJmp;
  *     else install-self at +0x08=0x0047ee90.
  */
 extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542080;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CmpEqInitCallElseJmp_0048d4b0(void);
@@ -164,7 +163,7 @@ __declspec(naked) void InstallSelfCountdownLong_0047ee70(void) {
         mov     ecx, dword ptr [g_x_0054205c]
         mov     eax, dword ptr [ecx*4 + 0x4c]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   28h
         push    0x004ed6b8
@@ -181,7 +180,7 @@ __declspec(naked) void InstallSelfCountdownLong_0047ee70(void) {
         call    InstallSelfCountdownLong_0047ee70
         pop     esi
         ret
-        mov     dword ptr [g_x_0054206c], 0x0c
+        mov     dword ptr [g_walkCallback], 0x0c
         call    CmpEqInitCallElseJmp_0048d4b0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

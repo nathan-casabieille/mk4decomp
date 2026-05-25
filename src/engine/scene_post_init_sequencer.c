@@ -136,7 +136,6 @@ extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_00542074;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_004d5308;
 extern unsigned int g_data_004d530c;
 extern unsigned int g_data_004d5300;
@@ -186,23 +185,23 @@ void ScenePostInitSequencer_00429b70(void) {
     L_9bf5:
         mov      ecx, dword ptr [g_cj_00542058]
         mov      edx, dword ptr [ecx*4 + 0x18]
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         call     CopyGlobal_004ac1f0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_9e22
         mov      eax, dword ptr [g_cj_00542058]
         mov      ecx, dword ptr [eax*4 + 0x1c]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_004d5308], ecx
         mov      ecx, dword ptr [eax*4 + 0x20]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_004d530c], ecx
         mov      ecx, dword ptr [eax*4 + 0x24]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_004d5300], ecx
         mov      eax, dword ptr [eax*4 + 0x28]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_004d5304], eax
         call     PendingMatch_00429ef0
         mov      eax, dword ptr [g_framePauseFlag]
@@ -212,22 +211,22 @@ void ScenePostInitSequencer_00429b70(void) {
         mov      ecx, dword ptr [g_cj_00542058]
         mov      dword ptr [g_scaledInit_00542044], eax
         mov      ecx, dword ptr [ecx*4 + 0x2c]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [eax*4 + 0x54], ecx
         mov      edx, dword ptr [g_cj_00542058]
         mov      ecx, dword ptr [g_scaledInit_00542044]
         mov      eax, dword ptr [edx*4 + 0x30]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x58], eax
         mov      edx, dword ptr [g_cj_00542058]
         mov      ecx, dword ptr [g_scaledInit_00542044]
         mov      eax, dword ptr [edx*4 + 0x34]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x5c], eax
         mov      edx, dword ptr [g_cj_00542058]
         mov      ecx, dword ptr [g_scaledInit_00542044]
         mov      eax, dword ptr [edx*4 + 0x38]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x3c], eax
         mov      edx, dword ptr [g_cj_00542058]
         mov      eax, dword ptr [edx*4 + 0xc]
@@ -241,12 +240,12 @@ void ScenePostInitSequencer_00429b70(void) {
         mov      dword ptr [eax*4 + 0x30], 0xb
         mov      eax, dword ptr [g_data_00535e6c]
         mov      ecx, dword ptr [g_cj_0054205c]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x3c], eax
         mov      edx, dword ptr [g_cj_00542058]
         mov      eax, dword ptr [edx*4 + 0x14]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       short L_9d79
         mov      dword ptr [g_data_00542048], eax
         call     MStackPush4LLWalkPop4_004090e0
@@ -257,7 +256,7 @@ void ScenePostInitSequencer_00429b70(void) {
         mov      eax, dword ptr [g_cj_00542058]
         mov      eax, dword ptr [eax*4 + 0x10]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       short L_9dc3
         mov      edx, dword ptr [g_cj_0054205c]
         mov      dword ptr [g_data_00542048], eax
@@ -280,7 +279,7 @@ void ScenePostInitSequencer_00429b70(void) {
         mov      edx, dword ptr [g_cj_00542058]
         mov      eax, dword ptr [edx*4 + 8]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       short L_9df5
         call     eax
     L_9df5:
@@ -288,12 +287,12 @@ void ScenePostInitSequencer_00429b70(void) {
         test     eax, eax
         jne      short L_9e22
         mov      eax, dword ptr [g_cj_0054205c]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         call     MStackPop8_004ab860
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_9e22
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [g_cj_0054205c], ecx
     L_9e22:
         }

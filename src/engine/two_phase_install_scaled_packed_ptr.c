@@ -129,7 +129,6 @@ extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern void CallDualStoreXorBit_004285e0(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
@@ -164,7 +163,7 @@ __declspec(naked) void TwoPhaseInstallScaledPackedPtr_00480d50(void)
         jne     L_tpisp_final
         mov     ecx, dword ptr [g_data_0054205c]
         mov     eax, 0x12
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x28], eax
         mov     edx, dword ptr [g_data_0054205c]
         mov     eax, offset g_data_00500c74
@@ -192,11 +191,11 @@ __declspec(naked) void TwoPhaseInstallScaledPackedPtr_00480d50(void)
         ret
     L_tpisp_phase0:
         mov     ecx, dword ptr [g_data_0054205c]
-        mov     eax, dword ptr [g_data_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [ecx*4 + 0x4c], eax
         mov     edx, dword ptr [g_data_00542060]
         mov     eax, 0x1005
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x74], eax
         mov     eax, dword ptr [g_data_0054205c]
         mov     ecx, dword ptr [g_data_00542070]
@@ -212,13 +211,13 @@ __declspec(naked) void TwoPhaseInstallScaledPackedPtr_00480d50(void)
         mov     dword ptr [edx*4 + 0x24], eax
         mov     ecx, dword ptr [g_data_0054205c]
         mov     eax, 7
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x28], eax
     L_tpisp_final:
         mov     edx, dword ptr [g_data_0054205c]
         mov     eax, dword ptr [edx*4 + 0x28]
         cmp     eax, 0x12
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jge     short L_tpisp_install
         call    CallDualStoreXorBit_004285e0
         mov     eax, dword ptr [g_framePauseFlag]

@@ -129,7 +129,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542080;
 extern unsigned int g_data_0054208c;
 extern void ArgSarStoreJmp_004594f0(void);
@@ -209,7 +208,7 @@ __declspec(naked) void ThrowTakedownStepCluster_00479e40(void)
         /* === Helper 2: 0x219 event === */
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, 0x219
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x74], eax
         call     ScoreAiStatusFsmCluster_00479b50
         mov      eax, dword ptr [g_framePauseFlag]
@@ -248,7 +247,7 @@ __declspec(naked) void ThrowTakedownStepCluster_00479e40(void)
         jne      L_a019
         mov      ecx, dword ptr [g_data_0054205c]
         mov      eax, 0x28f
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x4c], eax
         call     InstallSelf3StateDualChain_0047a1c0
         pop      esi
@@ -266,7 +265,7 @@ __declspec(naked) void ThrowTakedownStepCluster_00479e40(void)
         push     0xfffffd71
         push     0x1999
         mov      dword ptr [edx*4 + 0x70], 0xffffe148
-        mov      dword ptr [g_data_0054206c], 0xfffffd71
+        mov      dword ptr [g_walkCallback], 0xfffffd71
         call     Mul10Tail_00404af0
         mov      ecx, dword ptr [g_data_0054205c]
         add      esp, 8
@@ -278,7 +277,7 @@ __declspec(naked) void ThrowTakedownStepCluster_00479e40(void)
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], edx
-        mov      dword ptr [g_data_0054206c], 0x1a
+        mov      dword ptr [g_walkCallback], 0x1a
         call     CmpEqInitCallElseJmp_0048d4b0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

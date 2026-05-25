@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0049a4e0 (312b game) - dual-block: install-self entry + sibling-tail with Mul10 chain.
  *   Entry (0..0x96): load state; clear. state!=0: tail-jmp FiveCallGuardSetTail.
- *     state==0: g_x_0054206c=0x1016; chain[baseSel*4+0x74]=0x1016; install-self at entry+0x01000000.
+ *     state==0: g_walkCallback=0x1016; chain[baseSel*4+0x74]=0x1016; install-self at entry+0x01000000.
  *     state=1; call ScaledLoadJmp; pause=1; pop esi/edi; ret.
  *   Tail (+0xa0): call PendingMatch_0049a670; if pause ret.
  *     Mul10Tail(0x3333, g_x_00542084)->[g_x_00542084 + scaledInit chain offset +0x6c].
@@ -133,7 +133,6 @@ extern unsigned int g_data_00535e7c;
  *     push 0x004f2410; call ArgSar_Set0_Jmp; pop+ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542084;
 extern void ArgSar_Set0_Jmp_0049c6f0(void);
 extern void CopyThreeFields_00404df0(void);
@@ -157,7 +156,7 @@ __declspec(naked) void DualBlockInstallMul10Tail_0049a4e0(void) {
         push    esi
         mov     esi, dword ptr [g_baseSel_00542060]
         mov     ecx, 0x1016
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     edi, offset DualBlockInstallMul10Tail_0049a4e0
         mov     dword ptr [esi*4 + 0x74], ecx
         mov     dword ptr [eax + 8], offset DualBlockInstallMul10Tail_0049a4e0

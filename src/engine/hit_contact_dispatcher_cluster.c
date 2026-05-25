@@ -131,7 +131,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_0054207c;
@@ -175,18 +174,18 @@ __declspec(naked) void HitContactDispatcherCluster_00480240(void)
         mov      edx, dword ptr [ecx*4 + 0x38]
         mov      dword ptr [g_data_00542044], edx
         mov      ecx, dword ptr [edx*4 + 0x54]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      edx, dword ptr [edx*4 + 0x5c]
         add      edx, eax
         add      ecx, esi
         mov      dword ptr [g_data_00542070], edx
         mov      edx, dword ptr [g_data_0054205c]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [edx*4 + 0x54], ecx
         mov      ecx, dword ptr [g_data_0054205c]
         mov      eax, dword ptr [g_data_00542070]
         mov      dword ptr [ecx*4 + 0x5c], eax
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         mov      edx, dword ptr [g_data_00542070]
         push     eax
         push     eax
@@ -211,7 +210,7 @@ __declspec(naked) void HitContactDispatcherCluster_00480240(void)
         mov      eax, dword ptr [eax*4 + 0x38]
         mov      dword ptr [g_data_00542044], eax
         mov      ecx, dword ptr [eax*4 + 0x54]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      edx, dword ptr [eax*4 + 0x5c]
         mov      eax, dword ptr [g_data_0054205c]
         mov      dword ptr [g_data_00542070], edx
@@ -224,7 +223,7 @@ __declspec(naked) void HitContactDispatcherCluster_00480240(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_03af
-        mov      dword ptr [g_data_0054206c], 0xffffd99a
+        mov      dword ptr [g_walkCallback], 0xffffd99a
         call     MStackFrameCdeclDouble_004903f0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -256,7 +255,7 @@ __declspec(naked) void HitContactDispatcherCluster_00480240(void)
         /* === h2 (0x4803c0): event 004ed818 forwarder w/ 0x20a === */
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, 0x20a
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x74], eax
         call     PushCallScaledStore_004143c0
         mov      eax, dword ptr [g_framePauseFlag]
@@ -293,7 +292,7 @@ __declspec(naked) void HitContactDispatcherCluster_00480240(void)
         je       L_0537
         dec      eax
         je       short L_0454
-        mov      dword ptr [g_data_0054206c], 8
+        mov      dword ptr [g_walkCallback], 8
         call     ScaledIndexConditionalAdd_0048e400
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -305,7 +304,7 @@ __declspec(naked) void HitContactDispatcherCluster_00480240(void)
     L_0454:
         mov      eax, dword ptr [g_data_00535ddc]
         cmp      eax, 0x10000
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jge      short L_046d
         call     Install3StateLongSeq_00480570
         pop      edi
@@ -316,7 +315,7 @@ __declspec(naked) void HitContactDispatcherCluster_00480240(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_0567
-        mov      dword ptr [g_data_0054206c], 0x9999
+        mov      dword ptr [g_walkCallback], 0x9999
         call     EsiEdiAliasDualMul10_004906b0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -360,7 +359,7 @@ __declspec(naked) void HitContactDispatcherCluster_00480240(void)
     L_0537:
         mov      edx, dword ptr [g_data_00542060]
         mov      eax, 0x28
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x68], eax
     L_054e:
         mov      dword ptr [esi + 8], OFFSET L_0400

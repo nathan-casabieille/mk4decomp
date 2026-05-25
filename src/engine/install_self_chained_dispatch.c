@@ -129,7 +129,7 @@ extern unsigned int g_data_00535e7c;
  *   If was zero: call DirtyTestScaledCmpJmp_0046ea70; if pause? ret.
  *     call ScaledZeroFour_00490740; if pause? ret.
  *     call CopyJmp_0048ee80; if pause? ret.
- *     if g_x_0054206c <= 0xcccc: push 0x004eb268, tail-call ArgSarStoreJmp; ret.
+ *     if g_walkCallback <= 0xcccc: push 0x004eb268, tail-call ArgSarStoreJmp; ret.
  *     else: call ScaledMove48to58_00490720; if pause? ret.
  *     call MStackPushSet0200_00490140; if pause? ret.
  *     scaledInit = 0x004ec0a8 >> 2; call GuardedDirtyXformFromTable_0048f6d0; if pause? ret.
@@ -137,7 +137,6 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0054204c;
-extern unsigned int g_x_0054206c;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CopyJmp_0048ee80(void);
 extern void DirtyTestScaledCmpJmp_0046ea70(void);
@@ -159,7 +158,7 @@ __declspec(naked) void InstallSelfChainedDispatch_0046cb70(void) {
         _emit   34h
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     eax, 0x28f
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x4c], eax
         mov     eax, dword ptr [g_state_004d57ac]
         inc     eax
@@ -191,7 +190,7 @@ __declspec(naked) void InstallSelfChainedDispatch_0046cb70(void) {
         test    eax, eax
         _emit   75h
         _emit   79h
-        cmp     dword ptr [g_x_0054206c], 0xcccc
+        cmp     dword ptr [g_walkCallback], 0xcccc
         _emit   7eh
         _emit   14h
         push    0x004eb268

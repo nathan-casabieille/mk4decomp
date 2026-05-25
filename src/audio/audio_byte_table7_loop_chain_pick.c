@@ -127,7 +127,7 @@ extern unsigned int g_data_00535e7c;
  *   Loops edi 0..6: chain index from g_byteTab_004f3940[esi=edi*9*4]; g_x_00542044=chain[ecx*4].
  *   Call MStackPush2ChainLLInsert_00406790; load chain pointer (esi-table+0xc) and value (esi-table+0x4).
  *   Special pick when edi==2: ecx = (g_data_004f3928 != 0) ? 0x004d2420 : 0x004d2438.
- *   For edi in {5,6}: override g_x_0054206c with 0x03e80000 based on chain[+0x30] == 1 or 2.
+ *   For edi in {5,6}: override g_walkCallback with 0x03e80000 based on chain[+0x30] == 1 or 2.
  *   Push (eax, ecx); GuardedSetupCallTailJmp; restore. chain[+0x5c] = esi-table[+0x10];
  *   chain[+0x54] → esi-table[+0x8]; movsx ecx = byte tab; chain[+(baseSel+ecx)*4] = chain.
  *   inc edi; if < 7: loop.
@@ -135,7 +135,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_byteTab_004f3940;
 extern unsigned int g_data_004f3928;
 extern unsigned int g_x_00542044;
-extern unsigned int g_x_0054206c;
 extern void GuardedSetupCallTailJmp_004a1fa0(void);
 extern void MStackPush2ChainLLInsert_00406790(void);
 
@@ -162,7 +161,7 @@ __declspec(naked) void AudioByteTable7LoopChainPick_004a5160(void)
         mov     eax, dword ptr [esi + 0x004f394c]
         mov     ecx, dword ptr [esi + 0x004f3944]
         cmp     edi, ebx
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_x_00542044], ecx
         jne     short L_a51_skipPick
         mov     ecx, dword ptr [g_data_004f3928]
@@ -179,28 +178,28 @@ __declspec(naked) void AudioByteTable7LoopChainPick_004a5160(void)
         cmp     dword ptr [edx*4 + 0x30], ebp
         jne     short L_a51_chk6_eq
         mov     eax, 0x03e80000
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
     L_a51_chk6_eq:
         cmp     edi, 6
         jne     short L_a51_chk5_ne
         cmp     dword ptr [edx*4 + 0x30], ebp
         je      short L_a51_chk5_ne
         mov     eax, 0x03e80000
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
     L_a51_chk5_ne:
         cmp     edi, 5
         jne     short L_a51_chk6_ne
         cmp     dword ptr [edx*4 + 0x30], ebx
         jne     short L_a51_chk6_ne
         mov     eax, 0x03e80000
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
     L_a51_chk6_ne:
         cmp     edi, 6
         jne     short L_a51_callGuard
         cmp     dword ptr [edx*4 + 0x30], ebx
         jne     short L_a51_callGuard
         mov     eax, 0x03e80000
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
     L_a51_callGuard:
         push    eax
         push    ecx

@@ -124,18 +124,17 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00463e20 (166b game) - push 0x26f arg call + 3-entry table walk + Push70CallScaleArith + chain[+0x5c].
  *   push 0x26f; call SaveCallRestore; add esp,4.
- *   eax = [0x541fb0]; ecx = eax*3; g_x_0054206c = ecx.
+ *   eax = [0x541fb0]; ecx = eax*3; g_walkCallback = ecx.
  *   g_scaledInit = packed_ptr(0x4ea670) + ecx.
  *   Read 3 fields: chain[scaledInit] -> g_x_00542048;
  *                  chain[scaledInit+1] -> g_x_00542078;
  *                  chain[scaledInit+2] -> g_x_0054207c. Incrementing scaledInit each time.
- *   g_x_0054206c = 0x26f; g_x_00542070 = 4; call Push70CallScaleArith;
+ *   g_walkCallback = 0x26f; g_x_00542070 = 4; call Push70CallScaleArith;
  *   pause? -> end; (208c&4)? -> end.
- *   chain[g_scaledInit + 0x5c] = 0x14000; g_x_0054206c = 0x14000.
+ *   chain[g_scaledInit + 0x5c] = 0x14000; g_walkCallback = 0x14000.
  */
 extern unsigned int g_x_00541fb0;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542078;
 extern unsigned int g_x_0054207c;
@@ -153,7 +152,7 @@ void PackedTableWalkChainStore_00463e20(void) {
         mov     eax, 0x004ea670
         shr     eax, 2
         add     eax, ecx
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
         inc     eax
@@ -167,7 +166,7 @@ void PackedTableWalkChainStore_00463e20(void) {
         inc     eax
         mov     dword ptr [g_x_0054207c], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     dword ptr [g_x_0054206c], 0x26f
+        mov     dword ptr [g_walkCallback], 0x26f
         mov     dword ptr [g_x_00542070], 4
         call    Push70CallScaleArith_00457ad0
         mov     eax, dword ptr [g_framePauseFlag]
@@ -179,7 +178,7 @@ void PackedTableWalkChainStore_00463e20(void) {
         _emit   17h
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     eax, 0x00014000
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     [edx*4 + 0x5c], eax
         }
 }

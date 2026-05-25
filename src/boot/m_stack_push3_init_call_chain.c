@@ -125,15 +125,14 @@ extern unsigned int g_data_004d5dd8;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_00542054;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 
 /*
  * MStackPush3InitCallChain_0040bcf0 - 239b boot 3-arg mstack-push + xfm chain.
  *   Push g_x_00542048, g_x_00542054, g_x_0054205c to mstack.
- *   Snapshot g_x_0054205c → g_x_00542054; g_x_0054206c = (0x004d5dd8 >> 2).
+ *   Snapshot g_x_0054205c → g_x_00542054; g_walkCallback = (0x004d5dd8 >> 2).
  *   Call PushSetXfmMaskCallPop_00407140; if paused: pop 3 + ret.
  *   If g_state_0054208c & 4: pop 3 + ret. Else call ScaledChainOr8_00404e50;
- *   chain[g_x_00542048+0x48] = g_x_0054206c = 0x00018000;
+ *   chain[g_x_00542048+0x48] = g_walkCallback = 0x00018000;
  *   call ScaledTripleCopy54_004ac040; if paused: pop+ret. Call MStackCall_004062f0;
  *   if paused: pop+ret. Pop 3 from mstack into g_x_0054205c, g_x_00542054, g_x_00542048; ret.
  */
@@ -145,12 +144,12 @@ void MStackPush3InitCallChain_0040bcf0(void) {
     g_state_004d57ac++;
     *(unsigned int *)(g_state_004d57ac * 4) = g_x_0054205c;
     g_x_00542054 = g_x_0054205c;
-    g_x_0054206c = (unsigned int)&g_data_004d5dd8 >> 2;
+    g_walkCallback = (unsigned int)&g_data_004d5dd8 >> 2;
     PushSetXfmMaskCallPop_00407140();
     if (g_framePauseFlag != 0) return;
     if (!(g_state_0054208c & 4)) {
         ScaledChainOr8_00404e50();
-        g_x_0054206c = 0x18000;
+        g_walkCallback = 0x18000;
         *(unsigned int *)(g_x_00542048 * 4 + 0x48) = 0x18000;
         ScaledTripleCopy54_004ac040();
         if (g_framePauseFlag != 0) return;

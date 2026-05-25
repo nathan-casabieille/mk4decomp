@@ -126,13 +126,12 @@ extern void MoveStackPipeline_004660d0(void);
 extern void DecCallPushCall_00466090(void);
 
 /* @addr 0x00466000 (140b game) - dual-entry chain scaledInit push.
- *   Block A: call MoveStackPipeline_004660d0; if !pause: edx=g_x_0054206c; push string; ecx=baseSel[*4+4];
+ *   Block A: call MoveStackPipeline_004660d0; if !pause: edx=g_walkCallback; push string; ecx=baseSel[*4+4];
  *     scaledInit=ecx; [ecx*4+0]=edx; ++scaledInit; [baseSel*4+4]=scaledInit (via eax indirect);
  *     call ArgSarStoreJmp; ret.
- *   Block B (+0x60): scaledInit=--baseSel[*4+4]; g_x_0054206c=[scaledInit*4+0]; jmp DecCallPushCall_00466090.
+ *   Block B (+0x60): scaledInit=--baseSel[*4+4]; g_walkCallback=[scaledInit*4+0]; jmp DecCallPushCall_00466090.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern void ArgSarStoreJmp_004594f0(void);
 
 __declspec(naked) void DualScaledChainPush_00466000(void) {
@@ -143,7 +142,7 @@ __declspec(naked) void DualScaledChainPush_00466000(void) {
         _emit   75h
         _emit   42h
         mov     eax, dword ptr [g_baseSel_00542060]
-        mov     edx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         push    0x004ea978
         mov     ecx, dword ptr [eax*4 + 4]
         lea     eax, [eax*4 + 4]
@@ -176,7 +175,7 @@ __declspec(naked) void DualScaledChainPush_00466000(void) {
         dec     eax
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     edx, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [ecx*4 + 4], eax
         jmp     DecCallPushCall_00466090
     }

@@ -124,14 +124,13 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0047a560 (181b game) - install-self with 4-call cascade.
  *   Block A: install-self path; if chain[+0x84] != 0 call ScaledInitOrSelfPtrSetType, pop+ret.
- *   Else g_x_0054206c=0x18; call CmpEqInitCallElseJmp; pause-check; bit-0 test;
+ *   Else g_walkCallback=0x18; call CmpEqInitCallElseJmp; pause-check; bit-0 test;
  *     g_x_00542080=0x13; call ScaledArrStore; pause-check; call ScaledZeroFour; pause-check;
  *     call MStackPushSet0008; pause-check; cmp ebx vs g_state_00542088; if eq: install-self at +0x08=0x0047a560,
  *     g_data_0054204c=5, g_pause=1; else call ScaledInitOrSelfPtrSetType. pop+ret.
  */
 extern unsigned int g_data_0054204c;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542080;
 extern void CmpEqInitCallElseJmp_0048d4b0(void);
 extern void MStackPushSet0008_004901a0(void);
@@ -153,7 +152,7 @@ __declspec(naked) void InstallSelf4Cascade_0047a560(void) {
         pop     esi
         pop     ebx
         ret
-        mov     dword ptr [g_x_0054206c], 0x18
+        mov     dword ptr [g_walkCallback], 0x18
         call    CmpEqInitCallElseJmp_0048d4b0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

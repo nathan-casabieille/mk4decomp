@@ -124,16 +124,15 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0046e9a0 (206b game) - dual-path install-self with mstack overwrite.
  *   chain[+0x84]!=0 path: esi=g_x_0054207c; call CopyJmp_0048ef90; pause-check; bit-0 test:
- *     if set call CallPauseDirtyMStackPushFn_0046e2a0; pop+ret. Else g_x_0054206c=esi; call ScaledInit_0048d430;
+ *     if set call CallPauseDirtyMStackPushFn_0046e2a0; pop+ret. Else g_walkCallback=esi; call ScaledInit_0048d430;
  *     if !pause: call [g_cj_00542058]; pop+ret.
- *   chain[+0x84]==0 path: snapshot+swap mstack top: ecx=mstack[N], save to g_cj_00542058, overwrite mstack[N]=g_x_0054206c.
- *     call ScaledArrStore_00429980; pause-check; mstack-pop into g_x_0054206c; install-self at +0x08=0x0046e9a0;
+ *   chain[+0x84]==0 path: snapshot+swap mstack top: ecx=mstack[N], save to g_cj_00542058, overwrite mstack[N]=g_walkCallback.
+ *     call ScaledArrStore_00429980; pause-check; mstack-pop into g_walkCallback; install-self at +0x08=0x0046e9a0;
  *     g_data_0054204c=1; g_pause=1. pop+ret.
  */
 extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_0054207c;
 extern void CallPauseDirtyMStackPushFn_0046e2a0(void);
 extern void ScaledArrStore_00429980(void);
@@ -165,7 +164,7 @@ __declspec(naked) void InstallSelfMStackOverwrite_0046e9a0(void) {
         call    CallPauseDirtyMStackPushFn_0046e2a0
         pop     esi
         ret
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         call    ScaledInit_0048d430
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -180,7 +179,7 @@ __declspec(naked) void InstallSelfMStackOverwrite_0046e9a0(void) {
         pop     esi
         ret
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [g_cj_00542058], ecx
@@ -195,7 +194,7 @@ __declspec(naked) void InstallSelfMStackOverwrite_0046e9a0(void) {
         dec     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     eax, 1
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [esi + 0x08], 0x0046e9a0
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_data_0054204c], eax

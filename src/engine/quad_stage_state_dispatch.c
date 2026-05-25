@@ -123,18 +123,17 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0042c3e0 (169b game) - 4-stage cascade with bit-test on g_state_0054208c and 3-way state-cmp.
- *   A: call ScaledChain3c74; if !pause: if g_x_0054206c==0x1003: clear bit-0; ret.
+ *   A: call ScaledChain3c74; if !pause: if g_walkCallback==0x1003: clear bit-0; ret.
  *   B (+0x27): call DirtyToggleByGate; if !pause: if bit-2 clear: clear bit-0; ret.
  *   C (+0x4b): call DirtyToggleByBaseSel_0048f2e0; if !pause: if bit-2 set: clear bit-0; ret.
- *   D (+0x6f): cmp g_x_0054205c, g_state_00538158; default g_x_0054206c=g_x_0053a6dc;
- *     if not equal: g_x_0054206c=g_x_00537f2c. If still zero: clear bit-0; ret.
+ *   D (+0x6f): cmp g_x_0054205c, g_state_00538158; default g_walkCallback=g_x_0053a6dc;
+ *     if not equal: g_walkCallback=g_x_00537f2c. If still zero: clear bit-0; ret.
  *     Else: jmp WeightedSumClampHelper_00439920.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00537f2c;
 extern unsigned int g_x_0053a6dc;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern void DirtyToggleByBaseSel_0048f2e0(void);
 extern void ScaledChain3c74_0048f910(void);
 extern void WeightedSumClampHelper_00439920(void);
@@ -146,7 +145,7 @@ __declspec(naked) void QuadStageStateDispatch_0042c3e0(void) {
         test    eax, eax
         _emit   75h
         _emit   18h
-        cmp     dword ptr [g_x_0054206c], 0x00001003
+        cmp     dword ptr [g_walkCallback], 0x00001003
         _emit   75h
         _emit   0dh
         mov     eax, dword ptr [g_state_0054208c]
@@ -181,11 +180,11 @@ __declspec(naked) void QuadStageStateDispatch_0042c3e0(void) {
         mov     edx, dword ptr [g_state_00538158]
         mov     eax, dword ptr [g_x_0053a6dc]
         cmp     ecx, edx
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   0ah
         mov     eax, dword ptr [g_x_00537f2c]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         test    eax, eax
         _emit   75h
         _emit   0dh

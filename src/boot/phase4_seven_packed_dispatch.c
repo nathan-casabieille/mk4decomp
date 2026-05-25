@@ -127,7 +127,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_00543800;
 extern void AudioMixerStep_004ab700(void);
@@ -148,7 +147,7 @@ __declspec(naked) void Phase4SevenPackedDispatch_00417e40(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sp7_A_ret
-        mov     dword ptr [g_data_0054206c], 2
+        mov     dword ptr [g_walkCallback], 2
         call    BootStateTriple_00408d30
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -168,13 +167,13 @@ __declspec(naked) void Phase4SevenPackedDispatch_00417e40(void)
         mov     edx, dword ptr [g_data_00542050]
         mov     dword ptr [eax + 0x28], edx
         mov     edx, dword ptr [ecx + 0x3C]
-        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [eax + 0x38], edx
         mov     edx, dword ptr [ecx + 0x40]
-        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [eax + 0x3C], edx
         mov     ecx, dword ptr [ecx + 0x44]
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax + 0x40], ecx
         jmp     ZeroThreeFields_0040a8b0
     L_p4sp7_A_ret:
@@ -190,7 +189,7 @@ __declspec(naked) void Phase4SevenPackedDispatch_00417e40(void)
         mov     ecx, dword ptr [g_data_00542044]
         mov     eax, dword ptr [ecx*4 + 0x20]
         or      al, 0x40
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x20], eax
         mov     eax, dword ptr [g_data_00542048]
         mov     ecx, dword ptr [eax*4]
@@ -202,7 +201,7 @@ __declspec(naked) void Phase4SevenPackedDispatch_00417e40(void)
         mov     eax, 0x2147
         mov     dword ptr [ecx*4 + 0x10], 0x0049D200
         mov     edx, dword ptr [g_data_0054205c]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x70], eax
         jmp     CallSetPause_0041f830
     L_p4sp7_B_ret:
@@ -220,7 +219,7 @@ __declspec(naked) void Phase4SevenPackedDispatch_00417e40(void)
         mov     dword ptr [eax*4 + 0x48], ecx
         mov     eax, dword ptr [g_data_00542048]
         mov     ecx, dword ptr [eax*4 + 0x48]
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
     L_p4sp7_C_ret:
         ret
         nop
@@ -247,7 +246,7 @@ __declspec(naked) void Phase4SevenPackedDispatch_00417e40(void)
         mov     dword ptr [eax*4 + 0x48], ecx
         mov     eax, dword ptr [g_data_00542048]
         mov     ecx, dword ptr [eax*4 + 0x48]
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
     L_p4sp7_D_ret:
         ret
         nop
@@ -271,7 +270,7 @@ __declspec(naked) void Phase4SevenPackedDispatch_00417e40(void)
         mov     dword ptr [eax*4 + 0x48], ecx
         mov     eax, dword ptr [g_data_00542048]
         mov     ecx, dword ptr [eax*4 + 0x48]
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
     L_p4sp7_E_ret:
         ret
         nop
@@ -295,7 +294,7 @@ __declspec(naked) void Phase4SevenPackedDispatch_00417e40(void)
         mov     dword ptr [eax*4 + 0x48], ecx
         mov     eax, dword ptr [g_data_00542048]
         mov     ecx, dword ptr [eax*4 + 0x48]
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
     L_p4sp7_F_ret:
         ret
         nop
@@ -317,7 +316,7 @@ __declspec(naked) void Phase4SevenPackedDispatch_00417e40(void)
         mov     ecx, dword ptr [g_data_00542044]
         mov     eax, dword ptr [ecx*4 + 0x20]
         or      eax, 0x4040
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x20], eax
         mov     eax, dword ptr [g_data_00542048]
         mov     ecx, dword ptr [eax*4]
@@ -325,34 +324,34 @@ __declspec(naked) void Phase4SevenPackedDispatch_00417e40(void)
         mov     dword ptr [eax*4], ecx
         mov     eax, dword ptr [g_data_00542048]
         mov     dword ptr [eax*4 + 0x10], 0x0049D200
-        mov     dword ptr [g_data_0054206c], 0x8000
+        mov     dword ptr [g_walkCallback], 0x8000
         call    AudioMixerStep_004ab700
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sp7_G_ret
-        mov     ecx, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     edx, dword ptr [g_data_00542048]
         add     ecx, 0x5999
         mov     dword ptr [edx*4 + 0x48], ecx
-        mov     dword ptr [g_data_0054206c], 0x10000
+        mov     dword ptr [g_walkCallback], 0x10000
         call    StoreDoubleNegPauseSubStore_004ab750
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sp7_G_ret
         mov     ecx, dword ptr [g_data_00542048]
-        mov     eax, dword ptr [g_data_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [ecx*4 + 0x28], eax
-        mov     dword ptr [g_data_0054206c], 0x10000
+        mov     dword ptr [g_walkCallback], 0x10000
         call    StoreDoubleNegPauseSubStore_004ab750
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sp7_G_ret
         mov     eax, dword ptr [g_data_00542048]
-        mov     edx, dword ptr [g_data_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0x2C], edx
         mov     ecx, dword ptr [g_data_0054205c]
         mov     eax, 0x11EB
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x70], eax
         jmp     CallSetPause_0041f830
     L_p4sp7_G_ret:

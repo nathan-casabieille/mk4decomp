@@ -131,7 +131,6 @@ extern void BossPunchCluster_00446c50(void);
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 
 void SevenEntrySelfCallTable_00446b10(void) {
     __asm {
@@ -148,42 +147,42 @@ void SevenEntrySelfCallTable_00446b10(void) {
         mov     ecx, dword ptr [g_x_00542048]
         mov     eax, 0x004e6080
         shr     eax, 2
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x14], eax
         ret
         call    SevenEntrySelfCallTable_00446b10
         mov     ecx, dword ptr [g_x_00542048]
         mov     eax, 0x004e6090
         shr     eax, 2
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x14], eax
         ret
         call    SevenEntrySelfCallTable_00446b10
         mov     ecx, dword ptr [g_x_00542048]
         mov     eax, 0x004e60a0
         shr     eax, 2
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x14], eax
         ret
         call    SevenEntrySelfCallTable_00446b10
         mov     ecx, dword ptr [g_x_00542048]
         mov     eax, 0x004e60b0
         shr     eax, 2
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x14], eax
         ret
         call    SevenEntrySelfCallTable_00446b10
         mov     ecx, dword ptr [g_x_00542048]
         mov     eax, 0x004e60c0
         shr     eax, 2
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x14], eax
         ret
         call    SevenEntrySelfCallTable_00446b10
         mov     ecx, dword ptr [g_x_00542048]
         mov     eax, 0x004e60d0
         shr     eax, 2
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x14], eax
         }
 }

@@ -128,7 +128,6 @@ extern void Wrapper_00438ee0(void);
 extern void SetJmp_00438f70(void);
 extern void ThresholdedTailJmps_00436390(void);
 extern void PrefixThunkInstallSelf3State_00438f80(void);
-extern unsigned int g_x_0054206c;
 
 /* @addr 0x004362f0 (149b game) - 3-block: A: jmp 0x00439e40. B: Cmp2CallDirtyCall;
  *   threshold-dispatch on g_state_00535ddc to {0x00437c10, Wrapper_00438ee0, PrefixThunkInstallSelf3State_00438f80}.
@@ -155,7 +154,7 @@ __declspec(naked) void TripleThresholdDispatch_004362f0(void) {
         _emit   27h
         mov     eax, dword ptr [g_state_00535ddc]
         cmp     eax, 0x00014ccc
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7dh
         _emit   05h
         jmp     PoseFsm4StateInstall_00437c10
@@ -186,7 +185,7 @@ __declspec(naked) void TripleThresholdDispatch_004362f0(void) {
         _emit   27h
         mov     eax, dword ptr [g_state_00535ddc]
         cmp     eax, 0x00020000
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   05h
         jmp     Wrapper_00438ee0

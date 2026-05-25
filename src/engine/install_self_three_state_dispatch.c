@@ -135,7 +135,6 @@ extern void InstallSelfThreeStateDispatch_00436030(void);
  *     >0x14ccc jmp PoseFsm4StateInstall_00437c10, else jmp InstallSelfThreeStateDispatch_00436030. ret.
  */
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern void GuardedSeq_00433bb0(void);
 extern void PoseFsm4StateInstall_00437c10(void);
@@ -146,19 +145,19 @@ __declspec(naked) void Mul10ThresholdQuad_00435f50(void) {
     __asm {
         mov     ecx, dword ptr [g_x_0054205c]
         mov     eax, dword ptr [ecx*4 + 0x6c]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     ecx, dword ptr [ecx*4 + 0x74]
         push    eax
         push    eax
         mov     dword ptr [g_x_00542070], ecx
         call    Mul10Tail_00404af0
         add     esp, 8
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     eax, dword ptr [g_x_00542070]
         push    eax
         push    eax
         call    Mul10Tail_00404af0
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         add     esp, 8
         add     eax, ecx
         mov     dword ptr [g_x_00542070], eax
@@ -167,7 +166,7 @@ __declspec(naked) void Mul10ThresholdQuad_00435f50(void) {
         jmp     CmpRangeJmpStateInit_00436250
         mov     eax, dword ptr [g_state_00535ddc]
         cmp     eax, 0x00013333
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7dh
         _emit   05h
         jmp     PrefixThunkInstallSelf3State_00438f80
@@ -214,7 +213,7 @@ __declspec(naked) void Mul10ThresholdQuad_00435f50(void) {
         _emit   27h
         mov     eax, dword ptr [g_state_00535ddc]
         cmp     eax, 0x0002b333
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   05h
         jmp     Wrapper_00438ee0

@@ -126,7 +126,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542080;
 extern unsigned int g_data_0054208c;
 extern void ArgSarStoreJmp_004594f0(void);
@@ -170,14 +169,14 @@ __declspec(naked) void TripleSubInstallSelfPair_0047a670(void)
         pop     edi
         ret
     L_tsisp_sub2:
-        mov     dword ptr [g_data_0054206c], 0xb
+        mov     dword ptr [g_walkCallback], 0xb
         call    ScaledIndexConditionalAdd_0048e400
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_tsisp_sub2_ret
         mov     ecx, dword ptr [g_data_00542060]
         mov     eax, 0x216
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    0x4ed110
         mov     dword ptr [ecx*4 + 0x74], eax
         call    ArgSarStoreJmp_004594f0
@@ -205,7 +204,7 @@ __declspec(naked) void TripleSubInstallSelfPair_0047a670(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_tsisp_sub3_abort
-        mov     dword ptr [g_data_0054206c], 0x17
+        mov     dword ptr [g_walkCallback], 0x17
         call    CmpEqInitCallElseJmp_0048d4b0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -235,7 +234,7 @@ __declspec(naked) void TripleSubInstallSelfPair_0047a670(void)
     L_tsisp_sub3_phase0:
         mov     eax, dword ptr [g_data_00542060]
         mov     ebx, 1
-        mov     dword ptr [g_data_0054206c], ebx
+        mov     dword ptr [g_walkCallback], ebx
         push    0x4ed130
         mov     dword ptr [eax*4 + 0x5c], ebx
         call    IterStepDualStore_00490b40

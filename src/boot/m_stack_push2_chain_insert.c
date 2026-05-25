@@ -125,8 +125,8 @@ extern unsigned int g_data_00535e7c;
 /*
  * MStackPush2ChainInsert_00409870 - 243b boot linked-list insert with mstack push2.
  *   Push g_x_0053a168, g_data_0054204c to mstack. base=g_x_00542048 (packed_ptr).
- *   esi = base[+8]; ecx = g_x_00542044 + esi; chain[ecx*4 + 4] = base; g_x_0054206c = 0;
- *   chain[ecx*4 + 8] = 0; esi = base[0]; g_x_0054206c = esi; chain[ecx*4] = esi.
+ *   esi = base[+8]; ecx = g_x_00542044 + esi; chain[ecx*4 + 4] = base; g_walkCallback = 0;
+ *   chain[ecx*4 + 8] = 0; esi = base[0]; g_walkCallback = esi; chain[ecx*4] = esi.
  *   If base[0] == 0: base[+4] = g_x_00542044; else walk: g_data_0054204c = base->key + esi;
  *     chain[g_data_0054204c*4 + 8] = g_x_00542044. base[0] = g_x_00542044. base[+0xc]++.
  *   Pop2 mstack into g_data_0054204c and g_x_0053a168; ret.
@@ -135,7 +135,6 @@ extern unsigned int g_data_0054204c;
 extern unsigned int g_x_0053a168;
 extern unsigned int g_x_00542044;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 
 __declspec(naked) void MStackPush2ChainInsert_00409870(void)
 {
@@ -158,17 +157,17 @@ __declspec(naked) void MStackPush2ChainInsert_00409870(void)
         mov     ecx, edx
         add     ecx, esi
         mov     dword ptr [ecx*4 + 4], eax
-        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [ecx*4 + 8], 0
         mov     esi, dword ptr [eax*4]
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [ecx*4], esi
         cmp     dword ptr [eax*4], 0
         jne     short L_walk
         mov     dword ptr [eax*4 + 4], edx
         jmp     short L_after
     L_walk:
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [g_data_0054204c], ecx
         mov     esi, dword ptr [eax*4 + 8]
         add     ecx, esi

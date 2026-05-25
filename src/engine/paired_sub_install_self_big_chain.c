@@ -128,7 +128,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_00542088;
 extern void AerialHitDispatcher_0047c290(void);
@@ -145,7 +144,7 @@ __declspec(naked) void PairedSubInstallSelfBigChain_0047c0d0(void)
     {
         mov     ecx, dword ptr [g_data_00542060]
         mov     eax, 0x20e
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    0x4ed2a0
         mov     dword ptr [ecx*4 + 0x74], eax
         call    ArgSarStoreJmp_004594f0
@@ -174,7 +173,7 @@ __declspec(naked) void PairedSubInstallSelfBigChain_0047c0d0(void)
         mov     eax, dword ptr [g_data_0054205c]
         je      short L_psisbc_phase1
         mov     ecx, dword ptr [eax*4 + 0x58]
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     eax, dword ptr [eax*4 + 0x48]
         cmp     ecx, eax
         mov     dword ptr [g_data_00542070], eax
@@ -188,7 +187,7 @@ __declspec(naked) void PairedSubInstallSelfBigChain_0047c0d0(void)
         jne     L_psisbc_ret
         mov     edx, dword ptr [g_data_0054205c]
         mov     eax, 0x51e
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x4c], eax
         call    AerialHitDispatcher_0047c290
         pop     esi
@@ -197,7 +196,7 @@ __declspec(naked) void PairedSubInstallSelfBigChain_0047c0d0(void)
         mov     dword ptr [eax*4 + 0x58], 0
         mov     ecx, dword ptr [g_data_00542084]
         mov     edx, dword ptr [g_data_00542088]
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_data_00542070], edx
         call    Vec2ChainComputeStores_00480b80
         mov     eax, dword ptr [g_framePauseFlag]
@@ -219,7 +218,7 @@ __declspec(naked) void PairedSubInstallSelfBigChain_0047c0d0(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_psisbc_ret
-        mov     eax, dword ptr [g_data_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     ecx, dword ptr [g_data_00542070]
         mov     dword ptr [g_data_00542084], eax
         mov     dword ptr [g_data_00542088], ecx

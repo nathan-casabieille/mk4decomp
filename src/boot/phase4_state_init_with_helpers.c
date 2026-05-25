@@ -159,7 +159,6 @@ extern unsigned int g_data_004d6a18;
 extern unsigned int g_data_00543800;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
@@ -180,7 +179,7 @@ __declspec(naked) void Phase4StateInitWithHelpers_004143f0(void)
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], ecx
         mov     dword ptr [g_data_0054205c], 0
-        mov     dword ptr [g_data_0054206c], 0xEB85
+        mov     dword ptr [g_walkCallback], 0xEB85
         call    ZeroAndDirty4_00405430
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -191,7 +190,7 @@ __declspec(naked) void Phase4StateInitWithHelpers_004143f0(void)
         je      L_p4s_skip_body
         mov     edx, offset g_data_004d6a18
         shr     edx, 2
-        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         call    PushSetXfmMaskCallPop_00407140
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -200,7 +199,7 @@ __declspec(naked) void Phase4StateInitWithHelpers_004143f0(void)
         jne     L_p4s_skip_body
         mov     ecx, dword ptr [g_data_0054205c]
         mov     eax, 0x9B
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x30], eax
         mov     edx, dword ptr [g_data_0054205c]
         mov     eax, dword ptr [edx*4 + 0x18]
@@ -209,7 +208,7 @@ __declspec(naked) void Phase4StateInitWithHelpers_004143f0(void)
         mov     dword ptr [g_data_00542048], eax
         shl     eax, 2
         mov     dword ptr [eax + 0x10], 0x00414590
-        mov     dword ptr [g_data_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         mov     edx, dword ptr [eax]
         mov     dword ptr [eax + 0x14], 0
         or      edx, 8
@@ -218,7 +217,7 @@ __declspec(naked) void Phase4StateInitWithHelpers_004143f0(void)
         mov     eax, dword ptr [g_data_0054204c]
         dec     eax
         mov     dword ptr [g_data_0054204c], eax
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         js      L_p4s_alt_tail
         mov     ecx, dword ptr [g_state_004d57ac]
         inc     ecx
@@ -282,20 +281,20 @@ __declspec(naked) void Phase4StateInitWithHelpers_004143f0(void)
         mov     eax, dword ptr [ecx*4 + 0x48]
         add     eax, 0xCCC
         cmp     eax, 0x10000
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jle     L_p4s_helperA_cap48_ok
         mov     eax, 0x10000
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
     L_p4s_helperA_cap48_ok:
         mov     dword ptr [ecx*4 + 0x48], eax
         mov     ecx, dword ptr [g_data_00542048]
         mov     eax, dword ptr [ecx*4 + 0x14]
         add     eax, 6
         cmp     eax, 0xC0
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jle     L_p4s_helperA_cap14_ok
         mov     eax, 0xC0
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
     L_p4s_helperA_cap14_ok:
         mov     dword ptr [ecx*4 + 0x14], eax
     L_p4s_helperA_tail:
@@ -314,19 +313,19 @@ __declspec(naked) void Phase4StateInitWithHelpers_004143f0(void)
         mov     eax, dword ptr [ecx*4 + 0x48]
         add     eax, 0x28F
         cmp     eax, 0x14CCC
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jle     L_p4s_helperB_cap48_ok
         mov     eax, 0x14CCC
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
     L_p4s_helperB_cap48_ok:
         mov     dword ptr [ecx*4 + 0x48], eax
         mov     ecx, dword ptr [g_data_00542048]
         mov     eax, dword ptr [ecx*4 + 0x14]
         sub     eax, 6
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jns     L_p4s_helperB_cap14_ok
         xor     eax, eax
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
     L_p4s_helperB_cap14_ok:
         mov     dword ptr [ecx*4 + 0x14], eax
     L_p4s_helperB_tail:

@@ -123,14 +123,13 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004904c0 (273b game) - bit-driven dispatch with 2-call cascade + mstack-push.
- *   Negate g_x_0054206c -> g_x_00542070. scaledInit = baseSel[+0x38];
+ *   Negate g_walkCallback -> g_x_00542070. scaledInit = baseSel[+0x38];
  *   g_x_00542074 = scaledInit[+0x34]; bit0 -> g_x_00542094.
  *   If bit0 set: "1-bit" branch; else "0-bit" branch.
  *   Both branches: call DoublePushCallDoublePop; if pause? ret. Then conditional
  *   mstack-push, optional GuardedSeq, mstack-pop, tail-jmp MStackFrameCdeclDouble_004903f0.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542074;
 extern unsigned int g_x_00542094;
@@ -139,7 +138,7 @@ extern void GuardedSeq_00490c60(void);
 
 __declspec(naked) void BitDispatchDualCallMStackPush_004904c0(void) {
     __asm {
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     ecx, dword ptr [g_baseSel_00542060]
         neg     eax
         mov     dword ptr [g_x_00542070], eax
@@ -164,9 +163,9 @@ __declspec(naked) void BitDispatchDualCallMStackPush_004904c0(void) {
         _emit   74h
         _emit   0ch
         mov     edx, dword ptr [g_x_00542070]
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + 0], ecx
@@ -186,7 +185,7 @@ __declspec(naked) void BitDispatchDualCallMStackPush_004904c0(void) {
         mov     eax, dword ptr [g_state_004d57ac]
         mov     edx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [g_state_004d57ac], eax
         jmp     MStackFrameCdeclDouble_004903f0
         call    DoublePushCallDoublePop_004905e0
@@ -201,7 +200,7 @@ __declspec(naked) void BitDispatchDualCallMStackPush_004904c0(void) {
         mov     ecx, dword ptr [g_state_004d57ac]
         mov     eax, dword ptr [g_x_00542070]
         inc     ecx
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_state_004d57ac], ecx
         mov     dword ptr [ecx*4 + 0], eax
         call    GuardedSeq_00490c60
@@ -212,7 +211,7 @@ __declspec(naked) void BitDispatchDualCallMStackPush_004904c0(void) {
         mov     eax, dword ptr [g_state_004d57ac]
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_state_004d57ac], eax
         jmp     MStackFrameCdeclDouble_004903f0
         ret

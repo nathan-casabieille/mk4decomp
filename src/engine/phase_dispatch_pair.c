@@ -127,7 +127,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern void CmpEqInitCallElseJmp_0048d4b0(void);
 extern void FiveCallGuardSetTail_0046f6b0(void);
@@ -150,7 +149,7 @@ __declspec(naked) void PhaseDispatchPair_004799c0(void)
         mov     dword ptr [esi + 0x84], 0
         test    eax, eax
         je      short L_pdp_install1
-        mov     dword ptr [g_data_0054206c], 0x13
+        mov     dword ptr [g_walkCallback], 0x13
         call    CmpEqInitCallElseJmp_0048d4b0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -165,7 +164,7 @@ __declspec(naked) void PhaseDispatchPair_004799c0(void)
         mov     ecx, dword ptr [g_data_0054205c]
         mov     eax, dword ptr [ecx*4 + 0x70]
         cmp     eax, 0xfffffd71
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jl      short L_pdp_install1
         mov     eax, dword ptr [g_state_004d57ac]
         inc     eax
@@ -213,14 +212,14 @@ __declspec(naked) void PhaseDispatchPair_004799c0(void)
         ret
     L_pdp_phase2_work:
         mov     ecx, dword ptr [g_data_0054205c]
-        mov     dword ptr [g_data_0054206c], edi
+        mov     dword ptr [g_walkCallback], edi
         mov     dword ptr [ecx*4 + 0x78], edi
-        mov     edx, dword ptr [g_data_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         lea     eax, [ecx*4]
         mov     dword ptr [eax + 0x80], edx
-        mov     ecx, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax + 0x60], ecx
-        mov     edx, dword ptr [g_data_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax + 0x68], edx
         call    ScaledChainNegStore_00470310
         cmp     dword ptr [g_framePauseFlag], edi

@@ -124,16 +124,15 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
  *   if ([0x543800] != 0): ret;
- *   g_x_0054206c = eax = chain[g_scaledInit + 0x2c]; if (eax == 0) ret.
+ *   g_walkCallback = eax = chain[g_scaledInit + 0x2c]; if (eax == 0) ret.
  *   Push g_x_00542048. Loop while eax != 0:
  *     g_x_00542048 = eax; eax *= 4;
  *     chain[+4] += chain[+0x10]; chain[+8] += chain[+0x14]; chain[+0xc] += chain[+0x18];
- *     eax = chain[+0]; g_x_0054206c = eax;
+ *     eax = chain[+0]; g_walkCallback = eax;
  *   First iter has different field reg ordering (compiler quirk).
  *   Pop g_x_00542048.
  */
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00543800;
 
 extern unsigned int g_data_004d57ac_arr;
@@ -151,7 +150,7 @@ void ChainListVecAdd_0049d200(void) {
         mov     eax, dword ptr [g_scaledInit_00542044]
         mov     eax, [eax*4 + 0x2c]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   0fh
         _emit   84h
         _emit   9dh
@@ -163,7 +162,7 @@ void ChainListVecAdd_0049d200(void) {
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], ecx
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [g_x_00542048], eax
         shl     eax, 2
         mov     edx, [eax + 0x10]
@@ -180,7 +179,7 @@ void ChainListVecAdd_0049d200(void) {
         mov     [eax + 0x0c], ecx
         mov     eax, [eax]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   34h
         mov     dword ptr [g_x_00542048], eax
@@ -199,7 +198,7 @@ void ChainListVecAdd_0049d200(void) {
         mov     [eax + 0x0c], edx
         mov     eax, [eax]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   0cch
         mov     eax, dword ptr [g_state_004d57ac]

@@ -124,13 +124,12 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00431360 (100b game) - dual-entry init+dispatch.
  *   entry +0x00: eax = g_x_0054205c; eax *= 4; zero out 6 fields at offsets 0x6c,0x70,0x74,0x78,0x7c,0x80
- *     of struct at [eax], with g_x_0054206c=0 used as scratch zero source. ret.
+ *     of struct at [eax], with g_walkCallback=0 used as scratch zero source. ret.
  *   12 NOPs alignment pad.
  *   entry +0x50 (= 0x004313b0): self-call to +0x00 init, then if !g_pause: tail-jmp ScaledInitWithCounterAndType.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern void ScaledInitWithCounterAndType_004314f0(void);
 
 __declspec(naked) void DualEntryInitDispatch_00431360(void) {
@@ -138,17 +137,17 @@ __declspec(naked) void DualEntryInitDispatch_00431360(void) {
         mov     eax, dword ptr [g_x_0054205c]
         xor     ecx, ecx
         shl     eax, 2
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax + 0x78], ecx
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax + 0x7c], ecx
-        mov     edx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax + 0x80], edx
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax + 0x6c], ecx
-        mov     edx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax + 0x70], edx
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax + 0x74], ecx
         ret
         _emit   90h

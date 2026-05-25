@@ -145,7 +145,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_005433c8;
 extern unsigned int g_data_00543590;
 extern unsigned int g_data_0054359c;
@@ -247,7 +246,7 @@ __declspec(naked) void Phase3InstallVolToggle_004a8310(void) {
         lea     edx, [eax + eax*2]
         mov     dword ptr [g_data_00542044], ecx
         movsx   eax, byte ptr [edx*8 + g_data_005435a0]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    ScaledChainStore24_004a7d40
         jmp     short L_p3v_installTail
     L_p3v_phase0:

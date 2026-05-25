@@ -131,13 +131,12 @@ extern unsigned int g_data_00535e7c;
  *   saturation_high: cmp [cj*4+0x58], -0x18000; if >=: store -0x18000, set fields=0, ret.
  *     Else: ecx=0x7ae, store at cj[+0x70]=ecx; pop+ret.
  *   saturation_low: cmp ecx with 0xfffe3334; if < 0: eax=0; mov [cj*4+0x70]=eax; pop+ret.
- *     Else: eax stays -0x7ae, mov to g_x_0054206c, store at cj[+0x70]=-0x7ae; pop+ret.
+ *     Else: eax stays -0x7ae, mov to g_walkCallback, store at cj[+0x70]=-0x7ae; pop+ret.
  */
 extern unsigned int g_load_0052ab04;
 extern unsigned int g_load_0052ab08;
 extern unsigned int g_x_0053815c;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542074;
 
 __declspec(naked) void Distance2DSaturationClamp_004300a0(void) {
@@ -146,7 +145,7 @@ __declspec(naked) void Distance2DSaturationClamp_004300a0(void) {
         mov     edx, dword ptr [g_load_0052ab08]
         push    esi
         mov     esi, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_data_00542070], edx
         mov     eax, dword ptr [esi*4 + 0x54]
         mov     dword ptr [g_x_00542074], eax
@@ -176,14 +175,14 @@ __declspec(naked) void Distance2DSaturationClamp_004300a0(void) {
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     dword ptr [g_x_00542048], ecx
         mov     eax, dword ptr [eax*4 + 0x58]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     ecx, dword ptr [ecx*4 + 0x58]
         cmp     eax, ecx
         mov     dword ptr [g_data_00542070], ecx
         _emit   7eh
         _emit   07h
         mov     eax, ecx
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         cmp     eax, 0xfffe0000
         _emit   7eh
         _emit   4fh
@@ -196,25 +195,25 @@ __declspec(naked) void Distance2DSaturationClamp_004300a0(void) {
         mov     dword ptr [eax*4 + 0x58], 0xfffe8000
         mov     ecx, dword ptr [g_cj_0054205c]
         xor     eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x70], eax
         pop     esi
         ret
         mov     ecx, 0x7ae
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x70], ecx
         pop     esi
         ret
         mov     edx, dword ptr [g_cj_0054205c]
         mov     eax, 0xfffff852
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     ecx, dword ptr [edx*4 + 0x58]
         cmp     ecx, 0xfffe3334
         mov     dword ptr [g_data_00542070], ecx
         _emit   7dh
         _emit   07h
         xor     eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x70], eax
         pop     esi
         ret

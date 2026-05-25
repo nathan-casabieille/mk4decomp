@@ -134,7 +134,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_state_004d50b4;
 extern unsigned int g_x_00542044;
-extern unsigned int g_x_0054206c;
 extern void SetJmp_004a1ac0(void);
 extern void SetJmp_004a1ad0(void);
 
@@ -157,7 +156,7 @@ __declspec(naked) void AudioState50b4BitDispatcher_004a32c0(void)
         lea     eax, [eax + eax*8]
         movsx   eax, byte ptr [esi + eax*4]
         cmp     eax, -1
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         je      short L_a32_b1_innerSkip
         mov     dword ptr [edx*4 + 0x30], eax
         call    SetJmp_004a1ad0
@@ -175,7 +174,7 @@ __declspec(naked) void AudioState50b4BitDispatcher_004a32c0(void)
         lea     eax, [eax + eax*8]
         movsx   eax, byte ptr [esi + eax*4 + 1]
         cmp     eax, -1
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         je      short L_a32_b2_innerSkip
         mov     dword ptr [edx*4 + 0x30], eax
         call    SetJmp_004a1ad0

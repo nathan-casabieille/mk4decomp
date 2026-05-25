@@ -123,14 +123,13 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0046a630 (165b game) - 4-entry-point dispatcher.
- *   Block A: g_x_0054206c=g_x_0052d724; if zero jmp CallPauseCmpStateJmp; else jmp ScaledInitOrSelfPtrSetType.
+ *   Block A: g_walkCallback=g_x_0052d724; if zero jmp CallPauseCmpStateJmp; else jmp ScaledInitOrSelfPtrSetType.
  *   Blocks B/C/D: standard push/store chain[*4+0x74]=value, push string, call ArgSarStoreJmp.
  *     B: value=0x402, string=0x004eabe8.
  *     C: value=0x403, string=0x004eac38.
  *     D: value=0x1015, string=0x004eac08.
  */
 extern unsigned int g_x_0052d724;
-extern unsigned int g_x_0054206c;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CallPauseCmpStateJmp_0046a520(void);
 extern void ScaledInitOrSelfPtrSetType_0046a5e0(void);
@@ -139,7 +138,7 @@ __declspec(naked) void QuadEntryGateChain_0046a630(void) {
     __asm {
         mov     eax, dword ptr [g_x_0052d724]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   05h
         jmp     ScaledInitOrSelfPtrSetType_0046a5e0
@@ -154,7 +153,7 @@ __declspec(naked) void QuadEntryGateChain_0046a630(void) {
         _emit   90h
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x00000402
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    0x004eabe8
         mov     dword ptr [ecx*4 + 0x74], eax
         call    ArgSarStoreJmp_004594f0
@@ -173,7 +172,7 @@ __declspec(naked) void QuadEntryGateChain_0046a630(void) {
         _emit   90h
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x00000403
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    0x004eac38
         mov     dword ptr [ecx*4 + 0x74], eax
         call    ArgSarStoreJmp_004594f0
@@ -192,7 +191,7 @@ __declspec(naked) void QuadEntryGateChain_0046a630(void) {
         _emit   90h
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x00001015
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    0x004eac08
         mov     dword ptr [ecx*4 + 0x74], eax
         call    ArgSarStoreJmp_004594f0

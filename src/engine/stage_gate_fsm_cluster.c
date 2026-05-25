@@ -142,7 +142,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_00542080;
 extern unsigned int g_data_0054208c;
@@ -153,7 +152,7 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
 {
     __asm {
         /* === h1 (0x47aff0): pre-pose pause/check w/ bit 0x17 set === */
-        mov      dword ptr [g_data_0054206c], 0xe666
+        mov      dword ptr [g_walkCallback], 0xe666
         call     EsiEdiAliasDualMul10_004906b0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -166,7 +165,7 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         je       short L_b036
         mov      ecx, dword ptr [g_data_0054205c]
         mov      eax, 0x17
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x28], eax
     L_b036:
         ret
@@ -182,7 +181,7 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         /* === h2 (0x47b040): event 004ed160 forwarder w/ 0x20d store === */
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, 0x20d
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         push     OFFSET g_data_004ed160
         mov      dword ptr [ecx*4 + 0x74], eax
         call     ArgSarStoreJmp_004594f0

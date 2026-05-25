@@ -129,14 +129,13 @@ extern unsigned int g_data_00535e7c;
  *   Walk g_scaledInit forward, storing 6 values into:
  *     g_x_0054207c, 80, 84, 88, 54, 58 (using edx/ecx alternating).
  *   Then: g_scaledInit = chain[g_baseSel + 0x3c];
- *   g_x_0054206c = chain[g_scaledInit + 0x74].
+ *   g_walkCallback = chain[g_scaledInit + 0x74].
  */
 extern unsigned int g_x_00538158;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_00542054;
 extern unsigned int g_x_00542058;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_0054207c;
 extern unsigned int g_x_00542080;
 extern unsigned int g_x_00542084;
@@ -189,7 +188,7 @@ __declspec(naked) void PackedSelectLoad6_00433c60(void) {
         mov     eax, [eax*4 + 0x3c]
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     ecx, [eax*4 + 0x74]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         ret
     }
 }

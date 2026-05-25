@@ -125,12 +125,11 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x00460190 (184b game) - install-self push-arg call + chain[+0x74] = 0x2001, packed_ptr store.
  *   esi = base*4; flag = [esi+0x84]; clear.
  *   if (flag != 0): call CallPauseScaledStorePushCall; pop esi; ret.
- *   chain[base + 0x74] = 0x2001; g_x_0054206c = 0x2001;
+ *   chain[base + 0x74] = 0x2001; g_walkCallback = 0x2001;
  *   push 0x00542970; call ArgScaledTestStore_00494140; add esp, 4.
  *   pause? -> end.
  *   install self with packed_ptr store and call ScaledArrStore_00429450; pause = 1.
  */
-extern unsigned int g_x_0054206c;
 extern void ArgScaledTestStore_00494140(void);
 extern void ScaledArrStore_00429450(void);
 
@@ -151,7 +150,7 @@ __declspec(naked) void InstallSelfPushArg_00460190(void) {
         ret
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x00002001
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    0x00542970
         mov     [ecx*4 + 0x74], eax
         call    ArgScaledTestStore_00494140

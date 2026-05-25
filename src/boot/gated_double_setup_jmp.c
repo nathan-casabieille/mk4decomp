@@ -137,7 +137,7 @@ void GatedDoubleSetupJmp_00412450(void) {
     g_state_004d57ac++;
     *(unsigned int *)(g_state_004d57ac * 4) = g_cj_0054205c;
     _set_eqwt(g_scaledInit_00542044);
-    _set_x74((unsigned int)g_walkCallback);
+    _set_x74(g_walkCallback);
     _set_wc(((unsigned int)&g_data_004d5888) >> 2);
     BootChainBuildAndStep_004124c0();
 }

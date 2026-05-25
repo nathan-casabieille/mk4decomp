@@ -126,7 +126,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_00542080;
 extern unsigned int g_data_0054208c;
@@ -238,7 +237,7 @@ __declspec(naked) void MatchStartFsmCluster_00468eb0(void)
         call     Phase4DualHelperTrampoline_00412900
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_9288
-        mov      dword ptr [g_data_0054206c], 0x50
+        mov      dword ptr [g_walkCallback], 0x50
         call     TableLookupCall_00489ff0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_9288
@@ -253,11 +252,11 @@ __declspec(naked) void MatchStartFsmCluster_00468eb0(void)
         mov      ebx, 1
         test     al, bl
         jne      L_90a3
-        mov      dword ptr [g_data_0054206c], 0x23d7
+        mov      dword ptr [g_walkCallback], 0x23d7
         call     SfxAttenuateAndApply_0048dee0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_9288
-        mov      dword ptr [g_data_0054206c], 0x88
+        mov      dword ptr [g_walkCallback], 0x88
         call     ScaledLitLoadCall_00480fe0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_9288
@@ -338,7 +337,7 @@ __declspec(naked) void MatchStartFsmCluster_00468eb0(void)
     L_91ef:
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, 0x101
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         push     OFFSET g_data_00542a54
         mov      dword ptr [ecx*4 + 0x74], eax
         call     GuardedPackedSlotInit_00428760

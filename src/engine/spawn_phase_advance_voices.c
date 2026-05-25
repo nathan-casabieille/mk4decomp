@@ -130,7 +130,6 @@ extern unsigned int g_data_00541fbc;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_005a0000;
 extern void MStackPush2ChainLLInsert_00406790(void);
 extern void MStackPushTableMatch_0042e720(void);
@@ -139,7 +138,7 @@ __declspec(naked) void SpawnPhaseAdvanceVoices_0042e290(void)
 {
     __asm {
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         inc      eax
         push     ebx
         mov      dword ptr [g_data_004d57ac], eax
@@ -187,7 +186,7 @@ __declspec(naked) void SpawnPhaseAdvanceVoices_0042e290(void)
         jg       short L_e3f0
         mov      edi, dword ptr [g_data_00535de0]
         test     edi, edi
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         jne      short L_e39a
         add      eax, OFFSET g_data_005a0000
         mov      dword ptr [g_data_00542070], eax
@@ -240,7 +239,7 @@ __declspec(naked) void SpawnPhaseAdvanceVoices_0042e290(void)
         mov      dword ptr [g_data_004d57ac], esi
         mov      edx, dword ptr [esi*4]
         dec      esi
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [g_data_004d57ac], esi
     L_e46f:
         pop      edi

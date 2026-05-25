@@ -135,7 +135,6 @@ extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern void SaveCallRestoreOrXor_00404a00(void);
 extern void ScaledChainInit2Phase_0042e800(void);
@@ -226,7 +225,7 @@ void RoundEndAudioCluster_0042e8d0(void) {
         mov      dword ptr [ecx*4 + 0x3c], edx
         mov      ecx, dword ptr [g_data_00542084]
         sub      ecx, 0x83
-        mov      dword ptr [g_data_0054206c], 0x83
+        mov      dword ptr [g_walkCallback], 0x83
         cmp      ecx, 0x1999
         mov      dword ptr [g_data_00542084], ecx
         jge      short L_ea43
@@ -270,7 +269,7 @@ void RoundEndAudioCluster_0042e8d0(void) {
         or       eax, ecx
         dec      ecx
         cmp      ecx, 0x19
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_0052ab4c], eax
         mov      dword ptr [g_data_00542054], ecx
         jge      short L_eac8

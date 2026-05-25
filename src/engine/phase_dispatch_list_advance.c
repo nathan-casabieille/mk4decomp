@@ -146,7 +146,6 @@ extern void MStackJmpInstallSelf_0046ed40(void);
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542054;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_0054207c;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ScaledAndAlfe_00490390(void);
@@ -160,7 +159,7 @@ __declspec(naked) void FiveBlockDispatchChain_0046ec20(void) {
         _emit   32h
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x604
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
         call    TripleCallPauseJmp_00470500
         mov     eax, dword ptr [g_pause_00541e6c]

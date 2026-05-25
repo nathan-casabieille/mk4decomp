@@ -128,7 +128,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054207c;
 extern void BootChainBidirRecurseWalk_00405ca0(void);
 extern void BootPhaseGateBracketedInit_004060c0(void);
@@ -151,7 +150,7 @@ __declspec(naked) void Phase1SlotLinkAndInit_00419470(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1sli_ret
-        mov     dword ptr [g_data_0054206c], 0xFFFFFFFF
+        mov     dword ptr [g_walkCallback], 0xFFFFFFFF
         call    MStackInitCallToggle_00408ad0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -177,7 +176,7 @@ __declspec(naked) void Phase1SlotLinkAndInit_00419470(void)
         mov     dword ptr [eax*4 + 0x30], 0x85
         mov     eax, dword ptr [g_data_00535e6c]
         mov     edx, dword ptr [g_data_00542054]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x3C], eax
         mov     eax, dword ptr [g_data_0054205c]
         mov     dword ptr [g_data_0054207c], 0x10000
@@ -188,7 +187,7 @@ __declspec(naked) void Phase1SlotLinkAndInit_00419470(void)
     L_p1sli_after_select:
         mov     ecx, dword ptr [g_data_00542054]
         or      ah, 0x40
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x34], eax
         mov     eax, dword ptr [g_data_00542048]
         mov     ecx, dword ptr [eax*4]
@@ -198,17 +197,17 @@ __declspec(naked) void Phase1SlotLinkAndInit_00419470(void)
         mov     eax, 0x00419040
         mov     dword ptr [edx*4 + 0x48], 0x11999
         mov     ecx, dword ptr [g_data_00542048]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x10], eax
         mov     edx, dword ptr [g_data_0054205c]
         mov     ecx, dword ptr [g_data_00542054]
         mov     eax, dword ptr [edx*4 + 0x54]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x54], eax
         mov     edx, dword ptr [g_data_0054205c]
         mov     ecx, dword ptr [g_data_00542054]
         mov     eax, dword ptr [edx*4 + 0x58]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x58], eax
         mov     edx, dword ptr [g_data_0054205c]
         mov     ecx, dword ptr [g_data_00542054]
@@ -224,7 +223,7 @@ __declspec(naked) void Phase1SlotLinkAndInit_00419470(void)
         mov     edx, dword ptr [g_data_00542054]
         mov     dword ptr [edx*4 + 0x7C], 0x3333
         mov     ecx, dword ptr [g_data_00542054]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x80], eax
         mov     edx, dword ptr [g_data_00542050]
         mov     dword ptr [g_data_00542044], edx

@@ -132,7 +132,6 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_byteTab_004f3080;
 extern unsigned int g_state_004d50b4;
-extern unsigned int g_x_0054206c;
 extern void Helper_AudioStub_2960(void);
 extern void SetJmp_004a1ad0(void);
 
@@ -151,7 +150,7 @@ void DualBitFlagAudioChain_004a29d0(void) {
         sub     edx, eax
         movsx   eax, byte ptr [edx*4 + g_byteTab_004f3080]
         cmp     eax, -1
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         je      short L_b0_skip
         mov     dword ptr [ecx*4 + 0x30], eax
         call    SetJmp_004a1ad0
@@ -174,7 +173,7 @@ void DualBitFlagAudioChain_004a29d0(void) {
         sub     edx, eax
         movsx   eax, byte ptr [edx*4 + g_byteTab_004f3080 + 1]
         cmp     eax, -1
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         je      short L_b1_skip
         mov     dword ptr [ecx*4 + 0x30], eax
         call    SetJmp_004a1ad0

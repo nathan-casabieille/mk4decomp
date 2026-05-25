@@ -126,11 +126,11 @@ extern unsigned int g_data_00535e7c;
  * BootChainStreamWalkExtract_00407ae0 - 287b boot mstack-push1 + chain stream walker.
  *   Push g_x_00542050 to mstack. g_data_0054204c--; esi = chain[g_x_00542044*4] + g_x_00542044+1;
  *   g_x_00542044++. If esi <= ecx: pop+ret.
- *   Loop: eax = chain[ecx*4]; g_x_0054206c=eax. If eax < 0: skip pos branch.
+ *   Loop: eax = chain[ecx*4]; g_walkCallback=eax. If eax < 0: skip pos branch.
  *     Else: g_state_00542098 = (eax == 0); if != 0: skip to loop test.
- *       eax = chain[eax*4 + 0x20]; g_x_0054206c=eax; g_data_0054204c += 0xf; eax &= 0x100;
+ *       eax = chain[eax*4 + 0x20]; g_walkCallback=eax; g_data_0054204c += 0xf; eax &= 0x100;
  *       g_state_00542094 = eax; if 0: skip to loop test.
- *       g_x_0054206c = g_x_00542048[0]; call ExtractBitsToVec3; if paused: ret-noPop.
+ *       g_walkCallback = g_x_00542048[0]; call ExtractBitsToVec3; if paused: ret-noPop.
  *     edx = g_x_00542048+1; eax = (esi > ecx); g_x_00542094 = eax; if 0: pop+ret;
  *       g_x_00542050--; if sign: pop+ret; else loop back.
  *   Loop test: if esi > ecx: loop.
@@ -142,7 +142,6 @@ extern unsigned int g_state_00542098;
 extern unsigned int g_x_00542044;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_00542050;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542074;
 extern void ExtractBitsToVec3_00407c00(void);
 
@@ -171,7 +170,7 @@ __declspec(naked) void BootChainStreamWalkExtract_00407ae0(void)
         mov     eax, dword ptr [ecx*4]
         inc     ecx
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_x_00542044], ecx
         jl      short L_7ae_neg
         xor     edx, edx
@@ -183,7 +182,7 @@ __declspec(naked) void BootChainStreamWalkExtract_00407ae0(void)
         jne     L_7ae_loopTest
         mov     eax, dword ptr [eax*4 + 0x20]
         mov     edx, dword ptr [g_data_0054204c]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         add     edx, 0xf
         and     eax, 0x100
         mov     dword ptr [g_data_0054204c], edx
@@ -191,7 +190,7 @@ __declspec(naked) void BootChainStreamWalkExtract_00407ae0(void)
         je      short L_7ae_loopTest
         mov     eax, dword ptr [g_x_00542048]
         mov     ecx, dword ptr [eax*4]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         call    ExtractBitsToVec3_00407c00
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

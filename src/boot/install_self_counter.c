@@ -125,14 +125,13 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x00404920 (160b boot) - install-self with counter mod 0x10 + arg=cnt+3 dispatch + 3-call cleanup.
  *   esi = base*4; flag = [esi+0x84]; clear.
  *   if (flag != 0): call StackPopDispatchTagged; pop esi; ret.
- *   [0x541d90]++; if (>= 0x10): reset to 0; g_x_0054206c = same.
- *   call SixCallSeqPushImm. push 1, (g_x_0054206c+3); call SceneFrameStepWithInputs_004be250; add esp, 8.
+ *   [0x541d90]++; if (>= 0x10): reset to 0; g_walkCallback = same.
+ *   call SixCallSeqPushImm. push 1, (g_walkCallback+3); call SceneFrameStepWithInputs_004be250; add esp, 8.
  *   if (eax == 0xa): install self: [esi+8]=0x404920, [esi+0x84]=1, g_x_0054204c=1, pause=1.
  *   else: call ScenegraphWalk; call BootInitGuardedCallChain_004265d0; call AudioInitInstallerPair_004a2140; ret.
  */
 extern unsigned int g_x_00541d90;
 extern unsigned int g_x_0054204c;
-extern unsigned int g_x_0054206c;
 extern void AudioInitInstallerPair_004a2140(void);
 extern void BootInitGuardedCallChain_004265d0(void);
 extern void SceneFrameStepWithInputs_004be250(void);
@@ -158,14 +157,14 @@ __declspec(naked) void InstallSelfCounter_00404920(void) {
         mov     edx, dword ptr [g_x_00541d90]
         lea     eax, [edx + 1]
         cmp     eax, 0x10
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_x_00541d90], eax
         _emit   7ch
         _emit   0ch
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_x_00541d90], ecx
         call    SixCallSeqPushImm_004a1d80
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         push    1
         add     eax, 3
         push    eax

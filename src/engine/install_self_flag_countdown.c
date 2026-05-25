@@ -132,7 +132,6 @@ extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00ab51f8;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542080;
 extern unsigned int g_x_00542084;
 extern void ChainDecCondStoreCallJmp_00434880(void);
@@ -166,7 +165,7 @@ __declspec(naked) void InstallSelfFlagCountdown_00434690(void) {
         mov     ecx, dword ptr [g_x_00542084]
         cmp     eax, ecx
         mov     dword ptr [g_data_00ab51f8], 1
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   05h
         jmp     ChainDecCondStoreCallJmp_00434880

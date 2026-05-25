@@ -140,7 +140,6 @@ extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542080;
 extern unsigned int g_data_00542088;
 extern void ScaledLoadIncJmp_00429840(void);
@@ -184,7 +183,7 @@ __declspec(naked) void MoveDispatch4StateFsm_00494a60(void)
         mov      eax, dword ptr [g_data_004d57ac]
         and      ecx, 0xff
         inc      eax
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], edx
         call     ScaledInit_0048d490
@@ -219,7 +218,7 @@ __declspec(naked) void MoveDispatch4StateFsm_00494a60(void)
         mov      edx, dword ptr [g_data_00542054]
         mov      eax, dword ptr [edx*4 + 8]
         shr      eax, 0x10
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         call     TableLookupCall_00489ff0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -257,14 +256,14 @@ __declspec(naked) void MoveDispatch4StateFsm_00494a60(void)
         mov      eax, dword ptr [eax*4 + 8]
         and      eax, 0xff
         add      eax, 0x300
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x68], eax
         mov      edx, dword ptr [g_data_00542060]
         mov      eax, 0x10e
         mov      dword ptr [g_data_00542070], eax
         mov      ecx, dword ptr [edx*4 + 0x74]
         cmp      ecx, 0x113
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         jne      short L_4c74
         mov      eax, ecx
         mov      dword ptr [g_data_00542070], eax
@@ -289,7 +288,7 @@ __declspec(naked) void MoveDispatch4StateFsm_00494a60(void)
         mov      ecx, dword ptr [g_data_0054205c]
         xor      eax, eax
         mov      al, byte ptr [edx*4 + 9]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x28], eax
         mov      edx, dword ptr [g_data_00542054]
         mov      ecx, dword ptr [g_data_0054205c]

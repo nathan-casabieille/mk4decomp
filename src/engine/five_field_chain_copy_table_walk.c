@@ -127,40 +127,39 @@ extern unsigned int g_data_0053a3cc;
 extern unsigned int g_data_00541fac;
 extern unsigned int g_x_0052ab10;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 
 /* @addr 0x00431260 (256b game) - 5-field copy from indexed table to chain.
  *   eax = g_x_0052ab10 (chain base); ecx = g_data_00541fac (table idx).
  *   g_scaledInit_00542044 = eax; g_x_00542048 = ecx.
  *   Initial: chain[+0x54] = table[+0]. Then 4 more iterations:
- *     idx++; chain[+0x58/+0x5c/+0x60/+0x64] = table[+idx]; g_x_0054206c=value.
- *   Then idx++; chain[+0x68] = table[+idx] (no g_x_0054206c set).
+ *     idx++; chain[+0x58/+0x5c/+0x60/+0x64] = table[+idx]; g_walkCallback=value.
+ *   Then idx++; chain[+0x68] = table[+idx] (no g_walkCallback set).
  *   Then idx++ (final increment).
- *   Set g_data_0053a3cc=0, g_data_00535d68=0, g_x_0054206c=0xffff0000,
+ *   Set g_data_0053a3cc=0, g_data_00535d68=0, g_walkCallback=0xffff0000,
  *   g_data_00535d60=0xffff0000; ret.
  */
 void FiveFieldChainCopyTableWalk_00431260(void) {
     g_scaledInit_00542044 = g_x_0052ab10;
     g_x_00542048 = g_data_00541fac;
-    g_x_0054206c = *(unsigned int *)(g_x_00542048 * 4);
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x54) = g_x_0054206c;
+    g_walkCallback = *(unsigned int *)(g_x_00542048 * 4);
+    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x54) = g_walkCallback;
     g_x_00542048++;
-    g_x_0054206c = *(unsigned int *)(g_x_00542048 * 4);
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x58) = g_x_0054206c;
+    g_walkCallback = *(unsigned int *)(g_x_00542048 * 4);
+    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x58) = g_walkCallback;
     g_x_00542048++;
-    g_x_0054206c = *(unsigned int *)(g_x_00542048 * 4);
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x5c) = g_x_0054206c;
+    g_walkCallback = *(unsigned int *)(g_x_00542048 * 4);
+    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x5c) = g_walkCallback;
     g_x_00542048++;
-    g_x_0054206c = *(unsigned int *)(g_x_00542048 * 4);
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x60) = g_x_0054206c;
+    g_walkCallback = *(unsigned int *)(g_x_00542048 * 4);
+    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x60) = g_walkCallback;
     g_x_00542048++;
-    g_x_0054206c = *(unsigned int *)(g_x_00542048 * 4);
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x64) = g_x_0054206c;
+    g_walkCallback = *(unsigned int *)(g_x_00542048 * 4);
+    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x64) = g_walkCallback;
     g_x_00542048++;
     *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x68) = *(unsigned int *)(g_x_00542048 * 4);
     g_x_00542048++;
     g_data_0053a3cc = 0;
     g_data_00535d68 = 0;
-    g_x_0054206c = 0xffff0000;
+    g_walkCallback = 0xffff0000;
     g_data_00535d60 = 0xffff0000;
 }

@@ -129,7 +129,6 @@ extern unsigned int g_data_00542048;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_00542070;
 extern unsigned int g_data_00542054;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_004a0370;
 extern unsigned int g_data_004e2864;
@@ -171,7 +170,7 @@ __declspec(naked) void AudioPhaseDispatch_004a1150(void)
         mov     dword ptr [eax*4], ecx
         mov     eax, dword ptr [g_data_00542054]
         test    eax, eax
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jne     short L_apd_subPath
         call    PushCallPauseStorePushDispatch_004a12e0
         pop     esi
@@ -212,10 +211,10 @@ __declspec(naked) void AudioPhaseDispatch_004a1150(void)
         ret
     L_apd_continue:
         mov     eax, dword ptr [g_data_00542058]
-        mov     edx, dword ptr [g_data_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4], edx
         mov     ecx, dword ptr [g_data_00542048]
-        mov     dword ptr [g_data_0054206c], ebx
+        mov     dword ptr [g_walkCallback], ebx
         mov     eax, dword ptr [ecx*4 + 0x14]
         mov     dword ptr [g_data_00542044], eax
         mov     dword ptr [eax*4], ebx

@@ -126,7 +126,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_state_004d5320;
 extern unsigned int g_state_004d5324;
 extern unsigned int g_state_004d532c;
-extern unsigned int g_x_0054206c;
 
 __declspec(naked) void RangeClampThree_0042ae40(void) {
     __asm {
@@ -136,14 +135,14 @@ __declspec(naked) void RangeClampThree_0042ae40(void) {
         mov     esi, dword ptr [esp + 8]
         mov     eax, dword ptr [esi*4 + 0]
         cmp     eax, edx
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   0bh
         sub     eax, ecx
         cmp     eax, edx
         _emit   7fh
         _emit   0fah
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     edx, dword ptr [g_state_004d532c]
         cmp     eax, edx
         _emit   7fh
@@ -152,20 +151,20 @@ __declspec(naked) void RangeClampThree_0042ae40(void) {
         cmp     eax, edx
         _emit   7eh
         _emit   0fah
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [esi*4 + 0], eax
         mov     eax, dword ptr [esi*4 + 4]
         mov     edx, dword ptr [g_state_004d5320]
         mov     ecx, dword ptr [g_state_004d5324]
         cmp     eax, edx
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   0bh
         sub     eax, ecx
         cmp     eax, edx
         _emit   7fh
         _emit   0fah
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     edx, dword ptr [g_state_004d532c]
         cmp     eax, edx
         _emit   7fh
@@ -174,20 +173,20 @@ __declspec(naked) void RangeClampThree_0042ae40(void) {
         cmp     eax, edx
         _emit   7eh
         _emit   0fah
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [esi*4 + 4], eax
         mov     eax, dword ptr [esi*4 + 8]
         mov     edx, dword ptr [g_state_004d5320]
         mov     ecx, dword ptr [g_state_004d5324]
         cmp     eax, edx
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   0bh
         sub     eax, ecx
         cmp     eax, edx
         _emit   7fh
         _emit   0fah
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     edx, dword ptr [g_state_004d532c]
         cmp     eax, edx
         _emit   7fh
@@ -196,7 +195,7 @@ __declspec(naked) void RangeClampThree_0042ae40(void) {
         cmp     eax, edx
         _emit   7eh
         _emit   0fah
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [esi*4 + 8], eax
         pop     esi
         ret

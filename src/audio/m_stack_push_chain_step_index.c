@@ -123,16 +123,15 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 extern unsigned int g_x_00542044;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 
 /*
  * MStackPushChainStepIndex_004ab510 - 240b audio chain-step with mstack push2.
- *   ecx = g_x_00542044[0]; g_x_0054206c = ecx; g_state_0054208c |= 4.
+ *   ecx = g_x_00542044[0]; g_walkCallback = ecx; g_state_0054208c |= 4.
  *   If ecx == 0: g_x_00542044 = 0; ret. Else: g_state_0054208c ^= 4.
  *   If ecx == 0 (still): g_x_00542044 = 0; ret. Else: mstack-push ecx, then g_x_00542048;
- *   ecx = g_x_00542044; eax = chain[ecx*4 + 4] + g_x_0054206c → g_x_00542048; chain[0] = chain[eax*4];
- *   chain[g_x_00542048*4 + 4] = 0; chain[g_x_00542048*4] = g_x_0054206c; pop2 mstack into
- *   g_x_00542048 and g_x_0054206c; g_x_00542044 = (last popped); ret.
+ *   ecx = g_x_00542044; eax = chain[ecx*4 + 4] + g_walkCallback → g_x_00542048; chain[0] = chain[eax*4];
+ *   chain[g_x_00542048*4 + 4] = 0; chain[g_x_00542048*4] = g_walkCallback; pop2 mstack into
+ *   g_x_00542048 and g_walkCallback; g_x_00542044 = (last popped); ret.
  */
 void MStackPushChainStepIndex_004ab510(void)
 {
@@ -140,7 +139,7 @@ void MStackPushChainStepIndex_004ab510(void)
     unsigned int idx;
     unsigned int new_idx;
     chain = *(unsigned int *)(g_x_00542044 * 4);
-    g_x_0054206c = chain;
+    g_walkCallback = chain;
     g_state_0054208c |= 4;
     if (chain == 0) {
         g_x_00542044 = chain;
@@ -156,16 +155,16 @@ void MStackPushChainStepIndex_004ab510(void)
     g_state_004d57ac++;
     *(unsigned int *)(g_state_004d57ac * 4) = g_x_00542048;
     idx = g_x_00542044;
-    new_idx = *(unsigned int *)(idx * 4 + 4) + g_x_0054206c;
+    new_idx = *(unsigned int *)(idx * 4 + 4) + g_walkCallback;
     g_x_00542048 = new_idx;
     *(unsigned int *)(idx * 4) = *(unsigned int *)(new_idx * 4);
-    g_x_0054206c = 0;
+    g_walkCallback = 0;
     *(unsigned int *)(new_idx * 4 + 4) = 0;
     *(unsigned int *)(new_idx * 4) = 0;
     g_x_00542048 = *(unsigned int *)(g_state_004d57ac * 4);
     g_state_004d57ac--;
     chain = *(unsigned int *)(g_state_004d57ac * 4);
-    g_x_0054206c = chain;
+    g_walkCallback = chain;
     g_state_004d57ac--;
     g_x_00542044 = chain;
 }

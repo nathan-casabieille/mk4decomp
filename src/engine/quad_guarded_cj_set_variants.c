@@ -138,7 +138,6 @@ extern unsigned int g_x_00538164;
 extern unsigned int g_x_0053a178;
 extern unsigned int g_x_0053a250;
 extern unsigned int g_x_00541de0;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542074;
 extern void DownloadPlayerChar(void);
@@ -150,7 +149,7 @@ void QuadGuardedCjSet_00422fc0(void) {
     __asm {
         mov     eax, dword ptr [g_x_0053a178]
         mov     dword ptr [g_x_00542070], 2
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    DownloadPlayerChar
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -162,7 +161,7 @@ void QuadGuardedCjSet_00422fc0(void) {
         _emit   00h
         mov     ecx, dword ptr [g_x_0053a178]
         mov     edx, dword ptr [g_data_00541e34]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_x_00542070], 2
         mov     dword ptr [g_x_00542074], edx
         call    GuardedDualPushTailJmp_004231f0
@@ -190,7 +189,7 @@ void QuadGuardedCjSet_00422fc0(void) {
         mov     eax, dword ptr [g_cj_0054205c]
         mov     ecx, 3
         mov     dword ptr [g_x_00538160], eax
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x30], ecx
         mov     eax, dword ptr [g_cj_0054205c]
         _emit   81h
@@ -211,13 +210,13 @@ void QuadGuardedCjSet_00422fc0(void) {
         _emit   17h
         mov     eax, dword ptr [g_x_00537f78]
         mov     edx, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x3c], eax
         }
 }
 
 /* @addr 0x004230b0 (246b game) - 4-call guarded sequence (sibling of 0x00422fc0).
- *   Set up locals (g_x_00542070=3, g_x_0054206c=g_x_0053a250); call DownloadPlayerChar.
+ *   Set up locals (g_x_00542070=3, g_walkCallback=g_x_0053a250); call DownloadPlayerChar.
  *   If pause? ret. Reload then call GuardedDualPushTailJmp. If pause? ret.
  *   mstack-push g_scaledInit_00542044; call ScaledOr4DirtyClear; mstack-pop;
  *   set cj[+0x30]=4 + cj[+0x34] |= 0x1c0001; call TwoStateLookupDirty;
@@ -227,7 +226,7 @@ void QuadGuardedCjSet_004230b0(void) {
     __asm {
         mov     eax, dword ptr [g_x_0053a250]
         mov     dword ptr [g_x_00542070], 3
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    DownloadPlayerChar
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -239,7 +238,7 @@ void QuadGuardedCjSet_004230b0(void) {
         _emit   00h
         mov     ecx, dword ptr [g_x_0053a250]
         mov     edx, dword ptr [g_data_00541e38]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_x_00542070], 3
         mov     dword ptr [g_x_00542074], edx
         call    GuardedDualPushTailJmp_004231f0
@@ -267,7 +266,7 @@ void QuadGuardedCjSet_004230b0(void) {
         mov     eax, dword ptr [g_cj_0054205c]
         mov     ecx, 4
         mov     dword ptr [g_x_00538164], eax
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x30], ecx
         call    TwoStateLookupDirty_004237d0
         mov     eax, dword ptr [g_pause_00541e6c]
@@ -280,7 +279,7 @@ void QuadGuardedCjSet_004230b0(void) {
         mov     dword ptr [eax*4 + 0x34], ecx
         mov     eax, dword ptr [g_x_00541de0]
         mov     edx, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x3c], eax
         }
 }

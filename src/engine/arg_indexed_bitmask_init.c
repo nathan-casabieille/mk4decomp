@@ -126,16 +126,15 @@ extern unsigned int g_data_00535e7c;
  *   Init: eax=[esp+4]>>2; g_x_00542050=eax. Load 4 from [eax*4+0]: g_x_00542074, g_acc, g_state_0054207c, g_state_00542080.
  *   Load g_state_00538158 into g_scaledInit. If g_cj_0054205c==ecx (538158): skip second-init, jmp call.
  *   Else load 4 more from [eax*4+0] into same globals. Call NotMaskStorePair.
- *   If pause: ret. Compute (g_x_0054206c & g_state_0054207c) and (g_data_00542070 & g_state_00542080).
+ *   If pause: ret. Compute (g_walkCallback & g_state_0054207c) and (g_data_00542070 & g_state_00542080).
  *   If g_data_005424c0 != 0: jmp set-bit branch (or al,1).
- *   Else: cmp g_x_00542074 with eax (g_x_0054206c & 7c).
+ *   Else: cmp g_x_00542074 with eax (g_walkCallback & 7c).
  *     If equal: cmp g_acc with ecx. If equal: set bit. Else clear bit. Ret.
  *     If first not equal: clear bit, ret.
  */
 extern unsigned int g_data_005424c0;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542050;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542074;
 extern void NotMaskStorePair_0045f440(void);
 
@@ -187,12 +186,12 @@ void ArgIndexedBitmaskInit_0045f310(void) {
         test    eax, eax
         _emit   75h
         _emit   66h
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     ecx, dword ptr [g_state_0054207c]
         mov     edx, dword ptr [g_state_00542080]
         and     eax, ecx
         mov     ecx, dword ptr [g_data_00542070]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         and     ecx, edx
         mov     edx, dword ptr [g_data_005424c0]
         test    edx, edx

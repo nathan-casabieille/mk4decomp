@@ -128,7 +128,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00543800;
 extern void CallSetPause_0041f830(void);
 extern void ChainListVecAdd_0049d200(void);
@@ -153,7 +152,7 @@ __declspec(naked) void Phase4StateInit4Helpers_004130c0(void)
         mov     ecx, offset g_data_004d6758
         shr     ecx, 2
         mov     dword ptr [g_data_0054204c], eax
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         call    PushSetXfmMaskCallPop_00407140
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -165,17 +164,17 @@ __declspec(naked) void Phase4StateInit4Helpers_004130c0(void)
         shl     ecx, 2
         lea     eax, [edx*4]
         mov     edx, 0x98
-        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         push    0x100020
         mov     dword ptr [eax + 0x30], edx
         mov     edx, dword ptr [ecx + 0x3C]
-        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [eax + 0x54], edx
         mov     edx, dword ptr [ecx + 0x40]
-        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [eax + 0x58], edx
         mov     ecx, dword ptr [ecx + 0x44]
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [eax + 0x18]
         mov     dword ptr [eax + 0x5C], ecx
         mov     dword ptr [g_data_00542044], edx
@@ -195,7 +194,7 @@ __declspec(naked) void Phase4StateInit4Helpers_004130c0(void)
         mov     dword ptr [eax + 0x14], 0xFF
         mov     dword ptr [eax], ecx
         mov     ecx, 0x004131F0
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax + 0x10], ecx
         mov     edx, dword ptr [g_data_0054205c]
         mov     dword ptr [g_data_00542044], edx
@@ -225,7 +224,7 @@ __declspec(naked) void Phase4StateInit4Helpers_004130c0(void)
         mov     ecx, dword ptr [g_data_00542048]
         mov     eax, dword ptr [ecx*4 + 0x14]
         sub     eax, 0x16
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x14], eax
     L_p44_helperA_ret:
         ret
@@ -252,13 +251,13 @@ __declspec(naked) void Phase4StateInit4Helpers_004130c0(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p44_helperB_ret
-        mov     dword ptr [g_data_0054206c], 0xCCC
+        mov     dword ptr [g_walkCallback], 0xCCC
         call    MStackPushNegMul10_0040a690
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p44_helperB_ret
         mov     ecx, dword ptr [g_data_0054205c]
-        mov     edx, dword ptr [g_data_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [ecx*4 + 0x6C], edx
         lea     eax, [ecx*4]
         mov     ecx, dword ptr [g_data_00542070]
@@ -267,7 +266,7 @@ __declspec(naked) void Phase4StateInit4Helpers_004130c0(void)
         mov     dword ptr [g_data_00542044], eax
         mov     ecx, dword ptr [eax*4 + 0x20]
         or      ecx, 0x40
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x20], ecx
         mov     edx, dword ptr [g_data_00542044]
         mov     eax, dword ptr [edx*4 + 0x28]
@@ -280,7 +279,7 @@ __declspec(naked) void Phase4StateInit4Helpers_004130c0(void)
         mov     dword ptr [eax], ecx
         mov     ecx, 0x00413310
         mov     dword ptr [eax + 0x14], 0xFF
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax + 0x10], ecx
         jmp     CallSetPause_0041f830
     L_p44_helperB_ret:
@@ -305,10 +304,10 @@ __declspec(naked) void Phase4StateInit4Helpers_004130c0(void)
         test    eax, eax
         jne     L_p44_helperC_tail
         mov     ecx, dword ptr [g_data_00542048]
-        mov     dword ptr [g_data_0054206c], 0xFFFFFEB9
+        mov     dword ptr [g_walkCallback], 0xFFFFFEB9
         mov     eax, dword ptr [ecx*4 + 0x48]
         sub     eax, 0x147
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x48], eax
         call    ChainListVecAdd_0049d200
         mov     eax, dword ptr [g_framePauseFlag]

@@ -135,7 +135,7 @@ extern unsigned int g_data_00541e20;
  *   state==0: g_x_00542048=(0x0053a408>>2); g_x_0054204c=(0x00537e88>>2).
  *     If g_cj!=g_state_00538158: g_x_00542048=g_x_0054204c. eax=[*4+0].
  *     If eax!=0: call SlotPhaseResetInstallChain_0048e0e0; if pause ret. Tail-call ZeroScaledZeroCallPauseJmp; pop+ret.
- *     Else: g_x_0054206c=[0x00541e20]; cmp 0x78; if >: jmp body.
+ *     Else: g_walkCallback=[0x00541e20]; cmp 0x78; if >: jmp body.
  *   state!=0 / >0x78: call DualGatedStateYield; if !=0 ret. Call LeaPlus22StoreSelf; if pause ret.
  *     Call DualCallPauseDirtyJmp; if pause ret.
  *     Cascade g_state_00535ddc: <0x10000 -> Wrapper_0043abf0 -> ret; <0x20000 -> Wrapper_0043ac00 -> ret;
@@ -146,7 +146,6 @@ extern unsigned int g_data_00541e20;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_0054204c;
-extern unsigned int g_x_0054206c;
 extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void PackedAdvanceCallTailJmp_004392c0(void);
 
@@ -176,7 +175,7 @@ __declspec(naked) void StateMachine4ArmCascade_0043aab0(void) {
         mov     dword ptr [g_x_00542048], eax
         mov     eax, dword ptr [eax*4 + 0]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   1ah
         call    SlotPhaseResetInstallChain_0048e0e0
@@ -194,7 +193,7 @@ __declspec(naked) void StateMachine4ArmCascade_0043aab0(void) {
         ret
         mov     eax, dword ptr [g_data_00541e20]
         cmp     eax, 0x78
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   79h
         call    DualGatedStateYield_0048fc80
@@ -221,7 +220,7 @@ __declspec(naked) void StateMachine4ArmCascade_0043aab0(void) {
         _emit   7bh
         mov     eax, dword ptr [g_state_00535ddc]
         cmp     eax, 0x10000
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7dh
         _emit   08h
         call    Wrapper_0043abf0

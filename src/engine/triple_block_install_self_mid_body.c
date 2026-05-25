@@ -127,19 +127,18 @@ extern void GateDispatch6c_00494580(void);
 extern void CmpDualPatchCallJmp_00482b00(void);
 extern void TripleBlockInstallSelfMidBody_00482f60(void);
 
-/* @addr 0x00482ef0 (101b game) - 3-stage pause-guarded chain: set g_x_0054206c=0x8000;
+/* @addr 0x00482ef0 (101b game) - 3-stage pause-guarded chain: set g_walkCallback=0x8000;
  *   call CmpP1DualInitStore; if pause ret; call GateDispatch6c; if pause ret;
- *   call CmpDualPatchCallJmp; if pause ret; g_x_0054206c=0x4003; store at
+ *   call CmpDualPatchCallJmp; if pause ret; g_walkCallback=0x4003; store at
  *   [g_baseSel_00542060*4 + 0x74]; push 0x004ee370; call ArgSarStoreJmp; ret.
  *   Second block (+0x60): tail-jmp TripleBlockInstallSelfMidBody_00482f60.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern void ArgSarStoreJmp_004594f0(void);
 
 __declspec(naked) void Chain3CallGuarded_00482ef0(void) {
     __asm {
-        mov     dword ptr [g_x_0054206c], 0x00008000
+        mov     dword ptr [g_walkCallback], 0x00008000
         call    CmpP1DualInitStore_00482ab0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -157,7 +156,7 @@ __declspec(naked) void Chain3CallGuarded_00482ef0(void) {
         _emit   24h
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x00004003
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    0x004ee370
         mov     dword ptr [ecx*4 + 0x74], eax
         call    ArgSarStoreJmp_004594f0

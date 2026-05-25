@@ -126,7 +126,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_0053a3dc;
 extern unsigned int g_data_0053a41c;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542074;
 extern void DualMul10ChainAcc_0042d010(void);
 
@@ -149,7 +148,7 @@ void ChainMul10DotProd_0042cec0(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_state_0054207c]
-        mov     edx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     ecx, dword ptr [g_data_0053a3dc]
         mov     dword ptr [g_state_00542080], eax
         mov     eax, dword ptr [g_data_0053a41c]
@@ -158,7 +157,7 @@ void ChainMul10DotProd_0042cec0(void) {
         push    edx
         mov     dword ptr [g_acc_00542078], eax
         call    Mul10Tail_00404af0
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         add     esp, 8
         mov     dword ptr [g_acc_00542078], eax
         mov     eax, dword ptr [g_state_0054207c]
@@ -186,11 +185,11 @@ void ChainMul10DotProd_0042cec0(void) {
         mov     eax, dword ptr [g_state_0054207c]
         mov     ecx, dword ptr [g_state_00542080]
         cmp     eax, ecx
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         _emit   7fh
         _emit   07h
         neg     eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     ecx, dword ptr [g_data_0053a41c]
         mov     edx, dword ptr [g_data_0053a3dc]
         push    ecx
@@ -198,7 +197,7 @@ void ChainMul10DotProd_0042cec0(void) {
         mov     dword ptr [g_acc_00542078], ecx
         mov     dword ptr [g_state_0054207c], edx
         call    Mul10Tail_00404af0
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         add     esp, 8
         mov     dword ptr [g_acc_00542078], eax
         mov     eax, dword ptr [g_state_0054207c]

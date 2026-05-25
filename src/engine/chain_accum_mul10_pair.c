@@ -122,34 +122,33 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542074;
 extern unsigned int g_data_004d57ac_arr;
 
 /* @addr 0x00490b70 (191b game) - chain[+0x58] accumulate, then 2 Mul10 calls + chain[+0x54,+0x5c] accumulate.
- *   chain[g_x_0054205c + 0x58] += g_x_0054206c; g_x_00542074 = result.
+ *   chain[g_x_0054205c + 0x58] += g_walkCallback; g_x_00542074 = result.
  *   g_scaledInit = chain[g_baseSel + 0x40]; push packed_ptr[g_scaledInit], g_x_00542070;
- *   call Mul10Tail; g_x_0054206c = result; add esp,8.
+ *   call Mul10Tail; g_walkCallback = result; add esp,8.
  *   g_scaledInit = chain[g_baseSel + 0x44]; eax = packed_ptr[g_scaledInit];
  *   g_x_00542074 = eax; push eax, g_x_00542070; call Mul10Tail; add esp,8.
- *   g_x_00542074 = result; chain[g_x_0054205c + 0x54] += g_x_0054206c; g_x_00542070 = sum.
+ *   g_x_00542074 = result; chain[g_x_0054205c + 0x54] += g_walkCallback; g_x_00542070 = sum.
  *   chain[g_x_0054205c + 0x5c] += g_x_00542074; g_x_00542070 = sum.
  */
 void ChainAccumMul10Pair_00490b70(void) {
     unsigned int v;
-    v = g_x_0054206c + *(unsigned int *)(g_x_0054205c * 4 + 0x58);
+    v = g_walkCallback + *(unsigned int *)(g_x_0054205c * 4 + 0x58);
     g_x_00542074 = v;
     *(unsigned int *)(g_x_0054205c * 4 + 0x58) = v;
     g_scaledInit_00542044 = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x40);
-    g_x_0054206c = (&g_data_004d57ac_arr)[g_scaledInit_00542044];
-    g_x_0054206c = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail_00404af0)(
-        g_x_00542070, g_x_0054206c);
+    g_walkCallback = (&g_data_004d57ac_arr)[g_scaledInit_00542044];
+    g_walkCallback = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail_00404af0)(
+        g_x_00542070, g_walkCallback);
     g_scaledInit_00542044 = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x44);
     g_x_00542074 = (&g_data_004d57ac_arr)[g_scaledInit_00542044];
     g_x_00542074 = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail_00404af0)(
         g_x_00542070, g_x_00542074);
-    v = g_x_0054206c + *(unsigned int *)(g_x_0054205c * 4 + 0x54);
+    v = g_walkCallback + *(unsigned int *)(g_x_0054205c * 4 + 0x54);
     g_x_00542070 = v;
     *(unsigned int *)(g_x_0054205c * 4 + 0x54) = v;
     v = g_x_00542074 + *(unsigned int *)(g_x_0054205c * 4 + 0x5c);

@@ -125,18 +125,17 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x00496fc0 (303b game) - multi-thunk dispatcher with 5 small blocks.
  *   Block A (0..0x13): call MStackCall; if !pause tail-jmp CallSetPause; ret.
  *   Block B (+0x20): call CondPickDualStore; if pause ret. Set chain[+0x74]=0x314,
- *     g_x_0054206c=0x314; push 0x004f2078; call ArgSarStoreJmp; pop; ret.
+ *     g_walkCallback=0x314; push 0x004f2078; call ArgSarStoreJmp; pop; ret.
  *   Block C (+0x50): call DualCmpSwapStore; if pause ret. Push 0x004f20a0;
  *     call ScaledStackCallPause; pop; if pause ret. If bit2(0054208c) jmp CallSetPause.
  *     mul10[3333,x84]; chain[+0x6c]=result. mul10[3333,x88]; chain[+0x74]=result;
  *     g_cj=scaledInit; push 0x004f20b0; call ArgSar_Set0_Jmp; pop; ret.
- *   Block D (+0xd0): g_x_0054206c=0x312; jmp +0x11. (1-NOP)
- *   Block E (+0xe5): g_x_0054206c=0x311; jmp +1 (to next fn at 0x004970f0).
+ *   Block D (+0xd0): g_walkCallback=0x312; jmp +0x11. (1-NOP)
+ *   Block E (+0xe5): g_walkCallback=0x311; jmp +1 (to next fn at 0x004970f0).
  */
 extern unsigned int g_data_004ea000;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542050;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542084;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ArgSar_Set0_Jmp_0049c6f0(void);
@@ -183,7 +182,7 @@ __declspec(naked) void MultiThunkDispatcher_00496fc0(void) {
         _emit   24h
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x314
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    0x004f2078
         mov     dword ptr [ecx*4 + 0x74], eax
         call    ArgSarStoreJmp_004594f0
@@ -258,14 +257,14 @@ __declspec(naked) void MultiThunkDispatcher_00496fc0(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        mov     dword ptr [g_x_0054206c], 0x312
+        mov     dword ptr [g_walkCallback], 0x312
         _emit   0e9h
         _emit   11h
         _emit   00h
         _emit   00h
         _emit   00h
         _emit   90h
-        mov     dword ptr [g_x_0054206c], 0x311
+        mov     dword ptr [g_walkCallback], 0x311
         _emit   0e9h
         _emit   01h
         _emit   00h
@@ -278,7 +277,7 @@ __declspec(naked) void MultiThunkDispatcher_00496fc0(void) {
  *   Block A (0..0x1c): push 0x00542980; call ArgScaledTestStore; pop; if !pause tail-jmp DualScaledStoreZero; ret.
  *   Block B (0x20..0xbc): call DirtyToggleByGate; if pause ret. If bit2(0054208c) ret.
  *     g_x_00542050 = (0x004ea000>>2); call NotShrCmp1Store; if pause ret.
- *     ecx = g_x_00542050 + (g_x_0054206c & 0xf); jmp [ecx*4].
+ *     ecx = g_x_00542050 + (g_walkCallback & 0xf); jmp [ecx*4].
  *   Block C-H (0xc0..end): 6 thunks, each "call LeaPlus22StoreSelf; if !pause tail-jmp <target>; ret".
  */
 __declspec(naked) void MultiThunkDispatcher_00460470(void) {
@@ -312,11 +311,11 @@ __declspec(naked) void MultiThunkDispatcher_00460470(void) {
         test    eax, eax
         _emit   75h
         _emit   2ah
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     ecx, dword ptr [g_x_00542050]
         and     eax, 0xf
         add     ecx, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_x_00542050], ecx
         mov     ecx, dword ptr [ecx*4 + 0]
         mov     dword ptr [g_x_00542050], ecx

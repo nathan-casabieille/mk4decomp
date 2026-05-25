@@ -125,12 +125,11 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x0048b500 (271b game) - mstack-push 3 globals + 3 Mul10Tail + abs/half.
  *   mstack-push g_state_00542080, g_x_00542084, g_state_00542088.
  *   Compute: ecx = g_state_00542080 << 0x10; eax = g_state_00542088 - ecx; abs(eax).
- *   ecx = g_x_00542084 >> 1; push twice; Mul10Tail; result -> g_x_0054206c.
+ *   ecx = g_x_00542084 >> 1; push twice; Mul10Tail; result -> g_walkCallback.
  *   Push edx=g_state_00542088 and eax (last result); Mul10Tail.
- *   eax >>= 2; ecx >>= 2; add; sub edx; add 0x10000; Mul10Tail; -> g_x_0054206c.
+ *   eax >>= 2; ecx >>= 2; add; sub edx; add 0x10000; Mul10Tail; -> g_walkCallback.
  *   mstack-pop 3.
  */
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542084;
 
 void MStackPush3TripleMul10WithAbs_0048b500(void) {
@@ -168,11 +167,11 @@ void MStackPush3TripleMul10WithAbs_0048b500(void) {
         call    Mul10Tail_00404af0
         mov     edx, dword ptr [g_state_00542088]
         add     esp, 8
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    edx
         push    eax
         call    Mul10Tail_00404af0
-        mov     edx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         add     esp, 8
         mov     ecx, edx
         sar     eax, 2
@@ -184,9 +183,9 @@ void MStackPush3TripleMul10WithAbs_0048b500(void) {
         add     ecx, 0x00010000
         push    ecx
         push    eax
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         call    Mul10Tail_00404af0
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     eax, dword ptr [g_state_004d57ac]
         add     esp, 8
         mov     ecx, dword ptr [eax*4 + 0]

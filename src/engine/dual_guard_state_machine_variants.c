@@ -129,7 +129,6 @@ extern unsigned int g_data_00542004;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00541fc0;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 extern void MStackCall_004062a0(void);
 extern void SaveCallRestoreOrXor_00404a00(void);
 extern void SaveCallRestore_004049d0(void);
@@ -140,12 +139,12 @@ void DualGuardStateMachine_0049ea30(void) {
     __asm {
         mov     eax, dword ptr [g_data_00542004]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   0eh
         mov     eax, dword ptr [g_data_0053a1bc]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   0eh
         push    0x00000266
@@ -186,7 +185,7 @@ void DualGuardStateMachine_0049ea30(void) {
         mov     dword ptr [ecx*4 + 0x30], 0x00000266
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [g_x_00542048], edx
-        mov     dword ptr [g_x_0054206c], 2
+        mov     dword ptr [g_walkCallback], 2
         call    ThrowFlowSetupCluster_0049ed00
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -194,7 +193,7 @@ void DualGuardStateMachine_0049ea30(void) {
         _emit   17h
         mov     ecx, dword ptr [g_x_00542048]
         mov     eax, 0x0000028f
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x5c], eax
         }
 }
@@ -207,14 +206,14 @@ __declspec(naked) void DualGuardStateMachine_0049eb20(void) {
     __asm {
         mov     eax, dword ptr [g_data_00542004]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   05h
         jmp     Wrapper_0049eb10
         mov     eax, dword ptr [g_data_0053a354]
         push    0x00000267
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   09h
         call    SaveCallRestore_004049d0
@@ -253,7 +252,7 @@ __declspec(naked) void DualGuardStateMachine_0049eb20(void) {
         mov     dword ptr [ecx*4 + 0x30], 0x00000267
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [g_x_00542048], edx
-        mov     dword ptr [g_x_0054206c], 4
+        mov     dword ptr [g_walkCallback], 4
         call    ThrowFlowSetupCluster_0049ed00
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -261,7 +260,7 @@ __declspec(naked) void DualGuardStateMachine_0049eb20(void) {
         _emit   17h
         mov     ecx, dword ptr [g_x_00542048]
         mov     eax, 0x0000028f
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x5c], eax
         ret
     }

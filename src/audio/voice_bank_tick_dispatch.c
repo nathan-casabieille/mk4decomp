@@ -141,7 +141,6 @@ extern unsigned int g_data_004f4320;
 extern unsigned int g_data_004f432c;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00543450;
 extern unsigned int g_data_005437f8;
 extern unsigned int g_data_005437fc;
@@ -211,7 +210,7 @@ __declspec(naked) void VoiceBankTickDispatch_004a3120(void)
         mov      ecx, dword ptr [esi]
         push     eax
         push     ecx
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_00542044], ecx
         call     GuardedSetupCallTailJmp_004a1fa0
         mov      ecx, dword ptr [g_data_00542044]

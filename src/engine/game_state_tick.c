@@ -127,7 +127,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541fc0;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern void func_0049f336(void);
 extern void func_0049f33b(void);
@@ -158,6 +157,6 @@ __declspec(naked) void GameStateTick_0049f1f0(void)
         mov      eax, dword ptr [edx*4]
         mov      dword ptr [g_data_00542044], eax
         mov      eax, dword ptr [eax*4]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
     }
 }

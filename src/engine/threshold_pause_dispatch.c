@@ -123,13 +123,12 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0046fd10 (90b game) - threshold/pause-guarded dispatcher tail-jumping into 0x0046fd70.
- *   g_x_0054206c = (g_state_0053a3c0); if <= 1: push lit; call IterStepDualStore; ret.
- *   else: call CopyJmp; if pause or g_x_0054206c < 0xcccc: ret.
+ *   g_walkCallback = (g_state_0053a3c0); if <= 1: push lit; call IterStepDualStore; ret.
+ *   else: call CopyJmp; if pause or g_walkCallback < 0xcccc: ret.
  *   call DualGuardedTableSearch; if nonzero ret.
- *   g_x_0054206c = (g_state_00535ddc); if > 0x18000 ret; else jmp TimerWindowThreshDispatch_0046fd70.
+ *   g_walkCallback = (g_state_00535ddc); if > 0x18000 ret; else jmp TimerWindowThreshDispatch_0046fd70.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern void CopyJmp_0048ee80(void);
 extern void DualGuardedTableSearch_004708c0(void);
 extern void TimerWindowThreshDispatch_0046fd70(void);
@@ -138,7 +137,7 @@ __declspec(naked) void ThresholdPauseDispatch_0046fd10(void) {
     __asm {
         mov     eax, dword ptr [g_state_0053a3c0]
         cmp     eax, 1
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   0dh
         push    0x004eb8f4
@@ -171,7 +170,7 @@ __declspec(naked) void ThresholdPauseDispatch_0046fd10(void) {
         _emit   16h
         mov     eax, dword ptr [g_state_00535ddc]
         cmp     eax, 0x00018000
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7fh
         _emit   05h
         jmp     TimerWindowThreshDispatch_0046fd70

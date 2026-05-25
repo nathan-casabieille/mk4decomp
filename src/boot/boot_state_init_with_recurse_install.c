@@ -126,8 +126,8 @@ extern unsigned int g_data_00535e7c;
  * BootStateInitWithRecurseInstall_00402de0 - 230b boot self-installing state setup.
  *   chain = g_baseSel_00542060<<2; saved = chain->state; chain->state = 0.
  *   If was nonzero: tail-call StackPopDispatchTagged_0041f780; pop+ret.
- *   Else: g_data_0053a50c=5; g_x_0054206c=0xa; call StorePauseImulShr16; if paused: pop+ret.
- *     g_x_0054206c++; g_data_00535de4 = g_x_0054206c; call TripleCallCountdown; if paused: pop+ret.
+ *   Else: g_data_0053a50c=5; g_walkCallback=0xa; call StorePauseImulShr16; if paused: pop+ret.
+ *     g_walkCallback++; g_data_00535de4 = g_walkCallback; call TripleCallCountdown; if paused: pop+ret.
  *     Call TwoStageSelectorInit; if paused: pop+ret. push 8; call TableWalkBoundedCmp;
  *     install-self at entry; chain->state=1; load chain[+4] = g_x_00542044 = old cursor;
  *     mstack-push (entry + 0x01000000); g_x_00542044++; chain[+4] = new cursor;
@@ -137,7 +137,6 @@ extern unsigned int g_data_00535de4;
 extern unsigned int g_data_0053a50c;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542044;
-extern unsigned int g_x_0054206c;
 extern void StorePauseImulShr16_004ab630(void);
 extern void TableWalkBoundedCmp_004bd890(void);
 extern void TripleCallCountdown_00428080(void);
@@ -160,14 +159,14 @@ __declspec(naked) void BootStateInitWithRecurseInstall_00402de0(void)
         ret
     L_init:
         mov     dword ptr [g_data_0053a50c], 5
-        mov     dword ptr [g_x_0054206c], 0xa
+        mov     dword ptr [g_walkCallback], 0xa
         call    StorePauseImulShr16_004ab630
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         jne     L_pop_ret
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         inc     eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_data_00535de4], eax
         call    TripleCallCountdown_00428080
         mov     eax, dword ptr [g_pause_00541e6c]

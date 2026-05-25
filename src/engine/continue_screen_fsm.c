@@ -132,7 +132,6 @@ extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_0054207c;
@@ -172,12 +171,12 @@ __declspec(naked) void ContinueScreenFsm_00423c20(void)
         call     Push16Call_00489f50
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3e8f
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         call     CopyGlobal_004ac1f0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3e8f
         mov      edx, OFFSET g_data_004dee18
-        mov      dword ptr [g_data_0054206c], 0xa
+        mov      dword ptr [g_walkCallback], 0xa
         shr      edx, 2
         mov      dword ptr [g_data_00542048], edx
         mov      dword ptr [g_data_00542070], 4
@@ -189,7 +188,7 @@ __declspec(naked) void ContinueScreenFsm_00423c20(void)
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, 0x10000
         mov      edx, OFFSET g_data_004df9a0
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         shr      edx, 2
         mov      dword ptr [ecx*4 + 0x5c], eax
         mov      dword ptr [g_data_00542058], edx
@@ -241,7 +240,7 @@ __declspec(naked) void ContinueScreenFsm_00423c20(void)
         mov      dword ptr [eax*4 + 0x54], edi
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, 0x1f
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x30], eax
         call     PushSetCallPop_00406530
         cmp      dword ptr [g_framePauseFlag], edi
@@ -260,7 +259,7 @@ __declspec(naked) void ContinueScreenFsm_00423c20(void)
         call     BootInitGuardedCallChain_004265d0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_3e8f
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         call     CopyGlobal_004ac1f0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_3e8f

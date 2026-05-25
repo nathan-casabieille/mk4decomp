@@ -128,7 +128,6 @@ extern unsigned int g_data_00535e7c;
  *   Blocks B,C,D (+0x60/+0x70/+0x80): push 0x004eb318/0x004eb348/0x004eb398; call ArgSarStoreJmp; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ScaledAndAlfe_00490390(void);
 extern void ThresholdSetMatchDispatch_0046dc10(void);
@@ -150,7 +149,7 @@ void QuadEntryChainPush_0046dd00(void) {
         mov     dword ptr [eax*4 + 0x74], 0x0000010b
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x00000101
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x68], eax
         call    ArgSarStoreJmp_004594f0
         add     esp, 4

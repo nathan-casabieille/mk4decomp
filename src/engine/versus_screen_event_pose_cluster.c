@@ -129,7 +129,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_00542080;
@@ -324,12 +323,12 @@ __declspec(naked) void VersusScreenEventPoseCluster_0043b680(void)
         je       short L_b93c
         jmp      GuardedPushCall_0043b980
     L_b93c:
-        mov      dword ptr [g_data_0054206c], 0x3d70
+        mov      dword ptr [g_walkCallback], 0x3d70
         call     SfxAttenuateAndApply_0048dee0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b971
-        mov      dword ptr [g_data_0054206c], 0x88
+        mov      dword ptr [g_walkCallback], 0x88
         call     ScaledLitLoadCall_00480fe0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

@@ -136,7 +136,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004f3aec;
 extern unsigned int g_data_004f3af0;
 extern unsigned int g_x_00542044;
-extern unsigned int g_x_0054206c;
 extern void GuardedSetupCallTailJmp_004a1fa0(void);
 extern void Helper_Sprintf(void);
 extern void MStackPush2ChainLLInsert_00406790(void);
@@ -182,7 +181,7 @@ __declspec(naked) void AudioByteTableLoop_004a76e0(void)
         mov     ecx, dword ptr [esi + 0x004f3b4c]
         push    eax
         push    ecx
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_x_00542044], ecx
         call    GuardedSetupCallTailJmp_004a1fa0
         mov     edx, dword ptr [g_x_00542044]

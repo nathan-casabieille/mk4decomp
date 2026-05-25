@@ -135,7 +135,6 @@ extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_0054208c;
 extern void DualPushSetCallDualPop_00404b10(void);
@@ -174,7 +173,7 @@ __declspec(naked) void AudioMStackPushHandlerPair_0049ff30(void)
         mov     dword ptr [g_data_00542054], ecx
         mov     ecx, dword ptr [ecx*4]
         test    ecx, ecx
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         jne     short L_amspp_skipPush
         test    eax, eax
         jne     short L_amspp_else
@@ -193,7 +192,7 @@ __declspec(naked) void AudioMStackPushHandlerPair_0049ff30(void)
     L_amspp_callBe690:
         call    TaggedSceneDispatch_004be690
         mov     ecx, dword ptr [g_data_00542054]
-        mov     dword ptr [g_data_0054206c], 1
+        mov     dword ptr [g_walkCallback], 1
         add     esp, 4
         mov     dword ptr [ecx*4], 1
     L_amspp_skipPush:
@@ -246,7 +245,7 @@ __declspec(naked) void AudioMStackPushHandlerPair_0049ff30(void)
     L_amspp_sub2_check:
         mov     eax, dword ptr [g_data_00542004]
         test    eax, eax
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jne     short L_amspp_sub2_check2
         call    SetOnePairJmp_004a0110
         pop     esi
@@ -254,7 +253,7 @@ __declspec(naked) void AudioMStackPushHandlerPair_0049ff30(void)
     L_amspp_sub2_check2:
         mov     eax, dword ptr [g_data_0053a1bc]
         test    eax, eax
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jne     short L_amspp_sub2_callPair
         call    TripleTestInstallJmp_004a0130
         pop     esi

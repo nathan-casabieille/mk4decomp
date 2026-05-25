@@ -134,15 +134,14 @@ extern void MStackPushZeroCallPop_00407d00(void);
  *     Dec g_state_00542080; if 0: tail-call PendingMatch_00459510, ret.
  *     Call ScaledStoreOrFlagXor again; if pause ret. Same bit2 + counter sequence.
  *     Then recursive tail-call self (prefix entry); ret.
- *   Tail block (state==0): g_data_00542070=g_x_0054206c+1; cmp with chain[scaledInit*4+4].
+ *   Tail block (state==0): g_data_00542070=g_walkCallback+1; cmp with chain[scaledInit*4+4].
  *     If equal: mstack-push PendingMatch_00459510 addr; tail-call ComboMoveSelectFsmCluster_0045a2c0; ret.
- *     Else: g_x_00542054=[g_cj*4+0x24]; g_x_0054206c=0x8000; call MStackPushZeroCallPop;
+ *     Else: g_x_00542054=[g_cj*4+0x24]; g_walkCallback=0x8000; call MStackPushZeroCallPop;
  *       if pause ret. Install-self at body; state=1; g_x_0054204c=1; pause=1; ret.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0054204c;
 extern unsigned int g_x_00542054;
-extern unsigned int g_x_0054206c;
 
 extern unsigned int g_data_004d57ac_arr;
 
@@ -216,7 +215,7 @@ __declspec(naked) void DualEntryStateMachine_0045a180(void) {
         call    DualEntryStateMachine_0045a180
         pop     esi
         ret
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     edx, dword ptr [g_scaledInit_00542044]
         lea     eax, [ecx + 1]
         mov     dword ptr [g_data_00542070], eax
@@ -233,7 +232,7 @@ __declspec(naked) void DualEntryStateMachine_0045a180(void) {
         ret
         mov     eax, dword ptr [g_cj_0054205c]
         mov     ecx, dword ptr [eax*4 + 0x24]
-        mov     dword ptr [g_x_0054206c], 0x8000
+        mov     dword ptr [g_walkCallback], 0x8000
         mov     dword ptr [g_x_00542054], ecx
         call    MStackPushZeroCallPop_00407d00
         mov     eax, dword ptr [g_pause_00541e6c]

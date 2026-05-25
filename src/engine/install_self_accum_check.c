@@ -129,7 +129,7 @@ extern unsigned int g_data_00535e7c;
  *     else: fall through to setup.
  *   Main: call GuardedClampStoreJmp; pause? -> end.
  *   call StateDispatchTable_00490fc0; pause? -> end.
- *   g_x_00542054 = g_x_0054206c; g_x_0054206c = g_x_00542088; g_x_00542070 = 0;
+ *   g_x_00542054 = g_walkCallback; g_walkCallback = g_x_00542088; g_x_00542070 = 0;
  *   call MStackPushZeroCallPop; pause? -> end.
  *   if (g_x_00542058 != 0): call eax = g_x_00542058. pause? -> end.
  *   install self: [esi+8] = 0x00428c20; [esi+0x84]=1; g_x_0054204c=1; pause=1.
@@ -138,7 +138,6 @@ extern unsigned int g_x_00541dc4;
 extern unsigned int g_x_0054204c;
 extern unsigned int g_x_00542054;
 extern unsigned int g_x_00542058;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542084;
 extern unsigned int g_x_00542088;
@@ -178,10 +177,10 @@ __declspec(naked) void InstallSelfAccumCheck_00428c20(void) {
         test    eax, eax
         _emit   75h
         _emit   63h
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     eax, dword ptr [g_x_00542088]
         mov     dword ptr [g_x_00542054], ecx
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_x_00542070], 0
         call    MStackPushZeroCallPop_00407d00
         mov     eax, dword ptr [g_framePauseFlag]

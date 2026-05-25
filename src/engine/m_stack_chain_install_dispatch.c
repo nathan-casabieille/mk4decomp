@@ -129,7 +129,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542088;
 extern unsigned int g_data_0054208c;
 extern unsigned int g_data_00542094;
@@ -160,7 +159,7 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         mov      dword ptr [g_data_00542088], ecx
         mov      eax, dword ptr [eax*4 + 0x10]
         shr      eax, 0x18
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         and      eax, 2
         mov      dword ptr [g_data_00542094], eax
         je       short L_d55d
@@ -172,7 +171,7 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         mov      dword ptr [g_data_00542048], edx
         mov      eax, dword ptr [edx*4 + 0x40]
         mov      esi, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         and      esi, 0x20
         mov      dword ptr [g_data_00542094], esi
         je       short L_d591
@@ -183,7 +182,7 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
     L_d591:
         and      al, 0xef
         or       eax, ecx
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x40], eax
         mov      eax, dword ptr [g_data_00542060]
         mov      eax, dword ptr [eax*4 + 0x38]
@@ -199,7 +198,7 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         mov      dword ptr [g_data_0054204c], edx
         mov      eax, dword ptr [ecx*4 + 0x10]
         shr      eax, 0x18
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         and      eax, ebx
         mov      dword ptr [g_data_00542094], eax
         je       short L_d605
@@ -224,10 +223,10 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         mov      eax, dword ptr [eax*4 + 0x14]
         push     eax
         push     0x3333
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         call     Mul10Tail_00404af0
         add      esp, 8
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         call     SfxAttenuateAndApply_0048dee0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -239,13 +238,13 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         xor      ecx, ecx
         mov      dword ptr [g_data_00542088], ebx
         mov      cl, byte ptr [edx*4 + 0x12]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         jmp      short L_d763
     L_d6a7:
         mov      eax, dword ptr [g_data_00542044]
     L_d6ac:
         mov      eax, dword ptr [eax*4 + 0x14]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         call     SfxAttenuateAndApply_0048dee0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -262,7 +261,7 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         mov      cl, byte ptr [edx*4 + 0x11]
         jmp      short L_d736
     L_d6ff:
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         test     eax, eax
         je       short L_d71a
         call     PushCjWalkDispatchPop_00490810
@@ -276,7 +275,7 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         and      ecx, 0xff
     L_d736:
         mov      edx, dword ptr [g_data_00542060]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      ecx, dword ptr [edx*4 + 0x3c]
         mov      dword ptr [g_data_00542044], ecx
         mov      eax, dword ptr [ecx*4 + 0x7c]

@@ -125,12 +125,11 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x0042e480 (200b game) - mstack-push 2, counted call-loop, restore globals.
  *   Push g_x_00542070, g_x_00542074; set 70=10, 74=0x5a0000; call F1; pause? ret;
  *   Loop: 74 -= 0xa0000; 70--; if (70 == 0) break; call F1; while (!pause).
- *   After: g_x_0054205c = [0x52ab10]; g_x_0054206c = chain[+0x74] = 0xffffaaab;
+ *   After: g_x_0054205c = [0x52ab10]; g_walkCallback = chain[+0x74] = 0xffffaaab;
  *   mstack-pop into g_x_00542074, g_x_00542070.
  */
 extern unsigned int g_x_0052ab10;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542074;
 extern void MStackBracket3Init4bd5e0Tail_0042e550(void);
@@ -173,7 +172,7 @@ void CountedLoopMStack_0042e480(void) {
         mov     eax, dword ptr [g_x_0052ab10]
         mov     ecx, 0xffffaaab
         mov     dword ptr [g_x_0054205c], eax
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     [eax*4 + 0x74], ecx
         mov     eax, dword ptr [g_state_004d57ac]
         mov     ecx, [eax*4 + g_data_004d57ac_arr]

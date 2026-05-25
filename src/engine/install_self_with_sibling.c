@@ -134,7 +134,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542054;
 extern unsigned int g_x_00542058;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542084;
 extern void SelfInstallPhaseDispatch_00428990(void);
 
@@ -152,7 +151,7 @@ __declspec(naked) void InstallSelfWithSibling_00475490(void) {
         mov     eax, dword ptr [g_x_00542054]
         mov     dword ptr [ecx*4 + 0x24], eax
         mov     ecx, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [ecx*4 + 0x28], edx
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     edx, dword ptr [eax*4 + 0x64]
@@ -186,7 +185,7 @@ __declspec(naked) void InstallSelfWithSibling_00475490(void) {
         nop
         mov     eax, dword ptr [g_cj_0054205c]
         mov     ecx, dword ptr [eax*4 + 0x48]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x58], ecx
         ret
     }

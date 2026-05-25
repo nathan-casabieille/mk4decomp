@@ -128,13 +128,13 @@ extern unsigned int g_data_00535e7c;
  *   If g_state_0054208c & 4: tail-jmp TestEqJmpInitFightGroup_004a1740.
  *   Else: chain[g_x_00542044 + 0x1c] = g_data_0054204c; g_x_00542048 = g_x_00542050;
  *     call MStackPush2ChainPrepend_00409970. If paused: ret.
- *   chain[+0x30] = g_x_0054206c = 0x80000; chain[+0x34] = g_x_0054206c;
- *   chain[+0x38] = g_x_0054206c = 0x83; g_x_00542044 = g_x_0054205c; call MStackBracket4_ListInsertZeroFill_00408600.
+ *   chain[+0x30] = g_walkCallback = 0x80000; chain[+0x34] = g_walkCallback;
+ *   chain[+0x38] = g_walkCallback = 0x83; g_x_00542044 = g_x_0054205c; call MStackBracket4_ListInsertZeroFill_00408600.
  *   If paused: ret. If g_state_0054208c & 4: jmp 0x004a173f.
  *   Else call MStackPush3LinkedListWalk_004088b0. If paused: ret.
  *   If g_state_0054208c & 4: tail-jmp TestEqJmpInitFightGroup_004a1740.
- *   Else g_x_0054206c = g_data_0054204c; call ChainDirtyBitWalker. If paused: ret.
- *   chain[g_x_00542048*4 + 0x14] = 0x80; chain[+0x10] = g_x_0054206c = 0x004ba0e0;
+ *   Else g_walkCallback = g_data_0054204c; call ChainDirtyBitWalker. If paused: ret.
+ *   chain[g_x_00542048*4 + 0x14] = 0x80; chain[+0x10] = g_walkCallback = 0x004ba0e0;
  *   tail-jmp TestEqJmpInitFightGroup_004a1740.
  */
 extern unsigned int g_data_0050f1bc;
@@ -144,7 +144,6 @@ extern unsigned int g_x_00542044;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_00542050;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern void FramePauseScaledStore_00406c10(void);
 extern void MStackBracket4_ListInsertZeroFill_00408600(void);
 extern void MStackPush2ChainPrepend_00409970(void);
@@ -177,14 +176,14 @@ __declspec(naked) void AudioChainStateInitSequence_004a1610(void)
         jne     L_a16_ret
         mov     ecx, dword ptr [g_x_00542044]
         mov     eax, 0x80000
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x30], eax
         mov     eax, dword ptr [g_x_00542044]
-        mov     edx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0x34], edx
         mov     ecx, dword ptr [g_x_00542044]
         mov     eax, 0x83
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x38], eax
         mov     edx, dword ptr [g_x_0054205c]
         mov     dword ptr [g_x_00542044], edx
@@ -205,7 +204,7 @@ __declspec(naked) void AudioChainStateInitSequence_004a1610(void)
         jmp     TestEqJmpInitFightGroup_004a1740
     L_a16_callDirty:
         mov     eax, dword ptr [g_data_0054204c]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    ChainDirtyBitWalker_00408c10
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -214,7 +213,7 @@ __declspec(naked) void AudioChainStateInitSequence_004a1610(void)
         mov     eax, 0x004ba0e0
         mov     dword ptr [ecx*4 + 0x14], 0x80
         mov     edx, dword ptr [g_x_00542048]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x10], eax
         jmp     TestEqJmpInitFightGroup_004a1740
     L_a16_ret:

@@ -162,7 +162,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 
 __declspec(naked) void PhaseInstall2DInterpDispatch_0042f8a0(void) {
@@ -216,7 +215,7 @@ __declspec(naked) void PhaseInstall2DInterpDispatch_0042f8a0(void) {
         ret
     L_pii_check3:
         mov     ecx, dword ptr [g_data_00542074]
-        mov     esi, dword ptr [g_data_0054206c]
+        mov     esi, dword ptr [g_walkCallback]
         mov     edx, dword ptr [g_data_00542070]
         cmp     eax, 0x370000
         jl      short L_pii_sample

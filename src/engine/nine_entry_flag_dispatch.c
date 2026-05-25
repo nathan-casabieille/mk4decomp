@@ -124,18 +124,17 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00461260 (222b game) - 9-entry-point flag dispatcher.
  *   A: call Wrapper_0048a300; if !pause: g_x_00542080=0xd; ret.
- *   B (+0x20): g_x_0054206c=0x4000; jmp OrDualStore.
- *   C (+0x30): g_x_0054206c=0x2000; jmp OrDualStore.
- *   D (+0x40): g_x_0054206c=0x1000, g_x_00542070=5, g_data_0053a7d8=5; jmp OrDualStore.
- *   E (+0x60): byte[g_x_00543730]=1; g_x_0054206c=0x800; jmp OrDualStore.
- *   F (+0x80): call FiveSetWalkJmp_00461360; if !pause: g_x_0054206c=0x400; jmp OrDualStore.
- *   G (+0xa0): g_x_0054206c=0x200; jmp OrDualStore.
- *   H (+0xb0): g_x_0054206c=0x40; jmp OrDualStore.
- *   I (+0xc0): g_x_0054206c=0x2000; call OrDualStore; if !pause jmp Set1JmpSet2Jmp_00461340; ret.
+ *   B (+0x20): g_walkCallback=0x4000; jmp OrDualStore.
+ *   C (+0x30): g_walkCallback=0x2000; jmp OrDualStore.
+ *   D (+0x40): g_walkCallback=0x1000, g_x_00542070=5, g_data_0053a7d8=5; jmp OrDualStore.
+ *   E (+0x60): byte[g_x_00543730]=1; g_walkCallback=0x800; jmp OrDualStore.
+ *   F (+0x80): call FiveSetWalkJmp_00461360; if !pause: g_walkCallback=0x400; jmp OrDualStore.
+ *   G (+0xa0): g_walkCallback=0x200; jmp OrDualStore.
+ *   H (+0xb0): g_walkCallback=0x40; jmp OrDualStore.
+ *   I (+0xc0): g_walkCallback=0x2000; call OrDualStore; if !pause jmp Set1JmpSet2Jmp_00461340; ret.
  */
 extern unsigned int g_data_0053a7d8;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542080;
 extern unsigned int g_x_00543730;
@@ -160,21 +159,21 @@ __declspec(naked) void NineEntryFlagDispatch_00461260(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        mov     dword ptr [g_x_0054206c], 0x00004000
+        mov     dword ptr [g_walkCallback], 0x00004000
         jmp     OrDualStore_0048e4b0
         _emit   90h
-        mov     dword ptr [g_x_0054206c], 0x00002000
+        mov     dword ptr [g_walkCallback], 0x00002000
         jmp     OrDualStore_0048e4b0
         _emit   90h
         mov     eax, 5
-        mov     dword ptr [g_x_0054206c], 0x00001000
+        mov     dword ptr [g_walkCallback], 0x00001000
         mov     dword ptr [g_x_00542070], eax
         mov     dword ptr [g_data_0053a7d8], eax
         jmp     OrDualStore_0048e4b0
         _emit   90h
         _emit   90h
         mov     byte ptr [g_x_00543730], 1
-        mov     dword ptr [g_x_0054206c], 0x00000800
+        mov     dword ptr [g_walkCallback], 0x00000800
         jmp     OrDualStore_0048e4b0
         _emit   90h
         _emit   90h
@@ -191,18 +190,18 @@ __declspec(naked) void NineEntryFlagDispatch_00461260(void) {
         test    eax, eax
         _emit   75h
         _emit   0fh
-        mov     dword ptr [g_x_0054206c], 0x00000400
+        mov     dword ptr [g_walkCallback], 0x00000400
         jmp     OrDualStore_0048e4b0
         ret
         _emit   90h
         _emit   90h
-        mov     dword ptr [g_x_0054206c], 0x00000200
+        mov     dword ptr [g_walkCallback], 0x00000200
         jmp     OrDualStore_0048e4b0
         _emit   90h
-        mov     dword ptr [g_x_0054206c], 0x00000040
+        mov     dword ptr [g_walkCallback], 0x00000040
         jmp     OrDualStore_0048e4b0
         _emit   90h
-        mov     dword ptr [g_x_0054206c], 0x00002000
+        mov     dword ptr [g_walkCallback], 0x00002000
         call    OrDualStore_0048e4b0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

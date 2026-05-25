@@ -127,31 +127,30 @@ extern void AudioStoreXfer3SelfInstall_004a2060(void);
 extern unsigned int g_x_00535e6c;
 
 /* @addr 0x004a47c0 (183b audio) - chain init + two cdecl push-twice calls.
- *   chain[g_scaledInit + 0x54/0x58/0x5c] = 0; g_x_0054206c = 0;
- *   chain[+0x30] = 9; g_x_0054206c = 9; call MStackCall_00406340; pause? ret.
+ *   chain[g_scaledInit + 0x54/0x58/0x5c] = 0; g_walkCallback = 0;
+ *   chain[+0x30] = 9; g_walkCallback = 9; call MStackCall_00406340; pause? ret.
  *   g_x_0054205c = g_scaledInit; g_scaledInit = [0x535e6c];
- *   g_x_0054206c = 0xe666; chain[g_scaledInit + 0x3c] = 0xe666.
+ *   g_walkCallback = 0xe666; chain[g_scaledInit + 0x3c] = 0xe666.
  *   push 0x4f3030, g_scaledInit; call AudioStoreXfer3SelfInstall_004a2060; add esp, 8.
  *   g_scaledInit = [0x52ab10]; push 0x4f3040, g_scaledInit; call AudioStoreXfer3SelfInstall_004a2060; add esp, 8.
  */
 extern unsigned int g_x_0052ab10;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 
 void ChainInitDoublePushCall_004a47c0(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [eax*4 + 0x54], 0
         mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     [edx*4 + 0x58], ecx
         mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     [ecx*4 + 0x5c], eax
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     eax, 9
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     [edx*4 + 0x30], eax
         call    MStackCall_00406340
         mov     eax, dword ptr [g_framePauseFlag]
@@ -163,7 +162,7 @@ void ChainInitDoublePushCall_004a47c0(void) {
         mov     dword ptr [g_x_0054205c], eax
         mov     eax, dword ptr [g_x_00535e6c]
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     [eax*4 + 0x3c], ecx
         mov     ecx, dword ptr [g_scaledInit_00542044]
         push    0x004f3030

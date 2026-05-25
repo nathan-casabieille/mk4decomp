@@ -126,13 +126,12 @@ extern unsigned int g_data_00535e7c;
  *   state==0: call ScaledAndAldf_00490330; if pause ret.
  *     If g_state_00542088==1: tail-call MoveSelectorCluster_0047d9a0; ret.
  *     Else: install-self at entry+0x01000000; call HopBackFsmCluster_0047a2e0; pause=1; ret.
- *   state==1: g_x_0054206c=0x5e; call ScaledLitLoadCall; if pause ret.
+ *   state==1: g_walkCallback=0x5e; call ScaledLitLoadCall; if pause ret.
  *     Install-self at entry+0x02000000; jmp common chain-push tail.
- *   state>=2: g_x_0054206c=0x51e; call ScaledLitLoadCall; if pause ret.
+ *   state>=2: g_walkCallback=0x51e; call ScaledLitLoadCall; if pause ret.
  *     [cj*4+0x4c]=0x51e; tail-call InstallSelf3StateDualChain_0047a1c0; pop+ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern void HopBackFsmCluster_0047a2e0(void);
 extern void InstallSelf3StateDualChain_0047a1c0(void);
 extern void MoveSelectorCluster_0047d9a0(void);
@@ -158,7 +157,7 @@ __declspec(naked) void InstallSelf3StateFieldSet_0047a090(void) {
         dec     eax
         _emit   74h
         _emit   3ah
-        mov     dword ptr [g_x_0054206c], 0x5f
+        mov     dword ptr [g_walkCallback], 0x5f
         call    ScaledLitLoadCall_00480fe0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -170,12 +169,12 @@ __declspec(naked) void InstallSelf3StateFieldSet_0047a090(void) {
         _emit   00h
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     eax, 0x51e
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x4c], eax
         call    InstallSelf3StateDualChain_0047a1c0
         pop     esi
         ret
-        mov     dword ptr [g_x_0054206c], 0x5e
+        mov     dword ptr [g_walkCallback], 0x5e
         call    ScaledLitLoadCall_00480fe0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

@@ -123,7 +123,6 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern void MStackBracket5_FieldClear_StateAdvance_00405630(void);
-extern unsigned int g_x_0054206c;
 
 /* @addr 0x00406c10 (198b boot) - call F; pause? ret; (208c&4)? ret;
  *   chain[g_scaledInit + 0x24] = g_x_00542048;
@@ -163,13 +162,13 @@ void FramePauseScaledStore_00406c10(void) {
         mov     ecx, dword ptr [g_state_004d57ac]
         mov     eax, [eax*4 + g_data_004d57ac_arr]
         inc     ecx
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_state_004d57ac], ecx
         mov     [ecx*4 + g_data_004d57ac_arr], eax
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     ecx, dword ptr [g_scaledInit_00542044]
         sar     eax, 0x14
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     [ecx*4 + 0x1c], eax
         mov     ecx, dword ptr [g_state_004d57ac]
         mov     eax, [ecx*4 + g_data_004d57ac_arr]
@@ -178,7 +177,7 @@ void FramePauseScaledStore_00406c10(void) {
         mov     dword ptr [g_state_004d57ac], ecx
         mov     ecx, dword ptr [g_scaledInit_00542044]
         or      eax, 0x08000000
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     [ecx*4 + 0x20], eax
         mov     ecx, dword ptr [g_state_0054208c]
         mov     eax, dword ptr [g_scaledInit_00542044]

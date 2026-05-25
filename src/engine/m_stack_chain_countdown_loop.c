@@ -122,8 +122,8 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-/* @addr 0x00463fb0 (220b game) - mstack-push g_scaledInit, copy g_x_0054206c → g_x_00542074;
- *   call MStackPushSearchLoop; pause-check. Compute min(g_x_0054206c, g_x_00542074) into eax;
+/* @addr 0x00463fb0 (220b game) - mstack-push g_scaledInit, copy g_walkCallback → g_x_00542074;
+ *   call MStackPushSearchLoop; pause-check. Compute min(g_walkCallback, g_x_00542074) into eax;
  *   scaledInit = g_x_00541fb0*4 + g_data_00541fb8; g_x_00542070 = [scaledInit*4+4];
  *   loop: edx = 0xffff9688 - 0x6978*counter; until counter==0; store result.
  *   g_x_00542078 = [scaledInit*4+8]; mstack-pop g_scaledInit; pop esi; ret.
@@ -132,7 +132,6 @@ extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_data_00541fb8;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00541fb0;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542074;
 extern unsigned int g_x_00542078;
@@ -145,7 +144,7 @@ __declspec(naked) void MStackChainCountdownLoop_00463fb0(void) {
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
-        mov     edx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [g_x_00542074], edx
         call    MStackPushSearchLoop_00463ed0
         mov     eax, dword ptr [g_pause_00541e6c]
@@ -156,7 +155,7 @@ __declspec(naked) void MStackChainCountdownLoop_00463fb0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     eax, dword ptr [g_x_00542074]
         cmp     ecx, eax
         push    esi
@@ -168,7 +167,7 @@ __declspec(naked) void MStackChainCountdownLoop_00463fb0(void) {
         mov     edx, dword ptr [g_data_00541fb8]
         shl     ecx, 2
         mov     dword ptr [g_x_00542070], 4
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         lea     esi, [edx + ecx]
         mov     dword ptr [g_scaledInit_00542044], esi
         mov     ecx, dword ptr [esi*4 + 4]
@@ -180,7 +179,7 @@ __declspec(naked) void MStackChainCountdownLoop_00463fb0(void) {
         mov     edx, 0xffff9688
         dec     eax
         mov     dword ptr [g_x_00542074], edx
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   17h
         mov     ecx, eax
@@ -189,7 +188,7 @@ __declspec(naked) void MStackChainCountdownLoop_00463fb0(void) {
         dec     ecx
         _emit   75h
         _emit   0f6h
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_x_00542074], edx
         mov     edx, dword ptr [esi*4 + 8]
         mov     eax, dword ptr [g_state_004d57ac]

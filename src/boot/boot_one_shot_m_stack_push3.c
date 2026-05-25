@@ -129,7 +129,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 
 /* @addr 0x0040c100 (337b boot) - boot one-shot setup w/ MStack-push-3.
@@ -137,12 +136,12 @@ extern unsigned int g_data_0054208c;
  *   passes g_data_0054205c to CopyThreeFields_00404df0, then calls
  *   SetJmp_00405420. On no-error AND bit 2 of g_data_0054208c set:
  *   mstack-pushes g_data_00542048/00542054/0054205c (3 entries). Caches
- *   g_data_0054205c into g_data_00542054, sets g_data_0054206c =
+ *   g_data_0054205c into g_data_00542054, sets g_walkCallback =
  *   &g_data_004d5ed0>>2, calls PushSetXfmMaskCallPop_00407140.
  *   On no-error AND bit 2 NOT set: calls ScaledChainOr8_00404e50,
  *   writes 0x18000 into [g_data_00542048*4 + 0x48], calls
  *   ScaledTripleCopy54_004ac040. On no-error sets g_data_00542044 =
- *   g_data_0054205c, g_data_0054206c=0xff, calls
+ *   g_data_0054205c, g_walkCallback=0xff, calls
  *   PushSetDualDeref_00406650 → MStackCall_00406600. Pops the 3
  *   mstack entries back into 0054205c/00542054/00542048 in reverse.
  */
@@ -159,16 +158,16 @@ void BootOneShotMStackPush3_0040c100(void) {
     g_state_004d57ac++;
     *(unsigned int *)(g_state_004d57ac * 4) = g_data_0054205c;
     g_data_00542054 = g_data_0054205c;
-    g_data_0054206c = (unsigned int)&g_data_004d5ed0 >> 2;
+    g_walkCallback = (unsigned int)&g_data_004d5ed0 >> 2;
     PushSetXfmMaskCallPop_00407140();
     if (g_framePauseFlag != 0) return;
     if (!(g_data_0054208c & 4)) {
         ScaledChainOr8_00404e50();
-        g_data_0054206c = 0x18000;
+        g_walkCallback = 0x18000;
         *(unsigned int *)(g_data_00542048 * 4 + 0x48) = 0x18000;
         ScaledTripleCopy54_004ac040();
         if (g_framePauseFlag != 0) return;
-        g_data_0054206c = 0xff;
+        g_walkCallback = 0xff;
         g_data_00542044 = g_data_0054205c;
         PushSetDualDeref_00406650();
         if (g_framePauseFlag != 0) return;

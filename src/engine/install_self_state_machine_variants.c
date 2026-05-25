@@ -134,7 +134,6 @@ extern unsigned int g_x_00537f48;
 extern unsigned int g_x_005380e0;
 extern unsigned int g_x_00538158;
 extern unsigned int g_x_0054204c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_0054207c;
 extern void BootInitGuardedCallChain_004265d0(void);
@@ -196,7 +195,7 @@ __declspec(naked) void InstallSelfStateMachine_00464280(void) {
  *   B0 ([+0x84]==0): mov 0x4ccc, 0xffffb334 locals; call DualHelperCallStoreCjFields_0048ff40; if !pause
  *     call TripleFieldCopyJmpHi_0048f740; if !pause install-self + chain[+0x84]=1
  *     + g_x_0054204c=4 + g_pause=1; ret.
- *   B1 ([+0x84]==1): call TripleFieldCopyHi_0048f7b0; if !pause set g_x_0054206c=0xe666
+ *   B1 ([+0x84]==1): call TripleFieldCopyHi_0048f7b0; if !pause set g_walkCallback=0xe666
  *     call EsiEdiAliasDualMul10_004906b0; if !pause install-self + chain[+0x84]=2
  *     + g_x_0054204c=4 + g_pause=1; ret.
  *   B2 ([+0x84]==2+): set g_state_00542080=0x11; call ScaledArrStore_00429980;
@@ -237,7 +236,7 @@ __declspec(naked) void InstallSelfStateMachine_0047f3f0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     dword ptr [g_x_0054206c], 0xe666
+        mov     dword ptr [g_walkCallback], 0xe666
         call    EsiEdiAliasDualMul10_004906b0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -249,7 +248,7 @@ __declspec(naked) void InstallSelfStateMachine_0047f3f0(void) {
         mov     dword ptr [g_pause_00541e6c], 1
         pop     esi
         ret
-        mov     dword ptr [g_x_0054206c], 0x4ccc
+        mov     dword ptr [g_walkCallback], 0x4ccc
         mov     dword ptr [g_x_00542070], 0xffffb334
         call    DualHelperCallStoreCjFields_0048ff40
         mov     eax, dword ptr [g_pause_00541e6c]

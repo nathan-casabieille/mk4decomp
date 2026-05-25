@@ -132,7 +132,6 @@ extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_00542080;
@@ -156,7 +155,7 @@ __declspec(naked) void PunchDispatcherCluster_00497b50(void)
         /* === h1 (0x497b50): event 004f2178 forwarder === */
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, 0x316
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x74], eax
         mov      edx, dword ptr [g_data_00542060]
         mov      ecx, dword ptr [edx*4 + 4]
@@ -266,7 +265,7 @@ __declspec(naked) void PunchDispatcherCluster_00497b50(void)
         lea      esi, [ecx*4]
         mov      edx, dword ptr [eax*4 + 0x54]
         mov      ecx, dword ptr [g_data_00542088]
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      eax, dword ptr [eax*4 + 0x5c]
         mov      dword ptr [g_data_00542070], eax
         mov      eax, dword ptr [g_data_00542084]
@@ -281,13 +280,13 @@ __declspec(naked) void PunchDispatcherCluster_00497b50(void)
         push     edx
         push     0x9999
         call     Mul10Tail_00404af0
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      edx, dword ptr [g_data_00542074]
         add      ecx, edx
         mov      edx, dword ptr [g_data_00542070]
         add      edx, eax
         mov      dword ptr [g_data_00542078], eax
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_00542070], edx
         mov      dword ptr [esi + 0x54], ecx
         mov      eax, dword ptr [g_data_00542070]
@@ -326,7 +325,7 @@ __declspec(naked) void PunchDispatcherCluster_00497b50(void)
         mov      eax, 1
         mov      dword ptr [edx*4 + 0x70], ecx
         mov      ecx, dword ptr [g_data_00542060]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x68], eax
         call     ArgSar_Set0_Jmp_0049c6f0
         add      esp, 4

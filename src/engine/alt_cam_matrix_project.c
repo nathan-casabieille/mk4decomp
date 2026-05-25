@@ -141,7 +141,6 @@ extern unsigned int g_data_00535e7c;
  *   (0, 0x1e0) before storing into g_data_004f623c as a u16.
  */
 extern unsigned int g_data_004f623c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_007af990;
 extern unsigned int g_data_007af994;
 extern unsigned int g_data_007af998;
@@ -247,7 +246,7 @@ __declspec(naked) void AltCamMatrixProject_004b9840(void) {
         sar     eax, 0x10
         add     eax, 0xf0
         test    eax, eax
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jle     short L_acm_done
         cmp     eax, 0x1e0
         jge     short L_acm_done

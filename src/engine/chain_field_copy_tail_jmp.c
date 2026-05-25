@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00466e70 (325b game) - quad-call chain + chain-field copy (g_x_00542054 -> g_cj_0054205c) + tail-jmp.
- *   g_x_0054206c=2; call DirtyDoubleDeref. If pause ret.
+ *   g_walkCallback=2; call DirtyDoubleDeref. If pause ret.
  *   g_x_00542048 = [scaledInit*4 + 0x24]. Call MStackPushDispatchBitGate_00407330. If pause ret.
  *   If bit2(0054208c) ret. Call MStackPushTwoEntryChainCall_004058c0. If pause ret. Call MStackCall_004062f0. If pause ret.
  *   Copy chain entries from [g_x_00542054*4]+offset to [g_cj_0054205c*4]+offset:
@@ -134,7 +134,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_00542054;
-extern unsigned int g_x_0054206c;
 extern void DirtyDoubleDeref_00408cb0(void);
 extern void MStackCall_004062f0(void);
 extern void MStackPushDispatchBitGate_00407330(void);
@@ -143,7 +142,7 @@ extern void SetupVecFsmCluster_0043e3e0(void);
 
 __declspec(naked) void ChainFieldCopyTailJmp_00466e70(void) {
     __asm {
-        mov     dword ptr [g_x_0054206c], 2
+        mov     dword ptr [g_walkCallback], 2
         call    DirtyDoubleDeref_00408cb0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -195,27 +194,27 @@ __declspec(naked) void ChainFieldCopyTailJmp_00466e70(void) {
         shl     ecx, 2
         lea     eax, [edx*4 + 0]
         mov     edx, dword ptr [ecx + 0x54]
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [eax + 0x54], edx
         mov     edx, dword ptr [ecx + 0x58]
         sub     edx, 0x9999
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [eax + 0x58], edx
         mov     edx, dword ptr [ecx + 0x5c]
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [eax + 0x5c], edx
         mov     edx, dword ptr [ecx + 0x60]
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [eax + 0x60], edx
         mov     edx, dword ptr [ecx + 0x64]
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [eax + 0x64], edx
         mov     edx, dword ptr [ecx + 0x68]
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [eax + 0x68], edx
         mov     ecx, dword ptr [ecx + 0x34]
         xor     ecx, 1
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax + 0x34], ecx
         mov     edx, dword ptr [g_x_00542054]
         mov     ecx, dword ptr [edx*4 + 0x3c]
@@ -223,13 +222,13 @@ __declspec(naked) void ChainFieldCopyTailJmp_00466e70(void) {
         mov     dword ptr [edx*4 + 0x3c], ecx
         mov     eax, dword ptr [eax + 0x18]
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [eax*4 + 0x30], 0
         mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [ecx*4 + 0x34], eax
         mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     edx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0x38], edx
         jmp     SetupVecFsmCluster_0043e3e0
         ret

@@ -140,7 +140,6 @@ extern void GuardedSeq_0049c340(void);
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00541dc4;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542084;
 extern unsigned int g_x_00542088;
 
@@ -172,7 +171,7 @@ __declspec(naked) void DualMul10AndDispatchChain_0049c220(void) {
         mov     eax, 1
         add     esp, 8
         mov     dword ptr [edi + 0x5c], 0x30
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edi + 0x74], eax
         pop     edi
         pop     esi
@@ -181,12 +180,12 @@ __declspec(naked) void DualMul10AndDispatchChain_0049c220(void) {
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, dword ptr [ecx*4 + 0x74]
         dec     eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_x_00541dc4], eax
         _emit   75h
         _emit   0ah
         mov     eax, 3
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
         mov     eax, dword ptr [g_x_00541dc4]
         test    eax, eax
@@ -200,7 +199,7 @@ __declspec(naked) void DualMul10AndDispatchChain_0049c220(void) {
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, dword ptr [ecx*4 + 0x5c]
         dec     eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x5c], eax
         _emit   75h
         _emit   05h

@@ -132,7 +132,6 @@ extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern unsigned int g_data_00543140;
 extern void CallSetPause_0041f830(void);
@@ -153,7 +152,7 @@ __declspec(naked) void UpperBodyComboFsmCluster_00492aa0(void)
         mov      dword ptr [eax*4], edx
         mov      edx, dword ptr [g_data_0053a470]
         mov      eax, OFFSET g_data_004ea440
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         shr      eax, 2
         mov      dword ptr [g_data_00542044], eax
         mov      ecx, dword ptr [eax*4]
@@ -172,7 +171,7 @@ __declspec(naked) void UpperBodyComboFsmCluster_00492aa0(void)
         jmp      L_2b32
     L_2b1b:
         mov      eax, dword ptr [eax*4 + 4]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         call     eax
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -247,7 +246,7 @@ __declspec(naked) void UpperBodyComboFsmCluster_00492aa0(void)
         mov      dword ptr [eax*4 + 0x58], 0xff800000
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, 0x20
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x30], eax
         call     MStackPushComplexCallPop_00406430
         mov      eax, dword ptr [g_framePauseFlag]
@@ -342,7 +341,7 @@ __declspec(naked) void UpperBodyComboFsmCluster_00492aa0(void)
         mov      dword ptr [eax*4 + 0x58], 0xff800000
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, 0x20
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x30], eax
         call     MStackPushComplexCallPop_00406430
         mov      eax, dword ptr [g_framePauseFlag]
@@ -351,7 +350,7 @@ __declspec(naked) void UpperBodyComboFsmCluster_00492aa0(void)
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, dword ptr [ecx*4 + 0x34]
         or       al, 1
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
         mov      edx, dword ptr [g_data_00542044]
         mov      eax, dword ptr [edx*4 + 0x18]

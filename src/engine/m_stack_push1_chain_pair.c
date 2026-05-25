@@ -122,19 +122,18 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-/* @addr 0x00424080 (227b game) - mstack-push g_x_0054206c; advance g_cj_00542058 counter twice;
+/* @addr 0x00424080 (227b game) - mstack-push g_walkCallback; advance g_cj_00542058 counter twice;
  *   call DispatcherComplex260_00407400; pause-check; call 0x00406430; pause-check;
- *   load 2 chain values via scaledInit, shift, store; mstack-pop g_x_0054206c. ret.
+ *   load 2 chain values via scaledInit, shift, store; mstack-pop g_walkCallback. ret.
  */
 extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 
 void MStackPush1ChainPair_00424080(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
@@ -171,7 +170,7 @@ void MStackPush1ChainPair_00424080(void) {
         mov     dword ptr [g_cj_00542058], ecx
         mov     ecx, dword ptr [g_scaledInit_00542044]
         shl     eax, 0x10
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x54], eax
         mov     ecx, dword ptr [g_cj_00542058]
         mov     edx, dword ptr [g_scaledInit_00542044]
@@ -179,19 +178,19 @@ void MStackPush1ChainPair_00424080(void) {
         inc     ecx
         shl     eax, 0x10
         mov     dword ptr [g_cj_00542058], ecx
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x58], eax
         mov     eax, dword ptr [g_cj_00542058]
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
         mov     dword ptr [g_cj_00542058], eax
         mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x5c], ecx
         mov     eax, dword ptr [g_state_004d57ac]
         mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
         dec     eax
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_state_004d57ac], eax
         }
 }

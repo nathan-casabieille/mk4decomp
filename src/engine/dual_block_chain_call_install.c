@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00483de0 (308b game) - dual-block: entry-call chain + install-self body.
- *   Block A (0..0x4d): chain[baseSel*4+0x74] = g_x_0054206c.
+ *   Block A (0..0x4d): chain[baseSel*4+0x74] = g_walkCallback.
  *     Call GateDispatch6c; if pause ret. Call CopyJmp; if pause ret.
  *     If bit0(0054208c): tail-jmp TwoCallTail_00481380.
  *     Else: call ScaledMove48to58; if pause ret.
@@ -136,7 +136,6 @@ extern unsigned int g_data_00535e7c;
  *     state=1; call EsiInstallDecCallChain; pause=1; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void EsiInstallDecCallChain_004294a0(void);
 extern void GateDispatch6c_00494580(void);
@@ -149,7 +148,7 @@ extern unsigned int g_data_004d57ac_arr;
 __declspec(naked) void DualBlockChainCallInstall_00483de0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0x74], ecx
         call    GateDispatch6c_00494580
         mov     eax, dword ptr [g_pause_00541e6c]

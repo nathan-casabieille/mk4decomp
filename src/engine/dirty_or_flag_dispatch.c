@@ -128,7 +128,6 @@ extern unsigned int g_data_00535e7c;
  *   else set bit 2 of scaledInit[ecx*4+0x20], jmp CondInstallDispatch.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern void CondInstallDispatch_00476ed0(void);
 extern void DirtyDoubleDeref_00408cb0(void);
 
@@ -142,7 +141,7 @@ __declspec(naked) void DirtyOrFlagDispatch_00476e60(void) {
         mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     eax, dword ptr [ecx*4 + 0x20]
         or      al, 4
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x20], eax
         jmp     CondInstallDispatch_00476ed0
         ret
@@ -150,7 +149,7 @@ __declspec(naked) void DirtyOrFlagDispatch_00476e60(void) {
         mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     eax, dword ptr [ecx*4 + 0x1c]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   0dh
         mov     eax, dword ptr [g_state_0054208c]
@@ -159,7 +158,7 @@ __declspec(naked) void DirtyOrFlagDispatch_00476e60(void) {
         ret
         mov     eax, dword ptr [ecx*4 + 0x20]
         or      al, 4
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x20], eax
         jmp     CondInstallDispatch_00476ed0
     }

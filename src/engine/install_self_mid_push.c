@@ -125,14 +125,13 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x0045bd80 (187b game) - install-self with mid-function push-edi save.
  *   eax = base*4; edx=0; flag=[eax+0x84]; clear.
  *   if (flag == 0): install-path (push edi here).
- *   else: g_x_0054206c=1; chain[g_x_0054205c+0x28]=1; jmp StackPopDispatchTagged_0041f780.
+ *   else: g_walkCallback=1; chain[g_x_0054205c+0x28]=1; jmp StackPopDispatchTagged_0041f780.
  *   install-path: g_x_00542080=0; g_x_00542058=0; g_x_00542084=0xa3d; g_x_00542088=0x4000.
  *     install self: [eax+8]=0x45bd80, push edi for packed_ptr store,
  *     g_scaledInit++; chain[+0x84]=0; call InstallSelfAccumOverflow_00428b20; pause=1.
  */
 extern unsigned int g_x_00542058;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542080;
 extern unsigned int g_x_00542084;
 extern unsigned int g_x_00542088;
@@ -151,7 +150,7 @@ __declspec(naked) void InstallSelfMidPush_0045bd80(void) {
         _emit   74h
         _emit   20h
         mov     ecx, dword ptr [g_x_0054205c]
-        mov     dword ptr [g_x_0054206c], 1
+        mov     dword ptr [g_walkCallback], 1
         mov     dword ptr [ecx*4 + 0x28], 1
         jmp     StackPopDispatchTagged_0041f780
         mov     dword ptr [g_x_00542080], edx

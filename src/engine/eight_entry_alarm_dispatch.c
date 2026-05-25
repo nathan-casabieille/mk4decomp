@@ -156,7 +156,6 @@ extern unsigned int g_data_004edec8;
 extern unsigned int g_data_004edef8;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CjTableThresholdDispatch_00488f00(void);
 extern void CmpP1DualInitStore_00482ab0(void);
@@ -169,7 +168,7 @@ extern void TripleGuardSetTailJmp_00482680(void);
 
 __declspec(naked) void EightEntryAlarmDispatch_00482500(void) {
     __asm {
-        mov     dword ptr [g_data_0054206c], 0x6666
+        mov     dword ptr [g_walkCallback], 0x6666
         call    CmpP1DualInitStore_00482ab0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -193,12 +192,12 @@ __declspec(naked) void EightEntryAlarmDispatch_00482500(void) {
         ret
     L_eae_entry2:
         mov     eax, dword ptr [g_data_00542060]
-        mov     dword ptr [g_data_0054206c], 0xfffff852
+        mov     dword ptr [g_walkCallback], 0xfffff852
         mov     eax, dword ptr [eax*4 + 0x7c]
         cmp     eax, 1
         mov     dword ptr [g_data_00542070], eax
         jle     short L_eae_e2NoOver
-        mov     dword ptr [g_data_0054206c], 0xfffff0a4
+        mov     dword ptr [g_walkCallback], 0xfffff0a4
     L_eae_e2NoOver:
         call    MStackFrameCdeclDouble_004903f0
         mov     eax, dword ptr [g_framePauseFlag]
@@ -303,7 +302,7 @@ __declspec(naked) void EightEntryAlarmDispatch_00482500(void) {
         nop
         /* entry 7 (offset 0x140) */
     L_eae_entry7:
-        mov     dword ptr [g_data_0054206c], 6
+        mov     dword ptr [g_walkCallback], 6
         call    TableLookupCall_0048a160
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -315,7 +314,7 @@ __declspec(naked) void EightEntryAlarmDispatch_00482500(void) {
         nop
         /* entry 8 (offset 0x160) */
     L_eae_entry8:
-        mov     dword ptr [g_data_0054206c], 8
+        mov     dword ptr [g_walkCallback], 8
         call    TableLookupCall_00489ff0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

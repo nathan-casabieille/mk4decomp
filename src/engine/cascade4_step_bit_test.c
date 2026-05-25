@@ -122,30 +122,29 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern unsigned int g_x_0054206c;
 extern unsigned int g_pause_00541e6c;
 extern void PushScaledIdxBitToggle_0048c2f0(void);
 
 /* @addr 0x0048c370 (144b game) - 4-step cascade with bl=4 bit-test on g_state_0054208c.
- *   For step n in {0,1,2,3}: g_x_0054206c=n; call PushScaledIdxBitToggle; pause/bit-check breaks.
- *   Final default: g_x_0054206c=-1. ret.
+ *   For step n in {0,1,2,3}: g_walkCallback=n; call PushScaledIdxBitToggle; pause/bit-check breaks.
+ *   Final default: g_walkCallback=-1. ret.
  */
 void Cascade4StepBitTest_0048c370(void) {
-    g_x_0054206c = 0;
+    g_walkCallback = 0;
     PushScaledIdxBitToggle_0048c2f0();
     if (g_pause_00541e6c != 0) return;
     if (((unsigned char)g_state_0054208c & 4) != 0) return;
-    g_x_0054206c = 1;
+    g_walkCallback = 1;
     PushScaledIdxBitToggle_0048c2f0();
     if (g_pause_00541e6c != 0) return;
     if (((unsigned char)g_state_0054208c & 4) != 0) return;
-    g_x_0054206c = 2;
+    g_walkCallback = 2;
     PushScaledIdxBitToggle_0048c2f0();
     if (g_pause_00541e6c != 0) return;
     if (((unsigned char)g_state_0054208c & 4) != 0) return;
-    g_x_0054206c = 3;
+    g_walkCallback = 3;
     PushScaledIdxBitToggle_0048c2f0();
     if (g_pause_00541e6c != 0) return;
     if (((unsigned char)g_state_0054208c & 4) != 0) return;
-    g_x_0054206c = (unsigned int)-1;
+    g_walkCallback = (unsigned int)-1;
 }

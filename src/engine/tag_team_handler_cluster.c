@@ -146,7 +146,6 @@ extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern void MStackAngleRatioSubchain_00476af0(void);
 extern void Thunk_0049cbc0(void);
 
@@ -166,14 +165,14 @@ __declspec(naked) void ThrowEventCluster_0043e960(void)
         mov      dword ptr [eax*4], edx
         mov      eax, dword ptr [g_data_0053a7a8]
         mov      dword ptr [g_data_0054205c], eax
-        mov      dword ptr [g_data_0054206c], 1
+        mov      dword ptr [g_walkCallback], 1
         call     ChainDirtyBitWalker_00408c10
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_e9f4
         mov      ecx, dword ptr [g_data_00542048]
         mov      eax, 0x578d
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x2c], eax
         mov      eax, dword ptr [g_data_004d57ac]
         mov      edx, dword ptr [eax*4]

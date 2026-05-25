@@ -130,17 +130,16 @@ extern void CallPauseScaledStoreCopyJmp_00461220(void);
 /* @addr 0x00467d40 (280b game) - 3-state install-self with state-dependent dispatch.
  *   state 1: call CopyJmp_00406ba0; if !pause:
  *     baseSel[+0x34] mapped: 0x10 -> 2, 0x11 -> 7, else unchanged.
- *     g_x_0054206c=mapped++. Fall through to common tail.
+ *     g_walkCallback=mapped++. Fall through to common tail.
  *   state >= 2: skip to common tail.
  *   Common tail: call Wrapper_0041fcf0; tail-call DualBlockChainInitBody_0043cc10.
  *   state 0: dual-equal byte tests (g_x_00543590 vs g_state_00537f94 for 1 and 2)
- *     increment g_x_005433e8 on each match. g_x_0054206c=0xac. 4-call chain
+ *     increment g_x_005433e8 on each match. g_walkCallback=0xac. 4-call chain
  *     ending with install-self at [esi+8]=0x00467d40, chain[+0x84]=1,
  *     g_x_0054204c=8, pause=1; ret.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0054204c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_005433e8;
 extern unsigned int g_x_00543590;
 extern void CopyJmp_00406ba0(void);
@@ -172,20 +171,20 @@ __declspec(naked) void InstallSelfStateCounter_00467d40(void) {
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, dword ptr [ecx*4 + 0x34]
         cmp     eax, 0x10
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   0ah
         mov     eax, 2
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         cmp     eax, 0x11
         _emit   75h
         _emit   0ah
         mov     eax, 7
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x34], eax
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         inc     eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    Wrapper_0041fcf0
         call    DualBlockChainInitBody_0043cc10
         pop     esi
@@ -206,7 +205,7 @@ __declspec(naked) void InstallSelfStateCounter_00467d40(void) {
         _emit   75h
         _emit   06h
         inc     dword ptr [g_x_005433e8]
-        mov     dword ptr [g_x_0054206c], 0xac
+        mov     dword ptr [g_walkCallback], 0xac
         call    ScaledLitLoadCall_00480fe0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

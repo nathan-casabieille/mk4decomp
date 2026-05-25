@@ -124,41 +124,40 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00473c90 (192b game) - 3-stage gated call+tail-jmp dispatcher.
  *   call SetJmp; pause? -> ret.
- *   g_x_0054206c = (208c & 4) ? 0x15e : 0xa; call Cmp1OrDispatch; pause? -> ret;
+ *   g_walkCallback = (208c & 4) ? 0x15e : 0xa; call Cmp1OrDispatch; pause? -> ret;
  *   if (208c & 1 == 0): ret; else:
- *     g_x_0054206c = 0x64; call Cmp1OrDispatch; pause? -> ret;
+ *     g_walkCallback = 0x64; call Cmp1OrDispatch; pause? -> ret;
  *     if (208c & 1): goto stage3 (packed_ptr 0x4ec960 + tail-jmp);
- *     else: g_x_0054206c = 0x200; call Cmp1OrDispatch; pause? -> ret;
+ *     else: g_walkCallback = 0x200; call Cmp1OrDispatch; pause? -> ret;
  *       if (208c & 1 == 0): packed_ptr=0x4ec9c0 + tail-jmp;
  *       else: packed_ptr=0x4ec990 + tail-jmp.
  */
 extern unsigned int g_data_004ec960;
 extern unsigned int g_data_004ec990;
 extern unsigned int g_data_004ec9c0;
-extern unsigned int g_x_0054206c;
 void TriStageDispatchTailJmp_00473c90(void) {
     SetJmp_00405420();
     if (g_framePauseFlag != 0) return;
-    g_x_0054206c = (g_state_0054208c & 4) ? 0x15e : 0xa;
+    g_walkCallback = (g_state_0054208c & 4) ? 0x15e : 0xa;
     AudioVolumeRescale_004ab690();
     if (g_framePauseFlag != 0) return;
     if ((g_state_0054208c & 1) == 0) return;
-    g_x_0054206c = 0x64;
+    g_walkCallback = 0x64;
     AudioVolumeRescale_004ab690();
     if (g_framePauseFlag != 0) return;
     if ((g_state_0054208c & 1) == 0) {
-        g_x_0054206c = 0x200;
+        g_walkCallback = 0x200;
         AudioVolumeRescale_004ab690();
         if (g_framePauseFlag != 0) return;
         if ((g_state_0054208c & 1) != 0) {
-            g_x_0054206c = (unsigned int)&g_data_004ec9c0 >> 2;
+            g_walkCallback = (unsigned int)&g_data_004ec9c0 >> 2;
             TripleChainSetupDualCall_00473da0();
             return;
         }
-        g_x_0054206c = (unsigned int)&g_data_004ec990 >> 2;
+        g_walkCallback = (unsigned int)&g_data_004ec990 >> 2;
         TripleChainSetupDualCall_00473da0();
         return;
     }
-    g_x_0054206c = (unsigned int)&g_data_004ec960 >> 2;
+    g_walkCallback = (unsigned int)&g_data_004ec960 >> 2;
     TripleChainSetupDualCall_00473da0();
 }

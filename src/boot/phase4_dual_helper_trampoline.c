@@ -132,7 +132,6 @@ extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_00542088;
 extern void CallSetPause_0041f830(void);
@@ -208,7 +207,7 @@ __declspec(naked) void Phase4DualHelperTrampoline_00412900(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dht_A_exit
-        mov     dword ptr [g_data_0054206c], 0x0A
+        mov     dword ptr [g_walkCallback], 0x0A
         call    ChainDirtyBitWalker_00408c10
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -231,7 +230,7 @@ __declspec(naked) void Phase4DualHelperTrampoline_00412900(void)
         mov     edx, dword ptr [g_data_00542084]
         mov     ecx, 0xFFFFE667
         mov     dword ptr [eax + 0x40], edx
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax + 0x3C], ecx
         mov     eax, dword ptr [g_data_00542060]
         mov     dword ptr [g_data_00542044], eax
@@ -291,7 +290,7 @@ __declspec(naked) void Phase4DualHelperTrampoline_00412900(void)
         mov     ecx, dword ptr [g_data_00542054]
         mov     eax, dword ptr [g_data_0054205c]
         mov     edx, dword ptr [ecx*4 + 0x48]
-        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     ecx, dword ptr [eax*4 + 0x58]
         add     ecx, 0x7AE
         mov     dword ptr [eax*4 + 0x58], ecx
@@ -299,7 +298,7 @@ __declspec(naked) void Phase4DualHelperTrampoline_00412900(void)
         mov     ecx, dword ptr [eax*4 + 0x58]
         mov     eax, dword ptr [g_data_00542058]
         dec     eax
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_data_00542058], eax
         jns     L_p4dht_B_install
         call    MStackCall_00406740
@@ -314,7 +313,7 @@ __declspec(naked) void Phase4DualHelperTrampoline_00412900(void)
         mov     dword ptr [eax*4 + 0x48], ecx
         mov     edx, dword ptr [g_data_00542054]
         mov     eax, dword ptr [edx*4 + 0x48]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     eax, dword ptr [g_data_00542058]
         dec     eax
         mov     dword ptr [g_data_00542058], eax
@@ -353,12 +352,12 @@ __declspec(naked) void Phase4DualHelperTrampoline_00412900(void)
         mov     dword ptr [edx*4 + 0x5C], eax
         mov     ecx, dword ptr [g_data_0054205c]
         mov     eax, 0xFFFFF334
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x58], eax
         call    ScaledChainOr8_00404e50
         mov     edx, dword ptr [g_data_00542048]
         mov     eax, 0x28F
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x48], eax
         mov     eax, dword ptr [g_data_00542048]
         mov     dword ptr [g_data_00542054], eax

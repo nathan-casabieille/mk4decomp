@@ -136,7 +136,7 @@ extern void LinkedListInsert_004ab440(void);
  *   GuardedChainPushSetCallPop_00406bb0 + ScaledLoadGuardedJmp_004066d0.
  *   Sets g_data_0054205c = old g_data_00542044, reads [scaled+0x1c]; if
  *   non-zero, toggles bit 2 off and calls PvsMergeDriver_00425db0. Zeroes
- *   g_data_0054206c and [scaled+0x1c]. Reads [scaled+0x18]; if non-zero,
+ *   g_walkCallback and [scaled+0x1c]. Reads [scaled+0x18]; if non-zero,
  *   toggles bit 2 off and calls MStackBracket2_TreeWalkRecursive_00405e70. Then writes g_data_00541e80
  *   into g_data_00542048 and calls LinkedListInsert_004ab440. Pops the 2
  *   mstack entries back and clears bit 0 of g_data_0054208c via and 0xfe.
@@ -145,7 +145,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern unsigned int g_table_004d57b0;
 
@@ -199,7 +198,7 @@ __declspec(naked) void MStackPush2ChainLLInsert_00406790(void) {
         call    PvsMergeDriver_00425db0
     L_mpl_skipCall1:
         mov     eax, dword ptr [g_data_0054205c]
-        mov     dword ptr [g_data_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [eax*4 + 0x1c], 0
         mov     ecx, dword ptr [g_data_0054205c]
         mov     edx, dword ptr [g_data_0054208c]

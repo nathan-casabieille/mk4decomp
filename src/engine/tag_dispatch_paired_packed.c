@@ -123,18 +123,17 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004667f0 (190b game) - tag dispatch + paired packed_ptr install with bit-0 branch.
- *   g_x_0054206c = 0; call GatedWordPushCall_00489f90; pause? ret.
- *   g_x_0054206c = [0x537f9c]; call PushSearchToggleBit0_004577a0; pause? ret.
+ *   g_walkCallback = 0; call GatedWordPushCall_00489f90; pause? ret.
+ *   g_walkCallback = [0x537f9c]; call PushSearchToggleBit0_004577a0; pause? ret.
  *   if (g_state_0054208c & 1):
- *     mstack-push g_scaledInit; g_x_0054206c = packed_ptr(0x4e28c8); call GuardedScaledCall;
+ *     mstack-push g_scaledInit; g_walkCallback = packed_ptr(0x4e28c8); call GuardedScaledCall;
  *     pause? ret; jmp end-section.
  *   else:
- *     mstack-push g_scaledInit; g_x_0054206c = packed_ptr(0x4e28cc); call GuardedScaledCall;
+ *     mstack-push g_scaledInit; g_walkCallback = packed_ptr(0x4e28cc); call GuardedScaledCall;
  *     pause? ret.
  *   mstack-pop into g_scaledInit.
  */
 extern unsigned int g_x_00537f9c;
-extern unsigned int g_x_0054206c;
 extern void GatedWordPushCall_00489f90(void);
 extern void GuardedScaledCall_0048a020(void);
 extern void PushSearchToggleBit0_004577a0(void);
@@ -143,7 +142,7 @@ extern unsigned int g_data_004d57ac_arr;
 
 void TagDispatchPairedPacked_004667f0(void) {
     __asm {
-        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         call    GatedWordPushCall_00489f90
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -154,7 +153,7 @@ void TagDispatchPairedPacked_004667f0(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_x_00537f9c]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    PushSearchToggleBit0_004577a0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -174,7 +173,7 @@ void TagDispatchPairedPacked_004667f0(void) {
         mov     dword ptr [g_state_004d57ac], eax
         sar     edx, 2
         mov     [eax*4 + g_data_004d57ac_arr], ecx
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         call    GuardedScaledCall_0048a020
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -188,7 +187,7 @@ void TagDispatchPairedPacked_004667f0(void) {
         mov     [eax*4 + g_data_004d57ac_arr], edx
         mov     eax, 0x004e28cc
         sar     eax, 2
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    GuardedScaledCall_0048a020
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

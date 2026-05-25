@@ -123,13 +123,12 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0044cb80 (203b game) - mstack-push 3 values (g_x_00542074/70/6c); call Add0fJmp_0044ccd0;
- *   if !pause: mstack-pop into g_x_0054206c with side-store to scaledInit*4+0x58;
+ *   if !pause: mstack-pop into g_walkCallback with side-store to scaledInit*4+0x58;
  *   then more side-stores to chain[+0x54] (g_x_00542070) and chain[+0x5c] (g_x_00542074);
  *   mstack-pop g_x_00542070, g_x_00542074. ret.
  */
 extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542074;
 extern void Add0fJmp_0044ccd0(void);
@@ -147,7 +146,7 @@ void MStackPush3SideStore_0044cb80(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
@@ -160,7 +159,7 @@ void MStackPush3SideStore_0044cb80(void) {
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
         dec     eax
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [edx*4 + 0x58], ecx
         mov     eax, dword ptr [g_scaledInit_00542044]

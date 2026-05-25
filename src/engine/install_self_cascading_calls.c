@@ -124,16 +124,15 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004806c0 (195b game) - install-self with cascading pause-gated calls.
  *   esi = base*4; flag = [esi+0x84]; clear.
- *   if (flag != 0): g_x_0054206c = 8; call ScaledIndexConditionalAdd; pause? ret;
+ *   if (flag != 0): g_walkCallback = 8; call ScaledIndexConditionalAdd; pause? ret;
  *     call FiveCallGuardSetTail; ret.
- *   else: chain[base+0x74] = 0x1015; g_x_0054206c = 7; call ScaledLitLoadCall; pause? ret;
+ *   else: chain[base+0x74] = 0x1015; g_walkCallback = 7; call ScaledLitLoadCall; pause? ret;
  *     call MStackPushSet0008; pause? ret;
  *     call ScaledZeroFour; pause? ret;
  *     push 0x00542bac; call IterLoad; add esp,4; pause? ret;
  *     install self: [esi+8] = 0x004806c0; [esi+0x84] = 1; g_x_0054204c = 0x3c; pause = 1.
  */
 extern unsigned int g_x_0054204c;
-extern unsigned int g_x_0054206c;
 extern void FiveCallGuardSetTail_0046f6b0(void);
 extern void MStackPushSet0008_004901a0(void);
 extern void ScaledIndexConditionalAdd_0048e400(void);
@@ -151,7 +150,7 @@ __declspec(naked) void InstallSelfCascadingCalls_004806c0(void) {
         test    eax, eax
         _emit   74h
         _emit   23h
-        mov     dword ptr [g_x_0054206c], 8
+        mov     dword ptr [g_walkCallback], 8
         call    ScaledIndexConditionalAdd_0048e400
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -166,7 +165,7 @@ __declspec(naked) void InstallSelfCascadingCalls_004806c0(void) {
         ret
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [ecx*4 + 0x74], 0x00001015
-        mov     dword ptr [g_x_0054206c], 7
+        mov     dword ptr [g_walkCallback], 7
         call    ScaledLitLoadCall_00480fe0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

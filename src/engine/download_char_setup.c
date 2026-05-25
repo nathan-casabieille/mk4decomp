@@ -132,7 +132,6 @@ extern unsigned int g_x_005380e0;
 extern unsigned int g_x_0053815c;
 extern unsigned int g_x_00541de0;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542074;
 extern void DownloadPlayerChar(void);
@@ -142,7 +141,7 @@ void DownloadCharSetup_00422ef0(void) {
     __asm {
         mov     eax, dword ptr [g_x_005380e0]
         mov     dword ptr [g_x_00542070], 1
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    DownloadPlayerChar
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -154,7 +153,7 @@ void DownloadCharSetup_00422ef0(void) {
         _emit   00h
         mov     ecx, dword ptr [g_x_005380e0]
         mov     edx, dword ptr [g_x_0052aafc]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_x_00542070], 1
         mov     dword ptr [g_x_00542074], edx
         call    GuardedDualPushTailJmp_004231f0
@@ -168,7 +167,7 @@ void DownloadCharSetup_00422ef0(void) {
         mov     eax, dword ptr [g_x_0054205c]
         mov     dword ptr [eax*4 + 0x54], 0x00014ccc
         mov     ecx, dword ptr [g_x_0054205c]
-        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [ecx*4 + 0x5c], 0
         mov     eax, dword ptr [g_x_0054205c]
         mov     ecx, [eax*4 + 0x34]
@@ -176,7 +175,7 @@ void DownloadCharSetup_00422ef0(void) {
         mov     [eax*4 + 0x34], ecx
         mov     eax, dword ptr [g_x_00541de0]
         mov     edx, dword ptr [g_x_0054205c]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     [edx*4 + 0x3c], eax
         }
 }

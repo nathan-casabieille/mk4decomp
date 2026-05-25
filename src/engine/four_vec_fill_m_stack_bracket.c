@@ -128,7 +128,6 @@ extern unsigned int g_data_00541ff0;
 extern unsigned int g_data_00541ff4;
 extern unsigned int g_data_00541ff8;
 extern unsigned int g_data_00542044;
-extern unsigned int g_data_0054206c;
 
 __declspec(naked) void FourVecFillMStackBracket_00428130(void)
 {
@@ -149,12 +148,12 @@ __declspec(naked) void FourVecFillMStackBracket_00428130(void)
         mov     eax, dword ptr [g_data_00541fec]
         xor     edx, edx
         mov     dword ptr [g_data_00542044], eax
-        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [g_data_00542070], 3
         mov     dword ptr [g_data_0053a1ac], ecx
     L_fvf_loop1:
         mov     esi, dword ptr [g_data_00542044]
-        mov     eax, dword ptr [g_data_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [esi*4], eax
         mov     eax, dword ptr [g_data_00542044]
         mov     esi, dword ptr [g_data_00542070]
@@ -169,12 +168,12 @@ __declspec(naked) void FourVecFillMStackBracket_00428130(void)
         mov     dword ptr [g_data_0053a1ac], eax
         jns     short L_fvf_loop1
         mov     eax, dword ptr [g_data_00541ff0]
-        mov     dword ptr [g_data_0054206c], 0xc
+        mov     dword ptr [g_walkCallback], 0xc
         mov     dword ptr [g_data_00542044], eax
         mov     dword ptr [g_data_0053a1ac], ecx
     L_fvf_loop2:
         mov     esi, dword ptr [g_data_00542044]
-        mov     eax, dword ptr [g_data_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [esi*4], eax
         mov     esi, dword ptr [g_data_00542044]
         mov     eax, dword ptr [g_data_0053a1ac]
@@ -183,13 +182,13 @@ __declspec(naked) void FourVecFillMStackBracket_00428130(void)
         mov     dword ptr [g_data_00542044], esi
         mov     dword ptr [g_data_0053a1ac], eax
         jns     short L_fvf_loop2
-        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     edx, dword ptr [g_data_00541ff4]
         mov     dword ptr [g_data_00542044], edx
         mov     dword ptr [g_data_0053a1ac], ecx
     L_fvf_loop3:
         mov     edx, dword ptr [g_data_00542044]
-        mov     eax, dword ptr [g_data_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [edx*4], eax
         mov     edx, dword ptr [g_data_00542044]
         mov     eax, dword ptr [g_data_0053a1ac]
@@ -203,7 +202,7 @@ __declspec(naked) void FourVecFillMStackBracket_00428130(void)
         mov     dword ptr [g_data_00542044], eax
     L_fvf_loop4:
         mov     edx, dword ptr [g_data_00542044]
-        mov     ecx, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [edx*4], ecx
         mov     ecx, dword ptr [g_data_00542044]
         mov     eax, dword ptr [g_data_0053a1ac]

@@ -130,7 +130,6 @@ extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_00542088;
@@ -153,7 +152,7 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_909c
-        mov      dword ptr [g_data_0054206c], 2
+        mov      dword ptr [g_walkCallback], 2
         call     ChainDirtyBitWalker_00408c10
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -164,13 +163,13 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         mov      dword ptr [eax*4], ecx
         mov      edx, dword ptr [g_data_00542048]
         mov      eax, 0xa0000
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x34], eax
         call     MStackBracket7_DispatchAndChain_004b8fa0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_909c
-        mov      dword ptr [g_data_0054206c], 2
+        mov      dword ptr [g_walkCallback], 2
         mov      dword ptr [g_data_00542078], 4
         jmp      GuardedSeq_00473f50
     L_909c:
@@ -266,7 +265,7 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         test     eax, eax
         jne      L_92d8
         mov      dword ptr [g_data_00542074], 0xb333
-        mov      dword ptr [g_data_0054206c], 0xfffec000
+        mov      dword ptr [g_walkCallback], 0xfffec000
         call     MStackPush3SideStore_0044cb80
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

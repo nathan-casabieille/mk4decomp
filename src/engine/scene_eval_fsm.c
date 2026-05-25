@@ -134,11 +134,10 @@ extern unsigned int g_x_00541dc0;
  *   esi = base*4; edi=0; snapshot [esi+0x84]; clear via edi.
  *   if (snap == 0): go to main path; else: call InstallSelfDualBranchInit_004201a0; pop edi; pop esi; ret.
  *   Main: push 8, call TableWalk; add esp, 4; call IncOrZero9_00422080; pause? -> epilogue;
- *   g_x_0054206c = [0x53a51c]; call DispatchPair; pause? -> epilogue;
- *   g_x_0054206c = 0; g_x_00541dc0 = 0; install self with chain[+0x84]=1, packed ptr store,
+ *   g_walkCallback = [0x53a51c]; call DispatchPair; pause? -> epilogue;
+ *   g_walkCallback = 0; g_x_00541dc0 = 0; install self with chain[+0x84]=1, packed ptr store,
  *   g_scaledInit++; chain[+0x84] = 0; call SceneEvalFsm_0049dea0; g_framePauseFlag = 1.
  */
-extern unsigned int g_x_0054206c;
 
 extern unsigned int g_data_004d57ac_arr;
 
@@ -170,12 +169,12 @@ __declspec(naked) void InstallSelfTableWalk_004200d0(void) {
         _emit   00h
         _emit   00h
         mov     ecx, dword ptr [g_x_0053a51c]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         call    DispatchPair_00429ac0
         cmp     dword ptr [g_framePauseFlag], edi
         _emit   75h
         _emit   68h
-        mov     dword ptr [g_x_0054206c], edi
+        mov     dword ptr [g_walkCallback], edi
         mov     dword ptr [g_x_00541dc0], edi
         mov     dword ptr [esi + 8], 0x004200d0
         mov     edx, dword ptr [g_baseSel_00542060]

@@ -147,7 +147,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_0054208c;
 
@@ -176,14 +175,14 @@ __declspec(naked) void DualStreamSqDistThresh_0045ede0(void) {
         mov     dword ptr [g_data_00542044], ecx
         mov     dword ptr [g_data_00542048], edx
         mov     eax, dword ptr [ecx*4 + 0x54]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     esi, dword ptr [ecx*4 + 0x58]
         mov     dword ptr [g_data_00542070], esi
         mov     ecx, dword ptr [ecx*4 + 0x5c]
         mov     dword ptr [g_data_00542074], ecx
         mov     edi, dword ptr [edx*4 + 0x54]
         sub     eax, edi
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     edi, dword ptr [edx*4 + 0x58]
         sub     esi, edi
         push    eax
@@ -194,7 +193,7 @@ __declspec(naked) void DualStreamSqDistThresh_0045ede0(void) {
         mov     dword ptr [g_data_00542074], ecx
         call    Mul10Tail_00404af0
         add     esp, 8
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     eax, dword ptr [g_data_00542070]
         push    eax
         push    eax
@@ -206,7 +205,7 @@ __declspec(naked) void DualStreamSqDistThresh_0045ede0(void) {
         push    eax
         call    Mul10Tail_00404af0
         mov     ecx, dword ptr [g_data_00542070]
-        mov     esi, dword ptr [g_data_0054206c]
+        mov     esi, dword ptr [g_walkCallback]
         add     ecx, esi
         add     esp, 8
         add     eax, ecx
@@ -234,7 +233,7 @@ __declspec(naked) void DualStreamSqDistThresh_0045ede0(void) {
         mov     eax, dword ptr [g_data_0054205c]
         mov     eax, dword ptr [eax*4 + 0x58]
         cmp     eax, 0xfffe3334
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jle     short L_dsd_e2tail
         mov     eax, dword ptr [g_data_0054208c]
         and     al, 0xfe

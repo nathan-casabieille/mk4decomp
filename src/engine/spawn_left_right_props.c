@@ -135,7 +135,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_00542080;
 extern unsigned int g_data_0054208c;
@@ -191,7 +190,7 @@ __declspec(naked) void SpawnListBatchLoader_00477710(void)
         mov      edx, dword ptr [g_data_0054205c]
         mov      eax, dword ptr [ecx*4]
         inc      ecx
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_00542044], ecx
         mov      dword ptr [edx*4 + 0x30], eax
         mov      eax, dword ptr [g_data_00542044]
@@ -199,13 +198,13 @@ __declspec(naked) void SpawnListBatchLoader_00477710(void)
         inc      eax
         mov      dword ptr [g_data_00542044], eax
         mov      eax, dword ptr [g_data_0054205c]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [eax*4 + 0x54], ecx
         mov      eax, dword ptr [g_data_00542044]
         mov      edx, dword ptr [g_data_0054205c]
         mov      ecx, dword ptr [eax*4]
         inc      eax
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         add      ecx, 0x40000
         mov      dword ptr [g_data_00542044], eax
         mov      dword ptr [edx*4 + 0x58], ecx
@@ -214,7 +213,7 @@ __declspec(naked) void SpawnListBatchLoader_00477710(void)
         inc      eax
         mov      dword ptr [g_data_00542044], eax
         mov      eax, dword ptr [g_data_0054205c]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [eax*4 + 0x5c], ecx
         mov      eax, dword ptr [g_data_00542044]
         mov      ecx, dword ptr [eax*4]

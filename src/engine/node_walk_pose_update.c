@@ -142,7 +142,6 @@ extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_0054208c;
 extern void AudioMixerStep_004ab700(void);
@@ -165,13 +164,13 @@ __declspec(naked) void PreFightInstallCluster_00474390(void)
         mov      edx, dword ptr [g_data_0054204c]
         cmp      eax, 0x96
         mov      dword ptr [g_data_00542044], edx
-        mov      dword ptr [g_data_0054206c], 0x7ae
+        mov      dword ptr [g_walkCallback], 0x7ae
         je       short L_441c
         call     AudioMixerStep_004ab700
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_45d4
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         add      eax, 0x23d7
         mov      dword ptr [g_data_00542074], eax
         call     MStackPushVec3Mul10_004767e0
@@ -192,7 +191,7 @@ __declspec(naked) void PreFightInstallCluster_00474390(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_45d4
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         add      eax, 0x23d7
         mov      dword ptr [g_data_00542074], eax
         call     MStackPushVec3Mul10_004767e0
@@ -201,7 +200,7 @@ __declspec(naked) void PreFightInstallCluster_00474390(void)
         jne      L_45d4
         mov      ecx, OFFSET g_data_004eca50
         shr      ecx, 2
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         call     PushSetXfmMaskCallPop_00407140
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -219,20 +218,20 @@ __declspec(naked) void PreFightInstallCluster_00474390(void)
         pop      esi
         ret
     L_449b:
-        mov      dword ptr [g_data_0054206c], 0x6147
+        mov      dword ptr [g_walkCallback], 0x6147
         call     StoreDoubleNegPauseSubStore_004ab750
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_45d4
         mov      eax, dword ptr [g_data_00542044]
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [eax*4 + 0x80], ecx
     L_44c9:
         mov      eax, dword ptr [g_data_004d57ac]
         mov      edx, dword ptr [g_data_00542044]
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [edx*4 + 0x30], ecx
         mov      eax, dword ptr [g_data_00542058]
@@ -240,24 +239,24 @@ __declspec(naked) void PreFightInstallCluster_00474390(void)
         mov      esi, dword ptr [eax*4]
         lea      ecx, [eax*4]
         mov      eax, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_0054206c], esi
+        mov      dword ptr [g_walkCallback], esi
         shl      eax, 2
         shl      edx, 2
         mov      dword ptr [eax + 0x54], esi
         mov      esi, dword ptr [ecx + 4]
-        mov      dword ptr [g_data_0054206c], esi
+        mov      dword ptr [g_walkCallback], esi
         mov      dword ptr [eax + 0x58], esi
         mov      ecx, dword ptr [ecx + 8]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [eax + 0x5c], ecx
         mov      ecx, dword ptr [edx]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [eax + 0x6c], ecx
         mov      ecx, dword ptr [edx + 4]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [eax + 0x70], ecx
         mov      edx, dword ptr [edx + 8]
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [eax + 0x74], edx
         mov      ecx, dword ptr [g_data_00542044]
         mov      dword ptr [g_data_00542074], 0x7ae
@@ -275,7 +274,7 @@ __declspec(naked) void PreFightInstallCluster_00474390(void)
         mov      dword ptr [g_data_0054205c], eax
         mov      eax, dword ptr [eax*4 + 0x30]
         cmp      eax, 0x96
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       short L_45bc
         call     DoublePushAddCallDoublePop_00476930
         mov      eax, dword ptr [g_framePauseFlag]
@@ -286,7 +285,7 @@ __declspec(naked) void PreFightInstallCluster_00474390(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_45d4
-        mov      dword ptr [g_data_0054206c], 1
+        mov      dword ptr [g_walkCallback], 1
     L_45d4:
         pop      esi
         ret

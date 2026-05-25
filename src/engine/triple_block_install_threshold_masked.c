@@ -131,10 +131,9 @@ extern unsigned int g_data_00535e7c;
  *     <0x40000 jmp ProneFsmCluster_004355f0; else jmp InstallSelfPacked0x2005_00437a90.
  *   Block C (+0xe0): g_scaledInit=[baseSel*4+0x38]; g_data_00542070=[chain+0x40];
  *     and 0x200 -> g_state_00542094. If nonzero jmp PrefixThunkInstallSelf3State_00438f80.
- *     Else: g_x_0054206c &= 0xff; push 0x004e4668; call JumpTableDispatch; pop; ret.
+ *     Else: g_walkCallback &= 0xff; push 0x004e4668; call JumpTableDispatch; pop; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542084;
 extern void CallPauseConstStoreJmp_00438170(void);
 extern void EntryThenDispatcherPair_00438cd0(void);
@@ -194,7 +193,7 @@ __declspec(naked) void TripleBlockInstallThresholdMasked_00435df0(void) {
         _emit   33h
         mov     eax, dword ptr [g_state_00535ddc]
         cmp     eax, 0x10000
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7dh
         _emit   05h
         jmp     CallPauseTestByteJmpCalls_004390f0
@@ -221,10 +220,10 @@ __declspec(naked) void TripleBlockInstallThresholdMasked_00435df0(void) {
         _emit   74h
         _emit   05h
         jmp     PrefixThunkInstallSelf3State_00438f80
-        mov     edx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         push    0x004e4668
         and     edx, 0xff
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         call    JumpTableDispatch_0043a550
         add     esp, 4
         ret

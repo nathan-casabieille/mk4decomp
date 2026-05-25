@@ -127,7 +127,7 @@ extern unsigned int g_data_00535e7c;
  *   if (flag != 0 && flag != 1): call StackPopDispatchTagged; ret.
  *   else: call GuardedDoubleIncCmpJmp; pause? -> end.
  *     if (g_state_0054208c & 1): call ScaledInitOrSelfPtr; ret.
- *     eax = chain[g_x_0054205c+0x28]; g_x_0054206c = eax;
+ *     eax = chain[g_x_0054205c+0x28]; g_walkCallback = eax;
  *     if (eax < g_x_00542080): goto install-second-state.
  *     call ScaledArrStore; pause? -> end.
  *     install self with [esi+0x84]=2; pause = ebx (=1).
@@ -135,7 +135,6 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_x_0054204c;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542080;
 extern void GuardedDoubleIncCmpJmp_00429860(void);
 extern void ScaledArrStore_00429980(void);
@@ -180,7 +179,7 @@ __declspec(naked) void InstallSelfPair3Branch_00429240(void) {
         mov     eax, [ecx*4 + 0x28]
         mov     ecx, dword ptr [g_x_00542080]
         cmp     eax, ecx
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7ch
         _emit   2eh
         call    ScaledArrStore_00429980

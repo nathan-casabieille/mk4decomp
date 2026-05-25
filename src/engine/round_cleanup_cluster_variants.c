@@ -146,7 +146,6 @@ extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_0054207c;
@@ -259,14 +258,14 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
         nop
         nop
         /* H2: animate + tail-jump */
-        mov      dword ptr [g_data_0054206c], 0x27
+        mov      dword ptr [g_walkCallback], 0x27
         call     TableLookupCall_00489f60
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_758b
         mov      dword ptr [g_data_00542074], 1
         mov      dword ptr [g_data_0054207c], 2
-        mov      dword ptr [g_data_0054206c], 0x23d7
+        mov      dword ptr [g_walkCallback], 0x23d7
         jmp      MStackPush3CallCascade_00486d90
     L_758b:
         ret
@@ -348,13 +347,13 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, dword ptr [ecx*4 + 0x60]
         cmp      eax, 0x10a
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jne      short L_768b
         call     GameLoaderHandlerCluster_004876f0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_76ea
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
     L_768b:
         cmp      eax, 0x10b
         jne      short L_76a0
@@ -558,7 +557,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         mov      dword ptr [g_data_00542044], ecx
         mov      eax, dword ptr [ecx*4 + 0x34]
         or       ah, 0x10
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
         mov      eax, dword ptr [g_data_004d57ac]
         mov      ecx, dword ptr [eax*4]

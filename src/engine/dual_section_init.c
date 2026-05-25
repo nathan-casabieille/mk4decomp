@@ -124,14 +124,13 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00492140 (207b game) - dual-section init.
  *   Section A: g_x_00542048=0x0050f3d0>>2; call DispatcherComplex260; pause-check;
- *     bit-2 check; scaledInit[+0x54]=0xff9c0000; chain[+0x30]=scaledInit (= g_x_0054206c);
+ *     bit-2 check; scaledInit[+0x54]=0xff9c0000; chain[+0x30]=scaledInit (= g_walkCallback);
  *     call PushSetCallPop_00406530; pause-check; call RegistryPushBindPop; pause-check.
  *   Section B (+0x70): g_x_00542048=0x0050f3ec>>2; same pattern with chain[+0x54]=0x00630000.
  *   ret with pop esi.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 extern void RegistryPushBindPop_00403c20(void);
 
 __declspec(naked) void DualSectionInit_00492140(void) {
@@ -160,7 +159,7 @@ __declspec(naked) void DualSectionInit_00492140(void) {
         mov     esi, 0x0000001f
         mov     dword ptr [ecx*4 + 0x54], 0xff9c0000
         mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [edx*4 + 0x30], esi
         call    PushSetCallPop_00406530
         mov     eax, dword ptr [g_pause_00541e6c]
@@ -186,7 +185,7 @@ __declspec(naked) void DualSectionInit_00492140(void) {
         mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [ecx*4 + 0x54], 0x00630000
         mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [edx*4 + 0x30], esi
         call    PushSetCallPop_00406530
         mov     eax, dword ptr [g_pause_00541e6c]

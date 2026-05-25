@@ -129,16 +129,15 @@ extern void CallSetPause_0041f830(void);
 extern void TaggedSceneDispatch_004be690(void);
 
 /* @addr 0x004a1000 (120b audio) - push-0x230 setup + 2 calls + chain check + tag-dispatch.
- *   Compute base*4 + chain[+0x34]; push 0x230; store eax to g_x_0054206c and chain[g_x_00542058].
+ *   Compute base*4 + chain[+0x34]; push 0x230; store eax to g_walkCallback and chain[g_x_00542058].
  *   call TripleStageRollback; add esp,4. call RoundWinTransition_0049e7e0; pause? -> ret.
- *   eax = chain[g_baseSel + 0x30]; g_x_0054206c = eax;
+ *   eax = chain[g_baseSel + 0x30]; g_walkCallback = eax;
  *   if (eax == 0): jmp Push15PushDataCallWordCallJmp_004a1080.
  *   else: push 0x16, 0x4a0370; call StoreTwoCall_0049cb40; add esp,8.
  *     push (word)[0x4e2864]; call TaggedSceneDispatch_004be690; add esp,4;
  *     jmp CallSetPause_0041f830.
  */
 extern unsigned int g_x_00542058;
-extern unsigned int g_x_0054206c;
 
 extern unsigned int g_data_004d57ac_arr;
 
@@ -148,7 +147,7 @@ __declspec(naked) void AudioInitChainTag_004a1000(void) {
         mov     ecx, dword ptr [g_x_00542058]
         push    0x230
         mov     eax, [eax*4 + 0x34]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     [ecx*4 + g_data_004d57ac_arr], eax
         call    TripleStageRollback_00404a50
         add     esp, 4
@@ -160,7 +159,7 @@ __declspec(naked) void AudioInitChainTag_004a1000(void) {
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     eax, [edx*4 + 0x30]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   05h
         jmp     Push15PushDataCallWordCallJmp_004a1080

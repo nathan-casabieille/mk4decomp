@@ -131,14 +131,13 @@ extern unsigned int g_data_00535e7c;
  *   Tail (+0xc0, 1-NOP pad): set g_data_0053a478=0; call InstallSelfCountdownCascade; if pause ret.
  *     If [0053a478]!=0 ret; call Cmp2CallDirtyCall; if !=0 ret.
  *     If [baseSel*4+0x34]!=0: jmp InstallSelfThreeStateLeaPlus22.
- *     Else: g_x_0054206c=0x1f4; call AudioVolumeRescale; if pause ret.
+ *     Else: g_walkCallback=0x1f4; call AudioVolumeRescale; if pause ret.
  *       If bit0(0054208c): jmp InstallSelfChainSetB333v3 (0x00437fb0).
  *       Else: g_state_0054207c=0x10028; jmp HitReactionDispatcher_0045f650.
  *   Tail (+0x140 after 6-NOP pad): jmp InstallSelfChainSetB333v2_00437f00.
  */
 extern unsigned int g_data_0053a478;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542084;
 extern void AudioVolumeRescale_004ab690(void);
 extern void EsiInstallTwoCallCmpInstall_00438b10(void);
@@ -220,11 +219,11 @@ __declspec(naked) void InstallSelfCascadeSequence_00434350(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     eax, dword ptr [eax*4 + 0x34]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   05h
         jmp     InstallSelfThreeStateLeaPlus22_00437970
-        mov     dword ptr [g_x_0054206c], 0x1f4
+        mov     dword ptr [g_walkCallback], 0x1f4
         call    AudioVolumeRescale_004ab690
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

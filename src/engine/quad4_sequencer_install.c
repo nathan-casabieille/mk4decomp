@@ -125,7 +125,6 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x00483900 (205b game) - 4-entry-point sequencer. */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542078;
 extern unsigned int g_x_0054207c;
 extern unsigned int g_x_00542080;
@@ -140,7 +139,7 @@ __declspec(naked) void Quad4SequencerInstall_00483900(void) {
     __asm {
         mov     ecx, dword ptr [g_x_0054205c]
         mov     eax, 0x0000028f
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    0x004ef350
         mov     dword ptr [ecx*4 + 0x4c], eax
         call    ArgSarStoreJmp_004594f0
@@ -168,7 +167,7 @@ __declspec(naked) void Quad4SequencerInstall_00483900(void) {
         test    eax, eax
         _emit   75h
         _emit   41h
-        mov     dword ptr [g_x_0054206c], 0x00006666
+        mov     dword ptr [g_walkCallback], 0x00006666
         call    CmpP1DualInitStore_00482ab0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

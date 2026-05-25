@@ -151,7 +151,7 @@ extern void MatchInitMonsterChain_004228b0(void);
  *     - phase 2: install self at [esi+8]=0x403170, zero [esi+0x84]=3,
  *       set g_data_0054204c=4, set g_framePauseFlag=1, return.
  *     - phase 3: call GuardedScaledLookupCallJmp_004220a0, on no-error set
- *       g_data_0054206c=3, call AndShlStore_00409280, call
+ *       g_walkCallback=3, call AndShlStore_00409280, call
  *       StackPopDispatchTagged_0041f780, return.
  */
 extern unsigned int g_data_00537f48;
@@ -161,7 +161,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 
 __declspec(naked) void Phase3InstallSelf_00403170(void) {
     __asm {
@@ -181,7 +180,7 @@ __declspec(naked) void Phase3InstallSelf_00403170(void) {
         call    GuardedScaledLookupCallJmp_004220a0
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_p3i_done
-        mov     dword ptr [g_data_0054206c], 3
+        mov     dword ptr [g_walkCallback], 3
         call    AndShlStore_00409280
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_p3i_done
@@ -190,7 +189,7 @@ __declspec(naked) void Phase3InstallSelf_00403170(void) {
         pop     esi
         ret
     L_p3i_phase2:
-        mov     dword ptr [g_data_0054206c], edi
+        mov     dword ptr [g_walkCallback], edi
         mov     dword ptr [g_data_00541dc8], edi
         mov     dword ptr [esi + 8], offset Phase3InstallSelf_00403170
         mov     dword ptr [esi + 0x84], 3

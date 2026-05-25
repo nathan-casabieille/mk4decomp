@@ -122,7 +122,7 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-/* @addr 0x0043f8f0 (199b game) - g_x_0054206c = (0x4e5650 >> 2);
+/* @addr 0x0043f8f0 (199b game) - g_walkCallback = (0x4e5650 >> 2);
  *   call F1; pause? ret; (208c&4)? ret; call F2; pause? ret;
  *   chain[g_scaledInit + 0x30] = 0x76; push 0xfb43fb;
  *   ecx = chain[g_scaledInit + 0x18]; g_x_00542048 = ecx;
@@ -132,7 +132,6 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern void CopyThreeFields_00404df0(void);
 extern void MStackCall_00406340(void);
 extern void PushSetXfmMaskCallPop_00407140(void);
@@ -142,7 +141,7 @@ void TwoCallScaledOr1600_0043f8f0(void) {
     __asm {
         mov     eax, 0x004e5650
         shr     eax, 2
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    PushSetXfmMaskCallPop_00407140
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -170,7 +169,7 @@ void TwoCallScaledOr1600_0043f8f0(void) {
         _emit   00h
         mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     eax, 0x76
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    0x00fb43fb
         mov     [ecx*4 + 0x30], eax
         mov     edx, dword ptr [g_scaledInit_00542044]
@@ -178,7 +177,7 @@ void TwoCallScaledOr1600_0043f8f0(void) {
         mov     dword ptr [g_x_00542048], ecx
         mov     eax, [ecx*4 + 0x20]
         or      ah, 0x16
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     [ecx*4 + 0x20], eax
         mov     eax, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [g_x_0054205c], eax

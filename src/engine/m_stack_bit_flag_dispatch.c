@@ -124,15 +124,14 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00494750 (165b game) - mstack-push bit-flag + 2 calls + cond push-arg call.
  *   g_x_00542080 = 0. g_scaledInit = chain[g_baseSel + 0x38].
- *   g_x_0054206c = eax = chain[g_scaledInit + 0x40].
+ *   g_walkCallback = eax = chain[g_scaledInit + 0x40].
  *   g_x_00542094 = (eax & 8); if non-zero: ecx = 1; g_x_00542080 = 1.
  *   mstack-push ecx (= 0 or 1). call MStackPush3CmpCall_0048eec0. pause? -> ret.
- *   if (208c & 1): skip first call. else: g_x_0054206c = 0x78; call ScaledLitLoadCall_00480fe0; pause? -> ret.
+ *   if (208c & 1): skip first call. else: g_walkCallback = 0x78; call ScaledLitLoadCall_00480fe0; pause? -> ret.
  *   mstack-pop into g_x_00542080. counter--.
  *   if (popped == 0): ret.
  *   else: push 0x004f1400; call IterLoad_0048fd30; add esp, 4; ret.
  */
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542080;
 extern unsigned int g_x_00542094;
 extern void IterLoad_0048fd30(void);
@@ -148,7 +147,7 @@ void MStackBitFlagDispatch_00494750(void) {
         mov     eax, [eax*4 + 0x38]
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, [eax*4 + 0x40]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         and     eax, 8
         mov     dword ptr [g_x_00542094], eax
         _emit   74h
@@ -167,7 +166,7 @@ void MStackBitFlagDispatch_00494750(void) {
         test    byte ptr [g_state_0054208c], 1
         _emit   75h
         _emit   18h
-        mov     dword ptr [g_x_0054206c], 0x78
+        mov     dword ptr [g_walkCallback], 0x78
         call    ScaledLitLoadCall_00480fe0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

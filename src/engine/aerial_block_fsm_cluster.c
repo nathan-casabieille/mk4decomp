@@ -144,7 +144,6 @@ extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_0054208c;
@@ -183,7 +182,7 @@ __declspec(naked) void ThrowGrabPoseCopyCluster_0047f4e0(void)
         nop
         nop
         /* === Helper 2: 0x405 anim w/ source-pose copy === */
-        mov      dword ptr [g_data_0054206c], 6
+        mov      dword ptr [g_walkCallback], 6
         call     ScaledIndexConditionalAdd_0048e400
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -192,13 +191,13 @@ __declspec(naked) void ThrowGrabPoseCopyCluster_0047f4e0(void)
         mov      dword ptr [eax*4 + 0x74], 0x406
         mov      eax, dword ptr [g_data_00535ddc]
         cmp      eax, 0x10000
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jge      short L_f572
         jmp      AerialBlockFsmCluster_0047f730
     L_f572:
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, 0x405
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      edx, OFFSET g_data_0050b8dc
         mov      dword ptr [ecx*4 + 0x74], eax
         mov      eax, dword ptr [g_data_004d57ac]
@@ -236,39 +235,39 @@ __declspec(naked) void ThrowGrabPoseCopyCluster_0047f4e0(void)
         mov      dword ptr [g_data_00542048], edx
         mov      dword ptr [edx*4 + 0x34], 0
         mov      edx, 0x73
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [eax + 0x30], edx
         mov      edx, dword ptr [ecx + 0x54]
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [eax + 0x54], edx
         mov      edx, dword ptr [ecx + 0x58]
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [eax + 0x58], edx
         mov      edx, dword ptr [ecx + 0x5c]
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [eax + 0x5c], edx
         mov      edx, dword ptr [ecx + 0x60]
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [eax + 0x60], edx
         mov      edx, dword ptr [ecx + 0x64]
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [eax + 0x64], edx
         mov      edx, dword ptr [ecx + 0x68]
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [eax + 0x68], edx
         mov      edx, dword ptr [ecx + 0x34]
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [eax + 0x34], edx
         mov      edx, dword ptr [ecx + 0x24]
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [eax + 0x24], edx
         mov      edx, dword ptr [ecx + 0x28]
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [eax + 0x28], edx
         mov      edx, dword ptr [ecx + 0x3c]
         mov      dword ptr [eax + 0x3c], edx
         mov      ecx, dword ptr [g_data_0052ab10]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [eax + 0x3c], ecx
         mov      eax, dword ptr [g_data_00542044]
         mov      ecx, dword ptr [g_data_00542060]
@@ -276,7 +275,7 @@ __declspec(naked) void ThrowGrabPoseCopyCluster_0047f4e0(void)
         mov      dword ptr [g_data_00542074], 0x45
         mov      eax, dword ptr [ecx*4 + 0xc]
         cmp      eax, 1
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       short L_f6ef
         mov      dword ptr [g_data_00542074], 0x46
     L_f6ef:

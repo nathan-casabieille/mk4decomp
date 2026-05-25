@@ -128,7 +128,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00543550;
 extern unsigned int g_data_007af990;
 extern unsigned int g_data_007af994;
@@ -198,7 +197,7 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         shr      eax, 8
         push     edi
         mov      edi, dword ptr [g_data_00542048]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_00ab4e5c], eax
         mov      eax, dword ptr [g_data_00543550]
         mov      dword ptr [esp + 0x20], edx
@@ -206,7 +205,7 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         mov      ecx, dword ptr [edi*4 + 0x3c]
         sar      ecx, 8
         cmp      ecx, 0x60
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         jge      L_9a0e
         mov      ecx, 0x60
         jmp      L_9a1b
@@ -215,7 +214,7 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         jle      L_9a21
         mov      ecx, 0xa0
     L_9a1b:
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
     L_9a21:
         mov      esi, eax
         imul     esi, ecx
@@ -224,7 +223,7 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         cmp      ecx, 0x100
         jle      L_9a3f
         mov      ecx, 0x100
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
     L_9a3f:
         imul     eax, ecx
         sar      eax, 8

@@ -133,7 +133,6 @@ extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern void CallSetPause_0041f830(void);
 extern void MStackChainOrBitLoop_004635a0(void);
@@ -158,11 +157,11 @@ __declspec(naked) void MkTowerScreenFsmCluster_00462560(void)
         je       L_264f
         mov      edx, dword ptr [g_data_00541fb8]
         shl      eax, 2
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         add      eax, edx
         mov      dword ptr [g_data_0054204c], eax
         mov      eax, dword ptr [eax*4]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         call     MStackPush2LLWalkCompare_004069b0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -174,7 +173,7 @@ __declspec(naked) void MkTowerScreenFsmCluster_00462560(void)
         mov      eax, dword ptr [g_data_00542070]
         mov      edx, 0xfffe6de1
         dec      eax
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [g_data_00542070], eax
         je       short L_25fd
         mov      ecx, eax
@@ -184,7 +183,7 @@ __declspec(naked) void MkTowerScreenFsmCluster_00462560(void)
         dec      ecx
         jne      short L_25e8
         mov      dword ptr [g_data_00542070], eax
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
     L_25fd:
         call     Thunk_00427460
         mov      eax, dword ptr [g_framePauseFlag]
@@ -192,7 +191,7 @@ __declspec(naked) void MkTowerScreenFsmCluster_00462560(void)
         jne      short L_264f
         mov      eax, dword ptr [g_data_00542044]
     L_2610:
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [eax*4 + 0x64], ecx
         mov      edx, dword ptr [g_data_00542044]
         mov      eax, dword ptr [edx*4 + 0x40]
@@ -309,7 +308,7 @@ __declspec(naked) void MkTowerScreenFsmCluster_00462560(void)
         /* === Helper 4: flag-gated jmp 004627c0 (path A) === */
         mov      eax, dword ptr [g_data_0053a408]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jne      short L_2793
         jmp      CallSetPause_0041f830
     L_2793:
@@ -325,7 +324,7 @@ __declspec(naked) void MkTowerScreenFsmCluster_00462560(void)
         /* === Helper 5: flag-gated jmp 004627c0 (path B) === */
         mov      eax, dword ptr [g_data_00537e88]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jne      short L_27b3
         jmp      CallSetPause_0041f830
     L_27b3:

@@ -138,7 +138,6 @@ extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_00542088;
 extern unsigned int g_data_00542ce8;
@@ -184,29 +183,29 @@ __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
         mov     dword ptr [eax*4 + 0x64], 0x0004B65F
         mov     eax, dword ptr [g_data_00542044]
         mov     dword ptr [g_data_0053a7a0], eax
-        mov     dword ptr [g_data_0054206c], edi
+        mov     dword ptr [g_walkCallback], edi
         mov     dword ptr [eax*4 + 0x54], edi
         mov     eax, dword ptr [g_data_00542044]
-        mov     edx, dword ptr [g_data_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0x5C], edx
         mov     ecx, dword ptr [g_data_00542044]
         mov     eax, 0xFFFE4CCD
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x58], eax
         call    StoreLoadJmp_00404ef0
         mov     ecx, dword ptr [g_data_0053a51c]
         mov     eax, offset g_data_004d7b88
         shr     eax, 2
         add     eax, ecx
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_data_00542058], eax
         add     esp, 4
         mov     edx, dword ptr [eax*4]
-        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         call    StorePauseImulShr16_004ab630
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_p4tpis_A_ret
-        mov     ecx, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     eax, offset g_data_00542ce8
         shr     eax, 2
         add     eax, ecx
@@ -223,11 +222,11 @@ __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
         mov     edx, dword ptr [g_data_0053a7a0]
         mov     dword ptr [g_data_0054207c], edi
         mov     dword ptr [g_data_00542054], edx
-        mov     dword ptr [g_data_0054206c], 0xC4
+        mov     dword ptr [g_walkCallback], 0xC4
         call    AudioMixerStep_004ab700
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_p4tpis_A_ret
-        mov     eax, dword ptr [g_data_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     edx, 0x0041A610
         add     eax, 0x189
         add     edx, 0x01000000
@@ -265,16 +264,16 @@ __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
         mov     eax, dword ptr [eax*4 + 0x54]
         push    eax
         push    0xCCCC
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    Mul10Tail_00404af0
         add     esp, 8
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     eax, dword ptr [g_data_0052ab04]
         push    eax
         push    0x3333
         mov     dword ptr [g_data_00542070], eax
         call    Mul10Tail_00404af0
-        mov     edx, dword ptr [g_data_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     ecx, dword ptr [g_data_00542058]
         add     eax, edx
         add     esp, 8
@@ -284,16 +283,16 @@ __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
         mov     eax, dword ptr [edx*4 + 0x5C]
         push    eax
         push    0xCCCC
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    Mul10Tail_00404af0
         add     esp, 8
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     eax, dword ptr [g_data_0052ab08]
         push    eax
         push    0x3333
         mov     dword ptr [g_data_00542070], eax
         call    Mul10Tail_00404af0
-        mov     ecx, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         add     esp, 8
         add     eax, ecx
         mov     ecx, dword ptr [g_data_00542058]
@@ -330,7 +329,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
         mov     dword ptr [g_data_00542044], ecx
         mov     eax, dword ptr [ecx*4 + 0x20]
         or      al, 0x40
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x20], eax
         mov     edx, dword ptr [g_data_00542044]
         mov     eax, dword ptr [edx*4 + 0x28]
@@ -339,52 +338,52 @@ __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
         or      ecx, 0x0A
         mov     dword ptr [eax*4], ecx
         mov     eax, dword ptr [g_data_004d5324]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    AudioMixerStep_004ab700
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tpis_C_ret
         mov     edx, dword ptr [g_data_00542044]
-        mov     ecx, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [edx*4 + 0x3C], ecx
         mov     eax, dword ptr [g_data_004d5324]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    AudioMixerStep_004ab700
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tpis_C_ret
         mov     edx, dword ptr [g_data_00542044]
-        mov     ecx, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [edx*4 + 0x40], ecx
         mov     eax, dword ptr [g_data_004d5324]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    AudioMixerStep_004ab700
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tpis_C_ret
         mov     edx, dword ptr [g_data_00542044]
-        mov     ecx, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [edx*4 + 0x44], ecx
-        mov     dword ptr [g_data_0054206c], 0x6666
+        mov     dword ptr [g_walkCallback], 0x6666
         call    AudioMixerStep_004ab700
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tpis_C_ret
-        mov     eax, dword ptr [g_data_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     ecx, dword ptr [g_data_00542048]
         add     eax, 0x9999
         mov     dword ptr [ecx*4 + 0x48], eax
-        mov     dword ptr [g_data_0054206c], 0x6666
+        mov     dword ptr [g_walkCallback], 0x6666
         call    StoreDoubleNegPauseSubStore_004ab750
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tpis_C_ret
         mov     eax, dword ptr [g_data_00542048]
-        mov     edx, dword ptr [g_data_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0x2C], edx
         mov     ecx, dword ptr [g_data_00542048]
         mov     eax, 0x0049D200
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x10], eax
         jmp     CallSetPause_0041f830
     L_p4tpis_C_ret:

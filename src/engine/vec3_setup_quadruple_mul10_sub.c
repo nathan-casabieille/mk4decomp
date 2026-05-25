@@ -126,7 +126,6 @@ extern unsigned int g_data_004d5324;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542054;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern void AudioMixerStep_004ab700(void);
 extern void MStackCall_00406340(void);
@@ -144,17 +143,17 @@ __declspec(naked) void Vec3SetupQuadrupleMul10Sub_00442bc0(void)
         jne     L_v3sqs_ret
         mov     ecx, dword ptr [g_data_00542044]
         mov     eax, 0x7e
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x30], eax
         mov     edx, dword ptr [g_data_00542054]
         mov     ecx, dword ptr [g_data_00542044]
         mov     eax, dword ptr [edx*4 + 0x3c]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x54], eax
         mov     edx, dword ptr [g_data_00542054]
         mov     ecx, dword ptr [g_data_00542044]
         mov     eax, dword ptr [edx*4 + 0x40]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x58], eax
         mov     edx, dword ptr [g_data_00542054]
         mov     ecx, dword ptr [g_data_00542044]
@@ -165,12 +164,12 @@ __declspec(naked) void Vec3SetupQuadrupleMul10Sub_00442bc0(void)
         mov     eax, dword ptr [g_data_00542044]
         mov     dword ptr [eax*4 + 0x4c], 0x3d7
         mov     ecx, dword ptr [g_data_004d5324]
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         call    AudioMixerStep_004ab700
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_v3sqs_ret
-        mov     edx, dword ptr [g_data_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [g_data_00542074], edx
         call    MStackPush1MagicMod2_004244d0
         mov     eax, dword ptr [g_framePauseFlag]
@@ -180,40 +179,40 @@ __declspec(naked) void Vec3SetupQuadrupleMul10Sub_00442bc0(void)
         push    eax
         push    0x1c28
         call    Mul10Tail_00404af0
-        mov     ecx, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         add     esp, 8
         mov     dword ptr [g_data_00542070], eax
         push    ecx
         push    0x1c28
         call    Mul10Tail_00404af0
         mov     edx, dword ptr [g_data_00542044]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     eax, dword ptr [g_data_00542070]
         add     esp, 8
         lea     esi, [edx*4]
         mov     dword ptr [esi + 0x6c], eax
-        mov     ecx, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [esi + 0x74], ecx
-        mov     dword ptr [g_data_0054206c], 0x1999
+        mov     dword ptr [g_walkCallback], 0x1999
         call    StoreDoubleNegPauseSubStore_004ab750
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_v3sqs_ret
-        mov     edx, dword ptr [g_data_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [esi + 0x78], edx
-        mov     dword ptr [g_data_0054206c], 0x1999
+        mov     dword ptr [g_walkCallback], 0x1999
         call    StoreDoubleNegPauseSubStore_004ab750
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_v3sqs_ret
-        mov     eax, dword ptr [g_data_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [esi + 0x7c], eax
-        mov     dword ptr [g_data_0054206c], 0x1999
+        mov     dword ptr [g_walkCallback], 0x1999
         call    StoreDoubleNegPauseSubStore_004ab750
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_v3sqs_ret
-        mov     ecx, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [esi + 0x80], ecx
         mov     ecx, dword ptr [g_data_00542044]
         mov     esi, 0x1b

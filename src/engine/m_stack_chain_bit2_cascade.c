@@ -129,13 +129,12 @@ extern void MStackChainBit2Cascade_0048e8f0(void);
  *   A: load chain via baseSel[*4+0x38] then *4+0x40; g_state_00542094 = & 4; toggle bit-0 based on result. ret.
  *   B (+0x40): call DirtyToggleByBaseSel; pause-check; if bit-2 set jmp GuardedWalkSwitchDirty_0048ea40;
  *     call MStackChainBit2Cascade_0048e8f0; pause-check; if bit-0 clear ret. call PushPopState70Mask_00490650; pause-check;
- *     load g_state_00538158 vs g_x_0054205c; if eq eax=0x200 else eax=2; g_state_00542094=eax & g_x_0054206c;
+ *     load g_state_00538158 vs g_x_0054205c; if eq eax=0x200 else eax=2; g_state_00542094=eax & g_walkCallback;
  *     toggle bit-0; ret.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern void DirtyToggleByBaseSel_0048f2e0(void);
 extern void PushPopState70Mask_00490650(void);
@@ -194,7 +193,7 @@ __declspec(naked) void DualEntryBitFlagDispatch_0048e820(void) {
         _emit   0ah
         mov     eax, 2
         mov     dword ptr [g_x_00542070], eax
-        and     eax, dword ptr [g_x_0054206c]
+        and     eax, dword ptr [g_walkCallback]
         mov     dword ptr [g_state_00542094], eax
         mov     eax, dword ptr [g_state_0054208c]
         _emit   74h

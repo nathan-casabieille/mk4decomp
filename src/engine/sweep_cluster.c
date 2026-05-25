@@ -137,7 +137,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542080;
 extern void FiveCallGuardSetTail_0046f6b0(void);
 extern void GuardedPackedSlotInit_00428760(void);
@@ -165,7 +164,7 @@ __declspec(naked) void StageEventState4Way_004982f0(void)
         ret
     L_8327:
         mov      eax, dword ptr [g_data_0052ab40]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         and      eax, 0x400
         mov      dword ptr [g_data_00542094], eax
         jne      short L_8370
@@ -226,7 +225,7 @@ __declspec(naked) void StageEventState4Way_004982f0(void)
         jne      short L_84da
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, 0x30f
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         push     OFFSET g_data_005432f0
         mov      dword ptr [ecx*4 + 0x74], eax
         call     GuardedPackedSlotInit_00428760

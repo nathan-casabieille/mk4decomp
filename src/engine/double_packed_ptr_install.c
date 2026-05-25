@@ -131,7 +131,6 @@ extern unsigned int g_data_00535e7c;
  *   call PushSetCallPop; pause? ret; call RegistryPushBindPop;
  */
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 extern void RegistryPushBindPop_00403c20(void);
 
 __declspec(naked) void DoublePackedPtrInstall_00458ba0(void) {
@@ -160,7 +159,7 @@ __declspec(naked) void DoublePackedPtrInstall_00458ba0(void) {
         mov     esi, 0x1f
         mov     dword ptr [ecx*4 + 0x54], 0xffba0000
         mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         mov     [edx*4 + 0x30], esi
         call    PushSetCallPop_00406530
         mov     eax, dword ptr [g_framePauseFlag]
@@ -183,7 +182,7 @@ __declspec(naked) void DoublePackedPtrInstall_00458ba0(void) {
         mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [ecx*4 + 0x54], 0x00810000
         mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         mov     [edx*4 + 0x30], esi
         call    PushSetCallPop_00406530
         mov     eax, dword ptr [g_framePauseFlag]

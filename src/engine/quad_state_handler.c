@@ -126,14 +126,13 @@ extern unsigned int g_data_00535e7c;
  *   B1 (0..19, +12 NOPs): call ScaledMove48to58; if !pause jmp SixEntryYieldThunks_00461090; ret.
  *   B2 (32..71, +8 NOPs): call ScaledMove48to58; if !pause call InstallSelfPlusTrampoline_0046c5d0; if !pause
  *     call FlagCascadeStateSet; if !pause test bit0 of g_state_0054208c (clear=>jmp
- *     StageTransitionCluster_0046f250; set=>store 5 at g_x_0054206c and tail-jmp StateDispatchYield); ret.
+ *     StageTransitionCluster_0046f250; set=>store 5 at g_walkCallback and tail-jmp StateDispatchYield); ret.
  *   B3 (112..187, +4 NOPs): scaled chain via baseSel[+0x30]; if eax==0 jmp
  *     QuadEntryChainPush; else call MStackBitFlagDispatch; if !pause: chain[+0xc][+4]
  *     extracted and tail-call eax; ret.
  *   B4 (192..211): call ScaledMove48to58; if !pause jmp PushFourCallPopBitJmp; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_0054207c;
 extern void FlagCascadeStateSet_0048ec30(void);
 extern void InstallSelfPlusTrampoline_0046c5d0(void);
@@ -185,7 +184,7 @@ __declspec(naked) void QuadStateHandler_0046c6e0(void) {
         _emit   74h
         _emit   05h
         jmp     StageTransitionCluster_0046f250
-        mov     dword ptr [g_x_0054206c], 5
+        mov     dword ptr [g_walkCallback], 5
         jmp     StateDispatchYield_00471190
         ret
         nop

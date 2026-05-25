@@ -133,7 +133,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CallPauseScaledStoreJmp_00428820(void);
@@ -149,7 +148,7 @@ __declspec(naked) void StageGameProgressCluster_00482780(void)
 {
     __asm {
         /* H1 */
-        mov      dword ptr [g_data_0054206c], 2
+        mov      dword ptr [g_walkCallback], 2
         jmp      TableLookupCall_0048a160
         nop
         /* H2 */

@@ -129,7 +129,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern unsigned int g_data_00543800;
 extern void ChainNodeAdvanceCallback_00408e70(void);
@@ -154,7 +153,7 @@ __declspec(naked) void AnimEventUpdateCluster_00493ef0(void)
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], edx
-        mov      dword ptr [g_data_0054206c], ebx
+        mov      dword ptr [g_walkCallback], ebx
         call     DirtyDoubleDeref_00408cb0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -174,7 +173,7 @@ __declspec(naked) void AnimEventUpdateCluster_00493ef0(void)
         mov      dword ptr [eax*4], ecx
         mov      edx, dword ptr [g_data_00542048]
         mov      dword ptr [edx*4 + 0x2c], 0x5999
-        mov      dword ptr [g_data_0054206c], ebx
+        mov      dword ptr [g_walkCallback], ebx
         call     DirtyDoubleDeref_00408cb0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -182,13 +181,13 @@ __declspec(naked) void AnimEventUpdateCluster_00493ef0(void)
         mov      eax, dword ptr [g_data_00542044]
         mov      ecx, OFFSET L_4020
         mov      eax, dword ptr [eax*4 + 0x28]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_00542048], eax
         mov      dword ptr [eax*4 + 0x10], ecx
         mov      al, byte ptr [g_data_0053a7b0]
         test     al, bl
         jne      short L_3fef
-        mov      dword ptr [g_data_0054206c], ebx
+        mov      dword ptr [g_walkCallback], ebx
         call     OrDualStore_0048a190
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

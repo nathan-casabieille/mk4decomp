@@ -126,14 +126,13 @@ extern unsigned int g_data_00535e7c;
  *   Push g_acc_00542078, g_state_0054207c, g_x_00542048, g_cj_0054205c onto mstack.
  *   Load g_cj = [baseSel*4 + 0x64].
  *   Call MStackPush2RunCountdown_004089e0; if pause ret. Call MStackBracket7_DispatchAndChain_004b8fa0; if pause ret.
- *   g_x_0054206c=3; call ChainDirtyBitWalker; if pause ret.
+ *   g_walkCallback=3; call ChainDirtyBitWalker; if pause ret.
  *   Copy [g_x_00542048*4 + 0x3c]->g_acc, [g_x_00542048*4 + 0x44]->g_state_0054207c.
  *   Call StoreTwoCallSubMain_00426b60; if pause ret.
  *   Mstack-pop 4: g_cj_0054205c, g_x_00542048, g_state_0054207c, g_acc_00542078; ret.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 extern void StoreTwoCallSubMain_00426b60(void);
 
 extern unsigned int g_data_004d57ac_arr;
@@ -181,7 +180,7 @@ void MStackPush4ChainCopyPop4_00472e10(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     dword ptr [g_x_0054206c], 3
+        mov     dword ptr [g_walkCallback], 3
         call    ChainDirtyBitWalker_00408c10
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

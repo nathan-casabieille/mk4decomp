@@ -137,7 +137,6 @@ extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0052ab10;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_00542054;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542074;
 
@@ -168,25 +167,25 @@ __declspec(naked) void HelperCallTripleMul10_0043e2d0(void) {
         lea     esi, [edx*4 + 0]
         push    eax
         push    0x9999
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    Mul10Tail_00404af0
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         add     esp, 8
         mov     dword ptr [esi + 0x78], eax
         mov     eax, dword ptr [esi + 0x7c]
         push    eax
         push    0x9999
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    Mul10Tail_00404af0
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         add     esp, 8
         mov     dword ptr [esi + 0x7c], eax
         mov     eax, dword ptr [esi + 0x80]
         push    eax
         push    0x9999
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    Mul10Tail_00404af0
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [esi + 0x80], eax
         mov     eax, dword ptr [g_x_0052ab10]
         add     esp, 8

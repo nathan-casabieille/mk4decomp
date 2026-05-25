@@ -125,11 +125,10 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x00460fa0 (127b game) - dual-entry state-gated.
  *   Block A: g_x_00542070=0xb; call ScaledChainAndF000DirtyToggle; if !pause and bitfield clear and
  *     g_state_00535ddc<=0xcccc: g_x_00542070=0x9. Then call MStackPush3CmpCall_0048eec0; if !pause: if bitfield set
- *     g_x_00542070=0xb; g_x_0054206c=g_x_00542070; jmp StateDispatchYield_00471190.
- *   Block B (+0x70): g_x_0054206c=0x8; jmp StateDispatchYield_00471190.
+ *     g_x_00542070=0xb; g_walkCallback=g_x_00542070; jmp StateDispatchYield_00471190.
+ *   Block B (+0x70): g_walkCallback=0x8; jmp StateDispatchYield_00471190.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern void ScaledChainAndF000DirtyToggle_0048e740(void);
 extern void StateDispatchYield_00471190(void);
@@ -147,7 +146,7 @@ __declspec(naked) void DualEntryStateGated_00460fa0(void) {
         _emit   3ch
         mov     eax, dword ptr [g_state_00535ddc]
         cmp     eax, 0x0000cccc
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7fh
         _emit   0ah
         mov     dword ptr [g_x_00542070], 0x09
@@ -161,13 +160,13 @@ __declspec(naked) void DualEntryStateGated_00460fa0(void) {
         _emit   0ah
         mov     dword ptr [g_x_00542070], 0x0b
         mov     eax, dword ptr [g_x_00542070]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jmp     StateDispatchYield_00471190
         ret
         _emit   90h
         _emit   90h
         _emit   90h
-        mov     dword ptr [g_x_0054206c], 0x08
+        mov     dword ptr [g_walkCallback], 0x08
         jmp     StateDispatchYield_00471190
     }
 }

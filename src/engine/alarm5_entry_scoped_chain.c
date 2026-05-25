@@ -152,7 +152,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542088;
 extern unsigned int g_data_0054208c;
@@ -195,7 +194,7 @@ __declspec(naked) void Alarm5EntryScopedChain_0049be10(void) {
     L_a5e_entry2:
         mov     ecx, dword ptr [g_data_00542060]
         mov     eax, 0x305
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
         call    CondPickDualStore_0049c670
         mov     eax, dword ptr [g_framePauseFlag]
@@ -260,7 +259,7 @@ __declspec(naked) void Alarm5EntryScopedChain_0049be10(void) {
         mov     ecx, dword ptr [g_data_00542060]
         mov     eax, 0x30
         mov     dword ptr [g_data_0054205c], edx
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    offset g_data_004f2650
         mov     dword ptr [ecx*4 + 0x5c], eax
         call    ArgSar_Set0_Jmp_0049c6f0

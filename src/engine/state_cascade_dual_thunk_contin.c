@@ -126,7 +126,7 @@ extern unsigned int g_data_00535e7c;
  *   Multi-cmp on eax: ==ebx → branch_A; ==2/3/4 → +0xe then call LinkedListIndirectDirtyToggle_0049f7b0; ==5 → use esi.
  *     <5 → CallSetPause; ==0xa/0xf → -5; ==0x12 → -4; >0x12 → CallSetPause.
  *   After call LinkedListIndirectDirtyToggle_0049f7b0: if pause CallSetPause; if !bit0(0054208c) loop to start.
- *   Else: chain[scaledInit*4]=g_x_0054206c; copy g_state_00535e48 to g_data_00542070;
+ *   Else: chain[scaledInit*4]=g_walkCallback; copy g_state_00535e48 to g_data_00542070;
  *     call RoundWinTransition_0049e7e0; if pause CallSetPause; load chain[g_x_00542048*4+8];
  *     call GuardedScaledCall; if !pause CallSetPause; pop esi/ebx; ret.
  *   Tail thunk_1 (+0xe0): if g_data_00541d88!=0 jmp CallSetPause else g_state_00535e48=0; jmp IndirectOpcodeDispatch3Entry_0049f3a0.
@@ -137,7 +137,6 @@ extern unsigned int g_pause_00541e6c;
 extern unsigned int g_state_00537ea8;
 extern unsigned int g_x_00535e48;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 extern void CallSetPause_0041f830(void);
 extern void GuardedScaledCall_0048a020(void);
 extern void IndirectOpcodeDispatch3Entry_0049f3a0(void);
@@ -159,7 +158,7 @@ __declspec(naked) void StateCascadeDualThunkContin_0049f260(void) {
         _emit   75h
         _emit   28h
         add     eax, 0xe
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    LinkedListIndirectDirtyToggle_0049f7b0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -186,7 +185,7 @@ __declspec(naked) void StateCascadeDualThunkContin_0049f260(void) {
         cmp     eax, 5
         _emit   75h
         _emit   08h
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         _emit   0ebh
         _emit   22h
         _emit   0fh
@@ -208,7 +207,7 @@ __declspec(naked) void StateCascadeDualThunkContin_0049f260(void) {
         _emit   0ebh
         _emit   03h
         sub     eax, 5
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    LinkedListIndirectDirtyToggle_0049f7b0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -222,14 +221,14 @@ __declspec(naked) void StateCascadeDualThunkContin_0049f260(void) {
         _emit   00h
         _emit   74h
         _emit   0ah
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         _emit   0e9h
         _emit   76h
         _emit   0ffh
         _emit   0ffh
         _emit   0ffh
         mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0], ecx
         mov     edx, dword ptr [g_x_00535e48]
         mov     dword ptr [g_data_00542070], edx
@@ -240,7 +239,7 @@ __declspec(naked) void StateCascadeDualThunkContin_0049f260(void) {
         _emit   25h
         mov     eax, dword ptr [g_x_00542048]
         mov     ecx, dword ptr [eax*4 + 8]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         call    GuardedScaledCall_0048a020
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -254,7 +253,7 @@ __declspec(naked) void StateCascadeDualThunkContin_0049f260(void) {
         _emit   90h
         mov     eax, dword ptr [g_data_00541d88]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   05h
         jmp     CallSetPause_0041f830
@@ -276,7 +275,7 @@ __declspec(naked) void StateCascadeDualThunkContin_0049f260(void) {
         _emit   90h
         mov     eax, dword ptr [g_state_00537ea8]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   05h
         jmp     CallSetPause_0041f830

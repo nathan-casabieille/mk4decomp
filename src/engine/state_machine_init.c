@@ -128,7 +128,6 @@ extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00535e6c;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542074;
 extern unsigned int g_x_00542084;
 extern void MStackCall_004062f0(void);
@@ -138,7 +137,7 @@ extern void PushSetCallTailJmp_00493e40(void);
 
 void StateMachineInit_00493000(void) {
     __asm {
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [g_x_00542074], eax
         call    MStackPushDispatchBitGate_00407330
         mov     eax, dword ptr [g_pause_00541e6c]
@@ -158,7 +157,7 @@ void StateMachineInit_00493000(void) {
         _emit   00h
         mov     eax, dword ptr [g_x_00542074]
         mov     ecx, dword ptr [g_x_0054205c]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x30], eax
         call    MStackPushTableWalk_00493a20
         mov     eax, dword ptr [g_pause_00541e6c]
@@ -184,7 +183,7 @@ void StateMachineInit_00493000(void) {
         _emit   47h
         mov     eax, dword ptr [g_x_00535e6c]
         mov     ecx, dword ptr [g_x_0054205c]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x3c], eax
         call    MStackCall_004062f0
         mov     eax, dword ptr [g_pause_00541e6c]

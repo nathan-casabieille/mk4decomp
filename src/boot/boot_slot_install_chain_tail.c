@@ -140,7 +140,6 @@ extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542044;
 extern unsigned int g_x_00542054;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern void CallSetPause_0041f830(void);
 extern void TableHitOrSchedule_004be7a0(void);
 
@@ -180,7 +179,7 @@ __declspec(naked) void BootInstallPeriodicTriple_00414920(void)
         mov     dword ptr [g_x_00542044], eax
         mov     eax, dword ptr [eax*4 + 0x74]
         cmp     eax, 0x1001
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         je      short L_callTrip
         push    0x1392
         call    TableHitOrSchedule_004be7a0

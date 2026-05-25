@@ -129,7 +129,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_data_00541fbc;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 
 void MStackPushTableMatch_0042e720(void) {
     __asm {
@@ -148,14 +147,14 @@ void MStackPushTableMatch_0042e720(void) {
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
         test    ecx, ecx
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_x_00542048], eax
         _emit   74h
         _emit   57h
         mov     edx, dword ptr [g_scaledInit_00542044]
         cmp     ecx, edx
         mov     ecx, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         _emit   74h
         _emit   0ch
         inc     eax
@@ -175,7 +174,7 @@ void MStackPushTableMatch_0042e720(void) {
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
         test    ecx, ecx
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_x_00542048], eax
         _emit   75h
         _emit   0ddh

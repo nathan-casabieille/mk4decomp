@@ -134,7 +134,6 @@ extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00535e48;
 extern unsigned int g_x_00541fc0;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 extern void CallSetPause_0041f830(void);
 extern void GuardedScaledCall_0048a020(void);
 extern void LinkedListIndirectDirtyToggle_0049f7b0(void);
@@ -176,7 +175,7 @@ __declspec(naked) void IndirectStateDispatcher_0049f6a0(void) {
         mov     eax, dword ptr [eax*4 + 0]
     retry:
         cmp     eax, 5
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   0fh
         _emit   84h
         _emit   8ch
@@ -197,7 +196,7 @@ __declspec(naked) void IndirectStateDispatcher_0049f6a0(void) {
         _emit   74h
         _emit   79h
         inc     eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    LinkedListIndirectDirtyToggle_0049f7b0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -206,7 +205,7 @@ __declspec(naked) void IndirectStateDispatcher_0049f6a0(void) {
         test    byte ptr [g_state_0054208c], bl
         _emit   74h
         _emit   11h
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         cmp     eax, 5
         _emit   75h
         _emit   0c7h
@@ -214,7 +213,7 @@ __declspec(naked) void IndirectStateDispatcher_0049f6a0(void) {
         pop     ebx
         ret
         mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0], ecx
         mov     edx, dword ptr [g_x_00535e48]
         mov     dword ptr [g_data_00542070], edx
@@ -225,7 +224,7 @@ __declspec(naked) void IndirectStateDispatcher_0049f6a0(void) {
         _emit   25h
         mov     eax, dword ptr [g_x_00542048]
         mov     ecx, dword ptr [eax*4 + 8]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         call    GuardedScaledCall_0048a020
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

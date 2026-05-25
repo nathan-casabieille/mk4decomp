@@ -133,7 +133,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_0054208c;
 extern void BootInitGuardedCallChain_004265d0(void);
@@ -165,7 +164,7 @@ __declspec(naked) void RoundEndHandlerCluster_00457de0(void)
         jne      short L_7e38
         mov      eax, dword ptr [g_data_00541d6c]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       L_7f6d
         push     0x25e
         call     DualPushSetCallDualPop_00404b10
@@ -228,7 +227,7 @@ __declspec(naked) void RoundEndHandlerCluster_00457de0(void)
         mov      eax, 0xc
         add      esp, 0x10
         mov      dword ptr [g_data_00537e98], ecx
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_0052aac4], eax
         call     SequencedInit3CallB_00458ae0
         mov      eax, dword ptr [g_framePauseFlag]
@@ -275,7 +274,7 @@ __declspec(naked) void RoundEndHandlerCluster_00457de0(void)
         test     ecx, ecx
         je       short L_7fc2
         mov      ecx, 1
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_00541d6c], ecx
         jmp      CallSetPause_0041f830
     L_7fc2:

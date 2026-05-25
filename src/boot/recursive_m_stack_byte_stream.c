@@ -129,7 +129,7 @@ extern void RecursiveMStackByteStream_00406d00(void);
 /* @addr 0x0048ce60 (237b game) - mstack-push pair + 3 guarded calls.
  *   push g_scaledInit_00542044 and g_x_00542048 onto mstack (2x inc g_state_004d57ac).
  *   cj[+0x34] |= 0x0800 (or ch,8). Select dispatch arg: if cj == g_data_00538158
- *     use g_data_00537f48 else use g_data_005380e0; store to g_x_0054206c.
+ *     use g_data_00537f48 else use g_data_005380e0; store to g_walkCallback.
  *   call Helper_DownloadSetup; if pause? ret.
  *   load scaledInit[+0x14] -> g_x_00542048; call DispatchSetDirtyToggle_004ac150; if pause? ret.
  *   if bit2 of g_state_0054208c clear: load scaledInit[+0x18] -> g_x_00542048.
@@ -139,7 +139,6 @@ extern unsigned int g_pause_00541e6c;
 extern unsigned int g_state_00537f48;
 extern unsigned int g_state_005380e0;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 
 void MStackPushPairTriCall_0048ce60(void) {
     __asm {
@@ -159,12 +158,12 @@ void MStackPushPairTriCall_0048ce60(void) {
         mov     dword ptr [eax*4 + 0x34], ecx
         mov     eax, dword ptr [g_state_00537f48]
         mov     ecx, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         cmp     ecx, dword ptr [g_state_00538158]
         _emit   74h
         _emit   0ch
         mov     edx, dword ptr [g_state_005380e0]
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         call    Helper_DownloadSetup
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

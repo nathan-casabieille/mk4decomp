@@ -132,7 +132,7 @@ extern unsigned int g_data_00535e7c;
  *       installs Self with slot[+0x84] = 2 (bit-2 path) or 1 (clean path).
  *   5b NOP pad.
  *   Entry 2 (offset 0xc0, 70b): ScaledIterStep_0045c020; on no-error writes
- *     g_data_0054206c into [g_data_0054205c*4+0x24], zeroes +0x28, sets
+ *     g_walkCallback into [g_data_0054205c*4+0x24], zeroes +0x28, sets
  *     g_data_00542080=0xc8, tail-jmp DualEntryStateMachine_0045a180.
  *   10b NOP pad.
  *   Entry 3 (offset 0x110, 40b): mask g_data_00542070 with 0xff; on
@@ -146,7 +146,6 @@ extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542080;
 extern unsigned int g_data_0054208c;
 extern unsigned int g_table_004d57b0;
@@ -222,10 +221,10 @@ __declspec(naked) void Phase3IndirectInstallChain_0045a010(void) {
         cmp     ecx, eax
         jne     short L_p3i_e2End
         mov     edx, dword ptr [g_data_0054205c]
-        mov     ecx, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [edx*4 + 0x24], ecx
         mov     ecx, dword ptr [g_data_0054205c]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x28], eax
         mov     dword ptr [g_data_00542080], 0xc8
         jmp     DualEntryStateMachine_0045a180

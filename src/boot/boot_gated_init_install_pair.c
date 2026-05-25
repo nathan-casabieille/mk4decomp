@@ -131,7 +131,6 @@ extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_0054208c;
 extern unsigned int g_data_005420d8;
@@ -152,12 +151,12 @@ __declspec(naked) void BootGatedInitInstallPair_00412280(void)
         mov     al, byte ptr [g_data_004f360c]
         test    al, al
         je      L_bgip_ret1
-        mov     dword ptr [g_data_0054206c], 0x2666
+        mov     dword ptr [g_walkCallback], 0x2666
         call    AudioMixerStep_004ab700
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_bgip_ret1
-        add     dword ptr [g_data_0054206c], 0xd999
+        add     dword ptr [g_walkCallback], 0xd999
         call    ZeroAndDirty4_00405430
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -224,7 +223,7 @@ __declspec(naked) void BootGatedInitInstallPair_00412280(void)
         mov     dword ptr [g_data_00542044], ecx
         mov     eax, dword ptr [ecx*4 + 0x20]
         or      al, 0x40
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x20], eax
         mov     edx, dword ptr [g_data_00542044]
         mov     eax, dword ptr [edx*4 + 0x28]
@@ -234,20 +233,20 @@ __declspec(naked) void BootGatedInitInstallPair_00412280(void)
         mov     dword ptr [eax*4], ecx
         mov     ecx, dword ptr [g_data_00542048]
         mov     eax, 0x4000
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x48], eax
         mov     dword ptr [g_data_0054207c], 0xb
     L_bgip_skipToChain:
         call    ChainGetterStateInstaller_00412140
-        mov     eax, dword ptr [g_data_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     edx, dword ptr [g_data_00542048]
         sub     eax, 0x51e
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x48], eax
         mov     ecx, dword ptr [g_data_00542048]
         mov     eax, dword ptr [ecx*4]
         or      al, 8
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4], eax
         call    ChainListVecAdd_0049d200
         mov     eax, dword ptr [g_framePauseFlag]

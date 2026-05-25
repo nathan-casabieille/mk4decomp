@@ -164,7 +164,6 @@ extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern unsigned int g_table_004d57b0;
 extern void ArgSarStoreJmp_004594f0(void);
@@ -181,7 +180,7 @@ __declspec(naked) void FiveEntryAlarmInstallChain_0046ee00(void) {
         je      short L_fea_phase0
         mov     ecx, dword ptr [g_data_0054205c]
         mov     eax, 0x28f
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x4c], eax
         mov     eax, dword ptr [g_state_004d57ac]
         inc     eax
@@ -220,12 +219,12 @@ __declspec(naked) void FiveEntryAlarmInstallChain_0046ee00(void) {
         jne     short L_fea_e2End
         mov     ecx, dword ptr [g_data_00542060]
         mov     eax, 0x604
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
         mov     edx, dword ptr [g_data_00542060]
         mov     eax, dword ptr [edx*4 + 0x30]
         test    eax, eax
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         je      short L_fea_skipJmp
         jmp     FiveBlockDispatchChain_0046ec20
     L_fea_skipJmp:

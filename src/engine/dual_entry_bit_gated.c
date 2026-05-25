@@ -131,7 +131,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_data_0053a478;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern void LinkedListDistanceWalker_0045f950(void);
 extern void MStackPushPtr1Jmp_00438ef0(void);
 extern void MstackPopScaledChainPlusThunks_00471250(void);
@@ -154,7 +153,7 @@ __declspec(naked) void DualEntryBitGated_00439ba0(void) {
         mov     dword ptr [g_data_0053a478], eax
         mov     eax, dword ptr [g_state_004d57ac]
         inc     eax
-        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], 0x00439bf0
         jmp     MstackPopScaledChainPlusThunks_00471250

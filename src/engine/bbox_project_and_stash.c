@@ -130,7 +130,6 @@ extern unsigned int g_data_004f63ee;
 extern unsigned int g_data_004f63f0;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_007af958;
 extern unsigned int g_data_007af95e;
 extern unsigned int g_data_007af964;
@@ -167,7 +166,7 @@ __declspec(naked) void BboxProjectAndStash_004bc5a0(void)
         push     edi
         mov      edi, dword ptr [eax*4 + 0x1c]
         test     edi, edi
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         jle      L_c7d1
         cmp      edi, 0x10
         jg       L_c7d1

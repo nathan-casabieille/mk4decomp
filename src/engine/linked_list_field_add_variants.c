@@ -125,12 +125,11 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x0049d380 (174b game) - linked-list iteration with field-add via 3 sub-calls.
  *   eax=g_scaledInit; if zero pop+ret. Loop: ecx=g_x_00542048; esi=eax*4; eax=[ecx*4+0];
  *     edi=ecx*4. Three nested calls to StoreDoubleNegPauseSubStore (each gated on pause and
- *     non-null operand). Sets [esi+0x4/0x8/0xc] from g_x_0054206c. Walk: esi=[esi]; eax=esi;
+ *     non-null operand). Sets [esi+0x4/0x8/0xc] from g_walkCallback. Walk: esi=[esi]; eax=esi;
  *     scaledInit=eax; loop if nonzero. ret.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542098;
 extern void StoreDoubleNegPauseSubStore_004ab750(void);
@@ -141,7 +140,7 @@ __declspec(naked) void LinkedListFieldAdd_0049d380(void) {
         push    esi
         test    eax, eax
         push    edi
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   0fh
         _emit   84h
         _emit   97h
@@ -153,7 +152,7 @@ __declspec(naked) void LinkedListFieldAdd_0049d380(void) {
         mov     eax, dword ptr [ecx*4 + 0]
         lea     edi, [ecx*4 + 0]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   13h
         call    StoreDoubleNegPauseSubStore_004ab750
@@ -161,11 +160,11 @@ __declspec(naked) void LinkedListFieldAdd_0049d380(void) {
         test    eax, eax
         _emit   75h
         _emit   65h
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [edi + 4]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   13h
         call    StoreDoubleNegPauseSubStore_004ab750
@@ -173,11 +172,11 @@ __declspec(naked) void LinkedListFieldAdd_0049d380(void) {
         test    eax, eax
         _emit   75h
         _emit   43h
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [esi + 8], eax
         mov     edi, dword ptr [edi + 8]
         test    edi, edi
-        mov     dword ptr [g_x_0054206c], edi
+        mov     dword ptr [g_walkCallback], edi
         _emit   74h
         _emit   14h
         call    StoreDoubleNegPauseSubStore_004ab750
@@ -185,11 +184,11 @@ __declspec(naked) void LinkedListFieldAdd_0049d380(void) {
         test    eax, eax
         _emit   75h
         _emit   20h
-        mov     edi, dword ptr [g_x_0054206c]
+        mov     edi, dword ptr [g_walkCallback]
         mov     dword ptr [esi + 0x0c], edi
         mov     esi, dword ptr [esi]
         mov     eax, esi
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         test    esi, esi
         mov     dword ptr [g_scaledInit_00542044], eax
         _emit   0fh
@@ -207,7 +206,7 @@ __declspec(naked) void LinkedListFieldAdd_0049d380(void) {
 /* @addr 0x0049d450 (248b game) - linked-list traverse adding 3 fields per node.
  *   eax = [g_scaledInit_00542044]; if 0 ret.
  *   ecx = [g_x_00542048]<<2 (table base, byte address).
- *   For each node: node[+4/+8/+0xc] += table[+0/+4/+8] (g_x_0054206c temp).
+ *   For each node: node[+4/+8/+0xc] += table[+0/+4/+8] (g_walkCallback temp).
  *   eax = node[+0] (next link). Loop while eax != 0.
  *   Two loop body copies in the original - first uses shl/mov, second uses lea+mov.
  */
@@ -227,22 +226,22 @@ __declspec(naked) void LinkedListFieldAdd_0049d450(void) {
         shl     ecx, 2
         shl     eax, 2
         mov     edx, dword ptr [ecx]
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     esi, dword ptr [eax + 4]
         add     edx, esi
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [eax + 4], edx
         mov     edx, dword ptr [ecx + 4]
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     esi, dword ptr [eax + 8]
         add     edx, esi
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [eax + 8], edx
         mov     ecx, dword ptr [ecx + 8]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [eax + 0x0c]
         add     ecx, edx
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax + 0x0c], ecx
         mov     eax, dword ptr [eax]
         xor     ecx, ecx
@@ -258,22 +257,22 @@ __declspec(naked) void LinkedListFieldAdd_0049d450(void) {
         shl     eax, 2
         lea     ecx, [edx*4 + 0]
         mov     edx, dword ptr [edx*4 + 0]
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     esi, dword ptr [eax + 4]
         add     edx, esi
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [eax + 4], edx
         mov     edx, dword ptr [ecx + 4]
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     esi, dword ptr [eax + 8]
         add     edx, esi
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [eax + 8], edx
         mov     ecx, dword ptr [ecx + 8]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [eax + 0x0c]
         add     ecx, edx
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax + 0x0c], ecx
         mov     eax, dword ptr [eax]
         xor     ecx, ecx

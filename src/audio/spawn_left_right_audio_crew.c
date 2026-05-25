@@ -127,7 +127,6 @@ extern unsigned int g_data_004f3ae8;
 extern unsigned int g_data_00541d8c;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_005435a2;
 extern unsigned int g_data_0054361a;
 extern unsigned int g_data_00600000;
@@ -156,7 +155,7 @@ __declspec(naked) void SpawnLeftRightAudioCrew_004a8080(void)
         mov      esi, OFFSET g_data_005435a2
         mov      ebx, 0xfde40000
     L_80b1:
-        mov      dword ptr [g_data_0054206c], 0x10
+        mov      dword ptr [g_walkCallback], 0x10
         call     AudioChainInit_004a77c0
         mov      edx, dword ptr [g_data_00542060]
         mov      ecx, dword ptr [g_data_00542044]
@@ -175,7 +174,7 @@ __declspec(naked) void SpawnLeftRightAudioCrew_004a8080(void)
         mov      eax, dword ptr [g_data_00542044]
         mov      dword ptr [eax*4 + 0x5c], 0xc0000
         movsx    ecx, byte ptr [esi - 2]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         call     ScaledChainStore24_004a7d40
         cmp      byte ptr [esi], 0
         je       short L_816c
@@ -209,7 +208,7 @@ __declspec(naked) void SpawnLeftRightAudioCrew_004a8080(void)
         mov      esi, OFFSET g_data_0054361a
         mov      ebx, 0x12c0000
     L_81b0:
-        mov      dword ptr [g_data_0054206c], 0x10
+        mov      dword ptr [g_walkCallback], 0x10
         call     AudioChainInit_004a77c0
         mov      edx, dword ptr [g_data_00542060]
         mov      ecx, dword ptr [g_data_00542044]
@@ -228,7 +227,7 @@ __declspec(naked) void SpawnLeftRightAudioCrew_004a8080(void)
         mov      eax, dword ptr [g_data_00542044]
         mov      dword ptr [eax*4 + 0x5c], 0xc0000
         movsx    ecx, byte ptr [esi - 2]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         call     ScaledChainStore24_004a7d40
         cmp      byte ptr [esi], 0
         je       short L_826b

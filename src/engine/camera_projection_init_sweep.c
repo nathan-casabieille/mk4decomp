@@ -131,7 +131,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_0054207c;
@@ -155,13 +154,13 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
     __asm {
         push     ebx
         push     edi
-        mov      dword ptr [g_data_0054206c], 0x6487e
+        mov      dword ptr [g_walkCallback], 0x6487e
         mov      dword ptr [g_data_00542070], 0x280000
         call     RangeMulMod_004ab2a0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8430
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         mov      edi, OFFSET g_data_00542408
         shr      edi, 2
         mov      dword ptr [g_data_00542084], eax
@@ -234,7 +233,7 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         test     eax, eax
         jne      L_8430
         mov      ecx, dword ptr [g_data_00542044]
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         mov      dword ptr [ecx*4 + 0x30], edx
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, dword ptr [g_data_00542070]
@@ -242,24 +241,24 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         mov      dword ptr [ecx*4 + 0x38], eax
         mov      ecx, dword ptr [g_data_00542088]
         sub      edx, ecx
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         call     Thunk_00427460
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8430
         mov      ecx, dword ptr [g_data_00542044]
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         mov      dword ptr [ecx*4 + 0x40], eax
         mov      eax, dword ptr [g_data_00542088]
         sub      eax, dword ptr [g_data_00542084]
         mov      dword ptr [g_data_00542088], eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         call     Thunk_00427460
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8430
         mov      eax, dword ptr [g_data_00535e48]
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         mov      ecx, dword ptr [g_data_00542044]
         inc      eax
         mov      dword ptr [g_data_00542088], edx
@@ -274,7 +273,7 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         mov      dword ptr [eax*4 + 0x30], 0x270
         mov      edx, dword ptr [g_data_00542044]
         mov      eax, 0x18000
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x58], eax
         call     MStackCall_00406340
         mov      eax, dword ptr [g_framePauseFlag]

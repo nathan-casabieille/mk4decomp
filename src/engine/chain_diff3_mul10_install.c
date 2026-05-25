@@ -125,7 +125,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542074;
 extern void DivLongPushCall_004ab320(void);
 
@@ -142,12 +141,12 @@ __declspec(naked) void ChainDiff3Mul10Install_004730c0(void)
         test    eax, eax
         je      short L_nonzero_state
         mov     ecx, dword ptr [g_x_0054205c]
-        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [ecx*4 + 0x6c], 0
-        mov     edx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         lea     eax, [ecx*4]
         mov     dword ptr [eax + 0x70], edx
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax + 0x74], ecx
         call    StackPopDispatchTagged_0041f780
         pop     edi
@@ -160,11 +159,11 @@ __declspec(naked) void ChainDiff3Mul10Install_004730c0(void)
         lea     esi, [edx*4]
         mov     edx, dword ptr [g_data_00542070]
         sub     ecx, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_state_00542080], ecx
         mov     eax, dword ptr [esi + 0x58]
         sub     edx, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     eax, dword ptr [g_x_00542074]
         mov     dword ptr [g_data_00542084], edx
         mov     ecx, dword ptr [esi + 0x5c]
@@ -172,24 +171,24 @@ __declspec(naked) void ChainDiff3Mul10Install_004730c0(void)
         mov     ecx, dword ptr [g_acc_00542078]
         shl     ecx, 0x10
         mov     dword ptr [g_state_00542088], eax
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         call    DivLongPushCall_004ab320
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         jne     L_paused_skip
         mov     edx, dword ptr [g_state_00542080]
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         push    edx
         push    eax
         call    Mul10Tail_00404af0
         mov     ecx, dword ptr [g_data_00542084]
-        mov     edx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         add     esp, 8
         mov     dword ptr [g_state_00542080], eax
         push    ecx
         push    edx
         call    Mul10Tail_00404af0
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         add     esp, 8
         mov     dword ptr [g_data_00542084], eax
         mov     eax, dword ptr [g_state_00542088]

@@ -135,14 +135,13 @@ extern unsigned int g_x_00543550;
  *   if (208c & 4 != 0) goto install-self-zero;
  *   else: chain[g_x_00542048 + 0x10] = 0x426190 (handler);
  *         chain[+0x14] = 0x80; restore g_x_00542070;
- *         g_x_0054206c = 0x80; call DivBy; pause? ret;
- *         g_x_0054206c += 6; g_x_0054204c = g_x_0054206c;
+ *         g_walkCallback = 0x80; call DivBy; pause? ret;
+ *         g_walkCallback += 6; g_x_0054204c = g_walkCallback;
  *         [esi+8] = 0x00426000; [esi+0x84] = 1; pause = 1.
  *   install-self-zero: g_x_00543550 = 0; call StackPopDispatchTagged; ret.
  */
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_0054204c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 
 extern unsigned int g_data_004d57ac_arr;
@@ -182,15 +181,15 @@ __declspec(naked) void InstallSelfPackedF80_00426000(void) {
         mov     [ecx*4 + 0x14], eax
         mov     edx, dword ptr [g_x_0053a384]
         mov     dword ptr [g_x_00542070], edx
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    DivBy_004ab300
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   29h
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         add     eax, 6
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_x_0054204c], eax
         mov     eax, 1
         mov     dword ptr [esi + 8], 0x00426000

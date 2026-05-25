@@ -132,7 +132,6 @@ extern unsigned int g_data_0052d748;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0054204c;
 extern unsigned int g_x_00542058;
-extern unsigned int g_x_0054206c;
 extern void AudioVolumeRescale_004ab690(void);
 extern void DoubleStackPushAndJmp7d_00474050(void);
 
@@ -175,23 +174,23 @@ void AudioBridgeMStackChainCopy_00440730(void) {
         mov     eax, dword ptr [g_scaledInit_00542044]
         shr     edx, 2
         mov     ecx, dword ptr [eax*4 + 0x6c]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_data_0052d718], ecx
         mov     ecx, dword ptr [eax*4 + 0x70]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_data_0052d71c], ecx
         mov     ecx, dword ptr [eax*4 + 0x74]
         mov     dword ptr [g_x_0054204c], edx
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_data_0052d720], ecx
         mov     ecx, dword ptr [eax*4 + 0x54]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_data_0052d740], ecx
         mov     ecx, dword ptr [eax*4 + 0x58]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_data_0052d744], ecx
         mov     eax, dword ptr [eax*4 + 0x5c]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_data_0052d748], eax
         mov     eax, offset g_data_0052d740
         shr     eax, 2

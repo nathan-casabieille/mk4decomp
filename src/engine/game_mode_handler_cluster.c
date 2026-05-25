@@ -132,7 +132,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_00542080;
 extern unsigned int g_data_0054208c;
@@ -155,7 +154,7 @@ __declspec(naked) void GameModeHandlerCluster_004955d0(void)
         mov      eax, dword ptr [eax*4]
         sub      eax, 0x60
         add      ecx, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_00542048], ecx
         mov      ecx, dword ptr [ecx*4]
         mov      dword ptr [g_data_00542044], ecx
@@ -166,7 +165,7 @@ __declspec(naked) void GameModeHandlerCluster_004955d0(void)
         /* Helper 2: install handler 0x111 with g_data_004f1408. */
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, 0x111
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         push     OFFSET g_data_004f1408
         mov      dword ptr [ecx*4 + 0x74], eax
         call     ScaledLookupGuardJmpIndirect_004949f0
@@ -261,7 +260,7 @@ __declspec(naked) void GameModeHandlerCluster_004955d0(void)
         /* Helper 5: sister of helper 2, with g_data_004f1440. */
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, 0x111
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         push     OFFSET g_data_004f1440
         mov      dword ptr [ecx*4 + 0x74], eax
         call     ScaledLookupGuardJmpIndirect_004949f0

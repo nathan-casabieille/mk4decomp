@@ -136,7 +136,6 @@ extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern void CallSetPause_0041f830(void);
 extern void DualPushSetCallDualPop_00404b10(void);
@@ -160,7 +159,7 @@ __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7eda
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         mov      eax, dword ptr [g_data_004f3608]
         cmp      edx, eax
         jne      short L_7ec2
@@ -170,14 +169,14 @@ __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
         jne      short L_7e7d
         mov      eax, dword ptr [g_data_0053a408]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       short L_7ec2
         mov      ecx, OFFSET g_data_0053a3e0
         jmp      short L_7e90
     L_7e7d:
         mov      eax, dword ptr [g_data_00537e88]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       short L_7ec2
         mov      ecx, OFFSET g_data_0053a700
     L_7e90:
@@ -186,7 +185,7 @@ __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
         mov      eax, dword ptr [ecx*4]
         inc      eax
         cmp      eax, 0x3e7
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jae      short L_7ec2
         mov      dword ptr [ecx*4], eax
         call     MultiGateDispatchCallJmp_004779d0
@@ -220,7 +219,7 @@ __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
         je       L_80c4
         dec      eax
         mov      eax, dword ptr [g_data_0052ab48]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       L_8005
         cmp      eax, edi
         jne      L_7fee
@@ -273,7 +272,7 @@ __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
         jmp      L_80b3
     L_7fee:
         mov      eax, dword ptr [g_data_00542060]
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         mov      dword ptr [eax*4 + 0xc], edi
         jmp      L_80ae
     L_8005:
@@ -317,7 +316,7 @@ __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
         jmp      short L_8105
     L_809b:
         mov      ecx, dword ptr [g_data_00542060]
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         mov      dword ptr [ecx*4 + 0xc], edi
     L_80ae:
         call     MultiGateDispatchCallJmp_004779d0

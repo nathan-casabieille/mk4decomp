@@ -125,8 +125,8 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x00438060 (249b game) - install-self with state init.
  *   snapshot+clear chain[+0x84]. If was nonzero: call IndirectJmp_00438160; ret.
  *   Else: call LeaPlus22StoreSelf_0048e4d0; if pause? ret.
- *   set g_x_0054206c=5; call StorePauseImulShr16_004ab630; if pause? ret.
- *   eax = (0x004e4db8>>2) + g_x_0054206c*2 -> g_x_00542048; load eax[+0]/eax[+4]
+ *   set g_walkCallback=5; call StorePauseImulShr16_004ab630; if pause? ret.
+ *   eax = (0x004e4db8>>2) + g_walkCallback*2 -> g_x_00542048; load eax[+0]/eax[+4]
  *   into g_x_00542084 / g_x_00542058; g_state_00542080=0x1e;
  *   install-self at [esi+8]=0x00438060; chain[+0x84]=1;
  *   scaledInit-chain push 0x00438060+0x01000000;
@@ -135,7 +135,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_00542058;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542084;
 extern void IndirectJmp_00438160(void);
 extern void StateGateMStackOverlap_00438690(void);
@@ -163,7 +162,7 @@ __declspec(naked) void InstallSelfWithStateInit_00438060(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     dword ptr [g_x_0054206c], 5
+        mov     dword ptr [g_walkCallback], 5
         call    StorePauseImulShr16_004ab630
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -173,12 +172,12 @@ __declspec(naked) void InstallSelfWithStateInit_00438060(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     eax, 0x004e4db8
         shl     ecx, 1
         shr     eax, 2
         add     eax, ecx
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_x_00542048], eax
         mov     ecx, dword ptr [eax*4 + 0]
         mov     dword ptr [g_x_00542084], ecx

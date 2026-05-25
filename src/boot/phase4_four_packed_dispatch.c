@@ -142,7 +142,6 @@ extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054207c;
 extern void CallSetPause_0041f830(void);
 extern void FlagThunk4EntryDispatcher_0040a470(void);
@@ -216,7 +215,7 @@ __declspec(naked) void Phase4DispatchMultiInit_0041b610(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
-        mov     dword ptr [g_data_0054206c], 8
+        mov     dword ptr [g_walkCallback], 8
         call    FlagThunk4EntryDispatcher_0040a470
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -252,7 +251,7 @@ __declspec(naked) void Phase4DispatchMultiInit_0041b610(void)
         mov     dword ptr [eax], ecx
         mov     eax, dword ptr [g_data_00542060]
         mov     ecx, dword ptr [eax*4 + 0x38]
-        mov     dword ptr [g_data_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [g_data_0054205c], ecx
         call    FlagThunk4EntryDispatcher_0040a470
         mov     eax, dword ptr [g_framePauseFlag]

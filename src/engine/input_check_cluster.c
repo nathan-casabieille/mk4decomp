@@ -140,7 +140,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_00542094;
@@ -155,7 +154,7 @@ __declspec(naked) void EventPacketDecoder_0045de60(void)
         mov      edx, dword ptr [edi*4]
         inc      edi
         test     edx, edx
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [g_data_00542044], edi
         je       L_e084
         mov      eax, dword ptr [edi*4]
@@ -194,7 +193,7 @@ __declspec(naked) void EventPacketDecoder_0045de60(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e0a2
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         mov      eax, dword ptr [g_data_00542078]
     L_df10:
         cmp      eax, 0xaa
@@ -203,7 +202,7 @@ __declspec(naked) void EventPacketDecoder_0045de60(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e0a2
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         mov      eax, dword ptr [g_data_00542078]
     L_df34:
         mov      esi, dword ptr [g_data_00542050]
@@ -214,7 +213,7 @@ __declspec(naked) void EventPacketDecoder_0045de60(void)
         mov      dword ptr [g_data_00542050], esi
         jne      short L_dfc0
         shr      edx, 8
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         jne      L_ded3
         mov      edi, dword ptr [g_data_00542044]
         mov      eax, dword ptr [edi*4]
@@ -236,7 +235,7 @@ __declspec(naked) void EventPacketDecoder_0045de60(void)
         not      eax
         and      eax, 0xffff
         and      ecx, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_00542094], ecx
         je       short L_dfcf
     L_dfc0:
@@ -253,7 +252,7 @@ __declspec(naked) void EventPacketDecoder_0045de60(void)
         mov      cl, bh
         inc      edi
         test     ecx, ecx
-        mov      dword ptr [g_data_0054206c], ebx
+        mov      dword ptr [g_walkCallback], ebx
         mov      dword ptr [g_data_00542044], edi
         mov      dword ptr [g_data_00542070], ecx
         je       short L_e014
@@ -298,7 +297,7 @@ __declspec(naked) void EventPacketDecoder_0045de60(void)
         mov      dword ptr [g_data_00542094], eax
         je       short L_e092
     L_e084:
-        mov      dword ptr [g_data_0054206c], 0
+        mov      dword ptr [g_walkCallback], 0
         pop      edi
         pop      esi
         pop      ebx

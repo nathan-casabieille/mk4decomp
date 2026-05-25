@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004222a0 (224b game) - reset/init: clears ~17 globals, sets g_data_0054204c=0x004200b0,
  *   g_x_00542074=0x1000, call AllocNode; if !pause: clears more globals and stores eax=0xc
- *   to g_x_0054206c/0x0053a3e8; call ResetSceneCallbacks_00420090; if !pause: clears 6 more globals; ret.
+ *   to g_walkCallback/0x0053a3e8; call ResetSceneCallbacks_00420090; if !pause: clears 6 more globals; ret.
  */
 extern unsigned int g_data_0052aab4;
 extern unsigned int g_data_0052ab44;
@@ -151,7 +151,6 @@ extern unsigned int g_state_00537ea4;
 extern unsigned int g_state_0053a51c;
 extern unsigned int g_x_00541dc0;
 extern unsigned int g_x_00541e4c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542074;
 extern void ResetSceneCallbacks_00420090(void);
 
@@ -159,7 +158,7 @@ __declspec(naked) void GlobalsResetInit_004222a0(void) {
     __asm {
         push    esi
         xor     esi, esi
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [g_x_00541dc0], esi
         mov     dword ptr [g_data_0054204c], 0x004200b0
         mov     dword ptr [g_x_00542074], 0x00001000
@@ -189,13 +188,13 @@ __declspec(naked) void GlobalsResetInit_004222a0(void) {
         mov     dword ptr [g_state_00537ea4], esi
         mov     dword ptr [g_data_0053a358], esi
         mov     dword ptr [g_data_0052aab4], 8
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_data_0053a3e8], eax
         call    ResetSceneCallbacks_00420090
         cmp     dword ptr [g_pause_00541e6c], esi
         _emit   75h
         _emit   24h
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [g_x_00541e4c], esi
         mov     dword ptr [g_data_0053a2d8], esi
         mov     dword ptr [g_data_0053a2dc], esi

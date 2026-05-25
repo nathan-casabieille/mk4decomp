@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00472fe0 (137b game) - dual-entry install-self with magic-shift table init.
- *   Block A (+0x00): ecx=scaledInit; eax=0x00538158>>2; g_x_0054206c=0; eax = ecx+eax-1;
+ *   Block A (+0x00): ecx=scaledInit; eax=0x00538158>>2; g_walkCallback=0; eax = ecx+eax-1;
  *     scaledInit=eax; mov [eax*4 + 0], 0; ret.
  *   Block B (+0x30): esi=baseSel*4; if chain[+0x84]!=0 call Thunk_0049cbc0 then pop+ret;
  *     else push 0x00808080, call ThreeChanPackClamp, install-self at chain[+0x08]=0x00473010,
@@ -131,7 +131,6 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_data_0054204c;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern void ThreeChanPackClamp_00404cc0(void);
 extern void Thunk_0049cbc0(void);
 
@@ -140,7 +139,7 @@ __declspec(naked) void InstallSelfMagicShift_00472fe0(void) {
         mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     eax, 0x00538158
         shr     eax, 2
-        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         lea     eax, [ecx + eax - 1]
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     dword ptr [eax*4 + 0], 0

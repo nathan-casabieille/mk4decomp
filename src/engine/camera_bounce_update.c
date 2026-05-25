@@ -124,7 +124,6 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
-extern unsigned int g_data_0054206c;
 extern void AudioMixerStep_004ab700(void);
 extern void EsiTripleMul10Vec_00440660(void);
 extern void GatedWordPushCall_00489f90(void);
@@ -144,7 +143,7 @@ __declspec(naked) void CameraBounceUpdate_00440430(void)
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, dword ptr [ecx*4 + 0x58]
         cmp      eax, esi
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jge      short L_0472
         cmp      eax, 0xfffff334
         jge      L_0527
@@ -154,7 +153,7 @@ __declspec(naked) void CameraBounceUpdate_00440430(void)
         ret
     L_0472:
         je       L_0657
-        mov      dword ptr [g_data_0054206c], esi
+        mov      dword ptr [g_walkCallback], esi
         mov      dword ptr [ecx*4 + 0x58], esi
         mov      eax, dword ptr [g_data_00542044]
         mov      eax, dword ptr [eax*4 + 0x70]
@@ -167,26 +166,26 @@ __declspec(naked) void CameraBounceUpdate_00440430(void)
         mov      dword ptr [g_data_00542070], eax
         jle      short L_052e
         mov      ecx, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_0054206c], esi
+        mov      dword ptr [g_walkCallback], esi
         mov      dword ptr [ecx*4 + 0x6c], esi
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         lea      eax, [ecx*4]
         mov      dword ptr [eax + 0x70], edx
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [eax + 0x74], ecx
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         mov      dword ptr [eax + 0x78], edx
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [eax + 0x7c], ecx
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         mov      dword ptr [eax + 0x80], edx
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [eax + 0x4c], ecx
         mov      ecx, 0xfffffae2
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      edx, dword ptr [eax + 0x54]
         mov      dword ptr [eax + 0x58], ecx
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      eax, dword ptr [eax + 0x5c]
         mov      dword ptr [g_data_00542070], eax
         call     MStackBracketed3StoreCall_00475990
@@ -195,16 +194,16 @@ __declspec(naked) void CameraBounceUpdate_00440430(void)
         pop      esi
         ret
     L_052e:
-        mov      dword ptr [g_data_0054206c], 0x19
+        mov      dword ptr [g_walkCallback], 0x19
         call     GatedWordPushCall_00489f90
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_0657
-        mov      dword ptr [g_data_0054206c], 0x20c
+        mov      dword ptr [g_walkCallback], 0x20c
         call     StoreDoubleNegPauseSubStore_004ab750
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_0657
         mov      eax, dword ptr [g_data_00542070]
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         mov      ecx, dword ptr [g_data_00542044]
         add      eax, edx
         mov      dword ptr [g_data_00542070], eax
@@ -217,12 +216,12 @@ __declspec(naked) void CameraBounceUpdate_00440430(void)
         call     Mul10Tail_00404af0
         add      esp, 8
         mov      dword ptr [g_data_00542070], eax
-        mov      dword ptr [g_data_0054206c], 0x20000
+        mov      dword ptr [g_walkCallback], 0x20000
         call     AudioMixerStep_004ab700
         cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_0657
         mov      eax, dword ptr [g_data_00542070]
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         push     eax
         push     ecx
         call     Mul10Tail_00404af0
@@ -238,12 +237,12 @@ __declspec(naked) void CameraBounceUpdate_00440430(void)
         call     Mul10Tail_00404af0
         add      esp, 8
         mov      dword ptr [g_data_00542070], eax
-        mov      dword ptr [g_data_0054206c], 0x30000
+        mov      dword ptr [g_walkCallback], 0x30000
         call     AudioMixerStep_004ab700
         cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_0657
         mov      ecx, dword ptr [g_data_00542070]
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         push     ecx
         push     edx
         call     Mul10Tail_00404af0

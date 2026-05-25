@@ -123,14 +123,13 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00486d90 (234b game) - mstack-push 3 (g_x_0054207c, g_x_00542080, g_x_00542074);
- *   negate g_x_0054206c; if g_x_00542070 != 0 call StanceFsmCluster_004871f0; pause-check.
+ *   negate g_walkCallback; if g_x_00542070 != 0 call StanceFsmCluster_004871f0; pause-check.
  *   call MStackFrameCdeclDouble; pause-check. push 0x004eee48; call IterStepDualStore;
  *   pause-check. mstack-pop g_x_00542074 (with test); if zero skip call; else call CjTableThresholdDispatch_00488f00;
  *   pause-check. mstack-pop g_x_00542080, g_x_0054207c. jmp GatedChainClamp_00486e80.
  */
 extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542074;
 extern unsigned int g_x_0054207c;
@@ -141,10 +140,10 @@ extern void StanceFsmCluster_004871f0(void);
 
 __declspec(naked) void MStackPush3CallCascade_00486d90(void) {
     __asm {
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     ecx, dword ptr [g_x_0054207c]
         neg     eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     eax, dword ptr [g_state_004d57ac]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax

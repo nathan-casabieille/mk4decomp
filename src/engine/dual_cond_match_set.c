@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00488dc0 (208b game) - g_x_0052aac4 == 2 && g_state_00537f94 != 0:
  *   call SwapOrPassSet; if !pause: cmp g_x_0054205c vs g_data_0054204c; if eq jmp CmpEax1OrSetDirty.
- *   else set g_x_0054206c=0x1000; call SetJmp_0049cb90; if !pause: set bit-2 of state;
+ *   else set g_walkCallback=0x1000; call SetJmp_0049cb90; if !pause: set bit-2 of state;
  *   if scaledInit nonzero: load chain[*4+8] = 0x00421f40 store; if !=0x00421f40: clear bit-0;
  *   else xor bit-2 and set bit-0. Multiple ret paths.
  */
@@ -133,7 +133,6 @@ extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0052aac4;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern void CmpEax1OrSetDirty_00488e90(void);
 extern void SwapOrPassSet_0048fbf0(void);
 
@@ -141,7 +140,7 @@ __declspec(naked) void DualCondMatchSet_00488dc0(void) {
     __asm {
         mov     eax, dword ptr [g_x_0052aac4]
         cmp     eax, 2
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   0fh
         _emit   84h
         _emit   0b0h
@@ -150,7 +149,7 @@ __declspec(naked) void DualCondMatchSet_00488dc0(void) {
         _emit   00h
         mov     eax, dword ptr [g_state_00537f94]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   0fh
         _emit   84h
         _emit   9eh
@@ -172,7 +171,7 @@ __declspec(naked) void DualCondMatchSet_00488dc0(void) {
         _emit   74h
         _emit   05h
         jmp     CmpEax1OrSetDirty_00488e90
-        mov     dword ptr [g_x_0054206c], 0x00001000
+        mov     dword ptr [g_walkCallback], 0x00001000
         call    SetJmp_0049cb90
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

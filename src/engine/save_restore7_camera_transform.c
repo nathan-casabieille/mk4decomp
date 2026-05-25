@@ -126,7 +126,6 @@ extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_0052ab10;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_0054207c;
@@ -138,7 +137,7 @@ extern void ModMagicMul10Index_00424350(void);
 void SaveRestore7CameraTransform_004267f0(void) {
     __asm {
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
@@ -186,7 +185,7 @@ void SaveRestore7CameraTransform_004267f0(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_6a22
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [g_data_0054207c], ecx
         call     MStackMagicModMul10_00424410
         mov      eax, dword ptr [g_framePauseFlag]
@@ -201,7 +200,7 @@ void SaveRestore7CameraTransform_004267f0(void) {
         mov      eax, dword ptr [g_data_00542078]
         push     eax
         call     Mul10Tail_00404af0
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      edx, dword ptr [g_data_00542078]
         add      esp, 8
         mov      dword ptr [g_data_0054207c], eax
@@ -209,15 +208,15 @@ void SaveRestore7CameraTransform_004267f0(void) {
         push     edx
         call     Mul10Tail_00404af0
         mov      ecx, dword ptr [g_data_0054207c]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      eax, dword ptr [g_data_0054205c]
         add      esp, 8
         mov      dword ptr [eax*4 + 0x58], ecx
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         mov      ecx, dword ptr [g_data_00542080]
         mov      edx, dword ptr [g_data_0054205c]
         add      eax, ecx
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x5c], eax
         mov      eax, dword ptr [g_data_00542088]
         mov      ecx, dword ptr [g_data_0054205c]
@@ -254,7 +253,7 @@ void SaveRestore7CameraTransform_004267f0(void) {
         mov      dword ptr [g_data_004d57ac], eax
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_004d57ac], eax
     L_6a22:
         }

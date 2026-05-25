@@ -140,7 +140,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern void BootInitGuardedCallChain_004265d0(void);
 
 __declspec(naked) void PhaseInstallSelf3Step_00402350(void)
@@ -216,7 +215,7 @@ __declspec(naked) void PhaseInstallSelf3Step_00402350(void)
         mov     ebx, 0x1F
         mov     dword ptr [ecx*4 + 0x54], 0xFFB00000
         mov     edx, dword ptr [g_data_00542044]
-        mov     dword ptr [g_data_0054206c], ebx
+        mov     dword ptr [g_walkCallback], ebx
         mov     dword ptr [edx*4 + 0x30], ebx
         call    PushSetCallPop_00406530
         mov     eax, dword ptr [g_framePauseFlag]
@@ -236,7 +235,7 @@ __declspec(naked) void PhaseInstallSelf3Step_00402350(void)
         mov     ecx, dword ptr [g_data_00542044]
         mov     dword ptr [ecx*4 + 0x54], 0x00770000
         mov     edx, dword ptr [g_data_00542044]
-        mov     dword ptr [g_data_0054206c], ebx
+        mov     dword ptr [g_walkCallback], ebx
         mov     dword ptr [edx*4 + 0x30], ebx
         call    PushSetCallPop_00406530
         mov     eax, dword ptr [g_framePauseFlag]

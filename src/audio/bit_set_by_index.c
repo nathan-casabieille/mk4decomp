@@ -124,11 +124,11 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004a07a0 (196b audio) - mstack-push 2; sample bit-update by index.
  *   Push g_x_00542078, g_x_00542048.
- *   ecx = [0x541fc0]; eax = g_x_0054206c; g_x_00542048 = ecx;
- *   [0x535e48] = eax (= g_x_0054206c snapshot); ecx += eax;
+ *   ecx = [0x541fc0]; eax = g_walkCallback; g_x_00542048 = ecx;
+ *   [0x535e48] = eax (= g_walkCallback snapshot); ecx += eax;
  *   eax = chain[ecx]; g_x_00542048 = eax;
  *   edx = chain[eax + 0x10]; g_x_00542048 = edx; esi = chain[edx];
- *   g_x_00542078--; g_x_0054206c = esi;
+ *   g_x_00542078--; g_walkCallback = esi;
  *   if (g_x_00542078 > 0 before decrement, i.e., decremented value >= 0):
  *     g_x_00542070 = (1 << g_x_00542078) | esi; chain[edx] = same.
  *   mstack-pop into g_x_00542048, g_x_00542078.
@@ -136,7 +136,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_x_00535e48;
 extern unsigned int g_x_00541fc0;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542078;
 
@@ -156,7 +155,7 @@ __declspec(naked) void BitSetByIndex_004a07a0(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], edx
         mov     ecx, dword ptr [g_x_00541fc0]
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [g_x_00542048], ecx
         add     ecx, eax
         mov     dword ptr [g_x_00535e48], eax
@@ -168,7 +167,7 @@ __declspec(naked) void BitSetByIndex_004a07a0(void) {
         dec     eax
         mov     esi, [edx*4 + g_data_004d57ac_arr]
         mov     dword ptr [g_x_00542078], eax
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         _emit   78h
         _emit   1bh
         mov     ecx, dword ptr [g_x_00542078]

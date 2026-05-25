@@ -160,7 +160,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern void State6Latch_0048e240(void);
 
 __declspec(naked) void TripleEntryCountdownInstall_0046a230(void) {
@@ -181,7 +180,7 @@ __declspec(naked) void TripleEntryCountdownInstall_0046a230(void) {
         test    eax, eax
         jne     short L_tec_b1done
         mov     eax, dword ptr [g_data_0052ab40]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         and     eax, 0x10
         mov     dword ptr [g_data_00542094], eax
         jne     short L_tec_b1nonzero
@@ -225,7 +224,7 @@ __declspec(naked) void TripleEntryCountdownInstall_0046a230(void) {
         mov     ecx, dword ptr [edx*4 + 0x4c]
         mov     dword ptr [g_data_00542070], 0x41
         add     ecx, 0x41
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [edx*4 + 0x4c], ecx
         mov     ecx, dword ptr [g_data_00542080]
         dec     ecx
@@ -244,7 +243,7 @@ __declspec(naked) void TripleEntryCountdownInstall_0046a230(void) {
     L_tec_b2phase0:
         mov     edx, dword ptr [g_data_0054205c]
         mov     ecx, 0xfffffd71
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [edx*4 + 0x4c], ecx
         mov     ecx, 1
         mov     dword ptr [eax + 8], offset L_tec_body2

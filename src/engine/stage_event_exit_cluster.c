@@ -133,7 +133,7 @@ extern void ScaledChainJmp_00429470(void);
  *   On phase != 0 tail-calls Set200dCallPauseJmp_0047c5e0. Then if
  *   g_data_00537f94 != 0 tail-calls StageEventExitCluster_0047cd50.
  *   Otherwise pushes g_data_00542080 onto the mstack and sets
- *   g_data_0054206c=0xb333, calls EsiEdiAliasDualMul10_004906b0. On
+ *   g_walkCallback=0xb333, calls EsiEdiAliasDualMul10_004906b0. On
  *   no-error sets g_data_00542088=0x11999, calls PunchAnimCluster_00496d80. Pops
  *   back into g_data_00542080, then calls NotMaskStorePair_0045f440.
  *   Selects 0x542074 = 1 or 0x10 based on g_data_0054205c ==
@@ -148,7 +148,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542080;
 extern unsigned int g_data_00542088;
@@ -173,7 +172,7 @@ __declspec(naked) void InstallSelfMStackPackedFlow_0047c990(void) {
     L_ism_check2:
         mov     eax, dword ptr [g_data_00537f94]
         test    eax, eax
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         je      short L_ism_push
         call    StageEventExitCluster_0047cd50
         pop     esi
@@ -184,7 +183,7 @@ __declspec(naked) void InstallSelfMStackPackedFlow_0047c990(void) {
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_table_004d57b0], ecx
-        mov     dword ptr [g_data_0054206c], 0xb333
+        mov     dword ptr [g_walkCallback], 0xb333
         call    EsiEdiAliasDualMul10_004906b0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

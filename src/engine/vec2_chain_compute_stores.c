@@ -124,7 +124,6 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_0054207c;
@@ -136,7 +135,7 @@ __declspec(naked) void Vec2ChainComputeStores_00480b80(void)
     __asm
     {
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], ecx
@@ -166,7 +165,7 @@ __declspec(naked) void Vec2ChainComputeStores_00480b80(void)
         add     esi, ecx
         push    eax
         push    eax
-        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [g_data_00542070], ecx
         mov     dword ptr [g_data_00542074], eax
         mov     dword ptr [g_data_00542078], esi
@@ -190,7 +189,7 @@ __declspec(naked) void Vec2ChainComputeStores_00480b80(void)
         cmp     ecx, eax
         mov     dword ptr [g_data_00542074], eax
         jge     short L_v2ccs_skip
-        mov     eax, dword ptr [g_data_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     ecx, dword ptr [g_data_00542070]
         push    eax
         push    eax
@@ -214,18 +213,18 @@ __declspec(naked) void Vec2ChainComputeStores_00480b80(void)
         jl      short L_v2ccs_neg
     L_v2ccs_skip:
         mov     eax, dword ptr [g_data_0054207c]
-        mov     ecx, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         neg     eax
         lea     edx, [ecx + eax*2]
         mov     eax, dword ptr [g_data_00542080]
         mov     ecx, dword ptr [g_data_00542070]
-        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         neg     eax
         lea     edx, [ecx + eax*2]
         mov     dword ptr [g_data_00542070], edx
     L_v2ccs_neg:
         mov     eax, dword ptr [g_data_0054205c]
-        mov     ecx, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         pop     esi
         mov     dword ptr [eax*4 + 0x54], ecx
         mov     eax, dword ptr [g_data_0054205c]

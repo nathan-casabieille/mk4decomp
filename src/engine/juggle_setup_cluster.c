@@ -144,7 +144,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_0054208c;
@@ -164,19 +163,19 @@ __declspec(naked) void PoseCopyIdleCluster_004537a0(void)
         mov      edx, dword ptr [ecx + 0x54]
         mov      dword ptr [eax + 0x54], edx
         mov      edx, 0xfffed3b7
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [eax + 0x58], edx
         mov      edx, dword ptr [ecx + 0x5c]
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [eax + 0x5c], edx
         mov      edx, dword ptr [ecx + 0x60]
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [eax + 0x60], edx
         mov      edx, dword ptr [ecx + 0x64]
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [eax + 0x64], edx
         mov      edx, dword ptr [ecx + 0x68]
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [eax + 0x68], edx
         mov      ecx, dword ptr [ecx + 0x34]
         mov      dword ptr [g_data_00542070], ecx
@@ -186,18 +185,18 @@ __declspec(naked) void PoseCopyIdleCluster_004537a0(void)
         mov      dword ptr [g_data_00542070], ecx
         or       eax, ecx
         mov      ecx, dword ptr [g_data_0054205c]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
         mov      edx, dword ptr [g_data_0054205c]
         mov      eax, dword ptr [edx*4 + 0x18]
-        mov      dword ptr [g_data_0054206c], 0
+        mov      dword ptr [g_walkCallback], 0
         mov      dword ptr [g_data_00542044], eax
         mov      dword ptr [eax*4 + 0x30], 0
         mov      ecx, dword ptr [g_data_00542044]
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         mov      dword ptr [ecx*4 + 0x34], eax
         mov      eax, dword ptr [g_data_00542044]
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         mov      dword ptr [eax*4 + 0x38], edx
         mov      edx, dword ptr [g_data_0054208c]
         mov      ecx, dword ptr [g_data_0054205c]
@@ -263,7 +262,7 @@ __declspec(naked) void PoseCopyIdleCluster_004537a0(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      func_00453a01
         mov      dword ptr [g_data_00542074], 0xe666
-        mov      dword ptr [g_data_0054206c], 0xfffef334
+        mov      dword ptr [g_walkCallback], 0xfffef334
         call     MStackPush3SideStore_0044cb80
         cmp      dword ptr [g_framePauseFlag], edi
         jne      func_00453a01

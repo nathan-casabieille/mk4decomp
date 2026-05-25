@@ -127,17 +127,16 @@ extern void AerialKickComboCluster_0048b090(void);
 /* @addr 0x0048ae50 (263b game) - mstack-push pair + indirect dispatch + cj copy.
  *   mstack-push g_x_00542084 and g_x_00542088. g_x_00542070 = g_x_00542084.
  *   g_scaledInit_00542044 = g_x_00542054; g_x_00542048 = g_x_00542058.
- *   g_x_0054206c = 0; indirect call [g_state_00542080] (cdecl callback).
+ *   g_walkCallback = 0; indirect call [g_state_00542080] (cdecl callback).
  *   If pause? final-ret. call AerialKickComboCluster_0048b090; if pause? final-ret.
- *   cj[+0x58] = g_x_0054206c; cj[+0x54] = g_x_00542084; cj[+0x5c] = g_x_00542088.
- *   mstack-pop g_x_00542088, g_x_00542084. g_x_0054206c = 1; tail-jmp [g_state_00542080].
- *   ret. Followed by small tail block: if g_x_0054206c == 0, g_data_00542050 = 0x00537ec0>>2; ret.
+ *   cj[+0x58] = g_walkCallback; cj[+0x54] = g_x_00542084; cj[+0x5c] = g_x_00542088.
+ *   mstack-pop g_x_00542088, g_x_00542084. g_walkCallback = 1; tail-jmp [g_state_00542080].
+ *   ret. Followed by small tail block: if g_walkCallback == 0, g_data_00542050 = 0x00537ec0>>2; ret.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_00542054;
 extern unsigned int g_x_00542058;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542084;
 extern unsigned int g_x_00542088;
@@ -159,7 +158,7 @@ __declspec(naked) void IndirectDispatchCjStore_0048ae50(void) {
         mov     eax, dword ptr [g_x_00542058]
         mov     dword ptr [g_scaledInit_00542044], edx
         mov     dword ptr [g_x_00542048], eax
-        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         call    dword ptr [g_state_00542080]
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -175,7 +174,7 @@ __declspec(naked) void IndirectDispatchCjStore_0048ae50(void) {
         _emit   75h
         _emit   72h
         mov     ecx, dword ptr [g_cj_0054205c]
-        mov     edx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [ecx*4 + 0x58], edx
         mov     eax, dword ptr [g_cj_0054205c]
         mov     ecx, dword ptr [g_x_00542084]
@@ -192,7 +191,7 @@ __declspec(naked) void IndirectDispatchCjStore_0048ae50(void) {
         dec     eax
         mov     dword ptr [g_x_00542084], edx
         mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [g_x_0054206c], 1
+        mov     dword ptr [g_walkCallback], 1
         jmp     dword ptr [g_state_00542080]
         ret
         nop
@@ -201,7 +200,7 @@ __declspec(naked) void IndirectDispatchCjStore_0048ae50(void) {
         nop
         nop
         nop
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         test    eax, eax
         _emit   75h
         _emit   0dh

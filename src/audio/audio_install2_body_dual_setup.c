@@ -130,10 +130,10 @@ extern unsigned int g_x_00537eec;
 /*
  * AudioInstallSelfShiftedChainInit_004a0210 - 237b audio self-install setup.
  *   chain = g_baseSel_00542060<<2; saved = chain->state; chain->state=0.
- *   If was nonzero: g_x_0054206c = g_x_00541dd4; if !=0 tail-jmp AudioInstall2BodyDualSetup_004a0300.
+ *   If was nonzero: g_walkCallback = g_x_00541dd4; if !=0 tail-jmp AudioInstall2BodyDualSetup_004a0300.
  *     Else: g_x_00542054 = g_x_00537f88; push (0x250, 0x004a0680); StoreTwoCall; tail-jmp AudioInstall2BodyDualSetup_004a0300.
  *   If was zero: g_x_00542054=7; edx=1<<(g_x_00542074-1); g_x_00542074--; ecx = g_x_00537eec & edx;
- *     g_data_00542070=edx; g_x_0054206c=ecx; g_x_00537eec=ecx; install-self at entry; chain->state=1;
+ *     g_data_00542070=edx; g_walkCallback=ecx; g_x_00537eec=ecx; install-self at entry; chain->state=1;
  *     mstack-push (entry+0x01000000) packed; g_x_00542044++; clear g_baseSel*4+0x84;
  *     call AudioInstallSelf3StateWithSubcall_004a0870; g_pause_00541e6c=1; ret.
  */
@@ -141,7 +141,6 @@ extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00541dd4;
 extern unsigned int g_x_00542044;
 extern unsigned int g_x_00542054;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542074;
 
 __declspec(naked) void AudioInstallSelfShiftedChainInit_004a0210(void)
@@ -156,7 +155,7 @@ __declspec(naked) void AudioInstallSelfShiftedChainInit_004a0210(void)
         je      short L_install
         mov     eax, dword ptr [g_x_00541dd4]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         je      short L_pushCall
         jmp     AudioInstall2BodyDualSetup_004a0300
     L_pushCall:
@@ -177,7 +176,7 @@ __declspec(naked) void AudioInstallSelfShiftedChainInit_004a0210(void)
         mov     ecx, dword ptr [g_x_00537eec]
         and     ecx, edx
         mov     dword ptr [g_data_00542070], edx
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_x_00537eec], ecx
         mov     dword ptr [eax + 8], offset AudioInstallSelfShiftedChainInit_004a0210
         mov     edx, dword ptr [g_baseSel_00542060]

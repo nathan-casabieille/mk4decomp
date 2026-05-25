@@ -134,7 +134,6 @@ extern void InstallSelfChainSet13333_00437880(void);
  *   Block B (+0xb0): cmp g_state_00535ddc < 0x10000? jmp InstallSelfThreeStateLeaPlus22_00437970 : jmp InstallSelfChainSet13333_00437880.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542080;
 extern unsigned int g_x_00542084;
 
@@ -178,7 +177,7 @@ __declspec(naked) void InstallSelfDualPath_00435260(void) {
         _emit   90h
         mov     eax, dword ptr [g_state_00535ddc]
         cmp     eax, 0x00010000
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7dh
         _emit   05h
         jmp     InstallSelfThreeStateLeaPlus22_00437970

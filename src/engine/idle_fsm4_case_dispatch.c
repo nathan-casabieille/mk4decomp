@@ -126,7 +126,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern void DualConstJmp_00453480(void);
 extern void DualConstJmp_004534a0(void);
 extern void DualConstJmp_004534c0(void);
@@ -139,12 +138,12 @@ __declspec(naked) void IdleFsm4CaseDispatch_004531d0(void)
 {
     __asm {
         /* === Helper 1 (0x4531d0): tiny pre-roll === */
-        mov      dword ptr [g_data_0054206c], 4
+        mov      dword ptr [g_walkCallback], 4
         call     StorePauseImulShr16_004ab630
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_31f4
-        add      dword ptr [g_data_0054206c], 0x3b
+        add      dword ptr [g_walkCallback], 0x3b
         jmp      GatedWordPushCall_00489f90
     L_31f4:
         ret

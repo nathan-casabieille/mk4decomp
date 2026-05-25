@@ -126,7 +126,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void BootFrameSetup_00408190(void);
@@ -179,8 +178,8 @@ __declspec(naked) void EightPackedSubInstallSelfWalk_0042b6f0(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub3_ret
-        mov     eax, dword ptr [g_data_0054206c]
-        mov     dword ptr [g_data_0054206c], 0
+        mov     eax, dword ptr [g_walkCallback]
+        mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [g_data_00542048], eax
         call    BootFrameSetup_00408190
         mov     eax, dword ptr [g_framePauseFlag]
@@ -224,8 +223,8 @@ __declspec(naked) void EightPackedSubInstallSelfWalk_0042b6f0(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub5_ret
-        mov     eax, dword ptr [g_data_0054206c]
-        mov     dword ptr [g_data_0054206c], 0
+        mov     eax, dword ptr [g_walkCallback]
+        mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [g_data_00542048], eax
         call    BootFrameSetup_00408190
         mov     eax, dword ptr [g_framePauseFlag]
@@ -304,8 +303,8 @@ __declspec(naked) void EightPackedSubInstallSelfWalk_0042b6f0(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub8_ret
-        mov     ecx, dword ptr [g_data_0054206c]
-        mov     dword ptr [g_data_0054206c], 0
+        mov     ecx, dword ptr [g_walkCallback]
+        mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [g_data_00542048], ecx
         call    BootFrameSetup_00408190
         mov     eax, dword ptr [g_framePauseFlag]

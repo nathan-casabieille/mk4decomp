@@ -131,7 +131,7 @@ extern void ThrowAnimSetupCluster_00484150(void);
  *   state==0: dec g_state_0054207c; if non-zero tail-call InstallSelfTwoTailJmp_00483f30.
  *     Call SlotPhaseResetInstallChain_0048e0e0; if pause ret.
  *     g_data_00542070=[cj*4+0x28]. Install-self at entry+0x01000000; state=1; call CallPauseScaledStoreJmp; pause=1; ret.
- *   Tail (+0xc0): g_x_0054206c=3; call ByteWordTableTaggedDispatch; if pause ret.
+ *   Tail (+0xc0): g_walkCallback=3; call ByteWordTableTaggedDispatch; if pause ret.
  *     Call TradePlaceChain_004933d0; if pause ret. g_x_00542054=g_scaledInit. If zero: tail-jmp CjInstallSelfRouter.
  *     Push 0x70, push (ThrowAnimSetupCluster_00484150 + 0x10); call StoreTwoCall; pop. Copy chain[baseSel*4+0x3c] to [scaledInit*4+0x3c].
  *     Call CopyJmp; if pause ret. If bit0(0054208c): jmp ThrowAnimSetupCluster_00484150.
@@ -140,7 +140,6 @@ extern void ThrowAnimSetupCluster_00484150(void);
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_00542054;
-extern unsigned int g_x_0054206c;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ByteWordTableTaggedDispatch_0048a050(void);
 extern void CallPauseScaledStoreJmp_00428820(void);
@@ -196,7 +195,7 @@ __declspec(naked) void InstallSelfMultiCascadeChainCopy_00484000(void) {
         pop     esi
         ret
         _emit   90h
-        mov     dword ptr [g_x_0054206c], 3
+        mov     dword ptr [g_walkCallback], 3
         call    ByteWordTableTaggedDispatch_0048a050
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

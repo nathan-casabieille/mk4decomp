@@ -132,7 +132,6 @@ extern unsigned int g_data_00535e7c;
  *   if scaledInit was 0 clear bit2 again (xor 4); ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern void MStackBracket4_ListInsertZeroFill_00408600(void);
 extern void MStackPush3LinkedListWalk_004088b0(void);
 extern void MStackPushTwoEntryChainCall_004058c0(void);
@@ -179,26 +178,26 @@ void GuardedChainMaskOr_00446790(void) {
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     eax, dword ptr [edx*4 + 0x1c]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   7fh
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, dword ptr [eax*4 + 0x08]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   6ah
         mov     ecx, 0xf0ffffff
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [eax*4 + 0x20]
         and     edx, ecx
         mov     dword ptr [eax*4 + 0x20], edx
         mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [g_x_0054206c], 0x0b000000
+        mov     dword ptr [g_walkCallback], 0x0b000000
         mov     eax, dword ptr [ecx*4 + 0x20]
         or      eax, 0x0b000000
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x20], eax
         mov     ecx, dword ptr [g_state_0054208c]
         mov     eax, dword ptr [g_scaledInit_00542044]

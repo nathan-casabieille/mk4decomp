@@ -124,17 +124,16 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00470390 (232b game) - Mul10Tail pair with chain init + indirect via scaledInit pair.
  *   Pick scaledInit from 0x005380c0>>2 (if g_x_0054205c==g_state_00538158) or 0x0052d728>>2;
- *   chain[+0]=g_x_0054206c=[g_x_0054205c*4+0x54], chain[+4]=g_x_00542070=[g_x_0054205c*4+0x5c];
+ *   chain[+0]=g_walkCallback=[g_x_0054205c*4+0x54], chain[+4]=g_x_00542070=[g_x_0054205c*4+0x5c];
  *   call ScaledChainDouble_004911f0; pause-check.
  *   Two Mul10Tail calls with 0x00027333 multiplier:
  *     g_x_0054207c = Mul10Tail(0x27333, g_x_0054207c);
  *     eax = Mul10Tail(0x27333, g_x_00542080); g_x_00542080=eax;
- *   accumulate: g_x_0054206c += g_x_0054207c, g_x_00542070 += eax; store back to chain[+8/+0xc]. ret.
+ *   accumulate: g_walkCallback += g_x_0054207c, g_x_00542070 += eax; store back to chain[+8/+0xc]. ret.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_0054207c;
 extern unsigned int g_x_00542080;
@@ -157,7 +156,7 @@ __declspec(naked) void Mul10TailPairChain_00470390(void) {
         mov     eax, ecx
         mov     dword ptr [g_x_00542048], eax
         mov     ecx, dword ptr [edx*4 + 0x54]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [edx*4 + 0x5c]
         mov     dword ptr [g_x_00542070], edx
         mov     dword ptr [eax*4 + 0], ecx
@@ -179,7 +178,7 @@ __declspec(naked) void Mul10TailPairChain_00470390(void) {
         push    eax
         push    0x00027333
         call    Mul10Tail_00404af0
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     esi, dword ptr [g_x_0054207c]
         mov     edx, dword ptr [g_x_00542070]
         add     esp, 8
@@ -188,7 +187,7 @@ __declspec(naked) void Mul10TailPairChain_00470390(void) {
         mov     dword ptr [g_x_00542070], edx
         mov     edx, dword ptr [g_x_00542048]
         mov     dword ptr [g_x_00542080], eax
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [edx*4 + 8], ecx
         mov     eax, dword ptr [g_x_00542048]
         mov     ecx, dword ptr [g_x_00542070]

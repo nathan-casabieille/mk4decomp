@@ -139,7 +139,6 @@ extern unsigned int g_data_00541eb0;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern unsigned int g_table_004d57b0;
 extern void MStackPushChainStepIndex_004ab510(void);
@@ -193,7 +192,7 @@ __declspec(naked) void MStackPush2Burst6Init_00405450(void) {
         add     eax, 6
         mov     dword ptr [g_data_0053a1ac], ecx
         mov     dword ptr [g_data_00542044], eax
-        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         lea     edi, [eax*4]
         mov     eax, 3
     L_mpb_burst2:

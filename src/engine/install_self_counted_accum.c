@@ -130,7 +130,7 @@ extern unsigned int g_data_00535e7c;
  *     g_x_0054205c = esi; g_x_00542058 = edx; g_x_00542054 = 0xf; jmp install-with-snapshot.
  *   install-with-snapshot: esi = g_x_0054205c; edx = g_x_00542058;
  *     ecx = chain[esi+0x5c]; edi = chain[(edx+1)*4 - 4]; ecx += edi;
- *     g_x_0054206c = ecx; g_x_00542070 = edi; g_x_00542058 = edx+1;
+ *     g_walkCallback = ecx; g_x_00542070 = edi; g_x_00542058 = edx+1;
  *     chain[esi+0x5c] = ecx. install self: [eax+8]=0x42e1d0, [eax+0x84]=1.
  *     g_x_0054204c = 2; pause = 1.
  */
@@ -139,7 +139,6 @@ extern unsigned int g_x_0054204c;
 extern unsigned int g_x_00542054;
 extern unsigned int g_x_00542058;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 
 __declspec(naked) void InstallSelfCountedAccum_0042e1d0(void) {
@@ -174,12 +173,12 @@ __declspec(naked) void InstallSelfCountedAccum_0042e1d0(void) {
         mov     edx, dword ptr [g_x_00542058]
         mov     ecx, [esi*4 + 0x5c]
         inc     edx
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     edi, [edx*4 - 4]
         add     ecx, edi
         mov     dword ptr [g_x_00542070], edi
         mov     dword ptr [g_x_00542058], edx
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     [esi*4 + 0x5c], ecx
         mov     ecx, 1
         mov     dword ptr [eax + 8], 0x0042e1d0

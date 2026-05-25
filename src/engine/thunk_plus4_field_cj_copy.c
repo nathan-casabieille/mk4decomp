@@ -135,7 +135,6 @@ extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0054204c;
 extern unsigned int g_x_00542054;
 extern unsigned int g_x_00542058;
-extern unsigned int g_x_0054206c;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void FourPackedSubInitCmpDispatch_004665b0(void);
 extern void MStackCall_00406340(void);
@@ -169,12 +168,12 @@ __declspec(naked) void ThunkPlus4FieldCjCopy_00466490(void) {
         mov     dword ptr [g_x_00542058], ecx
         mov     eax, dword ptr [edx*4 + 0x58]
         mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x58], eax
         mov     edx, dword ptr [g_cj_0054205c]
         mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     eax, dword ptr [edx*4 + 0x3c]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x3c], eax
         mov     edx, dword ptr [g_cj_0054205c]
         mov     ecx, dword ptr [g_scaledInit_00542044]
@@ -182,7 +181,7 @@ __declspec(naked) void ThunkPlus4FieldCjCopy_00466490(void) {
         mov     dword ptr [ecx*4 + 0x64], eax
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     eax, 0x7e
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x30], eax
         call    MStackCall_00406340
         mov     eax, dword ptr [g_pause_00541e6c]

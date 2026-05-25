@@ -131,7 +131,6 @@ extern unsigned int g_data_004f62f8;
 extern unsigned int g_data_00515964;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00f00000;
 extern void AudioBindEntry_004a1e40(void);
 extern void AudioInitArgs3_004a1f20(void);
@@ -172,7 +171,7 @@ __declspec(naked) void VoiceMixerTickDispatch_004a27c0(void)
         mov      ecx, dword ptr [esi]
         push     eax
         push     ecx
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_00542044], ecx
         call     GuardedSetupCallTailJmp_004a1fa0
         lea      eax, [edi - 6]

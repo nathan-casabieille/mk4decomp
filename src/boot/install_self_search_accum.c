@@ -128,7 +128,7 @@ extern unsigned int g_data_00535e7c;
  *   call Push16Call_00489f50; pause? -> end.
  *   if (flag == 0): ecx = (0x4d5760 >> 2) (packed_ptr); g_x_0054205c = ecx; jmp +6.
  *   else: ecx = g_x_0054205c (already set).
- *   ecx++; eax = chain[ecx]; g_x_0054206c = eax; g_x_0054205c = ecx;
+ *   ecx++; eax = chain[ecx]; g_walkCallback = eax; g_x_0054205c = ecx;
  *   if (eax != 0): {
  *     ecx = g_x_00542054; chain[ecx + 0x58] += eax;
  *     g_x_00542070 = sum; chain[g_x_00542058 + 0x58] = sum;
@@ -139,7 +139,6 @@ extern unsigned int g_x_0054204c;
 extern unsigned int g_x_00542054;
 extern unsigned int g_x_00542058;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542074;
 
@@ -174,7 +173,7 @@ __declspec(naked) void InstallSelfSearchAccum_00402b40(void) {
         mov     eax, [ecx*4 + g_data_004d57ac_arr]
         inc     ecx
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_x_0054205c], ecx
         _emit   75h
         _emit   07h

@@ -140,7 +140,6 @@ extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054206c;
 extern void QuadInterpolator_00425380(void);
 extern void StoreDoubleNegPauseSubStore_004ab750(void);
 
@@ -163,7 +162,7 @@ __declspec(naked) void PoseTreeBlendWalker_0049d680(void)
         test     eax, eax
         mov      dword ptr [g_data_0054204c], edx
         mov      dword ptr [g_data_00542050], ecx
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       L_d8ba
     L_d6d0:
         mov      edx, dword ptr [g_data_00542058]
@@ -174,96 +173,96 @@ __declspec(naked) void PoseTreeBlendWalker_0049d680(void)
         lea      ebx, [ecx*4]
         mov      eax, dword ptr [esi + 0x3c]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       short L_d719
         call     StoreDoubleNegPauseSubStore_004ab750
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d8d0
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
     L_d719:
         add      eax, dword ptr [esi + 0x30]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edi], eax
         mov      eax, dword ptr [esi + 0x40]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       short L_d746
         call     StoreDoubleNegPauseSubStore_004ab750
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d8d0
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
     L_d746:
         add      eax, dword ptr [esi + 0x34]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edi + 4], eax
         mov      eax, dword ptr [esi + 0x44]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       short L_d774
         call     StoreDoubleNegPauseSubStore_004ab750
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d8d0
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
     L_d774:
         add      eax, dword ptr [esi + 0x38]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edi + 8], eax
         mov      eax, dword ptr [esi + 0x24]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       short L_d7a2
         call     StoreDoubleNegPauseSubStore_004ab750
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d8d0
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
     L_d7a2:
         add      eax, dword ptr [esi + 0x18]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         call     BootMod6487eClampAndChainMul10_00407510
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d8d0
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         mov      dword ptr [ebx], edx
         mov      eax, dword ptr [esi + 0x28]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       short L_d7e7
         call     StoreDoubleNegPauseSubStore_004ab750
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d8d0
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
     L_d7e7:
         add      eax, dword ptr [esi + 0x1c]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         call     BootMod6487eClampAndChainMul10_00407510
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d8d0
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         mov      dword ptr [ebx + 4], eax
         mov      eax, dword ptr [esi + 0x2c]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       short L_d82c
         call     StoreDoubleNegPauseSubStore_004ab750
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d8d0
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
     L_d82c:
         add      eax, dword ptr [esi + 0x20]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         call     BootMod6487eClampAndChainMul10_00407510
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d8d0
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [ebx + 8], ecx
         mov      edx, dword ptr [g_data_00541f94]
         mov      eax, dword ptr [g_data_00542050]
@@ -285,7 +284,7 @@ __declspec(naked) void PoseTreeBlendWalker_0049d680(void)
         mov      eax, dword ptr [g_data_00542054]
         mov      eax, dword ptr [eax*4]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_00542054], eax
         jne      L_d6d0
     L_d8ba:

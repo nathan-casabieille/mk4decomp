@@ -125,7 +125,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_0054207c;
 extern void DualScaledStore_00452740(void);
@@ -154,12 +153,12 @@ __declspec(naked) void JuggleFsmCluster_00451b90(void)
         ja       L_1ed3
         jmp      dword ptr [eax*4 + L_jmptbl]
     L_1bce:
-        mov      dword ptr [g_data_0054206c], 0x35
+        mov      dword ptr [g_walkCallback], 0x35
         call     GatedWordPushCall_00489f90
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
-        mov      dword ptr [g_data_0054206c], 0x2b
+        mov      dword ptr [g_walkCallback], 0x2b
         call     GatedWordPushCall_00489f90
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -171,7 +170,7 @@ __declspec(naked) void JuggleFsmCluster_00451b90(void)
         pop      esi
         ret
     L_1c2d:
-        mov      dword ptr [g_data_0054206c], 0x36
+        mov      dword ptr [g_walkCallback], 0x36
         call     GatedWordPushCall_00489f90
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -183,12 +182,12 @@ __declspec(naked) void JuggleFsmCluster_00451b90(void)
         pop      esi
         ret
     L_1c70:
-        mov      dword ptr [g_data_0054206c], 0x37
+        mov      dword ptr [g_walkCallback], 0x37
         call     GatedWordPushCall_00489f90
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
-        mov      dword ptr [g_data_0054206c], 0x2a
+        mov      dword ptr [g_walkCallback], 0x2a
         call     GatedWordPushCall_00489f90
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -200,7 +199,7 @@ __declspec(naked) void JuggleFsmCluster_00451b90(void)
         pop      esi
         ret
     L_1ccf:
-        mov      dword ptr [g_data_0054206c], 0x36
+        mov      dword ptr [g_walkCallback], 0x36
         call     GatedWordPushCall_00489f90
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -212,7 +211,7 @@ __declspec(naked) void JuggleFsmCluster_00451b90(void)
         pop      esi
         ret
     L_1d12:
-        mov      dword ptr [g_data_0054206c], 8
+        mov      dword ptr [g_walkCallback], 8
         call     GuardedSeq_00472840
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -224,7 +223,7 @@ __declspec(naked) void JuggleFsmCluster_00451b90(void)
         pop      esi
         ret
     L_1d55:
-        mov      dword ptr [g_data_0054206c], 0x37
+        mov      dword ptr [g_walkCallback], 0x37
         call     GatedWordPushCall_00489f90
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -301,7 +300,7 @@ __declspec(naked) void JuggleFsmCluster_00451b90(void)
         pop      esi
         ret      
     L_1ed3:
-        mov      dword ptr [g_data_0054206c], 0x12
+        mov      dword ptr [g_walkCallback], 0x12
         call     GatedWordPushCall_00489f90
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

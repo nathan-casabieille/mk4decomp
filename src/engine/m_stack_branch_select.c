@@ -124,18 +124,17 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00457d10 (196b game) - mstack-push g_baseSel; branch-select source; chain ops.
  *   Push g_baseSel; g_baseSel = (g_x_0054205c==[0x538158] ? [0x53803c] : [0x538038]);
- *   g_x_0054206c = 1; call DualBranchWordLookup; pause? ret.
+ *   g_walkCallback = 1; call DualBranchWordLookup; pause? ret.
  *   mstack-pop into g_baseSel.
  *   g_x_00542078 = chain[g_x_0054205c + 0x54]; g_x_0054207c = chain[+0x5c];
  *   call StoreTwoCallSubMain_00426b60; pause? ret.
  *   g_x_0054207c = 0; call EntryThunkBodyStateMachine_00457bb0; pause? ret.
- *   g_x_0054206c = 0x13; jmp TableLookupCall.
+ *   g_walkCallback = 0x13; jmp TableLookupCall.
  */
 extern unsigned int g_x_00538038;
 extern unsigned int g_x_0053803c;
 extern unsigned int g_x_00538158;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542078;
 extern unsigned int g_x_0054207c;
 extern void DualBranchWordLookup_0048a290(void);
@@ -161,7 +160,7 @@ __declspec(naked) void MStackBranchSelect_00457d10(void) {
         _emit   0ch
         mov     ecx, dword ptr [g_x_0053803c]
         mov     dword ptr [g_baseSel_00542060], ecx
-        mov     dword ptr [g_x_0054206c], 1
+        mov     dword ptr [g_walkCallback], 1
         call    DualBranchWordLookup_0048a290
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -188,7 +187,7 @@ __declspec(naked) void MStackBranchSelect_00457d10(void) {
         test    eax, eax
         _emit   75h
         _emit   0fh
-        mov     dword ptr [g_x_0054206c], 0x13
+        mov     dword ptr [g_walkCallback], 0x13
         jmp     TableLookupCall_00489f60
         ret
     }

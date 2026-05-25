@@ -126,14 +126,13 @@ extern unsigned int g_data_00535e7c;
  *   For each record from g_x_00542058 stream: read 3 fields (g_x_00542048, g_x_00542074, g_x_00542084).
  *   If 3rd field (g_x_00542084) == 0xffff0000: terminate.
  *   Else: read 4th field (g_state_00542088). mstack-push g_x_00542074, g_data_00542070, g_x_00542048.
- *   g_x_0054206c=0x6c. Call StateMachineInit_00493000. If pause: ret.
+ *   g_walkCallback=0x6c. Call StateMachineInit_00493000. If pause: ret.
  *   Mstack-pop: g_x_00542048, g_data_00542070, g_x_00542074. If g_x_00542074!=0: [g_cj*4+0x58]=g_x_00542074.
  *   Re-read next field from g_x_00542058 stream, if !=0xffff0000 loop. Pop edi/esi; ret.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_00542058;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542074;
 extern unsigned int g_x_00542084;
 extern void StateMachineInit_00493000(void);
@@ -184,7 +183,7 @@ __declspec(naked) void RecordListIterMStack_00422ce0(void) {
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], edx
-        mov     dword ptr [g_x_0054206c], edi
+        mov     dword ptr [g_walkCallback], edi
         call    StateMachineInit_00493000
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

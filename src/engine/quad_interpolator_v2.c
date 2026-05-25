@@ -141,7 +141,6 @@ extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542094;
 extern unsigned int g_table_004d57b0;
 
@@ -183,7 +182,7 @@ __declspec(naked) void MStackBootPush4Init_00408350(void) {
         jne     L_mp4i_cleanup
         mov     edx, dword ptr [g_data_0054205c]
         mov     eax, dword ptr [edx*4 + 0x34]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         and     eax, 1
         mov     dword ptr [g_data_00542094], eax
         je      short L_mp4i_skipCall

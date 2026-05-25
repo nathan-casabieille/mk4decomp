@@ -145,7 +145,6 @@ extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_0054208c;
 extern void AudioVolumeRescale_004ab690(void);
@@ -153,7 +152,7 @@ extern void AudioVolumeRescale_004ab690(void);
 __declspec(naked) void EndingScreenFsmCluster_00444390(void)
 {
     __asm {
-        mov      dword ptr [g_data_0054206c], 0x200
+        mov      dword ptr [g_walkCallback], 0x200
         call     AudioVolumeRescale_004ab690
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -163,13 +162,13 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, dword ptr [ecx*4 + 0x34]
         or       al, 1
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
     L_43d0:
         mov      eax, dword ptr [g_data_00542054]
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, dword ptr [eax*4 + 0x54]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x54], eax
         mov      edx, dword ptr [g_data_00542054]
         mov      ecx, dword ptr [g_data_00542044]
@@ -177,7 +176,7 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
         mov      dword ptr [ecx*4 + 0x5c], eax
         mov      edx, dword ptr [g_data_00542044]
         mov      eax, 0xffff999a
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x58], eax
         mov      ecx, dword ptr [g_data_00542044]
         mov      dword ptr [g_data_00542074], 0x3333
@@ -188,16 +187,16 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
         test     eax, eax
         jne      L_44bf
         mov      eax, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_0054206c], 0
+        mov      dword ptr [g_walkCallback], 0
         sub      eax, 0x15
         mov      dword ptr [g_data_00542044], eax
         mov      dword ptr [eax*4 + 0x6c], 0
         mov      ecx, dword ptr [g_data_00542044]
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         mov      dword ptr [ecx*4 + 0x74], eax
         mov      edx, dword ptr [g_data_00542044]
         mov      eax, 0xfffff0a4
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x70], eax
         mov      ecx, dword ptr [g_data_00542044]
         mov      dword ptr [g_data_00542074], 0x20c
@@ -215,7 +214,7 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
         mov      ecx, dword ptr [g_data_00542048]
         mov      eax, OFFSET g_data_004e6070
         shr      eax, 2
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x14], eax
         ret
         nop
@@ -232,7 +231,7 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
         sub      eax, 0
         je       L_4553
         dec      eax
-        mov      dword ptr [g_data_0054206c], 0x11
+        mov      dword ptr [g_walkCallback], 0x11
         call     GatedWordPushCall_00489f90
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -289,14 +288,14 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
         mov      eax, dword ptr [g_data_00542058]
         mov      dword ptr [edx*4 + 0x68], eax
         mov      eax, 0x451e
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_0053a24c], eax
         call     StoreLoadJmp_00404ef0
         mov      ecx, OFFSET g_data_004e5cc0
         add      esp, 4
         shr      ecx, 2
         mov      dword ptr [g_data_0053a35c], 0
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         call     PushSetXfmMaskCallPop_00407140
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -308,10 +307,10 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
         mov      dword ptr [g_data_0053a35c], ecx
         mov      eax, dword ptr [edx*4 + 0x34]
         and      eax, 1
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      edx, dword ptr [ecx*4 + 0x34]
         or       eax, edx
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
         mov      eax, dword ptr [g_data_004d57ac]
         mov      ecx, dword ptr [g_data_00542044]
@@ -320,7 +319,7 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
         mov      dword ptr [eax*4], ecx
         mov      edx, dword ptr [g_data_00542044]
         mov      eax, dword ptr [edx*4 + 0x18]
-        mov      dword ptr [g_data_0054206c], 2
+        mov      dword ptr [g_walkCallback], 2
         mov      dword ptr [g_data_00542044], eax
         call     CmpDivJmp_0049d080
         mov      eax, dword ptr [g_framePauseFlag]
@@ -403,7 +402,7 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
         mov      ecx, dword ptr [g_data_00542088]
         mov      edx, dword ptr [g_data_0053a24c]
         add      ecx, edx
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_0053a24c], ecx
         mov      ecx, 1
         mov      dword ptr [eax + 8], OFFSET L_4770
@@ -420,7 +419,7 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
         mov      ecx, dword ptr [g_data_0053a24c]
         mov      edx, dword ptr [g_data_00542088]
         sub      ecx, edx
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_0053a24c], ecx
         mov      ecx, 1
         mov      dword ptr [eax + 8], OFFSET L_4770

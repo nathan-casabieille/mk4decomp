@@ -128,19 +128,18 @@ extern void BootChainTreeRecurseWalk_00405b80(void);
  * BootChainBidirRecurseWalk_00405ca0 - 297b boot mstack-push2 + dual-chain bidir walk.
  *   Push g_x_00542044 and g_x_00542048 to mstack. g_state_0054208c |= 4.
  *   If g_x_00542044 == 0: pop+ret. g_state_0054208c ^= 4. If still ==0: pop+ret.
- *   ecx = chain[+0x1c]; g_x_0054206c = ecx; if <=0: skip recurse.
- *   edx = g_x_0054205c; if 0: skip recurse. Else ecx = chain2[+0x1c]; g_x_0054206c = ecx;
+ *   ecx = chain[+0x1c]; g_walkCallback = ecx; if <=0: skip recurse.
+ *   edx = g_x_0054205c; if 0: skip recurse. Else ecx = chain2[+0x1c]; g_walkCallback = ecx;
  *     if 0: skip recurse. Else call BootChainTreeRecurseWalk_00405b80 (sister); if paused: ret-noPop.
- *   ecx = chain[+0x14]; g_x_0054206c = ecx; if !=0: g_x_00542048 = 4; call MStackBracket5_LinkedListUnlink_00409aa0;
+ *   ecx = chain[+0x14]; g_walkCallback = ecx; if !=0: g_x_00542048 = 4; call MStackBracket5_LinkedListUnlink_00409aa0;
  *     if paused: ret-noPop; else pop+ret.
- *   Else: eax = chain[+0x18]; g_x_0054206c = eax; if 0: pop+ret. Else g_x_0054206c = 0;
+ *   Else: eax = chain[+0x18]; g_walkCallback = eax; if 0: pop+ret. Else g_walkCallback = 0;
  *     chain[+0x18] = 0; pop+ret.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542044;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern void MStackBracket5_LinkedListUnlink_00409aa0(void);
 
 void BootChainBidirRecurseWalk_00405ca0(void) {
@@ -169,14 +168,14 @@ void BootChainBidirRecurseWalk_00405ca0(void) {
         mov     ecx, dword ptr [eax*4 + 0x1c]
         mov     edx, dword ptr [g_x_0054205c]
         test    ecx, ecx
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         jle     short L_ca0_chain1
         test    edx, edx
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         je      short L_ca0_chain1
         mov     ecx, dword ptr [edx*4 + 0x1c]
         test    ecx, ecx
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         je      short L_ca0_chain1
         call    BootChainTreeRecurseWalk_00405b80
         mov     eax, dword ptr [g_pause_00541e6c]
@@ -187,7 +186,7 @@ void BootChainBidirRecurseWalk_00405ca0(void) {
     L_ca0_chain1:
         mov     ecx, dword ptr [eax*4 + 0x14]
         test    ecx, ecx
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         je      short L_ca0_chain2
         mov     dword ptr [g_x_00542048], 4
         call    MStackBracket5_LinkedListUnlink_00409aa0
@@ -198,9 +197,9 @@ void BootChainBidirRecurseWalk_00405ca0(void) {
     L_ca0_chain2:
         mov     eax, dword ptr [eax*4 + 0x18]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         je      short L_ca0_pop2
-        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [edx*4 + 0x18], 0
     L_ca0_pop2:
         mov     eax, dword ptr [g_state_004d57ac]

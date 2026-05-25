@@ -132,7 +132,6 @@ extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_00542094;
 extern void ChainListVecAdd_0049d200(void);
@@ -178,21 +177,21 @@ __declspec(naked) void Phase2InitDispatchInstallSelf_0040ba70(void)
         mov     eax, dword ptr [g_data_00542050]
         mov     ecx, dword ptr [g_data_00542044]
         mov     eax, dword ptr [eax*4]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x44], eax
         mov     eax, dword ptr [g_data_00542050]
         mov     edx, dword ptr [g_data_00542044]
         inc     eax
         mov     dword ptr [g_data_00542050], eax
         mov     eax, dword ptr [eax*4]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x48], eax
         mov     eax, dword ptr [g_data_00542050]
         mov     ecx, dword ptr [g_data_00542044]
         inc     eax
         mov     dword ptr [g_data_00542050], eax
         mov     eax, dword ptr [eax*4]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x4C], eax
         inc     dword ptr [g_data_00542050]
     L_p2id_tailjmp:
@@ -225,24 +224,24 @@ __declspec(naked) void Phase2InitDispatchInstallSelf_0040ba70(void)
         mov     eax, dword ptr [eax*4 + 0x28]
         mov     dword ptr [g_data_00542048], eax
         mov     eax, dword ptr [eax*4]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         and     eax, 0x400
         mov     dword ptr [g_data_00542094], eax
         je      L_p2id_helper_after_400
         mov     ecx, dword ptr [g_data_00542060]
         mov     eax, dword ptr [ecx*4 + 0x38]
         sub     eax, 0x33
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jns     L_p2id_helper_store_38
         xor     eax, eax
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
     L_p2id_helper_store_38:
         mov     dword ptr [ecx*4 + 0x38], eax
     L_p2id_helper_after_400:
         mov     edx, dword ptr [g_data_0054205c]
         mov     eax, dword ptr [edx*4 + 0x18]
         test    eax, eax
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jne     L_p2id_helper_link
         call    GuardedSeq_00471670
         pop     esi
@@ -257,13 +256,13 @@ __declspec(naked) void Phase2InitDispatchInstallSelf_0040ba70(void)
         mov     dword ptr [g_data_00542044], ecx
         mov     eax, dword ptr [ecx*4 + 0x20]
         or      al, 0x40
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x20], eax
         mov     ecx, dword ptr [g_data_00542044]
         mov     eax, dword ptr [ecx*4 + 0x28]
         mov     ecx, 0x10000
         mov     dword ptr [g_data_00542048], eax
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x2C], ecx
         mov     eax, dword ptr [g_data_00542048]
         mov     ecx, dword ptr [eax*4]
@@ -271,7 +270,7 @@ __declspec(naked) void Phase2InitDispatchInstallSelf_0040ba70(void)
         mov     dword ptr [eax*4], ecx
         mov     edx, dword ptr [g_data_00542048]
         mov     eax, 0x3333
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x48], eax
     L_p2id_helper_link:
         mov     eax, dword ptr [g_data_0054205c]

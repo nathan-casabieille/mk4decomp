@@ -128,7 +128,7 @@ extern unsigned int g_data_00535e7c;
  *   If bit2 of g_state_0054208c set, skip to final-ret.
  *   Else: scaledInit[+0x54]=0, scaledInit[+0x58]=0xff920000, scaledInit[+0x30]=0x1c.
  *   call MStackPushComplexCallPop_00406430; if pause? final-ret.
- *   g_x_0054206c = g_data_00535de4; call StoreIncrMStackPush6_004275c0; if pause? final-ret.
+ *   g_walkCallback = g_data_00535de4; call StoreIncrMStackPush6_004275c0; if pause? final-ret.
  *   Set 5 fields (g_x_00542070=1, _74=0x1d, _78=0, _7c=0xffb50000, _84=0).
  *   call DispatcherComplex181_004263d0; if pause? final-ret.
  *   call RoundCleanupCluster_00427690; if pause? final-ret. mstack-pop scaledInit; ret.
@@ -136,7 +136,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_00535de4;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542074;
 extern unsigned int g_x_00542078;
@@ -179,7 +178,7 @@ void MStackPushChainDispatchInit5_004925d0(void) {
         mov     eax, 0x1c
         mov     dword ptr [ecx*4 + 0x58], 0xff920000
         mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x30], eax
         call    MStackPushComplexCallPop_00406430
         mov     eax, dword ptr [g_pause_00541e6c]
@@ -187,7 +186,7 @@ void MStackPushChainDispatchInit5_004925d0(void) {
         _emit   75h
         _emit   7eh
         mov     eax, dword ptr [g_data_00535de4]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    StoreIncrMStackPush6_004275c0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

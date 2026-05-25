@@ -129,7 +129,6 @@ extern unsigned int g_data_00535e7c;
  *   D (+0x60): gate g_state_00535ddc>=0x18000? jmp CallPauseTestByteJmpCalls else jmp PrefixThunkInstallSelf3State_00438f80.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern void GuardedSeq_00433bb0(void);
 extern void PackedAdvanceCallTailJmp_004392c0(void);
 extern void PrefixThunkInstallSelf3State_00438f80(void);
@@ -162,7 +161,7 @@ __declspec(naked) void QuadStringStateGate_0043bd50(void) {
         _emit   1bh
         mov     eax, dword ptr [g_state_00535ddc]
         cmp     eax, 0x00030000
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   05h
         jmp     GuardedSeq_00433bb0
@@ -176,7 +175,7 @@ __declspec(naked) void QuadStringStateGate_0043bd50(void) {
         _emit   90h
         mov     eax, dword ptr [g_state_00535ddc]
         cmp     eax, 0x00018000
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7dh
         _emit   05h
         jmp     CallPauseTestByteJmpCalls_004390f0

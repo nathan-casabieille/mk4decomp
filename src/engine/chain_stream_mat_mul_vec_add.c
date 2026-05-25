@@ -124,18 +124,17 @@ extern unsigned int g_data_00535e7c;
 
 /*
  * ChainStreamMatMulVecAdd_004bd9a0 - 208b engine.geo chain-stream MatMul+Vec3Add.
- *   stream = g_x_00542050; advance: g_x_0054206c = stream[0]; g_data_00542070 = stream[1];
+ *   stream = g_x_00542050; advance: g_walkCallback = stream[0]; g_data_00542070 = stream[1];
  *   g_x_00542050 = stream[2] (next stream ptr). Unpack g_x_00542048 base:
  *   load 4 dwords + 1 word into g_x_007af990..g_word_007af9a0.
  *   Push (g_data_0054204c<<2, g_x_00542044<<2); call Mat3x3VecMul6Bit; restore.
- *   Add g_x_0054206c into target[0], g_data_00542070 into target[1], g_x_00542050 into target[2].
+ *   Add g_walkCallback into target[0], g_data_00542070 into target[1], g_x_00542050 into target[2].
  */
 extern unsigned int g_data_0054204c;
 extern unsigned int g_word_007af9a0;
 extern unsigned int g_x_00542044;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_00542050;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_007af990;
 extern unsigned int g_x_007af994;
 extern unsigned int g_x_007af998;
@@ -146,7 +145,7 @@ void ChainStreamMatMulVecAdd_004bd9a0(void) {
     __asm {
         mov     eax, dword ptr [g_x_00542050]
         mov     ecx, dword ptr [eax*4]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [eax*4 + 4]
         mov     ecx, dword ptr [g_x_00542048]
         mov     dword ptr [g_data_00542070], edx
@@ -171,7 +170,7 @@ void ChainStreamMatMulVecAdd_004bd9a0(void) {
         push    eax
         call    Mat3x3VecMul6Bit_004b3590
         mov     eax, dword ptr [g_x_00542044]
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         add     esp, 8
         mov     edx, dword ptr [eax*4]
         add     edx, ecx

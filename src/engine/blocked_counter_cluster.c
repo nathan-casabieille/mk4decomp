@@ -133,7 +133,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542088;
 extern void ArgSarStoreJmp_004594f0(void);
@@ -154,10 +153,10 @@ __declspec(naked) void BlockedCounterCluster_004816d0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1707
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         mov      ecx, dword ptr [g_data_0054205c]
         sub      eax, 0x191eb
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x64], eax
     L_1707:
         ret
@@ -262,7 +261,7 @@ __declspec(naked) void BlockedCounterCluster_004816d0(void)
         mov      ecx, 0xfffffd71
         add      esp, 4
         mov      dword ptr [g_data_00542044], eax
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [eax*4 + 0x70], ecx
         call     ScaledInitWithCounterAndType_004314f0
         pop      edi
@@ -271,7 +270,7 @@ __declspec(naked) void BlockedCounterCluster_004816d0(void)
     L_1874:
         mov      edi, 1
         mov      dword ptr [g_data_00542074], 0x3d
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         mov      dword ptr [g_data_00538124], edi
         call     Push16Call_00489f50
         mov      eax, dword ptr [g_framePauseFlag]
@@ -280,7 +279,7 @@ __declspec(naked) void BlockedCounterCluster_004816d0(void)
         mov      ecx, dword ptr [g_data_0054205c]
         mov      eax, dword ptr [ecx*4 + 0x58]
         sub      eax, 0x147a
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x58], eax
         mov      dword ptr [esi + 8], OFFSET L_1820
         mov      dword ptr [esi + 0x84], edi

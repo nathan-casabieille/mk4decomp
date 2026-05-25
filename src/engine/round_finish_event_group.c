@@ -145,7 +145,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern void GateDispatch6c_00494580(void);
 
 __declspec(naked) void GameModeAdvanceCluster_00482000(void)
@@ -172,7 +171,7 @@ __declspec(naked) void GameModeAdvanceCluster_00482000(void)
         nop
         nop
         /* H3: */
-        mov      dword ptr [g_data_0054206c], 0x9999
+        mov      dword ptr [g_walkCallback], 0x9999
         call     CmpP1DualInitStore_00482ab0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -180,24 +179,24 @@ __declspec(naked) void GameModeAdvanceCluster_00482000(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      eax, dword ptr [eax*4 + 0x7c]
         cmp      eax, 2
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jle      short L_20ab
         mov      eax, dword ptr [g_data_00538158]
         mov      edx, dword ptr [g_data_0054205c]
         mov      ecx, dword ptr [g_data_0053a774]
         cmp      edx, eax
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_00542044], eax
         je       short L_207e
         mov      ecx, dword ptr [g_data_00535d04]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
     L_207e:
         mov      edx, dword ptr [g_data_0053a180]
         lea      eax, [edx - 0xa0000]
         cmp      ecx, eax
         mov      dword ptr [g_data_00542070], eax
         jl       short L_20ab
-        mov      dword ptr [g_data_0054206c], 0xe
+        mov      dword ptr [g_walkCallback], 0xe
         call     ScaledLitLoadCall_00480fe0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -222,12 +221,12 @@ __declspec(naked) void GameModeAdvanceCluster_00482000(void)
         nop
         nop
         /* H4: */
-        mov      dword ptr [g_data_0054206c], 0x9999
+        mov      dword ptr [g_walkCallback], 0x9999
         call     CmpP1DualInitStore_00482ab0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2129
-        mov      dword ptr [g_data_0054206c], 2
+        mov      dword ptr [g_walkCallback], 2
         call     ScaledCmpJlJmp_00488ed0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -252,7 +251,7 @@ __declspec(naked) void GameModeAdvanceCluster_00482000(void)
         nop
         nop
         /* H5: */
-        mov      dword ptr [g_data_0054206c], 0x1b333
+        mov      dword ptr [g_walkCallback], 0x1b333
         mov      dword ptr [g_data_00542070], 0xffffe667
         call     Wrapper_0048ff30
         mov      eax, dword ptr [g_framePauseFlag]
@@ -270,7 +269,7 @@ __declspec(naked) void GameModeAdvanceCluster_00482000(void)
         nop
         nop
         /* H6: */
-        mov      dword ptr [g_data_0054206c], 6
+        mov      dword ptr [g_walkCallback], 6
         call     TableLookupCall_0048a160
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -281,7 +280,7 @@ __declspec(naked) void GameModeAdvanceCluster_00482000(void)
         nop
         nop
         /* H7: */
-        mov      dword ptr [g_data_0054206c], 8
+        mov      dword ptr [g_walkCallback], 8
         call     TableLookupCall_00489ff0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

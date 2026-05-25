@@ -123,12 +123,11 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00442dd0 (176b game) - dual sequence: A: esi=0x94, scaledInit=0; loop:
- *   set g_x_0054206c=esi; call DispatcherComplex138; pause-check; if bit-2 (bl=4) test fails:
+ *   set g_walkCallback=esi; call DispatcherComplex138; pause-check; if bit-2 (bl=4) test fails:
  *   call CameraBounceOverflow_00442f90; pause-check; reset. Block B (+0x58): same shape with esi=0x7e and
  *   ScaledChainAccumThreshold_00442e80; falls through to call ScaledInitOrSelfPtr_00442d90.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern void CameraBounceOverflow_00442f90(void);
 extern void DispatcherComplex138_004760f0(void);
 extern void ScaledChainAccumThreshold_00442e80(void);
@@ -140,7 +139,7 @@ __declspec(naked) void DualSeqLoopDispatch_00442dd0(void) {
         push    esi
         mov     esi, 0x94
         mov     dword ptr [g_scaledInit_00542044], 0
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         call    DispatcherComplex138_004760f0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -159,7 +158,7 @@ __declspec(naked) void DualSeqLoopDispatch_00442dd0(void) {
         test    eax, eax
         _emit   75h
         _emit   6ch
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         call    DispatcherComplex138_004760f0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -170,7 +169,7 @@ __declspec(naked) void DualSeqLoopDispatch_00442dd0(void) {
         ret
         mov     esi, 0x7e
         mov     dword ptr [g_scaledInit_00542044], 0
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         call    DispatcherComplex138_004760f0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -184,7 +183,7 @@ __declspec(naked) void DualSeqLoopDispatch_00442dd0(void) {
         test    eax, eax
         _emit   75h
         _emit   1ch
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         call    DispatcherComplex138_004760f0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

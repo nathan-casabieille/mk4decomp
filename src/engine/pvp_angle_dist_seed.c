@@ -139,7 +139,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_0054207c;
@@ -169,45 +168,45 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         push     eax
         push     eax
         mov      dword ptr [g_data_00542074], eax
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [g_data_0054207c], eax
         mov      dword ptr [g_data_00542080], edx
         call     Mul10Tail_00404af0
         add      esp, 8
         mov      dword ptr [g_data_00542074], eax
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         push     eax
         push     eax
         call     Mul10Tail_00404af0
         mov      ecx, dword ptr [g_data_00542074]
         add      esp, 8
         add      ecx, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_00542074], ecx
         call     FpuSqrtMul_004ab350
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_33e4
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         mov      ecx, dword ptr [g_data_0054207c]
         mov      dword ptr [g_data_00542084], eax
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_00542070], eax
         call     RangeMulMod_004ab2a0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_33e4
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         mov      eax, dword ptr [g_data_00542080]
         mov      ecx, dword ptr [g_data_00542084]
         mov      dword ptr [g_data_0054207c], edx
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_00542070], ecx
         call     RangeMulMod_004ab2a0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_33e4
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         mov      dword ptr [g_data_00542080], edx
     L_33e4:
         pop      esi
@@ -227,7 +226,7 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         mov      ecx, dword ptr [g_data_00542060]
         mov      dword ptr [g_data_0054205c], eax
         mov      eax, dword ptr [g_data_00537f48]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
         mov      edx, dword ptr [g_data_00542060]
         mov      eax, dword ptr [g_data_0053815c]
@@ -256,7 +255,7 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         mov      ecx, dword ptr [g_data_00542060]
         mov      dword ptr [g_data_0054205c], eax
         mov      eax, dword ptr [g_data_005380e0]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
         mov      edx, dword ptr [g_data_00542060]
         mov      eax, dword ptr [g_data_00538158]
@@ -285,7 +284,7 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         mov      ecx, dword ptr [g_data_00542060]
         mov      dword ptr [g_data_0054205c], eax
         mov      eax, dword ptr [g_data_0053a178]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
         mov      edx, dword ptr [g_data_00542060]
         mov      eax, dword ptr [g_data_00538164]
@@ -314,7 +313,7 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         mov      ecx, dword ptr [g_data_00542060]
         mov      dword ptr [g_data_0054205c], eax
         mov      eax, dword ptr [g_data_0053a250]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
         mov      edx, dword ptr [g_data_00542060]
         mov      eax, dword ptr [g_data_00538160]

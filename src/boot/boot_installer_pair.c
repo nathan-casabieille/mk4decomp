@@ -139,7 +139,6 @@ extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern void BossRoomInitCluster_00410340(void);
 extern void GuardedSeq_00471670(void);
 extern void MStackCall_00406340(void);
@@ -203,14 +202,14 @@ __declspec(naked) void BootInstallerPair_004101f0(void) {
         mov     dword ptr [eax*4 + 0x34], ecx
         mov     edx, dword ptr [g_data_00542044]
         mov     eax, 0x00100000
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x5c], eax
         call    MStackCall_00406340
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_bip_done
         mov     eax, 0x004d57c8
-        mov     dword ptr [g_data_0054206c], 0x00ffffff
+        mov     dword ptr [g_walkCallback], 0x00ffffff
         shr     eax, 2
         mov     dword ptr [g_data_00542044], eax
         mov     dword ptr [eax*4], 0x00ffffff
@@ -224,7 +223,7 @@ __declspec(naked) void BootInstallerPair_004101f0(void) {
     L_bip_loadIdx:
         mov     ecx, [eax*4]
         inc     eax
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_data_00542058], eax
         call    BossRoomInitCluster_00410340
         mov     eax, dword ptr [g_framePauseFlag]

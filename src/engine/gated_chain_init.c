@@ -125,7 +125,6 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x0042f760 (221b game) - gated chain init. */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_004f360c;
-extern unsigned int g_x_0054206c;
 extern void MStackCall_00406340(void);
 extern void PushSetXfmMaskCallPop_00407140(void);
 
@@ -142,7 +141,7 @@ __declspec(naked) void GatedChainInit_0042f760(void) {
         _emit   00h
         mov     esi, 0x004e3898
         shr     esi, 2
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         call    PushSetXfmMaskCallPop_00407140
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -174,7 +173,7 @@ __declspec(naked) void GatedChainInit_0042f760(void) {
         mov     dword ptr [eax + 0x58], 0
         mov     dword ptr [eax + 0x5c], 0x00003333
         mov     dword ptr [eax + 0x60], 0x0000ca3d
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         call    PushSetXfmMaskCallPop_00407140
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -193,7 +192,7 @@ __declspec(naked) void GatedChainInit_0042f760(void) {
         mov     dword ptr [ecx*4 + 0x58], 0x00003333
         mov     dword ptr [ecx*4 + 0x5c], 0x00003333
         lea     eax, [ecx*4 + 0]
-        mov     dword ptr [g_x_0054206c], 0x0000ca3d
+        mov     dword ptr [g_walkCallback], 0x0000ca3d
         mov     dword ptr [eax + 0x60], 0x0000ca3d
         pop     esi
         ret

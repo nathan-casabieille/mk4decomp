@@ -123,15 +123,14 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00441fd0 (200b game) - mstack-push g_scaledInit; clear it; esi=0x91;
- *   g_x_0054206c = esi; call F1 (Dispatcher138); pause? -> epilogue;
+ *   g_walkCallback = esi; call F1 (Dispatcher138); pause? -> epilogue;
  *   loop: if (g_state_0054208c & 4) -> pop+epilogue;
  *     mstack-push g_scaledInit; g_scaledInit = chain[g_scaledInit + 0x18];
  *     call F2 (ScaledAndFBJmp); pause? -> epilogue;
- *     mstack-pop -> g_scaledInit; g_x_0054206c = esi;
+ *     mstack-pop -> g_scaledInit; g_walkCallback = esi;
  *     call F1; if (!pause) goto loop; pop esi; pop ebx; ret;
  *   Bit-set exit: mstack-pop -> g_scaledInit; pop esi; pop ebx; ret.
  */
-extern unsigned int g_x_0054206c;
 extern void DispatcherComplex138_004760f0(void);
 extern void ScaledAndFBJmp_00476fe0(void);
 
@@ -148,7 +147,7 @@ __declspec(naked) void LoopMStackBitTest_00441fd0(void) {
         mov     esi, 0x91
         mov     [eax*4 + g_data_004d57ac_arr], ecx
         mov     dword ptr [g_scaledInit_00542044], 0
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         call    DispatcherComplex138_004760f0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -180,7 +179,7 @@ __declspec(naked) void LoopMStackBitTest_00441fd0(void) {
         dec     eax
         mov     dword ptr [g_scaledInit_00542044], edx
         mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         call    DispatcherComplex138_004760f0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

@@ -123,13 +123,12 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00483b80 (264b game) - dual block: counter inc thunk + cj cascade dispatch.
- *   B1 (0..0x1a, +5 NOPs): ++baseSel[+0x7c]; g_x_0054206c = new value; ret.
+ *   B1 (0..0x1a, +5 NOPs): ++baseSel[+0x7c]; g_walkCallback = new value; ret.
  *   B2 (0x20..0x107): cascade of guarded calls ending in 3-way dispatch:
  *     baseSel[+0x80] vs g_state_00542080 (set per state bits): if less, jmp QuadBlockInstallChainThunks_00483c90.
  *     Else if baseSel[+0x34] != 0xf: jmp QuadBlockInstallChainThunks_00483c90. Else: push 0x004ee780, tail-call ArgSarStoreJmp.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void DualPushCallPause_00482eb0(void);
 extern void FlagCascadeStateSet_0048ec30(void);
@@ -144,7 +143,7 @@ __declspec(naked) void IncThunkPlusCjDispatch_00483b80(void) {
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, dword ptr [ecx*4 + 0x7c]
         inc     eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x7c], eax
         ret
         nop
@@ -215,13 +214,13 @@ __declspec(naked) void IncThunkPlusCjDispatch_00483b80(void) {
         mov     edx, dword ptr [g_state_00542080]
         mov     eax, dword ptr [ecx*4 + 0x80]
         cmp     eax, edx
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7ch
         _emit   05h
         jmp     QuadBlockInstallChainThunks_00483c90
         mov     ecx, dword ptr [ecx*4 + 0x34]
         cmp     ecx, 0x0f
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         _emit   75h
         _emit   05h
         jmp     QuadBlockInstallChainThunks_00483c90

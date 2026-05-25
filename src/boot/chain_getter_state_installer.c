@@ -125,7 +125,7 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x00412140 (316b boot) - bundled pair: descend-chain getter + countdown state-installer.
  *   sub-1 (~40b @ 0x412140): chases entry chain - g_data_0054205c -> [+0x18]
  *   -> [+0x28] -> [+0x48]; saves intermediate to g_data_00542044/_42048, final to
- *   g_data_0054206c. ret.
+ *   g_walkCallback. ret.
  *   sub-2 (~228b @ 0x412170): countdown state - if [esi+0x84] != 0 and
  *   --g_data_0054207c > 0: ret. Else if [esi+0x84]==0: do full init (set bit
  *   0x40 of various fields), call sub-1, subtract 0x7ae and set bit 8 in
@@ -138,7 +138,6 @@ extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054207c;
 extern void ChainListVecAdd_0049d200(void);
 extern void GuardedSeq_00471670(void);
@@ -151,7 +150,7 @@ __declspec(naked) void ChainGetterStateInstaller_00412140(void) {
         mov     eax, dword ptr [eax*4 + 0x28]
         mov     dword ptr [g_data_00542048], eax
         mov     ecx, dword ptr [eax*4 + 0x48]
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         ret
         _emit   90h
         _emit   90h
@@ -180,7 +179,7 @@ __declspec(naked) void ChainGetterStateInstaller_00412140(void) {
         mov     dword ptr [g_data_00542044], ecx
         mov     eax, dword ptr [ecx*4 + 0x20]
         or      al, 0x40
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x20], eax
         mov     edx, dword ptr [g_data_00542044]
         mov     eax, dword ptr [edx*4 + 0x28]
@@ -190,20 +189,20 @@ __declspec(naked) void ChainGetterStateInstaller_00412140(void) {
         mov     dword ptr [eax*4], ecx
         mov     ecx, dword ptr [g_data_00542048]
         mov     eax, 0x5999
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x48], eax
         mov     dword ptr [g_data_0054207c], 0x0a
     L_cgsi_tailCall:
         call    ChainGetterStateInstaller_00412140
-        mov     eax, dword ptr [g_data_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     edx, dword ptr [g_data_00542048]
         sub     eax, 0x7ae
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x48], eax
         mov     ecx, dword ptr [g_data_00542048]
         mov     eax, dword ptr [ecx*4]
         or      al, 8
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4], eax
         call    ChainListVecAdd_0049d200
         mov     eax, dword ptr [g_framePauseFlag]

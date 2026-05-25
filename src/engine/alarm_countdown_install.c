@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004609e0 (383b game) - 2-entry packed: 3-call chain + countdown
- *   install. Entry 1 (offset 0, 104b): writes g_data_0054206c into
+ *   install. Entry 1 (offset 0, 104b): writes g_walkCallback into
  *     [scaled+0x6c], sets 0x54206c=0x2147, chains
  *     MStackFrameCdeclDouble_004903f0 → NineEntryFlagDispatch_00461260 →
  *     0x54206c=0x51e / 0x542070=0x28 / GatedScaledSubSat_0048fb40 → push
@@ -149,7 +149,6 @@ extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542080;
 extern unsigned int g_data_0054208c;
 extern void DispatchThroughBaseSel6c_00460f20(void);
@@ -163,9 +162,9 @@ extern void ZeroScaledZeroCallPauseJmp_0045fa90(void);
 __declspec(naked) void AlarmCountdownInstall_004609e0(void) {
     __asm {
         mov     ecx, dword ptr [g_data_00542060]
-        mov     eax, dword ptr [g_data_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [ecx*4 + 0x6c], eax
-        mov     dword ptr [g_data_0054206c], 0x2147
+        mov     dword ptr [g_walkCallback], 0x2147
         call    MStackFrameCdeclDouble_004903f0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -174,7 +173,7 @@ __declspec(naked) void AlarmCountdownInstall_004609e0(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_aci_e1End
-        mov     dword ptr [g_data_0054206c], 0x51e
+        mov     dword ptr [g_walkCallback], 0x51e
         mov     dword ptr [g_data_00542070], 0x28
         call    GatedScaledSubSat_0048fb40
         mov     eax, dword ptr [g_framePauseFlag]
@@ -217,7 +216,7 @@ __declspec(naked) void AlarmCountdownInstall_004609e0(void) {
         mov     ebx, 1
         test    al, bl
         je      short L_aci_checkVel
-        mov     dword ptr [g_data_0054206c], 0x51e
+        mov     dword ptr [g_walkCallback], 0x51e
         mov     dword ptr [g_data_00542070], 0x28
         call    GatedScaledSubSat_0048fb40
         mov     eax, dword ptr [g_framePauseFlag]
@@ -251,7 +250,7 @@ __declspec(naked) void AlarmCountdownInstall_004609e0(void) {
         jne     short L_aci_doneNoPop
         mov     edx, dword ptr [g_data_0054205c]
         mov     eax, 0xb
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     ebx, 1
         mov     dword ptr [edx*4 + 0x28], eax
         mov     dword ptr [g_data_00542080], ebx

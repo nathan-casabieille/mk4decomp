@@ -133,7 +133,6 @@ extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void DoubleScaledCrossStore_00475750(void);
 extern void GatedWordPushCall_00489f90(void);
@@ -276,7 +275,7 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
         mov      dword ptr [g_data_00542058], edx
         call     StoreLoadJmp_00404ef0
         add      esp, 4
-        mov      dword ptr [g_data_0054206c], 0x2b
+        mov      dword ptr [g_walkCallback], 0x2b
         call     GatedWordPushCall_00489f90
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

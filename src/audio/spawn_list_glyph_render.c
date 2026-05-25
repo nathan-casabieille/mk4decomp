@@ -131,7 +131,6 @@ extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern unsigned int g_data_00543398;
 extern unsigned int g_data_005433d8;
@@ -168,7 +167,7 @@ __declspec(naked) void SpawnListGlyphRender_004aa610(void)
         mov      dword ptr [eax*4 + 0x24], esi
         mov      dword ptr [edi*4 + 0x18], eax
         mov      dword ptr [eax*4 + 0x18], edi
-        mov      dword ptr [g_data_0054206c], ebx
+        mov      dword ptr [g_walkCallback], ebx
         call     MStackPush3HelperCondToggle_0049cf70
         mov      eax, dword ptr [g_data_00542044]
         mov      ecx, OFFSET g_data_005157a4

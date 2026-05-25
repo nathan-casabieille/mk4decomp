@@ -191,7 +191,6 @@ extern unsigned int g_data_00541f78;
 extern unsigned int g_data_00541f7c;
 extern unsigned int g_data_00541f80;
 extern unsigned int g_data_00541f84;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern unsigned int g_data_0054380c;
 extern void Cmp2DirtyToggle_00423870(void);
@@ -216,7 +215,7 @@ __declspec(naked) void RoundReset_004223e0(void)
     L_240f:
         mov      eax, dword ptr [g_data_0052aac4]
         cmp      eax, 2
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jne      short L_242f
         call     TestCmpZeroFour_004238b0
         cmp      dword ptr [g_framePauseFlag], ebx
@@ -227,7 +226,7 @@ __declspec(naked) void RoundReset_004223e0(void)
         mov      dword ptr [g_data_0053a474], eax
         mov      eax, dword ptr [g_data_00537f30]
         cmp      eax, 1
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jne      short L_2459
         mov      dword ptr [g_data_0053a6e0], ebx
         mov      dword ptr [g_data_00537ea4], ebx
@@ -298,7 +297,7 @@ __declspec(naked) void RoundReset_004223e0(void)
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      short L_25e9
         mov      eax, dword ptr [g_data_0053a498]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_005380d8], eax
     L_25e9:
         pop      ebx

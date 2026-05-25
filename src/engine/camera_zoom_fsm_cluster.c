@@ -138,7 +138,6 @@ extern void MStackPushVec3Mul10_004767e0(void);
  *   Else: scaledInit-=0x1b. ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542074;
 
@@ -167,7 +166,7 @@ void GuardedCascadeCjSetMul10_00440880(void) {
         _emit   00h
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     eax, 0x106
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x4c], eax
         call    GDispatch4_004089c0
         mov     eax, dword ptr [g_pause_00541e6c]
@@ -202,7 +201,7 @@ void GuardedCascadeCjSetMul10_00440880(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     eax, dword ptr [edx*4 + 0x18]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   53h
         call    CameraZoomFsmCluster_00440aa0
@@ -212,7 +211,7 @@ void GuardedCascadeCjSetMul10_00440880(void) {
         _emit   45h
         mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     eax, 0xffffdc6b
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x70], eax
         mov     ecx, dword ptr [g_scaledInit_00542044]
         add     ecx, 0x1b

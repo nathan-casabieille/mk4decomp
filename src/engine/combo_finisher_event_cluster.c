@@ -130,7 +130,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542080;
 extern unsigned int g_data_00542088;
@@ -170,7 +169,7 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         mov      dword ptr [eax*4 + 0x74], 0x404
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, 0x314
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x68], eax
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
@@ -203,7 +202,7 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         je       L_5f26
         dec      eax
         jne      L_6067
-        mov      dword ptr [g_data_0054206c], 0x14
+        mov      dword ptr [g_walkCallback], 0x14
         call     ScaledInit_0048d490
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_60d0
@@ -214,10 +213,10 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         call     ScaledChain3c7c_0048f930
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_60d0
-        cmp      dword ptr [g_data_0054206c], 3
+        cmp      dword ptr [g_walkCallback], 3
         jge      L_5fe8
     L_5e90:
-        mov      dword ptr [g_data_0054206c], 0xe666
+        mov      dword ptr [g_walkCallback], 0xe666
         call     EsiEdiAliasDualMul10_004906b0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_60d0
@@ -237,7 +236,7 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         mov      eax, 0x1000
         mov      dword ptr [g_data_00542074], eax
     L_5efb:
-        and      eax, dword ptr [g_data_0054206c]
+        and      eax, dword ptr [g_walkCallback]
         mov      dword ptr [g_data_00542094], eax
         jne      L_6067
         call     PushPopWalkSet1006_00470ee0
@@ -249,7 +248,7 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         pop      ebx
         ret
     L_5f26:
-        mov      dword ptr [g_data_0054206c], 0x1f
+        mov      dword ptr [g_walkCallback], 0x1f
         call     TableLookupCall_00489ff0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_60d0
@@ -281,7 +280,7 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         pop      ebx
         ret
     L_5fc5:
-        mov      dword ptr [g_data_0054206c], 0x14
+        mov      dword ptr [g_walkCallback], 0x14
         call     ScaledInit_0048d490
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_60d0

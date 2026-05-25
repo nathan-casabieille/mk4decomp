@@ -122,38 +122,37 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 
 /* @addr 0x00441f00 (197b game) - 6 pause-gated calls with different tag values, then chain bit-clear and tail-jmp.
- *   For tag in [0x93, 0x7e, 0x7b, 0x94, 0x77, 0x7f]: g_x_0054206c = tag; call F; pause? ret.
+ *   For tag in [0x93, 0x7e, 0x7b, 0x94, 0x77, 0x7f]: g_walkCallback = tag; call F; pause? ret.
  *   First uses PushPopCurrent (0x473070); rest use MStackPush2BitLoop_00476670.
  *   chain[g_baseSel + 0x64] = g_x_0054205c; chain[g_x_0054205c + 0x34] &= 0xfffffffb; jmp LoopMStackBitTest_00441fd0.
  */
 void SixTagCallsTailJmp_00441f00(void) {
     unsigned int new_cj;
     unsigned int dirty;
-    g_x_0054206c = 0x93;
+    g_walkCallback = 0x93;
     PushPopCurrentSetFFFFFFFF_00473070();
     if (g_framePauseFlag != 0) return;
-    g_x_0054206c = 0x7e;
+    g_walkCallback = 0x7e;
     MStackPush2BitLoop_00476670();
     if (g_framePauseFlag != 0) return;
-    g_x_0054206c = 0x7b;
+    g_walkCallback = 0x7b;
     MStackPush2BitLoop_00476670();
     if (g_framePauseFlag != 0) return;
-    g_x_0054206c = 0x94;
+    g_walkCallback = 0x94;
     MStackPush2BitLoop_00476670();
     if (g_framePauseFlag != 0) return;
-    g_x_0054206c = 0x77;
+    g_walkCallback = 0x77;
     MStackPush2BitLoop_00476670();
     if (g_framePauseFlag != 0) return;
-    g_x_0054206c = 0x7f;
+    g_walkCallback = 0x7f;
     MStackPush2BitLoop_00476670();
     if (g_framePauseFlag != 0) return;
     new_cj = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x64);
     g_x_0054205c = new_cj;
     dirty = *(unsigned int *)(new_cj * 4 + 0x34) & 0xfffffffbu;
-    g_x_0054206c = dirty;
+    g_walkCallback = dirty;
     *(unsigned int *)(new_cj * 4 + 0x34) = dirty;
     LoopMStackBitTest_00441fd0();
 }

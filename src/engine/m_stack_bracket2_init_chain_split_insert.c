@@ -127,7 +127,6 @@ extern unsigned int g_data_00541e74;
 extern unsigned int g_data_00541e78;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern void MStackBracket5_LinkedListUnlink_00409aa0(void);
 extern void MStackPush2ChainInsert_00409870(void);
@@ -148,14 +147,14 @@ __declspec(naked) void MStackBracket2InitChainSplitInsert_00425be0(void)
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], edx
-        mov     eax, dword ptr [g_data_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         cmp     eax, ebx
         mov     dword ptr [g_data_00542070], eax
         jae     short L_mbsi_skip1
         mov     dword ptr [g_data_00542070], ebx
     L_mbsi_skip1:
         mov     eax, dword ptr [g_data_00541e74]
-        mov     dword ptr [g_data_0054206c], 0x425ba0
+        mov     dword ptr [g_walkCallback], 0x425ba0
         mov     dword ptr [g_data_00542044], eax
         call    Helper_TickAlt
         mov     eax, dword ptr [g_framePauseFlag]
@@ -179,7 +178,7 @@ __declspec(naked) void MStackBracket2InitChainSplitInsert_00425be0(void)
         mov     ecx, dword ptr [eax*4 + 0xc]
         sub     ecx, edx
         cmp     ecx, 8
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         jb      L_mbsi_combine
         mov     dword ptr [eax*4 + 0xc], edx
         mov     eax, dword ptr [g_state_004d57ac]
@@ -189,13 +188,13 @@ __declspec(naked) void MStackBracket2InitChainSplitInsert_00425be0(void)
         mov     dword ptr [eax*4], edx
         mov     eax, dword ptr [g_data_00542070]
         mov     ecx, dword ptr [g_data_00542044]
-        mov     edx, dword ptr [g_data_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         add     edx, -4
         lea     eax, [ecx + eax + 4]
         mov     dword ptr [g_data_00542044], eax
         mov     dword ptr [eax*4 + 0xc], edx
         mov     eax, dword ptr [g_data_00542044]
-        mov     dword ptr [g_data_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [eax*4 + 4], 0
         mov     ecx, dword ptr [g_data_00541e74]
         mov     dword ptr [g_data_00542048], ecx
@@ -216,7 +215,7 @@ __declspec(naked) void MStackBracket2InitChainSplitInsert_00425be0(void)
     L_mbsi_loadCommon:
         mov     edx, dword ptr [g_data_00542070]
         mov     ecx, dword ptr [g_state_004d57ac]
-        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     edx, dword ptr [ecx*4]
         dec     ecx
         mov     dword ptr [g_data_00542070], edx

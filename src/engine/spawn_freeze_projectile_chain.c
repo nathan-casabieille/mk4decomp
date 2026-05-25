@@ -129,7 +129,6 @@ extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_0054208c;
 extern void MStackPush1MagicMod2_004244d0(void);
@@ -153,7 +152,7 @@ __declspec(naked) void SpawnFreezeProjectileChain_00442530(void)
         mov      dword ptr [g_data_00542050], eax
         mov      eax, dword ptr [eax*4]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       L_2734
         mov      ebp, 0x3d7
         mov      edi, 0x1999
@@ -170,7 +169,7 @@ __declspec(naked) void SpawnFreezeProjectileChain_00442530(void)
         mov      ecx, dword ptr [g_data_00542044]
         mov      dword ptr [ecx*4 + 0x70], 0xffffe148
         mov      edx, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_0054206c], ebp
+        mov      dword ptr [g_walkCallback], ebp
         mov      dword ptr [edx*4 + 0x4c], ebp
         mov      eax, dword ptr [g_data_00542050]
         mov      ecx, dword ptr [g_data_0054205c]
@@ -187,13 +186,13 @@ __declspec(naked) void SpawnFreezeProjectileChain_00442530(void)
         push     ecx
         push     0x28f5
         call     Mul10Tail_00404af0
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         add      esp, 8
         mov      dword ptr [g_data_00542070], eax
         push     edx
         push     0x28f5
         call     Mul10Tail_00404af0
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      eax, dword ptr [g_data_0054205c]
         add      esp, 8
         mov      ecx, dword ptr [eax*4 + 0x34]
@@ -206,29 +205,29 @@ __declspec(naked) void SpawnFreezeProjectileChain_00442530(void)
     L_2667:
         mov      edx, dword ptr [g_data_00542044]
         mov      dword ptr [edx*4 + 0x6c], eax
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         lea      esi, [edx*4]
         mov      dword ptr [esi + 0x74], eax
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         call     StoreDoubleNegPauseSubStore_004ab750
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2734
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [esi + 0x78], ecx
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         call     StoreDoubleNegPauseSubStore_004ab750
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2734
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         mov      dword ptr [esi + 0x7c], edx
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         call     StoreDoubleNegPauseSubStore_004ab750
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2734
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         mov      dword ptr [esi + 0x80], eax
         mov      ecx, dword ptr [g_data_00542044]
         mov      esi, 0x1b
@@ -247,7 +246,7 @@ __declspec(naked) void SpawnFreezeProjectileChain_00442530(void)
         mov      dword ptr [g_data_00542050], eax
         mov      eax, dword ptr [eax*4]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jne      L_2583
     L_2734:
         pop      edi

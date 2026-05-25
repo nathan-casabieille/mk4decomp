@@ -135,15 +135,14 @@ extern void AndStorePushCallZero_0048a220(void);
 
 /* @addr 0x004265d0 (249b game) - boot-style init sequence then guarded call chain.
  *   8 setup calls (DrainQueueCallEach_004a1ec0, PendingMatch_0045c8e0, Init0AndMax_00401370,
- *     g_x_0054206c=0, CopyGlobal_004ac1f0, Init6Struct_00404e20, ScenegraphWalk_0041f7d0,
+ *     g_walkCallback=0, CopyGlobal_004ac1f0, Init6Struct_00404e20, ScenegraphWalk_0041f7d0,
  *     CallPauseClear3CallTriple_00428030). If pause? ret.
  *   mstack-push 3 (0, g_x_00542070, g_x_00542074); clear g_state_0053a7b0;
  *   call SlideAttackEventCluster_00498900; if pause? ret. call AndStorePushCallZero_0048a220; if pause? ret.
- *   mstack-pop 3 into g_x_00542074, g_x_00542070, g_x_0054206c.
+ *   mstack-pop 3 into g_x_00542074, g_x_00542070, g_walkCallback.
  *   set g_x_00543550 = 0x100; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542074;
 extern unsigned int g_x_00543550;
@@ -153,7 +152,7 @@ void BootInitGuardedCallChain_004265d0(void) {
         call    DrainQueueCallEach_004a1ec0
         call    PendingMatch_0045c8e0
         call    Init0AndMax_00401370
-        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         call    CopyGlobal_004ac1f0
         call    Init6Struct_00404e20
         call    ScenegraphWalk_0041f7d0
@@ -167,7 +166,7 @@ void BootInitGuardedCallChain_004265d0(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         inc     eax
         mov     dword ptr [g_state_0053a7b0], 0
         mov     dword ptr [g_state_004d57ac], eax
@@ -203,7 +202,7 @@ void BootInitGuardedCallChain_004265d0(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [g_x_00543550], 0x100
         }

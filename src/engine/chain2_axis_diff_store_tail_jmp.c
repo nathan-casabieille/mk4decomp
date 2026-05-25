@@ -123,11 +123,10 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 extern unsigned int g_x_00542054;
 extern unsigned int g_x_00542058;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 
 /* @addr 0x0044cad0 (169b game) - 2-axis chain diff (+0x54, +0x5c) store + Mul10 + tail-jmp.
- *   eax = chain[g_x_00542054 + 0x54]; g_x_0054206c = eax;
+ *   eax = chain[g_x_00542054 + 0x54]; g_walkCallback = eax;
  *   ecx = chain[g_x_00542058 + 0x54]; eax -= ecx;  (eax = diff)
  *   g_x_00542070 = ecx; chain[g_baseSel + 0x3c] = eax.
  *   Same for +0x5c -> +0x44. g_scaledInit = g_baseSel + 0xf.
@@ -136,19 +135,19 @@ extern unsigned int g_x_00542070;
 void Chain2AxisDiffStoreTailJmp_0044cad0(void) {
     unsigned int a, b;
     a = *(unsigned int *)(g_x_00542054 * 4 + 0x54);
-    g_x_0054206c = a;
+    g_walkCallback = a;
     b = *(unsigned int *)(g_x_00542058 * 4 + 0x54);
     a -= b;
     g_x_00542070 = b;
     *(unsigned int *)(g_baseSel_00542060 * 4 + 0x3c) = a;
-    g_x_0054206c = 0;
+    g_walkCallback = 0;
     *(unsigned int *)(g_baseSel_00542060 * 4 + 0x40) = 0;
     a = *(unsigned int *)(g_x_00542054 * 4 + 0x5c);
-    g_x_0054206c = a;
+    g_walkCallback = a;
     b = *(unsigned int *)(g_x_00542058 * 4 + 0x5c);
     g_x_00542070 = b;
     a -= b;
-    g_x_0054206c = a;
+    g_walkCallback = a;
     *(unsigned int *)(g_baseSel_00542060 * 4 + 0x44) = a;
     g_scaledInit_00542044 = g_baseSel_00542060 + 0x0f;
     Triple3VecMul10Tail_00424a20();

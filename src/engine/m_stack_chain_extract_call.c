@@ -131,7 +131,6 @@ extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern void IncStoreCallIATDec_00439520(void);
 
@@ -154,7 +153,7 @@ void MStackChainExtractCall_004397d0(void) {
         mov     dword ptr [g_baseSel_00542060], eax
         mov     edx, dword ptr [eax*4 + 0x68]
         mov     eax, edx
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         shr     eax, 8
         and     eax, 0x0f
         cmp     eax, 4
@@ -169,7 +168,7 @@ void MStackChainExtractCall_004397d0(void) {
         add     ecx, eax
         mov     dword ptr [g_x_00542048], ecx
         mov     ecx, dword ptr [ecx*4 + 0]
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [g_x_00542048], ecx
         mov     dword ptr [g_cj_00542058], ecx
         call    IncStoreCallIATDec_00439520

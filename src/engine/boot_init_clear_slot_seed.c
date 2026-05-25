@@ -157,7 +157,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541fbc;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542054;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054371c;
 extern void BootInitGuardedCallChain_004265d0(void);
 extern void CopyGlobal_004ac1f0(void);
@@ -195,11 +194,11 @@ __declspec(naked) void BootInitClearSlotSeed_0042ee40(void) {
         mov     eax, 0xa
         mov     dword ptr [g_data_00541dd8], ebx
         mov     dword ptr [g_data_0053a170], 2
-        mov     dword ptr [g_data_0054206c], ebx
+        mov     dword ptr [g_walkCallback], ebx
         mov     dword ptr [g_data_0053a1ac], eax
     L_bic_zeroLoop:
         mov     edx, dword ptr [g_data_00542044]
-        mov     ecx, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [edx*4], ecx
         mov     edx, dword ptr [g_data_00542044]
         mov     ecx, dword ptr [g_data_0053a1ac]
@@ -209,32 +208,32 @@ __declspec(naked) void BootInitClearSlotSeed_0042ee40(void) {
         mov     dword ptr [g_data_0053a1ac], ecx
         jns     short L_bic_zeroLoop
         mov     dword ptr [g_data_0052aabc], eax
-        mov     dword ptr [g_data_0054206c], ebx
+        mov     dword ptr [g_walkCallback], ebx
         call    CopyGlobal_004ac1f0
         cmp     dword ptr [g_framePauseFlag], ebx
         jne     L_bic_done
-        mov     esi, dword ptr [g_data_0054206c]
+        mov     esi, dword ptr [g_walkCallback]
         mov     edi, dword ptr [g_data_00542070]
         push    2
         call    TableWalkBoundedCmp_004bd890
         mov     eax, dword ptr [g_data_00537f48]
         add     esp, 4
         mov     byte ptr [g_data_0054371c], 1
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_data_00542070], ebx
         call    DownloadPlayerChar
         cmp     dword ptr [g_framePauseFlag], ebx
         jne     short L_bic_done
         mov     ecx, dword ptr [g_data_005380e0]
         mov     dword ptr [g_data_00542070], 1
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         call    DownloadPlayerChar
         cmp     dword ptr [g_framePauseFlag], ebx
         jne     short L_bic_done
         mov     edx, offset g_data_0050b214
         mov     byte ptr [g_data_0054371c], bl
         shr     edx, 2
-        mov     dword ptr [g_data_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [g_data_00542070], edi
         mov     dword ptr [g_data_00542044], edx
         call    LoadGeoAsset_Default

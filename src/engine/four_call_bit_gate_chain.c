@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004334d0 (252b game) - 4-call pattern with bit2 gate.
- *   For each of 4 g_x_00542058 fields (+0/+4/+8/+0xc): set g_x_0054206c=field;
+ *   For each of 4 g_x_00542058 fields (+0/+4/+8/+0xc): set g_walkCallback=field;
  *   call MStackPush2LLWalkCompare_004069b0; if pause? final-OR-state-bit0 + copy scaledInit to
  *   g_x_00542054 + ret. If bit2 of g_state_0054208c set? clear-bit0-ret.
  *   Save scaledInit to side regs (g_x_00542048/0x4c/g_data_00542050) between calls.
@@ -133,7 +133,6 @@ extern unsigned int g_x_00542048;
 extern unsigned int g_x_0054204c;
 extern unsigned int g_x_00542054;
 extern unsigned int g_x_00542058;
-extern unsigned int g_x_0054206c;
 extern void MStackPush2LLWalkCompare_004069b0(void);
 
 __declspec(naked) void FourCallBitGateChain_004334d0(void) {
@@ -141,7 +140,7 @@ __declspec(naked) void FourCallBitGateChain_004334d0(void) {
         mov     eax, dword ptr [g_x_00542058]
         push    ebx
         mov     ecx, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         call    MStackPush2LLWalkCompare_004069b0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -165,7 +164,7 @@ __declspec(naked) void FourCallBitGateChain_004334d0(void) {
         mov     eax, dword ptr [g_x_00542058]
         mov     dword ptr [g_x_00542048], edx
         mov     ecx, dword ptr [eax*4 + 4]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         call    MStackPush2LLWalkCompare_004069b0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -182,7 +181,7 @@ __declspec(naked) void FourCallBitGateChain_004334d0(void) {
         mov     eax, dword ptr [g_x_00542058]
         mov     dword ptr [g_x_0054204c], edx
         mov     ecx, dword ptr [eax*4 + 8]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         call    MStackPush2LLWalkCompare_004069b0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -195,7 +194,7 @@ __declspec(naked) void FourCallBitGateChain_004334d0(void) {
         mov     eax, dword ptr [g_x_00542058]
         mov     dword ptr [g_data_00542050], edx
         mov     ecx, dword ptr [eax*4 + 0x0c]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         call    MStackPush2LLWalkCompare_004069b0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

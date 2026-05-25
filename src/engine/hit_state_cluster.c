@@ -132,7 +132,6 @@ extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542080;
 extern unsigned int g_data_0054208c;
@@ -188,7 +187,7 @@ __declspec(naked) void HitStateCluster_0046c7c0(void)
         jne      L_c840
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, 0x600
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x74], eax
         call     ScaledAndAlfe_00490390
         mov      eax, dword ptr [g_framePauseFlag]
@@ -242,10 +241,10 @@ __declspec(naked) void HitStateCluster_0046c7c0(void)
         mov      dword ptr [g_data_00542070], 0x51e
         mov      eax, dword ptr [ecx*4 + 0x4c]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jne      L_c8aa
         mov      eax, 0x51e
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
     L_c8aa:
         mov      dword ptr [ecx*4 + 0x4c], eax
         mov      eax, dword ptr [g_data_004d57ac]
@@ -346,10 +345,10 @@ __declspec(naked) void HitStateCluster_0046c7c0(void)
         mov      dword ptr [g_data_00542070], 0x51e
         mov      eax, dword ptr [ecx*4 + 0x4c]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jne      L_ca5e
         mov      eax, 0x51e
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
     L_ca5e:
         mov      dword ptr [ecx*4 + 0x4c], eax
         jmp      L_ca74
@@ -386,7 +385,7 @@ __declspec(naked) void HitStateCluster_0046c7c0(void)
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
-        mov      dword ptr [g_data_0054206c], 0x27
+        mov      dword ptr [g_walkCallback], 0x27
         call     ScaledInit_0048d450
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

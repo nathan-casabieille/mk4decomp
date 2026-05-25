@@ -141,7 +141,6 @@ extern void QuadCmpBitGateJmp_0046c560(void);
  *     Same state_0054207c gate; jmp CallPauseTripleScaledJmp or DualEntryStateGated; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern void FiveCallGuardSetTail_0046f6b0(void);
 extern void ScaledMove48to58_00490720(void);
 
@@ -198,7 +197,7 @@ __declspec(naked) void InstallSelfMultiThunkDispatch_0046c3d0(void) {
         jmp     DualEntryStateGated_00460fa0
         mov     eax, dword ptr [g_state_00535ddc]
         cmp     eax, 0xcccc
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   05h
         jmp     DualEntryStateGated_00460fa0

@@ -130,7 +130,6 @@ extern void GameModeAdvanceCluster_00482000(void);
 
 /* @addr 0x00483c90 (334b game) - 4-block: thunk + install-self body + 2 small thunks. */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CjInstallSelfRouter_00470480(void);
 extern void DualBlockChainCallInstall_00483de0(void);
@@ -195,14 +194,14 @@ __declspec(naked) void QuadBlockInstallChainThunks_00483c90(void) {
         mov     ebx, 1
         _emit   84h
         _emit   0c3h
-        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         _emit   75h
         _emit   08h
         call    DualBlockChainCallInstall_00483de0
         pop     esi
         pop     ebx
         ret
-        mov     dword ptr [g_x_0054206c], ebx
+        mov     dword ptr [g_walkCallback], ebx
         call    ByteWordTableTaggedDispatch_0048a050
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -233,7 +232,7 @@ __declspec(naked) void QuadBlockInstallChainThunks_00483c90(void) {
         test    eax, eax
         _emit   75h
         _emit   0fh
-        mov     dword ptr [g_x_0054206c], 0x2013
+        mov     dword ptr [g_walkCallback], 0x2013
         jmp     DualBlockChainCallInstall_00483de0
         ret
         _emit   90h
@@ -243,7 +242,7 @@ __declspec(naked) void QuadBlockInstallChainThunks_00483c90(void) {
         test    eax, eax
         _emit   75h
         _emit   0fh
-        mov     dword ptr [g_x_0054206c], 0x1013
+        mov     dword ptr [g_walkCallback], 0x1013
         jmp     DualBlockChainCallInstall_00483de0
         ret
     }

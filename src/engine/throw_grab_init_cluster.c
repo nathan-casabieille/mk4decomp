@@ -128,7 +128,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542080;
 extern unsigned int g_data_0054208c;
 extern void CallPauseScaledStoreCopyJmp_00461220(void);
@@ -149,7 +148,7 @@ __declspec(naked) void ThrowGrabInitCluster_00436b30(void)
         test     eax, eax
         jne      short L_6b63
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      dword ptr [g_data_0054206c], 0xa
+        mov      dword ptr [g_walkCallback], 0xa
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], OFFSET InstallSelfPlusTailThunk_00436a10 + 0x100
@@ -329,7 +328,7 @@ __declspec(naked) void ThrowGrabInitCluster_00436b30(void)
         jne      L_6e46
         mov      eax, dword ptr [g_data_00535ddc]
         cmp      eax, 0x20000
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jge      short L_6dd3
         call     GameStateDispatch4Way_00436e50
         pop      esi

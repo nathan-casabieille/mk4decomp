@@ -137,7 +137,6 @@ extern void CrouchCounterCluster_0043b1d0(void);
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542050;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542084;
 extern void PackedAdvanceCallTailJmp_004392c0(void);
 
@@ -153,7 +152,7 @@ __declspec(naked) void QuadBlockArgInstallChain_0043a950(void) {
         mov     dword ptr [g_scaledInit_00542044], ecx
         mov     eax, dword ptr [eax*4 + 0x34]
         cmp     eax, 0xf
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   02h
         jmp     ecx

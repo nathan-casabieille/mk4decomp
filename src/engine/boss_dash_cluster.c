@@ -130,13 +130,12 @@ extern void BossDashCluster_004879e0(void);
  *   mstack-push g_x_0054207c; if (g_x_00542054 != 0): call eax = g_x_00542054.
  *   pause? -> end. eax = mstack-pop; g_x_0054207c = eax; counter--.
  *   if (eax != 0): chain[g_baseSel+0x3c] -> g_scaledInit; ecx = chain[+0x74];
- *     g_x_0054206c = ecx; if (ecx == eax): goto install-path; else: call BossDashCluster_004879e0; pop esi; ret.
+ *     g_walkCallback = ecx; if (ecx == eax): goto install-path; else: call BossDashCluster_004879e0; pop esi; ret.
  *   if (eax == 0): call BossDashCluster_004879e0; pop esi; ret.
  *   install-path: install self with [esi+0x84]=1, g_x_0054204c=1, pause=1.
  */
 extern unsigned int g_x_0054204c;
 extern unsigned int g_x_00542054;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_0054207c;
 
 extern unsigned int g_data_004d57ac_arr;
@@ -181,7 +180,7 @@ __declspec(naked) void InstallSelfMStackIndirect_00487920(void) {
         mov     dword ptr [g_scaledInit_00542044], ecx
         mov     ecx, [ecx*4 + 0x74]
         cmp     ecx, eax
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         _emit   74h
         _emit   07h
         call    BossDashCluster_004879e0

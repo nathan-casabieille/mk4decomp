@@ -130,7 +130,6 @@ extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542080;
 extern void BootChainBidirRecurseWalk_00405ca0(void);
@@ -170,7 +169,7 @@ void SpecialAnimBuilder_004937b0(void) {
         test     al, cl
         jne      L_38c8
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], edx
@@ -184,7 +183,7 @@ void SpecialAnimBuilder_004937b0(void) {
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], edx
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         call     OrDualStore_0048a190
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -201,7 +200,7 @@ void SpecialAnimBuilder_004937b0(void) {
         mov      dword ptr [g_data_004d57ac], eax
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_004d57ac], eax
     L_38c8:
         mov      edx, dword ptr [g_data_00542044]
@@ -243,7 +242,7 @@ void SpecialAnimBuilder_004937b0(void) {
         test     eax, eax
         jne      short L_3a19
         mov      edx, dword ptr [g_data_00542080]
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         call     MStackPushTableWalk_00493a20
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

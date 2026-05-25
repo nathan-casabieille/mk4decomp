@@ -33,7 +33,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542070;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542078;
@@ -63,7 +62,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         test     ecx, ecx
         je       L_983c
         mov      edx, dword ptr [eax*4 + 0x54]
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      esi, dword ptr [eax*4 + 0x5c]
         mov      dword ptr [g_data_00542070], esi
         mov      eax, dword ptr [ecx*4 + 0x54]
@@ -99,7 +98,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_983c
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         test     edx, edx
         mov      dword ptr [g_data_00535ddc], edx
         je       L_9569
@@ -115,16 +114,16 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         jne      L_9569
         mov      ecx, dword ptr [g_data_0054207c]
         mov      dword ptr [g_data_00542084], edx
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_00542070], edx
         call     RangeMulMod_004ab2a0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_983c
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         mov      edx, dword ptr [g_data_00542080]
         mov      dword ptr [g_data_00535e78], eax
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         neg      eax
         mov      dword ptr [g_data_00535e70], eax
         mov      eax, dword ptr [g_data_00542084]
@@ -133,17 +132,17 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_983c
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      edx, dword ptr [g_data_00542044]
         mov      esi, ecx
         neg      ecx
         mov      eax, ecx
         mov      dword ptr [g_data_00535e7c], esi
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_00535e74], eax
         mov      edx, dword ptr [edx*4 + 0x40]
         mov      eax, dword ptr [g_data_00542048]
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      eax, dword ptr [eax*4 + 0x40]
         mov      dword ptr [g_data_00542070], eax
         or       eax, edx
@@ -179,7 +178,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         sub      ecx, esi
         push     eax
         push     eax
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [g_data_00542070], esi
         mov      dword ptr [g_data_00542074], eax
         mov      dword ptr [g_data_00542078], ecx
@@ -191,7 +190,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         push     eax
         call     Mul10Tail_00404af0
         mov      ecx, dword ptr [g_data_00542074]
-        mov      edi, dword ptr [g_data_0054206c]
+        mov      edi, dword ptr [g_walkCallback]
         mov      esi, dword ptr [g_data_00542080]
         mov      dword ptr [g_data_00542078], eax
         add      ecx, eax
@@ -241,7 +240,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      eax, dword ptr [g_data_0052ab10]
         test     ecx, ecx
         mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         jne      L_959e
         mov      edx, dword ptr [eax*4 + 0x5c]
         mov      eax, dword ptr [g_data_00542044]
@@ -266,7 +265,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      esi, dword ptr [esi*4 + 0x5c]
         sub      eax, ecx
         sub      esi, edx
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         push     eax
         push     edx
         mov      dword ptr [g_data_0054207c], eax
@@ -285,13 +284,13 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      ecx, dword ptr [g_data_00535e78]
         xor      edi, edi
         mov      dword ptr [g_data_0054207c], edi
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      eax, dword ptr [edx*4 + 0x6c]
         test     eax, eax
         mov      dword ptr [g_data_00542070], eax
         jne      L_9670
         mov      ecx, dword ptr [g_data_00535e7c]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      eax, dword ptr [edx*4 + 0x74]
         test     eax, eax
         mov      dword ptr [g_data_00542070], eax
@@ -331,13 +330,13 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      dword ptr [g_data_0052d74c], edi
         xor      edi, edi
         mov      dword ptr [g_data_0054207c], edi
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      eax, dword ptr [edx*4 + 0x6c]
         test     eax, eax
         mov      dword ptr [g_data_00542070], eax
         jne      L_9704
         mov      ecx, dword ptr [g_data_00535e74]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      eax, dword ptr [edx*4 + 0x74]
         test     eax, eax
         mov      dword ptr [g_data_00542070], eax
@@ -378,12 +377,12 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      dword ptr [g_data_00538068], edi
         dec      eax
         mov      ecx, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         test     eax, eax
         mov      dword ptr [g_data_00541dc4], ecx
         jge      L_977c
         xor      eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
     L_977c:
         test     ecx, ecx
         mov      dword ptr [g_data_00537ef4], eax
@@ -394,7 +393,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         jne      L_983c
         mov      eax, dword ptr [g_data_00535ddc]
         cmp      eax, 0x60000
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jle      L_97ba
         call     ScaledStateNegCallPauseLoad_00489e90
         mov      eax, dword ptr [g_framePauseFlag]
@@ -429,7 +428,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         jge      L_9837
         mov      eax, dword ptr [g_data_00535ddc]
         cmp      eax, 0x8000
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jge      L_9837
         call     GeoTransformDispatchAndApply_00489840
         mov      eax, dword ptr [g_framePauseFlag]

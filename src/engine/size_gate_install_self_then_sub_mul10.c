@@ -127,7 +127,6 @@ extern unsigned int g_data_004ecc38;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_0054208c;
 extern void AudioMixerStep_004ab700(void);
@@ -145,40 +144,40 @@ __declspec(naked) void SizeGateInstallSelfThenSubMul10_00473480(void)
         xor     esi, esi
         mov     ecx, dword ptr [eax*4 + 0x1c]
         cmp     ecx, edx
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         jl      L_sgis_lateTail
         mov     ecx, dword ptr [eax*4 + 0x28]
         mov     dword ptr [g_data_00542048], ecx
         mov     eax, dword ptr [eax*4 + 0x3c]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x20], eax
         mov     eax, dword ptr [g_data_00542044]
         mov     eax, dword ptr [eax*4 + 0x40]
         cmp     eax, esi
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         je      short L_sgis_after40
         push    eax
         push    0x1999
         call    Mul10Tail_00404af0
         mov     ecx, dword ptr [g_data_00542048]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         add     esp, 8
         mov     dword ptr [ecx*4 + 0x48], eax
         mov     eax, dword ptr [g_data_00542048]
         or      dword ptr [eax*4], 8
     L_sgis_after40:
-        mov     dword ptr [g_data_0054206c], 0x10000
+        mov     dword ptr [g_walkCallback], 0x10000
         call    StoreDoubleNegPauseSubStore_004ab750
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_sgis_ret
         mov     eax, dword ptr [g_data_00542048]
-        mov     edx, dword ptr [g_data_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0x18], edx
-        mov     dword ptr [g_data_0054206c], 0xccc
+        mov     dword ptr [g_walkCallback], 0xccc
         call    AudioMixerStep_004ab700
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_sgis_ret
-        mov     ecx, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     edx, dword ptr [g_data_00542048]
         add     ecx, 0xccc
         mov     dword ptr [edx*4 + 0x1c], ecx
@@ -189,7 +188,7 @@ __declspec(naked) void SizeGateInstallSelfThenSubMul10_00473480(void)
         mov     dword ptr [eax + 0x3c], esi
         mov     dword ptr [eax + 0x40], esi
         mov     dword ptr [eax + 0x44], esi
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         call    ScaledStoreThree_00409260
         cmp     dword ptr [g_framePauseFlag], esi
         jne     short L_sgis_ret
@@ -198,15 +197,15 @@ __declspec(naked) void SizeGateInstallSelfThenSubMul10_00473480(void)
         shr     eax, 2
         mov     dword ptr [edx*4 + 0x10], esi
         mov     ecx, dword ptr [g_data_00542048]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x14], eax
         mov     eax, dword ptr [g_data_00542044]
     L_sgis_lateTail:
         mov     eax, dword ptr [eax*4 + 0xc]
         cmp     eax, esi
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         je      short L_sgis_clear
-        mov     dword ptr [g_data_0054206c], offset SizeGateInstallSelfThenSubMul10_00473480
+        mov     dword ptr [g_walkCallback], offset SizeGateInstallSelfThenSubMul10_00473480
         call    Helper_TickAlt
         cmp     dword ptr [g_framePauseFlag], esi
         jne     short L_sgis_ret
@@ -235,10 +234,10 @@ __declspec(naked) void SizeGateInstallSelfThenSubMul10_00473480(void)
         mov     eax, dword ptr [eax*4 + 0x48]
         push    eax
         push    0x13f35
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    Mul10Tail_00404af0
         mov     ecx, dword ptr [g_data_00542048]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         add     esp, 8
         mov     dword ptr [ecx*4 + 0x48], eax
         jmp     PendingMatch_00473640

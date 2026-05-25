@@ -130,7 +130,6 @@ extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_00542080;
 extern unsigned int g_data_00542088;
@@ -174,7 +173,7 @@ __declspec(naked) void BootScheduledNodeTimerWalk_0041f570(void)
         mov     edx, dword ptr [eax*4 + 0x28]
         mov     dword ptr [g_data_00542058], edx
         mov     ecx, dword ptr [eax*4 + 8]
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [eax*4 + 0x2c]
         mov     dword ptr [g_data_0054205c], edx
         mov     ecx, dword ptr [eax*4 + 0x1c]

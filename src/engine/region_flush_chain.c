@@ -135,7 +135,6 @@ extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054207c;
 
 __declspec(naked) void MStackBracket7_DispatchAndChain_004b8fa0(void)
@@ -215,7 +214,7 @@ __declspec(naked) void MStackBracket7_DispatchAndChain_004b8fa0(void)
         mov     dword ptr [g_data_00542044], edx
         mov     ecx, dword ptr [eax*4 + 0x2C]
         test    ecx, ecx
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         je      L_msb7dc_no_2c
         mov     edx, dword ptr [g_data_00542050]
         add     eax, 0x15
@@ -232,17 +231,17 @@ __declspec(naked) void MStackBracket7_DispatchAndChain_004b8fa0(void)
         ret
     L_msb7dc_no_2c:
         mov     eax, dword ptr [eax*4 + 0x54]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4], eax
         mov     eax, dword ptr [g_data_0054205c]
         mov     ecx, dword ptr [g_data_00542044]
         mov     eax, dword ptr [eax*4 + 0x58]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 4], eax
         mov     edx, dword ptr [g_data_0054205c]
         mov     ecx, dword ptr [g_data_00542044]
         mov     eax, dword ptr [edx*4 + 0x5C]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 8], eax
     L_msb7dc_chain_init:
         mov     edx, dword ptr [g_data_0054205c]

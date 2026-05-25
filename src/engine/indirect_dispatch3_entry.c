@@ -149,7 +149,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541fc0;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern void CallSetPause_0041f830(void);
 extern void GuardedScaledCall_0048a020(void);
@@ -181,7 +180,7 @@ __declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
         mov     dword ptr [g_data_00542044], eax
         mov     eax, dword ptr [eax*4]
         cmp     eax, ebx
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         je      L_id3_freshPath
     L_id3_loopHead:
         cmp     eax, 6
@@ -191,14 +190,14 @@ __declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
         cmp     eax, 0x10
         je      short L_id3_freshPath
         dec     eax
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    LinkedListIndirectDirtyToggle_0049f7b0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_id3_doneNoPop
         test    byte ptr [g_data_0054208c], bl
         je      short L_id3_writeCx
-        mov     eax, dword ptr [g_data_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         cmp     eax, ebx
         jne     short L_id3_loopHead
         call    CallSetPause_0041f830
@@ -206,7 +205,7 @@ __declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
         ret
     L_id3_writeCx:
         mov     eax, dword ptr [g_data_00542044]
-        mov     ecx, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4], ecx
         mov     edx, dword ptr [g_data_00535e48]
         mov     dword ptr [g_data_00542070], edx
@@ -216,7 +215,7 @@ __declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
         jne     short L_id3_doneNoPop
         mov     eax, dword ptr [g_data_00542048]
         mov     ecx, dword ptr [eax*4 + 8]
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         call    GuardedScaledCall_0048a020
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -243,7 +242,7 @@ __declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
     L_id3_entry2:
         mov     eax, dword ptr [g_data_00541d88]
         test    eax, eax
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         je      short L_id3_e2zero
         jmp     CallSetPause_0041f830
     L_id3_e2zero:
@@ -268,7 +267,7 @@ __declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
     L_id3_entry3:
         mov     eax, dword ptr [g_data_00537ea8]
         test    eax, eax
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         je      short L_id3_e3one
         jmp     CallSetPause_0041f830
     L_id3_e3one:

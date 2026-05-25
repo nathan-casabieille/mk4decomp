@@ -23,7 +23,6 @@ extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542070;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542078;
@@ -34,7 +33,6 @@ extern unsigned int g_data_0054208c;
 extern unsigned int g_state_004d57ac;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_state_00535ddc;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_state_0054208c;
 extern unsigned int g_data_004edf68;
 extern unsigned int g_data_004f21d0;
@@ -302,12 +300,12 @@ void func_0042ce90(void) {
     CjInstallSelfRouter_00470480();
 }
 
-/* @addr 0x00439fa0 (35b): cmp state_ddc with 0x13333, store at g_x_0054206c;
+/* @addr 0x00439fa0 (35b): cmp state_ddc with 0x13333, store at g_walkCallback;
  * if < clear bit 0 of state_208c and ret; if >= tail-jmp IdCascadeBitSet.
  * Orphan sub-entry of the original packed block. */
 void func_00439fa0(void) {
     unsigned int v = g_state_00535ddc;
-    g_x_0054206c = v;
+    g_walkCallback = v;
     if ((int)v < 0x13333) {
         g_state_0054208c &= 0xfffffffeu;
         return;
@@ -358,7 +356,7 @@ __declspec(naked) void func_00498790(void)
         mov     ecx, dword ptr [g_data_0054205c]
         mov     eax, dword ptr [ecx*4 + 0x30]
         cmp     eax, 0x62
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jne     short L_qsv_callPause
         call    SlideAttackEventCluster_00498900
         mov     eax, dword ptr [g_framePauseFlag]
@@ -375,9 +373,9 @@ __declspec(naked) void func_00498790(void)
         mov     dword ptr [g_data_00542054], eax
         mov     eax, dword ptr [eax*4 + 0x30]
         cmp     eax, 0x6c
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         je      short L_qsv_install1
-        mov     dword ptr [g_data_0054206c], 0x12c
+        mov     dword ptr [g_walkCallback], 0x12c
         call    AudioVolumeRescale_004ab690
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -432,26 +430,26 @@ __declspec(naked) void func_00498790(void)
  * Sister of h7 (different imm and event addr). */
 void func_00498930(void) {
     unsigned int v;
-    g_data_0054206c = 7;
+    g_walkCallback = 7;
     ScaledIndexConditionalAdd_0048e400();
     if (g_framePauseFlag) return;
     CondPickDualStore_0049c670();
     if (g_framePauseFlag) return;
     v = 0x30b;
-    g_data_0054206c = v;
+    g_walkCallback = v;
     *(unsigned int *)(g_data_00542060 * 4 + 0x74) = v;
     ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004f21d0);
 }
 
 /* h3 @ 0x00498980 (368b naked): pose copy + 0x23d7 ratio + event
- * 004f2240. Keep naked: 13+ intermediate `mov [g_data_0054206c], reg`
+ * 004f2240. Keep naked: 13+ intermediate `mov [g_walkCallback], reg`
  * stores that pure C dead-store-eliminates; callee-saved esi for
  * cross-call value retention; reload-via-global pattern. */
 __declspec(naked) void func_00498980(void)
 {
     __asm {
         /* === h3 (0x498980): pose copy + 0x23d7 ratio + 004f2240 === */
-        mov      dword ptr [g_data_0054206c], 0x47
+        mov      dword ptr [g_walkCallback], 0x47
         call     TableLookupCall_00489ff0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -473,14 +471,14 @@ __declspec(naked) void func_00498980(void)
         jne      L_8ae4
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, 0x43
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         push     esi
         mov      dword ptr [ecx*4 + 0x30], eax
         mov      edx, dword ptr [g_data_00542044]
         mov      ecx, dword ptr [g_data_0054205c]
         lea      eax, [edx*4]
         mov      edx, dword ptr [ecx*4 + 0x54]
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      esi, dword ptr [ecx*4 + 0x58]
         mov      dword ptr [g_data_00542070], esi
         mov      ecx, dword ptr [ecx*4 + 0x5c]
@@ -494,10 +492,10 @@ __declspec(naked) void func_00498980(void)
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, dword ptr [edx*4 + 0x34]
         and      eax, 1
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      edx, dword ptr [ecx*4 + 0x34]
         or       eax, edx
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
         mov      eax, dword ptr [g_data_00542084]
         push     eax
@@ -553,7 +551,7 @@ __declspec(naked) void func_00498b20(void)
         mov      dword ptr [esi + 0x84], 0
         test     eax, eax
         je       short L_8b61
-        mov      dword ptr [g_data_0054206c], 0x49
+        mov      dword ptr [g_walkCallback], 0x49
         call     TableLookupCall_00489ff0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -566,7 +564,7 @@ __declspec(naked) void func_00498b20(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_8ba8
-        mov      dword ptr [g_data_0054206c], 0x48
+        mov      dword ptr [g_walkCallback], 0x48
         call     TableLookupCall_00489ff0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -597,7 +595,7 @@ void func_00498bd0(void) {
     CondPickDualStore_0049c670();
     if (g_framePauseFlag) return;
     v = 0x309;
-    g_data_0054206c = v;
+    g_walkCallback = v;
     *(unsigned int *)(g_data_00542060 * 4 + 0x74) = v;
     ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_data_004f2250);
 }
@@ -642,17 +640,17 @@ __declspec(naked) void func_0047c3f0(void)
         mov      edx, dword ptr [ecx*4 + 0x38]
         mov      ecx, dword ptr [g_data_0054205c]
         mov      dword ptr [g_data_00542044], edx
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x58], eax
         mov      eax, dword ptr [g_data_00542044]
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         mov      dword ptr [eax*4 + 0x58], edx
         mov      ecx, dword ptr [g_data_0054205c]
         mov      eax, 0x51e
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x4c], eax
         mov      edx, dword ptr [g_data_00542044]
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         mov      dword ptr [edx*4 + 0x4c], eax
         mov      eax, dword ptr [g_data_004d57ac]
         inc      eax
@@ -684,7 +682,7 @@ __declspec(naked) void func_0047c3f0(void)
 
 
 /* h6 @ 0x0047c530 (64b naked): swap-side pose [+0x70] add 0x51e on
- * both sides. Keep naked: redundant `mov [g_data_0054206c], reg`
+ * both sides. Keep naked: redundant `mov [g_walkCallback], reg`
  * stores before final indexed-store. */
 __declspec(naked) void func_0047c530(void)
 {
@@ -700,10 +698,10 @@ __declspec(naked) void func_0047c530(void)
     L_c54e:
         mov      eax, dword ptr [ecx*4 + 0x70]
         add      eax, 0x51e
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x70], eax
         mov      ecx, dword ptr [g_data_00542044]
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         mov      dword ptr [ecx*4 + 0x70], edx
         ret
     }
@@ -719,7 +717,7 @@ void func_0047c580(void) {
     DualCallPauseDirtyJmp_00490c30();
     if (g_framePauseFlag) return;
     v = 0x200d;
-    g_data_0054206c = v;
+    g_walkCallback = v;
     *(unsigned int *)(g_data_00542060 * 4 + 0x74) = v;
     ScaledChainAndF000DirtyToggle_0048e740();
     if (g_framePauseFlag) return;
@@ -748,7 +746,7 @@ void func_00482220(void) {
 void func_00482240(void) {
     GateDispatch6c_00494580();
     if (g_framePauseFlag) return;
-    g_data_0054206c = 0x1b333;
+    g_walkCallback = 0x1b333;
     g_data_00542070 = 0;
     Wrapper_0048ff30();
     if (g_framePauseFlag) return;
@@ -818,7 +816,7 @@ __declspec(naked) void func_004822e0(void)
 /* h9 @ 0x00482360 (80b): 0x8000 + CmpP1DualInitStore + chain + event
  * 004edca8. (Comment said 0x482350 but real addr is 0x482360.) */
 void func_00482360(void) {
-    g_data_0054206c = 0x8000;
+    g_walkCallback = 0x8000;
     CmpP1DualInitStore_00482ab0();
     if (g_framePauseFlag) return;
     CjTableThresholdDispatch_00488f00();
@@ -851,7 +849,7 @@ void func_004823e0(void) {
 /* h12 @ 0x00482420 (80b): 0x8000 + CmpP1DualInitStore + chain +
  * event 004edd58 + tail-jmp Wrapper_00488c60. */
 void func_00482420(void) {
-    g_data_0054206c = 0x8000;
+    g_walkCallback = 0x8000;
     CmpP1DualInitStore_00482ab0();
     if (g_framePauseFlag) return;
     CjTableThresholdDispatch_00488f00();
@@ -1041,7 +1039,7 @@ __declspec(naked) void func_00432710(void) {
         test     eax, eax
         jne      L_2a6a
         mov      edx, 0x4d55a8
-        mov      dword ptr [g_data_0054206c], 0x23f
+        mov      dword ptr [g_walkCallback], 0x23f
         shr      edx, 2
         mov      dword ptr [g_data_00542048], edx
         mov      dword ptr [g_data_00542070], ebx
@@ -1066,7 +1064,7 @@ __declspec(naked) void func_00432710(void) {
         shl      eax, 2
         mov      dword ptr [g_data_00542084], eax
         sar      eax, 0x10
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         call     StoreIncrMStackPush6_004275c0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -1094,7 +1092,7 @@ __declspec(naked) void func_00432710(void) {
         test     eax, eax
         jne      L_2a6a
         mov      ecx, 0x4d55b0
-        mov      dword ptr [g_data_0054206c], 0x241
+        mov      dword ptr [g_walkCallback], 0x241
         shr      ecx, 2
         mov      dword ptr [g_data_00542048], ecx
         mov      dword ptr [g_data_00542070], ebx
@@ -1209,7 +1207,7 @@ __declspec(naked) void func_00432710(void) {
         mov      ecx, dword ptr [g_data_00542044]
         mov      edx, dword ptr [g_data_00542080]
         mov      dword ptr [ecx*4 + 0x5c], edx
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         cmp      eax, 0xa
         jb       L_2c3b
         call     AllocSlotPushTripleGlobals_00427470
@@ -1217,7 +1215,7 @@ __declspec(naked) void func_00432710(void) {
         test     eax, eax
         jne      L_2ec2
         mov      eax, 0x4d55a8
-        mov      dword ptr [g_data_0054206c], 0x243
+        mov      dword ptr [g_walkCallback], 0x243
         shr      eax, 2
         mov      dword ptr [g_data_00542048], eax
         mov      dword ptr [g_data_00542070], ebx
@@ -1240,7 +1238,7 @@ __declspec(naked) void func_00432710(void) {
         test     eax, eax
         jne      L_2ec2
         mov      eax, 0x4d55a8
-        mov      dword ptr [g_data_0054206c], 0x243
+        mov      dword ptr [g_walkCallback], 0x243
         shr      eax, 2
         mov      dword ptr [g_data_00542048], eax
         mov      dword ptr [g_data_00542070], ebx
@@ -1266,7 +1264,7 @@ __declspec(naked) void func_00432710(void) {
         shl      eax, 2
         mov      dword ptr [g_data_00542084], eax
         sar      eax, 0x10
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         call     StoreIncrMStackPush6_004275c0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -1290,7 +1288,7 @@ __declspec(naked) void func_00432710(void) {
         mov      eax, dword ptr [g_data_00542044]
         mov      ecx, dword ptr [g_data_00542080]
         mov      dword ptr [eax*4 + 0x5c], ecx
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         cmp      eax, 0xa
         jb       L_2dd7
         call     AllocSlotPushTripleGlobals_00427470
@@ -1298,7 +1296,7 @@ __declspec(naked) void func_00432710(void) {
         test     eax, eax
         jne      L_2ec2
         mov      edx, 0x4d55b0
-        mov      dword ptr [g_data_0054206c], 0x245
+        mov      dword ptr [g_walkCallback], 0x245
         shr      edx, 2
         mov      dword ptr [g_data_00542048], edx
         mov      dword ptr [g_data_00542070], ebx
@@ -1321,7 +1319,7 @@ __declspec(naked) void func_00432710(void) {
         test     eax, eax
         jne      L_2ec2
         mov      edx, 0x4d55b0
-        mov      dword ptr [g_data_0054206c], 0x245
+        mov      dword ptr [g_walkCallback], 0x245
         shr      edx, 2
         mov      dword ptr [g_data_00542048], edx
         mov      dword ptr [g_data_00542070], ebx
@@ -1373,7 +1371,7 @@ __declspec(naked) void func_00432710(void) {
 
 void func_00448810(void) {
     *(unsigned int *)(g_data_0054205c * 4 + 0x28) = 0x3b;
-    g_data_0054206c = 0x1c;
+    g_walkCallback = 0x1c;
     GatedWordPushCall_00489f90();
     if (g_framePauseFlag != 0) return;
     ((void (*)(int))ArgSarStoreJmp_004594f0)(0x4e62c8);
@@ -1381,7 +1379,7 @@ void func_00448810(void) {
 
 void func_00448850(void) {
     *(unsigned int *)(g_data_0054205c * 4 + 0x28) = 0x83;
-    g_data_0054206c = 0x29;
+    g_walkCallback = 0x29;
     GatedWordPushCall_00489f90();
     if (g_framePauseFlag != 0) return;
     ((void (*)(int))ArgSarStoreJmp_004594f0)(0x4e62d8);
@@ -1389,7 +1387,7 @@ void func_00448850(void) {
 
 void func_00448890(void) {
     *(unsigned int *)(g_data_0054205c * 4 + 0x28) = 0x94;
-    g_data_0054206c = 0x1b;
+    g_walkCallback = 0x1b;
     GatedWordPushCall_00489f90();
     if (g_framePauseFlag != 0) return;
     ((void (*)(int))ArgSarStoreJmp_004594f0)(0x4e62e8);
@@ -1397,7 +1395,7 @@ void func_00448890(void) {
 
 void func_004488d0(void) {
     *(unsigned int *)(g_data_0054205c * 4 + 0x28) = 0xa6;
-    g_data_0054206c = 0x2a;
+    g_walkCallback = 0x2a;
     GatedWordPushCall_00489f90();
     if (g_framePauseFlag != 0) return;
     ((void (*)(int))ArgSarStoreJmp_004594f0)(0x4e62f8);
@@ -1405,7 +1403,7 @@ void func_004488d0(void) {
 
 void func_00448910(void) {
     *(unsigned int *)(g_data_0054205c * 4 + 0x28) = 0xb9;
-    g_data_0054206c = 0x1b;
+    g_walkCallback = 0x1b;
     GatedWordPushCall_00489f90();
     if (g_framePauseFlag != 0) return;
     ((void (*)(int))ArgSarStoreJmp_004594f0)(0x4e6308);
@@ -1413,7 +1411,7 @@ void func_00448910(void) {
 
 void func_00448950(void) {
     *(unsigned int *)(g_data_0054205c * 4 + 0x28) = 0xce;
-    g_data_0054206c = 0x2b;
+    g_walkCallback = 0x2b;
     GatedWordPushCall_00489f90();
     if (g_framePauseFlag != 0) return;
     ((void (*)(int))ArgSarStoreJmp_004594f0)(0x4e6318);
@@ -1452,7 +1450,7 @@ __declspec(naked) void func_00448990(void) {
     L_89fc:
         mov      ecx, dword ptr [g_data_0054205c]
         mov      dword ptr [ecx*4 + 0x28], 0x116
-        mov      dword ptr [g_data_0054206c], 0x12
+        mov      dword ptr [g_walkCallback], 0x12
         call     GatedWordPushCall_00489f90
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -1474,7 +1472,7 @@ __declspec(naked) void func_00448990(void) {
     L_8a7f:
         mov      eax, dword ptr [g_data_0054205c]
         mov      dword ptr [eax*4 + 0x28], 0xe1
-        mov      dword ptr [g_data_0054206c], 3
+        mov      dword ptr [g_walkCallback], 3
         call     GuardedSeq_00476f10
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -1528,12 +1526,12 @@ __declspec(naked) void func_00448990(void) {
         mov      edx, dword ptr [g_data_00542060]
         mov      eax, dword ptr [g_data_00542058]
         mov      dword ptr [edx*4 + 0x68], eax
-        mov      dword ptr [g_data_0054206c], 0xc
+        mov      dword ptr [g_walkCallback], 0xc
         call     GuardedSeq_00472840
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8cd2
-        mov      dword ptr [g_data_0054206c], 0x16
+        mov      dword ptr [g_walkCallback], 0x16
         call     GatedWordPushCall_00489f90
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -1551,7 +1549,7 @@ __declspec(naked) void func_00448990(void) {
         mov      edx, dword ptr [g_data_0054205c]
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, dword ptr [edx*4 + 0x58]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x58], eax
         mov      edx, dword ptr [g_data_0054205c]
         mov      ecx, dword ptr [g_data_00542044]
@@ -1559,7 +1557,7 @@ __declspec(naked) void func_00448990(void) {
         mov      dword ptr [ecx*4 + 0x3c], eax
         mov      edx, dword ptr [g_data_00542044]
         mov      eax, 0x7e
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x30], eax
         call     MStackCall_00406340
         mov      eax, dword ptr [g_framePauseFlag]
@@ -1578,17 +1576,17 @@ __declspec(naked) void func_00448990(void) {
         push     0x448e10
         call     StoreLoadJmp_00404ef0
         add      esp, 4
-        mov      dword ptr [g_data_0054206c], 0xb
+        mov      dword ptr [g_walkCallback], 0xb
         call     GuardedSeq_00476de0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8cd2
-        mov      dword ptr [g_data_0054206c], 0xc
+        mov      dword ptr [g_walkCallback], 0xc
         call     GuardedSeq_00476de0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8cd2
-        mov      dword ptr [g_data_0054206c], 4
+        mov      dword ptr [g_walkCallback], 4
         call     DirtyOrFlagDispatch_00476e60
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -1647,7 +1645,7 @@ __declspec(naked) void func_00448990(void) {
         nop      
         mov      eax, dword ptr [g_data_0054205c]
         mov      dword ptr [eax*4 + 0x28], 0x7b
-        mov      dword ptr [g_data_0054206c], 0x17
+        mov      dword ptr [g_walkCallback], 0x17
         call     GatedWordPushCall_00489f90
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -1664,7 +1662,7 @@ __declspec(naked) void func_00448990(void) {
         ret      
         nop      
         nop      
-        mov      dword ptr [g_data_0054206c], 0x17
+        mov      dword ptr [g_walkCallback], 0x17
         call     GatedWordPushCall_00489f90
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

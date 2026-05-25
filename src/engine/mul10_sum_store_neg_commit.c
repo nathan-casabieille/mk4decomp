@@ -138,7 +138,7 @@ extern void PendingMatch_004694b0(void);
 extern void ScaledClearJmp_00428d60(void);
 
 /* @addr 0x00469340 (364b game) - cdecl chain with stream-flag swap +
- *   packed_ptr select. Sets g_data_0054206c=0x52, calls
+ *   packed_ptr select. Sets g_walkCallback=0x52, calls
  *   TableLookupCall_00489ff0; on no-error sets 0x54206c=0xa, calls
  *   ScaledIndexConditionalAdd_0048e400. Then dispatches on
  *   g_data_00542060:
@@ -161,7 +161,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542080;
 extern unsigned int g_data_0054208c;
 extern void GuardedPackedSlotInit_00428760(void);
@@ -170,12 +169,12 @@ extern void TableLookupCall_00489ff0(void);
 
 __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
     __asm {
-        mov     dword ptr [g_data_0054206c], 0x52
+        mov     dword ptr [g_walkCallback], 0x52
         call    TableLookupCall_00489ff0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_sfp_done
-        mov     dword ptr [g_data_0054206c], 0xa
+        mov     dword ptr [g_walkCallback], 0xa
         call    ScaledIndexConditionalAdd_0048e400
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

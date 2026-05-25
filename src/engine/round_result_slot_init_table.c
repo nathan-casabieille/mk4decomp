@@ -129,7 +129,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_00542080;
@@ -142,7 +141,7 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
 {
     __asm {
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         inc      eax
         push     esi
         mov      dword ptr [g_data_004d57ac], eax
@@ -174,13 +173,13 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         mov      dword ptr [g_data_0054207c], ecx
         mov      dword ptr [g_data_00542080], edx
         mov      eax, dword ptr [esi*4 + 0x54]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      esi, dword ptr [esi*4 + 0x5c]
         add      eax, ecx
         mov      ecx, dword ptr [g_data_00542060]
         add      esi, edx
         add      ecx, 0x19
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_00542070], esi
         mov      dword ptr [g_data_00542074], 0xfffe6667
         mov      dword ptr [g_data_00542044], ecx
@@ -213,7 +212,7 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      edx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [g_data_004d57ac], eax
     L_69c8:
         pop      esi
@@ -229,7 +228,7 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         mov      dword ptr [g_data_00542070], 1
         mov      dword ptr [g_data_00542074], 0
         mov      dword ptr [g_data_0054207c], 2
-        mov      dword ptr [g_data_0054206c], 0xf5c
+        mov      dword ptr [g_walkCallback], 0xf5c
         mov      dword ptr [g_data_00542080], 3
         jmp      MStackPush3CallCascade_00486d90
         nop
@@ -246,7 +245,7 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         mov      dword ptr [g_data_00542070], ecx
         mov      dword ptr [g_data_00542074], eax
         mov      dword ptr [g_data_0054207c], eax
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_00542080], 0x10
         jmp      MStackPush3CallCascade_00486d90
         nop
@@ -256,7 +255,7 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         mov      dword ptr [g_data_00542070], 0
         mov      dword ptr [g_data_00542074], 1
         mov      dword ptr [g_data_0054207c], 2
-        mov      dword ptr [g_data_0054206c], 0x2e14
+        mov      dword ptr [g_walkCallback], 0x2e14
         mov      dword ptr [g_data_00542080], 0x15
         jmp      MStackPush3CallCascade_00486d90
         nop
@@ -272,7 +271,7 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         mov      dword ptr [g_data_0054207c], 2
         mov      dword ptr [g_data_00542070], eax
         mov      dword ptr [g_data_00542074], eax
-        mov      dword ptr [g_data_0054206c], 0x3333
+        mov      dword ptr [g_walkCallback], 0x3333
         mov      dword ptr [g_data_00542080], 0x16
         jmp      MStackPush3CallCascade_00486d90
         nop
@@ -294,7 +293,7 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         mov      dword ptr [g_data_00542074], eax
         mov      dword ptr [g_data_00542070], eax
         mov      dword ptr [g_data_0054207c], 3
-        mov      dword ptr [g_data_0054206c], 0x4000
+        mov      dword ptr [g_walkCallback], 0x4000
         jmp      MStackPush3CallCascade_00486d90
         nop
         nop
@@ -315,7 +314,7 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         mov      dword ptr [g_data_00542074], eax
         mov      dword ptr [g_data_00542070], eax
         mov      dword ptr [g_data_0054207c], 3
-        mov      dword ptr [g_data_0054206c], 0x4000
+        mov      dword ptr [g_walkCallback], 0x4000
         jmp      MStackPush3CallCascade_00486d90
         nop
         nop
@@ -335,7 +334,7 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         mov      dword ptr [g_data_0054207c], 2
         mov      dword ptr [g_data_00542070], eax
         mov      dword ptr [g_data_00542074], eax
-        mov      dword ptr [g_data_0054206c], 0x3333
+        mov      dword ptr [g_walkCallback], 0x3333
         mov      dword ptr [g_data_00542080], 6
         jmp      MStackPush3CallCascade_00486d90
         nop
@@ -355,7 +354,7 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         mov      dword ptr [g_data_00542070], 1
         mov      dword ptr [g_data_00542074], 0
         mov      dword ptr [g_data_0054207c], 2
-        mov      dword ptr [g_data_0054206c], 0x3333
+        mov      dword ptr [g_walkCallback], 0x3333
         mov      dword ptr [g_data_00542080], 6
         jmp      MStackPush3CallCascade_00486d90
         nop
@@ -370,7 +369,7 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         mov      dword ptr [g_data_00542070], 0
         mov      dword ptr [g_data_00542074], 1
         mov      dword ptr [g_data_0054207c], 2
-        mov      dword ptr [g_data_0054206c], 0x2e14
+        mov      dword ptr [g_walkCallback], 0x2e14
         mov      dword ptr [g_data_00542080], 5
         jmp      MStackPush3CallCascade_00486d90
         nop
@@ -385,7 +384,7 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         mov      dword ptr [g_data_00542070], 0
         mov      dword ptr [g_data_00542074], 1
         mov      dword ptr [g_data_0054207c], 2
-        mov      dword ptr [g_data_0054206c], 0x2666
+        mov      dword ptr [g_walkCallback], 0x2666
         mov      dword ptr [g_data_00542080], 4
         jmp      MStackPush3CallCascade_00486d90
         nop
@@ -403,7 +402,7 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         mov      dword ptr [g_data_00542070], eax
         mov      dword ptr [g_data_00542074], eax
         mov      dword ptr [g_data_0054207c], 2
-        mov      dword ptr [g_data_0054206c], 0xf5c
+        mov      dword ptr [g_walkCallback], 0xf5c
         mov      dword ptr [g_data_00542080], 3
         jmp      MStackPush3CallCascade_00486d90
         nop
@@ -424,7 +423,7 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         mov      dword ptr [g_data_00542070], 0
         mov      dword ptr [g_data_00542074], eax
         mov      dword ptr [g_data_0054207c], eax
-        mov      dword ptr [g_data_0054206c], 0x3d70
+        mov      dword ptr [g_walkCallback], 0x3d70
         mov      dword ptr [g_data_00542080], eax
         jmp      MStackPush3CallCascade_00486d90
         nop
@@ -432,7 +431,7 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         nop
         xor      eax, eax
         mov      dword ptr [g_data_0054207c], 1
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_00542070], eax
         mov      dword ptr [g_data_00542074], eax
         mov      dword ptr [g_data_00542080], eax
@@ -449,7 +448,7 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         nop
         nop
         xor      eax, eax
-        mov      dword ptr [g_data_0054206c], 0x2147
+        mov      dword ptr [g_walkCallback], 0x2147
         mov      dword ptr [g_data_00542070], eax
         mov      dword ptr [g_data_00542074], eax
         mov      dword ptr [g_data_0054207c], 2
@@ -458,7 +457,7 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         nop
         xor      eax, eax
         mov      ecx, 1
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_00542070], eax
         mov      dword ptr [g_data_00542074], ecx
         mov      dword ptr [g_data_0054207c], ecx
@@ -476,7 +475,7 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         xor      eax, eax
         mov      dword ptr [g_data_00542070], 1
         mov      dword ptr [g_data_0054207c], 2
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_00542080], eax
         jmp      GatedChainClamp_00486e80
     }

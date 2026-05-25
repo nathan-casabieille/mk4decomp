@@ -129,12 +129,11 @@ extern unsigned int g_data_00535e7c;
  *     eax = g_x_00542084 * 10; ecx = g_x_00542088 * 10;
  *     g_x_00542084 = eax; g_x_00542088 = ecx;
  *     chain[g_x_0054205c + 0x6c] = eax; chain[+0x74] = ecx;
- *     g_x_0054206c = 0x1999; chain[+0x80] = 0x1999;
+ *     g_walkCallback = 0x1999; chain[+0x80] = 0x1999;
  *     install self; g_x_0054204c = 0x2d; pause = 1.
  */
 extern unsigned int g_x_0054204c;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542084;
 extern unsigned int g_x_00542088;
 extern void CallSetPause_0041f830(void);
@@ -185,7 +184,7 @@ __declspec(naked) void InstallSelfMul10_00481c70(void) {
         mov     [eax*4 + 0x74], ecx
         mov     edx, dword ptr [g_x_0054205c]
         mov     eax, 0x1999
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     [edx*4 + 0x80], eax
         mov     eax, 1
         mov     dword ptr [esi + 8], 0x00481c70

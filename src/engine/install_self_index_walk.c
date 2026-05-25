@@ -137,7 +137,6 @@ extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0054204c;
 extern unsigned int g_x_00542054;
 extern unsigned int g_x_00542058;
-extern unsigned int g_x_0054206c;
 extern void DualScaledStore_00452740(void);
 extern void Thunk_0049cbc0(void);
 
@@ -167,7 +166,7 @@ L_isw_walk:
         mov     dword ptr [g_x_00542054], eax
         mov     eax, dword ptr [eax*4 + 0]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jge     short L_isw_after_thunk
         call    Thunk_0049cbc0
         pop     edi
@@ -186,7 +185,7 @@ L_isw_after_thunk:
         mov     eax, dword ptr [g_x_00542054]
         mov     ecx, dword ptr [eax*4 + 0x10]
         test    ecx, ecx
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         jne     short L_isw_install
         add     eax, 5
         jmp     short L_isw_walk

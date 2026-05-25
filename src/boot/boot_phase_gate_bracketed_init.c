@@ -127,7 +127,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541e80;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern void MStackPushChainStepIndex_004ab510(void);
 
@@ -153,19 +152,19 @@ __declspec(naked) void BootPhaseGateBracketedInit_004060c0(void)
         mov     eax, dword ptr [g_data_00542044]
         mov     ecx, 0x15
         shl     eax, 2
-        mov     dword ptr [g_data_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         mov     edx, 5
     L_bpgbi_loop1:
-        mov     esi, dword ptr [g_data_0054206c]
+        mov     esi, dword ptr [g_walkCallback]
         sub     ecx, 4
         mov     dword ptr [eax], esi
-        mov     esi, dword ptr [g_data_0054206c]
+        mov     esi, dword ptr [g_walkCallback]
         add     eax, 4
         mov     dword ptr [eax], esi
-        mov     esi, dword ptr [g_data_0054206c]
+        mov     esi, dword ptr [g_walkCallback]
         add     eax, 4
         mov     dword ptr [eax], esi
-        mov     esi, dword ptr [g_data_0054206c]
+        mov     esi, dword ptr [g_walkCallback]
         add     eax, 4
         mov     dword ptr [eax], esi
         add     eax, 4
@@ -174,7 +173,7 @@ __declspec(naked) void BootPhaseGateBracketedInit_004060c0(void)
         test    ecx, ecx
         jle     short L_bpgbi_block2
     L_bpgbi_rem1:
-        mov     edx, dword ptr [g_data_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax], edx
         add     eax, 4
         dec     ecx
@@ -183,7 +182,7 @@ __declspec(naked) void BootPhaseGateBracketedInit_004060c0(void)
         mov     eax, dword ptr [g_data_00542044]
         mov     edx, 0xc
         add     eax, 0x15
-        mov     dword ptr [g_data_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [g_data_00542044], eax
         lea     edi, [eax*4]
         mov     eax, 3

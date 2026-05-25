@@ -127,9 +127,9 @@ extern void AerialPunchCluster_0047bc30(void);
 extern void EsiInstallDecCallChain_004294a0(void);
 
 /* @addr 0x0047baf0 (305b game) - state-machine: 4-arm dispatcher with shared common-tail call.
- *   Load state; clear. If state!=0: scaledInit=[baseSel*4+0x3c]; inc [scaledInit*4+0x7c] -> g_x_0054206c.
+ *   Load state; clear. If state!=0: scaledInit=[baseSel*4+0x3c]; inc [scaledInit*4+0x7c] -> g_walkCallback.
  *     g_state_0054207c=0; call EntryThunkBodyStateMachine_00457bb0; if pause ret.
- *     g_x_0054206c=0x5f; call ScaledLitLoadCall; if pause ret. Tail-call AerialPunchCluster_0047bc30; pop+ret.
+ *     g_walkCallback=0x5f; call ScaledLitLoadCall; if pause ret. Tail-call AerialPunchCluster_0047bc30; pop+ret.
  *   state==0: g_state_0054207c=0; call EntryThunkBodyStateMachine_00457bb0; if pause ret.
  *     If g_state_00542088==1: tail-call AerialPunchCluster_0047bc30; pop+ret.
  *     Else: call MStackPush3CmpCall; if pause ret.
@@ -138,7 +138,6 @@ extern void EsiInstallDecCallChain_004294a0(void);
  *     pause=1; pop edi/esi/ebx; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern void ScaledLitLoadCall_00480fe0(void);
 
 __declspec(naked) void StateMachineSharedTail_0047baf0(void) {
@@ -159,7 +158,7 @@ __declspec(naked) void StateMachineSharedTail_0047baf0(void) {
         mov     dword ptr [g_scaledInit_00542044], ecx
         mov     eax, dword ptr [ecx*4 + 0x7c]
         inc     eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x7c], eax
         mov     dword ptr [g_state_0054207c], edi
         call    EntryThunkBodyStateMachine_00457bb0
@@ -170,7 +169,7 @@ __declspec(naked) void StateMachineSharedTail_0047baf0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     dword ptr [g_x_0054206c], 0x5f
+        mov     dword ptr [g_walkCallback], 0x5f
         call    ScaledLitLoadCall_00480fe0
         cmp     dword ptr [g_pause_00541e6c], edi
         _emit   0fh

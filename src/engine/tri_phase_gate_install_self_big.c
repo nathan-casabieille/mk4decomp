@@ -123,7 +123,6 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_00535ddc;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542060;
 extern unsigned int g_data_00542084;
 extern unsigned int g_data_00542044;
@@ -146,7 +145,7 @@ __declspec(naked) void TriEntryGateMain_00435440(void)
     {
         mov     eax, dword ptr [g_data_00535ddc]
         cmp     eax, 0x20000
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jle     short L_tegm_jmp2
         jmp     GuardedSeq_00433bb0
     L_tegm_jmp2:
@@ -157,10 +156,10 @@ __declspec(naked) void TriEntryGateMain_00435440(void)
         nop
         nop
     L_tegm_sub2:
-        mov     edx, dword ptr [g_data_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         push    0x4e4600
         and     edx, 0xff
-        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         call    JumpTableDispatch_0043a550
         add     esp, 4
         ret
@@ -210,7 +209,7 @@ __declspec(naked) void TriEntryGateMain_00435440(void)
         mov     ecx, dword ptr [g_data_00542060]
         mov     eax, dword ptr [ecx*4 + 0x74]
         cmp     eax, 0x200e
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jne     short L_tegm_cmp2
         call    TriPhaseGateInstallSelfBig_00437140
         pop     esi
@@ -218,7 +217,7 @@ __declspec(naked) void TriEntryGateMain_00435440(void)
     L_tegm_cmp2:
         mov     eax, dword ptr [g_data_00535ddc]
         cmp     eax, 0x20000
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jge     short L_tegm_cmp3
         call    EntryThenDispatcherPair_00438cd0
         pop     esi

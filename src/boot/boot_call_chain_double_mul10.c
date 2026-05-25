@@ -125,17 +125,16 @@ extern unsigned int g_data_004d6478;
 extern unsigned int g_x_00542044;
 extern unsigned int g_x_00542054;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 
 /*
  * BootCallChainDoubleMul10_0040b890 - 217b boot init via StoreTwoCall + dual Mul10.
  *   Snapshot g_x_0054205c → g_x_00542054; g_cj_00542058 = (0x004d6478 >> 2);
  *   g_state_0054207c = 0xc1; push 0xc0, 0x0049db40; call StoreTwoCall_0049cb40.
  *   If g_state_0054208c & 1: ret. Call StackPushAdd15CallPop_0040a7e0; if paused: ret.
- *   g_data_00542070 = 0x3333; load g_x_0054205c[+0x6c] → eax → g_x_0054206c;
+ *   g_data_00542070 = 0x3333; load g_x_0054205c[+0x6c] → eax → g_walkCallback;
  *   push (eax,0x3333); call Mul10Tail; chain[+0x44] = result.
- *   g_x_0054206c = 0; chain[+0x48] = 0;
- *   load g_x_0054205c[+0x74] → eax → g_x_0054206c; push (eax, g_data_00542070);
+ *   g_walkCallback = 0; chain[+0x48] = 0;
+ *   load g_x_0054205c[+0x74] → eax → g_walkCallback; push (eax, g_data_00542070);
  *   call Mul10Tail; chain[+0x4c] = result; ret.
  */
 void BootCallChainDoubleMul10_0040b890(void) {
@@ -149,14 +148,14 @@ void BootCallChainDoubleMul10_0040b890(void) {
     if (g_framePauseFlag != 0) return;
     g_data_00542070 = 0x3333;
     v = *(unsigned int *)(g_x_0054205c * 4 + 0x6c);
-    g_x_0054206c = v;
+    g_walkCallback = v;
     v = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail_00404af0)(0x3333, v);
     *(unsigned int *)(g_x_00542044 * 4 + 0x44) = v;
-    g_x_0054206c = 0;
+    g_walkCallback = 0;
     *(unsigned int *)(g_x_00542044 * 4 + 0x48) = 0;
     v = *(unsigned int *)(g_x_0054205c * 4 + 0x74);
-    g_x_0054206c = v;
+    g_walkCallback = v;
     v = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail_00404af0)(g_data_00542070, v);
-    g_x_0054206c = v;
+    g_walkCallback = v;
     *(unsigned int *)(g_x_00542044 * 4 + 0x4c) = v;
 }

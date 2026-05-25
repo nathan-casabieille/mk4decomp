@@ -138,7 +138,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern unsigned int g_table_004d57b0;
 extern void MStackInitCallToggle_00408ad0(void);
@@ -175,7 +174,7 @@ __declspec(naked) void MStackPush4LLWalkPop4_004090e0(void) {
         mov     ecx, dword ptr [eax*4]
         inc     eax
         test    ecx, ecx
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_data_0054204c], eax
         je      L_m4w_pop4
         mov     bl, 4
@@ -185,7 +184,7 @@ __declspec(naked) void MStackPush4LLWalkPop4_004090e0(void) {
         test    eax, eax
         jne     L_m4w_doneNoPop
         mov     ecx, dword ptr [g_data_00542070]
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         call    MStackInitCallToggle_00408ad0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -195,14 +194,14 @@ __declspec(naked) void MStackPush4LLWalkPop4_004090e0(void) {
         mov     ecx, dword ptr [g_data_00542044]
         mov     eax, dword ptr [ecx*4 + 0x28]
         test    eax, eax
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         je      short L_m4w_loopAdv
         mov     eax, dword ptr [g_data_00542048]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     edx, dword ptr [ecx*4 + 0x28]
         sar     eax, 2
         mov     dword ptr [g_data_00542048], edx
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    ScaledStoreThree_00409260
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -212,7 +211,7 @@ __declspec(naked) void MStackPush4LLWalkPop4_004090e0(void) {
         mov     ecx, dword ptr [eax*4]
         inc     eax
         test    ecx, ecx
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_data_0054204c], eax
         jne     L_m4w_loopTop
     L_m4w_pop4:

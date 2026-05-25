@@ -122,7 +122,6 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern unsigned int g_data_0054206c;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
@@ -142,17 +141,17 @@ extern void Thunk_00405ac0(void);
 __declspec(naked) void Phase2InitSlotTreeWalk_0041ad60(void)
 {
     __asm {
-        mov     dword ptr [g_data_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         call    FlagThunk4EntryDispatcher_0040a470
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p2is_ret
-        mov     dword ptr [g_data_0054206c], 8
+        mov     dword ptr [g_walkCallback], 8
         call    FlagThunk4EntryDispatcher_0040a470
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p2is_ret
-        mov     dword ptr [g_data_0054206c], 2
+        mov     dword ptr [g_walkCallback], 2
         call    DirtyDoubleDeref_00408cb0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -172,13 +171,13 @@ __declspec(naked) void Phase2InitSlotTreeWalk_0041ad60(void)
         mov     dword ptr [edx*4 + 0x30], 0x80
         mov     eax, dword ptr [g_data_00535e6c]
         mov     ecx, dword ptr [g_data_00542044]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x3C], eax
         mov     edx, dword ptr [g_data_0054205c]
         mov     dword ptr [g_data_0054207c], 0x10000
         mov     eax, dword ptr [edx*4 + 0x34]
         and     eax, 1
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         je      L_p2is_after_select
         mov     dword ptr [g_data_0054207c], 0xFFFF0000
     L_p2is_after_select:
@@ -188,7 +187,7 @@ __declspec(naked) void Phase2InitSlotTreeWalk_0041ad60(void)
         mov     eax, 0x147A
         mov     dword ptr [ecx*4 + 0x34], edx
         mov     ecx, dword ptr [g_data_00542044]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x80], eax
         mov     edx, dword ptr [g_data_00542044]
         mov     dword ptr [g_data_00542054], edx
@@ -200,7 +199,7 @@ __declspec(naked) void Phase2InitSlotTreeWalk_0041ad60(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p2is_ret
-        mov     dword ptr [g_data_0054206c], 2
+        mov     dword ptr [g_walkCallback], 2
         call    BootStateTriple_00408d30
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -208,28 +207,28 @@ __declspec(naked) void Phase2InitSlotTreeWalk_0041ad60(void)
         mov     eax, dword ptr [g_data_00542048]
         mov     ecx, dword ptr [g_data_00542054]
         mov     eax, dword ptr [eax*4 + 0x3C]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x54], eax
         mov     edx, dword ptr [g_data_00542048]
         mov     ecx, dword ptr [g_data_00542054]
         mov     eax, dword ptr [edx*4 + 0x40]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x58], eax
         mov     edx, dword ptr [g_data_00542048]
         mov     ecx, dword ptr [g_data_00542054]
         mov     eax, dword ptr [edx*4 + 0x44]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x5C], eax
         mov     edx, dword ptr [g_data_00542054]
         mov     eax, dword ptr [edx*4 + 0x18]
-        mov     dword ptr [g_data_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [g_data_00542050], eax
         mov     dword ptr [eax*4 + 0x30], 0
         mov     ecx, dword ptr [g_data_00542050]
-        mov     eax, dword ptr [g_data_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [ecx*4 + 0x34], eax
         mov     eax, dword ptr [g_data_00542050]
-        mov     edx, dword ptr [g_data_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0x38], edx
         mov     ecx, dword ptr [g_data_00542060]
         mov     eax, offset g_data_00542378

@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0042e800 (206b game) - scaledInit chain init with 2 phases.
  *   Phase 1: scaledInit[+0x54] = 0; +0x58 = 0; +0x5c += 0x41999; +0x68 = 0x62978;
- *   +0x74 = 0xffffaaab; +0x30 = arg1; g_x_0054206c = arg1.
+ *   +0x74 = 0xffffaaab; +0x30 = arg1; g_walkCallback = arg1.
  *   call MStackCall_00406340; if !pause: phase 2: g_data_0054204c = g_x_00535e6c;
  *   second chain at g_data_0054204c[+0x54/0x58/0x5c]=0/0xfffc0000/0;
  *   g_scaledInit[+0x3c] = g_data_0054204c. pop+ret.
@@ -132,7 +132,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00535e6c;
-extern unsigned int g_x_0054206c;
 extern void MStackCall_00406340(void);
 
 __declspec(naked) void ScaledChainInit2Phase_0042e800(void) {
@@ -142,7 +141,7 @@ __declspec(naked) void ScaledChainInit2Phase_0042e800(void) {
         xor     esi, esi
         mov     dword ptr [eax*4 + 0x54], esi
         mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [ecx*4 + 0x58], esi
         mov     edx, dword ptr [g_cj_00542054]
         mov     ecx, dword ptr [g_scaledInit_00542044]
@@ -155,7 +154,7 @@ __declspec(naked) void ScaledChainInit2Phase_0042e800(void) {
         mov     dword ptr [eax*4 + 0x74], 0xffffaaab
         mov     eax, dword ptr [esp + 8]
         mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x30], eax
         call    MStackCall_00406340
         cmp     dword ptr [g_pause_00541e6c], esi
@@ -167,7 +166,7 @@ __declspec(naked) void ScaledChainInit2Phase_0042e800(void) {
         mov     edx, dword ptr [g_data_0054204c]
         mov     dword ptr [edx*4 + 0x58], 0xfffc0000
         mov     eax, dword ptr [g_data_0054204c]
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [eax*4 + 0x5c], esi
         mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     edx, dword ptr [g_data_0054204c]

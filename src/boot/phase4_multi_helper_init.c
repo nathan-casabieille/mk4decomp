@@ -135,7 +135,6 @@ extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_00543800;
 extern void BootSetupWithMStackBody_00418e00(void);
@@ -162,7 +161,7 @@ __declspec(naked) void Phase4MultiHelperInit_00418af0(void)
         mov     ecx, offset g_data_004d75a0
         shr     ecx, 2
         mov     dword ptr [g_data_00542054], eax
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         call    PushSetXfmMaskCallPop_00407140
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -181,7 +180,7 @@ __declspec(naked) void Phase4MultiHelperInit_00418af0(void)
         or      ecx, 8
         mov     dword ptr [eax], ecx
         mov     ecx, 0x00418BE0
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax + 0x10], ecx
         call    ScaledTripleCopy54_004ac040
         mov     eax, dword ptr [g_framePauseFlag]
@@ -194,7 +193,7 @@ __declspec(naked) void Phase4MultiHelperInit_00418af0(void)
         mov     eax, dword ptr [g_data_0054205c]
         mov     ecx, dword ptr [eax*4 + 0x58]
         mov     dword ptr [g_data_00542044], eax
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         call    MStackCall_00406600
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -215,17 +214,17 @@ __declspec(naked) void Phase4MultiHelperInit_00418af0(void)
         jne     L_p4mh_B_tail
         mov     ecx, dword ptr [g_data_00542048]
         mov     eax, 0x10000
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         sub     eax, dword ptr [ecx*4 + 0x48]
         push    eax
         push    0x1999
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    Mul10Tail_00404af0
         mov     ecx, dword ptr [g_data_00542048]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         add     esp, 8
         add     eax, dword ptr [ecx*4 + 0x48]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x48], eax
     L_p4mh_B_tail:
         jmp     ClampMulShiftStore_004ba0e0
@@ -252,7 +251,7 @@ __declspec(naked) void Phase4MultiHelperInit_00418af0(void)
         mov     eax, dword ptr [g_data_00542054]
         mov     ecx, dword ptr [eax*4]
         test    ecx, ecx
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         jne     L_p4mh_C_have_target
         call    CallSetPause_0041f830
         pop     esi
@@ -260,11 +259,11 @@ __declspec(naked) void Phase4MultiHelperInit_00418af0(void)
     L_p4mh_C_phase1:
         mov     eax, dword ptr [g_data_0053a400]
         test    eax, eax
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         je      L_p4mh_C_set_install
         mov     ecx, offset g_data_004d7610
         shr     ecx, 2
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         call    PushSetXfmMaskCallPop_00407140
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -279,7 +278,7 @@ __declspec(naked) void Phase4MultiHelperInit_00418af0(void)
         mov     eax, 0xFFFFE667
         mov     dword ptr [edx*4 + 0x58], 0x00190000
         mov     ecx, dword ptr [g_data_0054205c]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x80], eax
         call    MStackCall_004062f0
         mov     eax, dword ptr [g_framePauseFlag]
@@ -313,7 +312,7 @@ __declspec(naked) void Phase4MultiHelperInit_00418af0(void)
     L_p4mh_C_have_target:
         mov     ecx, dword ptr [eax*4]
         inc     eax
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_data_0053a29c], ecx
         mov     dword ptr [g_data_00542054], eax
         mov     edx, dword ptr [eax*4]

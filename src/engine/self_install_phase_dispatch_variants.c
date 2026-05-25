@@ -127,7 +127,7 @@ extern void SelfInstallPhaseDispatch_00428990(void);
 /* @addr 0x004753b0 (221b game) - install-self with chain[+0x84] dispatch.
  *   chain[+0x84]==0 path: install-self at +0x08=0x004753b0; g_x_00542084=0x32f1, g_state_00542088=0x3333,
  *   g_x_00542080=0; scaledInit-chain push 0x004753b0|0x01000000; call SelfInstallPhaseDispatch_00428990; pause=1; pop+ret.
- *   chain[+0x84]!=0 path: set [g_x_0054205c*4+0x24]=g_cj_00542054, [g_x_0054205c*4+0x28]=0, g_x_0054206c=0,
+ *   chain[+0x84]!=0 path: set [g_x_0054205c*4+0x24]=g_cj_00542054, [g_x_0054205c*4+0x28]=0, g_walkCallback=0,
  *   g_cj_00542054=baseSel[*4+0x64], g_cj_00542058=baseSel[*4+0x68]; jmp StackPopDispatchTagged.
  */
 extern unsigned int g_data_004ea058;
@@ -135,13 +135,11 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_00542054;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542074;
 extern unsigned int g_x_00542080;
 extern unsigned int g_x_00542084;
@@ -180,7 +178,7 @@ __declspec(naked) void InstallSelfChainEsi_004753b0(void) {
         mov     eax, dword ptr [g_cj_00542054]
         mov     dword ptr [ecx*4 + 0x24], eax
         mov     ecx, dword ptr [g_x_0054205c]
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [ecx*4 + 0x28], edx
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     edx, dword ptr [eax*4 + 0x64]
@@ -323,10 +321,10 @@ __declspec(naked) void InstallSelfCmdStreamInterp_00494290(void) {
         mov     ecx, dword ptr [ecx*4 + 0x30]
         sub     ecx, 0x60
         add     eax, ecx
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     edx, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         call    TableLookupCall_00489ff0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -465,7 +463,7 @@ __declspec(naked) void SelfInstallPhaseDispatch_0045fd30(void)
         test    eax, eax
         jne     short L_sipd2_retCommon
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     dword ptr [g_data_0054206c], ebx
+        mov     dword ptr [g_walkCallback], ebx
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], offset CjInstallSelfRouter_00470480

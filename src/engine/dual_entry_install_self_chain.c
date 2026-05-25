@@ -129,7 +129,6 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_data_0054204c;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542080;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void FiveCallGuardSetTail_0046f6b0(void);
@@ -145,7 +144,7 @@ __declspec(naked) void DualEntryInstallSelfChain_00487430(void) {
         _emit   32h
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x00001008
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
         call    ScaledMove48to58_00490720
         mov     eax, dword ptr [g_pause_00541e6c]

@@ -146,7 +146,6 @@ extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern void QuadInterpolatorV2_004255b0(void);
 extern void ThreeClampLoop_00425a80(void);
 extern void ThreeMul10Stores_004252c0(void);
@@ -191,7 +190,7 @@ __declspec(naked) void InstallSelf5CallVecChain_00464660(void) {
         test    eax, eax
         jne     L_isvc_done
         mov     ecx, dword ptr [g_data_00542044]
-        mov     dword ptr [g_data_0054206c], 0xcccc
+        mov     dword ptr [g_walkCallback], 0xcccc
         mov     dword ptr [g_data_00542048], ecx
         call    ThreeMul10Stores_004252c0
         mov     eax, dword ptr [g_framePauseFlag]
@@ -208,7 +207,7 @@ __declspec(naked) void InstallSelf5CallVecChain_00464660(void) {
         test    eax, eax
         jne     short L_isvc_done
         mov     edx, dword ptr [g_data_00542044]
-        mov     dword ptr [g_data_0054206c], 0x4ccc
+        mov     dword ptr [g_walkCallback], 0x4ccc
         mov     dword ptr [g_data_00542048], edx
         call    ThreeClampLoop_00425a80
         mov     eax, dword ptr [g_framePauseFlag]

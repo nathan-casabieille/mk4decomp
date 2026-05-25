@@ -136,7 +136,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_0054207c;
@@ -179,7 +178,7 @@ __declspec(naked) void MkIntroFsm_004218b0(void)
         je       L_1aa8
     L_1920:
         mov      eax, 2
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_00537f94], eax
     L_192f:
         call     StackPopDispatchTagged_0041f780
@@ -198,7 +197,7 @@ __declspec(naked) void MkIntroFsm_004218b0(void)
         pop      ebx
         ret
     L_196c:
-        mov      dword ptr [g_data_0054206c], 0x2d
+        mov      dword ptr [g_walkCallback], 0x2d
         call     TableLookupCall_00489ff0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -218,7 +217,7 @@ __declspec(naked) void MkIntroFsm_004218b0(void)
         jne      short L_1aa1
         mov      ecx, dword ptr [g_data_00538038]
         mov      ebx, 1
-        mov      dword ptr [g_data_0054206c], ebx
+        mov      dword ptr [g_walkCallback], ebx
         mov      dword ptr [g_data_0052d724], ebx
         mov      dword ptr [g_data_00542044], ecx
         mov      dword ptr [g_data_00542048], OFFSET func_004214a0
@@ -234,7 +233,7 @@ __declspec(naked) void MkIntroFsm_004218b0(void)
         test     eax, eax
         jne      short L_1aa1
         mov      eax, OFFSET g_data_004d56d8
-        mov      dword ptr [g_data_0054206c], 0x24b
+        mov      dword ptr [g_walkCallback], 0x24b
         shr      eax, 2
         mov      dword ptr [g_data_00542070], 4
         mov      dword ptr [g_data_00542078], 0
@@ -264,17 +263,17 @@ __declspec(naked) void MkIntroFsm_004218b0(void)
         mov      eax, dword ptr [g_data_0053a6dc]
         mov      ecx, dword ptr [g_data_00537f2c]
         cmp      eax, ecx
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_00542070], ecx
         jg       short L_1ae4
         jl       L_1920
         cmp      eax, 0x10000
         je       L_192f
         call     DualAddSar_004ab600
-        test     byte ptr [g_data_0054206c], bl
+        test     byte ptr [g_walkCallback], bl
         jne      L_1920
     L_1ae4:
-        mov      dword ptr [g_data_0054206c], ebx
+        mov      dword ptr [g_walkCallback], ebx
         mov      dword ptr [g_data_00537f94], ebx
         call     StackPopDispatchTagged_0041f780
         pop      esi

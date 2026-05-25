@@ -144,7 +144,6 @@ extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542080;
 extern void CallSetPause_0041f830(void);
 extern void IndirectDispatchCjStore_0048ae50(void);
@@ -175,7 +174,7 @@ __declspec(naked) void Phase3InstallTableCheck_0048acd0(void) {
         je      L_p3itc_pauseTail
         mov     byte ptr [g_data_00538148], bl
     L_p3itc_phase1:
-        mov     dword ptr [g_data_0054206c], ebx
+        mov     dword ptr [g_walkCallback], ebx
         call    dword ptr [g_data_00542080]
         cmp     dword ptr [g_framePauseFlag], ebx
         jne     L_p3itc_done
@@ -187,7 +186,7 @@ __declspec(naked) void Phase3InstallTableCheck_0048acd0(void) {
         mov     eax, dword ptr [edx*4]
         add     eax, 0x30000
         cmp     ecx, eax
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jl      L_p3itc_dispatchOnly
         mov     dword ptr [g_data_00542084], eax
         call    IndirectDispatchCjStore_0048ae50
@@ -198,24 +197,24 @@ __declspec(naked) void Phase3InstallTableCheck_0048acd0(void) {
         pop     ebx
         ret
     L_p3itc_phase0:
-        mov     dword ptr [g_data_0054206c], ebx
+        mov     dword ptr [g_walkCallback], ebx
         call    dword ptr [g_data_00542080]
         cmp     dword ptr [g_framePauseFlag], ebx
         jne     L_p3itc_done
         mov     eax, dword ptr [g_data_0054205c]
         mov     ecx, dword ptr [g_data_00542050]
         mov     eax, dword ptr [eax*4 + 0x54]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4], eax
         mov     edx, dword ptr [g_data_0054205c]
         mov     ecx, dword ptr [g_data_00542050]
         mov     eax, dword ptr [edx*4 + 0x58]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 4], eax
         mov     edx, dword ptr [g_data_0054205c]
         mov     ecx, dword ptr [g_data_00542050]
         mov     eax, dword ptr [edx*4 + 0x5c]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 8], eax
     L_p3itc_dispatchOnly:
         call    IndirectDispatchCjStore_0048ae50

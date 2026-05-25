@@ -134,7 +134,6 @@ extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542080;
 extern unsigned int g_data_00542088;
@@ -162,7 +161,7 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
     __asm {
         /* === h1 (0x4970f0): event 004f20c0 forwarder === */
         mov      eax, dword ptr [g_data_00542060]
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [eax*4 + 0x74], ecx
         call     CondPickDualStore_0049c670
         mov      eax, dword ptr [g_framePauseFlag]
@@ -209,13 +208,13 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
         cmp      ecx, 0x311
         mov      dword ptr [g_data_00542070], 0x189
         mov      dword ptr [g_data_00542074], edx
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       short L_71cc
         cmp      ecx, 0x311
         mov      dword ptr [g_data_00542070], edx
         je       short L_71cc
         mov      eax, 0xffffcccd
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
     L_71cc:
         mov      ecx, dword ptr [g_data_00542044]
         mov      dword ptr [ecx*4 + 0x70], eax
@@ -225,7 +224,7 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
         mov      eax, dword ptr [g_data_00542044]
         mov      dword ptr [g_data_0054204c], eax
         mov      ecx, dword ptr [eax*4 + 0x18]
-        mov      dword ptr [g_data_0054206c], 1
+        mov      dword ptr [g_walkCallback], 1
         mov      dword ptr [g_data_00542044], ecx
         call     CmpDivJmp_0049d080
         mov      eax, dword ptr [g_framePauseFlag]
@@ -241,19 +240,19 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
         mov      eax, dword ptr [edi + 0x6c]
         push     eax
         push     0xffff3334
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         call     Mul10Tail_00404af0
         mov      dword ptr [esi], eax
-        mov      dword ptr [g_data_0054206c], 0
+        mov      dword ptr [g_walkCallback], 0
         add      esp, 8
         mov      dword ptr [esi + 4], 0
         mov      edi, dword ptr [edi + 0x74]
         push     edi
         push     0xffff3334
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         call     Mul10Tail_00404af0
         add      esp, 8
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [esi + 8], eax
         call     ScaledTripleCopy4_0049d2d0
         mov      eax, dword ptr [g_framePauseFlag]
@@ -270,7 +269,7 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
         mov      dword ptr [eax*4], ecx
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, 0xc000
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x48], eax
         mov      eax, dword ptr [g_data_0054204c]
         mov      ecx, dword ptr [g_data_00542060]
@@ -306,7 +305,7 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
         add      esp, 4
         mov      eax, 0x30
         mov      dword ptr [g_data_0054205c], ecx
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         push     OFFSET g_data_004f20f0
         mov      dword ptr [edx*4 + 0x5c], eax
         call     ArgSar_Set0_Jmp_0049c6f0
@@ -326,7 +325,7 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
         mov      dword ptr [g_data_00542070], eax
         mov      edx, dword ptr [ecx*4 + 0x70]
         add      eax, edx
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x70], eax
         call     Vec2SumMul10ChainCompute_0049bc60
         mov      eax, dword ptr [g_framePauseFlag]
@@ -349,10 +348,10 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
         nop
         /* === h4 (0x497400): 0x60/0x61 status + 0040bf20 → 497450 === */
         mov      eax, dword ptr [g_data_00542088]
-        mov      dword ptr [g_data_0054206c], 0x60
+        mov      dword ptr [g_walkCallback], 0x60
         cmp      eax, 1
         jne      short L_741e
-        mov      dword ptr [g_data_0054206c], 0x61
+        mov      dword ptr [g_walkCallback], 0x61
     L_741e:
         call     TableLookupCall_00489ff0
         mov      eax, dword ptr [g_framePauseFlag]

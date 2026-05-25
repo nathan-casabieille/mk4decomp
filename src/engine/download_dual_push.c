@@ -123,20 +123,19 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00422e20 (196b game) - 0x537f48 download/dual-push setup.
- *   g_x_0054206c = [0x537f48]; g_x_00542070 = 0; call DownloadPlayerChar;
+ *   g_walkCallback = [0x537f48]; g_x_00542070 = 0; call DownloadPlayerChar;
  *   pause? ret;
- *   g_x_0054206c = [0x537f48] (reload); g_x_00542074 = [0x53a510];
+ *   g_walkCallback = [0x537f48] (reload); g_x_00542074 = [0x53a510];
  *   g_x_00542070 = 0; call GuardedDualPushTailJmp; pause? ret;
- *   [0x538158] = g_x_0054205c; g_x_0054206c = 1; chain[+0x30] = 1;
+ *   [0x538158] = g_x_0054205c; g_walkCallback = 1; chain[+0x30] = 1;
  *   chain[+0x34] |= 0x001c0000; chain[+0x54] = 0xfffeb334; chain[+0x5c] = 0;
- *   chain[+0x3c] = [0x537f78]; g_x_0054206c = same.
+ *   chain[+0x3c] = [0x537f78]; g_walkCallback = same.
  */
 extern unsigned int g_x_00537f48;
 extern unsigned int g_x_00537f78;
 extern unsigned int g_x_00538158;
 extern unsigned int g_x_0053a510;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542074;
 extern void DownloadPlayerChar(void);
@@ -146,7 +145,7 @@ void DownloadDualPush_00422e20(void) {
     __asm {
         mov     eax, dword ptr [g_x_00537f48]
         mov     dword ptr [g_x_00542070], 0
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    DownloadPlayerChar
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -158,7 +157,7 @@ void DownloadDualPush_00422e20(void) {
         _emit   00h
         mov     ecx, dword ptr [g_x_00537f48]
         mov     edx, dword ptr [g_x_0053a510]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_x_00542070], 0
         mov     dword ptr [g_x_00542074], edx
         call    GuardedDualPushTailJmp_004231f0
@@ -169,7 +168,7 @@ void DownloadDualPush_00422e20(void) {
         mov     eax, dword ptr [g_x_0054205c]
         mov     ecx, 1
         mov     dword ptr [g_x_00538158], eax
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     [eax*4 + 0x30], ecx
         mov     eax, dword ptr [g_x_0054205c]
         mov     ecx, [eax*4 + 0x34]
@@ -181,7 +180,7 @@ void DownloadDualPush_00422e20(void) {
         mov     dword ptr [ecx*4 + 0x5c], 0
         mov     eax, dword ptr [g_x_00537f78]
         mov     edx, dword ptr [g_x_0054205c]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     [edx*4 + 0x3c], eax
         }
 }

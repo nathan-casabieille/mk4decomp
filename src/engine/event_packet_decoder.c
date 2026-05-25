@@ -128,7 +128,7 @@ extern unsigned int g_state_0053a730;
 
 /* @addr 0x0045dd90 (202b game) - chain-pick + arg-based scaledInit setup.
  *   if (g_x_0054205c == 0) jmp Thunk_0045e0f0.
- *   ecx = g_cj_00542058; clear g_state_00542088; load 0x54-field into g_x_0054206c/70/74;
+ *   ecx = g_cj_00542058; clear g_state_00542088; load 0x54-field into g_walkCallback/70/74;
  *   3 nested tests; if min/max swap; check eax<>g_x_00542080.
  *   If lo: g_state_00542088 = 1.
  *   Store g_data_00542050 to [baseSel*4+0x64]; eax = arg0>>2; g_data_00542054 store at [baseSel*4+0x68];
@@ -136,7 +136,6 @@ extern unsigned int g_state_0053a730;
  */
 extern unsigned int g_data_0054204c;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542074;
 extern unsigned int g_x_00542078;
@@ -152,7 +151,7 @@ __declspec(naked) void ChainPickArgScaledInit_0045dd90(void) {
         mov     ecx, dword ptr [g_cj_00542058]
         mov     dword ptr [g_state_00542088], 0
         mov     edx, dword ptr [ecx*4 + 0x54]
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     ecx, dword ptr [eax*4 + 0x54]
         mov     eax, dword ptr [g_state_0053a730]
         mov     dword ptr [g_x_00542070], ecx
@@ -166,7 +165,7 @@ __declspec(naked) void ChainPickArgScaledInit_0045dd90(void) {
         _emit   18h
         mov     edx, ecx
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         _emit   74h
         _emit   0ch
         mov     ecx, dword ptr [g_x_00542080]

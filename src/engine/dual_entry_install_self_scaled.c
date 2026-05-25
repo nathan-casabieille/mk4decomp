@@ -139,7 +139,6 @@ extern unsigned int g_data_00543720;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_0054204c;
-extern unsigned int g_x_0054206c;
 extern void CallSetPause_0041f830(void);
 extern void MStackCall_00406740(void);
 
@@ -197,7 +196,7 @@ __declspec(naked) void DualEntryInstallSelfScaled_00461b70(void) {
         add     eax, ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     ecx, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_x_0054206c], 0x5f
+        mov     dword ptr [g_walkCallback], 0x5f
         mov     dword ptr [g_x_00542048], ecx
         mov     dword ptr [g_data_00542070], 4
         mov     dword ptr [g_acc_00542078], 0
@@ -209,7 +208,7 @@ __declspec(naked) void DualEntryInstallSelfScaled_00461b70(void) {
         _emit   42h
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     eax, 0x1b333
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x5c], eax
         mov     eax, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [g_cj_0054205c], eax

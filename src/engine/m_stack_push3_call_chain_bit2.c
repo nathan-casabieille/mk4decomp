@@ -132,17 +132,16 @@ extern unsigned int g_data_004e5a00;
  *   chain[scaledInit*4+0x30]=0x94; eax = chain[+0x64] - 0x5b333; g_x_00542074=eax.
  *   Call MStackPush1MagicMod2; if pause ret.
  *   Mul10Tail(0x247, g_data_00542070) -> g_data_00542070.
- *   Mul10Tail(g_x_00542074, g_x_0054206c) -> g_x_0054206c.
+ *   Mul10Tail(g_x_00542074, g_walkCallback) -> g_walkCallback.
  *   ecx=g_data_00542070; if (g_cj[+0x34] & 1): keep, else neg ecx.
- *   chain at [scaledInit*4]: +0x6c=ecx, +0x70=-19660, +0x74=g_x_0054206c, +0x4c=0x20c,
+ *   chain at [scaledInit*4]: +0x6c=ecx, +0x70=-19660, +0x74=g_walkCallback, +0x4c=0x20c,
  *     +0x60=0x1e666, +0x78=0, +0x7c=0x51e, +0x80=0x28f.
- *   g_x_0054206c=0x28f. ret.
+ *   g_walkCallback=0x28f. ret.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542050;
 extern unsigned int g_x_00542054;
 extern unsigned int g_x_00542058;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542074;
 
 void ChainInitMul10BulkStore_00442740(void) {
@@ -173,7 +172,7 @@ void ChainInitMul10BulkStore_00442740(void) {
         _emit   00h
         mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     eax, 0x94
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x30], eax
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     eax, dword ptr [edx*4 + 0x64]
@@ -193,7 +192,7 @@ void ChainInitMul10BulkStore_00442740(void) {
         push    ecx
         push    0x247
         call    Mul10Tail_00404af0
-        mov     edx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         add     esp, 8
         mov     dword ptr [g_data_00542070], eax
         mov     eax, dword ptr [g_x_00542074]
@@ -201,7 +200,7 @@ void ChainInitMul10BulkStore_00442740(void) {
         push    eax
         call    Mul10Tail_00404af0
         mov     ecx, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         add     esp, 8
         mov     edx, dword ptr [ecx*4 + 0x34]
         mov     ecx, dword ptr [g_data_00542070]
@@ -214,7 +213,7 @@ void ChainInitMul10BulkStore_00442740(void) {
         mov     eax, dword ptr [g_scaledInit_00542044]
         shl     eax, 2
         mov     dword ptr [eax + 0x6c], ecx
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax + 0x74], ecx
         mov     ecx, 0x28f
         mov     dword ptr [eax + 0x70], 0xffffb334
@@ -222,7 +221,7 @@ void ChainInitMul10BulkStore_00442740(void) {
         mov     dword ptr [eax + 0x60], 0x1e666
         mov     dword ptr [eax + 0x78], 0
         mov     dword ptr [eax + 0x7c], 0x51e
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax + 0x80], ecx
         }
 }

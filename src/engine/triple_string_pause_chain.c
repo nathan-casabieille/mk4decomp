@@ -124,12 +124,11 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004468c0 (116b game) - dual-entry pause-gated 3-string chain.
  *   Block A: push 3 strings (0x4e5468/70/78) each followed by call PackedAdvance + pause-check ret;
- *     finally call Cmp2OrSet0b; if !pause: g_x_0054206c = g_state_00537e94 = 0x0fff; ret.
+ *     finally call Cmp2OrSet0b; if !pause: g_walkCallback = g_state_00537e94 = 0x0fff; ret.
  *   Block B (+0x60): call GateDispatch6c; if !pause: jmp ScaledInitWithCounterAndType_00446940; ret.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_state_00537e94;
-extern unsigned int g_x_0054206c;
 extern void Cmp2OrSet0b_0048e3e0(void);
 extern void GateDispatch6c_00494580(void);
 extern void PackedAdvanceCallContinue_0048e630(void);
@@ -164,7 +163,7 @@ __declspec(naked) void TripleStringPauseChain_004468c0(void) {
         _emit   75h
         _emit   0fh
         mov     eax, 0x00000fff
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_state_00537e94], eax
         ret
         call    GateDispatch6c_00494580

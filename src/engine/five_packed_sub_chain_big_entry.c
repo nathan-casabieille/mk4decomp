@@ -125,7 +125,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542080;
 extern unsigned int g_data_0054208c;
 extern void ArgSarStoreJmp_004594f0(void);
@@ -144,7 +143,7 @@ __declspec(naked) void FivePackedSubChainBigEntry_004966d0(void)
     {
         mov     ecx, dword ptr [g_data_00542060]
         mov     eax, 0x212
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    0x4f1728
         mov     dword ptr [ecx*4 + 0x74], eax
         call    StreamInitCountdownBody_00494830
@@ -165,7 +164,7 @@ __declspec(naked) void FivePackedSubChainBigEntry_004966d0(void)
     L_fpscb_sub2:
         mov     ecx, dword ptr [g_data_00542060]
         mov     eax, 0x111
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    0x4f1748
         mov     dword ptr [ecx*4 + 0x74], eax
         call    ScaledLookupGuardJmpIndirect_004949f0
@@ -189,7 +188,7 @@ __declspec(naked) void FivePackedSubChainBigEntry_004966d0(void)
         jne     short L_fpscb_sub3_ret
         mov     ecx, dword ptr [g_data_00542060]
         mov     eax, 0x111
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    0x4f1760
         mov     dword ptr [ecx*4 + 0x74], eax
         call    ScaledLookupGuardJmpIndirect_004949f0
@@ -215,7 +214,7 @@ __declspec(naked) void FivePackedSubChainBigEntry_004966d0(void)
         mov     dword ptr [eax*4 + 0x74], 0x112
         mov     ecx, dword ptr [g_data_00542060]
         mov     eax, 0x30a
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x68], eax
         call    StreamInitCountdownBody_00494830
         mov     eax, dword ptr [g_framePauseFlag]
@@ -257,7 +256,7 @@ __declspec(naked) void FivePackedSubChainBigEntry_004966d0(void)
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], ecx
-        mov     dword ptr [g_data_0054206c], 0xa
+        mov     dword ptr [g_walkCallback], 0xa
         call    ScaledInit_0048d490
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

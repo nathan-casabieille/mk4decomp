@@ -136,7 +136,6 @@ extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_00542080;
@@ -165,7 +164,7 @@ __declspec(naked) void SkelAnimUpdaterClusterV2_0049dbf0(void)
         mov      eax, dword ptr [g_data_00542048]
         mov      dword ptr [g_data_00542050], eax
         mov      eax, dword ptr [eax*4]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         call     PushSetXfmMaskCallPop_00407140
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -178,7 +177,7 @@ __declspec(naked) void SkelAnimUpdaterClusterV2_0049dbf0(void)
         call     SixCrossStores_0049d8e0
         mov      eax, dword ptr [g_data_00535e6c]
         mov      ecx, dword ptr [g_data_0054205c]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x3c], eax
         mov      edx, dword ptr [g_data_00542050]
         mov      ecx, dword ptr [g_data_0054207c]
@@ -202,7 +201,7 @@ __declspec(naked) void SkelAnimUpdaterClusterV2_0049dbf0(void)
         mov      dword ptr [g_data_00542044], ecx
         mov      eax, dword ptr [ecx*4 + 0x20]
         or       ah, 0x40
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x20], eax
         mov      ecx, dword ptr [g_data_00542080]
         cmp      ecx, 3
@@ -230,7 +229,7 @@ __declspec(naked) void SkelAnimUpdaterClusterV2_0049dbf0(void)
         mov      eax, dword ptr [g_data_00542070]
     L_dd40:
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       short L_ddda
         call     CmpDivJmp_0049d080
         mov      eax, dword ptr [g_framePauseFlag]
@@ -295,7 +294,7 @@ __declspec(naked) void SkelAnimUpdaterClusterV2_0049dbf0(void)
         mov      eax, dword ptr [ecx*4]
         inc      ecx
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_00542058], ecx
         je       short L_de71
         mov      ecx, eax
@@ -304,7 +303,7 @@ __declspec(naked) void SkelAnimUpdaterClusterV2_0049dbf0(void)
         mov      dword ptr [g_data_00542070], ecx
         mov      dword ptr [g_data_00542048], eax
         mov      dword ptr [g_data_0054204c], ecx
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       short L_de66
         call     L_dbf0
         mov      eax, dword ptr [g_framePauseFlag]

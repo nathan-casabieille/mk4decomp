@@ -123,12 +123,11 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0048de20 (177b game) - mstack-push g_x_00542074+g_x_0054207c; clamp g_x_00542074 to
- *   range based on g_x_0054206c sign; call FpuSqrtMul; pause-check; Mul10Tail(g_x_0054206c, g_x_0054207c);
+ *   range based on g_walkCallback sign; call FpuSqrtMul; pause-check; Mul10Tail(g_walkCallback, g_x_0054207c);
  *   store result; mstack-pop both. ret.
  */
 extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542074;
 extern unsigned int g_x_0054207c;
 
@@ -144,7 +143,7 @@ void MStackClampMul10_0048de20(void) {
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         test    eax, eax
         mov     dword ptr [g_x_0054207c], 0x00010000
         mov     dword ptr [g_x_00542074], eax
@@ -161,12 +160,12 @@ void MStackClampMul10_0048de20(void) {
         test    eax, eax
         _emit   75h
         _emit   45h
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     ecx, dword ptr [g_x_0054207c]
         push    eax
         push    ecx
         call    Mul10Tail_00404af0
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     eax, dword ptr [g_state_004d57ac]
         add     esp, 8
         mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]

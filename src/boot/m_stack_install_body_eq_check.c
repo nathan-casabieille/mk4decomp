@@ -126,7 +126,6 @@ extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_004d5134;
 extern unsigned int g_x_00541e84;
 extern unsigned int g_x_00542044;
-extern unsigned int g_x_0054206c;
 extern void MStackPush2ChainLLInsert_00406790(void);
 
 void MStackInstallBodyEqCheck_00406910(void) {
@@ -137,11 +136,11 @@ void MStackInstallBodyEqCheck_00406910(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], ecx
         mov     edx, dword ptr [g_x_00541e84]
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     ecx, dword ptr [g_x_004d5134]
         mov     dword ptr [g_x_00542044], edx
         mov     dword ptr [g_data_00542070], eax
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         call    Helper_TickAlt
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

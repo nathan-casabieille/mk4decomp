@@ -146,7 +146,6 @@ extern unsigned int g_data_004e6070;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern unsigned int g_table_004d57b0;
 extern void AudioVolumeRescale_004ab690(void);
@@ -162,17 +161,17 @@ __declspec(naked) void VecScaleMStackTripleCall_00446980(void) {
         call    Mul10Tail_00404af0
         add     esp, 8
         mov     dword ptr [g_data_00542070], eax
-        mov     dword ptr [g_data_0054206c], 0xf5c
+        mov     dword ptr [g_walkCallback], 0xf5c
         call    StoreDoubleNegPauseSubStore_004ab750
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_vsm_e1End
-        mov     eax, dword ptr [g_data_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     ecx, dword ptr [g_data_00542070]
         add     eax, 0x10000
         push    ecx
         push    eax
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    Mul10Tail_00404af0
         add     esp, 8
         mov     dword ptr [g_data_00542070], eax
@@ -201,7 +200,7 @@ __declspec(naked) void VecScaleMStackTripleCall_00446980(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_vsm_pop1
-        mov     dword ptr [g_data_0054206c], 0x12c
+        mov     dword ptr [g_walkCallback], 0x12c
         call    AudioVolumeRescale_004ab690
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -243,7 +242,7 @@ __declspec(naked) void VecScaleMStackTripleCall_00446980(void) {
         shr     eax, 2
         mov     dword ptr [ecx*4 + 0x10], 0
         mov     edx, dword ptr [g_data_00542048]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x14], eax
         mov     eax, dword ptr [g_state_004d57ac]
         mov     ecx, dword ptr [eax*4 + g_table_004d57b0]

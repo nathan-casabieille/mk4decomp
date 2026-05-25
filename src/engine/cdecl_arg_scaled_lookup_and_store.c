@@ -128,12 +128,11 @@ extern unsigned int g_data_00535e7c;
  *   If g_cj_0054205c == g_state_00538158: skip second 8-field load; else copy
  *     [eax*4 +0x10/+0x14/+0x18/+0x1c] -> same dests. eax += 8, store; call
  *     NotMaskStorePair_0045f440; if pause? ret.
- *   AND g_x_0054206c &= g_x_0054207c; AND g_x_00542070 &= g_state_00542080;
- *   if g_x_00542074 == g_x_0054206c then: if g_x_00542078 == g_x_00542070:
+ *   AND g_walkCallback &= g_x_0054207c; AND g_x_00542070 &= g_state_00542080;
+ *   if g_x_00542074 == g_walkCallback then: if g_x_00542078 == g_x_00542070:
  *     bit0 of g_state_0054208c set, else clear; else clear bit0; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542074;
 extern unsigned int g_x_00542078;
@@ -174,12 +173,12 @@ void CdeclArgScaledLookupAndStore_0045f470(void) {
         test    eax, eax
         _emit   75h
         _emit   5ah
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     ecx, dword ptr [g_x_0054207c]
         mov     edx, dword ptr [g_state_00542080]
         and     eax, ecx
         mov     ecx, dword ptr [g_x_00542070]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         and     ecx, edx
         mov     edx, dword ptr [g_x_00542074]
         cmp     edx, eax

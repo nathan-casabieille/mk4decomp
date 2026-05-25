@@ -123,13 +123,12 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00470e20 (181b game) - mstack-push 3 + indirect call via global ptr + mstack-pop 3 + bit-1 dispatch.
- *   Push g_x_00542048, g_x_00542084, g_x_0054207c; g_x_0054206c = g_x_0054207c;
+ *   Push g_x_00542048, g_x_00542084, g_x_0054207c; g_walkCallback = g_x_0054207c;
  *   call [g_x_00542048] (indirect through memory); pause? -> end.
  *   mstack-pop into g_x_0054207c, g_x_00542084, g_x_00542048.
  *   if (g_state_0054208c & 1): g_x_00542084 = 0x10000.
  */
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_0054207c;
 extern unsigned int g_x_00542084;
 
@@ -153,7 +152,7 @@ void MStackIndirectCallBit_00470e20(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], ecx
         mov     edx, dword ptr [g_x_0054207c]
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         call    dword ptr [g_x_00542048]
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

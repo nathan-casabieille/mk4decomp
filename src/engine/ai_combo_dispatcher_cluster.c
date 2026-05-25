@@ -132,7 +132,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542080;
 extern unsigned int g_data_00542088;
@@ -174,7 +173,7 @@ __declspec(naked) void AiComboDispatcherCluster_00497470(void)
         mov      dword ptr [eax*4], edx
         mov      eax, OFFSET g_data_004d6788
         shr      eax, 2
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         call     PushSetXfmMaskCallPop_00407140
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -211,7 +210,7 @@ __declspec(naked) void AiComboDispatcherCluster_00497470(void)
         jne      short L_759d
         call     TripleEntry3Block_00498df0
         mov      eax, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_0054206c], 0
+        mov      dword ptr [g_walkCallback], 0
         mov      dword ptr [eax*4 + 0x64], 0
         mov      eax, dword ptr [g_data_004d57ac]
         mov      ecx, dword ptr [eax*4]
@@ -229,7 +228,7 @@ __declspec(naked) void AiComboDispatcherCluster_00497470(void)
         jne      short L_75d2
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, 0x310
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         push     OFFSET g_data_004f2100
         mov      dword ptr [ecx*4 + 0x74], eax
         call     ArgSarStoreJmp_004594f0
@@ -287,7 +286,7 @@ __declspec(naked) void AiComboDispatcherCluster_00497470(void)
     L_766f:
         and      al, 0xfe
         or       eax, ecx
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [esi + 0x34], eax
         mov      edx, dword ptr [g_data_00542074]
         mov      dword ptr [esi + 0x80], edx
@@ -312,7 +311,7 @@ __declspec(naked) void AiComboDispatcherCluster_00497470(void)
         add      esp, 8
         mov      dword ptr [edx*4 + 0x5c], 0x30
         mov      eax, dword ptr [g_data_00542060]
-        mov      dword ptr [g_data_0054206c], 1
+        mov      dword ptr [g_walkCallback], 1
         push     OFFSET g_data_004f2168
         mov      dword ptr [eax*4 + 0x74], 1
         call     ArgSar_Set0_Jmp_0049c6f0
@@ -332,13 +331,13 @@ __declspec(naked) void AiComboDispatcherCluster_00497470(void)
         add      esp, 4
         mov      eax, dword ptr [ecx*4 + 0x74]
         dec      eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jne      short L_774a
         mov      eax, 3
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
     L_774a:
         mov      dword ptr [ecx*4 + 0x74], eax
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         test     eax, eax
         jne      short L_7768
         call     MStackPush8SlotInitPop8_00415010
@@ -349,7 +348,7 @@ __declspec(naked) void AiComboDispatcherCluster_00497470(void)
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, dword ptr [ecx*4 + 0x5c]
         dec      eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x5c], eax
         jne      short L_7789
         jmp      ScaledIndirectJmp_0049c850

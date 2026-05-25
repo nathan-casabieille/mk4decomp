@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0046eac0 (339b game) - 5-thunk dispatcher with mstack-push chain (state-machine via mstack callback ptrs).
- *   Thunk A (0..0x3f): call ScaledAndAlfe; if pause ret. chain[baseSel*4+0x74]=0x603, g_x_0054206c=0x603.
+ *   Thunk A (0..0x3f): call ScaledAndAlfe; if pause ret. chain[baseSel*4+0x74]=0x603, g_walkCallback=0x603.
  *     Call TripleCallPauseJmp; if pause ret. Push 0x004eb6b8; call ArgSarStoreJmp; pop; ret. 15-NOP pad.
  *   Thunk B (+0x50): call Wrapper_0048a3c0; if pause ret.
  *     g_x_00542054 = (0x004eb6c8 >> 2); tail-jmp PhaseDispatchListAdvance_004709e0. ret. 15-NOP pad.
@@ -137,7 +137,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004eb6c8;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542054;
-extern unsigned int g_x_0054206c;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CallPauseDirtyMStackPushFn_0046e2a0(void);
 extern void FiveEntryAlarmInstallChain_0046ee00(void);
@@ -159,7 +158,7 @@ __declspec(naked) void FiveThunkMStackDispatcher_0046eac0(void) {
         _emit   32h
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x603
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
         call    TripleCallPauseJmp_00470500
         mov     eax, dword ptr [g_pause_00541e6c]

@@ -124,14 +124,14 @@ extern unsigned int g_data_00535e7c;
 
 /*
  * AudioInitInstallSelfPeriodic_004a0610 - 216b audio 2-body install/periodic.
- *   Entry 0x004a0610: g_x_0054206c=g_data_00542004. If eax==0 OR g_data_0053a354 != 0:
+ *   Entry 0x004a0610: g_walkCallback=g_data_00542004. If eax==0 OR g_data_0053a354 != 0:
  *     tail-call CallSetPause; pop+ret. Else: chain=g_baseSel_00542060;
  *     g_data_0053a354=1, g_x_00537ea8=0, g_x_0053a2e8=0, g_state_00537e90=4,
- *     g_x_0054206c=0, chain[+0xc]=0; call RoundWinTransition_0049e7e0; if !paused: pop+ret;
+ *     g_walkCallback=0, chain[+0xc]=0; call RoundWinTransition_0049e7e0; if !paused: pop+ret;
  *     else CallSetPause; pop+ret.
  *   Entry 0x004a0680 (body): chain = g_baseSel_00542060*4; saved=chain->state; chain->state=0.
  *     If was 0: countdown g_x_00542054; if not yet 0: skip; else tail-jmp CallSetPause.
- *     Else: ecx=g_x_00538090; g_x_0054206c=ecx; if 0: tail-jmp InstallSelfStride5_004a06f0.
+ *     Else: ecx=g_x_00538090; g_walkCallback=ecx; if 0: tail-jmp InstallSelfStride5_004a06f0.
  *     Else: install-self at body; chain->state=1; g_data_0054204c=2; g_pause_00541e6c=1; ret.
  */
 extern unsigned int g_data_0053a354;
@@ -143,7 +143,6 @@ extern unsigned int g_x_00537ea8;
 extern unsigned int g_x_00538090;
 extern unsigned int g_x_0053a2e8;
 extern unsigned int g_x_00542054;
-extern unsigned int g_x_0054206c;
 extern void CallSetPause_0041f830(void);
 extern void InstallSelfStride5_004a06f0(void);
 extern void RoundWinTransition_0049e7e0(void);
@@ -155,19 +154,19 @@ __declspec(naked) void AudioInitInstallSelfPeriodic_004a0610(void)
         mov     eax, dword ptr [g_data_00542004]
         push    esi
         xor     esi, esi
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         cmp     eax, esi
         je      short L_pause
         mov     eax, dword ptr [g_data_0053a354]
         cmp     eax, esi
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jne     short L_pause
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [g_data_0053a354], 1
         mov     dword ptr [g_x_00537ea8], esi
         mov     dword ptr [g_x_0053a2e8], esi
         mov     dword ptr [g_state_00537e90], 4
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [eax*4 + 0xc], esi
         call    RoundWinTransition_0049e7e0
         cmp     dword ptr [g_pause_00541e6c], esi
@@ -203,7 +202,7 @@ __declspec(naked) void AudioInitInstallSelfPeriodic_004a0610(void)
     L_checkRollover:
         mov     ecx, dword ptr [g_x_00538090]
         test    ecx, ecx
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         jne     short L_install
         jmp     InstallSelfStride5_004a06f0
     L_install:

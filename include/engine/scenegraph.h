@@ -116,8 +116,9 @@ extern s16        g_xformTempAngles[3];                  /* 0x00ab5208 */
 /* Per-walk callback function pointer (caller sets this before
  * invoking WalkSceneGraphSiblings, the function loads it into a
  * register and tail-calls per-sibling). The slot is reused as a
- * "current sibling" scratch during the walk. */
-extern void     (*g_walkCallback)(void);                 /* 0x0054206c */
+ * "current sibling" scratch during the walk, hence the unsigned int
+ * type and the cast-to-fn-ptr at indirect-call sites. */
+extern unsigned int g_walkCallback;                      /* 0x0054206c */
 
 /* Per-state index slot the SetState_XX helpers write alongside
  * g_walkCallback. */

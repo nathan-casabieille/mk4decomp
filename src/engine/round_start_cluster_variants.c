@@ -142,7 +142,6 @@ extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_0054208c;
@@ -191,7 +190,7 @@ __declspec(naked) void RoundStartCluster_0047b900(void)
         call     StateDispatchTable_00490fc0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_ba4d
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [g_data_0054207c], edi
         mov      dword ptr [g_data_00542054], ecx
         mov      dword ptr [g_data_00542084], 0xccc
@@ -220,7 +219,7 @@ __declspec(naked) void RoundStartCluster_0047b900(void)
         jne      short L_ba4d
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, 0x100e
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x74], eax
         mov      dword ptr [esi + 8], OFFSET RoundStartCluster_0047b900
         mov      edx, dword ptr [g_data_00542060]
@@ -245,7 +244,7 @@ __declspec(naked) void RoundStartCluster_0047b900(void)
         /* H2: chime trigger */
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, 0x211
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         push     OFFSET g_data_004ed1d8
         mov      dword ptr [ecx*4 + 0x74], eax
         call     ArgSarStoreJmp_004594f0
@@ -267,7 +266,7 @@ __declspec(naked) void RoundStartCluster_0047b900(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_baed
-        mov      dword ptr [g_data_0054206c], 0x11
+        mov      dword ptr [g_walkCallback], 0x11
         call     CmpEqInitCallElseJmp_0048d4b0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -280,7 +279,7 @@ __declspec(naked) void RoundStartCluster_0047b900(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_baed
-        mov      dword ptr [g_data_0054206c], 0x11
+        mov      dword ptr [g_walkCallback], 0x11
         call     CmpEqInitCallElseJmp_0048d4b0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -345,7 +344,7 @@ __declspec(naked) void RoundStartCluster_004919c0(void)
         mov      dword ptr [eax*4 + 0x6c], 0x62e97
         mov      ecx, dword ptr [g_data_00542058]
         mov      eax, 0xfff9d169
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x6c], eax
         mov      dword ptr [esi + 8], OFFSET RoundStartCluster_004919c0
         mov      dword ptr [esi + 0x84], 2
@@ -359,7 +358,7 @@ __declspec(naked) void RoundStartCluster_004919c0(void)
         mov      edx, dword ptr [g_data_00542054]
         mov      dword ptr [edx*4 + 0x6c], edi
         mov      eax, dword ptr [g_data_00542058]
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         mov      dword ptr [eax*4 + 0x6c], edi
         mov      dword ptr [esi + 8], OFFSET RoundStartCluster_004919c0
         mov      dword ptr [esi + 0x84], 3
@@ -371,7 +370,7 @@ __declspec(naked) void RoundStartCluster_004919c0(void)
         ret
     L_1b2b:
         mov      ebx, 1
-        mov      dword ptr [g_data_0054206c], ebx
+        mov      dword ptr [g_walkCallback], ebx
         mov      dword ptr [g_data_0053a404], ebx
         call     UpperBodyComboFsmCluster_00492aa0
         cmp      dword ptr [g_framePauseFlag], edi
@@ -526,7 +525,7 @@ __declspec(naked) void RoundStartCluster_004919c0(void)
         mov      edx, dword ptr [g_data_00542058]
         mov      dword ptr [edx*4 + 0x30], eax
         mov      ecx, dword ptr [g_data_0054205c]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x30], eax
         mov      edx, dword ptr [g_data_00542058]
         mov      dword ptr [g_data_00542044], edx
@@ -535,7 +534,7 @@ __declspec(naked) void RoundStartCluster_004919c0(void)
         jne      L_1e3f
         mov      eax, dword ptr [g_data_00542058]
         mov      ebx, 0x14000
-        mov      dword ptr [g_data_0054206c], ebx
+        mov      dword ptr [g_walkCallback], ebx
         mov      dword ptr [eax*4 + 0x5c], ebx
         mov      ecx, dword ptr [g_data_0054205c]
         mov      dword ptr [g_data_00542044], ecx
@@ -543,7 +542,7 @@ __declspec(naked) void RoundStartCluster_004919c0(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_1e3f
         mov      edx, dword ptr [g_data_0054205c]
-        mov      dword ptr [g_data_0054206c], ebx
+        mov      dword ptr [g_walkCallback], ebx
         mov      dword ptr [edx*4 + 0x5c], ebx
         mov      eax, dword ptr [g_data_00542058]
         mov      edx, dword ptr [g_data_0054205c]

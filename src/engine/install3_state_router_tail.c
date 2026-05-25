@@ -124,12 +124,12 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0046b4e0 (325b game) - 3-state install-self + dispatch state-1 (router) + tail thunk.
  *   state==0: call StateDispatchTable; if pause ret.
- *     g_x_00542054=g_x_0054206c; g_x_00542084=0x1999; g_state_0054207c=0.
+ *     g_x_00542054=g_walkCallback; g_x_00542084=0x1999; g_state_0054207c=0.
  *     Install-self at entry+0x01000000; state=1; call EsiInstallClampAddCall; pause=1; ret.
  *   state==1 (dec,je): tail-call CallPauseScaledStoreCopyJmp; if pause ret.
  *     Install-self at entry; state=2; g_x_0054204c=1; pause=1; ret.
  *   state>=2 (fall): cmp g_x_0052aac4 with 2: if neq tail-call CjInstallSelfRouter; pop+ret.
- *     Else: g_x_0054206c=g_data_00541dc8; if zero jmp state=2 install; else tail-call CjInstallSelfRouter; pop+ret.
+ *     Else: g_walkCallback=g_data_00541dc8; if zero jmp state=2 install; else tail-call CjInstallSelfRouter; pop+ret.
  *   Tail (+0x120, 2-NOP pad): chain[baseSel*4+0x74]=0x104; push 0x004eb008; call ArgSarStoreJmp; pop; ret.
  */
 extern unsigned int g_data_00541dc8;
@@ -137,7 +137,6 @@ extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0052aac4;
 extern unsigned int g_x_0054204c;
 extern unsigned int g_x_00542054;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542084;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CallPauseScaledStoreCopyJmp_00461220(void);
@@ -162,7 +161,7 @@ __declspec(naked) void Install3StateRouterTail_0046b4e0(void) {
         _emit   2bh
         mov     eax, dword ptr [g_x_0052aac4]
         cmp     eax, 2
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   07h
         call    CjInstallSelfRouter_00470480
@@ -170,7 +169,7 @@ __declspec(naked) void Install3StateRouterTail_0046b4e0(void) {
         ret
         mov     eax, dword ptr [g_data_00541dc8]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   19h
         call    CjInstallSelfRouter_00470480
@@ -200,7 +199,7 @@ __declspec(naked) void Install3StateRouterTail_0046b4e0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [g_x_00542084], 0x1999
         mov     dword ptr [g_x_00542054], ecx
         mov     dword ptr [g_state_0054207c], 0
@@ -226,7 +225,7 @@ __declspec(naked) void Install3StateRouterTail_0046b4e0(void) {
         _emit   90h
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x104
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    0x004eb008
         mov     dword ptr [ecx*4 + 0x74], eax
         call    ArgSarStoreJmp_004594f0

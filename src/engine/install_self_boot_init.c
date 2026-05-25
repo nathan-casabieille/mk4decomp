@@ -126,7 +126,7 @@ extern unsigned int g_data_00535e7c;
  *   snapshot+clear chain[+0x84].
  *   If was nonzero: call BootInitGuardedCallChain_004265d0; if pause? ret.
  *     baseSel[+0x0c]=0x1000; tail-call InstallSelfTableWalk_004200d0; ret.
- *   If was zero: clear scaledInit[0]=0; g_state_00537f74=1; g_x_0054206c=2;
+ *   If was zero: clear scaledInit[0]=0; g_state_00537f74=1; g_walkCallback=2;
  *     g_state_0053a408=2; g_state_00537e88=2; g_x_00542074=4.
  *     call Push16Call_00489f50; if pause? ret.
  *     call ScenegraphWalk_0041f7d0; g_x_00542070=0xc; install-self at
@@ -135,7 +135,6 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_state_00537f74;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542074;
 extern void BootInitGuardedCallChain_004265d0(void);
@@ -164,7 +163,7 @@ __declspec(naked) void InstallSelfBootInit_00462980(void) {
         _emit   00h
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x1000
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x0c], eax
         call    InstallSelfTableWalk_004200d0
         pop     esi
@@ -173,7 +172,7 @@ __declspec(naked) void InstallSelfBootInit_00462980(void) {
         mov     eax, 2
         mov     dword ptr [edx*4 + 0], 0
         mov     dword ptr [g_state_00537f74], 1
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_state_0053a408], eax
         mov     dword ptr [g_state_00537e88], eax
         mov     dword ptr [g_x_00542074], 4

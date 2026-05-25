@@ -124,28 +124,27 @@ extern unsigned int g_data_00535e7c;
 
 /*
  * BootChainPushAddSignFlag_004077b0 - 297b boot mstack-push1 + sign-add + bit-flag toggle.
- *   g_state_00542098 = (g_x_0054206c < 0); push g_x_00542048 to mstack.
+ *   g_state_00542098 = (g_walkCallback < 0); push g_x_00542048 to mstack.
  *   ecx = g_x_0054205c[+0x24]; g_x_00542048 = ecx. If sign flag was set:
- *     edx = g_x_00542044[+0x28] + g_x_0054206c; g_x_0054206c = edx. If sign cleared (jns):
+ *     edx = g_x_00542044[+0x28] + g_walkCallback; g_walkCallback = edx. If sign cleared (jns):
  *       pop mstack → g_x_00542048; g_state_0054208c &= 0xfe; pop+ret.
  *     Else: ecx = ecx[+4]; pop mstack into edx; ecx--; g_state_0054208c |= 1;
- *       g_x_00542048 = edx; g_x_0054206c = ecx; pop+ret.
- *   Otherwise (positive branch): eax = g_x_0054206c + g_x_00542044[+0x28]; g_x_0054206c = eax.
+ *       g_x_00542048 = edx; g_walkCallback = ecx; pop+ret.
+ *   Otherwise (positive branch): eax = g_walkCallback + g_x_00542044[+0x28]; g_walkCallback = eax.
  *     esi = ecx[+4]; ecx = g_state_004d57ac--; g_state_00542098 = (eax < esi);
  *     edx = mstack at top; g_x_00542048 = edx; g_state_0054208c &= 0xfffffffe;
- *     commit g_state_004d57ac. If sign result = 0: g_x_0054206c = 0; g_state_0054208c |= 1.
+ *     commit g_state_004d57ac. If sign result = 0: g_walkCallback = 0; g_state_0054208c |= 1.
  *     pop+ret.
  */
 extern unsigned int g_x_00542044;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 
 __declspec(naked) void BootChainPushAddSignFlag_004077b0(void)
 {
     __asm
     {
-        mov     edx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         xor     eax, eax
         test    edx, edx
         mov     ecx, dword ptr [g_x_00542048]
@@ -164,13 +163,13 @@ __declspec(naked) void BootChainPushAddSignFlag_004077b0(void)
         je      short L_77_pos
         mov     edx, dword ptr [g_x_00542044]
         mov     eax, dword ptr [edx*4 + 0x28]
-        mov     edx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         add     edx, eax
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         jns     short L_77_signClear
         mov     ecx, dword ptr [ecx*4 + 4]
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [eax*4]
         dec     eax
         mov     dword ptr [g_state_004d57ac], eax
@@ -178,7 +177,7 @@ __declspec(naked) void BootChainPushAddSignFlag_004077b0(void)
         dec     ecx
         or      al, 1
         mov     dword ptr [g_x_00542048], edx
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_state_0054208c], eax
         pop     esi
         ret
@@ -194,11 +193,11 @@ __declspec(naked) void BootChainPushAddSignFlag_004077b0(void)
         pop     esi
         ret
     L_77_pos:
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     esi, dword ptr [edx*4 + 0x28]
         add     eax, esi
         xor     edx, edx
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     esi, dword ptr [ecx*4 + 4]
         mov     ecx, dword ptr [g_state_004d57ac]
         cmp     eax, esi
@@ -214,7 +213,7 @@ __declspec(naked) void BootChainPushAddSignFlag_004077b0(void)
         test    eax, eax
         mov     dword ptr [g_state_0054208c], edx
         jne     short L_77_done
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     eax, edx
         or      al, 1
         mov     dword ptr [g_state_0054208c], eax

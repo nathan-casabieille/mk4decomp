@@ -126,14 +126,13 @@ extern void InstallSelfHelperGate_00486490(void);
 extern void MStackPushPairTriCall_0048ce60(void);
 
 /* @addr 0x00486290 (215b game) - chain dispatcher with 4-call cascade.
- *   g_x_0054206c = 0x8000; if baseSel*4+0x7c <= 0: g_x_0054206c = 0x4ccc.
- *   call CmpP1DualInitStore_00482ab0; if !pause: g_x_0054206c=baseSel*4+0x60; if != 0x1003 jmp InstallSelfHelperGate_00486490.
- *   Else baseSel*4+0x74=0x1003; call MStackPushSet0008; pause-check; g_x_0054206c=1; call TableLookupCall_00489ff0; pause-check;
+ *   g_walkCallback = 0x8000; if baseSel*4+0x7c <= 0: g_walkCallback = 0x4ccc.
+ *   call CmpP1DualInitStore_00482ab0; if !pause: g_walkCallback=baseSel*4+0x60; if != 0x1003 jmp InstallSelfHelperGate_00486490.
+ *   Else baseSel*4+0x74=0x1003; call MStackPushSet0008; pause-check; g_walkCallback=1; call TableLookupCall_00489ff0; pause-check;
  *   call MStackPushPairTriCall_0048ce60; pause-check; g_x_0054207c=0; call CopyJmp_0048ef90; pause-check;
  *   if bit-0 set g_x_0054207c=1; g_x_00542080=6; jmp MStackInstallCountdown_00486370.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_0054207c;
 extern unsigned int g_x_00542080;
@@ -145,13 +144,13 @@ extern void TableLookupCall_00489ff0(void);
 __declspec(naked) void ChainDispatcher4Call_00486290(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
-        mov     dword ptr [g_x_0054206c], 0x00008000
+        mov     dword ptr [g_walkCallback], 0x00008000
         mov     eax, dword ptr [eax*4 + 0x7c]
         test    eax, eax
         mov     dword ptr [g_x_00542070], eax
         _emit   7eh
         _emit   0ah
-        mov     dword ptr [g_x_0054206c], 0x00004ccc
+        mov     dword ptr [g_walkCallback], 0x00004ccc
         call    CmpP1DualInitStore_00482ab0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -165,18 +164,18 @@ __declspec(naked) void ChainDispatcher4Call_00486290(void) {
         mov     edx, 0x00001003
         mov     ecx, dword ptr [eax*4 + 0x60]
         cmp     ecx, edx
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         _emit   75h
         _emit   05h
         jmp     InstallSelfHelperGate_00486490
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [eax*4 + 0x74], edx
         call    MStackPushSet0008_004901a0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         _emit   75h
         _emit   60h
-        mov     dword ptr [g_x_0054206c], 1
+        mov     dword ptr [g_walkCallback], 1
         call    TableLookupCall_00489ff0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

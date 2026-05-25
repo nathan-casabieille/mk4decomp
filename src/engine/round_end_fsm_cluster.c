@@ -130,7 +130,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_0054355c;
 extern unsigned int g_data_00543568;
@@ -179,7 +178,7 @@ __declspec(naked) void RoundEndFsmCluster_0045d680(void)
         call     SixCallSeqPushImm_004a1d80
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, 0x1000
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0xc], eax
         call     InstallSelfTableWalk_004200d0
         pop      edi
@@ -188,7 +187,7 @@ __declspec(naked) void RoundEndFsmCluster_0045d680(void)
         ret
     L_d6f9:
         mov      ebx, 2
-        mov      dword ptr [g_data_0054206c], ebx
+        mov      dword ptr [g_walkCallback], ebx
         mov      dword ptr [g_data_0053a408], ebx
         mov      dword ptr [g_data_00537e88], ebx
         call     BootInitGuardedCallChain_004265d0
@@ -221,7 +220,7 @@ __declspec(naked) void RoundEndFsmCluster_0045d680(void)
         mov      dword ptr [g_data_0052aac4], edi
         add      esp, 4
         mov      dword ptr [eax*4], edi
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         mov      dword ptr [g_data_0053a408], edi
         mov      dword ptr [g_data_00537e88], edi
         call     ScenegraphWalk_0041f7d0

@@ -148,7 +148,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054343c;
 extern void AndShlStore_00409280(void);
 extern void BootPhaseGateBracketedInit_004060c0(void);
@@ -258,7 +257,7 @@ __declspec(naked) void BootInitChainHeavy_00404f20(void)
         jne     L_boot_init_exit
         mov     edx, dword ptr [g_data_00542044]
         mov     eax, 0x0C
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x30], eax
         mov     eax, dword ptr [g_data_00542044]
         mov     dword ptr [g_data_0052ab10], eax
@@ -271,7 +270,7 @@ __declspec(naked) void BootInitChainHeavy_00404f20(void)
         mov     dword ptr [g_data_00541de0], esi
         mov     dword ptr [g_data_00535e6c], esi
         mov     dword ptr [g_data_004d5140], 0x7F000000
-        mov     dword ptr [g_data_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         call    AndShlStore_00409280
     L_boot_init_exit:
         pop     esi

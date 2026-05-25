@@ -125,12 +125,11 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x0049a410 (194b game) - install-self with StoreTwoCall + ArgSarStoreJmp.
  *   eax = base*4; ecx = [eax+0x84]; clear; if (ecx == 0) install-path.
  *   else: push 0x47, 0x49a580; call StoreTwoCall_0049cb40; add esp, 8;
- *     eax = 0x1016; g_x_0054206c = eax; chain[base+0x74] = eax;
+ *     eax = 0x1016; g_walkCallback = eax; chain[base+0x74] = eax;
  *     push 0x4f23f0; call ArgSarStoreJmp; add esp, 4; ret.
  *   install-path: g_x_00542080 = 4; install self; packed_ptr store;
  *     g_scaledInit++; chain[+0x84] = 0; call ScaledClearJmp; g_framePauseFlag = 1.
  */
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542080;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ScaledClearJmp_00428d40(void);
@@ -152,7 +151,7 @@ void InstallSelfStoreTwoCall_0049a410(void) {
         mov     ecx, dword ptr [g_baseSel_00542060]
         add     esp, 8
         mov     eax, 0x1016
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    0x004f23f0
         mov     [ecx*4 + 0x74], eax
         call    ArgSarStoreJmp_004594f0

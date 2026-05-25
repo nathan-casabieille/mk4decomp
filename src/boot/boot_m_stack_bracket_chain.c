@@ -131,14 +131,13 @@ extern void BootMStackBracketChain_00413ce0(void);
  *     If state was != 0: countdown g_x_00542058; if not yet 0: jump to mainloop;
  *       else call CallSetPause_0041f830; pop+ret.
  *     If state == 0 (or countdown done): reset g_x_00542058=0x14;
- *     mainloop: g_x_0054206c=0x3333; AudioMixerStep; if paused: pop+ret. Else
- *     g_x_0054206c += 0xd999; ZeroAndDirty4; if paused: pop+ret. If g_state_0054208c & 4:
+ *     mainloop: g_walkCallback=0x3333; AudioMixerStep; if paused: pop+ret. Else
+ *     g_walkCallback += 0xd999; ZeroAndDirty4; if paused: pop+ret. If g_state_0054208c & 4:
  *     call BootMStackBracketChain_00413ce0; if paused: pop+ret. Install-self at body2; chain->state=1;
  *     g_x_0054204c=1; g_pause_00541e6c=1; pop+ret.
  */
 extern unsigned int g_data_0054204c;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern void AudioMixerStep_004ab700(void);
 extern void CallSetPause_0041f830(void);
 extern void ZeroAndDirty4_00405430(void);
@@ -183,12 +182,12 @@ __declspec(naked) void BootInstallPeriodicAudio_00413aa0(void)
     L_skipCountdown:
         mov     dword ptr [g_cj_00542058], 0x14
     L_mainloop:
-        mov     dword ptr [g_x_0054206c], 0x3333
+        mov     dword ptr [g_walkCallback], 0x3333
         call    AudioMixerStep_004ab700
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         jne     short L_b2_ret
-        add     dword ptr [g_x_0054206c], 0xd999
+        add     dword ptr [g_walkCallback], 0xd999
         call    ZeroAndDirty4_00405430
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

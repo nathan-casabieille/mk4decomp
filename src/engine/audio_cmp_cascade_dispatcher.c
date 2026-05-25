@@ -129,7 +129,6 @@ extern unsigned int g_data_00537ea8;
 extern unsigned int g_data_00537f88;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542054;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_0054207c;
@@ -160,11 +159,11 @@ __declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
         je      L_acsd_ret
         mov     eax, dword ptr [g_data_00537e88]
         cmp     eax, 2
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jne     L_acsd_ret
         mov     eax, dword ptr [g_data_00537ea8]
         test    eax, eax
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jne     L_acsd_ret
         mov     eax, dword ptr [g_data_00537e90]
         mov     dword ptr [g_data_0054207c], ebx
@@ -188,7 +187,7 @@ __declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
     L_acsd_skipPush:
         push    0x16
         push    0x4a0370
-        mov     dword ptr [g_data_0054206c], ebx
+        mov     dword ptr [g_walkCallback], ebx
         mov     dword ptr [g_data_00537ea8], ebx
         call    SetWalkCurCallPauseDirty_00404c70
         add     esp, 8
@@ -223,7 +222,7 @@ __declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
         cmp     edx, eax
         je      L_acsd_ret
     L_acsd_skipCmp:
-        mov     dword ptr [g_data_0054206c], ebx
+        mov     dword ptr [g_walkCallback], ebx
         call    BitSetByIndex_004a07a0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -244,7 +243,7 @@ __declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
         mov     dword ptr [g_data_00542054], ebx
         call    SetWalkCurCallPauseDirty_00404c70
         add     esp, 8
-        mov     dword ptr [g_data_0054206c], ebx
+        mov     dword ptr [g_walkCallback], ebx
         mov     dword ptr [g_data_00537ea8], ebx
         pop     ebx
         ret
@@ -260,7 +259,7 @@ __declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
         push    0x4a10d0
         call    SetWalkCurCallPauseDirty_00404c70
         add     esp, 8
-        mov     dword ptr [g_data_0054206c], ebx
+        mov     dword ptr [g_walkCallback], ebx
         mov     dword ptr [g_data_00537ea8], ebx
         pop     ebx
         ret

@@ -125,13 +125,12 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x00434730 (185b game) - install-self with abs-diff threshold gating.
  *   eax = base*4; edx=0; flag = [eax+0x84]; clear via edx.
  *   if (flag != 0): call ChainDecCondStoreCallJmp; pop edi; ret.
- *   ecx = abs(g_x_0054206c - g_x_00542084); g_x_0054206c = ecx;
+ *   ecx = abs(g_walkCallback - g_x_00542084); g_walkCallback = ecx;
  *   if (ecx > 0x20000): goto install-path.
  *   else: call InstallSelfChainSet80Call; pop edi; ret.
  *   install-path: g_x_00542080 = 0x50; install self with packed_ptr store; call CmpDispatchPushCallPop;
  *     pause = 1.
  */
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542080;
 extern unsigned int g_x_00542084;
 extern void ChainDecCondStoreCallJmp_00434880(void);
@@ -154,14 +153,14 @@ __declspec(naked) void InstallSelfAbsDiff_00434730(void) {
         call    ChainDecCondStoreCallJmp_00434880
         pop     edi
         ret
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     edi, dword ptr [g_x_00542084]
         sub     ecx, edi
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         _emit   79h
         _emit   08h
         neg     ecx
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         cmp     ecx, 0x00020000
         _emit   7eh
         _emit   07h

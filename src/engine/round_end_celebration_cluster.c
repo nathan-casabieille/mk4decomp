@@ -129,7 +129,6 @@ extern unsigned int g_data_00537f98;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542080;
 extern unsigned int g_data_00542088;
 extern void ArgSarStoreJmp_004594f0(void);
@@ -154,7 +153,7 @@ __declspec(naked) void RoundEndCelebrationCluster_0047b6e0(void)
         /* H2 */
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, 0x213
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         push     OFFSET g_data_004ed1b8
         mov      dword ptr [ecx*4 + 0x74], eax
         call     ArgSarStoreJmp_004594f0
@@ -197,7 +196,7 @@ __declspec(naked) void RoundEndCelebrationCluster_0047b6e0(void)
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
-        mov      dword ptr [g_data_0054206c], 0x12
+        mov      dword ptr [g_walkCallback], 0x12
         call     CmpEqInitCallElseJmp_0048d4b0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -209,7 +208,7 @@ __declspec(naked) void RoundEndCelebrationCluster_0047b6e0(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      eax, dword ptr [g_data_00542088]
         cmp      eax, edi
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_00537f98], ecx
         jne      short L_b7cd
         call     RoundStartCluster_0047b900
@@ -217,7 +216,7 @@ __declspec(naked) void RoundEndCelebrationCluster_0047b6e0(void)
         pop      esi
         ret
     L_b7cd:
-        mov      dword ptr [g_data_0054206c], 0x12
+        mov      dword ptr [g_walkCallback], 0x12
         mov      dword ptr [esi + 8], OFFSET L_b720
         mov      edx, dword ptr [g_data_00542060]
         mov      ecx, OFFSET L_b720
@@ -238,7 +237,7 @@ __declspec(naked) void RoundEndCelebrationCluster_0047b6e0(void)
         pop      esi
         ret
     L_b836:
-        mov      dword ptr [g_data_0054206c], 9
+        mov      dword ptr [g_walkCallback], 9
         call     ScaledIndexConditionalAdd_0048e400
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -247,7 +246,7 @@ __declspec(naked) void RoundEndCelebrationCluster_0047b6e0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b8f3
-        mov      dword ptr [g_data_0054206c], 0x12
+        mov      dword ptr [g_walkCallback], 0x12
         call     CmpEqInitCallElseJmp_0048d4b0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

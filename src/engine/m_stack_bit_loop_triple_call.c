@@ -125,7 +125,6 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x0049cc30 (267b game) - mstack-push + bit-gated loop with 3 helper calls. */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0054204c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542074;
 extern void AndStoreJmp_0049cc10(void);
@@ -140,7 +139,7 @@ __declspec(naked) void MStackBitLoopTripleCall_0049cc30(void) {
         mov     dword ptr [g_state_004d57ac], eax
         push    esi
         mov     dword ptr [eax*4 + 0], ecx
-        mov     edx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [g_x_00542074], edx
         call    SetJmp_0049cb90
         mov     eax, dword ptr [g_pause_00541e6c]
@@ -179,7 +178,7 @@ __declspec(naked) void MStackBitLoopTripleCall_0049cc30(void) {
         _emit   70h
         mov     edx, dword ptr [g_x_00542074]
         mov     dword ptr [g_x_00542070], esi
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         call    AndStoreJmp_0049cc10
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -200,7 +199,7 @@ __declspec(naked) void MStackBitLoopTripleCall_0049cc30(void) {
         _emit   75h
         _emit   39h
         mov     edx, dword ptr [g_x_00542074]
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         call    SetJmp_0049cb90
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

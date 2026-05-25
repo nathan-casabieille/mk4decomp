@@ -127,12 +127,11 @@ extern unsigned int g_data_00535e7c;
  *   (208c&4)? -> end;
  *   mstack-push g_scaledInit; [0x53a3a8] = g_scaledInit;
  *   chain[+0x40] = 0x6487; chain[+0x3c] = 0; chain[+0x44] = 0; chain[+0x30] = 0;
- *   g_x_0054206c = 9; call DirtyDoubleDeref; pause? -> end;
+ *   g_walkCallback = 9; call DirtyDoubleDeref; pause? -> end;
  *   g_x_00542048 = g_scaledInit; mstack-pop into g_scaledInit; jmp PushPopScaled1cDoubleCall.
  */
 extern unsigned int g_x_0053a3a8;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 extern void DirtyDoubleDeref_00408cb0(void);
 extern void MStackBracket1_TreeWalkRecursive2_00406dd0(void);
 extern void PushPopScaled1cDoubleCall_00408510(void);
@@ -172,7 +171,7 @@ __declspec(naked) void InstallChainInitTailJmp_004a7030(void) {
         lea     eax, [ecx*4 + g_data_004d57ac_arr]
         mov     dword ptr [eax + 0x44], 0
         mov     dword ptr [eax + 0x30], 0
-        mov     dword ptr [g_x_0054206c], 9
+        mov     dword ptr [g_walkCallback], 9
         call    DirtyDoubleDeref_00408cb0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

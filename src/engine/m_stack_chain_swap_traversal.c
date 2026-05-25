@@ -129,7 +129,6 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 extern void MStackBracket2_TreeWalkRecursive_00405e70(void);
 extern void MStackBracket5_LinkedListUnlink_00409aa0(void);
 
@@ -149,13 +148,13 @@ void MStackChainSwapTraversal_00493d00(void) {
         mov     [eax*4 + g_data_004d57ac_arr], edx
         mov     eax, dword ptr [g_cj_0054205c]
         mov     eax, dword ptr [eax*4 + 0x18]
-        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     dword ptr [eax*4 + 0x44], 0
         mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     eax, dword ptr [ecx*4 + 0x1c]
         cmp     eax, 0xfffffff6
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   0fh
         _emit   85h
         _emit   0a2h
@@ -185,7 +184,7 @@ void MStackChainSwapTraversal_00493d00(void) {
         mov     dword ptr [eax*4 + 0x34], edx
         mov     edx, dword ptr [g_x_00542048]
         mov     eax, dword ptr [edx*4 + 0x34]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    MStackBracket2_TreeWalkRecursive_00405e70
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

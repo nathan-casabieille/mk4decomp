@@ -126,35 +126,34 @@ extern void OpcodeStreamDispatch_00423ea0(void);
 
 /* @addr 0x00423b80 (152b game) - 3-call init sequence ending in tail-jmp.
  *   call BootInitGuardedCallChain_004265d0; pause? -> ret.
- *   g_x_0054206c = 0; call CopyGlobal_004ac1f0; pause? -> ret.
- *   g_x_00542048 = packed_ptr(0x4dedf8); g_x_0054206c = 0xa;
+ *   g_walkCallback = 0; call CopyGlobal_004ac1f0; pause? -> ret.
+ *   g_x_00542048 = packed_ptr(0x4dedf8); g_walkCallback = 0xa;
  *   g_x_00542070 = 4; g_x_00542078 = 0; g_x_0054207c = 0xff9c0000.
  *   call Push70CallScaleArith; pause? -> ret.
  *   chain[g_scaledInit + 0x5c] = 0x10000; g_x_00542058 = packed_ptr(0x4dfb50);
- *   g_x_0054206c = 0x10000. jmp OpcodeStreamDispatch_00423ea0.
+ *   g_walkCallback = 0x10000. jmp OpcodeStreamDispatch_00423ea0.
  */
 extern unsigned int g_data_004dedf8;
 extern unsigned int g_data_004dfb50;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_00542058;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542078;
 extern unsigned int g_x_0054207c;
 void ChainInit3CallTailJmp_00423b80(void) {
     BootInitGuardedCallChain_004265d0();
     if (g_framePauseFlag != 0) return;
-    g_x_0054206c = 0;
+    g_walkCallback = 0;
     CopyGlobal_004ac1f0();
     if (g_framePauseFlag != 0) return;
-    g_x_0054206c = 0x0a;
+    g_walkCallback = 0x0a;
     g_x_00542048 = (unsigned int)&g_data_004dedf8 >> 2;
     g_x_00542070 = 4;
     g_x_00542078 = 0;
     g_x_0054207c = 0xff9c0000;
     Push70CallScaleArith_00457ad0();
     if (g_framePauseFlag != 0) return;
-    g_x_0054206c = 0x10000;
+    g_walkCallback = 0x10000;
     *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x5c) = 0x10000;
     g_x_00542058 = (unsigned int)&g_data_004dfb50 >> 2;
     OpcodeStreamDispatch_00423ea0();

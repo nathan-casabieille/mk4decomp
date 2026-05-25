@@ -134,7 +134,6 @@ extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern void AudioMixerStep_004ab700(void);
 extern void ChainInitMul10BulkStore_00442740(void);
@@ -163,7 +162,7 @@ __declspec(naked) void SpawnEffectCluster_004420a0(void)
         mov      esi, 0x91
         mov      dword ptr [eax*4], ecx
         mov      dword ptr [g_data_00542044], 0
-        mov      dword ptr [g_data_0054206c], esi
+        mov      dword ptr [g_walkCallback], esi
         call     DispatcherComplex138_004760f0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -189,7 +188,7 @@ __declspec(naked) void SpawnEffectCluster_004420a0(void)
         dec      eax
         mov      dword ptr [g_data_00542044], edx
         mov      dword ptr [g_data_004d57ac], eax
-        mov      dword ptr [g_data_0054206c], esi
+        mov      dword ptr [g_walkCallback], esi
         call     DispatcherComplex138_004760f0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -227,7 +226,7 @@ __declspec(naked) void SpawnEffectCluster_004420a0(void)
         mov      eax, dword ptr [g_data_00542058]
         mov      ecx, dword ptr [eax*4]
         inc      eax
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         jmp      L_224b
     L_21b0:
         mov      edx, dword ptr [g_data_00542060]
@@ -267,7 +266,7 @@ __declspec(naked) void SpawnEffectCluster_004420a0(void)
         mov      dword ptr [g_data_00542058], eax
         mov      eax, dword ptr [eax*4]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jne      L_227e
         mov      eax, dword ptr [g_data_00542054]
         dec      eax
@@ -288,7 +287,7 @@ __declspec(naked) void SpawnEffectCluster_004420a0(void)
         mov      dword ptr [eax*4], edx
         mov      eax, OFFSET g_data_004e57d0
         shr      eax, 2
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         call     PushSetXfmMaskCallPop_00407140
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -313,7 +312,7 @@ __declspec(naked) void SpawnEffectCluster_004420a0(void)
         jne      L_23af
         mov      edx, dword ptr [g_data_00542058]
         mov      eax, dword ptr [edx*4]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         call     ChainDirtyBitWalker_00408c10
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -321,25 +320,25 @@ __declspec(naked) void SpawnEffectCluster_004420a0(void)
         mov      ecx, dword ptr [g_data_00542048]
         mov      edx, dword ptr [g_data_00542044]
         mov      eax, dword ptr [ecx*4 + 0x3c]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x54], eax
         mov      eax, dword ptr [g_data_00542048]
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, dword ptr [eax*4 + 0x40]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x58], eax
         mov      edx, dword ptr [g_data_00542048]
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, dword ptr [edx*4 + 0x44]
         mov      dword ptr [ecx*4 + 0x5c], eax
         mov      edx, dword ptr [g_data_004d5324]
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         call     AudioMixerStep_004ab700
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_23af
         mov      ecx, dword ptr [g_data_00542044]
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         mov      dword ptr [ecx*4 + 0x68], eax
         mov      eax, 1
         mov      dword ptr [esi + 8], edi
@@ -390,7 +389,7 @@ __declspec(naked) void SpawnEffectCluster_004420a0(void)
         mov      dword ptr [g_data_0054205c], ecx
         mov      eax, dword ptr [ecx*4 + 0x34]
         or       al, 4
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
         mov      dword ptr [esi + 8], OFFSET L_23c0
         mov      dword ptr [esi + 0x84], 3

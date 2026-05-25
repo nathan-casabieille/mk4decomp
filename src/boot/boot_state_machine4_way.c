@@ -126,12 +126,12 @@ extern unsigned int g_data_00535e7c;
  * BootStateMachine4Way_00402f60 - 257b boot 4-state install-self machine.
  *   chain = g_baseSel_00542060<<2; saved = chain->state; chain->state=0.
  *   sub ecx,0 flags branch:
- *     state 0 → init full: g_data_0053a50c=7; g_state_0053a6e0=1; g_x_0054206c=0; g_state_00537ea4=0;
+ *     state 0 → init full: g_data_0053a50c=7; g_state_0053a6e0=1; g_walkCallback=0; g_state_00537ea4=0;
  *       install-self; chain->state=1; mstack-push (entry+0x01000000); g_x_00542044++; chain->state=0;
  *       call Phase3InstallSelf_00403170; g_pause_00541e6c=1; pop+ret.
  *     state 1 → install-self; chain->state=2; g_data_0054204c=0xa0; g_pause_00541e6c=1; pop+ret.
  *     state 2 → install-self; chain->state=3; g_data_0054204c=0x384; g_pause_00541e6c=1;
- *       g_x_0054206c=1; g_data_00541dc8=1; pop+ret.
+ *       g_walkCallback=1; g_data_00541dc8=1; pop+ret.
  *     state 3+ → tail-call BootDualStateInstallSelf_00403070; pop+ret.
  */
 extern unsigned int g_data_0053a50c;
@@ -141,7 +141,6 @@ extern unsigned int g_pause_00541e6c;
 extern unsigned int g_state_00537ea4;
 extern unsigned int g_state_0053a6e0;
 extern unsigned int g_x_00542044;
-extern unsigned int g_x_0054206c;
 extern void BootDualStateInstallSelf_00403070(void);
 extern void Phase3InstallSelf_00403170(void);
 
@@ -168,7 +167,7 @@ __declspec(naked) void BootStateMachine4Way_00402f60(void)
         ret
     L_s2:
         mov     esi, 1
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [g_data_00541dc8], esi
         mov     dword ptr [eax + 8], offset BootStateMachine4Way_00402f60
         mov     dword ptr [eax + 0x84], 3
@@ -189,7 +188,7 @@ __declspec(naked) void BootStateMachine4Way_00402f60(void)
         mov     esi, 1
         mov     dword ptr [g_data_0053a50c], 7
         mov     dword ptr [g_state_0053a6e0], esi
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [g_state_00537ea4], edx
         mov     dword ptr [eax + 8], offset BootStateMachine4Way_00402f60
         mov     ecx, dword ptr [g_baseSel_00542060]

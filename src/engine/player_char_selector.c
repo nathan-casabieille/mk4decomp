@@ -126,7 +126,7 @@ extern unsigned int g_data_00535e7c;
  *   Call BitShiftExtract; if pause ret.
  *   If g_state_0053a408==0: setup player1 (537f48). g_x_00542054 = (0x00535cfc>>2). Call DownloadPlayerChar; ret.
  *   Else: setup player2 (005380e0). g_x_00542054 = (0x0053a1d0>>2). Call DownloadPlayerChar; ret.
- *   Both arms normalize g_x_0054206c via cmp on 0xf/6/8 and write to g_data_00535d10.
+ *   Both arms normalize g_walkCallback via cmp on 0xf/6/8 and write to g_data_00535d10.
  */
 extern unsigned int g_data_00535cfc_arr;
 extern unsigned int g_data_00535d10;
@@ -139,7 +139,6 @@ extern unsigned int g_data_00541ec4;
 extern unsigned int g_data_00541ec8;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542054;
-extern unsigned int g_x_0054206c;
 extern void BitShiftExtract_00464090(void);
 extern void DownloadPlayerChar(void);
 
@@ -166,14 +165,14 @@ __declspec(naked) void PlayerCharSelector_004636d0(void) {
         mov     eax, dword ptr [g_data_005380e0]
         mov     dword ptr [g_data_00541ec4], esi
         cmp     eax, 0xf
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         _emit   75h
         _emit   0fh
         cmp     eax, 0xf
         _emit   75h
         _emit   0ah
         mov     eax, 6
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         cmp     eax, 6
         mov     dword ptr [g_data_00537f48], eax
         _emit   75h
@@ -200,14 +199,14 @@ __declspec(naked) void PlayerCharSelector_004636d0(void) {
         mov     eax, dword ptr [g_data_00537f48]
         mov     dword ptr [g_data_00541ec8], esi
         cmp     eax, 0xf
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         _emit   75h
         _emit   0fh
         cmp     eax, 0xf
         _emit   75h
         _emit   0ah
         mov     eax, 6
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         cmp     eax, 6
         mov     dword ptr [g_data_005380e0], eax
         _emit   75h
@@ -231,7 +230,7 @@ __declspec(naked) void PlayerCharSelector_004636d0(void) {
         cmp     dword ptr [g_pause_00541e6c], esi
         _emit   75h
         _emit   0ch
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [g_state_00537e88], esi
         pop     esi
         ret

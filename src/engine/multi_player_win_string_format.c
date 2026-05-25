@@ -128,7 +128,6 @@ extern unsigned int g_data_0053a408;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_00543564;
@@ -155,7 +154,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         _emit    0x00
         mov      eax, dword ptr [g_data_0053a318]
         mov      esi, 1
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         cmp      eax, esi
         mov      eax, dword ptr [g_data_0053a408]
         mov      dword ptr [g_data_00542084], 0x14000
@@ -235,7 +234,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         mov      edi, 0x238
         shr      eax, 2
         mov      dword ptr [g_data_00542048], eax
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         mov      dword ptr [g_data_00542070], ebp
         mov      dword ptr [g_data_00542078], 0x5a0000
         mov      dword ptr [g_data_0054207c], 0x370000
@@ -277,7 +276,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         _emit    0x00
         _emit    0x00
         mov      eax, 0x4d5578
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         shr      eax, 2
         mov      dword ptr [g_data_00542048], eax
         mov      dword ptr [g_data_00542070], ebp
@@ -320,7 +319,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         mov      esi, 0x610000
         shr      eax, 2
         mov      dword ptr [g_data_00542048], eax
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         mov      dword ptr [g_data_00542070], ebp
         mov      dword ptr [g_data_00542078], esi
         mov      dword ptr [g_data_0054207c], 0x640000
@@ -358,7 +357,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         _emit    0x00
         _emit    0x00
         mov      eax, 0x4d5628
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         shr      eax, 2
         mov      dword ptr [g_data_00542048], eax
         mov      dword ptr [g_data_00542070], ebp
@@ -461,7 +460,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         mov      edi, 0x238
         shr      eax, 2
         mov      dword ptr [g_data_00542048], eax
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         mov      dword ptr [g_data_00542070], ebp
         mov      dword ptr [g_data_00542078], 0xffa60000
         mov      dword ptr [g_data_0054207c], 0x370000
@@ -503,7 +502,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         _emit    0x00
         _emit    0x00
         mov      eax, 0x4d5568
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         shr      eax, 2
         mov      dword ptr [g_data_00542048], eax
         mov      dword ptr [g_data_00542070], ebp
@@ -546,7 +545,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         mov      esi, 0xff9f0000
         shr      eax, 2
         mov      dword ptr [g_data_00542048], eax
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         mov      dword ptr [g_data_00542070], ebp
         mov      dword ptr [g_data_00542078], esi
         mov      dword ptr [g_data_0054207c], 0x640000
@@ -576,7 +575,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         _emit    0x75
         _emit    0x5d
         mov      eax, 0x4d5628
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         shr      eax, 2
         mov      dword ptr [g_data_00542048], eax
         mov      dword ptr [g_data_00542070], ebp

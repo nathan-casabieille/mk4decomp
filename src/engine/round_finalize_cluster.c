@@ -132,7 +132,6 @@ extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542088;
 extern unsigned int g_data_0054208c;
 extern unsigned int g_data_00542098;
@@ -158,7 +157,7 @@ __declspec(naked) void RoundFinalizeCluster_0049b8b0(void)
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, dword ptr [ecx*4 + 0x68]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jne      short L_b8d3
         mov      eax, dword ptr [g_data_0054208c]
         or       al, 4
@@ -177,7 +176,7 @@ __declspec(naked) void RoundFinalizeCluster_0049b8b0(void)
     L_b8f5:
         mov      edx, dword ptr [eax*4 + 0x1c]
         cmp      edx, 3
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         je       short L_b909
         xor      eax, eax
     L_b909:
@@ -217,7 +216,7 @@ __declspec(naked) void RoundFinalizeCluster_0049b8b0(void)
         mov      dword ptr [g_data_00542098], ecx
         mov      ecx, 0xffff6b59
         mov      dword ptr [g_data_00542044], eax
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [eax*4 + 0x38], ecx
         mov      edx, dword ptr [g_data_00542060]
         mov      eax, dword ptr [edx*4 + 0x64]
@@ -235,7 +234,7 @@ __declspec(naked) void RoundFinalizeCluster_0049b8b0(void)
         test     eax, eax
         jne      short L_b9f9
         mov      eax, dword ptr [g_data_0054208c]
-        mov      dword ptr [g_data_0054206c], 1
+        mov      dword ptr [g_walkCallback], 1
         and      al, 0xfb
         mov      dword ptr [g_data_0054208c], eax
     L_b9f9:
@@ -249,7 +248,7 @@ __declspec(naked) void RoundFinalizeCluster_0049b8b0(void)
         /* === h2 (0x49ba00): event 004f24a8 forwarder w/ 0x313 store === */
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, 0x313
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x74], eax
         call     CondPickDualStore_0049c670
         mov      eax, dword ptr [g_framePauseFlag]
@@ -365,7 +364,7 @@ __declspec(naked) void RoundFinalizeCluster_0049b8b0(void)
         nop
         nop
         /* === h5 (0x49bb70): 489ff0+40d990 chain → tail-jmp 49bb90 === */
-        mov      dword ptr [g_data_0054206c], 0x5e
+        mov      dword ptr [g_walkCallback], 0x5e
         call     TableLookupCall_00489ff0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

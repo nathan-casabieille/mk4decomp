@@ -126,7 +126,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_0053a498;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542074;
 extern unsigned int g_x_00542084;
@@ -165,7 +164,7 @@ __declspec(naked) void TripleEntry3Block_00498df0(void) {
         _emit   90h
         mov     eax, dword ptr [g_data_0053a498]
         test    al, 1
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   0eh
         call    Phase4FourHelperChain_00413760

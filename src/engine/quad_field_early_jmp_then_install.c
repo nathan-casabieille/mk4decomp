@@ -127,7 +127,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542078;
 extern void AudioMixerStep_004ab700(void);
@@ -148,19 +147,19 @@ __declspec(naked) void QuadFieldEarlyJmpThenInstall_0043a670(void)
     L_qfeji_cont1:
         mov     ecx, dword ptr [eax*4 + 0x6c]
         test    ecx, ecx
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         je      short L_qfeji_cont2
         jmp     DirtyToggleScaledTest_0043a630
     L_qfeji_cont2:
         mov     ecx, dword ptr [eax*4 + 0x70]
         test    ecx, ecx
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         je      short L_qfeji_cont3
         jmp     DirtyToggleScaledTest_0043a630
     L_qfeji_cont3:
         mov     ecx, dword ptr [eax*4 + 0x74]
         test    ecx, ecx
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         je      short L_qfeji_install
         jmp     DirtyToggleScaledTest_0043a630
     L_qfeji_install:
@@ -212,16 +211,16 @@ __declspec(naked) void QuadFieldEarlyJmpThenInstall_0043a670(void)
         mov     dword ptr [g_data_00542044], eax
         jmp     short L_qfeji_sub2_chain
     L_qfeji_sub2_phase0:
-        mov     dword ptr [g_data_0054206c], 0xccc
+        mov     dword ptr [g_walkCallback], 0xccc
         call    AudioMixerStep_004ab700
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_qfeji_sub2_ret
-        mov     edx, dword ptr [g_data_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     eax, 0xffffd99a
         sub     eax, edx
         mov     edx, offset L_qfeji_sub2
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_data_00542078], eax
         mov     dword ptr [esi + 8], offset L_qfeji_sub2
         mov     ecx, dword ptr [g_data_00542060]

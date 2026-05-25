@@ -129,11 +129,10 @@ extern void DualCallTestPauseRange_004353f0(void);
 /* @addr 0x00435340 (165b game) - 5-block dispatcher.
  *   Block A: gate g_state_00535ddc>0x20000? jmp Wrapper_00438ee0 : jmp InstallSelfPacked0x2005_00437a90.
  *   Block B (+0x20): jmp GuardedSeq_00433bb0.
- *   Block C (+0x30): g_x_0054206c=g_x_0054206c & 0xff; push 0x004e45b0; call JumpTableDispatch_0043a550; ret.
+ *   Block C (+0x30): g_walkCallback=g_walkCallback & 0xff; push 0x004e45b0; call JumpTableDispatch_0043a550; ret.
  *   Block D (+0x50): call Cmp2CallDirtyCall; if nonzero ret; threshold-dispatch.
  *   Blocks E/F/G (+0x80/+0x90/+0xa0): all jmp DualCallTestPauseRange_004353f0.
  */
-extern unsigned int g_x_0054206c;
 extern void GuardedSeq_00433bb0(void);
 extern void PrefixThunkInstallSelf3State_00438f80(void);
 extern void Wrapper_00438ee0(void);
@@ -142,7 +141,7 @@ __declspec(naked) void FiveBlockDispatch_00435340(void) {
     __asm {
         mov     eax, dword ptr [g_state_00535ddc]
         cmp     eax, 0x00020000
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   05h
         jmp     Wrapper_00438ee0
@@ -164,10 +163,10 @@ __declspec(naked) void FiveBlockDispatch_00435340(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        mov     edx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         push    0x004e45b0
         and     edx, 0xff
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         call    JumpTableDispatch_0043a550
         add     esp, 4
         ret
@@ -177,7 +176,7 @@ __declspec(naked) void FiveBlockDispatch_00435340(void) {
         _emit   1bh
         mov     eax, dword ptr [g_state_00535ddc]
         cmp     eax, 0x00029999
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   05h
         jmp     GuardedSeq_00433bb0

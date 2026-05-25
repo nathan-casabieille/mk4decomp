@@ -128,7 +128,7 @@ extern void DualEntryRecursiveInstall_00471710(void);
 extern void EnvSpawnRehydratePass_004719f0(void);
 extern void TripleCallBitJmp_00471690(void);
 
-/* @addr 0x00471920 (193b game) - dual-entry: A: g_x_0054206c=[g_x_0054205c*4+0x18];
+/* @addr 0x00471920 (193b game) - dual-entry: A: g_walkCallback=[g_x_0054205c*4+0x18];
  *   if zero jmp GuardedSeq_00471670; else jmp InstallSelfBranchCascade_00471840.
  *   B (+0x20): install-self path with countdown; chain[+0x84]!=0 path: g_x_00542070=0x10000,
  *   g_x_00542074=0x10000; call DualEntryRecursiveInstall_00471710; pause-check; jmp EnvSpawnRehydratePass_004719f0.
@@ -137,7 +137,6 @@ extern void TripleCallBitJmp_00471690(void);
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542074;
 
@@ -146,7 +145,7 @@ __declspec(naked) void DualEntryInstall00471920_00471920(void) {
         mov     eax, dword ptr [g_x_0054205c]
         mov     eax, dword ptr [eax*4 + 0x18]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   05h
         jmp     InstallSelfBranchCascade_00471840

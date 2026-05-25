@@ -130,7 +130,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern void CallSetPause_0041f830(void);
 extern void CmpDivJmp_0049d080(void);
@@ -151,7 +150,7 @@ __declspec(naked) void MstackPushPackChainInit_00498c40(void)
         push    esi
         shr     edx, 2
         mov     dword ptr [eax*4], ecx
-        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         call    PushSetXfmMaskCallPop_00407140
         mov     eax, dword ptr [g_framePauseFlag]
         xor     esi, esi
@@ -179,12 +178,12 @@ __declspec(naked) void MstackPushPackChainInit_00498c40(void)
         jne     L_mppci_ret
         call    TripleEntry3Block_00498df0
         mov     eax, dword ptr [g_data_00542044]
-        mov     dword ptr [g_data_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [eax*4 + 0x64], esi
         mov     eax, dword ptr [g_data_00542044]
         mov     dword ptr [g_data_0054204c], eax
         mov     ecx, dword ptr [eax*4 + 0x18]
-        mov     dword ptr [g_data_0054206c], 1
+        mov     dword ptr [g_walkCallback], 1
         mov     dword ptr [g_data_00542044], ecx
         call    CmpDivJmp_0049d080
         cmp     dword ptr [g_framePauseFlag], esi
@@ -197,23 +196,23 @@ __declspec(naked) void MstackPushPackChainInit_00498c40(void)
         mov     eax, dword ptr [eax*4 + 0x6c]
         push    eax
         push    0xffff3334
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    Mul10Tail_00404af0
         mov     ecx, dword ptr [g_data_00542048]
         add     esp, 8
         mov     dword ptr [ecx*4], eax
         mov     edx, dword ptr [g_data_00542048]
-        mov     dword ptr [g_data_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [edx*4 + 4], esi
         mov     eax, dword ptr [g_data_0054204c]
         mov     eax, dword ptr [eax*4 + 0x74]
         push    eax
         push    0xffff3334
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    Mul10Tail_00404af0
         mov     ecx, dword ptr [g_data_00542048]
         add     esp, 8
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 8], eax
         call    ScaledTripleCopy4_0049d2d0
         cmp     dword ptr [g_framePauseFlag], esi
@@ -229,7 +228,7 @@ __declspec(naked) void MstackPushPackChainInit_00498c40(void)
         or      ecx, 8
         mov     dword ptr [eax], ecx
         mov     ecx, 0xc000
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax + 0x48], ecx
         mov     eax, dword ptr [g_data_0054204c]
         mov     dword ptr [g_data_00542044], eax

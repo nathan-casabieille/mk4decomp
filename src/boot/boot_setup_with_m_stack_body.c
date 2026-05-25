@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00418e00 (379b boot) - 2-entry packed boot setup + body.
- *   Entry 1 (offset 0, 194b): sets g_data_0054206c = &g_data_004d75e0>>2,
+ *   Entry 1 (offset 0, 194b): sets g_walkCallback = &g_data_004d75e0>>2,
  *     calls PushSetXfmMaskCallPop_00407140. On no-error AND bit 2 of
  *     g_data_0054208c clear: writes [g_data_0054205c*4+0x30]=0xa9,
  *     +0x3c=g_data_00535e6c, +0x70=0xffffaaab, +0x80=0xffffb334. Calls
@@ -146,7 +146,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_0054208c;
 extern unsigned int g_table_004d57b0;
@@ -160,7 +159,7 @@ __declspec(naked) void BootSetupWithMStackBody_00418e00(void) {
     __asm {
         mov     eax, offset g_data_004d75e0
         shr     eax, 2
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    PushSetXfmMaskCallPop_00407140
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -176,7 +175,7 @@ __declspec(naked) void BootSetupWithMStackBody_00418e00(void) {
         mov     eax, 0xffffb334
         mov     dword ptr [ecx*4 + 0x70], 0xffffaaab
         mov     edx, dword ptr [g_data_0054205c]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x80], eax
         call    SetJmp_00408d20
         mov     eax, dword ptr [g_framePauseFlag]
@@ -184,7 +183,7 @@ __declspec(naked) void BootSetupWithMStackBody_00418e00(void) {
         jne     short L_bsm_e1End
         mov     ecx, dword ptr [g_data_00542048]
         mov     eax, offset L_bsm_body
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x10], eax
         call    ScaledTripleCopy54_004ac040
         mov     eax, dword ptr [g_framePauseFlag]
@@ -231,12 +230,12 @@ __declspec(naked) void BootSetupWithMStackBody_00418e00(void) {
         push    esi
         mov     eax, dword ptr [edx*4 + 0x58]
         add     eax, 0x9fd70
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     esi, dword ptr [ecx*4 + 0x58]
         cmp     eax, esi
         jg      short L_bsm_skipAdd
         add     eax, 0x3be3d7
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x58], eax
     L_bsm_skipAdd:
         mov     eax, dword ptr [g_state_004d57ac]

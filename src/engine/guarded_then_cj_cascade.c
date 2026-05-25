@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0047d560 (231b game) - two blocks (+13 NOPs padding).
  *   B1 (0..66): clear g_x_0054207c; call EntryThunkBodyStateMachine_00457bb0; if !pause: set
- *     g_x_0054206c=0x13; call TableLookupCall; push 0x004ed420; call
+ *     g_walkCallback=0x13; call TableLookupCall; push 0x004ed420; call
  *     ScaledDualPropagateJmp; if !pause: tail-jmp FiveCallGuardSetTail; ret.
  *   B2 (80..230): read cj[+0x58]; if eax<0x9999: select g_data_00538038 or
  *     [0053803c] based on edx == g_state_00538158; copy [+0x5c]/[+0x60]; clear
@@ -133,7 +133,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_00538038;
 extern unsigned int g_data_0053803c;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_0054207c;
 extern void EntryThunkBodyStateMachine_00457bb0(void);
@@ -150,7 +149,7 @@ __declspec(naked) void GuardedThenCjCascade_0047d560(void) {
         test    eax, eax
         _emit   75h
         _emit   2ah
-        mov     dword ptr [g_x_0054206c], 0x13
+        mov     dword ptr [g_walkCallback], 0x13
         call    TableLookupCall_00489f60
         push    0x004ed420
         call    ScaledDualPropagateJmp_004287b0
@@ -177,7 +176,7 @@ __declspec(naked) void GuardedThenCjCascade_0047d560(void) {
         mov     edx, dword ptr [g_cj_0054205c]
         mov     eax, dword ptr [edx*4 + 0x58]
         cmp     eax, 0x9999
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7ch
         _emit   7dh
         mov     ecx, dword ptr [g_state_00538158]
@@ -189,7 +188,7 @@ __declspec(naked) void GuardedThenCjCascade_0047d560(void) {
         mov     eax, dword ptr [g_data_0053803c]
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     ecx, dword ptr [eax*4 + 0x5c]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     eax, dword ptr [eax*4 + 0x60]
         mov     dword ptr [g_x_00542070], eax
         mov     dword ptr [edx*4 + 0x54], ecx
@@ -210,7 +209,7 @@ __declspec(naked) void GuardedThenCjCascade_0047d560(void) {
         _emit   0ffh
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     eax, 0xa3d
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x4c], eax
         jmp     ScaledZero44_00491500
         ret

@@ -129,7 +129,6 @@ extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_0054208c;
@@ -162,25 +161,25 @@ __declspec(naked) void PoseFnInstallDualCluster_00463090(void)
         mov      edx, dword ptr [g_data_00542058]
         mov      dword ptr [ecx*4 + 0x30], edx
         mov      eax, dword ptr [g_data_00542054]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         call     MStackChainCountdownLoop_00463fb0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_321c
         mov      edx, dword ptr [g_data_00542060]
         mov      ecx, dword ptr [g_data_00542070]
         mov      dword ptr [edx*4 + 0x34], ecx
-        mov      dword ptr [g_data_0054206c], 0x6978
+        mov      dword ptr [g_walkCallback], 0x6978
         mov      dword ptr [g_data_00542070], 0x20000
         call     RangeMulMod_004ab2a0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_321c
         mov      eax, dword ptr [g_data_00542074]
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         sub      eax, ecx
         mov      ecx, dword ptr [g_data_00542060]
         mov      dword ptr [g_data_00542074], eax
         mov      dword ptr [ecx*4 + 0x38], eax
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         call     MStackChainCountdownLoop_00463fb0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_321c
@@ -195,12 +194,12 @@ __declspec(naked) void PoseFnInstallDualCluster_00463090(void)
         mov      eax, dword ptr [eax*4 + 0x60]
         mov      dword ptr [ecx*4 + 0x40], eax
         mov      edx, dword ptr [g_data_00542060]
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         mov      dword ptr [edx*4 + 0x44], edi
         mov      eax, dword ptr [g_data_0054205c]
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, dword ptr [eax*4 + 0x68]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x48], eax
         mov      dword ptr [esi + 8], OFFSET L_3090
         mov      edx, dword ptr [g_data_00542060]
@@ -252,7 +251,7 @@ __declspec(naked) void PoseFnInstallDualCluster_00463090(void)
         mov      eax, dword ptr [g_data_00542044]
         mov      ecx, dword ptr [g_data_00542054]
         mov      dword ptr [g_data_0054205c], eax
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         call     MStackChainCountdownLoop_00463fb0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3388
@@ -274,13 +273,13 @@ __declspec(naked) void PoseFnInstallDualCluster_00463090(void)
         mov      ecx, dword ptr [eax*4 + 0x60]
         mov      dword ptr [edx*4 + 0x40], ecx
         mov      eax, dword ptr [g_data_00542060]
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         mov      dword ptr [eax*4 + 0x44], edi
         mov      ecx, dword ptr [g_data_0054205c]
         mov      edx, dword ptr [g_data_00542060]
         mov      eax, dword ptr [ecx*4 + 0x68]
         mov      ecx, OFFSET L_3220
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x48], eax
         mov      dword ptr [esi + 8], OFFSET L_3220
         mov      eax, dword ptr [g_data_00542060]

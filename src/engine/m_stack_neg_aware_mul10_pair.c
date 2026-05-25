@@ -130,7 +130,6 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_state_0053a730;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_0054207c;
 extern void ScaledChainDouble_004911f0(void);
@@ -143,13 +142,13 @@ void MStackNegAwareMul10Pair_004910b0(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     eax, dword ptr [g_state_0053a730]
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [g_x_00542070], eax
         test    eax, eax
         _emit   74h
         _emit   08h
         neg     ecx
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     eax, dword ptr [g_state_004d57ac]
         mov     edx, dword ptr [eax*4 + 0]
         mov     dword ptr [g_state_004d57ac], eax
@@ -168,14 +167,14 @@ void MStackNegAwareMul10Pair_004910b0(void) {
         mov     eax, dword ptr [ecx*4 + 0]
         dec     ecx
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_state_004d57ac], ecx
         _emit   7dh
         _emit   13h
         mov     ecx, dword ptr [g_x_0054207c]
         neg     eax
         test    ecx, ecx
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7dh
         _emit   0ch
         _emit   0ebh
@@ -192,7 +191,7 @@ void MStackNegAwareMul10Pair_004910b0(void) {
         push    ecx
         push    eax
         call    Mul10Tail_00404af0
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         add     esp, 8
         mov     dword ptr [g_x_0054207c], eax
         mov     eax, dword ptr [g_state_00542080]

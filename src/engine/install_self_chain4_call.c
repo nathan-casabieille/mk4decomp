@@ -124,7 +124,6 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004376f0 (207b game) - install-self with 4-call cascade and scaledInit-chain push. */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern void DualBlockPauseAbsDirty_00439560(void);
 extern void DualScaledInitClear_00433c10(void);
 extern void HitReactionStateCluster_004335f0(void);
@@ -162,7 +161,7 @@ __declspec(naked) void InstallSelfChain4Call_004376f0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        cmp     dword ptr [g_x_0054206c], 0x00140000
+        cmp     dword ptr [g_walkCallback], 0x00140000
         _emit   7dh
         _emit   07h
         call    Wrapper_004377c0

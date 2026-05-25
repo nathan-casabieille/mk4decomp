@@ -122,7 +122,6 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 extern unsigned int g_x_00542058;
-extern unsigned int g_x_0054206c;
 
 /* @addr 0x004409e0 (184b game) - 3-call pause-gated, then chain[+0x3c/+0x40/+0x44] -> chain[+0x54/+0x58/+0x5c],
  *   set chain[+0x30] = 0x74, call MStackCall_00406340, tail-jmp MStackPushTwoEntryChainCall_004058c0.
@@ -136,14 +135,14 @@ void ThreeCallChainCopy_004409e0(void) {
     DualLinkedBlockCopyBracketed_00476320();
     if (g_framePauseFlag != 0) return;
     v = *(unsigned int *)(g_x_00542058 * 4 + 0x3c);
-    g_x_0054206c = v;
+    g_walkCallback = v;
     *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x54) = v;
     v = *(unsigned int *)(g_x_00542058 * 4 + 0x40);
-    g_x_0054206c = v;
+    g_walkCallback = v;
     *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x58) = v;
     v = *(unsigned int *)(g_x_00542058 * 4 + 0x44);
     *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x5c) = v;
-    g_x_0054206c = 0x74;
+    g_walkCallback = 0x74;
     *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x30) = 0x74;
     MStackCall_00406340();
     if (g_framePauseFlag != 0) return;

@@ -8,7 +8,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern unsigned int g_data_00543550;
 extern unsigned int g_data_00ab4db8;
@@ -27,8 +26,8 @@ __declspec(naked) void Helper_TickAlt(void)
         push    esi
         mov     eax, dword ptr [ecx*4]
         push    edi
-        mov     edi, dword ptr [g_data_0054206c]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     edi, dword ptr [g_walkCallback]
+        mov     dword ptr [g_walkCallback], eax
         mov     ebp, dword ptr [ecx*4 + 8]
         mov     ebx, eax
         test    eax, eax
@@ -38,7 +37,7 @@ __declspec(naked) void Helper_TickAlt(void)
         mov     dword ptr [g_data_00542044], eax
         mov     esi, dword ptr [ecx*4]
         mov     dword ptr [g_data_00542044], eax
-        mov     dword ptr [g_data_0054206c], edi
+        mov     dword ptr [g_walkCallback], edi
         call    edi
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -48,7 +47,7 @@ __declspec(naked) void Helper_TickAlt(void)
         mov     eax, esi
         mov     ebx, esi
         test    esi, esi
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jne     short L_ilw_loop
     L_ilw_done:
         mov     ecx, dword ptr [g_data_0054208c]

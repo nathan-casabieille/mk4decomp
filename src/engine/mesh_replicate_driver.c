@@ -129,7 +129,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_0054208c;
@@ -165,7 +164,7 @@ __declspec(naked) void MeshReplicateDriver_00473220(void)
         mov      dword ptr [g_data_00542078], eax
         mov      ecx, dword ptr [ecx*4]
         test     ecx, ecx
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         je       L_3403
         mov      esi, 0xa001000
     L_3289:
@@ -187,14 +186,14 @@ __declspec(naked) void MeshReplicateDriver_00473220(void)
         mov      eax, dword ptr [g_data_0054204c]
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, dword ptr [eax*4]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x3c], eax
         mov      eax, dword ptr [g_data_0054204c]
         mov      edx, dword ptr [g_data_00542044]
         inc      eax
         mov      dword ptr [g_data_0054204c], eax
         mov      eax, dword ptr [eax*4]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x40], eax
         mov      edx, dword ptr [g_data_0054204c]
         mov      eax, dword ptr [g_data_00542050]
@@ -203,26 +202,26 @@ __declspec(naked) void MeshReplicateDriver_00473220(void)
         mov      dword ptr [g_data_0054204c], edx
         mov      eax, dword ptr [eax*4 + 0x30]
         sar      eax, 1
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x30], eax
         mov      edx, dword ptr [g_data_00542050]
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, dword ptr [edx*4 + 0x34]
         sar      eax, 1
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
         mov      edx, dword ptr [g_data_00542050]
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, dword ptr [edx*4 + 0x38]
         sar      eax, 1
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x38], eax
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, dword ptr [ecx*4 + 0x20]
         mov      dword ptr [g_data_00542048], esi
         and      eax, 0xfaffffff
         or       eax, esi
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x20], eax
         mov      edx, dword ptr [g_data_00542050]
         mov      eax, dword ptr [edx*4 + 0x14]
@@ -240,7 +239,7 @@ __declspec(naked) void MeshReplicateDriver_00473220(void)
         mov      dword ptr [g_data_00542074], edx
         mov      eax, dword ptr [eax*4]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jne      L_3289
     L_3403:
         mov      ecx, dword ptr [g_data_0054205c]

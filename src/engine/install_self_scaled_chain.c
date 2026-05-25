@@ -131,14 +131,13 @@ extern void StoreGuardedBitInstallJmp_004915f0(void);
 /* @addr 0x00491520 (205b game) - 5-stage cascade init.
  *   call ScaledMove48to58; if !pause: scaledInit=(arg0>>2); call GDispatch1; if !pause: call DirtyToggleByGate;
  *   if !pause: bit-2 check; if not set call GuardedDualConst2AndToggle; if !pause: bit-0 check;
- *   if set jmp InstallSelfScaledChain_004916f0; baseSel[*4+0x74]=0x200e; eax=[g_cj_00542054*4 + 0]; g_x_0054206c=eax;
+ *   if set jmp InstallSelfScaledChain_004916f0; baseSel[*4+0x74]=0x200e; eax=[g_cj_00542054*4 + 0]; g_walkCallback=eax;
  *   call MStackFrameCdeclDouble_004903f0; if !pause: g_x_00542048 = [g_cj_00542054*4 + 4],
- *   store to [g_x_0054205c*4 + 0x24], clear g_x_0054206c; jmp StoreGuardedBitInstallJmp_004915f0. ret.
+ *   store to [g_x_0054205c*4 + 0x24], clear g_walkCallback; jmp StoreGuardedBitInstallJmp_004915f0. ret.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern void ScaledMove48to58_00490720(void);
 
 __declspec(naked) void Cascade5StageInit_00491520(void) {
@@ -187,11 +186,11 @@ __declspec(naked) void Cascade5StageInit_00491520(void) {
         jmp     InstallSelfScaledChain_004916f0
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x0000200e
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
         mov     edx, dword ptr [g_cj_00542054]
         mov     eax, dword ptr [edx*4 + 0]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    MStackFrameCdeclDouble_004903f0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -202,7 +201,7 @@ __declspec(naked) void Cascade5StageInit_00491520(void) {
         mov     eax, dword ptr [ecx*4 + 4]
         mov     dword ptr [g_x_00542048], eax
         mov     dword ptr [edx*4 + 0x24], eax
-        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         jmp     StoreGuardedBitInstallJmp_004915f0
         ret
     }

@@ -136,7 +136,6 @@ extern unsigned int g_data_00535e7c;
  *     TwoEntryStateScalar_00435ba0 / InstallSelfStatePush_00435b00 / EntryThenDispatcherPair_00438cd0.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542084;
 extern void CallPauseMStackPushSet2Jmp_00437930(void);
 extern void EntryThenDispatcherPair_00438cd0(void);
@@ -210,7 +209,7 @@ __declspec(naked) void InstallSelfPlusThresholdJmpChain_004359f0(void) {
         _emit   27h
         mov     eax, dword ptr [g_state_00535ddc]
         cmp     eax, 0x00034f5c
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   05h
         jmp     TwoEntryStateScalar_00435ba0

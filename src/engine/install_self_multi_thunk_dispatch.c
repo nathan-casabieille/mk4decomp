@@ -135,7 +135,6 @@ extern unsigned int g_data_00535e7c;
  *     Same state_0054207c gate; jmp CallPauseTripleScaledJmp or DualEntryStateGated; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern void CallPauseTripleScaledJmp_0046c520(void);
 extern void DualEntryStateGated_00460fa0(void);
 extern void FiveCallGuardSetTail_0046f6b0(void);
@@ -197,7 +196,7 @@ __declspec(naked) void InstallSelfMultiThunkDispatch_0046c3d0(void) {
         jmp     DualEntryStateGated_00460fa0
         mov     eax, dword ptr [g_state_00535ddc]
         cmp     eax, 0xcccc
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   05h
         jmp     DualEntryStateGated_00460fa0

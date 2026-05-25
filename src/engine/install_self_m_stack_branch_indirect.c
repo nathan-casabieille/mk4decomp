@@ -137,7 +137,6 @@ extern void InstallSelfMStackBranchIndirect_00470b90(void);
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542054;
-extern unsigned int g_x_0054206c;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void MStackBitFlagDispatch_00494750(void);
 
@@ -158,7 +157,7 @@ __declspec(naked) void SevenThunks_0047cc50(void) {
         nop
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x10f
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
         _emit   0e8h
         _emit   14h
@@ -212,7 +211,7 @@ __declspec(naked) void SevenThunks_0047cc50(void) {
         nop
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x114
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
         _emit   0e8h
         _emit   0a4h

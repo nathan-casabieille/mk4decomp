@@ -131,7 +131,6 @@ extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern void BootMultiAssetLoadStateInit_00403b10(void);
 extern void FiveTableWalkInit_00403c90(void);
@@ -210,7 +209,7 @@ __declspec(naked) void BootInitVec3PhaseInstall_00402c10(void)
         mov     dword ptr [eax + 0x5c], edi
         mov     ecx, dword ptr [g_data_00542044]
         mov     eax, 9
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x30], eax
         call    MStackCall_00406340
         cmp     dword ptr [g_framePauseFlag], edi
@@ -223,7 +222,7 @@ __declspec(naked) void BootInitVec3PhaseInstall_00402c10(void)
         mov     ecx, 0xfffde667
         mov     dword ptr [eax + 0x54], edi
         mov     dword ptr [eax + 0x58], edi
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax + 0x5c], ecx
         mov     eax, dword ptr [g_data_0054205c]
         mov     ecx, dword ptr [g_data_00542044]
@@ -234,7 +233,7 @@ __declspec(naked) void BootInitVec3PhaseInstall_00402c10(void)
         mov     dword ptr [eax*4 + 0x34], ecx
         mov     edx, dword ptr [g_data_0054205c]
         mov     eax, 0xc91
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x7c], eax
         mov     eax, 1
         mov     dword ptr [esi + 8], offset BootInitVec3PhaseInstall_00402c10

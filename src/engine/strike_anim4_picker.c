@@ -134,7 +134,6 @@ extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern unsigned int g_data_00542094;
 extern unsigned int g_data_00543200;
@@ -198,18 +197,18 @@ void StrikeAnim4Picker_00493100(void) {
         mov      eax, OFFSET g_data_005432a0
         shr      eax, 2
     L_3181:
-        add      eax, dword ptr [g_data_0054206c]
+        add      eax, dword ptr [g_walkCallback]
         mov      dword ptr [g_data_00542044], eax
         mov      eax, dword ptr [eax*4]
         mov      dword ptr [g_data_00542044], eax
         mov      dword ptr [edx*4 + 0x30], eax
-        mov      dword ptr [g_data_0054206c], 1
+        mov      dword ptr [g_walkCallback], 1
         call     ScaledAddDeref_00494800
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_33a1
         mov      eax, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_0054206c], 2
+        mov      dword ptr [g_walkCallback], 2
         mov      dword ptr [g_data_00542048], eax
         call     ScaledAddDeref_00494800
         mov      eax, dword ptr [g_framePauseFlag]
@@ -263,7 +262,7 @@ void StrikeAnim4Picker_00493100(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_33a1
-        mov      dword ptr [g_data_0054206c], 0xa
+        mov      dword ptr [g_walkCallback], 0xa
         call     DirtyDoubleDeref_00408cb0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

@@ -147,7 +147,6 @@ extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void BattleEndCluster_00483650(void);
@@ -173,12 +172,12 @@ __declspec(naked) void Phase3Packed3EntryDispatch_00486130(void) {
         mov     edx, dword ptr [g_data_0054205c]
         mov     ecx, dword ptr [g_data_00542084]
         add     ecx, dword ptr [edx*4 + 0x58]
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [edx*4 + 0x58], ecx
         mov     edx, dword ptr [g_data_00542054]
         mov     ecx, dword ptr [g_data_00542084]
         add     ecx, dword ptr [edx*4 + 0x58]
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [edx*4 + 0x58], ecx
         mov     dword ptr [eax + 8], offset Phase3Packed3EntryDispatch_00486130
         mov     dword ptr [eax + 0x84], 2
@@ -191,14 +190,14 @@ __declspec(naked) void Phase3Packed3EntryDispatch_00486130(void) {
         mov     esi, dword ptr [g_data_00542084]
         mov     ecx, dword ptr [edx*4 + 0x58]
         sub     ecx, esi
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [edx*4 + 0x58], ecx
         mov     edx, dword ptr [g_data_00542054]
         mov     esi, dword ptr [g_data_00542084]
         mov     ecx, dword ptr [edx*4 + 0x58]
         sub     ecx, esi
         pop     esi
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [edx*4 + 0x58], ecx
         mov     ecx, 1
         mov     dword ptr [eax + 8], offset Phase3Packed3EntryDispatch_00486130
@@ -249,7 +248,7 @@ __declspec(naked) void Phase3Packed3EntryDispatch_00486130(void) {
         mov     eax, dword ptr [g_data_00542060]
         mov     eax, dword ptr [eax*4 + 0x7c]
         cmp     eax, 3
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jle     short L_p3p_jumpNext
         jmp     BattleEndCluster_00483650
     L_p3p_jumpNext:

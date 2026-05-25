@@ -123,39 +123,38 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00432000 (264b game) - 4-field setup + 2-iter Mul10Tail loop.
- *   diff = g_x_0054206c - [g_x_0054204c*4]; -= [g_data_00542050*4]; shl 16;
+ *   diff = g_walkCallback - [g_x_0054204c*4]; -= [g_data_00542050*4]; shl 16;
  *   += [g_x_0054204c*4 +4]; += [g_data_00542050*4 +4].
  *   call DivLongPushCall_004ab320; if pause? final-ret.
  *   Init g_data_0053a1ac = 2. Loop while g_data_0053a1ac >= 0:
- *     Mul10Tail([g_x_00542048*4], g_x_0054206c), store to scaledInit++, ++g_x_00542048, --g_data_0053a1ac.
+ *     Mul10Tail([g_x_00542048*4], g_walkCallback), store to scaledInit++, ++g_x_00542048, --g_data_0053a1ac.
  *   At end: scaledInit -= 3, g_x_00542048 -= 4 (rewind to start), pop esi, ret.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0053a1ac;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_0054204c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern void DivLongPushCall_004ab320(void);
 
 __declspec(naked) void DiffMul10Loop_00432000(void) {
     __asm {
         mov     ecx, dword ptr [g_x_0054204c]
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         push    esi
         mov     edx, dword ptr [ecx*4 + 0]
         sub     eax, edx
         mov     edx, dword ptr [g_data_00542050]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         sub     eax, dword ptr [edx*4 + 0]
         shl     eax, 0x10
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     esi, dword ptr [ecx*4 + 4]
         add     eax, esi
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     ecx, dword ptr [edx*4 + 4]
         add     eax, ecx
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    DivLongPushCall_004ab320
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -166,7 +165,7 @@ __declspec(naked) void DiffMul10Loop_00432000(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_x_00542048]
-        mov     edx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     ecx, dword ptr [eax*4 + 0]
         push    ecx
         push    edx
@@ -180,7 +179,7 @@ __declspec(naked) void DiffMul10Loop_00432000(void) {
         mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [ecx*4 + 0], eax
         mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         inc     edx
         mov     dword ptr [g_scaledInit_00542044], edx
         mov     edx, dword ptr [g_x_00542048]

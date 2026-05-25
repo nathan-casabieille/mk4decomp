@@ -140,7 +140,7 @@ extern void ScaledInitWithCounterAndType_004314f0(void);
 /* @addr 0x00421380 (378b game) - 2-entry packed phase install + 6-call chain.
  *   Entry 1 (offset 0, 277b): phase-state install.
  *     Phase 1+: SwapOrPassSet_0048fbf0; on no-error compares
- *       g_data_0054206c with g_data_004f3608. If equal, tail-call
+ *       g_walkCallback with g_data_004f3608. If equal, tail-call
  *       PendingMatch_0042d240. Else bumps g_data_00537f30 by 1, calls
  *       CallPauseClear3CallTriple_00428030, then chains
  *       ScenegraphWalk_0041f7d0 + PendingMatch_00420300.
@@ -160,7 +160,6 @@ extern unsigned int g_data_0052ab40;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542094;
 extern void SwapOrPassSet_0048fbf0(void);
 
@@ -177,7 +176,7 @@ __declspec(naked) void Phase3InstallSelfChain_00421380(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis2_done
-        mov     ecx, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     eax, dword ptr [g_data_004f3608]
         cmp     ecx, eax
         jne     short L_pis2_advance
@@ -187,7 +186,7 @@ __declspec(naked) void Phase3InstallSelfChain_00421380(void) {
     L_pis2_advance:
         mov     edx, dword ptr [g_data_00537f30]
         lea     eax, [edx + 1]
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_data_00537f30], eax
         call    CallPauseClear3CallTriple_00428030
         mov     eax, dword ptr [g_framePauseFlag]
@@ -203,7 +202,7 @@ __declspec(naked) void Phase3InstallSelfChain_00421380(void) {
     L_pis2_phase0:
         mov     eax, dword ptr [g_data_0052ab40]
         mov     dword ptr [g_data_0052d724], 1
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         and     eax, 8
         mov     dword ptr [g_data_00542094], eax
         jne     short L_pis2_skipCall

@@ -135,7 +135,6 @@ extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_0054207c;
@@ -170,7 +169,7 @@ __declspec(naked) void CombatChainWalkExpand_00463870(void)
         mov      eax, dword ptr [g_data_0054204c]
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, dword ptr [eax*4 + 4]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x54], eax
         mov      edx, dword ptr [g_data_00542044]
         mov      eax, dword ptr [g_data_0054207c]
@@ -195,7 +194,7 @@ __declspec(naked) void CombatChainWalkExpand_00463870(void)
         dec      eax
         mov      dword ptr [g_data_0054204c], ecx
         mov      dword ptr [g_data_004d57ac], eax
-        mov      dword ptr [g_data_0054206c], 0
+        mov      dword ptr [g_walkCallback], 0
         mov      dword ptr [edx*4 + 0x40], 0
         call     MStackCall_00406340
         mov      eax, dword ptr [g_framePauseFlag]
@@ -277,7 +276,7 @@ __declspec(naked) void CombatChainWalkExpand_00463870(void)
         mov      dword ptr [g_data_00542044], edx
         mov      dword ptr [g_data_004d57ac], eax
         mov      ecx, dword ptr [ecx*4 + 4]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [edx*4 + 0x54], ecx
         mov      eax, dword ptr [g_data_00542044]
         mov      ecx, dword ptr [g_data_0054207c]
@@ -299,7 +298,7 @@ __declspec(naked) void CombatChainWalkExpand_00463870(void)
         mov      dword ptr [g_data_0054205c], ecx
         mov      ecx, OFFSET g_data_00542a08
         shr      ecx, 2
-        mov      dword ptr [g_data_0054206c], ebp
+        mov      dword ptr [g_walkCallback], ebp
         mov      dword ptr [g_data_00542070], 0xff
         mov      dword ptr [g_data_00542054], ecx
         jmp      L_3b89
@@ -324,16 +323,16 @@ __declspec(naked) void CombatChainWalkExpand_00463870(void)
         mov      eax, dword ptr [edx*4 + 0x28]
         mov      dword ptr [eax*4 + 0x10], edi
         mov      ecx, dword ptr [g_data_00542044]
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         mov      edx, dword ptr [ecx*4 + 0x28]
         mov      dword ptr [edx*4 + 0x14], eax
         mov      eax, dword ptr [g_data_00542074]
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         sar      eax, 8
         inc      ecx
         mov      dword ptr [g_data_00542074], eax
         cmp      ecx, 4
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         jbe      L_3b83
         mov      eax, dword ptr [g_data_0054207c]
         sub      eax, 0x6978
@@ -349,7 +348,7 @@ __declspec(naked) void CombatChainWalkExpand_00463870(void)
         mov      ecx, dword ptr [g_data_0054204c]
         mov      edx, dword ptr [g_data_0054205c]
         mov      eax, dword ptr [ecx*4]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x30], eax
     L_3c6e:
         pop      edi

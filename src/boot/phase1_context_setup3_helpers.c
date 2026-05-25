@@ -132,7 +132,6 @@ extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054207c;
 extern void CallSetPause_0041f830(void);
 extern void CopyThreeFields_00404df0(void);
@@ -203,7 +202,7 @@ __declspec(naked) void Phase1ContextSetup3Helpers_0040d990(void)
     L_p13_helperA:
         mov     ecx, dword ptr [g_data_0054205c]
         mov     eax, 0xFFFFB334
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x80], eax
         mov     edx, dword ptr [g_data_0054205c]
         mov     ecx, dword ptr [edx*4 + 0x18]
@@ -211,12 +210,12 @@ __declspec(naked) void Phase1ContextSetup3Helpers_0040d990(void)
         mov     eax, dword ptr [ecx*4 + 0x20]
         and     ah, 0xBF
         or      al, 0x40
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x20], eax
         mov     eax, dword ptr [g_data_00542044]
         mov     ecx, 0xFF
         mov     eax, dword ptr [eax*4 + 0x28]
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_data_00542048], eax
         mov     dword ptr [eax*4 + 0x14], ecx
         mov     eax, dword ptr [g_data_00542048]
@@ -230,7 +229,7 @@ __declspec(naked) void Phase1ContextSetup3Helpers_0040d990(void)
         mov     dword ptr [edx*4 + 0x18], eax
         mov     ecx, dword ptr [g_data_00542048]
         mov     eax, 0x0040DBF0
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x10], eax
         jmp     CallSetPause_0041f830
         nop
@@ -245,13 +244,13 @@ __declspec(naked) void Phase1ContextSetup3Helpers_0040d990(void)
         mov     dword ptr [g_data_00542044], ecx
         mov     eax, dword ptr [ecx*4 + 0x20]
         or      al, 0x40
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x20], eax
         mov     ecx, dword ptr [g_data_00542044]
         mov     eax, dword ptr [ecx*4 + 0x28]
         mov     ecx, 0xFF
         mov     dword ptr [g_data_00542048], eax
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x14], ecx
         mov     eax, dword ptr [g_data_00542048]
         mov     ecx, dword ptr [eax*4]
@@ -264,7 +263,7 @@ __declspec(naked) void Phase1ContextSetup3Helpers_0040d990(void)
         mov     dword ptr [eax*4 + 0x18], ecx
         mov     edx, dword ptr [g_data_00542048]
         mov     eax, 0x0040DCF0
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x10], eax
         jmp     CallSetPause_0041f830
     }

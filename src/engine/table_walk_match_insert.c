@@ -127,15 +127,14 @@ extern unsigned int g_data_00535e7c;
  *   Loop: ecx = [eax*4]; if zero ret. cmp with [edx*4]; if neq jump_advance.
  *     cmp with [edx*4+4]; if neq jump_advance. cmp with [edx*4+8]; if eq jump_insert.
  *     advance: eax+=3, reload, loop while ecx!=0.
- *   Insert: g_x_0054206c=3; call StorePauseImulShr16; if pause ret.
- *     eax = g_x_0054206c*3 + (0x004e8948>>2); scaledInit=eax; copy 3 entries to [g_x_00542048*4 +0/4/8]; pop esi; ret.
+ *   Insert: g_walkCallback=3; call StorePauseImulShr16; if pause ret.
+ *     eax = g_walkCallback*3 + (0x004e8948>>2); scaledInit=eax; copy 3 entries to [g_x_00542048*4 +0/4/8]; pop esi; ret.
  */
 extern unsigned int g_data_004e8860;
 extern unsigned int g_data_004e8948;
 extern unsigned int g_data_005380b0;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 extern void StorePauseImulShr16_004ab630(void);
 
 __declspec(naked) void TableWalkMatchInsert_00459030(void) {
@@ -149,7 +148,7 @@ __declspec(naked) void TableWalkMatchInsert_00459030(void) {
         mov     ecx, dword ptr [eax*4 + 0]
         push    esi
         test    ecx, ecx
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         _emit   0fh
         _emit   84h
         _emit   0f5h
@@ -161,13 +160,13 @@ __declspec(naked) void TableWalkMatchInsert_00459030(void) {
         _emit   75h
         _emit   30h
         mov     ecx, dword ptr [eax*4 + 4]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     esi, dword ptr [edx*4 + 4]
         cmp     ecx, esi
         _emit   75h
         _emit   18h
         mov     ecx, dword ptr [eax*4 + 8]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     esi, dword ptr [edx*4 + 8]
         cmp     ecx, esi
         _emit   74h
@@ -176,12 +175,12 @@ __declspec(naked) void TableWalkMatchInsert_00459030(void) {
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     ecx, dword ptr [eax*4 + 0]
         test    ecx, ecx
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         _emit   75h
         _emit   0aeh
         pop     esi
         ret
-        mov     dword ptr [g_x_0054206c], 3
+        mov     dword ptr [g_walkCallback], 3
         call    StorePauseImulShr16_004ab630
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -191,24 +190,24 @@ __declspec(naked) void TableWalkMatchInsert_00459030(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         lea     ecx, [eax + eax*2]
         mov     eax, offset g_data_004e8948
         shr     eax, 2
         add     eax, ecx
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, dword ptr [g_x_00542048]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0], ecx
         mov     eax, dword ptr [g_scaledInit_00542044]
         mov     edx, dword ptr [g_x_00542048]
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     dword ptr [edx*4 + 4], ecx
         mov     eax, dword ptr [g_scaledInit_00542044]
@@ -216,7 +215,7 @@ __declspec(naked) void TableWalkMatchInsert_00459030(void) {
         inc     eax
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, dword ptr [g_x_00542048]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 8], ecx
         pop     esi
         ret

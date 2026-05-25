@@ -134,7 +134,6 @@ extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_00542080;
@@ -218,7 +217,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         test     eax, eax
         jne      L_8019
         mov      eax, 0x20
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_0053a430], eax
         call     PushCallPauseSetMaxThenCallPauseJmp_0048e380
         mov      eax, dword ptr [g_framePauseFlag]
@@ -376,7 +375,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         mov      dword ptr [g_data_00542054], eax
         push     esi
         mov      eax, dword ptr [eax*4 + 0x34]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         and      eax, 1
         mov      dword ptr [g_data_00542094], eax
         je       L_8235
@@ -394,7 +393,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_83d1
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         mov      dword ptr [g_data_00542074], 0x60000
         push     edx
         push     0x60000
@@ -406,19 +405,19 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         push     eax
         push     ecx
         call     Mul10Tail_00404af0
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         add      esp, 8
         mov      dword ptr [g_data_00542088], eax
         push     edx
         push     0x11999
         call     Mul10Tail_00404af0
         add      esp, 8
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      eax, dword ptr [g_data_00542070]
         push     eax
         push     0x11999
         call     Mul10Tail_00404af0
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      esi, dword ptr [g_data_00542084]
         mov      dword ptr [g_data_00542070], eax
         mov      dword ptr [g_data_00542080], ecx
@@ -438,13 +437,13 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         call     Mul10Tail_00404af0
         mov      ecx, dword ptr [g_data_00542070]
         add      esp, 8
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         push     ecx
         push     0x14ccc
         call     Mul10Tail_00404af0
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [g_data_00542070], eax
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         add      esp, 8
         mov      dword ptr [edx*4 + 0x30], eax
         mov      ecx, dword ptr [g_data_00542060]

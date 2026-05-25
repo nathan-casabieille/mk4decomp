@@ -128,7 +128,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_0054208c;
 extern void ClampMulShiftStore_004ba0e0(void);
@@ -142,13 +141,13 @@ extern void ScaledOrStore_004903d0(void);
 __declspec(naked) void ThrowPoseCallbackSetup_00491f10(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         push     ebx
         lea      ecx, [eax*4]
         mov      eax, OFFSET g_data_004f1300
         shr      eax, 2
         add      eax, ecx
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_0054204c], eax
         mov      ecx, dword ptr [eax*4]
         inc      eax
@@ -170,7 +169,7 @@ __declspec(naked) void ThrowPoseCallbackSetup_00491f10(void)
         mov      edx, dword ptr [g_data_00542044]
         test     eax, eax
         mov      dword ptr [g_data_0054205c], edx
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       short L_1fa4
         call     ScaledOrStore_004903d0
         mov      eax, dword ptr [g_framePauseFlag]
@@ -199,7 +198,7 @@ __declspec(naked) void ThrowPoseCallbackSetup_00491f10(void)
         mov      edx, dword ptr [g_data_00542044]
         mov      dword ptr [edx*4 + 0x34], 0xd0000
         mov      ecx, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x38], eax
         mov      edx, dword ptr [g_data_00542050]
         mov      dword ptr [g_data_00542048], edx
@@ -214,17 +213,17 @@ __declspec(naked) void ThrowPoseCallbackSetup_00491f10(void)
         mov      eax, dword ptr [g_data_00542074]
         push     ecx
         push     eax
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         call     Mul10Tail_00404af0
         mov      ecx, dword ptr [g_data_0054205c]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         add      esp, 8
         mov      dword ptr [ecx*4 + 0x54], eax
         mov      eax, dword ptr [g_data_0054204c]
         mov      edx, dword ptr [g_data_0054205c]
         mov      ecx, dword ptr [eax*4]
         inc      eax
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_0054204c], eax
         mov      dword ptr [edx*4 + 0x58], ecx
         mov      eax, dword ptr [g_data_0054205c]
@@ -241,7 +240,7 @@ __declspec(naked) void ThrowPoseCallbackSetup_00491f10(void)
         jne      short L_2131
         test     byte ptr [g_data_0054208c], bl
         jne      short L_2131
-        mov      dword ptr [g_data_0054206c], 2
+        mov      dword ptr [g_walkCallback], 2
         call     ChainDirtyBitWalker_00408c10
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -250,7 +249,7 @@ __declspec(naked) void ThrowPoseCallbackSetup_00491f10(void)
         mov      eax, OFFSET ClampMulShiftStore_004ba0e0
         mov      dword ptr [ecx*4 + 0x14], 0x40
         mov      edx, dword ptr [g_data_00542048]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x10], eax
         mov      eax, dword ptr [g_data_0054205c]
         mov      dword ptr [g_data_00542048], eax

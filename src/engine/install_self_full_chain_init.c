@@ -131,7 +131,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern void PendingMatch_00432110(void);
 
 __declspec(naked) void InstallSelfFullChainInit_00462470(void) {
@@ -156,17 +155,17 @@ __declspec(naked) void InstallSelfFullChainInit_00462470(void) {
         mov     dword ptr [edx*4 + 0x34], esi
         mov     edx, 0xfff5cccd
         mov     dword ptr [eax + 0x38], 0xfffe0000
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [eax + 0x3c], edx
         mov     edx, dword ptr [g_load_0052ab10]
         mov     dword ptr [g_x_0054205c], edx
         shl     edx, 2
         mov     edi, dword ptr [edx + 0x60]
         mov     dword ptr [eax + 0x40], edi
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [eax + 0x44], esi
         mov     edx, dword ptr [edx + 0x68]
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [eax + 0x48], edx
         mov     dword ptr [ecx + 0x08], 0x00462470
         mov     eax, dword ptr [g_baseSel_00542060]

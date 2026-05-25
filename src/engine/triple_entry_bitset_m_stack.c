@@ -128,7 +128,6 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_0054207c;
 extern void GuardedSeq_004297b0(void);
 extern void InstallSelfMStackIndirect_00487920(void);
@@ -146,7 +145,7 @@ __declspec(naked) void TripleEntryBitsetMStack_00487890(void) {
         _emit   17h
         mov     ecx, dword ptr [g_x_0054205c]
         mov     eax, 4
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x28], eax
         ret
         _emit   90h

@@ -129,7 +129,6 @@ extern unsigned int g_data_00535e7c;
  *   mstack-pop pair (g_cj_0054205c, g_scaledInit_00542044); ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern void PreFightInstallCluster_00474390(void);
 
 void MStackPush2CjMul10Triple_00474170(void) {
@@ -165,30 +164,30 @@ void MStackPush2CjMul10Triple_00474170(void) {
         mov     eax, dword ptr [eax*4 + 0x6c]
         push    eax
         push    0x0001c000
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    Mul10Tail_00404af0
         mov     ecx, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         add     esp, 8
         mov     dword ptr [ecx*4 + 0x6c], eax
         mov     edx, dword ptr [g_cj_0054205c]
         mov     eax, dword ptr [edx*4 + 0x70]
         push    eax
         push    0x0001c000
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    Mul10Tail_00404af0
         mov     ecx, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         add     esp, 8
         mov     dword ptr [ecx*4 + 0x70], eax
         mov     edx, dword ptr [g_cj_0054205c]
         mov     eax, dword ptr [edx*4 + 0x74]
         push    eax
         push    0x0001c000
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    Mul10Tail_00404af0
         mov     ecx, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         add     esp, 8
         mov     dword ptr [ecx*4 + 0x74], eax
         mov     eax, dword ptr [g_state_004d57ac]

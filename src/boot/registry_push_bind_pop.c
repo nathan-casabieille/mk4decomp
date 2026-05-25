@@ -141,7 +141,7 @@ void RegistryPushBindPop_00403c20(void) {
     base = (unsigned char *)(g_x_00535e6c * 4);
     *(unsigned int *)(base + 0x54) = 0;
     *(unsigned int *)(base + 0x58) = 0;
-    g_walkCallback = (void (*)(void))0xfff68000;
+    g_walkCallback = 0xfff68000;
     *(unsigned int *)(base + 0x5c) = 0xfff68000;
     *(unsigned int *)(g_currentNodeIdx * 4 + 0x3c) = g_xformEntityIdx;
     top = g_state_004d57ac;

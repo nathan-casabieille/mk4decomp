@@ -133,7 +133,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542080;
 extern unsigned int g_data_0054208c;
 extern void ArgSarStoreJmp_004594f0(void);
@@ -156,7 +155,7 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5e8d
-        mov      dword ptr [g_data_0054206c], 3
+        mov      dword ptr [g_walkCallback], 3
         jmp      ScaledCmpJlJmp_00488ed0
     L_5e8d:
         ret
@@ -173,13 +172,13 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      ecx, dword ptr [eax*4 + 0x80]
         cmp      ecx, 0x3333
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         jl       short L_5ecb
         jmp      QuadBlockInstallChainThunks_00483c90
     L_5ecb:
         mov      eax, dword ptr [eax*4 + 0x34]
         cmp      eax, 0xf
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jne      short L_5ee1
         jmp      QuadBlockInstallChainThunks_00483c90
     L_5ee1:
@@ -206,7 +205,7 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      eax, dword ptr [eax*4 + 0x80]
         cmp      eax, 0x3333
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jl       short L_5f39
         jmp      QuadBlockInstallChainThunks_00483c90
     L_5f39:
@@ -267,7 +266,7 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         jne      short L_5fe2
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, 0x100a
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         push     OFFSET g_data_004eec90
         mov      dword ptr [ecx*4 + 0x74], eax
         call     ArgSarStoreJmp_004594f0
@@ -300,7 +299,7 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         nop
         nop
         nop
-        mov      dword ptr [g_data_0054206c], 0x9999
+        mov      dword ptr [g_walkCallback], 0x9999
         call     CmpP1DualInitStore_00482ab0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

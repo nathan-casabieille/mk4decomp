@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004708c0 (186b game) - dual-guarded packed-table search by chain[+0x34].
  *   call MStackPush3CmpCall_0048eec0. if (!(g_state_0054208c & 1)): return 0.
- *   eax = [0x535ddc]; g_x_0054206c = eax; if (eax > 0x10000): return 0.
+ *   eax = [0x535ddc]; g_walkCallback = eax; if (eax > 0x10000): return 0.
  *   call CmpP1GTSetup_00470980; g_scaledInit = packed_ptr(0x4ebe90);
  *   ecx = chain[scaledInit]; scaledInit++;
  *   loop: g_x_00542074 = ecx; if (ecx < 0) break;
@@ -132,12 +132,11 @@ extern unsigned int g_data_00535e7c;
  *     ecx = chain[scaledInit++]; g_x_00542074 = ecx; scaledInit++ again;
  *     ecx = chain[scaledInit]; if (ecx >= 0) goto loop.
  *   break: return 0.
- *   found: g_x_0054206c = chain[scaledInit++]; call SnapshotDispatchMStack;
+ *   found: g_walkCallback = chain[scaledInit++]; call SnapshotDispatchMStack;
  *     call ScaledZeroFour_00490740; return 1.
  */
 extern unsigned int g_x_00535ddc;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542074;
 extern void CmpP1GTSetup_00470980(void);
@@ -157,7 +156,7 @@ __declspec(naked) void DualGuardedTableSearch_004708c0(void) {
         ret
         mov     eax, dword ptr [g_x_00535ddc]
         cmp     eax, 0x00010000
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   04h
         xor     eax, eax
@@ -196,7 +195,7 @@ __declspec(naked) void DualGuardedTableSearch_004708c0(void) {
         ret
         mov     edx, [eax*4 + g_data_004d57ac_arr]
         inc     eax
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [g_scaledInit_00542044], eax
         call    SnapshotDispatchMStack_00491350
         call    ScaledZeroFour_00490740

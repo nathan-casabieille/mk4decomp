@@ -123,12 +123,11 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0047c880 (111b game) - triple-entry dispatcher.
- *   Block A: set g_x_0054206c=0x37; call TableLookupCall; if !pause set =0x07; ret.
+ *   Block A: set g_walkCallback=0x37; call TableLookupCall; if !pause set =0x07; ret.
  *   Block B (+0x30): set baseSel[*4+0x74]=0x408; push 0x004ed320; call ArgSarStoreJmp; ret.
  *   Block C (+0x60): set g_x_00542080=0x8; jmp InstallSelfCountdown2Stage_0047c8f0.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542080;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void InstallSelfCountdown2Stage_0047c8f0(void);
@@ -136,13 +135,13 @@ extern void TableLookupCall_00489ff0(void);
 
 __declspec(naked) void TripleEntryTblPushJmp_0047c880(void) {
     __asm {
-        mov     dword ptr [g_x_0054206c], 0x37
+        mov     dword ptr [g_walkCallback], 0x37
         call    TableLookupCall_00489ff0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         _emit   75h
         _emit   0ah
-        mov     dword ptr [g_x_0054206c], 0x07
+        mov     dword ptr [g_walkCallback], 0x07
         ret
         _emit   90h
         _emit   90h
@@ -159,7 +158,7 @@ __declspec(naked) void TripleEntryTblPushJmp_0047c880(void) {
         _emit   90h
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x00000408
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    0x004ed320
         mov     dword ptr [ecx*4 + 0x74], eax
         call    ArgSarStoreJmp_004594f0

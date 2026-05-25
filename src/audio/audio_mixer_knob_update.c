@@ -127,7 +127,6 @@ extern unsigned int g_data_004f3ae4;
 extern unsigned int g_data_004f3ae8;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_005433c4;
 extern unsigned int g_data_005433c8;
 extern unsigned int g_data_00543440;
@@ -192,7 +191,7 @@ __declspec(naked) void AudioMixerKnobUpdate_004a8aa0(void)
         lea      ecx, [ecx + ecx*2]
         movsx    edx, byte ptr [ecx*8 + g_data_005435a0]
         mov      ecx, dword ptr [g_data_0054359c]
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         add      ecx, eax
         mov      edx, dword ptr [ecx*4 + 0x34]
         mov      dword ptr [g_data_00542044], edx
@@ -255,7 +254,7 @@ __declspec(naked) void AudioMixerKnobUpdate_004a8aa0(void)
         mov      ecx, dword ptr [g_data_00542060]
         movsx    eax, byte ptr [edx*8 + g_data_005435a0]
         mov      edx, dword ptr [g_data_005433c8]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         add      edx, ecx
         mov      eax, dword ptr [edx*4 + 0x48]
         mov      dword ptr [g_data_00542044], eax

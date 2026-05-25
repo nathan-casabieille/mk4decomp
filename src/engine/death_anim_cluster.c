@@ -140,7 +140,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00543564;
 extern unsigned int g_data_00543594;
@@ -180,13 +179,13 @@ __declspec(naked) void DeathAnimCluster_0042eaf0(void)
         je       short L_eb75
         mov      eax, dword ptr [g_data_00537f48]
         mov      ecx, dword ptr [g_data_0053a510]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_00542074], ecx
         jmp      short L_eb8b
     L_eb75:
         mov      edx, dword ptr [g_data_005380e0]
         mov      eax, dword ptr [g_data_0052aafc]
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [g_data_00542074], eax
     L_eb8b:
         mov      dword ptr [g_data_00542070], esi
@@ -200,7 +199,7 @@ __declspec(naked) void DeathAnimCluster_0042eaf0(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      edx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [g_data_00541de8], edx
         mov      dword ptr [g_data_00541dec], ecx
@@ -224,13 +223,13 @@ __declspec(naked) void DeathAnimCluster_0042eaf0(void)
         mov      edx, 0xf
         shr      eax, 2
         cmp      ecx, 2
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jne      short L_ec66
         cmp      dword ptr [g_data_00537f48], edx
         jne      short L_ec66
         mov      eax, OFFSET g_data_00501970
         shr      eax, 2
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
     L_ec66:
         cmp      ecx, 1
         jne      short L_ec80
@@ -238,12 +237,12 @@ __declspec(naked) void DeathAnimCluster_0042eaf0(void)
         jne      short L_ec80
         mov      eax, OFFSET g_data_00501970
         shr      eax, 2
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
     L_ec80:
         mov      edx, dword ptr [g_data_0054205c]
         mov      dword ptr [edx*4 + 0x24], eax
         mov      ecx, dword ptr [g_data_0054205c]
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         mov      dword ptr [ecx*4 + 0x28], eax
         call     ScaledLoadOrSetJmp_00406b20
         cmp      dword ptr [g_framePauseFlag], esi
@@ -255,7 +254,7 @@ __declspec(naked) void DeathAnimCluster_0042eaf0(void)
         mov      eax, 0xfff98000
         mov      dword ptr [edx*4 + 0x58], esi
         mov      ecx, dword ptr [g_data_00542048]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x5c], eax
         mov      eax, dword ptr [g_data_0054205c]
         mov      edx, dword ptr [g_data_00542048]

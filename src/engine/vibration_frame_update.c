@@ -130,7 +130,7 @@ extern unsigned int g_data_00535e7c;
  *     re-init constants to 0x3fec_cccccccd / 0x3f90_624d_d2f1_a9fc.
  *   Else: check fcomp 0x004d2a10; if outside range, re-init to 0x3ff1_9999_9999_999a
  *     / 0xbf78_9374_bc6a_7efa.
- *   Convert via DoubleToInt64, write to g_data_0054206c, shift right by 4,
+ *   Convert via DoubleToInt64, write to g_walkCallback, shift right by 4,
  *   call Transform9Words_004b3a90(esi, &local); OR bit 0x30 of high byte of g_state_0054208c.
  */
 extern unsigned int g_data_004d2a00;
@@ -142,7 +142,6 @@ extern unsigned int g_data_004f6578;
 extern unsigned int g_data_004f657c;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern void DoubleToInt64_004c57d0(void);
 extern void Transform9Words_004b3a90(void);
 
@@ -165,7 +164,7 @@ __declspec(naked) void VibrationFrameUpdate_004b9640(void) {
         jg      L_vfu_done
         mov     eax, dword ptr [ecx*4 + g_data_004f6508]
         cmp     eax, 0x10000
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jz      L_vfu_done
         mov     edx, dword ptr [g_data_0054204c]
         cmp     ecx, 2
@@ -193,10 +192,10 @@ __declspec(naked) void VibrationFrameUpdate_004b9640(void) {
         mov     dword ptr [g_data_004f6578], 0xbc6a7efa
         mov     dword ptr [g_data_004f657c], 0xbf789374
     L_vfu_doConv:
-        fild    dword ptr [g_data_0054206c]
+        fild    dword ptr [g_walkCallback]
         fmul    qword ptr [g_data_004f6570]
         call    DoubleToInt64_004c57d0
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
     L_vfu_pathB_sar:
         sar     eax, 4
         mov     [esp + 0x0c], eax

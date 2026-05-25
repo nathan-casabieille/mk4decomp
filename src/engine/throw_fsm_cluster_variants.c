@@ -158,7 +158,6 @@ extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542070;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_0054208c;
@@ -258,66 +257,66 @@ __declspec(naked) void ThrowChargeCluster_0044e750(void)
         mov      eax, dword ptr [g_data_00542044]
         push     esi
         mov      dword ptr [eax*4 + 0x30], 0x75
-        mov      dword ptr [g_data_0054206c], 0x2147
+        mov      dword ptr [g_walkCallback], 0x2147
         lea      esi, [eax*4]
         call     StoreDoubleNegPauseSubStore_004ab750
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e8df
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [esi + 0x78], ecx
-        mov      dword ptr [g_data_0054206c], 0x2147
+        mov      dword ptr [g_walkCallback], 0x2147
         call     StoreDoubleNegPauseSubStore_004ab750
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e8df
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         mov      dword ptr [esi + 0x7c], edx
-        mov      dword ptr [g_data_0054206c], 0x2147
+        mov      dword ptr [g_walkCallback], 0x2147
         call     StoreDoubleNegPauseSubStore_004ab750
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e8df
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         mov      dword ptr [esi + 0x80], eax
         mov      ecx, dword ptr [g_data_004d5324]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         call     AudioMixerStep_004ab700
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e8df
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         mov      dword ptr [g_data_00542074], edx
         call     MStackPush1MagicMod2_004244d0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e8df
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         push     eax
         push     0x2b85
         call     Mul10Tail_00404af0
         mov      ecx, dword ptr [g_data_00542070]
         add      esp, 8
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_00542074], eax
         push     ecx
         push     0x2b85
         call     Mul10Tail_00404af0
         add      esp, 8
         mov      dword ptr [g_data_00542070], eax
-        mov      dword ptr [g_data_0054206c], 0xb333
+        mov      dword ptr [g_walkCallback], 0xb333
         call     AudioMixerStep_004ab700
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e8df
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         mov      edx, dword ptr [g_data_00542074]
         add      eax, 0x4ccc
         push     edx
         push     eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         call     Mul10Tail_00404af0
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         add      esp, 8
         mov      dword ptr [g_data_00542074], eax
         mov      eax, dword ptr [g_data_00542070]
@@ -330,15 +329,15 @@ __declspec(naked) void ThrowChargeCluster_0044e750(void)
         mov      eax, dword ptr [g_data_00542070]
         add      esp, 8
         mov      dword ptr [esi + 0x74], eax
-        mov      dword ptr [g_data_0054206c], 0x11eb
+        mov      dword ptr [g_walkCallback], 0x11eb
         call     AudioMixerStep_004ab700
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e8df
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      eax, 0xffffe3d8
         sub      eax, ecx
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [esi + 0x70], eax
     L_e8df:
         pop      esi
@@ -379,7 +378,7 @@ __declspec(naked) void ThrowChargeCluster_0044e750(void)
     L_e926:
         mov      dword ptr [g_data_00542044], esi
     L_e92c:
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         call     DispatcherComplex138_004760f0
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_ea0f
@@ -388,10 +387,10 @@ __declspec(naked) void ThrowChargeCluster_0044e750(void)
         mov      eax, dword ptr [g_data_00542044]
         mov      ecx, dword ptr [eax*4 + 0x58]
         cmp      ecx, esi
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         jl       L_e92c
         mov      ecx, dword ptr [eax*4 + 0x54]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      edx, dword ptr [eax*4 + 0x5c]
         mov      eax, dword ptr [g_data_004d57ac]
         mov      dword ptr [g_data_00542070], edx
@@ -413,7 +412,7 @@ __declspec(naked) void ThrowChargeCluster_0044e750(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_004d57ac], eax
         call     MStackBracketed3StoreCall_00475990
         cmp      dword ptr [g_framePauseFlag], esi

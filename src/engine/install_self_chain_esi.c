@@ -125,12 +125,11 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x004753b0 (221b game) - install-self with chain[+0x84] dispatch.
  *   chain[+0x84]==0 path: install-self at +0x08=0x004753b0; g_x_00542084=0x32f1, g_state_00542088=0x3333,
  *   g_x_00542080=0; scaledInit-chain push 0x004753b0|0x01000000; call SelfInstallPhaseDispatch_00428990; pause=1; pop+ret.
- *   chain[+0x84]!=0 path: set [g_x_0054205c*4+0x24]=g_cj_00542054, [g_x_0054205c*4+0x28]=0, g_x_0054206c=0,
+ *   chain[+0x84]!=0 path: set [g_x_0054205c*4+0x24]=g_cj_00542054, [g_x_0054205c*4+0x28]=0, g_walkCallback=0,
  *   g_cj_00542054=baseSel[*4+0x64], g_cj_00542058=baseSel[*4+0x68]; jmp StackPopDispatchTagged.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542080;
 extern unsigned int g_x_00542084;
 extern void SelfInstallPhaseDispatch_00428990(void);
@@ -149,7 +148,7 @@ __declspec(naked) void InstallSelfChainEsi_004753b0(void) {
         mov     eax, dword ptr [g_cj_00542054]
         mov     dword ptr [ecx*4 + 0x24], eax
         mov     ecx, dword ptr [g_x_0054205c]
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [ecx*4 + 0x28], edx
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     edx, dword ptr [eax*4 + 0x64]

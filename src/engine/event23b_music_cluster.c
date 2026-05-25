@@ -132,7 +132,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_0054207c;
@@ -184,7 +183,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         cmp      edx, 1
         jne      short L_f612
         mov      eax, dword ptr [g_data_0052aabc]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         call     StoreIncrMStackPush6_004275c0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -205,7 +204,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         jmp      short L_f67a
     L_f612:
         mov      edx, dword ptr [g_data_0052aabc]
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         call     StoreIncrMStackPush6_004275c0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -226,7 +225,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
     L_f67a:
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, 0x14000
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x5c], eax
     L_f691:
         pop      ebx
@@ -273,11 +272,11 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         je       short L_f733
         mov      eax, dword ptr [g_data_0052aac4]
         cmp      eax, 7
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jne      short L_f72b
         mov      eax, dword ptr [g_data_0052aabc]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       short L_f72b
         call     GuardedDualMaskFlagToggle_004261d0
         mov      eax, dword ptr [g_framePauseFlag]
@@ -291,7 +290,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         pop      ebx
         ret
     L_f733:
-        mov      dword ptr [g_data_0054206c], ebx
+        mov      dword ptr [g_walkCallback], ebx
         mov      dword ptr [g_data_00541dd8], ebx
         mov      dword ptr [esi + 8], OFFSET L_f6d0
         mov      dword ptr [esi + 0x84], ebx

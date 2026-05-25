@@ -136,7 +136,6 @@ extern unsigned int g_x_00535e6c;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_00542054;
 extern unsigned int g_x_00542058;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542078;
 extern unsigned int g_x_0054207c;
@@ -189,7 +188,7 @@ __declspec(naked) void GuardedCascadeCjCopyFieldsBitOr_0043cb00(void) {
         mov     eax, dword ptr [g_x_00542058]
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     eax, dword ptr [eax*4 + 0x64]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x64], eax
         mov     edx, dword ptr [g_x_00542058]
         mov     ecx, dword ptr [edx*4 + 0x34]
@@ -201,7 +200,7 @@ __declspec(naked) void GuardedCascadeCjCopyFieldsBitOr_0043cb00(void) {
         and     al, 0xfe
         or      eax, ecx
         or      eax, 0x00081000
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x34], eax
         mov     eax, dword ptr [g_cj_0054205c]
         mov     ecx, dword ptr [g_x_00535e6c]

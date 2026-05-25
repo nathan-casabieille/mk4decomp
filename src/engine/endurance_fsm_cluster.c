@@ -132,7 +132,6 @@ extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_0054207c;
 extern void BootInitGuardedCallChain_004265d0(void);
@@ -191,7 +190,7 @@ __declspec(naked) void EnduranceFsmCluster_004238e0(void)
         call     BootInitGuardedCallChain_004265d0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3a73
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         mov      dword ptr [g_data_0053a408], edi
         mov      dword ptr [g_data_00537e88], edi
         call     BootMultiAssetLoadStateInit_00403b10
@@ -207,7 +206,7 @@ __declspec(naked) void EnduranceFsmCluster_004238e0(void)
     L_39c9:
         mov      ecx, dword ptr [eax*4]
         cmp      ecx, edi
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         jge      short L_3a02
         mov      dword ptr [esi + 8], OFFSET L_38e0
         mov      dword ptr [esi + 0x84], 3
@@ -289,7 +288,7 @@ __declspec(naked) void EnduranceFsmCluster_004238e0(void)
         mov      ecx, dword ptr [g_data_0054205c]
         mov      eax, dword ptr [ecx*4 + 0x58]
         cmp      eax, 0xff060000
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jg       L_3b5d
         call     MStackCall_00406740
         mov      eax, dword ptr [g_framePauseFlag]
@@ -301,7 +300,7 @@ __declspec(naked) void EnduranceFsmCluster_004238e0(void)
     L_3ae8:
         mov      edx, dword ptr [g_data_00542058]
         mov      eax, dword ptr [edx*4]
-        mov      dword ptr [g_data_0054206c], 0xa
+        mov      dword ptr [g_walkCallback], 0xa
         mov      dword ptr [g_data_00542048], eax
         mov      dword ptr [g_data_00542070], 4
         mov      dword ptr [g_data_00542078], 0
@@ -315,7 +314,7 @@ __declspec(naked) void EnduranceFsmCluster_004238e0(void)
         mov      eax, dword ptr [g_data_00542044]
         mov      ecx, 0xfffe1000
         mov      dword ptr [g_data_0054205c], eax
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [eax*4 + 0x70], ecx
     L_3b5d:
         mov      eax, 1

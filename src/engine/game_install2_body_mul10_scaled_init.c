@@ -124,17 +124,17 @@ extern unsigned int g_data_00535e7c;
 
 /*
  * GameInstall2BodyMul10ScaledInit_00475590 - 347b 2-entry game state init.
- *   Entry 0x00475590: g_x_0054206c = g_x_00542054[+0x30]; call SetJmp_0049cb90; if paused: ret.
+ *   Entry 0x00475590: g_walkCallback = g_x_00542054[+0x30]; call SetJmp_0049cb90; if paused: ret.
  *     edx = g_x_00542044, eax = g_x_00542084; chain[edx*4 + 0x1c] = eax; push 0x004ec890;
  *     call IterLoad_0048e680; pop; ret.
  *   Body 0x004755d0 (16b-padded): chain = g_baseSel<<2; saved=chain->state; chain->state=0.
  *     If state == 0: setup g_x_00542074 = g_x_0054205c+0x15; eax = chain[+0x38];
  *       g_x_00542044 = eax; g_data_0054204c = eax+0x15. Call MStackPushMul10TailSqrt; if paused: ret.
- *       g_x_00542084 -= g_x_0054206c; push (eax, 0x1999); g_x_00542088 = eax; Mul10Tail; restore;
+ *       g_x_00542084 -= g_walkCallback; push (eax, 0x1999); g_x_00542088 = eax; Mul10Tail; restore;
  *       g_x_00542088 = result; g_x_00542080 = 0xa. Fall through.
  *     If state == 1: decrement g_x_00542080; if !=0 jump to chain-step.
  *     Otherwise install-self at body; chain->state=2; g_data_0054204c = 0x28; pause=1; ret.
- *     Chain-step: g_x_00542084 += g_x_00542088; g_data_00542070 = 0; g_x_0054206c = g_x_00542084;
+ *     Chain-step: g_x_00542084 += g_x_00542088; g_data_00542070 = 0; g_walkCallback = g_x_00542084;
  *       call Wrapper_0048ff30; if paused: ret. Install-self; chain->state=1; g_data_0054204c=1;
  *       pause=1; ret.
  */
@@ -143,7 +143,6 @@ extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542044;
 extern unsigned int g_x_00542054;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542074;
 extern void IterLoad_0048e680(void);
 extern void MStackPushMul10TailSqrt_00424a90(void);
@@ -155,7 +154,7 @@ __declspec(naked) void GameInstall2BodyMul10ScaledInit_00475590(void)
     {
         mov     eax, dword ptr [g_x_00542054]
         mov     ecx, dword ptr [eax*4 + 0x30]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         call    SetJmp_0049cb90
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -203,7 +202,7 @@ __declspec(naked) void GameInstall2BodyMul10ScaledInit_00475590(void)
         test    eax, eax
         jne     L_b2_ret
         mov     eax, dword ptr [g_data_00542084]
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         sub     eax, ecx
         mov     dword ptr [g_data_00542084], ecx
         push    eax
@@ -219,7 +218,7 @@ __declspec(naked) void GameInstall2BodyMul10ScaledInit_00475590(void)
         add     eax, ecx
         mov     dword ptr [g_data_00542070], 0
         mov     dword ptr [g_data_00542084], eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         call    Wrapper_0048ff30
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

@@ -125,7 +125,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004d57ac;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_0054207c;
@@ -142,7 +141,7 @@ __declspec(naked) void PoseBlendDriver_0042fc80(void)
         test     eax, eax
         jne      L_fe9d
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
@@ -155,17 +154,17 @@ __declspec(naked) void PoseBlendDriver_0042fc80(void)
         mov      eax, dword ptr [g_data_00535e78]
         push     eax
         push     0x1999
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_00542070], ecx
         call     Mul10Tail_00404af0
         mov      edx, dword ptr [g_data_00542070]
         add      esp, 8
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         push     edx
         push     0x1999
         call     Mul10Tail_00404af0
         mov      edx, dword ptr [g_data_0054205c]
-        mov      edi, dword ptr [g_data_0054206c]
+        mov      edi, dword ptr [g_walkCallback]
         mov      dword ptr [g_data_00542070], eax
         add      esp, 8
         mov      ecx, dword ptr [edx*4 + 0x54]
@@ -184,7 +183,7 @@ __declspec(naked) void PoseBlendDriver_0042fc80(void)
         test     eax, eax
         jne      short L_fe9d
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      esi, dword ptr [g_data_0054206c]
+        mov      esi, dword ptr [g_walkCallback]
         xor      edx, edx
         mov      ecx, dword ptr [eax*4]
         dec      eax
@@ -202,7 +201,7 @@ __declspec(naked) void PoseBlendDriver_0042fc80(void)
         mov      edx, dword ptr [g_data_0054205c]
         mov      eax, dword ptr [g_data_00542080]
         mov      dword ptr [edx*4 + 0x5c], eax
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         lea      eax, [ecx - 0x4ccc]
         test     eax, eax
         mov      dword ptr [g_data_00542078], eax

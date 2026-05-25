@@ -125,7 +125,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_x_00535e48;
 extern unsigned int g_x_00541fc0;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_data_004f2980;
 extern unsigned int g_data_00542004;
@@ -137,7 +136,7 @@ extern void MStackRestore27_004abd50(void);
 /* @addr 0x0049f7b0 (333b game) - dual-block: linked-list walk with indirect callback + dirty-toggle thunk.
  *   Block A (0..0x82): call SaveStateSnapshot_004aba40. Init scaledInit = (0x004f2980>>2); read pair (ecx, edx).
  *     If ecx<0 (sign): jmp to bit0-toggle path via 0x49f848.
- *     esi=g_x_0054206c. Loop: if ecx==esi: call edx (indirect); set bit gate from pause.
+ *     esi=g_walkCallback. Loop: if ecx==esi: call edx (indirect); set bit gate from pause.
  *     Else advance pair; if ecx<0: terminate. Loop until match.
  *     On no match: call MStackRestore27_004abd50; clear bit0; pop esi; ret.
  *     On match-indirect: if pause skip; if bit0(0054208c): call MStackRestore27_004abd50; or bit0; pop+ret.
@@ -163,7 +162,7 @@ __declspec(naked) void LinkedListIndirectDirtyToggle_0049f7b0(void) {
         mov     dword ptr [g_scaledInit_00542044], eax
         _emit   7ch
         _emit   5bh
-        mov     esi, dword ptr [g_x_0054206c]
+        mov     esi, dword ptr [g_walkCallback]
     loop_iter:
         cmp     ecx, esi
         _emit   74h
@@ -219,7 +218,7 @@ __declspec(naked) void LinkedListIndirectDirtyToggle_0049f7b0(void) {
         _emit   31h
         mov     eax, dword ptr [g_data_00542004]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   1ch
         mov     eax, dword ptr [g_x_00535e48]
@@ -229,7 +228,7 @@ __declspec(naked) void LinkedListIndirectDirtyToggle_0049f7b0(void) {
         _emit   05h
         mov     eax, dword ptr [g_data_0053a354]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   07h
         or      dword ptr [g_state_0054208c], ecx

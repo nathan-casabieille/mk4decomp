@@ -153,7 +153,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542094;
 extern void CallSetPause_0041f830(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
@@ -177,7 +176,7 @@ __declspec(naked) void MainTickChain_00481070(void)
         je       short L_10bc
         mov      eax, dword ptr [eax*4]
         cmp      eax, 0x6c
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jne      short L_10bc
         call     GateDispatch6c_00494580
         cmp      dword ptr [g_framePauseFlag], esi
@@ -217,15 +216,15 @@ __declspec(naked) void MainTickChain_00481070(void)
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, dword ptr [ecx*4 + 0x34]
         cmp      eax, 0x10
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jne      short L_1184
         mov      eax, 2
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
     L_1184:
         cmp      eax, 0x11
         jne      short L_1193
         mov      eax, 7
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
     L_1193:
         cmp      eax, esi
         jne      short L_11a8
@@ -237,22 +236,22 @@ __declspec(naked) void MainTickChain_00481070(void)
         mov      ecx, dword ptr [edx*4 + 0x74]
         lea      eax, [edx*4]
         mov      dword ptr [eax + 0x60], ecx
-        mov      dword ptr [g_data_0054206c], esi
+        mov      dword ptr [g_walkCallback], esi
         mov      dword ptr [eax + 0x5c], esi
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         mov      dword ptr [eax + 0x74], edx
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [eax + 0x4c], ecx
         mov      edx, dword ptr [g_data_0054205c]
         mov      dword ptr [edx*4 + 0x44], esi
-        mov      dword ptr [g_data_0054206c], esi
+        mov      dword ptr [g_walkCallback], esi
         lea      eax, [edx*4]
         mov      dword ptr [eax + 0x78], esi
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [eax + 0x80], ecx
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         mov      dword ptr [eax + 0x60], edx
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [eax + 0x68], ecx
         call     ScaledChainNegStore_00470310
         cmp      dword ptr [g_framePauseFlag], esi
@@ -261,10 +260,10 @@ __declspec(naked) void MainTickChain_00481070(void)
         mov      ecx, dword ptr [g_data_00538158]
         mov      eax, dword ptr [g_data_00537f48]
         cmp      edx, ecx
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       short L_124a
         mov      eax, dword ptr [g_data_005380e0]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
     L_124a:
         cmp      eax, 0xa
         jne      short L_1260
@@ -273,14 +272,14 @@ __declspec(naked) void MainTickChain_00481070(void)
         jne      L_1336
     L_1260:
         mov      eax, dword ptr [g_data_0052ab40]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         and      eax, 0x2000
         mov      dword ptr [g_data_00542094], eax
         jne      L_1336
         mov      eax, dword ptr [g_data_00542060]
         mov      eax, dword ptr [eax*4 + 0x80]
         cmp      eax, 0x6666
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jle      L_1336
         call     PoseChainInstallCluster_00427b60
         cmp      dword ptr [g_framePauseFlag], esi
@@ -288,7 +287,7 @@ __declspec(naked) void MainTickChain_00481070(void)
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, dword ptr [ecx*4 + 0x7c]
         cmp      eax, 3
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jl       short L_12cb
         call     PushCallPauseScaledJmpInd_0048e2f0
         cmp      dword ptr [g_framePauseFlag], esi
@@ -299,7 +298,7 @@ __declspec(naked) void MainTickChain_00481070(void)
         push     OFFSET L_1340
         mov      dword ptr [edx*4 + 0x80], esi
         mov      eax, dword ptr [g_data_00542060]
-        mov      dword ptr [g_data_0054206c], esi
+        mov      dword ptr [g_walkCallback], esi
         mov      dword ptr [eax*4 + 0x7c], esi
         call     StoreTwoCall_0049cb40
         mov      ecx, dword ptr [g_data_00542060]
@@ -326,7 +325,7 @@ __declspec(naked) void MainTickChain_00481070(void)
         nop
         /* === h2 (0x481340): wait+tail-jmp 0041f830 === */
     L_1340:
-        mov      dword ptr [g_data_0054206c], 0x2e
+        mov      dword ptr [g_walkCallback], 0x2e
         call     ScaledLitLoadCall_00480fe0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

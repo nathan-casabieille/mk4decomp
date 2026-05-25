@@ -125,8 +125,8 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x0049c710 (305b game) - install-self body with state-machine, bit2-loop, indirect-call dispatch.
  *   Load state; clear. state==0: call TripleBlockChainDiffMStackThunks; if pause ret.
  *   ebx=1. If g_state_00542080==0: call ScaledChain3c74; if pause ret.
- *     If g_x_0054206c==0x2001: jmp bit2-loop block.
- *   Else (state!=0 OR not 0x2001): mstack-push g_state_00542080; load chain[g_x_00542054*4+0] -> g_x_0054206c.
+ *     If g_walkCallback==0x2001: jmp bit2-loop block.
+ *   Else (state!=0 OR not 0x2001): mstack-push g_state_00542080; load chain[g_x_00542054*4+0] -> g_walkCallback.
  *     Call AtanDualDeltaThreshold_0049c870; if pause ret. Mstack-pop into g_state_00542080.
  *     If bit0(0054208c): chain[g_x_00542054*4+8] -> g_scaledInit; indirect call; pop; ret.
  *   bit2-loop: eax = [g_x_00542054*4+4]; ecx=4; set bit2 of g_state_0054208c.
@@ -136,7 +136,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0054204c;
 extern unsigned int g_x_00542054;
-extern unsigned int g_x_0054206c;
 extern void AtanDualDeltaThreshold_0049c870(void);
 extern void ScaledChain3c74_0048f910(void);
 extern void TripleBlockChainDiffMStackThunks_0049ca10(void);
@@ -177,7 +176,7 @@ __declspec(naked) void InstallSelfBit2LoopIndirect_0049c710(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        cmp     dword ptr [g_x_0054206c], 0x2001
+        cmp     dword ptr [g_walkCallback], 0x2001
         _emit   74h
         _emit   74h
         mov     ecx, dword ptr [g_x_00542054]
@@ -185,7 +184,7 @@ __declspec(naked) void InstallSelfBit2LoopIndirect_0049c710(void) {
         inc     eax
         mov     edx, dword ptr [ecx*4 + 0]
         mov     ecx, dword ptr [g_state_00542080]
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], ecx
         call    AtanDualDeltaThreshold_0049c870

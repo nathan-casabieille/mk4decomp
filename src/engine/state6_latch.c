@@ -127,42 +127,41 @@ extern unsigned int g_x_00537f94;
 extern unsigned int g_x_005380e0;
 extern unsigned int g_x_00538158;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 
 /* @addr 0x0048e240 (162b game) - state-6 latch with arr-lookup + tail-jmp.
- *   eax = ([0x537f48] if g_x_0054205c == [0x538158] else [0x5380e0]); g_x_0054206c = eax.
+ *   eax = ([0x537f48] if g_x_0054205c == [0x538158] else [0x5380e0]); g_walkCallback = eax.
  *   if (eax != 6): ret.
  *   eax = chain[g_baseSel + 0x34]; g_x_00542070 = eax;
  *   if (eax == 6): goto end.
  *   if ([0x537f94] != 0): skip CmpCondIdxArrLookup.
- *   else: g_x_0054206c = 5; call CmpCondIdxArrLookup; pause? ret;
- *     if (g_x_0054206c < 0x258): goto end.
- *   [0x54389c] = 1; chain[g_baseSel + 0x34] = 6; g_x_0054206c = 0x2c.
+ *   else: g_walkCallback = 5; call CmpCondIdxArrLookup; pause? ret;
+ *     if (g_walkCallback < 0x258): goto end.
+ *   [0x54389c] = 1; chain[g_baseSel + 0x34] = 6; g_walkCallback = 0x2c.
  *   call TableLookupCall; pause? ret; jmp ClearBit2x34.
  */
 void State6Latch_0048e240(void) {
     unsigned int v;
     unsigned int chain_34;
     v = g_x_00537f48;
-    g_x_0054206c = v;
+    g_walkCallback = v;
     if (g_x_0054205c != g_x_00538158) {
         v = g_x_005380e0;
-        g_x_0054206c = v;
+        g_walkCallback = v;
     }
     if (v != 6) return;
     chain_34 = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x34);
     g_x_00542070 = chain_34;
     if (chain_34 == 6) return;
     if (g_x_00537f94 == 0) {
-        g_x_0054206c = 5;
+        g_walkCallback = 5;
         CmpCondIdxArrLookup_0048e450();
         if (g_framePauseFlag != 0) return;
-        if ((int)g_x_0054206c < 0x258) return;
+        if ((int)g_walkCallback < 0x258) return;
     }
     g_byte_0054389c = 1;
     *(unsigned int *)(g_baseSel_00542060 * 4 + 0x34) = 6;
-    g_x_0054206c = 0x2c;
+    g_walkCallback = 0x2c;
     TableLookupCall_0048a130();
     if (g_framePauseFlag != 0) return;
     ClearBit2x34_00490130();

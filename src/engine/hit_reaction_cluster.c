@@ -136,7 +136,6 @@ extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_0054207c;
@@ -161,7 +160,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         shr      eax, 0xc
         and      ecx, 0xfff
         and      eax, 0xfff
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_00542070], eax
         ret      
         nop      
@@ -195,12 +194,12 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], edx
         call     DualAddSar_004ab600
-        mov      al, byte ptr [g_data_0054206c]
+        mov      al, byte ptr [g_walkCallback]
         mov      dword ptr [g_data_00542074], 0x64a
         test     al, 1
         je       L_c122
@@ -210,7 +209,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         mov      eax, dword ptr [g_data_004d57ac]
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_004d57ac], eax
         mov      edx, dword ptr [eax*4]
         dec      eax
@@ -257,7 +256,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         jne      L_c1ea
         cmp      dword ptr [g_data_00537f48], 9
         jne      L_c1e5
-        mov      dword ptr [g_data_0054206c], 0x1a
+        mov      dword ptr [g_walkCallback], 0x1a
         call     TableLookupCall_0048a130
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -270,7 +269,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         jne      L_c21d
         cmp      dword ptr [g_data_005380e0], 9
         jne      L_c218
-        mov      dword ptr [g_data_0054206c], 0x1a
+        mov      dword ptr [g_walkCallback], 0x1a
         call     TableLookupCall_0048a130
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -288,7 +287,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         jne      L_c25a
         cmp      dword ptr [g_data_00537f48], 9
         jne      L_c255
-        mov      dword ptr [g_data_0054206c], 0x1c
+        mov      dword ptr [g_walkCallback], 0x1c
         call     TableLookupCall_0048a130
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -301,7 +300,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         jne      L_c28d
         cmp      dword ptr [g_data_005380e0], 9
         jne      L_c288
-        mov      dword ptr [g_data_0054206c], 0x1c
+        mov      dword ptr [g_walkCallback], 0x1c
         call     TableLookupCall_0048a130
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -339,7 +338,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         mov      dword ptr [eax*4 + 0x54], edi
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, 0xffc40000
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x58], eax
         call     MStackPushComplexCallPop_00406430
         cmp      dword ptr [g_framePauseFlag], edi
@@ -348,7 +347,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         mov      eax, 0xffffc667
         mov      dword ptr [edx*4 + 0x5c], 0xa0000
         mov      ecx, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x74], eax
         mov      edx, dword ptr [g_data_00542044]
         mov      dword ptr [g_data_0054205c], edx
@@ -378,7 +377,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         push     eax
         call     TaggedSceneDispatch_004be690
         mov      ecx, dword ptr [g_data_0054205c]
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         add      esp, 4
         mov      dword ptr [ecx*4 + 0x74], edi
         mov      dword ptr [esi + 8], 0x45c290
@@ -391,7 +390,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         ret      
         mov      edx, dword ptr [g_data_0054205c]
         mov      eax, 0x3999
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x74], eax
         mov      dword ptr [esi + 8], 0x45c290
         mov      dword ptr [esi + 0x84], 5
@@ -405,7 +404,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_c5a0
         mov      eax, 0x4d5550
-        mov      dword ptr [g_data_0054206c], 0x30
+        mov      dword ptr [g_walkCallback], 0x30
         shr      eax, 2
         mov      dword ptr [g_data_00542048], eax
         mov      dword ptr [g_data_00542070], ebx
@@ -420,7 +419,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         test     byte ptr [g_data_0054208c], bl
         jne      L_c59b
         mov      ecx, dword ptr [g_data_00537f30]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         call     StoreIncrMStackPush6_004275c0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_c5a0
@@ -436,7 +435,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         call     RoundCleanupCluster_00427690
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_c5a0
-        cmp      dword ptr [g_data_0054206c], edi
+        cmp      dword ptr [g_walkCallback], edi
         je       L_c59b
         mov      edx, dword ptr [g_data_00537f30]
         mov      eax, 0x5424b0
@@ -448,7 +447,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         jg       L_c570
         add      eax, ecx
         mov      eax, dword ptr [eax*4]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         call     GuardedScaledCall_0048a020
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_c5a0

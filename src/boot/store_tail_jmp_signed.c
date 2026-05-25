@@ -123,14 +123,14 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004107d0 (198b boot) - 2-arg cdecl call + neg-chain + signed-bit branch + final tail-jmp.
- *   g_x_00542058 = g_x_0054206c; push 0x2f, 0x4109b0; call StoreTwoCall;
+ *   g_x_00542058 = g_walkCallback; push 0x2f, 0x4109b0; call StoreTwoCall;
  *   g_baseSel = g_scaledInit; g_scaledInit = [0x52ab10];
- *   ecx = -chain[g_scaledInit + 0x64]; g_x_0054206c = ecx;
+ *   ecx = -chain[g_scaledInit + 0x64]; g_walkCallback = ecx;
  *   eax = chain[g_x_0054205c + 0x34]; g_x_00542070 = eax;
  *   g_x_00542094 = eax & 1; if (bit clear) skip the add;
- *   else: g_x_0054206c = ecx + g_x_004d5320;
+ *   else: g_walkCallback = ecx + g_x_004d5320;
  *   call BootMod6487eClampAndChainMul10_00407510; pause? ret;
- *   g_x_00542074 = g_x_0054206c; g_x_0054204c = g_x_00541f94;
+ *   g_x_00542074 = g_walkCallback; g_x_0054204c = g_x_00541f94;
  *   call MStackPush2DualModMul10Pop2_00424860; pause? ret;
  *   g_scaledInit = g_baseSel + 0xc; g_x_00542048 = g_x_0054204c;
  *   g_x_0054204c += 9; jmp QuadInterpolator_00425380.
@@ -142,7 +142,6 @@ extern unsigned int g_x_00542048;
 extern unsigned int g_x_0054204c;
 extern unsigned int g_x_00542058;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542074;
 extern unsigned int g_x_00542094;
@@ -151,7 +150,7 @@ extern void QuadInterpolator_00425380(void);
 
 __declspec(naked) void StoreTailJmpSigned_004107d0(void) {
     __asm {
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         push    0x2f
         push    0x004109b0
         mov     dword ptr [g_x_00542058], eax
@@ -163,7 +162,7 @@ __declspec(naked) void StoreTailJmpSigned_004107d0(void) {
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     ecx, [eax*4 + 0x64]
         neg     ecx
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     eax, [edx*4 + 0x34]
         add     esp, 8
         mov     dword ptr [g_x_00542070], eax
@@ -172,13 +171,13 @@ __declspec(naked) void StoreTailJmpSigned_004107d0(void) {
         _emit   74h
         _emit   0ch
         add     ecx, dword ptr [g_x_004d5320]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         call    BootMod6487eClampAndChainMul10_00407510
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   51h
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     ecx, dword ptr [g_x_00541f94]
         mov     dword ptr [g_x_00542074], eax
         mov     dword ptr [g_x_0054204c], ecx

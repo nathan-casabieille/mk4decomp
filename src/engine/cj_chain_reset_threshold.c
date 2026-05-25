@@ -132,7 +132,6 @@ extern unsigned int g_data_00538038;
 extern unsigned int g_data_0053803c;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542074;
 extern void ScaledLoadJmpIfNonzero_00490e00(void);
 
@@ -151,7 +150,7 @@ __declspec(naked) void CjChainResetThreshold_00490cc0(void) {
         _emit   00h
         mov     eax, dword ptr [ecx*4 + 0x44]
         cmp     eax, esi
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   19h
         mov     dword ptr [g_scaledInit_00542044], eax
@@ -174,7 +173,7 @@ __declspec(naked) void CjChainResetThreshold_00490cc0(void) {
         _emit   00h
         _emit   00h
         add     eax, dword ptr [ecx*4 + 0x70]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x70], eax
         _emit   0fh
         _emit   88h
@@ -191,7 +190,7 @@ __declspec(naked) void CjChainResetThreshold_00490cc0(void) {
         mov     dword ptr [g_data_00542070], edi
         mov     eax, dword ptr [ecx*4 + 0x58]
         add     eax, edx
-        mov     edx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         add     eax, edx
         cmp     eax, edi
         mov     dword ptr [g_x_00542074], eax
@@ -210,14 +209,14 @@ __declspec(naked) void CjChainResetThreshold_00490cc0(void) {
         mov     dword ptr [eax + 0x7c], esi
         mov     dword ptr [eax + 0x80], esi
         mov     dword ptr [eax + 0x4c], esi
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax + 0x58], ecx
         mov     eax, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_data_00542070], esi
         mov     eax, dword ptr [eax*4 + 0x18]
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     ecx, dword ptr [eax*4 + 0x34]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x34], esi
         mov     eax, dword ptr [g_cj_0054205c]
         mov     ecx, dword ptr [g_state_00538158]

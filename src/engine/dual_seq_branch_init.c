@@ -130,7 +130,6 @@ extern unsigned int g_data_0053a408;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_0054207c;
@@ -146,7 +145,7 @@ void DualSeqBranchInit_00477a20(void) {
     __asm {
         mov     eax, dword ptr [g_data_0053a408]
         test    eax, eax
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         je      L_dsbi_secondPath
         push    0x23
         call    SaveCallRestore_004049d0
@@ -168,14 +167,14 @@ void DualSeqBranchInit_00477a20(void) {
         mov     edx, dword ptr [g_data_00542044]
         mov     dword ptr [edx*4 + 0x58], 0xff910000
         mov     eax, dword ptr [g_data_00542044]
-        mov     dword ptr [g_data_0054206c], 0x23
+        mov     dword ptr [g_walkCallback], 0x23
         mov     dword ptr [eax*4 + 0x30], 0x23
         call    MStackPushComplexCallPop_00406430
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_dsbi_ret
         mov     ecx, dword ptr [g_data_0053a3e0]
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         call    StoreIncrMStackPush6_004275c0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -210,7 +209,7 @@ void DualSeqBranchInit_00477a20(void) {
         mov     ecx, dword ptr [g_data_00542044]
         mov     dword ptr [ecx*4 + 0x58], 0xff910000
         mov     edx, dword ptr [g_data_00542044]
-        mov     dword ptr [g_data_0054206c], 0x232
+        mov     dword ptr [g_walkCallback], 0x232
         mov     dword ptr [edx*4 + 0x30], 0x232
         call    MStackPushComplexCallPop_00406430
         mov     eax, dword ptr [g_framePauseFlag]
@@ -218,7 +217,7 @@ void DualSeqBranchInit_00477a20(void) {
         jne     short L_dsbi_ret
         push    0x25b
         push    0x477ee0
-        mov     dword ptr [g_data_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [g_data_0052ab48], 0
         call    BootMstackInit_0041fb10
         add     esp, 8

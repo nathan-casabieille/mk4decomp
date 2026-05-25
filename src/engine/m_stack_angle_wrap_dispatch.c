@@ -126,7 +126,6 @@ extern unsigned int g_data_004d57ac;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_0054207c;
@@ -211,7 +210,7 @@ __declspec(naked) void MStackAngleWrapDispatch_0048b800(void)
         test     eax, eax
         jne      L_bab2
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         mov      ecx, dword ptr [eax*4]
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [g_data_00542074], ecx
@@ -247,7 +246,7 @@ __declspec(naked) void MStackAngleWrapDispatch_0048b800(void)
         mov      ecx, dword ptr [g_data_0054207c]
         add      esp, 8
         mov      dword ptr [g_data_00542080], eax
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         push     eax
         push     ecx
         call     Mul10Tail_00404af0
@@ -270,7 +269,7 @@ __declspec(naked) void MStackAngleWrapDispatch_0048b800(void)
         push     edx
         push     eax
         call     Mul10Tail_00404af0
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      edx, dword ptr [g_data_00542078]
         add      esp, 8
         mov      dword ptr [g_data_00542080], eax

@@ -127,31 +127,30 @@ extern void CrouchFsmCluster_00482c30(void);
 extern void CallPauseFourSet_00482be0(void);
 
 /* @addr 0x00482b60 (124b game) - dual-entry.
- *   Block A: set g_x_0054206c=1; jmp TableLookupCall_0048a160.
+ *   Block A: set g_walkCallback=1; jmp TableLookupCall_0048a160.
  *   Block A2 (+0x10): set baseSel[*4+0x74]=0x4002; call CmpDualPatchCallJmp; if pause ret;
- *     set g_x_0054206c=0x9999; call CmpP1DualInitStore; if pause ret; jmp CrouchFsmCluster_00482c30.
+ *     set g_walkCallback=0x9999; call CmpP1DualInitStore; if pause ret; jmp CrouchFsmCluster_00482c30.
  *   Block B (+0x60): set baseSel[*4+0x74]=0x4005; jmp CallPauseFourSet_00482be0.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern void CmpDualPatchCallJmp_00482b00(void);
 extern void CmpP1DualInitStore_00482ab0(void);
 
 __declspec(naked) void DualEntry4002Chain_00482b60(void) {
     __asm {
-        mov     dword ptr [g_x_0054206c], 1
+        mov     dword ptr [g_walkCallback], 1
         jmp     TableLookupCall_0048a160
         _emit   90h
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x00004002
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
         call    CmpDualPatchCallJmp_00482b00
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         _emit   75h
         _emit   1dh
-        mov     dword ptr [g_x_0054206c], 0x00009999
+        mov     dword ptr [g_walkCallback], 0x00009999
         call    CmpP1DualInitStore_00482ab0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -174,7 +173,7 @@ __declspec(naked) void DualEntry4002Chain_00482b60(void) {
         _emit   90h
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x00004005
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
         jmp     CallPauseFourSet_00482be0
     }

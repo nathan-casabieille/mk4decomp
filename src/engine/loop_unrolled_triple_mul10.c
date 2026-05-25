@@ -131,7 +131,6 @@ extern unsigned int g_data_00535e7c;
  *   Pop edi/esi; ret.
  */
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 
 __declspec(naked) void LoopUnrolledTripleMul10_0049d550(void) {
     __asm {
@@ -150,30 +149,30 @@ __declspec(naked) void LoopUnrolledTripleMul10_0049d550(void) {
         lea     esi, [eax*4 + 0]
         mov     eax, dword ptr [ecx*4 + 0]
         lea     edi, [ecx*4 + 0]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     edx, dword ptr [esi + 0x10]
         push    eax
         push    edx
         call    Mul10Tail_00404af0
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         add     esp, 8
         mov     dword ptr [esi + 0x10], eax
         mov     eax, dword ptr [edi + 4]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    eax
         mov     eax, dword ptr [esi + 0x14]
         push    eax
         call    Mul10Tail_00404af0
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [esi + 0x14], eax
         mov     edi, dword ptr [edi + 8]
         add     esp, 8
-        mov     dword ptr [g_x_0054206c], edi
+        mov     dword ptr [g_walkCallback], edi
         mov     ecx, dword ptr [esi + 0x18]
         push    edi
         push    ecx
         call    Mul10Tail_00404af0
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [esi + 0x18], eax
         mov     edx, dword ptr [g_scaledInit_00542044]
         add     esp, 8
@@ -190,30 +189,30 @@ __declspec(naked) void LoopUnrolledTripleMul10_0049d550(void) {
         lea     esi, [eax*4 + 0]
         mov     eax, dword ptr [ecx*4 + 0]
         lea     edi, [ecx*4 + 0]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     edx, dword ptr [esi + 0x10]
         push    eax
         push    edx
         call    Mul10Tail_00404af0
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         add     esp, 8
         mov     dword ptr [esi + 0x10], eax
         mov     eax, dword ptr [edi + 4]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    eax
         mov     eax, dword ptr [esi + 0x14]
         push    eax
         call    Mul10Tail_00404af0
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [esi + 0x14], eax
         mov     edi, dword ptr [edi + 8]
         add     esp, 8
-        mov     dword ptr [g_x_0054206c], edi
+        mov     dword ptr [g_walkCallback], edi
         mov     ecx, dword ptr [esi + 0x18]
         push    edi
         push    ecx
         call    Mul10Tail_00404af0
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [esi + 0x18], eax
         mov     edx, dword ptr [g_scaledInit_00542044]
         add     esp, 8

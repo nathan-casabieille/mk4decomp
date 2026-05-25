@@ -123,11 +123,10 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00426a30 (173b game) - mstack-push g_x_00542074, dispatch Mul10Index/MStackMagicModMul10_00424410,
- *   then two Mul10Tail double-pushes accumulating into g_x_0054206c (via g_x_00542078) and
+ *   then two Mul10Tail double-pushes accumulating into g_walkCallback (via g_x_00542078) and
  *   g_x_00542070 (via g_x_0054207c), with pause-aborts after each callee. mstack-pop g_x_00542074.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542074;
 extern unsigned int g_x_00542078;
@@ -154,7 +153,7 @@ void Chain2CallMul10Accum_00426a30(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     edx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [g_x_00542070], edx
         call    MStackMagicModMul10_00424410
         mov     eax, dword ptr [g_pause_00541e6c]
@@ -166,7 +165,7 @@ void Chain2CallMul10Accum_00426a30(void) {
         push    eax
         push    ecx
         call    Mul10Tail_00404af0
-        mov     edx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         add     esp, 8
         mov     dword ptr [g_x_00542070], eax
         mov     eax, dword ptr [g_x_00542080]
@@ -177,7 +176,7 @@ void Chain2CallMul10Accum_00426a30(void) {
         mov     edx, dword ptr [g_x_00542070]
         add     eax, ecx
         mov     ecx, dword ptr [g_x_0054207c]
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     eax, dword ptr [g_state_004d57ac]
         add     edx, ecx
         add     esp, 8

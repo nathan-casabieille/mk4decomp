@@ -130,7 +130,6 @@ extern unsigned int g_data_0053a6dc;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_0054208c;
@@ -140,7 +139,7 @@ void MStackBracket6_DualGate_004788e0(void) {
     g_state_004d57ac++;
     *(unsigned int *)(g_state_004d57ac * 4) = g_data_0054208c;
     g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = g_data_0054206c;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_walkCallback;
     g_state_004d57ac++;
     *(unsigned int *)(g_state_004d57ac * 4) = g_data_00542078;
     g_state_004d57ac++;
@@ -151,7 +150,7 @@ void MStackBracket6_DualGate_004788e0(void) {
     *(unsigned int *)(g_state_004d57ac * 4) = g_data_0054205c;
     v = g_data_0053a6dc;
     if (v != 0 && (int)v < 0xccc) {
-        g_data_0054206c = g_data_0053a2d0;
+        g_walkCallback = g_data_0053a2d0;
         if (g_data_0053a2d0 == 0) {
             g_data_0054205c = (unsigned int)&g_data_004ecea0 >> 2;
             VersusSwapCluster_00478a90();
@@ -160,14 +159,14 @@ void MStackBracket6_DualGate_004788e0(void) {
         }
     }
     v = g_data_00537f2c;
-    g_data_0054206c = v;
+    g_walkCallback = v;
     if (v != 0 && (int)v < 0xccc) {
-        g_data_0054206c = g_data_00535db0;
+        g_walkCallback = g_data_00535db0;
         if (g_data_00535db0 == 0) {
             g_data_0054205c = (unsigned int)&g_data_004eceb0 >> 2;
             VersusSwapCluster_00478a90();
             if (g_framePauseFlag != 0) return;
-            g_data_0054206c = 1;
+            g_walkCallback = 1;
             g_data_00535db0 = 1;
         }
     }
@@ -179,7 +178,7 @@ void MStackBracket6_DualGate_004788e0(void) {
     g_state_004d57ac--;
     g_data_00542078 = *(unsigned int *)(g_state_004d57ac * 4);
     g_state_004d57ac--;
-    g_data_0054206c = *(unsigned int *)(g_state_004d57ac * 4);
+    g_walkCallback = *(unsigned int *)(g_state_004d57ac * 4);
     g_state_004d57ac--;
     g_data_0054208c = *(unsigned int *)(g_state_004d57ac * 4);
     g_state_004d57ac--;

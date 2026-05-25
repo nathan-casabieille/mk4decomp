@@ -123,7 +123,6 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004f3608;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0053a6dc;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_0054204c;
@@ -152,17 +151,17 @@ __declspec(naked) void TriDispatchSetupChain_00421500(void)
         mov     eax, dword ptr [g_data_0053a6e0]
         mov     ecx, dword ptr [g_data_004f3608]
         cmp     eax, ecx
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         je      L_tdsc_ret
         mov     eax, dword ptr [g_data_00537ea4]
         cmp     eax, ecx
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         je      L_tdsc_ret
         mov     eax, dword ptr [g_data_0053a6dc]
         mov     dword ptr [g_data_00542074], 0x26
         test    eax, eax
         mov     dword ptr [g_data_0054204c], offset L_tdsc_sub2
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jne     short L_tdsc_a1
         mov     dword ptr [g_data_0054207c], 1
         call    AllocNode
@@ -173,7 +172,7 @@ __declspec(naked) void TriDispatchSetupChain_00421500(void)
         mov     eax, dword ptr [g_data_00537f2c]
         mov     dword ptr [g_data_0054204c], offset L_tdsc_sub3
         test    eax, eax
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jne     short L_tdsc_a2
         mov     dword ptr [g_data_00542080], 1
         call    AllocNode
@@ -192,7 +191,7 @@ __declspec(naked) void TriDispatchSetupChain_00421500(void)
         mov     dword ptr [g_data_00542044], eax
         mov     eax, dword ptr [eax*4 + 0x74]
         cmp     eax, 0x2012
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         je      short L_tdsc_a3
         call    Thunk_0049cbd0
         mov     eax, dword ptr [g_framePauseFlag]
@@ -210,7 +209,7 @@ __declspec(naked) void TriDispatchSetupChain_00421500(void)
         mov     dword ptr [g_data_00542044], eax
         mov     eax, dword ptr [eax*4 + 0x74]
         cmp     eax, 0x2012
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         je      short L_tdsc_ret
         jmp     Thunk_0049cbd0
     L_tdsc_ret:

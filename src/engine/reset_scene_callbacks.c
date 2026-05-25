@@ -123,11 +123,10 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 extern unsigned int g_state_00538094;
 extern unsigned int g_x_00535dac;
-extern unsigned int g_x_0054206c;
 
 /* @addr 0x00420090 (18b game) - zero 3 scene-callback globals. */
 void ResetSceneCallbacks_00420090(void) {
-    g_x_0054206c = 0;
+    g_walkCallback = 0;
     g_x_00535dac = 0;
     g_state_00538094 = 0;
 }

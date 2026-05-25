@@ -124,11 +124,11 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00413b70 (359b boot) - MStack push-8 + slot init with callback addr.
  *   Pushes 0x1000 to ThreeChanPackClamp_00404cc0, then [g_data_0054205c] to
- *   CopyThreeFields_00404df0. Sets g_data_0054206c=0x3333 and calls
+ *   CopyThreeFields_00404df0. Sets g_walkCallback=0x3333 and calls
  *   AudioMixerStep_004ab700, on no-error adds 0xd999 to it and calls
  *   ZeroAndDirty4_00405430. On no-error AND bit 2 of g_data_0054208c set:
  *   calls MStackPush8_004ab790; if it returns OK loads
- *   g_data_00542054 = old g_data_0054205c, g_data_0054206c = &g_data_004d67b8>>2,
+ *   g_data_00542054 = old g_data_0054205c, g_walkCallback = &g_data_004d67b8>>2,
  *   calls PushSetXfmMaskCallPop_00407140. On no-error AND bit 2 NOT set,
  *   writes 0x9e into [g_data_0054205c*4+0x30], calls
  *   ScaledTripleCopy54_004ac040 then MStackPushNegMul10_0040a690.
@@ -142,7 +142,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern void AudioMixerStep_004ab700(void);
 extern void CopyThreeFields_00404df0(void);
@@ -165,12 +164,12 @@ __declspec(naked) void MStackPush8CallbackInit_00413b70(void) {
         push    eax
         call    CopyThreeFields_00404df0
         add     esp, 4
-        mov     dword ptr [g_data_0054206c], 0x3333
+        mov     dword ptr [g_walkCallback], 0x3333
         call    AudioMixerStep_004ab700
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mp8c_ret
-        add     dword ptr [g_data_0054206c], 0xd999
+        add     dword ptr [g_walkCallback], 0xd999
         call    ZeroAndDirty4_00405430
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -185,7 +184,7 @@ __declspec(naked) void MStackPush8CallbackInit_00413b70(void) {
         mov     edx, offset g_data_004d67b8
         shr     edx, 2
         mov     dword ptr [g_data_00542054], ecx
-        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         call    PushSetXfmMaskCallPop_00407140
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -194,19 +193,19 @@ __declspec(naked) void MStackPush8CallbackInit_00413b70(void) {
         jne     L_mp8c_tailJmp
         mov     ecx, dword ptr [g_data_0054205c]
         mov     eax, 0x9e
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x30], eax
         call    ScaledTripleCopy54_004ac040
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mp8c_ret
-        mov     dword ptr [g_data_0054206c], 0xfffffeb9
+        mov     dword ptr [g_walkCallback], 0xfffffeb9
         call    MStackPushNegMul10_0040a690
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_mp8c_ret
         mov     edx, dword ptr [g_data_0054205c]
-        mov     ecx, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [edx*4 + 0x6c], ecx
         lea     eax, [edx*4]
         mov     edx, dword ptr [g_data_00542070]
@@ -222,7 +221,7 @@ __declspec(naked) void MStackPush8CallbackInit_00413b70(void) {
         mov     dword ptr [eax + 0x14], 0xff
         mov     dword ptr [eax], ecx
         mov     ecx, offset func_00413e60
-        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax + 0x10], ecx
         mov     eax, dword ptr [g_data_0054205c]
         mov     dword ptr [g_data_00542044], eax

@@ -127,7 +127,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern unsigned int g_data_00542094;
 extern void CallPauseCallTestStackPushJmp_00460c60(void);
@@ -173,7 +172,7 @@ __declspec(naked) void SlotPhaseDispatcherBigSwitch_0045fac0(void)
         call    NotShrCmp1Store_00460d80
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_spdbs_ret
-        mov     eax, dword ptr [g_data_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     ecx, eax
         and     ecx, 9
         cmp     ecx, 9
@@ -203,13 +202,13 @@ __declspec(naked) void SlotPhaseDispatcherBigSwitch_0045fac0(void)
         mov     dword ptr [g_data_00542094], eax
         jne     L_spdbs_b2
         mov     ecx, dword ptr [g_data_0054205c]
-        mov     dword ptr [g_data_0054206c], edi
+        mov     dword ptr [g_walkCallback], edi
         mov     dword ptr [ecx*4 + 0x6c], edi
         mov     eax, dword ptr [g_data_0054205c]
-        mov     edx, dword ptr [g_data_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0x70], edx
         mov     edx, dword ptr [g_data_0054205c]
-        mov     ecx, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [edx*4 + 0x74], ecx
         call    CallPauseTriCmpJmp_00460910
         cmp     dword ptr [g_framePauseFlag], edi

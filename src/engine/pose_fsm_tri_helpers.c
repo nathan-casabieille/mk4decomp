@@ -129,7 +129,6 @@ extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_00542080;
 extern unsigned int g_data_00542088;
@@ -173,7 +172,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         mov      eax, dword ptr [g_data_00542054]
         mov      dword ptr [g_data_00542088], 0x10000
         mov      eax, dword ptr [eax*4 + 0x34]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         and      eax, 1
         mov      dword ptr [g_data_00542094], eax
         je       short L_16bd
@@ -235,16 +234,16 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      ecx, dword ptr [g_data_0052ab10]
         mov      dword ptr [g_data_0054205c], ecx
-        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_walkCallback], edi
         lea      eax, [edx*4]
         mov      dword ptr [eax + 0x40], edi
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [eax + 0x48], ecx
         call     CameraAimSplineDriver_00430e60
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_191d
         mov      edx, dword ptr [g_data_00542060]
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [edx*4 + 0x44], ecx
         lea      eax, [edx*4]
         mov      edx, dword ptr [g_data_0054207c]
@@ -253,7 +252,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         mov      dword ptr [eax + 0x3c], ecx
         mov      ecx, 0x28
         mov      dword ptr [eax + 0x38], 0xfffe8000
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [eax + 0x30], ecx
         mov      dword ptr [esi + 8], OFFSET L_1710
         mov      edx, dword ptr [g_data_00542060]
@@ -291,7 +290,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         mov      edx, dword ptr [g_data_00542054]
         mov      dword ptr [g_data_00542088], 0x10000
         mov      eax, dword ptr [edx*4 + 0x34]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         and      eax, 1
         mov      dword ptr [g_data_00542094], eax
         je       short L_1894

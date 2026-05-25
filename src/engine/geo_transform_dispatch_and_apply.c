@@ -130,7 +130,6 @@ extern unsigned int g_data_0054200c;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542080;
 extern void PositionClampCluster_00489a30(void);
@@ -146,10 +145,10 @@ __declspec(naked) void GeoTransformDispatchAndApply_00489840(void)
         mov      dword ptr [g_data_00542080], eax
         xor      eax, eax
         test     ecx, ecx
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jle      short L_9871
         mov      eax, 2
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
     L_9871:
         mov      ecx, dword ptr [g_data_00538068]
         test     ecx, ecx
@@ -157,7 +156,7 @@ __declspec(naked) void GeoTransformDispatchAndApply_00489840(void)
         je       short L_9889
         jl       short L_9889
         inc      eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
     L_9889:
         mov      edx, dword ptr [g_data_0054200c]
         add      eax, edx
@@ -184,14 +183,14 @@ __declspec(naked) void GeoTransformDispatchAndApply_00489840(void)
         mov      eax, dword ptr [g_data_00535e70]
         push     eax
         push     0xccc
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_00542070], eax
         call     Mul10Tail_00404af0
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      edx, dword ptr [g_data_00542044]
         add      ecx, eax
         mov      dword ptr [g_data_00542070], eax
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [edx*4 + 0x54], ecx
         mov      eax, dword ptr [g_data_00542044]
         mov      edx, dword ptr [g_data_00542074]
@@ -200,14 +199,14 @@ __declspec(naked) void GeoTransformDispatchAndApply_00489840(void)
         mov      eax, dword ptr [g_data_00535e74]
         push     eax
         push     edx
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_00542070], eax
         call     Mul10Tail_00404af0
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [g_data_00542070], eax
         add      ecx, eax
         mov      eax, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         add      esp, 8
         mov      dword ptr [eax*4 + 0x5c], ecx
         mov      ecx, dword ptr [g_data_00542048]
@@ -217,13 +216,13 @@ __declspec(naked) void GeoTransformDispatchAndApply_00489840(void)
         push     eax
         mov      eax, dword ptr [g_data_00542074]
         push     eax
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         call     Mul10Tail_00404af0
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      edx, dword ptr [g_data_00542048]
         add      ecx, eax
         mov      dword ptr [g_data_00542070], eax
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [edx*4 + 0x54], ecx
         mov      eax, dword ptr [g_data_00542048]
         mov      edx, dword ptr [g_data_00542074]
@@ -232,14 +231,14 @@ __declspec(naked) void GeoTransformDispatchAndApply_00489840(void)
         mov      eax, dword ptr [g_data_00535e7c]
         push     eax
         push     edx
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_00542070], eax
         call     Mul10Tail_00404af0
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [g_data_00542070], eax
         add      ecx, eax
         mov      eax, dword ptr [g_data_00542048]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         add      esp, 8
         mov      dword ptr [eax*4 + 0x5c], ecx
         ret
@@ -260,7 +259,7 @@ __declspec(naked) void GeoTransformDispatchAndApply_00489840(void)
         mov      dword ptr [g_data_00542048], eax
         mov      eax, dword ptr [g_data_00542080]
         mov      dword ptr [g_data_00542044], ecx
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_00542080], edx
         mov      dword ptr [g_data_00542084], eax
         jmp      PositionClampCluster_00489a30

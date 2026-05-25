@@ -13,7 +13,6 @@ extern unsigned int g_data_00542050;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542070;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542084;
@@ -218,7 +217,7 @@ __declspec(naked) void RenderSceneNode(void)
         mov      dword ptr [g_data_00542048], ecx
         sar      ecx, 0xc
         and      ecx, 0x7ff
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         je       L_a9c4
         call     DirtyTestScaledCopy_004ba6c0
         test     eax, eax
@@ -320,7 +319,7 @@ __declspec(naked) void RenderSceneNode(void)
         je       L_ab84
         mov      edx, dword ptr [ecx*4 + 0x10]
         test     edx, edx
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         je       L_ab56
         mov      esi, eax
         call     edx
@@ -350,7 +349,7 @@ __declspec(naked) void RenderSceneNode(void)
     L_ab56:
         mov      ecx, dword ptr [ecx*4]
         test     cl, 8
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         je       L_ab72
         call     DirtyBitTripleWriteOrCall_004ba630
         mov      eax, dword ptr [g_data_0054204c]
@@ -435,7 +434,7 @@ __declspec(naked) void RenderSceneNode(void)
         test     byte ptr [g_data_00542084], 0x40
         jne      L_adaf
         xor      edx, edx
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         mov      eax, dword ptr [ebx*4 + 0x48]
         test     eax, eax
         mov      dword ptr [g_data_0054204c], eax
@@ -452,7 +451,7 @@ __declspec(naked) void RenderSceneNode(void)
         je       L_acf3
         mov      ebx, dword ptr [esp + 0x14]
         mov      edx, 1
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
     L_acce:
         push     edx
         push     ebp
@@ -475,7 +474,7 @@ __declspec(naked) void RenderSceneNode(void)
         and      eax, 1
         mov      ebp, edx
         test     cl, 0x40
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_00542048], OFFSET g_data_00ab4d9c
         je       L_ad3c
         mov      ecx, dword ptr [edi]
@@ -533,7 +532,7 @@ __declspec(naked) void RenderSceneNode(void)
         mov      dword ptr [g_data_00542044], ebx
         mov      eax, dword ptr [ebp]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       L_ae4a
         mov      ecx, dword ptr [g_data_00ab439c]
         mov      eax, dword ptr [g_data_00ab4398]
@@ -548,10 +547,10 @@ __declspec(naked) void RenderSceneNode(void)
         lea      ecx, [esp + 0x24]
         sar      ecx, 2
         cmp      eax, 1
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_0054204c], ecx
         je       L_ae33
-        mov      dword ptr [g_data_0054206c], OFFSET RenderSceneNode
+        mov      dword ptr [g_walkCallback], OFFSET RenderSceneNode
         call     Helper_TickAlt
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

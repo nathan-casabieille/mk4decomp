@@ -123,8 +123,8 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00461a60 (268b game) - install-self with table-walk init dispatch.
- *   If chain[+0x84] was nonzero: g_x_0054206c=2 unless was already 2 (then 6);
- *     scaledInit = 0x00543200>>2 + g_x_0054206c; nested chain load;
+ *   If chain[+0x84] was nonzero: g_walkCallback=2 unless was already 2 (then 6);
+ *     scaledInit = 0x00543200>>2 + g_walkCallback; nested chain load;
  *     call StateMachineInit_00493000; if pause? ret. If bit2 of state set tail-call CallSetPause; ret.
  *   If was zero: g_x_00542054 = g_cj_0054205c; cj[+0x58] = 0xfffb0000; install-self;
  *     chain[+0x84]=1; scaledInit-chain push 0x00461a60+0x01000000;
@@ -133,7 +133,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_00542054;
-extern unsigned int g_x_0054206c;
 extern void CallSetPause_0041f830(void);
 extern void InitZeroChainLookupJmp_00494210(void);
 extern void StateMachineInit_00493000(void);
@@ -148,12 +147,12 @@ __declspec(naked) void InstallSelfTableDispatch_00461a60(void) {
         test    eax, eax
         _emit   75h
         _emit   66h
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         cmp     ecx, 2
         _emit   75h
         _emit   0bh
         mov     ecx, 6
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     eax, 0x00543200
         shr     eax, 2
         add     eax, ecx
@@ -161,7 +160,7 @@ __declspec(naked) void InstallSelfTableDispatch_00461a60(void) {
         mov     eax, dword ptr [eax*4 + 0]
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     ecx, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [eax*4 + 4]
         mov     dword ptr [g_x_00542048], edx
         call    StateMachineInit_00493000
@@ -182,7 +181,7 @@ __declspec(naked) void InstallSelfTableDispatch_00461a60(void) {
         mov     eax, dword ptr [g_cj_0054205c]
         mov     ecx, 0xfffb0000
         mov     dword ptr [g_x_00542054], eax
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x58], ecx
         mov     dword ptr [esi + 8], 0x00461a60
         mov     eax, dword ptr [g_baseSel_00542060]

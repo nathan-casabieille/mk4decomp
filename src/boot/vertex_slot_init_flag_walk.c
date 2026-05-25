@@ -136,7 +136,6 @@ extern void VertexSlotInitFlagWalk_00409740(void);
 extern unsigned int g_data_0054204c;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 
 __declspec(naked) void DualEntryInitCmp_00425b20(void) {
@@ -156,7 +155,7 @@ __declspec(naked) void DualEntryInitCmp_00425b20(void) {
         mov     eax, dword ptr [g_state_00541e70]
         mov     ecx, 0x000007fc
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x0c], ecx
         mov     edx, dword ptr [g_state_00541e78]
         mov     dword ptr [g_data_00542050], edx
@@ -173,7 +172,7 @@ __declspec(naked) void DualEntryInitCmp_00425b20(void) {
         mov     ecx, dword ptr [g_x_00542070]
         mov     eax, dword ptr [eax*4 + 0x0c]
         inc     eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         cmp     ecx, eax
         mov     eax, dword ptr [g_state_0054208c]
         _emit   7dh

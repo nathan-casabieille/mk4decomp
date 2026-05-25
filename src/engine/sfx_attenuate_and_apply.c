@@ -130,19 +130,18 @@ extern void TableLookupCall_00489ff0(void);
 
 /* @addr 0x00480570 (333b game) - 3-state install-self with chain init + long state-0 sequence.
  *   state>=2: tail-call FiveCallGuardSetTail; pop+ret.
- *   state==1 (dec,je): chain[baseSel*4+0x74]=0; g_x_0054206c=0x1eb8; call SfxAttenuateAndApply_0048dee0; if pause ret.
- *     g_x_0054206c=8; call ScaledIndexConditionalAdd; if pause ret.
+ *   state==1 (dec,je): chain[baseSel*4+0x74]=0; g_walkCallback=0x1eb8; call SfxAttenuateAndApply_0048dee0; if pause ret.
+ *     g_walkCallback=8; call ScaledIndexConditionalAdd; if pause ret.
  *     Install-self at entry; state=2; g_x_0054204c=0xe; pause=1; pop+ret.
  *   state==0: call MStackChainBit2Cascade_0048e8f0; if pause ret.
  *     If bit0(0054208c): tail-call InstallSelfCascadingCalls; pop+ret.
- *     Else: call ScaledZeroFour; if pause ret. g_x_0054206c=5; call DispatcherComplex131_00431530; if pause ret.
- *     chain[baseSel*4+0x74]=0x1000; g_x_0054206c=0x62; call ScaledLitLoadCall_00480fe0; if pause ret.
- *     g_x_0054206c=0x3e; call TableLookupCall_00489ff0; if pause ret.
+ *     Else: call ScaledZeroFour; if pause ret. g_walkCallback=5; call DispatcherComplex131_00431530; if pause ret.
+ *     chain[baseSel*4+0x74]=0x1000; g_walkCallback=0x62; call ScaledLitLoadCall_00480fe0; if pause ret.
+ *     g_walkCallback=0x3e; call TableLookupCall_00489ff0; if pause ret.
  *     Install-self at entry; state=1; g_x_0054204c=0x33; pause=1; pop+ret.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0054204c;
-extern unsigned int g_x_0054206c;
 extern void FiveCallGuardSetTail_0046f6b0(void);
 extern void MStackChainBit2Cascade_0048e8f0(void);
 extern void ScaledLitLoadCall_00480fe0(void);
@@ -167,7 +166,7 @@ __declspec(naked) void Install3StateLongSeq_00480570(void) {
         ret
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [ecx*4 + 0x74], 0
-        mov     dword ptr [g_x_0054206c], 0x1eb8
+        mov     dword ptr [g_walkCallback], 0x1eb8
         call    SfxAttenuateAndApply_0048dee0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -177,7 +176,7 @@ __declspec(naked) void Install3StateLongSeq_00480570(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     dword ptr [g_x_0054206c], 8
+        mov     dword ptr [g_walkCallback], 8
         call    ScaledIndexConditionalAdd_0048e400
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -213,7 +212,7 @@ __declspec(naked) void Install3StateLongSeq_00480570(void) {
         test    eax, eax
         _emit   75h
         _emit   7eh
-        mov     dword ptr [g_x_0054206c], 5
+        mov     dword ptr [g_walkCallback], 5
         call    DispatcherComplex131_00431530
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -221,13 +220,13 @@ __declspec(naked) void Install3StateLongSeq_00480570(void) {
         _emit   66h
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [edx*4 + 0x74], 0x1000
-        mov     dword ptr [g_x_0054206c], 0x62
+        mov     dword ptr [g_walkCallback], 0x62
         call    ScaledLitLoadCall_00480fe0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         _emit   75h
         _emit   3dh
-        mov     dword ptr [g_x_0054206c], 0x3e
+        mov     dword ptr [g_walkCallback], 0x3e
         call    TableLookupCall_00489ff0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

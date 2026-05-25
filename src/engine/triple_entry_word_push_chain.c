@@ -127,13 +127,12 @@ extern unsigned int g_data_00535e7c;
  *     call MStackChainOrBitLoop_004635a0, pause-check, sync 80→fb0; call PackedTableWalkChainStore, pause-check;
  *     call MStackPush2ScaledChainLoop_00463430, pause-check; push (word)[0x004e2858], call TaggedSceneDispatch_004be690.
  *     Fall-through to jmp CallSetPause_0041f830.
- *   Block B (+0x70): g_x_0054206c=g_state_0053a408; if zero jmp CallSetPause; else jmp TripleEntryWordChainInc5_00462870.
- *   Block C (+0x90): g_x_0054206c=g_state_00537e88; if zero jmp CallSetPause; else jmp TripleEntryWordChainInc5_00462870.
+ *   Block B (+0x70): g_walkCallback=g_state_0053a408; if zero jmp CallSetPause; else jmp TripleEntryWordChainInc5_00462870.
+ *   Block C (+0x90): g_walkCallback=g_state_00537e88; if zero jmp CallSetPause; else jmp TripleEntryWordChainInc5_00462870.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_state_00537f74;
 extern unsigned int g_x_00541fb0;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542080;
 extern void CallSetPause_0041f830(void);
 extern void MStackChainOrBitLoop_004635a0(void);
@@ -145,7 +144,7 @@ __declspec(naked) void TripleEntryWordPushChain_004627c0(void) {
     __asm {
         mov     eax, dword ptr [g_state_00537f74]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   55h
         mov     eax, dword ptr [g_x_00541fb0]
@@ -192,7 +191,7 @@ __declspec(naked) void TripleEntryWordPushChain_004627c0(void) {
         _emit   90h
         mov     eax, dword ptr [g_state_0053a408]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   05h
         jmp     CallSetPause_0041f830
@@ -207,7 +206,7 @@ __declspec(naked) void TripleEntryWordPushChain_004627c0(void) {
         _emit   90h
         mov     eax, dword ptr [g_state_00537e88]
         test    eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   05h
         jmp     CallSetPause_0041f830

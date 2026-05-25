@@ -149,7 +149,6 @@ extern unsigned int g_data_004d57ac;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542080;
 extern unsigned int g_data_0054208c;
 
@@ -158,7 +157,7 @@ __declspec(naked) void MoveFsmCluster_004364a0(void)
     __asm {
         /* === Main (0x4364a0): post move-pick dispatcher === */
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      dword ptr [g_data_0054206c], 0xc
+        mov      dword ptr [g_walkCallback], 0xc
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], OFFSET L_64d0
@@ -255,7 +254,7 @@ __declspec(naked) void MoveFsmCluster_004364a0(void)
         jne      short L_664f
         mov      eax, dword ptr [g_data_00535ddc]
         cmp      eax, 0x30000
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jle      short L_6615
         jmp      GuardedSeq_00433bb0
     L_6615:
@@ -282,7 +281,7 @@ __declspec(naked) void MoveFsmCluster_004364a0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_667e
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         cmp      eax, 0x1006
         mov      eax, dword ptr [g_data_0054208c]
         je       short L_6677
@@ -309,7 +308,7 @@ __declspec(naked) void MoveFsmCluster_004364a0(void)
     L_66a5:
         mov      eax, dword ptr [g_data_00535ddc]
         cmp      eax, 0x40000
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jle      short L_66bb
         jmp      HitFsmCluster_00437300
     L_66bb:

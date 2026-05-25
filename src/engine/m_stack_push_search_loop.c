@@ -128,7 +128,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_data_00541fb8;
 extern unsigned int g_x_00541fb0;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 
 void MStackPushSearchLoop_00463ed0(void) {
@@ -147,11 +146,11 @@ void MStackPushSearchLoop_00463ed0(void) {
         mov     ecx, dword ptr [g_data_00541fb8]
         mov     dword ptr [g_x_00542070], 4
         shl     eax, 2
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         add     eax, ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, dword ptr [eax*4 + 0x0c]
-        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
@@ -160,10 +159,10 @@ void MStackPushSearchLoop_00463ed0(void) {
         mov     dword ptr [g_scaledInit_00542044], eax
         _emit   74h
         _emit   24h
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         inc     ecx
         inc     eax
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     ecx, dword ptr [eax*4 - 4]
         test    ecx, ecx
         mov     dword ptr [g_x_00542070], ecx

@@ -124,13 +124,12 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0042c7e0 (218b game) - triple-entry chain.
  *   A: call Cascade3ChainInit_0048fa50; if !pause: push 0x004e3828, call ArgSarStoreJmp; ret.
- *   B (+0x20): chain[*4+0x68]=0; g_x_0054206c=0; push 0x004e34d8; call ArgSarStoreJmp; ret.
+ *   B (+0x20): chain[*4+0x68]=0; g_walkCallback=0; push 0x004e34d8; call ArgSarStoreJmp; ret.
  *   C (+0x50): call GameSectionSwitcher_0042cac0; if !pause: if bit-0 set call InstallSelfDualStateDispatch_0042c9f0; ret.
- *     Else load chain at [g_baseSel*4+0x38]; copy fields +0x54/+0x58/+0x5c → g_x_0054206c/70/74;
+ *     Else load chain at [g_baseSel*4+0x38]; copy fields +0x54/+0x58/+0x5c → g_walkCallback/70/74;
  *     store back to chain+0x5c/+0x60/+0x64; call TripleBlockCjCopy_0042c8c0; pop+ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542074;
 extern void ArgSarStoreJmp_004594f0(void);
@@ -156,7 +155,7 @@ __declspec(naked) void TripleEntryStateCascade_0042c7e0(void) {
         _emit   90h
         mov     ecx, dword ptr [g_baseSel_00542060]
         xor     eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    0x004e34d8
         mov     dword ptr [ecx*4 + 0x68], eax
         call    ArgSarStoreJmp_004594f0
@@ -192,7 +191,7 @@ __declspec(naked) void TripleEntryStateCascade_0042c7e0(void) {
         mov     eax, dword ptr [ecx*4 + 0x38]
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     edx, dword ptr [eax*4 + 0x54]
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     esi, dword ptr [eax*4 + 0x58]
         mov     dword ptr [g_x_00542070], esi
         mov     eax, dword ptr [eax*4 + 0x5c]

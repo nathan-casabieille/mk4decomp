@@ -132,7 +132,6 @@ extern void ProneAnimFsmCluster_004958c0(void);
 
 /* @addr 0x00495770 (325b game) - 7-block thunk dispatcher with push-call entries. */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 
 __declspec(naked) void SevenThunkDispatcher_00495770(void) {
     __asm {
@@ -157,7 +156,7 @@ __declspec(naked) void SevenThunkDispatcher_00495770(void) {
         _emit   90h
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x113
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    0x004f1490
         mov     dword ptr [ecx*4 + 0x74], eax
         call    StreamInitCountdownBody_00494830
@@ -205,7 +204,7 @@ __declspec(naked) void SevenThunkDispatcher_00495770(void) {
         jmp     ProneAnimFsmCluster_004958c0
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x111
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    0x004f19d0
         mov     dword ptr [ecx*4 + 0x74], eax
         call    ArgScaledChain_004949b0
@@ -228,7 +227,7 @@ __declspec(naked) void SevenThunkDispatcher_00495770(void) {
         _emit   90h
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x111
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    0x004f19e0
         mov     dword ptr [ecx*4 + 0x74], eax
         call    ScaledLookupGuardJmpIndirect_004949f0
@@ -247,7 +246,7 @@ __declspec(naked) void SevenThunkDispatcher_00495770(void) {
         _emit   90h
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x111
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    0x004f14b0
         mov     dword ptr [ecx*4 + 0x74], eax
         call    ScaledLookupGuardJmpIndirect_004949f0

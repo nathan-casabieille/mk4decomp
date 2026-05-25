@@ -131,11 +131,10 @@ extern void ScaledChain3c7c_0048f930(void);
  *   Block A: standard install-self at +0x80 (self-addr 0x0047c8f0).
  *   Path on chain[+0x84]!=0: countdown g_x_00542080 (clearing g_state_00542088 first);
  *     when ==0 call PopCallBitCmpPushCall; pause-check then 2-way jmp dispatch on g_state_00542088
- *     and g_x_0054206c; otherwise call ScaledChain3c7c then 3-way dispatch on g_x_0054206c.
+ *     and g_walkCallback; otherwise call ScaledChain3c7c then 3-way dispatch on g_walkCallback.
  */
 extern unsigned int g_data_0054204c;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542080;
 
 __declspec(naked) void InstallSelfCountdown2Stage_0047c8f0(void) {
@@ -173,7 +172,7 @@ __declspec(naked) void InstallSelfCountdown2Stage_0047c8f0(void) {
         test    eax, eax
         _emit   75h
         _emit   31h
-        cmp     dword ptr [g_x_0054206c], 3
+        cmp     dword ptr [g_walkCallback], 3
         _emit   7ch
         _emit   05h
         jmp     InstallSelfCountdownStr_0047cb90

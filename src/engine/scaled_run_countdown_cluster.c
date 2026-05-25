@@ -132,7 +132,6 @@ extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_0054208c;
 extern void ArgSarStoreJmp_004594f0(void);
@@ -166,7 +165,7 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a0d7
-        mov      dword ptr [g_data_0054206c], 3
+        mov      dword ptr [g_walkCallback], 3
         mov      dword ptr [g_data_00542078], 4
         jmp      GuardedSeq_00473f10
     L_a0d7:
@@ -186,13 +185,13 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         mov      eax, dword ptr [g_data_00542058]
         mov      dword ptr [edx*4 + 0x68], eax
         mov      ecx, dword ptr [g_data_00542054]
-        mov      dword ptr [g_data_0054206c], 6
+        mov      dword ptr [g_walkCallback], 6
         mov      dword ptr [g_data_0054205c], ecx
         call     GuardedSeq_00476de0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a274
-        mov      dword ptr [g_data_0054206c], 6
+        mov      dword ptr [g_walkCallback], 6
         call     DirtyDoubleDeref_00408cb0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -214,17 +213,17 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         mov      eax, dword ptr [g_data_00542058]
         mov      ecx, dword ptr [g_data_0054205c]
         mov      eax, dword ptr [eax*4 + 0x54]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x54], eax
         mov      edx, dword ptr [g_data_00542058]
         mov      ecx, dword ptr [g_data_0054205c]
         mov      eax, dword ptr [edx*4 + 0x58]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x58], eax
         mov      edx, dword ptr [g_data_00542058]
         mov      ecx, dword ptr [g_data_0054205c]
         mov      eax, dword ptr [edx*4 + 0x5c]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x5c], eax
         mov      eax, dword ptr [g_data_004d57ac]
         mov      edx, dword ptr [g_data_00542054]
@@ -300,13 +299,13 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         jns      L_a38f
         mov      ecx, dword ptr [g_data_00542060]
         mov      edx, dword ptr [ecx*4 + 0x64]
-        mov      dword ptr [g_data_0054206c], 8
+        mov      dword ptr [g_walkCallback], 8
         mov      dword ptr [g_data_0054205c], edx
         call     GuardedSeq_00476f10
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a4fa
-        mov      dword ptr [g_data_0054206c], 6
+        mov      dword ptr [g_walkCallback], 6
         call     ChainDirtyBitWalker_00408c10
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -329,7 +328,7 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         jne      L_a385
         mov      ecx, dword ptr [g_data_00542060]
         mov      edx, dword ptr [ecx*4 + 0x4c]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_0054205c], edx
         call     ChainDirtyBitWalker_00408c10
         mov      eax, dword ptr [g_framePauseFlag]

@@ -152,7 +152,6 @@ extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_0054208c;
@@ -178,7 +177,7 @@ __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
         mov      eax, OFFSET g_data_004e8158
         mov      ecx, dword ptr [g_data_0054205c]
         shr      eax, 2
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      eax, dword ptr [g_data_004d57ac]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
@@ -199,7 +198,7 @@ __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5721
-        mov      dword ptr [g_data_0054206c], 0xa
+        mov      dword ptr [g_walkCallback], 0xa
         call     ChainDirtyBitWalker_00408c10
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -207,25 +206,25 @@ __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
         mov      eax, dword ptr [g_data_00542048]
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, dword ptr [eax*4 + 0x3c]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x54], eax
         mov      edx, dword ptr [g_data_00542048]
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, dword ptr [edx*4 + 0x40]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x58], eax
         mov      edx, dword ptr [g_data_00542048]
         mov      ecx, dword ptr [g_data_00542044]
         mov      eax, dword ptr [edx*4 + 0x44]
         mov      dword ptr [ecx*4 + 0x5c], eax
         mov      edx, dword ptr [g_data_004d5324]
-        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_walkCallback], edx
         call     AudioMixerStep_004ab700
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5721
         mov      ecx, dword ptr [g_data_00542044]
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         mov      dword ptr [ecx*4 + 0x68], eax
     L_5721:
         ret
@@ -295,17 +294,17 @@ __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
         mov      dword ptr [eax*4 + 0x5c], ecx
         mov      edx, dword ptr [g_data_0054205c]
         mov      eax, 0x91
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x30], eax
         mov      eax, dword ptr [g_data_00542058]
         mov      ecx, dword ptr [g_data_0054205c]
         mov      eax, dword ptr [eax*4 + 0x48]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x58], eax
         mov      edx, dword ptr [g_data_00542058]
         mov      ecx, dword ptr [g_data_0054205c]
         mov      eax, dword ptr [edx*4 + 0x64]
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x64], eax
         mov      edx, dword ptr [g_data_00542058]
         mov      ecx, dword ptr [edx*4 + 0x34]
@@ -317,7 +316,7 @@ __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
         and      al, 0xfe
         or       eax, ecx
         or       eax, 0x81000
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x34], eax
         mov      eax, dword ptr [g_data_0054205c]
         mov      ecx, dword ptr [g_data_00535e6c]

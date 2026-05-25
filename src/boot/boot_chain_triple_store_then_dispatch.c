@@ -126,14 +126,13 @@ extern void ScaledAddDeref_00494800(void);
 extern void BootChainTripleStoreThenDispatch_004076b0(void);
 
 /* @addr 0x004936f0 (189b game) - mstack-push 2, chain decode + sum, frame call.
- *   Push g_x_00542048, g_scaledInit; g_x_0054206c = 2; call ScaledAddDeref; pause? -> pop+ret.
- *   ecx = g_scaledInit; g_x_0054206c = 1; eax = chain[ecx+8] >> 16; g_x_00542048 = eax;
- *   g_x_0054206c = eax; ecx = chain[ecx]; ecx = (ecx >> 2) signed + eax;
+ *   Push g_x_00542048, g_scaledInit; g_walkCallback = 2; call ScaledAddDeref; pause? -> pop+ret.
+ *   ecx = g_scaledInit; g_walkCallback = 1; eax = chain[ecx+8] >> 16; g_x_00542048 = eax;
+ *   g_walkCallback = eax; ecx = chain[ecx]; ecx = (ecx >> 2) signed + eax;
  *   g_x_00542048 = ecx; mstack-pop into g_scaledInit; call BootChainTripleStoreThenDispatch_004076b0; pause? -> pop+ret.
  *   mstack-pop into g_x_00542048.
  */
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 
 extern unsigned int g_data_004d57ac_arr;
 
@@ -149,18 +148,18 @@ void MStackChainDecodeCall_004936f0(void) {
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], edx
-        mov     dword ptr [g_x_0054206c], 2
+        mov     dword ptr [g_walkCallback], 2
         call    ScaledAddDeref_00494800
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   74h
         mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [g_x_0054206c], 1
+        mov     dword ptr [g_walkCallback], 1
         mov     eax, [ecx*4 + 8]
         shr     eax, 0x10
         mov     dword ptr [g_x_00542048], eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     ecx, [ecx*4 + g_data_004d57ac_arr]
         sar     ecx, 2
         add     ecx, eax

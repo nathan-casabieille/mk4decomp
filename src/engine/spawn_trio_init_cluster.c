@@ -135,7 +135,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern void CallSetPause_0041f830(void);
 
@@ -145,13 +144,13 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
     {
         mov     eax, dword ptr [g_data_00541d6c]
         test    eax, eax
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         je      short L_gscp_check27
         jmp     CallSetPause_0041f830
     L_gscp_check27:
         mov     edx, dword ptr [g_data_0053a278]
         cmp     edx, 0x27
-        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         je      L_gscp_dec
         mov     ecx, dword ptr [g_data_005380a4]
         mov     eax, offset g_data_005380b0
@@ -184,7 +183,7 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
         mov     eax, 1
         push    0
         push    offset L_gscp_sub2
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_data_00541d6c], eax
         call    StoreTwoCall_0049cb40
         add     esp, 8
@@ -212,7 +211,7 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
         mov     dword ptr [g_data_005380a4], ecx
         shr     eax, 2
         add     eax, ecx
-        mov     dword ptr [g_data_0054206c], 0x27
+        mov     dword ptr [g_walkCallback], 0x27
         mov     dword ptr [g_data_00542044], eax
         mov     dword ptr [eax*4], 0x27
         call    SpawnTrioInitCluster_00458440
@@ -257,7 +256,7 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
     L_gscp_sub3:
         mov     eax, dword ptr [g_data_00537e98]
         test    eax, eax
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         je      short L_gscp_sub3_jmp
         jmp     CallSetPause_0041f830
     L_gscp_sub3_jmp:
@@ -273,7 +272,7 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
     L_gscp_sub4:
         mov     eax, dword ptr [g_data_00537e98]
         test    eax, eax
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jne     short L_gscp_sub4_jmp
         jmp     CallSetPause_0041f830
     L_gscp_sub4_jmp:

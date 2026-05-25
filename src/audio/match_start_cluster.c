@@ -136,7 +136,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_0054208c;
 extern unsigned int g_data_005433ec;
@@ -219,7 +218,7 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_260c
         mov      ecx, dword ptr [g_data_0053a51c]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         call     TablePushAccumTailJmp_00429e30
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_260c
@@ -232,14 +231,14 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         mov      ebx, 1
         mov      dword ptr [g_data_00542054], edx
         mov      byte ptr [g_data_0054371c], bl
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_00542070], edi
         call     DownloadPlayerChar
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_260c
         mov      ecx, dword ptr [g_data_005380e0]
         mov      dword ptr [g_data_00542070], ebx
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         call     DownloadPlayerChar
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_260c

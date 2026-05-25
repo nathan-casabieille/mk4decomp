@@ -124,7 +124,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_0053a3dc;
 extern unsigned int g_data_0053a41c;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542074;
 extern unsigned int g_x_00542078;
@@ -142,8 +141,8 @@ void Mul10Tail5xInterp_00485d90(void) {
     g_x_00542084 = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail_00404af0)(g_x_00542078, g_x_00542084);
     g_x_0054207c = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail_00404af0)(g_x_00542084, g_x_0054207c);
     g_x_00542080 = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail_00404af0)(g_x_00542084, g_x_00542080);
-    g_x_0054206c += g_x_0054207c;
+    g_walkCallback += g_x_0054207c;
     g_x_00542070 += g_x_00542080;
-    *(unsigned int *)(g_x_0054205c * 4 + 0x54) = g_x_0054206c;
+    *(unsigned int *)(g_x_0054205c * 4 + 0x54) = g_walkCallback;
     *(unsigned int *)(g_x_0054205c * 4 + 0x5c) = g_x_00542070;
 }

@@ -126,7 +126,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542088;
 extern unsigned int g_data_0054208c;
 extern void PendingMatch_00459510(void);
@@ -142,7 +141,7 @@ __declspec(naked) void MoveListCursorCluster_0045b420(void)
         test     eax, eax
         jne      short L_b445
         mov      eax, dword ptr [g_data_00542060]
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [eax*4 + 0x48], ecx
         jmp      PendingMatch_00459510
     L_b445:
@@ -188,7 +187,7 @@ __declspec(naked) void MoveListCursorCluster_0045b420(void)
         mov      eax, dword ptr [ecx*4]
         shr      eax, 0x18
         cmp      eax, 0x3a
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       short L_b4e4
     L_b4c9:
         dec      ecx
@@ -196,7 +195,7 @@ __declspec(naked) void MoveListCursorCluster_0045b420(void)
         mov      eax, dword ptr [ecx*4]
         shr      eax, 0x18
         cmp      eax, 0x3a
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jne      short L_b4c9
     L_b4e4:
         inc      ecx
@@ -218,20 +217,20 @@ __declspec(naked) void MoveListCursorCluster_0045b420(void)
         mov      dword ptr [g_data_00542050], ecx
         mov      eax, dword ptr [edx*4 + 0x34]
         cmp      eax, 0x10
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         jne      short L_b52e
         mov      eax, 2
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
     L_b52e:
         cmp      eax, 0x11
         jne      short L_b53d
         mov      eax, 7
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
     L_b53d:
         add      ecx, eax
         mov      dword ptr [g_data_00542050], ecx
         mov      ecx, dword ptr [ecx*4]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [edx*4 + 0x48], ecx
         jmp      PendingMatch_00459510
         nop
@@ -289,7 +288,7 @@ __declspec(naked) void MoveListCursorCluster_0045b420(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b614
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         mov      dword ptr [g_data_00542044], eax
         call     eax
         mov      eax, dword ptr [g_framePauseFlag]

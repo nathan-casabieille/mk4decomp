@@ -130,7 +130,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054204c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00543088;
 extern void BootInitGuardedCallChain_004265d0(void);
 extern void TableWalkBoundedCmp_004bd890(void);
@@ -173,7 +172,7 @@ __declspec(naked) void DualTableMappedDispatch_00492e60(void)
     L_dtmd_skip3:
         add     eax, eax
         add     ecx, eax
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_data_0054204c], ecx
         mov     edx, dword ptr [ecx*4]
         inc     ecx
@@ -209,7 +208,7 @@ __declspec(naked) void DualTableMappedDispatch_00492e60(void)
     L_dtmd_skip6:
         add     eax, eax
         add     esi, eax
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_data_0054204c], esi
         mov     edx, dword ptr [esi*4]
         inc     esi
@@ -237,7 +236,7 @@ __declspec(naked) void DualTableMappedDispatch_00492e60(void)
         mov     eax, 0xfff88000
         mov     dword ptr [esi + 0x54], 0
         mov     dword ptr [esi + 0x58], 0x1999
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [esi + 0x5c], eax
     L_dtmd_ret:
         pop     esi

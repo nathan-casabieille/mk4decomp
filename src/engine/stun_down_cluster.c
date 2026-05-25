@@ -130,7 +130,6 @@ extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542088;
 extern void Chain2AxisDiffStoreTailJmp_0044cad0(void);
@@ -149,7 +148,7 @@ __declspec(naked) void StunDownCluster_00451fc0(void)
         mov      ecx, dword ptr [eax*4]
         inc      eax
         test     ecx, ecx
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_00542054], eax
         jl       L_2054
     L_1fdc:
@@ -181,7 +180,7 @@ __declspec(naked) void StunDownCluster_00451fc0(void)
         mov      ecx, dword ptr [eax*4]
         inc      eax
         test     ecx, ecx
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_00542054], eax
         jge      L_1fdc
     L_2054:
@@ -308,7 +307,7 @@ __declspec(naked) void StunDownCluster_00451fc0(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_22df
         mov      dword ptr [g_data_00542074], 0xe666
-        mov      dword ptr [g_data_0054206c], 0xfffe7334
+        mov      dword ptr [g_walkCallback], 0xfffe7334
         call     MStackPush3SideStore_0044cb80
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_22df

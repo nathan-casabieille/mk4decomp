@@ -124,7 +124,6 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_0052ab40;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542094;
 extern void Helper_SetState_02(void);
 extern void Helper_SetState_03(void);
@@ -148,7 +147,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
     __asm {
         mov      eax, dword ptr [g_data_0052ab40]
         mov      ecx, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         and      ecx, 0x4000
         mov      dword ptr [g_data_00542094], ecx
         je       short L_13e1
@@ -159,7 +158,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      eax, dword ptr [g_data_0052ab40]
     L_13e1:
         mov      edx, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         and      edx, 0x1000
         mov      dword ptr [g_data_00542094], edx
         je       short L_140d
@@ -170,7 +169,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      eax, dword ptr [g_data_0052ab40]
     L_140d:
         mov      ecx, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         and      ecx, 0x800
         mov      dword ptr [g_data_00542094], ecx
         je       short L_1439
@@ -181,7 +180,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      eax, dword ptr [g_data_0052ab40]
     L_1439:
         mov      edx, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         and      edx, 0x200
         mov      dword ptr [g_data_00542094], edx
         je       short L_1465
@@ -192,7 +191,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      eax, dword ptr [g_data_0052ab40]
     L_1465:
         mov      ecx, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         and      ecx, 0x100
         mov      dword ptr [g_data_00542094], ecx
         je       short L_1491
@@ -203,7 +202,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      eax, dword ptr [g_data_0052ab40]
     L_1491:
         mov      edx, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         and      edx, 2
         mov      dword ptr [g_data_00542094], edx
         je       short L_14ba
@@ -214,7 +213,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      eax, dword ptr [g_data_0052ab40]
     L_14ba:
         mov      ecx, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         and      ecx, 4
         mov      dword ptr [g_data_00542094], ecx
         je       short L_14e3
@@ -225,7 +224,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      eax, dword ptr [g_data_0052ab40]
     L_14e3:
         mov      edx, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         and      edx, 0x400
         mov      dword ptr [g_data_00542094], edx
         je       short L_150f
@@ -236,7 +235,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      eax, dword ptr [g_data_0052ab40]
     L_150f:
         mov      ecx, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         and      ecx, 8
         mov      dword ptr [g_data_00542094], ecx
         je       short L_1538
@@ -247,7 +246,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      eax, dword ptr [g_data_0052ab40]
     L_1538:
         mov      edx, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         and      edx, 0x10
         mov      dword ptr [g_data_00542094], edx
         je       short L_1561
@@ -258,7 +257,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      eax, dword ptr [g_data_0052ab40]
     L_1561:
         mov      ecx, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         and      ecx, 0x20
         mov      dword ptr [g_data_00542094], ecx
         je       short L_158a
@@ -269,7 +268,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      eax, dword ptr [g_data_0052ab40]
     L_158a:
         mov      edx, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         and      edx, 0x40
         mov      dword ptr [g_data_00542094], edx
         je       short L_15b3
@@ -280,7 +279,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      eax, dword ptr [g_data_0052ab40]
     L_15b3:
         mov      ecx, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         and      ecx, 0x80
         mov      dword ptr [g_data_00542094], ecx
         je       short L_15db
@@ -293,10 +292,10 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      ecx, eax
         and      ecx, 0x2001
         cmp      ecx, 0x2001
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         je       short L_1632
         mov      edx, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         and      edx, 1
         mov      dword ptr [g_data_00542094], edx
         je       short L_1616
@@ -306,7 +305,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         jne      short L_1631
         mov      eax, dword ptr [g_data_0052ab40]
     L_1616:
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         and      eax, 0x2000
         mov      dword ptr [g_data_00542094], eax
         je       short L_1631

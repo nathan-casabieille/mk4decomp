@@ -129,7 +129,6 @@ extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_00542bd4;
 extern void CjInstallSelfRouter_00470480(void);
@@ -187,10 +186,10 @@ __declspec(naked) void GameLoaderHandlerCluster_004876f0(void)
         test     eax, eax
         jne      short L_77a7
         mov      edx, dword ptr [g_data_0054205c]
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [edx*4 + 0x24], ecx
         mov      eax, dword ptr [g_data_0054205c]
-        mov      ecx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [eax*4 + 0x28], ecx
         mov      edx, dword ptr [g_data_0054205c]
         mov      dword ptr [g_data_00542044], edx
@@ -224,7 +223,7 @@ __declspec(naked) void GameLoaderHandlerCluster_004876f0(void)
         jne      short L_7812
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, 1
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         push     OFFSET g_data_00542bd4
         mov      dword ptr [ecx*4 + 0x5c], eax
         call     GuardedPackedSlotInit_00428760
@@ -255,11 +254,11 @@ __declspec(naked) void GameLoaderHandlerCluster_004876f0(void)
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, dword ptr [ecx*4 + 0x5c]
         dec      eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_00541dc4], eax
         jne      short L_7844
         mov      eax, 8
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
     L_7844:
         mov      dword ptr [ecx*4 + 0x5c], eax
         mov      eax, dword ptr [g_data_00541dc4]
@@ -267,12 +266,12 @@ __declspec(naked) void GameLoaderHandlerCluster_004876f0(void)
         je       short L_7859
         jmp      TripleEntryBitsetMStack_00487890
     L_7859:
-        mov      dword ptr [g_data_0054206c], 0xf
+        mov      dword ptr [g_walkCallback], 0xf
         call     FlagThunk4EntryDispatcher_0040a470
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_788e
-        mov      dword ptr [g_data_0054206c], 5
+        mov      dword ptr [g_walkCallback], 5
         call     TableLookupCall_0048a160
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

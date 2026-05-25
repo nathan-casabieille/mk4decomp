@@ -125,7 +125,7 @@ extern unsigned int g_data_00535e7c;
 extern void DualMul10AccumState88_00431dd0(void);
 
 /* @addr 0x00431f40 (178b game) - install-self with counter update.
- *   Block A (chain[+0x84]!=0): update state machine: g_x_0054206c=-0x28f (sign-extended from 0xfd71),
+ *   Block A (chain[+0x84]!=0): update state machine: g_walkCallback=-0x28f (sign-extended from 0xfd71),
  *     g_x_00542070=[g_x_0054205c*4+0x58] clamped to >=0xfffd8000; g_data_00542088 -= 0x51e;
  *     if g_data_00542088 still > 0xfffcdbc1: install-self path; else call ScaledInitWithCounterAndType_004314f0, pop+ret.
  *   Block B (chain[+0x84]==0): g_data_00542088=0x3243f; g_x_00542078=0x7cccc; call DualMul10AccumState88_00431dd0;
@@ -134,7 +134,6 @@ extern void DualMul10AccumState88_00431dd0(void);
 extern unsigned int g_data_0054204c;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542078;
 extern void ScaledInitWithCounterAndType_004314f0(void);
@@ -151,14 +150,14 @@ __declspec(naked) void InstallSelfState88_00431f40(void) {
         _emit   50h
         mov     edx, dword ptr [g_x_0054205c]
         mov     eax, 0xfffffd71
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     ecx, dword ptr [edx*4 + 0x58]
         cmp     ecx, 0xfffd8000
         mov     dword ptr [g_x_00542070], ecx
         _emit   7dh
         _emit   07h
         xor     eax, eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x70], eax
         mov     eax, dword ptr [g_state_00542088]
         sub     eax, 0x051e

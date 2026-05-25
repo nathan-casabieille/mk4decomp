@@ -158,7 +158,6 @@ extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void FramePauseScaledStore_00406c10(void);
@@ -213,16 +212,16 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         ret
     L_d327:
         mov      edx, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_0054206c], esi
+        mov      dword ptr [g_walkCallback], esi
         mov      dword ptr [edx*4 + 0x30], esi
         mov      ecx, dword ptr [g_data_00542044]
-        mov      eax, dword ptr [g_data_0054206c]
+        mov      eax, dword ptr [g_walkCallback]
         mov      dword ptr [ecx*4 + 0x34], eax
         mov      eax, dword ptr [g_data_00542044]
-        mov      edx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_walkCallback]
         mov      dword ptr [eax*4 + 0x38], edx
         mov      ecx, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_0054206c], esi
+        mov      dword ptr [g_walkCallback], esi
         mov      dword ptr [ecx*4 + 0x1c], esi
         mov      eax, dword ptr [g_data_004d57ac]
         mov      edx, dword ptr [eax*4]
@@ -266,7 +265,7 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d4f9
-        mov      dword ptr [g_data_0054206c], 0x30
+        mov      dword ptr [g_walkCallback], 0x30
         call     GatedWordPushCall_00489f90
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -330,7 +329,7 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         /* === h3 (0x44d500): event 004e6590 forwarder === */
         mov      eax, dword ptr [g_data_0054205c]
         mov      dword ptr [eax*4 + 0x28], 0x35
-        mov      dword ptr [g_data_0054206c], 0x27
+        mov      dword ptr [g_walkCallback], 0x27
         call     GatedWordPushCall_00489f90
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -351,7 +350,7 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         nop
         nop
         /* === h4 (0x44d540): event 004e65a0 forwarder === */
-        mov      dword ptr [g_data_0054206c], 0xfffffbc7
+        mov      dword ptr [g_walkCallback], 0xfffffbc7
         call     PendingMatch_0044dd80
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

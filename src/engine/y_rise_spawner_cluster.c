@@ -132,7 +132,6 @@ extern unsigned int g_data_0053a700;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_0054207c;
@@ -149,7 +148,7 @@ void YRiseSpawnerCluster_00477bd0(void) {
     __asm {
         mov      eax, dword ptr [g_data_00537e88]
         test     eax, eax
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         je       L_7d70
         push     0x24
         call     SaveCallRestore_004049d0
@@ -171,7 +170,7 @@ void YRiseSpawnerCluster_00477bd0(void) {
         mov      edx, dword ptr [g_data_00542044]
         mov      dword ptr [edx*4 + 0x58], 0xff910000
         mov      eax, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_0054206c], 0x24
+        mov      dword ptr [g_walkCallback], 0x24
         mov      dword ptr [eax*4 + 0x30], 0x24
         call     MStackPushComplexCallPop_00406430
         mov      eax, dword ptr [g_framePauseFlag]
@@ -179,7 +178,7 @@ void YRiseSpawnerCluster_00477bd0(void) {
         jne      L_7e12
         mov      eax, dword ptr [g_data_0053a700]
         cmp      eax, 0x63
-        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_walkCallback], eax
         ja       short L_7ce0
         call     StoreIncrMStackPush6_004275c0
         mov      eax, dword ptr [g_framePauseFlag]
@@ -206,7 +205,7 @@ void YRiseSpawnerCluster_00477bd0(void) {
         add      ecx, 0xfff70000
         mov      dword ptr [eax*4 + 0x54], ecx
         mov      ecx, dword ptr [g_data_0053a700]
-        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_walkCallback], ecx
         call     StoreIncrMStackPush6_004275c0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -241,7 +240,7 @@ void YRiseSpawnerCluster_00477bd0(void) {
         mov      ecx, dword ptr [g_data_00542044]
         mov      dword ptr [ecx*4 + 0x58], 0xff910000
         mov      edx, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_0054206c], 0x233
+        mov      dword ptr [g_walkCallback], 0x233
         mov      dword ptr [edx*4 + 0x30], 0x233
         call     MStackPushComplexCallPop_00406430
         mov      eax, dword ptr [g_framePauseFlag]
@@ -249,7 +248,7 @@ void YRiseSpawnerCluster_00477bd0(void) {
         jne      short L_7e12
         push     0x25b
         push     OFFSET func_00477ee0
-        mov      dword ptr [g_data_0054206c], 0
+        mov      dword ptr [g_walkCallback], 0
         mov      dword ptr [g_data_0052ab48], 0
         call     BootMstackInit_0041fb10
         add      esp, 8

@@ -127,11 +127,10 @@ extern unsigned int g_data_00535e7c;
  *   B2 (0x10..0x10e): load cj[+0x6c] / cj[+0x74]; 4x Mul10Tail combining each pair
  *     with 0xe666 mod, results stored back to cj[+0x6c] and cj[+0x74].
  *     push 0x004f12b4; call IterStepNoSecond_0048e5e0; if pause? ret.
- *     If g_x_00542070 > g_x_0054206c: ret. Else: call ScaledZero44_00491500;
- *     if pause? ret. Else: cj[+0x6c]/cj[+0x74] = g_x_0054206c << 16. ret.
+ *     If g_x_00542070 > g_walkCallback: ret. Else: call ScaledZero44_00491500;
+ *     if pause? ret. Else: cj[+0x6c]/cj[+0x74] = g_walkCallback << 16. ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern void IterStepNoSecond_0048e5e0(void);
 extern void ScaledZero44_00491500(void);
@@ -146,7 +145,7 @@ void ThunkPlusCjMul10Accum_004913f0(void) {
         nop
         mov     eax, dword ptr [g_cj_0054205c]
         mov     ecx, dword ptr [eax*4 + 0x6c]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     eax, dword ptr [eax*4 + 0x74]
         push    ecx
         push    0xe666
@@ -154,29 +153,29 @@ void ThunkPlusCjMul10Accum_004913f0(void) {
         call    Mul10Tail_00404af0
         mov     ecx, dword ptr [g_x_00542070]
         add     esp, 8
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    ecx
         push    0xe666
         call    Mul10Tail_00404af0
         mov     edx, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_x_00542070], eax
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         add     esp, 8
         mov     dword ptr [edx*4 + 0x6c], eax
         mov     edx, dword ptr [g_cj_0054205c]
         mov     ecx, dword ptr [g_x_00542070]
         mov     dword ptr [edx*4 + 0x74], ecx
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         push    eax
         push    eax
         call    Mul10Tail_00404af0
         add     esp, 8
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     eax, dword ptr [g_x_00542070]
         push    eax
         push    eax
         call    Mul10Tail_00404af0
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         add     esp, 8
         add     eax, ecx
         push    0x004f12b4
@@ -188,7 +187,7 @@ void ThunkPlusCjMul10Accum_004913f0(void) {
         _emit   75h
         _emit   49h
         mov     eax, dword ptr [g_x_00542070]
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         cmp     eax, ecx
         _emit   7fh
         _emit   3ah
@@ -197,13 +196,13 @@ void ThunkPlusCjMul10Accum_004913f0(void) {
         test    eax, eax
         _emit   75h
         _emit   2ch
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     ecx, dword ptr [g_cj_0054205c]
         shl     eax, 0x10
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x6c], eax
         mov     eax, dword ptr [g_cj_0054205c]
-        mov     edx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0x74], edx
         }
 }

@@ -127,7 +127,6 @@ extern unsigned int g_data_00542070;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542060;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_0054208c;
 extern unsigned int g_data_00542044;

@@ -122,20 +122,19 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 
 /* @addr 0x00439f70 (83b game) - dual block.
- *   Block1 (0..43): store 500 at g_x_0054206c; call audio rescale; if pause? ret;
+ *   Block1 (0..43): store 500 at g_walkCallback; call audio rescale; if pause? ret;
  *     else test bit0 of g_state_0054208c: set => jmp QuadGuardBitGateJmp; clear => jmp CallPauseTestByteJmpCalls.
  *   Block2 (48..82, +4 NOP pad): cmp g_state_00535ddc with 0x13333 and store; if <  clear bit0 of g_state_0054208c, ret; if >= tail-jmp IdCascadeBitSet.
  */
-/* @addr 0x00439f70 (44b): store 0x1f4 at g_x_0054206c; call AudioVolumeRescale;
+/* @addr 0x00439f70 (44b): store 0x1f4 at g_walkCallback; call AudioVolumeRescale;
  * if !pause, bit-test state_208c: if set jmp QuadGuardBitGateJmp, else jmp
  * CallPauseTestByteJmpCalls. Entry A of the original 83-byte packed block;
  * entry B at +0x30 lives in func_00439fa0. The 4-byte nop gap is filled
  * by 0x90-fill. */
 void StoreCallPauseTestByte_DualCmpStoreClear_00439f70(void) {
-    g_x_0054206c = 0x1f4;
+    g_walkCallback = 0x1f4;
     AudioVolumeRescale_004ab690();
     if (g_pause_00541e6c != 0) return;
     if ((g_state_0054208c & 1) != 0) {

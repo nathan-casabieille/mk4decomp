@@ -148,7 +148,6 @@ extern unsigned int g_data_004f17f8;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542080;
 extern unsigned int g_data_0054208c;
 extern unsigned int g_table_004d57b0;
@@ -181,7 +180,7 @@ __declspec(naked) void Alarm4EntryInstallCountdown_00496960(void) {
         mov     dword ptr [eax*4 + 0x68], 0x30b
         mov     ecx, dword ptr [g_data_00542060]
         mov     eax, 0x112
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
         call    StreamInitCountdownBody_00494830
         mov     eax, dword ptr [g_framePauseFlag]
@@ -223,7 +222,7 @@ __declspec(naked) void Alarm4EntryInstallCountdown_00496960(void) {
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_table_004d57b0], ecx
-        mov     dword ptr [g_data_0054206c], 0xb
+        mov     dword ptr [g_walkCallback], 0xb
         call    ScaledInit_0048d490
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -263,7 +262,7 @@ __declspec(naked) void Alarm4EntryInstallCountdown_00496960(void) {
     L_aei_entry4:
         mov     ecx, dword ptr [g_data_00542060]
         mov     eax, 0x112
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         push    offset g_data_004f17f8
         mov     dword ptr [ecx*4 + 0x74], eax
         call    ScaledLookupGuardJmpIndirect_004949f0

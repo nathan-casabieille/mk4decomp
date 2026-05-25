@@ -123,13 +123,12 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00480790 (168b game) - triple-entry dispatcher.
- *   Block A: ecx=baseSel; g_x_0054206c=0x3e; eax = [ecx*4+0x68]-1; g_x_00542070=eax;
+ *   Block A: ecx=baseSel; g_walkCallback=0x3e; eax = [ecx*4+0x68]-1; g_x_00542070=eax;
  *     if eax==0 set eax=0x46, g_x_00542070=0x46; [ecx*4+0x68]=eax; if g_x_00542070!=0x14 ret; else jmp TableLookupCall_00489ff0.
  *   Block B (+0x40): push 0x004ed838; [eax*4+0x68]=0x316; chain[*4+0x74]=0x407; call ArgSarStoreJmp; ret.
- *   Block C (+0x80): g_x_0054206c=0x1d; call TableLookupCall_00489ff0; if !pause: g_x_00542080=0xc; jmp CountdownInstallSelfMultiTail_00480840.
+ *   Block C (+0x80): g_walkCallback=0x1d; call TableLookupCall_00489ff0; if !pause: g_x_00542080=0xc; jmp CountdownInstallSelfMultiTail_00480840.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542080;
 extern void ArgSarStoreJmp_004594f0(void);
@@ -139,7 +138,7 @@ extern void TableLookupCall_00489ff0(void);
 __declspec(naked) void TripleEntryChainGate_00480790(void) {
     __asm {
         mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     dword ptr [g_x_0054206c], 0x3e
+        mov     dword ptr [g_walkCallback], 0x3e
         mov     eax, dword ptr [ecx*4 + 0x68]
         dec     eax
         mov     dword ptr [g_x_00542070], eax
@@ -159,7 +158,7 @@ __declspec(naked) void TripleEntryChainGate_00480790(void) {
         mov     dword ptr [eax*4 + 0x68], 0x00000316
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x00000407
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
         call    ArgSarStoreJmp_004594f0
         add     esp, 4
@@ -175,7 +174,7 @@ __declspec(naked) void TripleEntryChainGate_00480790(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        mov     dword ptr [g_x_0054206c], 0x1d
+        mov     dword ptr [g_walkCallback], 0x1d
         call    TableLookupCall_00489ff0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

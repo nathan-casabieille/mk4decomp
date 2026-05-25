@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004580a0 (185b game) - 3-call dual-tagged setup with bit-4 gating.
  *   g_x_00542048 = (([0x537e98] != 0) ? packed_ptr(0x4d55f8) : packed_ptr(0x4d55e8)).
- *   Init: g_x_0054206c=0xa; +0x70=4; +0x78=0; +0x7c=0xff9c0000.
+ *   Init: g_walkCallback=0xa; +0x70=4; +0x78=0; +0x7c=0xff9c0000.
  *   Call Push70CallScaleArith; pause? -> end; (208c&4)? -> end.
  *   g_x_0054207c += 0x140000; g_x_00542048 = packed_ptr(0x4d55c0).
  *   Call Push70CallScaleArith; pause? -> end; (208c&4)? -> end.
@@ -136,7 +136,6 @@ extern unsigned int g_data_004d55c0;
 extern unsigned int g_data_004d55d8;
 extern unsigned int g_x_00537e98;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern unsigned int g_x_00542078;
 extern unsigned int g_x_0054207c;
@@ -146,7 +145,7 @@ void TriplePackedTagged_004580a0(void) {
     } else {
         g_x_00542048 = (unsigned int)&g_data_004d55f8 >> 2;
     }
-    g_x_0054206c = 0x0a;
+    g_walkCallback = 0x0a;
     g_x_00542070 = 4;
     g_x_00542078 = 0;
     g_x_0054207c = 0xff9c0000;

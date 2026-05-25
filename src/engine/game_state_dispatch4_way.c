@@ -129,7 +129,6 @@ extern void Push80SetWalkNegDualCallPop_004393b0(void);
 extern void CjInstallSelfRouter_00470480(void);
 extern void AudioVolumeRescale_004ab690(void);
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 
 extern unsigned int g_data_00542044;
@@ -161,7 +160,7 @@ __declspec(naked) void GameStateDispatch4Way_00436e50(void)
         add      edx, 0x2000000
         jmp      L_6f9a
     L_6ebe:
-        mov      dword ptr [g_data_0054206c], 0x1f4
+        mov      dword ptr [g_walkCallback], 0x1f4
         call     AudioVolumeRescale_004ab690
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_6fd2

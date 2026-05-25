@@ -134,7 +134,6 @@ extern unsigned int g_data_00535e7c;
  *     if !pause: push 0x004ee1f0, tail-call ArgSarStoreJmp; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CjTableThresholdDispatch_00488f00(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
@@ -145,7 +144,7 @@ void SixBlockCjCascade_004829b0(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     eax, dword ptr [eax*4 + 0x60]
         cmp     eax, 0x2001
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   0dh
         mov     eax, dword ptr [g_state_0054208c]
@@ -186,7 +185,7 @@ void SixBlockCjCascade_004829b0(void) {
         push    0x004ee188
         mov     eax, dword ptr [ecx*4 + 0x64]
         add     eax, 0x00032492
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x64], eax
         call    ArgSarStoreJmp_004594f0
         add     esp, 4

@@ -133,7 +133,6 @@ extern unsigned int g_data_00535e7c;
  *     call ClearBit2x34; if !pause: tail-jmp ScaledInitWithCounterAndType.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern void ClearBit2x34_00490130(void);
 extern void GateDispatch6c_00494580(void);
 extern void GuardedPackedSlotInit_00428760(void);
@@ -172,7 +171,7 @@ __declspec(naked) void InstallSelfChainPlusGuardedTail_00488ca0(void) {
         _emit   77h
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     eax, 0x14
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x28], eax
         mov     dword ptr [esi + 8], 0x00488ca0
         mov     edx, dword ptr [g_baseSel_00542060]

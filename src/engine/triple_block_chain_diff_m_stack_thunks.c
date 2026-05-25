@@ -126,14 +126,13 @@ extern unsigned int g_data_00535e7c;
  *   Block A (0..0x6c): mstack-push g_state_00542080. Compute diffs between [baseSel*4+0x38] and g_cj fields.
  *     g_x_00542074 = [scaledInit*4+0x54] - [cj*4+0x54]; g_acc = [scaledInit*4+0x5c] - [cj*4+0x5c].
  *     Call Atan2QuadrantLookup_004245b0; if pause skip. Call BootMod6487eClampAndChainMul10_00407510; if pause skip.
- *     chain[baseSel*4+0x70] = g_x_0054206c. Mstack-pop into g_state_00542080. Pop esi; ret.
+ *     chain[baseSel*4+0x70] = g_walkCallback. Mstack-pop into g_state_00542080. Pop esi; ret.
  *   Block B (+0xc0): call CondPickDualStore; if pause ret. Push 0x004f2778; call ArgSarStoreJmp; pop; ret.
  *   Block C (+0xe0): call DualCmpSwapStore; if pause ret. Push 0x004f27b8; call ScaledStackCallPause; pop; if pause ret.
  *     If bit2(0054208c): jmp CallSetPause. Else call DualMul10AndDispatchChain; if pause ret.
  *     Push 0x004f27c8; call ArgSar_Set1_Jmp; pop; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542074;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ArgSar_Set1_Jmp_0049c6d0(void);
@@ -159,7 +158,7 @@ __declspec(naked) void TripleBlockChainDiffMStackThunks_0049ca10(void) {
         mov     eax, dword ptr [edx*4 + 0x38]
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     edx, dword ptr [ecx*4 + 0x54]
-        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_walkCallback], edx
         mov     ecx, dword ptr [ecx*4 + 0x5c]
         mov     dword ptr [g_data_00542070], ecx
         mov     esi, dword ptr [eax*4 + 0x54]
@@ -180,7 +179,7 @@ __declspec(naked) void TripleBlockChainDiffMStackThunks_0049ca10(void) {
         _emit   75h
         _emit   2ah
         mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0x70], ecx
         mov     eax, dword ptr [g_state_004d57ac]
         mov     edx, [eax*4 + g_data_004d57ac_arr]

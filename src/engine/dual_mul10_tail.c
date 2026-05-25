@@ -123,13 +123,12 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004395d0 (161b game) - dual-entry Mul10Tail pair accumulator with bit-flag toggle.
- *   Block A: scaledInit=baseSel[*4+0x38]; g_x_0054206c=scaledInit[*4+0x6c]; g_x_00542070=scaledInit[*4+0x74];
+ *   Block A: scaledInit=baseSel[*4+0x38]; g_walkCallback=scaledInit[*4+0x6c]; g_x_00542070=scaledInit[*4+0x74];
  *     call Mul10Tail twice; accumulate into g_x_00542070; if add ZF clear set bit-0 of g_state_0054208c, else clear bit-0; ret.
  *   Block B (+0x70): call ScaledChainSignDirtyToggle; if !pause: if bit (al=1 vs cl) clear, OR bit-0 of state.
  *     Else clear bit-0 and ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern void ScaledChainSignDirtyToggle_00439680(void);
 
@@ -139,19 +138,19 @@ void DualMul10Tail_004395d0(void) {
         mov     eax, dword ptr [eax*4 + 0x38]
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     ecx, dword ptr [eax*4 + 0x6c]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [eax*4 + 0x74]
         push    ecx
         push    ecx
         mov     dword ptr [g_x_00542070], edx
         call    Mul10Tail_00404af0
         add     esp, 8
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     eax, dword ptr [g_x_00542070]
         push    eax
         push    eax
         call    Mul10Tail_00404af0
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         add     esp, 8
         add     eax, ecx
         mov     dword ptr [g_x_00542070], eax

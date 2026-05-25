@@ -123,17 +123,16 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00480f20 (144b game) - dual-entry chain decrement loop.
- *   Block A (+0x00): set [g_x_00542048*4+0x5c]=7; g_x_0054206c=0x29; jmp TableLookupCall_00489f60.
+ *   Block A (+0x00): set [g_x_00542048*4+0x5c]=7; g_walkCallback=0x29; jmp TableLookupCall_00489f60.
  *   Block A2 (+0x20): call CallPauseDirtyScaledSet7; if !pause: call CmpP1GTSetup; if !pause:
- *     ecx=g_x_00542048; eax = --[ecx*4+0x5c]; g_x_0054206c=eax; g_state_00541dc4=eax; if eax<0 set
- *     g_x_0054206c=1; store back; if g_state_00541dc4!=0 self-jmp. ret.
- *   Block B (+0x80): g_x_0054206c=1; g_state_00537e94=1; ret.
+ *     ecx=g_x_00542048; eax = --[ecx*4+0x5c]; g_walkCallback=eax; g_state_00541dc4=eax; if eax<0 set
+ *     g_walkCallback=1; store back; if g_state_00541dc4!=0 self-jmp. ret.
+ *   Block B (+0x80): g_walkCallback=1; g_state_00537e94=1; ret.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_state_00537e94;
 extern unsigned int g_state_00541dc4;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 extern void CallPauseDirtyScaledSet7_00480ef0(void);
 extern void CmpP1GTSetup_00470980(void);
 extern void TableLookupCall_00489f60(void);
@@ -142,7 +141,7 @@ __declspec(naked) void DualEntryDecLoop_00480f20(void) {
     __asm {
         mov     eax, dword ptr [g_x_00542048]
         mov     dword ptr [eax*4 + 0x5c], 7
-        mov     dword ptr [g_x_0054206c], 0x29
+        mov     dword ptr [g_walkCallback], 0x29
         jmp     TableLookupCall_00489f60
         _emit   90h
         call    CallPauseDirtyScaledSet7_00480ef0
@@ -158,12 +157,12 @@ __declspec(naked) void DualEntryDecLoop_00480f20(void) {
         mov     ecx, dword ptr [g_x_00542048]
         mov     eax, dword ptr [ecx*4 + 0x5c]
         dec     eax
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_state_00541dc4], eax
         _emit   79h
         _emit   0ah
         mov     eax, 1
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x5c], eax
         mov     eax, dword ptr [g_state_00541dc4]
         test    eax, eax
@@ -182,7 +181,7 @@ __declspec(naked) void DualEntryDecLoop_00480f20(void) {
         _emit   90h
         _emit   90h
         mov     eax, 1
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_state_00537e94], eax
         ret
     }

@@ -127,9 +127,9 @@ extern unsigned int g_data_00535e7c;
  *   Compute diffs: eax -= esi; ecx -= edx[cj*4+0x5c].
  *   Mul10Tail(eax,eax)->g_x_00542074. Mul10Tail(ecx,ecx)->g_acc_00542078; add for g_x_00542074.
  *   Call FpuSqrtMul; if pause ret.
- *   Mul10Tail(g_x_00542084, g_x_0054206c)->g_state_00542080.
+ *   Mul10Tail(g_x_00542084, g_walkCallback)->g_state_00542080.
  *   Mul10Tail(eax, g_data_0053a41c)->g_x_00542074. Mul10Tail(ecx, g_data_0053a3dc)->g_acc.
- *   Sum: g_x_0054206c = g_data_0053a1a8 + g_x_00542074; g_data_00542070 = g_data_0053a1a4 + g_acc.
+ *   Sum: g_walkCallback = g_data_0053a1a8 + g_x_00542074; g_data_00542070 = g_data_0053a1a4 + g_acc.
  *   Store both into [g_cj*4+0x54] and [+0x5c]. Tail-call DualCallPauseDirtyJmp; pop esi; ret.
  */
 extern unsigned int g_data_0053a1a4;
@@ -137,7 +137,6 @@ extern unsigned int g_data_0053a1a8;
 extern unsigned int g_data_0053a3dc;
 extern unsigned int g_data_0053a41c;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542074;
 extern unsigned int g_x_00542084;
 extern void DualCallPauseDirtyJmp_00490c30(void);
@@ -151,7 +150,7 @@ __declspec(naked) void Distance3DMul10Chain_0042d090(void) {
         mov     dword ptr [g_x_00542074], eax
         mov     dword ptr [g_acc_00542078], ecx
         mov     esi, dword ptr [edx*4 + 0x54]
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         mov     edx, dword ptr [edx*4 + 0x5c]
         sub     eax, esi
         sub     ecx, edx
@@ -181,7 +180,7 @@ __declspec(naked) void Distance3DMul10Chain_0042d090(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [g_state_00542080], eax
         push    eax
         mov     eax, dword ptr [g_x_00542084]
@@ -210,7 +209,7 @@ __declspec(naked) void Distance3DMul10Chain_0042d090(void) {
         mov     dword ptr [g_acc_00542078], eax
         add     edx, eax
         mov     eax, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_data_00542070], edx
         add     esp, 8
         mov     dword ptr [eax*4 + 0x54], ecx

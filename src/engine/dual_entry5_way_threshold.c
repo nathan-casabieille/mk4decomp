@@ -129,7 +129,6 @@ extern unsigned int g_data_00535e7c;
  *     else cascade 3 state-threshold gates jumping to Wrapper_00436760/70/80 or GuardedSeq.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054206c;
 extern void CallPauseMStackPushSet2Jmp_00437930(void);
 extern void GuardedSeq_00433bb0(void);
 extern void MultiThunkDispatcher9_00436780(void);
@@ -142,7 +141,7 @@ __declspec(naked) void DualEntry5WayThreshold_004366d0(void) {
     __asm {
         mov     eax, dword ptr [g_state_00535ddc]
         cmp     eax, 0x0003cccc
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   05h
         jmp     GuardedSeq_00433bb0
@@ -169,7 +168,7 @@ __declspec(naked) void DualEntry5WayThreshold_004366d0(void) {
         jmp     GuardedSeq_00433bb0
         mov     eax, dword ptr [g_state_00535ddc]
         cmp     eax, 0x00018000
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         _emit   7dh
         _emit   05h
         jmp     MultiThunkDispatcher9_00436780

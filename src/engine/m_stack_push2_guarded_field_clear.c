@@ -134,7 +134,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
 extern unsigned int g_x_0054204c;
-extern unsigned int g_x_0054206c;
 extern void DirtyDoubleDeref_00408cb0(void);
 extern void FramePauseScaledStore_00406c10(void);
 
@@ -187,18 +186,18 @@ __declspec(naked) void MStackPush2GuardedFieldClear_0044d0c0(void) {
         pop     esi
         ret
         dec     eax
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [g_state_004d57ac], eax
         mov     eax, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [eax*4 + 0x30], esi
         mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     ecx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [edx*4 + 0x34], ecx
         mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [ecx*4 + 0x38], eax
         mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [edx*4 + 0x1c], esi
         mov     eax, dword ptr [g_state_004d57ac]
         mov     ecx, dword ptr [eax*4 + 0]

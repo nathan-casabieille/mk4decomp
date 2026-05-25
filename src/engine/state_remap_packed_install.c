@@ -146,7 +146,6 @@ extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542048;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542a70;
 extern unsigned int g_data_00542a78;
 extern void ArgSarStoreJmp_004594f0(void);
@@ -163,15 +162,15 @@ __declspec(naked) void StateRemapPackedInstall_0046b360(void) {
         mov     dword ptr [g_data_00542048], eax
         mov     eax, dword ptr [ecx*4 + 0x34]
         cmp     eax, 0x10
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jne     short L_srp_check11
         mov     eax, 2
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
     L_srp_check11:
         cmp     eax, 0x11
         jne     short L_srp_check15
         mov     eax, 7
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
     L_srp_check15:
         cmp     eax, 0xf
         je      short L_srp_e1End
@@ -194,7 +193,7 @@ __declspec(naked) void StateRemapPackedInstall_0046b360(void) {
     L_srp_e2phase0:
         mov     ecx, dword ptr [g_data_00542060]
         mov     eax, 0x2002
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
         call    ScaledAndAlfe_00490390
         mov     eax, dword ptr [g_framePauseFlag]
@@ -242,10 +241,10 @@ __declspec(naked) void StateRemapPackedInstall_0046b360(void) {
         mov     eax, dword ptr [g_data_00542060]
         mov     eax, dword ptr [eax*4 + 0x34]
         cmp     eax, 0x11
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         jne     short L_srp_e3check15
         mov     eax, 7
-        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
     L_srp_e3check15:
         cmp     eax, 0xf
         jne     short L_srp_e3pushAlarm

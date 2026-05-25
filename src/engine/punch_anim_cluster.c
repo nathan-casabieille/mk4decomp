@@ -138,8 +138,8 @@ extern void FiveCallGuardSetTail_0046f6b0(void);
  *     and update g_data_00542098 (sete on dec result), if <= 0 sets it
  *     to 0xc. If g_data_00542098 != 0 calls Set1dCallSet16Jmp_004809b0.
  *     If g_data_00542088 == 1 tail-jmp Install3WayChainCounter_004809e0.
- *     Else calls ScaledChain3c7c_0048f930. If g_data_0054206c >= 3
- *     tail-jmp Install3WayChainCounter; else sets g_data_0054206c=0xb333
+ *     Else calls ScaledChain3c7c_0048f930. If g_walkCallback >= 3
+ *     tail-jmp Install3WayChainCounter; else sets g_walkCallback=0xb333
  *     and calls EsiEdiAliasDualMul10_004906b0, sets g_data_00542088=0x9999,
  *     calls PunchAnimCluster_00496d80, then NotMaskStorePair_0045f440. Selects
  *     g_data_00542074 = 1 (if 0x54205c == g_data_00538158) or 0x10,
@@ -153,7 +153,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_00542074;
 extern unsigned int g_data_00542080;
 extern unsigned int g_data_00542088;
@@ -202,9 +201,9 @@ __declspec(naked) void CountdownInstallSelfMultiTail_00480840(void) {
         call    ScaledChain3c7c_0048f930
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_cis_done
-        cmp     dword ptr [g_data_0054206c], 3
+        cmp     dword ptr [g_walkCallback], 3
         jge     L_cis_call9e0
-        mov     dword ptr [g_data_0054206c], 0xb333
+        mov     dword ptr [g_walkCallback], 0xb333
         call    EsiEdiAliasDualMul10_004906b0
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_cis_done

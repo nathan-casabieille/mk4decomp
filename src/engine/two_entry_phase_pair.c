@@ -126,7 +126,6 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542044;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054207c;
 extern void CjInstallSelfRouter_00470480(void);
 extern void EsiInstallClampAddCall_0048fe40(void);
@@ -186,7 +185,7 @@ __declspec(naked) void TwoEntryPhasePair_004952e0(void)
         call    StateDispatchTable_00490fc0
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_tepp_ret2
-        mov     ecx, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [g_data_00542084], 0x1999
         mov     dword ptr [g_data_00542054], ecx
         mov     dword ptr [g_data_0054207c], edi

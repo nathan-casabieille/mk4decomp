@@ -126,7 +126,6 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542070;
 extern void AddDerefJmp_00433e70(void);
 extern void CallPauseScaledStoreCopyJmp_00461220(void);
@@ -137,7 +136,7 @@ extern void WeightedSumClampHelper_00439920(void);
 
 __declspec(naked) void InstallSelfDualChain_00433d80(void) {
     __asm {
-        mov     eax, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_walkCallback]
         mov     ecx, 0x004e4c98
         and     eax, 0xff
         shr     ecx, 2

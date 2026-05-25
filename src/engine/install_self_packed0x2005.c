@@ -133,7 +133,6 @@ extern unsigned int g_data_00535e7c;
  *   g_scaledInit++; [esi+4] = g_scaledInit; chain[base + 0x84] = 0;
  *   call StateGateMStackOverlap_00438690; g_framePauseFlag = 1.
  */
-extern unsigned int g_x_0054206c;
 extern unsigned int g_x_00542080;
 extern unsigned int g_x_00542084;
 extern void GuardedDirtyDispatch_00438c50(void);
@@ -165,7 +164,7 @@ __declspec(naked) void InstallSelfPacked0x2005_00437a90(void) {
         _emit   00h
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x2005
-        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_walkCallback], eax
         mov     [ecx*4 + 0x74], eax
         mov     dword ptr [g_x_00542084], 0xb333
         mov     dword ptr [g_x_00542080], 0x1e

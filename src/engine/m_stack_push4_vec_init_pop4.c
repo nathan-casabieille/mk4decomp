@@ -126,7 +126,6 @@ extern unsigned int g_data_00542048;
 extern unsigned int g_data_00542054;
 extern unsigned int g_data_00542058;
 extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054207c;
 extern unsigned int g_data_0054208c;
 
@@ -155,17 +154,17 @@ void MStackPush4VecInitPop4_00471350(void) {
     ((void (*)(int, int))StoreTwoCall_0049cb40)(0x49db40, 0xc0);
     if (!(g_data_0054208c & 1)) {
         v = *(unsigned int *)(g_data_00542048 * 4);
-        g_data_0054206c = v;
+        g_walkCallback = v;
         *(unsigned int *)(g_data_00542044 * 4 + 0x38) = v;
         v = *(unsigned int *)(g_data_00542048 * 4 + 4);
-        g_data_0054206c = v;
+        g_walkCallback = v;
         *(unsigned int *)(g_data_00542044 * 4 + 0x3c) = v;
         v = *(unsigned int *)(g_data_00542048 * 4 + 8);
         *(unsigned int *)(g_data_00542044 * 4 + 0x40) = v;
-        g_data_0054206c = 0;
+        g_walkCallback = 0;
         *(unsigned int *)(g_data_00542044 * 4 + 0x44) = 0;
-        *(unsigned int *)(g_data_00542044 * 4 + 0x48) = g_data_0054206c;
-        *(unsigned int *)(g_data_00542044 * 4 + 0x4c) = g_data_0054206c;
+        *(unsigned int *)(g_data_00542044 * 4 + 0x48) = g_walkCallback;
+        *(unsigned int *)(g_data_00542044 * 4 + 0x4c) = g_walkCallback;
     }
     g_data_00542044 = *(unsigned int *)(g_state_004d57ac * 4);
     g_state_004d57ac--;
