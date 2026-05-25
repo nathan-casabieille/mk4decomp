@@ -124,6 +124,13 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00440660 (120b) - 3x Mul10Tail vec mul with esi alias. */
 
+/*
+ * NON-COAXABLE: MSVC /O2 keeps si (raw) in esi and uses [esi*4+offset] (7b SIB)
+ * for all three vec accesses. Orig pre-scales si*4 into esi via LEA and uses
+ * [esi+offset] (3b/6b base+disp8) for iterations 2 and 3; iteration 1 uses
+ * [eax*4+0x78] (7b SIB) with eax=si before eax is overwritten with v. MSVC's
+ * choice to keep the raw index vs. the pre-scaled pointer is not coaxable.
+ */
 __declspec(naked) void EsiTripleMul10Vec_00440660(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]
