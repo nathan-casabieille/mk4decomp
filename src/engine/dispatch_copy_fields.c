@@ -110,13 +110,13 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0043ec80 (227b game) - dispatch then 6-field copy.
  *   shr 0x004ec8f8 >> 2 -> g_xformEntityIdx; call DispatcherComplex260; if pause? ret.
- *   if bit2 of g_xformDirtyFlags set: copy g_cj_00542058 to g_x_00537e9c, ret.
+ *   if bit2 of g_xformDirtyFlags set: copy g_cj_00542058 to g_dispatchCopyField_00537e9c, ret.
  *   else: scaledInit[+0x30] = 0x78; call MStackCall; if pause? ret.
  *   else: copy fields +0x54/+0x58/+0x5c (via g_walkCallback temp) and +0x64 from
  *   g_cj_00542058<<2 to g_scaledInit_00542044<<2; zero +0x60/+0x68; copy
- *   scaledInit to g_x_00537e9c; merge low bit of [+0x34]; ret.
+ *   scaledInit to g_dispatchCopyField_00537e9c; merge low bit of [+0x34]; ret.
  */
-extern unsigned int g_x_00537e9c;
+extern unsigned int g_dispatchCopyField_00537e9c;
 extern void MStackCall_00406340(void);
 
 void DispatchCopyFields_0043ec80(void) {
@@ -137,7 +137,7 @@ void DispatchCopyFields_0043ec80(void) {
         _emit   74h
         _emit   0dh
         mov     ecx, dword ptr [g_cj_00542058]
-        mov     dword ptr [g_x_00537e9c], ecx
+        mov     dword ptr [g_dispatchCopyField_00537e9c], ecx
         ret
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     eax, 0x78
@@ -172,7 +172,7 @@ void DispatchCopyFields_0043ec80(void) {
         mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax + 0x68], edx
         mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [g_x_00537e9c], edx
+        mov     dword ptr [g_dispatchCopyField_00537e9c], edx
         mov     edx, dword ptr [eax + 0x34]
         mov     dword ptr [g_walkCallback], edx
         mov     ecx, dword ptr [ecx + 0x34]

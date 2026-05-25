@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_x_004d5320;
-extern unsigned int g_x_00537e9c;
+extern unsigned int g_dispatchCopyField_00537e9c;
 extern unsigned int g_x_0053a3a0;
 extern void WorldCellSetupCluster_0042b000(void);
 extern void ThrowEventCluster_0043e960(void);
@@ -129,7 +129,7 @@ void StackPushCallPopChain_0043ed70(void) {
     diff = (int)g_x_0053a3a0 - (int)g_x_004d5320;
     g_walkCallback = (void (*)(void))diff;
     r = ((int (*)(int))WorldCellSetupCluster_0042b000)(diff);
-    slot = g_x_00537e9c;
+    slot = g_dispatchCopyField_00537e9c;
     g_walkCallback = (void (*)(void))r;
     g_scaledInit_00542044 = slot;
     *(unsigned int *)(slot * 4 + 0x64) = r;

@@ -114,7 +114,7 @@ extern unsigned int g_data_004ef258;
 extern unsigned int g_data_004ef278;
 extern unsigned int g_data_004ef2b8;
 extern unsigned int g_load_0052ab10;
-extern unsigned int g_data_00537ef4;
+extern unsigned int g_dispatchSave_00537ef4;
 extern unsigned int g_data_00542be8;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void BlockedCounterCluster_004816d0(void);
@@ -147,7 +147,7 @@ __declspec(naked) void AggressorRunInitCluster_004813b0(void)
         mov      eax, 0x258
         push     OFFSET g_data_00542be8
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_00537ef4], eax
+        mov      dword ptr [g_dispatchSave_00537ef4], eax
         call     IterLoad_00491050
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4

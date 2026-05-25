@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004c72a0 (205b crt) - heap shrink/decommit scan.
- *   Walks the heap-region list head [g_data_00520134]; for each region with
+ *   Walks the heap-region list head [g_heapShrinkPtr_00520134]; for each region with
  *   handle != -1, scans its 2KB page-state array (1024 entries × 8 bytes)
  *   at +0x2010, looking for entries marked 0xf0 (free). Decommit each via
  *   IAT[0x4d2168] (VirtualFree); on success, mark slot 0xffffffff, decrement
@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   target count [esp+0x14]; if region fully empty (all -1), call
  *   HeapRegionTeardown_004c7240(region).
  */
-extern unsigned int g_data_00520134;
+extern unsigned int g_heapShrinkPtr_00520134;
 extern unsigned int g_data_00f9f8b8;
 extern unsigned int g_iat_004d2168;
 extern void HeapRegionTeardown_004c7240(void);
@@ -128,7 +128,7 @@ __declspec(naked) void HeapShrinkDecommit_004c72a0(void) {
         push    ebp
         push    esi
         push    edi
-        mov     edi, dword ptr [g_data_00520134]
+        mov     edi, dword ptr [g_heapShrinkPtr_00520134]
     L_hs_check:
         cmp     dword ptr [edi + 0x10], -1
         jz      L_hs_outer_check
@@ -191,7 +191,7 @@ __declspec(naked) void HeapShrinkDecommit_004c72a0(void) {
         call    HeapRegionTeardown_004c7240
         add     esp, 4
     L_hs_outer_check:
-        cmp     edi, dword ptr [g_data_00520134]
+        cmp     edi, dword ptr [g_heapShrinkPtr_00520134]
         jz      short L_hs_ret
         mov     eax, [esp + 0x14]
         test    eax, eax

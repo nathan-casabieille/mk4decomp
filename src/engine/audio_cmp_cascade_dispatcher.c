@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_data_004e2864;
 extern unsigned int g_data_00537e90;
 extern unsigned int g_state2_00537ea8;
-extern unsigned int g_data_00537f88;
+extern unsigned int g_audioInstall2State_00537f88;
 extern void AudioMStackPushHandlerPair_0049ff30(void);
 extern void BitSetByIndex_004a07a0(void);
 extern void Cmp3DirtyToggle_0049fa20(void);
@@ -195,7 +195,7 @@ __declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
         test    al, bl
         je      short L_acsd_skipCmp
         mov     edx, dword ptr [g_acc_00542078]
-        mov     eax, dword ptr [g_data_00537f88]
+        mov     eax, dword ptr [g_audioInstall2State_00537f88]
         cmp     edx, eax
         je      L_acsd_ret
     L_acsd_skipCmp:

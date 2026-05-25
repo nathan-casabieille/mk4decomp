@@ -120,9 +120,9 @@ extern int g_renderer2_surface;
 extern int g_renderer2_paused;
 extern s32 g_renderer2_batchCount;
 extern unsigned int g_glideTriBatch_0058c7f4;
-extern unsigned int g_data_0058c7f8;
-extern unsigned int g_data_0058c7fc;
-extern unsigned int g_data_0058c800;
+extern unsigned int g_glideTriBatchB_0058c7f8;
+extern unsigned int g_glideTriBatchC_0058c7fc;
+extern unsigned int g_glideTriBatchD_0058c800;
 extern unsigned int g_data_00543f88;
 extern unsigned int g_data_00543f8c;
 extern unsigned int g_data_00543f90;
@@ -317,15 +317,15 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         xor      si, si
         xor      dx, dx
         xor      cx, cx
-        mov      word ptr [g_data_0058c800], di
-        mov      word ptr [g_data_0058c7fc], si
+        mov      word ptr [g_glideTriBatchD_0058c800], di
+        mov      word ptr [g_glideTriBatchC_0058c7fc], si
         fnstsw   ax
-        mov      word ptr [g_data_0058c7f8], dx
+        mov      word ptr [g_glideTriBatchB_0058c7f8], dx
         mov      word ptr [g_glideTriBatch_0058c7f4], cx
         test     ah, 1
         je       L_de5a
         mov      di, 1
-        mov      word ptr [g_data_0058c800], di
+        mov      word ptr [g_glideTriBatchD_0058c800], di
         jmp      L_de76
     L_de5a:
         fld      dword ptr [esp + 0x1c]
@@ -334,7 +334,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         test     ah, 0x41
         jne      L_de76
         mov      dx, 1
-        mov      word ptr [g_data_0058c7f8], dx
+        mov      word ptr [g_glideTriBatchB_0058c7f8], dx
     L_de76:
         fld      dword ptr [esp + 0x20]
         fcomp    dword ptr [g_const_004d2964]
@@ -351,7 +351,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         test     ah, 0x41
         jne      L_deb0
         mov      si, 1
-        mov      word ptr [g_data_0058c7fc], si
+        mov      word ptr [g_glideTriBatchC_0058c7fc], si
     L_deb0:
         fld      dword ptr [esp + 0x30]
         fcomp    dword ptr [g_const_004d2964]
@@ -359,7 +359,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         test     ah, 1
         je       L_decc
         inc      di
-        mov      word ptr [g_data_0058c800], di
+        mov      word ptr [g_glideTriBatchD_0058c800], di
         jmp      L_dee6
     L_decc:
         fld      dword ptr [esp + 0x30]
@@ -368,7 +368,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         test     ah, 0x41
         jne      L_dee6
         inc      dx
-        mov      word ptr [g_data_0058c7f8], dx
+        mov      word ptr [g_glideTriBatchB_0058c7f8], dx
     L_dee6:
         fld      dword ptr [esp + 0x34]
         fcomp    dword ptr [g_const_004d2964]
@@ -385,7 +385,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         test     ah, 0x41
         jne      L_df1c
         inc      si
-        mov      word ptr [g_data_0058c7fc], si
+        mov      word ptr [g_glideTriBatchC_0058c7fc], si
     L_df1c:
         fld      dword ptr [esp + 0x44]
         fcomp    dword ptr [g_const_004d2964]
@@ -393,7 +393,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         test     ah, 1
         je       L_df38
         inc      di
-        mov      word ptr [g_data_0058c800], di
+        mov      word ptr [g_glideTriBatchD_0058c800], di
         jmp      L_df52
     L_df38:
         fld      dword ptr [esp + 0x44]
@@ -402,7 +402,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         test     ah, 0x41
         jne      L_df52
         inc      dx
-        mov      word ptr [g_data_0058c7f8], dx
+        mov      word ptr [g_glideTriBatchB_0058c7f8], dx
     L_df52:
         fld      dword ptr [esp + 0x48]
         fcomp    dword ptr [g_const_004d2964]
@@ -419,7 +419,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         test     ah, 0x41
         jne      L_df88
         inc      si
-        mov      word ptr [g_data_0058c7fc], si
+        mov      word ptr [g_glideTriBatchC_0058c7fc], si
     L_df88:
         cmp      cx, 3
         je       L_e55b
@@ -429,14 +429,14 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         je       L_e55b
         cmp      di, 3
         je       L_e55b
-        mov      eax, dword ptr [g_data_0058c7fc]
-        mov      ecx, dword ptr [g_data_0058c800]
+        mov      eax, dword ptr [g_glideTriBatchC_0058c7fc]
+        mov      ecx, dword ptr [g_glideTriBatchD_0058c800]
         mov      edx, dword ptr [g_glideTriBatch_0058c7f4]
         and      eax, 0xffff
         and      ecx, 0xffff
         and      edx, 0xffff
         add      eax, ecx
-        mov      ecx, dword ptr [g_data_0058c7f8]
+        mov      ecx, dword ptr [g_glideTriBatchB_0058c7f8]
         add      eax, edx
         and      ecx, 0xffff
         add      eax, ecx

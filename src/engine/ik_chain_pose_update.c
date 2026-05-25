@@ -118,7 +118,7 @@ extern void MStackCall_00406600(void);
 extern void IK_ChainPoseUpdate_00444860(void);
 extern unsigned int g_data_004e6070;
 extern unsigned int g_data_004e5cc0;
-extern unsigned int g_data_0053a24c;
+extern unsigned int g_dispatchVar2_0053a24c;
 extern unsigned int g_data_0053a35c;
 
 extern void AudioVolumeRescale_004ab690(void);
@@ -263,7 +263,7 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
         mov      dword ptr [edx*4 + 0x68], eax
         mov      eax, 0x451e
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_0053a24c], eax
+        mov      dword ptr [g_dispatchVar2_0053a24c], eax
         call     StoreLoadJmp_00404ef0
         mov      ecx, OFFSET g_data_004e5cc0
         add      esp, 4
@@ -374,10 +374,10 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
         mov      dword ptr [g_eventQueueEnd], 0xa
     L_47c6:
         mov      ecx, dword ptr [g_xformScratch2088]
-        mov      edx, dword ptr [g_data_0053a24c]
+        mov      edx, dword ptr [g_dispatchVar2_0053a24c]
         add      ecx, edx
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_data_0053a24c], ecx
+        mov      dword ptr [g_dispatchVar2_0053a24c], ecx
         mov      ecx, 1
         mov      dword ptr [eax + 8], OFFSET L_4770
         mov      dword ptr [eax + 0x84], 2
@@ -390,11 +390,11 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
     L_4817:
         mov      dword ptr [g_eventQueueEnd], 0xa
     L_4821:
-        mov      ecx, dword ptr [g_data_0053a24c]
+        mov      ecx, dword ptr [g_dispatchVar2_0053a24c]
         mov      edx, dword ptr [g_xformScratch2088]
         sub      ecx, edx
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_data_0053a24c], ecx
+        mov      dword ptr [g_dispatchVar2_0053a24c], ecx
         mov      ecx, 1
         mov      dword ptr [eax + 8], OFFSET L_4770
         mov      dword ptr [eax + 0x84], ecx

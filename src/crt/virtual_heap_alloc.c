@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_virtualHeapBase_00520130;
-extern unsigned int g_data_00520134;
+extern unsigned int g_heapShrinkPtr_00520134;
 extern unsigned int g_data_00520140;
 extern unsigned int g_data_00fa0ee4;
 extern unsigned int g_iat_004d20b4;
@@ -161,16 +161,16 @@ __declspec(naked) void VirtualHeapAlloc_004c70d0(void)
         jne      short L_7153
         mov      dword ptr [g_virtualHeapBase_00520130], OFFSET g_virtualHeapBase_00520130
     L_7153:
-        mov      eax, dword ptr [g_data_00520134]
+        mov      eax, dword ptr [g_heapShrinkPtr_00520134]
         test     eax, eax
         jne      short L_7183
-        mov      dword ptr [g_data_00520134], OFFSET g_virtualHeapBase_00520130
+        mov      dword ptr [g_heapShrinkPtr_00520134], OFFSET g_virtualHeapBase_00520130
         jmp      short L_7183
     L_7168:
         mov      dword ptr [ebp], OFFSET g_virtualHeapBase_00520130
-        mov      ecx, dword ptr [g_data_00520134]
+        mov      ecx, dword ptr [g_heapShrinkPtr_00520134]
         mov      dword ptr [ebp + 4], ecx
-        mov      dword ptr [g_data_00520134], ebp
+        mov      dword ptr [g_heapShrinkPtr_00520134], ebp
         mov      edx, dword ptr [ebp + 4]
         mov      dword ptr [edx], ebp
     L_7183:

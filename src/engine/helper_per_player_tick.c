@@ -20,7 +20,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_phaseTimer_00537e94;
-extern unsigned int g_data_00537ef4;
+extern unsigned int g_dispatchSave_00537ef4;
 extern unsigned int g_secondary_00538068;
 extern unsigned int g_data_0053a42c;
 extern unsigned int g_data_0053a730;
@@ -362,7 +362,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      edi, 0xffff0000
         mov      dword ptr [g_eventQueueNotMask], edi
     L_9758:
-        mov      eax, dword ptr [g_data_00537ef4]
+        mov      eax, dword ptr [g_dispatchSave_00537ef4]
         mov      dword ptr [g_secondary_00538068], edi
         dec      eax
         mov      ecx, eax
@@ -374,7 +374,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      dword ptr [g_walkCallback], eax
     L_977c:
         test     ecx, ecx
-        mov      dword ptr [g_data_00537ef4], eax
+        mov      dword ptr [g_dispatchSave_00537ef4], eax
         jge      L_97ba
         call     DualInstallCallSwap_00489cd0
         mov      eax, dword ptr [g_framePauseFlag]

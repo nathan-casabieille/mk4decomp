@@ -110,14 +110,14 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void AudioInstall2BodyDualSetup_004a0300(void);
 extern void AudioInstallSelf3StateWithSubcall_004a0870(void);
-extern unsigned int g_x_00537f88;
+extern unsigned int g_audioInstall2State_00537f88;
 extern unsigned int g_x_00537eec;
 
 /*
  * AudioInstallSelfShiftedChainInit_004a0210 - 237b audio self-install setup.
  *   chain = g_baseSel_00542060<<2; saved = chain->state; chain->state=0.
  *   If was nonzero: g_walkCallback = g_x_00541dd4; if !=0 tail-jmp AudioInstall2BodyDualSetup_004a0300.
- *     Else: g_eventQueueEnd = g_x_00537f88; push (0x250, 0x004a0680); StoreTwoCall; tail-jmp AudioInstall2BodyDualSetup_004a0300.
+ *     Else: g_eventQueueEnd = g_audioInstall2State_00537f88; push (0x250, 0x004a0680); StoreTwoCall; tail-jmp AudioInstall2BodyDualSetup_004a0300.
  *   If was zero: g_eventQueueEnd=7; edx=1<<(g_eventQueueWorkType-1); g_eventQueueWorkType--; ecx = g_x_00537eec & edx;
  *     g_eventQueueCurrent=edx; g_walkCallback=ecx; g_x_00537eec=ecx; install-self at entry; chain->state=1;
  *     mstack-push (entry+0x01000000) packed; g_currentNodeIdx++; clear g_baseSel*4+0x84;
@@ -141,7 +141,7 @@ __declspec(naked) void AudioInstallSelfShiftedChainInit_004a0210(void)
         je      short L_pushCall
         jmp     AudioInstall2BodyDualSetup_004a0300
     L_pushCall:
-        mov     ecx, dword ptr [g_x_00537f88]
+        mov     ecx, dword ptr [g_audioInstall2State_00537f88]
         push    0x250
         push    0x004a0680
         mov     dword ptr [g_eventQueueEnd], ecx

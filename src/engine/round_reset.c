@@ -113,7 +113,7 @@ extern u32 g_dlSomeFlag2;
 extern unsigned int g_data_0052d724;
 extern unsigned int g_phaseTimer_00537e94;
 extern unsigned int g_dst_00537ea4;
-extern unsigned int g_data_00537ef4;
+extern unsigned int g_dispatchSave_00537ef4;
 extern unsigned int g_data_00537f04;
 extern unsigned int g_hitPhase_00537f30;
 extern unsigned int g_audioBank2State_00537f98;
@@ -222,7 +222,7 @@ __declspec(naked) void RoundReset_004223e0(void)
         mov      dword ptr [g_smState4Way_00541dc8], ebx
         mov      dword ptr [g_phaseTimer_00537e94], ebx
         mov      dword ptr [g_data_0053a42c], ebx
-        mov      dword ptr [g_data_00537ef4], ebx
+        mov      dword ptr [g_dispatchSave_00537ef4], ebx
         mov      dword ptr [g_audioBankSel_00537f94], ebx
         mov      dword ptr [g_data_0052d724], ebx
         mov      dword ptr [g_audioBank2State_00537f98], ebx

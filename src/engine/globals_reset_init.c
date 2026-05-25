@@ -116,7 +116,7 @@ extern unsigned int g_data_0052aab4;
 extern unsigned int g_data_0052ab44;
 extern unsigned int g_extra_00535e68;
 extern unsigned int g_data_00535e80;
-extern unsigned int g_data_00537ef4;
+extern unsigned int g_dispatchSave_00537ef4;
 extern unsigned int g_data_00538128;
 extern unsigned int g_extra_0053a280;
 extern unsigned int g_data_0053a2d8;
@@ -159,7 +159,7 @@ __declspec(naked) void GlobalsResetInit_004222a0(void) {
         mov     dword ptr [g_player1NodeIdx], esi
         mov     dword ptr [g_player2NodeIdx], esi
         mov     dword ptr [g_phaseTimer_00537e94], esi
-        mov     dword ptr [g_data_00537ef4], esi
+        mov     dword ptr [g_dispatchSave_00537ef4], esi
         mov     dword ptr [g_extra_00535e68], esi
         mov     dword ptr [g_extra_0053a280], esi
         mov     dword ptr [g_data_00535e80], esi
