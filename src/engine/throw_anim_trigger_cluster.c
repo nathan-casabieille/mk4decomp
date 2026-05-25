@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_audioVoiceTrioBase_0050a0f0;
-extern unsigned int g_data_0050c0bc;
+extern unsigned int g_dispatchSave134_0050c0bc;
 extern unsigned int g_dispatchArg_00535e48;
 extern unsigned int g_particleEmitterNode_00535e6c;
 extern unsigned int g_state2_00537ea8;
@@ -139,7 +139,7 @@ __declspec(naked) void ThrowAnimTriggerCluster_0049efa0(void)
         mov      eax, dword ptr [g_matrixStackTop]
         mov      ecx, dword ptr [g_fightGroupHead]
         inc      eax
-        mov      edx, OFFSET g_data_0050c0bc
+        mov      edx, OFFSET g_dispatchSave134_0050c0bc
         mov      dword ptr [g_matrixStackTop], eax
         shr      edx, 2
         mov      dword ptr [eax*4], ecx

@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_0050b13c;
+extern unsigned int g_dispatchSave137_0050b13c;
 extern unsigned int g_load_0052ab10;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
@@ -129,7 +129,7 @@ __declspec(naked) void DualTableMappedDispatch_00492e60(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_dtmd_ret
-        mov     eax, offset g_data_0050b13c
+        mov     eax, offset g_dispatchSave137_0050b13c
         shr     eax, 2
         mov     dword ptr [g_currentNodeIdx], eax
         call    LoadGeoAsset_Default

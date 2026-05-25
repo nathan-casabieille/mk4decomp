@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00506d7c;
+extern unsigned int g_dispatchSave144_00506d7c;
 extern unsigned int g_particleEmitterNode_00535e6c;
 extern unsigned int g_phaseIdx_0053a50c;
 extern void BootMultiAssetLoadStateInit_00403b10(void);
@@ -150,7 +150,7 @@ __declspec(naked) void BootInitVec3PhaseInstall_00402c10(void)
         push    edi
         push    0x4a2180
         call    StoreTwoCall_0049cb40
-        mov     ecx, offset g_data_00506d7c
+        mov     ecx, offset g_dispatchSave144_00506d7c
         add     esp, 8
         shr     ecx, 2
         mov     dword ptr [g_xformEntityIdx], ecx

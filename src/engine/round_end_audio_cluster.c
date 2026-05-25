@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_dispatchTableArr11_0050d23c;
-extern unsigned int g_data_0050d258;
+extern unsigned int g_dispatchSave130_0050d258;
 extern unsigned int g_dispatchSave21_0052ab4c;
 extern unsigned int g_particleEmitterNode_00535e6c;
 extern unsigned int g_bootHeavyState_00537f78;
@@ -148,7 +148,7 @@ void RoundEndAudioCluster_0042e8d0(void) {
         call     ScaledChainInit2Phase_0042e800
         add      esp, 4
     L_e949:
-        mov      edx, OFFSET g_data_0050d258
+        mov      edx, OFFSET g_dispatchSave130_0050d258
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
         call     DispatcherComplex260_00407030

@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004e4c20;
 extern unsigned int g_data_004e4c38;
-extern unsigned int g_data_00501a24;
+extern unsigned int g_dispatchSave145_00501a24;
 extern unsigned int g_dispatchSave72_005422fc;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CopyJmp_0043a620(void);
@@ -263,7 +263,7 @@ __declspec(naked) void VersusScreenEventPoseCluster_0043b680(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_b919
-        mov      ecx, OFFSET g_data_00501a24
+        mov      ecx, OFFSET g_dispatchSave145_00501a24
         mov      dword ptr [g_currentNodeFlags], 0x3333
         shr      ecx, 2
         mov      dword ptr [g_eventQueueNotMask], 0

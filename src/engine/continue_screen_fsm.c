@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_data_004dee18;
 extern unsigned int g_data_004df9a0;
 extern unsigned int g_assetLoadStateInit_00506c14;
-extern unsigned int g_data_005080f4;
+extern unsigned int g_dispatchSave141_005080f4;
 extern void BootInitGuardedCallChain_004265d0(void);
 extern void CopyGlobal_004ac1f0(void);
 extern void InstallSelfPackedF80_00426000(void);
@@ -207,7 +207,7 @@ __declspec(naked) void ContinueScreenFsm_00423c20(void)
         call     LoadGeoAsset_Default
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_3e8f
-        mov      edx, OFFSET g_data_005080f4
+        mov      edx, OFFSET g_dispatchSave141_005080f4
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
         call     DispatcherComplex260_00407400

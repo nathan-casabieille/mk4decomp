@@ -108,9 +108,9 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_0050a49c;
-extern unsigned int g_data_0050cab0;
-extern unsigned int g_data_0050cb3c;
+extern unsigned int g_dispatchSave138_0050a49c;
+extern unsigned int g_dispatchSave132_0050cab0;
+extern unsigned int g_dispatchSave131_0050cb3c;
 extern unsigned int g_dispatchSave123_005108dc;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_dispatchArg_00535e48;
@@ -126,7 +126,7 @@ __declspec(naked) void CombatChainWalkExpand_00463870(void)
 {
     __asm {
         mov      eax, dword ptr [g_pendingNodeType]
-        mov      edx, OFFSET g_data_0050cb3c
+        mov      edx, OFFSET g_dispatchSave131_0050cb3c
         push     ebx
         push     ebp
         mov      ecx, dword ptr [eax*4 + 0xc]
@@ -187,7 +187,7 @@ __declspec(naked) void CombatChainWalkExpand_00463870(void)
         mov      dword ptr [g_eventQueueWorkType], ecx
         mov      dword ptr [g_eventQueueTotal], eax
         je       L_3c4f
-        mov      ebx, OFFSET g_data_0050cab0
+        mov      ebx, OFFSET g_dispatchSave132_0050cab0
         mov      ebp, 1
         shr      ebx, 2
         mov      edi, 0x4baf40
@@ -234,7 +234,7 @@ __declspec(naked) void CombatChainWalkExpand_00463870(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3c6e
-        mov      edx, OFFSET g_data_0050a49c
+        mov      edx, OFFSET g_dispatchSave138_0050a49c
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
         call     MStackPush4LLWalkPop4_004090e0

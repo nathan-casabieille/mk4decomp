@@ -115,8 +115,8 @@ extern unsigned int g_data_004f39dc;
 extern unsigned int g_data_004f3a48;
 extern unsigned int g_data_004f6338;
 extern unsigned int g_audioPreloadBase_0050b118;
-extern unsigned int g_data_0050f130;
-extern unsigned int g_data_0050f14c;
+extern unsigned int g_dispatchSave128_0050f130;
+extern unsigned int g_dispatchSave127_0050f14c;
 extern unsigned int g_dispatchSave119_0051599c;
 extern unsigned int g_bootInitState_00535de4;
 extern unsigned int g_count_005433b8;
@@ -173,12 +173,12 @@ __declspec(naked) void KonquestPortalCluster_004a5290(void)
         je       short L_52ff
         cmp      eax, 8
         jne      short L_530d
-        mov      ecx, OFFSET g_data_0050f130
+        mov      ecx, OFFSET g_dispatchSave128_0050f130
         shr      ecx, 2
         mov      dword ptr [g_xformEntityIdx], ecx
         jmp      short L_530d
     L_52ff:
-        mov      edx, OFFSET g_data_0050f14c
+        mov      edx, OFFSET g_dispatchSave127_0050f14c
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
     L_530d:

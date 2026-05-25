@@ -477,13 +477,13 @@ extern unsigned int g_data_004ed2f8;
 extern unsigned int g_data_004ed308;
 extern unsigned int g_data_004ed3d0;
 extern unsigned int g_data_004f29c0;
-extern unsigned int g_data_005007c4;
-extern unsigned int g_data_0050104c;
+extern unsigned int g_dispatchSave151_005007c4;
+extern unsigned int g_dispatchSave150_0050104c;
 extern unsigned int g_dispatchSave61_00501070;
 extern unsigned int g_dispatchTableArr5_00501088;
-extern unsigned int g_data_005010c4;
-extern unsigned int g_data_005010d0;
-extern unsigned int g_data_0050122c;
+extern unsigned int g_dispatchSave149_005010c4;
+extern unsigned int g_dispatchSave148_005010d0;
+extern unsigned int g_dispatchSave147_0050122c;
 extern unsigned int g_dispatchSave59_00501250;
 extern unsigned int g_dispatchSave58_0050b604;
 extern unsigned int g_dispatchSave57_005117c4;
@@ -2715,7 +2715,7 @@ __declspec(naked) void VersusScreenFsmCluster_0044f670(void)
         add      esp, 4
         test     eax, eax
         jne      short L_f74e
-        mov      ecx, OFFSET g_data_005007c4
+        mov      ecx, OFFSET g_dispatchSave151_005007c4
         shr      ecx, 2
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      dword ptr [esi + 8], OFFSET L_f680
@@ -4892,7 +4892,7 @@ __declspec(naked) void BossPunchCluster_00446c50(void)
         jne      L_6fc5
         test     byte ptr [g_xformDirtyFlags], 4
         je       L_6ea9
-        mov      eax, OFFSET g_data_005010d0
+        mov      eax, OFFSET g_dispatchSave148_005010d0
         mov      edx, OFFSET L_6d60
         shr      eax, 2
         mov      dword ptr [g_eventQueueEnd], eax
@@ -4930,7 +4930,7 @@ __declspec(naked) void BossPunchCluster_00446c50(void)
         test     eax, eax
         jne      L_6fc5
     L_6ea9:
-        mov      edx, OFFSET g_data_005010c4
+        mov      edx, OFFSET g_dispatchSave149_005010c4
         mov      ecx, OFFSET L_6d60
         shr      edx, 2
         mov      dword ptr [g_eventQueueEnd], edx
@@ -5191,7 +5191,7 @@ __declspec(naked) void BackdashSetupCluster_00440dc0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1196
-        mov      edx, OFFSET g_data_0050104c
+        mov      edx, OFFSET g_dispatchSave150_0050104c
         mov      ecx, OFFSET L_1020
         shr      edx, 2
         mov      dword ptr [g_eventQueueEnd], edx
@@ -5578,7 +5578,7 @@ __declspec(naked) void JuggleSetupCluster_004539d0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3b3b
-        mov      ecx, OFFSET g_data_0050122c
+        mov      ecx, OFFSET g_dispatchSave147_0050122c
         shr      ecx, 2
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      dword ptr [esi + 8], OFFSET L_3a10

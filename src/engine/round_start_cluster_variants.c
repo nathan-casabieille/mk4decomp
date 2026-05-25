@@ -118,7 +118,7 @@ extern void MStackPushSet0008_004901a0(void);
 extern void ScaledZeroFour_00490740(void);
 extern unsigned int g_data_004ed1d8;
 
-extern unsigned int g_data_0050f22c;
+extern unsigned int g_dispatchSave125_0050f22c;
 extern unsigned int g_dispatchWalkVar_0053a404;
 extern unsigned int g_dispatchTab70_00543100;
 extern void ArgSarStoreJmp_004594f0(void);
@@ -443,7 +443,7 @@ __declspec(naked) void RoundStartCluster_004919c0(void)
         mov      dword ptr [g_eventQueueEnd], ecx
         jne      L_1ca8
         mov      ecx, dword ptr [g_eventQueueIdx]
-        mov      eax, OFFSET g_data_0050f22c
+        mov      eax, OFFSET g_dispatchSave125_0050f22c
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
         mov      dword ptr [ecx*4 + 0x24], eax

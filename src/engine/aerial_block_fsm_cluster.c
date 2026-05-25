@@ -118,7 +118,7 @@ extern void AerialBlockFsmCluster_0047f730(void);
 extern void func_0047fa30(void);
 /* extern void AllocNode(void); -- defined elsewhere with diff sig */
 extern unsigned int g_data_004ed778;
-extern unsigned int g_data_0050b8dc;
+extern unsigned int g_dispatchSave135_0050b8dc;
 
 extern unsigned int g_load_0052ab10;
 extern void EntryThunkBodyStateMachine_00457bb0(void);
@@ -172,7 +172,7 @@ __declspec(naked) void ThrowGrabPoseCopyCluster_0047f4e0(void)
         mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x405
         mov      dword ptr [g_walkCallback], eax
-        mov      edx, OFFSET g_data_0050b8dc
+        mov      edx, OFFSET g_dispatchSave135_0050b8dc
         mov      dword ptr [ecx*4 + 0x74], eax
         mov      eax, dword ptr [g_matrixStackTop]
         mov      ecx, dword ptr [g_fightGroupHead]

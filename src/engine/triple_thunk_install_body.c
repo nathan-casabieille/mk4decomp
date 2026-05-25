@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004551f0 (330b game) - 3-thunk dispatcher + install-self body. */
-extern unsigned int g_data_005012b0;
+extern unsigned int g_dispatchSave146_005012b0;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void InstallSelfWithSibling_00475490(void);
 extern void StoreLoadJmp_00404ef0(void);
@@ -168,7 +168,7 @@ void TripleThunkInstallBody_004551f0(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         ret
-        mov     ecx, offset g_data_005012b0
+        mov     ecx, offset g_dispatchSave146_005012b0
         mov     dword ptr [g_currentNodeFlags], 0xccc
         shr     ecx, 2
         mov     dword ptr [g_eventQueueEnd], ecx

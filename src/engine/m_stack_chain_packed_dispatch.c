@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_0050c97c;
-extern unsigned int g_data_005108d0;
+extern unsigned int g_dispatchSave133_0050c97c;
+extern unsigned int g_dispatchSave124_005108d0;
 extern void InstallSelfDispatch_00407620(void);
 extern void MStackBracket4_ListInsertZeroFill_00408600(void);
 extern void MStackCall_00406390(void);
@@ -129,7 +129,7 @@ void MStackChainPackedDispatch_00463c80(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_fightGroupHead]
         inc     eax
-        mov     edx, offset g_data_0050c97c
+        mov     edx, offset g_dispatchSave133_0050c97c
         mov     dword ptr [g_matrixStackTop], eax
         shr     edx, 2
         mov     dword ptr [eax*4], ecx
@@ -155,7 +155,7 @@ void MStackChainPackedDispatch_00463c80(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4], edx
         mov     ecx, dword ptr [g_currentNodeIdx]
-        mov     eax, offset g_data_005108d0
+        mov     eax, offset g_dispatchSave124_005108d0
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
         mov     eax, dword ptr [eax*4]

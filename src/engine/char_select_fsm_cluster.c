@@ -126,7 +126,7 @@ extern void CharSelectFsmCluster_004561f0(void);
 extern void ChainGatedNegAccum_0048b740(void);
 extern unsigned int g_data_004e7f28;
 extern unsigned int g_data_004e8158;
-extern unsigned int g_data_0050d434;
+extern unsigned int g_dispatchSave129_0050d434;
 
 extern unsigned int g_data_004d5324;
 extern unsigned int g_particleEmitterNode_00535e6c;
@@ -226,7 +226,7 @@ __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
         mov      dword ptr [esi + 0x84], 0
         test     eax, eax
         je       L_58d0
-        mov      ecx, OFFSET g_data_0050d434
+        mov      ecx, OFFSET g_dispatchSave129_0050d434
         shr      ecx, 2
         mov      dword ptr [g_xformEntityIdx], ecx
         call     MStackPushDispatchBitGate_00407330

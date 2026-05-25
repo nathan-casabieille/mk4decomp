@@ -115,8 +115,8 @@ extern void DispatcherComplex260_00407400(void);
 extern void RegistryPushBindPop_00403c20(void);
 extern void InstallSelfPackedF80_00426000(void);
 extern unsigned int g_phaseInstall3Base_00506c2c;
-extern unsigned int g_data_00508308;
-extern unsigned int g_data_00508324;
+extern unsigned int g_dispatchSave140_00508308;
+extern unsigned int g_dispatchSave139_00508324;
 extern unsigned int g_data_004a2180;
 void PhaseInstallSelf3Step_00402350(void);
 
@@ -185,7 +185,7 @@ __declspec(naked) void PhaseInstallSelf3Step_00402350(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis3_exit
-        mov     eax, offset g_data_00508308
+        mov     eax, offset g_dispatchSave140_00508308
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
         call    DispatcherComplex260_00407400
@@ -206,7 +206,7 @@ __declspec(naked) void PhaseInstallSelf3Step_00402350(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis3_exit
-        mov     eax, offset g_data_00508324
+        mov     eax, offset g_dispatchSave139_00508324
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
         call    DispatcherComplex260_00407400
