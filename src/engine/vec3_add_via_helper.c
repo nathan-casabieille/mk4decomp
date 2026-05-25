@@ -135,8 +135,8 @@ extern unsigned int g_data_0054204c;
  * pushing callee-saved, then pre-scales via LEA into edi/ebx/esi and uses
  * [reg+disp8] (3b/6b) addressing throughout. MSVC /O2 instead pushes callee-saved
  * first, loads raw indices directly into esi/edi/ebx, and uses [reg*4+disp32]
- * (7b SIB) for all accesses. The load-before-push + LEA pre-scale pattern cannot
- * be coaxed from pure C.
+ * (7b SIB) for all accesses. Tested with #pragma optimize("a"), `register` kwd,
+ * /G6 (Pentium Pro target), /Ox - all produce 67-71 diffs.
  */
 __declspec(naked) void Vec3AddViaHelper_00425170(void) {
     __asm {
