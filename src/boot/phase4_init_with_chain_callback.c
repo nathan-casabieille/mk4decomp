@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_const_0049db40;
 extern unsigned int g_data_004d62a8;
 extern unsigned int g_data_004d62e8;
-extern unsigned int g_data_0053813c;
+extern unsigned int g_alarmTriState_0053813c;
 extern void CallSetPause_0041f830(void);
 extern void LinkedListFieldAdd_0049d450(void);
 extern void MStackCall_00406600(void);
@@ -143,7 +143,7 @@ __declspec(naked) void Phase4InitWithChainCallback_0040e860(void)
         mov     dword ptr [g_eventQueueEnd], edx
         shr     eax, 2
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_data_0053813c], eax
+        mov     dword ptr [g_alarmTriState_0053813c], eax
         mov     eax, offset g_data_004d62a8
         mov     dword ptr [g_eventQueueNotMask], 0xC1
         shr     eax, 2
@@ -198,7 +198,7 @@ __declspec(naked) void Phase4InitWithChainCallback_0040e860(void)
         pop     esi
         ret
     L_p4iwcc_B_phase0:
-        mov     ecx, dword ptr [g_data_0053813c]
+        mov     ecx, dword ptr [g_alarmTriState_0053813c]
         mov     edx, dword ptr [g_fightGroupHead]
         mov     eax, 0x5C
         mov     dword ptr [g_xformEntityIdx], ecx
@@ -271,7 +271,7 @@ __declspec(naked) void Phase4InitWithChainCallback_0040e860(void)
         inc     ecx
         add     eax, 0x4B5C2
         mov     dword ptr [g_xformEntityIdx], ecx
-        mov     dword ptr [g_data_0053813c], ecx
+        mov     dword ptr [g_alarmTriState_0053813c], ecx
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x44], eax
         mov     edx, dword ptr [g_currentNodeIdx]

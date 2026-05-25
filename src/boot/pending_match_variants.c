@@ -236,7 +236,7 @@ extern unsigned int g_load_0052ab10;
 extern unsigned int g_or_0052ab40;
 extern unsigned int g_bootInitState_00535de4;
 extern unsigned int g_data_00537efc;
-extern unsigned int g_data_0053813c;
+extern unsigned int g_alarmTriState_0053813c;
 extern unsigned int g_data_0053a19c;
 extern unsigned int g_data_00541dc0;
 extern unsigned int g_savedNode_00541f98;
@@ -871,7 +871,7 @@ __declspec(naked) void MStackInitTriAlarm_0040e190(void) {
         mov     dword ptr [g_eventQueueEnd], edx
         shr     eax, 2
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_data_0053813c], eax
+        mov     dword ptr [g_alarmTriState_0053813c], eax
         mov     eax, offset g_data_004d61d8
         mov     dword ptr [g_eventQueueNotMask], 0xc1
         shr     eax, 2

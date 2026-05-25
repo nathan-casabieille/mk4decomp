@@ -112,14 +112,14 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   snapshot+clear chain[+0x84].
  *   If was nonzero: call BootInitGuardedCallChain_004265d0; if pause? ret.
  *     baseSel[+0x0c]=0x1000; tail-call InstallSelfTableWalk_004200d0; ret.
- *   If was zero: clear scaledInit[0]=0; g_state_00537f74=1; g_walkCallback=2;
+ *   If was zero: clear scaledInit[0]=0; g_scaledChainLoop_00537f74=1; g_walkCallback=2;
  *     g_active_0053a408=2; g_active_00537e88=2; g_eventQueueWorkType=4.
  *     call Push16Call_00489f50; if pause? ret.
  *     call ScenegraphWalk_0041f7d0; g_eventQueueCurrent=0xc; install-self at
  *     [esi+8]=0x00462980; chain[+0x84]=1; scaledInit-chain push 0x00462980+0x01000000.
  *     Call InstallSelfPackedF80_00426000; pause=1; ret.
  */
-extern unsigned int g_state_00537f74;
+extern unsigned int g_scaledChainLoop_00537f74;
 extern void BootInitGuardedCallChain_004265d0(void);
 extern void InstallSelfPackedF80_00426000(void);
 extern void InstallSelfTableWalk_004200d0(void);
@@ -154,7 +154,7 @@ __declspec(naked) void InstallSelfBootInit_00462980(void) {
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     eax, 2
         mov     dword ptr [edx*4 + 0], 0
-        mov     dword ptr [g_state_00537f74], 1
+        mov     dword ptr [g_scaledChainLoop_00537f74], 1
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_active_0053a408], eax
         mov     dword ptr [g_active_00537e88], eax

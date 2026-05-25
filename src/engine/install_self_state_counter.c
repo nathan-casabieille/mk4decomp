@@ -115,11 +115,11 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   state >= 2: skip to common tail.
  *   Common tail: call Wrapper_0041fcf0; tail-call DualBlockChainInitBody_0043cc10.
  *   state 0: dual-equal byte tests (g_gtModeFlag vs g_audioBankSel_00537f94 for 1 and 2)
- *     increment g_x_005433e8 on each match. g_walkCallback=0xac. 4-call chain
+ *     increment g_installSelfCounter_005433e8 on each match. g_walkCallback=0xac. 4-call chain
  *     ending with install-self at [esi+8]=0x00467d40, chain[+0x84]=1,
  *     g_pendingNodeType=8, pause=1; ret.
  */
-extern unsigned int g_x_005433e8;
+extern unsigned int g_installSelfCounter_005433e8;
 extern void CallPauseScaledStoreCopyJmp_00461220(void);
 extern void CopyJmp_00406ba0(void);
 extern void DualBlockChainInitBody_0043cc10(void);
@@ -179,14 +179,14 @@ __declspec(naked) void InstallSelfStateCounter_00467d40(void) {
         cmp     ecx, 1
         _emit   75h
         _emit   06h
-        inc     dword ptr [g_x_005433e8]
+        inc     dword ptr [g_installSelfCounter_005433e8]
         cmp     al, 2
         _emit   75h
         _emit   0bh
         cmp     ecx, 2
         _emit   75h
         _emit   06h
-        inc     dword ptr [g_x_005433e8]
+        inc     dword ptr [g_installSelfCounter_005433e8]
         mov     dword ptr [g_walkCallback], 0xac
         call    ScaledLitLoadCall_00480fe0
         mov     eax, dword ptr [g_framePauseFlag]

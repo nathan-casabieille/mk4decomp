@@ -112,7 +112,7 @@ extern unsigned int g_data_004f478c;
 extern u8 g_renderer2_buf3[];
 extern u8 g_renderer2_buf2[];
 extern u8 g_renderer2_buf1[];
-extern unsigned int g_data_0058c7c8;
+extern unsigned int g_renderer2_state9_0058c7c8;
 extern unsigned int g_data_0058c7cc;
 extern int g_renderer2_present_rc;
 extern int g_renderer2_active;
@@ -155,7 +155,7 @@ __declspec(naked) void PadEnumDeviceRebind_004ad850(void)
         mov      edx, dword ptr [eax]
         call     dword ptr [edx + 0x6c]
     L_d8c1:
-        mov      edx, dword ptr [g_data_0058c7c8]
+        mov      edx, dword ptr [g_renderer2_state9_0058c7c8]
         test     edx, edx
         je       L_d8e9
         mov      eax, dword ptr [edx]
@@ -163,12 +163,12 @@ __declspec(naked) void PadEnumDeviceRebind_004ad850(void)
         call     dword ptr [eax + 0x60]
         cmp      eax, 0x887601c2
         jne      L_d8e3
-        mov      eax, dword ptr [g_data_0058c7c8]
+        mov      eax, dword ptr [g_renderer2_state9_0058c7c8]
         push     eax
         mov      ecx, dword ptr [eax]
         call     dword ptr [ecx + 0x6c]
     L_d8e3:
-        mov      edx, dword ptr [g_data_0058c7c8]
+        mov      edx, dword ptr [g_renderer2_state9_0058c7c8]
     L_d8e9:
         mov      ecx, 0x1b
         xor      eax, eax
@@ -185,7 +185,7 @@ __declspec(naked) void PadEnumDeviceRebind_004ad850(void)
         push     0
         push     edx
         call     dword ptr [eax + 0x64]
-        mov      edx, dword ptr [g_data_0058c7c8]
+        mov      edx, dword ptr [g_renderer2_state9_0058c7c8]
         mov      dword ptr [g_renderer2_present_rc], eax
     L_d91e:
         mov      ebx, dword ptr [esp + 0x34]
@@ -225,7 +225,7 @@ __declspec(naked) void PadEnumDeviceRebind_004ad850(void)
         dec      eax
         mov      dword ptr [esp + 0x80], eax
         jne      L_d931
-        mov      edx, dword ptr [g_data_0058c7c8]
+        mov      edx, dword ptr [g_renderer2_state9_0058c7c8]
         mov      esi, dword ptr [esp + 0x84]
     L_d999:
         test     edx, edx

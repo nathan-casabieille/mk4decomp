@@ -142,7 +142,7 @@ extern void MatchInitMonsterChain_004228b0(void);
  */
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
-extern unsigned int g_data_00541dc8;
+extern unsigned int g_smState4Way_00541dc8;
 
 __declspec(naked) void Phase3InstallSelf_00403170(void) {
     __asm {
@@ -172,7 +172,7 @@ __declspec(naked) void Phase3InstallSelf_00403170(void) {
         ret
     L_p3i_phase2:
         mov     dword ptr [g_walkCallback], edi
-        mov     dword ptr [g_data_00541dc8], edi
+        mov     dword ptr [g_smState4Way_00541dc8], edi
         mov     dword ptr [esi + 8], offset Phase3InstallSelf_00403170
         mov     dword ptr [esi + 0x84], 3
         mov     dword ptr [g_pendingNodeType], 4

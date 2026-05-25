@@ -520,12 +520,12 @@ extern unsigned int g_phaseCounter_00541fb0;
 extern unsigned int g_data_00542188;
 extern unsigned int g_data_00542a58;
 extern unsigned int g_data_00542b68;
-extern unsigned int g_data_005433e8;
+extern unsigned int g_installSelfCounter_005433e8;
 extern unsigned int g_data_005433ec;
 extern unsigned int g_data_00543714;
 extern u8 g_dlEnabledFlag;
 extern unsigned int g_data_00543728;
-extern unsigned int g_data_0054388c;
+extern unsigned int g_mul10SumState_0054388c;
 extern unsigned int g_data_00543890;
 extern void AiAngleDistComputation_00431920(void);
 extern void AmbientMonitorCluster_0049e3c0(void);
@@ -1817,9 +1817,9 @@ __declspec(naked) void StateMachineDualModuloInstall_0043d620(void) {
  *   TableLookupCall_00489ff0; on no-error sets 0x54206c=0xa, calls
  *   ScaledIndexConditionalAdd_0048e400. Then dispatches on
  *   g_baseSel_00542060:
- *     - matches g_gtPlayerProbe2: if g_data_0054388c is set, picks
+ *     - matches g_gtPlayerProbe2: if g_mul10SumState_0054388c is set, picks
  *       &g_data_004ec050>>2 (state 1) or &g_data_004ec040>>2 (other)
- *       into g_eventQueueTotal, clears g_data_0054388c, jumps to next.
+ *       into g_eventQueueTotal, clears g_mul10SumState_0054388c, jumps to next.
  *     - matches g_gtPlayerProbe1: mirror with g_data_00543890.
  *     - default: both g_eventQueueTotal and 0x54204c set to the two
  *       packed_ptrs, zeroes g_eventQueueChild, calls
@@ -1848,7 +1848,7 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
         mov     eax, dword ptr [g_gtPlayerProbe2]
         cmp     ecx, eax
         jne     short L_sfp_check2
-        mov     eax, dword ptr [g_data_0054388c]
+        mov     eax, dword ptr [g_mul10SumState_0054388c]
         test    eax, eax
         je      short L_sfp_check2
         cmp     eax, 1
@@ -1858,7 +1858,7 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
     L_sfp_useEax1:
         shr     eax, 2
         mov     dword ptr [g_eventQueueTotal], eax
-        mov     dword ptr [g_data_0054388c], 0
+        mov     dword ptr [g_mul10SumState_0054388c], 0
         jmp     L_sfp_callBlock
     L_sfp_check2:
         cmp     ecx, dword ptr [g_gtPlayerProbe1]
@@ -5897,13 +5897,13 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         jne      L_7f9b
         cmp      ecx, 1
         jne      L_7f9b
-        inc      dword ptr [g_data_005433e8]
+        inc      dword ptr [g_installSelfCounter_005433e8]
     L_7f9b:
         cmp      al, 2
         jne      L_7faa
         cmp      ecx, 2
         jne      L_7faa
-        inc      dword ptr [g_data_005433e8]
+        inc      dword ptr [g_installSelfCounter_005433e8]
     L_7faa:
         call     GateDispatch6c_00494580
         mov      eax, dword ptr [g_framePauseFlag]
@@ -6545,13 +6545,13 @@ __declspec(naked) void PendingMatch_0043bdd0(void)
         jne      L_bdea
         cmp      ecx, 1
         jne      L_bdea
-        inc      dword ptr [g_data_005433e8]
+        inc      dword ptr [g_installSelfCounter_005433e8]
     L_bdea:
         cmp      al, 2
         jne      L_bdf9
         cmp      ecx, 2
         jne      L_bdf9
-        inc      dword ptr [g_data_005433e8]
+        inc      dword ptr [g_installSelfCounter_005433e8]
     L_bdf9:
         mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [ecx*4 + 0x34]

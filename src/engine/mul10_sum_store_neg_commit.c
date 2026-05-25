@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_0054388c;
+extern unsigned int g_mul10SumState_0054388c;
 extern unsigned int g_data_00543890;
 extern unsigned int g_data_004ec040;
 extern unsigned int g_data_004ec050;
@@ -125,9 +125,9 @@ extern void ScaledClearJmp_00428d60(void);
  *   TableLookupCall_00489ff0; on no-error sets 0x54206c=0xa, calls
  *   ScaledIndexConditionalAdd_0048e400. Then dispatches on
  *   g_baseSel_00542060:
- *     - matches g_gtPlayerProbe2: if g_data_0054388c is set, picks
+ *     - matches g_gtPlayerProbe2: if g_mul10SumState_0054388c is set, picks
  *       &g_data_004ec050>>2 (state 1) or &g_data_004ec040>>2 (other)
- *       into g_eventQueueTotal, clears g_data_0054388c, jumps to next.
+ *       into g_eventQueueTotal, clears g_mul10SumState_0054388c, jumps to next.
  *     - matches g_gtPlayerProbe1: mirror with g_data_00543890.
  *     - default: both g_eventQueueTotal and 0x54204c set to the two
  *       packed_ptrs, zeroes g_eventQueueChild, calls
@@ -160,7 +160,7 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
         mov     eax, dword ptr [g_gtPlayerProbe2]
         cmp     ecx, eax
         jne     short L_sfp_check2
-        mov     eax, dword ptr [g_data_0054388c]
+        mov     eax, dword ptr [g_mul10SumState_0054388c]
         test    eax, eax
         je      short L_sfp_check2
         cmp     eax, 1
@@ -170,7 +170,7 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
     L_sfp_useEax1:
         shr     eax, 2
         mov     dword ptr [g_eventQueueTotal], eax
-        mov     dword ptr [g_data_0054388c], 0
+        mov     dword ptr [g_mul10SumState_0054388c], 0
         jmp     L_sfp_callBlock
     L_sfp_check2:
         cmp     ecx, dword ptr [g_gtPlayerProbe1]

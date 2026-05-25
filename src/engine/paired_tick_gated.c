@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_tickFlagF;
 extern unsigned char g_byte_00538148;
-extern unsigned int g_x_005433e8;
+extern unsigned int g_installSelfCounter_005433e8;
 
 /*
  * @addr 0x00467e60 (111b game) - paired-mode tick: if both byte
@@ -123,8 +123,8 @@ void PairedTickGated_00467e60(void) {
     unsigned int c;
     a = g_gtModeFlag;
     c = g_audioBankSel_00537f94;
-    if (a == 1 && c == 1) g_x_005433e8++;
-    if (a == 2 && c == 2) g_x_005433e8++;
+    if (a == 1 && c == 1) g_installSelfCounter_005433e8++;
+    if (a == 2 && c == 2) g_installSelfCounter_005433e8++;
     Wrapper_0041fcf0();
     if (g_tickFlagF == 2) g_byte_00538148 = 1;
     PushCallPauseSetMaxThenCallPauseJmp_0048e380();

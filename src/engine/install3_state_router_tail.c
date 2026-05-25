@@ -115,10 +115,10 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   state==1 (dec,je): tail-call CallPauseScaledStoreCopyJmp; if pause ret.
  *     Install-self at entry; state=2; g_pendingNodeType=1; pause=1; ret.
  *   state>=2 (fall): cmp g_tickFlagF with 2: if neq tail-call CjInstallSelfRouter; pop+ret.
- *     Else: g_walkCallback=g_data_00541dc8; if zero jmp state=2 install; else tail-call CjInstallSelfRouter; pop+ret.
+ *     Else: g_walkCallback=g_smState4Way_00541dc8; if zero jmp state=2 install; else tail-call CjInstallSelfRouter; pop+ret.
  *   Tail (+0x120, 2-NOP pad): chain[baseSel*4+0x74]=0x104; push 0x004eb008; call ArgSarStoreJmp; pop; ret.
  */
-extern unsigned int g_data_00541dc8;
+extern unsigned int g_smState4Way_00541dc8;
 extern unsigned int g_tickFlagF;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CallPauseScaledStoreCopyJmp_00461220(void);
@@ -149,7 +149,7 @@ __declspec(naked) void Install3StateRouterTail_0046b4e0(void) {
         call    CjInstallSelfRouter_00470480
         pop     esi
         ret
-        mov     eax, dword ptr [g_data_00541dc8]
+        mov     eax, dword ptr [g_smState4Way_00541dc8]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         _emit   74h

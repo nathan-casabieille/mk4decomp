@@ -128,7 +128,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 extern unsigned int g_data_004d61d8;
 extern unsigned int g_data_004d62e8;
-extern unsigned int g_data_0053813c;
+extern unsigned int g_alarmTriState_0053813c;
 extern unsigned int g_table_004d57b0;
 extern void MStackPop8_004ab860(void);
 extern void MStackPush8_004ab790(void);
@@ -155,7 +155,7 @@ __declspec(naked) void MStackInitTriAlarm_0040e190(void) {
         mov     dword ptr [g_eventQueueEnd], edx
         shr     eax, 2
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_data_0053813c], eax
+        mov     dword ptr [g_alarmTriState_0053813c], eax
         mov     eax, offset g_data_004d61d8
         mov     dword ptr [g_eventQueueNotMask], 0xc1
         shr     eax, 2

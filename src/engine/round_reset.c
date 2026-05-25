@@ -129,7 +129,7 @@ extern unsigned int g_data_0053a730;
 extern unsigned int g_data_0053a788;
 extern unsigned int g_data_0053e34c;
 extern unsigned int g_data_00541d84;
-extern unsigned int g_data_00541dc8;
+extern unsigned int g_smState4Way_00541dc8;
 extern unsigned int g_data_00541df0;
 extern unsigned int g_data_00541df4;
 extern u32 g_dlState;
@@ -219,7 +219,7 @@ __declspec(naked) void RoundReset_004223e0(void)
         mov      dword ptr [g_data_0053a6f8], ebx
         mov      dword ptr [g_data_0053a788], ebx
         mov      dword ptr [g_data_0053e34c], ebx
-        mov      dword ptr [g_data_00541dc8], ebx
+        mov      dword ptr [g_smState4Way_00541dc8], ebx
         mov      dword ptr [g_phaseTimer_00537e94], ebx
         mov      dword ptr [g_data_0053a42c], ebx
         mov      dword ptr [g_data_00537ef4], ebx

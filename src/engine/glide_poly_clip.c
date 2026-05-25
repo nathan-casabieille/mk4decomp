@@ -119,7 +119,7 @@ extern int g_renderer2_active;
 extern int g_renderer2_surface;
 extern int g_renderer2_paused;
 extern s32 g_renderer2_batchCount;
-extern unsigned int g_data_0058c7f4;
+extern unsigned int g_glideTriBatch_0058c7f4;
 extern unsigned int g_data_0058c7f8;
 extern unsigned int g_data_0058c7fc;
 extern unsigned int g_data_0058c800;
@@ -321,7 +321,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         mov      word ptr [g_data_0058c7fc], si
         fnstsw   ax
         mov      word ptr [g_data_0058c7f8], dx
-        mov      word ptr [g_data_0058c7f4], cx
+        mov      word ptr [g_glideTriBatch_0058c7f4], cx
         test     ah, 1
         je       L_de5a
         mov      di, 1
@@ -342,7 +342,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         test     ah, 1
         je       L_de94
         mov      cx, 1
-        mov      word ptr [g_data_0058c7f4], cx
+        mov      word ptr [g_glideTriBatch_0058c7f4], cx
         jmp      L_deb0
     L_de94:
         fld      dword ptr [esp + 0x20]
@@ -376,7 +376,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         test     ah, 1
         je       L_df02
         inc      cx
-        mov      word ptr [g_data_0058c7f4], cx
+        mov      word ptr [g_glideTriBatch_0058c7f4], cx
         jmp      L_df1c
     L_df02:
         fld      dword ptr [esp + 0x34]
@@ -410,7 +410,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         test     ah, 1
         je       L_df6e
         inc      cx
-        mov      word ptr [g_data_0058c7f4], cx
+        mov      word ptr [g_glideTriBatch_0058c7f4], cx
         jmp      L_df88
     L_df6e:
         fld      dword ptr [esp + 0x48]
@@ -431,7 +431,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         je       L_e55b
         mov      eax, dword ptr [g_data_0058c7fc]
         mov      ecx, dword ptr [g_data_0058c800]
-        mov      edx, dword ptr [g_data_0058c7f4]
+        mov      edx, dword ptr [g_glideTriBatch_0058c7f4]
         and      eax, 0xffff
         and      ecx, 0xffff
         and      edx, 0xffff

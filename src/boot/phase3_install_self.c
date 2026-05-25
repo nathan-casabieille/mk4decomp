@@ -120,11 +120,11 @@ extern unsigned int g_dst_0053a6e0;
  *       call Phase3InstallSelf_00403170; g_framePauseFlag=1; pop+ret.
  *     state 1 → install-self; chain->state=2; g_pendingNodeType=0xa0; g_framePauseFlag=1; pop+ret.
  *     state 2 → install-self; chain->state=3; g_pendingNodeType=0x384; g_framePauseFlag=1;
- *       g_walkCallback=1; g_data_00541dc8=1; pop+ret.
+ *       g_walkCallback=1; g_smState4Way_00541dc8=1; pop+ret.
  *     state 3+ → tail-call BootDualStateInstallSelf_00403070; pop+ret.
  */
 extern unsigned int g_phaseIdx_0053a50c;
-extern unsigned int g_data_00541dc8;
+extern unsigned int g_smState4Way_00541dc8;
 extern unsigned int g_dst_00537ea4;
 extern void BootDualStateInstallSelf_00403070(void);
 
@@ -152,7 +152,7 @@ __declspec(naked) void BootStateMachine4Way_00402f60(void)
     L_s2:
         mov     esi, 1
         mov     dword ptr [g_walkCallback], esi
-        mov     dword ptr [g_data_00541dc8], esi
+        mov     dword ptr [g_smState4Way_00541dc8], esi
         mov     dword ptr [eax + 8], offset BootStateMachine4Way_00402f60
         mov     dword ptr [eax + 0x84], 3
         mov     dword ptr [g_pendingNodeType], 0x384

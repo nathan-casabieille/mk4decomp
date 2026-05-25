@@ -124,7 +124,7 @@ extern unsigned int g_data_004f4304;
 extern unsigned int g_data_004f4310;
 extern unsigned int g_data_004f4320;
 extern unsigned int g_data_004f432c;
-extern unsigned int g_data_00543450;
+extern unsigned int g_voiceBankTickBase_00543450;
 extern unsigned int g_data_005437f8;
 extern unsigned int g_data_005437fc;
 extern void GuardedSetupCallTailJmp_004a1fa0(void);
@@ -185,7 +185,7 @@ __declspec(naked) void VoiceBankTickDispatch_004a3120(void)
         push     edx
         push     OFFSET g_data_004f42e0
     L_31d5:
-        push     OFFSET g_data_00543450
+        push     OFFSET g_voiceBankTickBase_00543450
         call     Helper_Sprintf
         add      esp, 0xc
     L_31e2:
