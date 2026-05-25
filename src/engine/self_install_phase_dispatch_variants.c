@@ -116,7 +116,7 @@ extern void SelfInstallPhaseDispatch_00428990(void);
  *   chain[+0x84]!=0 path: set [g_fightGroupHead*4+0x24]=g_cj_00542054, [g_fightGroupHead*4+0x28]=0, g_walkCallback=0,
  *   g_cj_00542054=baseSel[*4+0x64], g_cj_00542058=baseSel[*4+0x68]; jmp StackPopDispatchTagged.
  */
-extern unsigned int g_data_004ea058;
+extern unsigned int g_dispatchSave961_004ea058;
 extern void CallPauseMStackPushSet9Jmp_0045ffc0(void);
 extern void CjInstallSelfRouter_00470480(void);
 extern void CjMaskedFlagProbe_0048ecf0(void);
@@ -450,7 +450,7 @@ __declspec(naked) void SelfInstallPhaseDispatch_0045fd30(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_sipd2_retCommon
-        mov     ecx, offset g_data_004ea058
+        mov     ecx, offset g_dispatchSave961_004ea058
         shr     ecx, 2
         mov     dword ptr [g_currentNodeIdx], ecx
         call    GuardedDirtyXformFromTable_0048f6d0

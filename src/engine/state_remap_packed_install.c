@@ -125,7 +125,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     != 0xf, tail-call Install3StateRouterTail_0046b4e0; else pushes
  *     0x4eaee0 → ArgSarStoreJmp_004594f0.
  */
-extern unsigned int g_data_004eaee0;
+extern unsigned int g_dispatchSave967_004eaee0;
 extern unsigned int g_dispatchTableArr7_005019d0;
 extern unsigned int g_dispatchSave64_00542a70;
 extern unsigned int g_dispatchSave65_00542a78;
@@ -231,7 +231,7 @@ __declspec(naked) void StateRemapPackedInstall_0046b360(void) {
         jne     short L_srp_e3pushAlarm
         jmp     Install3StateRouterTail_0046b4e0
     L_srp_e3pushAlarm:
-        push    offset g_data_004eaee0
+        push    offset g_dispatchSave967_004eaee0
         call    ArgSarStoreJmp_004594f0
         add     esp, 4
     L_srp_e3End:

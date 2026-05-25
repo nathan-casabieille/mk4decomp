@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   else: refetch [g_eventQueueEnd*4+0x10]; if zero: add 5 to eax, jmp back to scaledInit
  *   walk. If non-zero: install-self at [esi+8]=0x00450de0, chain[+0x84]=1, pause=1; ret.
  */
-extern unsigned int g_data_004e7528;
+extern unsigned int g_dispatchSave946_004e7528;
 extern void DualScaledStore_00452740(void);
 extern void Thunk_0049cbc0(void);
 
@@ -142,7 +142,7 @@ __declspec(naked) void InstallSelfIndexWalk_00450de0(void) {
         mov     dword ptr [edx*4 + 0x4c], ecx
         mov     eax, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_eventQueueIdx], eax
-        mov     eax, OFFSET g_data_004e7528
+        mov     eax, OFFSET g_dispatchSave946_004e7528
         shr     eax, 2
 L_isw_walk:
         mov     dword ptr [g_eventQueueEnd], eax

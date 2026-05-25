@@ -108,10 +108,10 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004d5040;
-extern unsigned int g_data_004d504c;
+extern unsigned int g_dispatchSave891_004d5040;
+extern unsigned int g_dispatchSave892_004d504c;
 extern unsigned int g_dispatchVar40_004d505c;
-extern unsigned int g_data_004d5060;
+extern unsigned int g_dispatchSave893_004d5060;
 extern unsigned int g_dispatchSave565_004d506c;
 extern unsigned int g_fileLoaderArr_00524158;
 extern unsigned int g_fileLoaderState_00524358;
@@ -141,7 +141,7 @@ __declspec(naked) void FileLoaderTwoStage_00401120(void)
         push    edi
         push    esi
         push    offset g_dispatchSave565_004d506c
-        push    offset g_data_004d5060
+        push    offset g_dispatchSave893_004d5060
         push    eax
         call    Helper_Sprintf
         add     esp, 0x10
@@ -180,7 +180,7 @@ __declspec(naked) void FileLoaderTwoStage_00401120(void)
         mov     dword ptr [g_fileLoaderState_00524358], eax
         test    eax, eax
         jne     L_fl_have_buf
-        push    offset g_data_004d504c
+        push    offset g_dispatchSave892_004d504c
         call    ShowErrorMessage
         mov     eax, dword ptr [g_fileLoaderState_00524358]
         add     esp, 4
@@ -196,7 +196,7 @@ __declspec(naked) void FileLoaderTwoStage_00401120(void)
         push    esi
         push    offset g_dispatchSave565_004d506c
         lea     edx, [esp + 0x98]
-        push    offset g_data_004d5040
+        push    offset g_dispatchSave891_004d5040
         push    edx
         call    Helper_Sprintf
         add     esp, 0x10

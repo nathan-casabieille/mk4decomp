@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004d56d8;
+extern unsigned int g_dispatchSave901_004d56d8;
 extern unsigned int g_quadEntryGate_0052d724;
 extern unsigned int g_clamp_00537f2c;
 extern unsigned int g_clamp_0053a6dc;
@@ -204,7 +204,7 @@ __declspec(naked) void MkIntroFsm_004218b0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1aa1
-        mov      eax, OFFSET g_data_004d56d8
+        mov      eax, OFFSET g_dispatchSave901_004d56d8
         mov      dword ptr [g_walkCallback], 0x24b
         shr      eax, 2
         mov      dword ptr [g_eventQueueCurrent], 4

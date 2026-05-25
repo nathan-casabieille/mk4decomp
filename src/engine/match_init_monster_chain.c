@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_counter_0053a51c;
-extern unsigned int g_data_004a2090;
+extern unsigned int g_dispatchSave881_004a2090;
 extern unsigned int g_dispatchSave509_004a2180;
 extern int GuardedScaledLookupCallJmp_004220a0(void);
 extern void AndShlStore_00409280(void);
@@ -203,7 +203,7 @@ __declspec(naked) void Phase3InstallSelf_00403170(void) {
         cmp     dword ptr [g_framePauseFlag], edi
         jne     short L_p3i_done
         push    edi
-        push    offset g_data_004a2090
+        push    offset g_dispatchSave881_004a2090
         call    StoreTwoCall_0049cb40
         add     esp, 8
         push    edi

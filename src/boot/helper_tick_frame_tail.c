@@ -6,7 +6,7 @@
 
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_tickFrameTailVar_004d511c;
-extern unsigned int g_data_004d5124;
+extern unsigned int g_dispatchSave894_004d5124;
 extern unsigned int g_tickFrameTailVar2_004d5138;
 extern unsigned int g_bootChainState3_00541e98;
 extern unsigned int g_bootChainScaled4_00541e9c;
@@ -48,7 +48,7 @@ void Helper_TickFrameTail(void)
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
     g_scaledInit_00542044 = g_bootChainScaled3_00541ea0;
-    g_walkCallback = g_data_004d5124;
+    g_walkCallback = g_dispatchSave894_004d5124;
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
     g_scaledInit_00542044 = g_bootChainState3_00541e98;

@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004e86d8;
+extern unsigned int g_dispatchSave955_004e86d8;
 extern unsigned int g_dispatchArg_00535e48;
 extern unsigned int g_audioVoiceCounter_00535e50;
 extern unsigned int g_cameraProjSlot_00537eb4;
@@ -149,7 +149,7 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         test     al, bl
         jne      L_8430
         mov      eax, dword ptr [g_currentNodeIdx]
-        mov      ecx, OFFSET g_data_004e86d8
+        mov      ecx, OFFSET g_dispatchSave955_004e86d8
         shr      ecx, 2
         mov      dword ptr [g_eventQueueTotal], eax
         mov      dword ptr [g_cameraProjSlot_00537eb4], eax

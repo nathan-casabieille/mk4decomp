@@ -433,24 +433,24 @@ extern unsigned int g_dispatchSave658_004d5308;
 extern unsigned int g_dispatchSave659_004d530c;
 extern unsigned int g_pendingMatchVar2_004d531c;
 extern unsigned int g_dispatchSave669_004e2868;
-extern unsigned int g_data_004e51f8;
-extern unsigned int g_data_004e6208;
-extern unsigned int g_data_004e6218;
-extern unsigned int g_data_004e6230;
+extern unsigned int g_dispatchSave929_004e51f8;
+extern unsigned int g_dispatchSave932_004e6208;
+extern unsigned int g_dispatchSave933_004e6218;
+extern unsigned int g_dispatchSave934_004e6230;
 extern unsigned int g_dispatchSave684_004e6408;
 extern unsigned int g_dispatchSave685_004e6580;
 extern unsigned int g_dispatchSave686_004e6590;
 extern unsigned int g_dispatchSave687_004e65a0;
 extern unsigned int g_dispatchSave543_004e65b8;
 extern unsigned int g_dispatchSave542_004e65c8;
-extern unsigned int g_data_004e6f50;
-extern unsigned int g_data_004e6f60;
-extern unsigned int g_data_004e6f68;
-extern unsigned int g_data_004e6f80;
-extern unsigned int g_data_004e7e48;
-extern unsigned int g_data_004e7e58;
-extern unsigned int g_data_004e7e80;
-extern unsigned int g_data_004e7e90;
+extern unsigned int g_dispatchSave942_004e6f50;
+extern unsigned int g_dispatchSave943_004e6f60;
+extern unsigned int g_dispatchSave944_004e6f68;
+extern unsigned int g_dispatchSave945_004e6f80;
+extern unsigned int g_dispatchSave947_004e7e48;
+extern unsigned int g_dispatchSave948_004e7e58;
+extern unsigned int g_dispatchSave949_004e7e80;
+extern unsigned int g_dispatchSave950_004e7e90;
 extern unsigned int g_dispatchSave689_004e7f40;
 extern unsigned int g_dispatchSave690_004e7f50;
 extern unsigned int g_dispatchSave691_004e7f60;
@@ -2679,7 +2679,7 @@ __declspec(naked) void VersusScreenFsmCluster_0044f670(void)
     __asm {
         /* === Helper 1 (0x44f670): tiny event 004e6f50 forwarder === */
     L_f670:
-        push     OFFSET g_data_004e6f50
+        push     OFFSET g_dispatchSave942_004e6f50
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
         ret
@@ -2694,7 +2694,7 @@ __declspec(naked) void VersusScreenFsmCluster_0044f670(void)
         mov      dword ptr [esi + 0x84], 0
         test     eax, eax
         je       short L_f6b6
-        push     OFFSET g_data_004e6f68
+        push     OFFSET g_dispatchSave944_004e6f68
         call     ArgSarStoreJmp_004594f0
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -2709,7 +2709,7 @@ __declspec(naked) void VersusScreenFsmCluster_0044f670(void)
         pop      esi
         ret
     L_f6ca:
-        push     OFFSET g_data_004e6f60
+        push     OFFSET g_dispatchSave943_004e6f60
         call     ScaledIdxLoadCallTailThunk_00472db0
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -2832,7 +2832,7 @@ __declspec(naked) void VersusScreenFsmCluster_0044f670(void)
         mov      ecx, dword ptr [g_eventQueueIdx]
         add      esp, 4
         mov      dword ptr [g_fightGroupHead], ecx
-        push     OFFSET g_data_004e6f80
+        push     OFFSET g_dispatchSave945_004e6f80
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_f8c6:
@@ -4922,7 +4922,7 @@ __declspec(naked) void BossPunchCluster_00446c50(void)
         ret
     L_6e83:
         mov      ecx, dword ptr [g_eventQueueIdx]
-        push     OFFSET g_data_004e6208
+        push     OFFSET g_dispatchSave932_004e6208
         mov      dword ptr [g_fightGroupHead], ecx
         call     ArgSarStoreJmp_004594f0
         mov      eax, dword ptr [g_framePauseFlag]
@@ -4985,7 +4985,7 @@ __declspec(naked) void BossPunchCluster_00446c50(void)
         ret      
     L_6fac:
         mov      ecx, dword ptr [g_eventQueueIdx]
-        push     OFFSET g_data_004e6218
+        push     OFFSET g_dispatchSave933_004e6218
         mov      dword ptr [g_fightGroupHead], ecx
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
@@ -5022,7 +5022,7 @@ __declspec(naked) void BossPunchCluster_00446c50(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_6ffb
-        push     OFFSET g_data_004e6230
+        push     OFFSET g_dispatchSave934_004e6230
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_6ffb:
@@ -5180,7 +5180,7 @@ __declspec(naked) void BackdashSetupCluster_00440dc0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1196
-        push     OFFSET g_data_004e51f8
+        push     OFFSET g_dispatchSave929_004e51f8
         call     ArgSarStoreJmp_004594f0
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -5567,7 +5567,7 @@ __declspec(naked) void JuggleSetupCluster_004539d0(void)
         je       L_3ad0
         dec      eax
         je       L_3a4e
-        push     OFFSET g_data_004e7e48
+        push     OFFSET g_dispatchSave947_004e7e48
         call     ArgSarStoreJmp_004594f0
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -5636,7 +5636,7 @@ __declspec(naked) void JuggleSetupCluster_004539d0(void)
         mov      ecx, dword ptr [g_fightGroupHead]
         mov      eax, 0xb
         mov      dword ptr [g_walkCallback], eax
-        push     OFFSET g_data_004e7e58
+        push     OFFSET g_dispatchSave948_004e7e58
         mov      dword ptr [ecx*4 + 0x28], eax
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
@@ -5668,7 +5668,7 @@ __declspec(naked) void JuggleSetupCluster_004539d0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3bf6
-        push     OFFSET g_data_004e7e80
+        push     OFFSET g_dispatchSave949_004e7e80
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_3bf6:
@@ -5685,7 +5685,7 @@ __declspec(naked) void JuggleSetupCluster_004539d0(void)
         mov      ecx, dword ptr [g_fightGroupHead]
         mov      eax, 0x126
         mov      dword ptr [g_walkCallback], eax
-        push     OFFSET g_data_004e7e90
+        push     OFFSET g_dispatchSave950_004e7e90
         mov      dword ptr [ecx*4 + 0x28], eax
         call     ArgSarStoreJmp_004594f0
         add      esp, 4

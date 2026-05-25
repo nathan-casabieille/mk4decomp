@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004d6788;
+extern unsigned int g_dispatchSave910_004d6788;
 extern unsigned int g_dispatchSave792_004f2100;
 extern unsigned int g_dispatchSave793_004f2158;
 extern unsigned int g_dispatchSave794_004f2168;
@@ -148,7 +148,7 @@ __declspec(naked) void AiComboDispatcherCluster_00497470(void)
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], edx
-        mov      eax, OFFSET g_data_004d6788
+        mov      eax, OFFSET g_dispatchSave910_004d6788
         shr      eax, 2
         mov      dword ptr [g_walkCallback], eax
         call     PushSetXfmMaskCallPop_00407140

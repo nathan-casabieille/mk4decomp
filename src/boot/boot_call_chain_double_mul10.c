@@ -107,7 +107,7 @@ extern unsigned int g_fightAxisNegX_00535e70;
 extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
-extern unsigned int g_data_004d6478;
+extern unsigned int g_dispatchSave907_004d6478;
 
 /*
  * BootCallChainDoubleMul10_0040b890 - 217b boot init via StoreTwoCall + dual Mul10.
@@ -123,7 +123,7 @@ extern unsigned int g_data_004d6478;
 void BootCallChainDoubleMul10_0040b890(void) {
     unsigned int v;
     g_eventQueueEnd = g_fightGroupHead;
-    g_cj_00542058 = (unsigned int)&g_data_004d6478 >> 2;
+    g_cj_00542058 = (unsigned int)&g_dispatchSave907_004d6478 >> 2;
     g_eventQueueNotMask = 0xc1;
     ((void (*)(int, int))StoreTwoCall_0049cb40)(0x0049db40, 0xc0);
     if (g_xformDirtyFlags & 1) return;

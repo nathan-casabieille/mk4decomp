@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004d6718;
+extern unsigned int g_dispatchSave908_004d6718;
 extern unsigned int g_dispatchSave538_004f27f0;
 extern unsigned int g_savedNode_00541f98;
 extern void CallSetPause_0041f830(void);
@@ -125,7 +125,7 @@ __declspec(naked) void MstackPushPackChainInit_00498c40(void)
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_fightGroupHead]
         inc     eax
-        mov     edx, offset g_data_004d6718
+        mov     edx, offset g_dispatchSave908_004d6718
         mov     dword ptr [g_matrixStackTop], eax
         push    esi
         shr     edx, 2

@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004e4c20;
-extern unsigned int g_data_004e4c38;
+extern unsigned int g_dispatchSave927_004e4c20;
+extern unsigned int g_dispatchSave928_004e4c38;
 extern unsigned int g_dispatchSave145_00501a24;
 extern unsigned int g_dispatchSave72_005422fc;
 extern void ArgSarStoreJmp_004594f0(void);
@@ -132,7 +132,7 @@ __declspec(naked) void VersusScreenEventPoseCluster_0043b680(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b69b
-        push     OFFSET g_data_004e4c20
+        push     OFFSET g_dispatchSave927_004e4c20
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_b69b:
@@ -250,7 +250,7 @@ __declspec(naked) void VersusScreenEventPoseCluster_0043b680(void)
         mov      dword ptr [esi + 0x84], 0
         test     eax, eax
         je       short L_b876
-        push     OFFSET g_data_004e4c38
+        push     OFFSET g_dispatchSave928_004e4c38
         call     ArgSarStoreJmp_004594f0
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4

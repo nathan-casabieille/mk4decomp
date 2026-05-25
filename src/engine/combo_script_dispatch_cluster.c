@@ -108,11 +108,11 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004eb6f8;
+extern unsigned int g_dispatchSave971_004eb6f8;
 extern unsigned int g_dispatchSave560_004eb710;
 extern unsigned int g_dispatchSave559_004eb720;
-extern unsigned int g_data_004eb738;
-extern unsigned int g_data_004eb740;
+extern unsigned int g_dispatchSave972_004eb738;
+extern unsigned int g_dispatchSave973_004eb740;
 extern void CallPauseDirtyMStackPushFn_0046e2a0(void);
 extern void InstallSelfIndirectJmp_0048f3f0(void);
 extern void ScaledMove74to70_0046eaa0(void);
@@ -216,7 +216,7 @@ __declspec(naked) void FiveEntryAlarmInstallChain_0046ee00(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_fea_e2End
-        push    offset g_data_004eb6f8
+        push    offset g_dispatchSave971_004eb6f8
         call    ArgSarStoreJmp_004594f0
         add     esp, 4
     L_fea_e2End:
@@ -259,13 +259,13 @@ __declspec(naked) void FiveEntryAlarmInstallChain_0046ee00(void) {
         jmp     ComboScriptDispatchCluster_00470530
         /* entry 5 (offset 0x140) */
     L_fea_entry5:
-        push    offset g_data_004eb738
+        push    offset g_dispatchSave972_004eb738
         call    IterStepScaledStore_0048e600
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         jne     short L_fea_e5End
-        push    offset g_data_004eb740
+        push    offset g_dispatchSave973_004eb740
         call    ArgSarStoreJmp_004594f0
         add     esp, 4
     L_fea_e5End:

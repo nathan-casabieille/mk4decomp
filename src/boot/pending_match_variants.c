@@ -214,12 +214,12 @@ extern unsigned int g_pendingMatchVar2_004d531c;
 extern unsigned int g_pendingMatchVar_004d5324;
 extern unsigned int g_dispatchSave564_004d5354;
 extern unsigned int g_dispatchSave563_004d5358;
-extern unsigned int g_data_004d535c;
+extern unsigned int g_dispatchSave896_004d535c;
 extern unsigned int g_dispatchSave619_004d5ad8;
 extern unsigned int g_dispatchSave522_004d61d8;
 extern unsigned int g_phaseChainArr2_004d62e8;
-extern unsigned int g_data_004d7ce8;
-extern unsigned int g_data_004d7d00;
+extern unsigned int g_dispatchSave918_004d7ce8;
+extern unsigned int g_dispatchSave919_004d7d00;
 extern unsigned int g_dispatchSave606_004ded68;
 extern unsigned int g_dispatchSave505_004e3ac8;
 extern unsigned int g_dispatchSave788_004f2020;
@@ -1397,7 +1397,7 @@ __declspec(naked) void MStackBracket3_FieldSequentialCopy_00411d80(void)
 __declspec(naked) void Phase4FourPackedDispatch_0041b900(void)
 {
     __asm {
-        push    offset g_data_004d7ce8
+        push    offset g_dispatchSave918_004d7ce8
         call    ArgSarStoreJmp_004594f0
         add     esp, 4
         ret
@@ -1501,7 +1501,7 @@ __declspec(naked) void Phase4FourPackedDispatch_0041b900(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fpd2_M_ret
-        push    offset g_data_004d7d00
+        push    offset g_dispatchSave919_004d7d00
         call    ScaledStackCallPause_0049c360
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
@@ -7346,7 +7346,7 @@ __declspec(naked) void PendingMatch_00419c90(void)
         push     edx
         mov      dword ptr [g_walkCallback], eax
         call     Mul10Tail_00404af0
-        mov      ecx, dword ptr [g_data_004d535c]
+        mov      ecx, dword ptr [g_dispatchSave896_004d535c]
         add      esp, 8
         sub      eax, ecx
         mov      ecx, dword ptr [g_fightGroupHead]

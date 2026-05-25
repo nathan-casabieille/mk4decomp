@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004cb700 (372b crt) - 3-entry CRT FILE table mgmt. */
 extern unsigned int g_iat_004d209c;
-extern unsigned int g_data_004d20f0;
+extern unsigned int g_dispatchSave882_004d20f0;
 extern unsigned int g_byte_00f9f838;
 extern unsigned int g_data_00f9fdb4;
 extern unsigned int g_data_00fa0dc0;
@@ -155,7 +155,7 @@ __declspec(naked) void FileTableClose_004cb700(void) {
         call    CRTHandleLookup_004cd260
         add     esp, 4
         push    eax
-        call    dword ptr [g_data_004d20f0]
+        call    dword ptr [g_dispatchSave882_004d20f0]
         test    eax, eax
         jne     short L_ftc_clearErr
         call    dword ptr [g_iat_004d209c]

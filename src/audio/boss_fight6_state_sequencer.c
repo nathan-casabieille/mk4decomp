@@ -108,9 +108,9 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004d2320;
-extern unsigned int g_data_004d2330;
-extern unsigned int g_data_004d2340;
+extern unsigned int g_dispatchSave884_004d2320;
+extern unsigned int g_dispatchSave885_004d2330;
+extern unsigned int g_dispatchSave886_004d2340;
 extern unsigned int g_audioStreamState_0053a430;
 extern void AudioInitInstallerPair_004a2140(void);
 extern void BootInitGuardedCallChain_004265d0(void);
@@ -197,7 +197,7 @@ __declspec(naked) void BossFight6StateSequencer_004a3ce0(void)
     L_3e46:
         /* case 0: initial spawn - pick mesh by flag, install slots */
         push     0xffec0000
-        push     OFFSET g_data_004d2320
+        push     OFFSET g_dispatchSave884_004d2320
         call     GuardedSetupCallTailJmp_004a1fa0
         mov      eax, dword ptr [g_baseSel_00542060]
         mov      ecx, dword ptr [g_currentNodeIdx]
@@ -206,9 +206,9 @@ __declspec(naked) void BossFight6StateSequencer_004a3ce0(void)
         mov      dword ptr [eax*4 + 0x30], ecx
         mov      eax, dword ptr [g_audioBankSel_00537f94]
         cmp      eax, edi
-        mov      eax, OFFSET g_data_004d2330
+        mov      eax, OFFSET g_dispatchSave885_004d2330
         je       short L_3e82
-        mov      eax, OFFSET g_data_004d2340
+        mov      eax, OFFSET g_dispatchSave886_004d2340
     L_3e82:
         push     0x140000
         push     eax

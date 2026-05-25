@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   advance indices, write diff to scaledInit[k]*4, k++.
  *   end: store esi (=-1) to [0x0053a1ac]; rewind 3 indices.
  */
-extern unsigned int g_data_004d5328;
+extern unsigned int g_dispatchSave895_004d5328;
 extern unsigned int g_pendingMatchVar_004d5324;
 extern unsigned int g_pendingMatchVar3_004d5320;
 extern unsigned int g_eq_00542098;
@@ -153,7 +153,7 @@ loop_004251fd:
         mov     dword ptr [g_walkCallback], ecx
         _emit   7ch
         _emit   0ch
-        mov     ecx, dword ptr [g_data_004d5328]
+        mov     ecx, dword ptr [g_dispatchSave895_004d5328]
         mov     dword ptr [g_walkCallback], ecx
         test    edx, edx
         _emit   75h

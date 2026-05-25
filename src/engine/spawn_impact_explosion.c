@@ -109,9 +109,9 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_const_0049db40;
-extern unsigned int g_data_004ec220;
-extern unsigned int g_data_004ec270;
-extern unsigned int g_data_004ec2c0;
+extern unsigned int g_dispatchSave986_004ec220;
+extern unsigned int g_dispatchSave987_004ec270;
+extern unsigned int g_dispatchSave988_004ec2c0;
 extern void StoreDoubleNegPauseSubStore_004ab750(void);
 extern void ZeroAndDirty4_00405430(void);
 
@@ -135,7 +135,7 @@ __declspec(naked) void SpawnImpactExplosion_00471be0(void)
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], ecx
         mov      edx, dword ptr [g_fightGroupHead]
-        mov      eax, OFFSET g_data_004ec220
+        mov      eax, OFFSET g_dispatchSave986_004ec220
         mov      dword ptr [g_eventQueueEnd], edx
         shr      eax, 2
         mov      dword ptr [g_eventQueueIdx], eax
@@ -147,7 +147,7 @@ __declspec(naked) void SpawnImpactExplosion_00471be0(void)
         jne      L_1dfa
         test     byte ptr [g_xformDirtyFlags], 4
         jne      short L_1ca9
-        mov      ecx, OFFSET g_data_004ec270
+        mov      ecx, OFFSET g_dispatchSave987_004ec270
         mov      dword ptr [g_walkCallback], 0xd999
         shr      ecx, 2
         mov      dword ptr [g_eventQueueIdx], ecx
@@ -156,7 +156,7 @@ __declspec(naked) void SpawnImpactExplosion_00471be0(void)
         jne      L_1dfa
         test     byte ptr [g_xformDirtyFlags], 4
         jne      short L_1ca9
-        mov      edx, OFFSET g_data_004ec2c0
+        mov      edx, OFFSET g_dispatchSave988_004ec2c0
         shr      edx, 2
         mov      dword ptr [g_eventQueueIdx], edx
     L_1ca9:

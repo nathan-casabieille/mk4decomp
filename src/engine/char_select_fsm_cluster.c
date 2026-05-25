@@ -124,8 +124,8 @@ extern void MStackPushDispatchBitGate_00407330(void);
 extern void RoundCleanupCluster_00455920(void);
 extern void CharSelectFsmCluster_004561f0(void);
 extern void ChainGatedNegAccum_0048b740(void);
-extern unsigned int g_data_004e7f28;
-extern unsigned int g_data_004e8158;
+extern unsigned int g_dispatchSave951_004e7f28;
+extern unsigned int g_dispatchSave954_004e8158;
 extern unsigned int g_dispatchSave129_0050d434;
 
 extern unsigned int g_pendingMatchVar_004d5324;
@@ -149,7 +149,7 @@ __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5721
-        mov      eax, OFFSET g_data_004e8158
+        mov      eax, OFFSET g_dispatchSave954_004e8158
         mov      ecx, dword ptr [g_fightGroupHead]
         shr      eax, 2
         mov      dword ptr [g_walkCallback], eax
@@ -262,7 +262,7 @@ __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
         jne      L_58ff
         mov      ecx, dword ptr [g_fightGroupHead]
         mov      edx, dword ptr [g_acc_00542078]
-        push     OFFSET g_data_004e7f28
+        push     OFFSET g_dispatchSave951_004e7f28
         mov      dword ptr [ecx*4 + 0x54], edx
         mov      eax, dword ptr [g_fightGroupHead]
         mov      ecx, dword ptr [g_eventQueueNotMask]

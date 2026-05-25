@@ -126,10 +126,10 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *       arms 0x541e6c=1.
  *   Entry 4 (offset 0x120, 96b): mirror of entry 1 with alarm 0x4ea9f8.
  */
-extern unsigned int g_data_004ea9c0;
-extern unsigned int g_data_004ea9d8;
-extern unsigned int g_data_004ea9e8;
-extern unsigned int g_data_004ea9f8;
+extern unsigned int g_dispatchSave963_004ea9c0;
+extern unsigned int g_dispatchSave964_004ea9d8;
+extern unsigned int g_dispatchSave965_004ea9e8;
+extern unsigned int g_dispatchSave966_004ea9f8;
 extern unsigned int g_dispatchTableArr9_00501838;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ScaledDecBranch_00466460(void);
@@ -151,7 +151,7 @@ __declspec(naked) void FourEntryAlarmInstall_004662e0(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_fea2_e1End
-        push    offset g_data_004ea9c0
+        push    offset g_dispatchSave963_004ea9c0
         call    ArgSarStoreJmp_004594f0
         add     esp, 4
     L_fea2_e1End:
@@ -161,7 +161,7 @@ __declspec(naked) void FourEntryAlarmInstall_004662e0(void) {
         mov     eax, offset g_dispatchTableArr9_00501838
         sar     eax, 2
         mov     dword ptr [g_walkCallback], eax
-        push    offset g_data_004ea9d8
+        push    offset g_dispatchSave964_004ea9d8
         mov     dword ptr [ecx*4 + 0x24], eax
         call    ArgSarStoreJmp_004594f0
         add     esp, 4
@@ -195,7 +195,7 @@ __declspec(naked) void FourEntryAlarmInstall_004662e0(void) {
         jne     short L_fea2_install
         call    TripleStageRollback_00404a50
         add     esp, 4
-        push    offset g_data_004ea9e8
+        push    offset g_dispatchSave965_004ea9e8
         call    ArgSarStoreJmp_004594f0
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
@@ -225,7 +225,7 @@ __declspec(naked) void FourEntryAlarmInstall_004662e0(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_fea2_e4End
-        push    offset g_data_004ea9f8
+        push    offset g_dispatchSave966_004ea9f8
         call    ArgSarStoreJmp_004594f0
         add     esp, 4
     L_fea2_e4End:

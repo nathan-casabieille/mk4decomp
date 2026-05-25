@@ -108,10 +108,10 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004d67f8;
-extern unsigned int g_data_004d6808;
-extern unsigned int g_data_004d6818;
-extern unsigned int g_data_004d6828;
+extern unsigned int g_dispatchSave911_004d67f8;
+extern unsigned int g_dispatchSave912_004d6808;
+extern unsigned int g_dispatchSave913_004d6818;
+extern unsigned int g_dispatchSave914_004d6828;
 extern unsigned int g_packedDispatchVar_00541ffc;
 extern void AudioMixerStep_004ab700(void);
 extern void CallSetPause_0041f830(void);
@@ -125,14 +125,14 @@ __declspec(naked) void BootPackedDispatchPair_00413380(void)
     __asm
     {
         mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     eax, offset g_data_004d67f8
+        mov     eax, offset g_dispatchSave911_004d67f8
         shr     eax, 2
         mov     dword ptr [g_walkCallback], eax
         mov     eax, dword ptr [ecx*4 + 0x30]
         test    eax, eax
         mov     dword ptr [g_eventQueueCurrent], eax
         je      short L_bpdp_skipReplace
-        mov     edx, offset g_data_004d6818
+        mov     edx, offset g_dispatchSave913_004d6818
         shr     edx, 2
         mov     dword ptr [g_walkCallback], edx
     L_bpdp_skipReplace:
@@ -246,14 +246,14 @@ __declspec(naked) void BootPackedDispatchPair_00413580(void)
     __asm
     {
         mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     eax, offset g_data_004d6808
+        mov     eax, offset g_dispatchSave912_004d6808
         shr     eax, 2
         mov     dword ptr [g_walkCallback], eax
         mov     eax, dword ptr [ecx*4 + 0x30]
         test    eax, eax
         mov     dword ptr [g_eventQueueCurrent], eax
         je      short L_bpdp2_skipReplace
-        mov     edx, offset g_data_004d6828
+        mov     edx, offset g_dispatchSave914_004d6828
         shr     edx, 2
         mov     dword ptr [g_walkCallback], edx
     L_bpdp2_skipReplace:

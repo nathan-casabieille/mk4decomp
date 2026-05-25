@@ -127,8 +127,8 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *       [g_fightGroupHead*4 + 0x28], g_eventQueueChild=1, installs Self
  *       at body, arms 0x541e6c=1.
  */
-extern unsigned int g_data_004e9f78;
-extern unsigned int g_data_004e9f80;
+extern unsigned int g_dispatchSave959_004e9f78;
+extern unsigned int g_dispatchSave960_004e9f80;
 extern unsigned int g_dispatchTableArr10_00500c50;
 extern void DispatchThroughBaseSel6c_00460f20(void);
 extern void DualScaledStoreZero_00491080(void);
@@ -158,7 +158,7 @@ __declspec(naked) void AlarmCountdownInstall_004609e0(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_aci_e1End
-        push    offset g_data_004e9f78
+        push    offset g_dispatchSave959_004e9f78
         call    StateSnapshotDispatch_00460b60
         add     esp, 4
     L_aci_e1End:
@@ -181,7 +181,7 @@ __declspec(naked) void AlarmCountdownInstall_004609e0(void) {
         mov     dword ptr [esi + 0x84], 0
         test    eax, eax
         je      L_aci_phase0
-        push    offset g_data_004e9f80
+        push    offset g_dispatchSave960_004e9f80
         call    GuardedScaledChainJmpIndirect_00460e40
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4

@@ -109,8 +109,8 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_const_004d2b88;
-extern unsigned int g_data_004d2b60;
-extern unsigned int g_data_004d2b7c;
+extern unsigned int g_dispatchSave889_004d2b60;
+extern unsigned int g_dispatchSave890_004d2b7c;
 extern unsigned int g_crtCType_00522998;
 extern unsigned int g_crtLocaleNumeric_00522bb0;
 extern unsigned int g_byte_00522bb4;
@@ -126,11 +126,11 @@ __declspec(naked) void LocaleNumericHelpers_004c8450(void)
 {
     __asm {
         /* Helper 1: __setusermatherr early-init guard. */
-        push     OFFSET g_data_004d2b7c
+        push     OFFSET g_dispatchSave890_004d2b7c
         call     dword ptr [g_iat_004d212c]
         test     eax, eax
         je       short L_8474
-        push     OFFSET g_data_004d2b60
+        push     OFFSET g_dispatchSave889_004d2b60
         push     eax
         call     dword ptr [g_iat_004d2058]
         test     eax, eax

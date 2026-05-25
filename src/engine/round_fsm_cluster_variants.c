@@ -122,7 +122,7 @@ extern unsigned int g_dispatchSave735_004ed138;
 extern unsigned int g_dispatchSave736_004ed15c;
 extern unsigned int g_bootInitSaveSlot_00541dc4;
 
-extern unsigned int g_data_004e39c0;
+extern unsigned int g_dispatchSave924_004e39c0;
 extern unsigned int g_load_0052ab10;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void Atan2QuadrantLookup_004245b0(void);
@@ -426,7 +426,7 @@ __declspec(naked) void RoundFsmCluster_004308a0(void)
         mov      dword ptr [ecx*4 + 0x74], eax
         jmp      L_0b7c
     L_0ad7:
-        push     OFFSET g_data_004e39c0
+        push     OFFSET g_dispatchSave924_004e39c0
         call     TripleScaledChainStore54_004313d0
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4

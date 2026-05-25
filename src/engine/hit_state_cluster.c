@@ -108,9 +108,9 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004eb1e0;
-extern unsigned int g_data_004eb240;
-extern unsigned int g_data_004eb258;
+extern unsigned int g_dispatchSave968_004eb1e0;
+extern unsigned int g_dispatchSave969_004eb240;
+extern unsigned int g_dispatchSave970_004eb258;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ComboScriptDispatchCluster_00470530(void);
 extern void FiveCallGuardSetTail_0046f6b0(void);
@@ -168,7 +168,7 @@ __declspec(naked) void HitStateCluster_0046c7c0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c840
-        push     OFFSET g_data_004eb1e0
+        push     OFFSET g_dispatchSave968_004eb1e0
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_c840:
@@ -188,7 +188,7 @@ __declspec(naked) void HitStateCluster_0046c7c0(void)
         nop      
         nop      
         nop      
-        mov      eax, OFFSET g_data_004eb240
+        mov      eax, OFFSET g_dispatchSave969_004eb240
         sar      eax, 2
         mov      dword ptr [g_eventQueueEnd], eax
         jmp      ComboScriptDispatchCluster_00470530
@@ -206,7 +206,7 @@ __declspec(naked) void HitStateCluster_0046c7c0(void)
         nop      
         nop      
         nop      
-        push     OFFSET g_data_004eb258
+        push     OFFSET g_dispatchSave970_004eb258
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
         ret      

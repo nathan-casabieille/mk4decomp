@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004d6758;
+extern unsigned int g_dispatchSave909_004d6758;
 extern void CallSetPause_0041f830(void);
 extern void ChainListVecAdd_0049d200(void);
 extern void ClampMulShiftStore_004ba0e0(void);
@@ -129,7 +129,7 @@ __declspec(naked) void Phase4StateInit4Helpers_004130c0(void)
         test    byte ptr [g_xformDirtyFlags], 4
         jne     L_p44_pop1
         mov     eax, dword ptr [g_xformEntityIdx]
-        mov     ecx, offset g_data_004d6758
+        mov     ecx, offset g_dispatchSave909_004d6758
         shr     ecx, 2
         mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_walkCallback], ecx

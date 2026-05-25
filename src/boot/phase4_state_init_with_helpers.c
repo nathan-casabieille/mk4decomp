@@ -141,7 +141,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  * must match exactly.
  * ============================================================ */
 
-extern unsigned int g_data_004d6a18;
+extern unsigned int g_dispatchSave916_004d6a18;
 extern void ChainNodeAdvanceCallback_00408e70(void);
 extern void MStackCall_00406600(void);
 extern void PushSetXfmMaskCallPop_00407140(void);
@@ -167,7 +167,7 @@ __declspec(naked) void Phase4StateInitWithHelpers_004143f0(void)
         mov     ebx, 4
         test    al, bl
         je      L_p4s_skip_body
-        mov     edx, offset g_data_004d6a18
+        mov     edx, offset g_dispatchSave916_004d6a18
         shr     edx, 2
         mov     dword ptr [g_walkCallback], edx
         call    PushSetXfmMaskCallPop_00407140

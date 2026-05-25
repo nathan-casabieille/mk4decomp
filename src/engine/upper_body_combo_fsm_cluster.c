@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004ea440;
+extern unsigned int g_dispatchSave962_004ea440;
 extern unsigned int g_zero_0053a470;
 extern unsigned int g_dispatchTableBase_00543140;
 extern void CallSetPause_0041f830(void);
@@ -128,7 +128,7 @@ __declspec(naked) void UpperBodyComboFsmCluster_00492aa0(void)
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], edx
         mov      edx, dword ptr [g_zero_0053a470]
-        mov      eax, OFFSET g_data_004ea440
+        mov      eax, OFFSET g_dispatchSave962_004ea440
         mov      dword ptr [g_walkCallback], edx
         shr      eax, 2
         mov      dword ptr [g_currentNodeIdx], eax

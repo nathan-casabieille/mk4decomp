@@ -126,8 +126,8 @@ extern void QuadBlockArgInstallChain_0043a950(void);
 extern void MstackPopScaledChainPlusThunks_00471250(void);
 extern void State208cBit0Flag_0048f160(void);
 extern void ScaledChain3c74_0048f910(void);
-extern unsigned int g_data_004e46e0;
-extern unsigned int g_data_004e4a14;
+extern unsigned int g_dispatchSave925_004e46e0;
+extern unsigned int g_dispatchSave926_004e4a14;
 
 
 __declspec(naked) void MoveFsmCluster_004364a0(void)
@@ -221,7 +221,7 @@ __declspec(naked) void MoveFsmCluster_004364a0(void)
         nop
         nop
         /* === Helper 3 (0x436608): post-action dispatch === */
-        push     OFFSET g_data_004e4a14
+        push     OFFSET g_dispatchSave926_004e4a14
         call     QuadBlockArgInstallChain_0043a950
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -248,7 +248,7 @@ __declspec(naked) void MoveFsmCluster_004364a0(void)
         je       short L_663d
         jmp      PrefixThunkInstallSelf3State_00438f80
     L_663d:
-        mov      eax, OFFSET g_data_004e46e0
+        mov      eax, OFFSET g_dispatchSave925_004e46e0
         sar      eax, 2
         mov      dword ptr [g_eventQueueEnd], eax
         jmp      InstallSelfMStackPushDispatch_00436910

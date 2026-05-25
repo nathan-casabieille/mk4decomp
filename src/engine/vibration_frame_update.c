@@ -119,8 +119,8 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Convert via DoubleToInt64, write to g_walkCallback, shift right by 4,
  *   call Transform9Words_004b3a90(esi, &local); OR bit 0x30 of high byte of g_xformDirtyFlags.
  */
-extern unsigned int g_data_004d2a00;
-extern unsigned int g_data_004d2a10;
+extern unsigned int g_dispatchSave887_004d2a00;
+extern unsigned int g_dispatchSave888_004d2a10;
 extern unsigned int g_dispatchSave554_004f6508;
 extern unsigned int g_fpuConst_004f6570;
 extern unsigned int g_dispatchSave553_004f6574;
@@ -157,7 +157,7 @@ __declspec(naked) void VibrationFrameUpdate_004b9640(void) {
         fld     qword ptr [g_dispatchSave502_004f6578]
         fadd    qword ptr [g_fpuConst_004f6570]
         fst     qword ptr [g_fpuConst_004f6570]
-        fcomp   qword ptr [g_data_004d2a00]
+        fcomp   qword ptr [g_dispatchSave887_004d2a00]
         fnstsw  ax
         test    ah, 1
         jz      short L_vfu_skipReinitA
@@ -167,7 +167,7 @@ __declspec(naked) void VibrationFrameUpdate_004b9640(void) {
         mov     dword ptr [g_dispatchSave552_004f657c], 0x3f90624d
     L_vfu_skipReinitA:
         fld     qword ptr [g_fpuConst_004f6570]
-        fcomp   qword ptr [g_data_004d2a10]
+        fcomp   qword ptr [g_dispatchSave888_004d2a10]
         fnstsw  ax
         test    ah, 0x41
         jne     short L_vfu_doConv

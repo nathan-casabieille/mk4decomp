@@ -34,13 +34,13 @@ extern unsigned int g_dispatchSave756_004edd58;
 extern unsigned int g_dispatchSave757_004edd90;
 extern unsigned int g_dispatchSave758_004eddb8;
 extern unsigned int g_dispatchSave759_004ede00;
-extern unsigned int g_data_004e6cd8;
-extern unsigned int g_data_004e6d30;
-extern unsigned int g_data_004e6d88;
-extern unsigned int g_data_004e6de0;
-extern unsigned int g_data_004e6e38;
-extern unsigned int g_data_004e6e90;
-extern unsigned int g_data_004e6ee8;
+extern unsigned int g_dispatchSave935_004e6cd8;
+extern unsigned int g_dispatchSave936_004e6d30;
+extern unsigned int g_dispatchSave937_004e6d88;
+extern unsigned int g_dispatchSave938_004e6de0;
+extern unsigned int g_dispatchSave939_004e6e38;
+extern unsigned int g_dispatchSave940_004e6e90;
+extern unsigned int g_dispatchSave941_004e6ee8;
 extern void HitReactionStateCluster_004335f0(void);
 extern void DualCallPauseJmpDual_00439190(void);
 extern void AllocSlotPushTripleGlobals_00427470(void);
@@ -882,7 +882,7 @@ void func_00431c70(void) {
 
 /* @addr 0x0044f3d0 (28b) */
 void func_0044f3d0(void) {
-    unsigned int v = (unsigned int)&g_data_004e6cd8;
+    unsigned int v = (unsigned int)&g_dispatchSave935_004e6cd8;
     g_xformScratch2088 = 0x2666;
     v >>= 2;
     g_eventQueueIdx = v;
@@ -891,7 +891,7 @@ void func_0044f3d0(void) {
 
 /* @addr 0x0044f3f0 (28b) */
 void func_0044f3f0(void) {
-    unsigned int v = (unsigned int)&g_data_004e6d30;
+    unsigned int v = (unsigned int)&g_dispatchSave936_004e6d30;
     g_xformScratch2088 = 0x4ccc;
     v >>= 2;
     g_eventQueueIdx = v;
@@ -900,7 +900,7 @@ void func_0044f3f0(void) {
 
 /* @addr 0x0044f410 (28b) */
 void func_0044f410(void) {
-    unsigned int v = (unsigned int)&g_data_004e6d88;
+    unsigned int v = (unsigned int)&g_dispatchSave937_004e6d88;
     g_xformScratch2088 = 0x4ccc;
     v >>= 2;
     g_eventQueueIdx = v;
@@ -909,7 +909,7 @@ void func_0044f410(void) {
 
 /* @addr 0x0044f430 (28b) */
 void func_0044f430(void) {
-    unsigned int v = (unsigned int)&g_data_004e6de0;
+    unsigned int v = (unsigned int)&g_dispatchSave938_004e6de0;
     g_xformScratch2088 = 0x4ccc;
     v >>= 2;
     g_eventQueueIdx = v;
@@ -918,7 +918,7 @@ void func_0044f430(void) {
 
 /* @addr 0x0044f450 (28b) */
 void func_0044f450(void) {
-    unsigned int v = (unsigned int)&g_data_004e6e38;
+    unsigned int v = (unsigned int)&g_dispatchSave939_004e6e38;
     g_xformScratch2088 = 0x4ccc;
     v >>= 2;
     g_eventQueueIdx = v;
@@ -927,7 +927,7 @@ void func_0044f450(void) {
 
 /* @addr 0x0044f470 (28b) */
 void func_0044f470(void) {
-    unsigned int v = (unsigned int)&g_data_004e6e90;
+    unsigned int v = (unsigned int)&g_dispatchSave940_004e6e90;
     g_xformScratch2088 = 0x4ccc;
     v >>= 2;
     g_eventQueueIdx = v;
@@ -936,7 +936,7 @@ void func_0044f470(void) {
 
 /* @addr 0x0044f490 (28b) */
 void func_0044f490(void) {
-    unsigned int v = (unsigned int)&g_data_004e6ee8;
+    unsigned int v = (unsigned int)&g_dispatchSave941_004e6ee8;
     g_xformScratch2088 = 0x1999;
     v >>= 2;
     g_eventQueueIdx = v;

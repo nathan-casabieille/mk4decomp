@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004e9068;
+extern unsigned int g_dispatchSave958_004e9068;
 extern unsigned int g_tickFlagF;
 extern unsigned int g_audioPathFlag_0054355c;
 extern unsigned int g_matchStartClr_00543568;
@@ -291,7 +291,7 @@ __declspec(naked) void RoundEndFsmCluster_0045d680(void)
         je       short L_d89e
         jmp      CallSetPause_0041f830
     L_d89e:
-        push     OFFSET g_data_004e9068
+        push     OFFSET g_dispatchSave958_004e9068
         call     ArgSarAddDerefJmp_0048e710
         add      esp, 4
         ret

@@ -122,10 +122,10 @@ extern void func_00410725(void);
 extern void func_0041076b(void);
 extern void func_004107b4(void);
 extern void MStackBracket7_DispatchAndChain_004b8fa0(void);
-extern unsigned int g_data_004d57c8;
-extern unsigned int g_data_004d5814;
-extern unsigned int g_data_004d6990;
-extern unsigned int g_data_004107b8;
+extern unsigned int g_dispatchSave902_004d57c8;
+extern unsigned int g_dispatchSave903_004d5814;
+extern unsigned int g_dispatchSave915_004d6990;
+extern unsigned int g_dispatchSave880_004107b8;
 extern void MStackCall_004062f0(void);
 extern void TableLookupCall_00489ff0(void);
 
@@ -135,7 +135,7 @@ __declspec(naked) void BossRoomInitCluster_00410340(void)
         /* === Helper 1 (0x410340): pack-hi16 into 004d5814[0] === */
     L_0340:
         mov      edx, dword ptr [g_walkCallback]
-        mov      eax, OFFSET g_data_004d5814
+        mov      eax, OFFSET g_dispatchSave903_004d5814
         shr      eax, 2
         mov      dword ptr [g_currentNodeIdx], eax
         mov      ecx, dword ptr [eax*4]
@@ -172,7 +172,7 @@ __declspec(naked) void BossRoomInitCluster_00410340(void)
         mov      dword ptr [esi + 0x84], edi
         cmp      eax, ebx
         ja       func_0041076b
-        jmp      dword ptr [eax*4 + g_data_004107b8]
+        jmp      dword ptr [eax*4 + g_dispatchSave880_004107b8]
         mov      eax, dword ptr [g_eventQueueEnd]
         dec      eax
         mov      dword ptr [g_eventQueueEnd], eax
@@ -196,7 +196,7 @@ __declspec(naked) void BossRoomInitCluster_00410340(void)
         mov      dword ptr [g_pendingNodeType], ecx
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], edx
-        mov      eax, OFFSET g_data_004d6990
+        mov      eax, OFFSET g_dispatchSave915_004d6990
         shr      eax, 2
         mov      dword ptr [g_walkCallback], eax
         call     PushSetXfmMaskCallPop_00407140
@@ -239,7 +239,7 @@ __declspec(naked) void BossRoomInitCluster_00410340(void)
         mov      dword ptr [eax*4 + 0x38], 0xffff0000
         mov      dword ptr [g_eventQueueNotMask], 3
         jmp      BossRoomBootstrap_004105c0
-        mov      eax, OFFSET g_data_004d57c8
+        mov      eax, OFFSET g_dispatchSave902_004d57c8
         mov      dword ptr [g_walkCallback], 0x707070
         shr      eax, 2
         mov      dword ptr [g_currentNodeIdx], eax

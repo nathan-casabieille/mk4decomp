@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004dee18;
-extern unsigned int g_data_004df9a0;
+extern unsigned int g_dispatchSave920_004dee18;
+extern unsigned int g_dispatchSave922_004df9a0;
 extern unsigned int g_assetLoadStateInit_00506c14;
 extern unsigned int g_dispatchSave141_005080f4;
 extern void BootInitGuardedCallChain_004265d0(void);
@@ -152,7 +152,7 @@ __declspec(naked) void ContinueScreenFsm_00423c20(void)
         call     CopyGlobal_004ac1f0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3e8f
-        mov      edx, OFFSET g_data_004dee18
+        mov      edx, OFFSET g_dispatchSave920_004dee18
         mov      dword ptr [g_walkCallback], 0xa
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
@@ -164,7 +164,7 @@ __declspec(naked) void ContinueScreenFsm_00423c20(void)
         jne      short L_3e8f
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, 0x10000
-        mov      edx, OFFSET g_data_004df9a0
+        mov      edx, OFFSET g_dispatchSave922_004df9a0
         mov      dword ptr [g_walkCallback], eax
         shr      edx, 2
         mov      dword ptr [ecx*4 + 0x5c], eax
