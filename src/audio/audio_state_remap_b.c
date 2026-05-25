@@ -138,6 +138,13 @@ extern unsigned int g_x_0054372c;
 extern unsigned int g_x_00543730;
 extern void AudioInstallSelfChannel8_004a0520(void);
 
+/*
+ * NON-COAXABLE: orig uses `test ch, 0x20` (3b, F6 C5 20) to check bit 13 of
+ * g_x_004d50a4 by indexing the CH byte register (bits 8-15 of ecx). MSVC /O2
+ * from pure C `flags & 0x2000` emits the 6b 32-bit form `f7 c1 00 20 00 00`.
+ * MSVC SP3 won't choose CH byte addressing for a 32-bit unsigned masked test
+ * (no equivalent C construct). The 3b vs 6b delta breaks byte identity.
+ */
 __declspec(naked) void AudioStateRemapB_004a04a0(void) {
     __asm {
         mov     ecx, dword ptr [g_x_0053a2e8]
