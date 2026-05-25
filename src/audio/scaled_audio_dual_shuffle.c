@@ -114,7 +114,7 @@ extern unsigned int g_state_0053a3c0;
 extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
-extern unsigned int g_data_005437f0;
+extern unsigned int g_audioBoundNode_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
 extern unsigned int g_fightAxisNegX_00535e70;
@@ -137,7 +137,7 @@ void ScaledAudioDualShuffle_004a2970(void) {
         shl     edx, 3
         sub     edx, eax
         movsx   eax, byte ptr [edx*4 + g_byteTab_004f3088]
-        mov     edx, dword ptr [g_data_005437f0]
+        mov     edx, dword ptr [g_audioBoundNode_005437f0]
         add     eax, ecx
         mov     eax, dword ptr [eax*4 + 0]
         mov     dword ptr [g_currentNodeIdx], eax
@@ -145,7 +145,7 @@ void ScaledAudioDualShuffle_004a2970(void) {
         sub     ecx, 0x50000
         mov     dword ptr [edx*4 + 0x58], ecx
         mov     eax, dword ptr [g_currentNodeIdx]
-        mov     edx, dword ptr [g_data_005437f0]
+        mov     edx, dword ptr [g_audioBoundNode_005437f0]
         mov     ecx, dword ptr [eax*4 + 0x5c]
         mov     dword ptr [edx*4 + 0x5c], ecx
         }

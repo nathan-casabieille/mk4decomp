@@ -114,7 +114,7 @@ extern unsigned int g_state_0053a3c0;
 extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
-extern unsigned int g_data_005437f0;
+extern unsigned int g_audioBoundNode_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
 extern unsigned int g_fightAxisNegX_00535e70;
@@ -130,12 +130,12 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   = 0, slot[+0x58]=0xf0600000, slot[+0x5c]=0x10000.
  */
 void AudioBindEntry_004a1e40(unsigned int arg) {
-    if (g_data_005437f0 != 0) return;
+    if (g_audioBoundNode_005437f0 != 0) return;
     g_xformEntityIdx = arg >> 2;
     DispatcherComplex260_00407400();
     if (g_framePauseFlag != 0) return;
     if (g_currentNodeIdx == 0) return;
-    g_data_005437f0 = g_currentNodeIdx;
+    g_audioBoundNode_005437f0 = g_currentNodeIdx;
     MStackPushComplexCallPop_004064b0();
     if (g_framePauseFlag != 0) return;
     *(unsigned int *)(g_currentNodeIdx * 4 + 0x54) = 0;

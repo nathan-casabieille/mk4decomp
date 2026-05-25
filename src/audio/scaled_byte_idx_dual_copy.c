@@ -114,7 +114,7 @@ extern unsigned int g_state_0053a3c0;
 extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
-extern unsigned int g_data_005437f0;
+extern unsigned int g_audioBoundNode_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
 extern unsigned int g_fightAxisNegX_00535e70;
@@ -126,11 +126,11 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   ecx = g_baseSel; edx = arg0;
  *   eax = [ecx*4 + 0x30]; eax = eax + eax*8; eax <<= 0 (lea);
  *   eax = (signed char)[edx + eax*4 + 0x10];
- *   edx = g_data_005437f0; eax += ecx;
+ *   edx = g_audioBoundNode_005437f0; eax += ecx;
  *   eax = [eax*4]; g_scaledInit = eax;
  *   ecx = [eax*4 + 0x58]; ecx -= 0x50000;
  *   [edx*4 + 0x58] = ecx; eax = g_scaledInit;
- *   edx = g_data_005437f0; ecx = [eax*4 + 0x5c]; [edx*4+0x5c]=ecx;
+ *   edx = g_audioBoundNode_005437f0; ecx = [eax*4 + 0x5c]; [edx*4+0x5c]=ecx;
  *   ret.
  */
 void ScaledByteIdxDualCopy_004a3260(void) {
@@ -140,7 +140,7 @@ void ScaledByteIdxDualCopy_004a3260(void) {
         mov     eax, dword ptr [ecx*4 + 0x30]
         lea     eax, [eax + eax*8]
         movsx   eax, byte ptr [edx + eax*4 + 0x10]
-        mov     edx, dword ptr [g_data_005437f0]
+        mov     edx, dword ptr [g_audioBoundNode_005437f0]
         add     eax, ecx
         mov     eax, dword ptr [eax*4 + 0]
         mov     dword ptr [g_scaledInit_00542044], eax
@@ -148,7 +148,7 @@ void ScaledByteIdxDualCopy_004a3260(void) {
         sub     ecx, 0x50000
         mov     dword ptr [edx*4 + 0x58], ecx
         mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     edx, dword ptr [g_data_005437f0]
+        mov     edx, dword ptr [g_audioBoundNode_005437f0]
         mov     ecx, dword ptr [eax*4 + 0x5c]
         mov     dword ptr [edx*4 + 0x5c], ecx
         }

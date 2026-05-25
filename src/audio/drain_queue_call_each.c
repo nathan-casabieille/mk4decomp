@@ -114,7 +114,7 @@ extern unsigned int g_state_0053a3c0;
 extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
-extern unsigned int g_data_005437f0;
+extern unsigned int g_audioBoundNode_005437f0;
 extern unsigned int g_data_00543598;
 extern unsigned int g_data_0054358c;
 extern unsigned int g_fightAxisNegX_00535e70;
@@ -147,8 +147,8 @@ void DrainQueueCallEach_004a1ec0(void) {
             p++;
         } while (i < count);
     }
-    g_currentNodeIdx = g_data_005437f0;
-    g_data_005437f0 = 0;
+    g_currentNodeIdx = g_audioBoundNode_005437f0;
+    g_audioBoundNode_005437f0 = 0;
     MStackPush2ChainLLInsert_00406790();
     g_x_00543748 = 0;
 }

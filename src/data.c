@@ -1567,7 +1567,7 @@ unsigned int g_data_00543734;
 unsigned int g_data_00543738;
 unsigned int g_data_0054373c;
 unsigned int g_data_00543740;
-unsigned int g_data_005437f0;
+unsigned int g_audioBoundNode_005437f0;
 unsigned int g_data_005437f4;
 unsigned int g_data_005437f8;
 unsigned int g_data_005437fc;
