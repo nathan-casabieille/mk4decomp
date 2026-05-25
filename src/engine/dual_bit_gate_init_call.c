@@ -8,7 +8,7 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern unsigned int g_state_0053a718;
+extern unsigned int g_gameCountdown_0053a718;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
@@ -61,8 +61,8 @@ extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
 extern unsigned int g_dualBitGate_0053a7b0;
-extern unsigned int g_data_0053a770;
-extern unsigned int g_data_0053a46c;
+extern unsigned int g_eventArmReload_0053a770;
+extern unsigned int g_rangeBase_0053a46c;
 
 extern void ScaledArrStore_004298c0(void);
 extern void DualFieldAddSubStore_00470340(void);
@@ -101,8 +101,8 @@ extern unsigned int g_stateCountdown_0053a3c0;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
-extern unsigned int g_data_00543598;
-extern unsigned int g_data_0054358c;
+extern unsigned int g_lastGatedValue_00543598;
+extern unsigned int g_lastGatedTick_0054358c;
 extern unsigned int g_fightAxisNegX_00535e70;
 extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
@@ -111,21 +111,21 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 /* @addr 0x0048a1c0 (89b)
  *   if g_zero_00541fa4==0 and (g_dualBitGate_0053a7b0&1)!=0:
  *     g_eventQueueWorkType=0x1f9; call Push16Call_00489f50;
- *     g_zero_00541fa4 = g_data_0053a770;
+ *     g_zero_00541fa4 = g_eventArmReload_0053a770;
  *   if g_zero_00541fa8==0 and (g_dualBitGate_0053a7b0&2)!=0:
  *     g_eventQueueWorkType=0x1fe; call Push16Call_00489f50;
- *     g_zero_00541fa8 = g_data_0053a770;
+ *     g_zero_00541fa8 = g_eventArmReload_0053a770;
  *   ret.
  */
 void DualBitGateInitCall_0048a1c0(void) {
     if (g_zero_00541fa4 == 0 && (g_dualBitGate_0053a7b0 & 1) != 0) {
         g_eventQueueWorkType = 0x1f9;
         Push16Call_00489f50();
-        g_zero_00541fa4 = g_data_0053a770;
+        g_zero_00541fa4 = g_eventArmReload_0053a770;
     }
     if (g_zero_00541fa8 == 0 && (g_dualBitGate_0053a7b0 & 2) != 0) {
         g_eventQueueWorkType = 0x1fe;
         Push16Call_00489f50();
-        g_zero_00541fa8 = g_data_0053a770;
+        g_zero_00541fa8 = g_eventArmReload_0053a770;
     }
 }

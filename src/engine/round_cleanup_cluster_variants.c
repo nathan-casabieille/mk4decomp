@@ -8,7 +8,7 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern unsigned int g_state_0053a718;
+extern unsigned int g_gameCountdown_0053a718;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
@@ -61,8 +61,8 @@ extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
 extern unsigned int g_dualBitGate_0053a7b0;
-extern unsigned int g_data_0053a770;
-extern unsigned int g_data_0053a46c;
+extern unsigned int g_eventArmReload_0053a770;
+extern unsigned int g_rangeBase_0053a46c;
 
 extern void ScaledArrStore_004298c0(void);
 extern void DualFieldAddSubStore_00470340(void);
@@ -101,8 +101,8 @@ extern unsigned int g_stateCountdown_0053a3c0;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
-extern unsigned int g_data_00543598;
-extern unsigned int g_data_0054358c;
+extern unsigned int g_lastGatedValue_00543598;
+extern unsigned int g_lastGatedTick_0054358c;
 extern unsigned int g_fightAxisNegX_00535e70;
 extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
@@ -114,7 +114,7 @@ extern void RoundCleanupCluster_00427690(void);
 
 /* @addr 0x00477920 (165b game) - poll-then-init pattern:
  *   poll: SaveCallRestore(0x22); SaveCallRestoreOrXor(0x22); while (state & 4): retry.
- *   walkCallback = max(g_x_0053a718, 0); call StoreIncrMStackPush6_004275c0; pause? ret.
+ *   walkCallback = max(g_gameCountdown_0053a718, 0); call StoreIncrMStackPush6_004275c0; pause? ret.
  *   set fixed state (walkCallback=2, g_eventQueueWorkType=0x22, g_eventQueueCurrent=2,
  *   g_acc_00542078=0, g_eventQueueNotMask=0xff960000, g_currentNodeFlags=2);
  *   call DispatcherComplex181; pause? ret; call RoundCleanupCluster_00427690.
@@ -124,7 +124,7 @@ extern unsigned int g_data_004e7f50;
 extern unsigned int g_data_004e7f60;
 extern unsigned int g_data_004e7f70;
 extern unsigned int g_data_00501250;
-extern unsigned int g_x_0053a718;
+extern unsigned int g_gameCountdown_0053a718;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ChainGatedNegAccum_0048b740(void);
 extern void DualScaledStore_00452740(void);
@@ -176,7 +176,7 @@ loopPoll:
         _emit   0c3h
         _emit   74h
         _emit   0e3h
-        mov     eax, dword ptr [g_x_0053a718]
+        mov     eax, dword ptr [g_gameCountdown_0053a718]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         _emit   7dh
