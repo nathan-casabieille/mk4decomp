@@ -226,10 +226,10 @@ extern unsigned int g_data_004f2020;
 extern unsigned int g_data_004f2068;
 extern unsigned int g_data_004f2880;
 extern unsigned int g_data_00522154;
-extern unsigned int g_data_00523ae0;
+extern unsigned int g_dispatchSave12_00523ae0;
 extern unsigned int g_data_00523ae4;
 extern unsigned int g_data_00523b18;
-extern unsigned int g_data_00523b1c;
+extern unsigned int g_dispatchSave11_00523b1c;
 extern unsigned int g_dispatchSave5_00523b20;
 extern unsigned int g_data_00523b24;
 extern unsigned int g_load_0052ab10;
@@ -242,7 +242,7 @@ extern unsigned int g_pendingMatchSlot2_00541dc0;
 extern unsigned int g_savedNode_00541f98;
 extern unsigned int g_phaseCounter_00541fb0;
 extern unsigned int g_data_005420c8;
-extern unsigned int g_data_00542378;
+extern unsigned int g_walkTreeArrBase_00542378;
 extern unsigned int g_audioBankPick_005433c0;
 extern unsigned int g_counter_005433c8;
 extern unsigned int g_counter_0054359c;
@@ -1199,7 +1199,7 @@ __declspec(naked) void Phase2InitSlotTreeWalk_0041ad60(void)
         mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0x38], edx
         mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     eax, offset g_data_00542378
+        mov     eax, offset g_walkTreeArrBase_00542378
         sar     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
         mov     edx, dword ptr [ecx*4 + 0x34]

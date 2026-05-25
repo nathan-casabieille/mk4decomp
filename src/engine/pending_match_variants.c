@@ -370,9 +370,9 @@ extern void PendingMatch_00498eb0(void);
 extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_loaded_004f3608;
 extern unsigned int g_or_0052ab40;
-extern unsigned int g_data_0052d750;
-extern unsigned int g_data_0052d754;
-extern unsigned int g_data_0052d758;
+extern unsigned int g_dispatchVar18_0052d750;
+extern unsigned int g_dispatchVar17_0052d754;
+extern unsigned int g_dispatchVar16_0052d758;
 extern unsigned int g_dispatchArg_00535e48;
 extern unsigned int g_dispatchVar11_00537f04;
 extern unsigned int g_data_0053a514;
@@ -512,7 +512,7 @@ extern unsigned int g_clamp_0053a6dc;
 extern unsigned int g_phaseThunkState_0053a730;
 extern unsigned int g_installOwner2_0053a7a0;
 extern unsigned int g_pendingMatchAudio2_0053a7a8;
-extern unsigned int g_data_0053a7b4;
+extern unsigned int g_dispatchVar14_0053a7b4;
 extern unsigned int g_clamp_0053e348;
 extern unsigned int g_scenegraphWalkEnd_00541d68;
 extern unsigned int g_savedNode_00541f98;
@@ -6732,7 +6732,7 @@ __declspec(naked) void PendingMatch_0043bdd0(void)
         mov      ecx, dword ptr [g_eventQueueChild]
         mov      dword ptr [eax*4 + 0x54], ecx
         mov      eax, dword ptr [g_walkCallback]
-        mov      dword ptr [g_data_0053a7b4], eax
+        mov      dword ptr [g_dispatchVar14_0053a7b4], eax
         mov      dword ptr [g_walkBoundsSlot_00535d68], eax
         mov      eax, 0xffff0000
         mov      dword ptr [g_walkCallback], eax
@@ -8909,13 +8909,13 @@ __declspec(naked) void PendingMatch_004506c0(void)
         mov      edx, dword ptr [eax*4 + 0x48]
         sub      ecx, edx
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_data_0052d754], ecx
+        mov      dword ptr [g_dispatchVar17_0052d754], ecx
         mov      ecx, dword ptr [eax*4 + 0x54]
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_data_0052d750], ecx
+        mov      dword ptr [g_dispatchVar18_0052d750], ecx
         mov      eax, dword ptr [eax*4 + 0x5c]
         mov      dword ptr [g_currentNodeIdx], 0
-        mov      dword ptr [g_data_0052d758], eax
+        mov      dword ptr [g_dispatchVar16_0052d758], eax
         mov      dword ptr [g_walkCallback], esi
         call     DispatcherComplex138_00476060
         mov      eax, dword ptr [g_framePauseFlag]
@@ -8926,13 +8926,13 @@ __declspec(naked) void PendingMatch_004506c0(void)
         test     byte ptr [g_xformDirtyFlags], bl
         jne      L_0780
         mov      ecx, dword ptr [g_currentNodeIdx]
-        mov      edx, dword ptr [g_data_0052d750]
+        mov      edx, dword ptr [g_dispatchVar18_0052d750]
         mov      dword ptr [ecx*4 + 0x54], edx
         mov      eax, dword ptr [g_currentNodeIdx]
-        mov      ecx, dword ptr [g_data_0052d754]
+        mov      ecx, dword ptr [g_dispatchVar17_0052d754]
         mov      dword ptr [eax*4 + 0x58], ecx
         mov      eax, dword ptr [g_currentNodeIdx]
-        mov      edx, dword ptr [g_data_0052d758]
+        mov      edx, dword ptr [g_dispatchVar16_0052d758]
         mov      dword ptr [eax*4 + 0x5c], edx
         mov      dword ptr [g_walkCallback], esi
         call     DispatcherComplex138_00476060
@@ -9031,15 +9031,15 @@ __declspec(naked) void PendingMatch_004506c0(void)
         mov      dword ptr [ecx*4 + 0x34], eax
         mov      ecx, dword ptr [g_eventQueueEnd]
         mov      edx, dword ptr [g_currentNodeIdx]
-        mov      eax, dword ptr [g_data_0052d750]
+        mov      eax, dword ptr [g_dispatchVar18_0052d750]
         inc      ecx
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      dword ptr [edx*4 + 0x54], eax
         mov      ecx, dword ptr [g_currentNodeIdx]
-        mov      edx, dword ptr [g_data_0052d754]
+        mov      edx, dword ptr [g_dispatchVar17_0052d754]
         mov      dword ptr [ecx*4 + 0x58], edx
         mov      eax, dword ptr [g_currentNodeIdx]
-        mov      ecx, dword ptr [g_data_0052d758]
+        mov      ecx, dword ptr [g_dispatchVar16_0052d758]
         mov      dword ptr [eax*4 + 0x5c], ecx
         mov      dword ptr [g_walkCallback], 0x51e
         call     AudioMixerStep_004ab700

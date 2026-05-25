@@ -114,7 +114,7 @@ extern void SwapTwoGlobals_004911c0(void);
 extern void TableHitOrSchedule_004be7a0(void);
 extern unsigned int g_data_004ef290;
 extern unsigned int g_data_004ef2c0;
-extern unsigned int g_data_00538124;
+extern unsigned int g_bossArrivalState_00538124;
 extern unsigned int g_const_00481a10;
 extern unsigned int g_const_00481a80;
 
@@ -251,7 +251,7 @@ __declspec(naked) void BlockedCounterCluster_004816d0(void)
         mov      edi, 1
         mov      dword ptr [g_eventQueueWorkType], 0x3d
         mov      dword ptr [g_walkCallback], edi
-        mov      dword ptr [g_data_00538124], edi
+        mov      dword ptr [g_bossArrivalState_00538124], edi
         call     Push16Call_00489f50
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

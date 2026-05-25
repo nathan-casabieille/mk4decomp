@@ -198,7 +198,7 @@ extern unsigned int g_data_005433f8;
 extern unsigned int g_counter_0054359c;
 extern unsigned int g_byte_005435a0;
 extern unsigned int g_data_005435a3;
-extern unsigned int g_data_005435a4;
+extern unsigned int g_dispatchVar13_005435a4;
 extern unsigned int g_byte_005435b8;
 extern unsigned int g_byte_00543724;
 extern unsigned int g_byte_0054372c;
@@ -1671,13 +1671,13 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         test     eax, eax
         je       L_5c1a
         lea      eax, [esi + esi*2]
-        mov      dl, byte ptr [eax*8 + g_data_005435a4]
+        mov      dl, byte ptr [eax*8 + g_dispatchVar13_005435a4]
         inc      dl
         mov      cl, dl
-        mov      byte ptr [eax*8 + g_data_005435a4], dl
+        mov      byte ptr [eax*8 + g_dispatchVar13_005435a4], dl
         cmp      cl, 4
         jle      L_5c15
-        mov      byte ptr [eax*8 + g_data_005435a4], 0
+        mov      byte ptr [eax*8 + g_dispatchVar13_005435a4], 0
     L_5c15:
         call     SetJmp_004a1ac0
     L_5c1a:

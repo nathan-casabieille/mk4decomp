@@ -132,7 +132,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_installCountdownArr2_0050b214;
 extern unsigned int g_phaseThunkVar2_0052aabc;
 extern unsigned int g_load_0052ab10;
-extern unsigned int g_data_00535de0;
+extern unsigned int g_phaseThunkVar4_00535de0;
 extern unsigned int g_particleEmitterNode_00535e6c;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
@@ -171,7 +171,7 @@ __declspec(naked) void BootInitClearSlotSeed_0042ee40(void) {
         mov     dword ptr [eax + 0x5c], 0x10000
         mov     dword ptr [eax + 0x34], ebx
         mov     eax, dword ptr [g_dispatchVar7_00541fbc]
-        mov     dword ptr [g_data_00535de0], ebx
+        mov     dword ptr [g_phaseThunkVar4_00535de0], ebx
         mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, 0xa
         mov     dword ptr [g_data_00541dd8], ebx

@@ -110,11 +110,11 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00465ef0 (257b game) - 3 adjacent blocks (16/48/193 byte sizes).
  *   B1: push 0x004ea948; tail-call ArgSarStoreJmp.
- *   B2: if g_data_0053a238==1: tail-jmp DualScaledChainPush_00466000;
+ *   B2: if g_dispatchVar15_0053a238==1: tail-jmp DualScaledChainPush_00466000;
  *     else: push 0x004ea968, tail-call ArgSarStoreJmp.
  *   B3: install-self pattern.
  */
-extern unsigned int g_data_0053a238;
+extern unsigned int g_dispatchVar15_0053a238;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void DecCallPushCall_00466090(void);
 extern void DualScaledChainPush_00466000(void);
@@ -128,7 +128,7 @@ __declspec(naked) void TripleBlockInstallSelf_00465ef0(void) {
         ret
         nop
         nop
-        mov     eax, dword ptr [g_data_0053a238]
+        mov     eax, dword ptr [g_dispatchVar15_0053a238]
         cmp     eax, 1
         mov     dword ptr [g_walkCallback], eax
         _emit   75h
@@ -170,7 +170,7 @@ __declspec(naked) void TripleBlockInstallSelf_00465ef0(void) {
         call    DecCallPushCall_00466090
         pop     esi
         ret
-        mov     eax, dword ptr [g_data_0053a238]
+        mov     eax, dword ptr [g_dispatchVar15_0053a238]
         mov     dword ptr [g_walkCallback], eax
         call    MoveStackPipeline_004660d0
         mov     eax, dword ptr [g_framePauseFlag]

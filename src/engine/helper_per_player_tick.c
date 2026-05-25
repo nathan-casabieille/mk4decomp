@@ -24,7 +24,7 @@ extern unsigned int g_dispatchSave_00537ef4;
 extern unsigned int g_secondary_00538068;
 extern unsigned int g_phaseInstallSlot_0053a42c;
 extern unsigned int g_phaseThunkState_0053a730;
-extern unsigned int g_data_0053a7b4;
+extern unsigned int g_dispatchVar14_0053a7b4;
 extern unsigned int g_scenegraphWalkEnd_00541d68;
 extern unsigned int g_bootInitSaveSlot_00541dc4;
 extern unsigned int g_acc_00542078;
@@ -222,7 +222,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      dword ptr [g_eventQueueWorkType], edx
         mov      dword ptr [g_acc_00542078], esi
         mov      dword ptr [g_eventQueueCurrent], ecx
-        mov      dword ptr [g_data_0053a7b4], eax
+        mov      dword ptr [g_dispatchVar14_0053a7b4], eax
         mov      dword ptr [g_scenegraphWalkEnd_00541d68], ecx
     L_9569:
         mov      ecx, dword ptr [g_fightAxisPosY_00535e7c]

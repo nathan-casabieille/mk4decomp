@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_load_0052ab10;
-extern unsigned int g_data_00535de0;
+extern unsigned int g_phaseThunkVar4_00535de0;
 extern unsigned int g_dispatchVar7_00541fbc;
 extern unsigned int g_data_005a0000;
 extern void MStackPush2ChainLLInsert_00406790(void);
@@ -165,7 +165,7 @@ __declspec(naked) void SpawnPhaseAdvanceVoices_0042e290(void)
         mov      ebx, dword ptr [edi*4 + 0x5c]
         cmp      eax, ebx
         jg       short L_e3f0
-        mov      edi, dword ptr [g_data_00535de0]
+        mov      edi, dword ptr [g_phaseThunkVar4_00535de0]
         test     edi, edi
         mov      dword ptr [g_walkCallback], edi
         jne      short L_e39a

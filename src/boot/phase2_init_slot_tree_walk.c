@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_particleEmitterNode_00535e6c;
-extern unsigned int g_data_00542378;
+extern unsigned int g_walkTreeArrBase_00542378;
 extern void FlagThunk4EntryDispatcher_0040a470(void);
 extern void DirtyDoubleDeref_00408cb0(void);
 extern void PendingMatch_0041afd0(void);
@@ -210,7 +210,7 @@ __declspec(naked) void Phase2InitSlotTreeWalk_0041ad60(void)
         mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0x38], edx
         mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     eax, offset g_data_00542378
+        mov     eax, offset g_walkTreeArrBase_00542378
         sar     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
         mov     edx, dword ptr [ecx*4 + 0x34]
