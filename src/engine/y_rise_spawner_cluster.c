@@ -110,8 +110,8 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00514d78;
-extern unsigned int g_data_00514de8;
+extern unsigned int g_dispatchTableArr4_00514d78;
+extern unsigned int g_dispatchTableArr3_00514de8;
 extern unsigned int g_dispatchClr0_0052ab48;
 extern unsigned int g_state4_0053a700;
 extern void BootMstackInit_0041fb10(void);
@@ -133,7 +133,7 @@ void YRiseSpawnerCluster_00477bd0(void) {
         add      esp, 4
         push     0x26
         call     SaveCallRestore_004049d0
-        mov      eax, OFFSET g_data_00514d78
+        mov      eax, OFFSET g_dispatchTableArr4_00514d78
         add      esp, 4
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
@@ -203,7 +203,7 @@ void YRiseSpawnerCluster_00477bd0(void) {
     L_7d70:
         push     0x233
         call     SaveCallRestore_004049d0
-        mov      edx, OFFSET g_data_00514de8
+        mov      edx, OFFSET g_dispatchTableArr3_00514de8
         add      esp, 4
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx

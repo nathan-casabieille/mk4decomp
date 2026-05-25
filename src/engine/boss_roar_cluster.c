@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004eefd8;
 extern unsigned int g_data_004ef010;
-extern unsigned int g_data_00500710;
+extern unsigned int g_dispatchTableArr6_00500710;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CinematicCFsmCluster_004884a0(void);
 extern void FlagThunk4EntryDispatcher_0040a470(void);
@@ -258,7 +258,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         nop
         /* === Helper 4 (0x488410): event 004eefd8 forwarder === */
     L_8410:
-        mov      eax, OFFSET g_data_00500710
+        mov      eax, OFFSET g_dispatchTableArr6_00500710
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
         call     ScaledArrStore_004298c0

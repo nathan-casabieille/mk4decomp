@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_const_0044d820;
 extern unsigned int g_data_004e65b8;
 extern unsigned int g_data_004e65c8;
-extern unsigned int g_data_00501088;
+extern unsigned int g_dispatchTableArr5_00501088;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void DoubleScaledCrossStore_00475750(void);
 extern void GatedWordPushCall_00489f90(void);
@@ -186,7 +186,7 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
         add      esp, 4
         ret
     L_d61c:
-        mov      edx, OFFSET g_data_00501088
+        mov      edx, OFFSET g_dispatchTableArr5_00501088
         shr      edx, 2
         mov      dword ptr [g_eventQueueEnd], edx
         mov      dword ptr [eax + 8], OFFSET L_d5c0

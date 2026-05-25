@@ -480,7 +480,7 @@ extern unsigned int g_data_004f29c0;
 extern unsigned int g_data_005007c4;
 extern unsigned int g_data_0050104c;
 extern unsigned int g_data_00501070;
-extern unsigned int g_data_00501088;
+extern unsigned int g_dispatchTableArr5_00501088;
 extern unsigned int g_data_005010c4;
 extern unsigned int g_data_005010d0;
 extern unsigned int g_data_0050122c;
@@ -2587,7 +2587,7 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
         add      esp, 4
         ret
     L_d61c:
-        mov      edx, OFFSET g_data_00501088
+        mov      edx, OFFSET g_dispatchTableArr5_00501088
         shr      edx, 2
         mov      dword ptr [g_eventQueueEnd], edx
         mov      dword ptr [eax + 8], OFFSET L_d5c0

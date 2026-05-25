@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00514d78;
-extern unsigned int g_data_00514de8;
+extern unsigned int g_dispatchTableArr4_00514d78;
+extern unsigned int g_dispatchTableArr3_00514de8;
 extern unsigned int g_dispatchClr0_0052ab48;
 extern unsigned int g_state4_0053a3e0;
 extern void BootMstackInit_0041fb10(void);
@@ -130,7 +130,7 @@ void DualSeqBranchInit_00477a20(void) {
         add     esp, 4
         push    0x25
         call    SaveCallRestore_004049d0
-        mov     eax, offset g_data_00514d78
+        mov     eax, offset g_dispatchTableArr4_00514d78
         add     esp, 4
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
@@ -172,7 +172,7 @@ void DualSeqBranchInit_00477a20(void) {
     L_dsbi_secondPath:
         push    0x232
         call    SaveCallRestore_004049d0
-        mov     edx, offset g_data_00514de8
+        mov     edx, offset g_dispatchTableArr3_00514de8
         add     esp, 4
         shr     edx, 2
         mov     dword ptr [g_xformEntityIdx], edx

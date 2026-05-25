@@ -114,17 +114,17 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   g_currentNodeFlags = chain[g_xformEntityIdx + 0x68];
  *   g_xformScratch2088 = chain[g_xformEntityIdx + 0x6c];
  *   ecx = [0x53815c]; g_eventQueueTotal = g_x_00542010;
- *   g_xformEntityIdx = ecx; g_pendingNodeType = esi; g_eventQueueEnd = g_x_00542014;
+ *   g_xformEntityIdx = ecx; g_pendingNodeType = esi; g_eventQueueEnd = g_dispatchVar29_00542014;
  *   if (ecx == edx): swap with ebx-side; g_pendingNodeType = edi;
- *      g_xformEntityIdx = ebx; g_eventQueueTotal = g_x_00542018; g_eventQueueEnd = g_x_0054201c;
+ *      g_xformEntityIdx = ebx; g_eventQueueTotal = g_dispatchVar28_00542018; g_eventQueueEnd = g_dispatchVar27_0054201c;
  *   eax = g_baseSel*4; chain[eax + 0x38] = ecx;
  *   chain[eax + 0x3c] = g_pendingNodeType (=ecx-or-edi);
  *   chain[eax + 0x40] = g_eventQueueTotal; chain[eax + 0x44] = g_eventQueueEnd.
  */
 extern unsigned int g_x_00542010;
-extern unsigned int g_x_00542014;
-extern unsigned int g_x_00542018;
-extern unsigned int g_x_0054201c;
+extern unsigned int g_dispatchVar29_00542014;
+extern unsigned int g_dispatchVar28_00542018;
+extern unsigned int g_dispatchVar27_0054201c;
 
 extern unsigned int g_data_004d57ac_arr;
 
@@ -152,14 +152,14 @@ __declspec(naked) void DualCmpSwapStore_0049c5a0(void) {
         mov     eax, dword ptr [g_x_00542010]
         cmp     ecx, edx
         mov     dword ptr [g_eventQueueTotal], eax
-        mov     eax, dword ptr [g_x_00542014]
+        mov     eax, dword ptr [g_dispatchVar29_00542014]
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     dword ptr [g_pendingNodeType], esi
         mov     dword ptr [g_eventQueueEnd], eax
         _emit   75h
         _emit   24h
-        mov     edx, dword ptr [g_x_00542018]
-        mov     eax, dword ptr [g_x_0054201c]
+        mov     edx, dword ptr [g_dispatchVar28_00542018]
+        mov     eax, dword ptr [g_dispatchVar27_0054201c]
         mov     ecx, ebx
         mov     dword ptr [g_pendingNodeType], edi
         mov     dword ptr [g_xformEntityIdx], ecx

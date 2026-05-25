@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void SkelAnimUpdaterCluster_0049d940(void);
 extern unsigned int g_data_004d6948;
-extern unsigned int g_data_0050bbb4;
+extern unsigned int g_audioPreloadBase2_0050bbb4;
 
 extern void CallSetPause_0041f830(void);
 extern void MStackCall_004062f0(void);
@@ -305,7 +305,7 @@ __declspec(naked) void Phase4DualHelperTrampoline_00412900(void)
         pop     esi
         ret
     L_p4dht_B_phase0:
-        mov     ecx, offset g_data_0050bbb4
+        mov     ecx, offset g_audioPreloadBase2_0050bbb4
         shr     ecx, 2
         mov     dword ptr [g_xformEntityIdx], ecx
         call    MStackPushDispatchBitGate_00407330

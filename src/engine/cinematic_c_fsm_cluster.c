@@ -121,7 +121,7 @@ extern void InstallSelfIndirectJmpNeg_0048f4f0(void);
 extern void InstallSelfOrCmpJmp_0048f570(void);
 extern unsigned int g_data_004eefd8;
 extern unsigned int g_data_004ef010;
-extern unsigned int g_data_00500710;
+extern unsigned int g_dispatchTableArr6_00500710;
 
 extern void ArgSarStoreJmp_004594f0(void);
 extern void TableLookupCall_00489ff0(void);
@@ -264,7 +264,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         nop
         /* === Helper 4 (0x488410): event 004eefd8 forwarder === */
     L_8410:
-        mov      eax, OFFSET g_data_00500710
+        mov      eax, OFFSET g_dispatchTableArr6_00500710
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
         call     ScaledArrStore_004298c0
