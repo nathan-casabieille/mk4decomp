@@ -110,8 +110,8 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_00f9fc2c;
 extern unsigned int g_iat_004d20b8;
-extern unsigned int g_data_004d2f24;
-extern unsigned int g_data_004d2f20;
+extern unsigned int g_crtMemMoveHi_004d2f24;
+extern unsigned int g_crtMemMoveLo_004d2f20;
 extern unsigned int g_iat_004d20bc;
 extern unsigned int g_iat_004d20e0;
 extern unsigned int g_data_00f9fc20;
@@ -151,7 +151,7 @@ __declspec(naked) void MBToWCharCachedDispatch_004cd950(void) {
         lea     eax, [esp + 0x10]
         push    eax
         push    1
-        push    offset g_data_004d2f24
+        push    offset g_crtMemMoveHi_004d2f24
         push    1
         call    esi
         test    eax, eax
@@ -162,7 +162,7 @@ __declspec(naked) void MBToWCharCachedDispatch_004cd950(void) {
         lea     ecx, [esp + 0x10]
         push    ecx
         push    1
-        push    offset g_data_004d2f20
+        push    offset g_crtMemMoveLo_004d2f20
         push    1
         push    ebx
         call    dword ptr [g_iat_004d20bc]

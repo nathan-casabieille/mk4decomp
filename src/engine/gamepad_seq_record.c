@@ -108,10 +108,10 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004ed000;
-extern unsigned int g_data_004ed020;
-extern unsigned int g_data_004ed040;
-extern unsigned int g_data_004ed060;
+extern unsigned int g_installCountdownEnd_004ed000;
+extern unsigned int g_dispatchCmpEnd2_004ed020;
+extern unsigned int g_movesPanelEnd_004ed040;
+extern unsigned int g_dispatchCmpEnd_004ed060;
 extern unsigned int g_data_00ab48b8;
 extern unsigned int g_data_00ab48ba;
 extern unsigned int g_data_00ab48bc;
@@ -134,42 +134,42 @@ __declspec(naked) void GamepadSeqRecord_004bcc70(void)
         test     eax, eax
         mov      eax, dword ptr [esp + 8]
         jne      L_cd11
-        cmp      eax, OFFSET g_data_004ed040
+        cmp      eax, OFFSET g_movesPanelEnd_004ed040
         jne      L_ccbe
         inc      word ptr [g_data_00ab48b8]
         mov      ecx, 3
         add      word ptr [g_data_00ab48bc], cx
         add      word ptr [g_data_00ab48c0], cx
     L_ccbe:
-        cmp      eax, OFFSET g_data_004ed060
+        cmp      eax, OFFSET g_dispatchCmpEnd_004ed060
         jne      L_ccd3
         add      word ptr [g_data_00ab48bc], si
         add      word ptr [g_data_00ab48c0], si
     L_ccd3:
-        cmp      eax, OFFSET g_data_004ed000
+        cmp      eax, OFFSET g_installCountdownEnd_004ed000
         jne      L_ccf6
         inc      word ptr [g_data_00ab48b8]
         inc      word ptr [g_data_00ab48bc]
         inc      word ptr [g_data_00ab48c0]
         inc      word ptr [g_data_00ab48c2]
     L_ccf6:
-        cmp      eax, OFFSET g_data_004ed020
+        cmp      eax, OFFSET g_dispatchCmpEnd2_004ed020
         jne      L_cf5c
         inc      word ptr [g_data_00ab48b8]
         add      word ptr [g_data_00ab48bc], si
         jmp      L_cd7f
     L_cd11:
-        cmp      eax, OFFSET g_data_004ed040
+        cmp      eax, OFFSET g_movesPanelEnd_004ed040
         jne      L_cd2e
         inc      word ptr [g_data_00ab48b8]
         inc      word ptr [g_data_00ab48bc]
         add      word ptr [g_data_00ab48c0], 3
     L_cd2e:
-        cmp      eax, OFFSET g_data_004ed060
+        cmp      eax, OFFSET g_dispatchCmpEnd_004ed060
         jne      L_cd3c
         add      word ptr [g_data_00ab48c0], si
     L_cd3c:
-        cmp      eax, OFFSET g_data_004ed000
+        cmp      eax, OFFSET g_installCountdownEnd_004ed000
         jne      L_cd66
         inc      word ptr [g_data_00ab48b8]
         inc      word ptr [g_data_00ab48bc]
@@ -177,7 +177,7 @@ __declspec(naked) void GamepadSeqRecord_004bcc70(void)
         inc      word ptr [g_data_00ab48c0]
         inc      word ptr [g_data_00ab48c2]
     L_cd66:
-        cmp      eax, OFFSET g_data_004ed020
+        cmp      eax, OFFSET g_dispatchCmpEnd2_004ed020
         jne      L_cf5c
         inc      word ptr [g_data_00ab48b8]
         inc      word ptr [g_data_00ab48bc]
@@ -193,7 +193,7 @@ __declspec(naked) void GamepadSeqRecord_004bcc70(void)
         test     eax, eax
         mov      eax, dword ptr [esp + 8]
         jne      L_ce8c
-        cmp      eax, OFFSET g_data_004ed040
+        cmp      eax, OFFSET g_movesPanelEnd_004ed040
         jne      L_cde8
         mov      cx, word ptr [g_data_00ab48c0]
         inc      word ptr [g_data_00ab48b8]
@@ -207,7 +207,7 @@ __declspec(naked) void GamepadSeqRecord_004bcc70(void)
     L_cde8:
         mov      cx, word ptr [g_data_00ab48c0]
     L_cdef:
-        cmp      eax, OFFSET g_data_004ed060
+        cmp      eax, OFFSET g_dispatchCmpEnd_004ed060
         jne      L_ce1c
         add      word ptr [g_data_00ab48ba], dx
         add      word ptr [g_data_00ab48bc], si
@@ -216,14 +216,14 @@ __declspec(naked) void GamepadSeqRecord_004bcc70(void)
         dec      word ptr [g_data_00ab48c2]
         mov      word ptr [g_data_00ab48c0], cx
     L_ce1c:
-        cmp      eax, OFFSET g_data_004ed000
+        cmp      eax, OFFSET g_installCountdownEnd_004ed000
         jne      L_ce3a
         inc      word ptr [g_data_00ab48b8]
         inc      word ptr [g_data_00ab48bc]
         inc      cx
         mov      word ptr [g_data_00ab48c0], cx
     L_ce3a:
-        cmp      eax, OFFSET g_data_004ed020
+        cmp      eax, OFFSET g_dispatchCmpEnd2_004ed020
         jne      L_cf5c
         mov      dx, word ptr [g_data_00ab48b8]
         add      cx, si
@@ -244,7 +244,7 @@ __declspec(naked) void GamepadSeqRecord_004bcc70(void)
         pop      esi
         ret
     L_ce8c:
-        cmp      eax, OFFSET g_data_004ed040
+        cmp      eax, OFFSET g_movesPanelEnd_004ed040
         jne      L_cec9
         mov      cx, word ptr [g_data_00ab48c0]
         inc      word ptr [g_data_00ab48b8]
@@ -258,7 +258,7 @@ __declspec(naked) void GamepadSeqRecord_004bcc70(void)
     L_cec9:
         mov      cx, word ptr [g_data_00ab48c0]
     L_ced0:
-        cmp      eax, OFFSET g_data_004ed060
+        cmp      eax, OFFSET g_dispatchCmpEnd_004ed060
         jne      L_cef6
         add      word ptr [g_data_00ab48ba], dx
         dec      word ptr [g_data_00ab48be]
@@ -266,14 +266,14 @@ __declspec(naked) void GamepadSeqRecord_004bcc70(void)
         dec      word ptr [g_data_00ab48c2]
         mov      word ptr [g_data_00ab48c0], cx
     L_cef6:
-        cmp      eax, OFFSET g_data_004ed000
+        cmp      eax, OFFSET g_installCountdownEnd_004ed000
         jne      L_cf14
         inc      word ptr [g_data_00ab48b8]
         inc      word ptr [g_data_00ab48bc]
         inc      cx
         mov      word ptr [g_data_00ab48c0], cx
     L_cf14:
-        cmp      eax, OFFSET g_data_004ed020
+        cmp      eax, OFFSET g_dispatchCmpEnd2_004ed020
         jne      L_cf5c
         mov      dx, word ptr [g_data_00ab48b8]
         add      cx, si

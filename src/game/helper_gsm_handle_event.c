@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_data_004f5128;
+extern unsigned int g_gsmEventBase_004f5128;
 extern unsigned int g_data_004f512c;
 extern unsigned int g_data_00ab41c4;
 extern unsigned int g_data_00ab42f4;
@@ -23,7 +23,7 @@ __declspec(naked) void Helper_GSM_HandleEvent(void)
         push     esi
         jne      short L_84fc
         mov      bl, al
-        push     OFFSET g_data_004f5128
+        push     OFFSET g_gsmEventBase_004f5128
         or       bl, 1
         push     0
         mov      byte ptr [g_data_00ab42f4], bl
@@ -54,7 +54,7 @@ __declspec(naked) void Helper_GSM_HandleEvent(void)
         test     bl, 1
         je       short L_8563
         mov      eax, dword ptr [g_data_00ab41c4]
-        push     OFFSET g_data_004f5128
+        push     OFFSET g_gsmEventBase_004f5128
         push     eax
         call     TableSearchDesc_004b62c0
         add      esp, 8
@@ -67,7 +67,7 @@ __declspec(naked) void Helper_GSM_HandleEvent(void)
         jne      short L_85ba
         test     bl, 2
         je       short L_8584
-        push     OFFSET g_data_004f5128
+        push     OFFSET g_gsmEventBase_004f5128
         push     eax
         call     TableSearchAsc_004b6300
         add      esp, 8
@@ -90,7 +90,7 @@ __declspec(naked) void Helper_GSM_HandleEvent(void)
         mov      dword ptr [g_data_00ab4360], 0
     L_85ba:
         push     eax
-        push     OFFSET g_data_004f5128
+        push     OFFSET g_gsmEventBase_004f5128
         call     DrawMenu
         mov      eax, dword ptr [g_data_00ab4360]
         add      esp, 8

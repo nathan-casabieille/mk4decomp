@@ -112,7 +112,7 @@ extern void TableSearchAsc_004b6300(void);
 extern void TableSearchDesc_004b62c0(void);
 extern void DrawMenu(void *menu_items, s32 selection);
 extern void MenuInputPoll_004b7020(void);
-extern unsigned int g_data_004f5090;
+extern unsigned int g_gsmSub18Base_004f5090;
 extern unsigned int g_data_004f5094;
 extern unsigned char g_byte_00ab42d4;
 extern unsigned int g_data_00ab41a0;
@@ -127,7 +127,7 @@ extern unsigned int g_data_00ab4364;
  *       bl&2: TableSearchAsc again; bl&0x10: load word from g_data_004f5094[eax*8] → g_data_00ab4364;
  *       bl&0x20: g_data_00ab4364=0x45.
  *     If 0x45 → set 0x00ab4364=0.
- *     Final epilogue: push (eax, &g_data_004f5090); DrawMenu; pop ret.
+ *     Final epilogue: push (eax, &g_gsmSub18Base_004f5090); DrawMenu; pop ret.
  */
 __declspec(naked) void Helper_GSM_Sub18(void)
 {
@@ -139,7 +139,7 @@ __declspec(naked) void Helper_GSM_Sub18(void)
         push    esi
         jne     short L_skipSet
         mov     bl, al
-        push    offset g_data_004f5090
+        push    offset g_gsmSub18Base_004f5090
         or      bl, 1
         push    0
         mov     byte ptr [g_byte_00ab42d4], bl
@@ -170,7 +170,7 @@ __declspec(naked) void Helper_GSM_Sub18(void)
         test    bl, 1
         je      short L_skipDesc
         mov     eax, dword ptr [g_data_00ab41a0]
-        push    offset g_data_004f5090
+        push    offset g_gsmSub18Base_004f5090
         push    eax
         call    TableSearchDesc_004b62c0
         add     esp, 8
@@ -183,7 +183,7 @@ __declspec(naked) void Helper_GSM_Sub18(void)
         jne     short L_drawMenu
         test    bl, 2
         je      short L_checkBit4
-        push    offset g_data_004f5090
+        push    offset g_gsmSub18Base_004f5090
         push    eax
         call    TableSearchAsc_004b6300
         add     esp, 8
@@ -206,7 +206,7 @@ __declspec(naked) void Helper_GSM_Sub18(void)
         mov     dword ptr [g_data_00ab4364], 2
     L_drawMenu:
         push    eax
-        push    offset g_data_004f5090
+        push    offset g_gsmSub18Base_004f5090
         call    DrawMenu
         mov     eax, dword ptr [g_data_00ab4364]
         add     esp, 8

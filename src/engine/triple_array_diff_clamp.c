@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 extern unsigned int g_data_004d5328;
 extern unsigned int g_pendingMatchVar_004d5324;
-extern unsigned int g_x_004d5320;
+extern unsigned int g_pendingMatchVar3_004d5320;
 extern unsigned int g_eq_00542098;
 
 __declspec(naked) void TripleArrayDiffClamp_004251f0(void) {
@@ -143,7 +143,7 @@ loop_004251fd:
         _emit   7dh
         _emit   02h
         neg     ecx
-        mov     ebx, dword ptr [g_x_004d5320]
+        mov     ebx, dword ptr [g_pendingMatchVar3_004d5320]
         xor     edx, edx
         cmp     ecx, ebx
         mov     ecx, dword ptr [g_pendingMatchVar_004d5324]

@@ -183,8 +183,8 @@ extern unsigned int g_byte_005435a1;
 extern unsigned int g_byte_005435a2;
 extern unsigned int g_byte_00543619;
 extern unsigned int g_byte_0054361a;
-extern unsigned int g_data_004f3a58;
-extern unsigned int g_data_004f3a70;
+extern unsigned int g_audioPreloadVar2_004f3a58;
+extern unsigned int g_audioPreloadVar_004f3a70;
 extern unsigned int g_data_004f3a98;
 extern unsigned int g_data_004f3aa8;
 extern unsigned int g_audioPreloadBase_0050b118;
@@ -693,7 +693,7 @@ __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
         mov      edx, dword ptr [g_audioPreloadState_00543830]
         cmp      eax, 1
         lea      eax, [edx*4]
-        mov      ecx, dword ptr [eax + g_data_004f3a58]
+        mov      ecx, dword ptr [eax + g_audioPreloadVar2_004f3a58]
         lea      ecx, [ecx + ecx*2]
         jne      short L_6f2e
         mov      eax, dword ptr [eax + g_data_004f3a98]
@@ -708,14 +708,14 @@ __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
         jne      short L_6f5c
         mov      eax, dword ptr [g_audioPreloadState_00543830]
         shl      eax, 2
-        mov      ecx, dword ptr [eax + g_data_004f3a70]
+        mov      ecx, dword ptr [eax + g_audioPreloadVar_004f3a70]
         lea      ecx, [ecx + ecx*2]
         lea      ecx, [ecx*8 + g_byte_005435a0]
         jmp      short L_6f79
     L_6f5c:
         mov      edx, dword ptr [g_audioPreloadState_00543830]
         lea      eax, [edx*4]
-        mov      ecx, dword ptr [eax + g_data_004f3a70]
+        mov      ecx, dword ptr [eax + g_audioPreloadVar_004f3a70]
         lea      ecx, [ecx + ecx*2]
         lea      ecx, [ecx*8 + g_byte_005435b8]
     L_6f79:
@@ -931,13 +931,13 @@ __declspec(naked) void PendingMatch_004a70f0(void)
         cmp      dword ptr [g_count_005433b8], 4
         jne      L_746c
         mov      eax, dword ptr [g_audioPreloadState_00543830]
-        mov      eax, dword ptr [eax*4 + g_data_004f3a58]
+        mov      eax, dword ptr [eax*4 + g_audioPreloadVar2_004f3a58]
         lea      ecx, [eax + eax*2]
         lea      esi, [ecx*8 + g_byte_005435a0]
         jmp      L_7483
     L_746c:
         mov      edx, dword ptr [g_audioPreloadState_00543830]
-        mov      eax, dword ptr [edx*4 + g_data_004f3a70]
+        mov      eax, dword ptr [edx*4 + g_audioPreloadVar_004f3a70]
         lea      eax, [eax + eax*2]
         lea      esi, [eax*8 + g_byte_005435a0]
     L_7483:

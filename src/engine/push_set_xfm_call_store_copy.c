@@ -113,13 +113,13 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   call DispatcherComplex260_00407030; if pause: ret;
  *   g_eventQueueTotal = g_scaledInit; pop g_scaledInit; ret.
  */
-extern unsigned int g_data_004ec8f8;
+extern unsigned int g_phase4ThreePackedBase_004ec8f8;
 void PushSetXfmCallStoreCopy_0044d060(void) {
     unsigned int top;
     top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_scaledInit_00542044;
-    g_xformEntityIdx = (unsigned int)&g_data_004ec8f8 >> 2;
+    g_xformEntityIdx = (unsigned int)&g_phase4ThreePackedBase_004ec8f8 >> 2;
     DispatcherComplex260_00407030();
     if (g_framePauseFlag != 0) return;
     g_eventQueueTotal = g_scaledInit_00542044;

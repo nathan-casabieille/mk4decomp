@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004e2864;
+extern unsigned int g_poseGridGenVar_004e2864;
 extern unsigned int g_audioInitPeriodic_00537e90;
 extern unsigned int g_state2_00537ea8;
 extern unsigned int g_audioInstall2State_00537f88;
@@ -174,7 +174,7 @@ __declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
         jne     L_acsd_ret
         push    0x230
         call    TripleStageRollback_00404a50
-        mov     cx, word ptr [g_data_004e2864]
+        mov     cx, word ptr [g_poseGridGenVar_004e2864]
         add     esp, 4
         push    ecx
         call    TaggedSceneDispatch_004be690
@@ -227,7 +227,7 @@ __declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
     L_acsd_cmp11:
         cmp     eax, 0x11
         jne     short L_acsd_cmp12
-        mov     cx, word ptr [g_data_004e2864]
+        mov     cx, word ptr [g_poseGridGenVar_004e2864]
         mov     dword ptr [g_eventQueueEnd], ebx
         push    ecx
         call    TaggedSceneDispatch_004be690

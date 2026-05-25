@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_word_004e2860;
-extern unsigned int g_data_004e2864;
+extern unsigned int g_poseGridGenVar_004e2864;
 extern unsigned int g_dispatchArg_00535e48;
 extern unsigned int g_audioInitPeriodic_00537e90;
 extern unsigned int g_audioInstall2State_00537f88;
@@ -165,7 +165,7 @@ __declspec(naked) void AudioMStackPushHandlerPair_0049ff30(void)
     L_amspp_else:
         push    0x230
         call    TripleStageRollback_00404a50
-        mov     ax, word ptr [g_data_004e2864]
+        mov     ax, word ptr [g_poseGridGenVar_004e2864]
         add     esp, 4
         push    eax
     L_amspp_callBe690:

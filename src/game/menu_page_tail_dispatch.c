@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004f42d8;
 extern unsigned int g_data_004f42dc;
-extern unsigned int g_data_004f5328;
+extern unsigned int g_menuPageVar_004f5328;
 extern unsigned int g_data_004f6164;
 extern unsigned int g_data_004f6190;
 extern unsigned int g_data_004f61a0;
@@ -136,7 +136,7 @@ extern void StringSubstituteAfterColon_004b7160(void);
 __declspec(naked) void MenuPageTailDispatch_004b8080(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_004f5328]
+        mov      eax, dword ptr [g_menuPageVar_004f5328]
         mov      dword ptr [esp + 8], OFFSET g_data_004f61e0
         test     eax, eax
         mov      dword ptr [esp + 0xc], OFFSET g_data_004f61d8
@@ -145,7 +145,7 @@ __declspec(naked) void MenuPageTailDispatch_004b8080(void)
         mov      dword ptr [esp + 0x18], OFFSET g_data_004f61bc
         mov      dword ptr [esp + 0x1c], OFFSET g_data_004f61b0
         je       L_8152
-        mov      esi, OFFSET g_data_004f5328
+        mov      esi, OFFSET g_menuPageVar_004f5328
     L_80c2:
         movsx    eax, word ptr [esi + 4]
         add      eax, -0x3c
@@ -203,7 +203,7 @@ __declspec(naked) void MenuPageTailDispatch_004b8080(void)
     L_8152:
         mov      eax, dword ptr [g_data_00ab4328]
         push     eax
-        push     OFFSET g_data_004f5328
+        push     OFFSET g_menuPageVar_004f5328
         call     DrawMenu
         mov      eax, dword ptr [g_data_00ab4358]
         add      esp, 8

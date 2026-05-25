@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_pendingMatchVar_004d5324;
 extern unsigned int g_data_004d7b88;
-extern unsigned int g_data_004ec8f8;
+extern unsigned int g_phase4ThreePackedBase_004ec8f8;
 extern unsigned int g_data_004f00d0;
 extern unsigned int g_load_0052ab04;
 extern unsigned int g_load_0052ab08;
@@ -139,7 +139,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
         mov     dword ptr [esi + 0x84], edi
         cmp     eax, edi
         jne     L_p4tpis_A_call_0049cbc0
-        mov     ecx, offset g_data_004ec8f8
+        mov     ecx, offset g_phase4ThreePackedBase_004ec8f8
         shr     ecx, 2
         mov     dword ptr [g_xformEntityIdx], ecx
         call    DispatcherComplex260_00407030

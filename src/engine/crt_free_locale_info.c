@@ -130,8 +130,8 @@ extern unsigned int g_data_004d29f8;
 extern unsigned int g_data_004d29fc;
 extern unsigned int g_data_004d2b90;
 extern unsigned int g_data_004d2b94;
-extern unsigned int g_data_004d2f20;
-extern unsigned int g_data_004d2f24;
+extern unsigned int g_crtMemMoveLo_004d2f20;
+extern unsigned int g_crtMemMoveHi_004d2f24;
 extern unsigned int g_data_004d2f28;
 extern unsigned int g_data_004d505c;
 extern unsigned int g_data_004f478c;
@@ -343,7 +343,7 @@ __declspec(naked) void WcToMbDispatcher_004cdae0(void) {
         lea     eax, [esp + 0x12]
         push    eax
         push    1
-        push    offset g_data_004d2f24
+        push    offset g_crtMemMoveHi_004d2f24
         push    1
         call    dword ptr [g_iat_004d20b8]
         test    eax, eax
@@ -452,7 +452,7 @@ __declspec(naked) void WcToMbDispatcher_004cdae0(void) {
         lea     ecx, [esp + 0x12]
         push    ecx
         push    1
-        push    offset g_data_004d2f20
+        push    offset g_crtMemMoveLo_004d2f20
         push    1
         push    edi
         call    esi

@@ -464,8 +464,8 @@ extern unsigned int g_data_004eb9b0;
 extern unsigned int g_data_004eba10;
 extern unsigned int g_data_004ebbf8;
 extern unsigned int g_data_004ebc38;
-extern unsigned int g_data_004ec040;
-extern unsigned int g_data_004ec050;
+extern unsigned int g_dispatchTab_004ec040;
+extern unsigned int g_mul10TableBase_004ec050;
 extern unsigned int g_data_004ec060;
 extern unsigned int g_data_004ec078;
 extern unsigned int g_data_004ec950;
@@ -1818,7 +1818,7 @@ __declspec(naked) void StateMachineDualModuloInstall_0043d620(void) {
  *   ScaledIndexConditionalAdd_0048e400. Then dispatches on
  *   g_baseSel_00542060:
  *     - matches g_gtPlayerProbe2: if g_mul10SumState_0054388c is set, picks
- *       &g_data_004ec050>>2 (state 1) or &g_data_004ec040>>2 (other)
+ *       &g_mul10TableBase_004ec050>>2 (state 1) or &g_dispatchTab_004ec040>>2 (other)
  *       into g_eventQueueTotal, clears g_mul10SumState_0054388c, jumps to next.
  *     - matches g_gtPlayerProbe1: mirror with g_mul10SumState2_00543890.
  *     - default: both g_eventQueueTotal and 0x54204c set to the two
@@ -1852,9 +1852,9 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
         test    eax, eax
         je      short L_sfp_check2
         cmp     eax, 1
-        mov     eax, offset g_data_004ec050
+        mov     eax, offset g_mul10TableBase_004ec050
         je      short L_sfp_useEax1
-        mov     eax, offset g_data_004ec040
+        mov     eax, offset g_dispatchTab_004ec040
     L_sfp_useEax1:
         shr     eax, 2
         mov     dword ptr [g_eventQueueTotal], eax
@@ -1867,17 +1867,17 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
         test    eax, eax
         je      short L_sfp_defaultPath
         cmp     eax, 1
-        mov     eax, offset g_data_004ec050
+        mov     eax, offset g_mul10TableBase_004ec050
         je      short L_sfp_useEax2
-        mov     eax, offset g_data_004ec040
+        mov     eax, offset g_dispatchTab_004ec040
     L_sfp_useEax2:
         shr     eax, 2
         mov     dword ptr [g_eventQueueTotal], eax
         mov     dword ptr [g_mul10SumState2_00543890], 0
         jmp     short L_sfp_callBlock
     L_sfp_defaultPath:
-        mov     eax, offset g_data_004ec040
-        mov     ecx, offset g_data_004ec050
+        mov     eax, offset g_dispatchTab_004ec040
+        mov     ecx, offset g_mul10TableBase_004ec050
         shr     eax, 2
         shr     ecx, 2
         mov     dword ptr [g_pendingNodeType], eax

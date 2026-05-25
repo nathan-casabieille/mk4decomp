@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004f6398;
-extern unsigned int g_data_004f6580;
+extern unsigned int g_sunbeamSpriteVar_004f6580;
 extern u32 g_inLoopStep;
 extern unsigned int g_triStripRingB;
 extern s32 g_vtxOut2_z;
@@ -130,11 +130,11 @@ extern void ProjectVertex(void);
 __declspec(naked) void SunbeamSpriteEmit_004bd270(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_004f6580]
+        mov      eax, dword ptr [g_sunbeamSpriteVar_004f6580]
         mov      edx, dword ptr [g_data_00ab51fc]
         sub      esp, 0x2c
         add      eax, edx
-        mov      dword ptr [g_data_004f6580], eax
+        mov      dword ptr [g_sunbeamSpriteVar_004f6580], eax
         push     ebx
         mov      ebx, 0x64
         push     ebp
@@ -144,11 +144,11 @@ __declspec(naked) void SunbeamSpriteEmit_004bd270(void)
         jge      L_d2a3
         mov      eax, ebx
         mov      dword ptr [g_data_00ab51fc], 0x10
-        mov      dword ptr [g_data_004f6580], eax
+        mov      dword ptr [g_sunbeamSpriteVar_004f6580], eax
     L_d2a3:
         cmp      eax, 0x100
         jle      L_d2be
-        mov      dword ptr [g_data_004f6580], 0x100
+        mov      dword ptr [g_sunbeamSpriteVar_004f6580], 0x100
         mov      dword ptr [g_data_00ab51fc], 0xfffffff8
     L_d2be:
         mov      eax, dword ptr [g_inLoopStep]
@@ -209,7 +209,7 @@ __declspec(naked) void SunbeamSpriteEmit_004bd270(void)
         xor      eax, eax
     L_d387:
         movsx    edx, ax
-        mov      eax, dword ptr [g_data_004f6580]
+        mov      eax, dword ptr [g_sunbeamSpriteVar_004f6580]
         mov      ecx, 1
         imul     eax, edx
         sar      eax, 8
