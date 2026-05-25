@@ -14,7 +14,7 @@
 extern unsigned int g_installCountdownBase_00544298;
 extern unsigned int g_comptr_0058c7ac;
 extern unsigned int g_renderer2_state9_0058c7c8;
-extern unsigned int g_x_0058c7cc;
+extern unsigned int g_renderer2_var2_0058c7cc;
 extern int g_renderer2_present_rc;
 
 __declspec(naked) void R2_Init9(void) {
@@ -43,7 +43,7 @@ step2:
         test    eax, eax
         je      failPath
         mov     ecx, dword ptr [eax]
-        push    offset g_x_0058c7cc
+        push    offset g_renderer2_var2_0058c7cc
         push    0x004d28f0
         push    eax
         call    dword ptr [ecx]
@@ -51,7 +51,7 @@ step2:
         mov     eax, dword ptr [g_renderer2_state9_0058c7c8]
         test    eax, eax
         je      failPath
-        mov     eax, dword ptr [g_x_0058c7cc]
+        mov     eax, dword ptr [g_renderer2_var2_0058c7cc]
         test    eax, eax
         je      failPath
         mov     eax, 1

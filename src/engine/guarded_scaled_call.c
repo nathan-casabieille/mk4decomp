@@ -8,7 +8,7 @@ extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x0048a020 (45b)
- *   mov     eax, [g_state_00541dc0]
+ *   mov     eax, [g_dispatchVar9_00541dc0]
  *   test    eax, eax
  *   jl      +0x23
  *   mov     eax, [g_walkCallback]
@@ -22,12 +22,12 @@ extern unsigned int g_scaledInit_00542044;
  *   add     esp, 4
  *   ret
  */
-extern unsigned int g_state_00541dc0;
+extern unsigned int g_dispatchVar9_00541dc0;
 extern int func_004be690_b(int);
 void GuardedScaledCall_0048a020(void) {
     unsigned int walk;
     int v;
-    if ((int)g_state_00541dc0 < 0) return;
+    if ((int)g_dispatchVar9_00541dc0 < 0) return;
     walk = (unsigned int)g_walkCallback;
     if ((int)walk < 0) return;
     g_scaledInit_00542044 = walk;

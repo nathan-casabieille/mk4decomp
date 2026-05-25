@@ -13,13 +13,13 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_data_004d56c8;
 extern unsigned int g_data_004d56d0;
-extern unsigned int g_data_0053a1c0;
+extern unsigned int g_dispatchSave_0053a1c0;
 extern void Helper_Sprintf(void *buf, void *fmt, unsigned int arg);
 void Sprintf2WaySelect_00426550(void) {
-    g_scaledInit_00542044 = (unsigned int)&g_data_0053a1c0 >> 2;
+    g_scaledInit_00542044 = (unsigned int)&g_dispatchSave_0053a1c0 >> 2;
     if (g_currentNodeFlags == 2) {
-        Helper_Sprintf(&g_data_0053a1c0, &g_data_004d56c8, (unsigned int)g_walkCallback);
+        Helper_Sprintf(&g_dispatchSave_0053a1c0, &g_data_004d56c8, (unsigned int)g_walkCallback);
         return;
     }
-    Helper_Sprintf(&g_data_0053a1c0, &g_data_004d56d0, (unsigned int)g_walkCallback);
+    Helper_Sprintf(&g_dispatchSave_0053a1c0, &g_data_004d56d0, (unsigned int)g_walkCallback);
 }

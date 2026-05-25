@@ -15,10 +15,10 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  *   ret
  */
-extern unsigned int g_state_00543824;
+extern unsigned int g_dispatchSave_00543824;
 extern void func_0048a1ad(void);
 void TestZeroJmp_004a42b0(void) {
-    if (!g_state_00543824) return;
-    g_state_00543824 = 0;
+    if (!g_dispatchSave_00543824) return;
+    g_dispatchSave_00543824 = 0;
     func_0048a1ad();
 }

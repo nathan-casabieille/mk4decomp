@@ -46,7 +46,7 @@
 #include "engine/scenegraph.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_state_0053a2c0;
+extern unsigned int g_dispatchSave_0053a2c0;
 extern unsigned int g_cj_00535df0;
 
 /* @addr 0x00476060 */
@@ -63,7 +63,7 @@ __declspec(naked) void DispatcherComplex138_00476060(void) {
         test    eax, eax
         _emit   75h
         _emit   1fh
-        mov     eax, dword ptr [g_state_0053a2c0]
+        mov     eax, dword ptr [g_dispatchSave_0053a2c0]
         test    eax, eax
         mov     dword ptr [g_scaledInit_00542044], eax
         _emit   74h

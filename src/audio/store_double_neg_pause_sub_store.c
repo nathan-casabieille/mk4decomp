@@ -8,17 +8,17 @@ extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x004ab750 (62b)
- *   load walk; store g_state_00538130; double eax; if neg → neg eax;
+ *   load walk; store g_dispatchSave_00538130; double eax; if neg → neg eax;
  *   store walk; call F; pause-test → ret;
- *   load g_state_00538130 - walk → walk.
+ *   load g_dispatchSave_00538130 - walk → walk.
  */
-extern unsigned int g_state_00538130;
+extern unsigned int g_dispatchSave_00538130;
 extern void AudioMixerStep_004ab700(void);
 void StoreDoubleNegPauseSubStore_004ab750(void) {
     int saved;
     int v;
     saved = (int)g_walkCallback;
-    g_state_00538130 = (unsigned int)saved;
+    g_dispatchSave_00538130 = (unsigned int)saved;
     v = saved + saved;
     g_walkCallback = (void (*)(void))v;
     if (v < 0) {
@@ -27,5 +27,5 @@ void StoreDoubleNegPauseSubStore_004ab750(void) {
     }
     AudioMixerStep_004ab700();
     if (g_framePauseFlag != 0) return;
-    g_walkCallback = (void (*)(void))((unsigned int)g_walkCallback - g_state_00538130);
+    g_walkCallback = (void (*)(void))((unsigned int)g_walkCallback - g_dispatchSave_00538130);
 }

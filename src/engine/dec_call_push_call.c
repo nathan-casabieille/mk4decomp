@@ -9,11 +9,11 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_phaseTimer_00537e94;
 
 /* @addr 0x00466090 (61b)
- *   dec g_walkCallback; store both walk and g_state_0053a238
+ *   dec g_walkCallback; store both walk and g_dispatchVar15_0053a238
  *   je → jmp T1; mov [g_walkCallback], 6
  *   call F; pause → ret; push lit; call F2; add esp,4; ret
  */
-extern unsigned int g_state_0053a238;
+extern unsigned int g_dispatchVar15_0053a238;
 extern void TripleBlockInstallSelf_00465ef0(void);
 extern void AndShlStore_00409280(void);
 extern int ArgSarStoreJmp_004594f0(void *);
@@ -24,7 +24,7 @@ __declspec(naked) void DecCallPushCall_00466090(void) {
         mov     eax, dword ptr [g_walkCallback]
         dec     eax
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_state_0053a238], eax
+        mov     dword ptr [g_dispatchVar15_0053a238], eax
         je      short L_dcpc_body
         jmp     TripleBlockInstallSelf_00465ef0
 L_dcpc_body:

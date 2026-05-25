@@ -17,13 +17,13 @@ extern unsigned int g_acc_00542078;
  *   jne     +0x1a
  *   test    byte [g_xformDirtyFlags], 1
  *   jne     +0x11
- *   mov     ecx, [g_state_0053a2c0]
+ *   mov     ecx, [g_dispatchSave_0053a2c0]
  *   mov     [g_eventQueueIdx], ecx
  *   jmp     +0x0e
  *   ret
  */
 extern unsigned int g_cj_00535df0;
-extern unsigned int g_state_0053a2c0;
+extern unsigned int g_dispatchSave_0053a2c0;
 extern void func_004396f1(void);
 extern void func_004396ff(void);
 void StoreCallPauseDirtyStoreJmp_004396c0(void) {
@@ -31,6 +31,6 @@ void StoreCallPauseDirtyStoreJmp_004396c0(void) {
     func_004396f1();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 1) != 0) return;
-    g_eventQueueIdx = g_state_0053a2c0;
+    g_eventQueueIdx = g_dispatchSave_0053a2c0;
     func_004396ff();
 }

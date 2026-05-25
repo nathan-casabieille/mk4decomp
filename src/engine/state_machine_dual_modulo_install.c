@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_phaseThunkVar8_0053a2d4;
-extern unsigned int g_x_00501160;
+extern unsigned int g_dispatchSave254_00501160;
 extern unsigned int g_arr_005d83a4_indexed_24;
 extern unsigned int g_arr_005d83a4_indexed_28;
 extern unsigned char g_str_0043d8c0;
@@ -137,7 +137,7 @@ __declspec(naked) void CountdownStoreCallChain_0043d5a0(void) {
         jmp     DualEntryStub_0043d510
 L_csc_body:
         mov     edx, dword ptr [g_cj_0054205c]
-        mov     ecx, offset g_x_00501160
+        mov     ecx, offset g_dispatchSave254_00501160
         shr     ecx, 2
         mov     dword ptr [edx*4 + g_arr_005d83a4_indexed_24], ecx
         mov     ecx, dword ptr [g_cj_0054205c]

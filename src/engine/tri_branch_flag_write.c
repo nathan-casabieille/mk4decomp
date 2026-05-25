@@ -112,11 +112,11 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   If g_audioMatchStartFlag_00543714 == 1 && g_audioTriEntryFlag_005433ec == 0:
  *     if g_active_0053a408: call ClampTwoToMax_004226a0; goto setB.
  *     else: write 0x10000 to walkCallback/0x53a6dc/0x53a328.
- *     setB: if g_x_00537e88: call ClampTwoToMax_004226e0; ret.
+ *     setB: if g_active_00537e88: call ClampTwoToMax_004226e0; ret.
  *     else: write 0x10000 to walkCallback/0x537f2c/0x53e348; ret.
  *   Else: clear g_audioTriEntryFlag_005433ec; write 0x10000 to all 5 globals; ret.
  */
-extern unsigned int g_x_00537e88;
+extern unsigned int g_active_00537e88;
 extern unsigned int g_clamp_00537f2c;
 extern unsigned int g_clamp_0053a328;
 extern unsigned int g_active_0053a408;
@@ -149,7 +149,7 @@ __declspec(naked) void TriBranchFlagWrite_00422720(void) {
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [g_clamp_0053a6dc], esi
         mov     dword ptr [g_clamp_0053a328], esi
-        mov     eax, dword ptr [g_x_00537e88]
+        mov     eax, dword ptr [g_active_00537e88]
         test    eax, eax
         _emit   74h
         _emit   07h
