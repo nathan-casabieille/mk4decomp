@@ -68,5 +68,5 @@ void Push16Call_00489f50(void) {
  *   ret
  */
 void ClearBit2x34_00490130(void) {
-    *(int *)(g_fightGroupHead * 4 + 0x34) &= ~4;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->state_mask &= ~4u;
 }

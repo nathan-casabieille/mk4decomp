@@ -120,9 +120,9 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern void DualEntry4002Chain_00482b60(void);
 void CmpDualPatchCallJmp_00482b00(void) {
     unsigned int field;
-    field = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x3c);
+    field = ((ScenegraphNode *)(g_baseSel_00542060 * 4))->child_a;
     g_scaledInit_00542044 = field;
-    field = *(unsigned int *)(field * 4 + 0x34);
+    field = ((ScenegraphNode *)(field * 4))->state_mask;
     g_walkCallback = (void (*)(void))field;
     if (field == 0x10) {
         field = 2;

@@ -133,7 +133,7 @@ void GuardedChainDispatch_00421fe0(void) {
         a = g_gtPlayerProbe1;
         g_scaledInit_00542044 = a;
     }
-    field = *(unsigned int *)(a * 4 + 0x34);
+    field = ((ScenegraphNode *)(a * 4))->state_mask;
     g_walkCallback = (void (*)(void))field;
     if (field == 0xf) goto maskOut;
     TwoPushCallSetDirty_00422050();

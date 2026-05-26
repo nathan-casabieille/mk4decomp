@@ -124,7 +124,7 @@ void AudioSwapNegate_004ac080(void) {
     g_xformEntityIdx = g_load_0052ab10;
     v = (unsigned int)(-(int)*(int *)(g_load_0052ab10 * 4 + 0x64));
     g_walkCallback = (void(*)(void))v;
-    chain = *(unsigned int *)(g_cj_0054205c * 4 + 0x34);
+    chain = ((ScenegraphNode *)(g_cj_0054205c * 4))->state_mask;
     g_eventQueueCurrent = chain;
     chain &= 1;
     g_xformScratch94 = chain;
