@@ -114,7 +114,7 @@ void GuardedDualScaledChainCopy_0044dd00(void) {
     g_walkCallback = (void (*)(void))*(unsigned int *)(g_cj_0054205c * 4 + 0x30);
     SetJmp_0049cb90();
     if (g_framePauseFlag != 0) return;
-    v = *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x40);
+    v = ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->child_b;
     g_xformEntityIdx = v;
     v = *(unsigned int *)(v * 4);
     g_walkCallback = (void (*)(void))v;
