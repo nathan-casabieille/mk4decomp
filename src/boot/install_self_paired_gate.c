@@ -118,8 +118,8 @@ extern void InstallSelfPairedGate_004048b0(void);
 extern unsigned int g_pendingNodeTypeSrc_00542068;
 void InstallSelfPairedGate_004048b0(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
-    unsigned int prev = *(unsigned int *)(base + 0x84);
-    *(unsigned int *)(base + 0x84) = 0;
+    unsigned int prev = ((ScenegraphNode *)base)->install_flag;
+    ((ScenegraphNode *)base)->install_flag = 0;
     if (prev != 0) {
         Ten404c40_404bd0_00426780();
         if (g_framePauseFlag != 0) return;
@@ -130,6 +130,6 @@ void InstallSelfPairedGate_004048b0(void) {
     if (g_framePauseFlag != 0) return;
     g_pendingNodeType = g_pendingNodeTypeSrc_00542068;
     *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfPairedGate_004048b0;
-    *(unsigned int *)(base + 0x84) = 1;
+    ((ScenegraphNode *)base)->install_flag = 1;
     g_framePauseFlag = 1;
 }

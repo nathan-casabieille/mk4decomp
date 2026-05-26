@@ -118,8 +118,8 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern void InstallSelfOrChainCmpJmp_0047a8f0(void);
 void InstallSelfOrChainCmpJmp_0047a8f0(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
-    unsigned int v = *(unsigned int *)(base + 0x84);
-    *(unsigned int *)(base + 0x84) = 0;
+    unsigned int v = ((ScenegraphNode *)base)->install_flag;
+    ((ScenegraphNode *)base)->install_flag = 0;
     if (v != 0) {
         InstallSelfFullPath_0047a840();
         return;
@@ -129,7 +129,7 @@ void InstallSelfOrChainCmpJmp_0047a8f0(void) {
         return;
     }
     *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfOrChainCmpJmp_0047a8f0;
-    *(unsigned int *)(base + 0x84) = 1;
+    ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 8;
     g_framePauseFlag = 1;
 }

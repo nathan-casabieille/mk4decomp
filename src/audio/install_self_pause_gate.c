@@ -116,8 +116,8 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern void InstallSelfPauseGate_004a1a50(void);
 void InstallSelfPauseGate_004a1a50(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
-    unsigned int v = *(unsigned int *)(base + 0x84);
-    *(unsigned int *)(base + 0x84) = 0;
+    unsigned int v = ((ScenegraphNode *)base)->install_flag;
+    ((ScenegraphNode *)base)->install_flag = 0;
     if (v != 0) {
         g_currentNodeIdx = g_cj_0054205c;
         MStackPush2ChainLLInsert_00406790();
@@ -127,7 +127,7 @@ void InstallSelfPauseGate_004a1a50(void) {
     }
     g_cj_0054205c = g_currentNodeIdx;
     *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfPauseGate_004a1a50;
-    *(unsigned int *)(base + 0x84) = 1;
+    ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 0x26;
     g_framePauseFlag = 1;
 }
