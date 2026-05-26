@@ -51,6 +51,6 @@ void ScaledMove48to58_00490720(void) {
     packed_ptr fg = g_fightGroupHead;
     unsigned int v = *(unsigned int *)(fg * 4 + 0x48);
     g_walkCallback = (void (*)(void))v;
-    *(unsigned int *)(fg * 4 + 0x58) = v;
+    ((ScenegraphNode *)(fg * 4))->position_y = v;
     ScaledZeroFour_00490740();
 }

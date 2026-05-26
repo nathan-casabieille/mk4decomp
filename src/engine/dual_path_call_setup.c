@@ -136,5 +136,5 @@ void DualPathCallSetup_00458030(void) {
     MStackCall_00406340();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))0x1b333;
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x58) = 0x1b333;
+    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_y = 0x1b333;
 }
