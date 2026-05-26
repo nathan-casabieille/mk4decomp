@@ -2616,7 +2616,7 @@ Thunk_004c48b0
 ShowErrorMessage
 Helper_PostCreateWindow
 Win32_GetHInstance
-PendingMatch_004c49b0
+WndProc
 Boot
 AppInit_Misc8
 PumpMessages

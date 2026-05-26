@@ -304,7 +304,7 @@ Total: 99 functions, sorted by size.
 - top callees: `ArgSarStoreJmp_004594f0`×7, `SlotEvent3EntryChain_0046fdf0`×4, `ScaledAndAlfe_00490390`×4, `IterStepScaledStore_0048e600`×4, `TripleCallPauseJmp_00470500`×2, `GuardedDirtyXformFromTable_0048f6d0`×2, `Thunk_0049cbd0`, `extern_-0x17b8cd33`
 - top globals: `g_framePauseFlag`×22, `0x542060`×9, `g_matrixStackTop`×9, `g_eventQueueEnd`×8, `0x54206c`×5, `g_eventQueuePending`, `g_currentNodeIdx`
 
-## PendingMatch_004c49b0 @ 0x4c49b0 (1728b)
+## WndProc @ 0x4c49b0 (1728b)
 
 - file: `src/platform/win32/pending_match.c`
 - traits: SEH (fs:[0]), x87 FPU, IAT calls: 12, cond jmps: 20

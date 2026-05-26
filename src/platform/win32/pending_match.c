@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-__declspec(naked) void PendingMatch_004c49b0(void)
+__declspec(naked) void WndProc(void)
 {
     __asm {
         _emit    0x83

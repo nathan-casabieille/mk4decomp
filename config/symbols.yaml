@@ -16248,7 +16248,7 @@ functions:
     status: matched
     file: src/engine/getters.c
   - addr: 0x004c49b0
-    name: PendingMatch_004c49b0
+    name: WndProc
     size: 1728
     group: platform.win32
     status: matched
