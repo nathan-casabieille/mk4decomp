@@ -20,5 +20,5 @@ void LoadStoreScaled58_004314d0(void) {
     unsigned int idx = g_load_0052ab10;
     g_fightGroupHead = idx;
     g_walkCallback   = (void(*)(void))0xfffe8000;
-    *(unsigned int *)(idx * 4 + 0x58) = 0xfffe8000;
+    ((ScenegraphNode *)(idx * 4))->position_y = (s32)0xfffe8000;
 }

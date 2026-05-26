@@ -125,6 +125,6 @@ void AudioBindEntry_004a1e40(unsigned int arg) {
     MStackPushComplexCallPop_004064b0();
     if (g_framePauseFlag != 0) return;
     *(unsigned int *)(g_currentNodeIdx * 4 + 0x54) = 0;
-    *(unsigned int *)(g_currentNodeIdx * 4 + 0x58) = 0xf0600000;
+    ((ScenegraphNode *)(g_currentNodeIdx * 4))->position_y = (s32)0xf0600000;
     *(unsigned int *)(g_currentNodeIdx * 4 + 0x5c) = 0x00010000;
 }
