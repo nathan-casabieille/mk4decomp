@@ -26,7 +26,7 @@ void ScaledIncCmpJmp_004297d0(void) {
     int cmp_val;
     idx = g_fightGroupHead;
     scaled = g_scaledInit_00542044;
-    v = *(unsigned int *)(idx * 4 + 0x28) + 1;
+    v = ((ScenegraphNode *)(idx * 4))->queue_idx + 1;
     g_eventQueueCurrent = v;
     cmp_val = *(int *)(scaled * 4 + 4);
     if ((int)v < cmp_val) {

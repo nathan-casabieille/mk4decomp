@@ -28,9 +28,9 @@ void ScaledIncCmpDualJmp_00429800(void) {
     unsigned int v;
     int cmp_val;
     idx = g_fightGroupHead;
-    scaled = *(unsigned int *)(idx * 4 + 0x24);
+    scaled = ((ScenegraphNode *)(idx * 4))->queue_end;
     g_scaledInit_00542044 = scaled;
-    v = *(unsigned int *)(idx * 4 + 0x28) + 1;
+    v = ((ScenegraphNode *)(idx * 4))->queue_idx + 1;
     g_walkCallback = (void (*)(void))v;
     cmp_val = *(int *)(scaled * 4 + 4);
     if ((int)v >= cmp_val) {
