@@ -18,7 +18,7 @@ void ScenegraphWalk_0041f7d0(void) {
     unsigned char *p = (unsigned char *)&g_nodeSlotsArea;
     do {
         unsigned int v;
-        if (*(unsigned int *)(p + 0xd8) == 0) goto advance;
+        if (((ScenegraphNode *)p)->ptr_field == 0) goto advance;
         v = (unsigned int)((int)(unsigned int)p >> 2);
         g_scaledInit_00542044 = v;
         if (v == g_baseSel_00542060) goto advance;
