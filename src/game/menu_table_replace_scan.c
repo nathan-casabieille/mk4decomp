@@ -109,13 +109,13 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /*
- * MenuTableReplaceScan_004b71b0 - 176b menu helper: scans a 13-slot table
+ * Input_RebindKeyToAction - 176b menu helper: scans a 13-slot table
  *   pair starting at 0x00543ac0 (outer step 4, scans offsets -8..+0x58 step 8)
  *   and replaces any slot equal to arg2 with the saved [arg1] value, clearing
  *   the replacement value after use. Stores final value to [arg1] before
  *   returning. Early-out when arg2 == 0.
  */
-__declspec(naked) void MenuTableReplaceScan_004b71b0(void)
+__declspec(naked) void Input_RebindKeyToAction(void)
 {
     __asm
     {

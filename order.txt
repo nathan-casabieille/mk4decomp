@@ -2460,9 +2460,9 @@ Helper_DrawMenu_PostRender
 Helper_GSM_VS
 Menu_PollNavInput
 StringSubstituteAfterColon_004b7160
-MenuTableReplaceScan_004b71b0
+Input_RebindKeyToAction
 Helper_GSM_Tournament
-NineSlotReplace_004b7a40
+Input_RebindButtonToAction
 Helper_GSM_Practice
 PendingMatch_004b7ce0
 Helper_GSM_Options

@@ -124,7 +124,7 @@ extern unsigned int g_nineSlotKey6_00543b50;
 extern unsigned int g_nineSlotKey7_00543b58;
 extern unsigned int g_nineSlotKey8_00543b60;
 
-void NineSlotReplace_004b7a40(unsigned int *p, unsigned int val, unsigned int idx)
+void Input_RebindButtonToAction(unsigned int *p, unsigned int val, unsigned int idx)
 {
     unsigned int saved = *p;
     *p = 0;

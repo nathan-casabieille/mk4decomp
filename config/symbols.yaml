@@ -15264,7 +15264,7 @@ functions:
     status: matched
     file: src/game/string_substitute_after_colon.c
   - addr: 0x004b71b0
-    name: MenuTableReplaceScan_004b71b0
+    name: Input_RebindKeyToAction
     size: 176
     group: game.menu
     status: matched
@@ -15276,7 +15276,7 @@ functions:
     status: matched
     file: src/game/helper_gsm_tournament.c
   - addr: 0x004b7a40
-    name: NineSlotReplace_004b7a40
+    name: Input_RebindButtonToAction
     size: 193
     group: game.menu
     status: matched
