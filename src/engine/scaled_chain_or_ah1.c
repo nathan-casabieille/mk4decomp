@@ -21,7 +21,7 @@ void ScaledChainOrAh1_004462f0(void) {
     unsigned int scaled = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x5c);
     unsigned int v;
     g_scaledInit_00542044 = scaled;
-    v = *(unsigned int *)(scaled * 4 + 0x20) | 0x100;
+    v = ((ScenegraphNode *)(scaled * 4))->flags | 0x100;
     g_walkCallback = (void (*)(void))v;
-    *(unsigned int *)(scaled * 4 + 0x20) = v;
+    ((ScenegraphNode *)(scaled * 4))->flags = v;
 }

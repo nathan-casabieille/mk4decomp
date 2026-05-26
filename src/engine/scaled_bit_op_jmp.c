@@ -18,9 +18,9 @@ extern unsigned int g_scaledInit_00542044;
 extern void func_00476e1d(void);
 void ScaledOr4Jmp_00476e00(void) {
     unsigned int scaled = g_scaledInit_00542044;
-    unsigned int v = *(unsigned int *)(scaled * 4 + 0x20) | 4;
+    unsigned int v = ((ScenegraphNode *)(scaled * 4))->flags | 4;
     g_walkCallback = (void (*)(void))v;
-    *(unsigned int *)(scaled * 4 + 0x20) = v;
+    ((ScenegraphNode *)(scaled * 4))->flags = v;
     func_00476e1d();
 }
 
@@ -28,8 +28,8 @@ void ScaledOr4Jmp_00476e00(void) {
 extern void func_00476ffd(void);
 void ScaledAndFBJmp_00476fe0(void) {
     unsigned int scaled = g_scaledInit_00542044;
-    unsigned int v = *(unsigned int *)(scaled * 4 + 0x20) & 0xfffffffbu;
+    unsigned int v = ((ScenegraphNode *)(scaled * 4))->flags & 0xfffffffbu;
     g_walkCallback = (void (*)(void))v;
-    *(unsigned int *)(scaled * 4 + 0x20) = v;
+    ((ScenegraphNode *)(scaled * 4))->flags = v;
     func_00476ffd();
 }
