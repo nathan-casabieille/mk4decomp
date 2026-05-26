@@ -22,7 +22,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void func_00473461(void);
 void ScaledLoadDirtyOrSetJmp_00473450(void) {
-    unsigned int v = *(unsigned int *)(g_fightGroupHead * 4 + 0x18);
+    unsigned int v = ((ScenegraphNode *)(g_fightGroupHead * 4))->child_chain;
     g_walkCallback = (void (*)(void))v;
     if (v == 0) {
         g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffeu;

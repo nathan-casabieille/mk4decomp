@@ -27,5 +27,5 @@ void IterStepDualStore_00490b40(int arg) {
     packed++;
     g_eventQueueTotal = packed;
     g_pendingNodeType = v;
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x44) = v;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->child_c = v;
 }
