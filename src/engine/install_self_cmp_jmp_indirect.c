@@ -115,7 +115,7 @@ void InstallSelfCmpJmpIndirect_0048f470(void) {
     unsigned int slot84 = *(unsigned int *)(base + 0x84);
     *(unsigned int *)(base + 0x84) = 0;
     if (slot84 != 0) {
-        unsigned int chain = *(unsigned int *)(g_cj_0054205c * 4 + 0x58);
+        unsigned int chain = ((ScenegraphNode *)(g_cj_0054205c * 4))->position_y;
         g_walkCallback = (void (*)(void))chain;
         if ((int)g_currentNodeFlags <= (int)chain) {
             (*(void (**)(void))&g_eventQueueEnd)();

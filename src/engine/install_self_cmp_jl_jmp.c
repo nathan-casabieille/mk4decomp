@@ -115,7 +115,7 @@ void InstallSelfCmpJlJmp_00480b20(void) {
     unsigned int v = *(unsigned int *)(base + 0x84);
     *(unsigned int *)(base + 0x84) = 0;
     if (v != 0) {
-        unsigned int cb = *(unsigned int *)(g_cj_0054205c * 4 + 0x58);
+        unsigned int cb = ((ScenegraphNode *)(g_cj_0054205c * 4))->position_y;
         g_walkCallback = (void (*)(void))cb;
         if ((int)cb >= (int)g_eventQueueNotMask) {
             StackPopDispatchTagged_0041f780();

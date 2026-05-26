@@ -121,7 +121,7 @@ void InstallSelfPushDualCallCmpGt_0048f650(void) {
         int v;
         ((void (*)(int))ThreeChanPackClamp_00404cc0)(0x00201000);
         ((void (*)(int))CopyThreeFields_00404df0)((int)g_cj_0054205c);
-        v = *(int *)(g_cj_0054205c * 4 + 0x58);
+        v = ((ScenegraphNode *)(g_cj_0054205c * 4))->position_y;
         g_walkCallback = (void (*)(void))v;
         if (v <= (int)g_currentNodeFlags) {
             StackPopDispatchTagged_0041f780();
