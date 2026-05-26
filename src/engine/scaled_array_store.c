@@ -21,61 +21,61 @@ extern void GuardedChainCmpDualBitXor_004299a0(void);   /* 0x004299a0 */
 
 /* @addr 0x00428330 - g_X[idx*4 + 0x28] = g_Y; jmp T */
 void ScaledArrStore_00428330(void) {
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = (unsigned int)g_walkCallback;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = (unsigned int)g_walkCallback;
     GuardedSeq_00428350();
 }
 
 /* @addr 0x004285c0 - g_X[idx*4 + 0x24] = g_Y; jmp T */
 void ScaledArrStore_004285c0(void) {
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x24) = (unsigned int)g_eventQueueIdx;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end = (unsigned int)g_eventQueueIdx;
     CallDualStoreXorBit_004285e0();
 }
 
 /* @addr 0x00428e70 - g_X[idx*4 + 0x28] = g_Y; jmp T */
 void ScaledArrStore_00428e70(void) {
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = (unsigned int)g_eventQueueCurrent;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = (unsigned int)g_eventQueueCurrent;
     EsiInstallBitCallChain_00429530();
 }
 
 /* @addr 0x004293b0 - g_X[idx*4 + 0x28] = g_Y; jmp T */
 void ScaledArrStore_004293b0(void) {
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = (unsigned int)g_walkCallback;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = (unsigned int)g_walkCallback;
     EsiInstallBitCallChain_00429610();
 }
 
 /* @addr 0x00429450 - g_X[idx*4 + 0x24] = g_Y; jmp T */
 void ScaledArrStore_00429450(void) {
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x24) = (unsigned int)g_xformEntityIdx;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end = (unsigned int)g_xformEntityIdx;
     ScaledChainJmp_00429470();
 }
 
 /* @addr 0x004298c0 - g_X[idx*4 + 0x24] = g_Y; jmp T */
 void ScaledArrStore_004298c0(void) {
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x24) = (unsigned int)g_xformEntityIdx;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end = (unsigned int)g_xformEntityIdx;
     ScaledChainJmp_004298e0();
 }
 
 /* @addr 0x00429910 - g_X[idx*4 + 0x24] = g_Y; jmp T */
 void ScaledArrStore_00429910(void) {
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x24) = (unsigned int)g_xformEntityIdx;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end = (unsigned int)g_xformEntityIdx;
     ScaledArrStore_00429960();
 }
 
 /* @addr 0x00429930 - g_X[idx*4 + 0x24] = g_Y; jmp T */
 void ScaledArrStore_00429930(void) {
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x24) = (unsigned int)g_xformEntityIdx;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end = (unsigned int)g_xformEntityIdx;
     SetJmp_00429950();
 }
 
 /* @addr 0x00429960 - g_X[idx*4 + 0x28] = g_Y; jmp T */
 void ScaledArrStore_00429960(void) {
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = (unsigned int)g_walkCallback;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = (unsigned int)g_walkCallback;
     GuardedChainCmpDualBitXor_004299a0();
 }
 
 /* @addr 0x00429980 - g_X[idx*4 + 0x28] = g_Y; jmp T */
 void ScaledArrStore_00429980(void) {
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = (unsigned int)g_eventQueueChild;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = (unsigned int)g_eventQueueChild;
     GuardedChainCmpDualBitXor_004299a0();
 }
 
