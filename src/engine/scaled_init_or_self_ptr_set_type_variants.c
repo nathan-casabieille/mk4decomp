@@ -14,14 +14,14 @@ extern void ThresholdInitInstallSelfChain_00436120(void);
 extern void ScaledInitOrSelfPtrSetType_00434d60(void);
 void ScaledInitOrSelfPtrSetType_00434d60(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
-    unsigned int v = *(unsigned int *)(base + 0x84);
-    *(unsigned int *)(base + 0x84) = 0;
+    unsigned int v = ((ScenegraphNode *)base)->install_flag;
+    ((ScenegraphNode *)base)->install_flag = 0;
     if (v != 0) {
         ThresholdInitInstallSelfChain_00436120();
         return;
     }
     *(unsigned int *)(base + 8) = (unsigned int)&ScaledInitOrSelfPtrSetType_00434d60;
-    *(unsigned int *)(base + 0x84) = 1;
+    ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 8;
     g_framePauseFlag = 1;
 }
@@ -31,14 +31,14 @@ extern void QuadEntryGateChain_0046a630(void);
 extern void ScaledInitOrSelfPtrSetType_0046a5e0(void);
 void ScaledInitOrSelfPtrSetType_0046a5e0(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
-    unsigned int v = *(unsigned int *)(base + 0x84);
-    *(unsigned int *)(base + 0x84) = 0;
+    unsigned int v = ((ScenegraphNode *)base)->install_flag;
+    ((ScenegraphNode *)base)->install_flag = 0;
     if (v != 0) {
         QuadEntryGateChain_0046a630();
         return;
     }
     *(unsigned int *)(base + 8) = (unsigned int)&ScaledInitOrSelfPtrSetType_0046a5e0;
-    *(unsigned int *)(base + 0x84) = 1;
+    ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 3;
     g_framePauseFlag = 1;
 }
@@ -48,14 +48,14 @@ extern void TripleSubInstallSelfPair_0047a670(void);
 extern void ScaledInitOrSelfPtrSetType_0047a620(void);
 void ScaledInitOrSelfPtrSetType_0047a620(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
-    unsigned int v = *(unsigned int *)(base + 0x84);
-    *(unsigned int *)(base + 0x84) = 0;
+    unsigned int v = ((ScenegraphNode *)base)->install_flag;
+    ((ScenegraphNode *)base)->install_flag = 0;
     if (v != 0) {
         TripleSubInstallSelfPair_0047a670();
         return;
     }
     *(unsigned int *)(base + 8) = (unsigned int)&ScaledInitOrSelfPtrSetType_0047a620;
-    *(unsigned int *)(base + 0x84) = 1;
+    ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 0xa;
     g_framePauseFlag = 1;
 }

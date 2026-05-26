@@ -118,8 +118,8 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern void InstallSelfTri_00484a90(void);
 void InstallSelfTri_00484a90(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
-    unsigned int v = *(unsigned int *)(base + 0x84);
-    *(unsigned int *)(base + 0x84) = 0;
+    unsigned int v = ((ScenegraphNode *)base)->install_flag;
+    ((ScenegraphNode *)base)->install_flag = 0;
     if (v != 0) {
         unsigned int wt = g_audioBankSel_00537f94;
         g_walkCallback = (void (*)(void))wt;
@@ -137,7 +137,7 @@ void InstallSelfTri_00484a90(void) {
         return;
     }
     *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfTri_00484a90;
-    *(unsigned int *)(base + 0x84) = 1;
+    ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;
 }
