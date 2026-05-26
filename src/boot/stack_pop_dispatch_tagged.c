@@ -22,7 +22,7 @@ void StackPopDispatchTagged_0041f780(void) {
     g_scaledInit_00542044 = top;
     g_walkCallback = (void (*)(void))*(unsigned int *)(top * 4);
     *(unsigned int *)(base * 4 + 4) = top;
-    *(int *)(g_baseSel_00542060 * 4 + 0x84) = (int)g_walkCallback >> 24;
+    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->install_flag = (unsigned int)((int)g_walkCallback >> 24);
     walk = (unsigned int)g_walkCallback & 0xffffff;
     g_walkCallback = (void (*)(void))walk;
     ((void (*)(void))walk)();
