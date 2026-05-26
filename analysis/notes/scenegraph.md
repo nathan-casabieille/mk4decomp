@@ -129,17 +129,20 @@ decompilation:
 | `player_id`     | +0x30  | u32  | 1..4 (player nodes only - see polymorphism) |
 | `state_mask`    | +0x34  | u32  | Bit 0x1000 = "on screen", plus dirty bits   |
 | `child_a/b/c`   | +0x3C/+0x40/+0x44 | u32 | Child packed_ptr refs (some node types) |
+| `position_x`    | +0x54  | s32  | Signed x-coord (fixed-point)                |
 | `position_y`    | +0x58  | s32  | Signed y-coord (> -0xffff_0000 = on-screen) |
+| `position_z`    | +0x5C  | s32  | Signed z-coord (fixed-point)                |
 | `fsm_state`     | +0x74  | u32  | FSM state value (0x501 = special / fatality)|
+| `install_flag`  | +0x84  | u32  | 0/1 install state flag (set in install-self)|
 | `magic`         | +0xD4  | u32  | = `NODE_LIVE_MAGIC` (0x12345678) when live  |
 | `ptr_field`     | +0xD8  | u32  | Header: alloc-scan key mirror               |
 | `type_word`     | +0xDC  | u32  | Header: type tag                            |
 | `work_type`     | +0xE0  | u32  | Header: alloc-time `g_eventQueueWorkType`   |
 | `next_link`     | +0xE4  | u32  | Header: linked-list next pointer            |
 
-The remaining offsets (`_10`, `_38`, `_48[4]`, `_5C[6]`, `_78[23]`)
-are unnamed scratch / user-state slots. They are present in the
-struct as filler so the size matches 0xE8 exactly.
+The remaining offsets (`_10`, `_38`, `_48[3]`, `_60[5]`, `_78[3]`,
+`_88[19]`) are unnamed scratch / user-state slots. They are present
+in the struct as filler so the size matches 0xE8 exactly.
 
 ### Lift pattern
 
@@ -156,7 +159,7 @@ unsigned int s = ((ScenegraphNode *)(packed_ptr * 4))->state_mask;
 ```
 
 MSVC SP3 produces byte-identical machine code for both forms
-(verified across 30+ functions): the `(packed_ptr * 4) + field_offset`
+(verified across ~500 lifted accesses): the `(packed_ptr * 4) + field_offset`
 calculation is the same, and the compiler emits `mov reg,
 [reg*4 + disp32]` in both cases.
 
