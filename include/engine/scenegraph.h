@@ -38,6 +38,51 @@ extern "C" {
 /* Magic value at NODE_OFF_MAGIC for live nodes. */
 #define NODE_LIVE_MAGIC   0x12345678
 
+/* Typed view of a 232-byte scene-graph node slot.
+ *
+ * Fields below are the ones decoded from AllocateNode (writes) +
+ * RenderSceneNode (reads) + GameTick per-player scan. Gaps are
+ * deliberately left as raw byte arrays - those offsets are touched
+ * by hand-written __asm with packed-ptr arithmetic, and naming them
+ * speculatively would imply meaning we haven't verified.
+ *
+ * Pure-C readers can cast a `packed_ptr * 4` to `ScenegraphNode *`
+ * and access fields by name. Naked code keeps its raw offsets;
+ * both compile to the same `[reg*4 + disp32]` form on MSVC SP3. */
+typedef struct ScenegraphNode {
+    /* === Data area (+0x00 .. +0xD7) =========================== */
+    u32 payload;            /* +0x00 alloc scan key (0 = slot free)   */
+    u32 self_ref;           /* +0x04 lea [edx + 0x22] self-pointer    */
+    u32 alloc_type;         /* +0x08 g_pendingNodeType at birth       */
+    u32 alloc_work_type;    /* +0x0C g_eventQueueWorkType at birth    */
+    u32 _10;                /* +0x10 cleared by allocator             */
+    u32 not_mask;           /* +0x14 g_eventQueueNotMask at birth     */
+    u32 child_chain;        /* +0x18 g_eventQueueChild at birth       */
+    u32 alloc_flags;        /* +0x1C g_currentNodeFlags at birth      */
+    u32 flags;              /* +0x20 type/mode flag word (walker)     */
+    u32 queue_end;          /* +0x24 g_eventQueueEnd at birth         */
+    u32 queue_idx;          /* +0x28 g_eventQueueIdx at birth         */
+    u32 group_head;         /* +0x2C g_fightGroupHead at birth        */
+    u32 player_id;          /* +0x30 1..4 (validated by per-player tick) */
+    u32 state_mask;         /* +0x34 bit 0x1000 = "on screen"         */
+    u32 _38;                /* +0x38 user state (zeroed at alloc)     */
+    u32 child_a;            /* +0x3C first child reference (packed_ptr) */
+    u32 child_b;            /* +0x40 second child reference            */
+    u32 child_c;            /* +0x44 third child reference             */
+    u32 _48[4];             /* +0x48..+0x57 user state                */
+    s32 position_y;         /* +0x58 signed; > -0xffff_0000 = on-screen */
+    u32 _5C[6];             /* +0x5C..+0x73 user state                */
+    u32 fsm_state;          /* +0x74 0x501 = special / fatality       */
+    u32 _78[23];            /* +0x78..+0xD3 user state                */
+    u32 magic;              /* +0xD4 = NODE_LIVE_MAGIC when live      */
+
+    /* === Header (+0xD8 .. +0xE7) ============================== */
+    u32 ptr_field;          /* +0xD8 alloc scan key (data-area mirror) */
+    u32 type_word;          /* +0xDC type tag                         */
+    u32 work_type;          /* +0xE0 alloc-time g_eventQueueWorkType  */
+    u32 next_link;          /* +0xE4 linked-list next pointer         */
+} ScenegraphNode;
+
 /* === Allocator ============================================== */
 
 void *AllocateNode(u32 type);                            /* 0x0041f290 */

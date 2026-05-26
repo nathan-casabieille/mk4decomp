@@ -15,7 +15,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void func_00471006(void);
 void ScaledStore501Set8Jmp_0042c390(void) {
-    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74) = 0x501;
+    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->fsm_state = 0x501;
     g_walkCallback = (void (*)(void))8;
     func_00471006();
 }

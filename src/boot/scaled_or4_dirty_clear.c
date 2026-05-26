@@ -19,9 +19,9 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 void ScaledOr4DirtyClear_00409320(void) {
-    unsigned int idx = g_scaledInit_00542044;
-    unsigned int v = *(unsigned int *)(idx * 4 + 0x34) | 4;
+    ScenegraphNode *n = (ScenegraphNode *)(g_scaledInit_00542044 * 4);
+    unsigned int v = n->state_mask | 4;
     g_walkCallback = (void (*)(void))v;
-    *(unsigned int *)(idx * 4 + 0x34) = v;
+    n->state_mask = v;
     g_xformDirtyFlags = g_xformDirtyFlags & 0xFFFFFFFEu;
 }

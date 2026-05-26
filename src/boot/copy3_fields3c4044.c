@@ -25,15 +25,15 @@ extern unsigned int g_scaledInit_00542044;
  */
 void Copy3Fields3c4044_00404e90(void) {
     unsigned char *dst = (unsigned char *)(g_fightGroupHead * 4);
-    unsigned char *src = (unsigned char *)(g_pendingNodeType * 4);
+    ScenegraphNode *src = (ScenegraphNode *)(g_pendingNodeType * 4);
     unsigned int v;
-    v = *(unsigned int *)(src + 0x3c);
+    v = src->child_a;
     g_walkCallback = (void (*)(void))v;
     *(unsigned int *)(dst + 0x54) = v;
-    v = *(unsigned int *)(src + 0x40);
+    v = src->child_b;
     g_walkCallback = (void (*)(void))v;
     *(unsigned int *)(dst + 0x58) = v;
-    v = *(unsigned int *)(src + 0x44);
+    v = src->child_c;
     g_walkCallback = (void (*)(void))v;
     *(unsigned int *)(dst + 0x5c) = v;
 }
