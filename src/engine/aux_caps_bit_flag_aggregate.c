@@ -109,15 +109,15 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern int Input_GetAsyncKey(int);
-extern void AuxCapsBitFlagAggregate_004b5380(void);
+extern void Input_PollJoystick(void);
 extern unsigned int g_nineSlotKey9_00543b68;
 extern unsigned int g_nineSlotKeyExtra_00543b6c;
 
 /*
  * @addr 0x004be3c0 (125b engine.scenegraph) - input-keyset probe:
  *   if arg is 0 returns 0. Tests keys 0xd/0x20/0x1b via CallShrAnd;
- *   if any hit returns 1. Else returns boolean of: (AuxCapsBitFlagAggregate_004b5380(
- *   g_nineSlotKey9_00543b68) | AuxCapsBitFlagAggregate_004b5380(g_nineSlotKeyExtra_00543b6c)) & 0x0fffffff != 0.
+ *   if any hit returns 1. Else returns boolean of: (Input_PollJoystick(
+ *   g_nineSlotKey9_00543b68) | Input_PollJoystick(g_nineSlotKeyExtra_00543b6c)) & 0x0fffffff != 0.
  */
 __declspec(naked) void InputKeysetProbe_004be3c0(void) {
     __asm {
@@ -158,12 +158,12 @@ try3:
 stickPath:
         mov     eax, dword ptr [g_nineSlotKey9_00543b68]
         push    eax
-        call    AuxCapsBitFlagAggregate_004b5380
+        call    Input_PollJoystick
         mov     ecx, dword ptr [g_nineSlotKeyExtra_00543b6c]
         add     esp, 4
         mov     esi, eax
         push    ecx
-        call    AuxCapsBitFlagAggregate_004b5380
+        call    Input_PollJoystick
         or      esi, eax
         add     esp, 4
         and     esi, 0x0fffffff

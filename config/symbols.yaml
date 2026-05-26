@@ -15102,7 +15102,7 @@ functions:
     status: matched
     file: src/audio/empty_stubs.c
   - addr: 0x004b5380
-    name: AuxCapsBitFlagAggregate_004b5380
+    name: Input_PollJoystick
     size: 196
     group: engine.geo
     status: matched

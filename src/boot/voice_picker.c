@@ -112,7 +112,7 @@ extern unsigned int g_dispatchTableArr2_005420c8;
 extern unsigned int g_savedNode_00541f98;
 extern void VoicePicker_00401000(void);
 extern void ChainNodeAdvanceCallback_00408e70(void);
-/* extern void AuxCapsBitFlagAggregate_004b5380(void); -- defined elsewhere with diff sig */
+/* extern void Input_PollJoystick(void); -- defined elsewhere with diff sig */
 extern void Helper_AudioStartMusic(void);
 extern unsigned int g_dispatchSave16_00543b68;
 extern unsigned int g_dispatchSave23_00543b6c;

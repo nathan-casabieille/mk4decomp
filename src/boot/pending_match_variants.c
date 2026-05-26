@@ -724,7 +724,7 @@ __declspec(naked) void QuadBlockInstallChainThunks_00483c90(void) {
     }
 }
 
-/* extern void AuxCapsBitFlagAggregate_004b5380(void); -- defined elsewhere with diff sig */
+/* extern void Input_PollJoystick(void); -- defined elsewhere with diff sig */
 extern void *g_iat_004d2150;
 
 

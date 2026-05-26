@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern void AuxCapsBitFlagAggregate_004b5380(void);
+extern void Input_PollJoystick(void);
 
 __declspec(naked) void InputBitMaskDispatcher_004b5470(void)
 {
@@ -119,7 +119,7 @@ __declspec(naked) void InputBitMaskDispatcher_004b5470(void)
         cmp     eax, -1
         je      L_ibmd_ret
         push    eax
-        call    AuxCapsBitFlagAggregate_004b5380
+        call    Input_PollJoystick
         add     esp, 4
         test    eax, 0x40000000
         je      L_ibmd_skip1
