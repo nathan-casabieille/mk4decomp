@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   working frame, calls helper, restores fp control word, returns.
  *   Trails 12 0xcc int3 bytes.
  */
-extern void func_004cc6e0(void);
+extern void Crt_fpieee_flt_004cdd20(void);
 
 __declspec(naked) void TwinEntryFpHelper_004ca250(void) {
     __asm {
@@ -145,7 +145,7 @@ merged:
         push    eax
         push    ecx
         push    edx
-        call    func_004cc6e0
+        call    Crt_fpieee_flt_004cdd20
         add     esp, 0x0c
         fld     qword ptr [ebp - 8]
         cmp     word ptr [ebp + 8], 0x27f

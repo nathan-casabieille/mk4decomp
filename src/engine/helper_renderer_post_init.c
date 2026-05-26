@@ -11,10 +11,10 @@
  *   the last code block).
  */
 extern int g_currentRendererMode;
-extern void func_004a2870(void);
-extern void func_004ad5d0(void);
-extern void func_004af6a0(void);
-extern void func_004afed0(void);
+extern void Helper_AppStub_2890(void);
+extern void PaletteRampInit_004ad5f0(void);
+extern void ComSoundSetup_004af6c0(void);
+extern void ComSoundSetup_004afef0(void);
 extern void func_004b44d0(void);
 
 __declspec(naked) void Helper_RendererPostInit(void) {
@@ -38,22 +38,22 @@ __declspec(naked) void Helper_RendererPostInit(void) {
         ret
         mov     edx, dword ptr [esp + 4]
         push    edx
-        call    func_004ad5d0
+        call    PaletteRampInit_004ad5f0
         add     esp, 4
         ret
         mov     eax, dword ptr [esp + 4]
         push    eax
-        call    func_004af6a0
+        call    ComSoundSetup_004af6c0
         add     esp, 4
         ret
         mov     ecx, dword ptr [esp + 4]
         push    ecx
-        call    func_004afed0
+        call    ComSoundSetup_004afef0
         add     esp, 4
         ret
         mov     edx, dword ptr [esp + 4]
         push    edx
-        call    func_004a2870
+        call    Helper_AppStub_2890
         add     esp, 4
         ret
         _emit   32h

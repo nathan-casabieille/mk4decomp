@@ -99,7 +99,6 @@ __declspec(naked) void func_004a1136(void) { __asm ret }
 __declspec(naked) void func_004a1141(void) { __asm ret }
 __declspec(naked) void func_004a1c70(void) { __asm ret }
 __declspec(naked) void func_004a2080(void) { __asm ret }
-__declspec(naked) void func_004a2870(void) { __asm ret }
 __declspec(naked) void func_004a4136(void) { __asm ret }
 __declspec(naked) void func_004a4159(void) { __asm ret }
 __declspec(naked) void func_004ab608(void) { __asm ret }
@@ -109,10 +108,6 @@ __declspec(naked) void func_004ab730(void) { __asm ret }
 __declspec(naked) void func_004ab790_fwd(void) { __asm ret }
 __declspec(naked) void func_004ac318(void) { __asm ret }
 __declspec(naked) void func_004acabc(void) { __asm ret }
-__declspec(naked) void func_004ad5d0(void) { __asm ret }
-__declspec(naked) void func_004ae794(void) { __asm ret }
-__declspec(naked) void func_004af6a0(void) { __asm ret }
-__declspec(naked) void func_004afed0(void) { __asm ret }
 __declspec(naked) void func_004b0982(void) { __asm ret }
 __declspec(naked) void func_004b44d0(void) { __asm ret }
 __declspec(naked) void func_004b4600_cc(void) { __asm ret }
@@ -161,8 +156,6 @@ __declspec(naked) void func_004c8570(void) { __asm ret }
 __declspec(naked) void func_004c8940(void) { __asm ret }
 __declspec(naked) void func_004c9200(void) { __asm ret }
 __declspec(naked) void func_004c951e(void) { __asm ret }
-__declspec(naked) void func_004c9df0_b(void) { __asm ret }
-__declspec(naked) void func_004ca0a0(void) { __asm ret }
 __declspec(naked) void func_004ca0e7(void) { __asm ret }
 __declspec(naked) void func_004ca267(void) { __asm ret }
 __declspec(naked) void func_004ca2c5(void) { __asm ret }
@@ -176,7 +169,6 @@ __declspec(naked) void func_004cc030_ee(void) { __asm ret }
 __declspec(naked) void func_004cc070_ee(void) { __asm ret }
 __declspec(naked) void func_004cc070_gg(void) { __asm ret }
 __declspec(naked) void func_004cc4af(void) { __asm ret }
-__declspec(naked) void func_004cc6e0(void) { __asm ret }
 __declspec(naked) void func_004ccdf6(void) { __asm ret }
 /* __declspec(naked) void func_004d12cc@12(void) { __asm ret } -- stdcall mangled name, needs __stdcall */
 __declspec(naked) void func_004d12de(void) { __asm ret }
