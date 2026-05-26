@@ -15,9 +15,9 @@ extern unsigned int g_phaseTimer_00537e94;
  */
 extern void GuardedSeq_004297b0(void);
 extern void ScaledInitOrSelfPtr_00429680(void);
-extern void func_0048f330(void);
+extern void DirtyToggleByGate_0048f350(void);
 extern void func_00428950_oo(void);
-extern void func_004939a0(void);
+extern void GameDispatchValidateState_004339c0(void);
 extern void InstallSelfCallBitGate_00483ae0(void);
 
 __declspec(naked) void CallPauseDirty1JmpDirty4StackPush_00428850(void) {
@@ -31,7 +31,7 @@ __declspec(naked) void CallPauseDirty1JmpDirty4StackPush_00428850(void) {
         _emit   74h
         _emit   05h
         jmp     ScaledInitOrSelfPtr_00429680
-        call    func_0048f330
+        call    DirtyToggleByGate_0048f350
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -43,7 +43,7 @@ __declspec(naked) void CallPauseDirty1JmpDirty4StackPush_00428850(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], OFFSET func_00428950_oo
-        jmp     func_004939a0
+        jmp     GameDispatchValidateState_004339c0
         _emit   0e9h
         _emit   0adh
         _emit   00h
@@ -55,7 +55,7 @@ __declspec(naked) void CallPauseDirty1JmpDirty4StackPush_00428850(void) {
 
 /* @addr 0x00483a80 (84b): same shape, push 0x00483ae0 instead of 0x00428950 */
 extern void GuardedDoubleIncCmpJmp_00429860(void);
-extern void func_00488bf0(void);
+extern void LiteralPushCallEntZero_00488c00(void);
 extern void func_0048f330_oo(void);
 extern void func_0042b988_oo(void);
 __declspec(naked) void CallPauseDirty1JmpDirty4StackPush_00483a80(void) {
@@ -68,7 +68,7 @@ __declspec(naked) void CallPauseDirty1JmpDirty4StackPush_00483a80(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
-        jmp     func_00488bf0
+        jmp     LiteralPushCallEntZero_00488c00
         call    func_0048f330_oo
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

@@ -21,7 +21,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void func_004ab608(void);
-extern void func_004871b1(void);
+extern void CmpJmpTwoBranch_004871d0(void);
 void ScaledTestCallPauseJmp_00487180(void) {
     unsigned int v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x30);
     g_walkCallback = (void (*)(void))v;
@@ -29,5 +29,5 @@ void ScaledTestCallPauseJmp_00487180(void) {
         func_004ab608();
         if (g_framePauseFlag != 0) return;
     }
-    func_004871b1();
+    CmpJmpTwoBranch_004871d0();
 }

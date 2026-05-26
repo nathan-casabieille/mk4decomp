@@ -22,13 +22,13 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     +9
  *   ret
  */
-extern void func_00484f50(void);
+extern void DirtyToggleByGate_0048f350(void);
 extern void GuardedDispatch4_00484b40(void);
 extern void GameDispatchValidateState_004339c0(void);
-extern void func_00484b13(void);
+extern void GuardedDispatch4_00484b40(void);
 void CallPauseDirtyMStackPush484b40_00484b00(void) {
     unsigned int v;
-    func_00484f50();
+    DirtyToggleByGate_0048f350();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 4) != 0) {
         v = g_matrixStackTop + 1;
@@ -37,5 +37,5 @@ void CallPauseDirtyMStackPush484b40_00484b00(void) {
         GameDispatchValidateState_004339c0();
         return;
     }
-    func_00484b13();
+    GuardedDispatch4_00484b40();
 }

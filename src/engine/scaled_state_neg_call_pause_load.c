@@ -14,21 +14,21 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_primary_0052d74c;
 extern unsigned int g_secondary_00538068;
-extern void func_00489c60(void);
-extern void func_00489c30(void);
+extern void DualSubFromField_00489c70(void);
+extern void DualSubFromField_00489c70(void);
 void ScaledStateNegCallPauseLoad_00489e90(void) {
     int v;
     g_pendingNodeType = g_scaledInit_00542044;
     v = (int)g_primary_0052d74c;
     g_walkCallback = (void (*)(void))v;
     if (v < 0) {
-        func_00489c60();
+        DualSubFromField_00489c70();
         if (g_framePauseFlag != 0) return;
     }
     v = (int)g_secondary_00538068;
     g_pendingNodeType = g_xformEntityIdx;
     g_walkCallback = (void (*)(void))v;
     if (v < 0) {
-        func_00489c30();
+        DualSubFromField_00489c70();
     }
 }

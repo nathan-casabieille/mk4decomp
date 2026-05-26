@@ -16,11 +16,11 @@ extern unsigned int g_scaledInit_00542044;
  *   jl      +0x10
  *   ret
  */
-extern void func_00488f04(void);
+extern void CjTableThresholdDispatch_00488f00(void);
 void ScaledCmpJlJmp_00488ed0(void) {
     unsigned int walk = (unsigned int)g_walkCallback;
     unsigned int v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x7c);
     g_eventQueueCurrent = v;
     if ((int)v < (int)walk) return;
-    func_00488f04();
+    CjTableThresholdDispatch_00488f00();
 }

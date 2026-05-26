@@ -22,14 +22,14 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T2
  *   ret
  */
-extern void func_00487640(void);
-extern void func_00487358(void);
+extern void ScaledZeroFour_00490740(void);
+extern void DirtyToggleByGate_0048f350(void);
 extern void CjInstallSelfRouter_00470480(void);
 extern void Install3StateDualArmQuad_004602b0(void);
 void DualCallPauseDirtyDoubleJmp_00486fc0(void) {
-    func_00487640();
+    ScaledZeroFour_00490740();
     if (g_framePauseFlag != 0) return;
-    func_00487358();
+    DirtyToggleByGate_0048f350();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 4) != 0) {
         CjInstallSelfRouter_00470480();

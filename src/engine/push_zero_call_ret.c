@@ -11,7 +11,7 @@ extern unsigned int g_scaledInit_00542044;
  *   add     esp, 4
  *   ret
  */
-extern int __cdecl func_004887ff(int);
+extern int __cdecl MStackAngleWrapDispatch_0048b800(int);
 void PushZeroCallRet_0048bad0(void) {
-    func_004887ff(0);
+    MStackAngleWrapDispatch_0048b800(0);
 }

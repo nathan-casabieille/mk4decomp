@@ -24,12 +24,12 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_counter_0053a51c;
 extern void IncOrZero9_00422080(void);
 extern void TablePushAccumTailJmp_00429e30(void);
-extern void func_0049199a(void);
+extern void RoundStartCluster_004919c0(void);
 void TwoCallStatePauseJmp_00491990(void) {
     IncOrZero9_00422080();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))g_counter_0053a51c;
     TablePushAccumTailJmp_00429e30();
     if (g_framePauseFlag != 0) return;
-    func_0049199a();
+    RoundStartCluster_004919c0();
 }

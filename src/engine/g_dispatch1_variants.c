@@ -19,10 +19,10 @@ void GDispatch1_00439c40(void) {
 
 /* @addr 0x00488da0 (29b): mask=1, je (skip-then-jmp) */
 extern void DualCondMatchSet_00488dc0(void);
-extern void func_004814e0(void);
+extern void ScaledInitWithCounterAndType_004314f0(void);
 void GDispatch1_00488da0(void) {
     DualCondMatchSet_00488dc0();
     if (g_framePauseFlag) return;
     if (!(g_xformDirtyFlags & 1)) return;
-    func_004814e0();
+    ScaledInitWithCounterAndType_004314f0();
 }

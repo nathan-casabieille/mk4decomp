@@ -12,14 +12,14 @@ extern unsigned int g_scaledInit_00542044;
  *   testb 4,[dirty]; jz +0x1b →ret; inc g_matrixStackTop;
  *   push 0x00483a20 onto stack[idx*4]; jmp T.
  */
-extern void func_0047f860(void);
-extern void func_00484342(void);
+extern void GuardedDoubleIncCmpJmp_00429860(void);
+extern void DirtyToggleByGate_0048f350(void);
 extern void InstallSelfOrChainJmp_00483a20(void);
 extern void GameDispatchValidateState_004339c0(void);
 void CallPauseDirty4StackPushFn_004839d0(void) {
-    func_0047f860();
+    GuardedDoubleIncCmpJmp_00429860();
     if (g_framePauseFlag != 0) return;
-    func_00484342();
+    DirtyToggleByGate_0048f350();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 4) != 0) {
         g_matrixStackTop++;

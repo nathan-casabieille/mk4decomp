@@ -19,11 +19,11 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void func_004ab620_b(void);
-extern void func_00489f7e_b(void);
+extern void GatedWordPushCall_00489f90(void);
 void Set4CallAddJmp_00472890(void) {
     g_walkCallback = (void (*)(void))4;
     func_004ab620_b();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))((unsigned int)g_walkCallback + 0x42);
-    func_00489f7e_b();
+    GatedWordPushCall_00489f90();
 }

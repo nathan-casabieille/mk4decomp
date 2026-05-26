@@ -18,12 +18,12 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern unsigned int g_bootInitSaveSlot_00541dc4;
-extern void func_00493edd(void);
+extern void AnimEventUpdateCluster_00493ef0(void);
 extern unsigned int g_table_004f1e20;
 void LoadCmpAddrJmp_00493ed0(void) {
     unsigned int packed = (unsigned int)((int)&g_table_004f1e20 >> 2);
     g_bootInitSaveSlot_00541dc4 = packed;
     if ((unsigned int)g_walkCallback == packed) {
-        func_00493edd();
+        AnimEventUpdateCluster_00493ef0();
     }
 }

@@ -46,9 +46,9 @@ void ScaledAndAhfe_00490390(void) {
  *   mov     [ecx*4 + 0x74], eax
  *   jmp     +4
  */
-extern void func_00495dc8(void);
+extern void ComboFinisherEventCluster_00495dc0(void);
 void Const111ScaledStoreJmp_00495da0(void) {
     g_walkCallback = (void(*)(void))0x111;
     ((ScenegraphNode *)(g_baseSel_00542060 * 4))->fsm_state = 0x111;
-    func_00495dc8();
+    ComboFinisherEventCluster_00495dc0();
 }

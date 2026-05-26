@@ -17,10 +17,10 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [edx*4 + 0x28], eax
  *   jmp     T
  */
-extern void func_004907fa(void);
+extern void ScaledLoadOrSetJmp_00406b20(void);
 void DualScaledStoreZero_00491080(void) {
     ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end = g_xformEntityIdx;
     g_walkCallback = (void (*)(void))0;
     ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = 0;
-    func_004907fa();
+    ScaledLoadOrSetJmp_00406b20();
 }

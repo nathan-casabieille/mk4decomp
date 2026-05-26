@@ -48,10 +48,10 @@ void ScaledAndAhfe_00490390(void) {
  */
 extern unsigned int g_zero_0053a470;
 extern unsigned int g_zero_0053a104;
-extern void func_00492e50(void);
+extern void DualTableMappedDispatch_00492e60(void);
 void ZeroTripleJmp_00491e50(void) {
     g_walkCallback = 0;
     g_zero_0053a470 = 0;
     g_zero_0053a104 = 0;
-    func_00492e50();
+    DualTableMappedDispatch_00492e60();
 }

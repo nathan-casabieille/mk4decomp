@@ -17,12 +17,12 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  *   ret
  */
-extern void func_00489fe6(void);
-extern void func_0048d46e(void);
+extern void TableLookupCall_00489ff0(void);
+extern void ScaledInit_0048d490(void);
 void Set1dCallSet16Jmp_004809b0(void) {
     g_walkCallback = (void (*)(void))0x1d;
-    func_00489fe6();
+    TableLookupCall_00489ff0();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))0x16;
-    func_0048d46e();
+    ScaledInit_0048d490();
 }

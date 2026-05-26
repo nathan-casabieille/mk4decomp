@@ -20,15 +20,15 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void AudioVolumeRescale_004ab690(void);
-extern void func_004874f0(void);
-extern void func_00483906(void);
+extern void RoundCleanupCluster_00487510(void);
+extern void Quad4SequencerInstall_00483900(void);
 void Set1f4CallDirtyJmp_004838d0(void) {
     g_walkCallback = (void (*)(void))0x01f4;
     AudioVolumeRescale_004ab690();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 1) != 0) {
-        func_004874f0();
+        RoundCleanupCluster_00487510();
         return;
     }
-    func_00483906();
+    Quad4SequencerInstall_00483900();
 }

@@ -23,16 +23,16 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  *   ret
  */
-extern void func_00488282(void);
+extern void ZeroThreeSlots_00490780(void);
 extern void InitThreeFields_00490e90(void);
-extern void func_00490c14(void);
+extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void ScaledChainNegStore_00470310(void);
 void TripleCallPauseJmp_00470500(void) {
-    func_00488282();
+    ZeroThreeSlots_00490780();
     if (g_framePauseFlag != 0) return;
     InitThreeFields_00490e90();
     if (g_framePauseFlag != 0) return;
-    func_00490c14();
+    DualCallPauseDirtyJmp_00490c30();
     if (g_framePauseFlag != 0) return;
     ScaledChainNegStore_00470310();
 }

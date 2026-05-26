@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  *   call F; pause-test; jmp T.
  */
 extern unsigned int g_gameCountdown_0053a718;
-extern void func_00489ff0_ff(void);
+extern void TableLookupCall_00489ff0(void);
 extern void PollThenInit_00477920(void);
 void DecBoundCheckCallJmp_00421be0(void) {
     int s = (int)g_gameCountdown_0053a718;
@@ -23,7 +23,7 @@ void DecBoundCheckCallJmp_00421be0(void) {
     g_gameCountdown_0053a718 = s;
     if (s < 0x14) {
         g_walkCallback = (void(*)(void))0x32;
-        func_00489ff0_ff();
+        TableLookupCall_00489ff0();
         if (g_framePauseFlag) return;
     }
     PollThenInit_00477920();

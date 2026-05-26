@@ -19,7 +19,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern unsigned int g_xformScratch94;
-extern void func_00490374(void);
+extern void ScaledAndAlfe_00490390(void);
 void ScaledAndCheckJmp_00470f60(void) {
     unsigned int v = ((FightGroupNode *)(g_fightGroupHead * 4))->bits;
     unsigned int masked;
@@ -27,5 +27,5 @@ void ScaledAndCheckJmp_00470f60(void) {
     masked = v & 0x200;
     g_xformScratch94 = masked;
     if (masked == 0) return;
-    func_00490374();
+    ScaledAndAlfe_00490390();
 }

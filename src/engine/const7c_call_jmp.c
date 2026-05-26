@@ -48,11 +48,11 @@ void ScaledAndAhfe_00490390(void) {
  *   jmp     +3
  *   ret
  */
-extern void func_00490fd8(void);
-extern void func_0049b00f(void);
+extern void ScaledLitLoadCall_00480fe0(void);
+extern void InstallSelfFourStatePauseChain_0049b000(void);
 void Const7cCallJmp_0049afe0(void) {
     g_walkCallback = (void(*)(void))0x7c;
-    func_00490fd8();
+    ScaledLitLoadCall_00480fe0();
     if (g_framePauseFlag) return;
-    func_0049b00f();
+    InstallSelfFourStatePauseChain_0049b000();
 }

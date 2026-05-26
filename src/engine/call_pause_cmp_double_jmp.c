@@ -18,11 +18,11 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  *   ret
  */
-extern void func_00485e50(void);
+extern void CmpP2P1ScaledJmp_0048ee50(void);
 extern void InstallSelfDualPath_00435260(void);
 extern void InstallSelfPacked0x2005_00437a90(void);
 void CallPauseCmpDoubleJmp_00435230(void) {
-    func_00485e50();
+    CmpP2P1ScaledJmp_0048ee50();
     if (g_framePauseFlag != 0) {
         return;
     }

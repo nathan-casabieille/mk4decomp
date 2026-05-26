@@ -23,14 +23,14 @@ extern unsigned int g_acc_00542078;
  *   jmp     +8
  *   ret
  */
-extern void func_0048f6f0(void);
+extern void GuardedDirtyXformFromTable_0048f6d0(void);
 extern void OneSetCmpJmpLoadCall_0047c620(void);
 extern int g_dispatchSave1304_004ed3e0;
 void Set200dCallPauseJmp_0047c5e0(void) {
     g_walkCallback = (void (*)(void))0x200d;
     ((ScenegraphNode *)(g_baseSel_00542060 * 4))->fsm_state = 0x200d;
     g_scaledInit_00542044 = ((unsigned int)&g_dispatchSave1304_004ed3e0) >> 2;
-    func_0048f6f0();
+    GuardedDirtyXformFromTable_0048f6d0();
     if (g_framePauseFlag != 0) return;
     OneSetCmpJmpLoadCall_0047c620();
 }

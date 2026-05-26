@@ -12,7 +12,7 @@ extern unsigned int g_scaledInit_00542044;
  *   push 0x4ee2f0; call F4; add esp 4; ret.
  */
 extern void CjTableThresholdDispatch_00488f00(void);
-extern void func_00484572(void);
+extern void GateDispatch6c_00494580(void);
 extern void func_004ae794(void);
 extern void ArgSarStoreJmp_004594f0(void);
 extern unsigned int g_dispatchSave1309_004ee2f0;
@@ -24,7 +24,7 @@ void TripleCallPauseTestPush_00482e60(void) {
         test    eax, eax
         _emit   75h
         _emit   37h
-        call    func_00484572
+        call    GateDispatch6c_00494580
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

@@ -18,7 +18,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_walkCallback], ecx
  *   jmp     T
  */
-extern void func_0049000a(void);
+extern void MStackFrameCdeclDouble_004903f0(void);
 void IterStepNegStore_00490b10(int arg) {
     unsigned int packed = (unsigned int)(arg >> 2);
     int v;
@@ -28,5 +28,5 @@ void IterStepNegStore_00490b10(int arg) {
     v = -v;
     g_eventQueueEnd = packed;
     g_walkCallback = (void (*)(void))v;
-    func_0049000a();
+    MStackFrameCdeclDouble_004903f0();
 }

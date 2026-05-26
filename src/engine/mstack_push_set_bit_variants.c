@@ -14,7 +14,7 @@ void MStackPushSet0200_00490140(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = acc;
     g_eventQueueNotMask = 0x0200;
-    func_0049036e();
+    OrStoreDecStackPop_00490290();
 }
 
 /* @addr 0x00490170 */
@@ -24,7 +24,7 @@ void MStackPushSet0080_00490170(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = acc;
     g_eventQueueNotMask = 0x0080;
-    func_0049039e();
+    OrStoreDecStackPop_00490290();
 }
 
 /* @addr 0x004901a0 */
@@ -34,7 +34,7 @@ void MStackPushSet0008_004901a0(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = acc;
     g_eventQueueNotMask = 8;
-    func_004903ce();
+    OrStoreDecStackPop_00490290();
 }
 
 /* @addr 0x004901d0 */
@@ -44,7 +44,7 @@ void MStackPushSet0020_004901d0(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = acc;
     g_eventQueueNotMask = 0x20;
-    func_004903fe();
+    OrStoreDecStackPop_00490290();
 }
 
 /* @addr 0x00490200 */
@@ -54,7 +54,7 @@ void MStackPushSet0040_00490200(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = acc;
     g_eventQueueNotMask = 0x40;
-    func_0049042e();
+    OrStoreDecStackPop_00490290();
 }
 
 /* @addr 0x00490230 */
@@ -64,7 +64,7 @@ void MStackPushSet0004_00490230(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = acc;
     g_eventQueueNotMask = 4;
-    func_0049045e();
+    OrStoreDecStackPop_00490290();
 }
 
 /* @addr 0x00490260 */
@@ -74,5 +74,5 @@ void MStackPushSet0001_00490260(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = acc;
     g_eventQueueNotMask = 1;
-    func_0049048e();
+    OrStoreDecStackPop_00490290();
 }

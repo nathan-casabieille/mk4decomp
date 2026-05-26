@@ -13,8 +13,8 @@ extern unsigned int g_baseSel_00542060;
  *   mov     [g_scaledInit_00542044], ecx
  *   jmp     +9
  */
-extern void func_0049008b(void);
+extern void DualMaskCmpJmp_00490090(void);
 void ScaledLoadJmp_38_00490070(void) {
     g_scaledInit_00542044 = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x38);
-    func_0049008b();
+    DualMaskCmpJmp_00490090();
 }

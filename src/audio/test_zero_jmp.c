@@ -16,9 +16,9 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern unsigned int g_dispatchSave_00543824;
-extern void func_0048a1ad(void);
+extern void DualBitGateInitCall_0048a1c0(void);
 void TestZeroJmp_004a42b0(void) {
     if (!g_dispatchSave_00543824) return;
     g_dispatchSave_00543824 = 0;
-    func_0048a1ad();
+    DualBitGateInitCall_0048a1c0();
 }

@@ -12,9 +12,9 @@ extern unsigned int g_baseSel_00542060;
  *   mov     [g_eventQueueCurrent], -1
  *   jmp     T
  */
-extern void func_0048cbef(void);
+extern void Thunk_0049cc00(void);
 void DualConstJmpNeg1_0048cc20(void) {
     g_walkCallback = (void(*)(void))0x71;
     g_eventQueueCurrent = 0xffffffff;
-    func_0048cbef();
+    Thunk_0049cc00();
 }

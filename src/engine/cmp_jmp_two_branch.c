@@ -14,11 +14,11 @@ extern unsigned int g_baseSel_00542060;
  *   jmp     T2
  */
 extern void func_004ba317(void);
-extern void func_00489202(void);
+extern void Wrapper_0048a310(void);
 void CmpJmpTwoBranch_004871d0(void) {
     if ((int)g_eventQueueChild < 5) {
         func_004ba317();
         return;
     }
-    func_00489202();
+    Wrapper_0048a310();
 }

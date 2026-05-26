@@ -16,7 +16,7 @@ extern unsigned int g_audioRestoreSlot3_0053a1f0;
 extern void Wrapper_0041fd00(void);
 extern void ZeroLargeBlock_0041f270(void);
 extern void GuardedSeq_004335d0(void);
-extern void func_00481fc0(void);
+extern void SentinelInitTripleCall_0048bbf0(void);
 extern void GlobalsResetInit_004222a0(void);
 extern void Helper_TickFrameTail(void);
 extern void OnceCall_00401340(void);
@@ -27,7 +27,7 @@ void Set2FiveCallPauseJmp_0041fd10(void) {
     if (g_framePauseFlag) return;
     GuardedSeq_004335d0();
     if (g_framePauseFlag) return;
-    func_00481fc0();
+    SentinelInitTripleCall_0048bbf0();
     if (g_framePauseFlag) return;
     GlobalsResetInit_004222a0();
     if (g_framePauseFlag) return;
