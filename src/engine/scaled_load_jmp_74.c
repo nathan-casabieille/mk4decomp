@@ -15,6 +15,6 @@ extern unsigned int g_baseSel_00542060;
  */
 extern void func_0048e7cb(void);
 void ScaledLoadJmp_74_0048e7b0(void) {
-    g_walkCallback = *(void (**)(void))(g_baseSel_00542060 * 4 + 0x74);
+    g_walkCallback = (void (*)(void))((ScenegraphNode *)(g_baseSel_00542060 * 4))->fsm_state;
     func_0048e7cb();
 }

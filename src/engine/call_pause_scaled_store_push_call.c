@@ -21,7 +21,7 @@ void CallPauseScaledStorePushCall_0045fca0(void) {
     SlotPhaseResetInstallChain_0048e0e0();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))0x2001;
-    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74) = 0x2001;
+    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->fsm_state = 0x2001;
     IterStepScaledStore24_00428730(&g_dispatchSave419_00542958);
     if (g_framePauseFlag != 0) return;
     SelfInstallPhaseDispatch_0045fd30();

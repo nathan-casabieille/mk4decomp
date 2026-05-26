@@ -122,5 +122,5 @@ void TripleFieldCopyHi_0048f7b0(void) {
     *(unsigned int *)(g_cj_0054205c * 4 + 0x70) = val;
     val = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x64);
     g_walkCallback = (void (*)(void))val;
-    *(unsigned int *)(g_cj_0054205c * 4 + 0x74) = val;
+    ((ScenegraphNode *)(g_cj_0054205c * 4))->fsm_state = val;
 }
