@@ -124,7 +124,7 @@ void DualSlotPropagateCall_004683e0(void) {
     base = g_baseSel_00542060;
     field38 = *(unsigned int *)(base * 4 + 0x38);
     g_currentNodeFlags = field38;
-    field3c = *(unsigned int *)(base * 4 + 0x3c);
+    field3c = ((ScenegraphNode *)(base * 4))->child_a;
     g_xformScratch2088 = field3c;
     tmp = *(unsigned int *)(base * 4 + 0x30);
     field38 += tmp;
