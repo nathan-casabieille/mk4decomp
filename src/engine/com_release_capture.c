@@ -18,37 +18,38 @@
  * je skips both the Release call and the store, but still falls
  * through to the unconditional clear.
  */
+#include "engine/com.h"
 
-extern void *g_comptr_0058c7ac;   /* 0x0058c7ac */
+extern Mk4ComObj   *g_comptr_0058c7ac;   /* 0x0058c7ac */
 extern unsigned int g_comret_0058c7dc;   /* 0x0058c7dc */
-extern void *g_comptr_0058c860;   /* 0x0058c860 */
+extern Mk4ComObj   *g_comptr_0058c860;   /* 0x0058c860 */
 extern unsigned int g_comret_0058c878;   /* 0x0058c878 */
-extern void *g_comptr_0058c8e0;   /* 0x0058c8e0 */
+extern Mk4ComObj   *g_comptr_0058c8e0;   /* 0x0058c8e0 */
 extern unsigned int g_comret_0058c8f8;   /* 0x0058c8f8 */
 
 /* @addr 0x004aeee0 */
 void ComReleaseCapture_004aeee0(void) {
-    void *p = g_comptr_0058c7ac;
+    Mk4ComObj *p = g_comptr_0058c7ac;
     if (p) {
-        g_comret_0058c7dc = ((unsigned int (__stdcall **)(void*))(*(void**)p))[2](p);
+        g_comret_0058c7dc = p->vtbl->Release(p);
     }
     g_comptr_0058c7ac = 0;
 }
 
 /* @addr 0x004afb50 */
 void ComReleaseCapture_004afb50(void) {
-    void *p = g_comptr_0058c860;
+    Mk4ComObj *p = g_comptr_0058c860;
     if (p) {
-        g_comret_0058c878 = ((unsigned int (__stdcall **)(void*))(*(void**)p))[2](p);
+        g_comret_0058c878 = p->vtbl->Release(p);
     }
     g_comptr_0058c860 = 0;
 }
 
 /* @addr 0x004b0380 */
 void ComReleaseCapture_004b0380(void) {
-    void *p = g_comptr_0058c8e0;
+    Mk4ComObj *p = g_comptr_0058c8e0;
     if (p) {
-        g_comret_0058c8f8 = ((unsigned int (__stdcall **)(void*))(*(void**)p))[2](p);
+        g_comret_0058c8f8 = p->vtbl->Release(p);
     }
     g_comptr_0058c8e0 = 0;
 }

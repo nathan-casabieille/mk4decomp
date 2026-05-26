@@ -1,11 +1,7 @@
 /**
  * Auto-split from misc_matchesBB.c
  */
-#include "engine/scenegraph.h"
-#include "game/tick.h"
-
-extern unsigned int g_baseSel_00542060;
-extern unsigned int g_scaledInit_00542044;
+#include "engine/com.h"
 
 /* @addr 0x004af650 (56b)
  *   if g_renderer2_r7_data_0058c7d4 != 0:
@@ -14,19 +10,19 @@ extern unsigned int g_scaledInit_00542044;
  *   if g_renderer2_state7_0058c7c4 != 0: call vtable[+8](eax);
  *   clear g_renderer2_state7_0058c7c4; ret.
  */
-extern unsigned int g_renderer2_r7_data_0058c7d4;
-extern unsigned int g_renderer2_state7_0058c7c4;
+extern Mk4ComObj *g_renderer2_r7_data_0058c7d4;
+extern Mk4ComObj *g_renderer2_state7_0058c7c4;
 extern int g_renderer2_present_rc;
 void DualVtable8Call_004af650(void) {
-    void *p1 = g_renderer2_r7_data_0058c7d4;
-    void *p2;
+    Mk4ComObj *p1 = g_renderer2_r7_data_0058c7d4;
+    Mk4ComObj *p2;
     if (p1) {
-        g_renderer2_present_rc = ((unsigned int (__stdcall **)(void*))(*(void**)p1))[2](p1);
+        g_renderer2_present_rc = p1->vtbl->Release(p1);
     }
     p2 = g_renderer2_state7_0058c7c4;
     g_renderer2_r7_data_0058c7d4 = 0;
     if (p2) {
-        ((unsigned int (__stdcall **)(void*))(*(void**)p2))[2](p2);
+        p2->vtbl->Release(p2);
     }
     g_renderer2_state7_0058c7c4 = 0;
 }
