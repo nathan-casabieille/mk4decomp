@@ -47,7 +47,6 @@ void ScaledAndAhfe_00490390(void) {
  *   ret
  */
 void ScaledZero44_00491500(void) {
-    int *p = (int *)(g_fightGroupHead * 4 + 0x44);
     g_walkCallback = 0;
-    *p = 0;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->child_c = 0;
 }

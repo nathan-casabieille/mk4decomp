@@ -18,7 +18,7 @@ extern unsigned int g_scaledInit_00542044;
 extern void func_004757a4(void);
 void DualScaledLoadStoreJmp_00475790(void) {
     unsigned int idx = g_xformEntityIdx;
-    g_walkCallback = (void (*)(void))*(unsigned int *)(idx * 4 + 0x3c);
-    g_eventQueueCurrent = *(unsigned int *)(idx * 4 + 0x44);
+    g_walkCallback = (void (*)(void))((ScenegraphNode *)(idx * 4))->child_a;
+    g_eventQueueCurrent = ((ScenegraphNode *)(idx * 4))->child_c;
     func_004757a4();
 }

@@ -13,11 +13,11 @@ extern unsigned int g_scaledInit_00542044;
  */
 void ScaledChainDouble_004911f0(void) {
     unsigned int base = g_baseSel_00542060;
-    unsigned int s1 = *(unsigned int *)(base * 4 + 0x40);
+    unsigned int s1 = ((ScenegraphNode *)(base * 4))->child_b;
     unsigned int s2;
     g_scaledInit_00542044 = s1;
     g_eventQueueNotMask = *(unsigned int *)(s1 * 4);
-    s2 = *(unsigned int *)(base * 4 + 0x44);
+    s2 = ((ScenegraphNode *)(base * 4))->child_c;
     g_scaledInit_00542044 = s2;
     g_eventQueueChild = *(unsigned int *)(s2 * 4);
 }
