@@ -120,17 +120,17 @@ extern void ThrowPairPoseCluster_0048a3d0(void);
  */
 void Chain2AxisDiffStoreTailJmp_0044cad0(void) {
     unsigned int a, b;
-    a = *(unsigned int *)(g_eventQueueEnd * 4 + 0x54);
+    a = (unsigned int)((ScenegraphNode *)(g_eventQueueEnd * 4))->position_x;
     g_walkCallback = a;
-    b = *(unsigned int *)(g_eventQueueIdx * 4 + 0x54);
+    b = (unsigned int)((ScenegraphNode *)(g_eventQueueIdx * 4))->position_x;
     a -= b;
     g_eventQueueCurrent = b;
     ((ScenegraphNode *)(g_baseSel_00542060 * 4))->child_a = a;
     g_walkCallback = 0;
     ((ScenegraphNode *)(g_baseSel_00542060 * 4))->child_b = 0;
-    a = *(unsigned int *)(g_eventQueueEnd * 4 + 0x5c);
+    a = (unsigned int)((ScenegraphNode *)(g_eventQueueEnd * 4))->position_z;
     g_walkCallback = a;
-    b = *(unsigned int *)(g_eventQueueIdx * 4 + 0x5c);
+    b = (unsigned int)((ScenegraphNode *)(g_eventQueueIdx * 4))->position_z;
     g_eventQueueCurrent = b;
     a -= b;
     g_walkCallback = a;
