@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern void InstallSelfNoCheck_00439250(void);
 void InstallSelfNoCheck_00439250(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
-    *(unsigned int *)(base + 0x84) = 0;
+    ((ScenegraphNode *)base)->install_flag = 0;
     g_eventQueueCurrent = 0xf0;
     g_walkCallback = (void (*)(void))0x40;
     Thunk_0049cba0();
@@ -128,7 +128,7 @@ void InstallSelfNoCheck_00439250(void) {
         return;
     }
     *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfNoCheck_00439250;
-    *(unsigned int *)(base + 0x84) = 1;
+    ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;
 }

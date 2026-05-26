@@ -115,9 +115,9 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 void InstallSelfIndirectJmpNeg_0048f4f0(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
-    unsigned int slot84 = *(unsigned int *)(base + 0x84);
+    unsigned int slot84 = ((ScenegraphNode *)base)->install_flag;
     int walk;
-    *(unsigned int *)(base + 0x84) = 0;
+    ((ScenegraphNode *)base)->install_flag = 0;
     if (slot84 != 0) {
         walk = *(int *)(g_cj_0054205c * 4 + 0x70);
         g_walkCallback = (void (*)(void))walk;
@@ -131,7 +131,7 @@ void InstallSelfIndirectJmpNeg_0048f4f0(void) {
         g_matrixStackTop = top - 1;
     }
     *(unsigned int *)(base + 8) = (unsigned int)InstallSelfIndirectJmpNeg_0048f4f0;
-    *(unsigned int *)(base + 0x84) = 1;
+    ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;
 }

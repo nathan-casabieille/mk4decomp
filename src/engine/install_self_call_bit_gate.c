@@ -119,8 +119,8 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern void InstallSelfCallBitGate_00483ae0(void);
 void InstallSelfCallBitGate_00483ae0(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
-    unsigned int v = *(unsigned int *)(base + 0x84);
-    *(unsigned int *)(base + 0x84) = 0;
+    unsigned int v = ((ScenegraphNode *)base)->install_flag;
+    ((ScenegraphNode *)base)->install_flag = 0;
     if (v != 0) {
         GuardedDualConst2AndToggle_0048eba0();
         if (g_framePauseFlag != 0) return;
@@ -132,7 +132,7 @@ void InstallSelfCallBitGate_00483ae0(void) {
         return;
     }
     *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfCallBitGate_00483ae0;
-    *(unsigned int *)(base + 0x84) = 1;
+    ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;
 }

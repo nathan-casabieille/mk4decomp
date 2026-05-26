@@ -118,8 +118,8 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern void InstallSelfHelperGate_00486490(void);
 void InstallSelfHelperGate_00486490(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
-    unsigned int prev = *(unsigned int *)(base + 0x84);
-    *(unsigned int *)(base + 0x84) = 0;
+    unsigned int prev = ((ScenegraphNode *)base)->install_flag;
+    ((ScenegraphNode *)base)->install_flag = 0;
     if (prev != 0) {
         CopyJmp_0048ef90();
         if (g_framePauseFlag != 0) return;
@@ -134,7 +134,7 @@ void InstallSelfHelperGate_00486490(void) {
     ScaledLitLoadCall_00480fe0();
     if (g_framePauseFlag != 0) return;
     *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfHelperGate_00486490;
-    *(unsigned int *)(base + 0x84) = 1;
+    ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;
 }

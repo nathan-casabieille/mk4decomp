@@ -115,8 +115,8 @@ extern void CopyThreeFields_00404df0(void);
 extern void InstallSelfPushDualCallCmpGt_0048f650(void);
 void InstallSelfPushDualCallCmpGt_0048f650(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
-    unsigned int prev = *(unsigned int *)(base + 0x84);
-    *(unsigned int *)(base + 0x84) = 0;
+    unsigned int prev = ((ScenegraphNode *)base)->install_flag;
+    ((ScenegraphNode *)base)->install_flag = 0;
     if (prev != 0) {
         int v;
         ((void (*)(int))ThreeChanPackClamp_00404cc0)(0x00201000);
@@ -129,7 +129,7 @@ void InstallSelfPushDualCallCmpGt_0048f650(void) {
         }
     }
     *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfPushDualCallCmpGt_0048f650;
-    *(unsigned int *)(base + 0x84) = 1;
+    ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;
 }

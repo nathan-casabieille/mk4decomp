@@ -120,8 +120,8 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern void InstallSelfOrCmpJmp_0048f570(void);
 void InstallSelfOrCmpJmp_0048f570(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
-    unsigned int v = *(unsigned int *)(base + 0x84);
-    *(unsigned int *)(base + 0x84) = 0;
+    unsigned int v = ((ScenegraphNode *)base)->install_flag;
+    ((ScenegraphNode *)base)->install_flag = 0;
     if (v != 0) {
         unsigned int cb = *(unsigned int *)(g_cj_0054205c * 4 + 0x70);
         g_walkCallback = (void (*)(void))cb;
@@ -131,7 +131,7 @@ void InstallSelfOrCmpJmp_0048f570(void) {
         }
     }
     *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfOrCmpJmp_0048f570;
-    *(unsigned int *)(base + 0x84) = 1;
+    ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;
 }

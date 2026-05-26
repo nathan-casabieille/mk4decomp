@@ -16,12 +16,12 @@ extern unsigned int g_baseSel_00542060;
 extern void GuardedSelfRefSet_0048d070(void);
 void GuardedSelfRefSet_0048d070(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
-    *(unsigned int *)(base + 0x84) = 0;
+    ((ScenegraphNode *)base)->install_flag = 0;
     do {
         if (g_fightGroupHead == g_player1NodeIdx) break;
         if (g_fightGroupHead == g_player2NodeIdx) break;
         *(unsigned int *)(base + 8) = (unsigned int)&GuardedSelfRefSet_0048d070;
-        *(unsigned int *)(base + 0x84) = 1;
+        ((ScenegraphNode *)base)->install_flag = 1;
         g_pendingNodeType = 0x0a;
         g_framePauseFlag = 1;
         return;

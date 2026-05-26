@@ -118,8 +118,8 @@ void InstallSelfChainCmpDispatch_00491660(void) {
     unsigned int new_si;
     unsigned int cb;
     base = (unsigned char *)(g_baseSel_00542060 * 4);
-    v = *(unsigned int *)(base + 0x84);
-    *(unsigned int *)(base + 0x84) = 0;
+    v = ((ScenegraphNode *)base)->install_flag;
+    ((ScenegraphNode *)base)->install_flag = 0;
     if (v != 0) {
         cj = g_cj_0054205c;
         new_si = *(unsigned int *)(cj * 4 + 0x24);
@@ -138,7 +138,7 @@ void InstallSelfChainCmpDispatch_00491660(void) {
         return;
     }
     *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfChainCmpDispatch_00491660;
-    *(unsigned int *)(base + 0x84) = 1;
+    ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;
 }
