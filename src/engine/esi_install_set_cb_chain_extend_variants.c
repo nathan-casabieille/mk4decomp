@@ -115,8 +115,8 @@ extern void EsiInstallSetCbChainExtend_0048a810(void);
 extern unsigned int g_load_0052ab10;
 void EsiInstallSetCbChainExtend_0048a810(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
-    unsigned int prev = *(unsigned int *)(base + 0x84);
-    *(unsigned int *)(base + 0x84) = 0;
+    unsigned int prev = ((ScenegraphNode *)base)->install_flag;
+    ((ScenegraphNode *)base)->install_flag = 0;
     if (prev != 0) {
         StackPopDispatchTagged_0041f780();
         return;
@@ -142,8 +142,8 @@ void EsiInstallSetCbChainExtend_0048a810(void) {
 extern void EsiInstallSetCbChainExtend_0048a8c0(void);
 void EsiInstallSetCbChainExtend_0048a8c0(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
-    unsigned int prev = *(unsigned int *)(base + 0x84);
-    *(unsigned int *)(base + 0x84) = 0;
+    unsigned int prev = ((ScenegraphNode *)base)->install_flag;
+    ((ScenegraphNode *)base)->install_flag = 0;
     if (prev != 0) {
         StackPopDispatchTagged_0041f780();
         return;
@@ -169,8 +169,8 @@ void EsiInstallSetCbChainExtend_0048a8c0(void) {
 extern void EsiInstallSetCbChainExtend_0048a970(void);
 void EsiInstallSetCbChainExtend_0048a970(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
-    unsigned int prev = *(unsigned int *)(base + 0x84);
-    *(unsigned int *)(base + 0x84) = 0;
+    unsigned int prev = ((ScenegraphNode *)base)->install_flag;
+    ((ScenegraphNode *)base)->install_flag = 0;
     if (prev != 0) {
         StackPopDispatchTagged_0041f780();
         return;

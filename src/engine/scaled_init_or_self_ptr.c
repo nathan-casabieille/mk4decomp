@@ -13,14 +13,14 @@ extern unsigned int g_phaseTimer_00537e94;
 extern void PoseChainAdvanceCluster_0044ef50(void);
 void ScaledInitOrSelfPtr_0044ef10(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
-    unsigned int ptr = *(unsigned int *)(base + 0x84);
-    *(unsigned int *)(base + 0x84) = 0;
+    unsigned int ptr = ((ScenegraphNode *)base)->install_flag;
+    ((ScenegraphNode *)base)->install_flag = 0;
     if (ptr) {
         PoseChainAdvanceCluster_0044ef50();
         return;
     }
     *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_0044ef10;
-    *(unsigned int *)(base + 0x84) = 1;
+    ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;
 }
