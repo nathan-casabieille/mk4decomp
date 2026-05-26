@@ -23,7 +23,7 @@ void ScaledMaskOrStore_00405880(void) {
     unsigned int walk = (unsigned int)g_walkCallback;
     unsigned int v;
     g_eventQueueCurrent = 0xf0ffffff;
-    v = (*(unsigned int *)(idx * 4 + 0x20) & 0xf0ffffff) | walk;
+    v = (((ScenegraphNode *)(idx * 4))->flags & 0xf0ffffff) | walk;
     g_eventQueueCurrent = v;
-    *(unsigned int *)(idx * 4 + 0x20) = v;
+    ((ScenegraphNode *)(idx * 4))->flags = v;
 }

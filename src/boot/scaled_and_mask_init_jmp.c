@@ -25,7 +25,7 @@ extern void func_004bae62(void);
 extern void ScaledAndMaskInitJmp_00405a00(void);
 void ScaledAndMaskInitJmp_00405a00(void) {
     unsigned int v;
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x20) &= 0xffffff7fu;
+    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->flags &= 0xffffff7fu;
     g_walkCallback = (void (*)(void))&ScaledAndMaskInitJmp_00405a00;
     v = *(unsigned int *)(g_scaledInit_00542044 * 4);
     g_eventQueueCurrent = v;
