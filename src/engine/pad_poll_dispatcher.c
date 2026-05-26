@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void PadPollDispatcher_004b5650(int player);
-/* extern void Helper_JoyButtonInit(int key); -- defined elsewhere with diff sig */
+/* extern void Input_GetAsyncKey(int key); -- defined elsewhere with diff sig */
 extern u32 g_appInitFlag1;
 extern unsigned int g_phaseThunkInst_004d50ac;
 extern unsigned int g_renderer2_var5_004f4e98;
@@ -135,7 +135,7 @@ extern unsigned int g_dispatchSave25_00543370;
 extern unsigned int g_dispatchVar39_0054357c;
 
 extern u32 g_demoModeFlag;
-extern void Helper_JoyButtonInit(void);
+extern void Input_GetAsyncKey(void);
 extern void InputBitMaskDispatcher_004b5470(void);
 
 __declspec(naked) void GameStateMachineMaybeRebuild(void)
@@ -176,17 +176,17 @@ __declspec(naked) void GameStateMachineMaybeRebuild(void)
         cmp     dword ptr [g_phaseThunkInst_004d50ac], esi
         jne     L_idep_clear_loop
         push    0x1B
-        call    Helper_JoyButtonInit
+        call    Input_GetAsyncKey
         add     esp, 4
         test    eax, eax
         jne     L_idep_clear_loop
         push    0x20
-        call    Helper_JoyButtonInit
+        call    Input_GetAsyncKey
         add     esp, 4
         test    eax, eax
         jne     L_idep_clear_loop
         push    0x0D
-        call    Helper_JoyButtonInit
+        call    Input_GetAsyncKey
         add     esp, 4
         test    eax, eax
         jne     L_idep_clear_loop

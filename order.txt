@@ -2434,7 +2434,7 @@ DSoundBufferInit146_004b5190
 Joystick_Init
 Helper_GeoStub_5370
 AuxCapsBitFlagAggregate_004b5380
-Helper_JoyButtonInit
+Input_GetAsyncKey
 InputBitMaskDispatcher_004b5470
 PadPollDispatcher_004b5650
 Helper_TitleAudioReset

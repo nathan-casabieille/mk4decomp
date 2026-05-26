@@ -7,7 +7,7 @@
  * via the magic-multiply-by-0x51eb851f / shr 5 idiom (unsigned
  * divide-by-50). Stores the result tables to g_joyCal{A,B,C}
  * and stashes one button byte per device into g_joyButtonState.
- * Tail does a 256-iteration call to Helper_JoyButtonInit for
+ * Tail does a 256-iteration call to Input_GetAsyncKey for
  * input mapping.
  */
 #include "engine/geo.h"
@@ -123,7 +123,7 @@ skip_dev:
         xor     esi, esi
 button_loop:
         push    esi
-        call    Helper_JoyButtonInit
+        call    Input_GetAsyncKey
         add     esp, 4
         inc     esi
         cmp     esi, 0x100

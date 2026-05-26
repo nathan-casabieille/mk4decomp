@@ -12,7 +12,7 @@
  *   ret
  */
 extern unsigned int (__stdcall *g_iat_004d21c0)(int);
-int Helper_JoyButtonInit(int arg) {
+int Input_GetAsyncKey(int arg) {
     return (g_iat_004d21c0(arg) >> 15) & 1;
 }
 

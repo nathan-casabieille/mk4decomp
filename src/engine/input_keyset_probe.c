@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_nineSlotKey9_00543b68;
 extern unsigned int g_nineSlotKeyExtra_00543b6c;
 extern void AuxCapsBitFlagAggregate_004b5380(void);
-extern void Helper_JoyButtonInit(void);
+extern void Input_GetAsyncKey(void);
 
 __declspec(naked) void InputKeysetProbe_004be3c0(void) {
     __asm {
@@ -130,7 +130,7 @@ __declspec(naked) void InputKeysetProbe_004be3c0(void) {
         ret
 gateOk:
         push    0x0d
-        call    Helper_JoyButtonInit
+        call    Input_GetAsyncKey
         add     esp, 4
         test    eax, eax
         je      try2
@@ -139,7 +139,7 @@ gateOk:
         ret
 try2:
         push    0x20
-        call    Helper_JoyButtonInit
+        call    Input_GetAsyncKey
         add     esp, 4
         test    eax, eax
         je      try3
@@ -148,7 +148,7 @@ try2:
         ret
 try3:
         push    0x1b
-        call    Helper_JoyButtonInit
+        call    Input_GetAsyncKey
         add     esp, 4
         test    eax, eax
         je      stickPath

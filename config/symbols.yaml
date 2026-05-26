@@ -15108,7 +15108,7 @@ functions:
     status: matched
     file: src/engine/aux_caps_bit_flag_aggregate.c
   - addr: 0x004b5450
-    name: Helper_JoyButtonInit
+    name: Input_GetAsyncKey
     size: 18
     group: engine.geo
     status: matched

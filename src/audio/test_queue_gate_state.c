@@ -16,9 +16,9 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern u32 g_gsmActiveFlag;
 extern unsigned int g_dispatchSave1318_004f2fc8;
-extern int Helper_JoyButtonInit(int);
+extern int Input_GetAsyncKey(int);
 int TestQueueGateState_004a1ba0(void) {
-    if (Helper_JoyButtonInit(0x0d) == 0) {
+    if (Input_GetAsyncKey(0x0d) == 0) {
         g_dispatchSave1318_004f2fc8 = 0;
         return 0;
     }

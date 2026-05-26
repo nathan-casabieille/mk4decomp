@@ -28,7 +28,7 @@ extern unsigned int g_dispatchSave26_0054336c;
 extern unsigned int g_dispatchSave25_00543370;
 extern unsigned int g_dispatchVar39_0054357c;
 extern u32 g_appInitFlag1;
-extern void Helper_JoyButtonInit(void);
+extern void Input_GetAsyncKey(void);
 extern void InputBitMaskDispatcher_004b5470(void);
 extern void PadPollDispatcher_004b5650(void);
 
@@ -70,17 +70,17 @@ __declspec(naked) void GameStateMachineMaybeRebuild(void)
         cmp     dword ptr [g_phaseThunkInst_004d50ac], esi
         jne     L_idep_clear_loop
         push    0x1B
-        call    Helper_JoyButtonInit
+        call    Input_GetAsyncKey
         add     esp, 4
         test    eax, eax
         jne     L_idep_clear_loop
         push    0x20
-        call    Helper_JoyButtonInit
+        call    Input_GetAsyncKey
         add     esp, 4
         test    eax, eax
         jne     L_idep_clear_loop
         push    0x0D
-        call    Helper_JoyButtonInit
+        call    Input_GetAsyncKey
         add     esp, 4
         test    eax, eax
         jne     L_idep_clear_loop
