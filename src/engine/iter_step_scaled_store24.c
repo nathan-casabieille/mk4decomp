@@ -28,6 +28,6 @@ void IterStepScaledStore24_00428730(int arg) {
     packed++;
     g_eventQueueTotal = packed;
     g_scaledInit_00542044 = v;
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x24) = v;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end = v;
     func_00429868();
 }

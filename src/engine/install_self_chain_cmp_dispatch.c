@@ -122,9 +122,9 @@ void InstallSelfChainCmpDispatch_00491660(void) {
     ((ScenegraphNode *)base)->install_flag = 0;
     if (v != 0) {
         cj = g_cj_0054205c;
-        new_si = *(unsigned int *)(cj * 4 + 0x24);
+        new_si = ((ScenegraphNode *)(cj * 4))->queue_end;
         g_scaledInit_00542044 = new_si;
-        cb = *(unsigned int *)(cj * 4 + 0x28) + 1;
+        cb = ((ScenegraphNode *)(cj * 4))->queue_idx + 1;
         g_walkCallback = (void (*)(void))cb;
         if ((int)cb < (int)(*(unsigned int *)(new_si * 4 + 4))) {
             StoreGuardedBitInstallJmp_004915f0();

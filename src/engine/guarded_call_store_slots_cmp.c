@@ -19,8 +19,8 @@ int GuardedCallStoreSlotsCmp_00440990(void) {
     DirtyDoubleDeref_00408cb0();
     if (g_framePauseFlag != 0) return g_framePauseFlag;
     s = g_scaledInit_00542044;
-    g_xformEntityIdx = *(unsigned int *)(s * 4 + 0x24);
-    g_eventQueueIdx = *(unsigned int *)(s * 4 + 0x28);
+    g_xformEntityIdx = ((ScenegraphNode *)(s * 4))->queue_end;
+    g_eventQueueIdx = ((ScenegraphNode *)(s * 4))->queue_idx;
     if ((unsigned int)g_walkCallback != 2) {
         DispatcherComplex260_00407400();
         return g_framePauseFlag;

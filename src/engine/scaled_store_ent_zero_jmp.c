@@ -19,6 +19,6 @@ void ScaledStoreEntZeroJmp_00428e40(void) {
     unsigned int idx = g_fightGroupHead;
     unsigned int ent = g_xformEntityIdx;
     g_eventQueueCurrent = 0;
-    *(unsigned int *)(idx * 4 + 0x24) = ent;
+    ((ScenegraphNode *)(idx * 4))->queue_end = ent;
     func_00428e68();
 }

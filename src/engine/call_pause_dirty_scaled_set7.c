@@ -26,5 +26,5 @@ void CallPauseDirtyScaledSet7_00480ef0(void) {
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 4) == 0) return;
     g_walkCallback = (void (*)(void))7;
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 7;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = 7;
 }

@@ -120,10 +120,10 @@ void CallDualStoreXorBit_004285e0(void) {
     unsigned int new_cj;
     BootMStackBracket3SubdispatchPair_00407920();
     if (g_framePauseFlag != 0) return;
-    v = *(unsigned int *)(g_cj_0054205c * 4 + 0x28) + 1;
+    v = ((ScenegraphNode *)(g_cj_0054205c * 4))->queue_idx + 1;
     g_walkCallback = (void (*)(void))v;
-    *(unsigned int *)(g_cj_0054205c * 4 + 0x28) = v;
-    new_cj = *(unsigned int *)(g_cj_0054205c * 4 + 0x24);
+    ((ScenegraphNode *)(g_cj_0054205c * 4))->queue_idx = v;
+    new_cj = ((ScenegraphNode *)(g_cj_0054205c * 4))->queue_end;
     g_cj_00542058 = new_cj;
     g_xformDirtyFlags |= 4;
     if (*(unsigned int *)(new_cj * 4 + 4) != (unsigned int)g_walkCallback) {

@@ -14,6 +14,6 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void func_004297c0(void);
 void ScaledLoadJmp_24_00429790(void) {
-    g_scaledInit_00542044 = *(unsigned int*)(g_fightGroupHead * 4 + 0x24);
+    g_scaledInit_00542044 = ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end;
     func_004297c0();
 }
