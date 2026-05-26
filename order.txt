@@ -2272,7 +2272,7 @@ GetExeDirectory
 Helper_ComputeExeHash
 CheckInstallPath
 AudioRestoreGlobals_004acce0
-AudioSnapshotGlobals_004ace60
+Config_SnapshotGlobals
 ResetConfigToDefaults
 ComputeConfigHash
 DeobfuscateConfig

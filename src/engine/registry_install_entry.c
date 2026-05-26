@@ -119,7 +119,7 @@ extern unsigned int g_iat_004d2004;
 extern unsigned int g_iat_004d2010;
 extern u8 g_configBuffer[];
 extern s32 g_installValidated;
-extern void AudioSnapshotGlobals_004ace60(void);
+extern void Config_SnapshotGlobals(void);
 extern void ComputeConfigHash(void);
 extern void DeobfuscateConfig(void);
 
@@ -138,7 +138,7 @@ void RegistryInstallEntry_004ad410(void) {
         test    eax, eax
         _emit   74h
         _emit   72h
-        call    AudioSnapshotGlobals_004ace60
+        call    Config_SnapshotGlobals
         call    ComputeConfigHash
         mov     dword ptr [g_configBuffer], eax
         call    DeobfuscateConfig

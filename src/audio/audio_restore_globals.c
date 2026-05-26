@@ -164,7 +164,7 @@ extern unsigned int g_table_00543934;
 extern unsigned int g_table_00543a6c;
 extern unsigned int g_audioStateMachine0_004f3ae4;
 extern unsigned int g_audioStateMachine1_004f3ae8;
-extern void AudioSnapshotGlobals_004ace60(void);
+extern void Config_SnapshotGlobals(void);
 
 __declspec(naked) void AudioRestoreGlobals_004acce0(void)
 {
@@ -183,7 +183,7 @@ __declspec(naked) void AudioRestoreGlobals_004acce0(void)
         mov     dword ptr [g_gsmFlag], ecx
         mov     dword ptr [g_audioRestoreSlot_00543f7c], ecx
         jne     L_arg_main
-        call    AudioSnapshotGlobals_004ace60
+        call    Config_SnapshotGlobals
     L_arg_main:
         mov     ecx, 0x3C
         mov     esi, offset g_table_00543934

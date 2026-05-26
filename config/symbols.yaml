@@ -14136,7 +14136,7 @@ functions:
     status: matched
     file: src/audio/audio_restore_globals.c
   - addr: 0x004ace60
-    name: AudioSnapshotGlobals_004ace60
+    name: Config_SnapshotGlobals
     size: 292
     group: audio
     status: matched
