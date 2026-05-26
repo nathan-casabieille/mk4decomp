@@ -87,7 +87,7 @@ void CallPauseDirty4ScaledSet_004196c0(void) {
     SlotInitAndChainLink_004191b0();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 4) return;
-    *(unsigned int *)(g_eventQueueEnd * 4 + 0x30) = 0x81;
+    ((FightGroupNode *)(g_eventQueueEnd * 4))->tag = 0x81;
     g_walkCallback = (void(*)(void))0x14ccc;
     *(unsigned int *)(g_xformEntityIdx * 4 + 0x48) = 0x14ccc;
     g_scaledInit_00542044 = g_eventQueueEnd + 0x15;

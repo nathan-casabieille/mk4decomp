@@ -19,7 +19,7 @@ void CallPauseDirty4ScaledSet_00419780(void) {
     SlotInitAndChainLink_004191b0();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 4) return;
-    *(unsigned int *)(g_eventQueueEnd * 4 + 0x30) = 0x83;
+    ((FightGroupNode *)(g_eventQueueEnd * 4))->tag = 0x83;
     g_walkCallback = (void(*)(void))0x11999;
     *(unsigned int *)(g_xformEntityIdx * 4 + 0x48) = 0x11999;
     g_scaledInit_00542044 = g_eventQueueEnd + 0x15;
@@ -31,7 +31,7 @@ void CallPauseDirty4ScaledSet_00419840(void) {
     SlotInitAndChainLink_004191b0();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 4) return;
-    *(unsigned int *)(g_eventQueueEnd * 4 + 0x30) = 0x86;
+    ((FightGroupNode *)(g_eventQueueEnd * 4))->tag = 0x86;
     g_walkCallback = (void(*)(void))0x11999;
     *(unsigned int *)(g_xformEntityIdx * 4 + 0x48) = 0x11999;
     g_scaledInit_00542044 = g_eventQueueEnd + 0x15;
@@ -43,7 +43,7 @@ void CallPauseDirty4ScaledSet_00419980(void) {
     SlotInitAndChainLink_004191b0();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 4) return;
-    *(unsigned int *)(g_eventQueueEnd * 4 + 0x30) = 0x87;
+    ((FightGroupNode *)(g_eventQueueEnd * 4))->tag = 0x87;
     g_walkCallback = (void(*)(void))0x11999;
     *(unsigned int *)(g_xformEntityIdx * 4 + 0x48) = 0x11999;
     g_scaledInit_00542044 = g_eventQueueEnd + 0x15;
@@ -55,7 +55,7 @@ void CallPauseDirty4ScaledSet_00419a40(void) {
     SlotInitAndChainLink_004191b0();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 4) return;
-    *(unsigned int *)(g_eventQueueEnd * 4 + 0x30) = 0x82;
+    ((FightGroupNode *)(g_eventQueueEnd * 4))->tag = 0x82;
     g_walkCallback = (void(*)(void))0x11999;
     *(unsigned int *)(g_xformEntityIdx * 4 + 0x48) = 0x11999;
     g_scaledInit_00542044 = g_eventQueueEnd + 0x15;
@@ -67,7 +67,7 @@ void CallPauseDirty4ScaledSet_00419b00(void) {
     SlotInitAndChainLink_004191b0();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 4) return;
-    *(unsigned int *)(g_eventQueueEnd * 4 + 0x30) = 0x88;
+    ((FightGroupNode *)(g_eventQueueEnd * 4))->tag = 0x88;
     g_walkCallback = (void(*)(void))0x13333;
     *(unsigned int *)(g_xformEntityIdx * 4 + 0x48) = 0x13333;
     g_scaledInit_00542044 = g_eventQueueEnd + 0x15;
