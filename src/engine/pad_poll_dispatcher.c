@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern void PadPollDispatcher_004b5650(int player);
+extern void Input_PollPlayerKeyboard(int player);
 /* extern void Input_GetAsyncKey(int key); -- defined elsewhere with diff sig */
 extern u32 g_appInitFlag1;
 extern unsigned int g_phaseThunkInst_004d50ac;
@@ -136,7 +136,7 @@ extern unsigned int g_dispatchVar39_0054357c;
 
 extern u32 g_demoModeFlag;
 extern void Input_GetAsyncKey(void);
-extern void InputBitMaskDispatcher_004b5470(void);
+extern void Input_PollPlayerJoystick(void);
 
 __declspec(naked) void GameStateMachineMaybeRebuild(void)
 {
@@ -153,16 +153,16 @@ __declspec(naked) void GameStateMachineMaybeRebuild(void)
         cmp     dword ptr [g_gameStateResult], esi
         jne     L_idep_after_clear_masks
         push    esi
-        call    PadPollDispatcher_004b5650
+        call    Input_PollPlayerKeyboard
         add     esp, 4
         push    1
-        call    PadPollDispatcher_004b5650
+        call    Input_PollPlayerKeyboard
         add     esp, 4
         push    esi
-        call    InputBitMaskDispatcher_004b5470
+        call    Input_PollPlayerJoystick
         add     esp, 4
         push    1
-        call    InputBitMaskDispatcher_004b5470
+        call    Input_PollPlayerJoystick
         mov     eax, dword ptr [g_renderer2_var5_004f4e98]
         add     esp, 4
         cmp     eax, esi

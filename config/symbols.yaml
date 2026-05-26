@@ -15114,13 +15114,13 @@ functions:
     status: matched
     file: src/engine/helper_joy_button_init.c
   - addr: 0x004b5470
-    name: InputBitMaskDispatcher_004b5470
+    name: Input_PollPlayerJoystick
     size: 475
     group: engine.geo
     status: matched
     file: src/engine/input_bit_mask_dispatcher.c
   - addr: 0x004b5650
-    name: PadPollDispatcher_004b5650
+    name: Input_PollPlayerKeyboard
     size: 494
     group: engine.geo
     status: matched

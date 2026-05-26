@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void Input_PollJoystick(void);
 
-__declspec(naked) void InputBitMaskDispatcher_004b5470(void)
+__declspec(naked) void Input_PollPlayerJoystick(void)
 {
     __asm {
         push    esi

@@ -2435,8 +2435,8 @@ Joystick_Init
 Helper_GeoStub_5370
 Input_PollJoystick
 Input_GetAsyncKey
-InputBitMaskDispatcher_004b5470
-PadPollDispatcher_004b5650
+Input_PollPlayerJoystick
+Input_PollPlayerKeyboard
 Helper_TitleAudioReset
 GameStateMachineMaybeRebuild
 AppInit_PostJoy

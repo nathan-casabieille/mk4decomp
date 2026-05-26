@@ -29,8 +29,8 @@ extern unsigned int g_dispatchSave25_00543370;
 extern unsigned int g_dispatchVar39_0054357c;
 extern u32 g_appInitFlag1;
 extern void Input_GetAsyncKey(void);
-extern void InputBitMaskDispatcher_004b5470(void);
-extern void PadPollDispatcher_004b5650(void);
+extern void Input_PollPlayerJoystick(void);
+extern void Input_PollPlayerKeyboard(void);
 
 __declspec(naked) void GameStateMachineMaybeRebuild(void)
 {
@@ -47,16 +47,16 @@ __declspec(naked) void GameStateMachineMaybeRebuild(void)
         cmp     dword ptr [g_gameStateResult], esi
         jne     L_idep_after_clear_masks
         push    esi
-        call    PadPollDispatcher_004b5650
+        call    Input_PollPlayerKeyboard
         add     esp, 4
         push    1
-        call    PadPollDispatcher_004b5650
+        call    Input_PollPlayerKeyboard
         add     esp, 4
         push    esi
-        call    InputBitMaskDispatcher_004b5470
+        call    Input_PollPlayerJoystick
         add     esp, 4
         push    1
-        call    InputBitMaskDispatcher_004b5470
+        call    Input_PollPlayerJoystick
         mov     eax, dword ptr [g_renderer2_var5_004f4e98]
         add     esp, 4
         cmp     eax, esi
