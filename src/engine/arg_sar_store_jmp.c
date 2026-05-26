@@ -10,33 +10,33 @@ extern unsigned int g_scaledInit_00542044;
 /* @addr 0x00490330 (28b): scaled and ah, 0xdf */
 void ScaledAndAhdf_00490330(void) {
     unsigned int idx = g_fightGroupHead;
-    unsigned int v = *(unsigned int *)(idx * 4 + 0x40) & 0xFFFFFFDFu;
+    unsigned int v = ((FightGroupNode *)(idx * 4))->bits & 0xFFFFFFDFu;
     g_eventQueueCurrent = v;
-    *(unsigned int *)(idx * 4 + 0x40) = v;
+    ((FightGroupNode *)(idx * 4))->bits = v;
 }
 
 /* @addr 0x00490350 (28b): scaled and ah, 0xbf */
 void ScaledAndAhbf_00490350(void) {
     unsigned int idx = g_fightGroupHead;
-    unsigned int v = *(unsigned int *)(idx * 4 + 0x40) & 0xFFFFFFBFu;
+    unsigned int v = ((FightGroupNode *)(idx * 4))->bits & 0xFFFFFFBFu;
     g_eventQueueCurrent = v;
-    *(unsigned int *)(idx * 4 + 0x40) = v;
+    ((FightGroupNode *)(idx * 4))->bits = v;
 }
 
 /* @addr 0x00490370 (28b): scaled and ah, 0xfb */
 void ScaledAndAhfb_00490370(void) {
     unsigned int idx = g_fightGroupHead;
-    unsigned int v = *(unsigned int *)(idx * 4 + 0x40) & 0xFFFFFFFBu;
+    unsigned int v = ((FightGroupNode *)(idx * 4))->bits & 0xFFFFFFFBu;
     g_eventQueueCurrent = v;
-    *(unsigned int *)(idx * 4 + 0x40) = v;
+    ((FightGroupNode *)(idx * 4))->bits = v;
 }
 
 /* @addr 0x00490390 (28b): scaled and ah, 0xfe */
 void ScaledAndAhfe_00490390(void) {
     unsigned int idx = g_fightGroupHead;
-    unsigned int v = *(unsigned int *)(idx * 4 + 0x40) & 0xFFFFFFFEu;
+    unsigned int v = ((FightGroupNode *)(idx * 4))->bits & 0xFFFFFFFEu;
     g_eventQueueCurrent = v;
-    *(unsigned int *)(idx * 4 + 0x40) = v;
+    ((FightGroupNode *)(idx * 4))->bits = v;
 }
 
 /* @addr 0x004594f0 (30b)
