@@ -22,7 +22,7 @@ void GuardedPackedSlotInit_00428760(int arg0) {
     v = *(unsigned int *)(packed * 4);
     g_eventQueueTotal = packed + 1;
     g_scaledInit_00542044 = v;
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x24) = v;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end = v;
     g_walkCallback = (void (*)(void))0;
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = 0;
 }

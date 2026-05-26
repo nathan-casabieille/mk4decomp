@@ -24,7 +24,7 @@ extern void DualGuardPushInstallJmp_004288e0(void);
 void CallPauseScaledStoreJmp_00428820(void) {
     CopyJmp_00406ba0();
     if (g_framePauseFlag) return;
-    *(unsigned int*)(g_fightGroupHead * 4 + 0x28) = g_eventQueueCurrent;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = g_eventQueueCurrent;
     CallPauseDirty1JmpDirty4StackPush_00428850();
 }
 
@@ -32,6 +32,6 @@ void CallPauseScaledStoreJmp_00428820(void) {
 void CallPauseScaledStoreJmp_004288b0(void) {
     CopyJmp_00406ba0();
     if (g_framePauseFlag) return;
-    *(unsigned int*)(g_fightGroupHead * 4 + 0x28) = g_eventQueueCurrent;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = g_eventQueueCurrent;
     DualGuardPushInstallJmp_004288e0();
 }

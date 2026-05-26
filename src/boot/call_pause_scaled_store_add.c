@@ -25,6 +25,6 @@ extern void BootChainPushAddSignFlag_004077b0(void);
 void CallPauseScaledStoreAdd_004078f0(void) {
     BootChainPushAddSignFlag_004077b0();
     if (g_framePauseFlag != 0) return;
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = (unsigned int)g_walkCallback;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = (unsigned int)g_walkCallback;
     g_bootInitSaveSlot_00541dc4 = g_fightGroupHead + 0x0a;
 }
