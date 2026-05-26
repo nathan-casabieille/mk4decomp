@@ -14,7 +14,7 @@ extern void StageGameProgressCluster_00482780(void);
 extern void Wrapper_0048a360(void);
 void ScaledChainCmp61_00482740(void) {
     unsigned int v;
-    v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x3c);
+    v = ((ScenegraphNode *)(g_baseSel_00542060 * 4))->child_a;
     g_scaledInit_00542044 = v;
     v = *(unsigned int *)(v * 4 + 0x30);
     g_scaledInit_00542044 = v;

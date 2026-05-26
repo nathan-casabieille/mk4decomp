@@ -128,7 +128,7 @@ void GuardedBitChainCmpJmp_00470f90(void) {
     v &= 0x200;
     g_xformScratch94 = v;
     if (v == 0) return;
-    g_scaledInit_00542044 = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x3c);
+    g_scaledInit_00542044 = ((ScenegraphNode *)(g_baseSel_00542060 * 4))->child_a;
     v = *(int *)(g_scaledInit_00542044 * 4 + 0x7c);
     g_walkCallback = (void (*)(void))v;
     if (v < 2) return;

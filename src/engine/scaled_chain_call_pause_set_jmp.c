@@ -22,7 +22,7 @@ extern unsigned int g_scaledInit_00542044;
 extern void Thunk_0049cbd0(void);
 extern void func_00498e3c(void);
 void ScaledChainCallPauseSetJmp_0048f8e0(void) {
-    g_scaledInit_00542044 = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x3c);
+    g_scaledInit_00542044 = ((ScenegraphNode *)(g_baseSel_00542060 * 4))->child_a;
     Thunk_0049cbd0();
     if (g_framePauseFlag != 0) return;
     g_scaledInit_00542044 = 0x0048fa20;
