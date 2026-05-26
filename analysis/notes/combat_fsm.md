@@ -74,68 +74,86 @@ section, immediately after the function body:
 Decoded from the `_emit` block in [src/game/statemachine.c](../../src/game/statemachine.c):
 
 ```
-state  0   -> idx 0  (MAINMENU - sub-dispatch on cmd via table2)
+state  0   -> idx 0  (main-menu sub-dispatch on cmd via table2)
 state  1   -> idx 0xf (default no-op)
 state  2   -> idx 0xf
 state  3   -> idx 0xf
-state  4   -> idx 1  (TRANSITION - handle event)
-state  5   -> idx 2  (ARCADE)
-state  6   -> idx 3  (VS)
-state  7   -> idx 4  (TOURNAMENT)
-state  8   -> idx 5  (PRACTICE)
-state  9   -> idx 6  (OPTIONS)
-state  0xa -> idx 7  (CONFIG)
-state  0xb -> idx 0xf  (CREDITS - default)
-state  0xc -> idx 0xf  (SETTINGS - default)
+state  4   -> idx 1  (DrawMenu - menu redraw/transition)
+state  5   -> idx 2  (Menu_HelpScreen)
+state  6   -> idx 3  (Helper_GSM_HandleEvent)
+state  7   -> idx 4  (Menu_PauseMenu)
+state  8   -> idx 5  (Menu_GlideUnavailableDialog)
+state  9   -> idx 6  (Menu_Direct3DUnavailableDialog)
+state  0xa -> idx 7  (Menu_DirectDrawUnavailableDialog)
+state  0xb -> idx 8  (Menu_InsertCDDialog)
+state  0xc -> idx 9  (Menu_ColorDepthErrorDialog)
 states 0xd..0x17 -> idx 0xf (default)
-state  0x18 -> idx 0xa (Menu_HelpScreen)
-state  0x19 -> idx 0xb (Menu_GlideUnavailableDialog)
-state  0x1a -> idx 0xc (Menu_Direct3DUnavailableDialog)
-state  0x1b -> idx 0xd (Menu_DirectDrawUnavailableDialog)
-state  0x1c -> idx 0xe (Menu_PauseMenu)
+state  0x18 -> idx 0xa (Helper_GSM_VS)
+state  0x19 -> idx 0xb (Helper_GSM_Tournament)
+state  0x1a -> idx 0xc (Helper_GSM_Practice)
+state  0x1b -> idx 0xd (Helper_GSM_Options)
+state  0x1c -> idx 0xe (Helper_GSM_Config)
 ```
 
 ### State -> screen mapping
 
-| State (g_gameState) | Symbol                | Screen                          |
-|---------------------|-----------------------|---------------------------------|
-| 0                   | `GAMESTATE_MAINMENU`  | Top-level menu (sub-dispatched) |
-| 4                   | `GAMESTATE_TRANSITION`| Screen transition (audio re-arm)|
-| 5                   | `GAMESTATE_ARCADE`    | Arcade mode (vs ladder)         |
-| 6                   | `GAMESTATE_VS`        | VS mode                         |
-| 7                   | `GAMESTATE_TOURNAMENT`| Tournament mode                 |
-| 8                   | `GAMESTATE_PRACTICE`  | Practice/training mode          |
-| 9                   | `GAMESTATE_OPTIONS`   | Options menu                    |
-| 0xa                 | `GAMESTATE_CONFIG`    | Config (controls binding)       |
-| 0xb                 | `GAMESTATE_CREDITS`   | Credits roll                    |
-| 0xc                 | `GAMESTATE_SETTINGS`  | Graphics/sound settings         |
-| 0x18                | `Menu_HelpScreen`        | HELP overlay (F1)             |
-| 0x19                | `Menu_GlideUnavailableDialog` | "GLIDE 3D NOT AVAILABLE" |
-| 0x1a                | `Menu_Direct3DUnavailableDialog` | "DIRECT3D NOT AVAILABLE" |
-| 0x1b                | `Menu_DirectDrawUnavailableDialog` | "DIRECT-DRAW NOT AVAILABLE" |
-| 0x1c                | `Menu_PauseMenu`         | In-match PAUSE menu           |
+| State (g_gameState) | Handler                            | Screen                          |
+|---------------------|------------------------------------|---------------------------------|
+| 0                   | (main-menu sub-dispatch)           | Top-level menu                  |
+| 4                   | `DrawMenu`                         | Menu redraw / transition        |
+| 5                   | `Menu_HelpScreen`                  | F1 HELP overlay                 |
+| 6                   | `Helper_GSM_HandleEvent`           | event / transition dispatch     |
+| 7                   | `Menu_PauseMenu`                   | in-match PAUSE menu             |
+| 8                   | `Menu_GlideUnavailableDialog`      | "GLIDE 3D NOT AVAILABLE"         |
+| 9                   | `Menu_Direct3DUnavailableDialog`   | "DIRECT3D NOT AVAILABLE"         |
+| 0xa                 | `Menu_DirectDrawUnavailableDialog` | "DIRECT-DRAW NOT AVAILABLE"      |
+| 0xb                 | `Menu_InsertCDDialog`              | no-CD / RESCAN dialog           |
+| 0xc                 | `Menu_ColorDepthErrorDialog`       | windowed 8-bit-color error       |
+| 0x18                | `Helper_GSM_VS`                    | VS / arcade fight flow          |
+| 0x19                | `Helper_GSM_Tournament`            | tournament setup                |
+| 0x1a                | `Helper_GSM_Practice`              | practice setup                  |
+| 0x1b                | `Helper_GSM_Options`               | options page                    |
+| 0x1c                | `Helper_GSM_Config`                | controls config                 |
 
-CORRECTION: 0x18-0x1c were previously guessed as character/stage
-select and gfx-options sub-states. The handlers' menu-item tables
-(dumped from the EXE) prove they are the help/error/pause dialogs
-above. The state numbers and routing are confirmed via the byte
-table; only the screen labels were wrong.
+CORRECTION: prior revisions guessed the gameplay modes
+(ARCADE/VS/TOURNAMENT/PRACTICE/OPTIONS) were at states 5-9 and that
+0x18-0x1c were char/stage-select sub-states. Both were wrong. The
+mechanical byte-table -> jumptable1 -> call-target decode above (cross
+-checked against the raw disassembly of each dispatch label) shows the
+**gameplay modes live at 0x18-0x1c** and the **help/error/pause
+dialogs at 0x05-0x0c**. Handler identities are independently confirmed
+from each dialog's menu-item strings (see [menu_state.md](menu_state.md)).
+The old `GAMESTATE_*` symbol names below are retained only as a record
+of the superseded guess.
 
-### Main-menu sub-dispatch (state 0)
+### `cmd` sub-dispatch (state 0)
 
-When state is `MAINMENU` and `cmd` is in [1..8], a second jump table
-`g_gsmJumpTable2[8]` picks the new state:
+When state is 0 and `cmd` is in [1..8], a second jump table
+`g_gsmJumpTable2[8]` sets a new state. Decoded from the actual
+`mov ecx, imm32` in each target block (verified against the EXE),
+the `cmd` values are **direct screen/dialog requests**, not
+gameplay-mode selectors - `cmd 1` is F1=HELP (matches WndProc's
+`F1 -> GameStateMachine(1)`), and the rest open the engine's
+error/pause dialogs:
 
-| cmd | New state      | Symbol               |
-|-----|----------------|----------------------|
-| 1   | 8 (PRACTICE)   | `sub_practice`       |
-| 2   | 9 (OPTIONS)    | `sub_options`        |
-| 3   | 0xa (CONFIG)   | `sub_settings`       |
-| 4   | 5 (ARCADE)     | `sub_arcade`         |
-| 5   | 6 (VS, gated by `g_gsmFlag`) | `sub_options_gated` |
-| 6   | 0xb (CREDITS)  | `sub_credits`        |
-| 7   | 0xc (SETTINGS) | `sub_config`         |
-| 8   | 7 (TOURNAMENT) | `sub_settings_alt`   |
+| cmd | New state | Resulting handler                  |
+|-----|-----------|------------------------------------|
+| 1   | 5         | `Menu_HelpScreen` (F1 HELP)        |
+| 2   | 6 (gated by `g_gsmFlag`) | `Helper_GSM_HandleEvent` |
+| 3   | 7         | `Menu_PauseMenu`                   |
+| 4   | 9         | `Menu_Direct3DUnavailableDialog`   |
+| 5   | 0xa       | `Menu_DirectDrawUnavailableDialog` |
+| 6   | 8         | `Menu_GlideUnavailableDialog`      |
+| 7   | 0xb       | `Menu_InsertCDDialog`              |
+| 8   | 0xc       | `Menu_ColorDepthErrorDialog`       |
+
+(Superseded guess: an earlier revision read these as
+`sub_practice`/`sub_arcade`/`sub_options`/... main-menu mode launches.
+The `mov ecx` constants + the verified state->handler map disprove
+that - these eight commands all open help/error/pause overlays. The
+gameplay modes at states 0x18-0x1c are entered by a different path,
+most likely the state-0 `DrawMenu` row selection rather than this
+`cmd` table.)
 
 After setting the new state, the function falls through to an
 **audio re-arm** sequence:
@@ -157,9 +175,9 @@ acts on:
 
 | Return code | Action                                                     |
 |-------------|------------------------------------------------------------|
-| `0x45`      | Set `g_gameState = 4` (back to transition)                 |
-| `0x18..0x1c`| Set `g_gameState = retval` (open help / renderer-error / pause dialog) |
-| `0x3`       | Set `g_gameState = 6` (back to VS)                         |
+| `0x45`      | Set `g_gameState = 4` (menu redraw / transition)           |
+| `0x18..0x1c`| Set `g_gameState = retval` (enter a gameplay mode: VS / Tournament / Practice / Options / Config) |
+| `0x3`       | Set `g_gameState = 6`                                      |
 
 The helpers themselves:
 
@@ -561,15 +579,15 @@ In `src/game/`:
 
 ## Where to start when modifying
 
-1. **Add a new game mode**: pick an unused state in `g_gameState`'s
-   range (none are easily available - the table is dense - so you'd
-   need to repurpose `0xb` (CREDITS) or `0xc` (SETTINGS) which both
-   currently fall through to the default no-op). Extend
-   `g_gsmByteTable` and add a `Helper_GSM_NewMode` returning one of
-   the recognized post-codes.
-2. **Skip the menu**: set `g_gameState = 5` (ARCADE) and `g_gameMode = 0`
-   before `GameLogicStep`. The fight tick runs as if you'd selected
-   arcade mode and finished char/stage select.
+1. **Add a new game mode**: pick an unused `g_gameState` value. The
+   byte table only maps 0, 4-0xc and 0x18-0x1c; states 0xd-0x17 and
+   0x1d+ fall through to the default no-op, so they are free. Extend
+   `g_gsmByteTable` + `g_gsmJumpTable1` and add a `Helper_GSM_NewMode`
+   returning one of the recognized post-codes.
+2. **Skip the menu**: set `g_gameState = 0x18` (the VS / arcade fight
+   handler `Helper_GSM_VS`) before `GameLogicStep`. The fight tick
+   runs as if you'd selected a mode from the main menu. (NB: state 5
+   is the HELP overlay, not arcade - see the verified state map above.)
 3. **Force a fatal pose**: write `0x501` to a player node's `+0x74`
    field. The per-player scan in `GameTick` will skip updating that
    player; the scenegraph walker will keep rendering it. Useful for

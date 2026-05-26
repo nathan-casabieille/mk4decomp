@@ -1345,31 +1345,36 @@ It's a switch-based FSM driven by a state variable `g_gameState`
                 STATE 6 again
 ```
 
-| State | Handler                       | Role (DECODED via byte-table dispatch)    |
-|-------|-------------------------------|-------------------------------------------|
-| 0     | (main menu, sub-dispatches on `cmd` via `g_gsmJumpTable2`) | MAINMENU       |
-| 4     | `Helper_GSM_HandleEvent` `0x004b84d0` | TRANSITION (audio re-arm)            |
-| 5     | `Helper_GSM_VS` `0x004b6900`  | ARCADE                                    |
-| 6     | `Helper_GSM_Tournament` `0x004b7260` | VS                                  |
-| 7     | `Helper_GSM_Practice` `0x004b7b10` | TOURNAMENT                            |
-| 8     | `Helper_GSM_Options` `0x004b7df0` | PRACTICE                              |
-| 9     | `Helper_GSM_Config` `0x004b81f0` | OPTIONS                                |
-| 0xa   | (handler reused)              | CONFIG                                    |
-| 0xb   | (default no-op)               | CREDITS (falls through to default tail)   |
-| 0xc   | (default no-op)               | SETTINGS                                  |
-| 0x18  | `Menu_HelpScreen` `0x004b8630` | HELP overlay (CORRECTED - was guessed CHAR_SELECT_1) |
-| 0x19  | `Menu_GlideUnavailableDialog` `0x004b8730` | "GLIDE 3D NOT AVAILABLE" dialog          |
-| 0x1a  | `Menu_Direct3DUnavailableDialog` `0x004b8830` | "DIRECT3D NOT AVAILABLE" dialog          |
-| 0x1b  | `Menu_DirectDrawUnavailableDialog` `0x004b8930` | "DIRECT-DRAW NOT AVAILABLE" dialog      |
-| 0x1c  | `Menu_PauseMenu` `0x004b8a30` | In-match PAUSE menu (CORRECTED - was guessed GFX_OPTIONS) |
+Mechanically decoded from `g_gsmByteTable` (state -> jt index) +
+`g_gsmJumpTable1` (jt index -> dispatch label) + the `call` each label
+makes. This is ground truth, not inference:
 
-NOTE: the 0x18-0x1c screen labels were previously guessed as
-char/stage-select sub-states. Dumping each handler's menu-item table
-from the EXE proved they are the HELP overlay, the three
-renderer-unavailable dialogs, and the in-match PAUSE menu. The state
-numbers and state->handler routing are confirmed via `g_gsmByteTable`
-(state 0x18..0x1c -> jt1 index 0x0a..0x0e); only the gameplay-meaning
-labels were wrong. See [menu_state.md](menu_state.md).
+| State | jt idx | Handler                          | Screen |
+|-------|-------|-----------------------------------|--------|
+| 0x00  | 0     | (main-menu sub-dispatch on `cmd`) | Top-level menu |
+| 0x04  | 1     | `DrawMenu` `0x004b65c0`           | Menu redraw / transition |
+| 0x05  | 2     | `Menu_HelpScreen` `0x004b8630`    | F1 HELP overlay |
+| 0x06  | 3     | `Helper_GSM_HandleEvent` `0x004b84d0` | event/transition dispatch |
+| 0x07  | 4     | `Menu_PauseMenu` `0x004b8a30`     | in-match PAUSE menu |
+| 0x08  | 5     | `Menu_GlideUnavailableDialog` `0x004b8730` | "GLIDE 3D NOT AVAILABLE" |
+| 0x09  | 6     | `Menu_Direct3DUnavailableDialog` `0x004b8830` | "DIRECT3D NOT AVAILABLE" |
+| 0x0a  | 7     | `Menu_DirectDrawUnavailableDialog` `0x004b8930` | "DIRECT-DRAW NOT AVAILABLE" |
+| 0x0b  | 8     | `Menu_InsertCDDialog` `0x004b8d70` | no-CD / RESCAN |
+| 0x0c  | 9     | `Menu_ColorDepthErrorDialog` `0x004b8bd0` | windowed 8-bit error |
+| 0x18  | 0xa   | `Helper_GSM_VS` `0x004b6900`      | VS / arcade fight flow |
+| 0x19  | 0xb   | `Helper_GSM_Tournament` `0x004b7260` | tournament setup |
+| 0x1a  | 0xc   | `Helper_GSM_Practice` `0x004b7b10` | practice setup |
+| 0x1b  | 0xd   | `Helper_GSM_Options` `0x004b7df0` | options page |
+| 0x1c  | 0xe   | `Helper_GSM_Config` `0x004b81f0`  | controls config |
+| (else)| 0xf   | (default no-op tail)              | - |
+
+CORRECTION HISTORY: earlier revisions guessed the gameplay modes were
+at states 5-9 (ARCADE/VS/TOURNAMENT/PRACTICE/OPTIONS) and that
+0x18-0x1c were char/stage-select. Both were wrong. The byte-table
+decode above shows the **gameplay modes live at 0x18-0x1c** and the
+**help/error/pause dialogs at 0x05-0x0c**. Handler identities were
+independently confirmed from each handler's menu-item table strings;
+see [menu_state.md](menu_state.md).
 
 Full byte-table + sub-dispatch decoding in [combat_fsm.md](combat_fsm.md).
 

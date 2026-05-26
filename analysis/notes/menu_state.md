@@ -16,40 +16,41 @@ document covers the menu/UI layer above them.
                                           dispatch_index = g_gsmByteTable[state]
                                           jump to g_gsmJumpTable1[dispatch_index]:
 
-                                          state 0 (main menu)
-                                            sub-dispatch on `cmd` (1..8):
-                                              1 -> state 8   Practice
-                                              2 -> state 9   Options
-                                              3 -> state 0xa Settings
-                                              4 -> state 5   Arcade
-                                              5 -> state 6   Options (gated by g_gsmFlag)
-                                              6 -> state 0xb Credits
-                                              7 -> state 0xc Config (controls)
-                                              8 -> state 7   Settings (alt)
-                                            tail: re-arm music id 0x4a
+   state 0 + cmd 1..8: open an overlay/dialog (cmd is a direct screen
+                       request, e.g. F1 -> cmd 1 -> HELP):
+                         cmd 1 -> state 5   Menu_HelpScreen
+                         cmd 2 -> state 6   Helper_GSM_HandleEvent (gated)
+                         cmd 3 -> state 7   Menu_PauseMenu
+                         cmd 4 -> state 9   Menu_Direct3DUnavailableDialog
+                         cmd 5 -> state 0xa Menu_DirectDrawUnavailableDialog
+                         cmd 6 -> state 8   Menu_GlideUnavailableDialog
+                         cmd 7 -> state 0xb Menu_InsertCDDialog
+                         cmd 8 -> state 0xc Menu_ColorDepthErrorDialog
+                       tail: re-arm menu music id 0x4a
 
-                                          per-state handlers:
-                                            Helper_GSM_VS         (versus mode select)
-                                            Helper_GSM_Tournament (tournament setup)
-                                            Helper_GSM_Practice   (practice mode setup)
-                                            Helper_GSM_Options    (options page)
-                                            Helper_GSM_Config     (config page)
-                                            Helper_GSM_HandleEvent(event/cutscene dispatch)
-                                            Menu_HelpScreen        (F1 help overlay)
-                                            Menu_GlideUnavailableDialog
-                                            Menu_Direct3DUnavailableDialog
-                                            Menu_DirectDrawUnavailableDialog
-                                            Menu_PauseMenu         (in-match pause)
-                                            Menu_ColorDepthErrorDialog
-                                            Menu_InsertCDDialog    (no-CD / rescan)
+   state -> handler (verified via g_gsmByteTable -> g_gsmJumpTable1):
+     0x05 Menu_HelpScreen           0x08 Menu_GlideUnavailableDialog
+     0x06 Helper_GSM_HandleEvent    0x09 Menu_Direct3DUnavailableDialog
+     0x07 Menu_PauseMenu            0x0a Menu_DirectDrawUnavailableDialog
+                                    0x0b Menu_InsertCDDialog
+                                    0x0c Menu_ColorDepthErrorDialog
+     0x18 Helper_GSM_VS             0x1b Helper_GSM_Options
+     0x19 Helper_GSM_Tournament     0x1c Helper_GSM_Config
+     0x1a Helper_GSM_Practice
 
                                           tail (default):
                                             g_gsmActiveFlag = (state != 0)
 ```
 
-`g_gameState` is set to `7` (TOURNAMENT) by `AppInit` (entry #22 in
-the boot table) when demo mode is off. Otherwise the attract loop
-drives it.
+NOTE: the gameplay modes (VS / Tournament / Practice / Options /
+Config) are at states **0x18-0x1c**, and the help/error/pause dialogs
+at **0x05-0x0c**. The `cmd` argument selects a dialog/overlay (F1 =
+HELP), NOT a gameplay mode - those are entered from the state-0
+`DrawMenu` row selection. (An earlier revision had this backwards;
+the mapping above is decoded directly from the byte + jump tables.)
+
+`g_gameState` is initialised by `AppInit` (entry #22 in the boot
+table) when demo mode is off; otherwise the attract loop drives it.
 
 ## Per-page handler shape (the 7 Menu_* dialogs)
 
@@ -169,12 +170,18 @@ skipped during up/down navigation.
 
 ## TODOs
 
-- **Per-state -> handler mapping**. `g_gsmByteTable` is currently
-  reachable as in-text data inside `GameStateMachine`. Decoding the
-  29-byte translation table would let us label every state value
-  (0..0x1c) with a human name (TITLE, ARCADE_CHAR_SELECT,
-  PRACTICE_OPTS_PAGE, ...) and confirm which state value lands on
-  which page handler.
+- ~~**Per-state -> handler mapping**~~ - DONE. Decoded
+  `g_gsmByteTable` (state -> jt index), `g_gsmJumpTable1` (index ->
+  dispatch label), and the `call` each label makes, all from the EXE.
+  The verified map is in the dispatch diagram above and in
+  [combat_fsm.md](combat_fsm.md) / [architecture.md](architecture.md).
+  Key correction: gameplay modes are at 0x18-0x1c, dialogs at
+  0x05-0x0c (earlier revisions had these swapped).
+- **What enters states 0x18-0x1c?** The `cmd` table only opens
+  dialogs/overlays; the gameplay modes must be set elsewhere - most
+  likely the state-0 main-menu `DrawMenu` writing `g_gameState`
+  directly from the selected row's `action_code`. Confirm by tracing
+  the main-menu row selection.
 - ~~**Which menu is which Sub\*?**~~ - DONE. Identified by dumping each
   handler's menu-items table from the EXE and reading the row strings:
   HELP overlay, the three renderer-unavailable dialogs, the in-match
