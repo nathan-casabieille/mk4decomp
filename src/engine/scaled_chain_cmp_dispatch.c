@@ -18,7 +18,7 @@ void ScaledChainCmpDispatch_0048e4f0(int arg) {
     unsigned int walk;
     unsigned int target;
     g_scaledInit_00542044 = idx;
-    walk = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x34);
+    walk = ((ScenegraphNode *)(g_baseSel_00542060 * 4))->state_mask;
     g_walkCallback = (void (*)(void))walk;
     if (walk == 0x10) {
         walk = 2;

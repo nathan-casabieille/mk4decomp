@@ -126,5 +126,5 @@ void DualMulScaleStore_0042ffa0(void) {
     g_eventQueueNotMask = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail_00404af0)(0x1999, g_eventQueueNotMask);
     g_eventQueueChild = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail_00404af0)(0x1999, g_eventQueueChild);
     *(unsigned int *)(g_cj_0054205c * 4 + 0x6c) = g_eventQueueNotMask;
-    *(unsigned int *)(g_cj_0054205c * 4 + 0x74) = g_eventQueueChild;
+    ((ScenegraphNode *)(g_cj_0054205c * 4))->fsm_state = g_eventQueueChild;
 }

@@ -133,9 +133,9 @@ void BootMStackBracketedScaledStores_0040bf70(void) {
         v = *(unsigned int *)(g_fightGroupHead * 4 + 0x6c);
         v = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail_00404af0)(0x2000, v);
         *(unsigned int *)(g_fightGroupHead * 4 + 0x6c) = v;
-        v = *(unsigned int *)(g_fightGroupHead * 4 + 0x74);
+        v = ((ScenegraphNode *)(g_fightGroupHead * 4))->fsm_state;
         v = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail_00404af0)(g_eventQueueCurrent, v);
-        *(unsigned int *)(g_fightGroupHead * 4 + 0x74) = v;
+        ((ScenegraphNode *)(g_fightGroupHead * 4))->fsm_state = v;
         ScaledTripleCopy54_004ac040();
         if (g_framePauseFlag != 0) return;
         g_walkCallback = 0xff;

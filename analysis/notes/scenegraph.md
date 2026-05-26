@@ -38,6 +38,10 @@ at `g_nodeSlotsHdr_end` (`0x00541e40`). Each slot has two regions:
 +0xD8 .. +0xE7   header  (16 bytes)
 ```
 
+The typed view is `struct ScenegraphNode` in
+[include/engine/scenegraph.h](../../include/engine/scenegraph.h).
+See "Typed access" section below for the lift pattern.
+
 Header subfields, aliased as individual `extern` symbols:
 
 | Field                | Offset | Symbol                       | Set by                  |
@@ -100,6 +104,123 @@ distinct nodes at addresses 0x53e368 and 0x53e450 have
 `g_currentNodeIdx` values of 0x14f8da and 0x14f914 - so iterating
 `for (idx = ...; idx < ...; idx += 0x3a) ...` won't work. The walker
 follows the `+0xE4` linked-list pointer instead.
+
+
+## Typed access - struct ScenegraphNode
+
+The 232-byte slot is now exposed as a typed C struct in
+[include/engine/scenegraph.h](../../include/engine/scenegraph.h).
+The struct provides named fields for the offsets confirmed via
+decompilation:
+
+| Field           | Offset | Type | Semantic (when valid)                       |
+|-----------------|--------|------|---------------------------------------------|
+| `payload`       | +0x00  | u32  | Alloc-scan key (0 = slot free)              |
+| `self_ref`      | +0x04  | u32  | lea-based self-pointer scratch              |
+| `alloc_type`    | +0x08  | u32  | `g_pendingNodeType` at birth                |
+| `alloc_work_type` | +0x0C | u32 | `g_eventQueueWorkType` at birth             |
+| `not_mask`      | +0x14  | u32  | `g_eventQueueNotMask` at birth              |
+| `child_chain`   | +0x18  | u32  | Chain pointer (packed_ptr), used by walks   |
+| `alloc_flags`   | +0x1C  | u32  | `g_currentNodeFlags` at birth               |
+| `flags`         | +0x20  | u32  | Type/mode flag word (read by walker)        |
+| `queue_end`     | +0x24  | u32  | `g_eventQueueEnd` at birth                  |
+| `queue_idx`     | +0x28  | u32  | `g_eventQueueIdx` at birth                  |
+| `group_head`    | +0x2C  | u32  | `g_fightGroupHead` at birth                 |
+| `player_id`     | +0x30  | u32  | 1..4 (player nodes only - see polymorphism) |
+| `state_mask`    | +0x34  | u32  | Bit 0x1000 = "on screen", plus dirty bits   |
+| `child_a/b/c`   | +0x3C/+0x40/+0x44 | u32 | Child packed_ptr refs (some node types) |
+| `position_y`    | +0x58  | s32  | Signed y-coord (> -0xffff_0000 = on-screen) |
+| `fsm_state`     | +0x74  | u32  | FSM state value (0x501 = special / fatality)|
+| `magic`         | +0xD4  | u32  | = `NODE_LIVE_MAGIC` (0x12345678) when live  |
+| `ptr_field`     | +0xD8  | u32  | Header: alloc-scan key mirror               |
+| `type_word`     | +0xDC  | u32  | Header: type tag                            |
+| `work_type`     | +0xE0  | u32  | Header: alloc-time `g_eventQueueWorkType`   |
+| `next_link`     | +0xE4  | u32  | Header: linked-list next pointer            |
+
+The remaining offsets (`_10`, `_38`, `_48[4]`, `_5C[6]`, `_78[23]`)
+are unnamed scratch / user-state slots. They are present in the
+struct as filler so the size matches 0xE8 exactly.
+
+### Lift pattern
+
+To convert raw pointer arithmetic to typed access:
+
+```c
+/* Before */
+*(unsigned int *)(packed_ptr * 4 + 0x34) = v;
+unsigned int s = *(unsigned int *)(packed_ptr * 4 + 0x34);
+
+/* After (inline cast - always safe) */
+((ScenegraphNode *)(packed_ptr * 4))->state_mask = v;
+unsigned int s = ((ScenegraphNode *)(packed_ptr * 4))->state_mask;
+```
+
+MSVC SP3 produces byte-identical machine code for both forms
+(verified across 30+ functions): the `(packed_ptr * 4) + field_offset`
+calculation is the same, and the compiler emits `mov reg,
+[reg*4 + disp32]` in both cases.
+
+### Lift caveat - register allocation across function calls
+
+A LOCAL pointer binding can break the byte match when there's a
+function call between accesses:
+
+```c
+/* RISKY when there's a function call between accesses */
+ScenegraphNode *n = (ScenegraphNode *)(packed_ptr * 4);
+v = n->state_mask;
+SomeFunc();
+n->state_mask = v;    /* MSVC caches `n` in callee-saved register */
+                      /* orig reloads packed_ptr from memory each time */
+```
+
+For these patterns, use inline casts at each access site so MSVC
+sees a fresh global load each time. This was caught when lifting
+`BitSavePushCallMergePop_0045dc60` regressed (92 bytes differ) then
+matched again after switching to inline-cast.
+
+**Rule of thumb**: bind `ScenegraphNode *n = ...` only when the
+function body has no calls between field accesses on the same node.
+Otherwise inline-cast every access.
+
+### Slot polymorphism
+
+The 232-byte slot is a **polymorphic view**. The same offset can
+hold different semantic data depending on the node type:
+
+- `+0x30 (player_id)`: 1..4 for player nodes; for fight-group nodes
+  it's a tag value (`0x25a`, `0x82-0x88`, etc.).
+- `+0x34 (state_mask)`: bitfield in many contexts, but can hold
+  arbitrary state/value writes in others.
+- `+0x40 (child_b)`: child packed_ptr in scenegraph children, but
+  treated as a bitfield in `scaled_zero44.c` etc.
+
+The struct field names are chosen for the **most common semantic**.
+Pure-C lifts should only use a named field when the context's usage
+matches that semantic. For unmatched contexts (e.g. writing `0x25a`
+to `+0x30` in a fight-group init), keep the raw cast.
+
+### Lifted-function inventory
+
+As of this writing, 32 pure-C readers use typed access. By field:
+
+- `player_id`: `game_tick.c` per-player overlay scan (4 player blocks).
+- `state_mask`: `scaled_or_store`, `scaled_xor_store`, `scaled_or4_store`,
+  `scaled_or_ah8_call_pause_jmp`, `scaled_and4_inv_dirty_clear`,
+  `scaled_or4_dirty_clear`, `bit_save_push_call_merge_pop`,
+  `state6_latch`, `six_tag_calls_tail_jmp`, `guarded_set_call_or_jmp`,
+  `swap_or_pass_set`, `audio_swap_negate`, `cmp_dual_patch_call_jmp`,
+  `dual_field_add_sub_store`, `guarded_chain_dispatch`,
+  `m_stack_bracket3_sub_chain`, `small_helpers` (ClearBit2x34).
+- `child_a/b/c`: `copy3_fields3c4044`, `slot_field_swap3c`,
+  `chain2_axis_diff_store_tail_jmp`, `registry_push_bind_pop`,
+  `scaled_chain_3c74_jmp`, `three_call_chain_copy`, `cmp_dual_patch_call_jmp`.
+- `child_chain`: `scaled_chain_neg_store`, `dual_field_add_sub_store`.
+- `fsm_state`: `scaled_store501_set8_jmp`, `const0x2005_store`,
+  `const111_scaled_store_jmp`, `const_0303_init_jmp`,
+  `push_pop_walk_set1006`, `chained_event3`, `scaled_chain_3c74_jmp`,
+  `cmp_p1_scaled_load`.
+- `position_y`: `game_tick.c` per-player blocks, `dual_field_add_sub_store`.
 
 
 ## Allocator - AllocateNode (0x0041f290)

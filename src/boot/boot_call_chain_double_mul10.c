@@ -136,7 +136,7 @@ void BootCallChainDoubleMul10_0040b890(void) {
     *(unsigned int *)(g_currentNodeIdx * 4 + 0x44) = v;
     g_walkCallback = 0;
     *(unsigned int *)(g_currentNodeIdx * 4 + 0x48) = 0;
-    v = *(unsigned int *)(g_fightGroupHead * 4 + 0x74);
+    v = ((ScenegraphNode *)(g_fightGroupHead * 4))->fsm_state;
     g_walkCallback = v;
     v = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail_00404af0)(g_eventQueueCurrent, v);
     g_walkCallback = v;

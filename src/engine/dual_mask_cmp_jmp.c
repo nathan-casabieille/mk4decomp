@@ -125,9 +125,9 @@ void DualMaskCmpJmp_00490090(void) {
     v = *(unsigned int *)(g_cj_0054205c * 4 + 0x64);
     g_walkCallback = (void (*)(void))v;
     *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x64) = v;
-    a = *(unsigned int *)(g_cj_0054205c * 4 + 0x34);
+    a = ((ScenegraphNode *)(g_cj_0054205c * 4))->state_mask;
     g_walkCallback = (void (*)(void))a;
-    c = *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x34);
+    c = ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->state_mask;
     a &= 1;
     c &= 1;
     g_walkCallback = (void (*)(void))a;
