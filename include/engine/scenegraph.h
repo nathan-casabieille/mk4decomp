@@ -115,6 +115,38 @@ typedef struct FightGroupNode {
     u8  _44[0xA4];          /* +0x44..+0xE7 rest (matches 232 total)  */
 } FightGroupNode;
 
+/* Sister view of the same 232-byte slot when used as a node carrying
+ * an auxiliary vec3 immediately after the position vec3. Three pieces
+ * of evidence for this pairing:
+ *
+ *   1. `FiveFieldChainCopyTableWalk_00431260` copies 6 consecutive
+ *      values from a source table into +0x54..+0x68 (position vec3
+ *      followed by aux vec3).
+ *   2. `TripleScaledChainStore60_00431450` copies 3 consecutive
+ *      values into +0x60/+0x64/+0x68.
+ *   3. `InitThreeFields_00490e90` initialises the triplet (Y-only
+ *      seed, X/Z zero).
+ *
+ * Audio context uses an axis-flip on `aux_y` (see
+ * `AudioSwapNegate_004ac080`) which suggests this is a per-source
+ * vector consumed by the 3D audio panning code (likely a velocity
+ * for Doppler or a position offset relative to the listener).
+ *
+ * CAVEAT: the same byte range is reused as scratch by non-vec3 code
+ * paths (chain bookkeeping in `DualScaledStore_00452740`, flag stores
+ * in `Alarm3EntryPhaseChain`, the overlapping `TripleFieldCopyLo/Hi`
+ * pair targeting +0x5c..+0x64). Use this typedef ONLY when the
+ * surrounding call-site is unambiguously treating the 3 slots as a
+ * vec3; otherwise stick with raw `*(unsigned int *)` access.
+ */
+typedef struct AuxVec3Node {
+    u8  _00[0x60];          /* +0x00..+0x5F shared / opaque           */
+    s32 aux_x;              /* +0x60 secondary vec3 X component       */
+    s32 aux_y;              /* +0x64 secondary vec3 Y component       */
+    s32 aux_z;              /* +0x68 secondary vec3 Z component       */
+    u8  _6C[0x7C];          /* +0x6C..+0xE7 rest (matches 232 total)  */
+} AuxVec3Node;
+
 /* === Allocator ============================================== */
 
 void *AllocateNode(u32 type);                            /* 0x0041f290 */

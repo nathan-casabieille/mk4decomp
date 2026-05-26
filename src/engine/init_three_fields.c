@@ -21,10 +21,10 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 void InitThreeFields_00490e90(void) {
-    unsigned char *base = (unsigned char *)(g_fightGroupHead * 4);
+    AuxVec3Node *node = (AuxVec3Node *)(g_fightGroupHead * 4);
     g_walkCallback = (void (*)(void))0;
-    *(unsigned int *)(base + 0x60) = (unsigned int)g_walkCallback;
-    *(unsigned int *)(base + 0x68) = (unsigned int)g_walkCallback;
+    node->aux_x = (s32)(unsigned int)g_walkCallback;
+    node->aux_z = (s32)(unsigned int)g_walkCallback;
     g_walkCallback = (void (*)(void))0x0004c7ae;
-    *(unsigned int *)(base + 0x64) = (unsigned int)g_walkCallback;
+    node->aux_y = (s32)(unsigned int)g_walkCallback;
 }

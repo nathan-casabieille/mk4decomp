@@ -36,7 +36,7 @@ __declspec(naked) void AppInit_Misc2(void) {
  *   while (eax >= 0 && tab[eax].first != 0) { if (tab[eax].second != 1) break; eax--; }
  *   complex tail computing the final index.
  */
-__declspec(naked) void TableSearchDesc_004b62c0(void) {
+__declspec(naked) void Menu_FindPrevSelectable(void) {
     __asm {
         mov     edx, dword ptr [esp + 4]
         push    esi

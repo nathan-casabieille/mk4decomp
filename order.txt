@@ -2452,8 +2452,8 @@ PackedListVisitor_004b5c90
 PaletteFillLineHybrid_004b5ce0
 AppInit_Misc1
 Helper_MenuStub_62B0
-TableSearchDesc_004b62c0
-TableSearchAsc_004b6300
+Menu_FindPrevSelectable
+Menu_FindNextSelectable
 GameStateMachine
 DrawMenu
 Helper_DrawMenu_PostRender

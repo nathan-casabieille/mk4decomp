@@ -15216,13 +15216,13 @@ functions:
     status: matched
     file: src/audio/empty_stubs.c
   - addr: 0x004b62c0
-    name: TableSearchDesc_004b62c0
+    name: Menu_FindPrevSelectable
     size: 55
     group: game.menu
     status: matched
     file: src/game/table_search_desc.c
   - addr: 0x004b6300
-    name: TableSearchAsc_004b6300
+    name: Menu_FindNextSelectable
     size: 58
     group: game.menu
     status: matched

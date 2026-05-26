@@ -35,7 +35,7 @@ __declspec(naked) void AppInit_Misc2(void) {
  *   table search ascending from arg+1; clamps arg < -1 to -1; returns count
  *   of contiguous valid entries (each 8 bytes; .second must equal 1, .next != 0).
  */
-__declspec(naked) void TableSearchAsc_004b6300(void) {
+__declspec(naked) void Menu_FindNextSelectable(void) {
     __asm {
         mov     edx, dword ptr [esp + 4]
         push    esi

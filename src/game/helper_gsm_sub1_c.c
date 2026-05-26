@@ -15,8 +15,8 @@ extern u32 g_gsmDirty3;
 extern unsigned int g_dispatchSave1498_00ab4380;
 extern void DrawMenu(void);
 extern void Menu_PollNavInput(void);
-extern void TableSearchAsc_004b6300(void);
-extern void TableSearchDesc_004b62c0(void);
+extern void Menu_FindNextSelectable(void);
+extern void Menu_FindPrevSelectable(void);
 
 __declspec(naked) void Helper_GSM_Sub1C(void)
 {
@@ -31,7 +31,7 @@ __declspec(naked) void Helper_GSM_Sub1C(void)
         or       bl, 1
         push     0
         mov      byte ptr [g_dispatchSave1480_00ab42cc], bl
-        call     TableSearchAsc_004b6300
+        call     Menu_FindNextSelectable
         add      esp, 8
         mov      dword ptr [g_dispatchSave1483_00ab42dc], eax
         jmp      short L_8a61
@@ -60,7 +60,7 @@ __declspec(naked) void Helper_GSM_Sub1C(void)
         mov      eax, dword ptr [g_dispatchSave1483_00ab42dc]
         push     OFFSET g_gsmHelperBase_004f4f30
         push     eax
-        call     TableSearchDesc_004b62c0
+        call     Menu_FindPrevSelectable
         add      esp, 8
         mov      dword ptr [g_dispatchSave1483_00ab42dc], eax
         jmp      short L_8ac7
@@ -73,7 +73,7 @@ __declspec(naked) void Helper_GSM_Sub1C(void)
         je       short L_8ae3
         push     OFFSET g_gsmHelperBase_004f4f30
         push     eax
-        call     TableSearchAsc_004b6300
+        call     Menu_FindNextSelectable
         add      esp, 8
         mov      dword ptr [g_dispatchSave1483_00ab42dc], eax
     L_8ae3:
@@ -129,7 +129,7 @@ __declspec(naked) void Helper_GSM_Sub1C(void)
         push     OFFSET g_gsmHelperBase_004f4f30
         push     0
         mov      dword ptr [g_dispatchSave1498_00ab4380], 2
-        call     TableSearchAsc_004b6300
+        call     Menu_FindNextSelectable
         add      esp, 8
         mov      dword ptr [g_dispatchSave1483_00ab42dc], eax
     L_8ba2:
