@@ -72,15 +72,15 @@ extern void CallPauseScaledDecJmp_00429750(void);
         g_fightGroupHead = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x38);  \
         CALL_FN();                                                            \
         if (g_framePauseFlag != 0) return;                                    \
-        g_eventQueueCurrent = *(unsigned int *)(g_fightGroupHead * 4 + 0x28); \
-        g_xformEntityIdx = *(unsigned int *)(g_fightGroupHead * 4 + 0x24);    \
+        g_eventQueueCurrent = ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx; \
+        g_xformEntityIdx = ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end;    \
         saved_fg = *(unsigned int *)(g_matrixStackTop * 4);                   \
         g_fightGroupHead = saved_fg;                                          \
         g_matrixStackTop--;                                                   \
         g_eventQueueIdx = *(unsigned int *)(g_matrixStackTop * 4);            \
         g_matrixStackTop--;                                                   \
-        g_walkCallback = (void (*)(void))(*(unsigned int *)(saved_fg * 4 + 0x28)); \
-        g_scaledInit_00542044 = *(unsigned int *)(saved_fg * 4 + 0x24);       \
+        g_walkCallback = (void (*)(void))(((ScenegraphNode *)(saved_fg * 4))->queue_idx); \
+        g_scaledInit_00542044 = ((ScenegraphNode *)(saved_fg * 4))->queue_end;       \
     } while (0)
 
 /* @addr 0x0045be40 */
