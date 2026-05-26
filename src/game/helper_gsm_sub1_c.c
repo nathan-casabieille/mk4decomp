@@ -14,7 +14,7 @@ extern u32 g_gsmDirty2;
 extern u32 g_gsmDirty3;
 extern unsigned int g_dispatchSave1498_00ab4380;
 extern void DrawMenu(void);
-extern void MenuInputPoll_004b7020(void);
+extern void Menu_PollNavInput(void);
 extern void TableSearchAsc_004b6300(void);
 extern void TableSearchDesc_004b62c0(void);
 
@@ -49,7 +49,7 @@ __declspec(naked) void Helper_GSM_Sub1C(void)
         jmp      L_8ba2
     L_8a8d:
         push     1
-        call     MenuInputPoll_004b7020
+        call     Menu_PollNavInput
         mov      ebx, eax
         add      esp, 4
         mov      esi, ebx

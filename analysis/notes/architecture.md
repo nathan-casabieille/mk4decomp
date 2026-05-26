@@ -1479,7 +1479,7 @@ Three of GameLogicStep's auxiliary calls are audio updates:
 | `Audio_TimerTick` | `0x004ac4b0` | Schedules background audio via timeGetTime |
 | `Audio_UpdateChannels` | `0x004c37f0` | Iterates active sound channels, ticks each via vtable[0x24], removes finished ones |
 
-The other GameLogicStep helpers (`GameStateMachineMaybeRebuild` at
+The other GameLogicStep helpers (`Input_TickPlayers` at
 `0x004b5850` for idle-when-state-0 logic, `XformChainAdvance` at
 `0x004bd990` for per-frame xform update) are minor cleanup wrappers.
 
@@ -1490,7 +1490,7 @@ void GameLogicStep(void) {
     ++g_frameCounter;                                  // 60 Hz monotonic counter
     g_gameStateResult = GameStateMachine(0);           // menu FSM tick
     if (g_gameStateResult == 0) {
-        GameStateMachineMaybeRebuild();                // 0x004b5850 - idle when state==0
+        Input_TickPlayers();                // 0x004b5850 - idle when state==0
     }
     Audio_UpdateChannels();                            // 0x004c37f0 - DSound channel sweep
     Audio_TimerTick();                                 // 0x004ac4b0 - MCI music timer

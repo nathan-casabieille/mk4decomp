@@ -19,7 +19,7 @@ void GameLogicStep(void)
     ++g_frameCounter;
     g_gameStateResult = GameStateMachine(0);
     if (g_gameStateResult == 0) {
-        GameStateMachineMaybeRebuild();
+        Input_TickPlayers();
     }
     Audio_UpdateChannels();
     Audio_TimerTick();

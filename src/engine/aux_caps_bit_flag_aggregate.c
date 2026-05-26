@@ -119,7 +119,7 @@ extern unsigned int g_nineSlotKeyExtra_00543b6c;
  *   if any hit returns 1. Else returns boolean of: (Input_PollJoystick(
  *   g_nineSlotKey9_00543b68) | Input_PollJoystick(g_nineSlotKeyExtra_00543b6c)) & 0x0fffffff != 0.
  */
-__declspec(naked) void InputKeysetProbe_004be3c0(void) {
+__declspec(naked) void Input_AnyConfirmPressed(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         push    esi

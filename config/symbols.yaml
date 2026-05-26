@@ -15132,7 +15132,7 @@ functions:
     status: matched
     file: src/audio/helper_title_audio_reset.c
   - addr: 0x004b5850
-    name: GameStateMachineMaybeRebuild
+    name: Input_TickPlayers
     size: 448
     group: engine.geo
     status: matched
@@ -15252,7 +15252,7 @@ functions:
     status: matched
     file: src/game/helper_gsm_vs.c
   - addr: 0x004b7020
-    name: MenuInputPoll_004b7020
+    name: Menu_PollNavInput
     size: 312
     group: game.menu
     status: matched
@@ -15780,7 +15780,7 @@ functions:
     status: matched
     file: src/engine/scene_frame_step_with_inputs.c
   - addr: 0x004be3c0
-    name: InputKeysetProbe_004be3c0
+    name: Input_AnyConfirmPressed
     size: 125
     group: engine.scenegraph
     status: matched

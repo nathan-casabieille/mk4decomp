@@ -11,7 +11,7 @@ extern unsigned int g_dispatchSave868_004f5054;
 extern unsigned int g_dispatchSave1486_00ab4304;
 extern unsigned int g_dispatchSave1496_00ab436c;
 extern void DrawMenu(void);
-extern void MenuInputPoll_004b7020(void);
+extern void Menu_PollNavInput(void);
 extern void TableSearchAsc_004b6300(void);
 extern void TableSearchDesc_004b62c0(void);
 
@@ -47,7 +47,7 @@ __declspec(naked) void Helper_GSM_Sub1A(void)
         jmp     L_b83_drawMenu
     L_b83_case2:
         push    1
-        call    MenuInputPoll_004b7020
+        call    Menu_PollNavInput
         mov     ebx, eax
         add     esp, 4
         mov     esi, ebx

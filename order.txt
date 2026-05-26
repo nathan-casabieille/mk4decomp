@@ -2438,7 +2438,7 @@ Input_GetAsyncKey
 Input_PollPlayerJoystick
 Input_PollPlayerKeyboard
 Helper_TitleAudioReset
-GameStateMachineMaybeRebuild
+Input_TickPlayers
 AppInit_PostJoy
 Helper_GeoStub_5A70
 AppInit_Misc2
@@ -2458,7 +2458,7 @@ GameStateMachine
 DrawMenu
 Helper_DrawMenu_PostRender
 Helper_GSM_VS
-MenuInputPoll_004b7020
+Menu_PollNavInput
 StringSubstituteAfterColon_004b7160
 MenuTableReplaceScan_004b71b0
 Helper_GSM_Tournament
@@ -2542,7 +2542,7 @@ NodeApplyMatrix
 NodeApplyTransform_B_Swapped
 ScaledNegThreeWords_004be210
 SceneFrameStepWithInputs_004be250
-InputKeysetProbe_004be3c0
+Input_AnyConfirmPressed
 SceneRecordLookupRandInit_004be440
 TwinRecordIter_004be590
 CallZero2_004be610

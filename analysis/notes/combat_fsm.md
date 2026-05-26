@@ -32,7 +32,7 @@ void GameLogicStep(void) {
     ++g_frameCounter;
     g_gameStateResult = GameStateMachine(0);          // menu FSM
     if (g_gameStateResult == 0)
-        GameStateMachineMaybeRebuild();
+        Input_TickPlayers();
     Audio_UpdateChannels();
     Audio_TimerTick();
     if (Renderer_GetMode() == 4 && g_mode4PauseGate == 0) {

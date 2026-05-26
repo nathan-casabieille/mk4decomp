@@ -52,7 +52,7 @@ extern u32        g_logicStepFlag;      /* 0x0054381c */
 /* Helpers called from GameLogicStep that aren't in render.h /
  * scenegraph.h yet. */
 int  Renderer_GetMode(void);             /* 0x004b3db0 - tiny getter */
-void GameStateMachineMaybeRebuild(void); /* 0x004b5850 */
+void Input_TickPlayers(void); /* 0x004b5850 */
 void XformChainAdvance(void);            /* 0x004bd990 */
 
 extern packed_ptr g_player1NodeIdx;   /* 0x00538158 */

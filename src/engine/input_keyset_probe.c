@@ -119,7 +119,7 @@ extern unsigned int g_nineSlotKeyExtra_00543b6c;
 extern void Input_PollJoystick(void);
 extern void Input_GetAsyncKey(void);
 
-__declspec(naked) void InputKeysetProbe_004be3c0(void) {
+__declspec(naked) void Input_AnyConfirmPressed(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         push    esi

@@ -8,7 +8,7 @@
  *   On first invocation (bit 0 of g_dispatchSave1488_00ab431c clear), sets bit 0 and
  *   initializes g_dispatchSave1481_00ab42d0 = TableSearchAsc(0x4f4fd0, 0).
  *   Then dispatches on g_dispatchSave1500_00ab4388 (state): 0 → set state=2; 2 →
- *   read input via MenuInputPoll_004b7020, OR with 0x8000 mask, walk the
+ *   read input via Menu_PollNavInput, OR with 0x8000 mask, walk the
  *   table at 0x4f4fd0 via Asc/Desc moves if bit 0/1 of input set, and if
  *   bit 5 set transition to state 0x45. Then reads movsx eax,
  *   [g_dispatchSave1481_00ab42d0*8 + 0x4f4fd4] (entry-type tag), subtracts 0x11 and
@@ -25,7 +25,7 @@ extern unsigned int g_dispatchSave1488_00ab431c;
 extern unsigned int g_dispatchSave1500_00ab4388;
 extern void AppInit_Misc8(void);
 extern void DrawMenu(void);
-extern void MenuInputPoll_004b7020(void);
+extern void Menu_PollNavInput(void);
 extern void TableSearchAsc_004b6300(void);
 extern void TableSearchDesc_004b62c0(void);
 extern void Thunk_004c48b0(void);
@@ -57,7 +57,7 @@ __declspec(naked) void Helper_GSM_Sub_Other2(void) {
         jmp     L_mps_drawTail
     L_mps_state2:
         push    1
-        call    MenuInputPoll_004b7020
+        call    Menu_PollNavInput
         mov     ebx, eax
         add     esp, 4
         mov     esi, ebx

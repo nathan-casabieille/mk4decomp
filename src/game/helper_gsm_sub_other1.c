@@ -11,7 +11,7 @@ extern unsigned int g_dispatchSave1485_00ab42f8;
 extern unsigned int g_dispatchSave1499_00ab4384;
 extern void DrawMenu(void);
 extern void Helper_GSM_PlayMusic(void);
-extern void MenuInputPoll_004b7020(void);
+extern void Menu_PollNavInput(void);
 extern void TableSearchAsc_004b6300(void);
 extern void TableSearchDesc_004b62c0(void);
 
@@ -44,7 +44,7 @@ __declspec(naked) void Helper_GSM_Sub_Other1(void)
         jmp      L_8d3b
     L_8c26:
         push     1
-        call     MenuInputPoll_004b7020
+        call     Menu_PollNavInput
         mov      ebx, eax
         add      esp, 4
         mov      esi, ebx

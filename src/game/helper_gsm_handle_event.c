@@ -10,7 +10,7 @@ extern unsigned int g_dispatchSave1478_00ab41c4;
 extern unsigned int g_dispatchSave1484_00ab42f4;
 extern unsigned int g_dispatchSave1493_00ab4360;
 extern void DrawMenu(void);
-extern void MenuInputPoll_004b7020(void);
+extern void Menu_PollNavInput(void);
 extern void TableSearchAsc_004b6300(void);
 extern void TableSearchDesc_004b62c0(void);
 
@@ -45,7 +45,7 @@ __declspec(naked) void Helper_GSM_HandleEvent(void)
         jmp      L_85ba
     L_852e:
         push     1
-        call     MenuInputPoll_004b7020
+        call     Menu_PollNavInput
         mov      ebx, eax
         add      esp, 4
         mov      esi, ebx

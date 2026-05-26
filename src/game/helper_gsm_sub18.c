@@ -9,7 +9,7 @@
  *   al = g_byte_00ab42d4. If bit 0 not set: set it, push (0, &table); TableSearchAsc; store eax.
  *   Else: load saved g_dispatchSave1473_00ab41a0. Switch on g_dispatchSave1494_00ab4364 = 0/2/0x45/default.
  *     If 0 → set 0x00ab4364=2 + DrawMenu epilogue.
- *     If 2 → call MenuInputPoll_004b7020(1); check bit 0x8000; bl&1: TableSearchDesc; check esi;
+ *     If 2 → call Menu_PollNavInput(1); check bit 0x8000; bl&1: TableSearchDesc; check esi;
  *       bl&2: TableSearchAsc again; bl&0x10: load word from g_dispatchSave516_004f5094[eax*8] → g_dispatchSave1494_00ab4364;
  *       bl&0x20: g_dispatchSave1494_00ab4364=0x45.
  *     If 0x45 → set 0x00ab4364=0.
@@ -20,7 +20,7 @@ extern unsigned int g_gsmSub18Base_004f5090;
 extern unsigned int g_dispatchSave1473_00ab41a0;
 extern unsigned int g_dispatchSave1494_00ab4364;
 extern void DrawMenu(void);
-extern void MenuInputPoll_004b7020(void);
+extern void Menu_PollNavInput(void);
 extern void TableSearchAsc_004b6300(void);
 extern void TableSearchDesc_004b62c0(void);
 
@@ -58,7 +58,7 @@ __declspec(naked) void Helper_GSM_Sub18(void)
         jmp     L_drawMenu
     L_case2:
         push    1
-        call    MenuInputPoll_004b7020
+        call    Menu_PollNavInput
         mov     ebx, eax
         add     esp, 4
         mov     esi, ebx

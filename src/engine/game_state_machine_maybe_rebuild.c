@@ -32,7 +32,7 @@ extern void Input_GetAsyncKey(void);
 extern void Input_PollPlayerJoystick(void);
 extern void Input_PollPlayerKeyboard(void);
 
-__declspec(naked) void GameStateMachineMaybeRebuild(void)
+__declspec(naked) void Input_TickPlayers(void)
 {
     __asm {
         mov     eax, dword ptr [g_demoModeFlag]

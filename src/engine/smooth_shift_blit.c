@@ -120,7 +120,7 @@ extern void SceneRecordLookupRandInit_004be440(void);
 extern void DSound_GetContext(void);
 extern void ECM_OpenTrack_004be9c0(void);
 extern void TestPushPushCall_004bea50(void);
-extern void InputKeysetProbe_004be3c0(void);
+extern void Input_AnyConfirmPressed(void);
 /* Renderer_GetMode declared in game/tick.h as int */
 extern void AnimNodeKindDispatch_004b40d0(void);
 extern void SmoothShiftBlit_004bea80(void);
@@ -134,7 +134,7 @@ extern void CallZero_004bea30(void);
  *   g_gsmActiveFlag == 0 returns 0; else looks up an entry via
  *   SceneRecordLookupRandInit_004be440 keyed by [esp+0x24]. While that pointer is non-zero
  *   plays an ECM track and pumps the message loop: probe inputs via
- *   InputKeysetProbe_004be3c0, advance through TestPushPushCall_004bea50
+ *   Input_AnyConfirmPressed, advance through TestPushPushCall_004bea50
  *   transitions, and on key-1 input dispatch a 5-way JumpTable_004b41c0
  *   based action. On finish-condition (ebx != 0) restores state and
  *   returns either 0 or 0xa (bit-pattern via `neg/sbb/and 0xa`).
@@ -199,7 +199,7 @@ __declspec(naked) void SceneFrameStepWithInputs_004be250(void) {
     L_sfs_innerLoop:
         mov     edx, dword ptr [esp + 0x28]
         push    edx
-        call    InputKeysetProbe_004be3c0
+        call    Input_AnyConfirmPressed
         mov     ebx, eax
         add     esp, 4
         cmp     ebx, ebp
