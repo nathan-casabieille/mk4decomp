@@ -93,20 +93,142 @@ scenegraph ([scenegraph.md](scenegraph.md)) feed work into each frame.
 | `0x00542078` | `g_acc_00542078`                    | Decoder accumulator preset by the `0xdd`/`0xaa` opcode helpers. |
 | `0x00542060` | `g_baseSel_00542060`                | Selected entity base used by `EventGateCluster`'s anchor to fetch the per-entity script cursor. |
 
-## Known opcodes
+## The opcode dispatch table (g_eventHandlerTable_004e9ea8)
+
+Extracted directly from `MK4.EXE` (.rdata, file offset 0xe7ca8). The
+table is **113 dword slots** (opcodes `0x00`..`0x70`), indexed by
+`g_eventQueueCurrent`. 84 slots are live, pointing at **71 distinct
+handlers**; the remaining 29 slots are NULL (no-op opcodes). Handlers
+span `0x45e210`..`0x48e0d0`, almost all inside the event-helper
+cluster at `0x45exxx`.
+
+Structural observations:
+- **Opcode 0x00 is NULL** - opcode 0 = end/no-op (matches the decoder
+  treating a zero op as stream terminator).
+- **`0x48e0d0` is a shared catch-all**, reused by 8 opcodes
+  (`0x56, 0x59, 0x5c, 0x5d, 0x60`..`0x65`). It sits 16 bytes before
+  `SlotPhaseResetInstallChain_0048e0e0` and is almost certainly the
+  default 'ignore this opcode' stub.
+- **Opcode pairs 0x10 apart share a handler**: `0x37`/`0x47`,
+  `0x38`/`0x48`, `0x3b`/`0x4b`, `0x3f`/`0x4f` each point at the same
+  function. Suggests a per-player (or per-mode) opcode bank where the
+  high nibble selects the actor and the low nibble selects the action.
+- The named handlers below still carry shape-names (`SetJmp_`,
+  `GuardedDispatch_`, ...) - the table tells us *which opcode maps to
+  which handler*, but the per-handler in-game effect is still TODO.
+
+| Opcode | Handler VA | Symbol |
+|------:|-----------|--------|
+| 0x01 | `0x0045f2d0` | (unnamed) |
+| 0x02 | `0x0045f020` | (unnamed) |
+| 0x03 | `0x0045efb0` | (unnamed) |
+| 0x04 | `0x0045ede0` | `DualStreamSqDistThresh_0045ede0` |
+| 0x05 | `0x0045f210` | (unnamed) |
+| 0x06 | `0x0045edd0` | (unnamed) |
+| 0x07 | `0x0045f120` | (unnamed) |
+| 0x08 | `0x0045ed40` | (unnamed) |
+| 0x09 | `0x0045ec70` | (unnamed) |
+| 0x0a | `0x0045ec50` | (unnamed) |
+| 0x0b | `0x0045ec00` | `SetJmp_0045ec00` |
+| 0x0c | `0x0045f250` | (unnamed) |
+| 0x0d | `0x0045ebe0` | (unnamed) |
+| 0x0e | `0x0045ef10` | (unnamed) |
+| 0x0f | `0x0045eb70` | (unnamed) |
+| 0x10 | `0x0045eab0` | (unnamed) |
+| 0x11 | `0x0045eb10` | (unnamed) |
+| 0x12 | `0x0045ef80` | (unnamed) |
+| 0x13 | `0x0045eba0` | (unnamed) |
+| 0x14 | `0x0045ecc0` | (unnamed) |
+| 0x15 | `0x0045eac0` | (unnamed) |
+| 0x16 | `0x0045ea70` | (unnamed) |
+| 0x17 | `0x0045f2c0` | (unnamed) |
+| 0x18 | `0x0045ea30` | (unnamed) |
+| 0x19 | `0x0045e9f0` | (unnamed) |
+| 0x1a | `0x0045e600` | (unnamed) |
+| 0x1b | `0x0045e5d0` | `TripleEntryGate_0045e5d0` |
+| 0x1c | `0x0045e4c0` | (unnamed) |
+| 0x1d | `0x0045e880` | (unnamed) |
+| 0x1e | `0x0045e9b0` | (unnamed) |
+| 0x1f | `0x0045e970` | (unnamed) |
+| 0x20 | `0x0045f180` | (unnamed) |
+| 0x21 | `0x0045e930` | (unnamed) |
+| 0x22 | `0x0045e840` | (unnamed) |
+| 0x23 | `0x0045e800` | (unnamed) |
+| 0x24 | `0x0045e770` | (unnamed) |
+| 0x25 | `0x0045e590` | `RangeCheckJmp_0045e590` |
+| 0x26 | `0x0045e470` | (unnamed) |
+| 0x27 | `0x0045e410` | (unnamed) |
+| 0x29 | `0x0045e3c0` | (unnamed) |
+| 0x2a | `0x0045e350` | (unnamed) |
+| 0x2b | `0x0045e300` | (unnamed) |
+| 0x2c | `0x0045e2b0` | (unnamed) |
+| 0x2d | `0x0045e280` | (unnamed) |
+| 0x2e | `0x0045e210` | (unnamed) |
+| 0x2f | `0x0045e510` | (unnamed) |
+| 0x31 | `0x0045e730` | (unnamed) |
+| 0x32 | `0x0045e700` | (unnamed) |
+| 0x33 | `0x0045e550` | (unnamed) |
+| 0x35 | `0x00460a50` | (unnamed) |
+| 0x37 | `0x00460c60` | `CallPauseCallTestStackPushJmp_00460c60` |
+| 0x38 | `0x0045fcf0` | `CallPauseMStackPushSet0Jmp_0045fcf0` |
+| 0x3b | `0x00460cd0` | `GuardedDispatch_00460cd0` |
+| 0x3f | `0x00460ca0` | `GuardedDispatch_00460ca0` |
+| 0x47 | `0x00460c60` | `CallPauseCallTestStackPushJmp_00460c60` |
+| 0x48 | `0x0045fcf0` | `CallPauseMStackPushSet0Jmp_0045fcf0` |
+| 0x4b | `0x00460cd0` | `GuardedDispatch_00460cd0` |
+| 0x4f | `0x00460ca0` | `GuardedDispatch_00460ca0` |
+| 0x56 | `0x0048e0d0` | (shared catch-all) |
+| 0x57 | `0x004604f0` | (unnamed) |
+| 0x58 | `0x00460510` | (unnamed) |
+| 0x59 | `0x0048e0d0` | (shared catch-all) |
+| 0x5a | `0x00460530` | (unnamed) |
+| 0x5b | `0x00460550` | (unnamed) |
+| 0x5c | `0x0048e0d0` | (shared catch-all) |
+| 0x5d | `0x0048e0d0` | (shared catch-all) |
+| 0x5e | `0x00460570` | (unnamed) |
+| 0x5f | `0x00460590` | (unnamed) |
+| 0x60 | `0x0048e0d0` | (shared catch-all) |
+| 0x61 | `0x0048e0d0` | (shared catch-all) |
+| 0x62 | `0x0048e0d0` | (shared catch-all) |
+| 0x63 | `0x0048e0d0` | (shared catch-all) |
+| 0x64 | `0x0048e0d0` | (shared catch-all) |
+| 0x65 | `0x0048e0d0` | (shared catch-all) |
+| 0x66 | `0x00460fa0` | `DualEntryStateGated_00460fa0` |
+| 0x67 | `0x00461010` | (unnamed) |
+| 0x68 | `0x00460260` | `GuardedDoubleCallSetJmp_00460260` |
+| 0x69 | `0x00461090` | `SixEntryYieldThunks_00461090` |
+| 0x6a | `0x00461020` | `PushFourCallPopBitJmp_00461020` |
+| 0x6c | `0x00461120` | (unnamed) |
+| 0x6d | `0x00461130` | (unnamed) |
+| 0x6e | `0x00461190` | (unnamed) |
+| 0x6f | `0x004611f0` | (unnamed) |
+| 0x70 | `0x004611c0` | (unnamed) |
+
+No-op opcodes (NULL slot, decoder ignores): `0x00, 0x28, 0x30, 0x34,
+0x36, 0x39, 0x3a, 0x3c, 0x3d, 0x3e, 0x40, 0x41, 0x42, 0x43, 0x44,
+0x45, 0x46, 0x49, 0x4a, 0x4c, 0x4d, 0x4e, 0x50, 0x51, 0x52, 0x53,
+0x54, 0x55, 0x6b`.
+
+### Accumulator-preset opcodes (decoded inline, not via the table)
 
 | Opcode | Handler | Effect |
 |-------:|---------|--------|
 | `0xdd` | `ConditionalAcc4or3_0045e0b0` | Set `g_acc` to 4, or 3 if `g_xformScratch2088` is set. |
 | `0xaa` | `ConditionalAcc3or4_0045e0d0` | Set `g_acc` to 3, or 4 if `g_xformScratch2088` is set. |
-| (others) | via `g_eventHandlerTable_004e9ea8` | Dispatched through `Event_InvokeHandler`; individual handler roles not yet mapped. |
+
+`0xdd` and `0xaa` are handled by an explicit compare in
+`EventPacketDecoder` *before* the table lookup, so they sit outside
+the `0x00`..`0x70` table range (they are sentinel/escape opcodes).
 
 ## TODOs
 
-- **Opcode catalog**. Only `0xdd`/`0xaa` are decoded above. The full
-  set lives in `g_eventHandlerTable_004e9ea8` - dumping that table
-  (entries are packed pointers, multiply by 4 to get the VA) would
-  enumerate every scripted-event opcode and let each handler be named.
+- ~~**Opcode catalog**~~ - DONE (raw mapping). The full
+  `g_eventHandlerTable_004e9ea8` is now dumped above: 113 slots, 84
+  live, 71 distinct handlers. What remains is **naming each handler**
+  by reverse-engineering its body - they currently carry shape-names.
+  Start with the 4 handler-sharing opcode pairs (0x37/0x47 etc) to
+  confirm the per-player/per-mode bank theory, and with the
+  shared catch-all at `0x48e0d0`.
 - **`g_eventQueue*` exact slot semantics**. Head / Active / Pending /
   End / Current are reverse-engineered from access patterns; a runtime
   trace during a fatality (which is the densest event producer) would
