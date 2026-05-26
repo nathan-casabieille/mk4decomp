@@ -129,11 +129,11 @@ void MStackBracketedStoreTwoCall_004714e0(void) {
         *(unsigned int *)(g_currentNodeIdx * 4 + 0x38) = v;
         v = *(unsigned int *)(g_xformEntityIdx * 4 + 4);
         g_walkCallback = v;
-        *(unsigned int *)(g_currentNodeIdx * 4 + 0x3c) = v;
+        ((ScenegraphNode *)(g_currentNodeIdx * 4))->child_a = v;
         v = *(unsigned int *)(g_xformEntityIdx * 4 + 8);
-        *(unsigned int *)(g_currentNodeIdx * 4 + 0x40) = v;
+        ((ScenegraphNode *)(g_currentNodeIdx * 4))->child_b = v;
         g_walkCallback = 0;
-        *(unsigned int *)(g_currentNodeIdx * 4 + 0x44) = 0;
+        ((ScenegraphNode *)(g_currentNodeIdx * 4))->child_c = 0;
         *(unsigned int *)(g_currentNodeIdx * 4 + 0x48) = g_walkCallback;
         *(unsigned int *)(g_currentNodeIdx * 4 + 0x4c) = g_walkCallback;
     }
