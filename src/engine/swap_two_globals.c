@@ -23,7 +23,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_acc_00542078;
 extern void func_004245d4(void);
-extern void func_00404060(void);
+extern void Atan2QuadrantLookup_004245b0(void);
 void SwapTwoGlobals_004911c0(void) {
     unsigned int a, b;
     func_004245d4();
@@ -32,5 +32,5 @@ void SwapTwoGlobals_004911c0(void) {
     b = g_eventQueueChild;
     g_eventQueueWorkType = a;
     g_acc_00542078 = b;
-    func_00404060();
+    Atan2QuadrantLookup_004245b0();
 }

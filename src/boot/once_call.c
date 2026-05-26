@@ -23,13 +23,13 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned char g_byte_0052435c;
 extern void *g_dispatchSave1161_004d5084;
-extern int func_00401118(void *p, int a, int b);
-extern void func_0040136d(void);
+extern int FileLoaderTwoStage_00401120(void *p, int a, int b);
+extern void Init0AndMax_00401370(void);
 void OnceCall_00401340(void) {
     if (g_byte_0052435c != 0) {
         return;
     }
     g_byte_0052435c = 1;
-    func_00401118(&g_dispatchSave1161_004d5084, 0, 0);
-    func_0040136d();
+    FileLoaderTwoStage_00401120(&g_dispatchSave1161_004d5084, 0, 0);
+    Init0AndMax_00401370();
 }

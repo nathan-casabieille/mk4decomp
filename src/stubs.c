@@ -32,16 +32,6 @@ __declspec(naked) void Thunk_004ca77b_helper(void) { __asm ret }
 /* __declspec(naked) void WndProc@16(void) { __asm ret } -- stdcall mangled name, needs __stdcall */
 __declspec(naked) void __CIuintCvtPivot(void) { __asm ret }
 __declspec(naked) void _crt_startup_check(void) { __asm ret }
-__declspec(naked) void func_00401118(void) { __asm ret }
-__declspec(naked) void func_004012f0(void) { __asm ret }
-__declspec(naked) void func_0040136d(void) { __asm ret }
-__declspec(naked) void func_00404060(void) { __asm ret }
-__declspec(naked) void func_00404a00_bb(void) { __asm ret }
-__declspec(naked) void func_00404ad0(void) { __asm ret }
-__declspec(naked) void func_00404ae0(void) { __asm ret }
-__declspec(naked) void func_00404e10(void) { __asm ret }
-__declspec(naked) void func_00404efb(void) { __asm ret }
-__declspec(naked) void func_0040517a(void) { __asm ret }
 __declspec(naked) void func_00405420_ii(void) { __asm ret }
 __declspec(naked) void func_004058a0(void) { __asm ret }
 __declspec(naked) void func_0040592c(void) { __asm ret }

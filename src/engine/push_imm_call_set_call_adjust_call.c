@@ -13,8 +13,8 @@ extern unsigned int g_scaledInit_00542044;
  *   load walk, current; walk += 0x10000; push current, push walk; store walk;
  *   call F3; add esp 8; store eax → eventQueueCurrent.
  */
-extern int func_00404ae0(int, int);
-extern int func_00404ad0(int, int);
+extern int Mul10Tail_00404af0(int, int);
+extern int Mul10Tail_00404af0(int, int);
 extern void func_004ab730(void);
 
 void PushImmCallSetCallAdjustCall_00446bf0(void) {
@@ -22,7 +22,7 @@ void PushImmCallSetCallAdjustCall_00446bf0(void) {
         mov     eax, dword ptr [g_eventQueueCurrent]
         push    eax
         push    0x6666
-        call    func_00404ae0
+        call    Mul10Tail_00404af0
         add     esp, 8
         mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [g_walkCallback], 0xf5c
@@ -37,7 +37,7 @@ void PushImmCallSetCallAdjustCall_00446bf0(void) {
         push    ecx
         push    eax
         mov     dword ptr [g_walkCallback], eax
-        call    func_00404ad0
+        call    Mul10Tail_00404af0
         add     esp, 8
         mov     dword ptr [g_eventQueueCurrent], eax
         }

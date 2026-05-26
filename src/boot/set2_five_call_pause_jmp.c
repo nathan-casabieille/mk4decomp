@@ -18,8 +18,8 @@ extern void func_0041f260(void);
 extern void func_004135b0(void);
 extern void func_00481fc0(void);
 extern void func_00422280(void);
-extern void func_0040517a(void);
-extern void func_004012f0(void);
+extern void Helper_TickFrameTail(void);
+extern void OnceCall_00401340(void);
 void Set2FiveCallPauseJmp_0041fd10(void) {
     Wrapper_0041fd00();
     g_audioRestoreSlot3_0053a1f0 = 2;
@@ -31,7 +31,7 @@ void Set2FiveCallPauseJmp_0041fd10(void) {
     if (g_framePauseFlag) return;
     func_00422280();
     if (g_framePauseFlag) return;
-    func_0040517a();
+    Helper_TickFrameTail();
     if (g_framePauseFlag) return;
-    func_004012f0();
+    OnceCall_00401340();
 }

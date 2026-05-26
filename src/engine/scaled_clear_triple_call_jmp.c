@@ -26,7 +26,7 @@ extern u32 g_framePauseFlag;
  *   ret
  */
 extern void ZeroState_0048a1b0(void);
-extern void func_00404e10(void);
+extern void Init6Struct_00404e20(void);
 extern void func_004222c0(void);
 extern void func_004202f5(void);
 void ScaledClearTripleCallJmp_004202c0(void) {
@@ -36,7 +36,7 @@ void ScaledClearTripleCallJmp_004202c0(void) {
     if (v == 0) {
         ZeroState_0048a1b0();
     }
-    func_00404e10();
+    Init6Struct_00404e20();
     func_004222c0();
     if (g_framePauseFlag != 0) return;
     func_004202f5();
