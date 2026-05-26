@@ -24,8 +24,8 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern int func_004395b0(void);
 extern void func_00439600(void);
-extern void func_0043625b(void);
-extern void func_00435f4d(void);
+extern void PrefixThunkInstallSelf3State_00438f80(void);
+extern void Mul10ThresholdQuad_00435f50(void);
 void DualCallPauseDirtyJmp_00435f20(void) {
     if (func_004395b0() != 0) {
         return;
@@ -35,9 +35,9 @@ void DualCallPauseDirtyJmp_00435f20(void) {
         return;
     }
     if ((g_xformDirtyFlags & 1) != 0) {
-        func_0043625b();
+        PrefixThunkInstallSelf3State_00438f80();
     } else {
-        func_00435f4d();
+        Mul10ThresholdQuad_00435f50();
     }
 }
 

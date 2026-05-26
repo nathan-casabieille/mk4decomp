@@ -19,16 +19,16 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void func_00485e50(void);
-extern void func_0043524c(void);
-extern void func_00437a91(void);
+extern void InstallSelfDualPath_00435260(void);
+extern void InstallSelfPacked0x2005_00437a90(void);
 void CallPauseCmpDoubleJmp_00435230(void) {
     func_00485e50();
     if (g_framePauseFlag != 0) {
         return;
     }
     if ((int)g_walkCallback > 0x13333) {
-        func_0043524c();
+        InstallSelfDualPath_00435260();
     } else {
-        func_00437a91();
+        InstallSelfPacked0x2005_00437a90();
     }
 }

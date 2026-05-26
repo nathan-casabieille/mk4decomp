@@ -13,9 +13,9 @@
  *   shr     ecx, 2
  *   mov     [g_eventQueueCurrent], eax
  *   mov     [g_xformEntityIdx], ecx
- *   jmp     func_00433e80
+ *   jmp     AddDerefJmp_00433e70
  */
-extern void func_00433e80(void);
+extern void AddDerefJmp_00433e70(void);
 __declspec(naked) void ShrShrStoreJmp_00433e50(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueCurrent]
@@ -24,6 +24,6 @@ __declspec(naked) void ShrShrStoreJmp_00433e50(void) {
         shr     ecx, 2
         mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [g_xformEntityIdx], ecx
-        jmp     func_00433e80
+        jmp     AddDerefJmp_00433e70
     }
 }

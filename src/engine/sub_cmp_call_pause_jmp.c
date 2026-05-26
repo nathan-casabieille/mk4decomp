@@ -23,9 +23,9 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern unsigned int g_acc_00542078;
-extern void func_0042fb6c(void);
-extern void func_0042fc62(void);
-extern void func_0042f87c(void);
+extern void GuardedSeq_0042fb80(void);
+extern void PoseBlendDriver_0042fc80(void);
+extern void PhaseInstall2DInterpDispatch_0042f8a0(void);
 void SubCmpCallPauseJmp_0042fc40(void) {
     unsigned int new_wt;
     int acc;
@@ -34,10 +34,10 @@ void SubCmpCallPauseJmp_0042fc40(void) {
     acc = (int)g_acc_00542078;
     g_eventQueueWorkType = new_wt;
     if (acc > (int)new_wt) {
-        func_0042fb6c();
+        GuardedSeq_0042fb80();
         return;
     }
-    func_0042fc62();
+    PoseBlendDriver_0042fc80();
     if (g_framePauseFlag != 0) return;
-    func_0042f87c();
+    PhaseInstall2DInterpDispatch_0042f8a0();
 }

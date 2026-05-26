@@ -21,9 +21,9 @@ extern int func_00498b40(void *p, int n);
 extern int func_004be698(unsigned short v);
 extern void *g_const_004a0060;
 extern unsigned short g_word_004e2860;
-extern void func_00428c10(void);
+extern void CallSetPause_0041f830(void);
 int Push15PushDataCallWordCallJmp_004a1080(void) {
     func_00498b40(&g_const_004a0060, 0x15);
     func_004be698(g_word_004e2860);
-    return ((int (*)(void))func_00428c10)();
+    return ((int (*)(void))CallSetPause_0041f830)();
 }

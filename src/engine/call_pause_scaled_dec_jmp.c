@@ -22,8 +22,8 @@
  *   ret
  */
 extern void GuardedChainCmpDualBitXor_004299a0(void);
-extern void func_004296d8(void);
-extern void func_004296fb(void);
+extern void ScaledStoreCurDirtyClear_004296f0(void);
+extern void ScaledStoreCurDirtyOr1_00429730(void);
 extern u32 g_framePauseFlag;
 
 __declspec(naked) void CallPauseScaledDecJmp_00429750(void) {
@@ -37,10 +37,10 @@ __declspec(naked) void CallPauseScaledDecJmp_00429750(void) {
         dec     ecx
         mov     dword ptr [g_eventQueueCurrent], ecx
         js      short L_cpsdj_neg
-        jmp     func_004296d8
+        jmp     ScaledStoreCurDirtyClear_004296f0
 L_cpsdj_neg:
         mov     dword ptr [g_eventQueueCurrent], 0
-        jmp     func_004296fb
+        jmp     ScaledStoreCurDirtyOr1_00429730
 L_cpsdj_ret:
         ret
     }

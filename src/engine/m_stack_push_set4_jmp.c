@@ -10,7 +10,7 @@ extern unsigned int g_scaledInit_00542044;
 /* @addr 0x004384f0 (37b): same shape value=4 */
 extern void func_00438520(void);
 extern void func_0046f230_c(void);
-extern void func_0042b240(void);
+extern void StackPopDispatchTagged_0041f780(void);
 void MStackPushSet4Jmp_004384f0(void) {
     int top = g_matrixStackTop;
     g_walkCallback = (void(*)(void))4;

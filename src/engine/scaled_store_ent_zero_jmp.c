@@ -14,11 +14,11 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [eax*4 + 0x24], ecx
  *   jmp     +0xf
  */
-extern void func_00428e68(void);
+extern void ScaledArrStore_00428e70(void);
 void ScaledStoreEntZeroJmp_00428e40(void) {
     unsigned int idx = g_fightGroupHead;
     unsigned int ent = g_xformEntityIdx;
     g_eventQueueCurrent = 0;
     ((ScenegraphNode *)(idx * 4))->queue_end = ent;
-    func_00428e68();
+    ScaledArrStore_00428e70();
 }

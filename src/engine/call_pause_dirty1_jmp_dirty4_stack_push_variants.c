@@ -14,7 +14,7 @@ extern unsigned int g_phaseTimer_00537e94;
  *   inc g_matrixStackTop; push 0x00428950 onto stack[idx*4]; jmp T2.
  */
 extern void GuardedSeq_004297b0(void);
-extern void func_00436670(void);
+extern void ScaledInitOrSelfPtr_00429680(void);
 extern void func_0048f330(void);
 extern void func_00428950_oo(void);
 extern void func_004939a0(void);
@@ -30,7 +30,7 @@ __declspec(naked) void CallPauseDirty1JmpDirty4StackPush_00428850(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
-        jmp     func_00436670
+        jmp     ScaledInitOrSelfPtr_00429680
         call    func_0048f330
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

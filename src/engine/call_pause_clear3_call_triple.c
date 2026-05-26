@@ -18,7 +18,7 @@ extern unsigned int g_player1NodeIdx;
 extern unsigned int g_player2NodeIdx;
 extern void DualEntryInitCmp_00425b20(void);
 extern void StageParticleEmitterInit_00464350(void);
-extern void func_00431230(void);
+extern void FiveFieldChainCopyTableWalk_00431260(void);
 void CallPauseClear3CallTriple_00428030(void) {
     BootInitChainHeavy_00404f20();
     if (g_framePauseFlag != 0) return;
@@ -29,5 +29,5 @@ void CallPauseClear3CallTriple_00428030(void) {
     if (g_framePauseFlag != 0) return;
     StageParticleEmitterInit_00464350();
     if (g_framePauseFlag != 0) return;
-    func_00431230();
+    FiveFieldChainCopyTableWalk_00431260();
 }

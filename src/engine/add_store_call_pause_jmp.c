@@ -21,11 +21,11 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void MStackMagicModMul10_00424410(void);
-extern void func_00432522(void);
+extern void ModMagicMul10Index_00424350(void);
 void AddStoreCallPauseJmp_00431da0(void) {
     g_eventQueueWorkType = g_xformScratch2088 + 0x0001921f;
     MStackMagicModMul10_00424410();
     if (g_framePauseFlag != 0) return;
     g_eventQueueCurrent = (unsigned int)g_walkCallback;
-    func_00432522();
+    ModMagicMul10Index_00424350();
 }

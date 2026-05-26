@@ -15,13 +15,13 @@ extern unsigned int g_baseSel_00542060;
  *   pop     edi, esi, ebp
  *   ret
  */
-extern void func_0042f539(void);
+extern void Event23bMusicCluster_0042f540(void);
 __declspec(naked) void ScaledStoreCallEpilogue_0042f4d0(void) {
     __asm {
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     ecx, dword ptr [g_currentNodeFlags]
         mov     dword ptr [edx*4 + 0x5c], ecx
-        call    func_0042f539
+        call    Event23bMusicCluster_0042f540
         pop     edi
         pop     esi
         pop     ebp

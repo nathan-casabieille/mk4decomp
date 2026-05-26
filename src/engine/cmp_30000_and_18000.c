@@ -23,22 +23,22 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern unsigned int g_table_00535ddc;
-extern int func_00436090(void);
-extern void func_00430b96(void);
-extern void func_00436324(void);
-extern void func_004362cf(void);
+extern int Cmp2CallDirtyCall_004398b0(void);
+extern void GuardedSeq_00433bb0(void);
+extern void Mul10ThresholdQuad_00435f50(void);
+extern void TripleThresholdDispatch_004362f0(void);
 void Cmp30000And18000_004362b0(void) {
     unsigned int v;
-    if (func_00436090() != 0) return;
+    if (Cmp2CallDirtyCall_004398b0() != 0) return;
     v = g_table_00535ddc;
     g_walkCallback = (void (*)(void))v;
     if ((int)v > 0x30000) {
-        func_00430b96();
+        GuardedSeq_00433bb0();
         return;
     }
     if ((int)v < 0x18000) {
-        func_004362cf();
+        TripleThresholdDispatch_004362f0();
         return;
     }
-    func_00436324();
+    Mul10ThresholdQuad_00435f50();
 }

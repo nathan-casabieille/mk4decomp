@@ -16,10 +16,10 @@ extern unsigned int g_baseSel_00542060;
  *   mov     [g_xformDirtyFlags], eax
  *   jmp     +0xf
  */
-extern void func_004296d4(void);
+extern void Thunk_004296e0(void);
 void DirtyOrJmp_004296c0(void) {
     g_xformDirtyFlags = g_xformDirtyFlags | 1;
-    func_004296d4();
+    Thunk_004296e0();
 }
 
 /* @addr 0x00421c20 (18b)

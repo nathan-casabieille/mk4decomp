@@ -19,19 +19,19 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     +0x0e
  */
 extern unsigned int g_counter_0053a51c;
-extern void func_00434983(void);
-extern void func_004348e1(void);
-extern void func_0043454c(void);
+extern void InstallSelfStatePush_00434990(void);
+extern void InstallSelfStatePush_004348f0(void);
+extern void FlagInitTableSelector_00434560(void);
 void TriBranchJmp_00434530(void) {
     unsigned int v = g_counter_0053a51c;
     g_walkCallback = (void (*)(void))v;
     if (v == 8) {
-        func_00434983();
+        InstallSelfStatePush_00434990();
         return;
     }
     if (v == 0) {
-        func_004348e1();
+        InstallSelfStatePush_004348f0();
         return;
     }
-    func_0043454c();
+    FlagInitTableSelector_00434560();
 }

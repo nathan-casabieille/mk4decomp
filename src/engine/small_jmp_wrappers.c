@@ -19,11 +19,11 @@ void IndirectJmp_00438160(void) {
  *   mov     [g_currentNodeFlags], eax
  *   jmp     T
  */
-extern void func_0042ac0a(void);
+extern void InstallSelfAccumCheck_00428c20(void);
 void Init3333Jmp_00460400(void) {
     unsigned int v = 0x3333;
     g_eventQueueIdx = 0x00460490;
     g_xformScratch2088 = v;
     g_currentNodeFlags = v;
-    func_0042ac0a();
+    InstallSelfAccumCheck_00428c20();
 }

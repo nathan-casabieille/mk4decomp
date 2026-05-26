@@ -16,8 +16,8 @@ extern unsigned int g_phaseTimer_00537e94;
 extern void *g_dispatchSave1317_004f12f8;
 extern int PackedAdvanceCallContinue_0048e630(void *);
 extern void func_00489fd0(void);
-extern void func_004312e0(void);
-extern void func_00431470(void);
+extern void DualEntryInitDispatch_00431360(void);
+extern void ScaledInitWithCounterAndType_004314f0(void);
 void PushCallPauseSetMaxThenCallPauseJmp_0048e380(void) {
     int v;
     PackedAdvanceCallContinue_0048e630(&g_dispatchSave1317_004f12f8);

@@ -24,7 +24,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void func_00484f50(void);
 extern void GuardedDispatch4_00484b40(void);
-extern void func_0042b594(void);
+extern void GameDispatchValidateState_004339c0(void);
 extern void func_00484b13(void);
 void CallPauseDirtyMStackPush484b40_00484b00(void) {
     unsigned int v;
@@ -34,7 +34,7 @@ void CallPauseDirtyMStackPush484b40_00484b00(void) {
         v = g_matrixStackTop + 1;
         g_matrixStackTop = v;
         *(unsigned int *)(v * 4) = (unsigned int)&GuardedDispatch4_00484b40;
-        func_0042b594();
+        GameDispatchValidateState_004339c0();
         return;
     }
     func_00484b13();

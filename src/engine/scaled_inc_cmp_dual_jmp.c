@@ -20,8 +20,8 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     +0xb1
  *   jmp     +0x12c
  */
-extern void func_0042985c(void);
-extern void func_004298d7(void);
+extern void ScaledChainJmp_004298e0(void);
+extern void ScaledArrStore_00429960(void);
 void ScaledIncCmpDualJmp_00429800(void) {
     unsigned int idx;
     unsigned int scaled;
@@ -34,8 +34,8 @@ void ScaledIncCmpDualJmp_00429800(void) {
     g_walkCallback = (void (*)(void))v;
     cmp_val = *(int *)(scaled * 4 + 4);
     if ((int)v >= cmp_val) {
-        func_0042985c();
+        ScaledChainJmp_004298e0();
         return;
     }
-    func_004298d7();
+    ScaledArrStore_00429960();
 }

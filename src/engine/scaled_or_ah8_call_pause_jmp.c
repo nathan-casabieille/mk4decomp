@@ -20,14 +20,14 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  *   ret
  */
-extern void func_00426d80(void);
+extern void GameMusicState4Way_00426d90(void);
 extern void SetCallSetJmp_00414fe0(void);
 void ScaledOrAh8CallPauseJmp_0048d0c0(void) {
     ScenegraphNode *n = (ScenegraphNode *)(g_fightGroupHead * 4);
     unsigned int v = n->state_mask | 0x800;
     g_walkCallback = (void (*)(void))v;
     n->state_mask = v;
-    func_00426d80();
+    GameMusicState4Way_00426d90();
     if (g_framePauseFlag != 0) return;
     SetCallSetJmp_00414fe0();
 }

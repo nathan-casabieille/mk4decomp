@@ -90,8 +90,8 @@ extern void TableLookupCall_00489ff0(void);
 extern void Thunk_0049cbc0(void);
 extern void TripleEntryStateCascade_0042c7e0(void);
 extern void TripleMStackPushChainStores_00476180(void);
-extern void func_004283b3(void);
-extern void func_0042976e(void);
+extern void MStackPushDualJmp_00428370(void);
+extern void StackPopDispatchTagged_0041f780(void);
 
 extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void EsiInstallChainCallIndirect_00428680(void);
@@ -105,8 +105,8 @@ __declspec(naked) void func_00428390(void) {
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   75h
         _emit   05h
-        jmp     func_004283b3
-        jmp     func_0042976e
+        jmp     MStackPushDualJmp_00428370
+        jmp     StackPopDispatchTagged_0041f780
     }
 }
 
@@ -143,9 +143,9 @@ void func_00436270(void) {
     func_00471200();
 }
 
-/* @addr 0x004362a0 (5b): orphan tail-jmp into func_00436290. */
+/* @addr 0x004362a0 (5b): orphan tail-jmp into Cmp30000And18000_004362b0. */
 void func_004362a0(void) {
-    func_00436290();
+    Cmp30000And18000_004362b0();
 }
 
 /* @addr 0x00437100 (52b): call LeaPlus22StoreSelf; if !pause set walk=3,
@@ -161,12 +161,12 @@ void func_00437100(void) {
     func_00471270();
 }
 
-/* @addr 0x0048e3c0 (20b): call func_004312e0; if !pause tail-jmp
- * func_00431470. Orphan sub-entry of the original packed block. */
+/* @addr 0x0048e3c0 (20b): call DualEntryInitDispatch_00431360; if !pause tail-jmp
+ * ScaledInitWithCounterAndType_004314f0. Orphan sub-entry of the original packed block. */
 void func_0048e3c0(void) {
-    func_004312e0();
+    DualEntryInitDispatch_00431360();
     if (g_framePauseFlag != 0) return;
-    func_00431470();
+    ScaledInitWithCounterAndType_004314f0();
 }
 
 /* @addr 0x004bf080 (5b) tail-jmp wrapper to LoadStoreRetNopJmp_004bf090

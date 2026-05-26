@@ -10,11 +10,11 @@ extern unsigned int g_scaledInit_00542044;
 /* @addr 0x00438470 (37b main + 11 nop pad + 5b sub-entry at +0x30):
  *   set walk=6, mstack-push func_004384a0, tail-jmp func_0046f230.
  *   Sub-entry MStackCleanupFrom_004384a0 (below) is a 5b tail-jmp
- *   wrapper into func_0042b1c0; the 11-byte gap is synth 0x90 fill.
+ *   wrapper into StackPopDispatchTagged_0041f780; the 11-byte gap is synth 0x90 fill.
  */
 extern void func_004384a0(void);
 extern void func_0046f230(void);
-extern void func_0042b1c0(void);
+extern void StackPopDispatchTagged_0041f780(void);
 void MStackPushSet6Jmp_00438470(void) {
     int top = g_matrixStackTop;
     g_walkCallback = (void(*)(void))6;

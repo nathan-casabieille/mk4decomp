@@ -19,7 +19,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [eax*4 + 0x24], ecx
  *   jmp     T
  */
-extern void func_00429868(void);
+extern void ScaledChainJmp_004298e0(void);
 void IterStepScaledStore24_00428730(int arg) {
     unsigned int packed = (unsigned int)(arg >> 2);
     unsigned int v;
@@ -29,5 +29,5 @@ void IterStepScaledStore24_00428730(int arg) {
     g_eventQueueTotal = packed;
     g_scaledInit_00542044 = v;
     ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end = v;
-    func_00429868();
+    ScaledChainJmp_004298e0();
 }
