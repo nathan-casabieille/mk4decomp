@@ -177,11 +177,23 @@ skipped during up/down navigation.
   [combat_fsm.md](combat_fsm.md) / [architecture.md](architecture.md).
   Key correction: gameplay modes are at 0x18-0x1c, dialogs at
   0x05-0x0c (earlier revisions had these swapped).
-- **What enters states 0x18-0x1c?** The `cmd` table only opens
-  dialogs/overlays; the gameplay modes must be set elsewhere - most
-  likely the state-0 main-menu `DrawMenu` writing `g_gameState`
-  directly from the selected row's `action_code`. Confirm by tracing
-  the main-menu row selection.
+- ~~**What enters states 0x18-0x1c?**~~ - ANSWERED. There is no direct
+  `mov g_gameState, 0x18` anywhere; the gameplay states arrive as a
+  handler **return code**. `Helper_GSM_HandleEvent` (state 6) returns
+  0x18/0x19/0x1a/0x1b/0x1c, and `GameStateMachine`'s `case_handle_event`
+  block compares the return value and does `mov g_gameState, eax` for
+  each (the 5 such writes in [statemachine.c](../../src/game/statemachine.c)
+  lines 87-103). A return of 0x45 instead routes back to state 4
+  (menu redraw). So the mode-select menu feeds its choice through
+  `Helper_GSM_HandleEvent`'s return value, not through the `cmd` table.
+- **Mode-select item table (lead, layout unconfirmed)**. A table near
+  `0x004f30c4` holds the mode labels (`ENDURANCE`, `TOURNAMENT`,
+  `PRACTICE`, `EXIT GAME`, ...) in ~28-byte records with interleaved
+  `.text` pointers and small id codes (0x12-0x17). The exact record
+  layout is NOT yet confirmed - an early parse mis-aligned the
+  per-row pointer onto an audio function, so do not trust a naive
+  8- or 28-byte stride without disassembling the consumer
+  (`Helper_GSM_HandleEvent` / `DrawMenu`) first.
 - ~~**Which menu is which Sub\*?**~~ - DONE. Identified by dumping each
   handler's menu-items table from the EXE and reading the row strings:
   HELP overlay, the three renderer-unavailable dialogs, the in-match

@@ -183,7 +183,7 @@ The helpers themselves:
 
 | Symbol                       | Address      | Role                           |
 |------------------------------|--------------|--------------------------------|
-| `Helper_GSM_HandleEvent`     | `0x004b84d0` | Common event-handler tail      |
+| `Helper_GSM_HandleEvent`     | `0x004b84d0` | State-6 handler; returns the next gameplay state (0x18-0x1c) or 0x45. This return value is how the mode-select menu enters VS/Tournament/Practice/Options/Config (see `case_handle_event`). |
 | `Helper_GSM_VS`              | `0x004b6900` | VS-mode tick                   |
 | `Helper_GSM_Tournament`      | `0x004b7260` | Tournament-mode tick           |
 | `Helper_GSM_Practice`        | `0x004b7b10` | Practice-mode tick             |
