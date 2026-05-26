@@ -27,6 +27,6 @@ void GuardedClampStoreJmp_00428bd0(void) {
         walk = scaled - 1;
         g_walkCallback = (void (*)(void))walk;
     }
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = walk;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = walk;
     GuardedChainCmpDualBitXor_004299a0();
 }

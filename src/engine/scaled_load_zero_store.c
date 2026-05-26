@@ -20,5 +20,5 @@ void ScaledLoadZeroStore_004464f0(void) {
     unsigned int scaled = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x30);
     g_walkCallback = 0;
     g_scaledInit_00542044 = scaled;
-    *(unsigned int *)(scaled * 4 + 0x28) = 0;
+    ((ScenegraphNode *)(scaled * 4))->queue_idx = 0;
 }
