@@ -133,7 +133,7 @@ void BootCallChainDoubleMul10_0040b890(void) {
     v = *(unsigned int *)(g_fightGroupHead * 4 + 0x6c);
     g_walkCallback = v;
     v = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail_00404af0)(0x3333, v);
-    *(unsigned int *)(g_currentNodeIdx * 4 + 0x44) = v;
+    ((ScenegraphNode *)(g_currentNodeIdx * 4))->child_c = v;
     g_walkCallback = 0;
     *(unsigned int *)(g_currentNodeIdx * 4 + 0x48) = 0;
     v = ((ScenegraphNode *)(g_fightGroupHead * 4))->fsm_state;

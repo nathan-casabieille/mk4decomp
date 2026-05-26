@@ -15,5 +15,5 @@ extern void func_0042c3d0(void);
 void StoreLitRetSet2_0042c3b0(void) {
     unsigned int addr = (unsigned int)&func_0042c3d0;
     g_scaledInit_00542044 = addr;
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x44) = addr;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->child_c = addr;
 }
