@@ -83,6 +83,34 @@ typedef struct ScenegraphNode {
     u32 next_link;          /* +0xE4 linked-list next pointer         */
 } ScenegraphNode;
 
+/* Sister view of the same 232-byte slot when used as a fight-group
+ * node (where `g_fightGroupHead` points). Same memory, different
+ * field semantics at three offsets:
+ *
+ *   - +0x30 holds a group "tag" (0x25a, 0x25b, 0x82-0x88, ...)
+ *           instead of a player_id (1..4).
+ *   - +0x34 is a bitfield in fight-group contexts (same memory as
+ *           ScenegraphNode.state_mask - the name differs to reflect
+ *           the fight-group semantic).
+ *   - +0x40 is a bitfield (shifted+masked, e.g. `& 0xdf` to clear
+ *           bit 5) instead of a child_b packed_ptr reference.
+ *
+ * Use `((FightGroupNode *)(g_fightGroupHead * 4))->tag` etc. when
+ * a function clearly operates on a fight-group node; use
+ * `((ScenegraphNode *)...)` for player or generic-scenegraph contexts.
+ *
+ * Offsets that don't differ semantically (+0x74 fsm_state, header
+ * fields) are left unnamed here - access them via ScenegraphNode.
+ */
+typedef struct FightGroupNode {
+    u8  _00[0x30];          /* +0x00..+0x2F shared / opaque           */
+    u32 tag;                /* +0x30 fight-group kind tag             */
+    u32 flags;              /* +0x34 fight-group flag bitfield        */
+    u8  _38[0x08];          /* +0x38..+0x3F                           */
+    u32 bits;               /* +0x40 bitfield (shr+mask in dispatch)  */
+    u8  _44[0xA4];          /* +0x44..+0xE7 rest (matches 232 total)  */
+} FightGroupNode;
+
 /* === Allocator ============================================== */
 
 void *AllocateNode(u32 type);                            /* 0x0041f290 */

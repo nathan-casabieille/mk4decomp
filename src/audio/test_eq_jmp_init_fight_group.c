@@ -20,7 +20,7 @@ void TestEqJmpInitFightGroup_004a1740(void) {
         return;
     }
     g_eventQueueWorkType = 0xfef20000;
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x30) = 0x25a;
+    ((FightGroupNode *)(g_fightGroupHead * 4))->tag = 0x25a;
     g_walkCallback = (void(*)(void))0x50000;
     *(unsigned int *)(g_fightGroupHead * 4 + 0x6c) = 0x50000;
     AudioInstall3StateSubXform_004a17d0();

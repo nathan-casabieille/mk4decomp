@@ -15,5 +15,5 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 void ScaledShrAnd_0048bb40(void) {
-    g_walkCallback = (NodeHandlerFn)((*(u32 *)(g_fightGroupHead * 4 + 0x40) >> 12) & 3);
+    g_walkCallback = (NodeHandlerFn)((((FightGroupNode *)(g_fightGroupHead * 4))->bits >> 12) & 3);
 }

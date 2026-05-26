@@ -188,17 +188,39 @@ Otherwise inline-cast every access.
 The 232-byte slot is a **polymorphic view**. The same offset can
 hold different semantic data depending on the node type:
 
-- `+0x30 (player_id)`: 1..4 for player nodes; for fight-group nodes
-  it's a tag value (`0x25a`, `0x82-0x88`, etc.).
-- `+0x34 (state_mask)`: bitfield in many contexts, but can hold
-  arbitrary state/value writes in others.
-- `+0x40 (child_b)`: child packed_ptr in scenegraph children, but
-  treated as a bitfield in `scaled_zero44.c` etc.
+- `+0x30`: `player_id` (1..4) for player nodes; `tag` (`0x25a`,
+  `0x82-0x88`, etc.) for fight-group nodes.
+- `+0x34`: `state_mask` bitfield in most contexts; `flags` bitfield
+  with different bit semantics in fight-group nodes.
+- `+0x40`: `child_b` packed_ptr in scenegraph children; `bits`
+  bitfield (e.g. `& 0xdf` to clear bit 5) in fight-group nodes.
 
-The struct field names are chosen for the **most common semantic**.
-Pure-C lifts should only use a named field when the context's usage
-matches that semantic. For unmatched contexts (e.g. writing `0x25a`
-to `+0x30` in a fight-group init), keep the raw cast.
+The header defines **two sister typedefs** over the same 232 bytes,
+each with field names chosen for one node-type context:
+
+| View              | Use when                                          |
+|-------------------|---------------------------------------------------|
+| `ScenegraphNode`  | Generic / player nodes (default)                  |
+| `FightGroupNode`  | When `g_fightGroupHead` points to the node, OR    |
+|                   | when the function writes a tag like `0x25a` to +0x30, OR |
+|                   | when bit operations on `+0x40` indicate a flag word |
+
+Lift syntax differs by view:
+
+```c
+/* Player node context */
+((ScenegraphNode *)(g_player1NodeIdx * 4))->player_id == 1
+((ScenegraphNode *)(p * 4))->state_mask |= 4
+
+/* Fight-group node context */
+((FightGroupNode *)(g_fightGroupHead * 4))->tag = 0x25a
+((FightGroupNode *)(g_fightGroupHead * 4))->bits &= 0xFFFFFFDFu
+```
+
+Offsets that don't differ semantically across views (+0x74
+`fsm_state`, header fields, +0x58 `position_y`) are only named in
+`ScenegraphNode`. Access them via that view even in fight-group
+contexts.
 
 ### Lifted-function inventory
 

@@ -15,7 +15,7 @@ extern unsigned int g_scaledInit_00542044;
 extern void AudioInstall3StateSubXform_004a17d0(void);
 void SetWorkType02CountFFB_004a1790(void) {
     g_eventQueueWorkType = 0x01020000;
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x30) = 0x25b;
+    ((FightGroupNode *)(g_fightGroupHead * 4))->tag = 0x25b;
     g_walkCallback = (void(*)(void))0xfffb0000;
     *(unsigned int *)(g_fightGroupHead * 4 + 0x6c) = 0xfffb0000;
     AudioInstall3StateSubXform_004a17d0();

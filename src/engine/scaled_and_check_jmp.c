@@ -21,7 +21,7 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_xformScratch94;
 extern void func_00490374(void);
 void ScaledAndCheckJmp_00470f60(void) {
-    unsigned int v = *(unsigned int *)(g_fightGroupHead * 4 + 0x40);
+    unsigned int v = ((FightGroupNode *)(g_fightGroupHead * 4))->bits;
     unsigned int masked;
     g_walkCallback = (void (*)(void))v;
     masked = v & 0x200;

@@ -13,9 +13,10 @@ extern unsigned int g_scaledInit_00542044;
  *   load g_matrixStackTop; pop top into eventQueueNotMask; dec ; store.
  */
 void OrStoreDecStackPop_00490290(void) {
-    unsigned int v = g_eventQueueNotMask | *(unsigned int *)(g_fightGroupHead * 4 + 0x40);
+    FightGroupNode *n = (FightGroupNode *)(g_fightGroupHead * 4);
+    unsigned int v = g_eventQueueNotMask | n->bits;
     g_eventQueueCurrent = v;
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x40) = v;
+    n->bits = v;
     g_eventQueueNotMask = *(unsigned int *)(g_matrixStackTop * 4);
     g_matrixStackTop--;
 }
