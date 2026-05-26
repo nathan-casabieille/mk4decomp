@@ -23,5 +23,5 @@ void ScaledChainStore_004462c0(void) {
     g_scaledInit_00542044 = v;
     v2 = *(unsigned int *)(base * 4 + 0x38);
     g_walkCallback = (void (*)(void))v2;
-    *(unsigned int *)(v * 4 + 0x28) = v2;
+    ((ScenegraphNode *)(v * 4))->queue_idx = v2;
 }
