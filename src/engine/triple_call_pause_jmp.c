@@ -24,13 +24,13 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void func_00488282(void);
-extern void func_00490e82(void);
+extern void InitThreeFields_00490e90(void);
 extern void func_00490c14(void);
 extern void func_00470309(void);
 void TripleCallPauseJmp_00470500(void) {
     func_00488282();
     if (g_framePauseFlag != 0) return;
-    func_00490e82();
+    InitThreeFields_00490e90();
     if (g_framePauseFlag != 0) return;
     func_00490c14();
     if (g_framePauseFlag != 0) return;

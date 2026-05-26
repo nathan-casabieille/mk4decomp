@@ -371,7 +371,6 @@ __declspec(naked) void func_004907fa(void) { __asm ret }
 __declspec(naked) void func_00490c0a(void) { __asm ret }
 __declspec(naked) void func_00490c14(void) { __asm ret }
 __declspec(naked) void func_00490d30(void) { __asm ret }
-__declspec(naked) void func_00490e82(void) { __asm ret }
 __declspec(naked) void func_00490fd8(void) { __asm ret }
 __declspec(naked) void func_0049126c(void) { __asm ret }
 __declspec(naked) void func_00491508(void) { __asm ret }
