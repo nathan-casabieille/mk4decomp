@@ -2459,7 +2459,7 @@ DrawMenu
 Helper_DrawMenu_PostRender
 Helper_GSM_VS
 Menu_PollNavInput
-StringSubstituteAfterColon_004b7160
+Menu_FillColonField
 Input_RebindKeyToAction
 Helper_GSM_Tournament
 Input_RebindButtonToAction

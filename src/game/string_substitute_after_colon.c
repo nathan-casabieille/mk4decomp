@@ -12,7 +12,7 @@ extern unsigned int g_scaledInit_00542044;
  *   arg1 (or ' ' if arg1 is empty). Effectively a one-shot
  *   substitute-after-delim helper.
  */
-__declspec(naked) void StringSubstituteAfterColon_004b7160(void) {
+__declspec(naked) void Menu_FillColonField(void) {
     __asm {
         push    ebp
         mov     ebp, dword ptr [esp + 8]

@@ -131,7 +131,7 @@ extern unsigned int g_dispatchSave1490_00ab4328;
 extern unsigned int g_dispatchSave1492_00ab4358;
 extern void DrawMenu(void);
 extern void Helper_Sprintf(void);
-extern void StringSubstituteAfterColon_004b7160(void);
+extern void Menu_FillColonField(void);
 
 __declspec(naked) void MenuPageTailDispatch_004b8080(void)
 {
@@ -193,7 +193,7 @@ __declspec(naked) void MenuPageTailDispatch_004b8080(void)
         push     edx
     L_813b:
         push     esi
-        call     StringSubstituteAfterColon_004b7160
+        call     Menu_FillColonField
         add      esp, 8
     L_8144:
         mov      eax, dword ptr [esi + 8]

@@ -15258,7 +15258,7 @@ functions:
     status: matched
     file: src/game/menu_input_poll.c
   - addr: 0x004b7160
-    name: StringSubstituteAfterColon_004b7160
+    name: Menu_FillColonField
     size: 73
     group: game.menu
     status: matched
