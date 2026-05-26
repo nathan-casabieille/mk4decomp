@@ -23,10 +23,14 @@ extern "C" {
 
 typedef struct Mk4ComObj Mk4ComObj;
 typedef unsigned int (__stdcall *Mk4ComObj_Release_t)(Mk4ComObj *self);
+typedef unsigned int (__stdcall *Mk4ComObj_QI_t)(Mk4ComObj *self,
+                                                 void *iid,
+                                                 void *ppvObj);
 
 typedef struct Mk4ComObjVtbl {
-    void               *m_0_to_1[2];   /* QueryInterface, AddRef */
-    Mk4ComObj_Release_t Release;       /* slot 2 = offset 0x08   */
+    Mk4ComObj_QI_t      QueryInterface; /* slot 0 = offset 0x00 */
+    void               *m_AddRef;       /* slot 1 = offset 0x04 */
+    Mk4ComObj_Release_t Release;        /* slot 2 = offset 0x08 */
 } Mk4ComObjVtbl;
 
 struct Mk4ComObj {

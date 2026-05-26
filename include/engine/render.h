@@ -251,6 +251,21 @@ struct DDSurface {
     DDSurfaceVtbl *vtbl;
 };
 
+/* Sister type used at vtable slot 11 (offset 0x2c) = Flip(target, flags).
+ * Same memory layout as DDSurface above; just a different reader-side
+ * typedef so the lifted callsite can write `p->vtbl->Flip(p, ...)`. */
+typedef struct DDSurfaceFlippable DDSurfaceFlippable;
+typedef long (__stdcall *DDSurface_Flip_t)(DDSurfaceFlippable *self,
+                                           DDSurfaceFlippable *target,
+                                           int flags);
+typedef struct DDSurfaceFlipVtbl {
+    void            *m_0_to_10[11];
+    DDSurface_Flip_t Flip;             /* slot 11 = offset 0x2c */
+} DDSurfaceFlipVtbl;
+struct DDSurfaceFlippable {
+    DDSurfaceFlipVtbl *vtbl;
+};
+
 extern DDSurface *g_renderer3_obj;       /* 0x0058c868 */
 extern int       g_renderer3_active;     /* 0x0058c874 */
 extern int       g_renderer3_present_rc; /* 0x0058c878 (last Flip return) */

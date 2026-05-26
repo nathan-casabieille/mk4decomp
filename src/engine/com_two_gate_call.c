@@ -31,19 +31,6 @@ extern unsigned int g_comret_0058c8f8;
 extern void Renderer3_EndScene_SW_FS(void);
 extern void Renderer5_EndScene_SW_FS_Hi(void);
 
-/* DDraw surface with vtable slot 11 = Flip(target, flags). */
-typedef struct DDSurfaceFlippable DDSurfaceFlippable;
-typedef long (__stdcall *DDSurface_Flip_t)(DDSurfaceFlippable *self,
-                                           DDSurfaceFlippable *target,
-                                           int flags);
-typedef struct DDSurfaceFlipVtbl {
-    void           *m_0_to_10[11];
-    DDSurface_Flip_t Flip;
-} DDSurfaceFlipVtbl;
-struct DDSurfaceFlippable {
-    DDSurfaceFlipVtbl *vtbl;
-};
-
 extern DDSurfaceFlippable *g_comptr_0058c864;
 extern DDSurfaceFlippable *g_comptr_0058c8e4;
 
