@@ -15,7 +15,7 @@ extern void TestCallIat_004c44f0(void);
 extern void Helper_GfxCleanup(void);
 extern void Helper_AppStub_2AE0(void);
 extern void Thunk_004b5ac0(void);
-extern void RegistryInstallEntry_004ad410(void);
+extern void Config_SaveToRegistry(void);
 extern void Helper_MenuStub_62B0(void);
 extern void Helper_AppStub_21C0(void);
 extern void AudioShutdownSequence_004c4240(void);
@@ -28,7 +28,7 @@ void AppShutdown(void) {
     Helper_GfxCleanup();
     Helper_AppStub_2AE0();
     Thunk_004b5ac0();
-    RegistryInstallEntry_004ad410();
+    Config_SaveToRegistry();
     Helper_MenuStub_62B0();
     Helper_AppStub_21C0();
     AudioShutdownSequence_004c4240();

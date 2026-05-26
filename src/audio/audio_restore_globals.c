@@ -166,7 +166,7 @@ extern unsigned int g_audioStateMachine0_004f3ae4;
 extern unsigned int g_audioStateMachine1_004f3ae8;
 extern void Config_SnapshotGlobals(void);
 
-__declspec(naked) void AudioRestoreGlobals_004acce0(void)
+__declspec(naked) void Config_RestoreGlobals(void)
 {
     __asm {
         mov     eax, dword ptr [g_gsmFlag]

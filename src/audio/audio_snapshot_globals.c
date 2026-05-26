@@ -125,7 +125,7 @@ extern unsigned int g_iat_004d2000;
 extern unsigned int g_iat_004d2004;
 extern unsigned int g_iat_004d2010;
 
-void RegistryInstallEntry_004ad410(void) {
+void Config_SaveToRegistry(void) {
     __asm {
         sub     esp, 8
         mov     eax, dword ptr [g_installValidated]

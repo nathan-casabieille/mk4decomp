@@ -2271,13 +2271,13 @@ AuxAudio_SetVolume
 GetExeDirectory
 Helper_ComputeExeHash
 CheckInstallPath
-AudioRestoreGlobals_004acce0
+Config_RestoreGlobals
 Config_SnapshotGlobals
 ResetConfigToDefaults
 ComputeConfigHash
 DeobfuscateConfig
 ValidateInstall
-RegistryInstallEntry_004ad410
+Config_SaveToRegistry
 DSoundCaptureSetupGate_004ad4a0
 VtRelease_Modal_004ad590
 PaletteRampInit_004ad5f0

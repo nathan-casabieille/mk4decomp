@@ -259,7 +259,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/audio/pending_match_variants.c`
 - traits: switch-via-jumptable, SEH (fs:[0]), x87 FPU, IAT calls: 1, cond jmps: 8
-- top callees: `Push16Call_00489f50`×4, `VoiceTableInit_004a28d0`×4, `AudioStoreXfer3SelfInstall_004a2060`×2, `DispatcherComplex260_00407400`×2, `PushSetCallPop_00406530`×2, `FiveTableWalkInit_00403c90`×2, `LoadGeoAsset_Default`×2, `AudioRestoreGlobals_004acce0`
+- top callees: `Push16Call_00489f50`×4, `VoiceTableInit_004a28d0`×4, `AudioStoreXfer3SelfInstall_004a2060`×2, `DispatcherComplex260_00407400`×2, `PushSetCallPop_00406530`×2, `FiveTableWalkInit_00403c90`×2, `LoadGeoAsset_Default`×2, `Config_RestoreGlobals`
 - top globals: `g_currentNodeIdx`×10, `0x542060`×5, `0x4f31cc`×4, `0x4f31d0`×4, `0x5437fc`×4, `g_gtConfig4f`×4, `0x5437f8`×4, `0x54206c`×2
 
 ## PendingMatch_00411210 @ 0x411210 (1654b)

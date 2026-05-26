@@ -123,7 +123,7 @@ extern void Config_SnapshotGlobals(void);
 extern void ComputeConfigHash(void);
 extern void DeobfuscateConfig(void);
 
-void RegistryInstallEntry_004ad410(void) {
+void Config_SaveToRegistry(void) {
     __asm {
         sub     esp, 8
         mov     eax, dword ptr [g_installValidated]

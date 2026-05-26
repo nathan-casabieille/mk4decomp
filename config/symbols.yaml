@@ -14130,7 +14130,7 @@ functions:
     status: matched
     file: src/audio/install_path.c
   - addr: 0x004acce0
-    name: AudioRestoreGlobals_004acce0
+    name: Config_RestoreGlobals
     size: 376
     group: audio
     status: matched
@@ -14166,7 +14166,7 @@ functions:
     status: matched
     file: src/audio/validate_install.c
   - addr: 0x004ad410
-    name: RegistryInstallEntry_004ad410
+    name: Config_SaveToRegistry
     size: 138
     group: engine.install
     status: matched
