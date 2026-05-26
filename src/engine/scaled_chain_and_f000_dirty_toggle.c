@@ -13,9 +13,9 @@ extern unsigned int g_scaledInit_00542044;
  */
 void ScaledChainAndF000DirtyToggle_0048e740(void) {
     unsigned int v;
-    v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x3c);
+    v = ((ScenegraphNode *)(g_baseSel_00542060 * 4))->child_a;
     g_scaledInit_00542044 = v;
-    v = *(unsigned int *)(v * 4 + 0x74) & 0xf000;
+    v = ((ScenegraphNode *)(v * 4))->fsm_state & 0xf000;
     g_walkCallback = (void(*)(void))v;
     if (v == 0x4000) {
         g_xformDirtyFlags = g_xformDirtyFlags | 1;

@@ -16,7 +16,7 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_baseSel_00542060;
 void ScaledMove74to70_0046eaa0(void) {
     unsigned int idx = g_baseSel_00542060;
-    unsigned int v = *(unsigned int *)(idx * 4 + 0x74);
+    unsigned int v = ((ScenegraphNode *)(idx * 4))->fsm_state;
     g_walkCallback = (void(*)(void))v;
     *(unsigned int *)(idx * 4 + 0x70) = v;
 }

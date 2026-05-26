@@ -130,7 +130,7 @@ void InstallSelfSetTagJmp_00439e40(void) {
     ScaledZeroFour_00490740();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))0x2011;
-    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74) = 0x2011;
+    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->fsm_state = 0x2011;
     *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfSetTagJmp_00439e40;
     *(unsigned int *)(base + 0x84) = 1;
     g_pendingNodeType = 6;

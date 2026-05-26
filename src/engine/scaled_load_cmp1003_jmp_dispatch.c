@@ -17,7 +17,7 @@ extern void func_0048cf38(void);
 extern void func_0040ccf0(void);
 extern void func_00489fb2(void);
 void ScaledLoadCmp1003JmpDispatch_00486530(void) {
-    unsigned int v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74);
+    unsigned int v = ((ScenegraphNode *)(g_baseSel_00542060 * 4))->fsm_state;
     g_walkCallback = (void (*)(void))v;
     if (v != 0x1003) return;
     func_0048cf38();

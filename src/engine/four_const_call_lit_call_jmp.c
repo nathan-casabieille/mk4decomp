@@ -35,7 +35,7 @@ extern void StageEventStartCluster_0047ff80(void);
 
 /* @addr 0x0047fec0 */
 void FourConstCallLitCallJmp_0047fec0(void) {
-    *(unsigned int*)(g_baseSel_00542060 * 4 + 0x74) = 0x1011;
+    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->fsm_state = 0x1011;
     g_phaseTimer_00537e94 = 5;
     g_walkCallback = (void(*)(void))0x8000;
     g_eventQueueCurrent = 0;
@@ -48,7 +48,7 @@ void FourConstCallLitCallJmp_0047fec0(void) {
 
 /* @addr 0x0047ff20 */
 void FourConstCallLitCallJmp_0047ff20(void) {
-    *(unsigned int*)(g_baseSel_00542060 * 4 + 0x74) = 0x1011;
+    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->fsm_state = 0x1011;
     g_phaseTimer_00537e94 = 5;
     g_walkCallback = (void(*)(void))0x8000;
     g_eventQueueCurrent = 0;

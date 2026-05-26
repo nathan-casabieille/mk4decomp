@@ -122,7 +122,7 @@ void GuardedTripleSetTailJmp8_0044a500(void) {
     v = *(unsigned int *)(g_xformEntityIdx * 4) | 4;
     *(unsigned int *)(g_xformEntityIdx * 4) = v;
     g_walkCallback = (void (*)(void))0xa0000;
-    *(unsigned int *)(g_xformEntityIdx * 4 + 0x34) = 0xa0000;
+    ((ScenegraphNode *)(g_xformEntityIdx * 4))->state_mask = 0xa0000;
     MStackBracket7_DispatchAndChain_004b8fa0();
     if (g_framePauseFlag != 0) return;
     g_acc_00542078 = 6;
