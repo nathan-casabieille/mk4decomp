@@ -124,11 +124,11 @@ void ZMaskMergePop2_0044cfe0(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_eventQueueCurrent;
     walk = g_scaledInit_00542044;
-    slot = *(unsigned int *)(walk * 4 + 0x20);
+    slot = ((ScenegraphNode *)(walk * 4))->flags;
     g_eventQueueCurrent = 0x0f000000;
     slot = (slot & 0xf0ffffff) | g_eventQueueWorkType;
     g_walkCallback = (void (*)(void))slot;
-    *(unsigned int *)(walk * 4 + 0x20) = slot;
+    ((ScenegraphNode *)(walk * 4))->flags = slot;
     /* Dual-pop: orig alternates edx/ecx; MSVC SP3 prefers ecx for both. */
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
