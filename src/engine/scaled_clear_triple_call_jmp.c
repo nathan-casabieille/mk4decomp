@@ -31,8 +31,8 @@ extern void func_004222c0(void);
 extern void func_004202f5(void);
 void ScaledClearTripleCallJmp_004202c0(void) {
     unsigned int base = g_baseSel_00542060;
-    unsigned int v = *(unsigned int *)(base * 4 + 0x84);
-    *(unsigned int *)(base * 4 + 0x84) = 0;
+    unsigned int v = ((ScenegraphNode *)(base * 4))->install_flag;
+    ((ScenegraphNode *)(base * 4))->install_flag = 0;
     if (v == 0) {
         ZeroState_0048a1b0();
     }

@@ -125,7 +125,7 @@ void EsiInstallSetCbChainExtend_0048a810(void) {
     ZeroSixStores6c80_0048a7c0();
     g_eventQueueChild = 0x0048aad0;
     *(unsigned int *)(base + 8) = (unsigned int)&EsiInstallSetCbChainExtend_0048a810;
-    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x84) = 1;
+    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->install_flag = 1;
     {
         unsigned int t = *(unsigned int *)(base + 4);
         g_scaledInit_00542044 = t;
@@ -133,7 +133,7 @@ void EsiInstallSetCbChainExtend_0048a810(void) {
         g_scaledInit_00542044 = g_scaledInit_00542044 + 1;
         *(unsigned int *)(base + 4) = g_scaledInit_00542044;
     }
-    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x84) = 0;
+    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->install_flag = 0;
     SetJmp_0048acc0();
     g_framePauseFlag = 1;
 }
@@ -152,7 +152,7 @@ void EsiInstallSetCbChainExtend_0048a8c0(void) {
     ZeroSixStores6c80_0048a7c0();
     g_eventQueueChild = 0x0048ab40;
     *(unsigned int *)(base + 8) = (unsigned int)&EsiInstallSetCbChainExtend_0048a8c0;
-    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x84) = 1;
+    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->install_flag = 1;
     {
         unsigned int t = *(unsigned int *)(base + 4);
         g_scaledInit_00542044 = t;
@@ -160,7 +160,7 @@ void EsiInstallSetCbChainExtend_0048a8c0(void) {
         g_scaledInit_00542044 = g_scaledInit_00542044 + 1;
         *(unsigned int *)(base + 4) = g_scaledInit_00542044;
     }
-    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x84) = 0;
+    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->install_flag = 0;
     SetJmp_0048acc0();
     g_framePauseFlag = 1;
 }
@@ -179,7 +179,7 @@ void EsiInstallSetCbChainExtend_0048a970(void) {
     ZeroSixStores6c80_0048a7c0();
     g_eventQueueChild = 0x0048abc0;
     *(unsigned int *)(base + 8) = (unsigned int)&EsiInstallSetCbChainExtend_0048a970;
-    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x84) = 1;
+    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->install_flag = 1;
     {
         unsigned int t = *(unsigned int *)(base + 4);
         g_scaledInit_00542044 = t;
@@ -187,7 +187,7 @@ void EsiInstallSetCbChainExtend_0048a970(void) {
         g_scaledInit_00542044 = g_scaledInit_00542044 + 1;
         *(unsigned int *)(base + 4) = g_scaledInit_00542044;
     }
-    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x84) = 0;
+    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->install_flag = 0;
     SetJmp_0048acc0();
     g_framePauseFlag = 1;
 }

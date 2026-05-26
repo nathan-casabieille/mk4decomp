@@ -73,7 +73,9 @@ typedef struct ScenegraphNode {
     s32 position_y;         /* +0x58 signed; > -0xffff_0000 = on-screen */
     u32 _5C[6];             /* +0x5C..+0x73 user state                */
     u32 fsm_state;          /* +0x74 0x501 = special / fatality       */
-    u32 _78[23];            /* +0x78..+0xD3 user state                */
+    u32 _78[3];             /* +0x78..+0x83 user state                */
+    u32 install_flag;       /* +0x84 0/1 install state flag           */
+    u32 _88[19];            /* +0x88..+0xD3 user state                */
     u32 magic;              /* +0xD4 = NODE_LIVE_MAGIC when live      */
 
     /* === Header (+0xD8 .. +0xE7) ============================== */
