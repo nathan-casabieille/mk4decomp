@@ -125,7 +125,7 @@ void MStackBracket3SubChain_00493ad0(void) {
         *(unsigned int *)(g_currentNodeIdx * 4 + 0x1c) = 0xfffffff6;
         g_walkCallback = 4;
         *(unsigned int *)(g_currentNodeIdx * 4 + 0x20) = 4;
-        g_walkCallback = *(unsigned int *)(g_fightGroupHead * 4 + 0x30);
+        g_walkCallback = ((FightGroupNode *)(g_fightGroupHead * 4))->tag;
         MStackPushTableWalk_00493a20();
         if (g_framePauseFlag != 0) return;
         v = *(unsigned int *)(g_xformEntityIdx * 4 + 0x1c);

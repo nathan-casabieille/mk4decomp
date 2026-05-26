@@ -24,7 +24,7 @@ void NotShrCmp1Store_00460d80(void) {
     }
     e = ~g_fightTableC0;
     g_walkCallback = (void(*)(void))e;
-    chain = *(unsigned int *)(g_fightGroupHead * 4 + 0x30);
+    chain = ((FightGroupNode *)(g_fightGroupHead * 4))->tag;
     g_eventQueueCurrent = chain;
     if (chain == 1) return;
     g_walkCallback = (void(*)(void))(e >> 8);
