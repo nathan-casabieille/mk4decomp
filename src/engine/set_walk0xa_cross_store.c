@@ -12,14 +12,14 @@ extern unsigned int g_scaledInit_00542044;
  *   call F; pause → ret;
  *   copy g_scaledInit → g_xformEntityIdx; baseSel*4 + 0x5c → g_scaledInit; jmp T.
  */
-extern void func_00408c98(void);
-extern void func_004084d0(void);
+extern void DirtyDoubleDeref_00408cb0(void);
+extern void PushPopScaled1cDoubleCall_00408510(void);
 void SetWalk0xaCrossStore_00445fb0(void) {
     g_fightGroupHead = g_eventQueueIdx;
     g_walkCallback = (void (*)(void))0xa;
-    func_00408c98();
+    DirtyDoubleDeref_00408cb0();
     if (g_framePauseFlag != 0) return;
     g_xformEntityIdx = g_scaledInit_00542044;
     g_scaledInit_00542044 = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x5c);
-    func_004084d0();
+    PushPopScaled1cDoubleCall_00408510();
 }

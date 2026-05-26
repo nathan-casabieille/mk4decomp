@@ -20,14 +20,14 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  *   ret
  */
-extern void func_004085f0(void);
-extern void func_004058a0(void);
+extern void MStackBracket4_ListInsertZeroFill_00408600(void);
+extern void MStackPushTwoEntryChainCall_004058c0(void);
 void TripleSetCallPauseDirtyJmp_00446150(void) {
     unsigned int v = g_eventQueueIdx;
     g_fightGroupHead = v;
     g_scaledInit_00542044 = v;
-    func_004085f0();
+    MStackBracket4_ListInsertZeroFill_00408600();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 4) != 0) return;
-    func_004058a0();
+    MStackPushTwoEntryChainCall_004058c0();
 }

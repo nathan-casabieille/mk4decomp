@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_tickFlagF;
 extern void DualTestDirtyToggle_004282c0(void);
-extern void func_0041f780_aa(void);
+extern void StackPopDispatchTagged_0041f780(void);
 extern void IncCapped3e7_00491920(void);
 extern void RoundStartCluster_004919c0(void);
 void Set5CallPauseTestByteJmpCall_00491950(void) {
@@ -25,7 +25,7 @@ void Set5CallPauseTestByteJmpCall_00491950(void) {
         return;
     }
     if ((g_xformDirtyFlags & 1) == 0) {
-        func_0041f780_aa();
+        StackPopDispatchTagged_0041f780();
         return;
     }
     IncCapped3e7_00491920();

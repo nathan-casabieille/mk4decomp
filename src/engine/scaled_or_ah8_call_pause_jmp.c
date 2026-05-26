@@ -21,7 +21,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void func_00426d80(void);
-extern void func_00414fa6(void);
+extern void SetCallSetJmp_00414fe0(void);
 void ScaledOrAh8CallPauseJmp_0048d0c0(void) {
     ScenegraphNode *n = (ScenegraphNode *)(g_fightGroupHead * 4);
     unsigned int v = n->state_mask | 0x800;
@@ -29,5 +29,5 @@ void ScaledOrAh8CallPauseJmp_0048d0c0(void) {
     n->state_mask = v;
     func_00426d80();
     if (g_framePauseFlag != 0) return;
-    func_00414fa6();
+    SetCallSetJmp_00414fe0();
 }

@@ -19,10 +19,10 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void DirtyDoubleDeref_00408cb0(void);
-extern void func_00407310(void);
+extern void MStackPushDispatchBitGate_00407330(void);
 void CallPauseScaledStoreXJmp_00453750(void) {
     DirtyDoubleDeref_00408cb0();
     if (g_framePauseFlag != 0) return;
     g_xformEntityIdx = ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->queue_end;
-    func_00407310();
+    MStackPushDispatchBitGate_00407330();
 }

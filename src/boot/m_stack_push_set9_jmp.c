@@ -16,7 +16,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_walkCallback], 9
  *   jmp     T
  */
-extern void func_0041309e(void);
+extern void Phase4StateInit4Helpers_004130c0(void);
 void MStackPushSet9Jmp_00413040(void) {
     unsigned int top = g_matrixStackTop;
     unsigned int v = g_fightGroupHead;
@@ -24,5 +24,5 @@ void MStackPushSet9Jmp_00413040(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = v;
     g_walkCallback = (void (*)(void))9;
-    func_0041309e();
+    Phase4StateInit4Helpers_004130c0();
 }

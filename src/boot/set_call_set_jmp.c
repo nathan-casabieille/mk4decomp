@@ -18,7 +18,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void func_0049cc28(void);
-extern void func_00414e3c(void);
+extern void MStackBitLoopTripleCall_0049cc30(void);
 void SetCallSetJmp_00414fe0(void) {
     g_walkCallback = (void (*)(void))0xb1;
     func_0049cc28();
@@ -26,5 +26,5 @@ void SetCallSetJmp_00414fe0(void) {
         return;
     }
     g_walkCallback = (void (*)(void))0xb2;
-    func_00414e3c();
+    MStackBitLoopTripleCall_0049cc30();
 }

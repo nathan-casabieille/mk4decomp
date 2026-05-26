@@ -22,11 +22,11 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp T
  */
 extern unsigned int g_acc_00542078;
-extern void func_004245d4(void);
+extern void ScaledChainDouble_004911f0(void);
 extern void Atan2QuadrantLookup_004245b0(void);
 void SwapTwoGlobals_004911c0(void) {
     unsigned int a, b;
-    func_004245d4();
+    ScaledChainDouble_004911f0();
     if (g_framePauseFlag != 0) return;
     a = g_eventQueueNotMask;
     b = g_eventQueueChild;

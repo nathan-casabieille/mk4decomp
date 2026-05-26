@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
  *   call F2; pause →ret; set walk=0x3b; jmp T.
  */
 extern void func_0048cf38(void);
-extern void func_0040ccf0(void);
+extern void GuardedScaled_0040cd20(void);
 extern void func_00489fb2(void);
 void ScaledLoadCmp1003JmpDispatch_00486530(void) {
     unsigned int v = ((ScenegraphNode *)(g_baseSel_00542060 * 4))->fsm_state;
@@ -22,7 +22,7 @@ void ScaledLoadCmp1003JmpDispatch_00486530(void) {
     if (v != 0x1003) return;
     func_0048cf38();
     if (g_framePauseFlag != 0) return;
-    func_0040ccf0();
+    GuardedScaled_0040cd20();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))0x3b;
     func_00489fb2();

@@ -17,11 +17,11 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     Tail
  *   ret
  */
-extern void func_004085f8(void);
-extern void func_004088a0(void);
+extern void MStackBracket4_ListInsertZeroFill_00408600(void);
+extern void MStackPush3LinkedListWalk_004088b0(void);
 void GDispatch4_004089c0(void) {
-    func_004085f8();
+    MStackBracket4_ListInsertZeroFill_00408600();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 4) return;
-    func_004088a0();
+    MStackPush3LinkedListWalk_004088b0();
 }

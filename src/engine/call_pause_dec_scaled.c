@@ -19,11 +19,11 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [ecx*4 + 0x28], eax
  *   ret
  */
-extern void func_0040592c(void);
+extern void BootMStackBracket3SubdispatchPair_00407920(void);
 void CallPauseDecScaled_00428650(void) {
     unsigned int idx;
     unsigned int v;
-    func_0040592c();
+    BootMStackBracket3SubdispatchPair_00407920();
     if (g_framePauseFlag) return;
     idx = g_fightGroupHead;
     v = ((ScenegraphNode *)(idx * 4))->queue_idx - 1;

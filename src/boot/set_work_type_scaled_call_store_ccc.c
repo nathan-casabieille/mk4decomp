@@ -13,11 +13,11 @@ extern unsigned int g_scaledInit_00542044;
  *   load g_xformEntityIdx; set walk = 0x14ccc and store at [ecx*4 + 0x48]; ret.
  */
 extern unsigned int g_dispatchSave1196_004d7b28;
-extern void func_00419190(void);
+extern void SlotInitAndChainLink_004191b0(void);
 void SetWorkTypeScaledCallStoreCcc_0041aa80(void) {
     g_eventQueueWorkType = 2;
     g_pendingNodeType = (unsigned int)&g_dispatchSave1196_004d7b28 >> 2;
-    func_00419190();
+    SlotInitAndChainLink_004191b0();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 4) != 0) return;
     g_walkCallback = (void (*)(void))0x14ccc;

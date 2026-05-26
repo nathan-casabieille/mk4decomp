@@ -114,7 +114,7 @@ __declspec(naked) void func_00428390(void) {
  * the original packed slot. Reached via OFFSET func_004391b0 references
  * (e.g. from misc_matchesF.c). */
 void func_004391b0(void) {
-    func_00423bf0();
+    DualScaledInitClear_00433c10();
     if (g_framePauseFlag != 0) return;
     func_0046f680();
 }

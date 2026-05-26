@@ -14,22 +14,22 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_audioRestoreSlot3_0053a1f0;
 extern void Wrapper_0041fd00(void);
-extern void func_0041f260(void);
-extern void func_004135b0(void);
+extern void ZeroLargeBlock_0041f270(void);
+extern void GuardedSeq_004335d0(void);
 extern void func_00481fc0(void);
-extern void func_00422280(void);
+extern void GlobalsResetInit_004222a0(void);
 extern void Helper_TickFrameTail(void);
 extern void OnceCall_00401340(void);
 void Set2FiveCallPauseJmp_0041fd10(void) {
     Wrapper_0041fd00();
     g_audioRestoreSlot3_0053a1f0 = 2;
-    func_0041f260();
+    ZeroLargeBlock_0041f270();
     if (g_framePauseFlag) return;
-    func_004135b0();
+    GuardedSeq_004335d0();
     if (g_framePauseFlag) return;
     func_00481fc0();
     if (g_framePauseFlag) return;
-    func_00422280();
+    GlobalsResetInit_004222a0();
     if (g_framePauseFlag) return;
     Helper_TickFrameTail();
     if (g_framePauseFlag) return;

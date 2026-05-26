@@ -16,11 +16,11 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     Tail
  *   ret
  */
-extern void func_00408c0a(void);
+extern void ChainDirtyBitWalker_00408c10(void);
 extern void func_00475778(void);
 void ConstStoreCallJmp_00448fa0(void) {
     g_walkCallback = (void(*)(void))3;
-    func_00408c0a();
+    ChainDirtyBitWalker_00408c10();
     if (g_framePauseFlag) return;
     func_00475778();
 }

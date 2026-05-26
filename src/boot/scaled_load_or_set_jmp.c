@@ -17,12 +17,12 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     +0xf
  *   ret
  */
-extern void func_00406b3a(void);
+extern void MStackCall_00406b50(void);
 void ScaledLoadOrSetJmp_00406b20(void) {
     unsigned int idx = g_fightGroupHead;
     unsigned int v = *(unsigned int *)(idx * 4 + 0x10);
     g_walkCallback = (void (*)(void))v;
     if (v) return;
     g_scaledInit_00542044 = idx;
-    func_00406b3a();
+    MStackCall_00406b50();
 }

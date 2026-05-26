@@ -21,11 +21,11 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void StateDispatchTable_00490fc0(void);
-extern void func_00406ad0(void);
+extern void ScaledLoadOrSetJmp_00406b20(void);
 void CallPauseScaledStoreCopyJmp_00461220(void) {
     StateDispatchTable_00490fc0();
     if (g_framePauseFlag != 0) return;
     ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end = (unsigned int)g_walkCallback;
     g_scaledInit_00542044 = g_fightGroupHead;
-    func_00406ad0();
+    ScaledLoadOrSetJmp_00406b20();
 }

@@ -21,7 +21,7 @@
 extern u32 g_framePauseFlag;
 extern void func_00455746(void);
 extern void func_00455760(void);
-extern void func_0042038f(void);
+extern void SetupVecFsmCluster_0043e3e0(void);
 void Set2CallDirtyCallPauseJmp_004535e0(void) {
     g_walkCallback = (void (*)(void))2;
     func_00455746();
@@ -29,5 +29,5 @@ void Set2CallDirtyCallPauseJmp_004535e0(void) {
     if ((g_xformDirtyFlags & 4) != 0) return;
     func_00455760();
     if (g_framePauseFlag != 0) return;
-    func_0042038f();
+    SetupVecFsmCluster_0043e3e0();
 }

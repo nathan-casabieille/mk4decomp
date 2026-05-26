@@ -17,22 +17,22 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_scaledInit_00542044], edx
  *   jmp     T
  */
-extern void func_00405e90(void);
+extern void PushPopScaled1cDoubleCall_00408510(void);
 void CopyScaledTriple_00446120(void) {
     unsigned int base;
     g_fightGroupHead = g_eventQueueIdx;
     base = g_baseSel_00542060;
     g_xformEntityIdx = *(unsigned int *)(base * 4 + 0x78);
     g_scaledInit_00542044 = *(unsigned int *)(base * 4 + 0x5c);
-    func_00405e90();
+    PushPopScaled1cDoubleCall_00408510();
 }
 
 /* @addr 0x00446350 (46b): same shape with offsets 0x5c->disp, 0x78->disp swapped */
-extern void func_00405ce0(void);
+extern void PushPopScaled1cDoubleCall_00408510(void);
 void CopyScaledTriple_00446350(void) {
     unsigned int base = g_baseSel_00542060;
     g_scaledInit_00542044 = *(unsigned int *)(base * 4 + 0x5c);
     g_xformEntityIdx = *(unsigned int *)(base * 4 + 0x78);
     g_fightGroupHead = g_eventQueueEnd;
-    func_00405ce0();
+    PushPopScaled1cDoubleCall_00408510();
 }

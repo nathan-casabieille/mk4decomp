@@ -13,12 +13,12 @@ extern unsigned int g_scaledInit_00542044;
  *   imul    dword ptr [esp+8]
  *   jmp     +0x0c0b5e
  */
-extern void func_0040c656(void);
+extern void Sar64_004c5660(void);
 __declspec(naked) void Mul10Tail_00404af0(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         mov     ecx, 0x10
         imul    dword ptr [esp + 8]
-        jmp     func_0040c656
+        jmp     Sar64_004c5660
     }
 }

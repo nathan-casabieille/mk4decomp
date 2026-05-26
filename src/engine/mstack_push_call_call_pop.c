@@ -34,9 +34,9 @@
 #include "game/tick.h"
 
 extern void func_00405A40(void);
-extern void func_00405CB8(void);
+extern void BootChainBidirRecurseWalk_00405ca0(void);
 extern void MStackCall_00406740(void);
-extern void func_00405E68(void);
+extern void MStackBracket2_TreeWalkRecursive_00405e70(void);
 
 /* @addr 0x00405b30 */
 void MStackPushCallCallPop_00405b30(void) {
@@ -45,7 +45,7 @@ void MStackPushCallCallPop_00405b30(void) {
     *(unsigned int *)(top * 4) = g_fightGroupHead;
     func_00405A40();
     if (g_framePauseFlag != 0) return;
-    func_00405CB8();
+    BootChainBidirRecurseWalk_00405ca0();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     g_fightGroupHead = *(unsigned int *)(top * 4);
@@ -73,7 +73,7 @@ void MStackPushCallCallPop_00405e20(void) {
     *(unsigned int *)(top * 4) = g_fightGroupHead;
     func_00405A40();
     if (g_framePauseFlag != 0) return;
-    func_00405E68();
+    MStackBracket2_TreeWalkRecursive_00405e70();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     g_fightGroupHead = *(unsigned int *)(top * 4);

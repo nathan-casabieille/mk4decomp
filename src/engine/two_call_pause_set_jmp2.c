@@ -20,15 +20,15 @@ extern u32 g_framePauseFlag;
  *   jmp     T
  *   ret
  */
-extern void func_00408990(void);
+extern void MStackPush2RunCountdown_004089e0(void);
 extern void func_00478f90(void);
-extern void func_00407f40(void);
+extern void GuardedSeq_00473f70(void);
 void TwoCallPauseSetJmp2_00456180(void) {
-    func_00408990();
+    MStackPush2RunCountdown_004089e0();
     if (g_framePauseFlag != 0) return;
     func_00478f90();
     if (g_framePauseFlag != 0) return;
     g_acc_00542078 = 2;
     g_walkCallback = (void (*)(void))3;
-    func_00407f40();
+    GuardedSeq_00473f70();
 }
