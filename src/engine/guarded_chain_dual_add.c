@@ -122,8 +122,8 @@ void GuardedChainDualAdd_0044ccf0(void) {
     MStackPushVec3Mul10_004767e0();
     if (g_framePauseFlag) return;
     g_scaledInit_00542044 = g_installOwnerNode_00535cf8;
-    g_eventQueueCurrent = *(unsigned int *)(g_cj_00542058 * 4 + 0x54);
-    g_eventQueueCurrent += *(unsigned int *)(g_baseSel_00542060 * 4 + 0x3c);
-    g_eventQueueWorkType = *(unsigned int *)(g_cj_00542058 * 4 + 0x5c);
-    g_eventQueueWorkType += *(unsigned int *)(g_baseSel_00542060 * 4 + 0x44);
+    g_eventQueueCurrent = ((ScenegraphNode *)(g_cj_00542058 * 4))->position_x;
+    g_eventQueueCurrent += ((ScenegraphNode *)(g_baseSel_00542060 * 4))->child_a;
+    g_eventQueueWorkType = ((ScenegraphNode *)(g_cj_00542058 * 4))->position_z;
+    g_eventQueueWorkType += ((ScenegraphNode *)(g_baseSel_00542060 * 4))->child_c;
 }

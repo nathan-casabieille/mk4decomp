@@ -125,7 +125,7 @@ void GuardedSetupTailMStackJmp_00492210(void) {
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 4) != 0) return;
     v = 0x1b;
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x54) = 0;
+    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_x = 0;
     ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_y = 0x760000;
     g_walkCallback = (void (*)(void))v;
     *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x30) = v;

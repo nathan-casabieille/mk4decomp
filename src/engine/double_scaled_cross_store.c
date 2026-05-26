@@ -12,10 +12,10 @@ extern unsigned int g_scaledInit_00542044;
  */
 void DoubleScaledCrossStore_00475750(void) {
     unsigned int v;
-    v = *(unsigned int *)(g_eventQueueIdx * 4 + 0x54);
+    v = ((ScenegraphNode *)(g_eventQueueIdx * 4))->position_x;
     g_walkCallback = (void(*)(void))v;
-    *(unsigned int *)(g_eventQueueEnd * 4 + 0x54) = v;
-    v = *(unsigned int *)(g_eventQueueIdx * 4 + 0x5c);
+    ((ScenegraphNode *)(g_eventQueueEnd * 4))->position_x = v;
+    v = ((ScenegraphNode *)(g_eventQueueIdx * 4))->position_z;
     g_walkCallback = (void(*)(void))v;
-    *(unsigned int *)(g_eventQueueEnd * 4 + 0x5c) = v;
+    ((ScenegraphNode *)(g_eventQueueEnd * 4))->position_z = v;
 }

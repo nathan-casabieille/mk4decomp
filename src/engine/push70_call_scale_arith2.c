@@ -125,8 +125,8 @@ void Push70CallScaleArith2_00457b40(void) {
     if ((g_xformDirtyFlags & 4) == 0) {
         sc = g_scaledInit_00542044;
         neg_data = (unsigned int)(-(int)g_eventQueueCurrent);
-        g_walkCallback = (void (*)(void))*(unsigned int *)(sc * 4 + 0x54);
-        *(unsigned int *)(sc * 4 + 0x54) += neg_data << 9;
+        g_walkCallback = (void (*)(void))((ScenegraphNode *)(sc * 4))->position_x;
+        ((ScenegraphNode *)(sc * 4))->position_x += neg_data << 9;
     }
     g_eventQueueCurrent = *(unsigned int *)(g_matrixStackTop * 4);
     g_matrixStackTop--;
