@@ -125,7 +125,7 @@ void PushSetDualDeref_00406650(void) {
     walk = (unsigned int)g_walkCallback;
     v1 = *(unsigned int *)(walk * 4 + 0x18);
     g_eventQueueWorkType = v1;
-    v2 = *(unsigned int *)(v1 * 4 + 0x28);
+    v2 = ((ScenegraphNode *)(v1 * 4))->queue_idx;
     g_eventQueueWorkType = v2;
     *(unsigned int *)(v2 * 4 + 0x14) = walk;
     g_walkCallback = (void (*)(void))&ClampMulShiftStore_004ba0e0;

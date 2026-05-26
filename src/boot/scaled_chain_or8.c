@@ -25,7 +25,7 @@ void ScaledChainOr8_00404e50(void) {
     unsigned int v;
     s = ((ScenegraphNode *)(g_fightGroupHead * 4))->child_chain;
     g_scaledInit_00542044 = s;
-    e = *(unsigned int *)(s * 4 + 0x28);
+    e = ((ScenegraphNode *)(s * 4))->queue_idx;
     g_xformEntityIdx = e;
     v = *(unsigned int *)(e * 4) | 8;
     g_walkCallback = (void (*)(void))v;
