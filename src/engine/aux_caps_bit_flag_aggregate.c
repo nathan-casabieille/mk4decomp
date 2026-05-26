@@ -110,14 +110,14 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern int Input_GetAsyncKey(int);
 extern void Input_PollJoystick(void);
-extern unsigned int g_nineSlotKey9_00543b68;
-extern unsigned int g_nineSlotKeyExtra_00543b6c;
+extern unsigned int g_joySelP0_00543b68;
+extern unsigned int g_joySelP1_00543b6c;
 
 /*
  * @addr 0x004be3c0 (125b engine.scenegraph) - input-keyset probe:
  *   if arg is 0 returns 0. Tests keys 0xd/0x20/0x1b via CallShrAnd;
  *   if any hit returns 1. Else returns boolean of: (Input_PollJoystick(
- *   g_nineSlotKey9_00543b68) | Input_PollJoystick(g_nineSlotKeyExtra_00543b6c)) & 0x0fffffff != 0.
+ *   g_joySelP0_00543b68) | Input_PollJoystick(g_joySelP1_00543b6c)) & 0x0fffffff != 0.
  */
 __declspec(naked) void Input_AnyConfirmPressed(void) {
     __asm {
@@ -156,10 +156,10 @@ try3:
         pop     esi
         ret
 stickPath:
-        mov     eax, dword ptr [g_nineSlotKey9_00543b68]
+        mov     eax, dword ptr [g_joySelP0_00543b68]
         push    eax
         call    Input_PollJoystick
-        mov     ecx, dword ptr [g_nineSlotKeyExtra_00543b6c]
+        mov     ecx, dword ptr [g_joySelP1_00543b6c]
         add     esp, 4
         mov     esi, eax
         push    ecx

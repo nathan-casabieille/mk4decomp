@@ -114,8 +114,8 @@ extern void VoicePicker_00401000(void);
 extern void ChainNodeAdvanceCallback_00408e70(void);
 /* extern void Input_PollJoystick(void); -- defined elsewhere with diff sig */
 extern void Helper_AudioStartMusic(void);
-extern unsigned int g_dispatchSave16_00543b68;
-extern unsigned int g_dispatchSave23_00543b6c;
+extern unsigned int g_joySelP0_00543b68;
+extern unsigned int g_joySelP1_00543b6c;
 extern unsigned int g_dispatchSave1491_00ab4338;
 extern void GuardedSeq_00471670(void);
 extern void ChainListVecAdd_0049d200(void);

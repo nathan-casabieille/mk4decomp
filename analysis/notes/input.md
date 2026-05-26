@@ -71,8 +71,8 @@ read on the next tick.
 
 | VA         | Name (shown in source)              | Meaning |
 |------------|-------------------------------------|---------|
-| `0x00543b68` | `g_dispatchSave16_00543b68`         | Selected joystick index for player 0 (-1 = no joystick bound). |
-| `0x00543b6c` | `g_dispatchSave23_00543b6c`         | Selected joystick index for player 1 (-1 = no joystick bound). |
+| `0x00543b68` | `g_joySelP0_00543b68`         | Selected joystick index for player 0 (-1 = no joystick bound). |
+| `0x00543b6c` | `g_joySelP1_00543b6c`         | Selected joystick index for player 1 (-1 = no joystick bound). |
 | `0x00543b20..b60` | (9 dwords, 2 players each)     | Per-player joystick button bindings (1-based button index per action slot; 0 = unbound). |
 | `0x00543ab8..b18` | (13 dwords, 2 players each)    | Per-player keyboard VK bindings - one VK per of the 13 action slots. |
 | `0x004f4dc8..0x004f4e8c` | (per-player action table) | For each of the 4 directions + 9 buttons: a (target-ptr, action-mask) pair. The pollers OR the mask into `*target` when the bound input is held. |

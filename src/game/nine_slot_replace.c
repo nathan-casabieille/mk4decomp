@@ -114,29 +114,29 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   For each slot (0..8): if (slot[ecx_idx] == edx) { slot[ecx_idx] = eax; eax = 0; }
  *   *esi = edx. pop esi; ret.
  */
-extern unsigned int g_nineSlotKey0_00543b20;
-extern unsigned int g_nineSlotKey1_00543b28;
-extern unsigned int g_nineSlotKey2_00543b30;
-extern unsigned int g_nineSlotKey3_00543b38;
-extern unsigned int g_nineSlotKey4_00543b40;
-extern unsigned int g_nineSlotKey5_00543b48;
-extern unsigned int g_nineSlotKey6_00543b50;
-extern unsigned int g_nineSlotKey7_00543b58;
-extern unsigned int g_nineSlotKey8_00543b60;
+extern unsigned int g_btnBind0_00543b20;
+extern unsigned int g_btnBind1_00543b28;
+extern unsigned int g_btnBind2_00543b30;
+extern unsigned int g_btnBind3_00543b38;
+extern unsigned int g_btnBind4_00543b40;
+extern unsigned int g_btnBind5_00543b48;
+extern unsigned int g_btnBind6_00543b50;
+extern unsigned int g_btnBind7_00543b58;
+extern unsigned int g_btnBind8_00543b60;
 
 void Input_RebindButtonToAction(unsigned int *p, unsigned int val, unsigned int idx)
 {
     unsigned int saved = *p;
     *p = 0;
     if (!val) return;
-    if ((&g_nineSlotKey0_00543b20)[idx] == val) { (&g_nineSlotKey0_00543b20)[idx] = saved; saved = 0; }
-    if ((&g_nineSlotKey1_00543b28)[idx] == val) { (&g_nineSlotKey1_00543b28)[idx] = saved; saved = 0; }
-    if ((&g_nineSlotKey2_00543b30)[idx] == val) { (&g_nineSlotKey2_00543b30)[idx] = saved; saved = 0; }
-    if ((&g_nineSlotKey3_00543b38)[idx] == val) { (&g_nineSlotKey3_00543b38)[idx] = saved; saved = 0; }
-    if ((&g_nineSlotKey4_00543b40)[idx] == val) { (&g_nineSlotKey4_00543b40)[idx] = saved; saved = 0; }
-    if ((&g_nineSlotKey5_00543b48)[idx] == val) { (&g_nineSlotKey5_00543b48)[idx] = saved; saved = 0; }
-    if ((&g_nineSlotKey6_00543b50)[idx] == val) { (&g_nineSlotKey6_00543b50)[idx] = saved; saved = 0; }
-    if ((&g_nineSlotKey7_00543b58)[idx] == val) { (&g_nineSlotKey7_00543b58)[idx] = saved; saved = 0; }
-    if ((&g_nineSlotKey8_00543b60)[idx] == val) { (&g_nineSlotKey8_00543b60)[idx] = saved; }
+    if ((&g_btnBind0_00543b20)[idx] == val) { (&g_btnBind0_00543b20)[idx] = saved; saved = 0; }
+    if ((&g_btnBind1_00543b28)[idx] == val) { (&g_btnBind1_00543b28)[idx] = saved; saved = 0; }
+    if ((&g_btnBind2_00543b30)[idx] == val) { (&g_btnBind2_00543b30)[idx] = saved; saved = 0; }
+    if ((&g_btnBind3_00543b38)[idx] == val) { (&g_btnBind3_00543b38)[idx] = saved; saved = 0; }
+    if ((&g_btnBind4_00543b40)[idx] == val) { (&g_btnBind4_00543b40)[idx] = saved; saved = 0; }
+    if ((&g_btnBind5_00543b48)[idx] == val) { (&g_btnBind5_00543b48)[idx] = saved; saved = 0; }
+    if ((&g_btnBind6_00543b50)[idx] == val) { (&g_btnBind6_00543b50)[idx] = saved; saved = 0; }
+    if ((&g_btnBind7_00543b58)[idx] == val) { (&g_btnBind7_00543b58)[idx] = saved; saved = 0; }
+    if ((&g_btnBind8_00543b60)[idx] == val) { (&g_btnBind8_00543b60)[idx] = saved; }
     *p = val;
 }
