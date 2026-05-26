@@ -135,11 +135,11 @@ void MStackBracket3SubChain_00493ad0(void) {
         g_currentNodeIdx = ((ScenegraphNode *)(g_fightGroupHead * 4))->child_chain;
         ((ScenegraphNode *)(g_currentNodeIdx * 4))->state_mask -= ((ScenegraphNode *)(g_xformEntityIdx * 4))->state_mask;
         g_walkCallback = 0;
-        *(unsigned int *)(g_currentNodeIdx * 4 + 0x18) = 0;
+        ((ScenegraphNode *)(g_currentNodeIdx * 4))->child_chain = 0;
         Thunk_00405ac0();
         if (g_framePauseFlag != 0) return;
-        *(unsigned int *)(g_fightGroupHead * 4 + 0x18) = g_xformEntityIdx;
-        *(unsigned int *)(g_xformEntityIdx * 4 + 0x18) = g_fightGroupHead;
+        ((ScenegraphNode *)(g_fightGroupHead * 4))->child_chain = g_xformEntityIdx;
+        ((ScenegraphNode *)(g_xformEntityIdx * 4))->child_chain = g_fightGroupHead;
     }
     g_fightGroupHead = *(unsigned int *)(g_matrixStackTop * 4);
     g_matrixStackTop--;
