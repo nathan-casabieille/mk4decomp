@@ -1693,9 +1693,11 @@ doesn't reveal further architectural surprises.
 - **Bit-by-bit Huffman decoder spec** for ECM mode 1 (~2400 bytes asm).
   For porting, replacing ECM with a modern video container is far
   cheaper than implementing the codec. See [install.md](install.md).
-- **Per-primitive draw routines** - 12 functions call `SubmitDrawEntry`,
-  one per visual primitive type (textured/alpha/dithered/etc).
-  Cataloging would map all the SW rasterizers.
+- ~~**Per-primitive draw routines**~~ - **DONE**. 12 distinct
+  functions call `SubmitDrawEntry` (producers); 10 distinct functions
+  are dispatched by `FlushDrawQueue` (consumers / SW rasterizers).
+  Full inventory + dispatch table in [render.md](render.md)
+  ("The 12 draw-queue submitters" and "Software rasterizers").
 - **Euler axis identification** - 3 `BuildRotMatrix_Order*` builders
   use different multiplication orderings; the exact axis sequence
   (XYZ vs ZYX vs YXZ vs ...) hasn't been pinned down for each.

@@ -560,14 +560,182 @@ re-attempt conversion.
    .rdata.
 
 
-## Caveat: software rasterizers are huge
+## The 12 draw-queue submitters
 
-The `0x004c0360..0x004c2cb0` range (about 9 KB) is mostly software
-rasterizers - `TexturedTriRasterize*`, `ScanlineTexBlit*`, etc. -
-none yet documented in this file. They are reached only when modes
-3/4/5 are active (no Glide / no D3D). Each has its own per-pixel
-inner loop with specific blending modes (alpha, additive, paletted,
-dithered, interlaced).
+The 28-byte entries in `g_drawQueue` come from exactly **12 functions**
+that call `SubmitDrawEntry` (`Helper_DrawCursor` `0x004c3360`). Each
+specializes in a particular kind of geometry / overlay:
+
+| Function                       | VA           | Submits                                                |
+|--------------------------------|--------------|--------------------------------------------------------|
+| `DrawMeshBlock`                | `0x004bb250` | One textured triangle per .geo strip vertex (main path) |
+| `Helper_DrawMenuText`          | `0x004b21d0` | 3D menu text glyphs (perspective-projected font3d_g)   |
+| `DrawMenu`                     | `0x004b65c0` | 2D menu items + background sprites                     |
+| `Helper_DrawMenu_PostRender`   | `0x004b6880` | Menu cursor + post-pass overlay                        |
+| `BillboardChainRender_004bb030`| `0x004bb030` | Single-billboard chain (camera-facing quads)           |
+| `BillboardSheetDualEmit_004bbda0`| `0x004bbda0`| Multi-sprite sheet emitter (dual-pass)                |
+| `MovesPanelEmit_004bcf60`      | `0x004bcf60` | Move-list overlay panel (character select screen)      |
+| `SunbeamSpriteEmit_004bd270`   | `0x004bd270` | Sunbeam / lens flare sprite effect                     |
+| `TristripBatchEmit_004bbb80`   | `0x004bbb80` | Triangle-strip batch (generic stripped geometry)       |
+| `TristripBatchEmit2_004bb930`  | `0x004bb930` | Triangle-strip batch variant 2                         |
+| `TristripBatchEmit3Cap_004bb680`| `0x004bb680`| Triangle-strip batch variant 3 with end-cap            |
+| `Helper_TickReinit`            | (varies)     | Re-init path that flushes residual entries             |
+
+All 12 are still naked. Each has a specific 28-byte entry layout
+they produce; the dispatch then routes entries to either Glide / D3D
+/ SW rasterizers based on `g_clampedRendererMode`.
+
+The split into 3 `TristripBatchEmit*` variants reflects MK4's late-90s
+fighting-game-engine optimization: pre-batched strips with different
+winding/cap handling for different node-types in the scenegraph. The
+distinction is opaque from outside (the queue entries look the same);
+the variants differ in their internal walk pattern.
+
+
+## Software rasterizers - the SW-mode pixel-pushing
+
+The `0x004c0360..0x004c2cb0` range (~9 KB) holds the **10 software
+rasterizers** that `FlushDrawQueue` dispatches to when running in
+modes 3 / 4 / 5 (no Glide, no D3D). They are split into two
+families:
+
+| Family             | Style              | Input                  |
+|--------------------|--------------------|------------------------|
+| `ScanlineTexBlit*` | 2D sprite blit     | Sprite (axis-aligned)  |
+| `TexturedTriRasterize*` | 3D textured tri | Triangle (3 verts)    |
+
+### The 10 rasterizers
+
+| Function                            | VA           | Family    | Role                                   |
+|-------------------------------------|--------------|-----------|----------------------------------------|
+| `ScanlineTexBlitPaletted_004c0360`  | `0x004c0360` | sprite    | Default sprite blit (palette LUT)      |
+| `ScanlineTexBlit_004c0920`          | `0x004c0920` | sprite    | Plain opaque copy (no blend)           |
+| `ScanlineTexBlitAlpha_004c0b70`     | `0x004c0b70` | sprite    | Alpha-blend src over dst               |
+| `ScanlineTexBlitAdditive_004c0e10`  | `0x004c0e10` | sprite    | Additive blend (saturated add)         |
+| `ScanlineTexBlitInterlaced_004c1130`| `0x004c1130` | sprite    | Skip every other scanline (low-res)    |
+| `TexturedTriRasterize_004c13f0`     | `0x004c13f0` | triangle  | Plain textured triangle                |
+| `TexturedTriRasterizeAlpha_004c19c0`| `0x004c19c0` | triangle  | Triangle with alpha-blend              |
+| `TexturedTriRasterizeAlphaPal_004c1fe0`| `0x004c1fe0`| triangle | Triangle with alpha + palette          |
+| `TexturedTriRasterizeDithered_004c2650`| `0x004c2650`| triangle | Triangle with dithered output (4:4:4)  |
+| `TexturedTriRasterizeShaded_004c2cb0`| `0x004c2cb0`| triangle  | Triangle with Gouraud shading          |
+
+Plus one auxiliary blitter outside the rasterizer block:
+
+| Function                  | VA           | Role                             |
+|---------------------------|--------------|----------------------------------|
+| `BlitBlend16bpp_004c05e0` | `0x004c05e0` | 16bpp two-source blend (sprites) |
+| `GlideTriBatchEmit_004adca0`| `0x004adca0`| D3D path (batched)               |
+| `GlideTriColorFlush_004b46f0`| `0x004b46f0`| Glide path (per-triangle)        |
+
+All 10 rasterizers are still naked - they each have 300-650 lines of
+inner-loop asm with FPU-driven edge interpolation, sub-pixel offsets,
+and per-pixel blending. Pure-C conversion would lose the FPU
+scheduling and produce 30-50% larger code; not worth the matching
+effort.
+
+### Dispatch in FlushDrawQueue
+
+`FlushDrawQueue` (`0x004bf460`) walks the sorted draw queue and
+picks a rasterizer per entry based on TWO words in the 28-byte entry:
+
+- **Entry +0x14**: if `< 0x7fff`, the entry is a **sprite** (low-z,
+  no triangle geometry); if `>= 0x7fff`, it's a **textured triangle**.
+- **Entry +0x1a**: a flags word. Bits `0x180` select the blend mode;
+  bit `0x40` selects the 16bpp two-source blend variant.
+
+The dispatch is **renderer-mode-sensitive**: the same draw entry
+maps to different rasterizers in low-res (mode 3/4) vs hi-res (mode 5):
+
+#### Sprite path (`entry[+0x14] < 0x7fff`)
+
+| `entry[+0x1a] & 0x180` | Mode 3/4 (low-res)            | Mode 5 (hi-res)                |
+|------------------------|-------------------------------|--------------------------------|
+| 0x80                   | `ScanlineTexBlitInterlaced`   | `ScanlineTexBlitAdditive`      |
+| 0x100                  | `ScanlineTexBlitInterlaced`   | `ScanlineTexBlitInterlaced`    |
+| 0x180                  | `ScanlineTexBlitInterlaced`   | `ScanlineTexBlitAlpha`         |
+| other, bit 0x40 set    | `BlitBlend16bpp`              | `BlitBlend16bpp`               |
+| other                  | `ScanlineTexBlit`             | `ScanlineTexBlit`              |
+
+So in low-res mode, the `Additive` and `Alpha` blend modes degrade
+to `Interlaced` (i.e. mode 3/4 doesn't have enough fillrate to do
+true alpha; it just halves the scanline count to compensate).
+`ScanlineTexBlitPaletted` is the **fallback** when none of the other
+flags match.
+
+#### Triangle path (`entry[+0x14] >= 0x7fff`)
+
+If `entry.flags & 0x10` (shading bit) is set, always
+`TexturedTriRasterizeShaded`. Otherwise:
+
+| `entry[+0x1a] & 0x180` | Mode 3/4 (low-res)              | Mode 5 (hi-res)                  |
+|------------------------|---------------------------------|----------------------------------|
+| 0x80                   | `TexturedTriRasterizeDithered`  | `TexturedTriRasterizeAlphaPal`   |
+| 0x100                  | `TexturedTriRasterizeDithered`  | `TexturedTriRasterizeDithered`   |
+| 0x180                  | `TexturedTriRasterizeDithered`  | `TexturedTriRasterizeAlpha`      |
+| other                  | `TexturedTriRasterize`          | `TexturedTriRasterize`           |
+
+Low-res mode again collapses the variants to `Dithered` (which
+emits 16bpp from 24bpp via Bayer dithering - the cheapest
+fillrate-friendly path). Hi-res uses the full set.
+
+### Per-rasterizer pixel inner loop
+
+Each rasterizer has a similar structure (~300 lines asm):
+
+1. **Viewport clip**: bail if `g_viewportX == 0` or computed
+   coords fall outside `g_viewportW x g_viewportH`. Read from
+   `g_dispatchSave1378_00f70fa8` (x), `g_dispatchSave1381_00f70fb8`
+   (y), `g_dispatchSave1380_00f70fb0` (width).
+2. **Source/dest setup**: source texture pointer (from `+0x14` of
+   entry), dest framebuffer offset.
+3. **Inner loop**: per-pixel read from source, optional palette
+   indirection, blend with dest, store. Loop counter is width;
+   outer counter is height (sprite) or scanline count (triangle).
+4. **Triangle variants**: also interpolate U/V coords along edges
+   (fixed-point step counters) and the color (for Shaded variant).
+
+Sizes:
+
+| Family member        | LOC (incl. boilerplate) | Estimated inner-loop bytes |
+|----------------------|-------------------------|----------------------------|
+| ScanlineTexBlit family (5) | 294-362 lines      | ~200 bytes each            |
+| TexturedTriRasterize family (5)| 568-645 lines  | ~600 bytes each            |
+
+The TexturedTri variants are bigger because they include the
+edge-walking + UV-interpolation setup (the FPU-driven 1/z and 1/w
+divides) on top of the per-pixel inner loop.
+
+### Framebuffer layout
+
+All rasterizers write into the SW framebuffer. The destination
+format depends on the mode:
+
+- **Mode 4** (SW Win): 16bpp DIBSection, RGB-555 or RGB-565
+  depending on display caps.
+- **Mode 3** (SW FS 320x240): DDraw primary, 16bpp.
+- **Mode 5** (SW FS Hi): DDraw primary, 16bpp at higher resolution.
+
+The `Dithered` variant outputs 16bpp from a 24bpp intermediate;
+the other variants are direct 16bpp.
+
+### What to do when porting away
+
+The 10-function dispatch in `FlushDrawQueue` can be replaced with a
+modern OpenGL/Vulkan path that:
+
+1. Walks the sorted queue same way.
+2. For each entry, decides sprite vs triangle from `+0x14`.
+3. Emits a textured quad (sprite) or triangle into a vertex buffer
+   instead of calling the SW rasterizers.
+4. Flushes the vertex buffer at the end of the frame.
+
+The flag bits in `+0x1a` map cleanly to GLSL discard/alpha-test
+states. Once that's done, **all 10 rasterizers become dead code**
+and can be left in but never invoked. The `BlitBlend16bpp` auxiliary
+follows the same fate.
+
+
+## Caveat: avoid converting rasterizers to pure C
 
 For PORTING purposes, the rasterizers can be replaced wholesale
 with a modern blitter without touching `FlushDrawQueue` - the
