@@ -29,7 +29,7 @@ void CallPauseTripleScaledJmp_0046c520(void) {
     if (g_framePauseFlag) return;
     v = g_eventQueueNotMask;
     g_scaledInit_00542044 = v;
-    v = *(unsigned int *)(v * 4 + 0x0c);
+    v = ((ScenegraphNode *)(v * 4))->alloc_work_type;
     g_scaledInit_00542044 = v;
     v = *(unsigned int *)(v * 4);
     g_scaledInit_00542044 = v;

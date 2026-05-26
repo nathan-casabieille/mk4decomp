@@ -23,5 +23,5 @@ void ClearTwoCallSetStore_004a2270(void) {
     ZeroMultiGlobalsCmp_00404680();
     if (g_framePauseFlag) return;
     g_walkCallback = (void(*)(void))0x1000;
-    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x0c) = 0x1000;
+    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->alloc_work_type = 0x1000;
 }

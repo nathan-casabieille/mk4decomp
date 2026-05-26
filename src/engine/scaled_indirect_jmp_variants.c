@@ -26,7 +26,7 @@ void ScaledIndirectJmp_00433bf0(void) {
  *   jmp     eax
  */
 void ScaledIndirectJmp_0049c850(void) {
-    unsigned int v = *(unsigned int *)(g_eventQueueEnd * 4 + 0x0c);
+    unsigned int v = ((ScenegraphNode *)(g_eventQueueEnd * 4))->alloc_work_type;
     g_scaledInit_00542044 = v;
     ((void(*)(void))v)();
 }
