@@ -21,7 +21,7 @@ extern unsigned int g_scaledInit_00542044;
 extern void func_0041f700(unsigned int);
 void LoadShlDerefCallSkip_0041f810(void) {
     unsigned int p = g_pendingNodeType * 4;
-    if (*(unsigned int*)(p + 0xd8)) {
+    if (((ScenegraphNode *)p)->ptr_field) {
         func_0041f700(p);
     }
 }
