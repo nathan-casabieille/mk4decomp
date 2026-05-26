@@ -23,12 +23,12 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_acc_00542078;
 extern void MStackPush2RunCountdown_004089e0(void);
-extern void func_00478f90(void);
+extern void MStackBracket7_DispatchAndChain_004b8fa0(void);
 extern void GuardedSeq_00473f50(void);
 void TwoCallPauseSetJmp_00445e80(void) {
     MStackPush2RunCountdown_004089e0();
     if (g_framePauseFlag != 0) return;
-    func_00478f90();
+    MStackBracket7_DispatchAndChain_004b8fa0();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))3;
     g_acc_00542078 = 2;

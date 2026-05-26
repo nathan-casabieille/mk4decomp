@@ -24,13 +24,13 @@ extern unsigned int g_acc_00542078;
  */
 extern unsigned int g_cj_00535df0;
 extern unsigned int g_dispatchSave_0053a2c0;
-extern void func_004396f1(void);
-extern void func_004396ff(void);
+extern void WalkCj58Loop43Toggle_00439700(void);
+extern void WalkCj58Loop43Toggle_00439700(void);
 void StoreCallPauseDirtyStoreJmp_004396c0(void) {
     g_eventQueueIdx = g_cj_00535df0;
-    func_004396f1();
+    WalkCj58Loop43Toggle_00439700();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 1) != 0) return;
     g_eventQueueIdx = g_dispatchSave_0053a2c0;
-    func_004396ff();
+    WalkCj58Loop43Toggle_00439700();
 }

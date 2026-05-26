@@ -20,7 +20,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_stateChangePair3_0053a278;
 extern unsigned int g_acc_00542078;
-extern void func_00458886(void);
+extern void CinematicStageCluster_004588b0(void);
 void IncCmp28StoreOrJmp_00458880(void) {
     int v = (int)g_stateChangePair3_0053a278;
     g_acc_00542078 = (unsigned int)v;
@@ -30,5 +30,5 @@ void IncCmp28StoreOrJmp_00458880(void) {
         g_walkCallback = 0;
     }
     g_eventQueueEnd = 1;
-    func_00458886();
+    CinematicStageCluster_004588b0();
 }

@@ -23,13 +23,13 @@ extern unsigned int g_acc_00542078;
  *   jmp     +9
  *   ret
  */
-extern void func_00470450(void);
+extern void DirtyToggleByGate_0048f350(void);
 extern void PendingMatch_0046e2e0(void);
 extern void GameDispatchValidateState_004339c0(void);
-extern void func_0046e2b3(void);
+extern void PendingMatch_0046e2e0(void);
 void CallPauseDirtyMStackPushFn_0046e2a0(void) {
     unsigned int top;
-    func_00470450();
+    DirtyToggleByGate_0048f350();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 4) != 0) {
         top = g_matrixStackTop + 1;
@@ -38,5 +38,5 @@ void CallPauseDirtyMStackPushFn_0046e2a0(void) {
         GameDispatchValidateState_004339c0();
         return;
     }
-    func_0046e2b3();
+    PendingMatch_0046e2e0();
 }

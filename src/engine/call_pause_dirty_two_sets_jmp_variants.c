@@ -21,7 +21,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void func_0048eff0(void);
-extern void func_0046fc35(void);
+extern void PushCallSignClampDualStore_0046fc60(void);
 void CallPauseDirtyTwoSetsJmp_0046fbe0(void) {
     func_0048eff0();
     if (g_framePauseFlag != 0) return;
@@ -29,12 +29,12 @@ void CallPauseDirtyTwoSetsJmp_0046fbe0(void) {
     if ((g_xformDirtyFlags & 1) == 0) {
         g_walkCallback = (void (*)(void))0xfffff1ec;
     }
-    func_0046fc35();
+    PushCallSignClampDualStore_0046fc60();
 }
 
 /* @addr 0x0046fc20 (49b): same as 0x0046fbe0 with constants swapped */
 extern void func_0048eff0_b(void);
-extern void func_0046fc75(void);
+extern void PushCallSignClampDualStore_0046fc60(void);
 void CallPauseDirtyTwoSetsJmp_0046fc20(void) {
     func_0048eff0_b();
     if (g_framePauseFlag != 0) return;
@@ -42,5 +42,5 @@ void CallPauseDirtyTwoSetsJmp_0046fc20(void) {
     if ((g_xformDirtyFlags & 1) == 0) {
         g_walkCallback = (void (*)(void))0x0e14;
     }
-    func_0046fc75();
+    PushCallSignClampDualStore_0046fc60();
 }

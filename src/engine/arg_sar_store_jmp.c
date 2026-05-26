@@ -47,11 +47,11 @@ void ScaledAndAhfe_00490390(void) {
  *   mov     [ecx*4 + 0x48], eax
  *   jmp     +2
  */
-extern void func_0045950e(void);
+extern void PendingMatch_00459510(void);
 void ArgSarStoreJmp_004594f0(int arg) {
     unsigned int base = g_baseSel_00542060;
     int v = arg >> 2;
     g_eventQueueTotal = (unsigned int)v;
     *(int *)(base * 4 + 0x48) = v;
-    func_0045950e();
+    PendingMatch_00459510();
 }

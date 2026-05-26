@@ -54,13 +54,13 @@ __declspec(naked) void CallPauseDirty1JmpDirty4StackPush_00428850(void) {
 }
 
 /* @addr 0x00483a80 (84b): same shape, push 0x00483ae0 instead of 0x00428950 */
-extern void func_0047d860(void);
+extern void GuardedDoubleIncCmpJmp_00429860(void);
 extern void func_00488bf0(void);
 extern void func_0048f330_oo(void);
 extern void func_0042b988_oo(void);
 __declspec(naked) void CallPauseDirty1JmpDirty4StackPush_00483a80(void) {
     __asm {
-        call    func_0047d860
+        call    GuardedDoubleIncCmpJmp_00429860
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

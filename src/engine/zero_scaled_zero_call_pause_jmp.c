@@ -18,12 +18,12 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     +3
  *   ret
  */
-extern void func_004611c0(void);
-extern void func_0045faec(void);
+extern void CallPauseScaledStoreCopyJmp_00461220(void);
+extern void SlotPhaseDispatcherBigSwitch_0045fac0(void);
 void ZeroScaledZeroCallPauseJmp_0045fa90(void) {
     g_walkCallback = (void (*)(void))0;
     ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = 0;
-    func_004611c0();
+    CallPauseScaledStoreCopyJmp_00461220();
     if (g_framePauseFlag != 0) return;
-    func_0045faec();
+    SlotPhaseDispatcherBigSwitch_0045fac0();
 }

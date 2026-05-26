@@ -21,12 +21,12 @@ extern u32 g_framePauseFlag;
  *   ret
  */
 extern void MStackPush2RunCountdown_004089e0(void);
-extern void func_00478f90(void);
+extern void MStackBracket7_DispatchAndChain_004b8fa0(void);
 extern void GuardedSeq_00473f70(void);
 void TwoCallPauseSetJmp2_00456180(void) {
     MStackPush2RunCountdown_004089e0();
     if (g_framePauseFlag != 0) return;
-    func_00478f90();
+    MStackBracket7_DispatchAndChain_004b8fa0();
     if (g_framePauseFlag != 0) return;
     g_acc_00542078 = 2;
     g_walkCallback = (void (*)(void))3;

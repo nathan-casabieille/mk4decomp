@@ -15,7 +15,7 @@
 #include "engine/scenegraph.h"
 
 extern void InstallSelfMStackPushDispatch_00436910(void);
-extern void func_004677f8(void);
+extern void IntroComboFsmCluster_00467800(void);
 
 /* Table-base externs - referenced only by `&` so the linker emits a
  * DIR32 reloc into the imm32 slot; that keeps `addr >> 2` from being
@@ -32,11 +32,11 @@ void ScaledAddrInit_004368f0(void) {
 /* @addr 0x004677c0 */
 void ScaledAddrInit_004677c0(void) {
     g_walkCallback = (void (*)(void))((int)&g_table_004e56d8 >> 2);
-    func_004677f8();
+    IntroComboFsmCluster_00467800();
 }
 
 /* @addr 0x004677e0 */
 void ScaledAddrInit_004677e0(void) {
     g_walkCallback = (void (*)(void))((int)&g_table_004e56d8 >> 2);
-    func_004677f8();
+    IntroComboFsmCluster_00467800();
 }

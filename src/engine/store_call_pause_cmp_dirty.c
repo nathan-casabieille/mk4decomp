@@ -28,10 +28,10 @@ extern unsigned int g_acc_00542078;
  *   ret
  */
 extern unsigned int g_stateCountdown_0053a3c0;
-extern void func_00463ec0(void);
+extern void MStackPushSearchLoop_00463ed0(void);
 void StoreCallPauseCmpDirty_00464240(void) {
     g_eventQueueCurrent = g_stateCountdown_0053a3c0;
-    func_00463ec0();
+    MStackPushSearchLoop_00463ed0();
     if (g_framePauseFlag != 0) return;
     if (g_eventQueueCurrent > (unsigned int)g_walkCallback) {
         g_xformDirtyFlags = g_xformDirtyFlags | 1;

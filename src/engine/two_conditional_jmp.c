@@ -21,16 +21,16 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern unsigned int g_counter_0053a51c;
-extern void func_00439ba1(void);
-extern void func_00439ba6(void);
+extern void DualEntryBitGated_00439ba0(void);
+extern void DualEntryBitGated_00439ba0(void);
 void TwoConditionalJmp_00439b80(void) {
     unsigned int v = g_counter_0053a51c;
     g_walkCallback = (void (*)(void))v;
     if (v == 0) {
-        func_00439ba1();
+        DualEntryBitGated_00439ba0();
         return;
     }
     if (v == 1) {
-        func_00439ba6();
+        DualEntryBitGated_00439ba0();
     }
 }

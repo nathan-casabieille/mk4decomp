@@ -17,14 +17,14 @@ extern void func_004391b0(void);
  *   mov     [eax*4 + 0], OFFSET DualCallPauseJmpDual_00439190
  *   jmp     T
  */
-extern void func_0043928c(void);
+extern void MstackPopScaledChainPlusThunks_00471250(void);
 void MStackPushPtr1Jmp_00438e70(void) {
     unsigned int v = g_matrixStackTop;
     g_walkCallback = (void (*)(void))3;
     v++;
     g_matrixStackTop = v;
     *(unsigned int *)(v * 4) = (unsigned int)&DualCallPauseJmpDual_00439190;
-    func_0043928c();
+    MstackPopScaledChainPlusThunks_00471250();
 }
 
 /* @addr 0x00438ef0 (37b)
@@ -35,12 +35,12 @@ void MStackPushPtr1Jmp_00438e70(void) {
  *   mov     [eax*4 + 0], OFFSET func_004391b0
  *   jmp     T
  */
-extern void func_0043930c(void);
+extern void MstackPopScaledChainPlusThunks_00471250(void);
 void MStackPushPtr1Jmp_00438ef0(void) {
     unsigned int v = g_matrixStackTop;
     g_walkCallback = (void (*)(void))1;
     v++;
     g_matrixStackTop = v;
     *(unsigned int *)(v * 4) = (unsigned int)&func_004391b0;
-    func_0043930c();
+    MstackPopScaledChainPlusThunks_00471250();
 }

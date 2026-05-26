@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern void BossRoomInitCluster_00410340(void);
 extern void GuardedSeq_00471670(void);
 extern void MStackCall_00406340(void);
-extern void func_0047f830(void);
+extern void CallSetPause_0041f830(void);
 
 __declspec(naked) void BootInstallerPair_004101f0(void) {
     __asm {
@@ -169,7 +169,7 @@ __declspec(naked) void BootInstallerPair_004101f0(void) {
         jne     L_bip_done
         test    byte ptr [g_xformDirtyFlags], 4
         jz      short L_bip_doMain
-        call    func_0047f830
+        call    CallSetPause_0041f830
         pop     esi
         ret
     L_bip_doMain:

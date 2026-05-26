@@ -17,20 +17,20 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void ChainDirtyBitWalker_00408c10(void);
-extern void func_00475778(void);
+extern void DualScaledLoadStoreJmp_00475790(void);
 void ConstStoreCallJmp_00448fa0(void) {
     g_walkCallback = (void(*)(void))3;
     ChainDirtyBitWalker_00408c10();
     if (g_framePauseFlag) return;
-    func_00475778();
+    DualScaledLoadStoreJmp_00475790();
 }
 
 /* @addr 0x0046ff60 (30b): same shape, value=4 */
 extern void func_0048a046(void);
-extern void func_0046ff8e(void);
+extern void Phase3PackedInstallSelf_0046ff80(void);
 void ConstStoreCallJmp_0046ff60(void) {
     g_walkCallback = (void(*)(void))4;
     func_0048a046();
     if (g_framePauseFlag) return;
-    func_0046ff8e();
+    Phase3PackedInstallSelf_0046ff80();
 }

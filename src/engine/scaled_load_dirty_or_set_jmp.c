@@ -20,7 +20,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_scaledInit_00542044], eax
  *   jmp     +4
  */
-extern void func_00473461(void);
+extern void SizeGateInstallSelfThenSubMul10_00473480(void);
 void ScaledLoadDirtyOrSetJmp_00473450(void) {
     unsigned int v = ((ScenegraphNode *)(g_fightGroupHead * 4))->child_chain;
     g_walkCallback = (void (*)(void))v;
@@ -29,5 +29,5 @@ void ScaledLoadDirtyOrSetJmp_00473450(void) {
         return;
     }
     g_scaledInit_00542044 = v;
-    func_00473461();
+    SizeGateInstallSelfThenSubMul10_00473480();
 }

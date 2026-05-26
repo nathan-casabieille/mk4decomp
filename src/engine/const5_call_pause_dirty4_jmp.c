@@ -18,12 +18,12 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  *   ret
  */
-extern void func_00453746(void);
-extern void func_00455761(void);
+extern void CallPauseScaledStoreXJmp_00453750(void);
+extern void GuardedSeq_00453780(void);
 void Const5Call_PauseDirty4_Jmp_004534e0(void) {
     g_walkCallback = (void(*)(void))5;
-    func_00453746();
+    CallPauseScaledStoreXJmp_00453750();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 4) return;
-    func_00455761();
+    GuardedSeq_00453780();
 }

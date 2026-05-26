@@ -23,12 +23,12 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void func_00489520(void);
 extern void Wrapper_0048a280(void);
-extern int func_004594d0(void *p);
+extern int ArgSarStoreJmp_004594f0(void *p);
 extern void *g_dispatchSave1312_004ef080;
 void TwoCallsPushCall_004887d0(void) {
     func_00489520();
     if (g_framePauseFlag != 0) return;
     Wrapper_0048a280();
     if (g_framePauseFlag != 0) return;
-    func_004594d0(&g_dispatchSave1312_004ef080);
+    ArgSarStoreJmp_004594f0(&g_dispatchSave1312_004ef080);
 }

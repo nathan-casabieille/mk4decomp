@@ -32,7 +32,7 @@ void CallPauseMStackPushSet0Jmp_0045fcf0(void) {
     top++;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = (unsigned int)&SelfInstallPhaseDispatch_0045fd30;
-    func_004611f4();
+    MstackPopScaledChainPlusThunks_00471250();
 }
 
 /* @addr 0x0045ffc0 (52b): same shape, value=9 */
@@ -47,7 +47,7 @@ void CallPauseMStackPushSet9Jmp_0045ffc0(void) {
     top++;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = (unsigned int)&SelfInstallPhaseDispatch_00460000;
-    func_004700f4();
+    MstackPopScaledChainPlusThunks_00471250();
 }
 
 /* @addr 0x00460d00 (52b): same shape, value=3, OFFSET 0x00470480 */
@@ -62,7 +62,7 @@ void CallPauseMStackPushSet3Jmp_00460d00(void) {
     top++;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = (unsigned int)&CjInstallSelfRouter_00470480;
-    func_0046f6e0();
+    MstackPopScaledChainPlusThunks_00471250();
 }
 
 /* @addr 0x00460d40 (52b): same shape, value=4 */
@@ -76,5 +76,5 @@ void CallPauseMStackPushSet4Jmp_00460d40(void) {
     top++;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = (unsigned int)&CjInstallSelfRouter_00470480;
-    func_0046f6e0();
+    MstackPopScaledChainPlusThunks_00471250();
 }

@@ -43,10 +43,10 @@ void ZeroTriple_00421c20(void) {
  *   mov     [g_scaledInit_00542044], eax
  *   jmp     +0xe
  */
-extern void func_0044cce2(void);
+extern void GuardedChainDualAdd_0044ccf0(void);
 void Add0fJmp_0044ccd0(void) {
     g_scaledInit_00542044 = g_baseSel_00542060 + 0x0f;
-    func_0044cce2();
+    GuardedChainDualAdd_0044ccf0();
 }
 
 /* @addr 0x00489f50 (16b)

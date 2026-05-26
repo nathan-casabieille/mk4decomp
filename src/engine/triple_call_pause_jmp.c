@@ -26,7 +26,7 @@ extern unsigned int g_scaledInit_00542044;
 extern void func_00488282(void);
 extern void InitThreeFields_00490e90(void);
 extern void func_00490c14(void);
-extern void func_00470309(void);
+extern void ScaledChainNegStore_00470310(void);
 void TripleCallPauseJmp_00470500(void) {
     func_00488282();
     if (g_framePauseFlag != 0) return;
@@ -34,5 +34,5 @@ void TripleCallPauseJmp_00470500(void) {
     if (g_framePauseFlag != 0) return;
     func_00490c14();
     if (g_framePauseFlag != 0) return;
-    func_00470309();
+    ScaledChainNegStore_00470310();
 }

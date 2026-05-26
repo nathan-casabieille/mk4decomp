@@ -26,21 +26,21 @@ extern unsigned int g_acc_00542078;
  */
 extern unsigned int g_table_00535ddc;
 extern void func_0048ec10(void);
-extern void func_00439183(void);
-extern void func_004390e9(void);
-extern void func_004390cf(void);
+extern void DualCallPauseJmpDual_00439190(void);
+extern void CallPauseTestByteJmpCalls_004390f0(void);
+extern void GuardedDirtyDispatch_00438c50(void);
 void CmpccccCallPauseDirtyJmp_004390b0(void) {
     unsigned int v = g_table_00535ddc;
     g_walkCallback = (void (*)(void))v;
     if ((int)v > 0xcccc) {
-        func_00439183();
+        DualCallPauseJmpDual_00439190();
         return;
     }
     func_0048ec10();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 1) != 0) {
-        func_004390cf();
+        GuardedDirtyDispatch_00438c50();
         return;
     }
-    func_004390e9();
+    CallPauseTestByteJmpCalls_004390f0();
 }

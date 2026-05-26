@@ -116,7 +116,7 @@ __declspec(naked) void func_00428390(void) {
 void func_004391b0(void) {
     DualScaledInitClear_00433c10();
     if (g_framePauseFlag != 0) return;
-    func_0046f680();
+    FiveCallGuardSetTail_0046f6b0();
 }
 
 /* @addr 0x00497b30 (15b): set g_eventQueueChild = 1; tail-jmp PunchDispatcher. */
@@ -131,16 +131,16 @@ void func_00497b40(void) {
     PunchDispatcherCluster_00497b50();
 }
 
-/* @addr 0x00436270 (47b): call func_00439890; if non-zero ret;
+/* @addr 0x00436270 (47b): call Cmp2CallDirtyCall_004398b0; if non-zero ret;
  * else mstack-push HitReactionStateCluster_004335f0, set walkCallback=2,
- * tail-jmp func_00471200. Orphan sub-entry. */
+ * tail-jmp MstackPopScaledChainPlusThunks_00471250. Orphan sub-entry. */
 void func_00436270(void) {
-    if (func_00439890() != 0) return;
+    if (Cmp2CallDirtyCall_004398b0() != 0) return;
     g_walkCallback = (void (*)(void))2;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) =
         (unsigned int)&HitReactionStateCluster_004335f0;
-    func_00471200();
+    MstackPopScaledChainPlusThunks_00471250();
 }
 
 /* @addr 0x004362a0 (5b): orphan tail-jmp into Cmp30000And18000_004362b0. */
@@ -149,7 +149,7 @@ void func_004362a0(void) {
 }
 
 /* @addr 0x00437100 (52b): call LeaPlus22StoreSelf; if !pause set walk=3,
- * mstack-push OFFSET DualCallPauseJmpDual_00439190, tail-jmp func_00471270.
+ * mstack-push OFFSET DualCallPauseJmpDual_00439190, tail-jmp MstackPopScaledChainPlusThunks_00471250.
  * Orphan sub-entry of the original packed block. */
 void func_00437100(void) {
     LeaPlus22StoreSelf_0048e4d0();
@@ -158,7 +158,7 @@ void func_00437100(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) =
         (unsigned int)&DualCallPauseJmpDual_00439190;
-    func_00471270();
+    MstackPopScaledChainPlusThunks_00471250();
 }
 
 /* @addr 0x0048e3c0 (20b): call DualEntryInitDispatch_00431360; if !pause tail-jmp

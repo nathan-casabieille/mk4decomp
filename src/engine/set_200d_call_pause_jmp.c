@@ -24,7 +24,7 @@ extern unsigned int g_acc_00542078;
  *   ret
  */
 extern void func_0048f6f0(void);
-extern void func_0047c61b(void);
+extern void OneSetCmpJmpLoadCall_0047c620(void);
 extern int g_dispatchSave1304_004ed3e0;
 void Set200dCallPauseJmp_0047c5e0(void) {
     g_walkCallback = (void (*)(void))0x200d;
@@ -32,5 +32,5 @@ void Set200dCallPauseJmp_0047c5e0(void) {
     g_scaledInit_00542044 = ((unsigned int)&g_dispatchSave1304_004ed3e0) >> 2;
     func_0048f6f0();
     if (g_framePauseFlag != 0) return;
-    func_0047c61b();
+    OneSetCmpJmpLoadCall_0047c620();
 }

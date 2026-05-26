@@ -16,7 +16,7 @@
  */
 #include "engine/scenegraph.h"
 
-extern void func_0044cfc8(void);
+extern void ZMaskMergePop2_0044cfe0(void);
 
 /* @addr 0x0044cf50 */
 void MStackPushTyped_0044cf50(void) {
@@ -26,7 +26,7 @@ void MStackPushTyped_0044cf50(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = wt;
     g_eventQueueWorkType = 0x09000100;
-    func_0044cfc8();
+    ZMaskMergePop2_0044cfe0();
 }
 
 /* @addr 0x0044cf80 */
@@ -37,7 +37,7 @@ void MStackPushTyped_0044cf80(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = wt;
     g_eventQueueWorkType = 0x0a000100;
-    func_0044cfc8();
+    ZMaskMergePop2_0044cfe0();
 }
 
 /* @addr 0x0044cfb0 */
@@ -48,5 +48,5 @@ void MStackPushTyped_0044cfb0(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = wt;
     g_eventQueueWorkType = 0x0b000100;
-    func_0044cfc8();
+    ZMaskMergePop2_0044cfe0();
 }

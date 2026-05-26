@@ -13,10 +13,10 @@ extern unsigned int g_scaledInit_00542044;
  *   two pure-C functions; the gap is filled by the synth via 0x90-fill. */
 extern void DualScaledInitClear_00433c10(void);
 extern void DualScaledInitClear_00433c10(void);
-extern void func_00477670(void);
-extern void func_0046f680(void);
+extern void CjInstallSelfRouter_00470480(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
 void DualCallPauseJmpDual_00439190(void) {
     DualScaledInitClear_00433c10();
     if (g_framePauseFlag != 0) return;
-    func_00477670();
+    CjInstallSelfRouter_00470480();
 }

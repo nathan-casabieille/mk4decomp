@@ -24,16 +24,16 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void func_00487640(void);
 extern void func_00487358(void);
-extern void func_0046f660(void);
-extern void func_0046025e(void);
+extern void CjInstallSelfRouter_00470480(void);
+extern void Install3StateDualArmQuad_004602b0(void);
 void DualCallPauseDirtyDoubleJmp_00486fc0(void) {
     func_00487640();
     if (g_framePauseFlag != 0) return;
     func_00487358();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 4) != 0) {
-        func_0046f660();
+        CjInstallSelfRouter_00470480();
         return;
     }
-    func_0046025e();
+    Install3StateDualArmQuad_004602b0();
 }

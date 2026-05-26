@@ -21,14 +21,14 @@
 extern unsigned int g_baseSel_00542060;
 extern void *g_lit_004e4500;
 extern void *g_lit_004e4528;
-extern int func_004392e0(void *p);
+extern int PackedAdvanceCallTailJmp_004392c0(void *p);
 
 /* @addr 0x00433960 */
 void ScaledLoadInstallOrCall_00433960(void) {
     unsigned int cb = *(unsigned int*)(g_baseSel_00542060 * 4 + 0x30);
     g_walkCallback = cb;
     if (cb) {
-        func_004392e0(&g_lit_004e4500);
+        PackedAdvanceCallTailJmp_004392c0(&g_lit_004e4500);
     }
 }
 
@@ -37,6 +37,6 @@ void ScaledLoadInstallOrCall_00433990(void) {
     unsigned int cb = *(unsigned int*)(g_baseSel_00542060 * 4 + 0x30);
     g_walkCallback = cb;
     if (cb) {
-        func_004392e0(&g_lit_004e4528);
+        PackedAdvanceCallTailJmp_004392c0(&g_lit_004e4528);
     }
 }

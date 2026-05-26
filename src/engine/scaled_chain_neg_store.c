@@ -20,7 +20,7 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     +3
  *   ret
  */
-extern void func_00470342(void);
+extern void DualFieldAddSubStore_00470340(void);
 void ScaledChainNegStore_00470310(void) {
     unsigned int s;
     unsigned int v;
@@ -31,5 +31,5 @@ void ScaledChainNegStore_00470310(void) {
     if (v == 0) return;
     v = (unsigned int)-(int)v;
     g_walkCallback = (void (*)(void))v;
-    func_00470342();
+    DualFieldAddSubStore_00470340();
 }

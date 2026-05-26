@@ -25,7 +25,7 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     +0x79
  */
 extern unsigned int g_table_00535ddc;
-extern void func_0045e60c(void);
+extern void PendingMatch_0045e640(void);
 void RangeCheckJmp_0045e590(void) {
     int v = (int)g_table_00535ddc;
     g_walkCallback = (void (*)(void))v;
@@ -37,5 +37,5 @@ void RangeCheckJmp_0045e590(void) {
         g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffeu;
         return;
     }
-    func_0045e60c();
+    PendingMatch_0045e640();
 }

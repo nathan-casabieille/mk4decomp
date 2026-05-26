@@ -21,7 +21,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void func_00482ec0(void);
 extern void func_0049f4ad(void);
-extern void func_0046f170(void);
+extern void StateDispatchYield_00471190(void);
 void CallPauseDirtyConstJmp_00438ca0(void) {
     func_00482ec0();
     if (g_framePauseFlag) return;
@@ -30,5 +30,5 @@ void CallPauseDirtyConstJmp_00438ca0(void) {
         return;
     }
     g_walkCallback = (void(*)(void))0x0c;
-    func_0046f170();
+    StateDispatchYield_00471190();
 }

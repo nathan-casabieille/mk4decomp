@@ -15,13 +15,13 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_table_00535ddc;
 extern void GuardedSeq_00433bb0(void);
-extern void func_00438f30(void);
-extern int func_00439890(void);
+extern void PrefixThunkInstallSelf3State_00438f80(void);
+extern int Cmp2CallDirtyCall_004398b0(void);
 extern void HitReactionStateCluster_004335f0(void);
-extern void func_00471200(void);
+extern void MstackPopScaledChainPlusThunks_00471250(void);
 extern void Cmp30000And18000_004362b0(void);
 /* @addr 0x00436250 (27b): if state_ddc > 0x30000 tail-jmp GuardedSeq_00433bb0,
- * else tail-jmp func_00438f30. Entry A of the original 85-byte packed
+ * else tail-jmp PrefixThunkInstallSelf3State_00438f80. Entry A of the original 85-byte packed
  * block; entries B (call + mstack-push) and C (single tail-jmp) live in
  * func_00436270 / func_004362a0. The 5-byte nop gap is filled by 0x90-fill. */
 void CmpRangeJmpStateInit_00436250(void) {
@@ -31,5 +31,5 @@ void CmpRangeJmpStateInit_00436250(void) {
         GuardedSeq_00433bb0();
         return;
     }
-    func_00438f30();
+    PrefixThunkInstallSelf3State_00438f80();
 }

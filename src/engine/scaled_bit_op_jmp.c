@@ -15,21 +15,21 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [ecx*4 + 0x20], eax
  *   jmp     T
  */
-extern void func_00476e1d(void);
+extern void CondInstallDispatch_00476e20(void);
 void ScaledOr4Jmp_00476e00(void) {
     unsigned int scaled = g_scaledInit_00542044;
     unsigned int v = ((ScenegraphNode *)(scaled * 4))->flags | 4;
     g_walkCallback = (void (*)(void))v;
     ((ScenegraphNode *)(scaled * 4))->flags = v;
-    func_00476e1d();
+    CondInstallDispatch_00476e20();
 }
 
 /* @addr 0x00476fe0 (32b): same shape, and al, 0xfb */
-extern void func_00476ffd(void);
+extern void CondInstallDispatch_00477000(void);
 void ScaledAndFBJmp_00476fe0(void) {
     unsigned int scaled = g_scaledInit_00542044;
     unsigned int v = ((ScenegraphNode *)(scaled * 4))->flags & 0xfffffffbu;
     g_walkCallback = (void (*)(void))v;
     ((ScenegraphNode *)(scaled * 4))->flags = v;
-    func_00476ffd();
+    CondInstallDispatch_00477000();
 }

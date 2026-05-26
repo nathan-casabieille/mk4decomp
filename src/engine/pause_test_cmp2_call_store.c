@@ -26,7 +26,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern unsigned char g_byte_00542071;
-extern void func_0045c005(void);
+extern void ScaledIterStep_0045c020(void);
 void PauseTestCmp2CallStore_0045bfe0(void) {
     unsigned int pause;
     unsigned int b;
@@ -35,7 +35,7 @@ void PauseTestCmp2CallStore_0045bfe0(void) {
     g_walkCallback = (void (*)(void))b;
     if (pause != 0) return;
     if (b != 2) return;
-    func_0045c005();
+    ScaledIterStep_0045c020();
     if (g_framePauseFlag != 0) return;
     ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end = (unsigned int)g_walkCallback;
 }
