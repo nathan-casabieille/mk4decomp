@@ -183,6 +183,37 @@ matched again after switching to inline-cast.
 function body has no calls between field accesses on the same node.
 Otherwise inline-cast every access.
 
+### Lift caveat - SIB encoding vs pointer linearization
+
+A second case where local binding can break the byte match: when the
+orig uses an `[eax*4 + disp]` SIB addressing form, and the local
+binding causes MSVC to linearize the address into a pre-computed
+pointer.
+
+```c
+/* RISKY when the orig uses SIB encoding for the access */
+ScenegraphNode *n = (ScenegraphNode *)(g_baseSel * 4);
+v = n->fsm_state;
+*(unsigned int *)((char *)n + 0x70) = v;
+```
+
+MSVC may emit `mov eax, [g_baseSel]; shl eax, 2; mov [eax + 0x70], ecx`
+(2 instructions to compute the pointer, then a `[reg + disp]` store)
+instead of the orig's `mov [eax*4 + 0x70], ecx` (1-instruction SIB
+form). 14 byte difference observed in `ScaledMove74to70_0046eaa0`.
+
+**Fix**: keep the packed_ptr (`idx = g_baseSel`) as a local u32 and
+write the cast inline at each access site:
+
+```c
+unsigned int idx = g_baseSel_00542060;
+unsigned int v = ((ScenegraphNode *)(idx * 4))->fsm_state;
+*(unsigned int *)(idx * 4 + 0x70) = v;       /* matches SIB */
+```
+
+MSVC now treats `idx * 4 + disp` as a fresh expression at each site
+and emits the SIB form.
+
 ### Slot polymorphism
 
 The 232-byte slot is a **polymorphic view**. The same offset can
