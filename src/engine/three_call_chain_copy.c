@@ -119,13 +119,13 @@ void ThreeCallChainCopy_004409e0(void) {
     if (g_framePauseFlag != 0) return;
     DualLinkedBlockCopyBracketed_00476320();
     if (g_framePauseFlag != 0) return;
-    v = *(unsigned int *)(g_eventQueueIdx * 4 + 0x3c);
+    v = ((ScenegraphNode *)(g_eventQueueIdx * 4))->child_a;
     g_walkCallback = v;
     *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x54) = v;
-    v = *(unsigned int *)(g_eventQueueIdx * 4 + 0x40);
+    v = ((ScenegraphNode *)(g_eventQueueIdx * 4))->child_b;
     g_walkCallback = v;
     *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x58) = v;
-    v = *(unsigned int *)(g_eventQueueIdx * 4 + 0x44);
+    v = ((ScenegraphNode *)(g_eventQueueIdx * 4))->child_c;
     *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x5c) = v;
     g_walkCallback = 0x74;
     *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x30) = 0x74;

@@ -15,7 +15,6 @@ extern unsigned int g_baseSel_00542060;
  *   ret
  */
 void Const0x2005Store_00487120(void) {
-    unsigned int *p = (unsigned int *)(g_baseSel_00542060 * 4 + 0x74);
     g_walkCallback = (void(*)(void))0x2005;
-    *p = 0x2005;
+    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->fsm_state = 0x2005;
 }

@@ -122,7 +122,7 @@ void BitSavePushCallMergePop_0045dc60(void) {
     unsigned int top;
     unsigned int bit;
     unsigned int merged;
-    bit = *(unsigned int *)(g_cj_0054205c * 4 + 0x34) & 1;
+    bit = ((ScenegraphNode *)(g_cj_0054205c * 4))->state_mask & 1;
     g_walkCallback = (void (*)(void))bit;
     top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
@@ -133,7 +133,7 @@ void BitSavePushCallMergePop_0045dc60(void) {
     bit = *(unsigned int *)(top * 4);
     g_walkCallback = (void (*)(void))bit;
     g_matrixStackTop = top - 1;
-    merged = (*(unsigned int *)(g_cj_0054205c * 4 + 0x34) & 0xfffffffe) | bit;
+    merged = (((ScenegraphNode *)(g_cj_0054205c * 4))->state_mask & 0xfffffffe) | bit;
     g_eventQueueCurrent = merged;
-    *(unsigned int *)(g_cj_0054205c * 4 + 0x34) = merged;
+    ((ScenegraphNode *)(g_cj_0054205c * 4))->state_mask = merged;
 }

@@ -17,8 +17,8 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void WalkCallbackSetClearDirty_0048e7d0(void);
 void ScaledChain3c74Jmp_0048e780(void) {
-    unsigned int v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x3c);
+    unsigned int v = ((ScenegraphNode *)(g_baseSel_00542060 * 4))->child_a;
     g_scaledInit_00542044 = v;
-    g_walkCallback = (void (*)(void))*(unsigned int *)(v * 4 + 0x74);
+    g_walkCallback = (void (*)(void))((ScenegraphNode *)(v * 4))->fsm_state;
     WalkCallbackSetClearDirty_0048e7d0();
 }

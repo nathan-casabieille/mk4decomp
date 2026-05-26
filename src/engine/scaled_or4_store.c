@@ -16,8 +16,8 @@ extern unsigned int g_baseSel_00542060;
  *   ret
  */
 void ScaledOr4Store_00490110(void) {
-    unsigned int idx = g_fightGroupHead;
-    unsigned int v = *(unsigned int *)(idx * 4 + 0x34) | 4;
+    ScenegraphNode *n = (ScenegraphNode *)(g_fightGroupHead * 4);
+    unsigned int v = n->state_mask | 4;
     g_walkCallback = (void (*)(void))v;
-    *(unsigned int *)(idx * 4 + 0x34) = v;
+    n->state_mask = v;
 }

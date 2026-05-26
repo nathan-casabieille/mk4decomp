@@ -17,10 +17,10 @@ void SlotFieldSwap3c_004463b0(void) {
     unsigned int v;
     idx = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x4c);
     g_scaledInit_00542044 = idx;
-    v = *(unsigned int *)(g_eventQueueIdx * 4 + 0x3c);
+    v = ((ScenegraphNode *)(g_eventQueueIdx * 4))->child_a;
     g_walkCallback = (void (*)(void))v;
-    *(unsigned int *)(idx * 4 + 0x3c) = v;
-    v = *(unsigned int *)(g_eventQueueIdx * 4 + 0x3c);
+    ((ScenegraphNode *)(idx * 4))->child_a = v;
+    v = ((ScenegraphNode *)(g_eventQueueIdx * 4))->child_a;
     g_walkCallback = (void (*)(void))v;
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x3c) = v;
+    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->child_a = v;
 }

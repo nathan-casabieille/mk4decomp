@@ -30,7 +30,7 @@ void CmpP1ScaledLoad74_0045f5d0(void) {
         v = g_gtPlayerProbe2;
         g_scaledInit_00542044 = v;
     }
-    g_walkCallback = (void (*)(void))*(unsigned int *)(v * 4 + 0x74);
+    g_walkCallback = (void (*)(void))((ScenegraphNode *)(v * 4))->fsm_state;
 }
 
 /* @addr 0x0045f610 (50b): same shape with offset 0x7c */

@@ -129,7 +129,7 @@ void RegistryPushBindPop_00403c20(void) {
     *(unsigned int *)(base + 0x58) = 0;
     g_walkCallback = 0xfff68000;
     *(unsigned int *)(base + 0x5c) = 0xfff68000;
-    *(unsigned int *)(g_currentNodeIdx * 4 + 0x3c) = g_xformEntityIdx;
+    ((ScenegraphNode *)(g_currentNodeIdx * 4))->child_a = g_xformEntityIdx;
     top = g_matrixStackTop;
     g_xformEntityIdx = *(unsigned int *)(top * 4);
     g_matrixStackTop = top - 1;

@@ -19,7 +19,7 @@ extern void func_0048d8d0(void);
 void Const0303InitJmp_00495cf0(void) {
     unsigned int v = 0x0303;
     g_walkCallback = (void (*)(void))v;
-    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74) = v;
+    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->fsm_state = v;
     g_eventQueueNotMask = 0x0002000f;
     func_0048d8d0();
 }

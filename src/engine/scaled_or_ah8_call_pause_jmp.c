@@ -23,10 +23,10 @@ extern unsigned int g_scaledInit_00542044;
 extern void func_00426d80(void);
 extern void func_00414fa6(void);
 void ScaledOrAh8CallPauseJmp_0048d0c0(void) {
-    unsigned int idx = g_fightGroupHead;
-    unsigned int v = *(unsigned int *)(idx * 4 + 0x34) | 0x800;
+    ScenegraphNode *n = (ScenegraphNode *)(g_fightGroupHead * 4);
+    unsigned int v = n->state_mask | 0x800;
     g_walkCallback = (void (*)(void))v;
-    *(unsigned int *)(idx * 4 + 0x34) = v;
+    n->state_mask = v;
     func_00426d80();
     if (g_framePauseFlag != 0) return;
     func_00414fa6();

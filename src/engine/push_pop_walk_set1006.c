@@ -15,7 +15,7 @@ void PushPopWalkSet1006_00470ee0(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = (unsigned int)g_walkCallback;
     g_walkCallback = (void (*)(void))0x1006;
-    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74) = 0x1006;
+    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->fsm_state = 0x1006;
     g_walkCallback = *(void (**)(void))(g_matrixStackTop * 4);
     g_matrixStackTop--;
 }

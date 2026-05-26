@@ -18,24 +18,24 @@ extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00441df0 */
 void ScaledOrStore_00441df0(void) {
-    unsigned int idx = g_scaledInit_00542044;
-    unsigned int v = *(unsigned int *)(idx * 4 + 0x34) | 1;
+    ScenegraphNode *n = (ScenegraphNode *)(g_scaledInit_00542044 * 4);
+    unsigned int v = n->state_mask | 1;
     g_walkCallback = (void (*)(void))v;
-    *(unsigned int *)(idx * 4 + 0x34) = v;
+    n->state_mask = v;
 }
 
 /* @addr 0x004677a0 */
 void ScaledOrStore_004677a0(void) {
-    unsigned int idx = g_scaledInit_00542044;
-    unsigned int v = *(unsigned int *)(idx * 4 + 0x34) | 1;
+    ScenegraphNode *n = (ScenegraphNode *)(g_scaledInit_00542044 * 4);
+    unsigned int v = n->state_mask | 1;
     g_walkCallback = (void (*)(void))v;
-    *(unsigned int *)(idx * 4 + 0x34) = v;
+    n->state_mask = v;
 }
 
 /* @addr 0x004903d0 */
 void ScaledOrStore_004903d0(void) {
-    unsigned int idx = g_fightGroupHead;
-    unsigned int v = *(unsigned int *)(idx * 4 + 0x34) | 1;
+    ScenegraphNode *n = (ScenegraphNode *)(g_fightGroupHead * 4);
+    unsigned int v = n->state_mask | 1;
     g_walkCallback = (void (*)(void))v;
-    *(unsigned int *)(idx * 4 + 0x34) = v;
+    n->state_mask = v;
 }
