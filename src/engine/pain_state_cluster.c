@@ -120,8 +120,8 @@ extern void ScaledChainJmp_004298e0(void);
 extern void InstallSelfHelper2_0047e8a0(void);
 void InstallSelfHelper2_0047e8a0(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
-    unsigned int prev = *(unsigned int *)(base + 0x84);
-    *(unsigned int *)(base + 0x84) = 0;
+    unsigned int prev = ((ScenegraphNode *)base)->install_flag;
+    ((ScenegraphNode *)base)->install_flag = 0;
     if (prev != 0) {
         PainStateCluster_0047e9f0();
         return;
@@ -131,7 +131,7 @@ void InstallSelfHelper2_0047e8a0(void) {
     ScaledChainJmp_004298e0();
     if (g_framePauseFlag != 0) return;
     *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfHelper2_0047e8a0;
-    *(unsigned int *)(base + 0x84) = 1;
+    ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 0xa;
     g_framePauseFlag = 1;
 }
