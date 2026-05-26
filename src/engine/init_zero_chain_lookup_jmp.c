@@ -133,7 +133,7 @@ void InitZeroChainLookupJmp_00494210(void) {
     *(unsigned int *)(idx + 0x68) = (unsigned int)g_walkCallback;
     eax_val = (unsigned int)&g_dispatchSave422_005431c0 >> 2;
     g_scaledInit_00542044 = eax_val;
-    adj = *(unsigned int *)(g_cj_0054205c * 4 + 0x30) - 0x60;
+    adj = ((FightGroupNode *)(g_cj_0054205c * 4))->tag - 0x60;
     eax_val += adj;
     g_walkCallback = (void (*)(void))adj;
     g_scaledInit_00542044 = eax_val;
