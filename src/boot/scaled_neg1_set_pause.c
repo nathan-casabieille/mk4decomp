@@ -18,10 +18,9 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 void ScaledNeg1SetPause_0041f840(void) {
-    unsigned int base = g_baseSel_00542060;
-    unsigned int *slot = (unsigned int *)(base * 4 + 0xd8);
-    if (*slot != 0) {
-        *slot = 0xffffffff;
+    ScenegraphNode *node = (ScenegraphNode *)(g_baseSel_00542060 * 4);
+    if (node->ptr_field != 0) {
+        node->ptr_field = 0xffffffff;
         g_framePauseFlag = 1;
     }
 }
