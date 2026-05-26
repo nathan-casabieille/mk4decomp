@@ -126,7 +126,7 @@ void AudioInitArgs3_004a1f20(unsigned int arg0, int arg1, int arg2, int arg3) {
     g_voicePoolHead_00543748++;
     MStackPushComplexCallPop_004064b0();
     if (g_framePauseFlag != 0) return;
-    *(int *)(g_currentNodeIdx * 4 + 0x54) = arg1;
+    ((ScenegraphNode *)(g_currentNodeIdx * 4))->position_x = arg1;
     ((ScenegraphNode *)(g_currentNodeIdx * 4))->position_y = arg2;
-    *(int *)(g_currentNodeIdx * 4 + 0x5c) = arg3;
+    ((ScenegraphNode *)(g_currentNodeIdx * 4))->position_z = arg3;
 }

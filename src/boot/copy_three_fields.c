@@ -24,7 +24,7 @@ extern unsigned int g_struct_00ab4e54;
 extern unsigned int g_struct_00ab4e58;
 void CopyThreeFields_00404df0(unsigned int arg) {
     if (arg == 0) return;
-    g_struct_00ab4e50 = *(unsigned int *)(arg * 4 + 0x54);
-    g_struct_00ab4e54 = *(unsigned int *)(arg * 4 + 0x58);
-    g_struct_00ab4e58 = *(unsigned int *)(arg * 4 + 0x5c);
+    g_struct_00ab4e50 = ((ScenegraphNode *)(arg * 4))->position_x;
+    g_struct_00ab4e54 = ((ScenegraphNode *)(arg * 4))->position_y;
+    g_struct_00ab4e58 = ((ScenegraphNode *)(arg * 4))->position_z;
 }

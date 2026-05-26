@@ -121,12 +121,12 @@ void ThreeCallChainCopy_004409e0(void) {
     if (g_framePauseFlag != 0) return;
     v = ((ScenegraphNode *)(g_eventQueueIdx * 4))->child_a;
     g_walkCallback = v;
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x54) = v;
+    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_x = v;
     v = ((ScenegraphNode *)(g_eventQueueIdx * 4))->child_b;
     g_walkCallback = v;
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x58) = v;
+    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_y = v;
     v = ((ScenegraphNode *)(g_eventQueueIdx * 4))->child_c;
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x5c) = v;
+    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_z = v;
     g_walkCallback = 0x74;
     *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x30) = 0x74;
     MStackCall_00406340();

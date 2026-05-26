@@ -113,11 +113,11 @@ void TripleFieldCopyLo_0048f880(void) {
     unsigned int val;
     val = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x5c);
     g_walkCallback = (void (*)(void))val;
-    *(unsigned int *)(g_cj_0054205c * 4 + 0x54) = val;
+    ((ScenegraphNode *)(g_cj_0054205c * 4))->position_x = val;
     val = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x60);
     g_walkCallback = (void (*)(void))val;
     ((ScenegraphNode *)(g_cj_0054205c * 4))->position_y = val;
     val = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x64);
     g_walkCallback = (void (*)(void))val;
-    *(unsigned int *)(g_cj_0054205c * 4 + 0x5c) = val;
+    ((ScenegraphNode *)(g_cj_0054205c * 4))->position_z = val;
 }

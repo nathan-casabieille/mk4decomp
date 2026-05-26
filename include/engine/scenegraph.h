@@ -69,9 +69,11 @@ typedef struct ScenegraphNode {
     u32 child_a;            /* +0x3C first child reference (packed_ptr) */
     u32 child_b;            /* +0x40 second child reference            */
     u32 child_c;            /* +0x44 third child reference             */
-    u32 _48[4];             /* +0x48..+0x57 user state                */
-    s32 position_y;         /* +0x58 signed; > -0xffff_0000 = on-screen */
-    u32 _5C[6];             /* +0x5C..+0x73 user state                */
+    u32 _48[3];             /* +0x48..+0x53 user state                */
+    s32 position_x;         /* +0x54 vec3 X coord (fixed-point)       */
+    s32 position_y;         /* +0x58 vec3 Y coord; > -0xffff_0000 = on-screen */
+    s32 position_z;         /* +0x5C vec3 Z coord (fixed-point)       */
+    u32 _60[5];             /* +0x60..+0x73 user state                */
     u32 fsm_state;          /* +0x74 0x501 = special / fatality       */
     u32 _78[3];             /* +0x78..+0x83 user state                */
     u32 install_flag;       /* +0x84 0/1 install state flag           */
