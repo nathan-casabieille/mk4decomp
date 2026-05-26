@@ -14,10 +14,10 @@ extern unsigned int g_scaledInit_00542044;
 void ScaledStoreOrFlagXor_00428560(void) {
     unsigned int v;
     unsigned int s;
-    v = *(unsigned int *)(g_fightGroupHead * 4 + 0x28) + 1;
+    v = ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx + 1;
     g_walkCallback = (void (*)(void))v;
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = v;
-    s = *(unsigned int *)(g_fightGroupHead * 4 + 0x24);
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = v;
+    s = ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end;
     g_scaledInit_00542044 = s;
     g_xformDirtyFlags = g_xformDirtyFlags | 4;
     if (*(unsigned int *)(s * 4 + 4) != (unsigned int)g_walkCallback) {

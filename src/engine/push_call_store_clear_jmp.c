@@ -19,8 +19,8 @@ void PushCallStoreClearJmp_00460420(void) {
     if (g_framePauseFlag != 0) {
         return;
     }
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x24) = g_xformEntityIdx;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end = g_xformEntityIdx;
     g_walkCallback = (void (*)(void))0;
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = 0;
     ScaledLoadOrSetJmp_00406b20();
 }

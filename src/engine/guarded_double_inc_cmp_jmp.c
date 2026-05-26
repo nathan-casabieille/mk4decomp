@@ -126,7 +126,7 @@ void GuardedDoubleIncCmpJmp_00429860(void) {
     if (g_framePauseFlag != 0) return;
     idx_cj = g_cj_0054205c;
     idx_scaled = g_scaledInit_00542044;
-    val = *(unsigned int *)(idx_cj * 4 + 0x28) + 1;
+    val = ((ScenegraphNode *)(idx_cj * 4))->queue_idx + 1;
     g_eventQueueCurrent = val;
     cmp_val = *(int *)(idx_scaled * 4 + 4);
     if ((int)val >= cmp_val) {

@@ -125,7 +125,7 @@ void DualGuardedChainJmp_00453170(void) {
     if (g_framePauseFlag != 0) return;
     idx = ((ScenegraphNode *)(g_cj_0054205c * 4))->child_chain;
     g_scaledInit_00542044 = idx;
-    idx = *(unsigned int *)(idx * 4 + 0x28);
+    idx = ((ScenegraphNode *)(idx * 4))->queue_idx;
     g_scaledInit_00542044 = idx;
     g_walkCallback = (void (*)(void))((ScenegraphNode *)(idx * 4))->child_a;
     g_eventQueueCurrent = ((ScenegraphNode *)(idx * 4))->child_c;

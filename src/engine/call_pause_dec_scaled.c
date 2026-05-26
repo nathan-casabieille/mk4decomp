@@ -26,7 +26,7 @@ void CallPauseDecScaled_00428650(void) {
     func_0040592c();
     if (g_framePauseFlag) return;
     idx = g_fightGroupHead;
-    v = *(unsigned int *)(idx * 4 + 0x28) - 1;
+    v = ((ScenegraphNode *)(idx * 4))->queue_idx - 1;
     g_walkCallback = (void (*)(void))v;
-    *(unsigned int *)(idx * 4 + 0x28) = v;
+    ((ScenegraphNode *)(idx * 4))->queue_idx = v;
 }

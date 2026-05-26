@@ -19,18 +19,18 @@ extern void EsiInstallBitCallChain_00429610(void);
 
 /* @addr 0x00428d20 */
 void ScaledLoadJmp_00428d20(void) {
-    g_walkCallback = (void (*)(void))*(unsigned int *)(g_fightGroupHead * 4 + 0x28);
+    g_walkCallback = (void (*)(void))((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx;
     EsiInstallBitCallChain_00429530();
 }
 
 /* @addr 0x00429210 */
 void ScaledLoadJmp_00429210(void) {
-    g_walkCallback = (void (*)(void))*(unsigned int *)(g_fightGroupHead * 4 + 0x28);
+    g_walkCallback = (void (*)(void))((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx;
     EsiInstallBitCallChain_004295a0();
 }
 
 /* @addr 0x00429390 */
 void ScaledLoadJmp_00429390(void) {
-    g_walkCallback = (void (*)(void))*(unsigned int *)(g_fightGroupHead * 4 + 0x28);
+    g_walkCallback = (void (*)(void))((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx;
     EsiInstallBitCallChain_00429610();
 }
