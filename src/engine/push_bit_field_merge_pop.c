@@ -124,11 +124,11 @@ void PushBitFieldMergePop_0048bae0(void) {
     shifted = ((unsigned int)g_walkCallback & 3) << 0xc;
     cj = g_cj_0054205c;
     g_walkCallback = (void (*)(void))shifted;
-    merged = *(unsigned int *)(cj * 4 + 0x40);
+    merged = ((FightGroupNode *)(cj * 4))->bits;
     merged &= 0xffffcfff;
     merged |= shifted;
     g_scaledInit_00542044 = merged;
-    *(unsigned int *)(cj * 4 + 0x40) = merged;
+    ((FightGroupNode *)(cj * 4))->bits = merged;
     g_scaledInit_00542044 = *(unsigned int *)(g_matrixStackTop * 4);
     g_matrixStackTop--;
 }

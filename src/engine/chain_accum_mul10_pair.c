@@ -123,11 +123,11 @@ void ChainAccumMul10Pair_00490b70(void) {
     v = g_walkCallback + ((ScenegraphNode *)(g_fightGroupHead * 4))->position_y;
     g_eventQueueWorkType = v;
     ((ScenegraphNode *)(g_fightGroupHead * 4))->position_y = v;
-    g_scaledInit_00542044 = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x40);
+    g_scaledInit_00542044 = ((ScenegraphNode *)(g_baseSel_00542060 * 4))->child_b;
     g_walkCallback = (&g_matrixStack_arr)[g_scaledInit_00542044];
     g_walkCallback = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail_00404af0)(
         g_eventQueueCurrent, g_walkCallback);
-    g_scaledInit_00542044 = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x44);
+    g_scaledInit_00542044 = ((ScenegraphNode *)(g_baseSel_00542060 * 4))->child_c;
     g_eventQueueWorkType = (&g_matrixStack_arr)[g_scaledInit_00542044];
     g_eventQueueWorkType = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail_00404af0)(
         g_eventQueueCurrent, g_eventQueueWorkType);
