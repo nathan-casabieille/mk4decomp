@@ -416,7 +416,7 @@ void func_00498930(void) {
     if (g_framePauseFlag) return;
     v = 0x30b;
     g_walkCallback = v;
-    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74) = v;
+    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->fsm_state = v;
     ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_dispatchSave795_004f21d0);
 }
 
@@ -575,7 +575,7 @@ void func_00498bd0(void) {
     if (g_framePauseFlag) return;
     v = 0x309;
     g_walkCallback = v;
-    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74) = v;
+    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->fsm_state = v;
     ((void (*)(void *))ArgSarStoreJmp_004594f0)(&g_dispatchSave797_004f2250);
 }
 
@@ -697,7 +697,7 @@ void func_0047c580(void) {
     if (g_framePauseFlag) return;
     v = 0x200d;
     g_walkCallback = v;
-    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74) = v;
+    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->fsm_state = v;
     ScaledChainAndF000DirtyToggle_0048e740();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 1) {

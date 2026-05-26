@@ -122,7 +122,7 @@ extern void ArgSarStoreJmp_004594f0(int);
 void ChainedEvent3_00485a10(void) {
     unsigned int v = 0x100b;
     g_walkCallback = (void (*)(void))v;
-    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74) = v;
+    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->fsm_state = v;
     CopyJmp_0048ef90();
     if (g_framePauseFlag != 0) return;
     if ((int)g_currentNodeFlags > 0x3333) {

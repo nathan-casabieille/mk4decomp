@@ -15,7 +15,7 @@ void ZeroSixStores6c80_0048a7c0(void) {
     g_walkCallback = 0;
     *(unsigned int *)(base + 0x6c) = 0;
     *(unsigned int *)(base + 0x70) = (unsigned int)g_walkCallback;
-    *(unsigned int *)(base + 0x74) = (unsigned int)g_walkCallback;
+    ((ScenegraphNode *)base)->fsm_state = (unsigned int)g_walkCallback;
     *(unsigned int *)(base + 0x78) = (unsigned int)g_walkCallback;
     *(unsigned int *)(base + 0x7c) = (unsigned int)g_walkCallback;
     *(unsigned int *)(base + 0x80) = (unsigned int)g_walkCallback;

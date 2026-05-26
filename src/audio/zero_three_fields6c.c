@@ -23,5 +23,5 @@ void ZeroThreeFields6c_004abfe0(void) {
     g_walkCallback = 0;
     *(unsigned int *)(base + 0x6c) = 0;
     *(unsigned int *)(base + 0x70) = (unsigned int)g_walkCallback;
-    *(unsigned int *)(base + 0x74) = (unsigned int)g_walkCallback;
+    ((ScenegraphNode *)base)->fsm_state = (unsigned int)g_walkCallback;
 }
