@@ -37,5 +37,5 @@ void PauseTestCmp2CallStore_0045bfe0(void) {
     if (b != 2) return;
     func_0045c005();
     if (g_framePauseFlag != 0) return;
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x24) = (unsigned int)g_walkCallback;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end = (unsigned int)g_walkCallback;
 }

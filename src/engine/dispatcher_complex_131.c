@@ -74,7 +74,7 @@ void DispatcherComplex131_00431530(void) {
     {
         unsigned int s2 = g_scaledInit_00542044;
         unsigned int fg = g_fightGroupHead;
-        *(unsigned int *)(s2 * 4 + 0x24) = fg;
+        ((ScenegraphNode *)(s2 * 4))->queue_end = fg;
     }
 }
 
@@ -105,6 +105,6 @@ void DispatcherComplex131_004315c0(void) {
     {
         unsigned int s2 = g_scaledInit_00542044;
         unsigned int fg = g_fightGroupHead;
-        *(unsigned int *)(s2 * 4 + 0x24) = fg;
+        ((ScenegraphNode *)(s2 * 4))->queue_end = fg;
     }
 }

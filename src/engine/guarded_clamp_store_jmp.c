@@ -18,9 +18,9 @@ void GuardedClampStoreJmp_00428bd0(void) {
     unsigned int scaled, walk;
     CopyJmp_00406ba0();
     if (g_framePauseFlag) return;
-    scaled = *(unsigned int *)(g_fightGroupHead * 4 + 0x24);
+    scaled = ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end;
     g_scaledInit_00542044 = scaled;
-    walk = *(unsigned int *)(g_fightGroupHead * 4 + 0x28);
+    walk = ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx;
     g_walkCallback = (void (*)(void))walk;
     scaled = *(unsigned int *)(scaled * 4 + 4);
     if ((int)walk >= (int)scaled) {
