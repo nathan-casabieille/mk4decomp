@@ -123,11 +123,11 @@ void DualGuardedChainJmp_00453170(void) {
     if (g_framePauseFlag != 0) return;
     MStackBracket7_DispatchAndChain_004b8fa0();
     if (g_framePauseFlag != 0) return;
-    idx = *(unsigned int *)(g_cj_0054205c * 4 + 0x18);
+    idx = ((ScenegraphNode *)(g_cj_0054205c * 4))->child_chain;
     g_scaledInit_00542044 = idx;
     idx = *(unsigned int *)(idx * 4 + 0x28);
     g_scaledInit_00542044 = idx;
-    g_walkCallback = (void (*)(void))*(unsigned int *)(idx * 4 + 0x3c);
-    g_eventQueueCurrent = *(unsigned int *)(idx * 4 + 0x44);
+    g_walkCallback = (void (*)(void))((ScenegraphNode *)(idx * 4))->child_a;
+    g_eventQueueCurrent = ((ScenegraphNode *)(idx * 4))->child_c;
     MStackBracketed3StoreCall_00475990();
 }

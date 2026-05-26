@@ -42,7 +42,7 @@ void DualEntryPushCall_0046b630(void) {
 void func_0046b640(void) {
     int v = 0x2010;
     g_walkCallback = (void (*)(void))v;
-    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74) = v;
+    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->fsm_state = v;
     ScaledAndAlfe_00490390();
     if (g_framePauseFlag != 0) return;
     func_0046b687();

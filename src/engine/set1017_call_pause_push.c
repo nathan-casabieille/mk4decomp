@@ -26,7 +26,7 @@ extern int func_0046d4d8(void *p);
 extern void *g_dispatchSave1306_004ed5e0;
 void Set1017CallPausePush_0047e600(void) {
     g_walkCallback = (void (*)(void))0x1017;
-    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74) = 0x1017;
+    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->fsm_state = 0x1017;
     func_004fa320();
     if (g_framePauseFlag != 0) return;
     func_0046d4d8(&g_dispatchSave1306_004ed5e0);

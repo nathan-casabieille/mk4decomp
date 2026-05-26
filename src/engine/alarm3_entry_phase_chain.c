@@ -141,7 +141,7 @@ extern void TriPhaseDualPathInstallChain_0047e420(void);
 /* entry 1 (offset 0, 51b) */
 void Alarm3EntryPhaseChain_0047e1a0(void) {
     g_walkCallback = 0x1012;
-    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74) = 0x1012;
+    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->fsm_state = 0x1012;
     MStackPushSet0008_004901a0();
     if (g_framePauseFlag == 0)
         ArgSarStoreJmp_004594f0(&g_dispatchSave717_004ed590);
@@ -150,7 +150,7 @@ void Alarm3EntryPhaseChain_0047e1a0(void) {
 /* entry 2 (offset 0x40, 67b) */
 void Alarm3PhaseChainEntry2_0047e1e0(void) {
     *(unsigned int *)(g_baseSel_00542060 * 4 + 0x68) = 0x402;
-    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74) = g_walkCallback = 0x201;
+    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->fsm_state = g_walkCallback = 0x201;
     MStackPushSet0020_004901d0();
     if (g_framePauseFlag == 0)
         ArgSarStoreJmp_004594f0(&g_dispatchSave718_004ed5a8);

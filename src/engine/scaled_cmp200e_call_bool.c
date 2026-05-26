@@ -22,7 +22,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void func_00439998(void);
 int ScaledCmp200eCallBool_004398f0(void) {
-    unsigned int v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74);
+    unsigned int v = ((ScenegraphNode *)(g_baseSel_00542060 * 4))->fsm_state;
     g_eventQueueNotMask = v;
     if (v != 0x200e) return 0;
     func_00439998();

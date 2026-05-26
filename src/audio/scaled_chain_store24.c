@@ -28,7 +28,7 @@ void ScaledChainStore24_004a7d40(void) {
     v = (v >> 2) & 0x3fffff;
     g_xformEntityIdx = (unsigned int)v;
     {
-        unsigned int chain = *(unsigned int *)(sc * 4 + 0x18);
+        unsigned int chain = ((ScenegraphNode *)(sc * 4))->child_chain;
         g_fightGroupHead = chain;
         *(int *)(chain * 4 + 0x24) = v;
     }

@@ -118,7 +118,7 @@ void EsiInstallClearTripleFields_00457240(void) {
     if (prev != 0) {
         g_walkCallback = (void (*)(void))0;
         *(unsigned int *)(g_eventQueueEnd * 4 + 0x6c) = 0;
-        *(unsigned int *)(g_eventQueueEnd * 4 + 0x74) = (unsigned int)g_walkCallback;
+        ((ScenegraphNode *)(g_eventQueueEnd * 4))->fsm_state = (unsigned int)g_walkCallback;
         *(unsigned int *)(g_eventQueueEnd * 4 + 0x70) = (unsigned int)g_walkCallback;
         StackPopDispatchTagged_0041f780();
         return;

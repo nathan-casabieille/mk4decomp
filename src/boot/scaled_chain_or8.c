@@ -23,7 +23,7 @@ void ScaledChainOr8_00404e50(void) {
     unsigned int s;
     unsigned int e;
     unsigned int v;
-    s = *(unsigned int *)(g_fightGroupHead * 4 + 0x18);
+    s = ((ScenegraphNode *)(g_fightGroupHead * 4))->child_chain;
     g_scaledInit_00542044 = s;
     e = *(unsigned int *)(s * 4 + 0x28);
     g_xformEntityIdx = e;

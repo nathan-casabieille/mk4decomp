@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 void DualPackedStoreCallSubBack_0043e270(void) {
     unsigned int val;
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x74) = 0xffffcccd;
+    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->fsm_state = 0xffffcccd;
     val = 0xffffd70b;
     g_walkCallback = (void (*)(void))val;
     *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x70) = val;

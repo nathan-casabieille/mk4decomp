@@ -21,7 +21,7 @@ void PushPopScaled18_004059a0(void) {
     unsigned int v;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_scaledInit_00542044;
-    v = *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x18);
+    v = ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->child_chain;
     g_walkCallback = (void (*)(void))v;
     if (v != 0) {
         g_scaledInit_00542044 = v;
