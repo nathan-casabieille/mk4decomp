@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 void GuardedChainDispatch2c_004082d0(void) {
     unsigned int w;
-    w = *(unsigned int *)(g_cj_0054205c * 4 + 0x2c);
+    w = ((ScenegraphNode *)(g_cj_0054205c * 4))->group_head;
     g_walkCallback = (void (*)(void))w;
     if (w == 0) return;
     g_matrixStackTop++;
@@ -125,7 +125,7 @@ void GuardedChainDispatch2c_004082d0(void) {
     MStackBootPush4Init_00408350();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = 0;
-    *(unsigned int *)(g_cj_0054205c * 4 + 0x2c) = 0;
+    ((ScenegraphNode *)(g_cj_0054205c * 4))->group_head = 0;
     g_walkCallback = (void (*)(void))*(unsigned int *)(g_matrixStackTop * 4);
     g_matrixStackTop--;
 }

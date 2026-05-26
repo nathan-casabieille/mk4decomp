@@ -23,5 +23,5 @@ extern void StoreTwoCall_0049cb40(unsigned int, unsigned int);
 extern void func_00416e50(void);
 void PendingMatch_00416e20(void) {
     StoreTwoCall_0049cb40((unsigned int)&func_00416e50, 0xb6);
-    *(unsigned int *)(g_currentNodeIdx * 4 + 0x2c) = g_fightGroupHead;
+    ((ScenegraphNode *)(g_currentNodeIdx * 4))->group_head = g_fightGroupHead;
 }
