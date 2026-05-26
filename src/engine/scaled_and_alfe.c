@@ -10,7 +10,7 @@ extern unsigned int g_baseSel_00542060;
 /* @addr 0x00490390 (28b): same shape, and al, 0xfe */
 void ScaledAndAlfe_00490390(void) {
     unsigned int idx = g_fightGroupHead;
-    unsigned int v = *(unsigned int *)(idx * 4 + 0x40) & 0xFFFFFFFEu;
+    unsigned int v = ((FightGroupNode *)(idx * 4))->bits & 0xFFFFFFFEu;
     g_eventQueueCurrent = v;
-    *(unsigned int *)(idx * 4 + 0x40) = v;
+    ((FightGroupNode *)(idx * 4))->bits = v;
 }
