@@ -1,0 +1,519 @@
+# Scenegraph subsystem
+
+Per-subsystem deep dive for MK4's scene graph: node allocator,
+transform stack, dispatch table, render walker. For the
+asm-verified `RenderSceneNode` analysis see the corresponding
+section in [architecture.md](architecture.md) ("Outer walker -
+RenderSceneNode"). This doc covers the in-engine plumbing a
+contributor needs to safely modify the subsystem without breaking
+the byte match.
+
+
+## Overview
+
+MK4's scene graph is a **fixed-pool, linked-list node tree** with
+three cooperating pieces:
+
+1. **Allocator** (`AllocateNode`, `0x0041f290`) - hands out one of 63
+   pre-allocated 0xE8-byte slots, splices it into a singly-linked
+   list rooted at `g_nodeListTail`.
+2. **Walker** (`RenderSceneNode`, `0x004ba720`) - recursive descent
+   driven by a 16-entry function-pointer dispatch table.
+3. **Transform stack** (`g_matrixStackA/B`, `g_xformChainTable`) -
+   push/pop matrix chain managed by `NodeApplyMatrix` and
+   `NodeApplyTransform_B_Swapped`.
+
+There is no malloc/free per frame. Per-frame work is purely walking
+the existing list and unlinking finished nodes.
+
+
+## Node layout (0xE8 bytes = 232 bytes per slot)
+
+The pool lives at `g_nodeSlotsArea` (`0x0053e368`), 64 slots ending
+at `g_nodeSlotsHdr_end` (`0x00541e40`). Each slot has two regions:
+
+```
++0x00 .. +0xD7   data area (216 bytes)
++0xD4            magic   0x12345678 (live-slot sanity tag)
++0xD8 .. +0xE7   header  (16 bytes)
+```
+
+Header subfields, aliased as individual `extern` symbols:
+
+| Field                | Offset | Symbol                       | Set by                  |
+|----------------------|--------|------------------------------|-------------------------|
+| `ptr_field`          | +0xD8  | `g_nodeSlotsHdr_ptrField`    | `AllocateNode` (= type) |
+| `magic`              | +0xDC  | `g_nodeSlotsHdr_magic`       | `AllocateNode` (= 0x12345678) |
+| `type_word`          | +0xDC  | `g_nodeSlotsHdr_typeWord`    | `AllocateNode` (zeroed) |
+| `workType`           | +0xE0  | `g_nodeSlotsHdr_workType`    | `AllocateNode` (= `g_eventQueueWorkType`) |
+| `next_link`          | +0xE4  | `g_nodeSlotsHdr_nextLink`    | `AllocateNode` (linked) |
+
+Per-node data fields read by the walker + tick code:
+
+| Offset | Meaning                                            |
+|--------|----------------------------------------------------|
+| +0x00  | linked-list/payload pointer (DWORD)                |
+| +0x04  | `lea esi, [edx + 0x22]; mov [edx*4+4], esi` (self-ref scratch) |
+| +0x08  | `g_pendingNodeType` at alloc time                  |
+| +0x0C  | `g_eventQueueWorkType` at alloc time               |
+| +0x10  | (cleared by alloc; later: see node-type docs)      |
+| +0x14  | `g_eventQueueNotMask` at alloc time                |
+| +0x18  | `g_eventQueueChild` at alloc time / chain next     |
+| +0x1C  | `g_currentNodeFlags` at alloc time                 |
+| +0x20  | **flag word** = `g_currentNodeFlags` (the type/mode bits read by the walker) |
+| +0x24  | `g_eventQueueEnd` at alloc time                    |
+| +0x28  | `g_eventQueueIdx` at alloc time / sub-descriptor for `NodeApplyMatrix` |
+| +0x2C  | `g_fightGroupHead` at alloc time                   |
+| +0x30  | player_id (1..4) - set by callers                  |
+| +0x34  | state - set by callers                             |
+| +0x3C  | first child ref                                    |
+| +0x40  | second child ref                                   |
+| +0x44  | third child ref                                    |
+| +0x58  | y-position (signed, clamped to -0xffff)            |
+| +0x74  | state-machine value (0x501 = "special state")     |
+| +0xD4  | magic 0x12345678 (live tag)                        |
+| +0xE4  | linked-list next pointer (header)                  |
+
+`AllocateNode` zero-clears `+0x30` through `+0x80` and sets every
+working-state global into a specific slot - so the 16 alloc-time
+globals listed above are the **node's birth state**, captured at
+allocation and never re-read by the allocator itself.
+
+### The "packed_ptr" encoding
+
+`g_currentNodeIdx` and `g_xformEntityIdx` are NOT array indices.
+They are **node addresses pre-divided by 4**:
+
+```
+g_currentNodeIdx = node_address / 4
+node_address     = g_currentNodeIdx * 4
+node[+N]         = *(u32 *)(g_currentNodeIdx * 4 + N)
+```
+
+This is the legacy of the PSX/N64 origin codebase, where MIPS could
+reach `[reg*4]` in one instruction. On x86 the engine pays no
+penalty - MSVC SP3 turns it into `[edx*4 + disp32]` (one byte
+shorter than the natural `[edx + disp32]` form).
+
+Critically, this means the node POOL is **not** a typed array. Two
+distinct nodes at addresses 0x53e368 and 0x53e450 have
+`g_currentNodeIdx` values of 0x14f8da and 0x14f914 - so iterating
+`for (idx = ...; idx < ...; idx += 0x3a) ...` won't work. The walker
+follows the `+0xE4` linked-list pointer instead.
+
+
+## Allocator - AllocateNode (0x0041f290)
+
+`AllocateNode(type)` is a single naked function that does, in order:
+
+1. **Walk to list tail**: starting at `g_nodeListTail`, follow `+0xE4`
+   until null. This finds where to append the new node.
+2. **Scan for free slot**: walk `g_nodeSlotsHdr_ptrField` in 0xE8 steps
+   looking for `ptr_field == 0`. On exhaustion (after 64 slots),
+   `g_xformDirtyFlags |= 5` and return NULL.
+3. **Init header**: write `type` into `+0xD8`, zero `+0xDC` (low 16),
+   copy `g_eventQueueWorkType` into `+0xE0`.
+4. **Splice list**: if previous tail exists, set `prev->next_link = new_node`;
+   otherwise set `g_nodeListTail = new_node`. Either way the new
+   node's `next_link` is null.
+5. **Stamp magic**: `+0xD4 = 0x12345678`.
+6. **Capture birth state**: set `g_currentNodeIdx = new_node / 4`, then
+   copy 9 working-state globals into the data area at +0x04 / +0x08 /
+   +0x0C / +0x14 / +0x18 / +0x1C / +0x20 / +0x24 / +0x28 / +0x2C.
+7. **Zero +0x30..+0x80**: 21 dwords, the "user state" area.
+8. **Bookkeeping**: `g_nodeAllocCounter++`, `g_xformDirtyFlags &= ~5`.
+
+The 9 captured globals are the **scene-walk context** the caller has
+already set up. A caller normally:
+
+```c
+g_pendingNodeType = 0x02;             // node type
+g_currentNodeFlags = ...;             // flag word (type/mode bits)
+g_eventQueueWorkType = ...;
+... (set the other globals)
+
+node = AllocNode();                   // wraps AllocateNode(g_pendingNodeType)
+```
+
+Hence the `AllocNode` wrapper at `0x0049cb60` - 15 bytes of
+`AllocateNode(g_pendingNodeType)`.
+
+
+## Deallocator - NodeUnlink (0x0041f710)
+
+Unlinks a node from the list and decrements `g_nodeAllocCounter`.
+The naked body lives in `src/boot/node_unlink.c`. Two paths:
+
+- **Tail case**: if `g_nodeListTail == node`, set
+  `g_nodeListTail = node->next_link` and clear node->next/prev.
+- **Mid-list case**: scan the pool for the slot whose `+0xD8` field
+  is `node`, copy `node->next_link` into that slot's `+0xD8` field
+  (the previous node's payload pointer). This is a slow O(N) walk
+  but the pool is only 64 entries.
+
+Then `+0xD8` and `+0xE4` of the freed node are both zeroed, freeing
+the slot for the next allocator scan.
+
+The asymmetry (allocator finds free slots by `+0xD8 == 0`, NodeUnlink
+walks finding the predecessor by `+0xD8 == target`) is why slot reuse
+preserves the order: an unlinked slot keeps zeros in its header until
+the next `AllocateNode` overwrites them.
+
+
+## Per-frame walk - TickAllEntities (0x004b9e50)
+
+Called from `GameLogicStep`. Has two distinct modes:
+
+- **First frame** (`g_tickInitFlag == 0`): walks five fixed sub-trees,
+  each with a different mask state, then fall through to the main
+  pass.
+- **Subsequent frames**: just the main sub-tree at `0x538070`.
+
+Each "pass" sets up a packed_ptr for `g_currentNodeIdx`, points
+`g_walkCallback` at the per-sibling callback, and calls
+`Helper_TickInner` (or `Helper_TickAlt` if a sticky flag is set).
+The callback is normally `Helper_FightSceneCallback`. After each
+sub-tree, the walk aborts if `g_framePauseFlag != 0`.
+
+Tail does `g_tickDecay = max(g_tickDecay - 1, 0)`.
+
+
+## Sibling walker - Helper_TickInner (0x004ba130)
+
+`Helper_TickInner` (in `src/engine/scenegraph.c`) walks the **sibling
+chain** of `g_currentNodeIdx` by indexing into `g_siblingTable`:
+
+```
+ecx  = g_currentNodeIdx
+eax  = g_siblingTable[ecx][+4]    ; first sibling
+edi  = g_siblingTable[ecx][+8] + 2
+
+loop:
+  ecx = edi + eax
+  g_currentNodeIdx = ecx           ; sibling[idx + 2]
+  esi = g_siblingTable[ecx][0]
+  g_currentNodeIdx = eax
+  call g_walkCallback              ; ebx = callback addr
+  if g_framePauseFlag != 0 -> exit
+  if g_xformDirtyFlags & 1 -> post_walk
+  eax = esi
+  if eax != 0 -> loop
+```
+
+Two relevant globals:
+
+| Symbol             | Address      | Role                                     |
+|--------------------|--------------|------------------------------------------|
+| `g_walkCallback`   | `0x0054206c` | Per-sibling callback function pointer    |
+| `g_siblingTable[]` | (RELOC base) | Stride 4, indexed at +0, +4, +8          |
+| `g_xformDirtyFlags`| `0x0054208c` | Bit 1 = abort walk early                 |
+
+Exit path is `g_xformDirtyFlags |= 4`, then if `ebp != 0` and bit 0 of
+the dirty flag is clear, `g_xformDirtyFlags ^= 4` (i.e. clear bit 2
+that was just set). This is a two-state acknowledgment dance: the
+callback can set bit 1 to abort the walk, and the walker tracks
+whether the walk completed.
+
+
+## Render walker - RenderSceneNode (0x004ba720)
+
+Recursive descent through the node hierarchy. 1899 bytes, naked.
+For full ASM-level analysis see [architecture.md](architecture.md);
+the in-engine summary:
+
+1. Load `node->flag_word` from `+0x20` into `g_currentNodeFlags`.
+2. Test `g_currentNodeFlags & 0x2000` - bbox cull / Z-bucket clamp.
+3. Test `g_framePauseFlag` - abort if set.
+4. Read `node->child` at `+0x3C`; if zero, this is a leaf (calls
+   `DrawMeshBlock` or one of the per-primitive submitters).
+5. Otherwise dispatch via the **16-entry table**:
+   ```
+   idx = (flags >> 24) & 7;           // node type, 0..7
+   if (flags & 0x100) idx += 8;       // mode bit
+   g_nodeDispatchTable[idx]();        // apply local transform
+   ```
+6. Recurse into `+0x3C`, then `+0x40`, then `+0x44` (the three child
+   slots).
+
+The dispatch table at `g_nodeDispatchTable` (`0x004f7888`) is 16
+function pointers, 9 distinct handlers:
+
+| idx (type/mode) | Handler                          | Builder used      |
+|-----------------|----------------------------------|-------------------|
+| 0/0, 6/0, 7/0   | `NodeApplyTransform_A` (0xA3 b)  | `BuildRotMatrix_OrderA` |
+| 1/0             | `NodeApplyTransform_C` (0xA3 b)  | `BuildRotMatrix_OrderC` |
+| 2/0             | `NodeApplyTransform_B` (0xA3 b)  | `BuildRotMatrix_OrderB` |
+| 3/0             | `NodeApplyTransform_C_Inverse` (0x9D b) | `BuildRotMatrix_OrderC` (no negation) |
+| 4/0, 4/1        | `NodeApplyMatrix` (0xD6 b)       | (uses pre-built sub-matrix) |
+| 5/0, 5/1        | `NodeApplyTransform_B_Swapped` (0xE0 b) | wraps `_B` with Y/Z swap |
+| 0/1, 3/1, 6/1, 7/1 | `NodeApplyTransform_A_Direct` (0x62 b) | `BuildRotMatrix_OrderA` (BAM input) |
+| 1/1             | `NodeApplyTransform_C_Direct` (0x62 b) | `BuildRotMatrix_OrderC` (BAM input) |
+| 2/1             | `NodeApplyTransform_B_Direct` (0x62 b) | `BuildRotMatrix_OrderB` (BAM input) |
+
+**Mode 0 vs mode 1**: in mode 0 (0xA3 bytes per handler) the
+angle input is a 32-bit fixed-point value, scaled to a 16-bit BAM
+via `(x >> 2) * 10430 >> 18`. In mode 1 (0x62 bytes per handler)
+the input is already a 16-bit BAM, copied direct. This lets a node
+choose between high-precision (radians) and compact (pre-converted
+BAM) storage per joint.
+
+The MSVC SP3 strength-reduction of `* 10430` is reproduced exactly
+by writing the multiplication that way in source - see
+[src/engine/scenegraph.c](../../src/engine/scenegraph.c) for the
+pure-C body of `NodeApplyTransform_A/B/C` (already converted).
+
+
+## Transform stack - NodeApplyMatrix (0x004be050)
+
+The matrix stack is **two parallel arrays** plus a top counter:
+
+| Symbol             | Role                                     |
+|--------------------|------------------------------------------|
+| `g_matrixStackTop` | Index (incremented before write, decremented after read) |
+| `g_matrixStackA[]` | Stack of saved `g_currentNodeIdx` values |
+| `g_matrixStackB[]` | Stack of saved `g_xformLoopCounter` values |
+| `g_xformChainTable[]` | The actual matrix data, indexed by `g_xformEntityIdx*4` |
+
+`NodeApplyMatrix` (still naked) implements a "push, loop 8 times,
+pop" pattern:
+
+```
+push:  g_matrixStackA[++top] = g_currentNodeIdx
+       g_matrixStackB[++top] = g_xformLoopCounter
+       g_xformEntityIdx -= 0x0F
+       g_xformLoopCounter = 8
+
+loop8: for (i = 0; i < 8; i++) {
+         next = g_xformChainTable[g_xformEntityIdx];
+         g_walkCallback = next;
+         g_xformChainTable[g_currentNodeIdx] = next;
+         g_currentNodeIdx++;
+         g_xformEntityIdx++;
+       }
+
+pop:   g_xformLoopCounter = g_matrixStackB[top--];
+       g_currentNodeIdx   = g_matrixStackA[top--];
+```
+
+So `NodeApplyMatrix` copies 8 entries of `g_xformChainTable` to a
+different slot in the same table - this is the **matrix multiply**
+step in the recursive walk, accumulating the local transform on top
+of the stacked parent transform.
+
+`NodeApplyTransform_B_Swapped` (0x004be130) is similar but also
+swaps Y/Z components of three chain entries, then tail-calls
+`NodeApplyTransform_B`. If `g_framePauseFlag` is set after the inner
+call, it skips the pop - leaving the stack 2-deep for the caller to
+unwind on resume.
+
+
+## Rotation matrices - the 4096-entry sine LUT
+
+The three rotation-matrix builders (`BuildRotMatrix_OrderA/B/C`) at
+`0x004b3800` / `0x004b3940` / `0x004b36c0` each take a 3-vector of
+16-bit BAM angles and build a 3x3 matrix via:
+
+```
+sin(a) =  g_sinTable[a & 0xfff]
+cos(a) = -g_sinTable[(a - 0x400) & 0xfff]
+```
+
+`g_sinTable` (`0x007b01a0`) is a 4096 x 4-byte fixed-point lookup
+with `0x1000 = 2*pi`. The cosine offset trick (`sin(a - pi/2) = -cos(a)`)
+lets both functions share one table.
+
+The three orderings (A/B/C) correspond to three Euler axis sequences
+(likely XYZ / ZYX / YXZ) - exact axis order is recoverable from each
+function's matrix-element formulas. Not yet decoded; recoverable in
+~1 session if needed.
+
+
+## Sort-key LUT - BuildSortKeyLUT (0x004bf290)
+
+Two-pass init called once from `Gfx_Init`:
+
+1. `memset(g_paletteScratch, 0, 0x108000 * 4)` - clears 4 MB
+   (`0x00b2d010..0x00f35010`).
+2. `Helper_PaletteInit(0)` - palette/lighting init.
+3. Fill `g_zSortKeyLUT[0..65535]` with
+   `(s32)(i / (i * 31 / 65536 + 1))`. This remaps a linear z-bucket
+   (0..65535) to a hyperbolic sort-key, giving more sort precision
+   to near geometry.
+4. Fill `g_div3Table[0..767]` with `i / 3`. Used to pick which of
+   3 vertices in a primitive owns the sort key.
+
+The pure-C body is in [src/engine/sort_lut.c](../../src/engine/sort_lut.c).
+The static const decl order is **reversed** from the .rdata pool
+order so MSVC SP3 emits the `fmul` operands in the right sequence.
+
+
+## Globals reference
+
+### Pool + linked list
+
+| Symbol               | Address     | Role                                       |
+|----------------------|-------------|--------------------------------------------|
+| `g_nodeSlotsArea`    | `0x0053e368`| 64 * 0xE8-byte slot pool                   |
+| `g_nodeSlotsHdr_ptrField` | `0x0053e440` | First slot's +0xD8 (alloc scan target) |
+| `g_nodeSlotsHdr_end` | `0x00541e40`| End sentinel (exclusive)                   |
+| `g_nodeListTail`     | `0x0052ab3c`| Tail of live linked list                   |
+| `g_nodeAllocCounter` | `0x00541e64`| `g_nodeAllocCounter++` per alloc           |
+| `g_pendingNodeType`  | `0x0054204c`| Type for next `AllocNode()` call           |
+
+### Walk state
+
+| Symbol               | Address     | Role                                       |
+|----------------------|-------------|--------------------------------------------|
+| `g_currentNodeIdx`   | `0x00542044`| Current node (packed_ptr = addr/4)         |
+| `g_currentNodeFlags` | `0x00542084`| Flag word loaded from current node's +0x20 |
+| `g_xformEntityIdx`   | `0x00542048`| Entity-table index (packed_ptr)            |
+| `g_xformDirtyFlags`  | `0x0054208c`| Dirty bits OR'd by every `_Direct` handler |
+| `g_xformScratch2088` | `0x00542088`| Sticky scratch slot                        |
+| `g_walkCallback`     | `0x0054206c`| Per-sibling callback                       |
+| `g_walkStateIndex`   | `0x0053a748`| Per-state index for SetState_XX helpers    |
+| `g_framePauseFlag`   | (game/tick) | Set non-zero to abort all in-flight walks  |
+
+### Transform stack
+
+| Symbol               | Address     | Role                                       |
+|----------------------|-------------|--------------------------------------------|
+| `g_matrixStackTop`   | `0x004d57ac`| Stack index                                |
+| `g_matrixStackA[]`   | (RELOC)     | Saved-nodeIdx stack                        |
+| `g_matrixStackB[]`   | (RELOC)     | Saved-loopCounter stack                    |
+| `g_xformLoopCounter` | `0x0053a1ac`| Inner-walk loop counter                    |
+| `g_xformChainTable[]`| (RELOC)     | The matrix data (indexed via packed_ptr*4) |
+| `g_xformTempAngles[3]`| `0x00ab5208`| 6-byte scratch for negated angles          |
+
+### Event queue (driven alongside scene walk)
+
+| Symbol               | Address     | Role                                       |
+|----------------------|-------------|--------------------------------------------|
+| `g_eventQueueHead`   | `0x0053a2f0`| Iteration cursor                           |
+| `g_eventQueueEnd`    | `0x00542054`| Cached end of iteration                    |
+| `g_eventQueueTotal`  | (varies)    | (set by `RenderSceneNode`)                 |
+| `g_eventQueueWorkType`| `0x00542074`| Type tag captured at AllocateNode          |
+| `g_eventQueueCurrent`| `0x00542070`| Active head value                          |
+| `g_eventQueueChild`  | `0x00542080`| AND-merged child flags                     |
+| `g_eventQueueIdx`    | `0x00542058`| Per-iter counter                           |
+| `g_eventQueueNotMask`| `0x0054207c`| Negated mask                               |
+| `g_fightGroupHead`   | `0x0054205c`| Per-fight-subtree head                     |
+
+### Dispatch + render
+
+| Symbol               | Address     | Role                                       |
+|----------------------|-------------|--------------------------------------------|
+| `g_nodeDispatchTable[16]` | `0x004f7888`| 16 fn ptrs (9 distinct handlers)      |
+| `g_sinTable[4096]`   | `0x007b01a0`| BAM-indexed sine LUT (`0x1000 = 2*pi`)     |
+| `g_zSortKeyLUT[65536]`| `0x00b0d008`| z-bucket -> sort-key remap (set by `BuildSortKeyLUT`) |
+| `g_div3Table[768]`   | `0x00f70ff8`| `i / 3` for primitive vertex selection     |
+| `g_paletteScratch[]` | `0x00b2d010`| 4 MB scratch (zero'd by `BuildSortKeyLUT`) |
+
+
+## What's safe to change vs not
+
+**Safe**:
+- Renaming any of the globals above (apply consistently + `make matching`).
+- Adding type info to the node descriptor (e.g. typedefing a `struct
+  Node` in `include/engine/scenegraph.h`) **so long as field offsets
+  and sizes match exactly** - 232-byte stride is hard-coded in
+  `AllocateNode`, `NodeUnlink`, the walker's `+0xE4` chase, and in the
+  16 dispatch handlers' `[packed_ptr * 4 + disp32]` references.
+- Editing pure-C handlers (`NodeApplyTransform_A/B/C`, `_Direct`
+  variants, `_C_Inverse`) - they are already converted; small style
+  changes that preserve the strength-reduced `* 10430` lowering
+  keep matching.
+- Adding new sub-systems that allocate nodes via `AllocNode()`,
+  provided they correctly prime `g_pendingNodeType` +
+  `g_currentNodeFlags` before the call.
+
+**Unsafe**:
+- Changing the 232-byte stride, the `+0xD8` header offset, the
+  `+0xE4` link offset, or the `+0xD4` magic. All four are
+  byte-baked into the allocator + walker + dispatch handlers.
+- Reordering slot fields. The 16 dispatch handlers reach into
+  `node[+0x20]` (flag word), `+0x28` (sub-matrix for `NodeApplyMatrix`),
+  `+0x3C/+0x40/+0x44` (children) directly via packed_ptr arithmetic.
+- Reordering globals in the 0x00542044..0x0054208c range. They are
+  loaded in specific byte-addressing patterns:
+  `g_currentNodeIdx` (0x542044) -> `g_xformEntityIdx` (0x542048) ->
+  `g_pendingNodeType` (0x54204c) etc. Changing offsets changes the
+  imm32 in every `mov [g_X], reg` instruction site-wide.
+- Changing the sine LUT base (`0x007b01a0`) or stride (4 bytes).
+  Indexed via `[reg*4 + 0x007b01a0]` from inside the matrix builders.
+- Changing the dispatch table base (`0x004f7888`) or entry order.
+  `RenderSceneNode` does `[g_nodeDispatchTable + eax*4]` with the
+  imm32 hardcoded.
+- Modifying `BuildSortKeyLUT`'s static const order. MSVC SP3 emits
+  `fmul` operands by .rdata pool order, which is reversed from C
+  declaration order - the comment in `sort_lut.c` explains.
+
+
+## What's still naked vs pure C
+
+In `src/engine/scenegraph.c`:
+
+- **Pure C** (already converted):
+  `AllocNode` (the 15-byte wrapper),
+  `NodeApplyTransform_A`, `_B`, `_C`, `_C_Inverse`,
+  `_A_Direct`, `_B_Direct`, `_C_Direct`,
+  `DispatchProbeOrTransformB_004bdc70`,
+  `DispatchProbeOrTransformC_004bddc0`.
+
+- **Hybrid C+__asm**:
+  `NodeApplyMatrix` (push/loop/pop matrix-stack body, C-call wrapper).
+
+- **Still naked**:
+  `AllocateNode` - the 30-store reload-from-`g_currentNodeIdx`
+  pattern cannot be coaxed from pure C; MSVC would CSE the load.
+  `Helper_TickInner` - the long sibling walk needs `ebx` cached as
+  the callback function pointer in a way pure C wouldn't preserve.
+  `NodeApplyTransform_B_Swapped` - byte-exact `lea eax, [esp+0]`
+  with disp8=0 forced via `_emit`.
+
+In `src/engine/render_scene_node.c`:
+- `RenderSceneNode` (1899 bytes naked) - recursive function pointer
+  table dispatch + frustum cull + Z-bucket clamp. The function is
+  too big and too register-allocator-sensitive to convert.
+
+In `src/boot/`:
+- `NodeUnlink_0041f710` - hybrid asm body (C wrapper +
+  `__asm` block). The asm fits naturally; conversion is possible
+  but adds 6+ instruction-byte diffs.
+
+
+## Adding a new node type
+
+If you wanted to add a new scene-graph node type without breaking
+the byte match:
+
+1. **Pick an unused type/mode pair**. The 16-entry dispatch table is
+   FULL (types 0..7, both modes used somewhere). You cannot extend
+   it. So a new node type has to **reuse** an existing handler via a
+   creative flag-word assignment - or you can patch the dispatch
+   table runtime (which would break the byte match of the data
+   segment).
+2. **Set up the alloc-time globals** before calling `AllocNode()`:
+   `g_pendingNodeType`, `g_currentNodeFlags`, and the eight working
+   `g_eventQueue*` globals.
+3. **Add the type to the per-frame walk**. The default callbacks
+   (`Helper_FightSceneCallback`, etc.) only fire on specific
+   sub-trees - hook into `TickAllEntities` or attach via the
+   `+0x3C/+0x40/+0x44` child fields of an existing node.
+
+In practice MK4 is too constrained for runtime engine extension; the
+scene graph was designed for a fixed set of game-object kinds. New
+features ride on top of existing node types' user-state areas
+(`+0x30..+0x80`).
+
+
+## Where to start when modifying
+
+- **Add a debug overlay**: walk the live list via `g_nodeListTail`
+  and `+0xE4`; for each node print `+0x20` (flags) and `+0x30`
+  (player_id). Doesn't need to touch any matching code.
+- **Adjust draw order**: change the sort-key formula in
+  `BuildSortKeyLUT`. Breaks byte match - flagged unsafe above.
+- **Replace the sine LUT with float sin/cos**: hook
+  `BuildRotMatrix_OrderA/B/C` callers. Breaks byte match.
+- **Profile node lifetime**: tap `g_nodeAllocCounter` each frame.
+  Pure observation, no risk.
