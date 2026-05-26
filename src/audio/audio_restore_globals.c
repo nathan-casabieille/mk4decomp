@@ -157,7 +157,7 @@ extern unsigned int g_menuRestoreD_00543a9c;
 extern unsigned int g_menuRestoreA_00543aa0;
 extern unsigned int g_menuRestoreB_00543aac;
 extern unsigned int g_menuRestoreC_00543ab0;
-extern unsigned int g_audioRestoreSlot_00543f7c;
+extern unsigned int g_configInitGate_00543f7c;
 extern unsigned int g_table_004f3f28;
 extern unsigned int g_table_0053a53c;
 extern unsigned int g_table_00543934;
@@ -174,14 +174,14 @@ __declspec(naked) void Config_RestoreGlobals(void)
         test    eax, eax
         push    edi
         je      L_arg_setboth
-        mov     ecx, dword ptr [g_audioRestoreSlot_00543f7c]
+        mov     ecx, dword ptr [g_configInitGate_00543f7c]
         test    ecx, ecx
         jne     L_arg_tail
     L_arg_setboth:
         mov     ecx, 1
         test    eax, eax
         mov     dword ptr [g_gsmFlag], ecx
-        mov     dword ptr [g_audioRestoreSlot_00543f7c], ecx
+        mov     dword ptr [g_configInitGate_00543f7c], ecx
         jne     L_arg_main
         call    Config_SnapshotGlobals
     L_arg_main:

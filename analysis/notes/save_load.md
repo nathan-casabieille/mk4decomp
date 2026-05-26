@@ -72,7 +72,7 @@ The rest are video, input, and game-state.
 
 | Address    | Name                       | Size (b) | Role |
 |------------|----------------------------|---------:|------|
-| 0x004acce0 | `Config_RestoreGlobals`    |      376 | Copies the 588-byte buffer payload at `g_configBuffer + 0x0c` back into ~80 live in-memory settings. Lazy-init guard: if neither gate flag (`g_gsmFlag`, `g_audioRestoreSlot_00543f7c`) is set, sets both and calls `Config_SnapshotGlobals` first to seed the buffer from the current globals. Used as the 'apply settings' path from the menus. |
+| 0x004acce0 | `Config_RestoreGlobals`    |      376 | Copies the 588-byte buffer payload at `g_configBuffer + 0x0c` back into ~80 live in-memory settings. Lazy-init guard: if neither gate flag (`g_gsmFlag`, `g_configInitGate_00543f7c`) is set, sets both and calls `Config_SnapshotGlobals` first to seed the buffer from the current globals. Used as the 'apply settings' path from the menus. |
 | 0x004ace60 | `Config_SnapshotGlobals`   |      292 | Inverse direction. Copies the ~80 live settings globals into the buffer payload, ready for hashing + XOR + registry write. Bails if not initialized (both gate flags must be set). |
 | 0x004acf90 | `ResetConfigToDefaults`    |      634 | Zeroes `g_configBuffer` then re-fills it from the constant table at `0x004f46a0`. Called when ValidateInstall detects a bad hash or missing registry value. |
 | 0x004ad210 | `ComputeConfigHash`        |       52 | Hash over `g_configBuffer[4..583]`. Seed `0x43464729` (= "FCG)"). Algorithm: `hash += byte[i] << (i % 23)`. See [install.md](install.md). |
@@ -89,7 +89,7 @@ The rest are video, input, and game-state.
 | `0x00543934`  | (payload @ buffer + 0x0c)            | Start of the 60-dword 'audio/state machine' block that Config_RestoreGlobals fans out to live globals. |
 | `0x00543a6c`  | (payload @ buffer + 0x144)           | Start of the 5-dword 'audio per-channel state' block. |
 | `0x00543a24..0x00543a68` | (payload tail)            | ~18 individual slot mirrors for FSM state, joystick selection, input bindings. |
-| `0x00543f7c`  | `g_audioRestoreSlot`                 | Gate flag #1: set on first successful snapshot. While 0, Config_SnapshotGlobals bails. The 'Audio' prefix is a misnomer - this is the config-init gate. |
+| `0x00543f7c`  | `g_configInitGate_00543f7c`          | Gate flag #1: set on first successful snapshot. While 0, Config_SnapshotGlobals bails. (Renamed from `g_audioRestoreSlot_00543f7c` - only ~20 of the ~80 snapshotted slots are audio-related, so the original name was misleading.) |
 | `0x00543f78`  | `g_validInstall` / `g_installValidated` | 1 if the registry load succeeded (or defaults were applied). Read by Config_SaveToRegistry as 'do we have something to save?'. |
 | `0x004d2000`  | IAT: `RegCreateKeyExA`               |  |
 | `0x004d2004`  | IAT: `RegCloseKey`                   |  |
@@ -124,7 +124,7 @@ prefix - see [install.md](install.md) for the runtime-testing path.
 
 ## TODOs
 
-- **`g_audioRestoreSlot_00543f7c`** is the config-init gate, not an
+- **`g_configInitGate_00543f7c`** is the config-init gate, not an
   'audio restore slot'. Belongs in a globals rename pass.
 - **Buffer tail (bytes 584..587)** - 4 bytes at the very end of the
   588-byte blob. ResetConfigToDefaults zeros them; nothing else reads

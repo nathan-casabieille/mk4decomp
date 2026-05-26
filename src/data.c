@@ -1629,7 +1629,7 @@ unsigned int g_table_00543b10;
 unsigned int g_table_00543b18;
 unsigned int g_joySelP0_00543b68;
 unsigned int g_joySelP1_00543b6c;
-unsigned int g_audioRestoreSlot_00543f7c;
+unsigned int g_configInitGate_00543f7c;
 unsigned int g_glideTriSave_00543f88;
 unsigned int g_glideDataArr_00543f8c;
 unsigned int g_glideDataArr_00543f90;
