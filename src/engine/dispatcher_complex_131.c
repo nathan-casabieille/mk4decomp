@@ -70,7 +70,7 @@ void DispatcherComplex131_00431530(void) {
     popped = *(unsigned int *)(top * 4);
     g_walkCallback = (void (*)(void))popped;
     g_matrixStackTop = top - 1;
-    *(unsigned int *)(scaled * 4 + 0x18) = popped;
+    ((ScenegraphNode *)(scaled * 4))->child_chain = popped;
     {
         unsigned int s2 = g_scaledInit_00542044;
         unsigned int fg = g_fightGroupHead;
@@ -101,7 +101,7 @@ void DispatcherComplex131_004315c0(void) {
     popped = *(unsigned int *)(top * 4);
     g_walkCallback = (void (*)(void))popped;
     g_matrixStackTop = top - 1;
-    *(unsigned int *)(scaled * 4 + 0x18) = popped;
+    ((ScenegraphNode *)(scaled * 4))->child_chain = popped;
     {
         unsigned int s2 = g_scaledInit_00542044;
         unsigned int fg = g_fightGroupHead;

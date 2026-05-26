@@ -29,6 +29,6 @@ void ScaledChainTripleStore_004465c0(void) {
     g_scaledInit_00542044 = s;
     e = *(unsigned int *)(base * 4 + 0x4c);
     g_xformEntityIdx = e;
-    *(unsigned int *)(e * 4 + 0x18) = s;
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x18) = g_xformEntityIdx;
+    ((ScenegraphNode *)(e * 4))->child_chain = s;
+    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->child_chain = g_xformEntityIdx;
 }
