@@ -123,7 +123,7 @@ void GuardedBitChainCmpJmp_00470f90(void) {
     int v;
     ScaledAndCheckJmp_00470f60();
     if (g_framePauseFlag != 0) return;
-    v = *(int *)(g_cj_0054205c * 4 + 0x40);
+    v = (int)((FightGroupNode *)(g_cj_0054205c * 4))->bits;
     g_walkCallback = (void (*)(void))v;
     v &= 0x200;
     g_xformScratch94 = v;

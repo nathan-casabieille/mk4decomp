@@ -132,6 +132,6 @@ void DualSlotPropagateCall_004683e0(void) {
     tmp = *(unsigned int *)(base * 4 + 0x34);
     g_xformScratch2088 += tmp;
     *(unsigned int *)(base * 4 + 0x38) = field38;
-    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x3c) = g_xformScratch2088;
+    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->child_a = g_xformScratch2088;
     DualWalkRange_00468440();
 }
