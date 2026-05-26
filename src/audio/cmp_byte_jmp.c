@@ -14,12 +14,12 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T2
  */
 extern unsigned char g_byte_00543590;
-extern void func_004a4159(void);
-extern void func_004a4136(void);
+extern void Helper_AudioStub_4160(void);
+extern void Helper_AudioStub_4140(void);
 void CmpByteJmp_004a4180(void) {
     if (g_byte_00543590 == 1) {
-        func_004a4159();
+        Helper_AudioStub_4160();
         return;
     }
-    func_004a4136();
+    Helper_AudioStub_4140();
 }

@@ -47,11 +47,11 @@ void ScaledAndAhfe_00490390(void) {
  * after_set:
  *   jmp     +0x031407
  */
-extern void func_004bd5a2(void);
+extern void LoadGeoAsset_Default(void);
 void ScaledSet1OnNonZero_0048c190(void) {
     unsigned int v = g_eventQueueEnd;
     if (v != 0) {
         *(unsigned int *)(v * 4) = 1;
     }
-    func_004bd5a2();
+    LoadGeoAsset_Default();
 }

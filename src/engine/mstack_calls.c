@@ -25,17 +25,17 @@
 #include "game/tick.h"   /* g_framePauseFlag */
 
 /* Externs for call targets. */
-extern void func_545ecf1e(void);   /* 0x545ecf1e */
-extern void func_545ecf6e(void);   /* 0x545ecf6e */
-extern void func_545ecfbe(void);   /* 0x545ecfbe */
-extern void func_545ed00e(void);   /* 0x545ed00e */
-extern void func_545ed05e(void);   /* 0x545ed05e */
-extern void func_545ed0ae(void);   /* 0x545ed0ae */
-extern void func_545ed27e(void);   /* 0x545ed27e */
-extern void func_545ed2ce(void);   /* 0x545ed2ce */
-extern void func_545ed40e(void);   /* 0x545ed40e */
-extern void func_545ed81e(void);   /* 0x545ed81e */
-extern void func_54633efe(void);   /* 0x54633efe */
+extern void MStackCall_004062a0(void);   /* 0x545ecf1e */
+extern void MStackPush2ChainInsert_00409870(void);   /* 0x545ecf6e */
+extern void MStackCall_00406340(void);   /* 0x545ecfbe */
+extern void MStackPush2ChainPrepend_00409970(void);   /* 0x545ed00e */
+extern void MStackPush2ChainPrepend_00409970(void);   /* 0x545ed05e */
+extern void MStackPush2ChainPrepend_00409970(void);   /* 0x545ed0ae */
+extern void MStackPush2ChainInsert_00409870(void);   /* 0x545ed27e */
+extern void MStackPush2ChainPrepend_00409970(void);   /* 0x545ed2ce */
+extern void MStackPush2ChainLLInsert_00406790(void);   /* 0x545ed40e */
+extern void MStackPush2ChainInsert_00409870(void);   /* 0x545ed81e */
+extern void PushPopScaled1cDoubleCall_00408510(void);   /* 0x54633efe */
 
 /* The wrappers. */
 /* @addr 0x00406250 */
@@ -44,7 +44,7 @@ void MStackCall_00406250(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_currentNodeIdx;
     g_currentNodeIdx = g_fightGroupHead;
-    func_545ecf1e();
+    MStackCall_004062a0();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     g_currentNodeIdx = *(unsigned int *)(top * 4);
@@ -57,7 +57,7 @@ void MStackCall_004062a0(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_currentNodeIdx;
     g_currentNodeIdx = g_fightGroupHead;
-    func_545ecf6e();
+    MStackPush2ChainInsert_00409870();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     g_currentNodeIdx = *(unsigned int *)(top * 4);
@@ -70,7 +70,7 @@ void MStackCall_004062f0(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_currentNodeIdx;
     g_currentNodeIdx = g_fightGroupHead;
-    func_545ecfbe();
+    MStackCall_00406340();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     g_currentNodeIdx = *(unsigned int *)(top * 4);
@@ -83,7 +83,7 @@ void MStackCall_00406340(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_currentNodeIdx;
     g_currentNodeIdx = g_fightGroupHead;
-    func_545ed00e();
+    MStackPush2ChainPrepend_00409970();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     g_currentNodeIdx = *(unsigned int *)(top * 4);
@@ -96,7 +96,7 @@ void MStackCall_00406390(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_currentNodeIdx;
     g_currentNodeIdx = g_fightGroupHead;
-    func_545ed05e();
+    MStackPush2ChainPrepend_00409970();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     g_currentNodeIdx = *(unsigned int *)(top * 4);
@@ -109,7 +109,7 @@ void MStackCall_004063e0(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_currentNodeIdx;
     g_currentNodeIdx = g_fightGroupHead;
-    func_545ed0ae();
+    MStackPush2ChainPrepend_00409970();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     g_currentNodeIdx = *(unsigned int *)(top * 4);
@@ -122,7 +122,7 @@ void MStackCall_004065b0(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_currentNodeIdx;
     g_currentNodeIdx = g_fightGroupHead;
-    func_545ed27e();
+    MStackPush2ChainInsert_00409870();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     g_currentNodeIdx = *(unsigned int *)(top * 4);
@@ -135,7 +135,7 @@ void MStackCall_00406600(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_currentNodeIdx;
     g_currentNodeIdx = g_fightGroupHead;
-    func_545ed2ce();
+    MStackPush2ChainPrepend_00409970();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     g_currentNodeIdx = *(unsigned int *)(top * 4);
@@ -148,7 +148,7 @@ void MStackCall_00406740(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_currentNodeIdx;
     g_currentNodeIdx = g_fightGroupHead;
-    func_545ed40e();
+    MStackPush2ChainLLInsert_00406790();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     g_currentNodeIdx = *(unsigned int *)(top * 4);
@@ -161,7 +161,7 @@ void MStackCall_00406b50(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_currentNodeIdx;
     g_currentNodeIdx = g_fightGroupHead;
-    func_545ed81e();
+    MStackPush2ChainInsert_00409870();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     g_currentNodeIdx = *(unsigned int *)(top * 4);
@@ -174,7 +174,7 @@ void MStackCall_0044d230(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_currentNodeIdx;
     g_currentNodeIdx = g_fightGroupHead;
-    func_54633efe();
+    PushPopScaled1cDoubleCall_00408510();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     g_currentNodeIdx = *(unsigned int *)(top * 4);

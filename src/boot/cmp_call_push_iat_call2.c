@@ -43,13 +43,13 @@ void _init_premain(void) {
  *   (variant of 0x004c6e60 with different IAT.)
  */
 extern unsigned int g_crtCleanupFlag_00f9f84c;
-extern void func_004cc030_ee(void);
-extern void func_004cc070_ee(int);
+extern void DualCondCleanupCall_004cc030(void);
+extern void RaiseAbortLocalized_004cc070(int);
 extern void (__stdcall *g_iat_004d2154)(int);
 void CmpCallPushIATCall2_004c6e90(int arg) {
     if (g_crtCleanupFlag_00f9f84c == 1) {
-        func_004cc030_ee();
+        DualCondCleanupCall_004cc030();
     }
-    func_004cc070_ee(arg);
+    RaiseAbortLocalized_004cc070(arg);
     g_iat_004d2154(0xff);
 }

@@ -19,12 +19,11 @@
  *   ret
  */
 extern u32 g_ecmReserved;
-extern int func_004b0982(int);
 
 void IncCallVtablePushCall_004b0d80(void) {
     g_ecmReserved++;
     if (g_ecmDSBuffer != 0) {
         g_ecmDSBuffer->vtbl->Stop(g_ecmDSBuffer);
     }
-    func_004b0982(0);
+    Helper_ECM_PostCleanup(0);
 }

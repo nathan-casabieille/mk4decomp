@@ -43,13 +43,13 @@ void _init_premain(void) {
  *   call 0x4c7040(state); restore ret; ret.
  */
 extern void * HeapScanInit_004c9440(void);
-extern int func_004c9200(int, int, int, void *);
-extern void func_004c7040(void *);
+extern int FopenMode_004c9270(int, int, int, void *);
+extern void RangePathIATDispatch_004c7060(void *);
 int WrapperCallSelf_004c5d70(int a, int b, int c) {
     int ret;
     void *state = HeapScanInit_004c9440();
     if (state == 0) return (int)state;
-    ret = func_004c9200(a, b, c, state);
-    func_004c7040(state);
+    ret = FopenMode_004c9270(a, b, c, state);
+    RangePathIATDispatch_004c7060(state);
     return ret;
 }

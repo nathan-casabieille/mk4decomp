@@ -15,9 +15,8 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_eventQueueWorkType], edx
  *   jmp     T
  */
-extern void func_0049cb44(void);
 void StoreLoadJmp_00404ef0(unsigned int arg) {
     g_pendingNodeType = arg;
     g_eventQueueWorkType = ((ScenegraphNode *)(g_baseSel_00542060 * 4))->alloc_work_type;
-    func_0049cb44();
+    AllocNode();
 }

@@ -24,7 +24,7 @@ extern unsigned int g_dispatchSave1606_007ab07c;
 extern unsigned int g_dispatchSave1607_007ab080;
 extern unsigned int g_dispatchSave1608_007ab084;
 
-__declspec(naked) void Helper_ECM_PostCleanup(void) {
+__declspec(naked) int Helper_ECM_PostCleanup(int flag) {
     __asm {
         mov     al, byte ptr [esp + 4]
         push    ebx

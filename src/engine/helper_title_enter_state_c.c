@@ -13,11 +13,11 @@
 extern u32 g_timerFlag;
 extern u32 g_audioState00;
 extern u32 g_audioPreState;
-extern int func_004ac318(void);
+extern int Helper_AuxAudio_PostInit(void);
 extern void (__stdcall *g_iat_004d2244)(int, int, int, int);
 extern int (__stdcall *g_iat_004d2240)(void);
 void Helper_TitleEnterStateC(void) {
-    if (g_timerFlag != 0 && func_004ac318() != 0) {
+    if (g_timerFlag != 0 && Helper_AuxAudio_PostInit() != 0) {
         g_iat_004d2244((int)g_audioPreState, 0x808, 2, 0);
     }
     if (g_audioState00 == 0) {

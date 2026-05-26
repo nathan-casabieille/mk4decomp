@@ -170,15 +170,15 @@ void func_0048e3c0(void) {
 }
 
 /* @addr 0x004bf080 (5b) tail-jmp wrapper to LoadStoreRetNopJmp_004bf090
- * (resolved via the func_004bf088 alias in extras_map). */
+ * (resolved via the LoadStoreRetNopJmp_004bf090 alias in extras_map). */
 void func_004bf080(void) {
-    func_004bf088();
+    LoadStoreRetNopJmp_004bf090();
 }
 
 /* @addr 0x004bf0a0 (5b) tail-jmp wrapper to AddStore_004bf0b0
- * (resolved via the func_004bf0a8 alias in extras_map). */
+ * (resolved via the AddStore_004bf0b0 alias in extras_map). */
 void func_004bf0a0(void) {
-    func_004bf0a8();
+    AddStore_004bf0b0();
 }
 
 /* @addr 0x004284a0 (27b): mstack-push the chain callback at +0x20 (func_004284c0)

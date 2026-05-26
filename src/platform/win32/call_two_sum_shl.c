@@ -25,7 +25,7 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     +0x0b
  */
 extern s32 g_clientWidth;
-extern void func_004c45c1(void);
+extern void CallThreeSumLea_004c45d0(void);
 extern unsigned int g_iat_004d21b0;
 
 /*

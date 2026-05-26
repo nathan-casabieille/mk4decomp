@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern void Helper_ECM_PostCleanup(void);
+extern int Helper_ECM_PostCleanup(int);
 extern void ECM_Cleanup(void);
 extern void EcmFrameDecode_004bec30(void);
 /* extern void DoubleToInt64_004c57d0(void); -- defined elsewhere with diff sig */

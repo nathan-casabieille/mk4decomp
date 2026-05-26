@@ -16,7 +16,7 @@ extern unsigned int g_scaledInit_00542044;
  *   add     esp, 8
  *   ret
  */
-extern int __cdecl func_004cc4af(int, int);
+extern int __cdecl FpuCwTxn_004cc4c0(int, int);
 int MaskCall_004cc500(int a, int b) {
-    return func_004cc4af(a, b & 0xfff7ffff);
+    return FpuCwTxn_004cc4c0(a, b & 0xfff7ffff);
 }

@@ -24,14 +24,14 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern int TripleByteCheck_004a1c50(void);
-extern int func_004a1c70(void);
+extern int TripleByteCheck20_004a1c80(void);
 extern unsigned char g_byte_00543590;
 int DualCallSetByte_004a1cb0(void) {
     if (TripleByteCheck_004a1c50() != 0) {
         g_byte_00543590 = 1;
         return 1;
     }
-    if (func_004a1c70() != 0) {
+    if (TripleByteCheck20_004a1c80() != 0) {
         g_byte_00543590 = 2;
         return 1;
     }

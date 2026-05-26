@@ -37,10 +37,10 @@ void CallPauseConstStoreJmp_00438170(void) {
 
 /* @addr 0x00481360 (30b): same shape, store walkCallback=0xb5 */
 extern void BootChainMaskAndDispatch_00416cb0(void);
-extern void func_0049cc35(void);
+extern void MStackBitLoopTripleCall_0049cc30(void);
 void CallPauseConstStoreJmp_00481360(void) {
     BootChainMaskAndDispatch_00416cb0();
     if (g_framePauseFlag) return;
     g_walkCallback = (void(*)(void))0xb5;
-    func_0049cc35();
+    MStackBitLoopTripleCall_0049cc30();
 }

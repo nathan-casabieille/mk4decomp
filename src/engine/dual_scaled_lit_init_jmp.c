@@ -21,14 +21,14 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  *   ret
  */
-extern void func_004bd5a4(void);
-extern void func_004bd584(void);
+extern void LoadGeoAsset_Default(void);
+extern void LoadGeoAsset_Default(void);
 extern int g_dispatchSave409_0050b10c;
 extern int g_dispatchSave414_00511310;
 void DualScaledLitInitJmp_00464800(void) {
     g_scaledInit_00542044 = ((unsigned int)&g_dispatchSave409_0050b10c) >> 2;
-    func_004bd5a4();
+    LoadGeoAsset_Default();
     if (g_framePauseFlag != 0) return;
     g_scaledInit_00542044 = ((unsigned int)&g_dispatchSave414_00511310) >> 2;
-    func_004bd584();
+    LoadGeoAsset_Default();
 }

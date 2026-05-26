@@ -11,7 +11,7 @@ extern unsigned int g_scaledInit_00542044;
  *   add     esp, 4
  *   ret
  */
-extern int __cdecl func_004c951e(int);
+extern int __cdecl CrtSetlocaleInstaller_004c9520(int);
 void PushNeg3CallRet_004c9a20(void) {
-    func_004c951e(-3);
+    CrtSetlocaleInstaller_004c9520(-3);
 }

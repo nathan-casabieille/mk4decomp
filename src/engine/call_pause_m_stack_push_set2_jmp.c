@@ -20,12 +20,12 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  *   ret
  */
-extern void func_0049e4d0(void);
+extern void LeaPlus22StoreSelf_0048e4d0(void);
 extern void InstallSelfThreeStateLeaPlus22_00437970(void);
 extern void MstackPopScaledChainPlusThunks_00471250(void);
 void CallPauseMStackPushSet2Jmp_00437930(void) {
     unsigned int top;
-    func_0049e4d0();
+    LeaPlus22StoreSelf_0048e4d0();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     g_walkCallback = (void (*)(void))2;

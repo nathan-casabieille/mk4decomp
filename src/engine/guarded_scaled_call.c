@@ -23,7 +23,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern unsigned int g_dispatchVar9_00541dc0;
-extern int func_004be690_b(int);
+extern int TaggedSceneDispatch_004be690(int);
 void GuardedScaledCall_0048a020(void) {
     unsigned int walk;
     int v;
@@ -33,5 +33,5 @@ void GuardedScaledCall_0048a020(void) {
     g_scaledInit_00542044 = walk;
     v = *(int *)(walk * 4);
     g_walkCallback = (void (*)(void))v;
-    func_004be690_b(v);
+    TaggedSceneDispatch_004be690(v);
 }

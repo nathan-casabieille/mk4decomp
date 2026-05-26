@@ -12,9 +12,9 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_target], 0
  *   ret
  */
-extern void func_004bdcb0(void);
+extern void ECM_Cleanup(void);
 extern unsigned int g_rendererCheckVal;
 void CallZero_004bea30(void) {
-    func_004bdcb0();
+    ECM_Cleanup();
     g_rendererCheckVal = 0;
 }

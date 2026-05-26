@@ -22,7 +22,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void RoundResultSlotInitTable_00486860(void);
-extern void func_004ba31a(void);
+extern void Wrapper_0048a340(void);
 extern void GuardedSeq_004871b0(void);
 void ScaledTestCallPauseJmpFar_00487150(void) {
     unsigned int v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x30);
@@ -33,5 +33,5 @@ void ScaledTestCallPauseJmpFar_00487150(void) {
     }
     RoundResultSlotInitTable_00486860();
     if (g_framePauseFlag != 0) return;
-    func_004ba31a();
+    Wrapper_0048a340();
 }

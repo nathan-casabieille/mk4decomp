@@ -2144,8 +2144,8 @@ unsigned int g_dispatchSave1471_00fa0eec;
 unsigned int g_dispatchSave1472_00fa0ef0;
 
 /* Additional data symbols extracted from unresolved refs */
-unsigned int func_004fa320 = 0x006e038e;
-unsigned int func_00513ac8 = 0x00511310;
+unsigned int ScaledAndAldf_00490330 = 0x006e038e;
+unsigned int Snd3DSourceCleanup_004c3ad0 = 0x00511310;
 const unsigned int g_GetModuleFileNameA_004d20a0 = 0x000d3b7c;
 const unsigned int g_IndirectCall_004d2228 = 0x000d412c;
 const unsigned int g_SetStdHandle_004d20d4 = 0x000d44a4;

@@ -20,13 +20,13 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  *   ret
  */
-extern void func_004ab608(void);
+extern void Wrapper_0048a3a0(void);
 extern void CmpJmpTwoBranch_004871d0(void);
 void ScaledTestCallPauseJmp_00487180(void) {
     unsigned int v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x30);
     g_walkCallback = (void (*)(void))v;
     if (v != 0) {
-        func_004ab608();
+        Wrapper_0048a3a0();
         if (g_framePauseFlag != 0) return;
     }
     CmpJmpTwoBranch_004871d0();

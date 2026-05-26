@@ -15,7 +15,7 @@ extern unsigned int g_scaledInit_00542044;
  *   add     esp, 8
  *   ret
  */
-extern int __cdecl func_004c1ac8(int, int);
+extern int __cdecl Snd3DSourceCleanup_004c3ad0(int, int);
 int PushArgPushNeg1Call_004be790(int x) {
-    return func_004c1ac8(-1, x);
+    return Snd3DSourceCleanup_004c3ad0(-1, x);
 }

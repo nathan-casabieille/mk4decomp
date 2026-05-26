@@ -23,7 +23,7 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_dispatchSave1592_00ab5754;
 extern unsigned int g_dispatchSave1594_00ab575c;
 extern unsigned int g_dispatchSave1595_00ab5760;
-extern int func_004bedd0(unsigned int *, unsigned int *);
+extern int EcmStreamTickAdvance_004b0db0(unsigned int *, unsigned int *);
 void TestPushPushCall_004bea50(void) {
     __asm {
         mov     ecx, dword ptr [g_dispatchSave1592_00ab5754]
@@ -36,7 +36,7 @@ void TestPushPushCall_004bea50(void) {
         push    OFFSET g_dispatchSave1594_00ab575c
         mov     dword ptr [g_dispatchSave1594_00ab575c], eax
         mov     dword ptr [g_dispatchSave1595_00ab5760], eax
-        call    func_004bedd0
+        call    EcmStreamTickAdvance_004b0db0
         add     esp, 8
         }
 }

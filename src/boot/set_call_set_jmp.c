@@ -17,11 +17,11 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  *   ret
  */
-extern void func_0049cc28(void);
+extern void MStackBitLoopTripleCall_0049cc30(void);
 extern void MStackBitLoopTripleCall_0049cc30(void);
 void SetCallSetJmp_00414fe0(void) {
     g_walkCallback = (void (*)(void))0xb1;
-    func_0049cc28();
+    MStackBitLoopTripleCall_0049cc30();
     if (g_framePauseFlag != 0) {
         return;
     }

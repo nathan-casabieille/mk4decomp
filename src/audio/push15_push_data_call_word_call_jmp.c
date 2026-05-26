@@ -18,12 +18,12 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  */
 extern int StoreTwoCall_0049cb40(void *p, int n);
-extern int func_004be698(unsigned short v);
+extern int TaggedSceneDispatch_004be690(unsigned short v);
 extern void *g_const_004a0060;
 extern unsigned short g_word_004e2860;
 extern void CallSetPause_0041f830(void);
 int Push15PushDataCallWordCallJmp_004a1080(void) {
     StoreTwoCall_0049cb40(&g_const_004a0060, 0x15);
-    func_004be698(g_word_004e2860);
+    TaggedSceneDispatch_004be690(g_word_004e2860);
     return ((int (*)(void))CallSetPause_0041f830)();
 }

@@ -21,7 +21,7 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     +0xb5456
  *   ret
  */
-extern void func_004bae62(void);
+extern void Helper_TickAlt(void);
 extern void ScaledAndMaskInitJmp_00405a00(void);
 void ScaledAndMaskInitJmp_00405a00(void) {
     unsigned int v;
@@ -30,5 +30,5 @@ void ScaledAndMaskInitJmp_00405a00(void) {
     v = *(unsigned int *)(g_scaledInit_00542044 * 4);
     g_eventQueueCurrent = v;
     if (v == 0) return;
-    func_004bae62();
+    Helper_TickAlt();
 }

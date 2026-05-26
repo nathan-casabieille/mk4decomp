@@ -18,10 +18,10 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern unsigned int g_dispatchSave266_0052ab00;
-extern void func_004b5c80(int);
+extern void PackedListVisitor_004b5c90(int);
 void TestCallPush4Zero_004bd590(void) {
     if (g_dispatchSave266_0052ab00 != 0) {
-        func_004b5c80(4);
+        PackedListVisitor_004b5c90(4);
         g_dispatchSave266_0052ab00 = 0;
     }
 }

@@ -40,14 +40,14 @@ void AppShutdown(void) {
  *   table swaps entries 4<->5 (table[3]=case5, table[4]=case4).
  */
 extern int Renderer_GetMode(void);
-extern void func_004b4600_cc(void);
+extern void EarlyOutDualPushIATStore_004b4600(void);
 extern void VtRelease_Modal_004ad590(void);
 extern void Renderer3_EndScene_SW_FS(void);
 extern void Renderer5_EndScene_SW_FS_Hi(void);
 extern void Renderer4_EndScene_SW_Win(void);
 void JumpTable5Way_004b41c0(void) {
     switch (Renderer_GetMode()) {
-        case 1: func_004b4600_cc(); return;
+        case 1: EarlyOutDualPushIATStore_004b4600(); return;
         case 2: VtRelease_Modal_004ad590(); return;
         case 3: Renderer3_EndScene_SW_FS(); return;
         case 5: Renderer5_EndScene_SW_FS_Hi(); return;

@@ -15,7 +15,7 @@ extern unsigned int g_scaledInit_00542044;
  *   add     esp, 8
  *   ret
  */
-extern int __cdecl func_004bbb70(unsigned int, unsigned int);
+extern int __cdecl MatrixTransform3x3Q12_004b3b80(unsigned int, unsigned int);
 void Push2GlobalsCall_004bdae0(void) {
-    func_004bbb70(g_pendingNodeType, g_scaledInit_00542044);
+    MatrixTransform3x3Q12_004b3b80(g_pendingNodeType, g_scaledInit_00542044);
 }

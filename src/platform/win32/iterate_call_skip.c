@@ -26,13 +26,13 @@ extern unsigned int g_scaledInit_00542044;
  *   pop     esi
  *   ret
  */
-extern int func_004c3700(int);
+extern int Helper_AudioStop(int);
 void IterateCallSkip_004c4210(void) {
     int i = 0;
     unsigned char *p = (unsigned char *)0x00f8fade;
     do {
         if ((*p & 4) == 0) {
-            func_004c3700(i);
+            Helper_AudioStop(i);
         }
         i++;
         p += 0x1c;

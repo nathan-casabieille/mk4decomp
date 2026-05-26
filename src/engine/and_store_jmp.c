@@ -14,8 +14,8 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_walkCallback], ecx
  *   jmp     T
  */
-extern void func_0049fa30(void);
+extern void ChainSearch_0041f9c0(void);
 void AndStoreJmp_0049cc10(void) {
     g_walkCallback = (void(*)(void))((unsigned int)g_walkCallback & g_eventQueueCurrent);
-    func_0049fa30();
+    ChainSearch_0041f9c0();
 }

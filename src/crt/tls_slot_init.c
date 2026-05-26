@@ -114,7 +114,7 @@ extern unsigned int g_crtTlsSlot_00522400;
 
 /* @addr 0x004c9d70 (92b crt) - TLS slot init: call init helper;
  *   TlsAlloc into g_crtTlsSlot_00522400; if -1 fail. Else: alloc 0x74 bytes via
- *   func_004c60a0; if NULL fail. TlsSetValue(slot, ptr); if fail return 0.
+ *   Calloc_004c6110; if NULL fail. TlsSetValue(slot, ptr); if fail return 0.
  *   Else: call InitFields50and14, GetCurrentThreadId; *ptr = tid, ptr[+4] = -1. Return 1.
  */
 int TlsSlotInit_004c9d70(void) {
@@ -122,7 +122,7 @@ int TlsSlotInit_004c9d70(void) {
     FourIndirectCalls_004c6f20();
     g_crtTlsSlot_00522400 = ((unsigned int (__stdcall *)(void))g_iat_004d20fc)();
     if (g_crtTlsSlot_00522400 != 0xffffffff) {
-        ptr = (unsigned int *)func_004c60a0(1, 0x74);
+        ptr = (unsigned int *)Calloc_004c6110(1, 0x74);
         if (ptr != 0) {
             if (((int (__stdcall *)(unsigned int, void *))g_iat_004d210c)(g_crtTlsSlot_00522400, ptr) != 0) {
                 InitFields50and14_004c9dd0(ptr);

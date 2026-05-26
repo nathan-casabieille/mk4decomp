@@ -133,7 +133,7 @@ extern unsigned int g_iat_004d2240;
 extern void DoubleToInt64_004c57d0(void);
 extern void ECM_Cleanup(void);
 extern void EcmFrameDecode_004bec30(void);
-extern void Helper_ECM_PostCleanup(void);
+extern int Helper_ECM_PostCleanup(int);
 
 __declspec(naked) void EcmStreamTickAdvance_004b0db0(void)
 {

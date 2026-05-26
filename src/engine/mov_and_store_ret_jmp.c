@@ -16,7 +16,7 @@ extern unsigned int g_scaledInit_00542044;
  * into a single `mov [g], imm32` (10b), losing the load+and form.
  */
 extern unsigned int g_dispatchSave1401_00f85b38;
-extern void func_004bf088(void);
+extern void LoadStoreRetNopJmp_004bf090(void);
 __declspec(naked) void MovAndStoreRetJmp_004bf070(void) {
     __asm {
         mov     eax, 0x00b4d00f

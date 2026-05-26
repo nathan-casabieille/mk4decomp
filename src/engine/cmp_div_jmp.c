@@ -17,11 +17,11 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_walkCallback], eax
  *   jmp     T
  */
-extern void func_0049cf60(void);
+extern void MStackPush3HelperCondToggle_0049cf70(void);
 void CmpDivJmp_0049d080(void) {
     int v = (int)g_walkCallback;
     if (v > 2) {
         g_walkCallback = (void (*)(void))(v / 2);
     }
-    func_0049cf60();
+    MStackPush3HelperCondToggle_0049cf70();
 }

@@ -15,7 +15,7 @@ extern void Helper_AppStub_2890(void);
 extern void PaletteRampInit_004ad5f0(void);
 extern void ComSoundSetup_004af6c0(void);
 extern void ComSoundSetup_004afef0(void);
-extern void func_004b44d0(void);
+extern void AbsClampIATCall_004b44f0(void);
 
 __declspec(naked) void Helper_RendererPostInit(void) {
     __asm {
@@ -33,7 +33,7 @@ __declspec(naked) void Helper_RendererPostInit(void) {
         _emit   00h
         mov     ecx, dword ptr [esp + 4]
         push    ecx
-        call    func_004b44d0
+        call    AbsClampIATCall_004b44f0
         add     esp, 4
         ret
         mov     edx, dword ptr [esp + 4]

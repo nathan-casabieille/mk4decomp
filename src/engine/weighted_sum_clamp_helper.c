@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   computes walk = clamp(0x53a3c0 * 0x4f381c + 0x4f3814 + 0x54355c_dispatch
  *   + 0x541fb0*0x4f3818 + 0x53a1f0*0x4f3820, max 0x3cf); cj-dependent
  *   pick of multiplier (0x5433f0 if baseSel==0x538038, else 0x543444);
- *   call func_004ab620.
+ *   call StorePauseImulShr16_004ab630.
  */
 extern unsigned int g_dispatchSave1319_004f3814;
 extern unsigned int g_dispatchSave1320_004f3818;

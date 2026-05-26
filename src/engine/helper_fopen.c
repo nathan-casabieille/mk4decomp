@@ -13,8 +13,8 @@
  *   add     esp, 0xc
  *   ret
  */
-extern int __cdecl func_004c5d68(int, int, int);
+extern int __cdecl WrapperCallSelf_004c5d70(int, int, int);
 int Helper_FOpen(int a, int b) {
-    return func_004c5d68(a, b, 0x40);
+    return WrapperCallSelf_004c5d70(a, b, 0x40);
 }
 
