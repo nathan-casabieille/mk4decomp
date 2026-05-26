@@ -6714,7 +6714,7 @@ functions:
     status: matched
     file: src/engine/thunks.c
   - addr: 0x0045e100
-    name: MStackPush3IndirectCall_0045e100
+    name: Event_InvokeHandler_0045e100
     size: 201
     group: game
     status: matched
@@ -6726,7 +6726,7 @@ functions:
     status: matched
     file: src/engine/inc_jmp.c
   - addr: 0x0045e1e0
-    name: InputCheckCluster_0045e1e0
+    name: EventGateCluster_0045e1e0
     size: 942
     group: game
     status: matched

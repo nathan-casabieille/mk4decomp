@@ -134,10 +134,11 @@ above) for what looks like an outer-deadzone threshold.
 - `AppInit_Misc1` (0x004b6180) - HUD font precache. Uses `MapVirtualKeyA`
   but on the loop index (`MapVirtualKeyA(i, MAPVK_VK_TO_CHAR=2)`) to
   patch the first byte of dot-prefixed asset names. Not input handling.
-- `InputCheckCluster_0045e1e0` - actually a scripted-event packet
-  dispatcher (events 0xdd, 0xaa), reached from the event-queue decoder.
-  The name has 'Input' but it's the cutscene/event interpreter, not the
-  keyboard/pad path. Misnomer; flagged for a separate rename pass.
+- `EventGateCluster_0045e1e0` (was `InputCheckCluster_0045e1e0`) -
+  NOT input. A packed cluster of event-queue sub-functions; its anchor
+  loads the current entity's event cursor and jumps into
+  `EventPacketDecoder`. Renamed in the event-decoder pass; see
+  [events.md](events.md).
 - `InputPollFlagBits_004a1b00` and `InputPollFlagBitsHalf_004a1b50` -
   read individual bits of `g_byte_004d50b8` and `g_byte_004d50b4`
   (which look like already-aggregated per-player action accumulators).
@@ -163,9 +164,9 @@ above) for what looks like an outer-deadzone threshold.
   tables exist (`g_joyCalA/B` 33/50 and the corresponding 66/50
   variant). One is likely the inner deadzone, the other the
   edge-triggered max threshold. Need a runtime test.
-- **`InputCheckCluster_0045e1e0` rename**. The name is misleading -
-  it's an event-packet dispatcher, not input. Belongs in the
-  event-queue rename pass.
+- ~~**`InputCheckCluster_0045e1e0` rename**~~ - DONE. Renamed to
+  `EventGateCluster_0045e1e0`; it's event-queue machinery, not input.
+  See [events.md](events.md).
 - **`InputPollFlagBits_004a1b00` / `_004a1b50` clarification**. Once
   the slot mapping above is confirmed, these two `g_byte_004d50b4/b8`
   bit-checkers can be renamed to descriptive predicates (likely

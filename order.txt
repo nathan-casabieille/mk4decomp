@@ -1079,9 +1079,9 @@ EventPacketDecoder_0045de60
 ConditionalAcc4or3_0045e0b0
 ConditionalAcc3or4_0045e0d0
 Thunk_0045e0f0
-MStackPush3IndirectCall_0045e100
+Event_InvokeHandler_0045e100
 IncJmp_0045e1d0
-InputCheckCluster_0045e1e0
+EventGateCluster_0045e1e0
 RangeCheckJmp_0045e590
 TripleEntryGate_0045e5d0
 PendingMatch_0045e640

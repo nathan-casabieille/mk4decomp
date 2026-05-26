@@ -115,9 +115,9 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 /* ------------------------------------------------------------------ */
 extern void ConditionalAcc4or3_0045e0b0(void);
 extern void ConditionalAcc3or4_0045e0d0(void);
-extern void MStackPush3IndirectCall_0045e100(void);
+extern void Event_InvokeHandler_0045e100(void);
 extern void IncJmp_0045e1d0(void);
-extern void InputCheckCluster_0045e1e0(void);
+extern void EventGateCluster_0045e1e0(void);
 
 
 __declspec(naked) void EventPacketDecoder_0045de60(void)
@@ -257,7 +257,7 @@ __declspec(naked) void EventPacketDecoder_0045de60(void)
         cmp      ecx, eax
         mov      dword ptr [g_acc_00542078], ecx
         je       short L_e061
-        call     InputCheckCluster_0045e1e0
+        call     EventGateCluster_0045e1e0
         pop      edi
         pop      esi
         pop      ebx
@@ -282,7 +282,7 @@ __declspec(naked) void EventPacketDecoder_0045de60(void)
         shr      ebx, 0x18
         mov      dword ptr [g_eventQueueCurrent], ebx
         je       short L_e0a2
-        call     MStackPush3IndirectCall_0045e100
+        call     Event_InvokeHandler_0045e100
     L_e0a2:
         pop      edi
         pop      esi

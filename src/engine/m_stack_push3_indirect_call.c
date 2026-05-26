@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_matrixStack_arr;
 extern void IncJmp_0045e1d0(void);
 
-__declspec(naked) void MStackPush3IndirectCall_0045e100(void) {
+__declspec(naked) void Event_InvokeHandler_0045e100(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_scaledInit_00542044]
