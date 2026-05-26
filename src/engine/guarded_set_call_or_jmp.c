@@ -125,6 +125,6 @@ void GuardedSetCallOrJmp_00453420(void) {
     *(unsigned int *)(g_xformEntityIdx * 4) |= 4;
     v = 0xa0000;
     g_walkCallback = (void (*)(void))v;
-    *(unsigned int *)(g_xformEntityIdx * 4 + 0x34) = v;
+    ((ScenegraphNode *)(g_xformEntityIdx * 4))->state_mask = v;
     MStackBracket7_DispatchAndChain_004b8fa0();
 }

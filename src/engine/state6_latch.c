@@ -132,7 +132,7 @@ void State6Latch_0048e240(void) {
         g_walkCallback = v;
     }
     if (v != 6) return;
-    chain_34 = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x34);
+    chain_34 = ((ScenegraphNode *)(g_baseSel_00542060 * 4))->state_mask;
     g_eventQueueCurrent = chain_34;
     if (chain_34 == 6) return;
     if (g_audioBankSel_00537f94 == 0) {
@@ -142,7 +142,7 @@ void State6Latch_0048e240(void) {
         if ((int)g_walkCallback < 0x258) return;
     }
     g_byte_0054389c = 1;
-    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x34) = 6;
+    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->state_mask = 6;
     g_walkCallback = 0x2c;
     TableLookupCall_0048a130();
     if (g_framePauseFlag != 0) return;

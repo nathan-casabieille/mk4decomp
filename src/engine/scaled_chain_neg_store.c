@@ -24,9 +24,9 @@ extern void func_00470342(void);
 void ScaledChainNegStore_00470310(void) {
     unsigned int s;
     unsigned int v;
-    s = *(unsigned int *)(g_fightGroupHead * 4 + 0x18);
+    s = ((ScenegraphNode *)(g_fightGroupHead * 4))->child_chain;
     g_scaledInit_00542044 = s;
-    v = *(unsigned int *)(s * 4 + 0x34);
+    v = ((ScenegraphNode *)(s * 4))->state_mask;
     g_walkCallback = (void (*)(void))v;
     if (v == 0) return;
     v = (unsigned int)-(int)v;

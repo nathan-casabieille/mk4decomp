@@ -136,8 +136,8 @@ void SixTagCallsTailJmp_00441f00(void) {
     if (g_framePauseFlag != 0) return;
     new_cj = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x64);
     g_fightGroupHead = new_cj;
-    dirty = *(unsigned int *)(new_cj * 4 + 0x34) & 0xfffffffbu;
+    dirty = ((ScenegraphNode *)(new_cj * 4))->state_mask & 0xfffffffbu;
     g_walkCallback = dirty;
-    *(unsigned int *)(new_cj * 4 + 0x34) = dirty;
+    ((ScenegraphNode *)(new_cj * 4))->state_mask = dirty;
     LoopMStackBitTest_00441fd0();
 }
