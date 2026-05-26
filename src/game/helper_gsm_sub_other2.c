@@ -30,7 +30,7 @@ extern void Menu_FindNextSelectable(void);
 extern void Menu_FindPrevSelectable(void);
 extern void Thunk_004c48b0(void);
 
-__declspec(naked) void Helper_GSM_Sub_Other2(void) {
+__declspec(naked) void Menu_InsertCDDialog(void) {
     __asm {
         mov     al, byte ptr [g_dispatchSave1488_00ab431c]
         push    ebx

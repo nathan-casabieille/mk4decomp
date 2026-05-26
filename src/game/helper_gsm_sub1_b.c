@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-/* Helper_GSM_Sub1B - sister of 0x4b8630 for 0x004f5070 menu. */
+/* Menu_DirectDrawUnavailableDialog - sister of 0x4b8630 for 0x004f5070 menu. */
 extern unsigned int g_byte_00ab4308;
 extern unsigned int g_gsmVar_004f5070;
 extern unsigned int g_dispatchSave869_004f5074;
@@ -15,7 +15,7 @@ extern void Menu_PollNavInput(void);
 extern void Menu_FindNextSelectable(void);
 extern void Menu_FindPrevSelectable(void);
 
-__declspec(naked) void Helper_GSM_Sub1B(void)
+__declspec(naked) void Menu_DirectDrawUnavailableDialog(void)
 {
     __asm
     {

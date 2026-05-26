@@ -15,7 +15,7 @@ extern void Menu_PollNavInput(void);
 extern void Menu_FindNextSelectable(void);
 extern void Menu_FindPrevSelectable(void);
 
-__declspec(naked) void Helper_GSM_Sub_Other1(void)
+__declspec(naked) void Menu_ColorDepthErrorDialog(void)
 {
     __asm {
         mov      al, byte ptr [g_dispatchSave1482_00ab42d8]

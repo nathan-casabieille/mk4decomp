@@ -88,11 +88,11 @@ state  0xa -> idx 7  (CONFIG)
 state  0xb -> idx 0xf  (CREDITS - default)
 state  0xc -> idx 0xf  (SETTINGS - default)
 states 0xd..0x17 -> idx 0xf (default)
-state  0x18 -> idx 0xa (Sub18 - char select 1)
-state  0x19 -> idx 0xb (Sub19 - char select 2)
-state  0x1a -> idx 0xc (Sub1A - stage select)
-state  0x1b -> idx 0xd (Sub1B - pre-fight intro)
-state  0x1c -> idx 0xe (Sub1C - gfx options)
+state  0x18 -> idx 0xa (Menu_HelpScreen)
+state  0x19 -> idx 0xb (Menu_GlideUnavailableDialog)
+state  0x1a -> idx 0xc (Menu_Direct3DUnavailableDialog)
+state  0x1b -> idx 0xd (Menu_DirectDrawUnavailableDialog)
+state  0x1c -> idx 0xe (Menu_PauseMenu)
 ```
 
 ### State -> screen mapping
@@ -109,11 +109,17 @@ state  0x1c -> idx 0xe (Sub1C - gfx options)
 | 0xa                 | `GAMESTATE_CONFIG`    | Config (controls binding)       |
 | 0xb                 | `GAMESTATE_CREDITS`   | Credits roll                    |
 | 0xc                 | `GAMESTATE_SETTINGS`  | Graphics/sound settings         |
-| 0x18                | `SUBSTATE_CHAR_SELECT_1` | Player 1 character select    |
-| 0x19                | `SUBSTATE_CHAR_SELECT_2` | Player 2 character select    |
-| 0x1a                | `SUBSTATE_STAGE_SELECT`  | Stage select                  |
-| 0x1b                | `SUBSTATE_PRE_FIGHT_INTRO`| Pre-fight character intro     |
-| 0x1c                | `SUBSTATE_GFX_OPTIONS`   | Graphics options sub-screen  |
+| 0x18                | `Menu_HelpScreen`        | HELP overlay (F1)             |
+| 0x19                | `Menu_GlideUnavailableDialog` | "GLIDE 3D NOT AVAILABLE" |
+| 0x1a                | `Menu_Direct3DUnavailableDialog` | "DIRECT3D NOT AVAILABLE" |
+| 0x1b                | `Menu_DirectDrawUnavailableDialog` | "DIRECT-DRAW NOT AVAILABLE" |
+| 0x1c                | `Menu_PauseMenu`         | In-match PAUSE menu           |
+
+CORRECTION: 0x18-0x1c were previously guessed as character/stage
+select and gfx-options sub-states. The handlers' menu-item tables
+(dumped from the EXE) prove they are the help/error/pause dialogs
+above. The state numbers and routing are confirmed via the byte
+table; only the screen labels were wrong.
 
 ### Main-menu sub-dispatch (state 0)
 
@@ -152,7 +158,7 @@ acts on:
 | Return code | Action                                                     |
 |-------------|------------------------------------------------------------|
 | `0x45`      | Set `g_gameState = 4` (back to transition)                 |
-| `0x18..0x1c`| Set `g_gameState = retval` (enter the char/stage select)   |
+| `0x18..0x1c`| Set `g_gameState = retval` (open help / renderer-error / pause dialog) |
 | `0x3`       | Set `g_gameState = 6` (back to VS)                         |
 
 The helpers themselves:
@@ -165,8 +171,8 @@ The helpers themselves:
 | `Helper_GSM_Practice`        | `0x004b7b10` | Practice-mode tick             |
 | `Helper_GSM_Options`         | `0x004b7df0` | Options menu tick              |
 | `Helper_GSM_Config`          | `0x004b81f0` | Config menu tick               |
-| `Helper_GSM_Sub18..1C`       | `0x004b8630..8a30` | Char/stage select sub-states |
-| `Helper_GSM_Sub_Other1/2`    | `0x004b8bd0/8d70` | Two other sub-state handlers |
+| `Menu_HelpScreen` ..`Menu_PauseMenu` | `0x004b8630..8a30` | Help / renderer-unavailable / pause dialogs |
+| `Menu_ColorDepthErrorDialog`, `Menu_InsertCDDialog` | `0x004b8bd0/8d70` | Color-depth + no-CD error dialogs |
 | `Helper_GSM_Reset`           | `0x004b5840` | Reset menu dirty flags         |
 
 The actual menu logic (selection cursor, options crawl, etc.) lives

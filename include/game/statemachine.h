@@ -157,13 +157,13 @@ s32  Helper_GSM_Practice(void);                          /* 0x004b7b10 */
 s32  Helper_GSM_Options(void);                           /* 0x004b7df0 */
 s32  Helper_GSM_Config(void);                            /* 0x004b81f0 */
 void Helper_GSM_PlayMusic(s32 track);                    /* 0x004b40a0 */
-s32  Helper_GSM_Sub18(s32 cmd);                          /* 0x004b8630 */
-s32  Helper_GSM_Sub19(s32 cmd);                          /* 0x004b8730 */
-s32  Helper_GSM_Sub1A(s32 cmd);                          /* 0x004b8830 */
-s32  Helper_GSM_Sub1B(s32 cmd);                          /* 0x004b8930 */
-s32  Helper_GSM_Sub1C(s32 cmd);                          /* 0x004b8a30 */
-s32  Helper_GSM_Sub_Other1(s32 cmd);                     /* 0x004b8bd0 */
-s32  Helper_GSM_Sub_Other2(s32 cmd);                     /* 0x004b8d70 */
+s32  Menu_HelpScreen(s32 cmd);                          /* 0x004b8630 */
+s32  Menu_GlideUnavailableDialog(s32 cmd);                          /* 0x004b8730 */
+s32  Menu_Direct3DUnavailableDialog(s32 cmd);                          /* 0x004b8830 */
+s32  Menu_DirectDrawUnavailableDialog(s32 cmd);                          /* 0x004b8930 */
+s32  Menu_PauseMenu(s32 cmd);                          /* 0x004b8a30 */
+s32  Menu_ColorDepthErrorDialog(s32 cmd);                     /* 0x004b8bd0 */
+s32  Menu_InsertCDDialog(s32 cmd);                     /* 0x004b8d70 */
 void Helper_GSM_Reset(void);                             /* 0x004b5840 */
 
 #ifdef __cplusplus

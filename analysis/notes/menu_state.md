@@ -35,9 +35,13 @@ document covers the menu/UI layer above them.
                                             Helper_GSM_Options    (options page)
                                             Helper_GSM_Config     (config page)
                                             Helper_GSM_HandleEvent(event/cutscene dispatch)
-                                            Helper_GSM_Sub18..1C  (5 themed menu pages)
-                                            Helper_GSM_Sub_Other1 (a menu page)
-                                            Helper_GSM_Sub_Other2 (a menu page)
+                                            Menu_HelpScreen        (F1 help overlay)
+                                            Menu_GlideUnavailableDialog
+                                            Menu_Direct3DUnavailableDialog
+                                            Menu_DirectDrawUnavailableDialog
+                                            Menu_PauseMenu         (in-match pause)
+                                            Menu_ColorDepthErrorDialog
+                                            Menu_InsertCDDialog    (no-CD / rescan)
 
                                           tail (default):
                                             g_gsmActiveFlag = (state != 0)
@@ -47,20 +51,22 @@ document covers the menu/UI layer above them.
 the boot table) when demo mode is off. Otherwise the attract loop
 drives it.
 
-## Per-page handler shape (Sub18..Sub_Other2)
+## Per-page handler shape (the 7 Menu_* dialogs)
 
-Every Sub* helper has the same skeleton, parameterised only by the
-menu-items table it points at:
+Every page helper (`Menu_HelpScreen`, the three renderer-unavailable
+dialogs, `Menu_PauseMenu`, `Menu_ColorDepthErrorDialog`,
+`Menu_InsertCDDialog`) has the same skeleton, parameterised only by
+the menu-items table it points at:
 
 ```c
-void Helper_GSM_SubXX(void) {
+void Menu_SomePage(void) {
     static unsigned char init_flag;   // 1 bit
     static int           selected;    // current row index
     static int           sub_state;   // 0 / 2 / 0x45
 
     if ((init_flag & 1) == 0) {        // first entry
         init_flag |= 1;
-        selected = Menu_FindNextSelectable(0, &g_subXX_items);
+        selected = Menu_FindNextSelectable(0, &g_page_items);
     }
 
     switch (sub_state) {
@@ -73,8 +79,8 @@ void Helper_GSM_SubXX(void) {
         if (!repeat) {
             if (nav & 0x01) selected = Menu_FindPrevSelectable(selected, &items);
             if (nav & 0x02) selected = Menu_FindNextSelectable(selected, &items);
-            if (nav & 0x10) sub_state = items[selected].link;   // ENTER
-            if (nav & 0x20) sub_state = 0x45;                   // BACK
+            if (nav & 0x10) sub_state = items[selected].action_code; // ENTER
+            if (nav & 0x20) sub_state = 0x45;                        // BACK
         }
         break;
     case 0x45:                          // exit page
@@ -87,10 +93,10 @@ void Helper_GSM_SubXX(void) {
 }
 ```
 
-The variations (Sub1C in particular) add per-row action callbacks
-through a small embedded jump table - for example "I=14: set
-g_gsmDirty1 = 1 on ENTER" so the parent state machine knows to
-re-emit a sound cue or reload an asset.
+The variations (`Menu_PauseMenu` in particular) add per-row action
+callbacks through a small embedded jump table - for example the QUIT
+MATCH row sets `g_gsmDirty1 = 1` on ENTER so the parent state machine
+knows to tear down the match and return to the title.
 
 ## Functions in this subsystem
 
@@ -110,12 +116,16 @@ re-emit a sound cue or reload an asset.
 | 0x004b7b10 | `Helper_GSM_Practice`         |      464 | State handler for the practice-mode setup screen. |
 | 0x004b7ce0 | `FormatMenuItemsAndDraw_004b7ce0` | 272  | (TODO - hand-rolled byte-stream, exact role still unclear; appears to fetch a row from `g_dispatchVar40_004d52d8` and format it via `Menu_FillColonField`.) |
 | 0x004b7df0 | `Helper_GSM_Options`          |      656 | State handler for the audio/video options page. |
-| 0x004b8080 | `MenuPageTailDispatch_004b8080` |    360 | (TODO - common tail used by several Helper_GSM_Sub* handlers, exact pattern still unverified.) |
+| 0x004b8080 | `MenuPageTailDispatch_004b8080` |    360 | (TODO - common tail used by several `Menu_*` page handlers, exact pattern still unverified.) |
 | 0x004b81f0 | `Helper_GSM_Config`           |      722 | State handler for the controls config page. Calls `Input_RebindKeyToAction` / `Input_RebindButtonToAction` when the user assigns a new VK / button to an action. |
 | 0x004b84d0 | `Helper_GSM_HandleEvent`      |      346 | Cutscene / scripted-event dispatcher used during state transitions (returns 0x45/0x18/0x19/0x1a/0x1b/0x1c to switch to the matching menu state). |
-| 0x004b8630..0x004b8a30 | `Helper_GSM_Sub18..1C` |     ~255 each | Generic menu-page handlers; each owns one menu items table (`g_gsmSub18Base_004f5090`, `g_gsmVar3_004f5018`, `g_gsmVar2_004f5050`, `g_gsmVar_004f5070`, `g_gsmHelperBase_004f4f30`). Pattern documented above. Sub1C additionally dispatches per-row action callbacks via an inline jump table. |
-| 0x004b8bd0 | `Helper_GSM_Sub_Other1`       |      408 | Another menu-page handler (specific table base TBD). |
-| 0x004b8d70 | `Helper_GSM_Sub_Other2`       |      311 | Another menu-page handler; table base `g_gsmVar4_004f4fd0`. |
+| 0x004b8630 | `Menu_HelpScreen`             |      255 | HELP overlay (table `0x4f5090`): "MORTAL KOMBAT 4 / (C) 1997 MIDWAY / F1-HELP / F2-OPTIONS / F4-PAUSE & QUIT". |
+| 0x004b8730 | `Menu_GlideUnavailableDialog` |      255 | "GLIDE 3D NOT AVAILABLE / TRY INSTALLING THE LATEST GLIDE DRIVERS / PRESS ENTER TO CONTINUE" (table `0x4f5018`). Shown when the F5 Glide renderer fails to init. |
+| 0x004b8830 | `Menu_Direct3DUnavailableDialog` |   255 | "DIRECT3D NOT AVAILABLE / PRESS ENTER TO CONTINUE" (table `0x4f5050`). F6 D3D init failure. |
+| 0x004b8930 | `Menu_DirectDrawUnavailableDialog` | 255 | "DIRECT-DRAW NOT AVAILABLE / PRESS ENTER TO CONTINUE" (table `0x4f5070`). DDraw init failure. |
+| 0x004b8a30 | `Menu_PauseMenu`              |      408 | In-match PAUSE menu (table `0x4f4f30`): "PAUSED / CONTINUE MATCH (20) / MOVES LIST (21) / QUIT MATCH (23)". The action codes drive its inline jump table (sets g_gsmDirty1..3). |
+| 0x004b8bd0 | `Menu_ColorDepthErrorDialog`  |      408 | "THE GAME CANNOT RUN IN THIS WINDOW BECAUSE YOUR DISPLAY IS NOT IN A HIGH OR TRUE COLOR MODE / INSTEAD, TRY A FULLSCREEN MODE BY PRESSING:" (table `0x4f4f60`). Shown for windowed 8-bit-color displays. |
+| 0x004b8d70 | `Menu_InsertCDDialog`         |      311 | "TO PLAY MORTAL KOMBAT 4 YOU MUST CLOSE ALL OTHER CD APPLICATIONS AND INSERT THE GAME CD / RESCAN CD (17) / DEMO MODE (18) / EXIT GAME (19)" (table `0x4f4fd0`). |
 | 0x004ad810 | `Helper_GSM_PlayMusic`        |       - | Menu-side music control. Called from `GameStateMachine`'s tail when transitioning between states (each state has a music id; switching states cues the new track). |
 
 ## Globals
@@ -128,12 +138,13 @@ re-emit a sound cue or reload an asset.
 | `0x004b6580` | `g_gsmJumpTable2` (in-text data)    | 8-entry jump table for the main-menu sub-dispatch on `cmd`. |
 | (g_gsm*Flag) | `g_gsmActiveFlag`                   | 1 iff `g_gameState != 0`. Read by `MainLoopStep` to know if the fight is paused for a menu. |
 | (g_gsm*Out)  | `g_gsmOut1..4`, `g_gsmDirty1..3`    | Edge-trigger shadows: when the per-page handler sets a dirty flag (e.g. user changed audio volume), the next `GameStateMachine` invocation publishes the change into the corresponding Out latch. |
-| `0x004f5090` | `g_gsmSub18Base`                    | Menu items table for Sub18 (label/selectable/link triplets). |
-| `0x004f5018` | `g_gsmVar3`                         | Menu items table for Sub19. |
-| `0x004f5050` | `g_gsmVar2`                         | Menu items table for Sub1A. |
-| `0x004f5070` | `g_gsmVar`                          | Menu items table for Sub1B. |
-| `0x004f4f30` | `g_gsmHelperBase`                   | Menu items table for Sub1C (with per-row action callbacks). |
-| `0x004f4fd0` | `g_gsmVar4`                         | Menu items table for Sub_Other2. |
+| `0x004f5090` | `g_gsmSub18Base`                    | Items table for `Menu_HelpScreen`. |
+| `0x004f5018` | `g_gsmVar3`                         | Items table for `Menu_GlideUnavailableDialog`. |
+| `0x004f5050` | `g_gsmVar2`                         | Items table for `Menu_Direct3DUnavailableDialog`. |
+| `0x004f5070` | `g_gsmVar`                          | Items table for `Menu_DirectDrawUnavailableDialog`. |
+| `0x004f4f30` | `g_gsmHelperBase`                   | Items table for `Menu_PauseMenu` (with per-row action callbacks). |
+| `0x004f4f60` | (Menu_ColorDepthErrorDialog table) | Items table for `Menu_ColorDepthErrorDialog`. |
+| `0x004f4fd0` | `g_gsmVar4`                         | Items table for `Menu_InsertCDDialog`. |
 
 ## Menu items table layout (8 bytes per entry)
 
@@ -141,17 +152,20 @@ Deduced from `Menu_FindNextSelectable` / `Menu_FindPrevSelectable`
 and the per-page handler's use of `items[idx].link`:
 
 ```c
-struct menu_item {
-    int16  label_id;    // index into the menu-string pool (UI text)
-    int16  selectable;  // 1 = navigable, 0 = header/separator (skipped by nav)
-    int32  link;        // 'next sub_state' value when this row is confirmed
-                        // (Sub18 uses it as the new sub_state, Sub1C uses
-                        //  it as an opcode to drive its inline jump table)
+struct menu_item {            // 8 bytes (confirmed by dumping the tables)
+    char  *label;       // direct pointer to the UI string (NOT an index)
+    uint16 action_code; // 1 = plain text line; other values are the
+                        //   selectable action ID (e.g. PAUSE menu uses
+                        //   20/21/23, the dialogs use 0x45 = 'press
+                        //   ENTER to dismiss'). 0 in label terminates.
+    uint16 link;        // secondary flags / next-state hint
 };
 ```
 
-Termination: the search functions stop on `label_id == 0` (Asc) or
-on running off the start (Desc).
+Termination: the search functions stop on a zero `label` pointer
+(Asc) or on running off the start (Desc). Selectable rows are those
+whose `action_code` marks them navigable; pure-text/header rows are
+skipped during up/down navigation.
 
 ## TODOs
 
@@ -160,12 +174,13 @@ on running off the start (Desc).
   29-byte translation table would let us label every state value
   (0..0x1c) with a human name (TITLE, ARCADE_CHAR_SELECT,
   PRACTICE_OPTS_PAGE, ...) and confirm which state value lands on
-  which Sub18..1C handler.
-- **Which menu is which Sub*?** Sub18..1C and Sub_Other1/2 each own
-  one menu items table at a specific `.data` offset. The first row
-  label of each table would identify the page (likely strings like
-  "DIFFICULTY", "TIME LIMIT", etc). A runtime trap on
-  `Menu_FindNextSelectable` would print the table base on first call.
+  which page handler.
+- ~~**Which menu is which Sub\*?**~~ - DONE. Identified by dumping each
+  handler's menu-items table from the EXE and reading the row strings:
+  HELP overlay, the three renderer-unavailable dialogs, the in-match
+  PAUSE menu, the windowed-color-depth error, and the insert-CD
+  dialog. Renamed `Helper_GSM_Sub18/19/1A/1B/1C/Other1/Other2` to the
+  `Menu_*` names in the function table above.
 - **`FormatMenuItemsAndDraw_004b7ce0`** is still a hand-emit byte
   stream; the role above is a hypothesis. Worth a focused decompile
   pass to confirm.

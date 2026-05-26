@@ -19,7 +19,7 @@ extern void Menu_PollNavInput(void);
 extern void Menu_FindNextSelectable(void);
 extern void Menu_FindPrevSelectable(void);
 
-__declspec(naked) void Helper_GSM_Sub19(void)
+__declspec(naked) void Menu_GlideUnavailableDialog(void)
 {
     __asm
     {

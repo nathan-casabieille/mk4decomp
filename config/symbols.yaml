@@ -15318,43 +15318,43 @@ functions:
     status: matched
     file: src/game/helper_gsm_handle_event.c
   - addr: 0x004b8630
-    name: Helper_GSM_Sub18
+    name: Menu_HelpScreen
     size: 255
     group: game.menu
     status: matched
     file: src/game/helper_gsm_sub18.c
   - addr: 0x004b8730
-    name: Helper_GSM_Sub19
+    name: Menu_GlideUnavailableDialog
     size: 255
     group: game.menu
     status: matched
     file: src/game/helper_gsm_sub19.c
   - addr: 0x004b8830
-    name: Helper_GSM_Sub1A
+    name: Menu_Direct3DUnavailableDialog
     size: 255
     group: game.menu
     status: matched
     file: src/game/helper_gsm_sub1_a.c
   - addr: 0x004b8930
-    name: Helper_GSM_Sub1B
+    name: Menu_DirectDrawUnavailableDialog
     size: 255
     group: game.menu
     status: matched
     file: src/game/helper_gsm_sub1_b.c
   - addr: 0x004b8a30
-    name: Helper_GSM_Sub1C
+    name: Menu_PauseMenu
     size: 408
     group: game.menu
     status: matched
     file: src/game/helper_gsm_sub1_c.c
   - addr: 0x004b8bd0
-    name: Helper_GSM_Sub_Other1
+    name: Menu_ColorDepthErrorDialog
     size: 408
     group: game.menu
     status: matched
     file: src/game/helper_gsm_sub_other1.c
   - addr: 0x004b8d70
-    name: Helper_GSM_Sub_Other2
+    name: Menu_InsertCDDialog
     size: 311
     group: game.menu
     status: matched

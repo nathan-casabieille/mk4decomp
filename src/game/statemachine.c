@@ -129,25 +129,25 @@ case_config:
         add     esp, 4
         jmp     tail
 case_sub18:
-        call    Helper_GSM_Sub18
+        call    Menu_HelpScreen
         jmp     SHORT share_check_45
 case_sub19:
-        call    Helper_GSM_Sub19
+        call    Menu_GlideUnavailableDialog
         jmp     SHORT share_check_45
 case_sub1a:
-        call    Helper_GSM_Sub1A
+        call    Menu_Direct3DUnavailableDialog
         jmp     SHORT share_check_45
 case_sub1b:
-        call    Helper_GSM_Sub1B
+        call    Menu_DirectDrawUnavailableDialog
         jmp     SHORT share_check_45
 case_sub1c:
-        call    Helper_GSM_Sub1C
+        call    Menu_PauseMenu
         jmp     SHORT share_check_45
 case_other1:
-        call    Helper_GSM_Sub_Other1
+        call    Menu_ColorDepthErrorDialog
         jmp     SHORT share_check_45
 case_other2:
-        call    Helper_GSM_Sub_Other2
+        call    Menu_InsertCDDialog
 share_check_45:
         cmp     eax, 0x45
         ; orig short-form jne (75 66); MASM's __asm picks long-form

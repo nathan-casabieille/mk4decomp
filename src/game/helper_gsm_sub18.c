@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 /*
- * Helper_GSM_Sub18 - 255b menu navigation dispatcher.
+ * Menu_HelpScreen - 255b menu navigation dispatcher.
  *   al = g_byte_00ab42d4. If bit 0 not set: set it, push (0, &table); TableSearchAsc; store eax.
  *   Else: load saved g_dispatchSave1473_00ab41a0. Switch on g_dispatchSave1494_00ab4364 = 0/2/0x45/default.
  *     If 0 → set 0x00ab4364=2 + DrawMenu epilogue.
@@ -26,7 +26,7 @@ extern void Menu_FindPrevSelectable(void);
 
 extern unsigned int g_dispatchSave516_004f5094;
 
-__declspec(naked) void Helper_GSM_Sub18(void)
+__declspec(naked) void Menu_HelpScreen(void)
 {
     __asm
     {

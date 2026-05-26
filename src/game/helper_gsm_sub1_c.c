@@ -18,7 +18,7 @@ extern void Menu_PollNavInput(void);
 extern void Menu_FindNextSelectable(void);
 extern void Menu_FindPrevSelectable(void);
 
-__declspec(naked) void Helper_GSM_Sub1C(void)
+__declspec(naked) void Menu_PauseMenu(void)
 {
     __asm {
         mov      al, byte ptr [g_dispatchSave1480_00ab42cc]

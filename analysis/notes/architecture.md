@@ -1357,11 +1357,19 @@ It's a switch-based FSM driven by a state variable `g_gameState`
 | 0xa   | (handler reused)              | CONFIG                                    |
 | 0xb   | (default no-op)               | CREDITS (falls through to default tail)   |
 | 0xc   | (default no-op)               | SETTINGS                                  |
-| 0x18  | `Helper_GSM_Sub18` `0x004b8630` | CHAR_SELECT_1                            |
-| 0x19  | `Helper_GSM_Sub19` `0x004b8730` | CHAR_SELECT_2                            |
-| 0x1a  | `Helper_GSM_Sub1A` `0x004b8830` | STAGE_SELECT                             |
-| 0x1b  | `Helper_GSM_Sub1B` `0x004b8930` | PRE_FIGHT_INTRO                          |
-| 0x1c  | `Helper_GSM_Sub1C` `0x004b8a30` | GFX_OPTIONS                              |
+| 0x18  | `Menu_HelpScreen` `0x004b8630` | HELP overlay (CORRECTED - was guessed CHAR_SELECT_1) |
+| 0x19  | `Menu_GlideUnavailableDialog` `0x004b8730` | "GLIDE 3D NOT AVAILABLE" dialog          |
+| 0x1a  | `Menu_Direct3DUnavailableDialog` `0x004b8830` | "DIRECT3D NOT AVAILABLE" dialog          |
+| 0x1b  | `Menu_DirectDrawUnavailableDialog` `0x004b8930` | "DIRECT-DRAW NOT AVAILABLE" dialog      |
+| 0x1c  | `Menu_PauseMenu` `0x004b8a30` | In-match PAUSE menu (CORRECTED - was guessed GFX_OPTIONS) |
+
+NOTE: the 0x18-0x1c screen labels were previously guessed as
+char/stage-select sub-states. Dumping each handler's menu-item table
+from the EXE proved they are the HELP overlay, the three
+renderer-unavailable dialogs, and the in-match PAUSE menu. The state
+numbers and state->handler routing are confirmed via `g_gsmByteTable`
+(state 0x18..0x1c -> jt1 index 0x0a..0x0e); only the gameplay-meaning
+labels were wrong. See [menu_state.md](menu_state.md).
 
 Full byte-table + sub-dispatch decoding in [combat_fsm.md](combat_fsm.md).
 
