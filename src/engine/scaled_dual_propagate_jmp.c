@@ -126,7 +126,7 @@ void ScaledDualPropagateJmp_004287b0(int arg) {
     v1 = *(unsigned int *)(p * 4);
     g_eventQueueTotal = p + 1;
     g_eventQueueWorkType = v1;
-    *(unsigned int *)(g_cj_0054205c * 4 + 0x24) = v1;
+    ((ScenegraphNode *)(g_cj_0054205c * 4))->queue_end = v1;
     slot_p = (unsigned int *)(g_baseSel_00542060 * 4 + 4);
     idx = *slot_p;
     g_walkCallback = (void (*)(void))idx;
