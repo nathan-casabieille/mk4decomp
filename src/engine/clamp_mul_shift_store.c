@@ -15,7 +15,7 @@ extern int g_dispatchSave1577_00ab4e6c;
 extern int g_dispatchSave1575_00ab4e5c;
 extern int g_dispatchSave1576_00ab4e60;
 void ClampMulShiftStore_004ba0e0(void) {
-    int v = (*(int *)(g_xformEntityIdx * 4 + 0x14) * g_dispatchSave1577_00ab4e6c) >> 8;
+    int v = ((int)((ScenegraphNode *)(g_xformEntityIdx * 4))->not_mask * g_dispatchSave1577_00ab4e6c) >> 8;
     g_dispatchSave1575_00ab4e5c = v;
     if (v < 0) {
         v = 0;

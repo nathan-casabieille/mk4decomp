@@ -127,7 +127,7 @@ void PushSetDualDeref_00406650(void) {
     g_eventQueueWorkType = v1;
     v2 = ((ScenegraphNode *)(v1 * 4))->queue_idx;
     g_eventQueueWorkType = v2;
-    *(unsigned int *)(v2 * 4 + 0x14) = walk;
+    ((ScenegraphNode *)(v2 * 4))->not_mask = walk;
     g_walkCallback = (void (*)(void))&ClampMulShiftStore_004ba0e0;
     *(unsigned int *)(g_eventQueueWorkType * 4 + 0x10) = (unsigned int)&ClampMulShiftStore_004ba0e0;
     top = g_matrixStackTop;

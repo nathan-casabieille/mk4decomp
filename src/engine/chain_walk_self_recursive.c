@@ -123,7 +123,7 @@ int ChainWalkSelfRecursive_0045daf0(void) {
     unsigned int link = *(unsigned int *)(g_pendingNodeType * 4 + 0x40);
     g_eventQueueWorkType = link;
     if ((unsigned int)g_walkCallback != 0) {
-        *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x14) = (unsigned int)g_walkCallback;
+        ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->not_mask = (unsigned int)g_walkCallback;
         g_xformEntityIdx = (unsigned int)&HitReactionDispatcher_0045f650;
         Thunk_0049cbd0();
         return g_framePauseFlag;

@@ -40,7 +40,7 @@ void PushPopScaled14_00405ad0(void) {
     unsigned int v;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_xformEntityIdx;
-    v = *(unsigned int *)(g_xformEntityIdx * 4 + 0x14);
+    v = ((ScenegraphNode *)(g_xformEntityIdx * 4))->not_mask;
     g_walkCallback = (void (*)(void))v;
     if (v != 0) {
         g_xformEntityIdx = v;
