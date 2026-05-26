@@ -9,8 +9,8 @@ extern unsigned int g_baseSel_00542060;
 
 /* @addr 0x00490330 (28b): same shape, and al, 0xdf */
 void ScaledAndAldf_00490330(void) {
-    unsigned int idx = g_fightGroupHead;
-    unsigned int v = *(unsigned int *)(idx * 4 + 0x40) & 0xFFFFFFDFu;
+    FightGroupNode *n = (FightGroupNode *)(g_fightGroupHead * 4);
+    unsigned int v = n->bits & 0xFFFFFFDFu;
     g_eventQueueCurrent = v;
-    *(unsigned int *)(idx * 4 + 0x40) = v;
+    n->bits = v;
 }
