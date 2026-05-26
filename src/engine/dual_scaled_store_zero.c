@@ -19,8 +19,8 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void func_004907fa(void);
 void DualScaledStoreZero_00491080(void) {
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x24) = g_xformEntityIdx;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end = g_xformEntityIdx;
     g_walkCallback = (void (*)(void))0;
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = 0;
     func_004907fa();
 }

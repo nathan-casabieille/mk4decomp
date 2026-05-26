@@ -30,6 +30,6 @@ void ScaledChainStore24_004a7d40(void) {
     {
         unsigned int chain = ((ScenegraphNode *)(sc * 4))->child_chain;
         g_fightGroupHead = chain;
-        *(int *)(chain * 4 + 0x24) = v;
+        ((ScenegraphNode *)(chain * 4))->queue_end = (unsigned int)v;
     }
 }

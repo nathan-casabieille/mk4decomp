@@ -24,7 +24,7 @@ extern void ScaledArrStore_00429960(void);
 
 /* @addr 0x00429470 */
 void ScaledChainJmp_00429470(void) {
-    unsigned int p = *(unsigned int *)(g_fightGroupHead * 4 + 0x24);
+    unsigned int p = ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end;
     g_scaledInit_00542044 = p;
     g_walkCallback = (void (*)(void))(*(unsigned int *)(p * 4 + 4) - 1);
     ScaledArrStore_004293b0();
@@ -32,7 +32,7 @@ void ScaledChainJmp_00429470(void) {
 
 /* @addr 0x004298e0 */
 void ScaledChainJmp_004298e0(void) {
-    unsigned int p = *(unsigned int *)(g_fightGroupHead * 4 + 0x24);
+    unsigned int p = ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end;
     g_scaledInit_00542044 = p;
     g_walkCallback = (void (*)(void))(*(unsigned int *)(p * 4 + 4) - 1);
     ScaledArrStore_00429960();
