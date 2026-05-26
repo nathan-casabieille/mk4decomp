@@ -4,21 +4,26 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-/* @addr 0x004c3960 (362b engine.render) - texture-slot allocator + dispatch.
- *   Reads short slot-id at [esp+0x10]; if >= 0x898 returns -1. Indexes
- *   the per-slot 0x1c-byte record at g_audioChannelTable (idx * 0x1c via
- *   lea/sub/shl ladder). Falls through if the slot table pointer is
- *   NULL or, when g_audioMute is non-zero, the +0x16 flag bit 0 is
- *   clear. Reads the cursor word at [+0x14] and the per-cursor byte at
- *   [cursor + +0x17] - if non-zero a slot is busy, return -1. Allocates
- *   a new free slot via FreeSlotFinder_004c3900 → byte index; on found
- *   writes (slot-id, cursor) into the 4-byte entries at g_audioChannelQueue
- *   indexed by free-slot. If two byte args [esp+0x18] and [esp+0x1c]
- *   are both <= 0x64, looks up a (arg1*25 + arg2 - based) offset in the
- *   table at g_table_00f85b60 and indirect-calls the vtables at +0x3c
- *   and +0x40 of two different slot pointers. Then on no-render mode
- *   ([g_f9efd4] == 0), calls vtable +0x30 with (slot, 0, 0, flag). Marks
- *   the cursor byte at [cursor + +0x17] = 1, advances cursor (mod 4).
+/* @addr 0x004c3960 (362b) - Audio_PlaySoundId(soundId, pan, vol):
+ *   plays a sound by id on a newly allocated voice channel; returns the
+ *   channel-slot index, or -1 on failure. (The old "texture-slot
+ *   allocator / engine.render" label was wrong - every global it
+ *   touches is audio: g_audioChannelTable, g_audioChannelQueue,
+ *   g_audioMute. Menu nav calls it with id 0xa0 for the UI blip, so it
+ *   serves all SFX, not just music.)
+ *   Reads short soundId at [esp+0x10]; if >= 0x898 returns -1. Indexes
+ *   the per-sound 0x1c-byte record in g_audioChannelTable. Bails if the
+ *   record pointer is NULL or, when g_audioMute is set, the +0x16 flag
+ *   bit 0 is clear. Reads the round-robin cursor word at [+0x14]; if the
+ *   per-cursor busy byte at [cursor + +0x17] is set, returns -1.
+ *   Allocates a free voice via FreeSlotFinder_004c3900 -> byte index; on
+ *   success writes (soundId, cursor) into the 4-byte g_audioChannelQueue
+ *   entries. If the two byte args pan/vol [esp+0x18]/[esp+0x1c] are both
+ *   <= 0x64 (0..100), looks up a (pan*25 + vol) offset in g_table_00f85b60
+ *   and calls the DSound vtable params methods +0x3c and +0x40. Then,
+ *   unless suppressed ([g_f9efd4] == 0), calls vtable +0x30
+ *   (DirectSoundBuffer::Play) with (buf, 0, 0, loopflag). Marks the
+ *   cursor busy and advances it (mod 4 - 4 voices per sound).
  */
 extern unsigned int g_table_00f85b60;
 extern unsigned int g_dispatchSave1405_00f85b62;
@@ -31,7 +36,7 @@ extern unsigned int g_dispatchSave1412_00f9eb82;
 extern u8 g_audioMute;
 extern void FreeSlotFinder_004c3900(void);
 
-__declspec(naked) void Helper_AudioStartMusic(void) {
+__declspec(naked) void Audio_PlaySoundId(void) {
     __asm {
         push    ebx
         push    ebp

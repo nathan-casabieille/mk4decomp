@@ -113,7 +113,7 @@ extern unsigned int g_savedNode_00541f98;
 extern void VoicePicker_00401000(void);
 extern void ChainNodeAdvanceCallback_00408e70(void);
 /* extern void Input_PollJoystick(void); -- defined elsewhere with diff sig */
-extern void Helper_AudioStartMusic(void);
+extern void Audio_PlaySoundId(void);
 extern unsigned int g_joySelP0_00543b68;
 extern unsigned int g_joySelP1_00543b6c;
 extern unsigned int g_dispatchSave1491_00ab4338;

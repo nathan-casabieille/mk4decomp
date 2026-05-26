@@ -149,7 +149,7 @@ extern u32 g_gsmActiveFlag;      /* 0x00ab4334 */
 
 /* Per-state helper functions. */
 void Helper_AudioRelease2(s32 channel);                  /* 0x004c3490 */
-void Helper_AudioStartMusic(s32 a, s32 b, s32 c);        /* 0x004c3960 */
+void Audio_PlaySoundId(s32 a, s32 b, s32 c);        /* 0x004c3960 */
 s32  Helper_GSM_HandleEvent(void);                       /* 0x004b84d0 */
 s32  Helper_GSM_VS(void);                                /* 0x004b6900 */
 s32  Helper_GSM_Tournament(void);                        /* 0x004b7260 */

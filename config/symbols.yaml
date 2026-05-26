@@ -16074,7 +16074,7 @@ functions:
     status: matched
     file: src/engine/free_slot_finder.c
   - addr: 0x004c3960
-    name: Helper_AudioStartMusic
+    name: Audio_PlaySoundId
     size: 362
     group: engine.render
     status: matched

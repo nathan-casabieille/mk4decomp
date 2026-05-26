@@ -73,7 +73,7 @@ check_state:
         push    -1
         push    -1
         push    0x4a
-        call    Helper_AudioStartMusic
+        call    Audio_PlaySoundId
         add     esp, 0xc
         jmp     tail
 case_handle_event:

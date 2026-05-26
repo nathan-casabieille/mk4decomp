@@ -311,7 +311,7 @@ extern void GameModeAdvanceCluster_00482000(void);
 extern void GuardedSeq_00471670(void);
 extern void GuardedSeq_0049c340(void);
 extern void GuardedSetupCallTailJmp_004a1fa0(void);
-extern void Helper_AudioStartMusic(void);
+extern void Audio_PlaySoundId(void);
 extern void Helper_MemMalloc_Post(void);
 extern void HitReactionDispatcher_0045f650(void);
 extern void IndirectCall_004c6ec0(void);

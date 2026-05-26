@@ -2589,7 +2589,7 @@ DSound_GetContext
 Audio_UpdateChannels
 BuildMaskFromArray_004c38d0
 FreeSlotFinder_004c3900
-Helper_AudioStartMusic
+Audio_PlaySoundId
 Snd3DSourceCleanup_004c3ad0
 Snd3DSourceCleanupFiltered_004c3be0
 Snd3DVolumePanSet_004c3d00

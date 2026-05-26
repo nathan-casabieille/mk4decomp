@@ -160,7 +160,7 @@ After setting the new state, the function falls through to an
 
 ```c
 Helper_AudioRelease2(0x4a);
-Helper_AudioStartMusic(0x4a, -1, -1);
+Audio_PlaySoundId(0x4a, -1, -1);
 ```
 
 So every menu transition triggers a music release + restart, which
@@ -536,7 +536,7 @@ fight FSM operates directly on the scenegraph's per-node state.
   live in `.text` after `GameStateMachine` and the function
   references them by absolute address.
 - Removing the audio re-arm sequence in the main-menu sub-dispatch
-  tail (`Helper_AudioRelease2(0x4a)` / `Helper_AudioStartMusic`).
+  tail (`Helper_AudioRelease2(0x4a)` / `Audio_PlaySoundId`).
   The `0x4a` track-id is the menu music; baking it out would change
   the byte match of the FSM tail.
 - Changing the event queue size (20 entries = base + 80). Hardcoded
