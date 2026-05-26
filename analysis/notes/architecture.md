@@ -4,6 +4,24 @@ Living high-level map of the binary, updated as reverse engineering progresses.
 Every claim should be backed by concrete evidence noted in the prose.
 Suspicions that haven't been verified are tagged **(suspected)**.
 
+## Per-subsystem deep dives
+
+Once the high-level map was complete, each major subsystem got its own
+dedicated doc. This file remains the top-level overview; the deep dives
+below carry the in-engine plumbing details for porters and contributors:
+
+- [audio.md](audio.md) - DSound/MCI/AuxOut paths, channel queue, ESF/ECM streaming
+- [scenegraph.md](scenegraph.md) - 63-slot node pool, transform stack, dispatch table
+- [render.md](render.md) - 5 renderer modes, draw queue, counting sort, vertex pipeline
+- [combat_fsm.md](combat_fsm.md) - menu FSM, fight tick, event queue, per-player state
+- [install.md](install.md) - registry probe, FSYS archive, ESF/ECM/GEO loaders
+- [win32_surface.md](win32_surface.md) - complete IAT inventory by DLL and use case
+
+Most of the "(suspected)" / "(TBD)" tags below this point have since been
+resolved; the sub-docs are the up-to-date source of truth for their
+subsystems. This file is kept as the historical narrative of how the RE
+unfolded.
+
 ---
 
 ## Binary at a glance
@@ -15,8 +33,8 @@ Suspicions that haven't been verified are tagged **(suspected)**.
 | `.text` | ~830 KiB code |
 | `.data` | ~314 KiB writable globals |
 | Date | 1998-07-09 |
-| Compiler | MSVC 5 / 6 era (suspected - VC SEH idioms, MSVC strcpy/memcpy inlining) |
-| Original source path | `C:\source\mk4\win\` (leaked debug string in `FUN_004b6180`) |
+| Compiler | **MSVC 5.0 SP3** (CONFIRMED, CL 11.00.7022 Pro Optimizing - see "Compiler identification" section) |
+| Original source path | `C:\source\mk4\win\` (leaked debug string in `AppInit_Misc1` `0x004b6180`) |
 
 **Imports (7 DLLs)**
 - `KERNEL32`, `USER32`, `GDI32`, `ADVAPI32` - Win32 base
@@ -28,7 +46,11 @@ Notably absent: `DINPUT.DLL`. Input via:
 - Keyboard: `WM_KEYDOWN`/`WM_KEYUP` in WndProc, decoded via `MapVirtualKeyA`
 - Joystick: WINMM legacy `joyGetDevCapsA` / `joyGetPos`
 
-`glide2x.dll` referenced as a string - possibly an optional 3dfx Glide path.
+`glide2x.dll` is loaded dynamically via `LoadLibraryA` + `GetProcAddress`
+into a function-pointer table at `g_glideFnTable` (`0x007b0000`). It is
+**not in the IAT** - if `glide2x.dll` is absent the game silently falls
+through to the next renderer mode. See [render.md](render.md) and
+[win32_surface.md](win32_surface.md).
 
 **In-game render-mode hotkeys** (from strings):
 | Key | Mode |
@@ -46,8 +68,8 @@ Notably absent: `DINPUT.DLL`. Input via:
 entry  (CRT MSVC)                                     0x004c6cb0
 └── WinMain(hInst, NULL, lpCmdLine, nCmdShow)         0x004c53c0
     ├── CreateFileMappingA("Mortal Kombat 4")         single-instance lock
-    │     └── on ERROR_ALREADY_EXISTS → ExitGame
-    ├── CreateMainWindow                              0x004c5070
+    │     └── on GetLastError() != 0 → ExitGame
+    ├── Boot                                          0x004c5070
     │   ├── RegisterClassA → wndclass.lpfnWndProc = WndProc
     │   ├── CreateWindowExA  → g_hMainWindow
     │   └── Show/UpdateWindow
@@ -67,29 +89,29 @@ It calls 27 helpers - the order itself reveals the boot sequence.
 |---|---|---|---|---|
 | 1 | `Timer_Init` | `0x004c4470` | High-precision timer | imports `QueryPerformanceCounter`, `QueryPerformanceFrequency`, `timeBeginPeriod` |
 | 2 | `Joystick_Init` | `0x004b5230` | Joystick input | imports `joyGetDevCapsA`, `joyGetPos` |
-| 3 | `ValidateInstall` | `0x004ad270` | Install / registry check | (see chain below) |
-| 4 | `FUN_004b5a10` | `0x004b5a10` | ? | small, no signal yet |
-| 5 | **`FSYS_Init`** | `0x004b1cf0` | **Asset archive (filesys.dat)** | strings `'filesys.dat'`, `'FSYS_Init(1..3)'` - name preserved by devs |
-| 6 | **`Gfx_Init`** | `0x004b4370` | **Graphics base** | string `'Gfx_Init()'` |
-| 7 | `AuxAudio_Init` | `0x004ac8f0` | CD-DA mixer / aux line | imports `auxGetDevCapsA`, `auxGetNumDevs`, `auxGetVolume` |
-| 8 | `AuxAudio_SetVolume` | `0x004aca10` | (sets volume from Config) | import `auxSetVolume` |
+| 3 | `ValidateInstall` | `0x004ad270` | Install / registry check | see [install.md](install.md) |
+| 4 | `AppInit_PostJoy` | `0x004b5a10` | Joystick post-init | small wrapper, no further signal |
+| 5 | **`FSYS_Init`** (== `AppInit_PreInstall`) | `0x004b1cf0` | **Asset archive (filesys.dat)** | strings `'filesys.dat'`, `'FSYS_Init(1..3)'` |
+| 6 | **`Gfx_Init`** | `0x004b4370` | **Graphics base** | string `'Gfx_Init()'`, see [render.md](render.md) |
+| 7 | `AuxAudio_Init` | `0x004ac8f0` | CD-DA mixer / aux line | imports `auxGetDevCapsA`, `auxGetNumDevs`, `auxGetVolume`, see [audio.md](audio.md) |
+| 8 | `AuxAudio_SetMasterVol` | `0x004ac9c0` | Sets master volume from `g_audioMasterVol` | import `auxSetVolume` |
 | 9 | **`DSound_Init`** | `0x004c3ef0` | **DirectSound (SFX)** | import `DirectSoundCreate` |
-| 10 | `FUN_004c3eb0` | `0x004c3eb0` | (suspected) DSound volume | called immediately after DSound_Init with `DAT_00543a90` (Config-derived) |
-| 11 | `FUN_004b21b0` | `0x004b21b0` | tiny stub | 8 bytes, 0 callees - likely a flag init |
-| 12 | `FUN_004b6180` | `0x004b6180` | (suspected) Menu / TGA loader | imports `MapVirtualKeyA`; string `'c:\source\mk4\win\menu.tga'` |
-| 13 | `FUN_004b5a80` | `0x004b5a80` | ? | small |
-| 14 | `FUN_004b2ac0` | `0x004b2ac0` | tiny stub | 17 bytes |
-| 15 | **`SetRendererMode(N)`** + **`TryInitRenderer()`** | `0x004b40a0` / `0x004b3ed0` | **Renderer fallback chain** | iterates modes 1, 2, 3, 5 (skipping 4) |
+| 10 | `AppInit_AudioPostInit` (== `Helper_TitleSetMaxVolume`) | `0x004c3eb0` | DSound post-init max-vol gate | called after DSound_Init with `g_audioPostFlag` |
+| 11 | `AppInit_PostDSound` | `0x004b21b0` | 1-byte clear of `g_byte_007af508` | 8-byte stub |
+| 12 | `AppInit_Misc1` | `0x004b6180` | Menu / TGA loader pre-init | string `'c:\source\mk4\win\menu.tga'`, imports `MapVirtualKeyA` |
+| 13 | `AppInit_Misc2` | `0x004b5a80` | (TBD) | small |
+| 14 | `AppInit_Misc3` | `0x004b2ac0` | (TBD) | 17-byte stub |
+| 15 | **`SetRendererMode(N)`** + **`TryInitRenderer()`** | `0x004b40a0` / `0x004b3ed0` | **Renderer fallback chain** | iterates modes 1, 2, 3, 5 (mode 4 = SW-Win fallback always available), see [render.md](render.md) |
 | 16 | `UpdateWindowTitle` | `0x004b22e0` | Window title | import `SetWindowTextA`; strings "Mortal Kombat 4", "...Demo Mode", "...Waiting" |
-| 17 | `FUN_004bd960` | `0x004bd960` | ? | small |
-| 18 | `FUN_004049c0` | `0x004049c0` | ? | tiny (14 bytes) |
-| 19 | `FUN_0041fd10` | `0x0041fd10` | ? | small with 7 callees |
-| 20 | `FUN_00464830` | `0x00464830` | ? | tiny (18 bytes) |
-| 21 | `FUN_004c51f0` | `0x004c51f0` | ? | moderate (171 bytes) |
-| 22 | `FUN_004b6340(7)` | `0x004b6340` | (conditional, fallback) | called only if `DAT_004ffd7c == 0`; 18 callees - likely a UI/menu setup |
-| 23 | `GetExeDirectory` | `0x004aca60` | Path resolution | imports `GetModuleFileNameA`, `GetModuleHandleA` |
-| 24 | `FUN_004c6500(timeGetTime())` | `0x004c6500` | (suspected) RNG seed |  |
-| 25 | `FUN_004c6510` | `0x004c6510` | (suspected) RNG read | result OR'd with `0x1881` flag mask |
+| 17 | `AppInit_Misc4` | `0x004bd960` | (TBD) | small |
+| 18 | `AppInit_Misc5` | `0x004054c0` | (TBD) | tiny (14 bytes) |
+| 19 | `AppInit_Misc6` | `0x00418f10` | (TBD) | small with 7 callees |
+| 20 | `AppInit_Misc7` | `0x00464830` | (TBD) | tiny (18 bytes) |
+| 21 | `AppInit_Misc8` | `0x004c51f0` | (TBD) | moderate (171 bytes) |
+| 22 | `GameStateMachine(7)` | `0x004b6340` | Initial state = TOURNAMENT (cmd 7 maps to GAMESTATE 7) | called only if `g_demoModeFlag == 0`, see [combat_fsm.md](combat_fsm.md) |
+| 23 | `GetExeDirectory` | `0x004aca60` | Path resolution + EXE integrity hash | imports `GetModuleFileNameA`, see [install.md](install.md) |
+| 24 | `Crt_srand(timeGetTime())` | `0x004c6500` | RNG seed | confirmed (CRT signature) |
+| 25 | `Crt_rand` | `0x004c6510` | RNG read | result OR'd with `0x1881` flag mask |
 
 ---
 
@@ -128,11 +150,14 @@ WM_KEYDOWN switch) and via fallback chain in AppInit (modes 1, 2, 3, 5).
 
 | Mode | Key | Type | Init function | Availability flag |
 |---|---|---|---|---|
-| **1** | F5 | **3dfx Glide** (CONFIRMED) | `Renderer1_Init_Glide` (`0x004b49a0`) | `DAT_00f9f7d8` |
-| **2** | F6 | Direct3D card (suspected) | `Renderer2_Init_D3D` (`0x004ad6a0`) | `DAT_00f9f7dc` |
-| **3** | F7 | Software fullscreen (suspected) | `Renderer3_Init_SW_FS` (`0x004af8c0`) | `DAT_00f9f7e0` |
-| **4** | F8 | Software windowed | _none - unconditional fallback_ | _always_ |
-| **5** | F9 | Software fullscreen hi-res (suspected) | `Renderer5_Init_SW_FS_Hi` (`0x004b00f0`) | `DAT_00f9f7e4` |
+| **1** | F5 | **3dfx Glide** (CONFIRMED) | `Renderer1_Init_Glide` (`0x004b49a0`) | `g_pumpFlagD8` (`0x00f9f7d8`) |
+| **2** | F6 | **Direct3D 2** (CONFIRMED - via DDraw QueryInterface) | `Renderer2_Init_D3D` (`0x004ad6a0`) | `g_pumpFlagDC` (`0x00f9f7dc`) |
+| **3** | F7 | **DirectDraw fullscreen 320x240** (CONFIRMED) | `Renderer3_Init_SW_FS` (`0x004af8c0`) | `g_pumpFlagE0` (`0x00f9f7e0`) |
+| **4** | F8 | **DirectDraw windowed 640x480** (CONFIRMED) | _none - always-available fallback_ | _always_ |
+| **5** | F9 | **DirectDraw fullscreen hi-res** (CONFIRMED) | `Renderer5_Init_SW_FS_Hi` (`0x004b00f0`) | `g_pumpFlagE4` (`0x00f9f7e4`) |
+
+Full per-mode init details, including the D3D vtable surface and the
+counting-sort draw queue, are in [render.md](render.md).
 
 Glide confirmed via:
 - ~20 calls through a function-pointer dispatch table at `DAT_007b0008..0070`
@@ -140,13 +165,13 @@ Glide confirmed via:
 - Hard-coded resolution `0x280 × 0x1e0` = 640 × 480 (canonical Glide res)
 - `glide2x.dll` literal in `.data`
 
-The Render2/3/5 mappings are deduced from the F-key UI strings + the
-key binding switch + AppInit's fallback order - not yet decompiled in detail.
+All five mode mappings have been verified by decompilation and runtime
+behavior. Mode 4 is special: no init function, used unconditionally as
+the fallback when modes 1/2/3/5 fail or are unset.
 
-`SetRendererMode(N)` (`0x004b40a0`) just stores the requested mode in a global.
-`TryInitRenderer()` (`0x004b3ed0`) reads that global and dispatches to the
-relevant init function via a switch (see WndProc decomp). Mode 4 is special:
-no init function, used unconditionally if the requested mode fails or is unset.
+`SetRendererMode(N)` (`0x004b40a0`) stores the requested mode in
+`g_clampedRendererMode`. `TryInitRenderer()` (`0x004b3ed0`) reads that
+global and dispatches to the relevant init function via a switch.
 
 ---
 
@@ -158,8 +183,8 @@ The window procedure at `0x004c49b0` handles these messages:
 |---|---|---|
 | `0x02` | `WM_DESTROY` | `PostQuitMessage(0)` |
 | `0x05` | `WM_SIZE` | track minimised state, force renderer mode 4 if window collapsed |
-| `0x0F` | `WM_PAINT` | `BeginPaint`; if mode 4, call `FUN_004b3e90` (suspected present); else fill black; `EndPaint` |
-| `0x10` | `WM_CLOSE` | call `FUN_004b2690` cleanup hook then default |
+| `0x0F` | `WM_PAINT` | `BeginPaint`; if mode 4, call `PresentFrame` (`0x004b3e90`); else fill black; `EndPaint` |
+| `0x10` | `WM_CLOSE` | call `AppShutdown` (`0x004b2690`) cleanup hook then default |
 | `0x14` | `WM_ERASEBKGND` | return 1 (no auto-erase, game owns repaint) |
 | `0x1C` | `WM_ACTIVATEAPP` | focus tracking; `SetRendererMode(4)` if losing focus |
 | `0x20` | `WM_SETCURSOR` | `SetCursor(NULL)` in fullscreen modes |
@@ -168,7 +193,7 @@ The window procedure at `0x004c49b0` handles these messages:
 | `0x100` | `WM_KEYDOWN` | game key bindings (see below) |
 | `0x101` | `WM_KEYUP` | PrintScreen → screenshot to `scrngrab.bmp` |
 | `0x102` | `WM_CHAR` | (default) |
-| `0x104, 0x105` | `WM_SYSKEYDOWN/UP` | call `FUN_004b5840` then default |
+| `0x104, 0x105` | `WM_SYSKEYDOWN/UP` | call `Helper_TitleAudioReset` (`0x004b5840`) then default |
 | `0x112` | `WM_SYSCOMMAND` | block SC_MONITORPOWER (0xF170); on SC_MAXIMIZE, retry renderer chain 1→2→3→5 |
 
 **Key bindings (from `WM_KEYDOWN`):**
@@ -176,7 +201,7 @@ The window procedure at `0x004c49b0` handles these messages:
 | Vkey | Key | Action |
 |---|---|---|
 | `0x1B` | ESC | exit submenu / mode-switch |
-| `0x70-0x71` | F1, F2 | `FUN_004b6340(1 or 2)` (suspected: pause / menu / debug) |
+| `0x70-0x71` | F1, F2 | `GameStateMachine(1 or 2)` - sub-dispatches main-menu commands |
 | `0x73` | F4 | set `DAT_0054381c` flag (debug?) |
 | `0x74-0x78` | F5-F9 | `SetRendererMode(1..5)` (renderer hot-swap) |
 
@@ -347,30 +372,34 @@ It's a **queue-based architecture** with counting sort:
 
 ```
    game logic / scene update                  GameLogicStep
-   ─────────────────────────                  └─ adds entries to g_drawQueue
-                                                  (function that does this NOT yet found)
+   ─────────────────────────                  └─ scenegraph walk -> DrawMeshBlock per leaf
+                                                  └─ SubmitDrawEntry(28-byte entry) -> g_drawQueue
         │
         ▼
-   BeginFrame  (FUN_004b4200)
+   BeginFrame  (0x004b4200)
    └─ mode-specific begin (Glide/D3D/SW)
    └─ SetViewport(x, y, w, h)
         │
         ▼
-   DrawScene  (FUN_004b42e0)        ← profiled with timeGetTime
-   └─ FlushDrawQueue  (FUN_004bf460)        ← THE big one (~3.8 KB of code)
+   DrawScene  (0x004b42e0)          ← profiled with timeGetTime
+   └─ FlushDrawQueue  (0x004bf460)          ← THE big one (~3.8 KB of code)
    │  ├─ zero g_drawQueueBuckets (1024 dwords)
-   │  ├─ pass 1: histogram by entry[0] (sort key)
+   │  ├─ pass 1: histogram by entry sort key
    │  ├─ cumulative-sum the buckets (= counting sort)
    │  └─ pass 2: dispatch each entry's triangle to the per-mode submit
-   │             (Glide: FUN_004b46f0, D3D: FUN_004adca0)
+   │             (Glide: GlideTriColorFlush 0x004b46f0,
+   │              D3D:   GlideTriBatchEmit 0x004adca0)
    │
    └─ Renderer<N>_EndScene_<mode>           ← per-mode finalize
-                                              (D3D: vtable[0x2C], SW: vtable[0x80])
+                                              (D3D: vtable[11] = EndScene,
+                                               SW:  vtable[32] = Flip)
         │
         ▼
-   PresentFrame  (FUN_004b3e90)
-   └─ mode-specific present (Glide: FUN_004b46d0, D3D: FUN_004ae950, ...)
+   PresentFrame  (0x004b3e90)
+   └─ mode-specific present (Glide: 0x004b46d0, D3D: 0x004ae950, ...)
 ```
+
+Full per-mode pipeline details in [render.md](render.md).
 
 ### Draw queue layout
 
@@ -385,27 +414,29 @@ key** (range 0..1023, used as a bucket index - probably a quantized z-depth
 or material id). The remaining 26 bytes contain triangle data: short
 coordinates + a flag byte at index 13 (`psVar14[0xd]`). Full layout TBD.
 
-The per-mode submit functions (`FUN_004b46f0` for Glide, `FUN_004adca0`
-for D3D) take ~16 args including 7+ floats (vertex positions and probably
-UVs). These are the actual per-triangle GPU/SW dispatches.
+The per-mode submit functions (`GlideTriColorFlush` `0x004b46f0` for
+Glide, `GlideTriBatchEmit` `0x004adca0` for D3D) take ~16 args including
+7+ floats (vertex positions and UVs). These are the actual per-triangle
+GPU/SW dispatches.
 
-### What this means for the .geo mesh format
+### How the .geo mesh data reaches the queue (DECODED)
 
-The `.geo` mesh data is **not consumed** by FlushDrawQueue (which only
-reads the draw queue, not the .geo buffer). It must be processed by an
-intermediate function that:
-1. Walks the `.geo` block-header table starting at offset `0x0C`
-2. Walks the per-block face/vertex data
-3. Computes per-triangle screen-space coordinates (camera transform applied)
-4. Adds the resulting triangles to `g_drawQueue`
+The "submitter" bridging static `.geo` data to `g_drawQueue` is
+**`DrawMeshBlock`** (`0x004bb250`), called from `RenderSceneNode`
+(`0x004ba720`) for each leaf node in the scenegraph traversal.
 
-This "submitter" function is the next target - it's the bridge between
-the static `.geo` data and the runtime draw queue. It probably lives in
-the game-logic layer (called from `GameLogicStep` or its callees).
+```
+TickAllEntities -> Helper_FightSceneCallback (0x004ba1c0)
+                    -> camera transform + frustum cull
+                    -> RenderSceneNode (recursive descent on +0x3c..+0x44 children)
+                        -> g_nodeDispatchTable[idx] for transform handlers
+                        -> DrawMeshBlock for leaf meshes
+                            -> ProjectTwoVertices + ProjectVertex + TransformVertex
+                            -> SubmitDrawEntry per triangle
+                                -> g_drawQueue[g_drawQueueSize++] = entry
+```
 
-A good way to find it: walk the callers of any function that increments
-`g_drawQueueSize`. Or look at functions that read from offset `0x0C` of
-a buffer pointer.
+Full walkthrough in [scenegraph.md](scenegraph.md) and [render.md](render.md).
 
 ---
 
@@ -421,12 +452,12 @@ do {
 
 `MainLoopStep` (`0x004b2750`) is the frame-rate-limited tick. Each invocation:
 - Runs **4 helpers** unconditionally:
-  - `FUN_004b4200(1)` - graphics, also called by Gfx_Init priming (suspected: render-begin / input-poll)
-  - **`GameLogicStep`** (`0x004b26d0`) - fixed-step game logic, **CONFIRMED**:
+  - **`BeginFrame(1)`** (`0x004b4200`) - per-mode renderer begin + SetViewport
+  - **`GameLogicStep`** (`0x004b26d0`) - fixed-step game logic:
     - only callee re-run by the catch-up loop
     - NOT called by Gfx_Init (the other 3 are)
-  - `FUN_004b42e0` - graphics, also Gfx_Init (suspected: scene draw)
-  - `FUN_004b3e90` - graphics, also Gfx_Init (suspected: present/flip)
+  - **`DrawScene`** (`0x004b42e0`) - FlushDrawQueue + per-mode EndScene
+  - **`PresentFrame`** (`0x004b3e90`) - per-mode present/flip
 - Catch-up loop (max 3 extra ticks): re-runs only `GameLogicStep` if delta > 20 ms,
   advancing virtual time by `0x411b µs = 16 667 µs = 1/60 s` per iteration
 - Throttle: `Sleep(min(needed_ms, 16))`
@@ -677,15 +708,15 @@ into a 16-entry function-pointer table.
 
 | Idx (type/mode) | Handler | Size | Calls helper |
 |---|---|---|---|
-| 0/0, 6/0, 7/0 | `0x004bdb50` | 0xa3 | FUN_004b3800 (transform A) |
-| 1/0 | `0x004bde90` | 0xa3 | FUN_004b36c0 (transform C) |
-| 2/0 | `0x004bdca0` | 0xa3 | FUN_004b3940 (transform B) |
-| 3/0 | `0x004bdfb0` | 0x9d | FUN_004b36c0 (transform C) |
-| 4/0, 4/1 | `0x004be050` | 0xd6 | (no callee - special) |
-| 5/0, 5/1 | `0x004be130` | 0xe0 | wraps 0x004bdca0 |
-| 0/1, 3/1, 6/1, 7/1 | `0x004bdc00` | 0x62 | FUN_004b3800 (transform A small) |
-| 1/1 | `0x004bdf40` | 0x62 | FUN_004b36c0 (transform C small) |
-| 2/1 | `0x004bdd50` | 0x62 | FUN_004b3940 (transform B small) |
+| 0/0, 6/0, 7/0 | `NodeApplyTransform_A` `0x004bdb50` | 0xa3 | `BuildRotMatrix_OrderA` `0x004b3800` |
+| 1/0 | `NodeApplyTransform_C` `0x004bde90` | 0xa3 | `BuildRotMatrix_OrderC` `0x004b36c0` |
+| 2/0 | `NodeApplyTransform_B` `0x004bdca0` | 0xa3 | `BuildRotMatrix_OrderB` `0x004b3940` |
+| 3/0 | `NodeApplyTransform_C_Inverse` `0x004bdfb0` | 0x9d | `BuildRotMatrix_OrderC` (no negation) |
+| 4/0, 4/1 | `NodeApplyMatrix` `0x004be050` | 0xd6 | (no callee - copies pre-built 3x3 matrix) |
+| 5/0, 5/1 | `NodeApplyTransform_B_Swapped` `0x004be130` | 0xe0 | wraps `NodeApplyTransform_B` |
+| 0/1, 3/1, 6/1, 7/1 | `NodeApplyTransform_A_Direct` `0x004bdc00` | 0x62 | `BuildRotMatrix_OrderA` (BAM input) |
+| 1/1 | `NodeApplyTransform_C_Direct` `0x004bdf40` | 0x62 | `BuildRotMatrix_OrderC` (BAM input) |
+| 2/1 | `NodeApplyTransform_B_Direct` `0x004bdd50` | 0x62 | `BuildRotMatrix_OrderB` (BAM input) |
 
 The "small" mode-1 variants (0x62 bytes vs 0xa3 in mode 0) suggest a
 simpler render path - maybe alpha-blended polygons or no Z-buffer.
@@ -817,8 +848,10 @@ Euler orderings for flexibility, fixed-point math throughout.
 - **The full node format** - per-type layout of the 12-20 byte
   sub-header between `ofs_b` and `ofs_a`. Likely contains the node's
   local transform (matrix or quaternion) plus child references.
-- **Outer walker decompilation** - `FUN_004ba720` needs ASM-level
-  review of the dispatch site to understand the indirect call.
+- ~~**Outer walker decompilation**~~ - **DONE** - `RenderSceneNode`
+  (`0x004ba720`) fully analyzed; the 16-entry dispatch table at
+  `g_nodeDispatchTable` (`0x004f7888`) drives 9 distinct handlers
+  by node type/mode bits. See [scenegraph.md](scenegraph.md).
 - **Per-primitive draw routines** - 12 functions call
   `SubmitDrawEntry`, each presumably handles a specific node-type.
   Cataloging them would reveal all the .geo node variants.
@@ -826,8 +859,9 @@ Euler orderings for flexibility, fixed-point math throughout.
   be in either the VERTEX stream or the HEADER stream (`flag` byte).
 - **Skinning** (joint weights) - for animated characters, vertices
   must be associated with bones. Probably in `ofs_c`.
-- **Sort key LUT at `DAT_00b0d008`** - 64 KB lookup, probably remaps
-  z-bucket (0..65535) to bucket-id (0..1023).
+- ~~**Sort key LUT at `DAT_00b0d008`**~~ - **DECODED** - `g_zSortKeyLUT`
+  is built by `BuildSortKeyLUT` (`0x004bf290`) with the hyperbolic
+  formula `(s32)(i / (i * 31 / 65536 + 1))`. See [render.md](render.md).
 
 ### RLE-16 stream
 
@@ -886,7 +920,7 @@ Successfully decoded (visual confirmation, RGB-555 + xor_key=0):
 | Function | VA | Role |
 |---|---|---|
 | `LoadGeoAsset_Textures` | `0x004bd6e0` | Loads a .geo file via FSYS_fload, then iterates the texture entries and dispatches each to a cache slot |
-| `Tex_DecodeRLE16` | `0x004bd5f0` | Decodes RLE-16 to a 256-stride buffer, then calls `FUN_004bf370(slot, 0, 0, w, h)` (suspected GPU upload) |
+| `Tex_DecodeRLE16` | `0x004bd5f0` | Decodes RLE-16 to a 256-stride buffer, then calls `Helper_TexUpload(slot, 0, 0, w, h)` (`0x004bf370` - GPU upload) |
 | `FSYS_fopen` | `0x004b1e00` | Open by name (binary search by hash) |
 | `FSYS_fload` | `0x004b2160` | Read entire asset into a buffer |
 | `FSYS_fsize` | `0x004b2120` | Size by name (suspected) |
@@ -1311,23 +1345,25 @@ It's a switch-based FSM driven by a state variable `g_gameState`
                 STATE 6 again
 ```
 
-| State | Handler | Suspected role |
-|---|---|---|
-| 0 | (idle) | Main menu / boot screen |
-| 4 | `FUN_004b65c0` | **Active fight** (in-game gameplay) |
-| 5 | `FUN_004b8630` | Arcade mode? |
-| 6 | `FUN_004b84d0` | Vs mode? (transitions to sub-states 0x18-0x1c) |
-| 7 | `FUN_004b8a30` | Tournament? |
-| 8 | `FUN_004b8730` | (TBD) |
-| 9 | `FUN_004b8830` | Options? |
-| 0xa | `FUN_004b8930` | (TBD) |
-| 0xb | `FUN_004b8d70` | Credits? |
-| 0xc | `FUN_004b8bd0` | Settings? |
-| 0x18 | `FUN_004b6900` | Character select 1? |
-| 0x19 | `FUN_004b7260` | Character select 2? |
-| 0x1a | `FUN_004b7b10` | Stage select? |
-| 0x1b | `FUN_004b7df0` | Pre-fight intro? |
-| 0x1c | `FUN_004b81f0` | (calls SetRendererMode on exit - graphics options?) |
+| State | Handler                       | Role (DECODED via byte-table dispatch)    |
+|-------|-------------------------------|-------------------------------------------|
+| 0     | (main menu, sub-dispatches on `cmd` via `g_gsmJumpTable2`) | MAINMENU       |
+| 4     | `Helper_GSM_HandleEvent` `0x004b84d0` | TRANSITION (audio re-arm)            |
+| 5     | `Helper_GSM_VS` `0x004b6900`  | ARCADE                                    |
+| 6     | `Helper_GSM_Tournament` `0x004b7260` | VS                                  |
+| 7     | `Helper_GSM_Practice` `0x004b7b10` | TOURNAMENT                            |
+| 8     | `Helper_GSM_Options` `0x004b7df0` | PRACTICE                              |
+| 9     | `Helper_GSM_Config` `0x004b81f0` | OPTIONS                                |
+| 0xa   | (handler reused)              | CONFIG                                    |
+| 0xb   | (default no-op)               | CREDITS (falls through to default tail)   |
+| 0xc   | (default no-op)               | SETTINGS                                  |
+| 0x18  | `Helper_GSM_Sub18` `0x004b8630` | CHAR_SELECT_1                            |
+| 0x19  | `Helper_GSM_Sub19` `0x004b8730` | CHAR_SELECT_2                            |
+| 0x1a  | `Helper_GSM_Sub1A` `0x004b8830` | STAGE_SELECT                             |
+| 0x1b  | `Helper_GSM_Sub1B` `0x004b8930` | PRE_FIGHT_INTRO                          |
+| 0x1c  | `Helper_GSM_Sub1C` `0x004b8a30` | GFX_OPTIONS                              |
+
+Full byte-table + sub-dispatch decoding in [combat_fsm.md](combat_fsm.md).
 
 The 4 callers of `GameStateMachine`:
 - **`AppInit`** - sets initial state during boot
@@ -1361,53 +1397,66 @@ The FSM (`g_gameState`) is **menu-only** - it dispatches between UI
 screens. The fight itself runs through `GameTick`, which is gated by
 `g_gameMode = 0`. Both run every frame; their effects are independent.
 
-### GameTick architecture
+### GameTick architecture (current pure-C body)
+
+The function is now pure C in [src/game/game_tick.c](../../src/game/game_tick.c).
+The placeholder names "Physics" / "Collision" / "TickEntity_A/B" from
+my earlier interpretation were wrong - see the explicit correction
+section below. Current accurate flow:
 
 ```c
-GameTick(int param):
-    // Per-entity tick (alternate between TickEntity_A / _B by submode)
-    if (g_gameMode != 0) {
-        if (DAT_00543804 == 2) TickEntity_B();
-        else TickEntity_A();
-    }
-    if (DAT_0054356c == 1) {
-        if (DAT_00543590 == 1) TickEntity_A();
-        else TickEntity_B();
-    }
-    if (DAT_004f3234 != 2 && DAT_00543438 != 0) {
-        if (DAT_00543590 == 1) TickEntity_A();
-        if (DAT_00543590 == 2) TickEntity_B();
-    }
-    
-    if (g_gameMode == 0) {           // active fight
-        Physics();                   // FUN_0045c5c0
-        Collision();                 // FUN_0045c820
-    }
-    UpdateGeneralEntities();         // FUN_004a1d50
-    UpdateInput();                   // thunk_FUN_0041f570
-    
+void GameTick(int param) {
+    /* 1. Debug stubs (DebugStub_NoOp_A/B are compiled out - 1-byte ret) */
+    if (g_gameMode != 0) DebugStub_NoOp_*(g_gtPauseMode);
+    if (g_gtOtherFlag == 1) DebugStub_NoOp_*(g_gtModeFlag);
+    if (g_gtConfig4f != 2 && g_gtState438 != 0) DebugStub_NoOp_*();
+
+    /* 2. Main fight pump */
     if (g_gameMode == 0) {
-        // Per-player update for up to 4 players
+        FightFrameStep();                /* 0x0045c5c0 - 3-pass scenegraph */
+        if (g_framePauseFlag) return;
+        ++g_gtFightTickCounter;
+        DispatchEventQueue();            /* 0x0045c820 - drain pending events */
+        if (g_framePauseFlag) return;
+    }
+
+    Helper_TickFrame_Misc();             /* 0x004a1d50 */
+    if (g_framePauseFlag) return;
+    Helper_TickFrame_PostFight();        /* 0x0049cbe0 */
+    if (g_framePauseFlag) return;
+
+    /* 3. Per-player tick (only in fight mode) */
+    if (g_gameMode == 0) {
+        g_walkCallback = (void *)g_player1NodeIdx;
+        if (g_player1NodeIdx != 0) Helper_PerPlayerTick();
+        if (g_framePauseFlag) return;
+        Helper_PostPlayerTick();         /* 0x004227b0 */
+        if (g_framePauseFlag) return;
+        Helper_TickFrameTail();          /* 0x004051e0 */
+        if (g_framePauseFlag) return;
+    }
+
+    /* 4. 4-player overlay scan (toggles +0x1000 flag based on y-position) */
+    if (param == 0) {
         for (i = 1..4) {
-            if (g_playerN_NodeIdx != 0
-                && nodes[N].player_id == i
-                && nodes[N].opponent != 0
-                && nodes[N].state != 0x501) {
-                // Update camera-bound flag (off-screen detection)
-                if (nodes[N].position_y < -0xffff) {
-                    nodes[N].flags &= ~0x1000;
-                } else {
-                    nodes[N].flags |= 0x1000;
-                }
+            p = g_playerN_NodeIdx;
+            if (p && nodes[p].player_id == i && probes != 0 && state != 0x501) {
+                if (enabled && nodes[p].pos_y > -0xffff_0000)
+                    nodes[p].flags |= 0x1000;
+                else
+                    nodes[p].flags &= ~0x1000;
             }
         }
-        OtherUpdate();               // FUN_00405400
-        // Lerp camera shake / RGB lighting back toward neutral 0x8000
-        DAT_00ab4e44 += (0x8000 - DAT_00ab4e44) >> 3;
-        DAT_00ab4e48 += (0x8000 - DAT_00ab4e48) >> 3;
-        DAT_00ab4e4c += (0x8000 - DAT_00ab4e4c) >> 3;
     }
+
+    /* 5. Axis lowpass + sentinel reset */
+    g_gtAxisX += (0x8000 - g_gtAxisX) / 8;    /* same for Y, Z */
+    if (g_gameMode == -1) g_gameMode = 0;
+}
 ```
+
+See [combat_fsm.md](combat_fsm.md) for the full per-frame breakdown
+including the event queue ping-pong and the 4-player state machine.
 
 ### Player descriptor layout
 
@@ -1430,41 +1479,36 @@ Three of GameLogicStep's auxiliary calls are audio updates:
 | `Audio_TimerTick` | `0x004ac4b0` | Schedules background audio via timeGetTime |
 | `Audio_UpdateChannels` | `0x004c37f0` | Iterates active sound channels, ticks each via vtable[0x24], removes finished ones |
 
-The remaining unidentified GameLogicStep helpers (`FUN_004b5850` for
-idle logic when state==0, `FUN_004bd990`) are minor cleanup wrappers.
+The other GameLogicStep helpers (`GameStateMachineMaybeRebuild` at
+`0x004b5850` for idle-when-state-0 logic, `XformChainAdvance` at
+`0x004bd990` for per-frame xform update) are minor cleanup wrappers.
 
 ## GameLogicStep - the per-frame heart of gameplay
 
 ```c
 void GameLogicStep(void) {
-    g_frameCounter++;                  // 60 Hz monotonic counter
-    g_gameStateResult = GameStateMachine(0);   // tick current state
+    ++g_frameCounter;                                  // 60 Hz monotonic counter
+    g_gameStateResult = GameStateMachine(0);           // menu FSM tick
     if (g_gameStateResult == 0) {
-        FUN_004b5850();                // idle logic when state == 0
+        GameStateMachineMaybeRebuild();                // 0x004b5850 - idle when state==0
     }
-    FUN_004c37f0();                    // (TBD) probably input poll
-    FUN_004ac4b0();                    // (TBD) probably entity update
-    if (FUN_004b3db0() == 4 && DAT_004ffd78 == 0) {
-        // Force into state 0xc (settings / pause menu?)
-        GameStateMachine(8);
-        DAT_0054381c = 0;
+    Audio_UpdateChannels();                            // 0x004c37f0 - DSound channel sweep
+    Audio_TimerTick();                                 // 0x004ac4b0 - MCI music timer
+    if (Renderer_GetMode() == 4 && g_mode4PauseGate == 0) {
+        GameStateMachine(8);                           // SW-Windowed pause path
+        g_logicStepFlag = 0;
         return;
     }
-    FUN_004bd990();                    // (TBD)
-    FUN_0041fd70(0);                   // (TBD)
-    DAT_0054381c = 0;
+    XformChainAdvance();                               // 0x004bd990 - per-frame xform update
+    GameTick(0);                                       // 0x0041fd70 - active-fight tick
+    g_logicStepFlag = 0;
 }
 ```
 
-The 5 unidentified calls (`FUN_004b5850`, `FUN_004c37f0`, `FUN_004ac4b0`,
-`FUN_004bd990`, `FUN_0041fd70`) are likely the per-frame subsystem
-updates: **input polling, entity tick, physics step, collision detection,
-particle update**. Each could be reverse-engineered in 1-2 sessions if
-gameplay-level RE is wanted.
-
-For PORTING purposes, knowing the FSM exists and dispatches through
-known function pointers is enough - the port can replace each handler
-with its own UI implementation.
+All 5 helpers are now identified. The pure-C body lives in
+[src/game/tick.c](../../src/game/tick.c). Full per-frame breakdown
+(menu FSM, fight tick, event queue, per-player overlay scan) in
+[combat_fsm.md](combat_fsm.md).
 
 ---
 
@@ -1563,22 +1607,20 @@ After more digging, the per-entity update lives in a **scene-graph
 callback walker**, not in dedicated tick functions:
 
 ```
-GameTick                                 (FUN_0041fd70)
-└── ... → FrameFinalize                  (FUN_00405400, end of GameTick)
-    └── TickAllEntities                  (FUN_004b9e50)
+GameTick                                 (0x0041fd70)
+└── ... → FrameFinalize                  (0x00405400, end of GameTick)
+    └── TickAllEntities                  (0x004b9e50)
         for each of 6 root subtrees in scene graph:
             (HUD, P1, P2, effects, BG, ... at fixed indices)
-            └── WalkSceneGraphSiblings   (FUN_004ba130)
+            └── Helper_TickInner         (0x004ba130 - sibling-walker)
                 follows nodes[i].field_4 next-ptr linked list
                 for each entity:
-                    └── PerEntityTick callback    (LAB_004ba1c0)
-                        - reads node handler at +0x18
-                        - reads node flags at +0x34
-                        - compares node idx to g_player1NodeIdx /
-                          g_player2NodeIdx for player-aware logic
-                        - dispatches per-entity behavior
-                        - (full code at LAB_004ba1c0 - large, not yet
-                          fully decompiled)
+                    └── Helper_FightSceneCallback (0x004ba1c0)
+                        = the camera-transform + frustum-cull +
+                          RenderSceneNode wrapper. Reads node
+                          handler at +0x18, flags at +0x34,
+                          compares idx to g_player1..4NodeIdx.
+                        (Full body large - see [scenegraph.md])
 ```
 
 So the per-frame loop is:
@@ -1621,22 +1663,41 @@ doesn't reveal further architectural surprises.
 
 ## Open questions / TODO
 
-- **`.geo` mesh portion** - decode the bytes from `0x0C` to
-  `tex_table_offset`. Likely contains vertex positions, indices, UVs, and
-  texture-slot references. Look at `LoadGeoAsset_Textures` callers and
-  whichever function reads the mesh data.
-- **`.esf` sound format** - magic `'ESF\x06'`, 674 sounds known by name.
-  Worth decoding.
-- **Graphics frame-step trio** - confirm individual roles of `FUN_004b4200`,
-  `FUN_004b42e0`, `FUN_004b3e90`. One of them is called from WM_PAINT
-  only when in mode 4 - that's likely the blit/present.
-- **Confirm Renderer2/3/5 identities** - decompile to verify suspected
-  D3D / SW Fullscreen / SW Hi-res mappings.
-- **`FUN_004b6340`** - 18 callees, called from WndProc on F1/F2 keys with
-  args 1/2 - likely a multi-mode menu / pause handler. Worth a look.
-- **Compiler identification** - likely MSVC 5/6, but confirm via Detect It
-  Easy or by recognizing CRT signatures.
+### Resolved since this section was written
+
+- ~~**`.geo` mesh portion**~~ - **DONE**. Block-header table, vertex
+  stream (12 bytes / vertex), header stream (4 bytes / strip), triangle-
+  strip encoding all decoded. `DrawMeshBlock` is the per-leaf submitter.
+  See [scenegraph.md](scenegraph.md) and [render.md](render.md).
+- ~~**`.esf` sound format**~~ - **FULLY DECODED**. 8-byte header, MS-IMA
+  ADPCM decoder verified, 356 of 385 PCMK files extracted to WAV. See
+  the dedicated section above and [install.md](install.md).
+- ~~**Graphics frame-step trio**~~ - **DONE**. `BeginFrame` /
+  `DrawScene` / `PresentFrame` confirmed and their per-mode dispatchers
+  decompiled. See [render.md](render.md).
+- ~~**Confirm Renderer2/3/5 identities**~~ - **DONE**. R2 = Direct3D 2
+  via DDraw QueryInterface; R3 = DDraw FS 320x240; R5 = DDraw FS hi-res.
+- ~~**`FUN_004b6340`**~~ - **IDENTIFIED**. It's `GameStateMachine` -
+  the top-level menu FSM. F1/F2 keys map to `cmd 1/2` sub-dispatch.
+  See [combat_fsm.md](combat_fsm.md).
+- ~~**Compiler identification**~~ - **CONFIRMED MSVC 5.0 SP3** (CL
+  11.00.7022 Pro Optimizing). Byte-identical rebuild produced from
+  reconstructed C source as proof.
+
+### Still open
+
 - **2 unidentified FILESYS.DAT entries** (entries 0 and 1) - small (3 KB)
-  and large (1.1 MB), with hashes 0x2da2df95 / 0x2da3df95 differing by
-  one char. Probably a base/data pair outside the standard `c:\source\mk4\`
-  prefix.
+  and large (1.1 MB), with hashes `0x2da2df95` / `0x2da3df95` differing
+  by one char. Probably a base/data pair outside the standard
+  `c:\source\mk4\` prefix.
+- **Bit-by-bit Huffman decoder spec** for ECM mode 1 (~2400 bytes asm).
+  For porting, replacing ECM with a modern video container is far
+  cheaper than implementing the codec. See [install.md](install.md).
+- **Per-primitive draw routines** - 12 functions call `SubmitDrawEntry`,
+  one per visual primitive type (textured/alpha/dithered/etc).
+  Cataloging would map all the SW rasterizers.
+- **Euler axis identification** - 3 `BuildRotMatrix_Order*` builders
+  use different multiplication orderings; the exact axis sequence
+  (XYZ vs ZYX vs YXZ vs ...) hasn't been pinned down for each.
+- **Skinning (joint weights)** - if animated characters have per-vertex
+  bone weights, they likely live in `ofs_c` of each .geo block.
