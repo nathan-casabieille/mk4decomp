@@ -111,13 +111,13 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 /* @addr 0x0048f810 (97b) - twin of 0x0048f740 with source offsets 0x54/0x58/0x5c. */
 void TripleFieldCopyJmpLo_0048f810(void) {
     unsigned int val;
-    val = *(unsigned int *)(g_cj_0054205c * 4 + 0x54);
+    val = ((ScenegraphNode *)(g_cj_0054205c * 4))->position_x;
     g_walkCallback = (void (*)(void))val;
     *(unsigned int *)(g_baseSel_00542060 * 4 + 0x5c) = val;
-    val = *(unsigned int *)(g_cj_0054205c * 4 + 0x58);
+    val = ((ScenegraphNode *)(g_cj_0054205c * 4))->position_y;
     g_walkCallback = (void (*)(void))val;
     *(unsigned int *)(g_baseSel_00542060 * 4 + 0x60) = val;
-    val = *(unsigned int *)(g_cj_0054205c * 4 + 0x5c);
+    val = ((ScenegraphNode *)(g_cj_0054205c * 4))->position_z;
     g_walkCallback = (void (*)(void))val;
     *(unsigned int *)(g_baseSel_00542060 * 4 + 0x64) = val;
     ScaledZeroFour_00490740();

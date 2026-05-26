@@ -120,10 +120,10 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 void DualMul10ChainAcc_0042d010(void) {
     unsigned int cj = g_cj_0054205c;
-    int a = (int)*(unsigned int *)(cj * 4 + 0x54);
+    int a = (int)((ScenegraphNode *)(cj * 4))->position_x;
     int b;
     g_acc_00542078 = (unsigned int)a;
-    b = (int)*(unsigned int *)(cj * 4 + 0x5c);
+    b = (int)((ScenegraphNode *)(cj * 4))->position_z;
     a -= (int)g_eventQueueCurrent;
     b -= (int)g_eventQueueWorkType;
     g_acc_00542078 = (unsigned int)a;

@@ -121,9 +121,9 @@ void DualMul10AccCj_00491230(void) {
     unsigned int v2;
     unsigned int r1;
     unsigned int r2;
-    v1 = *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x54);
+    v1 = ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_x;
     g_walkCallback = (void (*)(void))v1;
-    v2 = *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x5c);
+    v2 = ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_z;
     g_eventQueueCurrent = v2;
     r1 = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail_00404af0)(v1, v1);
     g_walkCallback = (void (*)(void))r1;

@@ -131,9 +131,9 @@ int TimerWindowThreshDispatch_0046fd70(void) {
     }
     CmpP1ScaledInit_004709c0();
     if (g_framePauseFlag != 0) return g_framePauseFlag;
-    a = *(unsigned int *)((unsigned int)g_scaledInit_00542044 * 4 + 0x58);
+    a = ((ScenegraphNode *)((unsigned int)g_scaledInit_00542044 * 4))->position_y;
     g_eventQueueWorkType = a;
-    c = *(unsigned int *)(g_cj_0054205c * 4 + 0x58);
+    c = ((ScenegraphNode *)(g_cj_0054205c * 4))->position_y;
     a -= c;
     g_eventQueueCurrent = c;
     g_eventQueueWorkType = a;
