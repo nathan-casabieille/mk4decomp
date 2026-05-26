@@ -62,7 +62,7 @@ void PushPopScaled1cDoubleCall_00408510(void) {
     *(unsigned int *)(g_matrixStackTop * 4) = g_xformEntityIdx;
     func_00409970_ii();
     if (g_framePauseFlag != 0) return;
-    v = *(unsigned int *)(g_fightGroupHead * 4 + 0x1c);
+    v = ((ScenegraphNode *)(g_fightGroupHead * 4))->alloc_flags;
     g_xformEntityIdx = v;
     if (v != 0) {
         PushSetCallCleanup_00408580();
