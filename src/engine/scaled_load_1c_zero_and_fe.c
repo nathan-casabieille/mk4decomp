@@ -28,7 +28,7 @@ void ScaledLoad1cZeroAndFE_00446640(void) {
     s = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x30);
     g_walkCallback = 0;
     g_scaledInit_00542044 = s;
-    *(unsigned int *)(s * 4 + 0x1c) = 0;
+    ((ScenegraphNode *)(s * 4))->alloc_flags = 0;
     s = g_scaledInit_00542044;
     v = ((ScenegraphNode *)(s * 4))->flags & 0xFFFFFEFFu;
     g_walkCallback = (void(*)(void))v;

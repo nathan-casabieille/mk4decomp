@@ -132,5 +132,5 @@ void FourFieldCopyCallSet_00446040(void) {
     if (g_framePauseFlag != 0) return;
     g_scaledInit_00542044 = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x5c);
     g_walkCallback = (void (*)(void))2;
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x1c) = 2;
+    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->alloc_flags = 2;
 }
