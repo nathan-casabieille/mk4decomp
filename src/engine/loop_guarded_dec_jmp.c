@@ -15,7 +15,7 @@ extern unsigned int g_dispatchSave1219_004e37d0;
 extern void Cascade3ChainInit_0048fa50(void);
 extern void TripleEntryStateCascade_0042c7e0(void);
 void LoopGuardedDecJmp_0042c790(void) {
-    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x5c) = (unsigned int)g_walkCallback;
+    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->position_z = (unsigned int)g_walkCallback;
     Cascade3ChainInit_0048fa50();
     if (g_framePauseFlag != 0) return;
     ArgSarStoreJmp_004594f0(&g_dispatchSave1219_004e37d0);

@@ -127,13 +127,13 @@ void FiveFieldChainCopyTableWalk_00431260(void) {
     g_scaledInit_00542044 = g_load_0052ab10;
     g_xformEntityIdx = g_xformEntityIdxSrc_00541fac;
     g_walkCallback = *(unsigned int *)(g_xformEntityIdx * 4);
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x54) = g_walkCallback;
+    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_x = g_walkCallback;
     g_xformEntityIdx++;
     g_walkCallback = *(unsigned int *)(g_xformEntityIdx * 4);
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x58) = g_walkCallback;
+    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_y = g_walkCallback;
     g_xformEntityIdx++;
     g_walkCallback = *(unsigned int *)(g_xformEntityIdx * 4);
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x5c) = g_walkCallback;
+    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_z = g_walkCallback;
     g_xformEntityIdx++;
     g_walkCallback = *(unsigned int *)(g_xformEntityIdx * 4);
     *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x60) = g_walkCallback;

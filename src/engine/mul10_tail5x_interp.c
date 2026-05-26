@@ -122,6 +122,6 @@ void Mul10Tail5xInterp_00485d90(void) {
     g_eventQueueChild = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail_00404af0)(g_currentNodeFlags, g_eventQueueChild);
     g_walkCallback += g_eventQueueNotMask;
     g_eventQueueCurrent += g_eventQueueChild;
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x54) = g_walkCallback;
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x5c) = g_eventQueueCurrent;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->position_x = g_walkCallback;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->position_z = g_eventQueueCurrent;
 }

@@ -120,9 +120,9 @@ extern unsigned int g_matrixStack_arr;
  */
 void ChainAccumMul10Pair_00490b70(void) {
     unsigned int v;
-    v = g_walkCallback + *(unsigned int *)(g_fightGroupHead * 4 + 0x58);
+    v = g_walkCallback + ((ScenegraphNode *)(g_fightGroupHead * 4))->position_y;
     g_eventQueueWorkType = v;
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x58) = v;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->position_y = v;
     g_scaledInit_00542044 = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x40);
     g_walkCallback = (&g_matrixStack_arr)[g_scaledInit_00542044];
     g_walkCallback = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail_00404af0)(
@@ -131,10 +131,10 @@ void ChainAccumMul10Pair_00490b70(void) {
     g_eventQueueWorkType = (&g_matrixStack_arr)[g_scaledInit_00542044];
     g_eventQueueWorkType = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail_00404af0)(
         g_eventQueueCurrent, g_eventQueueWorkType);
-    v = g_walkCallback + *(unsigned int *)(g_fightGroupHead * 4 + 0x54);
+    v = g_walkCallback + ((ScenegraphNode *)(g_fightGroupHead * 4))->position_x;
     g_eventQueueCurrent = v;
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x54) = v;
-    v = g_eventQueueWorkType + *(unsigned int *)(g_fightGroupHead * 4 + 0x5c);
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->position_x = v;
+    v = g_eventQueueWorkType + ((ScenegraphNode *)(g_fightGroupHead * 4))->position_z;
     g_eventQueueCurrent = v;
-    *(unsigned int *)(g_fightGroupHead * 4 + 0x5c) = v;
+    ((ScenegraphNode *)(g_fightGroupHead * 4))->position_z = v;
 }

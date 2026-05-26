@@ -123,13 +123,13 @@ void TripleFieldChainSub_00446400(void) {
     unsigned int val;
     scaled = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x4c);
     g_scaledInit_00542044 = scaled;
-    val = *(unsigned int *)(g_cj_00542058 * 4 + 0x54);
+    val = ((ScenegraphNode *)(g_cj_00542058 * 4))->position_x;
     g_walkCallback = (void (*)(void))val;
-    *(unsigned int *)(scaled * 4 + 0x54) = val;
-    val = *(unsigned int *)(g_cj_00542058 * 4 + 0x58) - 0xccc;
+    ((ScenegraphNode *)(scaled * 4))->position_x = val;
+    val = ((ScenegraphNode *)(g_cj_00542058 * 4))->position_y - 0xccc;
     g_walkCallback = (void (*)(void))val;
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x58) = val;
-    val = *(unsigned int *)(g_cj_00542058 * 4 + 0x5c);
+    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_y = val;
+    val = ((ScenegraphNode *)(g_cj_00542058 * 4))->position_z;
     g_walkCallback = (void (*)(void))val;
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x5c) = val;
+    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_z = val;
 }

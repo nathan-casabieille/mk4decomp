@@ -131,15 +131,15 @@ void TripleScaledChainStore54_004313d0(int arg) {
     v = *(unsigned int *)(idx * 4);
     g_walkCallback = (void (*)(void))v;
     g_scaledInit_00542044 = idx + 1;
-    *(unsigned int *)(cj * 4 + 0x54) = v;
+    ((ScenegraphNode *)(cj * 4))->position_x = v;
     idx = g_scaledInit_00542044;
     v = *(unsigned int *)(idx * 4);
     g_walkCallback = (void (*)(void))v;
     g_scaledInit_00542044 = idx + 1;
-    *(unsigned int *)(g_cj_0054205c * 4 + 0x58) = v;
+    ((ScenegraphNode *)(g_cj_0054205c * 4))->position_y = v;
     idx = g_scaledInit_00542044;
     v = *(unsigned int *)(idx * 4);
     g_walkCallback = (void (*)(void))v;
     g_scaledInit_00542044 = idx + 1;
-    *(unsigned int *)(g_cj_0054205c * 4 + 0x5c) = v;
+    ((ScenegraphNode *)(g_cj_0054205c * 4))->position_z = v;
 }
