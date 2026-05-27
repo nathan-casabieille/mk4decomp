@@ -67,16 +67,27 @@ shape**, and the cursor that selects the view differs:
   `ScenegraphNode` view: +0x84 task state, +0x54 position, +0x04
   cursor, +0x08 continuation).
 - `g_xformEntityIdx` -> an **angle / transform-input record**. The
-  `NodeApplyTransform_{A,B,C}` handlers read three 16.16 rotation
-  angles from its `+0x00 / +0x04 / +0x08` and write a 3x3 matrix to the
-  `g_currentNodeIdx` node (see [scenegraph.md](scenegraph.md)).
+  `NodeApplyTransform_{A,B,C}` handlers read three rotation angles from
+  its `+0x00 / +0x04 / +0x08` (16.16 radians, wrapped to the `0x6487e`
+  period; the non-`Direct` handlers convert them to 12-bit BAM via the
+  `((x>>2)*10430)>>18` scale, the `Direct` handlers take BAM straight)
+  and write a 3x3 matrix to the `g_currentNodeIdx` node (see
+  [scenegraph.md](scenegraph.md)).
+- `g_currentNodeIdx` as **matrix-output record**. `BuildRotMatrix_*`'s
+  second arg is `(s16 *)(g_currentNodeIdx * 4)`, so it writes the nine
+  16-bit matrix cells into that node's **first 18 bytes**
+  (`+0x00..+0x11`, row-major as decoded in scenegraph.md). So during a
+  transform pass +0x00..+0x11 of the current node hold a rotation
+  matrix - a *third* meaning for the same low bytes that the
+  `ScenegraphNode` view calls `payload`/`self_ref`/`alloc_type`.
 
 So the same byte offset can mean different things depending on which
 cursor reached the record. The `ScenegraphNode` fields apply to the
 **task/scene node** view; do not assume +0x04/+0x08 are the
 cursor/continuation when the access goes through `g_xformEntityIdx`
-(there they are rotation angles). When in doubt, check which global
-indexed the `*4`.
+(there they are rotation angles) or `g_currentNodeIdx` during a
+transform pass (there +0x00..+0x11 are a 3x3 matrix). When in doubt,
+check which global indexed the `*4`.
 
 ## What this view adds over `ScenegraphNode`
 
