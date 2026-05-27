@@ -75,9 +75,7 @@ most call sites:
 
 | Off  | Accesses | Notes / hypothesis (unconfirmed) |
 |-----:|---------:|----------------------------------|
-| +0x5c | 1900 | often written `0x10000` / `0x100000` (looks like a 16.16 scale or a render flag) |
-| +0x58 | 1867 | |
-| +0x54 | 1729 | |
+| +0x54 / +0x58 / +0x5c | 1729 / 1867 / 1900 | **a 16.16 fixed-point 3-vector** (partly pinned). The constants written to +0x5c are all clean 16.16 values - `0x10000`=1.0, `0x18000`=1.5, `0x30000`=3.0, `0xa0000`=10.0, `0xc0000`=12.0. The three are frequently set together by spawn/physics/anim functions (`bullet_volley_spawner`, `aerial_kick_combo_cluster`, `death_anim_cluster`, ...), consistent with a position or velocity vector. Which of position/velocity/scale is still unconfirmed - needs the consumer (transform/physics integrator). |
 | +0x30 | 1652 | |
 | +0x34 | 1556 | adjacent to +0x30 - possible pair (x/y? min/max?) |
 | +0x70 | 1018 | adjacent to the +0x74 pose field - maybe anim frame/timer |
@@ -112,11 +110,12 @@ address, so treat them as relative weights, not exact totals.)
 
 ## TODOs
 
-- Pin +0x5c (the `0x10000` writer) - likely the first concrete win;
-  trace which render/scale path consumes it.
-- Confirm whether +0x30/+0x34 and +0x54/+0x58/+0x5c are coordinate or
-  bbox pairs by checking arithmetic on them in the physics/collision
-  functions.
+- Finish pinning the +0x54/+0x58/+0x5c vector: it is 16.16 fixed-point
+  and set as a group by spawn/physics code (see above) - trace the
+  integrator/transform that *reads* all three to decide position vs
+  velocity.
+- Confirm whether +0x30/+0x34 are a coordinate or bbox pair by checking
+  arithmetic on them in the physics/collision functions.
 - Emit a real C `struct` once enough fields are pinned, so the
   combat-FSM bodies can be read against named members instead of raw
   offsets.
