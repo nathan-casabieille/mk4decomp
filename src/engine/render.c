@@ -110,6 +110,10 @@ void SetViewport(int x, int y, int w, int h)
  * before the EndScene/Flip vtbl call. count is in triangles - the
  * D3D call wants vertices, hence the count*3.
  *
+ * The arg pair (4, 3) is (D3DPT_TRIANGLELIST, D3DVT_TLVERTEX), so
+ * g_renderer2_vertexBatch is read as an array of D3DTLVertex (see
+ * include/engine/render_types.h), 3 per queued triangle.
+ *
  * @addr 0x004adc60
  */
 void Renderer2_FlushBatch_D3D(void)

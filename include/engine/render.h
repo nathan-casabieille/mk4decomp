@@ -326,7 +326,9 @@ s32  R2_Init11(s32 idx);                 /* 0x004af020 */
 void R2_Cleanup(void);                   /* 0x004ad7c0 */
 extern s32    g_renderer2_batchCount;    /* 0x0058c7f0 - queued tris (count) */
 
-/* Buffer of pending D3D primitives flushed by Renderer2_FlushBatch_D3D. */
+/* Buffer of pending D3D primitives flushed by Renderer2_FlushBatch_D3D
+ * - an array of D3DTLVertex (see include/engine/render_types.h), 3 per
+ * queued triangle (live extent = g_renderer2_batchCount * 3 verts). */
 extern u8     g_renderer2_vertexBatch[]; /* 0x00544718 */
 
 /* Submit any pending D3D primitive batch and reset the queued
@@ -334,11 +336,11 @@ extern u8     g_renderer2_vertexBatch[]; /* 0x00544718 */
 void Renderer2_FlushBatch_D3D(void);                    /* 0x004adc60 */
 
 extern u32  g_drawQueueSize;         /* 0x00f85b40 */
-extern u8   g_drawQueue[DRAW_QUEUE_MAX * DRAW_QUEUE_SIZE]; /* 0x00f71310 */
+extern u8   g_drawQueue[DRAW_QUEUE_MAX * DRAW_QUEUE_SIZE]; /* 0x00f71310 - DrawEntry[] (render_types.h) */
 extern u32  g_drawQueueBuckets[DRAW_QUEUE_BUCKETS];       /* 0x00f6d050 */
 
 /* Per-frame clip-rect scratch reused by SubmitDrawEntry's two
- * bounds-loops (X then Y). */
+ * bounds-loops (Y coords first, then X). */
 extern s32  g_clipMinScratch;        /* 0x00f70f70 */
 extern s32  g_clipMaxScratch;        /* 0x00f70f78 */
 
@@ -366,7 +368,8 @@ extern f32  g_glideTable1[256];      /* 0x007afaa8 */
 extern f32  g_glideTable2[8];        /* 0x007afa28 */
 extern f32  g_glideTable3[];         /* 0x007aff50 */
 
-/* Adapter-info struct grEnumerate fills out (0x25 dwords). */
+/* Adapter-info struct grEnumerate fills out (0x25 dwords). Typed as
+ * GrHwConfiguration in include/engine/render_types.h. */
 extern u32  g_glideAdapterInfo[37];  /* 0x007afeb0 */
 
 /* Glide function-pointer table (initialised once at startup; each

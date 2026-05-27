@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "engine/render_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_screenH_004f623c;
@@ -66,6 +67,13 @@ extern void TristripBatchEmit3Cap_004bb680(void);
  *   [edi+0..4]   v0.pos_x/y/z   -> tri-strip ring
  *   [edi+6..0xa] v0.nrm_x/y/z   -> TransformVertex (rotation)
  *   [edi+0xc..0x10] v1.pos      ; [edi+0x14..0x1e] v1.nrm
+ *
+ * Output side (esi = DrawEntry, see include/engine/render_types.h): writes
+ * the three projected screen verts as packed X:low/Y:high dwords to
+ * +0/+4/+8 (DrawEntry.x0/y0, x1/y1, x2/y2), the facing/valid bit into
+ * flags (+0x1a bit 0x400), and the shaded RGB555 colors to +0x14/+0x16/
+ * +0x18, then tail-calls SubmitDrawEntry. This function is the bridge
+ * from the .geo mesh format to the draw queue.
  */
 __declspec(naked) void DrawMeshBlock(void)
 {

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "engine/render_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
@@ -173,6 +174,20 @@ extern void DoubleToInt64_004c57d0(void);
 extern void GlidePolyClip_004ae560(void);
 extern void Renderer2_FlushBatch_D3D(void);
 
+/*
+ * @addr 0x004adca0 - appends one triangle (3 D3DTLVertex, see
+ * include/engine/render_types.h) to g_renderer2_vertexBatch, which
+ * Renderer2_FlushBatch_D3D then hands to DrawPrimitive.
+ *
+ * NON-COAXABLE: kept naked. The base offset is batchCount*3*32
+ * (lea eax,[eax+eax*2]; shl eax,5 = *96), one 32-byte D3DTLVertex per
+ * triangle vertex. The g_glideVertArr_005447xx globals are per-dword
+ * aliases into that array; per D3DTLVertex field they are:
+ *   +0x00 sx  +0x04 sy  +0x08 sz=1.0  +0x0c rhw=1.0 (0x3f800000)
+ *   +0x10 color (packed from g_palette_00544158)  +0x14 specular (unset)
+ *   +0x18 tu   +0x1c tv  (both g_renderer2_lutTable[...] perspective lookups)
+ * batchCount is bumped once at the tail; capacity guard is cmp eax,0xc00.
+ */
 __declspec(naked) void GlideTriBatchEmit_004adca0(void)
 {
     __asm {

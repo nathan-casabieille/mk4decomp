@@ -1,13 +1,17 @@
 /**
- * Submit a 28-byte draw entry to g_drawQueue.
+ * Submit a 28-byte draw entry (DrawEntry, see
+ * include/engine/render_types.h) to g_drawQueue.
  *
- * Bounds-checks the entry's X coords (fields at +2/+6/+a) and Y
- * coords (fields at +0/+4/+8) against viewport thresholds, skips
- * the entry if out-of-bounds. Otherwise copies it into
- * g_drawQueue[g_drawQueueSize] and rewrites the 16-bit sort key
- * at +0x12 via g_zSortKeyLUT.
+ * Bounds-checks the entry against the viewport in two loops: first the
+ * Y coords (DrawEntry.y0/y1/y2 at +2/+6/+0xa) against the height
+ * envelope (480/580), then the X coords (DrawEntry.x0/x1/x2 at
+ * +0/+4/+8) against the width envelope (640/740). Skips the entry if
+ * out-of-bounds; otherwise copies it into g_drawQueue[g_drawQueueSize]
+ * and rewrites DrawEntry.sort_key at +0x12 via g_zSortKeyLUT. Vertex 1
+ * (x1/y1) is skipped in both loops when flags (+0x1a) bit 0x20 is set.
  */
 #include "engine/render.h"
+#include "engine/render_types.h"
 
 /*
  * @addr 0x004c3360

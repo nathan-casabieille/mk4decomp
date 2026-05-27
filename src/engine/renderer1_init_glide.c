@@ -8,8 +8,15 @@
  * grSstWinOpen, grRenderBuffer, grColorMask, grAlphaCombine, ...).
  * Returns 1 on success, 0 on any failure (with Helper_GlideError
  * called on the way out).
+ *
+ * The grSstQueryHardware call (g_glideFnTable+0x44) fills the 37-dword
+ * GrHwConfiguration at g_glideAdapterInfo (see include/engine/render_types.h):
+ * it is zero-cleared first (mov ecx,0x25; rep stosd), and only its
+ * first dword (num_sst) is tested (must be >= 1) before the pointer is
+ * passed on to grSstWinOpen (g_glideFnTable+0x48).
  */
 #include "engine/render.h"
+#include "engine/render_types.h"
 #include "platform/win32.h"
 
 /*

@@ -270,9 +270,13 @@ and rewrites the sort-key word at +0x12 via `g_zSortKeyLUT[z]`.
 
 The two bounds loops mutate `g_clipMinScratch` / `g_clipMaxScratch`
 in place - these scratch globals at `0x00f70f70/78` are reused per
-entry for X then Y. Still naked.
+entry: the first loop tests the **Y** coords (+2/+6/+0xa) against the
+480/580 height envelope, the second the **X** coords (+0/+4/+8) against
+the 640/740 width envelope. Still naked.
 
 ### Draw entry layout (28 bytes)
+
+Typed as `DrawEntry` in [include/engine/render_types.h](../../include/engine/render_types.h):
 
 ```
 +0x00  int16 x0      vertex 0 screen X
