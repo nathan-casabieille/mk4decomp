@@ -155,7 +155,7 @@ RE, since naming the busiest unlocks the most call sites:
 | +0x18 | 1012 | scenegraph.h `child_chain` - written at alloc from `g_eventQueueChild` (render-node view); high traffic likely includes other-view reuse. |
 | +0x28 |  970 | scenegraph.h `queue_idx` - written at alloc from `g_eventQueueIdx`. |
 | +0x64 |  910 | scenegraph.h `AuxVec3Node.aux_y` (secondary vec3 Y, +0x60/+0x64/+0x68); plain `_60[]` user state on the base view. |
-| +0x6c |  834 | **genuinely TBD** - unnamed in scenegraph.h. |
+| +0x6c |  834 | **TBD, strong lead** - horizontal facing/offset component (see "+0x6c facing lead" below). |
 | +0x48 |  822 | first of scenegraph.h's `_48[3]`. `ScaledMove48to58_00490720` copies it directly into `position_y` (+0x58) - a staged/next-Y committed to the live Y position; combat_fsm.md notes +0x40/+0x48 read together in some walkers. (Polymorphic `_48` slot - meaning likely varies by node type, like +0x38.) |
 | +0x68 |  795 | scenegraph.h `AuxVec3Node.aux_z` (secondary vec3 Z). |
 | +0x38 |  757 | polymorphic user state (anchor ref vs 16.16 scalar) - see cross-cutting table above. |
@@ -217,6 +217,31 @@ that *character* motion is pose/transform-driven; this is a thrown /
 falling object, a different node type). Per the polymorphism rule the
 +0x70 = velocity meaning is asserted only for this fight-group / thrown
 node view, not universally.
+
+## +0x6c facing lead (TBD, two converging clues)
+
++0x6c is unnamed in scenegraph.h but two independent contexts point at
+a **horizontal facing / direction component** in the fighter-vs-fighter
+math (not yet confident enough to name):
+
+1. **Round start** (`round_start_cluster_variants` ~0x319): two nodes
+   (`g_eventQueueEnd` and `g_eventQueueIdx`) get +0x6c set to
+   `0x62e97` and `0xfff9d169` - **equal and opposite** (+/-405143,
+   ~+/-6.18 in 16.16). A symmetric left/right placement of the two
+   combatants. (A sister round-start branch zeroes both instead.)
+2. **Per-player tick** (`helper_per_player_tick` ~0x277/0x323): +0x6c
+   is read, and if zero falls back to +0x74 (`fsm_state`); the value is
+   combined with the `g_fightAxisPosX/PosY/NegX/NegY` globals
+   (`0x535e70..0x535e7c`) through an abs-sum + sign test that yields
+   `0x10000` / `0xffff0000` (= +1.0 / -1.0 in 16.16) - a left/right
+   **facing sign**. Consumed elsewhere via `add ecx, [n+0x6c]`
+   accumulation (`pending_match_variants`) and a `dual_sub_from_field`
+   subtract.
+
+Hypothesis: a per-node horizontal facing / X-offset feeding the
+inter-fighter direction computation. Left TBD pending a writer that
+pins whether it is a position delta, a facing vector, or a knockback
+direction.
 
 ## How to pin a field (method)
 
