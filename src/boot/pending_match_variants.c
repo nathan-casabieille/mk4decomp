@@ -2138,7 +2138,7 @@ __declspec(naked) void MainTickChain_00481070(void)
 }
 
 
-__declspec(naked) void PendingMatch_004a93c0(void)
+__declspec(naked) void Match_TeamOutcomeScreen(void)
 {
     __asm {
         mov      eax, dword ptr [g_baseSel_00542060]

@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /*
- * AudioByteTable8Loop_004a7f50 - 292b audio 8-iter table loop (extended from 0x004a76e0's 6-iter).
+ * CharSelect_Team - 292b audio 8-iter table loop (extended from 0x004a76e0's 6-iter).
  *   For edi in 0..7: esi=(edi*9)*4; index=g_byteTab_004f3c20[esi]; chain=baseSel+index;
  *     g_currentNodeIdx=chain[ecx*4]; call MStackPush2ChainLLInsert_00406790.
  *   Switch on (edi-3): case 0 → use g_audioMixerKnob2_00543440 (3-way: push 0x4f43f4/0x4f43dc/0x4f43cc);
@@ -127,7 +127,7 @@ extern void GuardedSetupCallTailJmp_004a1fa0(void);
 extern void Helper_Sprintf(void);
 extern void MStackPush2ChainLLInsert_00406790(void);
 
-__declspec(naked) void AudioByteTable8Loop_004a7f50(void)
+__declspec(naked) void CharSelect_Team(void)
 {
     __asm
     {

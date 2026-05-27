@@ -109,8 +109,8 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /*
- * AudioByteTable5Loop_004a8970 - 292b audio 5-iter byte-table loop variant.
- *   Same shape as AudioByteTable8Loop_004a7f50 but uses g_byteTab_004f3d80 (offsets
+ * CharSelect_1v1 - 292b audio 5-iter byte-table loop variant.
+ *   Same shape as CharSelect_Team but uses g_byteTab_004f3d80 (offsets
  *   +0/+4/+8/+0xc/+0x10 → 0x004f3d80..0x004f3d90), iterates 5 times instead of 8, and uses
  *   strings 0x004f44c4/a8/94 (case 4) and 0x004f447c/60/4c (case 3) in the printf.
  */
@@ -121,7 +121,7 @@ extern void GuardedSetupCallTailJmp_004a1fa0(void);
 extern void Helper_Sprintf(void);
 extern void MStackPush2ChainLLInsert_00406790(void);
 
-__declspec(naked) void AudioByteTable5Loop_004a8970(void)
+__declspec(naked) void CharSelect_1v1(void)
 {
     __asm
     {

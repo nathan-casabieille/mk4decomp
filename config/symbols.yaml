@@ -13320,7 +13320,7 @@ functions:
     status: matched
     file: src/audio/guarded_setup_call_tail_jmp3.c
   - addr: 0x004a2060
-    name: AudioStoreXfer3SelfInstall_004a2060
+    name: Title_PressStartScreen
     size: 221
     group: audio
     status: matched
@@ -13452,7 +13452,7 @@ functions:
     status: matched
     file: src/audio/two_calls_two_branch_tail.c
   - addr: 0x004a3ce0
-    name: BossFight6StateSequencer_004a3ce0
+    name: Match_OutcomeScreen
     size: 616
     group: audio
     status: matched
@@ -13512,7 +13512,7 @@ functions:
     status: matched
     file: src/audio/test_zero_jmp.c
   - addr: 0x004a42d0
-    name: PendingMatch_004a42d0
+    name: Screen_Loading
     size: 1262
     group: audio
     status: matched
@@ -13554,7 +13554,7 @@ functions:
     status: matched
     file: src/audio/round_display_init_cluster.c
   - addr: 0x004a5160
-    name: AudioByteTable7LoopChainPick_004a5160
+    name: CharSelect_CpuBattlesToggle
     size: 300
     group: audio
     status: matched
@@ -13566,7 +13566,7 @@ functions:
     status: matched
     file: src/audio/konquest_portal_cluster.c
   - addr: 0x004a5540
-    name: Audio11SlotInitLoop_004a5540
+    name: CharSelect_HelpPrompts
     size: 278
     group: audio
     status: matched
@@ -13638,7 +13638,7 @@ functions:
     status: matched
     file: src/audio/install_chain_init_tail_jmp.c
   - addr: 0x004a70f0
-    name: PendingMatch_004a70f0
+    name: Match_ChampionScreen
     size: 1295
     group: audio
     status: matched
@@ -13650,7 +13650,7 @@ functions:
     status: matched
     file: src/audio/audio_micro_entries.c
   - addr: 0x004a76e0
-    name: AudioByteTableLoop_004a76e0
+    name: CharSelect_TeamSize
     size: 221
     group: audio
     status: matched
@@ -13704,7 +13704,7 @@ functions:
     status: matched
     file: src/audio/audio4_entry_scope_dispatch.c
   - addr: 0x004a7f50
-    name: AudioByteTable8Loop_004a7f50
+    name: CharSelect_Team
     size: 292
     group: audio
     status: matched
@@ -13740,7 +13740,7 @@ functions:
     status: matched
     file: src/audio/audio_install_self_state_machine2.c
   - addr: 0x004a8970
-    name: AudioByteTable5Loop_004a8970
+    name: CharSelect_1v1
     size: 292
     group: audio
     status: matched
@@ -13770,7 +13770,7 @@ functions:
     status: matched
     file: src/audio/audio_bank2_state_picker_walk.c
   - addr: 0x004a93c0
-    name: PendingMatch_004a93c0
+    name: Match_TeamOutcomeScreen
     size: 1116
     group: audio
     status: matched
@@ -13788,7 +13788,7 @@ functions:
     status: matched
     file: src/audio/state_cmp_and_store_byte.c
   - addr: 0x004a9940
-    name: PendingMatch_004a9940
+    name: TeamMode_JoinScreen
     size: 2736
     group: audio
     status: matched

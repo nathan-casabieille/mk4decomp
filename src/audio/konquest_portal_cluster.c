@@ -122,7 +122,7 @@ extern unsigned int g_bootInitState_00535de4;
 extern unsigned int g_count_005433b8;
 extern unsigned int g_voicePoolTickFlag_005437f4;
 extern void AudioBindEntry_004a1e40(void);
-extern void AudioByteTable7LoopChainPick_004a5160(void);
+extern void CharSelect_CpuBattlesToggle(void);
 extern void AudioInitArgs3_004a1f20(void);
 extern void AudioState50b4BitDispatcher_004a32c0(void);
 extern void FiveTableWalkInit_00403c90(void);
@@ -206,7 +206,7 @@ __declspec(naked) void EnduranceMode_Handler(void)
         mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [edx*4 + 0x58], 0xfff60000
     L_5360:
-        call     AudioByteTable7LoopChainPick_004a5160
+        call     CharSelect_CpuBattlesToggle
         push     OFFSET g_dispatchSave556_004f3930
         call     ScaledByteIdxDualCopy_004a3260
         add      esp, 4
@@ -238,7 +238,7 @@ __declspec(naked) void EnduranceMode_Handler(void)
     L_53d8:
         mov      dword ptr [g_eventQueueWorkType], 0x32f
         call     Push16Call_00489f50
-        call     AudioByteTable7LoopChainPick_004a5160
+        call     CharSelect_CpuBattlesToggle
         mov      dword ptr [g_eventQueueCurrent], 0x20
         mov      dword ptr [edi + 8], OFFSET L_5290
         mov      edx, dword ptr [g_baseSel_00542060]

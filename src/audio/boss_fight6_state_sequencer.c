@@ -117,7 +117,7 @@ extern void BootInitGuardedCallChain_004265d0(void);
 extern void GuardedSetupCallTailJmp_004a1fa0(void);
 extern void TwoCallsTwoBranchTail_004a3c50(void);
 
-__declspec(naked) void BossFight6StateSequencer_004a3ce0(void)
+__declspec(naked) void Match_OutcomeScreen(void)
 {
     __asm {
     L_3ce0:

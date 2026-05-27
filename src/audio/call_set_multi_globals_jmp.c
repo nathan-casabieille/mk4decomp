@@ -44,7 +44,7 @@ extern unsigned int g_audioPathFlag2_00543710;
 extern unsigned int g_counter_0054359c;
 extern unsigned int g_counter_005433c8;
 extern unsigned char g_byte_00543834;
-extern void PendingMatch_004a93c0(void);
+extern void Match_TeamOutcomeScreen(void);
 void CallSetMultiGlobalsJmp_004a9230(void) {
     DrainQueueCallEach_004a1ec0();
     g_tickFlagF = 2;
@@ -54,5 +54,5 @@ void CallSetMultiGlobalsJmp_004a9230(void) {
     g_counter_0054359c = 0;
     g_counter_005433c8 = 0;
     g_byte_00543834 = 1;
-    PendingMatch_004a93c0();
+    Match_TeamOutcomeScreen();
 }

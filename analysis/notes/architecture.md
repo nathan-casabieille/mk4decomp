@@ -21,6 +21,7 @@ below carry the in-engine plumbing details for porters and contributors:
 - [save_load.md](save_load.md) - Config registry blob, snapshot/restore, obfuscation
 - [events.md](events.md) - event queue ring + scripted (opcode, arg) decoder
 - [debug_menu.md](debug_menu.md) - hidden debug/"kheat" menu (toggles + Kombat Rating stats)
+- [fight_flow.md](fight_flow.md) - title/select/loading/outcome screens (the 0x4a cluster)
 
 Most of the "(suspected)" / "(TBD)" tags below this point have since been
 resolved; the sub-docs are the up-to-date source of truth for their

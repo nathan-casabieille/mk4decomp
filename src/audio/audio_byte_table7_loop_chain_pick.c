@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /*
- * AudioByteTable7LoopChainPick_004a5160 - 300b 7-iter audio byte-table loop with extra picks.
+ * CharSelect_CpuBattlesToggle - 300b 7-iter audio byte-table loop with extra picks.
  *   Loops edi 0..6: chain index from g_byteTab_004f3940[esi=edi*9*4]; g_currentNodeIdx=chain[ecx*4].
  *   Call MStackPush2ChainLLInsert_00406790; load chain pointer (esi-table+0xc) and value (esi-table+0x4).
  *   Special pick when edi==2: ecx = (g_audioStateMachineVar2_004f3928 != 0) ? 0x004d2420 : 0x004d2438.
@@ -123,7 +123,7 @@ extern unsigned int g_audioStateMachineVar2_004f3928;
 extern void GuardedSetupCallTailJmp_004a1fa0(void);
 extern void MStackPush2ChainLLInsert_00406790(void);
 
-__declspec(naked) void AudioByteTable7LoopChainPick_004a5160(void)
+__declspec(naked) void CharSelect_CpuBattlesToggle(void)
 {
     __asm
     {

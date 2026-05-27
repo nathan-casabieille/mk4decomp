@@ -117,11 +117,11 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   ++g_bootInitState_00535de4. esi=1. ecx=g_audioStateMachine0_004f3ae4; walk g_byte_005435a2[i*24] for i in [0,ecx);
  *     if any !=0: keep esi=1; else esi=0. If esi: g_audioBankPick_005433c0=2; tail to cleanup.
  *   Else: ebp=g_audioStateMachine1_004f3ae8; esi=1. Walk g_byte_0054361a[i*24] for i in [0,ebp). If esi: g_audioBankPick_005433c0=1;
- *     cleanup: zero g_counter_0054359c, g_counter_005433c8; call PendingMatch_004a93c0; pop+ret.
+ *     cleanup: zero g_counter_0054359c, g_counter_005433c8; call Match_TeamOutcomeScreen; pop+ret.
  *   Else (both banks have something nonzero): eax = g_audioBankSel_00537f94 again.
  *     If eax==2: roundrobin edx through ecx slots looking for g_byte_005435a2[edx*24]!=0; store to g_counter_0054359c.
  *     If eax==1: roundrobin edi through ebp slots looking for g_byte_0054361a[edi*24]!=0; store to g_counter_005433c8.
- *     call PendingMatch_004a93c0; pop+ret.
+ *     call Match_TeamOutcomeScreen; pop+ret.
  */
 extern unsigned int g_byte_005435a1;
 extern unsigned int g_byte_005435a2;
@@ -134,7 +134,7 @@ extern unsigned int g_audioStateMachine0_004f3ae4;
 extern unsigned int g_audioStateMachine1_004f3ae8;
 extern unsigned int g_counter_005433c8;
 extern void CopyGlobal_004ac1f0(void);
-extern void PendingMatch_004a93c0(void);
+extern void Match_TeamOutcomeScreen(void);
 extern void IncOrZero9_00422080(void);
 
 __declspec(naked) void AudioBank2StatePickerWalk_004a9270(void)
@@ -210,7 +210,7 @@ __declspec(naked) void AudioBank2StatePickerWalk_004a9270(void)
     L_a92_cleanup:
         mov     dword ptr [g_counter_0054359c], 0
         mov     dword ptr [g_counter_005433c8], 0
-        call    PendingMatch_004a93c0
+        call    Match_TeamOutcomeScreen
         pop     edi
         pop     esi
         pop     ebp
@@ -245,7 +245,7 @@ __declspec(naked) void AudioBank2StatePickerWalk_004a9270(void)
         jne     short L_a92_rrLow
         mov     dword ptr [g_counter_005433c8], edi
     L_a92_callEnd:
-        call    PendingMatch_004a93c0
+        call    Match_TeamOutcomeScreen
         pop     edi
         pop     esi
         pop     ebp

@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /*
- * AudioByteTableLoop_004a76e0 - 221b audio iteration over a 6-element byte index table.
+ * CharSelect_TeamSize - 221b audio iteration over a 6-element byte index table.
  *   Loop edi 0..5: esi = (g_baseSel_00542060 + edi) * 4; index = byteTab[0x004f3b48 + esi];
  *     ecx = baseSel + index; edx = chain[ecx*4]; g_currentNodeIdx = edx; call MStackPush2ChainLLInsert_00406790.
  *     Switch on (edi-3): case 0 → push (data_004f3a30[edx*4], 0x004d2608) into Printf args;
@@ -125,7 +125,7 @@ extern void GuardedSetupCallTailJmp_004a1fa0(void);
 extern void Helper_Sprintf(void);
 extern void MStackPush2ChainLLInsert_00406790(void);
 
-__declspec(naked) void AudioByteTableLoop_004a76e0(void)
+__declspec(naked) void CharSelect_TeamSize(void)
 {
     __asm
     {

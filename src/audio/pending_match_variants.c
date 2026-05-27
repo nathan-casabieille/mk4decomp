@@ -149,8 +149,8 @@ extern unsigned int g_audioSavedGlobal5_005437fc;
 extern unsigned int g_audioStateMachine0_004f3ae4;
 extern unsigned int g_audioStateMachine1_004f3ae8;
 extern unsigned int g_counter_005433c8;
-extern void Audio11SlotInitLoop_004a5540(void);
-extern void AudioStoreXfer3SelfInstall_004a2060(void);
+extern void CharSelect_HelpPrompts(void);
+extern void Title_PressStartScreen(void);
 extern void CallDualStoreXorBit_004285e0(void);
 extern void ChainInitDoublePushCall_004a47c0(void);
 extern void ClearTwoCallSetStore_004a2270(void);
@@ -229,7 +229,7 @@ extern void PendingMatch_004a2a80(void);
 extern void PendingMatch_004a56c0(void);
 extern void PendingMatch_004a62b0(void);
 extern void PendingMatch_004a8ca0(void);
-extern void PendingMatch_004a93c0(void);
+extern void Match_TeamOutcomeScreen(void);
 extern void PendingMatch_004aa9f0(void);
 extern void Push16Call_00489f50(void);
 extern void QuadCallPhase2_004be800(void);
@@ -414,11 +414,11 @@ extern void IncOrZero9_00422080(void);
  *   ++g_bootInitState_00535de4. esi=1. ecx=g_audioStateMachine0_004f3ae4; walk g_byte_005435a2[i*24] for i in [0,ecx);
  *     if any !=0: keep esi=1; else esi=0. If esi: g_audioBankPick_005433c0=2; tail to cleanup.
  *   Else: ebp=g_audioStateMachine1_004f3ae8; esi=1. Walk g_byte_0054361a[i*24] for i in [0,ebp). If esi: g_audioBankPick_005433c0=1;
- *     cleanup: zero g_counter_0054359c, g_counter_005433c8; call PendingMatch_004a93c0; pop+ret.
+ *     cleanup: zero g_counter_0054359c, g_counter_005433c8; call Match_TeamOutcomeScreen; pop+ret.
  *   Else (both banks have something nonzero): eax = g_audioBankSel_00537f94 again.
  *     If eax==2: roundrobin edx through ecx slots looking for g_byte_005435a2[edx*24]!=0; store to g_counter_0054359c.
  *     If eax==1: roundrobin edi through ebp slots looking for g_byte_0054361a[edi*24]!=0; store to g_counter_005433c8.
- *     call PendingMatch_004a93c0; pop+ret.
+ *     call Match_TeamOutcomeScreen; pop+ret.
  */
 __declspec(naked) void AudioBank2StatePickerWalk_004a9270(void)
 {
@@ -493,7 +493,7 @@ __declspec(naked) void AudioBank2StatePickerWalk_004a9270(void)
     L_a92_cleanup:
         mov     dword ptr [g_counter_0054359c], 0
         mov     dword ptr [g_counter_005433c8], 0
-        call    PendingMatch_004a93c0
+        call    Match_TeamOutcomeScreen
         pop     edi
         pop     esi
         pop     ebp
@@ -528,7 +528,7 @@ __declspec(naked) void AudioBank2StatePickerWalk_004a9270(void)
         jne     short L_a92_rrLow
         mov     dword ptr [g_counter_005433c8], edi
     L_a92_callEnd:
-        call    PendingMatch_004a93c0
+        call    Match_TeamOutcomeScreen
         pop     edi
         pop     esi
         pop     ebp
@@ -771,7 +771,7 @@ __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
     }
 }
 
-__declspec(naked) void PendingMatch_004a70f0(void)
+__declspec(naked) void Match_ChampionScreen(void)
 {
     __asm {
         mov      eax, dword ptr [g_baseSel_00542060]
@@ -977,7 +977,7 @@ __declspec(naked) void PendingMatch_004a70f0(void)
         mov      dword ptr [g_fightGroupHead], eax
         push     0x4f3ad8
         push     eax
-        call     AudioStoreXfer3SelfInstall_004a2060
+        call     Title_PressStartScreen
         mov      dword ptr [g_eventQueueWorkType], edi
         add      esp, 8
         movsx    eax, byte ptr [esi]
@@ -1781,7 +1781,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         mov      dword ptr [g_phaseIdx_0053a50c], 0xd
         mov      dword ptr [g_audioPathFlag_0054355c], ebp
         call     DrainQueueCallEach_004a1ec0
-        call     Audio11SlotInitLoop_004a5540
+        call     CharSelect_HelpPrompts
         mov      esi, 0x4f3940
     L_5d63:
         movsx    eax, byte ptr [esi]
@@ -1869,7 +1869,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
     }
 }
 
-__declspec(naked) void PendingMatch_004a42d0(void)
+__declspec(naked) void Screen_Loading(void)
 {
     __asm {
         _emit    0xc7
@@ -3137,7 +3137,7 @@ __declspec(naked) void PendingMatch_004a42d0(void)
     }
 }
 
-__declspec(naked) void PendingMatch_004a9940(void)
+__declspec(naked) void TeamMode_JoinScreen(void)
 {
     __asm {
         _emit    0x56

@@ -31,7 +31,7 @@ Total: 99 functions, sorted by size.
 - top callees: `DoubleScaledCrossStore_00475750`, `ArgSarStoreJmp_004594f0`, `SetJmp_004753a0`
 - top globals: `0x542060`×2, `g_framePauseFlag`×2
 
-## PendingMatch_004a93c0 @ 0x4a93c0 (1116b)
+## Match_TeamOutcomeScreen @ 0x4a93c0 (1116b)
 
 - file: `src/audio/pending_match_variants.c`
 - traits: switch-via-jumptable, x87 FPU, cond jmps: 9
@@ -80,14 +80,14 @@ Total: 99 functions, sorted by size.
 - top callees: `Atan2QuadrantLookup_004245b0`×2, `BootMod6487eClampAndChainMul10_00407510`×2, `PushSetXfmMaskCallPop_00407140`×2, `AudioMixerStep_004ab700`×2, `StoreDoubleNegPauseSubStore_004ab750`×2, `Mul10Tail_00404af0`×2, `ChainWalkPushPop_00405a40`, `PendingMatch_00409c90`
 - top globals: `0x54206c`×14, `g_framePauseFlag`×14, `g_matrixStackTop`×7, `g_fightGroupHead`×4, `g_eventQueueChild`×4, `0x542078`×2, `0x52ab10`×2, `g_eventQueueTotal`×2
 
-## PendingMatch_004a42d0 @ 0x4a42d0 (1262b)
+## Screen_Loading @ 0x4a42d0 (1262b)
 
 - file: `src/audio/pending_match_variants.c`
 - traits: SEH (fs:[0]), x87 FPU, cond jmps: 4
 - top callees: `PushPopScaledInit343c_004aa940`×3, `SetJmp_004a1ac0`×2, `CopyGlobal_004ac1f0`×2, `CallSetPause_0041f830`×2, `Push16Call_00489f50`×2, `QuadCallPhase2_004be800`, `TableLookupCall_0048a130`, `TestZeroJmp_004a42b0`
 - top globals: `g_xformDirtyFlags`×20, `g_currentNodeIdx`×7, `0x53a1f0`×4, `0x4f3608`×4, `0x4f361c`×4, `0x542060`×3, `0x53a51c`, `g_logicStepFlag`
 
-## PendingMatch_004a70f0 @ 0x4a70f0 (1295b)
+## Match_ChampionScreen @ 0x4a70f0 (1295b)
 
 - file: `src/audio/pending_match_variants.c`
 - traits: x87 FPU, cond jmps: 19
@@ -259,7 +259,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/audio/pending_match_variants.c`
 - traits: switch-via-jumptable, SEH (fs:[0]), x87 FPU, IAT calls: 1, cond jmps: 8
-- top callees: `Push16Call_00489f50`×4, `VoiceTableInit_004a28d0`×4, `AudioStoreXfer3SelfInstall_004a2060`×2, `DispatcherComplex260_00407400`×2, `PushSetCallPop_00406530`×2, `FiveTableWalkInit_00403c90`×2, `LoadGeoAsset_Default`×2, `Config_RestoreGlobals`
+- top callees: `Push16Call_00489f50`×4, `VoiceTableInit_004a28d0`×4, `Title_PressStartScreen`×2, `DispatcherComplex260_00407400`×2, `PushSetCallPop_00406530`×2, `FiveTableWalkInit_00403c90`×2, `LoadGeoAsset_Default`×2, `Config_RestoreGlobals`
 - top globals: `g_currentNodeIdx`×10, `0x542060`×5, `0x4f31cc`×4, `0x4f31d0`×4, `0x5437fc`×4, `g_gtConfig4f`×4, `0x5437f8`×4, `0x54206c`×2
 
 ## PendingMatch_00411210 @ 0x411210 (1654b)
@@ -556,18 +556,18 @@ Total: 99 functions, sorted by size.
 - top callees: `ScaledIterStep_0045c020`×13, `PendingMatch_00459510`×8, `EsiInstallDecGlobalJmp_004284f0`×2, `extern_-0x46f1dfa2`, `extern_-0x75f967ae`, `TableLookupCall_00489f60`, `EntryThunkBodyStateMachine_00457bb0`, `DualBranchWordLookup_0048a290`
 - top globals: `g_framePauseFlag`×39, `g_currentNodeIdx`×18, `0x542060`×14, `0x54206c`×13, `g_matrixStackTop`×6, `g_eventQueueCurrent`×3, `g_pendingNodeType`×2, `g_eventQueueChild`×2
 
-## PendingMatch_004a9940 @ 0x4a9940 (2736b)
+## TeamMode_JoinScreen @ 0x4a9940 (2736b)
 
 - file: `src/audio/pending_match_variants.c`
 - traits: SEH (fs:[0]), x87 FPU, IAT calls: 1, cond jmps: 20
-- top callees: `GuardedSetupCallTailJmp_004a1fa0`×7, `Push16Call_00489f50`×6, `MStackPush2ChainLLInsert_00406790`×5, `FiveTableWalkInit_00403c90`×3, `PendingMatch_004a9940`×3, `SetJmp_004a1ac0`×3, `DispatcherComplex260_00407030`×3, `PendingMatch_004a2a80`×2
+- top callees: `GuardedSetupCallTailJmp_004a1fa0`×7, `Push16Call_00489f50`×6, `MStackPush2ChainLLInsert_00406790`×5, `FiveTableWalkInit_00403c90`×3, `TeamMode_JoinScreen`×3, `SetJmp_004a1ac0`×3, `DispatcherComplex260_00407030`×3, `PendingMatch_004a2a80`×2
 - top globals: `g_currentNodeIdx`×21, `0x542060`×11, `0x54206c`×3, `0x5433d0`×3, `g_framePauseFlag`×2, `0x543708`×2, `0x5433fc`×2, `g_eventQueueIdx`
 
 ## PendingMatch_004a62b0 @ 0x4a62b0 (3004b)
 
 - file: `src/audio/pending_match_variants.c`
 - traits: switch-via-jumptable, x87 FPU, cond jmps: 16
-- top callees: `GuardedSetupCallTailJmp_004a1fa0`×6, `PendingMatch_004a70f0`×4, `TableWalkBoundedCmp_004bd890`×4, `VoiceTrioBindAndKick_004a5ea0`×4, `Push16Call_00489f50`×3, `MStackPush2ChainLLInsert_00406790`×2, `SetJmp_004a1ac0`×2, `LoadGeoAsset_Default`×2
+- top callees: `GuardedSetupCallTailJmp_004a1fa0`×6, `Match_ChampionScreen`×4, `TableWalkBoundedCmp_004bd890`×4, `VoiceTrioBindAndKick_004a5ea0`×4, `Push16Call_00489f50`×3, `MStackPush2ChainLLInsert_00406790`×2, `SetJmp_004a1ac0`×2, `LoadGeoAsset_Default`×2
 - top globals: `g_currentNodeIdx`×25, `g_eventQueueWorkType`×6, `g_eventQueueChild`×4, `g_framePauseFlag`×4, `0x542060`×3, `0x543830`×3, `g_eventQueueNotMask`×3, `g_eventQueueCurrent`×3
 
 ## PendingMatch_004411d0 @ 0x4411d0 (3093b)

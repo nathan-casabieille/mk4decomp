@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void MStackCall_00406340(void);
-extern void AudioStoreXfer3SelfInstall_004a2060(void);
+extern void Title_PressStartScreen(void);
 extern unsigned int g_particleEmitterNode_00535e6c;
 
 /* @addr 0x004a47c0 (183b audio) - chain init + two cdecl push-twice calls.
@@ -117,8 +117,8 @@ extern unsigned int g_particleEmitterNode_00535e6c;
  *   chain[+0x30] = 9; g_walkCallback = 9; call MStackCall_00406340; pause? ret.
  *   g_fightGroupHead = g_scaledInit; g_scaledInit = [0x535e6c];
  *   g_walkCallback = 0xe666; chain[g_scaledInit + 0x3c] = 0xe666.
- *   push 0x4f3030, g_scaledInit; call AudioStoreXfer3SelfInstall_004a2060; add esp, 8.
- *   g_scaledInit = [0x52ab10]; push 0x4f3040, g_scaledInit; call AudioStoreXfer3SelfInstall_004a2060; add esp, 8.
+ *   push 0x4f3030, g_scaledInit; call Title_PressStartScreen; add esp, 8.
+ *   g_scaledInit = [0x52ab10]; push 0x4f3040, g_scaledInit; call Title_PressStartScreen; add esp, 8.
  */
 extern unsigned int g_load_0052ab10;
 
@@ -152,13 +152,13 @@ void ChainInitDoublePushCall_004a47c0(void) {
         mov     ecx, dword ptr [g_scaledInit_00542044]
         push    0x004f3030
         push    ecx
-        call    AudioStoreXfer3SelfInstall_004a2060
+        call    Title_PressStartScreen
         mov     eax, dword ptr [g_load_0052ab10]
         add     esp, 8
         mov     dword ptr [g_scaledInit_00542044], eax
         push    0x004f3040
         push    eax
-        call    AudioStoreXfer3SelfInstall_004a2060
+        call    Title_PressStartScreen
         add     esp, 8
         }
 }
