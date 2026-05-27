@@ -76,6 +76,43 @@ bound from the render-only view.
 | +0x74 | pose / move_state (packed enum) | [combat_fsm.md](combat_fsm.md): `0x501` = the special "victory pose / fatality" sentinel. Written values cluster into categories with a low-byte variant - `0x404/0x406`, `0x501/0x502`, `0x1000/0x1002`, `0x4004`, `0x10b`, `0x112` - i.e. a packed move/animation-state code (`category << 8 | variant`). Distinct from the +0x84 task-FSM state. |
 | +0x84 | **per-node task-FSM state** | read-and-clear dispatch (`eax = [n+0x84]; [n+0x84]=0; sub eax,0/dec eax/...`) in every task handler - `GameMode_EnterScene`, `EnduranceMode_Handler`, `ContinueScreenFsm`, the screen drawers. The most-accessed field in the binary. |
 
+## Struct skeleton (established fields)
+
+A reading aid for the asm - established offsets named, gaps left as
+explicit padding. This is the **task/scene-node view** (reached via
+`g_baseSel` / `g_currentNodeIdx`); see the multi-view caveat above.
+
+```c
+typedef struct node {                  // >= 0x88 bytes
+    /* 0x00 */ s32   angles_or_lo[1];  // angle[0] under g_xformEntityIdx view
+    /* 0x04 */ u32   work_cursor;      // child-alloc bump pointer (task view)
+    /* 0x08 */ void *resume;           // FSM continuation (phase tag in top byte)
+    /* 0x0c */ u8    pad0c[0x14 - 0x0c];
+    /* 0x14 */ u32   f14;              // flags/packed (0xff, 0x1d01000f) - TBD
+    /* 0x18 */ u32   pad18[(0x20-0x18)/4];
+    /* 0x20 */ u32   flags;            // type<<24 & 7, mode bit 0x100 (scenegraph)
+    /* 0x24 */ u32   f24;              // read by RenderSceneNode - TBD
+    /* 0x28 */ u32   pad28[(0x30-0x28)/4];
+    /* 0x30 */ s32   player_id;        // 1..4 (player view)
+    /* 0x34 */ u32   state_mask;       // |0x1000 = on-screen (player view)
+    /* 0x38 */ packed_ptr parent;      // linked/owner node (alloc-time; xform/dist anchor)
+    /* 0x3c */ packed_ptr child[3];    // +0x3c/+0x40/+0x44 child refs
+    /* 0x48 */ u32   pad48[(0x54-0x48)/4];
+    /* 0x54 */ s32   pos_x;            // 16.16, ground plane
+    /* 0x58 */ s32   pos_y;            // 16.16, vertical (gravity integrates here)
+    /* 0x5c */ s32   pos_z;            // 16.16, ground plane (depth)
+    /* 0x60 */ u32   pad60[(0x74-0x60)/4];
+    /* 0x74 */ u32   move_state;       // packed pose/anim enum (0x501 = fatality)
+    /* 0x78 */ u32   pad78[(0x84-0x78)/4];
+    /* 0x84 */ u32   task_state;       // cooperative task-FSM dispatch state
+    /* 0x88 */
+} node_t;
+```
+
+Fields marked TBD / `pad` are unverified (see the ranked list below).
+The struct is documentation only - the matching build is byte-for-byte
+asm and does not compile against this type.
+
 ## Cooperative task-FSM pattern (how to read the combat code)
 
 This is **the** idiom of the `game` cluster - hundreds of the naked
