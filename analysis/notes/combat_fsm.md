@@ -433,10 +433,21 @@ Y(+0x58). Full field map in [node_struct.md](node_struct.md).
 the two combatants and publishes it through five globals consumed by
 the reaction FSMs:
 
-- **Distance** `g_table_00535ddc` = `sqrt(Sum d^2)` - squared deltas
-  accumulated via `Mul10Tail`, then `FpuSqrtMul` (`fsqrt`). The
+- **Distance** `g_table_00535ddc` = `sqrt(dx*dx + dz*dz)` over the
+  **horizontal floor plane** only - `dx = P2.x - P1.x` (+0x54),
+  `dz = P2.z - P1.z` (+0x5c); each delta squared via `Mul10Tail`
+  (fixmul), summed, then `FpuSqrtMul` (`fsqrt`). Y (+0x58) is excluded,
+  matching `HitContactDispatcherCluster`'s `dx^2+dz^2` leash. The
   computed **actor distance**; `HitReactionStateCluster` tiers its
   reaction on it (thresholds 1.0/2.0/3.0 units).
+- **Midpoint** - the same pass also computes the fighter **midpoint**
+  `(P1.x+P2.x)/2` -> `g_load_0052ab04` and `(P1.z+P2.z)/2` ->
+  `g_load_0052ab08` (`lea edi,[a+b]; sar edi,1`): the floor-plane point
+  halfway between the two combatants, a natural camera-framing /
+  centering value. (Hypothesis only - the `g_load_0052ab0x` globals are
+  also reused as generic scratch by many m_stack/chain functions, so
+  whether this midpoint persists as a dedicated camera target or is
+  transient is unconfirmed.)
 - **Facing axis** `g_fightAxisPosX/PosY` (`0x535e78`/`0x535e7c`) and
   `g_fightAxisNegX/NegY` (`0x535e70`/`0x535e74`). The "Neg" pair is
   literally the **negation** of the "Pos" pair (`neg eax` right after
