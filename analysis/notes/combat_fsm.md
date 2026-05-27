@@ -385,13 +385,40 @@ reads on the per-player overlay scan:
 |--------|-----------------|---------------------------------------------|
 | `+0x30`| `player_id`     | 1..4 (validated against the index)          |
 | `+0x34`| `state_mask`    | OR `0x1000` when on-screen, ANDed otherwise |
-| `+0x58`| `position_y`    | s32 - "on-screen" if `> -0xffff_0000`       |
-| `+0x74`| `fsm_state`     | u32 - `0x501` is the "special" sentinel     |
+| `+0x54`| `position_x`    | s32 16.16 - ground-plane X (see below)      |
+| `+0x58`| `position_y`    | s32 16.16 - vertical; gravity integrates here |
+| `+0x5c`| `position_z`    | s32 16.16 - ground-plane depth              |
+| `+0x74`| `pose / move_state` | u32 - `0x501` is the "special" sentinel |
+| `+0x84`| `task_fsm_state`| u32 - the cooperative task-FSM dispatch state (distinct from +0x74) |
 
 The `0x501` value is checked but never written within the per-player
 overlay scan - it's set elsewhere by the per-player tick. It likely
 means "victory pose / fatality" - the special state that the rest
 of the engine treats as inert.
+
+**Position axes (confirmed):** `+0x54`/`+0x58`/`+0x5c` are a 16.16
+position vector. `HitContactDispatcherCluster` range-checks
+`dx*dx + dz*dz <= g_rangeSqLimit_0053a180` using only X(+0x54) and
+Z(+0x5c) - the horizontal floor plane - while gravity adds to
+Y(+0x58). Full field map in [node_struct.md](node_struct.md).
+
+### Per-player state blocks + health bar
+
+Beyond the four `g_playerNNodeIdx` render-node pointers, there are two
+larger **per-player fight-state blocks**, 0x320 bytes apart:
+
+| Symbol            | Address      | Role |
+|-------------------|--------------|------|
+| `g_player1State`  | `0x0053a3e0` | P1 fight-state block (was `g_state4_0053a3e0`) |
+| `g_player2State`  | `0x0053a700` | P2 fight-state block (was `g_state4_0053a700`) |
+
+`HealthBarTickDriver_00458cc0` reads one of these (selected by
+`g_stateFlag_00537e98` = current side) as the value that drives the
+health-bar segment loop; `globals_reset_init` clears both at match
+reset; the AI walk counter and `GameMode_EnterScene` (mode entry) also
+use them as the per-player node base (`base >> 2` packed). The first
+dword is the bar/energy value the health bar renders. (Exact split
+between "true health" and "displayed bar value" still TBD.)
 
 A second probe object exists per player: `g_gtPlayerProbe1/2`
 (`0x0053803c/8038`). These look like "the opposing player's overlay

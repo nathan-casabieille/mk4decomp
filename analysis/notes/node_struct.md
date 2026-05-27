@@ -73,8 +73,8 @@ bound from the render-only view.
 | +0x3c..+0x44 | up to 3 child-node refs | [scenegraph.md](scenegraph.md): recursive `RenderSceneNode` descent |
 | +0x38 | linked / anchor node ref (packed index) | read then used as a node pointer: `mov edx,[n+0x38]; ... [edx*4 + 0x54]`. In `HitContactDispatcherCluster` it is the anchor the moving node's distance is measured against (owner / opponent / leash anchor - exact role TBD). Distinct from the +0x3c..+0x44 child refs. |
 | +0x54 / +0x58 / +0x5c | **position: X (ground) / Y (vertical) / Z (depth), 16.16 fixed-point** | `BulletVolleySpawner` lays a row of projectiles at `+0x54` = stepping X (`+0x120000`=+18.0 each) with `+0x58` = constant Y (`0xffb00000`=-80.0) - a spatial layout. **Axis roles confirmed** by `HitContactDispatcherCluster`: it advances `+0x54`/`+0x5c`, then range-checks `dx*dx + dz*dz <= g_rangeSqLimit` using only X(+0x54) and Z(+0x5c) - the horizontal ground plane - while **gravity integrates on +0x58** (`add [n+0x58], 0x1999`). So +0x58 is the vertical axis, +0x54/+0x5c the floor plane. |
-| +0x74 | pose / animation state | [combat_fsm.md](combat_fsm.md): writing `0x501` forces a fatal pose |
-| +0x84 | **per-node FSM state** | read-and-clear dispatch (`eax = [n+0x84]; [n+0x84]=0; sub eax,0/dec eax/...`) in every task handler - `GameMode_EnterScene`, `EnduranceMode_Handler`, `ContinueScreenFsm`, the screen drawers. The most-accessed field in the binary. |
+| +0x74 | pose / move_state | [combat_fsm.md](combat_fsm.md): `0x501` = the special "victory pose / fatality" sentinel. Distinct from the +0x84 task-FSM state. |
+| +0x84 | **per-node task-FSM state** | read-and-clear dispatch (`eax = [n+0x84]; [n+0x84]=0; sub eax,0/dec eax/...`) in every task handler - `GameMode_EnterScene`, `EnduranceMode_Handler`, `ContinueScreenFsm`, the screen drawers. The most-accessed field in the binary. |
 
 The task-handler idiom that ties +0x84 / +0x08 / +0x04 together:
 
@@ -96,9 +96,9 @@ most call sites:
 
 | Off  | Accesses | Notes / hypothesis (unconfirmed) |
 |-----:|---------:|----------------------------------|
-| +0x30 | 1652 | mostly register stores, no distinctive constants - generic scratch/state |
-| +0x34 | 1556 | small signed 16.16 deltas written (`0xa3d`=+0.04, `0x20000`=+2.0, `0xfffff5c3`=-0.04) - likely a velocity / rate component (unconfirmed) |
-| +0x70 | 1018 | small signed 16.16 deltas (`0xffffe148`=-0.12, `0xffffaaab`=-0.33) - likely a velocity / rate component (unconfirmed) |
+| +0x30 | 1652 | **player_id** (1..4) on the player view, per [combat_fsm.md](combat_fsm.md)'s GameTick scan; generic register scratch on other node views. |
+| +0x34 | 1556 | **state_mask** (OR'd with `0x1000` when on-screen) on the player view, per [combat_fsm.md](combat_fsm.md). (An earlier guess here of "velocity delta" from write-constants was wrong - the GameTick reading is authoritative.) |
+| +0x70 | 1018 | small signed 16.16 deltas (`0xffffe148`=-0.12, `0xffffaaab`=-0.33) - a rate/offset, role unconfirmed |
 | +0x18 | 1012 | |
 | +0x28 |  970 | |
 | +0x64 |  910 | |
