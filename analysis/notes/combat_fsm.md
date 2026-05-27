@@ -427,6 +427,31 @@ position vector. `HitContactDispatcherCluster` range-checks
 Z(+0x5c) - the horizontal floor plane - while gravity adds to
 Y(+0x58). Full field map in [node_struct.md](node_struct.md).
 
+### Inter-fighter geometry (distance + facing axis)
+
+`helper_per_player_tick` computes, each frame, the relative geometry of
+the two combatants and publishes it through five globals consumed by
+the reaction FSMs:
+
+- **Distance** `g_table_00535ddc` = `sqrt(Sum d^2)` - squared deltas
+  accumulated via `Mul10Tail`, then `FpuSqrtMul` (`fsqrt`). The
+  computed **actor distance**; `HitReactionStateCluster` tiers its
+  reaction on it (thresholds 1.0/2.0/3.0 units).
+- **Facing axis** `g_fightAxisPosX/PosY` (`0x535e78`/`0x535e7c`) and
+  `g_fightAxisNegX/NegY` (`0x535e70`/`0x535e74`). The "Neg" pair is
+  literally the **negation** of the "Pos" pair (`neg eax` right after
+  each store): a single 2D direction vector `(dx,dy)` from
+  `RangeMulMod_004ab2a0` stored as `+v` and `-v` so each fighter can
+  grab the sign pointing at its opponent. This is the per-frame
+  **inter-fighter facing vector**; the per-player facing-sign math
+  (yielding +1.0/-1.0 = `0x10000`/`0xffff0000`) reads it together with
+  node `+0x6c` (see [node_struct.md](node_struct.md) "+0x6c facing
+  lead").
+
+So distance (a scalar) and the facing axis (a +/- vector pair) are the
+two outputs of the same per-frame geometry pass, and together they
+drive range-tiered reactions and which way each fighter turns.
+
 ### Hit / reaction cluster inventory
 
 The hit-handling logic is spread across these named clusters. They do
