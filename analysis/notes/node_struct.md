@@ -243,6 +243,13 @@ inter-fighter direction computation. Left TBD pending a writer that
 pins whether it is a position delta, a facing vector, or a knockback
 direction.
 
+**Polymorphic, as always:** in a different node view
+(`camera_bounce_update`) the same +0x6c slot is a **Mul10-smoothed
+scalar** - `node[+0x6c] *= 0.4` (`Mul10Tail(0x6666, ...)`), with +0x70
+accumulated alongside it - i.e. camera-bounce/shake smoothing, not a
+facing component. So +0x6c must not be named globally; the facing role
+is asserted only for the player / fight view above.
+
 ## How to pin a field (method)
 
 1. `grep -rn "\\*4 + 0xNN\\]" src/` to collect every read/write site.
