@@ -192,9 +192,20 @@ fixed-point multiply):
 - `0xffff6667` = -0.60 and `0xffff4ccd` = -0.70 -> restitution / bounce
   damping multiplied into +0x70 on floor contact (negative => velocity
   reverses, magnitude < 1 => energy loss).
-- `0xfd70` = +0.99 -> an air-drag factor multiplied into the adjacent
-  +0x78 slot in the same loop (so +0x78 is a second motion component,
-  role TBD).
+- `0xfd70` = +0.99 -> an air-drag factor multiplied into the
+  **+0x78 / +0x7c / +0x80 triple** in the same loop, all three scaled by
+  the identical 0.99 each frame. A uniformly drag-damped 3-vector that
+  pairs with the +0x70 vertical term (the linear vs angular-velocity
+  distinction is unconfirmed - the consuming position/rotation update is
+  not in this loop).
+
+This triple is a sharp polymorphism example: on the **player view**
+(`g_baseSel`) the very same +0x7c and +0x80 slots are **counters** - a
+`pending_match_variants` handler compares `node[+0x80]` against `0x6666`
+and `node[+0x7c]` against `3`, then zeroes them - nothing to do with the
+drag-damped fight-group vector. So +0x78/+0x7c/+0x80 are a motion vector
+in the thrown-object view and unrelated counters in the player view; do
+not name them globally.
 
 So in this node type the motion model **is** a `pos += vel; vel +=
 gravity` ballistic integrator with restitution - the one place a real
