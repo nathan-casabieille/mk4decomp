@@ -52,6 +52,7 @@ bound from the render-only view.
 | +0x08 | FSM re-entry continuation | stores `OFFSET <label>` or a function pointer (e.g. `OFFSET AudioPreloadStreamingTrack`); the task resumes here next frame |
 | +0x20 | flag word (node type/mode bits) | [scenegraph.md](scenegraph.md): `(flags>>24)&7` = type, bit 0x100 = mode; drives the 16-entry transform dispatch |
 | +0x3c..+0x44 | up to 3 child-node refs | [scenegraph.md](scenegraph.md): recursive `RenderSceneNode` descent |
+| +0x54 / +0x58 / +0x5c | **position vector (X / Y / Z), 16.16 fixed-point** | `BulletVolleySpawner` lays a row of projectiles at `+0x54` = stepping X (`base + 0x120000`=+18.0 each) with `+0x58` = constant Y (`0xffb00000`=-80.0) - a spatial layout, i.e. positions not velocities. Gravity drifts the node via `add [n+0x58], 0x1999` (+0.1/frame). Read into coordinate math at 15-19 sites each (`add reg, [n+0x5x]`). Set as a group by spawn/physics/anim code. |
 | +0x74 | pose / animation state | [combat_fsm.md](combat_fsm.md): writing `0x501` forces a fatal pose |
 | +0x84 | **per-node FSM state** | read-and-clear dispatch (`eax = [n+0x84]; [n+0x84]=0; sub eax,0/dec eax/...`) in every task handler - `GameMode_EnterScene`, `EnduranceMode_Handler`, `ContinueScreenFsm`, the screen drawers. The most-accessed field in the binary. |
 
@@ -75,10 +76,9 @@ most call sites:
 
 | Off  | Accesses | Notes / hypothesis (unconfirmed) |
 |-----:|---------:|----------------------------------|
-| +0x54 / +0x58 / +0x5c | 1729 / 1867 / 1900 | **a 16.16 fixed-point 3-vector** (partly pinned). The constants written to +0x5c are all clean 16.16 values - `0x10000`=1.0, `0x18000`=1.5, `0x30000`=3.0, `0xa0000`=10.0, `0xc0000`=12.0. The three are frequently set together by spawn/physics/anim functions (`bullet_volley_spawner`, `aerial_kick_combo_cluster`, `death_anim_cluster`, ...), consistent with a position or velocity vector. Which of position/velocity/scale is still unconfirmed - needs the consumer (transform/physics integrator). |
-| +0x30 | 1652 | |
-| +0x34 | 1556 | adjacent to +0x30 - possible pair (x/y? min/max?) |
-| +0x70 | 1018 | adjacent to the +0x74 pose field - maybe anim frame/timer |
+| +0x30 | 1652 | mostly register stores, no distinctive constants - generic scratch/state |
+| +0x34 | 1556 | small signed 16.16 deltas written (`0xa3d`=+0.04, `0x20000`=+2.0, `0xfffff5c3`=-0.04) - likely a velocity / rate component (unconfirmed) |
+| +0x70 | 1018 | small signed 16.16 deltas (`0xffffe148`=-0.12, `0xffffaaab`=-0.33) - likely a velocity / rate component (unconfirmed) |
 | +0x18 | 1012 | |
 | +0x28 |  970 | |
 | +0x64 |  910 | |
@@ -110,12 +110,11 @@ address, so treat them as relative weights, not exact totals.)
 
 ## TODOs
 
-- Finish pinning the +0x54/+0x58/+0x5c vector: it is 16.16 fixed-point
-  and set as a group by spawn/physics code (see above) - trace the
-  integrator/transform that *reads* all three to decide position vs
-  velocity.
-- Confirm whether +0x30/+0x34 are a coordinate or bbox pair by checking
-  arithmetic on them in the physics/collision functions.
+- ~~Pin +0x54/+0x58/+0x5c~~ - DONE: position (X/Y/Z), 16.16. Next: find
+  the per-frame `pos += vel` integration to pin the **velocity** vector
+  (the small signed-delta fields +0x34 / +0x70 are the prime suspects).
+- Confirm whether +0x34 / +0x70 are the velocity components by locating
+  the frame update that adds them into +0x54/+0x58/+0x5c.
 - Emit a real C `struct` once enough fields are pinned, so the
   combat-FSM bodies can be read against named members instead of raw
   offsets.
