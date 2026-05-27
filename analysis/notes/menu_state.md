@@ -186,14 +186,45 @@ skipped during up/down navigation.
   lines 87-103). A return of 0x45 instead routes back to state 4
   (menu redraw). So the mode-select menu feeds its choice through
   `Helper_GSM_HandleEvent`'s return value, not through the `cmd` table.
-- **Mode-select item table (lead, layout unconfirmed)**. A table near
-  `0x004f30c4` holds the mode labels (`ENDURANCE`, `TOURNAMENT`,
-  `PRACTICE`, `EXIT GAME`, ...) in ~28-byte records with interleaved
-  `.text` pointers and small id codes (0x12-0x17). The exact record
-  layout is NOT yet confirmed - an early parse mis-aligned the
-  per-row pointer onto an audio function, so do not trust a naive
-  8- or 28-byte stride without disassembling the consumer
-  (`Helper_GSM_HandleEvent` / `DrawMenu`) first.
+- ~~**Mode-select item table**~~ - DECODED. The main mode menu is a
+  table of **28-byte records** starting at `0x004f308c`. Per-record
+  layout (confirmed against the EXE):
+
+  | Off | Field | Notes |
+  |----:|-------|-------|
+  | +0x00 | `char *label` | the row text |
+  | +0x04 | (0) | unused / second-label slot |
+  | +0x08 | `ypos << 16` | screen Y in 16.16 (rows step ~0x16) |
+  | +0x0c | `0x00010000` | scale 1.0 (16.16) |
+  | +0x10 | flags | low byte = row index 0..4; high byte 2..5 |
+  | +0x14 | `void (*on_select)()` | per-row handler, invoked when chosen |
+  | +0x18 | `int row_id` | menu row id (NOT a g_gameState value) |
+
+  The six selectable rows + their handlers and ids:
+
+  | Row | on_select VA | row_id |
+  |-----|-------------|-------:|
+  | `ARCADE`     | `0x004a7620` | 0x0f |
+  | `TEAM`       | `0x004a99d0` | 0x10 |
+  | `ENDURANCE`  | `0x004a5290` | 0x12 |
+  | `TOURNAMENT` | `0x004a2720` | 0x13 |
+  | `PRACTICE`   | `0x004a27b0` | 0x14 |
+  | `EXIT GAME`  | `0` (none)   | 0x15 |
+
+  Trailing rows (flags `0xffff`, non-selectable) are the footer hint
+  text: "UP/DOWN ... TO CHOOSE", "ACTION KEYS ... SELECT".
+
+  The `on_select` handlers live in the `0x004a2000`..`0x004a9000`
+  cluster that the symbol table mislabels as "audio" - they are
+  actually **mode-entry / scene-setup routines**. Verified by reading
+  `0x004a2720` (the TOURNAMENT handler, shared with PRACTICE at the
+  `+0x90` sub-entry): it branches on `g_gtModeFlag`, sets the node
+  cursors, clears `g_dlMode`, and tail-calls the match-setup chain.
+  Most are packed multi-entry / stateful handlers (e.g. `0x004a5290`
+  is a multi-state per-frame handler), so they are documented here
+  rather than renamed - a clean single-role name would misrepresent
+  the packed bodies. See [debug_menu.md](debug_menu.md) for the rest
+  of this cluster (the option-toggle drawers share the same region).
 - ~~**Which menu is which Sub\*?**~~ - DONE. Identified by dumping each
   handler's menu-items table from the EXE and reading the row strings:
   HELP overlay, the three renderer-unavailable dialogs, the in-match
