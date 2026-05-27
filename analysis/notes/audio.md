@@ -135,15 +135,36 @@ For each live entry:
    and call vtable method 9 (`[ecx + 0x24]`) on the inner COM object -
    this is `IDirectSoundBuffer::GetStatus`.
 4. Inspect the returned status byte:
-   - bit 0 ("playing") + `flags[+0x16] & 2` -> needs release -> call
+   - bit 0 ("playing") + `flags[+0x16] & 2` -> needs teardown -> call
      `Helper_AudioStop(owner)`
    - if `g_audioMute` is set, skip remaining work
    - if not playing -> mark dead (`0xffff`)
-   - otherwise call `Helper_AudioRelease`
+   - otherwise call `Helper_AudioRelease(id)` to (re)start / advance
+     the streamed sound
 
-`Helper_AudioStop` / `Helper_AudioRelease` (`0x004c3710` /
-`0x004c3490`) call `IDirectSoundBuffer::Stop` / `Release` through the
-cached COM vtable and then zero the slot.
+**Their real roles (verified by disassembly - the names are misleading):**
+
+- `Helper_AudioStop` (`0x004c3710`) is the **resource teardown**: for
+  the sound's 4 voice slots it calls vtable `+0x48` then vtable `+0x08`
+  (`IUnknown::Release`), zeros each slot, and decrements the global
+  accounting (`g_dsoundFieldE4 -= buffer_size`, `g_dsoundFieldE8--`).
+  Its alt branch just sets the in-flight bit (`flags[+0x16] |= 2`) and
+  returns - a deferred-release marker. So "Stop" really means "free
+  this sound's voice buffers".
+- `Helper_AudioRelease` (`0x004c3490`) does the **opposite of its
+  name** - it *starts* streamed playback: builds the filename
+  (`Helper_Sprintf`), opens the stream (`ESF_Open`), then drives the
+  DSound vtable (`+0x0c` Init, `+0x34/+0x44/+0x40/+0x3c` resets,
+  `+0x2c` Play, `+0x4c` Update, `+0x14` Subscribe x4 channels); on
+  channel-0 failure it falls back to `Helper_AudioStop`. Its alt
+  branch (sound already in-flight) just clears the in-flight bit and
+  returns - which is the only path that behaves like a "release", and
+  is why callers like `Menu_PollNavInput` call it right before
+  `Audio_PlaySoundId` to retrigger a repeated UI blip.
+
+(`Audio_PlaySoundId` at `0x004c3960`, formerly `Helper_AudioStartMusic`,
+is the separate short-SFX path: allocate a round-robin voice + Play,
+no ESF streaming.)
 
 
 ## Per-channel state - the channel table
