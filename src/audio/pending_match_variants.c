@@ -177,7 +177,7 @@ extern void SetJmp_004a1ad0(void);
 extern void SixCallSeqPushImm_004a1d80(void);
 extern void TablePushAccumTailJmp_00429e30(void);
 extern void TestCmpZeroFour_004238b0(void);
-extern void VoiceBankTickDispatch_004a3120(void);
+extern void DebugMenu_DrawMatchOptions(void);
 
 extern unsigned int g_byte_005435a1;
 extern unsigned int g_byte_005435a2;
@@ -240,7 +240,7 @@ extern void TableWalkChainCall_004a30f0(void);
 extern void TestByteOrAndCheck_004a1ae0(void);
 extern void TripleCallByteCheck_004a1bf0(void);
 extern void TripleCallSetCopy_004a4880(void);
-extern void VoicePoolTickDispatch_004a4c10(void);
+extern void DebugMenu_DrawUnlockToggles(void);
 
 __declspec(naked) void AudioFlagPair3EntryDeinit_004a2720(void)
 {
@@ -549,7 +549,7 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
         pop     ebx
         ret
     L_asimi_phase1:
-        call    VoicePoolTickDispatch_004a4c10
+        call    DebugMenu_DrawUnlockToggles
         push    0x4f3830
         call    ScaledByteIdxDualCopy_004a3260
         add     esp, 4
@@ -581,7 +581,7 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
     L_asimi_skipRetZero:
         mov     dword ptr [g_eventQueueWorkType], 0x32f
         call    Push16Call_00489f50
-        call    VoicePoolTickDispatch_004a4c10
+        call    DebugMenu_DrawUnlockToggles
         mov     dword ptr [g_eventQueueCurrent], 0x20
         mov     dword ptr [edi + 8], offset AudioStateInitMultiInstall_004a4d20
         mov     eax, dword ptr [g_baseSel_00542060]
@@ -1073,7 +1073,7 @@ __declspec(naked) void PendingMatch_004a3400(void)
         mov      dword ptr [g_audioPendingBcSlot_005433bc], ebx
     L_34a1:
         call     CmpByteJmp_004a4180
-        call     VoiceBankTickDispatch_004a3120
+        call     DebugMenu_DrawMatchOptions
         push     0x4f3250
         call     ScaledByteIdxDualCopy_004a3260
         add      esp, 4
@@ -1089,7 +1089,7 @@ __declspec(naked) void PendingMatch_004a3400(void)
         jne      L_352d
         mov      dword ptr [g_eventQueueWorkType], 0x32a
         call     Push16Call_00489f50
-        call     VoiceBankTickDispatch_004a3120
+        call     DebugMenu_DrawMatchOptions
         mov      dword ptr [g_eventQueueCurrent], 0x20
         mov      dword ptr [edi + 8], 0x4a3400
         mov      eax, dword ptr [g_baseSel_00542060]
@@ -1113,7 +1113,7 @@ __declspec(naked) void PendingMatch_004a3400(void)
         jne      L_358b
         mov      dword ptr [g_eventQueueWorkType], 0x32f
         call     Push16Call_00489f50
-        call     VoiceBankTickDispatch_004a3120
+        call     DebugMenu_DrawMatchOptions
         mov      dword ptr [g_eventQueueCurrent], 0x20
         mov      dword ptr [edi + 8], 0x4a3400
         mov      eax, dword ptr [g_baseSel_00542060]
@@ -1129,7 +1129,7 @@ __declspec(naked) void PendingMatch_004a3400(void)
         je       L_37fa
         mov      dword ptr [g_eventQueueWorkType], 0x32f
         call     Push16Call_00489f50
-        call     VoiceBankTickDispatch_004a3120
+        call     DebugMenu_DrawMatchOptions
         mov      dword ptr [g_eventQueueCurrent], 0x20
         mov      dword ptr [edi + 8], 0x4a3400
         mov      eax, dword ptr [g_baseSel_00542060]

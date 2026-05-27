@@ -70,7 +70,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/audio/pending_match_variants.c`
 - traits: switch-via-jumptable, x87 FPU, cond jmps: 4
-- top callees: `Push16Call_00489f50`×6, `VoiceBankTickDispatch_004a3120`×4, `DualScaledStoreConst_004a22c0`×2, `DownloadPlayerChar`×2, `AudioStateInitMultiInstall_004a4d20`, `CmpByteJmp_004a4180`, `ScaledByteIdxDualCopy_004a3260`, `AudioState50b4BitDispatcher_004a32c0`
+- top callees: `Push16Call_00489f50`×6, `DebugMenu_DrawMatchOptions`×4, `DualScaledStoreConst_004a22c0`×2, `DownloadPlayerChar`×2, `AudioStateInitMultiInstall_004a4d20`, `CmpByteJmp_004a4180`, `ScaledByteIdxDualCopy_004a3260`, `AudioState50b4BitDispatcher_004a32c0`
 - top globals: `g_currentNodeIdx`×9, `0x542060`×4, `0x5433bc`×2, `0x5437f8`, `0x53a51c`, `0x5437fc`, `0x53a3c0`, `0x541fb0`
 
 ## PendingMatch_00411890 @ 0x411890 (1258b)

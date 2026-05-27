@@ -131,7 +131,19 @@ extern void GuardedSetupCallTailJmp_004a1fa0(void);
 extern void Helper_Sprintf(void);
 extern void MStackPush2ChainLLInsert_00406790(void);
 
-__declspec(naked) void VoiceBankTickDispatch_004a3120(void)
+/* @addr 0x004a3120 (320b) - DebugMenu_DrawMatchOptions: renders the
+ * match-setup section of MK4's hidden debug/"kheat" menu. Walks a
+ * per-row record table and, per row, sprintf's a label + state value
+ * into the shared text buffer g_voiceBankTickBase (0x543450), then
+ * inserts it as a scene text node via GuardedSetupCallTailJmp. The
+ * 6 row labels are "Player 1 %s", "Player 2 %s", "Difficulty %s",
+ * "Opponent %s", "Background %s", "Practice Info %s"; the %s value is
+ * looked up from the 0x4f2fc0 table whose [0]/[1] entries are the
+ * strings "OFF"/"ON", so each row shows an ON/OFF (or value) toggle.
+ * (NOT audio - the old "VoiceBankTickDispatch" name was wrong; the
+ * values come from game/input state globals at 0x4d50xx / 0x543xxx.)
+ */
+__declspec(naked) void DebugMenu_DrawMatchOptions(void)
 {
     __asm {
         push     esi

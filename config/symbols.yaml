@@ -13416,7 +13416,7 @@ functions:
     status: matched
     file: src/audio/table_walk_chain_call.c
   - addr: 0x004a3120
-    name: VoiceBankTickDispatch_004a3120
+    name: DebugMenu_DrawMatchOptions
     size: 320
     group: audio
     status: matched
@@ -13536,7 +13536,7 @@ functions:
     status: matched
     file: src/audio/install_self_state_machine6.c
   - addr: 0x004a4c10
-    name: VoicePoolTickDispatch_004a4c10
+    name: DebugMenu_DrawUnlockToggles
     size: 264
     group: audio
     status: matched

@@ -16,6 +16,11 @@ below carry the in-engine plumbing details for porters and contributors:
 - [combat_fsm.md](combat_fsm.md) - menu FSM, fight tick, event queue, per-player state
 - [install.md](install.md) - registry probe, FSYS archive, ESF/ECM/GEO loaders
 - [win32_surface.md](win32_surface.md) - complete IAT inventory by DLL and use case
+- [input.md](input.md) - keyboard/joystick polling, per-player action bitmasks, rebinding
+- [menu_state.md](menu_state.md) - GameStateMachine dispatch, menu pages, mode entry
+- [save_load.md](save_load.md) - Config registry blob, snapshot/restore, obfuscation
+- [events.md](events.md) - event queue ring + scripted (opcode, arg) decoder
+- [debug_menu.md](debug_menu.md) - hidden debug/"kheat" menu (toggles + Kombat Rating stats)
 
 Most of the "(suspected)" / "(TBD)" tags below this point have since been
 resolved; the sub-docs are the up-to-date source of truth for their

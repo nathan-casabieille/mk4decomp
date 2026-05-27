@@ -122,7 +122,7 @@ extern void RetZero_004a1c40(void);
 extern void ScaledByteIdxDualCopy_004a3260(void);
 extern void TripleCallByteCheck_004a1bf0(void);
 extern void TripleCallSetCopy_004a4880(void);
-extern void VoicePoolTickDispatch_004a4c10(void);
+extern void DebugMenu_DrawUnlockToggles(void);
 
 __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
 {
@@ -146,7 +146,7 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
         pop     ebx
         ret
     L_asimi_phase1:
-        call    VoicePoolTickDispatch_004a4c10
+        call    DebugMenu_DrawUnlockToggles
         push    0x4f3830
         call    ScaledByteIdxDualCopy_004a3260
         add     esp, 4
@@ -178,7 +178,7 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
     L_asimi_skipRetZero:
         mov     dword ptr [g_eventQueueWorkType], 0x32f
         call    Push16Call_00489f50
-        call    VoicePoolTickDispatch_004a4c10
+        call    DebugMenu_DrawUnlockToggles
         mov     dword ptr [g_eventQueueCurrent], 0x20
         mov     dword ptr [edi + 8], offset AudioStateInitMultiInstall_004a4d20
         mov     eax, dword ptr [g_baseSel_00542060]

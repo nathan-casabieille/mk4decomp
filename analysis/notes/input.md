@@ -167,10 +167,11 @@ above) for what looks like an outer-deadzone threshold.
 - ~~**`InputCheckCluster_0045e1e0` rename**~~ - DONE. Renamed to
   `EventGateCluster_0045e1e0`; it's event-queue machinery, not input.
   See [events.md](events.md).
-- **`InputPollFlagBits_004a1b00` / `_004a1b50` clarification**. Once
-  the slot mapping above is confirmed, these two `g_byte_004d50b4/b8`
-  bit-checkers can be renamed to descriptive predicates (likely
-  variations of 'any direction held' / 'any button held').
+- **`InputPollFlagBits_004a1b00` / `_004a1b50` clarification**. These
+  two read `g_byte_004d50b4/b8` - which the hidden debug menu treats as
+  toggle-state bytes (see [debug_menu.md](debug_menu.md)). So they may
+  be debug-menu/option predicates rather than gameplay input checks;
+  confirm against the debug-menu toggle wiring before renaming.
 - **Runtime verification on Whisky+dgVoodoo2**. The whole subsystem
   has been mapped from static analysis. A runtime trace (e.g. WINEDEBUG
   hooks on `GetAsyncKeyState` + `joyGetPosEx`) would confirm the
