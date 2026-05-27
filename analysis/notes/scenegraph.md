@@ -510,10 +510,36 @@ cos(a) = -g_sinTable[(a - 0x400) & 0xfff]
 with `0x1000 = 2*pi`. The cosine offset trick (`sin(a - pi/2) = -cos(a)`)
 lets both functions share one table.
 
-The three orderings (A/B/C) correspond to three Euler axis sequences
-(likely XYZ / ZYX / YXZ) - exact axis order is recoverable from each
-function's matrix-element formulas. Not yet decoded; recoverable in
-~1 session if needed.
+### OrderA matrix - decoded + verified
+
+`BuildRotMatrix_OrderA` (`0x004b3800`) was transcribed cell-by-cell
+from the asm and the result **verified orthonormal with det = +1**
+over 200 random angle triples (a real rotation matrix). With
+`cN = cos(aN)`, `sN = sin(aN)` for the three input angles, it stores
+the row-major 3x3:
+
+```
+| -c2 c0 c1 + s2 s1    s2 c0 c1 + c2 s1   -s0 c1 |
+| -c2 s0               s2 s0               c0    |
+|  c2 c0 s1 + c1 s2   -s2 c0 s1 + c2 c1    s0 s1 |
+```
+
+(byte offsets: row0 = +0/+2/+4, row1 = +6/+8/+0xA, row2 = +0xC/+0xE/
++0x10; each product is `>> 12` normalised.)
+
+**It is NOT a textbook Euler order.** Brute-forcing all 3-axis
+sequences (incl. repeated-axis), per-axis sign conventions, angle-sign
+flips and transpose (48+ conventions, validated to find a known
+`Rz Ry Rx`) yields **no match** - the bare `cos(a0)` sits at the
+off-diagonal (1,2) position, which standard XYZ/ZXZ/etc. never produce.
+This is the engine's own axis convention (consistent with the explicit
+Y/Z-swap variant `NodeApplyTransform_B_Swapped`), so a textbook label
+like "XYZ" would be wrong. For porting, use the verified matrix above
+directly rather than a Euler name.
+
+`OrderB` (`0x004b3940`) and `OrderC` (`0x004b36c0`) are decodable the
+same way (transcribe -> verify orthonormal -> compare); they differ
+from A only in the multiplication tree / store order.
 
 
 ## Sort-key LUT - BuildSortKeyLUT (0x004bf290)
