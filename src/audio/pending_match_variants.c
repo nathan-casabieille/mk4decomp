@@ -161,7 +161,7 @@ extern void DualAddSar_004ab600(void);
 extern void DualScaledStoreConst_004a22c0(void);
 extern void GuardedSetupCallTailJmp_004a1fa0(void);
 extern void InstallChainInitTailJmp_004a7030(void);
-extern void KonquestPortalCluster_004a5290(void);
+extern void EnduranceMode_Handler(void);
 extern void MStackBracket3_FieldSequentialCopy_00411d80(void);
 extern void MStackPush2ChainLLInsert_00406790(void);
 extern void MStackPushComplexCallPop_004064b0(void);
@@ -1768,7 +1768,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         je       L_5e75
         mov      dword ptr [g_eventQueueWorkType], 0x32f
         call     Push16Call_00489f50
-        call     KonquestPortalCluster_004a5290
+        call     EnduranceMode_Handler
         pop      edi
         pop      esi
         pop      ebp

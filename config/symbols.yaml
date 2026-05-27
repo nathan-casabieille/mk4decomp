@@ -13560,7 +13560,7 @@ functions:
     status: matched
     file: src/audio/audio_byte_table7_loop_chain_pick.c
   - addr: 0x004a5290
-    name: KonquestPortalCluster_004a5290
+    name: EnduranceMode_Handler
     size: 676
     group: audio
     status: matched

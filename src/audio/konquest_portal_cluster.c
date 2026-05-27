@@ -137,7 +137,16 @@ extern void TableWalkBoundedCmp_004bd890(void);
 extern void TripleCallByteCheck_004a1bf0(void);
 extern void TripleCallSetCopy_004a4880(void);
 
-__declspec(naked) void KonquestPortalCluster_004a5290(void)
+/* @addr 0x004a5290 - EnduranceMode_Handler: the main mode menu's
+ * on-select handler for the ENDURANCE row (table at 0x4f308c, +0x14
+ * field; see analysis/notes/menu_state.md). A per-frame state machine
+ * dispatching on the node's +0x84 state field (0/1/2): drives the
+ * endurance-mode flow, manages g_voicePoolTickFlag, and walks the
+ * scene node chain. NOT audio / "Konquest" - the old name was a
+ * mis-grouping artifact (this is in the 0x4a2000-0x4a9000 menu/mode
+ * cluster the symbol table labels "audio"; MK4 has no Konquest mode).
+ */
+__declspec(naked) void EnduranceMode_Handler(void)
 {
     __asm {
     L_5290:
