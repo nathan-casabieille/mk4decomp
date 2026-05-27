@@ -218,11 +218,11 @@ falling object, a different node type). Per the polymorphism rule the
 +0x70 = velocity meaning is asserted only for this fight-group / thrown
 node view, not universally.
 
-## +0x6c facing lead (TBD, two converging clues)
+## +0x6c facing lead (TBD, three converging clues)
 
-+0x6c is unnamed in scenegraph.h but two independent contexts point at
-a **horizontal facing / direction component** in the fighter-vs-fighter
-math (not yet confident enough to name):
++0x6c is unnamed in scenegraph.h but three independent contexts point
+at a **horizontal geometric scalar** (projection / facing / offset) in
+the fighter-vs-fighter math (not yet confident enough to name):
 
 1. **Round start** (`round_start_cluster_variants` ~0x319): two nodes
    (`g_eventQueueEnd` and `g_eventQueueIdx`) get +0x6c set to
@@ -237,11 +237,18 @@ math (not yet confident enough to name):
    **facing sign**. Consumed elsewhere via `add ecx, [n+0x6c]`
    accumulation (`pending_match_variants`) and a `dual_sub_from_field`
    subtract.
+3. **Dot-product write** (`ChainMul10DotProd_0042cec0`): reads the
+   anchor node's X(+0x54)/Z(+0x5c) position, runs them through a chain
+   of `Mul10Tail` (fixmul) products accumulated in `g_acc`, and stores
+   the result to that node's **+0x6c** (and +0x74). So +0x6c is the
+   *output* of a horizontal-position dot-product / projection - exactly
+   the kind of scalar a facing/offset measure is built from.
 
-Hypothesis: a per-node horizontal facing / X-offset feeding the
-inter-fighter direction computation. Left TBD pending a writer that
-pins whether it is a position delta, a facing vector, or a knockback
-direction.
+Hypothesis: a per-node horizontal geometric scalar - a projection of
+the node's floor-plane position (the dot-product result of clue 3) used
+as the facing / X-offset measure in clues 1-2. Left TBD pending the
+exact projection axis (and whether the stored value is a signed offset,
+a distance, or a facing cosine).
 
 **Polymorphic, as always:** in a different node view
 (`camera_bounce_update`) the same +0x6c slot is a **Mul10-smoothed
