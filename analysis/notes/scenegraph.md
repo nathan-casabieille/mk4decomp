@@ -556,8 +556,30 @@ bare `c0` at (1,2)), and OrderC's row 0 is the simple `[s2 s1, c2 s1,
 -c1]`. So A and C compose the three angles about a different axis
 sequence (both in the engine's custom, non-textbook convention).
 
-`OrderB` (`0x004b3940`, joint types 2/5) is the remaining one,
-decodable by the identical transcribe -> verify-orthonormal method.
+### OrderB matrix - decoded + verified
+
+`BuildRotMatrix_OrderB` (`0x004b3940`, joint types 2/5) transcribed
+cell-by-cell the same way and **verified orthonormal, det = +1** over
+20000 random triples:
+
+```
+|  s1 s2             c0 c1 s2 + c2 s0    -s0 c1 s2 + c0 c2 |
+| -s1 c2            -c0 c1 c2 + s0 s2     s0 c1 c2 + c0 s2 |
+|  c1               -c0 s1                s1 s0           |
+```
+
+(byte offsets as in OrderA: row0 = +0/+2/+4, row1 = +6/+8/+0xA,
+row2 = +0xC/+0xE/+0x10; products `>> 12` normalised.)
+
+It is again the engine's **custom convention**, distinct from both A
+and C: the bare `cos(a1)` sits at (2,0) and the simple `s1 s2`/`-s1 c2`
+pair leads rows 0 and 1, while the bare `s1 s0` lands at (2,2). All
+three builders (A/B/C) therefore compose the same three angles about
+**different axis sequences**; none is a textbook Euler order, so port
+each by its verified matrix above rather than a Euler name.
+
+With this the full `BuildRotMatrix_OrderA/B/C` trio is decoded and
+numerically verified.
 
 
 ## Sort-key LUT - BuildSortKeyLUT (0x004bf290)
