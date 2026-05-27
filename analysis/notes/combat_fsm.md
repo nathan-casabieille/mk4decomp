@@ -396,6 +396,31 @@ overlay scan - it's set elsewhere by the per-player tick. It likely
 means "victory pose / fatality" - the special state that the rest
 of the engine treats as inert.
 
+#### `move_state` (+0x74) value map
+
+Identified by which function writes each value to the **current
+player node** (`g_baseSel`)`+0x74` - the writer's role names the state.
+Values look packed as `category<<8 | variant`:
+
+| Value  | Writer (function/file)            | Meaning |
+|--------|-----------------------------------|---------|
+| 0x404  | `combo_finisher_event_cluster`    | combo finisher move |
+| 0x406  | `aerial_block_fsm_cluster`        | aerial block |
+| 0x501  | (per-player tick)                 | victory pose / fatality (the inert sentinel above) |
+| 0x1002 | `boss_roar_cluster` / `cinematic_c_fsm_cluster` | cinematic / boss-roar special |
+| 0x4004 | `round_result_slot_init_table`    | round-result pose |
+
+Category nibbles seen: `0x4xx` = combat moves, `0x5xx` = victory/
+fatality, `0x1xxx` = cinematic/special, `0x4xxx` = round result.
+
+Caveats: the values `0x10b / 0x112 / 0xCCC / 0x1000 / 0x1011 / 0x1015 /
+0x11eb` are written only by generic scheduler primitives, so their
+move meaning is unresolved. Negative writes to +0x74 (`0xffffc000` =
+-0.25, by `audio_stream_fsm5_way` / `round_display_init_cluster`) are
+the node-pool **polymorphism** - in those non-combat node types +0x74
+is a 16.16 scalar, not a move_state (see
+[node_struct.md](node_struct.md)).
+
 **Position axes (confirmed):** `+0x54`/`+0x58`/`+0x5c` are a 16.16
 position vector. `HitContactDispatcherCluster` range-checks
 `dx*dx + dz*dz <= g_rangeSqLimit_0053a180` using only X(+0x54) and
