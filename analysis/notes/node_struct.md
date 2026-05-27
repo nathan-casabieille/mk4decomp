@@ -137,32 +137,35 @@ Key mechanics:
 - The `InstallSelf*` / `Push16Call` / `MStackPush*` helpers are the
   scheduler plumbing that registers/runs these continuations.
 
-## Hot fields still TBD (ranked by access count)
+## Hot fields ranked by access count (reconciled with scenegraph.h)
 
-These are referenced thousands of times but their meaning is not yet
-pinned. Listed highest-traffic first - this is the recommended order
-for future combat-FSM RE, since naming the busiest fields unlocks the
-most call sites:
+Ranked highest-traffic first. Most rows are now named in
+[scenegraph.h](../../include/engine/scenegraph.h) (allocator-birth
+fields, the AuxVec3 triple, the child refs); the names below are the
+**render/base-node view** and high counts likely fold in other-view
+reuse (polymorphism). Rows flagged **genuinely TBD** have no name in
+the header yet - those are the recommended next targets for combat-FSM
+RE, since naming the busiest unlocks the most call sites:
 
 | Off  | Accesses | Notes / hypothesis (unconfirmed) |
 |-----:|---------:|----------------------------------|
 | +0x30 | 1652 | **player_id** (1..4) on the player view, per [combat_fsm.md](combat_fsm.md)'s GameTick scan; generic register scratch on other node views. |
 | +0x34 | 1556 | **state_mask** (OR'd with `0x1000` when on-screen) on the player view, per [combat_fsm.md](combat_fsm.md). (An earlier guess here of "velocity delta" from write-constants was wrong - the GameTick reading is authoritative.) |
 | +0x70 | 1018 | **vertical velocity accumulator** in the ballistic / fight-group node view (see "Ballistic integration loop" below). Still polymorphic - the small signed 16.16 deltas (`0xffffe148`=-0.12, `0xffffaaab`=-0.33) seen elsewhere are not necessarily the same role. |
-| +0x18 | 1012 | |
-| +0x28 |  970 | |
-| +0x64 |  910 | |
-| +0x6c |  834 | |
+| +0x18 | 1012 | scenegraph.h `child_chain` - written at alloc from `g_eventQueueChild` (render-node view); high traffic likely includes other-view reuse. |
+| +0x28 |  970 | scenegraph.h `queue_idx` - written at alloc from `g_eventQueueIdx`. |
+| +0x64 |  910 | scenegraph.h `AuxVec3Node.aux_y` (secondary vec3 Y, +0x60/+0x64/+0x68); plain `_60[]` user state on the base view. |
+| +0x6c |  834 | **genuinely TBD** - unnamed in scenegraph.h. |
 | +0x48 |  822 | first of scenegraph.h's `_48[3]`. `ScaledMove48to58_00490720` copies it directly into `position_y` (+0x58) - a staged/next-Y committed to the live Y position; combat_fsm.md notes +0x40/+0x48 read together in some walkers. (Polymorphic `_48` slot - meaning likely varies by node type, like +0x38.) |
-| +0x68 |  795 | |
-| +0x38 |  757 | |
-| +0x14 |  552 | |
-| +0x40 |  544 | |
-| +0x24 |  503 | [scenegraph.md] reads this in RenderSceneNode |
-| +0x4c |  468 | |
-| +0x1c |  423 | |
-| +0x10 |  419 | [scenegraph.md] reads this (dword index 4) |
-| +0x44 |  414 | child ref (see above) |
+| +0x68 |  795 | scenegraph.h `AuxVec3Node.aux_z` (secondary vec3 Z). |
+| +0x38 |  757 | polymorphic user state (anchor ref vs 16.16 scalar) - see cross-cutting table above. |
+| +0x14 |  552 | scenegraph.h `not_mask` - written at alloc from `g_eventQueueNotMask`. |
+| +0x40 |  544 | scenegraph.h `child_b` (render view) / `FightGroupNode.bits` (fight-group view, shr+mask). |
+| +0x24 |  503 | scenegraph.h `queue_end` - written at alloc from `g_eventQueueEnd`; read in RenderSceneNode. |
+| +0x4c |  468 | **genuinely TBD** - tail of scenegraph.h's `_48[3]` region. |
+| +0x1c |  423 | scenegraph.h `alloc_flags` - written at alloc from `g_currentNodeFlags`. |
+| +0x10 |  419 | scenegraph.h `_10` - cleared by the allocator; live meaning **TBD**. |
+| +0x44 |  414 | scenegraph.h `child_c` (third child reference). |
 
 (Counts are from a grep of `[reg*4 + 0xNN]` across `src/`; they
 under-count `reg+disp` accesses where the base is already the node
