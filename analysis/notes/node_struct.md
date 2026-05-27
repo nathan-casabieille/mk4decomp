@@ -31,6 +31,25 @@ mov  edx, [eax*4 + 0x84]          ; edx = node->state   (idx*4 = node addr)
 
 So `[reg*4 + 0xNN]` throughout the source is reading node field `0xNN`.
 
+## Caveat: multiple record views over the same `*4` pool
+
+The packed-pointer convention is used for **more than one record
+shape**, and the cursor that selects the view differs:
+
+- `g_baseSel` / `g_currentNodeIdx` -> the **task / scene node** (the
+  fields tabled below: +0x84 FSM state, +0x54 position, +0x04 cursor,
+  +0x08 continuation).
+- `g_xformEntityIdx` -> an **angle / transform-input record**. The
+  `NodeApplyTransform_{A,B,C}` handlers read three 16.16 rotation
+  angles from its `+0x00 / +0x04 / +0x08` and write a 3x3 matrix to the
+  `g_currentNodeIdx` node (see [scenegraph.md](scenegraph.md)).
+
+So the same byte offset can mean different things depending on which
+cursor reached the record. The field table below is the **task/scene
+node** view; do not assume +0x04/+0x08 are the cursor/continuation
+when the access goes through `g_xformEntityIdx` (there they are
+rotation angles). When in doubt, check which global indexed the `*4`.
+
 ## One pool, two roles
 
 The same record serves simultaneously as:
