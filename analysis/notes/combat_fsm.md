@@ -438,7 +438,7 @@ trace):
 
 | Address    | Name                          | Apparent role |
 |------------|-------------------------------|---------------|
-| 0x004335f0 | `HitReactionStateCluster`     | hit-reaction / hitstun FSM (launch dispatch; thresholds 1.0/2.0/3.0 on `g_table_00535ddc`) |
+| 0x004335f0 | `HitReactionStateCluster`     | hit-reaction / hitstun FSM. Dispatches on `g_table_00535ddc` thresholded at 1.0/2.0/3.0 units - that global is a **computed actor distance**: `helper_per_player_tick` accumulates squared deltas via `Mul10Tail` then `FpuSqrtMul` (`fsqrt`) and stores `sqrt(Sum dx^2)` there, so the reaction tier is chosen by range. |
 | 0x00437300 | `HitFsmCluster`               | hit task-FSM wrapper (dispatch on `+0x84`, calls HitReactionStateCluster) |
 | 0x0045c080 | `HitReactionCluster`          | hit-reaction handler |
 | 0x0045f650 | `HitReactionDispatcher`       | flag-driven reaction dispatch (tests node `+0x40` bit 0x200, `g_dispatchSave34_0054207e` bits) |
