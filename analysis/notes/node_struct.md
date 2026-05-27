@@ -164,11 +164,17 @@ address, so treat them as relative weights, not exact totals.)
 
 ## TODOs
 
-- ~~Pin +0x54/+0x58/+0x5c~~ - DONE: position (X/Y/Z), 16.16. Next: find
-  the per-frame `pos += vel` integration to pin the **velocity** vector
-  (the small signed-delta fields +0x34 / +0x70 are the prime suspects).
-- Confirm whether +0x34 / +0x70 are the velocity components by locating
-  the frame update that adds them into +0x54/+0x58/+0x5c.
+- ~~Pin +0x54/+0x58/+0x5c~~ - DONE: position X/Y/Z, 16.16 (axes
+  confirmed via the HitContactDispatcher floor-plane range check).
+- ~~"velocity" at +0x34~~ - SETTLED: +0x34 is a **state_mask**, not a
+  velocity (GameTick reading). Node motion is transform/pose-driven
+  (`ik_chain_pose_update`, `pose_blend_driver`, `geo_transform_*`), not
+  a simple `pos += vel`, so there is no single velocity field to pin.
+- **Health field**: `HealthBarTickDriver` reads the first dword of the
+  per-player block (`g_player1State`/`g_player2State`); damage reaches
+  it via the node-pointer path inside the layered hit FSMs
+  (`HitFsmCluster` -> `HitReactionStateCluster` -> ...), not a direct
+  global decrement - trace that chain to pin true-health vs bar-value.
 - Emit a real C `struct` once enough fields are pinned, so the
   combat-FSM bodies can be read against named members instead of raw
   offsets.
