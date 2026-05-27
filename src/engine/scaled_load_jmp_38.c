@@ -15,6 +15,6 @@ extern unsigned int g_baseSel_00542060;
  */
 extern void DualMaskCmpJmp_00490090(void);
 void ScaledLoadJmp_38_00490070(void) {
-    g_scaledInit_00542044 = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x38);
+    g_scaledInit_00542044 = ((ScenegraphNode *)(g_baseSel_00542060 * 4))->parent;
     DualMaskCmpJmp_00490090();
 }
