@@ -59,7 +59,7 @@ Total: 99 functions, sorted by size.
 - top callees: `FlagThunk4EntryDispatcher_0040a470`×4, `AudioMixerStep_004ab700`×4, `MStackPush8_004ab790`×3, `MStackBracket3_ChainSwapAdvance_0041d560`, `StoreTwoCall_0049cb40`, `CallSetPause_0041f830`, `StackPushAdd15CallPop_0040a7e0`, `ZeroThreeFields_0040a8b0`
 - top globals: `g_framePauseFlag`×11, `0x54206c`×8, `g_eventQueuePending`×3, `g_eventQueueTotal`×3, `g_fightGroupHead`×2, `0x542060`×2, `g_eventQueueNotMask`×2, `g_currentNodeIdx`
 
-## PendingMatch_00403670 @ 0x403670 (1181b)
+## Screen_BestKombatants @ 0x403670 (1181b)
 
 - file: `src/boot/pending_match_variants.c`
 - traits: cond jmps: 21
@@ -420,7 +420,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/boot/pending_match_variants.c`
 - traits: switch-via-jumptable, SEH (fs:[0]), x87 FPU, cond jmps: 4
-- top callees: `QuadCallPhase2_004be800`×8, `TableWalkBoundedCmp_004bd890`×3, `Push16Call_00489f50`×3, `LeaPlus22StoreSelf_0048e4d0`×2, `SceneFrameStepWithInputs_004be250`×2, `TitleDemoStateMachine_004032d0`×2, `BootStateMachine4Way_00402f60`×2, `PendingMatch_00403d60`×2
+- top callees: `QuadCallPhase2_004be800`×8, `TableWalkBoundedCmp_004bd890`×3, `Push16Call_00489f50`×3, `LeaPlus22StoreSelf_0048e4d0`×2, `SceneFrameStepWithInputs_004be250`×2, `TitleDemoStateMachine_004032d0`×2, `BootStateMachine4Way_00402f60`×2, `Screen_GreatestWarrior`×2
 - top globals: `g_currentNodeIdx`×47, `0x542060`×12, `0x53a3e8`×2, `0x53a19c`, `0x54206c`, `g_tickFlagF`
 
 ## PendingMatch_0044fe90 @ 0x44fe90 (2020b)
@@ -479,7 +479,7 @@ Total: 99 functions, sorted by size.
 - top callees: `StoreDoubleNegPauseSubStore_004ab750`×4, `ZeroAndDirty4_00405430`×3, `Mul10Tail_00404af0`×3, `ThreeMul10Stores_004252c0`×2, `DirtyDoubleDeref_00408cb0`×2, `MStackBracket1_TreeWalkRecursive2_00406dd0`×2, `Thunk_00405ac0`×2, `StoreTwoCall_0049cb40`
 - top globals: `g_framePauseFlag`×35, `g_matrixStackTop`×19, `g_currentNodeIdx`×10, `0x54206c`×8, `g_eventQueuePending`×6, `g_pendingNodeType`×4, `g_fightGroupHead`×3, `g_eventQueueIdx`×2
 
-## PendingMatch_00403d60 @ 0x403d60 (2334b)
+## Screen_GreatestWarrior @ 0x403d60 (2334b)
 
 - file: `src/boot/pending_match_variants.c`
 - traits: switch-via-jumptable, SEH (fs:[0]), x87 FPU, cond jmps: 25
@@ -674,7 +674,7 @@ Total: 99 functions, sorted by size.
 - top callees: `ArgSarStoreJmp_004594f0`×12, `GatedWordPushCall_00489f90`×9, `StoreLoadJmp_00404ef0`×6, `TwoCallPauseSetJmp_00445e80`×6, `Thunk_0049cbc0`×5, `Mul10Tail_00404af0`×2, `Chain2AxisDiffStoreTailJmp_0044cad0`×2, `MStackPush3SideStore_0044cb80`×2
 - top globals: `g_framePauseFlag`×61, `0x542060`×17, `g_currentNodeIdx`×13, `g_eventQueueEnd`×9, `g_matrixStackTop`×7, `0x54206c`×7, `g_eventQueueIdx`×4, `g_pendingNodeType`×3
 
-## PendingMatch_00420300 @ 0x420300 (4216b)
+## Screen_ArcadeEnding @ 0x420300 (4216b)
 
 - file: `src/engine/pending_match_variants.c`
 - traits: switch-via-jumptable, SEH (fs:[0]), x87 FPU, cond jmps: 56

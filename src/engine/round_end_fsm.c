@@ -112,7 +112,7 @@ extern unsigned int g_hitPhase_00537f30;
 extern unsigned int g_quadEntryGate_0052d724;
 extern void PendingMatch_0042d240(void);
 extern void ScenegraphWalk_0041f7d0(void);
-extern void PendingMatch_00420300(void);
+extern void Screen_ArcadeEnding(void);
 extern void TwinMStackPushScaledChain_00422110(void);
 extern void RoundEndFsm_0042b2f0(void);
 extern void CallPauseClear3CallTriple_00428030(void);
@@ -129,7 +129,7 @@ extern void ScaledInitWithCounterAndType_004314f0(void);
  *       g_walkCallback with g_loaded_004f3608. If equal, tail-call
  *       PendingMatch_0042d240. Else bumps g_hitPhase_00537f30 by 1, calls
  *       CallPauseClear3CallTriple_00428030, then chains
- *       ScenegraphWalk_0041f7d0 + PendingMatch_00420300.
+ *       ScenegraphWalk_0041f7d0 + Screen_ArcadeEnding.
  *     Phase 0: g_quadEntryGate_0052d724=1, reads g_or_0052ab40 and tests
  *       bit 3; if clear calls TwinMStackPushScaledChain_00422110. Either way installs Self
  *       at body with slot[+0x84]=1, packs (Self + 0x01000000) at the
@@ -178,7 +178,7 @@ __declspec(naked) void Phase3InstallSelfChain_00421380(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis2_done
-        call    PendingMatch_00420300
+        call    Screen_ArcadeEnding
         pop     esi
         ret
     L_pis2_phase0:

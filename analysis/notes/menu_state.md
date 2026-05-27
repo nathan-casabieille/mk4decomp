@@ -117,7 +117,7 @@ knows to tear down the match and return to the title.
 | 0x004b7b10 | `Helper_GSM_Practice`         |      464 | State handler for the practice-mode setup screen. |
 | 0x004b7ce0 | `FormatMenuItemsAndDraw_004b7ce0` | 272  | (TODO - hand-rolled byte-stream, exact role still unclear; appears to fetch a row from `g_dispatchVar40_004d52d8` and format it via `Menu_FillColonField`.) |
 | 0x004b7df0 | `Helper_GSM_Options`          |      656 | State handler for the audio/video options page. |
-| 0x004b8080 | `MenuPageTailDispatch_004b8080` |    360 | (TODO - common tail used by several `Menu_*` page handlers, exact pattern still unverified.) |
+| 0x004b8080 | `Menu_FillOptionValues` |    360 | Options-page value formatter (was `MenuPageTailDispatch`). Walks the options rows; per row, a jump table on the row type (`[row+4] - 0x3c`, 0..5) picks the value string - ON/OFF, difficulty name ("VERY EASY".."ULTIMATE"), control style ("ARCADE STYLE"/"KEYB FRIENDLY"), or an sprintf'd number - and fills it after the colon via `Menu_FillColonField`. Called as the render tail of `Helper_GSM_Options`/`Config`. |
 | 0x004b81f0 | `Helper_GSM_Config`           |      722 | State handler for the controls config page. Calls `Input_RebindKeyToAction` / `Input_RebindButtonToAction` when the user assigns a new VK / button to an action. |
 | 0x004b84d0 | `Helper_GSM_HandleEvent`      |      346 | Cutscene / scripted-event dispatcher used during state transitions (returns 0x45/0x18/0x19/0x1a/0x1b/0x1c to switch to the matching menu state). |
 | 0x004b8630 | `Menu_HelpScreen`             |      255 | HELP overlay (table `0x4f5090`): "MORTAL KOMBAT 4 / (C) 1997 MIDWAY / F1-HELP / F2-OPTIONS / F4-PAUSE & QUIT". |
@@ -235,9 +235,10 @@ skipped during up/down navigation.
 - **`FormatMenuItemsAndDraw_004b7ce0`** is still a hand-emit byte
   stream; the role above is a hypothesis. Worth a focused decompile
   pass to confirm.
-- **`MenuPageTailDispatch_004b8080`** is referenced from multiple
-  Sub* handlers but its exact role (table re-init? music re-arm?
-  audio gate?) is unconfirmed.
+- ~~**`Menu_FillOptionValues`** role~~ - DONE. It is the options-page
+  value-column formatter (see the function table above): per options
+  row a jump table picks ON/OFF / difficulty name / control style / a
+  number and fills it via `Menu_FillColonField`.
 - **`Helper_GSM_HandleEvent` event ID space**. The function returns
   0x18/0x19/0x1a/0x1b/0x1c/0x45 (each switches to a state of the
   same value) - but the inputs that produce each return value

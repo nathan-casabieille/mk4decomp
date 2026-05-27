@@ -133,7 +133,7 @@ extern void DrawMenu(void);
 extern void Helper_Sprintf(void);
 extern void Menu_FillColonField(void);
 
-__declspec(naked) void MenuPageTailDispatch_004b8080(void)
+__declspec(naked) void Menu_FillOptionValues(void)
 {
     __asm {
         mov      eax, dword ptr [g_menuPageVar_004f5328]

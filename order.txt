@@ -1,5 +1,5 @@
 VoicePicker_00401000
-FileLoaderTwoStage_00401120
+Anim_LoadPackFile
 ListInitLoop_00401310
 OnceCall_00401340
 Init0AndMax_00401370
@@ -15,11 +15,11 @@ BootStateMachine4Way_00402f60
 BootDualStateInstallSelf_00403070
 Phase3InstallSelf_00403170
 PendingMatch_004032d0
-PendingMatch_00403670
+Screen_BestKombatants
 BootMultiAssetLoadStateInit_00403b10
 RegistryPushBindPop_00403c20
 FiveTableWalkInit_00403c90
-PendingMatch_00403d60
+Screen_GreatestWarrior
 ZeroMultiGlobalsCmp_00404680
 BootMStackPopPush3Install_004046d0
 InstallSelfPairedGate_004048b0
@@ -295,7 +295,7 @@ GuardedSeq_004200b0
 InstallSelfTableWalk_004200d0
 InstallSelfDualBranchInit_004201a0
 ScaledClearTripleCallJmp_004202c0
-PendingMatch_00420300
+Screen_ArcadeEnding
 Phase3InstallSelfChain_00421380
 TriDispatchSetupChain_00421500
 StageEntityInitCluster_004216a0
@@ -1020,7 +1020,7 @@ MStackBranchSelect_00457d10
 RoundEndHandlerCluster_00457de0
 QuadCallPauseJmp_00457ff0
 DualPathCallSetup_00458030
-TriplePackedTagged_004580a0
+Screen_EnterInitials
 CameraProjectionInitSweep_00458160
 SpawnTrioInitCluster_00458440
 GuardedStateChangePair_00458630
@@ -2466,7 +2466,7 @@ Input_RebindButtonToAction
 Helper_GSM_Practice
 PendingMatch_004b7ce0
 Helper_GSM_Options
-MenuPageTailDispatch_004b8080
+Menu_FillOptionValues
 Helper_GSM_Config
 Helper_GSM_HandleEvent
 Menu_HelpScreen

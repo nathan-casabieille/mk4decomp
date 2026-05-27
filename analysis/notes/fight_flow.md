@@ -38,6 +38,27 @@ option drawers live in the same cluster; see
 [debug_menu.md](debug_menu.md). They were left under their existing
 names because they are packed multi-helper clusters.)
 
+## Records / ending screens (elsewhere in `.text`)
+
+A second string-reference sweep found the post-game record and ending
+screens outside the `0x4a` cluster:
+
+| Address    | Name (was)                          | On-screen text -> role |
+|------------|-------------------------------------|------------------------|
+| 0x00403670 | `Screen_BestKombatants` (`PendingMatch_00403670`) | "BEST KOMBATANTS", "WINS IN A ROW" - leaderboard |
+| 0x00403d60 | `Screen_GreatestWarrior` (`PendingMatch_00403d60`) | "THE GREATEST WARRIOR IS", "WINS IN A ROW" - top-record screen |
+| 0x00420300 | `Screen_ArcadeEnding` (`PendingMatch_00420300`) | "CHAMPION OF MORTAL KOMBAT", "SHINNOK'S MENACE IS OVER", "YOU ARE THE SUPREME" - arcade victory ending |
+| 0x004580a0 | `Screen_EnterInitials` (`TriplePackedTagged_004580a0`) | "ENTER INITIALS", "GREAT WINNING STREAK", "PLAYER 1/2" - high-score initials entry |
+
+(`MultiPlayerWinStringFormat_0042efc0` - "PLAYER 1/2", "PRESS START",
+"TO CONTINUE" - was already aptly named and is left as is.)
+
+## Animation pack loader
+
+| Address    | Name (was)                       | Evidence |
+|------------|----------------------------------|----------|
+| 0x00401120 | `Anim_LoadPackFile` (`FileLoaderTwoStage_00401120`) | builds `c:\source\mk4\win\anim\%s%s.AP0` / `.AP1` paths, allocates via the `"Anim_malloc()"` path - the two-stage animation-pack loader |
+
 ## How a screen draws its text
 
 Same primitive as the debug menu: each screen formats label text with

@@ -28,7 +28,7 @@ extern u32 g_framePauseFlag;
 extern void ZeroState_0048a1b0(void);
 extern void Init6Struct_00404e20(void);
 extern void StateInitShuffle_00422380(void);
-extern void PendingMatch_00420300(void);
+extern void Screen_ArcadeEnding(void);
 void ScaledClearTripleCallJmp_004202c0(void) {
     unsigned int base = g_baseSel_00542060;
     unsigned int v = ((ScenegraphNode *)(base * 4))->install_flag;
@@ -39,5 +39,5 @@ void ScaledClearTripleCallJmp_004202c0(void) {
     Init6Struct_00404e20();
     StateInitShuffle_00422380();
     if (g_framePauseFlag != 0) return;
-    PendingMatch_00420300();
+    Screen_ArcadeEnding();
 }

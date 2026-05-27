@@ -18,7 +18,7 @@ extern void Mul10Tail_00404af0(void);
  */
 extern void DoublePackedPtrInstall_00458ba0(void);
 extern void DualPathCallSetup_00458030(void);
-extern void TriplePackedTagged_004580a0(void);
+extern void Screen_EnterInitials(void);
 extern void CameraProjectionInitSweep_00458160(void);
 extern void SpawnTrioInitCluster_00458440(void);
 void QuadCallPauseJmp_00457ff0(void) {
@@ -30,7 +30,7 @@ void QuadCallPauseJmp_00457ff0(void) {
     if (g_framePauseFlag != 0) {
         return;
     }
-    TriplePackedTagged_004580a0();
+    Screen_EnterInitials();
     if (g_framePauseFlag != 0) {
         return;
     }

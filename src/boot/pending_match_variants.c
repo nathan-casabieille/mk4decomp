@@ -336,7 +336,7 @@ extern void Mul10Tail_00404af0(void);
 extern void MultiThunkDispatcher_00496fc0(void);
 extern void PendingMatch_004013a0(void);
 extern void PendingMatch_00401b70(void);
-extern void PendingMatch_00403d60(void);
+extern void Screen_GreatestWarrior(void);
 extern void PendingMatch_00409c90(void);
 extern void PendingMatch_0040a8d0(void);
 extern void PendingMatch_0040b020(void);
@@ -3015,7 +3015,7 @@ __declspec(naked) void PendingMatch_0041d770(void)
     }
 }
 
-__declspec(naked) void PendingMatch_00403670(void)
+__declspec(naked) void Screen_BestKombatants(void)
 {
     __asm {
         push     ecx
@@ -6123,7 +6123,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], ebp
-        call     PendingMatch_00403d60
+        call     Screen_GreatestWarrior
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
@@ -6149,7 +6149,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], ebp
-        call     PendingMatch_00403670
+        call     Screen_BestKombatants
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
@@ -6252,7 +6252,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      dword ptr [esi + 4], eax
         mov      ecx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [ecx*4 + 0x84], ebp
-        call     PendingMatch_00403d60
+        call     Screen_GreatestWarrior
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
@@ -6278,7 +6278,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], ebp
-        call     PendingMatch_00403670
+        call     Screen_BestKombatants
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi

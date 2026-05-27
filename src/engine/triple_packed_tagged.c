@@ -121,7 +121,7 @@ extern unsigned int g_dispatchSave900_004d55f8;
 extern unsigned int g_dispatchSave897_004d55c0;
 extern unsigned int g_dispatchSave898_004d55d8;
 extern unsigned int g_stateFlag_00537e98;
-void TriplePackedTagged_004580a0(void) {
+void Screen_EnterInitials(void) {
     if (g_stateFlag_00537e98 == 0) {
         g_xformEntityIdx = (unsigned int)&g_dispatchSave899_004d55e8 >> 2;
     } else {

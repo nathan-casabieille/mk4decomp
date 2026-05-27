@@ -6,7 +6,7 @@ functions:
     status: matched
     file: src/boot/voice_picker.c
   - addr: 0x00401120
-    name: FileLoaderTwoStage_00401120
+    name: Anim_LoadPackFile
     size: 496
     group: boot
     status: matched
@@ -102,7 +102,7 @@ functions:
     status: matched
     file: src/boot/title_demo_state_machine.c
   - addr: 0x00403670
-    name: PendingMatch_00403670
+    name: Screen_BestKombatants
     size: 1181
     group: boot
     status: matched
@@ -126,7 +126,7 @@ functions:
     status: matched
     file: src/boot/five_table_walk_init.c
   - addr: 0x00403d60
-    name: PendingMatch_00403d60
+    name: Screen_GreatestWarrior
     size: 2334
     group: boot
     status: matched
@@ -1800,7 +1800,7 @@ functions:
     status: matched
     file: src/engine/scaled_clear_triple_call_jmp.c
   - addr: 0x00420300
-    name: PendingMatch_00420300
+    name: Screen_ArcadeEnding
     size: 4216
     group: game
     status: matched
@@ -6354,7 +6354,7 @@ functions:
     status: matched
     file: src/engine/dual_path_call_setup.c
   - addr: 0x004580a0
-    name: TriplePackedTagged_004580a0
+    name: Screen_EnterInitials
     size: 185
     group: game
     status: matched
@@ -15300,7 +15300,7 @@ functions:
     status: matched
     file: src/game/helper_gsm_options.c
   - addr: 0x004b8080
-    name: MenuPageTailDispatch_004b8080
+    name: Menu_FillOptionValues
     size: 360
     group: game.menu
     status: matched

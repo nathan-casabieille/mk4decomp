@@ -126,7 +126,7 @@ extern void LoadArgPushCall_004c54b0(void);
 extern void MemcpyByteN_004a5680(void);
 extern void ShowErrorMessage(void);
 
-__declspec(naked) void FileLoaderTwoStage_00401120(void)
+__declspec(naked) void Anim_LoadPackFile(void)
 {
     __asm {
         sub     esp, 0x100

@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void ZeroMultiGlobalsCmp_00404680(void);
 extern void TitleDemoStateMachine_004032d0(void);
-extern void PendingMatch_00403d60(void);
+extern void Screen_GreatestWarrior(void);
 extern unsigned int g_pendingMatchSlot_0053a19c;
 extern unsigned int g_pendingMatchSlot2_00541dc0;
 
@@ -128,7 +128,7 @@ extern void BootStateMachine4Way_00402f60(void);
 extern void CopyGlobal_004ac1f0(void);
 extern void InstallSelfCounter_00404920(void);
 extern void PendingMatch_00402540(void);
-extern void PendingMatch_00403670(void);
+extern void Screen_BestKombatants(void);
 extern void PendingMatch_004a2a80(void);
 extern void PhaseInstallSelf3Step_00402350(void);
 extern void QuadCallPhase2_004be800(void);
@@ -391,7 +391,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], ebp
-        call     PendingMatch_00403d60
+        call     Screen_GreatestWarrior
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
@@ -417,7 +417,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [edx*4 + 0x84], ebp
-        call     PendingMatch_00403670
+        call     Screen_BestKombatants
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
@@ -520,7 +520,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      dword ptr [esi + 4], eax
         mov      ecx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [ecx*4 + 0x84], ebp
-        call     PendingMatch_00403d60
+        call     Screen_GreatestWarrior
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
@@ -546,7 +546,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [eax*4 + 0x84], ebp
-        call     PendingMatch_00403670
+        call     Screen_BestKombatants
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
