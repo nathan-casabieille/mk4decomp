@@ -170,13 +170,16 @@ void NodeApplyTransform_A_Direct(void)
 
 /*
  * Non-Direct variant of NodeApplyTransform_A: same shape as the
- * _Direct family but each s32 angle is first pre-scaled by the
+ * _Direct family but each s32 angle is first converted from the
+ * engine's stored angle unit (16.16 radians, full circle ~= 2*pi<<16,
+ * wrapped to the 0x6487e period - see analysis/notes/scenegraph.md)
+ * into the 12-bit BAM the sine LUT indexes:
  *
- *     y = ((x >> 2) * 10430) >> 18    (~ x / 100.58)
+ *     bam = ((x >> 2) * 10430) >> 18    (= x * 4096 / (2*pi<<16))
  *
- * magic before being negated and truncated to 16 bits. Likely
- * converts an internal "centi-degrees"-ish unit before handing it
- * to BuildRotMatrix.
+ * 10430 / 2^20 = 1/100.53 = 4096 / (2*pi<<16). The result is negated
+ * and truncated to 16 bits. (The _Direct family skips this - its
+ * inputs are already BAM.)
  *
  * MSVC SP3 lowers the * 10430 multiplication into a strength-
  * reduced lea/shl/add chain (10430 = 2 * 5 * 1043 = 2 * 5 * (1 +
