@@ -148,7 +148,7 @@ most call sites:
 |-----:|---------:|----------------------------------|
 | +0x30 | 1652 | **player_id** (1..4) on the player view, per [combat_fsm.md](combat_fsm.md)'s GameTick scan; generic register scratch on other node views. |
 | +0x34 | 1556 | **state_mask** (OR'd with `0x1000` when on-screen) on the player view, per [combat_fsm.md](combat_fsm.md). (An earlier guess here of "velocity delta" from write-constants was wrong - the GameTick reading is authoritative.) |
-| +0x70 | 1018 | small signed 16.16 deltas (`0xffffe148`=-0.12, `0xffffaaab`=-0.33) - a rate/offset, role unconfirmed |
+| +0x70 | 1018 | **vertical velocity accumulator** in the ballistic / fight-group node view (see "Ballistic integration loop" below). Still polymorphic - the small signed 16.16 deltas (`0xffffe148`=-0.12, `0xffffaaab`=-0.33) seen elsewhere are not necessarily the same role. |
 | +0x18 | 1012 | |
 | +0x28 |  970 | |
 | +0x64 |  910 | |
@@ -168,6 +168,42 @@ most call sites:
 under-count `reg+disp` accesses where the base is already the node
 address, so treat them as relative weights, not exact totals.)
 
+## Ballistic integration loop (+0x70 vertical velocity, fight-group view)
+
+Two independent fight-group handlers (`phase1_chain_advance_call_scale`
+and a `pending_match_variants` continuation, both keyed on
+`g_fightGroupHead`) run the same per-frame loop that pins +0x70 as a
+**vertical velocity** integrated against the Y position +0x58:
+
+```c
+node->vel_y += delta;             // +0x70 accumulate (g_dispatchSave621 / 0x106)
+if (node->vel_y < 0) goto skip;   // js: nothing more while rising
+node->position_y += 0x1999;       // +0x58 += ~0.1  (the gravity constant)
+if (node->position_y <= 0) goto skip;   // still at/under the floor
+... play landing sound (0x28A / 0x106) ...
+if (g_xformDirtyFlags & 1)
+    node->vel_y = fixmul(node->vel_y, RESTITUTION);  // +0x70 *= ~ -0.6 / -0.7
+```
+
+Evidence (16.16 fixed-point constants, `Mul10Tail_00404af0` =
+fixed-point multiply):
+- `0x1999` = +0.0999 -> the gravity increment on Y (+0x58), the same
+  constant `HitContactDispatcherCluster` uses (see axis-roles row).
+- `0xffff6667` = -0.60 and `0xffff4ccd` = -0.70 -> restitution / bounce
+  damping multiplied into +0x70 on floor contact (negative => velocity
+  reverses, magnitude < 1 => energy loss).
+- `0xfd70` = +0.99 -> an air-drag factor multiplied into the adjacent
+  +0x78 slot in the same loop (so +0x78 is a second motion component,
+  role TBD).
+
+So in this node type the motion model **is** a `pos += vel; vel +=
+gravity` ballistic integrator with restitution - the one place a real
+velocity field exists, contradicting nothing in the TODOs (which note
+that *character* motion is pose/transform-driven; this is a thrown /
+falling object, a different node type). Per the polymorphism rule the
++0x70 = velocity meaning is asserted only for this fight-group / thrown
+node view, not universally.
+
 ## How to pin a field (method)
 
 1. `grep -rn "\\*4 + 0xNN\\]" src/` to collect every read/write site.
@@ -183,9 +219,12 @@ address, so treat them as relative weights, not exact totals.)
 - ~~Pin +0x54/+0x58/+0x5c~~ - DONE: position X/Y/Z, 16.16 (axes
   confirmed via the HitContactDispatcher floor-plane range check).
 - ~~"velocity" at +0x34~~ - SETTLED: +0x34 is a **state_mask**, not a
-  velocity (GameTick reading). Node motion is transform/pose-driven
+  velocity (GameTick reading). *Character* motion is transform/pose-driven
   (`ik_chain_pose_update`, `pose_blend_driver`, `geo_transform_*`), not
-  a simple `pos += vel`, so there is no single velocity field to pin.
+  a simple `pos += vel`. But a real velocity field DOES exist for the
+  thrown / ballistic node type at **+0x70** (vel_y), integrated against
+  +0x58 with gravity `0x1999` and restitution multipliers - see the
+  "Ballistic integration loop" section above.
 - **Health field**: `HealthBarTickDriver` reads the first dword of the
   per-player block (`g_player1State`/`g_player2State`); damage reaches
   it via the node-pointer path inside the layered hit FSMs
