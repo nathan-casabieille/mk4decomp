@@ -109,12 +109,17 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /*
- * @addr 0x004bd8e0 (127b engine.geo) - geometry-load fixup loop:
- *   for each entry in walk[+4] (offset 4): walks word table at ecx,
- *   each word indexes a u16 table at 0x00ab4e00 set to esi (negated
- *   index); reaches the final dword[+0] for a second pair of u16
- *   tables; calls Mem_Free_004b5b10 with the entry pointer and
- *   Helper_GeoLoadPost.
+ * @addr 0x004bd8e0 (127b engine.geo) - geometry-unload fixup loop, the
+ * teardown counterpart of LoadGeoAsset_Textures: it frees the texture
+ * slots a .geo asset claimed (g_texSlots[0x00ab4e00], g_table_004ab4e78,
+ * g_texCount) before Mem_Free'ing the buffer.
+ *
+ *   mov ecx,[eax+4]; lea ecx,[ecx+eax+4]
+ * is the same relative-offset-from-the-field-at-+4 fixup that geo_block
+ * (include/engine/geo.h) and the texture-chunk reach in
+ * LoadGeoAsset_Textures use - here it lands on the strip/texture index
+ * word table. `mov dx,[eax+6]` then reads the node[0] header's u16 at
+ * +6 (the same g_texCount index used by the loader).
  */
 extern u16 g_texSlots[];
 extern u32 g_curTexSlot;

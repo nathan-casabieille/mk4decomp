@@ -12,6 +12,11 @@
 /*
  * @addr 0x004bd5f0
  *
+ * Decodes the rle_data stream of one geo_tex_entry (see
+ * include/engine/geo.h). LoadGeoAsset_Textures passes entry->width as
+ * row_pixels, entry->height as row_count, and the entry's rle_data
+ * pointer (entry+8) as src.
+ *
  * Naked + __asm: the early-out for "row_pixels < 1 || row_count < 1"
  * jumps directly into the MIDDLE of the epilogue (past the two pops
  * for esi/ebx, which weren't pushed yet at that point). Pure C

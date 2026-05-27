@@ -45,6 +45,28 @@ extern void ProjectVertex(void);
 extern void TransformVertex(void);
 extern void TristripBatchEmit3Cap_004bb680(void);
 
+/*
+ * @addr 0x004bb250 - per-block triangle-strip mesh walker.
+ *
+ * NON-COAXABLE: kept naked. This is the central consumer of the .geo
+ * mesh format (see geo_block / geo_vertex / geo_strip_header in
+ * include/engine/geo.h). Mapping the raw offsets to those struct
+ * fields (edi = block ptr from [esp+0x20]):
+ *
+ *   mov eax,[edi+8]            ; block->ofs_b
+ *   mov ecx,[edi+4]            ; block->ofs_a
+ *   lea ebx,[eax+edi+8]        ; header = (geo_strip_header*)(block+8+ofs_b)
+ *   lea edi,[edi+ecx+4]        ; verts  = (geo_vertex*)(block+4+ofs_a)
+ *
+ * Strip loop (L_b2f2):
+ *   mov bp,[ebx]; add ebx,2    ; flag  = header->flag  (bit 0 winding, bit 8 draw-flag)
+ *   movsx eax,[ebx]; add ebx,2 ; count = header->count; if (count < 0) end of block
+ *
+ * Vertex reads off `edi` (12-byte geo_vertex, advances 0x18 = 2 verts):
+ *   [edi+0..4]   v0.pos_x/y/z   -> tri-strip ring
+ *   [edi+6..0xa] v0.nrm_x/y/z   -> TransformVertex (rotation)
+ *   [edi+0xc..0x10] v1.pos      ; [edi+0x14..0x1e] v1.nrm
+ */
 __declspec(naked) void DrawMeshBlock(void)
 {
     __asm {

@@ -555,7 +555,16 @@ struct geo_tex_chunk {
     uint32_t count;              // number of texture entries
     geo_tex_entry entries[count];
 };
+```
 
+At runtime, `LoadGeoAsset_Textures` (0x004bd6e0) does NOT see the
+`sub_header`: it reaches the chunk via `node[+4] + relative-offset` and
+that offset lands directly on `count`, so the parser reads `count` at
++0 and the first entry at +4. The C view of just that runtime-visible
+part is `geo_tex_chunk` in [include/engine/geo.h](../../include/engine/geo.h)
+(count + entries, sub_header omitted).
+
+```c
 struct geo_tex_entry {
     uint16_t width;              // always 256 in observed files
     uint16_t height;             // always 256 in observed files

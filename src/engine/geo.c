@@ -26,6 +26,16 @@ static const char $SG_geofmt[] = "c:\\source\\mk4\\win\\geogfx\\%s";
  * unrepresentable. The original also clamps the texture-slot search
  * with a wrap-around using a register-pair counter that pure C will
  * not produce identically.
+ *
+ * Reads the .geo texture chunk (see geo_tex_chunk / geo_tex_entry in
+ * include/engine/geo.h). Mapping of the raw offsets:
+ *   mov eax,[esi+4]; lea esi,[eax+esi+4] ; esi = geo_tex_chunk (node+4+relofs)
+ *   mov ax,[esi]; add esi,4              ; count = chunk->count; esi -> entries
+ * tex_loop, per geo_tex_entry (esi = entry):
+ *   mov ax,[esi]                         ; entry->width  -> Tex_DecodeRLE16 row_pixels
+ *   mov cx,[esi+2]                       ; entry->height -> Tex_DecodeRLE16 row_count
+ *   add esi,4; mov ebp,[esi]; add esi,4  ; ebp = entry->data_size; esi -> rle_data
+ *   ...; lea esi,[esi+ebp*2]             ; advance past this entry's RLE stream
  */
 __declspec(naked) void LoadGeoAsset_Textures(s32 flag)
 {
