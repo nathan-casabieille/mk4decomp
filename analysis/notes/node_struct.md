@@ -129,7 +129,7 @@ most call sites:
 | +0x28 |  970 | |
 | +0x64 |  910 | |
 | +0x6c |  834 | |
-| +0x48 |  822 | (combat_fsm.md notes +0x40/+0x48 are read together in some walkers) |
+| +0x48 |  822 | first of scenegraph.h's `_48[3]`. `ScaledMove48to58_00490720` copies it directly into `position_y` (+0x58) - a staged/next-Y committed to the live Y position; combat_fsm.md notes +0x40/+0x48 read together in some walkers. (Polymorphic `_48` slot - meaning likely varies by node type, like +0x38.) |
 | +0x68 |  795 | |
 | +0x38 |  757 | |
 | +0x14 |  552 | |
