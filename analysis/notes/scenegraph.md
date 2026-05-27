@@ -532,11 +532,26 @@ The wrap is a reciprocal-magic modulo: `q = (x or (lower - x)) *
 period; the explicit `imul ..., 0x6487e` / `sub ..., 0x6487e` fixes the
 period unambiguously.)
 
-`0x6487e / 65536 = 6.2754 ~= 2*pi` (within ~0.13%), so the unit is
-effectively **16.16 radians** (full circle ~= `2*pi << 16`); the LUT
-index is then `angle * 0x1000 / 0x6487e` reduced to 12 bits. The small
-deviation from an exact `2*pi << 16` is left unexplained (truncated pi
-constant or a deliberately rounded period).
+The stored unit is **16.16 radians** (full circle ~= `2*pi << 16`),
+confirmed by the radians->BAM converter in the non-`Direct`
+`NodeApplyTransform_A/B/C` handlers:
+
+```c
+bam12 = ((angle >> 2) * 10430) >> 18;   // = angle * 10430 / 2^20
+```
+
+`10430 / 2^20 = 0.0099468 = 1 / 100.53 = 4096 / (2*pi << 16)`, i.e. it
+scales a 16.16-radian angle into the 4096-step (12-bit) BAM the sine
+LUT indexes. The `Direct` variants
+(`NodeApplyTransform_A/B/C_Direct`) skip this and copy `angles[]`
+straight through - their inputs are **already** 12-bit BAM.
+
+Note a real (tiny) engine inconsistency: the converter's implied
+`2*pi << 16 = 411775`, but the wrap period is `0x6487e = 411262`. So a
+full stored revolution converts to `((0x6487e >> 2) * 10430) >> 18 =
+4091` BAM, not 4096 - the wrap path and the convert path use slightly
+different `pi` approximations (~0.12% apart). Harmless at this scale,
+but it means angle wrap and angle->LUT do not share one constant.
 
 ### OrderA matrix - decoded + verified
 
