@@ -444,7 +444,7 @@ trace):
 | 0x0045f650 | `HitReactionDispatcher`       | flag-driven reaction dispatch (tests node `+0x40` bit 0x200, `g_dispatchSave34_0054207e` bits) |
 | 0x0046c7c0 | `HitStateCluster`             | hit-state handler |
 | 0x00480240 | `HitContactDispatcherCluster` | move + horizontal-distance leash (`dx^2+dz^2 <= g_rangeSqLimit`) |
-| 0x004816d0 | `BlockedCounterCluster`       | blocked-attack counter/handler |
+| 0x004816d0 | `BlockedCounterCluster`       | 3 packed helpers: H1 decrements node `+0x64` by `0x191eb` (~1.57 in 16.16); H2 fires a paired event (id 0x26, ground-impact); H3 is a task-FSM (reads `+0x6c`/`move_state`) that tail-calls `BossArrivalSequence_00481950` (same file). Name only loosely fits - it is boss-arrival-adjacent. |
 | 0x00451b90 | `JuggleFsmCluster`            | air-juggle FSM |
 | 0x004539d0 | `JuggleSetupCluster`          | juggle setup |
 
