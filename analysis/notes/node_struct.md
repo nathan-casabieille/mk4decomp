@@ -34,6 +34,30 @@ mov  edx, [eax*4 + 0x84]          ; edx = node->state   (idx*4 = node addr)
 
 So `[reg*4 + 0xNN]` throughout the source is reading node field `0xNN`.
 
+## Governing principle: the node pool is POLYMORPHIC
+
+The single most important thing to know before trusting any field
+name: **the node record is a polymorphic union - most slots mean
+different things depending on the node's type.** scenegraph.h's named
+fields (`position_x/y/z`, `fsm_state`, ...) are the meanings for the
+**scenegraph / render / player** node type. Generic task nodes reuse
+the very same bytes for unrelated purposes. Verified examples:
+
+| Slot | scenegraph/render-node meaning | other observed use |
+|------|--------------------------------|--------------------|
+| +0x5c | `position_z` (16.16 coord) | a **countdown counter** in `DualPickDecJmp_*` (dec by 1, clamp at 0) |
+| +0x38 | (unnamed) xform/distance anchor node ref | a **16.16 scalar** in `ChainStoreCmpJmp_*` (set to 0xffffb334, delta vs 0.1) |
+| +0x48 | (unnamed `_48[3]`) | a **staged Y** copied to `position_y` by `ScaledMove48to58_*` |
+
+So: **always confirm the node type / calling context before applying
+a field name.** This is why scenegraph.h leaves most slots unnamed and
+why a "lift `[reg*4+0xNN]` -> `node->field`" is only meaning-correct
+inside a confirmed scenegraph/render-node context (it stays
+byte-identical regardless, but the *name* can mislead). It is also why
+the field-archaeology in this note stops at the universally-consistent
+slots (state +0x84, the task-FSM cursor/continuation +0x04/+0x08) and
+flags everything else as context-dependent.
+
 ## Caveat: multiple record views over the same `*4` pool
 
 The packed-pointer convention is used for **more than one record

@@ -111,7 +111,15 @@ follows the `+0xE4` linked-list pointer instead.
 The 232-byte slot is now exposed as a typed C struct in
 [include/engine/scenegraph.h](../../include/engine/scenegraph.h).
 The struct provides named fields for the offsets confirmed via
-decompilation:
+decompilation.
+
+> **The pool is polymorphic.** These names are the meaning for the
+> scenegraph / render / player node type. Generic task nodes reuse the
+> same bytes for other purposes (e.g. `+0x5C` is `position_z` here but
+> a countdown counter in `DualPickDecJmp_*`). Lifting a raw
+> `[reg*4+0xNN]` access to `node->field` stays byte-identical, but only
+> apply the *name* once you've confirmed the node type. See the
+> "polymorphic" section of [node_struct.md](node_struct.md).
 
 | Field           | Offset | Type | Semantic (when valid)                       |
 |-----------------|--------|------|---------------------------------------------|
