@@ -510,6 +510,34 @@ cos(a) = -g_sinTable[(a - 0x400) & 0xfff]
 with `0x1000 = 2*pi`. The cosine offset trick (`sin(a - pi/2) = -cos(a)`)
 lets both functions share one table.
 
+### Angle-wrap period: `0x6487e` = one full revolution
+
+The LUT is indexed in 12-bit BAM (`& 0xfff`, `0x1000` = 2*pi), but the
+engine *stores and accumulates* rotation angles in a finer 16.16-style
+unit whose full-circle period is **`0x6487e` (411262)**. Angles are
+normalised into `[0, 0x6487e)` before use. Confirmed across a naming
+family that all wrap by this constant:
+
+- `TripleMod411262_00424740` - 3-unrolled mod-`0x6487e` over a node's
+  three consecutive `+0x00 / +0x04 / +0x08` slots (the rotation-angle
+  triple in the xform-record view), normalising each into one
+  revolution.
+- `ModuloMagic_0042afc0`, `m_stack_angle_wrap_dispatch`,
+  `BootMod6487eClampAndChainMul10_00407510`, `triple_mod411262` - same
+  `0x6487e` wrap.
+
+The wrap is a reciprocal-magic modulo: `q = (x or (lower - x)) *
+0xa2f99905 >> (32+18)` gives the revolution count, then `x -+= q *
+0x6487e`. (`0xa2f99905 >> 50` is MSVC's magic reciprocal of the
+period; the explicit `imul ..., 0x6487e` / `sub ..., 0x6487e` fixes the
+period unambiguously.)
+
+`0x6487e / 65536 = 6.2754 ~= 2*pi` (within ~0.13%), so the unit is
+effectively **16.16 radians** (full circle ~= `2*pi << 16`); the LUT
+index is then `angle * 0x1000 / 0x6487e` reduced to 12 bits. The small
+deviation from an exact `2*pi << 16` is left unexplained (truncated pi
+constant or a deliberately rounded period).
+
 ### OrderA matrix - decoded + verified
 
 `BuildRotMatrix_OrderA` (`0x004b3800`) was transcribed cell-by-cell
