@@ -65,7 +65,7 @@ typedef struct ScenegraphNode {
     u32 group_head;         /* +0x2C g_fightGroupHead at birth        */
     u32 player_id;          /* +0x30 1..4 (validated by per-player tick) */
     u32 state_mask;         /* +0x34 bit 0x1000 = "on screen"         */
-    u32 parent;             /* +0x38 parent/owner node ref (packed_ptr); xform + distance anchor */
+    u32 _38;                /* +0x38 polymorphic user state (zeroed at alloc): a node ref (xform/distance anchor) in some node types, a 16.16 scalar in others */
     u32 child_a;            /* +0x3C first child reference (packed_ptr) */
     u32 child_b;            /* +0x40 second child reference            */
     u32 child_c;            /* +0x44 third child reference             */

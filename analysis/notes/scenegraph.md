@@ -128,7 +128,6 @@ decompilation:
 | `group_head`    | +0x2C  | u32  | `g_fightGroupHead` at birth                 |
 | `player_id`     | +0x30  | u32  | 1..4 (player nodes only - see polymorphism) |
 | `state_mask`    | +0x34  | u32  | Bit 0x1000 = "on screen", plus dirty bits   |
-| `parent`        | +0x38  | u32  | Parent/owner node ref (packed_ptr); set at alloc, used as the transform + distance anchor (see [node_struct.md](node_struct.md)) |
 | `child_a/b/c`   | +0x3C/+0x40/+0x44 | u32 | Child packed_ptr refs (some node types) |
 | `position_x`    | +0x54  | s32  | Signed x-coord (fixed-point)                |
 | `position_y`    | +0x58  | s32  | Signed y-coord (> -0xffff_0000 = on-screen) |
@@ -141,9 +140,12 @@ decompilation:
 | `work_type`     | +0xE0  | u32  | Header: alloc-time `g_eventQueueWorkType`   |
 | `next_link`     | +0xE4  | u32  | Header: linked-list next pointer            |
 
-The remaining offsets (`_10`, `_48[3]`, `_60[5]`, `_78[3]`,
-`_88[19]`) are unnamed scratch / user-state slots. They are present
-in the struct as filler so the size matches 0xE8 exactly.
+The remaining offsets (`_10`, `_38`, `_48[3]`, `_60[5]`, `_78[3]`,
+`_88[19]`) are unnamed scratch / user-state slots whose meaning is
+polymorphic per node type. (`_38`, for instance, is a node ref used as
+the xform/distance anchor in some node types but a 16.16 scalar in
+others - see [node_struct.md](node_struct.md) - so it is deliberately
+left unnamed.) They are present as filler so the size matches 0xE8.
 
 ### Lift pattern
 

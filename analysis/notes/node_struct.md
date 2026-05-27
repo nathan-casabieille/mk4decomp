@@ -14,8 +14,8 @@ across the decompiled source finds `[reg*4 + 0x84]` alone referenced
 This note does **not** re-table those fields - it covers the
 *cross-cutting* views of the same pool that scenegraph.md does not: the
 **cooperative task-FSM** role, the **multi-view addressing** caveat,
-the position **axis roles**, the `+0x38` parent link (left unnamed
-`_38` in scenegraph.h), and the access-frequency ranking that
+the position **axis roles**, the polymorphic `+0x38` slot (left
+unnamed `_38` in scenegraph.h), and the access-frequency ranking that
 prioritises future RE.
 
 ## Packed-pointer addressing
@@ -63,7 +63,7 @@ findings that belong here, not there:
 |-----:|---------|------|
 | +0x04 | also the task **work cursor** | scenegraph.h calls it `self_ref` (scratch); the screen FSMs use it as a child-alloc bump pointer (`[esi+4]` read, write `node[cursor]`, inc, store). Same slot, task-layer reuse. |
 | +0x08 | also the task **FSM continuation** | scenegraph.h calls it `alloc_type` (g_pendingNodeType at birth); the task layer overwrites it with `OFFSET <label>` (the resume point) once running. |
-| +0x38 | **parent / owner node ref** (NEW) | scenegraph.h leaves this unnamed (`_38`). It is set at `AllocateNode` time and used as a packed node pointer by the pose/camera/pvp-distance code; in `HitContactDispatcherCluster` it is the anchor the moving node's distance is measured against. Candidate to name `parent` in scenegraph.h. |
+| +0x38 | **polymorphic user-state slot** | scenegraph.h keeps it unnamed (`_38`). In some node types it holds a node ref used as the xform / distance anchor (read as `[edx*4 + ...]` in `HitContactDispatcherCluster`); in others it is a plain 16.16 scalar (`ChainStoreCmpJmp_0049b850` sets it to `0xffffb334` and deltas it against a 0.1 threshold). So it is **not** a universal "parent" field - meaning depends on node type. (I briefly named it `parent`; reverted after finding the scalar usage.) |
 | +0x54/+0x58/+0x5c | **axis roles** (refines scenegraph's position_x/y/z) | `HitContactDispatcherCluster` range-checks `dx*dx + dz*dz <= g_rangeSqLimit` using only X(+0x54) and Z(+0x5c) - the **horizontal floor plane** - while **gravity integrates on Y(+0x58)** (`add [n+0x58],0x1999`). So +0x58 is vertical/height, +0x54/+0x5c the ground plane. |
 | +0x74 | move_state **value space** | scenegraph.h has `fsm_state` (0x501 sentinel). Written values cluster as `category<<8 | variant`: `0x404/0x406`, `0x501/0x502`, `0x1000/0x1002`, `0x4004`, `0x10b`, `0x112`. |
 | +0x84 | task-FSM state is **multi-valued** | scenegraph.h calls it `install_flag` (0/1); the screen/mode FSMs dispatch it across 0/1/2/3 - it is the cooperative task-FSM dispatch state, not just a 0/1 flag (see pattern below). |
