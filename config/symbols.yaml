@@ -13368,7 +13368,7 @@ functions:
     status: matched
     file: src/audio/audio_mode_init_variant.c
   - addr: 0x004a2720
-    name: AudioFlagPair3EntryDeinit_004a2720
+    name: GameMode_EnterScene
     size: 149
     group: audio
     status: matched

@@ -112,7 +112,7 @@ extern void PendingMatch_004a3400(void);
 extern void Thunk_004c48b0(void);
 
 /*
- * AudioFlagPair3EntryDeinit_004a2720 - 149b audio deinit variant of AudioModeInit_004a2610.
+ * GameMode_EnterScene - 149b audio deinit variant of AudioModeInit_004a2610.
  *   Main (0x004a2720): if g_gtModeFlag == 1 → store (0x53a408,0x53a3e0)>>2 to
  *     (g_currentNodeIdx,g_xformEntityIdx); else (0x537e88,0x53a700)>>2; call
  *     DualScaledStoreConst, ClearTwoCallSetStore; g_dlMode=0; call
@@ -242,7 +242,18 @@ extern void TripleCallByteCheck_004a1bf0(void);
 extern void TripleCallSetCopy_004a4880(void);
 extern void DebugMenu_DrawUnlockToggles(void);
 
-__declspec(naked) void AudioFlagPair3EntryDeinit_004a2720(void)
+/* @addr 0x004a2720 (149b) - GameMode_EnterScene: the on-select handler
+ * the main mode menu invokes for TOURNAMENT (entry 0x4a2720) and, via
+ * the +0x90 sub-entry 0x4a27b0, PRACTICE. Sets the scene node cursors
+ * (g_currentNodeIdx / g_xformEntityIdx) from one of two base tables
+ * depending on g_gtModeFlag, clears g_dlMode (per-frame asset download
+ * off), runs the scene-setup helper chain, and tail-calls the match
+ * setup PendingMatch_004a3400. NOT audio - the old
+ * "AudioFlagPair3EntryDeinit" name was a mis-grouping artifact (this
+ * function lives in the 0x4a2000-0x4a9000 menu/mode cluster that the
+ * symbol table labels "audio"). See analysis/notes/menu_state.md.
+ */
+__declspec(naked) void GameMode_EnterScene(void)
 {
     __asm
     {

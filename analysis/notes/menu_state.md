@@ -207,8 +207,8 @@ skipped during up/down navigation.
   | `ARCADE`     | `0x004a7620` | 0x0f |
   | `TEAM`       | `0x004a99d0` | 0x10 |
   | `ENDURANCE`  | `0x004a5290` | 0x12 |
-  | `TOURNAMENT` | `0x004a2720` | 0x13 |
-  | `PRACTICE`   | `0x004a27b0` | 0x14 |
+  | `TOURNAMENT` | `0x004a2720` (`GameMode_EnterScene`) | 0x13 |
+  | `PRACTICE`   | `0x004a27b0` (`GameMode_EnterScene`+0x90) | 0x14 |
   | `EXIT GAME`  | `0` (none)   | 0x15 |
 
   Trailing rows (flags `0xffff`, non-selectable) are the footer hint
@@ -217,9 +217,10 @@ skipped during up/down navigation.
   The `on_select` handlers live in the `0x004a2000`..`0x004a9000`
   cluster that the symbol table mislabels as "audio" - they are
   actually **mode-entry / scene-setup routines**. Verified by reading
-  `0x004a2720` (the TOURNAMENT handler, shared with PRACTICE at the
-  `+0x90` sub-entry): it branches on `g_gtModeFlag`, sets the node
-  cursors, clears `g_dlMode`, and tail-calls the match-setup chain.
+  `0x004a2720` (renamed `GameMode_EnterScene`; the TOURNAMENT handler,
+  shared with PRACTICE at the `+0x90` sub-entry): it branches on
+  `g_gtModeFlag`, sets the node cursors, clears `g_dlMode`, and
+  tail-calls the match-setup chain.
   Most are packed multi-entry / stateful handlers (e.g. `0x004a5290`
   is a multi-state per-frame handler), so they are documented here
   rather than renamed - a clean single-role name would misrepresent

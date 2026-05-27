@@ -2144,7 +2144,7 @@ AudioTriEntryFlagPairInit_004a22f0
 MatchStartCluster_004a23c0
 AudioModeInit_004a2610
 AudioModeInitVariant_004a2690
-AudioFlagPair3EntryDeinit_004a2720
+GameMode_EnterScene
 VoiceMixerTickDispatch_004a27c0
 VoiceTableInit_004a28d0
 Helper_AudioStub_2960

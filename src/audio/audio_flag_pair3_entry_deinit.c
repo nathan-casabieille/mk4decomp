@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /*
- * AudioFlagPair3EntryDeinit_004a2720 - 149b audio deinit variant of AudioModeInit_004a2610.
+ * GameMode_EnterScene - 149b audio deinit variant of AudioModeInit_004a2610.
  *   Main (0x004a2720): if g_gtModeFlag == 1 → store (0x53a408,0x53a3e0)>>2 to
  *     (g_currentNodeIdx,g_xformEntityIdx); else (0x537e88,0x53a700)>>2; call
  *     DualScaledStoreConst, ClearTwoCallSetStore; g_dlMode=0; call
@@ -125,7 +125,7 @@ extern void PendingMatch_004a3400(void);
 extern void SixCallSeqPushImm_004a1d80(void);
 extern void Thunk_004c48b0(void);
 
-__declspec(naked) void AudioFlagPair3EntryDeinit_004a2720(void)
+__declspec(naked) void GameMode_EnterScene(void)
 {
     __asm
     {
