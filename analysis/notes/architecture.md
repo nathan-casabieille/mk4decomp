@@ -69,6 +69,40 @@ through to the next renderer mode. See [render.md](render.md) and
 
 ---
 
+## Engine math conventions: the `Mul10` fixed-point family
+
+A naming gotcha that recurs in ~70 symbol names. The engine's core
+arithmetic primitive is a **signed 16.16 fixed-point multiply**, and
+the project's symbol convention abbreviates it **`Mul10`** - where the
+`10` is the **`0x10` = 16-bit shift count**, not "times ten".
+
+Canonical primitive, `Mul10Tail_00404af0` (verified):
+
+```asm
+mov  eax, [esp+4]          ; a
+mov  ecx, 0x10             ; shift = 16
+imul dword ptr [esp+8]     ; edx:eax = a * b   (signed 64-bit product)
+jmp  Sar64_004c5660        ; (edx:eax) >> 16  ->  return (a*b) >> 16
+```
+
+So `Mul10Tail(a, b) = (a * b) >> 16` - exactly the fixed-point multiply
+that pairs with the 16.16 position/velocity/angle values used
+everywhere in the node pool (see [node_struct.md](node_struct.md)).
+
+The ~70 `Mul10*` symbols are this idiom in different contexts, and the
+suffix says what they do with it: `Mul10Accum` (multiply-accumulate),
+`Mul10Pair` (on a 2-vector), `Mul10DotProd` (dot product),
+`Mul10SumSqrt` (sum-of-products then `sqrt`, e.g. the actor-distance
+calc), `Mul10Tail` / `Mul10TailSqrt` (tail-call forms). When reading
+combat / transform code, mentally expand `Mul10` to "fixmul16".
+
+The sister divide primitive is `FixedDiv16_004ab2a0`
+(`(a << 16) / b`, was misleadingly `RangeMulMod`); it does **not**
+follow the `Mul10` family naming because it is a one-off, not part of a
+divide family.
+
+---
+
 ## Top-level call graph
 
 ```
