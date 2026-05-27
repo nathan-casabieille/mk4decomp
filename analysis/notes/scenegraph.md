@@ -537,9 +537,27 @@ Y/Z-swap variant `NodeApplyTransform_B_Swapped`), so a textbook label
 like "XYZ" would be wrong. For porting, use the verified matrix above
 directly rather than a Euler name.
 
-`OrderB` (`0x004b3940`) and `OrderC` (`0x004b36c0`) are decodable the
-same way (transcribe -> verify orthonormal -> compare); they differ
-from A only in the multiplication tree / store order.
+### OrderC matrix - decoded + verified
+
+`BuildRotMatrix_OrderC` (`0x004b36c0`, used by joint types 1 and 3)
+transcribed the same way and **verified orthonormal, det = +1** over
+300 random triples:
+
+```
+|  s2 s1               c2 s1              -c1    |
+|  s2 c1 c0 - c2 s0    s2 s0 + c2 c1 c0    c0 s1 |
+|  s2 c1 s0 + c2 c0   -c0 s2 + c2 c1 s0    s1 s0 |
+```
+
+It is a **genuinely different ordering** from OrderA, not just a
+different store order: the bare-cos terms sit elsewhere (OrderC has
+`-c1` at (0,2) and `c0 s1` at (1,2); OrderA has `-s0 c1` at (0,2) and
+bare `c0` at (1,2)), and OrderC's row 0 is the simple `[s2 s1, c2 s1,
+-c1]`. So A and C compose the three angles about a different axis
+sequence (both in the engine's custom, non-textbook convention).
+
+`OrderB` (`0x004b3940`, joint types 2/5) is the remaining one,
+decodable by the identical transcribe -> verify-orthonormal method.
 
 
 ## Sort-key LUT - BuildSortKeyLUT (0x004bf290)
