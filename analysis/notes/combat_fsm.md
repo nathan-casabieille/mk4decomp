@@ -427,6 +427,30 @@ position vector. `HitContactDispatcherCluster` range-checks
 Z(+0x5c) - the horizontal floor plane - while gravity adds to
 Y(+0x58). Full field map in [node_struct.md](node_struct.md).
 
+### Hit / reaction cluster inventory
+
+The hit-handling logic is spread across these named clusters. They do
+**not** call each other directly - each is a node task-FSM scheduled
+via continuations (see [node_struct.md](node_struct.md) "cooperative
+task-FSM pattern"), reacting to flags and the `move_state` (+0x74).
+Inventory for navigation (precise flag semantics still need a runtime
+trace):
+
+| Address    | Name                          | Apparent role |
+|------------|-------------------------------|---------------|
+| 0x004335f0 | `HitReactionStateCluster`     | hit-reaction / hitstun FSM (launch dispatch; thresholds 1.0/2.0/3.0 on `g_table_00535ddc`) |
+| 0x00437300 | `HitFsmCluster`               | hit task-FSM wrapper (dispatch on `+0x84`, calls HitReactionStateCluster) |
+| 0x0045c080 | `HitReactionCluster`          | hit-reaction handler |
+| 0x0045f650 | `HitReactionDispatcher`       | flag-driven reaction dispatch (tests node `+0x40` bit 0x200, `g_dispatchSave34_0054207e` bits) |
+| 0x0046c7c0 | `HitStateCluster`             | hit-state handler |
+| 0x00480240 | `HitContactDispatcherCluster` | move + horizontal-distance leash (`dx^2+dz^2 <= g_rangeSqLimit`) |
+| 0x004816d0 | `BlockedCounterCluster`       | blocked-attack counter/handler |
+| 0x00451b90 | `JuggleFsmCluster`            | air-juggle FSM |
+| 0x004539d0 | `JuggleSetupCluster`          | juggle setup |
+
+Move-trigger writers that set `move_state` (combo finisher, aerial
+block, etc.) are listed in the move_state table above.
+
 ### Per-player state blocks + health bar
 
 Beyond the four `g_playerNNodeIdx` render-node pointers, there are two
