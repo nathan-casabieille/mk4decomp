@@ -81,6 +81,18 @@ single role name would mislead, or are genuinely audio:
 | 0x004a6e70 | `AudioPreloadStreamingTrack` | streaming-track preload (genuinely audio) |
 | 0x004a38d0 | `LoadGeoAssetsStateMachine` | already descriptively named (geo asset loader) |
 
+## Lower-confidence leads (single string - not renamed)
+
+These reference one suggestive string but the existing names are
+already plausible, so they are left pending a fuller read:
+
+| Address    | Name | String seen | Hypothesis |
+|------------|------|-------------|-----------|
+| 0x00423c20 | `ContinueScreenFsm_00423c20` | "MORTAL KOMBAT 4 DESIGN TEAM" | continue screen that rolls into credits, or the credits roll itself |
+| 0x00423b80 | `ChainInit3CallTailJmp_00423b80` | "GAME ANALYSTS" | credits (testers) - adjacent to the above |
+| 0x0042d240 | `PendingMatch_0042d240` | "GAME OVER" | a game-over handler (string too common to be sure) |
+| 0x004a62b0 | `PendingMatch_004a62b0` | "PRESS ACTION KEY", "WAITING" | the largest (3004b) unidentified screen - likely the VS / pre-fight matchup |
+
 ## TODOs
 
 - **`group: audio` is wrong for the screen handlers.** The whole
