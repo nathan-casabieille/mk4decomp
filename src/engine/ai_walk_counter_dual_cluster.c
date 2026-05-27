@@ -110,8 +110,8 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_loaded_004f3608;
 extern unsigned int g_dispatchClr0_0052ab48;
-extern unsigned int g_state4_0053a3e0;
-extern unsigned int g_state4_0053a700;
+extern unsigned int g_player1State;
+extern unsigned int g_player2State;
 extern void CallSetPause_0041f830(void);
 extern void DualPushSetCallDualPop_00404b10(void);
 extern void MStackPush2ChainLLInsert_00406790(void);
@@ -146,14 +146,14 @@ __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
         test     eax, eax
         mov      dword ptr [g_walkCallback], eax
         je       short L_7ec2
-        mov      ecx, OFFSET g_state4_0053a3e0
+        mov      ecx, OFFSET g_player1State
         jmp      short L_7e90
     L_7e7d:
         mov      eax, dword ptr [g_active_00537e88]
         test     eax, eax
         mov      dword ptr [g_walkCallback], eax
         je       short L_7ec2
-        mov      ecx, OFFSET g_state4_0053a700
+        mov      ecx, OFFSET g_player2State
     L_7e90:
         shr      ecx, 2
         mov      dword ptr [g_currentNodeIdx], ecx

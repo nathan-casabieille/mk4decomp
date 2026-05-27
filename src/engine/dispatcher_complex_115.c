@@ -42,8 +42,8 @@ extern unsigned int g_active_0053a408;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_state2_00541d88;
 extern unsigned int g_state2_00537ea8;
-extern unsigned int g_state4_0053a3e0;
-extern unsigned int g_state4_0053a700;
+extern unsigned int g_player1State;
+extern unsigned int g_player2State;
 extern unsigned int g_lit16_004e286c;
 
 extern void Cmp3DirtyToggle_0049fa20(void);
@@ -75,7 +75,7 @@ __declspec(naked) void DispatcherComplex115_0049f900(void) {
         _emit   3fh
         mov     dword ptr [g_active_0053a408], 2
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_state4_0053a3e0], eax
+        mov     dword ptr [g_player1State], eax
         call    RoundWinTransition_0049e7e0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -117,7 +117,7 @@ __declspec(naked) void DispatcherComplex115_0049f980(void) {
         _emit   3fh
         mov     dword ptr [g_active_00537e88], 2
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_state4_0053a700], eax
+        mov     dword ptr [g_player2State], eax
         call    RoundWinTransition_0049e7e0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

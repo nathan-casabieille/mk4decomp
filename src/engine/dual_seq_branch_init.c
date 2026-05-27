@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_dispatchTableArr4_00514d78;
 extern unsigned int g_dispatchTableArr3_00514de8;
 extern unsigned int g_dispatchClr0_0052ab48;
-extern unsigned int g_state4_0053a3e0;
+extern unsigned int g_player1State;
 extern void BootMstackInit_0041fb10(void);
 extern void DispatcherComplex181_00426310(void);
 extern void MStackPushComplexCallPop_00406430(void);
@@ -151,7 +151,7 @@ void DualSeqBranchInit_00477a20(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_dsbi_ret
-        mov     ecx, dword ptr [g_state4_0053a3e0]
+        mov     ecx, dword ptr [g_player1State]
         mov     dword ptr [g_walkCallback], ecx
         call    StoreIncrMStackPush6_004275c0
         mov     eax, dword ptr [g_framePauseFlag]

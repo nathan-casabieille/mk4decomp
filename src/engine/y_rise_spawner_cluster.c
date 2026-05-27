@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_dispatchTableArr4_00514d78;
 extern unsigned int g_dispatchTableArr3_00514de8;
 extern unsigned int g_dispatchClr0_0052ab48;
-extern unsigned int g_state4_0053a700;
+extern unsigned int g_player2State;
 extern void BootMstackInit_0041fb10(void);
 extern void DispatcherComplex181_00426310(void);
 extern void MStackPushComplexCallPop_00406430(void);
@@ -154,7 +154,7 @@ void YRiseSpawnerCluster_00477bd0(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7e12
-        mov      eax, dword ptr [g_state4_0053a700]
+        mov      eax, dword ptr [g_player2State]
         cmp      eax, 0x63
         mov      dword ptr [g_walkCallback], eax
         ja       short L_7ce0
@@ -182,7 +182,7 @@ void YRiseSpawnerCluster_00477bd0(void) {
         mov      ecx, dword ptr [eax*4 + 0x54]
         add      ecx, 0xfff70000
         mov      dword ptr [eax*4 + 0x54], ecx
-        mov      ecx, dword ptr [g_state4_0053a700]
+        mov      ecx, dword ptr [g_player2State]
         mov      dword ptr [g_walkCallback], ecx
         call     StoreIncrMStackPush6_004275c0
         mov      eax, dword ptr [g_framePauseFlag]

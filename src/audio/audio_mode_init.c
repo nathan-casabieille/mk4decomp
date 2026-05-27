@@ -115,16 +115,16 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   g_dlMode=1, call SixCallSeqPushImm; clear g_eventQueueWorkType;
  *   call Push16Call; if pause clear tail-jmp InstallSelfTableWalk_004200d0.
  */
-extern unsigned int g_state4_0053a3e0;
-extern unsigned int g_state4_0053a700;
+extern unsigned int g_player1State;
+extern unsigned int g_player2State;
 extern u32 g_dlMode;
 void AudioModeInit_004a2610(void) {
     if (g_gtModeFlag == 1) {
         g_currentNodeIdx = (unsigned int)&g_active_0053a408 >> 2;
-        g_xformEntityIdx = (unsigned int)&g_state4_0053a3e0 >> 2;
+        g_xformEntityIdx = (unsigned int)&g_player1State >> 2;
     } else {
         g_currentNodeIdx = (unsigned int)&g_active_00537e88 >> 2;
-        g_xformEntityIdx = (unsigned int)&g_state4_0053a700 >> 2;
+        g_xformEntityIdx = (unsigned int)&g_player2State >> 2;
     }
     DualScaledStoreConst_004a22c0();
     ClearTwoCallSetStore_004a2270();

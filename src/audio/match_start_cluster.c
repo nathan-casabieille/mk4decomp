@@ -111,9 +111,9 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_dataArr_00535cfc;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
-extern unsigned int g_state4_0053a3e0;
+extern unsigned int g_player1State;
 extern unsigned int g_counter_0053a51c;
-extern unsigned int g_state4_0053a700;
+extern unsigned int g_player2State;
 extern u32 g_dlMode;
 extern unsigned int g_audioTriEntryFlag_005433ec;
 extern unsigned int g_matchStartClr_00543568;
@@ -137,7 +137,7 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         /* === Helper 1 (0x4a23c0): match init === */
         mov      edx, dword ptr [g_xformDirtyFlags]
         mov      eax, OFFSET g_active_0053a408
-        mov      ecx, OFFSET g_state4_0053a3e0
+        mov      ecx, OFFSET g_player1State
         and      edx, 0xfffffffe
         shr      eax, 2
         shr      ecx, 2
@@ -146,7 +146,7 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         mov      dword ptr [g_xformEntityIdx], ecx
         call     DualScaledStoreConst_004a22c0
         mov      edx, OFFSET g_active_00537e88
-        mov      eax, OFFSET g_state4_0053a700
+        mov      eax, OFFSET g_player2State
         shr      edx, 2
         shr      eax, 2
         mov      dword ptr [g_currentNodeIdx], edx
@@ -232,7 +232,7 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         mov      dword ptr [g_xformDirtyFlags], ebx
         call     TableWalkBoundedCmp_004bd890
         mov      edx, OFFSET g_active_0053a408
-        mov      eax, OFFSET g_state4_0053a3e0
+        mov      eax, OFFSET g_player1State
         mov      ebx, 1
         add      esp, 4
         shr      edx, 2
@@ -244,7 +244,7 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         mov      dword ptr [g_xformEntityIdx], eax
         call     DualScaledStoreConst_004a22c0
         mov      ecx, OFFSET g_active_00537e88
-        mov      edx, OFFSET g_state4_0053a700
+        mov      edx, OFFSET g_player2State
         shr      ecx, 2
         shr      edx, 2
         mov      dword ptr [g_currentNodeIdx], ecx
