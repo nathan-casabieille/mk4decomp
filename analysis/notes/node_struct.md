@@ -7,13 +7,16 @@ most load-bearing data structure in the binary: a field-access tally
 across the decompiled source finds `[reg*4 + 0x84]` alone referenced
 **8110** times, and the next dozen offsets thousands more.
 
-This note consolidates the node-field knowledge that was scattered
-across [scenegraph.md](scenegraph.md) (render/transform view) and
-[combat_fsm.md](combat_fsm.md) (fight view), adds the FSM-task fields
-verified while mapping the menu/mode/screen handlers
-([menu_state.md](menu_state.md), [fight_flow.md](fight_flow.md)), and
-ranks every field by how often it is touched - which doubles as a
-priority list for future combat-FSM reverse engineering.
+**The authoritative field table is the `ScenegraphNode` struct in
+[scenegraph.md](scenegraph.md) / [include/engine/scenegraph.h](../../include/engine/scenegraph.h)**
+(0xE8 = 232 bytes, with `position_x/y/z`, `player_id`, `state_mask`,
+`fsm_state`, `flags`, `child_a/b/c`, the `magic`/header tail, etc.).
+This note does **not** re-table those fields - it covers the
+*cross-cutting* views of the same pool that scenegraph.md does not: the
+**cooperative task-FSM** role, the **multi-view addressing** caveat,
+the position **axis roles**, the `+0x38` parent link (left unnamed
+`_38` in scenegraph.h), and the access-frequency ranking that
+prioritises future RE.
 
 ## Packed-pointer addressing
 
@@ -37,81 +40,33 @@ The packed-pointer convention is used for **more than one record
 shape**, and the cursor that selects the view differs:
 
 - `g_baseSel` / `g_currentNodeIdx` -> the **task / scene node** (the
-  fields tabled below: +0x84 FSM state, +0x54 position, +0x04 cursor,
-  +0x08 continuation).
+  `ScenegraphNode` view: +0x84 task state, +0x54 position, +0x04
+  cursor, +0x08 continuation).
 - `g_xformEntityIdx` -> an **angle / transform-input record**. The
   `NodeApplyTransform_{A,B,C}` handlers read three 16.16 rotation
   angles from its `+0x00 / +0x04 / +0x08` and write a 3x3 matrix to the
   `g_currentNodeIdx` node (see [scenegraph.md](scenegraph.md)).
 
 So the same byte offset can mean different things depending on which
-cursor reached the record. The field table below is the **task/scene
-node** view; do not assume +0x04/+0x08 are the cursor/continuation
-when the access goes through `g_xformEntityIdx` (there they are
-rotation angles). When in doubt, check which global indexed the `*4`.
+cursor reached the record. The `ScenegraphNode` fields apply to the
+**task/scene node** view; do not assume +0x04/+0x08 are the
+cursor/continuation when the access goes through `g_xformEntityIdx`
+(there they are rotation angles). When in doubt, check which global
+indexed the `*4`.
 
-## One pool, two roles
+## What this view adds over `ScenegraphNode`
 
-The same record serves simultaneously as:
-- a **scenegraph render node** (transform/flags/children - the view in
-  scenegraph.md), and
-- a **task / FSM actor** (a co-operative per-frame state machine with
-  its own re-entry continuation - the view used by every
-  `*_Handler` / `*Screen` / `*Fsm` function).
+scenegraph.md already names the render-struct fields. The cross-cutting
+findings that belong here, not there:
 
-The struct is at least **~0x88 bytes** (the highest field seen is
-`+0x84`). scenegraph.md's earlier "at least 0x48 bytes" was a lower
-bound from the render-only view.
-
-## Established fields
-
-| Off  | Field | Evidence |
-|-----:|-------|----------|
-| +0x04 | child-alloc / work cursor | screen FSMs read it, write `node[cursor]`, `inc`, store back (e.g. `ContinueScreenFsm`/`GameMode_EnterScene`) - a bump pointer used to append child nodes |
-| +0x08 | FSM re-entry continuation | stores `OFFSET <label>` or a function pointer (e.g. `OFFSET AudioPreloadStreamingTrack`); the task resumes here next frame |
-| +0x20 | flag word (node type/mode bits) | [scenegraph.md](scenegraph.md): `(flags>>24)&7` = type, bit 0x100 = mode; drives the 16-entry transform dispatch |
-| +0x3c..+0x44 | up to 3 child-node refs | [scenegraph.md](scenegraph.md): recursive `RenderSceneNode` descent |
-| +0x38 | linked / anchor node ref (packed index) | read then used as a node pointer: `mov edx,[n+0x38]; ... [edx*4 + 0x54]`. In `HitContactDispatcherCluster` it is the anchor the moving node's distance is measured against (owner / opponent / leash anchor - exact role TBD). Distinct from the +0x3c..+0x44 child refs. |
-| +0x54 / +0x58 / +0x5c | **position: X (ground) / Y (vertical) / Z (depth), 16.16 fixed-point** | `BulletVolleySpawner` lays a row of projectiles at `+0x54` = stepping X (`+0x120000`=+18.0 each) with `+0x58` = constant Y (`0xffb00000`=-80.0) - a spatial layout. **Axis roles confirmed** by `HitContactDispatcherCluster`: it advances `+0x54`/`+0x5c`, then range-checks `dx*dx + dz*dz <= g_rangeSqLimit` using only X(+0x54) and Z(+0x5c) - the horizontal ground plane - while **gravity integrates on +0x58** (`add [n+0x58], 0x1999`). So +0x58 is the vertical axis, +0x54/+0x5c the floor plane. |
-| +0x74 | pose / move_state (packed enum) | [combat_fsm.md](combat_fsm.md): `0x501` = the special "victory pose / fatality" sentinel. Written values cluster into categories with a low-byte variant - `0x404/0x406`, `0x501/0x502`, `0x1000/0x1002`, `0x4004`, `0x10b`, `0x112` - i.e. a packed move/animation-state code (`category << 8 | variant`). Distinct from the +0x84 task-FSM state. |
-| +0x84 | **per-node task-FSM state** | read-and-clear dispatch (`eax = [n+0x84]; [n+0x84]=0; sub eax,0/dec eax/...`) in every task handler - `GameMode_EnterScene`, `EnduranceMode_Handler`, `ContinueScreenFsm`, the screen drawers. The most-accessed field in the binary. |
-
-## Struct skeleton (established fields)
-
-A reading aid for the asm - established offsets named, gaps left as
-explicit padding. This is the **task/scene-node view** (reached via
-`g_baseSel` / `g_currentNodeIdx`); see the multi-view caveat above.
-
-```c
-typedef struct node {                  // >= 0x88 bytes
-    /* 0x00 */ s32   angles_or_lo[1];  // angle[0] under g_xformEntityIdx view
-    /* 0x04 */ u32   work_cursor;      // child-alloc bump pointer (task view)
-    /* 0x08 */ void *resume;           // FSM continuation (phase tag in top byte)
-    /* 0x0c */ u8    pad0c[0x14 - 0x0c];
-    /* 0x14 */ u32   f14;              // flags/packed (0xff, 0x1d01000f) - TBD
-    /* 0x18 */ u32   pad18[(0x20-0x18)/4];
-    /* 0x20 */ u32   flags;            // type<<24 & 7, mode bit 0x100 (scenegraph)
-    /* 0x24 */ u32   f24;              // read by RenderSceneNode - TBD
-    /* 0x28 */ u32   pad28[(0x30-0x28)/4];
-    /* 0x30 */ s32   player_id;        // 1..4 (player view)
-    /* 0x34 */ u32   state_mask;       // |0x1000 = on-screen (player view)
-    /* 0x38 */ packed_ptr parent;      // linked/owner node (alloc-time; xform/dist anchor)
-    /* 0x3c */ packed_ptr child[3];    // +0x3c/+0x40/+0x44 child refs
-    /* 0x48 */ u32   pad48[(0x54-0x48)/4];
-    /* 0x54 */ s32   pos_x;            // 16.16, ground plane
-    /* 0x58 */ s32   pos_y;            // 16.16, vertical (gravity integrates here)
-    /* 0x5c */ s32   pos_z;            // 16.16, ground plane (depth)
-    /* 0x60 */ u32   pad60[(0x74-0x60)/4];
-    /* 0x74 */ u32   move_state;       // packed pose/anim enum (0x501 = fatality)
-    /* 0x78 */ u32   pad78[(0x84-0x78)/4];
-    /* 0x84 */ u32   task_state;       // cooperative task-FSM dispatch state
-    /* 0x88 */
-} node_t;
-```
-
-Fields marked TBD / `pad` are unverified (see the ranked list below).
-The struct is documentation only - the matching build is byte-for-byte
-asm and does not compile against this type.
+| Off  | Finding | Note |
+|-----:|---------|------|
+| +0x04 | also the task **work cursor** | scenegraph.h calls it `self_ref` (scratch); the screen FSMs use it as a child-alloc bump pointer (`[esi+4]` read, write `node[cursor]`, inc, store). Same slot, task-layer reuse. |
+| +0x08 | also the task **FSM continuation** | scenegraph.h calls it `alloc_type` (g_pendingNodeType at birth); the task layer overwrites it with `OFFSET <label>` (the resume point) once running. |
+| +0x38 | **parent / owner node ref** (NEW) | scenegraph.h leaves this unnamed (`_38`). It is set at `AllocateNode` time and used as a packed node pointer by the pose/camera/pvp-distance code; in `HitContactDispatcherCluster` it is the anchor the moving node's distance is measured against. Candidate to name `parent` in scenegraph.h. |
+| +0x54/+0x58/+0x5c | **axis roles** (refines scenegraph's position_x/y/z) | `HitContactDispatcherCluster` range-checks `dx*dx + dz*dz <= g_rangeSqLimit` using only X(+0x54) and Z(+0x5c) - the **horizontal floor plane** - while **gravity integrates on Y(+0x58)** (`add [n+0x58],0x1999`). So +0x58 is vertical/height, +0x54/+0x5c the ground plane. |
+| +0x74 | move_state **value space** | scenegraph.h has `fsm_state` (0x501 sentinel). Written values cluster as `category<<8 | variant`: `0x404/0x406`, `0x501/0x502`, `0x1000/0x1002`, `0x4004`, `0x10b`, `0x112`. |
+| +0x84 | task-FSM state is **multi-valued** | scenegraph.h calls it `install_flag` (0/1); the screen/mode FSMs dispatch it across 0/1/2/3 - it is the cooperative task-FSM dispatch state, not just a 0/1 flag (see pattern below). |
 
 ## Cooperative task-FSM pattern (how to read the combat code)
 
