@@ -76,16 +76,50 @@ bound from the render-only view.
 | +0x74 | pose / move_state | [combat_fsm.md](combat_fsm.md): `0x501` = the special "victory pose / fatality" sentinel. Distinct from the +0x84 task-FSM state. |
 | +0x84 | **per-node task-FSM state** | read-and-clear dispatch (`eax = [n+0x84]; [n+0x84]=0; sub eax,0/dec eax/...`) in every task handler - `GameMode_EnterScene`, `EnduranceMode_Handler`, `ContinueScreenFsm`, the screen drawers. The most-accessed field in the binary. |
 
-The task-handler idiom that ties +0x84 / +0x08 / +0x04 together:
+## Cooperative task-FSM pattern (how to read the combat code)
+
+This is **the** idiom of the `game` cluster - hundreds of the naked
+`MStack* / CallPause* / InstallSelf* / *Cluster / *Fsm` functions are
+instances of it. Understanding it makes them readable even before
+they are individually named.
+
+A node is a **cooperative task**. Each frame the scheduler invokes the
+node's current handler; the handler runs until it decides to "sleep
+until next frame", at which point it registers a continuation and
+yields. Canonical shape (verified in `HitFsmCluster_00437300`,
+`ContinueScreenFsm`, `GameMode_EnterScene`, `EnduranceMode_Handler`,
+the screen drawers):
 
 ```c
-switch (node->state /* +0x84 */) {     // read-and-cleared each entry
-case 0: ... break;                      // first entry: set up
-case 1: node->resume = &&LABEL;         // +0x08 continuation
-        node->state  = 2;               // advance; yield (g_framePauseFlag=1)
-        ...
+void Handler(void) {
+    int st = node->state;   // +0x84, READ-AND-CLEARED (node->state = 0)
+    if (st == 0) {                       // first/active entry: do the work
+        ... ;
+        node->resume      = &Handler + (1 << 24);  // +0x08: continuation,
+                                                    //  state tag in top byte
+        node->work_cursor = ... ;                   // +0x04 child bump ptr
+        node->state       = 1;                      // +0x84: next phase
+        g_framePauseFlag  = 1;                       // YIELD this frame
+        return;
+    }
+    // st == 1: HitReactionStateCluster()/next phase, etc.
 }
 ```
+
+Key mechanics:
+- **`node->state` (+0x84)** is read **and zeroed** on entry, then the
+  switch runs - so a handler that wants to re-run a phase must re-set
+  it. `sub eax,0 / dec eax / dec eax ...` is the compiled switch.
+- **`node->resume` (+0x08)** stores the re-entry point. The constant
+  added to `OFFSET label` (`+0x1000000` / `+0x2000000` / `+0x3000000`)
+  packs a **phase tag in the top byte** of the continuation pointer.
+- **`g_framePauseFlag`** is the cooperative **yield signal**: once a
+  handler sets it, every caller up the chain checks
+  `if (g_framePauseFlag) return;` and unwinds without advancing - so
+  the whole call stack suspends until next frame. (This is why almost
+  every combat function is peppered with that check after each call.)
+- The `InstallSelf*` / `Push16Call` / `MStackPush*` helpers are the
+  scheduler plumbing that registers/runs these continuations.
 
 ## Hot fields still TBD (ranked by access count)
 
