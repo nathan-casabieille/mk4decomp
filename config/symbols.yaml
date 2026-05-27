@@ -13860,7 +13860,7 @@ functions:
     status: matched
     file: src/audio/mark_slot.c
   - addr: 0x004ab2a0
-    name: RangeMulMod_004ab2a0
+    name: FixedDiv16_004ab2a0
     size: 89
     group: audio
     status: matched

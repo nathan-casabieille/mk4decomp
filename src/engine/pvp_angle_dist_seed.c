@@ -116,7 +116,7 @@ extern s32 g_dlNalt3;
 extern s32 g_dlNalt4;
 extern void CallPauseLoadAndDispatch_004235f0(void);
 extern void InstallSelfPause2_00423630(void);
-extern void RangeMulMod_004ab2a0(void);
+extern void FixedDiv16_004ab2a0(void);
 
 __declspec(naked) void PvpAngleDistSeed_004232e0(void)
 {
@@ -163,7 +163,7 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         mov      dword ptr [g_currentNodeFlags], eax
         mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_eventQueueCurrent], eax
-        call     RangeMulMod_004ab2a0
+        call     FixedDiv16_004ab2a0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_33e4
@@ -173,7 +173,7 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         mov      dword ptr [g_eventQueueNotMask], edx
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_eventQueueCurrent], ecx
-        call     RangeMulMod_004ab2a0
+        call     FixedDiv16_004ab2a0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_33e4

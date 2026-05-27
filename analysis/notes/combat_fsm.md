@@ -441,7 +441,7 @@ the reaction FSMs:
   `g_fightAxisNegX/NegY` (`0x535e70`/`0x535e74`). The "Neg" pair is
   literally the **negation** of the "Pos" pair (`neg eax` right after
   each store): a single 2D direction vector `(dx,dy)` from
-  `RangeMulMod_004ab2a0` stored as `+v` and `-v` so each fighter can
+  `FixedDiv16_004ab2a0` stored as `+v` and `-v` so each fighter can
   grab the sign pointing at its opponent. This is the per-frame
   **inter-fighter facing vector**; the per-player facing-sign math
   (yielding +1.0/-1.0 = `0x10000`/`0xffff0000`) reads it together with

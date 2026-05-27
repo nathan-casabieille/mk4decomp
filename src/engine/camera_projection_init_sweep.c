@@ -120,7 +120,7 @@ extern void MStackBracket4_ListInsertZeroFill_00408600(void);
 extern void MStackCall_00406340(void);
 extern void MStackPush2ChainLLInsert_00406790(void);
 extern void MStackPush2ChainPrepend_00409970(void);
-extern void RangeMulMod_004ab2a0(void);
+extern void FixedDiv16_004ab2a0(void);
 extern void RegistryPushBindPop_00403c20(void);
 extern void Thunk_00427460(void);
 
@@ -131,7 +131,7 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         push     edi
         mov      dword ptr [g_walkCallback], 0x6487e
         mov      dword ptr [g_eventQueueCurrent], 0x280000
-        call     RangeMulMod_004ab2a0
+        call     FixedDiv16_004ab2a0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8430
