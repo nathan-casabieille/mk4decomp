@@ -55,7 +55,17 @@ typedef struct ScenegraphNode {
     u32 self_ref;           /* +0x04 lea [edx + 0x22] self-pointer    */
     u32 alloc_type;         /* +0x08 g_pendingNodeType at birth       */
     u32 alloc_work_type;    /* +0x0C g_eventQueueWorkType at birth    */
-    u32 _10;                /* +0x10 cleared by allocator             */
+    u32 _10;                /* +0x10 cleared by allocator. Polymorphic:
+                             *   - render-walker view: a draw/tick fn-ptr
+                             *     RenderSceneNode loads via [child*4+0x10]
+                             *     and call's directly; dispatch tables write
+                             *     entry points (0x49d200, 0x4ba0e0, 0x412ff0,
+                             *     0x418030, 0x4168f0, 0x4171a0, ...).
+                             *   - post-init sequencer view: a packed_ptr child
+                             *     link, chased via [reg*4] after stashing.
+                             *   - cooperative-task view: an opaque saved u32
+                             *     restored into g_eventQueueNotMask.
+                             *   See analysis/notes/node_struct.md for sites.   */
     u32 not_mask;           /* +0x14 g_eventQueueNotMask at birth     */
     u32 child_chain;        /* +0x18 g_eventQueueChild at birth       */
     u32 alloc_flags;        /* +0x1C g_currentNodeFlags at birth      */
@@ -69,7 +79,14 @@ typedef struct ScenegraphNode {
     u32 child_a;            /* +0x3C first child reference (packed_ptr) */
     u32 child_b;            /* +0x40 second child reference            */
     u32 child_c;            /* +0x44 third child reference             */
-    u32 _48[3];             /* +0x48..+0x53 user state                */
+    u32 _48[3];             /* +0x48..+0x53 user state. _48[0] (+0x48)
+                             * is the staged-Y in the throw view (copied
+                             * to position_y by ScaledMove48to58_*).
+                             * _48[1] (+0x4c) is polymorphic: per-frame
+                             * vel_y delta in the projectile view (added
+                             * to +0x70 until landing), 16.16 scratch
+                             * scalar on the player view, phase counter
+                             * elsewhere. See analysis/notes/node_struct.md. */
     s32 position_x;         /* +0x54 vec3 X coord (fixed-point)       */
     s32 position_y;         /* +0x58 vec3 Y coord; > -0xffff_0000 = on-screen */
     s32 position_z;         /* +0x5C vec3 Z coord (fixed-point)       */

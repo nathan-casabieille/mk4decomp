@@ -48,6 +48,8 @@ the very same bytes for unrelated purposes. Verified examples:
 | +0x5c | `position_z` (16.16 coord) | a **countdown counter** in `DualPickDecJmp_*` (dec by 1, clamp at 0) |
 | +0x38 | (unnamed) xform/distance anchor node ref | a **16.16 scalar** in `ChainStoreCmpJmp_*` (set to 0xffffb334, delta vs 0.1) |
 | +0x48 | (unnamed `_48[3]`) | a **staged Y** copied to `position_y` by `ScaledMove48to58_*` |
+| +0x10 | a **per-node draw / tick fn-ptr** invoked by the render walker (`RenderSceneNode` does `mov edx, [child*4+0x10]; call edx` at line 309 of `render_scene_node.c`) | a **packed_ptr child link** in `scene_post_init_sequencer` (the value is stored to `g_xformEntityIdx` then dereferenced as `[eax*4]`), and a **saved-state stash u32** in cooperative-task handlers (`pending_match_variants` restores it into `g_eventQueueNotMask`) |
+| +0x4c | a **per-frame vertical-velocity delta** (acceleration term) for throw / projectile node physics: `throw_init_link_cluster` does `vel_y(+0x70) += [+0x4c]` every frame until the projectile clears its target Y (+0x48), then clears +0x4c to 0 | a **16.16 scratch scalar** on the player view (set to 0x50000 = 5.0 alongside +0x3c/+0x44/+0x48 = 3.0/4.0/7.0 in `five_block_dispatch_variants` line 237127), and a **per-frame phase counter** in `triple_entry_countdown_install` (incremented by 0x41 each frame, reset to -0x28f at phase 0) |
 
 So: **always confirm the node type / calling context before applying
 a field name.** This is why scenegraph.h leaves most slots unnamed and
@@ -173,9 +175,9 @@ RE, since naming the busiest unlocks the most call sites:
 | +0x14 |  552 | scenegraph.h `not_mask` - written at alloc from `g_eventQueueNotMask`. |
 | +0x40 |  544 | scenegraph.h `child_b` (render view) / `FightGroupNode.bits` (fight-group view, shr+mask). |
 | +0x24 |  503 | scenegraph.h `queue_end` - written at alloc from `g_eventQueueEnd`; read in RenderSceneNode. |
-| +0x4c |  468 | **genuinely TBD** - tail of scenegraph.h's `_48[3]` region. |
+| +0x4c |  468 | **polymorphic** (see slot table above): in the throw/projectile view, the **per-frame vel_y delta** (acceleration) added to +0x70 each frame until landing (`throw_init_link_cluster.c:200-225`); in the player view, a **16.16 scratch scalar** (sometimes 5.0); in the countdown FSM view, a **phase counter** (incremented +0x41/frame). Common small initial values 0x147 / 0x28f / 0x3d7 stepped by 0x148 = ~0.005 / 0.01 / 0.015 in 16.16 - consistent with throw-speed presets. The negative reset -0x28f confirms signedness. Stays unnamed in `_48[3]`. |
 | +0x1c |  423 | scenegraph.h `alloc_flags` - written at alloc from `g_currentNodeFlags`. |
-| +0x10 |  419 | scenegraph.h `_10` - cleared by the allocator; live meaning **TBD**. |
+| +0x10 |  419 | scenegraph.h `_10` - cleared by the allocator; **polymorphic** (see slot table above). The dominant role is a **per-node draw/tick fn-ptr** (RenderSceneNode loads it via `[child*4+0x10]` and `call edx`s the result; dispatch tables write function entry points here: 0x0049d200, 0x004ba0e0, 0x00412ff0, 0x00418030, 0x004168f0, 0x004171a0, ...). Two minority views also use the slot: a **packed_ptr child link** (`scene_post_init_sequencer` stores the value into `g_xformEntityIdx` and chases it via `[eax*4]`) and an **opaque saved-state u32** (`pending_match_variants` restores it into `g_eventQueueNotMask`). Not promotable to a named `ScenegraphNode` field because of the polymorphism, but the *render-walker* view name is `draw_callback` if a future sister-typedef is added. |
 | +0x44 |  414 | scenegraph.h `child_c` (third child reference). |
 
 (Counts are from a grep of `[reg*4 + 0xNN]` across `src/`; they
