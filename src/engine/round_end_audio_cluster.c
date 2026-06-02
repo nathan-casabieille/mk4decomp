@@ -112,8 +112,8 @@ extern unsigned int g_dispatchTableArr11_0050d23c;
 extern unsigned int g_dispatchSave130_0050d258;
 extern unsigned int g_dispatchSave21_0052ab4c;
 extern unsigned int g_particleEmitterNode;
-extern unsigned int g_bootHeavyState_00537f78;
-extern unsigned int g_particleInitState_00541de0;
+extern unsigned int g_bootHeavyState;
+extern unsigned int g_particleInitState;
 extern void SaveCallRestoreOrXor(void);
 extern void ScaledChainInit2Phase(void);
 
@@ -191,10 +191,10 @@ void RoundEndAudioCluster(void) {
         jne      short L_e9d6
         mov      dword ptr [g_currentNodeFlags], 0xe666
     L_e9d6:
-        mov      ecx, dword ptr [g_bootHeavyState_00537f78]
+        mov      ecx, dword ptr [g_bootHeavyState]
         mov      edx, dword ptr [g_currentNodeFlags]
         mov      dword ptr [ecx*4 + 0x3c], edx
-        mov      edx, dword ptr [g_particleInitState_00541de0]
+        mov      edx, dword ptr [g_particleInitState]
         mov      ecx, dword ptr [g_currentNodeFlags]
         mov      dword ptr [edx*4 + 0x3c], ecx
         mov      ecx, dword ptr [g_particleEmitterNode]

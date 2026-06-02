@@ -37,12 +37,12 @@ void AppShutdown(void) {
 
 /* @addr 0x004235f0 (64b)
  *   call F; pause → ret;
- *   load g_or_0052ab40 → walk; and 4 → g_xformScratch94;
+ *   load g_or → walk; and 4 → g_xformScratch94;
  *   jz → call F2; pause → ret;
  *   set [g_eventQueueNotMask] = 0x1002f; jmp T.
  */
 extern void ZeroSlotsGatedDispatch(void);
-extern unsigned int g_or_0052ab40;
+extern unsigned int g_or;
 extern unsigned int g_xformScratch94;
 extern void ScaledLoadCmp0fJmp(void);
 extern void HitReactionDispatcher(void);
@@ -50,7 +50,7 @@ void CallPauseLoadAndDispatch(void) {
     unsigned int v;
     ZeroSlotsGatedDispatch();
     if (g_framePauseFlag != 0) return;
-    v = g_or_0052ab40;
+    v = g_or;
     g_walkCallback = (void (*)(void))v;
     v = v & 4;
     g_xformScratch94 = v;

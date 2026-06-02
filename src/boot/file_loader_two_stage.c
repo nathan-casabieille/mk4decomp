@@ -113,8 +113,8 @@ extern unsigned int g_dispatchSave892_004d504c;
 extern unsigned int g_dispatchVar40_004d505c;
 extern unsigned int g_dispatchSave893_004d5060;
 extern unsigned int g_dispatchSave565_004d506c;
-extern unsigned int g_fileLoaderArr_00524158;
-extern unsigned int g_fileLoaderState_00524358;
+extern unsigned int g_fileLoaderArr;
+extern unsigned int g_fileLoaderState;
 extern void FSYS_fclose(void);
 extern void FSYS_fopen(void);
 extern void FSYS_fread(void);
@@ -177,12 +177,12 @@ __declspec(naked) void Anim_LoadPackFile(void)
         push    ebp
         call    LoadArgPushCall
         add     esp, 4
-        mov     dword ptr [g_fileLoaderState_00524358], eax
+        mov     dword ptr [g_fileLoaderState], eax
         test    eax, eax
         jne     L_fl_have_buf
         push    offset g_dispatchSave892_004d504c
         call    ShowErrorMessage
-        mov     eax, dword ptr [g_fileLoaderState_00524358]
+        mov     eax, dword ptr [g_fileLoaderState]
         add     esp, 4
         test    eax, eax
         jne     L_fl_have_buf
@@ -238,7 +238,7 @@ __declspec(naked) void Anim_LoadPackFile(void)
         push    0
         push    esi
         call    FSYS_fseek
-        mov     ecx, dword ptr [g_fileLoaderState_00524358]
+        mov     ecx, dword ptr [g_fileLoaderState]
         add     esp, 0xC
         push    esi
         push    edi
@@ -248,15 +248,15 @@ __declspec(naked) void Anim_LoadPackFile(void)
         add     esp, 0x10
         push    esi
         call    FSYS_fclose
-        mov     edx, dword ptr [g_fileLoaderState_00524358]
+        mov     edx, dword ptr [g_fileLoaderState]
         add     esp, 4
         push    0x200
         push    edx
-        push    offset g_fileLoaderArr_00524158
+        push    offset g_fileLoaderArr
         call    MemcpyByteN
         add     esp, 0xC
         call    ListInitLoop
-        mov     esi, dword ptr [g_fileLoaderState_00524358]
+        mov     esi, dword ptr [g_fileLoaderState]
         xor     eax, eax
         mov     ax, word ptr [esi + 0x200]
         lea     ecx, [esi + 0x200]
@@ -284,7 +284,7 @@ __declspec(naked) void Anim_LoadPackFile(void)
         and     edx, 0x8000
         cmp     eax, 0xFFFF
         jne     L_fl_loop
-        mov     esi, dword ptr [g_fileLoaderState_00524358]
+        mov     esi, dword ptr [g_fileLoaderState]
     L_fl_terminator:
         push    ebx
         push    ebp
@@ -294,7 +294,7 @@ __declspec(naked) void Anim_LoadPackFile(void)
         add     esp, 0x10
         push    ebx
         call    FSYS_fclose
-        mov     eax, dword ptr [g_fileLoaderState_00524358]
+        mov     eax, dword ptr [g_fileLoaderState]
         add     esp, 4
         pop     edi
         pop     esi

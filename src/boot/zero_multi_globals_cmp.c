@@ -9,13 +9,13 @@ extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00404680 (71b)
  *   zero a bunch of state globals, with one extra-conditional zero on
- *   g_bootInitState_00535de4 if g_audioPathFlag_0054355c == 0 && g_audioPathFlag2_00543710 == 0.
+ *   g_bootInitState if g_audioPathFlag == 0 && g_audioPathFlag2_00543710 == 0.
  */
-extern unsigned int g_audioPathFlag_0054355c;
+extern unsigned int g_audioPathFlag;
 extern unsigned int g_stateCountdown;
 extern unsigned int g_dispatchSave402_00537f10;
 extern unsigned int g_audioPathFlag2_00543710;
-extern unsigned int g_bootInitState_00535de4;
+extern unsigned int g_bootInitState;
 extern unsigned int g_dispatchSave266_0052ab00;
 extern unsigned int g_dispatchSave_00537f8c;
 extern unsigned int g_installSelfCounter2_00541d90;
@@ -26,8 +26,8 @@ void ZeroMultiGlobalsCmp(void) {
     g_walkCallback = 0;
     g_stateCountdown = 0;
     g_dispatchSave402_00537f10 = 0;
-    if (g_audioPathFlag_0054355c == 0 && g_audioPathFlag2_00543710 == 0) {
-        g_bootInitState_00535de4 = 0;
+    if (g_audioPathFlag == 0 && g_audioPathFlag2_00543710 == 0) {
+        g_bootInitState = 0;
     }
     g_dispatchSave266_0052ab00 = 0;
     g_dispatchSave_00537f8c = 0;

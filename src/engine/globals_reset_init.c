@@ -123,7 +123,7 @@ extern unsigned int g_dispatchSave94_0053a2d8;
 extern unsigned int g_dispatchSave93_0053a2dc;
 extern unsigned int g_dispatchSave91_0053a358;
 extern unsigned int g_player1State;
-extern unsigned int g_pendingMatchAcc_0053a3e8;
+extern unsigned int g_pendingMatchAcc;
 extern unsigned int g_dispatchSave84_0053a6d8;
 extern unsigned int g_dst_0053a6e0;
 extern unsigned int g_player2State;
@@ -133,7 +133,7 @@ extern unsigned int g_phaseTimer;
 extern unsigned int g_dst_00537ea4;
 extern unsigned int g_counter_0053a51c;
 extern unsigned int g_dispatchVar9_00541dc0;
-extern unsigned int g_nodeUnlinkSlot_00541e4c;
+extern unsigned int g_nodeUnlinkSlot;
 extern void ResetSceneCallbacks(void);
 
 __declspec(naked) void GlobalsResetInit(void) {
@@ -171,13 +171,13 @@ __declspec(naked) void GlobalsResetInit(void) {
         mov     dword ptr [g_dispatchSave91_0053a358], esi
         mov     dword ptr [g_dispatchSave109_0052aab4], 8
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_pendingMatchAcc_0053a3e8], eax
+        mov     dword ptr [g_pendingMatchAcc], eax
         call    ResetSceneCallbacks
         cmp     dword ptr [g_framePauseFlag], esi
         _emit   75h
         _emit   24h
         mov     dword ptr [g_walkCallback], esi
-        mov     dword ptr [g_nodeUnlinkSlot_00541e4c], esi
+        mov     dword ptr [g_nodeUnlinkSlot], esi
         mov     dword ptr [g_dispatchSave94_0053a2d8], esi
         mov     dword ptr [g_dispatchSave93_0053a2dc], esi
         mov     dword ptr [g_load_0052ab04], esi

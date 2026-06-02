@@ -107,25 +107,25 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
-extern unsigned int g_walkBoundsLimit_00535d60;
-extern unsigned int g_walkBoundsSlot_00535d68;
-extern unsigned int g_pendingClear_0053a3cc;
-extern unsigned int g_xformEntityIdxSrc_00541fac;
+extern unsigned int g_walkBoundsLimit;
+extern unsigned int g_walkBoundsSlot;
+extern unsigned int g_pendingClear;
+extern unsigned int g_xformEntityIdxSrc;
 extern unsigned int g_load_0052ab10;
 
 /* @addr 0x00431260 (256b game) - 5-field copy from indexed table to chain.
- *   eax = g_load_0052ab10 (chain base); ecx = g_xformEntityIdxSrc_00541fac (table idx).
+ *   eax = g_load_0052ab10 (chain base); ecx = g_xformEntityIdxSrc (table idx).
  *   g_scaledInit_00542044 = eax; g_xformEntityIdx = ecx.
  *   Initial: chain[+0x54] = table[+0]. Then 4 more iterations:
  *     idx++; chain[+0x58/+0x5c/+0x60/+0x64] = table[+idx]; g_walkCallback=value.
  *   Then idx++; chain[+0x68] = table[+idx] (no g_walkCallback set).
  *   Then idx++ (final increment).
- *   Set g_pendingClear_0053a3cc=0, g_walkBoundsSlot_00535d68=0, g_walkCallback=0xffff0000,
- *   g_walkBoundsLimit_00535d60=0xffff0000; ret.
+ *   Set g_pendingClear=0, g_walkBoundsSlot=0, g_walkCallback=0xffff0000,
+ *   g_walkBoundsLimit=0xffff0000; ret.
  */
 void FiveFieldChainCopyTableWalk(void) {
     g_scaledInit_00542044 = g_load_0052ab10;
-    g_xformEntityIdx = g_xformEntityIdxSrc_00541fac;
+    g_xformEntityIdx = g_xformEntityIdxSrc;
     g_walkCallback = *(unsigned int *)(g_xformEntityIdx * 4);
     ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_x = g_walkCallback;
     g_xformEntityIdx++;
@@ -143,8 +143,8 @@ void FiveFieldChainCopyTableWalk(void) {
     g_xformEntityIdx++;
     *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x68) = *(unsigned int *)(g_xformEntityIdx * 4);
     g_xformEntityIdx++;
-    g_pendingClear_0053a3cc = 0;
-    g_walkBoundsSlot_00535d68 = 0;
+    g_pendingClear = 0;
+    g_walkBoundsSlot = 0;
     g_walkCallback = 0xffff0000;
-    g_walkBoundsLimit_00535d60 = 0xffff0000;
+    g_walkBoundsLimit = 0xffff0000;
 }

@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned short* g_crtCType_00522998;
+extern unsigned short* g_crtCType;
 extern void WcToMbDispatcher(void);
 
 extern unsigned int g_dispatchSave1580_00ab51f8;

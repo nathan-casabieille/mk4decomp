@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave520_004ec0c0;
-extern unsigned int g_dispatchTableArr_00500c08;
+extern unsigned int g_dispatchTableArr;
 extern unsigned int g_dispatchSave31_00542aac;
 extern void ThrowFsmCluster_004700e0(void);
 extern void GuardedSeq_00428480(void);
@@ -126,7 +126,7 @@ extern void GuardedPackedSlotInit(void);
  *       g_currentNodeIdx bumped after); zeroes slot[+0x84] and calls
  *       GuardedSeq_00428480, arms g_framePauseFlag=1.
  *     - phase 0 (eax==0): pushes 0x00542aac, calls GuardedPackedSlotInit;
- *       on success sets g_eventQueueChild=2, sets g_eventQueueIdx = &g_dispatchTableArr_00500c08>>2,
+ *       on success sets g_eventQueueChild=2, sets g_eventQueueIdx = &g_dispatchTableArr>>2,
  *       installs Self at [esi+8], sets slot[+0x84]=1, packs (Self + 0x01000000)
  *       at [eax*4], zeroes slot[+0x84], and arms 0x541e6c=1 via GuardedSeq.
  */
@@ -196,7 +196,7 @@ __declspec(naked) void Phase3PackedInstallSelf(void) {
         add     esp, 4
         test    eax, eax
         jne     short L_pis_done
-        mov     ecx, offset g_dispatchTableArr_00500c08
+        mov     ecx, offset g_dispatchTableArr
         mov     dword ptr [g_eventQueueChild], 2
         shr     ecx, 2
         mov     dword ptr [g_eventQueueIdx], ecx

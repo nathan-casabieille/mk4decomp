@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004749a0 (360b game) - mstack snapshot + vec setup + scoped run.
- *   Sets g_xformEntityIdx = &g_vecSetupArrBase_0051204c>>2 (packed_ptr), calls
+ *   Sets g_xformEntityIdx = &g_vecSetupArrBase>>2 (packed_ptr), calls
  *   DispatcherComplex260_00407030. On no-error AND bit 2 of 0x54208c clear:
  *   pushes g_currentNodeIdx, walks one level of [scaled+0x18] indirection,
  *   OR's bit 9 into [resolved+0x20]. Pops the snapshot back into 0x542044,
@@ -121,14 +121,14 @@ extern unsigned int g_fightAxisPosY;
  *   On no-error subtracts 0x1b back from 0x542044, calls MStackCall_00406340,
  *   sets g_walkCallback=1 on success.
  */
-extern unsigned int g_vecSetupArrBase_0051204c;
+extern unsigned int g_vecSetupArrBase;
 extern unsigned int g_table_004d57b0;
 extern void AudioMixerStep(void);
 extern void MStackCall_00406340(void);
 
 void MStackVecSetupScopedRun(void) {
     __asm {
-        mov     eax, offset g_vecSetupArrBase_0051204c
+        mov     eax, offset g_vecSetupArrBase
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
         call    DispatcherComplex260_00407030

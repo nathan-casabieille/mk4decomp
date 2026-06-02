@@ -110,18 +110,18 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00464090 (250b game) - bit-shift extraction sequence.
  *   mstack-push g_eventQueueCurrent and g_scaledInit_00542044. g_eventQueueCurrent=4.
- *   eax = g_phaseCounter*4 -> g_walkCallback; eax += g_dispatchAcc_00541fb8.
+ *   eax = g_phaseCounter*4 -> g_walkCallback; eax += g_dispatchAcc.
  *   edx = g_stateCountdown - 1; eax = [eax+0x0c]; eax += edx.
- *   ecx = g_phaseCounter + g_phaseThunkVar_00541fb4; esi = [ecx*4]; edx = eax;
+ *   ecx = g_phaseCounter + g_phaseThunkVar; esi = [ecx*4]; edx = eax;
  *   shift = ((esi-2)&3)<<3; sar edx,cl; ecx = esi*8; sar eax,cl;
- *   mask to 8 bits; store edx to g_dispatchVar34_00535d5c and g_installState_00535d10;
+ *   mask to 8 bits; store edx to g_dispatchVar34_00535d5c and g_installState;
  *   store eax to g_eventQueueCurrent / g_walkCallback.
  *   mstack-pop pair.
  */
-extern unsigned int g_installState_00535d10;
+extern unsigned int g_installState;
 extern unsigned int g_dispatchVar34_00535d5c;
-extern unsigned int g_phaseThunkVar_00541fb4;
-extern unsigned int g_dispatchAcc_00541fb8;
+extern unsigned int g_phaseThunkVar;
+extern unsigned int g_dispatchAcc;
 extern unsigned int g_phaseCounter;
 
 __declspec(naked) void BitShiftExtract(void) {
@@ -138,7 +138,7 @@ __declspec(naked) void BitShiftExtract(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], edx
         mov     ecx, dword ptr [g_phaseCounter]
-        mov     edx, dword ptr [g_dispatchAcc_00541fb8]
+        mov     edx, dword ptr [g_dispatchAcc]
         mov     dword ptr [g_eventQueueCurrent], 4
         lea     eax, [ecx*4 + 0]
         mov     dword ptr [g_walkCallback], eax
@@ -149,7 +149,7 @@ __declspec(naked) void BitShiftExtract(void) {
         dec     edx
         mov     dword ptr [g_walkCallback], edx
         add     eax, edx
-        mov     edx, dword ptr [g_phaseThunkVar_00541fb4]
+        mov     edx, dword ptr [g_phaseThunkVar]
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, dword ptr [eax*4 + 0]
         add     ecx, edx
@@ -166,7 +166,7 @@ __declspec(naked) void BitShiftExtract(void) {
         sar     eax, cl
         and     edx, 0xff
         mov     dword ptr [g_dispatchVar34_00535d5c], edx
-        mov     dword ptr [g_installState_00535d10], edx
+        mov     dword ptr [g_installState], edx
         and     eax, 0xff
         mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [g_walkCallback], eax

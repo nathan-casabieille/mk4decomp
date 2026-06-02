@@ -111,12 +111,12 @@ extern unsigned int g_fightAxisPosY;
 /*
  * @addr 0x004ba5d0 (92b) - z-bucket clamp/store: extracts byte field
  *   from g_currentNodeFlags, computes (val<<20)+0x100000, compares
- *   against g_dest_0053a6e4, sets g_eq_00542098 = (val>=ref),
+ *   against g_dest_0053a6e4, sets g_eq = (val>=ref),
  *   if true zeros g_walkCallback; merges low bits back into base
  *   and stores into table[walkCallback].
  */
 extern unsigned int g_dest_0053a6e4;
-extern unsigned int g_eq_00542098;
+extern unsigned int g_eq;
 
 __declspec(naked) void ZBucketClampStore(void) {
     __asm {
@@ -132,7 +132,7 @@ __declspec(naked) void ZBucketClampStore(void) {
         mov     dword ptr [g_walkCallback], eax
         setge   dl
         test    edx, edx
-        mov     dword ptr [g_eq_00542098], edx
+        mov     dword ptr [g_eq], edx
         je      keep
         xor     eax, eax
         mov     dword ptr [g_walkCallback], eax

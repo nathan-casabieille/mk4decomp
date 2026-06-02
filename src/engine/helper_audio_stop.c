@@ -23,9 +23,9 @@ extern u32 g_dsoundFieldE4;
 extern u32 g_dsoundFieldE8;
 extern unsigned int g_dispatchSave1417_00f9eff0;
 
-extern unsigned int g_obj_size_00f8fad8;
-extern unsigned int g_obj_table_00f8fac8;
-extern unsigned int g_obj_used_00f8fad4;
+extern unsigned int g_obj_size;
+extern unsigned int g_obj_table;
+extern unsigned int g_obj_used;
 
 __declspec(naked) void Helper_AudioStop(void) {
     __asm {
@@ -45,8 +45,8 @@ __declspec(naked) void Helper_AudioStop(void) {
         shl     edi, 3
         sub     edi, eax
         shl     edi, 2
-        mov     eax, [edi + g_obj_table_00f8fac8]
-        lea     ecx, [edi + g_obj_table_00f8fac8]
+        mov     eax, [edi + g_obj_table]
+        lea     ecx, [edi + g_obj_table]
         test    eax, eax
         _emit   0fh
         _emit   84h
@@ -75,7 +75,7 @@ __declspec(naked) void Helper_AudioStop(void) {
         cmp     eax, 4
         _emit   7ch
         _emit   0dfh
-        lea     esi, [edi + g_obj_used_00f8fad4]
+        lea     esi, [edi + g_obj_used]
         mov     ebx, 4
         mov     eax, [esi]
         test    eax, eax
@@ -93,7 +93,7 @@ __declspec(naked) void Helper_AudioStop(void) {
         dec     ebx
         _emit   75h
         _emit   0e0h
-        mov     eax, [edi + g_obj_size_00f8fad8]
+        mov     eax, [edi + g_obj_size]
         mov     edx, dword ptr [g_dsoundFieldE4]
         mov     ecx, dword ptr [g_dsoundFieldE8]
         sub     edx, eax

@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_clamp_0053a6dc;
-extern unsigned int g_walkCallbackSrc_0053a2d0;
+extern unsigned int g_walkCallbackSrc;
 extern unsigned int g_dispatchSave711_004ecea0;
 extern unsigned int g_clamp_00537f2c;
 extern unsigned int g_walkCallbackSrc2_00535db0;
@@ -132,12 +132,12 @@ void MStackBracket6_DualGate(void) {
     *(unsigned int *)(g_matrixStackTop * 4) = g_fightGroupHead;
     v = g_clamp_0053a6dc;
     if (v != 0 && (int)v < 0xccc) {
-        g_walkCallback = g_walkCallbackSrc_0053a2d0;
-        if (g_walkCallbackSrc_0053a2d0 == 0) {
+        g_walkCallback = g_walkCallbackSrc;
+        if (g_walkCallbackSrc == 0) {
             g_fightGroupHead = (unsigned int)&g_dispatchSave711_004ecea0 >> 2;
             VersusSwapCluster();
             if (g_framePauseFlag != 0) return;
-            g_walkCallbackSrc_0053a2d0 = 1;
+            g_walkCallbackSrc = 1;
         }
     }
     v = g_clamp_00537f2c;

@@ -110,9 +110,9 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_stateFlag;
 extern unsigned int g_stateChangePair2_005380a4;
-extern unsigned int g_stateChangeBase_005380b0;
+extern unsigned int g_stateChangeBase;
 extern unsigned int g_stateChangePair3_0053a278;
-extern unsigned int g_stateChangePair_00541d6c;
+extern unsigned int g_stateChangePair;
 extern void CallSetPause(void);
 extern void MStackPush2ClampLookup(void);
 extern void SpawnTrioInitCluster(void);
@@ -122,7 +122,7 @@ __declspec(naked) void GuardedStateChangePair(void)
 {
     __asm
     {
-        mov     eax, dword ptr [g_stateChangePair_00541d6c]
+        mov     eax, dword ptr [g_stateChangePair]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         je      short L_gscp_check27
@@ -133,7 +133,7 @@ __declspec(naked) void GuardedStateChangePair(void)
         mov     dword ptr [g_walkCallback], edx
         je      L_gscp_dec
         mov     ecx, dword ptr [g_stateChangePair2_005380a4]
-        mov     eax, offset g_stateChangeBase_005380b0
+        mov     eax, offset g_stateChangeBase
         shr     eax, 2
         cmp     ecx, 2
         mov     dword ptr [g_currentNodeIdx], eax
@@ -164,7 +164,7 @@ __declspec(naked) void GuardedStateChangePair(void)
         push    0
         push    offset L_gscp_sub2
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_stateChangePair_00541d6c], eax
+        mov     dword ptr [g_stateChangePair], eax
         call    StoreTwoCall
         add     esp, 8
         jmp     CallSetPause
@@ -187,7 +187,7 @@ __declspec(naked) void GuardedStateChangePair(void)
         jge     short L_gscp_decOk
         jmp     CallSetPause
     L_gscp_decOk:
-        mov     eax, offset g_stateChangeBase_005380b0
+        mov     eax, offset g_stateChangeBase
         mov     dword ptr [g_stateChangePair2_005380a4], ecx
         shr     eax, 2
         add     eax, ecx

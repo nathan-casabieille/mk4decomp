@@ -114,14 +114,14 @@ extern unsigned int g_fightAxisPosY;
  *   Mul10Tail(eax,eax)->g_eventQueueWorkType. Mul10Tail(ecx,ecx)->g_acc_00542078; add for g_eventQueueWorkType.
  *   Call FpuSqrtMul; if pause ret.
  *   Mul10Tail(g_currentNodeFlags, g_walkCallback)->g_eventQueueChild.
- *   Mul10Tail(eax, g_eventQueueScratch_0053a41c)->g_eventQueueWorkType. Mul10Tail(ecx, g_eventQueueChildSrc_0053a3dc)->g_acc.
+ *   Mul10Tail(eax, g_eventQueueScratch)->g_eventQueueWorkType. Mul10Tail(ecx, g_eventQueueChildSrc)->g_acc.
  *   Sum: g_walkCallback = g_dual_0053a1a8 + g_eventQueueWorkType; g_eventQueueCurrent = g_dual_0053a1a4 + g_acc.
  *   Store both into [g_cj*4+0x54] and [+0x5c]. Tail-call DualCallPauseDirtyJmp; pop esi; ret.
  */
 extern unsigned int g_dual_0053a1a4;
 extern unsigned int g_dual_0053a1a8;
-extern unsigned int g_eventQueueChildSrc_0053a3dc;
-extern unsigned int g_eventQueueScratch_0053a41c;
+extern unsigned int g_eventQueueChildSrc;
+extern unsigned int g_eventQueueScratch;
 extern void DualCallPauseDirtyJmp_00490c30(void);
 
 __declspec(naked) void Distance3DMul10Chain(void) {
@@ -169,8 +169,8 @@ __declspec(naked) void Distance3DMul10Chain(void) {
         mov     eax, dword ptr [g_currentNodeFlags]
         push    eax
         call    Mul10Tail
-        mov     ecx, dword ptr [g_eventQueueScratch_0053a41c]
-        mov     edx, dword ptr [g_eventQueueChildSrc_0053a3dc]
+        mov     ecx, dword ptr [g_eventQueueScratch]
+        mov     edx, dword ptr [g_eventQueueChildSrc]
         add     esp, 8
         mov     dword ptr [g_eventQueueChild], eax
         mov     dword ptr [g_eventQueueWorkType], ecx

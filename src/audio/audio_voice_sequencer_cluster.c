@@ -110,9 +110,9 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave803_004f2dc0;
 extern unsigned int g_dispatchArg;
-extern unsigned int g_audioVoiceCounter_00535e50;
-extern unsigned int g_audioBitField_00541fc0;
-extern unsigned int g_audioSequencerSlot_00541fc4;
+extern unsigned int g_audioVoiceCounter;
+extern unsigned int g_audioBitField;
+extern unsigned int g_audioSequencerSlot;
 extern unsigned int g_dispatchTab65_00543320;
 extern void AudioInitChainTag(void);
 extern void Eleven404b90_404c00(void);
@@ -132,7 +132,7 @@ __declspec(naked) void AudioVoiceSequencerCluster(void)
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], ecx
         mov      eax, dword ptr [g_acc_00542078]
-        mov      edx, dword ptr [g_audioSequencerSlot_00541fc4]
+        mov      edx, dword ptr [g_audioSequencerSlot]
         lea      eax, [eax + eax*4 - 5]
         mov      dword ptr [g_acc_00542078], eax
         add      eax, edx
@@ -170,7 +170,7 @@ __declspec(naked) void AudioVoiceSequencerCluster(void)
         call     Ten404c40_404bd0
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_0ff9
-        inc      dword ptr [g_audioVoiceCounter_00535e50]
+        inc      dword ptr [g_audioVoiceCounter]
         jmp      L_0f19
     L_0e03:
         mov      edx, dword ptr [g_baseSel]
@@ -190,7 +190,7 @@ __declspec(naked) void AudioVoiceSequencerCluster(void)
         jne      L_0ff9
         test     byte ptr [g_xformDirtyFlags], bl
         jne      short L_0ed1
-        mov      eax, dword ptr [g_audioBitField_00541fc0]
+        mov      eax, dword ptr [g_audioBitField]
         mov      edx, dword ptr [g_dispatchArg]
         mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [g_xformEntityIdx], eax
@@ -207,7 +207,7 @@ __declspec(naked) void AudioVoiceSequencerCluster(void)
         mov      edx, dword ptr [g_eventQueueCurrent]
         shr      eax, 2
         add      eax, edx
-        mov      dword ptr [g_audioVoiceCounter_00535e50], esi
+        mov      dword ptr [g_audioVoiceCounter], esi
         mov      dword ptr [g_currentNodeIdx], eax
         mov      eax, dword ptr [eax*4]
         cmp      eax, esi
@@ -234,7 +234,7 @@ __declspec(naked) void AudioVoiceSequencerCluster(void)
         mov      dword ptr [edx*4 + 0x38], eax
     L_0f19:
         mov      eax, dword ptr [g_fightGroupHead]
-        mov      ecx, dword ptr [g_audioVoiceCounter_00535e50]
+        mov      ecx, dword ptr [g_audioVoiceCounter]
         add      eax, ecx
         mov      eax, dword ptr [eax*4]
         cmp      eax, esi
@@ -271,7 +271,7 @@ __declspec(naked) void AudioVoiceSequencerCluster(void)
         mov      edx, dword ptr [eax*4]
         dec      eax
         mov      dword ptr [g_matrixStackTop], eax
-        mov      eax, dword ptr [g_audioVoiceCounter_00535e50]
+        mov      eax, dword ptr [g_audioVoiceCounter]
         add      ecx, eax
         mov      dword ptr [g_xformEntityIdx], edx
         mov      edx, dword ptr [ecx*4]

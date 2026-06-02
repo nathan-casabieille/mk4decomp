@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_eq_00542098;
+extern unsigned int g_eq;
 extern void DualGatedStateYield(void);
 extern void Set1dCallSet16Jmp(void);
 extern void ScaledChain3c7c(void);
@@ -121,8 +121,8 @@ extern void FiveCallGuardSetTail(void);
  *   On phase = [scaled g_baseSel+0x84] == 0 jumps direct to install
  *   tail. Else runs a polling loop:
  *     DualGatedStateYield → on success decrement g_eventQueueChild
- *     and update g_eq_00542098 (sete on dec result), if <= 0 sets it
- *     to 0xc. If g_eq_00542098 != 0 calls Set1dCallSet16Jmp.
+ *     and update g_eq (sete on dec result), if <= 0 sets it
+ *     to 0xc. If g_eq != 0 calls Set1dCallSet16Jmp.
  *     If g_xformScratch2088 == 1 tail-jmp Install3WayChainCounter.
  *     Else calls ScaledChain3c7c. If g_walkCallback >= 3
  *     tail-jmp Install3WayChainCounter; else sets g_walkCallback=0xb333
@@ -161,7 +161,7 @@ __declspec(naked) void CountdownInstallSelfMultiTail(void) {
         sete    cl
         cmp     eax, edi
         mov     dword ptr [g_eventQueueChild], eax
-        mov     dword ptr [g_eq_00542098], ecx
+        mov     dword ptr [g_eq], ecx
         jg      short L_cis_skipReset
         mov     eax, 0xc
         mov     dword ptr [g_eventQueueChild], eax

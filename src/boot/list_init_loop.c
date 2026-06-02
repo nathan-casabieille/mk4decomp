@@ -49,13 +49,13 @@ extern unsigned int g_scaledInit_00542044;
  *
  * Total: 7+2+5+2+3+6+2+3+2+1 = 33 ✓
  */
-extern int g_list_004ffdec;
+extern int g_list;
 void ListInitLoop(void) {
     __asm {
-        cmp     dword ptr [g_list_004ffdec], -1
+        cmp     dword ptr [g_list], -1
         _emit   74h
         _emit   17h
-        mov     ecx, OFFSET g_list_004ffdec
+        mov     ecx, OFFSET g_list
         mov     eax, ecx
         add     eax, 0x0c
         mov     dword ptr [ecx], 0

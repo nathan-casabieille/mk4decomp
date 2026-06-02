@@ -113,11 +113,11 @@ extern unsigned int g_const_004d2ee4;
 extern unsigned int g_const_004d2ee8;
 extern unsigned int g_const_004d2f04;
 extern unsigned int g_const_004d2f08;
-extern unsigned int g_crtFdCloseSlot_00520064;
-extern unsigned int g_crtAbortBase_00522908;
+extern unsigned int g_crtFdCloseSlot;
+extern unsigned int g_crtAbortBase;
 extern unsigned int g_crtFpuSlot1_0052290c;
-extern unsigned int g_crtCType_00522998;
-extern unsigned int g_crtCleanupFlag_00f9f84c;
+extern unsigned int g_crtCType;
+extern unsigned int g_crtCleanupFlag;
 extern unsigned int g_arr_00fa0de0;
 extern unsigned int g_iat_004d20a0;
 extern unsigned int g_iat_004d2108;
@@ -130,7 +130,7 @@ __declspec(naked) void RaiseAbortLocalized(void)
     __asm {
         mov      ecx, dword ptr [esp + 4]
         sub      esp, 0x1a8
-        mov      eax, OFFSET g_crtAbortBase_00522908
+        mov      eax, OFFSET g_crtAbortBase
         push     ebx
         push     ebp
         push     esi
@@ -141,17 +141,17 @@ __declspec(naked) void RaiseAbortLocalized(void)
         je       short L_c094
         add      eax, 8
         inc      ebp
-        cmp      eax, OFFSET g_crtCType_00522998
+        cmp      eax, OFFSET g_crtCType
         jb       short L_c085
     L_c094:
-        cmp      ecx, dword ptr [ebp*8 + g_crtAbortBase_00522908]
+        cmp      ecx, dword ptr [ebp*8 + g_crtAbortBase]
         jne      L_c23b
-        mov      eax, dword ptr [g_crtCleanupFlag_00f9f84c]
+        mov      eax, dword ptr [g_crtCleanupFlag]
         cmp      eax, 1
         je       L_c1fd
         test     eax, eax
         jne      short L_c0c0
-        cmp      dword ptr [g_crtFdCloseSlot_00520064], 1
+        cmp      dword ptr [g_crtFdCloseSlot], 1
         je       L_c1fd
     L_c0c0:
         cmp      ecx, 0xfc

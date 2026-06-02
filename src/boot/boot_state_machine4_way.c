@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  * BootStateMachine4Way - 257b boot 4-state install-self machine.
  *   chain = g_baseSel<<2; saved = chain->state; chain->state=0.
  *   sub ecx,0 flags branch:
- *     state 0 → init full: g_phaseIdx_0053a50c=7; g_dst_0053a6e0=1; g_walkCallback=0; g_dst_00537ea4=0;
+ *     state 0 → init full: g_phaseIdx=7; g_dst_0053a6e0=1; g_walkCallback=0; g_dst_00537ea4=0;
  *       install-self; chain->state=1; mstack-push (entry+0x01000000); g_currentNodeIdx++; chain->state=0;
  *       call Phase3InstallSelf; g_framePauseFlag=1; pop+ret.
  *     state 1 → install-self; chain->state=2; g_pendingNodeType=0xa0; g_framePauseFlag=1; pop+ret.
@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY;
  *       g_walkCallback=1; g_smState4Way_00541dc8=1; pop+ret.
  *     state 3+ → tail-call BootDualStateInstallSelf; pop+ret.
  */
-extern unsigned int g_phaseIdx_0053a50c;
+extern unsigned int g_phaseIdx;
 extern unsigned int g_smState4Way_00541dc8;
 extern unsigned int g_dst_00537ea4;
 extern unsigned int g_dst_0053a6e0;
@@ -169,7 +169,7 @@ __declspec(naked) void BootStateMachine4Way(void)
         ret
     L_s0:
         mov     esi, 1
-        mov     dword ptr [g_phaseIdx_0053a50c], 7
+        mov     dword ptr [g_phaseIdx], 7
         mov     dword ptr [g_dst_0053a6e0], esi
         mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [g_dst_00537ea4], edx

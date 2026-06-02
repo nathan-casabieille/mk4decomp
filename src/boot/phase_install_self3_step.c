@@ -120,7 +120,7 @@ extern unsigned int g_dispatchSave139_00508324;
 extern unsigned int g_dispatchSave509_004a2180;
 void PhaseInstallSelf3Step(void);
 
-extern unsigned int g_phaseIdx_0053a50c;
+extern unsigned int g_phaseIdx;
 extern void BootInitGuardedCallChain(void);
 
 __declspec(naked) void PhaseInstallSelf3Step(void)
@@ -168,7 +168,7 @@ __declspec(naked) void PhaseInstallSelf3Step(void)
         jne     L_pis3_exit
         push    0
         push    offset g_dispatchSave509_004a2180
-        mov     dword ptr [g_phaseIdx_0053a50c], 3
+        mov     dword ptr [g_phaseIdx], 3
         call    StoreTwoCall
         mov     ecx, offset g_phaseInstall3Base_00506c2c
         add     esp, 8

@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchArg;
-extern unsigned int g_audioBitField_00541fc0;
+extern unsigned int g_audioBitField;
 extern unsigned int g_dispatchSave579_004f2980;
 extern u32 g_dlMode;
 extern unsigned int g_state2_0053a1bc;

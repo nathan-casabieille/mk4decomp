@@ -78,7 +78,7 @@ scenegraph ([scenegraph.md](scenegraph.md)) feed work into each frame.
 
 | VA           | Name                                | Meaning |
 |--------------|-------------------------------------|---------|
-| `0x0053a4b8` | `g_eventQueueDrainBase_0053a4b8`    | Base of the 20-slot packed-pointer ring (0x0053a4b8..0x0053a508). |
+| `0x0053a4b8` | `g_eventQueueDrainBase`    | Base of the 20-slot packed-pointer ring (0x0053a4b8..0x0053a508). |
 | (state)      | `g_eventQueueHead`                  | Write cursor: where the next produced event lands. The drain loop stops when the read cursor catches up to it. |
 | (state)      | `g_eventQueueActive`                | Read position used to seed the drain cursor each frame. |
 | (state)      | `g_eventQueuePending`               | Tail produced during the current drain; promoted to Active by `DispatchEventQueue_Commit`. |

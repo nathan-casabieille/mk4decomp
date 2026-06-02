@@ -109,20 +109,20 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0046a630 (165b game) - 4-entry-point dispatcher.
- *   Block A: g_walkCallback=g_quadEntryGate_0052d724; if zero jmp CallPauseCmpStateJmp; else jmp ScaledInitOrSelfPtrSetType.
+ *   Block A: g_walkCallback=g_quadEntryGate; if zero jmp CallPauseCmpStateJmp; else jmp ScaledInitOrSelfPtrSetType.
  *   Blocks B/C/D: standard push/store chain[*4+0x74]=value, push string, call ArgSarStoreJmp.
  *     B: value=0x402, string=0x004eabe8.
  *     C: value=0x403, string=0x004eac38.
  *     D: value=0x1015, string=0x004eac08.
  */
-extern unsigned int g_quadEntryGate_0052d724;
+extern unsigned int g_quadEntryGate;
 extern void ArgSarStoreJmp(void);
 extern void CallPauseCmpStateJmp(void);
 extern void ScaledInitOrSelfPtrSetType_0046a5e0(void);
 
 __declspec(naked) void QuadEntryGateChain(void) {
     __asm {
-        mov     eax, dword ptr [g_quadEntryGate_0052d724]
+        mov     eax, dword ptr [g_quadEntryGate]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         _emit   75h

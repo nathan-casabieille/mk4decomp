@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0049f530 (354b game) - 3-entry indirect dispatcher with state walk.
- *   Entry 1 (offset 0, 260b): cache [g_audioBitField_00541fc0] into g_xformEntityIdx,
+ *   Entry 1 (offset 0, 260b): cache [g_audioBitField] into g_xformEntityIdx,
  *     index it by [g_dispatchArg] base, deref once, save in 0x542048
  *     and [edx*4+4] in g_currentNodeIdx then `call eax` (indirect). On
  *     no-error AND bit 0 of g_xformDirtyFlags set: walks an outer state
@@ -131,7 +131,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchArg;
 extern unsigned int g_state2_00537ea8;
 extern unsigned int g_state2_00541d88;
-extern unsigned int g_audioBitField_00541fc0;
+extern unsigned int g_audioBitField;
 extern void CallSetPause(void);
 extern void GuardedScaledCall(void);
 extern void IndirectStateDispatcher(void);
@@ -140,7 +140,7 @@ extern void RoundWinTransition(void);
 
 __declspec(naked) void IndirectDispatch3Entry(void) {
     __asm {
-        mov     eax, dword ptr [g_audioBitField_00541fc0]
+        mov     eax, dword ptr [g_audioBitField]
         mov     ecx, dword ptr [g_dispatchArg]
         mov     dword ptr [g_xformEntityIdx], eax
         add     eax, ecx

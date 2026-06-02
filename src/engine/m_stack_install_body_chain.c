@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_tripleEntryFlag_0054380c;
-extern unsigned int g_or_0052ab40;
+extern unsigned int g_tripleEntryFlag;
+extern unsigned int g_or;
 extern void HitReactionDispatcher(void);
 extern void ClearBit2x34(void);
 extern void Wrapper_00471340(void);
@@ -121,7 +121,7 @@ extern void MStackInstallBodyChain(void);
  *     HitReactionDispatcher.
  *   1b NOP align pad.
  *   Entry 2 / body1 (offset 0x10, 159b): phase-state install. Phase 0:
- *     calls State6Latch, then reads g_or_0052ab40 → 0x54206c,
+ *     calls State6Latch, then reads g_or → 0x54206c,
  *     AND with 0x10 → g_xformScratch94; if bit-4 set goes to phase-1 body.
  *     Otherwise chain ClearBit2x34 → ScaledZeroFour →
  *     sets byte 0x54380c = 1 → tail-call Wrapper_00471340.
@@ -157,7 +157,7 @@ __declspec(naked) void TripleEntryCountdownInstall(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_tec_b1done
-        mov     eax, dword ptr [g_or_0052ab40]
+        mov     eax, dword ptr [g_or]
         mov     dword ptr [g_walkCallback], eax
         and     eax, 0x10
         mov     dword ptr [g_xformScratch94], eax
@@ -171,7 +171,7 @@ __declspec(naked) void TripleEntryCountdownInstall(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_tec_b1done
-        mov     byte ptr [g_tripleEntryFlag_0054380c], 1
+        mov     byte ptr [g_tripleEntryFlag], 1
         call    Wrapper_00471340
         pop     esi
         ret

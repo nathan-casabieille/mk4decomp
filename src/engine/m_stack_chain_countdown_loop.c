@@ -110,12 +110,12 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00463fb0 (220b game) - mstack-push g_scaledInit, copy g_walkCallback → g_eventQueueWorkType;
  *   call MStackPushSearchLoop; pause-check. Compute min(g_walkCallback, g_eventQueueWorkType) into eax;
- *   scaledInit = g_phaseCounter*4 + g_dispatchAcc_00541fb8; g_eventQueueCurrent = [scaledInit*4+4];
+ *   scaledInit = g_phaseCounter*4 + g_dispatchAcc; g_eventQueueCurrent = [scaledInit*4+4];
  *   loop: edx = 0xffff9688 - 0x6978*counter; until counter==0; store result.
  *   g_acc_00542078 = [scaledInit*4+8]; mstack-pop g_scaledInit; pop esi; ret.
  */
 extern unsigned int g_matrixStack_arr;
-extern unsigned int g_dispatchAcc_00541fb8;
+extern unsigned int g_dispatchAcc;
 extern unsigned int g_phaseCounter;
 extern void MStackPushSearchLoop(void);
 
@@ -146,7 +146,7 @@ __declspec(naked) void MStackChainCountdownLoop(void) {
         mov     eax, ecx
         mov     dword ptr [g_eventQueueWorkType], eax
         mov     ecx, dword ptr [g_phaseCounter]
-        mov     edx, dword ptr [g_dispatchAcc_00541fb8]
+        mov     edx, dword ptr [g_dispatchAcc]
         shl     ecx, 2
         mov     dword ptr [g_eventQueueCurrent], 4
         mov     dword ptr [g_walkCallback], ecx

@@ -21,7 +21,7 @@
 #include "game/tick.h"   /* g_framePauseFlag */
 
 /* New globals. */
-extern unsigned int g_gs_00542048;   /* 0x00542048 */
+extern unsigned int g_gs;   /* 0x00542048 */
 
 /* Table-base externs - &-references defeat constant-folding of `>> 2`. */
 extern unsigned int g_table_004d7238;   /* 0x004d7238 */
@@ -52,7 +52,7 @@ void GuardedScaled_0040cd20(void) {
 void GuardedScaled_00474fd0(void) {
     TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
-        g_gs_00542048 = (unsigned int)&g_table_004ecaf0 >> 2;
+        g_gs = (unsigned int)&g_table_004ecaf0 >> 2;
         LinkedListSearch();
     }
 }
@@ -61,7 +61,7 @@ void GuardedScaled_00474fd0(void) {
 void GuardedScaled_00475000(void) {
     TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
-        g_gs_00542048 = (unsigned int)&g_table_004ecb10 >> 2;
+        g_gs = (unsigned int)&g_table_004ecb10 >> 2;
         LinkedListSearch();
     }
 }
@@ -70,7 +70,7 @@ void GuardedScaled_00475000(void) {
 void GuardedScaled_00475030(void) {
     TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
-        g_gs_00542048 = (unsigned int)&g_table_004ecb20 >> 2;
+        g_gs = (unsigned int)&g_table_004ecb20 >> 2;
         LinkedListSearch();
     }
 }
@@ -79,7 +79,7 @@ void GuardedScaled_00475030(void) {
 void GuardedScaled_00475060(void) {
     TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
-        g_gs_00542048 = (unsigned int)&g_table_004ecb28 >> 2;
+        g_gs = (unsigned int)&g_table_004ecb28 >> 2;
         LinkedListSearch();
     }
 }
@@ -88,7 +88,7 @@ void GuardedScaled_00475060(void) {
 void GuardedScaled_00475090(void) {
     TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
-        g_gs_00542048 = (unsigned int)&g_table_004ecb40 >> 2;
+        g_gs = (unsigned int)&g_table_004ecb40 >> 2;
         LinkedListSearch();
     }
 }
@@ -97,7 +97,7 @@ void GuardedScaled_00475090(void) {
 void GuardedScaled_004750c0(void) {
     TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
-        g_gs_00542048 = (unsigned int)&g_table_004ecb48 >> 2;
+        g_gs = (unsigned int)&g_table_004ecb48 >> 2;
         LinkedListSearch();
     }
 }

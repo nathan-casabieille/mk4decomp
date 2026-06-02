@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00427ad0 (138b)
- *   Push g_dispatchArg on mstack; eax = g_eventQueueEnd + g_audioVoiceCounter_00535e50;
+ *   Push g_dispatchArg on mstack; eax = g_eventQueueEnd + g_audioVoiceCounter;
  *   [eax*4] = 0xc; eax = g_dispatchArg + g_eventQueueTotal;
  *   [eax*4] = 0; eax = g_dispatchArg + 1; g_walkCallback = 3;
  *   [(g_eventQueueTotal+old_g_dispatchArg_00535e48+1)*4] = 3;
@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *   Hmm let me re-read.
  */
 extern unsigned int g_dispatchArg;
-extern unsigned int g_audioVoiceCounter_00535e50;
+extern unsigned int g_audioVoiceCounter;
 
 void Push48PreSetTwoStores(void) {
     __asm {
@@ -127,7 +127,7 @@ void Push48PreSetTwoStores(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     edx, dword ptr [g_eventQueueEnd]
-        mov     eax, dword ptr [g_audioVoiceCounter_00535e50]
+        mov     eax, dword ptr [g_audioVoiceCounter]
         add     edx, eax
         mov     dword ptr [edx*4 + 0], 0x0c
         mov     ecx, dword ptr [g_dispatchArg]

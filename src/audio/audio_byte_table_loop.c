@@ -113,14 +113,14 @@ extern unsigned int g_fightAxisPosY;
  *   Loop edi 0..5: esi = (g_baseSel + edi) * 4; index = byteTab[0x004f3b48 + esi];
  *     ecx = baseSel + index; edx = chain[ecx*4]; g_currentNodeIdx = edx; call MStackPush2ChainLLInsert.
  *     Switch on (edi-3): case 0 → push (data_004f3a30[edx*4], 0x004d2608) into Printf args;
- *     case 1 → push (data_004f3a30[eax*4 from g_audioByteTable_004f3af0], 0x004d2618); other → skip.
+ *     case 1 → push (data_004f3a30[eax*4 from g_audioByteTable], 0x004d2618); other → skip.
  *     If case fired: push (0x004f43c4, 0x00543450); call PrintfStub; restore.
  *     Snapshot tab[+0xc] & tab[+4]; call GuardedSetupCallTailJmp; chain[g_currentNodeIdx*4 + 0x5c] = tab[+0x10];
  *     tab[+8] = chain[+0x54]; ecx = movsx tab[+0]; g_eventQueueCurrent = ecx;
  *     chain[(baseSel + index)*4] = g_currentNodeIdx. inc edi; if <6: loop.
  */
 extern unsigned int g_audioStateMachine2_004f3aec;
-extern unsigned int g_audioByteTable_004f3af0;
+extern unsigned int g_audioByteTable;
 extern void GuardedSetupCallTailJmp(void);
 extern void Helper_Sprintf(void);
 extern void MStackPush2ChainLLInsert(void);
@@ -146,7 +146,7 @@ __declspec(naked) void CharSelect_TeamSize(void)
         je      short L_case3
         dec     eax
         jne     short L_skipCase
-        mov     eax, dword ptr [g_audioByteTable_004f3af0]
+        mov     eax, dword ptr [g_audioByteTable]
         mov     ecx, dword ptr [eax*4 + 0x004f3a30]
         push    ecx
         push    0x004d2618

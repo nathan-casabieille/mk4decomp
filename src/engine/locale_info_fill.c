@@ -130,9 +130,9 @@ extern unsigned int g_dispatchSave529_004d29f8;
 extern unsigned int g_dispatchSave528_004d29fc;
 extern unsigned int g_dispatchSave515_004d2b90;
 extern unsigned int g_dispatchSave566_004d2b94;
-extern unsigned int g_crtMemMoveLo_004d2f20;
-extern unsigned int g_crtMemMoveHi_004d2f24;
-extern unsigned int g_crtMemMoveVar_004d2f28;
+extern unsigned int g_crtMemMoveLo;
+extern unsigned int g_crtMemMoveHi;
+extern unsigned int g_crtMemMoveVar;
 extern unsigned int g_dispatchVar40_004d505c;
 extern unsigned int g_renderer2_initVar_004f478c;
 extern unsigned int g_renderer2_initVar2_004f47a0;
@@ -141,24 +141,24 @@ extern unsigned int g_renderer2_initVar3_004f47b0;
 extern unsigned int g_dispatchSave526_004f5398;
 extern unsigned int g_dispatchSave525_004f5798;
 extern unsigned int g_dispatchSave524_004f613c;
-extern unsigned int g_texturedTriVar_004ffd4c;
-extern unsigned int g_crtFilbufBase_005222e0;
-extern unsigned int g_crtDispatchEnd_00522620;
-extern unsigned int g_crtCType_00522998;
-extern unsigned int g_crtLocaleNumeric_00522bb0;
-extern unsigned int g_crtFpuTbyteVar_00522e58;
+extern unsigned int g_texturedTriVar;
+extern unsigned int g_crtFilbufBase;
+extern unsigned int g_crtDispatchEnd;
+extern unsigned int g_crtCType;
+extern unsigned int g_crtLocaleNumeric;
+extern unsigned int g_crtFpuTbyteVar;
 extern unsigned int g_crtFpuTbyteVar2_00522e68;
-extern unsigned int g_crtFpuStateBuf_00523600;
-extern unsigned int g_crtFpuStack_005236ac;
-extern unsigned int g_dispatchPair_005236b8;
-extern unsigned int g_crtTimeFmtPrefs_005236e8;
+extern unsigned int g_crtFpuStateBuf;
+extern unsigned int g_crtFpuStack;
+extern unsigned int g_dispatchPair;
+extern unsigned int g_crtTimeFmtPrefs;
 extern u8 g_renderer2_buf3[];
-extern unsigned int g_installCountdownBase_00544298;
+extern unsigned int g_installCountdownBase;
 extern unsigned int g_dispatchInit1007_0054429c;
 extern unsigned int g_dispatchSave15_005442a0;
 extern unsigned int g_dispatchSave14_005442a4;
-extern unsigned int g_glideTileSize_005442e0;
-extern unsigned int g_glideMipInit_00544300;
+extern unsigned int g_glideTileSize;
+extern unsigned int g_glideMipInit;
 extern u8 g_renderer2_buf2[];
 extern unsigned int g_renderer2_baseB_0058c760;
 extern unsigned int g_renderer2_var3_0058c764;
@@ -226,7 +226,7 @@ extern unsigned int g_dispatchSave1455_00f9fc64;
 extern unsigned int g_dispatchSave1459_00f9fc74;
 extern unsigned int g_dispatchSave1462_00f9fd9c;
 extern unsigned int g_arr_00fa0de0;
-extern unsigned int g_iid_004d28f0;
+extern unsigned int g_iid;
 extern void Calloc(void);
 extern void CfltcvtFormat(void);
 extern void CmpCallPushIATCall(void);
@@ -343,7 +343,7 @@ __declspec(naked) void WcToMbDispatcher(void) {
         lea     eax, [esp + 0x12]
         push    eax
         push    1
-        push    offset g_crtMemMoveHi_004d2f24
+        push    offset g_crtMemMoveHi
         push    1
         call    dword ptr [g_iat_004d20b8]
         test    eax, eax
@@ -452,7 +452,7 @@ __declspec(naked) void WcToMbDispatcher(void) {
         lea     ecx, [esp + 0x12]
         push    ecx
         push    1
-        push    offset g_crtMemMoveLo_004d2f20
+        push    offset g_crtMemMoveLo
         push    1
         push    edi
         call    esi

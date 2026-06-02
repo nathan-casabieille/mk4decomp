@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_eventMusicSlot2_0053a318;
 extern unsigned int g_dispatchVar3_00543564;
-extern unsigned int g_eventMusicSlot_00543594;
+extern unsigned int g_eventMusicSlot;
 extern void Helper_Sprintf(void);
 extern void PushPopPendingTwoCalls(void);
 extern void ScaledStoreCallEpilogue(void);
@@ -369,9 +369,9 @@ __declspec(naked) void MultiPlayerWinStringFormat(void)
         mov      eax, dword ptr [g_active_00537e88]
         test     eax, eax
         jne      L_f38f
-        mov      eax, dword ptr [g_eventMusicSlot_00543594]
+        mov      eax, dword ptr [g_eventMusicSlot]
         dec      eax
-        mov      dword ptr [g_eventMusicSlot_00543594], eax
+        mov      dword ptr [g_eventMusicSlot], eax
         /* js 0x42f4e8 (external, raw bytes) */
         _emit    0x0f
         _emit    0x88
@@ -384,7 +384,7 @@ __declspec(naked) void MultiPlayerWinStringFormat(void)
         push     0x4d56d0
         push     0x543450
         call     Helper_Sprintf
-        mov      eax, dword ptr [g_eventMusicSlot_00543594]
+        mov      eax, dword ptr [g_eventMusicSlot]
         add      esp, 0xc
         cmp      eax, esi
         mov      edi, 0x4d56e8

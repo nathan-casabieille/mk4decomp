@@ -110,8 +110,8 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave955_004e86d8;
 extern unsigned int g_dispatchArg;
-extern unsigned int g_audioVoiceCounter_00535e50;
-extern unsigned int g_cameraProjSlot_00537eb4;
+extern unsigned int g_audioVoiceCounter;
+extern unsigned int g_cameraProjSlot;
 extern unsigned int g_installCountdownArr3_00542408;
 extern void BootPhaseGateBracketedInit(void);
 extern void Chain2CallMul10Accum(void);
@@ -152,7 +152,7 @@ __declspec(naked) void CameraProjectionInitSweep(void)
         mov      ecx, OFFSET g_dispatchSave955_004e86d8
         shr      ecx, 2
         mov      dword ptr [g_eventQueueTotal], eax
-        mov      dword ptr [g_cameraProjSlot_00537eb4], eax
+        mov      dword ptr [g_cameraProjSlot], eax
         mov      dword ptr [g_xformEntityIdx], ecx
         call     FramePauseScaledStore
         mov      eax, dword ptr [g_framePauseFlag]
@@ -168,7 +168,7 @@ __declspec(naked) void CameraProjectionInitSweep(void)
         mov      dword ptr [ecx*4 + 0x18], edx
         mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_eventQueueTotal], eax
-        mov      dword ptr [g_audioVoiceCounter_00535e50], 0x28
+        mov      dword ptr [g_audioVoiceCounter], 0x28
         mov      dword ptr [g_acc_00542078], 0
         mov      dword ptr [g_eventQueueNotMask], 0
         mov      dword ptr [g_xformScratch2088], 0x3243f
@@ -239,11 +239,11 @@ __declspec(naked) void CameraProjectionInitSweep(void)
         mov      dword ptr [g_xformScratch2088], edx
         mov      dword ptr [g_dispatchArg], eax
         mov      dword ptr [ecx*4 + 0x1c], eax
-        mov      eax, dword ptr [g_audioVoiceCounter_00535e50]
+        mov      eax, dword ptr [g_audioVoiceCounter]
         dec      eax
-        mov      dword ptr [g_audioVoiceCounter_00535e50], eax
+        mov      dword ptr [g_audioVoiceCounter], eax
         jne      L_8267
-        mov      eax, dword ptr [g_cameraProjSlot_00537eb4]
+        mov      eax, dword ptr [g_cameraProjSlot]
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [eax*4 + 0x30], 0x270
         mov      edx, dword ptr [g_currentNodeIdx]
@@ -266,7 +266,7 @@ __declspec(naked) void CameraProjectionInitSweep(void)
         pop      ebx
         ret
     L_840c:
-        mov      ecx, dword ptr [g_cameraProjSlot_00537eb4]
+        mov      ecx, dword ptr [g_cameraProjSlot]
         mov      dword ptr [g_currentNodeIdx], ecx
         call     MStackPush2ChainLLInsert
         mov      eax, dword ptr [g_framePauseFlag]

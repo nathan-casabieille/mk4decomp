@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_audioInitState6_00537ea0;
 extern unsigned int g_audioInitState5_00537edc;
-extern unsigned int g_hitPhase_00537f30;
+extern unsigned int g_hitPhase;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 extern s32 g_dlNalt3;
@@ -126,7 +126,7 @@ extern s32 g_dlChar13;
 extern s32 g_dlChar24;
 extern unsigned int g_audioInitState2_00541ecc;
 extern unsigned int g_audioInitState1_00541ed0;
-extern unsigned int g_installCountdownPair_00543894;
+extern unsigned int g_installCountdownPair;
 extern unsigned int g_dispatchSave8_00543898;
 
 void StateInitShuffle(void) {
@@ -136,7 +136,7 @@ void StateInitShuffle(void) {
         xor     eax, eax
         mov     dword ptr [g_audioInitState6_00537ea0], ecx
         mov     ecx, dword ptr [g_dlChar13]
-        mov     dword ptr [g_installCountdownPair_00543894], eax
+        mov     dword ptr [g_installCountdownPair], eax
         mov     dword ptr [g_dispatchSave8_00543898], eax
         mov     eax, dword ptr [g_dlNalt1]
         mov     dword ptr [g_audioInitState3_0053a790], eax
@@ -148,7 +148,7 @@ void StateInitShuffle(void) {
         mov     dword ptr [g_audioInitState2_00541ecc], ecx
         mov     dword ptr [g_audioInitState1_00541ed0], edx
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_hitPhase_00537f30], eax
+        mov     dword ptr [g_hitPhase], eax
         }
 }
 

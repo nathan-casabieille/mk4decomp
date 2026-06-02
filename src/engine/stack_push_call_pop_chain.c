@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 extern unsigned int g_pendingMatchVar3_004d5320;
-extern unsigned int g_dispatchCopyField_00537e9c;
-extern unsigned int g_throwEventTime_0053a3a0;
+extern unsigned int g_dispatchCopyField;
+extern unsigned int g_throwEventTime;
 extern void WorldCellSetupCluster(void);
 extern void ThrowEventCluster(void);
 
@@ -126,10 +126,10 @@ void StackPushCallPopChain(void) {
     unsigned int slot;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_scaledInit_00542044;
-    diff = (int)g_throwEventTime_0053a3a0 - (int)g_pendingMatchVar3_004d5320;
+    diff = (int)g_throwEventTime - (int)g_pendingMatchVar3_004d5320;
     g_walkCallback = (void (*)(void))diff;
     r = ((int (*)(int))WorldCellSetupCluster)(diff);
-    slot = g_dispatchCopyField_00537e9c;
+    slot = g_dispatchCopyField;
     g_walkCallback = (void (*)(void))r;
     g_scaledInit_00542044 = slot;
     *(unsigned int *)(slot * 4 + 0x64) = r;

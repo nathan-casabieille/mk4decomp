@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *     non-null operand). Sets [esi+0x4/0x8/0xc] from g_walkCallback. Walk: esi=[esi]; eax=esi;
  *     scaledInit=eax; loop if nonzero. ret.
  */
-extern unsigned int g_eq_00542098;
+extern unsigned int g_eq;
 extern void StoreDoubleNegPauseSubStore(void);
 
 __declspec(naked) void LinkedListFieldAdd_0049d380(void) {
@@ -232,7 +232,7 @@ __declspec(naked) void LinkedListFieldAdd_0049d450(void) {
         setne   cl
         test    ecx, ecx
         mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [g_eq_00542098], ecx
+        mov     dword ptr [g_eq], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         _emit   74h
         _emit   76h
@@ -263,7 +263,7 @@ __declspec(naked) void LinkedListFieldAdd_0049d450(void) {
         setne   cl
         test    ecx, ecx
         mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [g_eq_00542098], ecx
+        mov     dword ptr [g_eq], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         _emit   75h
         _emit   8ah

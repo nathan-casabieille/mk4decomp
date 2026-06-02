@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_audioStateMachine0_004f3ae4;
 extern unsigned int g_audioStateMachine1_004f3ae8;
-extern unsigned int g_audioCrewState_00541d8c;
+extern unsigned int g_audioCrewState;
 extern unsigned int g_byte_005435a2;
 extern unsigned int g_byte_0054361a;
 extern unsigned int g_dispatchSave1701_00600000;
@@ -133,7 +133,7 @@ __declspec(naked) void SpawnLeftRightAudioCrew(void)
         sub      ecx, OFFSET g_dispatchSave1701_00600000
         xor      edi, edi
         test     eax, eax
-        mov      dword ptr [g_audioCrewState_00541d8c], ecx
+        mov      dword ptr [g_audioCrewState], ecx
         jle      L_8183
         xor      ebp, ebp
         mov      esi, OFFSET g_byte_005435a2
@@ -146,7 +146,7 @@ __declspec(naked) void SpawnLeftRightAudioCrew(void)
         lea      eax, [edi + edx]
         mov      edx, ebp
         mov      dword ptr [eax*4 + 0x34], ecx
-        mov      eax, dword ptr [g_audioCrewState_00541d8c]
+        mov      eax, dword ptr [g_audioCrewState]
         sub      edx, eax
         mov      eax, dword ptr [g_currentNodeIdx]
         shl      edx, 2
@@ -163,7 +163,7 @@ __declspec(naked) void SpawnLeftRightAudioCrew(void)
         cmp      byte ptr [esi], 0
         je       short L_816c
         call     AudioInitLoopTriple
-        mov      eax, dword ptr [g_audioCrewState_00541d8c]
+        mov      eax, dword ptr [g_audioCrewState]
         mov      edx, ebp
         sub      edx, eax
         mov      eax, dword ptr [g_currentNodeIdx]
@@ -186,7 +186,7 @@ __declspec(naked) void SpawnLeftRightAudioCrew(void)
         shl      ecx, 0x15
         sub      ecx, OFFSET g_dispatchSave1701_00600000
         test     eax, eax
-        mov      dword ptr [g_audioCrewState_00541d8c], ecx
+        mov      dword ptr [g_audioCrewState], ecx
         jle      short L_8282
         xor      ebp, ebp
         mov      esi, OFFSET g_byte_0054361a
@@ -199,7 +199,7 @@ __declspec(naked) void SpawnLeftRightAudioCrew(void)
         lea      eax, [edi + edx]
         mov      edx, ebp
         mov      dword ptr [eax*4 + 0x48], ecx
-        mov      eax, dword ptr [g_audioCrewState_00541d8c]
+        mov      eax, dword ptr [g_audioCrewState]
         sub      edx, eax
         mov      eax, dword ptr [g_currentNodeIdx]
         shl      edx, 2
@@ -216,7 +216,7 @@ __declspec(naked) void SpawnLeftRightAudioCrew(void)
         cmp      byte ptr [esi], 0
         je       short L_826b
         call     AudioInitLoopTriple
-        mov      eax, dword ptr [g_audioCrewState_00541d8c]
+        mov      eax, dword ptr [g_audioCrewState]
         mov      edx, ebp
         sub      edx, eax
         mov      eax, dword ptr [g_currentNodeIdx]

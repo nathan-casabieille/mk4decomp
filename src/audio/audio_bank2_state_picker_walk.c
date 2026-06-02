@@ -114,9 +114,9 @@ extern unsigned int g_fightAxisPosY;
  *   eax = g_audioBankSel; edx = g_counter_0054359c; edi = g_counter_005433c8.
  *   If eax == 1: chain low table [edi*24 + 0x0054361a/19] += 1.
  *   Else: chain high table [edx*24 + 0x005435a2/a1] += 1.
- *   ++g_bootInitState_00535de4. esi=1. ecx=g_audioStateMachine0_004f3ae4; walk g_byte_005435a2[i*24] for i in [0,ecx);
- *     if any !=0: keep esi=1; else esi=0. If esi: g_audioBankPick_005433c0=2; tail to cleanup.
- *   Else: ebp=g_audioStateMachine1_004f3ae8; esi=1. Walk g_byte_0054361a[i*24] for i in [0,ebp). If esi: g_audioBankPick_005433c0=1;
+ *   ++g_bootInitState. esi=1. ecx=g_audioStateMachine0_004f3ae4; walk g_byte_005435a2[i*24] for i in [0,ecx);
+ *     if any !=0: keep esi=1; else esi=0. If esi: g_audioBankPick=2; tail to cleanup.
+ *   Else: ebp=g_audioStateMachine1_004f3ae8; esi=1. Walk g_byte_0054361a[i*24] for i in [0,ebp). If esi: g_audioBankPick=1;
  *     cleanup: zero g_counter_0054359c, g_counter_005433c8; call Match_TeamOutcomeScreen; pop+ret.
  *   Else (both banks have something nonzero): eax = g_audioBankSel again.
  *     If eax==2: roundrobin edx through ecx slots looking for g_byte_005435a2[edx*24]!=0; store to g_counter_0054359c.
@@ -127,8 +127,8 @@ extern unsigned int g_byte_005435a1;
 extern unsigned int g_byte_005435a2;
 extern unsigned int g_byte_00543619;
 extern unsigned int g_byte_0054361a;
-extern unsigned int g_bootInitState_00535de4;
-extern unsigned int g_audioBankPick_005433c0;
+extern unsigned int g_bootInitState;
+extern unsigned int g_audioBankPick;
 extern unsigned int g_counter_0054359c;
 extern unsigned int g_audioStateMachine0_004f3ae4;
 extern unsigned int g_audioStateMachine1_004f3ae8;
@@ -167,10 +167,10 @@ __declspec(naked) void AudioBank2StatePickerWalk(void)
         inc     cl
         mov     byte ptr [eax + g_byte_005435a1], cl
     L_a92_afterStore:
-        mov     ecx, dword ptr [g_bootInitState_00535de4]
+        mov     ecx, dword ptr [g_bootInitState]
         mov     esi, 1
         inc     ecx
-        mov     dword ptr [g_bootInitState_00535de4], ecx
+        mov     dword ptr [g_bootInitState], ecx
         mov     ecx, dword ptr [g_audioStateMachine0_004f3ae4]
         test    ecx, ecx
         jle     short L_a92_checkLow
@@ -186,7 +186,7 @@ __declspec(naked) void AudioBank2StatePickerWalk(void)
     L_a92_checkLow:
         test    esi, esi
         je      short L_a92_lowBankCheck
-        mov     dword ptr [g_audioBankPick_005433c0], 2
+        mov     dword ptr [g_audioBankPick], 2
         jmp     short L_a92_cleanup
     L_a92_lowBankCheck:
         mov     ebp, dword ptr [g_audioStateMachine1_004f3ae8]
@@ -206,7 +206,7 @@ __declspec(naked) void AudioBank2StatePickerWalk(void)
     L_a92_decideSet:
         test    esi, esi
         je      short L_a92_walkPicks
-        mov     dword ptr [g_audioBankPick_005433c0], 1
+        mov     dword ptr [g_audioBankPick], 1
     L_a92_cleanup:
         mov     dword ptr [g_counter_0054359c], 0
         mov     dword ptr [g_counter_005433c8], 0

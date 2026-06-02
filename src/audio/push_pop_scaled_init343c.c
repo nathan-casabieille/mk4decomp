@@ -11,14 +11,14 @@ extern unsigned int g_scaledInit_00542044;
  *   into g_scaledInit, call helper, clear [0x54343c]. Standard
  *   "scoped global swap" pattern.
  */
-extern unsigned int g_audioInitScaled_0054343c;
+extern unsigned int g_audioInitScaled;
 extern void MStackPush2ChainLLInsert(void);
 void PushPopScaledInit343c(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_scaledInit_00542044;
-    g_scaledInit_00542044 = g_audioInitScaled_0054343c;
+    g_scaledInit_00542044 = g_audioInitScaled;
     MStackPush2ChainLLInsert();
-    g_audioInitScaled_0054343c = 0;
+    g_audioInitScaled = 0;
     g_scaledInit_00542044 = *(unsigned int *)(g_matrixStackTop * 4);
     g_matrixStackTop--;
 }

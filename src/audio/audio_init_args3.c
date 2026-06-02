@@ -107,13 +107,13 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
-extern unsigned int g_voicePoolHead_00543748;
-extern unsigned int g_voicePoolTail_00543750;
+extern unsigned int g_voicePoolHead;
+extern unsigned int g_voicePoolTail;
 
 /*
  * @addr 0x004a1f20 (118b audio) - audio init with 3 stash args:
  *   wt = arg0>>2, call DispatcherComplex260; if pause clear and walk
- *   non-null, append walk to ring at g_voicePoolHead_00543748/g_voicePoolTail_00543750, call
+ *   non-null, append walk to ring at g_voicePoolHead/g_voicePoolTail, call
  *   MStackPushComplexCallPop; if pause clear stash arg1 at walk[+0x54],
  *   arg2 at walk[+0x58], arg3 at walk[+0x5c].
  */
@@ -122,8 +122,8 @@ void AudioInitArgs3(unsigned int arg0, int arg1, int arg2, int arg3) {
     DispatcherComplex260_00407400();
     if (g_framePauseFlag != 0) return;
     if (g_currentNodeIdx == 0) return;
-    (&g_voicePoolTail_00543750)[g_voicePoolHead_00543748] = g_currentNodeIdx;
-    g_voicePoolHead_00543748++;
+    (&g_voicePoolTail)[g_voicePoolHead] = g_currentNodeIdx;
+    g_voicePoolHead++;
     MStackPushComplexCallPop_004064b0();
     if (g_framePauseFlag != 0) return;
     ((ScenegraphNode *)(g_currentNodeIdx * 4))->position_x = arg1;

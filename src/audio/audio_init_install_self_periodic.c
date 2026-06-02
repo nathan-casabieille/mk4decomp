@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  * AudioInitInstallSelfPeriodic - 216b audio 2-body install/periodic.
  *   Entry 0x004a0610: g_walkCallback=g_dlMode. If eax==0 OR g_state2_0053a354 != 0:
  *     tail-call CallSetPause; pop+ret. Else: chain=g_baseSel;
- *     g_state2_0053a354=1, g_state2_00537ea8=0, g_audioPeriodicSlot_0053a2e8=0, g_audioInitPeriodic_00537e90=4,
+ *     g_state2_0053a354=1, g_state2_00537ea8=0, g_audioPeriodicSlot=0, g_audioInitPeriodic=4,
  *     g_walkCallback=0, chain[+0xc]=0; call RoundWinTransition; if !paused: pop+ret;
  *     else CallSetPause; pop+ret.
  *   Entry 0x004a0680 (body): chain = g_baseSel*4; saved=chain->state; chain->state=0.
@@ -122,10 +122,10 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_state2_0053a354;
 extern u32 g_dlMode;
-extern unsigned int g_audioInitPeriodic_00537e90;
+extern unsigned int g_audioInitPeriodic;
 extern unsigned int g_state2_00537ea8;
 extern unsigned int g_installSelfStride5_00538090;
-extern unsigned int g_audioPeriodicSlot_0053a2e8;
+extern unsigned int g_audioPeriodicSlot;
 extern void CallSetPause(void);
 extern void InstallSelfStride5(void);
 extern void RoundWinTransition(void);
@@ -147,8 +147,8 @@ __declspec(naked) void AudioInitInstallSelfPeriodic(void)
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [g_state2_0053a354], 1
         mov     dword ptr [g_state2_00537ea8], esi
-        mov     dword ptr [g_audioPeriodicSlot_0053a2e8], esi
-        mov     dword ptr [g_audioInitPeriodic_00537e90], 4
+        mov     dword ptr [g_audioPeriodicSlot], esi
+        mov     dword ptr [g_audioInitPeriodic], 4
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [eax*4 + 0xc], esi
         call    RoundWinTransition

@@ -122,14 +122,14 @@ extern void LoadGeoAsset_Default(void);
 extern void TableWalkBoundedCmp(int);
 extern void QuadCallPhase2(void);
 extern unsigned int g_audioPreloadVar2_004f3a58;
-extern unsigned int g_audioPreloadVar_004f3a70;
+extern unsigned int g_audioPreloadVar;
 extern unsigned int g_dispatchSave519_004f3a98;
 extern unsigned int g_dispatchSave633_004f3aa8;
-extern unsigned int g_audioPreloadBase_0050b118;
+extern unsigned int g_audioPreloadBase;
 extern unsigned int g_count;
 extern unsigned int g_byte_005435a0;
 extern unsigned int g_byte_005435b8;
-extern unsigned int g_audioPreloadState_00543830;
+extern unsigned int g_audioPreloadState;
 
 
 __declspec(naked) void AudioPreloadStreamingTrack(void)
@@ -159,7 +159,7 @@ __declspec(naked) void AudioPreloadStreamingTrack(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_702b
-        mov      ecx, OFFSET g_audioPreloadBase_0050b118
+        mov      ecx, OFFSET g_audioPreloadBase
         shr      ecx, 2
         mov      dword ptr [g_currentNodeIdx], ecx
         call     LoadGeoAsset_Default
@@ -171,7 +171,7 @@ __declspec(naked) void AudioPreloadStreamingTrack(void)
         cmp      eax, 4
         mov      eax, dword ptr [g_audioBankSel]
         jne      short L_6f3d
-        mov      edx, dword ptr [g_audioPreloadState_00543830]
+        mov      edx, dword ptr [g_audioPreloadState]
         cmp      eax, 1
         lea      eax, [edx*4]
         mov      ecx, dword ptr [eax + g_audioPreloadVar2_004f3a58]
@@ -187,16 +187,16 @@ __declspec(naked) void AudioPreloadStreamingTrack(void)
     L_6f3d:
         cmp      eax, 1
         jne      short L_6f5c
-        mov      eax, dword ptr [g_audioPreloadState_00543830]
+        mov      eax, dword ptr [g_audioPreloadState]
         shl      eax, 2
-        mov      ecx, dword ptr [eax + g_audioPreloadVar_004f3a70]
+        mov      ecx, dword ptr [eax + g_audioPreloadVar]
         lea      ecx, [ecx + ecx*2]
         lea      ecx, [ecx*8 + g_byte_005435a0]
         jmp      short L_6f79
     L_6f5c:
-        mov      edx, dword ptr [g_audioPreloadState_00543830]
+        mov      edx, dword ptr [g_audioPreloadState]
         lea      eax, [edx*4]
-        mov      ecx, dword ptr [eax + g_audioPreloadVar_004f3a70]
+        mov      ecx, dword ptr [eax + g_audioPreloadVar]
         lea      ecx, [ecx + ecx*2]
         lea      ecx, [ecx*8 + g_byte_005435b8]
     L_6f79:
@@ -208,11 +208,11 @@ __declspec(naked) void AudioPreloadStreamingTrack(void)
         lea      eax, [edx*8 + g_byte_005435a0]
         push     eax
         call     MemcpyByteN
-        mov      ecx, dword ptr [g_audioPreloadState_00543830]
+        mov      ecx, dword ptr [g_audioPreloadState]
         add      esp, 0xc
         inc      ecx
         mov      dword ptr [g_pendingNodeType], OFFSET PendingMatch_004a62b0
-        mov      dword ptr [g_audioPreloadState_00543830], ecx
+        mov      dword ptr [g_audioPreloadState], ecx
         mov      dword ptr [g_eventQueueWorkType], 0x1000
         call     AllocNode
         mov      eax, dword ptr [g_framePauseFlag]

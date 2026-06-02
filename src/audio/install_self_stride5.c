@@ -111,13 +111,13 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x004a06f0 (165b audio) - install-self with 5x stride:
  *   chain[sel].slot84 -> eax; clear. If !=0: clear walkCallback/g_installSelfStride5_00538090,
  *   call CallSetPause; ret.
- *   else: eax = g_eventQueueEnd * 5; ecx = g_audioSequencerSlot_00541fc4; walkCallback=edi=1;
+ *   else: eax = g_eventQueueEnd * 5; ecx = g_audioSequencerSlot; walkCallback=edi=1;
  *   g_eventQueueEnd = eax; eax += ecx; g_installSelfStride5_00538090 = 1; g_scaledInit = eax;
  *   walkCallback = chain[eax].slot4; call GuardedScaledCall; pause? ret;
  *   install self at +8; chain[sel].slot84 = 1; g_pendingNodeType = 0x32; pause=1.
  */
 extern unsigned int g_installSelfStride5_00538090;
-extern unsigned int g_audioSequencerSlot_00541fc4;
+extern unsigned int g_audioSequencerSlot;
 extern void CallSetPause(void);
 extern void GuardedScaledCall(void);
 
@@ -142,7 +142,7 @@ __declspec(naked) void InstallSelfStride5(void) {
         pop     esi
         ret
         mov     eax, dword ptr [g_eventQueueEnd]
-        mov     ecx, dword ptr [g_audioSequencerSlot_00541fc4]
+        mov     ecx, dword ptr [g_audioSequencerSlot]
         mov     edi, 1
         lea     eax, [eax + eax*4]
         mov     dword ptr [g_walkCallback], edi

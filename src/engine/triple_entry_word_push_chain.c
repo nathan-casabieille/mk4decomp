@@ -109,14 +109,14 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004627c0 (168b game) - triple-entry pause-gated chain.
- *   Block A: if g_scaledChainLoop_00537f74 != 0: dec g_phaseCounter -> g_eventQueueChild; if >= 0:
+ *   Block A: if g_scaledChainLoop != 0: dec g_phaseCounter -> g_eventQueueChild; if >= 0:
  *     call MStackChainOrBitLoop, pause-check, sync 80→fb0; call PackedTableWalkChainStore, pause-check;
  *     call MStackPush2ScaledChainLoop, pause-check; push (word)[0x004e2858], call TaggedSceneDispatch.
  *     Fall-through to jmp CallSetPause.
  *   Block B (+0x70): g_walkCallback=g_active_0053a408; if zero jmp CallSetPause; else jmp TripleEntryWordChainInc5.
  *   Block C (+0x90): g_walkCallback=g_active_00537e88; if zero jmp CallSetPause; else jmp TripleEntryWordChainInc5.
  */
-extern unsigned int g_scaledChainLoop_00537f74;
+extern unsigned int g_scaledChainLoop;
 extern unsigned int g_phaseCounter;
 extern void CallSetPause(void);
 extern void MStackChainOrBitLoop(void);
@@ -126,7 +126,7 @@ extern void TripleEntryWordChainInc5(void);
 
 __declspec(naked) void TripleEntryWordPushChain(void) {
     __asm {
-        mov     eax, dword ptr [g_scaledChainLoop_00537f74]
+        mov     eax, dword ptr [g_scaledChainLoop]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         _emit   75h

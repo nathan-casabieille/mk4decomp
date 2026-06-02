@@ -113,14 +113,14 @@ extern unsigned int g_fightAxisPosY;
  *   call GuardedDualPushTailJmp; if pause? ret.
  *   mstack-push g_scaledInit_00542044, call ScaledOr4DirtyClear, mstack-pop.
  *   cj[+0x30]=3, cj[+0x34] |= 0x1c0000.
- *   call TwoStateLookupDirty; if !pause: cj[+0x3c] = g_bootHeavyState_00537f78; ret.
+ *   call TwoStateLookupDirty; if !pause: cj[+0x3c] = g_bootHeavyState; ret.
  */
 extern u32 g_dlState;
 extern u32 g_dlAux;
-extern unsigned int g_bootHeavyState_00537f78;
+extern unsigned int g_bootHeavyState;
 extern s32 g_dlNalt3;
 extern s32 g_dlNalt4;
-extern unsigned int g_particleInitState_00541de0;
+extern unsigned int g_particleInitState;
 extern void DownloadPlayerChar(void);
 extern void GuardedDualPushTailJmp(void);
 extern void ScaledOr4DirtyClear(void);
@@ -189,7 +189,7 @@ void QuadGuardedCjSet_00422fc0(void) {
         test    eax, eax
         _emit   75h
         _emit   17h
-        mov     eax, dword ptr [g_bootHeavyState_00537f78]
+        mov     eax, dword ptr [g_bootHeavyState]
         mov     edx, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x3c], eax
@@ -201,7 +201,7 @@ void QuadGuardedCjSet_00422fc0(void) {
  *   If pause? ret. Reload then call GuardedDualPushTailJmp. If pause? ret.
  *   mstack-push g_scaledInit_00542044; call ScaledOr4DirtyClear; mstack-pop;
  *   set cj[+0x30]=4 + cj[+0x34] |= 0x1c0001; call TwoStateLookupDirty;
- *   if pause? ret; else cj[+0x3c] = g_particleInitState_00541de0; ret.
+ *   if pause? ret; else cj[+0x3c] = g_particleInitState; ret.
  */
 void QuadGuardedCjSet_004230b0(void) {
     __asm {
@@ -258,7 +258,7 @@ void QuadGuardedCjSet_004230b0(void) {
         mov     ecx, dword ptr [eax*4 + 0x34]
         or      ecx, 0x001c0001
         mov     dword ptr [eax*4 + 0x34], ecx
-        mov     eax, dword ptr [g_particleInitState_00541de0]
+        mov     eax, dword ptr [g_particleInitState]
         mov     edx, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x3c], eax

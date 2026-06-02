@@ -110,9 +110,9 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave958_004e9068;
 extern unsigned int g_tickFlagF;
-extern unsigned int g_audioPathFlag_0054355c;
-extern unsigned int g_matchStartClr_00543568;
-extern unsigned int g_audioMatchStartFlag_00543714;
+extern unsigned int g_audioPathFlag;
+extern unsigned int g_matchStartClr;
+extern unsigned int g_audioMatchStartFlag;
 extern void ArgSarAddDerefJmp(void);
 extern void AudioInstallSelfStatePush(void);
 extern void BootInitGuardedCallChain(void);
@@ -276,17 +276,17 @@ __declspec(naked) void RoundEndFsmCluster(void)
         nop
         nop
         /* === Helper 5: flag-gated dispatch w/ 4e9068 fallback === */
-        mov      eax, dword ptr [g_audioMatchStartFlag_00543714]
+        mov      eax, dword ptr [g_audioMatchStartFlag]
         test     eax, eax
         je       short L_d890
-        mov      eax, dword ptr [g_matchStartClr_00543568]
+        mov      eax, dword ptr [g_matchStartClr]
         test     eax, eax
         jne      short L_d890
         cmp      byte ptr [g_gtModeFlag], 1
         jne      short L_d890
         jmp      CallSetPause
     L_d890:
-        mov      eax, dword ptr [g_audioPathFlag_0054355c]
+        mov      eax, dword ptr [g_audioPathFlag]
         test     eax, eax
         je       short L_d89e
         jmp      CallSetPause

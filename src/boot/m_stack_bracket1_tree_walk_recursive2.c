@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern void MStackBracket1_TreeWalkRecursive2(void);
 extern void DirtyDoubleDeref(void);
 extern void PushPopScaled1cDoubleCall(void);
-extern unsigned int g_installChainTailSlot_0053a3a8;
+extern unsigned int g_installChainTailSlot;
 
 /* @addr 0x004a7030 (189b audio) - packed-ptr install + chain init + tail-jmp.
  *   g_xformEntityIdx = packed_ptr(0x50d418); call MStackBracket1_TreeWalkRecursive2; pause? -> end;
@@ -148,7 +148,7 @@ __declspec(naked) void InstallChainInitTailJmp(void) {
         mov     ecx, dword ptr [g_matrixStackTop]
         mov     eax, dword ptr [g_scaledInit_00542044]
         inc     ecx
-        mov     dword ptr [g_installChainTailSlot_0053a3a8], eax
+        mov     dword ptr [g_installChainTailSlot], eax
         mov     dword ptr [g_matrixStackTop], ecx
         mov     [ecx*4 + g_matrixStack_arr], eax
         mov     ecx, dword ptr [g_scaledInit_00542044]

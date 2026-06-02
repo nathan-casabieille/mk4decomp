@@ -119,7 +119,7 @@ extern void ScaledZeroFour(void);
 extern unsigned int g_dispatchSave598_004ed1d8;
 
 extern unsigned int g_dispatchSave125_0050f22c;
-extern unsigned int g_dispatchWalkVar_0053a404;
+extern unsigned int g_dispatchWalkVar;
 extern unsigned int g_dispatchTab70_00543100;
 extern void ArgSarStoreJmp(void);
 extern void AudioInstallSelfStatePush(void);
@@ -346,7 +346,7 @@ __declspec(naked) void RoundStartCluster_004919c0(void)
     L_1b2b:
         mov      ebx, 1
         mov      dword ptr [g_walkCallback], ebx
-        mov      dword ptr [g_dispatchWalkVar_0053a404], ebx
+        mov      dword ptr [g_dispatchWalkVar], ebx
         call     UpperBodyComboFsmCluster
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_1c08

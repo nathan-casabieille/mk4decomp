@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
  *   and raise framePause.
  */
 extern void InstallSelfPairedGate(void);
-extern unsigned int g_pendingNodeTypeSrc_00542068;
+extern unsigned int g_pendingNodeTypeSrc;
 void InstallSelfPairedGate(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int prev = ((ScenegraphNode *)base)->install_flag;
@@ -128,7 +128,7 @@ void InstallSelfPairedGate(void) {
     }
     Eleven404b90_404c00();
     if (g_framePauseFlag != 0) return;
-    g_pendingNodeType = g_pendingNodeTypeSrc_00542068;
+    g_pendingNodeType = g_pendingNodeTypeSrc;
     *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfPairedGate;
     ((ScenegraphNode *)base)->install_flag = 1;
     g_framePauseFlag = 1;

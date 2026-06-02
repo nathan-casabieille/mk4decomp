@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   loop scanning chain[*4+disp] for zero terminator, mstack-pop 2.
  */
 extern unsigned int g_matrixStack_arr;
-extern unsigned int g_dispatchAcc_00541fb8;
+extern unsigned int g_dispatchAcc;
 extern unsigned int g_phaseCounter;
 
 void MStackPushSearchLoop(void) {
@@ -128,7 +128,7 @@ void MStackPushSearchLoop(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_matrixStack_arr], edx
         mov     eax, dword ptr [g_phaseCounter]
-        mov     ecx, dword ptr [g_dispatchAcc_00541fb8]
+        mov     ecx, dword ptr [g_dispatchAcc]
         mov     dword ptr [g_eventQueueCurrent], 4
         shl     eax, 2
         mov     dword ptr [g_walkCallback], eax

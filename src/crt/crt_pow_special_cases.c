@@ -119,9 +119,9 @@ extern void func_004ca34e(void);
 extern void func_004ca399(void);
 extern void CrtPowSpecialCases(void);
 extern unsigned int g_dispatchSave118_0051fff0;
-extern unsigned int g_crtPowConstBase_0051fff8;
+extern unsigned int g_crtPowConstBase;
 extern unsigned int g_dispatchSave113_00522410;
-extern unsigned int g_crtFpuTbyte_00522470;
+extern unsigned int g_crtFpuTbyte;
 extern unsigned int g_dispatchSave1422_00f9f7f8;
 
 __declspec(naked) void CrtPowCluster(void)
@@ -167,13 +167,13 @@ __declspec(naked) void CrtPowCluster(void)
     L_65bd:
         cmp      dword ptr [g_dispatchSave1422_00f9f7f8], 0
         jne      func_004ca34e
-        lea      ecx, [g_crtPowConstBase_0051fff8]
+        lea      ecx, [g_crtPowConstBase]
         mov      edx, 0x1d
         jmp      func_004ca399
     L_65da:
         cmp      dword ptr [g_dispatchSave1422_00f9f7f8], 0
         jne      func_004ca34e
-        lea      ecx, [g_crtPowConstBase_0051fff8]
+        lea      ecx, [g_crtPowConstBase]
         mov      edx, 0x1d
         call     TwinEntryFpHelper
         pop      edx
@@ -281,7 +281,7 @@ __declspec(naked) void CrtPowCluster(void)
         jne      L_65af
         fstp     st(0)
         fstp     st(0)
-        fld      tbyte ptr [g_crtFpuTbyte_00522470]
+        fld      tbyte ptr [g_crtFpuTbyte]
         mov      eax, 1
         jmp      L_65da
     L_6735:

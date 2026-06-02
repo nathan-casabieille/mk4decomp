@@ -5,11 +5,11 @@
 #include "game/tick.h"
 
 /* @addr 0x004c5520 (85b boot) - small-block malloc with lock fallback.
- *   esi = (size+0xf) & ~0xf; if (esi > g_crtHeapMaxPtr_00522154): HeapAlloc(g_dispatchSave1470_00fa0ee4,0,size).
+ *   esi = (size+0xf) & ~0xf; if (esi > g_crtHeapMaxPtr): HeapAlloc(g_dispatchSave1470_00fa0ee4,0,size).
  *   Else: Lock(9); ptr = func_004c7430(esi >> 4); Unlock(9); return ptr (or 0).
  */
 extern unsigned int g_iat_004d20b4;
-extern unsigned int g_crtHeapMaxPtr_00522154;
+extern unsigned int g_crtHeapMaxPtr;
 extern unsigned int g_dispatchSave1470_00fa0ee4;
 extern void Lock(void);
 extern void TableLookupIatCall(void);
@@ -21,7 +21,7 @@ __declspec(naked) void* SmallMalloc(void) {
         push    esi
         push    edi
         lea     esi, [eax + 0xf]
-        mov     eax, dword ptr [g_crtHeapMaxPtr_00522154]
+        mov     eax, dword ptr [g_crtHeapMaxPtr]
         and     esi, 0xfffffff0
         cmp     esi, eax
         _emit   77h

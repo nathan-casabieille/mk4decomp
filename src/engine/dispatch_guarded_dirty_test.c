@@ -13,13 +13,13 @@ extern unsigned int g_scaledInit_00542044;
  *   cl = byte dirty; eax = 1; if (al & cl) == 0, jmp store-tail;
  *   eventQueueCurrent = 1; walk = 1; jmp T.
  */
-extern unsigned int g_dispatchWalkVar_0053a404;
+extern unsigned int g_dispatchWalkVar;
 extern void MStackPush3MaskBit0(void);
 extern void GuardedFourCallChain(void);
 void DispatchGuardedDirtyTest(void) {
     unsigned int v;
     if (g_gtOtherFlag != 0) return;
-    v = g_dispatchWalkVar_0053a404;
+    v = g_dispatchWalkVar;
     g_walkCallback = (void (*)(void))v;
     if (v != 0) return;
     g_eventQueueCurrent = 0;

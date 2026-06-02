@@ -15,7 +15,7 @@
 #include "engine/scenegraph.h"
 
 extern unsigned int g_dualBitGate;     /* 0x004d57b0 (mirrors back) */
-extern unsigned int g_or_0052ab40;     /* 0x0052ab40 */
+extern unsigned int g_or;     /* 0x0052ab40 */
 
 /* @addr 0x0048a190 */
 void OrDualStore_0048a190(void) {
@@ -26,7 +26,7 @@ void OrDualStore_0048a190(void) {
 
 /* @addr 0x0048e4b0 */
 void OrDualStore_0048e4b0(void) {
-    unsigned int v = g_or_0052ab40 | (unsigned int)g_walkCallback;
+    unsigned int v = g_or | (unsigned int)g_walkCallback;
     g_eventQueueCurrent = v;
-    g_or_0052ab40       = v;
+    g_or       = v;
 }

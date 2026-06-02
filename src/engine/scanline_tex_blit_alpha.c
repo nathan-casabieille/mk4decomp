@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_viewportW;
 extern unsigned int g_viewportH;
-extern unsigned int g_texturedTriVar_004ffd4c;
+extern unsigned int g_texturedTriVar;
 extern unsigned int g_dispatchSave1707_00b2d008;
 extern unsigned int g_dispatchSave1708_00b2d00c;
 extern unsigned int g_dispatchSave1346_00f4d044;
@@ -263,7 +263,7 @@ __declspec(naked) void ScanlineTexBlitAlpha(void)
         mov      ecx, dword ptr [g_dispatchSave1357_00f70f4c]
         rol      ecx, 0x10
         mov      ch, 0
-        cmp      dword ptr [g_texturedTriVar_004ffd4c], 0
+        cmp      dword ptr [g_texturedTriVar], 0
         jne      L_0d99
     L_0d69:
         mov      ax, word ptr [edx*2]

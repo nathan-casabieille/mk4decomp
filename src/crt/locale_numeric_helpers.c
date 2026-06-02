@@ -111,8 +111,8 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_const_004d2b88;
 extern unsigned int g_dispatchSave889_004d2b60;
 extern unsigned int g_dispatchSave890_004d2b7c;
-extern unsigned int g_crtCType_00522998;
-extern unsigned int g_crtLocaleNumeric_00522bb0;
+extern unsigned int g_crtCType;
+extern unsigned int g_crtLocaleNumeric;
 extern unsigned int g_byte_00522bb4;
 extern unsigned int g_iat_004d2058;
 extern unsigned int g_iat_004d212c;
@@ -157,7 +157,7 @@ __declspec(naked) void LocaleNumericHelpers(void)
         cmp      eax, 0x65
         je       short L_84c3
     L_8496:
-        mov      eax, dword ptr [g_crtLocaleNumeric_00522bb0]
+        mov      eax, dword ptr [g_crtLocaleNumeric]
         inc      esi
         cmp      eax, 1
         jle      short L_84b1
@@ -169,7 +169,7 @@ __declspec(naked) void LocaleNumericHelpers(void)
         jmp      short L_84bf
     L_84b1:
         movsx    edx, byte ptr [esi]
-        mov      eax, dword ptr [g_crtCType_00522998]
+        mov      eax, dword ptr [g_crtCType]
         mov      al, byte ptr [eax + edx*2]
         and      eax, 4
     L_84bf:

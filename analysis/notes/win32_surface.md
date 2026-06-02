@@ -126,7 +126,7 @@ because the ECM thread communicates via a single status byte
 
 | Import                | Wrapper / call site                                              |
 |-----------------------|------------------------------------------------------------------|
-| `TlsAlloc`            | CRT `_init_per_thread_data` -> `g_crtTlsSlot_00522400`           |
+| `TlsAlloc`            | CRT `_init_per_thread_data` -> `g_crtTlsSlot`           |
 | `TlsGetValue`         | CRT per-thread data lookup                                       |
 | `TlsSetValue`         | CRT per-thread data set                                          |
 

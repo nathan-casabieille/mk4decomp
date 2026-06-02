@@ -10,13 +10,13 @@ extern void Mul10Tail(void);
 
 /* @addr 0x00439520 (64b)
  *   inc g_matrixStackTop, store callback to stack[idx*4],
- *   call IAT [g_iatPtr_00542058], pause-test, restore
+ *   call IAT [g_iatPtr], pause-test, restore
  */
-extern void (*g_iatPtr_00542058)(void);
+extern void (*g_iatPtr)(void);
 void IncStoreCallIATDec(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_eventQueueChild;
-    g_iatPtr_00542058();
+    g_iatPtr();
     if (g_framePauseFlag != 0) {
         return;
     }

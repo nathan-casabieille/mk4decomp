@@ -20,12 +20,12 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern unsigned char g_byte_00542040;
-extern unsigned int g_or_0052ab40;
+extern unsigned int g_or;
 extern unsigned int g_save_0053a7d8;
 void TestCmpZeroFour(void) {
     g_walkCallback = (void (*)(void))0;
     if (g_byte_00542040 == 0) {
-        g_or_0052ab40 = 0;
+        g_or = 0;
     }
     g_byte_00542040 = 0;
     g_save_0053a7d8 = 0;

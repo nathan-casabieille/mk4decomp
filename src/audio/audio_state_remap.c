@@ -108,9 +108,9 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 extern s32 g_dlNalt1;
-extern unsigned int g_audioInstallGate_00541dd4;
+extern unsigned int g_audioInstallGate;
 extern unsigned char g_byte_00543724;
-extern unsigned char g_audioStateRemapByte_00543728;
+extern unsigned char g_audioStateRemapByte;
 extern unsigned char g_byte_0054372c;
 extern unsigned char g_byte_00543730;
 
@@ -124,12 +124,12 @@ extern unsigned char g_byte_00543730;
 void AudioStateRemap(void) {
     unsigned int v = g_acc_00542078;
     g_dlNalt1 = v;
-    if (g_audioInstallGate_00541dd4 != 0 &&
+    if (g_audioInstallGate != 0 &&
         (g_fightTableC0 & 0x20) == 0 &&
         (g_fightTableC1 & 0x04) == 0) {
-        if (g_byte_00543724 != 0 && v == 6 && g_audioStateRemapByte_00543728 == 0) {
+        if (g_byte_00543724 != 0 && v == 6 && g_audioStateRemapByte == 0) {
             v = 0xf;
-            g_audioStateRemapByte_00543728 = 1;
+            g_audioStateRemapByte = 1;
             g_dlNalt1 = v;
         }
         if (g_byte_0054372c != 0 && g_byte_00543730 != 0 && v == 7) {

@@ -114,11 +114,11 @@ extern unsigned int g_dispatchSave816_004f394c;
 extern unsigned int g_dispatchSave817_004f39dc;
 extern unsigned int g_dispatchSave818_004f3a48;
 extern unsigned int g_dispatchSave724_004f6338;
-extern unsigned int g_audioPreloadBase_0050b118;
+extern unsigned int g_audioPreloadBase;
 extern unsigned int g_dispatchSave128_0050f130;
 extern unsigned int g_dispatchSave127_0050f14c;
 extern unsigned int g_dispatchSave119_0051599c;
-extern unsigned int g_bootInitState_00535de4;
+extern unsigned int g_bootInitState;
 extern unsigned int g_count;
 extern unsigned int g_voicePoolTickFlag_005437f4;
 extern void AudioBindEntry(void);
@@ -264,7 +264,7 @@ __declspec(naked) void EnduranceMode_Handler(void)
     L_5453:
         mov      ebx, 1
         push     8
-        mov      dword ptr [g_bootInitState_00535de4], ebx
+        mov      dword ptr [g_bootInitState], ebx
         call     TableWalkBoundedCmp
         add      esp, 4
         call     FiveTableWalkInit
@@ -294,7 +294,7 @@ __declspec(naked) void EnduranceMode_Handler(void)
         push     OFFSET g_dispatchSave724_004f6338
         call     AudioBindEntry
         mov      eax, dword ptr [g_baseSel]
-        mov      ecx, OFFSET g_audioPreloadBase_0050b118
+        mov      ecx, OFFSET g_audioPreloadBase
         shr      ecx, 2
         add      esp, 4
         mov      dword ptr [eax*4 + 0x30], ebx

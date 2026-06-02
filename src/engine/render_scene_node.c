@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_eq_00542098;
+extern unsigned int g_eq;
 extern s16 g_vtxMat[];
 extern unsigned int g_mat3x3_007af994;
 extern unsigned int g_mat3x3_007af998;
@@ -76,7 +76,7 @@ __declspec(naked) void RenderSceneNode(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_ae73
-        mov      eax, dword ptr [g_eq_00542098]
+        mov      eax, dword ptr [g_eq]
         test     eax, eax
         jne      L_ae7b
         mov      eax, dword ptr [g_currentNodeIdx]

@@ -111,9 +111,9 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_phaseThunkVar2_0052aabc;
 extern unsigned int g_tickFlagF;
 extern unsigned int g_eventMusicSlot2_0053a318;
-extern unsigned int g_eventMusicVar_00541dd8;
+extern unsigned int g_eventMusicVar;
 extern unsigned int g_dispatchVar3_00543564;
-extern unsigned int g_eventMusicSlot_00543594;
+extern unsigned int g_eventMusicSlot;
 extern unsigned int g_dispatchTab61_00550000;
 extern unsigned int g_dispatchSave1705_008c0000;
 extern void CallSetPause(void);
@@ -142,7 +142,7 @@ __declspec(naked) void Event23bMusicCluster(void)
         jne      short L_f57b
         cmp      edx, 2
         jne      short L_f57b
-        mov      ebx, dword ptr [g_eventMusicSlot_00543594]
+        mov      ebx, dword ptr [g_eventMusicSlot]
         test     ebx, ebx
         jl       L_f691
     L_f57b:
@@ -267,7 +267,7 @@ __declspec(naked) void Event23bMusicCluster(void)
         ret
     L_f733:
         mov      dword ptr [g_walkCallback], ebx
-        mov      dword ptr [g_eventMusicVar_00541dd8], ebx
+        mov      dword ptr [g_eventMusicVar], ebx
         mov      dword ptr [esi + 8], OFFSET L_f6d0
         mov      dword ptr [esi + 0x84], ebx
         mov      dword ptr [g_pendingNodeType], 0xa

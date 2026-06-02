@@ -111,15 +111,15 @@ extern unsigned int g_fightAxisPosY;
 extern void ZeroMultiGlobalsCmp(void);
 extern void TitleDemoStateMachine(void);
 extern void Screen_GreatestWarrior(void);
-extern unsigned int g_pendingMatchSlot_0053a19c;
+extern unsigned int g_pendingMatchSlot;
 extern unsigned int g_pendingMatchSlot2_00541dc0;
 
 extern unsigned int g_tickFlagF;
-extern unsigned int g_pendingMatchAcc_0053a3e8;
-extern unsigned int g_phaseIdx_0053a50c;
+extern unsigned int g_pendingMatchAcc;
+extern unsigned int g_phaseIdx;
 extern unsigned int g_zerotriple_00541de8;
 extern unsigned int g_zerotriple_00541dec;
-extern unsigned int g_titleDemoState_00541df0;
+extern unsigned int g_titleDemoState;
 extern unsigned int g_titleDemoState2_00541df4;
 extern void AudioVolumeRescale(void);
 extern void BootInitVec3PhaseInstall(void);
@@ -167,10 +167,10 @@ __declspec(naked) void PendingMatch_00401b70(void)
         test     eax, eax
         je       L_1d46
         jmp      L_1bf5
-        mov      eax, dword ptr [g_pendingMatchAcc_0053a3e8]
+        mov      eax, dword ptr [g_pendingMatchAcc]
         inc      eax
         cmp      eax, 4
-        mov      dword ptr [g_pendingMatchAcc_0053a3e8], eax
+        mov      dword ptr [g_pendingMatchAcc], eax
         jne      L_2047
         push     ebx
         push     0x23
@@ -188,10 +188,10 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      dword ptr [esi + 0x84], ebp
         jbe      L_1ba3
     L_1c1e:
-        mov      ecx, dword ptr [g_pendingMatchSlot_0053a19c]
+        mov      ecx, dword ptr [g_pendingMatchSlot]
         lea      eax, [ecx + 1]
         cmp      eax, 3
-        mov      dword ptr [g_pendingMatchSlot_0053a19c], eax
+        mov      dword ptr [g_pendingMatchSlot], eax
         jbe      L_1c37
         mov      dword ptr [g_pendingMatchSlot2_00541dc0], ebx
     L_1c37:
@@ -202,7 +202,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      dword ptr [g_walkCallback], ebp
         mov      dword ptr [g_zerotriple_00541de8], ebp
         mov      dword ptr [g_zerotriple_00541dec], ebp
-        mov      dword ptr [g_titleDemoState_00541df0], ebp
+        mov      dword ptr [g_titleDemoState], ebp
         mov      dword ptr [g_titleDemoState2_00541df4], ebp
         call     QuadCallPhase2
         mov      dword ptr [esi + 8], edi
@@ -235,7 +235,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         cmp      dword ptr [g_framePauseFlag], ebp
         jne      L_1cb3
         mov      eax, 2
-        mov      dword ptr [g_phaseIdx_0053a50c], ebp
+        mov      dword ptr [g_phaseIdx], ebp
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_tickFlagF], eax
         mov      dword ptr [g_eventQueueWorkType], ebp
@@ -247,7 +247,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         jne      L_1cb3
         mov      dword ptr [g_walkCallback], ebp
         mov      dword ptr [g_pendingMatchSlot2_00541dc0], ebp
-        mov      dword ptr [g_pendingMatchSlot_0053a19c], ebp
+        mov      dword ptr [g_pendingMatchSlot], ebp
         mov      dword ptr [g_active_0053a408], ebp
         mov      dword ptr [g_active_00537e88], ebp
         mov      dword ptr [esi + 8], edi
@@ -445,7 +445,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         pop      ebx
         ret      
     L_2041:
-        mov      dword ptr [g_pendingMatchAcc_0053a3e8], ebp
+        mov      dword ptr [g_pendingMatchAcc], ebp
     L_2047:
         mov      dword ptr [esi + 8], edi
         mov      edx, dword ptr [g_baseSel]

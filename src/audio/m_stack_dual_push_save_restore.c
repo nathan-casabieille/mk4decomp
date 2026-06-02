@@ -109,9 +109,9 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_state2_00537ea8;
-extern unsigned int g_audioInitPeriodic_00537e90;
+extern unsigned int g_audioInitPeriodic;
 extern unsigned int g_audioInstall2State_00537f88;
-extern unsigned int g_poseGridGenVar_004e2864;
+extern unsigned int g_poseGridGenVar;
 extern void Cmp3DirtyToggle(void);
 extern void DualPushSetCallDualPop(void);
 extern void MStackPush2TableNot(void);
@@ -144,7 +144,7 @@ __declspec(naked) void AudioCmpCascadeDispatcher(void)
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         jne     L_acsd_ret
-        mov     eax, dword ptr [g_audioInitPeriodic_00537e90]
+        mov     eax, dword ptr [g_audioInitPeriodic]
         mov     dword ptr [g_eventQueueNotMask], ebx
         cmp     eax, 0xf
         mov     dword ptr [g_acc_00542078], eax
@@ -176,7 +176,7 @@ __declspec(naked) void AudioCmpCascadeDispatcher(void)
         jne     L_acsd_ret
         push    0x230
         call    TripleStageRollback
-        mov     cx, word ptr [g_poseGridGenVar_004e2864]
+        mov     cx, word ptr [g_poseGridGenVar]
         add     esp, 4
         push    ecx
         call    TaggedSceneDispatch
@@ -229,7 +229,7 @@ __declspec(naked) void AudioCmpCascadeDispatcher(void)
     L_acsd_cmp11:
         cmp     eax, 0x11
         jne     short L_acsd_cmp12
-        mov     cx, word ptr [g_poseGridGenVar_004e2864]
+        mov     cx, word ptr [g_poseGridGenVar]
         mov     dword ptr [g_eventQueueEnd], ebx
         push    ecx
         call    TaggedSceneDispatch

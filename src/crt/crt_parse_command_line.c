@@ -128,7 +128,7 @@ extern unsigned int g_dispatchSave1424_00f9f814;
  *   Call CrtParseCommandLine again (this time storing args). [0xf9f818] = esi (argv array).
  *   [0xf9f814] = argc - 1.
  */
-extern unsigned int g_GetModuleFileNameA_004d20a0;
+extern unsigned int g_GetModuleFileNameA;
 
 __declspec(naked) void SetupArgv(void) {
     __asm {
@@ -138,7 +138,7 @@ __declspec(naked) void SetupArgv(void) {
         push    0x104
         push    offset g_buf_00f9faf0
         push    0
-        call    dword ptr [g_GetModuleFileNameA_004d20a0]
+        call    dword ptr [g_GetModuleFileNameA]
         mov     edi, dword ptr [g_cmdline]
         mov     dword ptr [g_dispatchSave1427_00f9f830], offset g_buf_00f9faf0
         cmp     byte ptr [edi], 0

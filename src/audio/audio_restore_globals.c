@@ -122,13 +122,13 @@ extern unsigned int g_byte_00543ab4;
 extern unsigned int g_audioStateMachineVar6_004f31cc;
 extern unsigned int g_audioStateMachineVar5_004f31d0;
 extern unsigned int g_audioStateMachineVar3_004f3404;
-extern unsigned int g_loaded_004f3608;
+extern unsigned int g_loaded;
 extern unsigned int g_dispatchSave813_004f361c;
 extern unsigned int g_dispatchSave577_004f3814;
 extern unsigned int g_dispatchSave576_004f3818;
 extern unsigned int g_dispatchSave575_004f381c;
 extern unsigned int g_dispatchSave574_004f3820;
-extern unsigned int g_or_0052ab40;
+extern unsigned int g_or;
 extern unsigned int g_audioRestoreSlot3_0053a1f0;
 extern unsigned int g_audioSavedGlobal0_00543734;
 extern unsigned int g_audioSavedGlobal1_00543738;
@@ -153,11 +153,11 @@ extern unsigned int g_audioSavedReg_00543a5c;
 extern unsigned int g_audioSavedReg_00543a60;
 extern unsigned int g_audioSavedReg_00543a64;
 extern unsigned int g_audioRestoreSlot2_00543a68;
-extern unsigned int g_menuRestoreD_00543a9c;
-extern unsigned int g_menuRestoreA_00543aa0;
-extern unsigned int g_menuRestoreB_00543aac;
-extern unsigned int g_menuRestoreC_00543ab0;
-extern unsigned int g_configInitGate_00543f7c;
+extern unsigned int g_menuRestoreD;
+extern unsigned int g_menuRestoreA;
+extern unsigned int g_menuRestoreB;
+extern unsigned int g_menuRestoreC;
+extern unsigned int g_configInitGate;
 extern unsigned int g_table_004f3f28;
 extern unsigned int g_table_0053a53c;
 extern unsigned int g_table_00543934;
@@ -174,14 +174,14 @@ __declspec(naked) void Config_RestoreGlobals(void)
         test    eax, eax
         push    edi
         je      L_arg_setboth
-        mov     ecx, dword ptr [g_configInitGate_00543f7c]
+        mov     ecx, dword ptr [g_configInitGate]
         test    ecx, ecx
         jne     L_arg_tail
     L_arg_setboth:
         mov     ecx, 1
         test    eax, eax
         mov     dword ptr [g_gsmFlag], ecx
-        mov     dword ptr [g_configInitGate_00543f7c], ecx
+        mov     dword ptr [g_configInitGate], ecx
         jne     L_arg_main
         call    Config_SnapshotGlobals
     L_arg_main:
@@ -233,16 +233,16 @@ __declspec(naked) void Config_RestoreGlobals(void)
         mov     dword ptr [g_audioStateMachine0_004f3ae4], edx
         movsb
         mov     dword ptr [g_audioStateMachine1_004f3ae8], eax
-        mov     dword ptr [g_or_0052ab40], ecx
+        mov     dword ptr [g_or], ecx
     L_arg_tail:
         mov     al, byte ptr [g_byte_00543ab4]
-        mov     edx, dword ptr [g_menuRestoreC_00543ab0]
-        mov     ecx, dword ptr [g_menuRestoreD_00543a9c]
+        mov     edx, dword ptr [g_menuRestoreC]
+        mov     ecx, dword ptr [g_menuRestoreD]
         mov     byte ptr [g_byte_004f360c], al
         mov     byte ptr [g_byte_004f3610], al
-        mov     eax, dword ptr [g_menuRestoreB_00543aac]
-        mov     dword ptr [g_loaded_004f3608], edx
-        mov     edx, dword ptr [g_menuRestoreA_00543aa0]
+        mov     eax, dword ptr [g_menuRestoreB]
+        mov     dword ptr [g_loaded], edx
+        mov     edx, dword ptr [g_menuRestoreA]
         pop     edi
         mov     dword ptr [g_audioStateMachineVar3_004f3404], eax
         mov     dword ptr [g_audioRestoreSlot3_0053a1f0], ecx

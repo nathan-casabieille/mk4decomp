@@ -193,7 +193,7 @@ extern void CallPauseScaledStoreCopyJmp(void);
 extern void ScaledArrStore_00429980(void);
 extern void MStackPushComplexCallPop_00406430(void);
 extern unsigned int g_counter_0053a51c;
-extern unsigned int g_hitPhase_00537f30;
+extern unsigned int g_hitPhase;
 extern void StreamChainStringInstall(void);
 extern void StorePauseImulShr16(void);
 extern void Mul10TailPairMidChain(void);
@@ -302,7 +302,7 @@ extern void Vec2SumMul10ChainCompute(void);
 extern void GuardedSeq_0049a650(void);
 extern void AtanDualDeltaThreshold(void);
 extern void Set43DualCallJmp(void);
-extern unsigned int g_scaledArgChain_00541e68;
+extern unsigned int g_scaledArgChain;
 extern unsigned int g_load_0052ab04;
 extern unsigned int g_load_0052ab08;
 extern unsigned int g_load_0052ab10;
@@ -368,8 +368,8 @@ extern void PendingMatch_00498eb0(void);
 
 /* @addr 0x00498df0 (180b game) - triple-entry 3-block dispatcher with Mul10Tail and pause-gated paths. */
 extern unsigned int g_matrixStack_arr;
-extern unsigned int g_loaded_004f3608;
-extern unsigned int g_or_0052ab40;
+extern unsigned int g_loaded;
+extern unsigned int g_or;
 extern unsigned int g_dispatchVar18_0052d750;
 extern unsigned int g_dispatchVar17_0052d754;
 extern unsigned int g_dispatchVar16_0052d758;
@@ -464,7 +464,7 @@ extern unsigned int g_dispatchSave1297_004eb9b0;
 extern unsigned int g_dispatchSave1298_004eba10;
 extern unsigned int g_dispatchSave1299_004ebbf8;
 extern unsigned int g_dispatchSave1300_004ebc38;
-extern unsigned int g_dispatchTab_004ec040;
+extern unsigned int g_dispatchTab;
 extern unsigned int g_mul10TableBase_004ec050;
 extern unsigned int g_dispatchSave1301_004ec060;
 extern unsigned int g_dispatchSave1302_004ec078;
@@ -487,10 +487,10 @@ extern unsigned int g_dispatchSave147_0050122c;
 extern unsigned int g_dispatchSave59_00501250;
 extern unsigned int g_dispatchSave58_0050b604;
 extern unsigned int g_dispatchSave57_005117c4;
-extern unsigned int g_quadEntryGate_0052d724;
+extern unsigned int g_quadEntryGate;
 extern unsigned int g_dispatchSave104_00535d58;
-extern unsigned int g_walkBoundsLimit_00535d60;
-extern unsigned int g_walkBoundsSlot_00535d68;
+extern unsigned int g_walkBoundsLimit;
+extern unsigned int g_walkBoundsSlot;
 extern unsigned int g_walkCallbackSrc2_00535db0;
 extern unsigned int g_dispatchSave49_00535e44;
 extern unsigned int g_dispatchSave103_00535e4c;
@@ -502,29 +502,29 @@ extern unsigned int g_clamp_00537f2c;
 extern unsigned int g_byte_00538148;
 extern s32 g_dlNalt3;
 extern s32 g_dlNalt4;
-extern unsigned int g_walkCallbackSrc_0053a2d0;
+extern unsigned int g_walkCallbackSrc;
 extern unsigned int g_dispatchSave92_0053a324;
 extern unsigned int g_clamp_0053a328;
 extern unsigned int g_audioStreamState;
 extern unsigned int g_dispatchVar6_0053a464;
 extern unsigned int g_phaseThunkSlot5_0053a468;
 extern unsigned int g_clamp_0053a6dc;
-extern unsigned int g_phaseThunkState_0053a730;
+extern unsigned int g_phaseThunkState;
 extern unsigned int g_installOwner2_0053a7a0;
 extern unsigned int g_pendingMatchAudio2_0053a7a8;
 extern unsigned int g_dispatchVar14_0053a7b4;
 extern unsigned int g_clamp_0053e348;
-extern unsigned int g_scenegraphWalkEnd_00541d68;
+extern unsigned int g_scenegraphWalkEnd;
 extern unsigned int g_savedNode;
 extern unsigned int g_phaseCounter;
-extern unsigned int g_dispatchArr_00542188;
+extern unsigned int g_dispatchArr;
 extern unsigned int g_dispatchVar37_00542a58;
 extern unsigned int g_dispatchSave68_00542b68;
-extern unsigned int g_installSelfCounter_005433e8;
-extern unsigned int g_audioTriEntryFlag_005433ec;
-extern unsigned int g_audioMatchStartFlag_00543714;
+extern unsigned int g_installSelfCounter;
+extern unsigned int g_audioTriEntryFlag;
+extern unsigned int g_audioMatchStartFlag;
 extern u8 g_dlEnabledFlag;
-extern unsigned int g_audioStateRemapByte_00543728;
+extern unsigned int g_audioStateRemapByte;
 extern unsigned int g_mul10SumState_0054388c;
 extern unsigned int g_mul10SumState2_00543890;
 extern void AiAngleDistComputation(void);
@@ -1818,7 +1818,7 @@ __declspec(naked) void StateMachineDualModuloInstall(void) {
  *   ScaledIndexConditionalAdd. Then dispatches on
  *   g_baseSel:
  *     - matches g_gtPlayerProbe2: if g_mul10SumState_0054388c is set, picks
- *       &g_mul10TableBase_004ec050>>2 (state 1) or &g_dispatchTab_004ec040>>2 (other)
+ *       &g_mul10TableBase_004ec050>>2 (state 1) or &g_dispatchTab>>2 (other)
  *       into g_eventQueueTotal, clears g_mul10SumState_0054388c, jumps to next.
  *     - matches g_gtPlayerProbe1: mirror with g_mul10SumState2_00543890.
  *     - default: both g_eventQueueTotal and 0x54204c set to the two
@@ -1854,7 +1854,7 @@ __declspec(naked) void StreamFlagPackedSelectChain(void) {
         cmp     eax, 1
         mov     eax, offset g_mul10TableBase_004ec050
         je      short L_sfp_useEax1
-        mov     eax, offset g_dispatchTab_004ec040
+        mov     eax, offset g_dispatchTab
     L_sfp_useEax1:
         shr     eax, 2
         mov     dword ptr [g_eventQueueTotal], eax
@@ -1869,14 +1869,14 @@ __declspec(naked) void StreamFlagPackedSelectChain(void) {
         cmp     eax, 1
         mov     eax, offset g_mul10TableBase_004ec050
         je      short L_sfp_useEax2
-        mov     eax, offset g_dispatchTab_004ec040
+        mov     eax, offset g_dispatchTab
     L_sfp_useEax2:
         shr     eax, 2
         mov     dword ptr [g_eventQueueTotal], eax
         mov     dword ptr [g_mul10SumState2_00543890], 0
         jmp     short L_sfp_callBlock
     L_sfp_defaultPath:
-        mov     eax, offset g_dispatchTab_004ec040
+        mov     eax, offset g_dispatchTab
         mov     ecx, offset g_mul10TableBase_004ec050
         shr     eax, 2
         shr     ecx, 2
@@ -1937,11 +1937,11 @@ __declspec(naked) void StreamFlagPackedSelectChain(void) {
 /* @addr 0x00421380 (378b game) - 2-entry packed phase install + 6-call chain.
  *   Entry 1 (offset 0, 277b): phase-state install.
  *     Phase 1+: SwapOrPassSet; on no-error compares
- *       g_walkCallback with g_loaded_004f3608. If equal, tail-call
- *       PendingMatch_0042d240. Else bumps g_hitPhase_00537f30 by 1, calls
+ *       g_walkCallback with g_loaded. If equal, tail-call
+ *       PendingMatch_0042d240. Else bumps g_hitPhase by 1, calls
  *       CallPauseClear3CallTriple, then chains
  *       ScenegraphWalk + Screen_ArcadeEnding.
- *     Phase 0: g_quadEntryGate_0052d724=1, reads g_or_0052ab40 and tests
+ *     Phase 0: g_quadEntryGate=1, reads g_or and tests
  *       bit 3; if clear calls TwinMStackPushScaledChain. Either way installs Self
  *       at body with slot[+0x84]=1, packs (Self + 0x01000000) at the
  *       bumped scaled slot, calls RoundEndFsm, arms 0x541e6c=1.
@@ -1966,17 +1966,17 @@ __declspec(naked) void Phase3InstallSelfChain(void) {
         test    eax, eax
         jne     L_pis2_done
         mov     ecx, dword ptr [g_walkCallback]
-        mov     eax, dword ptr [g_loaded_004f3608]
+        mov     eax, dword ptr [g_loaded]
         cmp     ecx, eax
         jne     short L_pis2_advance
         call    PendingMatch_0042d240
         pop     esi
         ret
     L_pis2_advance:
-        mov     edx, dword ptr [g_hitPhase_00537f30]
+        mov     edx, dword ptr [g_hitPhase]
         lea     eax, [edx + 1]
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_hitPhase_00537f30], eax
+        mov     dword ptr [g_hitPhase], eax
         call    CallPauseClear3CallTriple
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -1989,8 +1989,8 @@ __declspec(naked) void Phase3InstallSelfChain(void) {
         pop     esi
         ret
     L_pis2_phase0:
-        mov     eax, dword ptr [g_or_0052ab40]
-        mov     dword ptr [g_quadEntryGate_0052d724], 1
+        mov     eax, dword ptr [g_or]
+        mov     dword ptr [g_quadEntryGate], 1
         mov     dword ptr [g_walkCallback], eax
         and     eax, 8
         mov     dword ptr [g_xformScratch94], eax
@@ -3225,7 +3225,7 @@ __declspec(naked) void PoseFsmTriHelpers(void)
     __asm {
         /* === h1 (0x431650): table-index wrapper, tail-jmp 31920 === */
         mov      ecx, dword ptr [g_eventQueueChild]
-        mov      eax, OFFSET g_dispatchArr_00542188
+        mov      eax, OFFSET g_dispatchArr
         shr      eax, 2
         add      eax, ecx
         mov      dword ptr [g_currentNodeIdx], eax
@@ -3257,7 +3257,7 @@ __declspec(naked) void PoseFsmTriHelpers(void)
         mov      dword ptr [g_xformScratch2088], 0xffff0000
     L_16bd:
         mov      ecx, dword ptr [g_eventQueueChild]
-        mov      eax, OFFSET g_dispatchArr_00542188
+        mov      eax, OFFSET g_dispatchArr
         shr      eax, 2
         add      eax, ecx
         mov      dword ptr [g_currentNodeIdx], eax
@@ -3375,7 +3375,7 @@ __declspec(naked) void PoseFsmTriHelpers(void)
         mov      dword ptr [g_xformScratch2088], 0xffff0000
     L_1894:
         mov      ecx, dword ptr [g_eventQueueChild]
-        mov      eax, OFFSET g_dispatchArr_00542188
+        mov      eax, OFFSET g_dispatchArr
         shr      eax, 2
         add      eax, ecx
         mov      dword ptr [g_currentNodeIdx], eax
@@ -4299,7 +4299,7 @@ __declspec(naked) void EnduranceStateInitWalk(void)
         xor      eax, eax
         cmp      ecx, eax
         jne      short L_8665
-        mov      edx, dword ptr [g_audioMatchStartFlag_00543714]
+        mov      edx, dword ptr [g_audioMatchStartFlag]
         mov      dword ptr [g_dispatchSave104_00535d58], eax
         cmp      edx, eax
         mov      dword ptr [g_dispatchSave92_0053a324], eax
@@ -4315,7 +4315,7 @@ __declspec(naked) void EnduranceStateInitWalk(void)
         mov      dword ptr [g_clamp_0053a328], ecx
         mov      dword ptr [g_clamp_0053e348], ecx
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_walkCallbackSrc_0053a2d0], eax
+        mov      dword ptr [g_walkCallbackSrc], eax
         mov      dword ptr [g_walkCallbackSrc2_00535db0], eax
         call     SetWalkCurCallPauseDirty
         add      esp, 8
@@ -4664,7 +4664,7 @@ __declspec(naked) void SceneEvalFsm(void)
         je       L_e05e
         jmp      L_e198
         push     6
-        mov      byte ptr [g_audioStateRemapByte_00543728], bl
+        mov      byte ptr [g_audioStateRemapByte], bl
         call     TableWalkBoundedCmp
         add      esp, 4
         push     2
@@ -4702,11 +4702,11 @@ __declspec(naked) void SceneEvalFsm(void)
         mov      dword ptr [g_walkCallback], eax
         je       L_e0fc
     L_e05e:
-        cmp      dword ptr [g_audioMatchStartFlag_00543714], ebx
+        cmp      dword ptr [g_audioMatchStartFlag], ebx
         je       L_e09d
         cmp      dword ptr [g_gtOtherFlag], ebx
         je       L_e09d
-        cmp      dword ptr [g_audioTriEntryFlag_005433ec], ebx
+        cmp      dword ptr [g_audioTriEntryFlag], ebx
         je       L_e09d
         mov      al, byte ptr [g_gtModeFlag]
         mov      dword ptr [g_stateCountdown], ebx
@@ -5897,13 +5897,13 @@ __declspec(naked) void StoryCharIntroFsmCluster(void)
         jne      L_7f9b
         cmp      ecx, 1
         jne      L_7f9b
-        inc      dword ptr [g_installSelfCounter_005433e8]
+        inc      dword ptr [g_installSelfCounter]
     L_7f9b:
         cmp      al, 2
         jne      L_7faa
         cmp      ecx, 2
         jne      L_7faa
-        inc      dword ptr [g_installSelfCounter_005433e8]
+        inc      dword ptr [g_installSelfCounter]
     L_7faa:
         call     GateDispatch6c
         mov      eax, dword ptr [g_framePauseFlag]
@@ -6545,13 +6545,13 @@ __declspec(naked) void PendingMatch_0043bdd0(void)
         jne      L_bdea
         cmp      ecx, 1
         jne      L_bdea
-        inc      dword ptr [g_installSelfCounter_005433e8]
+        inc      dword ptr [g_installSelfCounter]
     L_bdea:
         cmp      al, 2
         jne      L_bdf9
         cmp      ecx, 2
         jne      L_bdf9
-        inc      dword ptr [g_installSelfCounter_005433e8]
+        inc      dword ptr [g_installSelfCounter]
     L_bdf9:
         mov      ecx, dword ptr [g_baseSel]
         mov      eax, dword ptr [ecx*4 + 0x34]
@@ -6733,11 +6733,11 @@ __declspec(naked) void PendingMatch_0043bdd0(void)
         mov      dword ptr [eax*4 + 0x54], ecx
         mov      eax, dword ptr [g_walkCallback]
         mov      dword ptr [g_dispatchVar14_0053a7b4], eax
-        mov      dword ptr [g_walkBoundsSlot_00535d68], eax
+        mov      dword ptr [g_walkBoundsSlot], eax
         mov      eax, 0xffff0000
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_scenegraphWalkEnd_00541d68], eax
-        mov      dword ptr [g_walkBoundsLimit_00535d60], eax
+        mov      dword ptr [g_scenegraphWalkEnd], eax
+        mov      dword ptr [g_walkBoundsLimit], eax
         call     PendingMatch_0043c400
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_c197
@@ -6751,7 +6751,7 @@ __declspec(naked) void PendingMatch_0043bdd0(void)
         mov      dword ptr [g_eventQueueChild], eax
         mov      dword ptr [edx*4 + 0x54], eax
         mov      dword ptr [g_walkCallback], esi
-        mov      dword ptr [g_phaseThunkState_0053a730], esi
+        mov      dword ptr [g_phaseThunkState], esi
         call     ArgSarStoreJmp
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -7731,7 +7731,7 @@ __declspec(naked) void PendingMatch_004694b0(void)
         mov      ecx, dword ptr [g_dlNalt3]
         mov      dword ptr [g_currentNodeIdx], edx
         mov      edx, dword ptr [g_player2NodeIdx]
-        mov      dword ptr [g_walkCallbackSrc_0053a2d0], edi
+        mov      dword ptr [g_walkCallbackSrc], edi
         mov      dword ptr [g_gtPlayerProbe2], eax
         mov      dword ptr [g_player3NodeIdx], edi
         mov      dword ptr [g_eventQueueCurrent], ecx

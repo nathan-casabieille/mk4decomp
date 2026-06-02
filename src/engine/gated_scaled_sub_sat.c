@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-/* @addr 0x0048fb40 (127b) - if (g_or_0052ab40 & 0x4000) ret;
+/* @addr 0x0048fb40 (127b) - if (g_or & 0x4000) ret;
  *   call ArgScaledLoadCmpP1(str_542fa0); pause? ret;
  *   arr1[sel] = g_eventQueueCurrent;
  *   call ArgScaledLoadCmpP1(str_542fa8); pause? ret;
@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_str_00542fa0;
 extern unsigned int g_str_00542fa8;
-extern unsigned int g_or_0052ab40;
+extern unsigned int g_or;
 extern void ArgScaledLoadCmpP1(void);
 
 extern unsigned int g_arr_005d8208;
@@ -126,7 +126,7 @@ extern unsigned int g_arr_005d83a4;
 
 void GatedScaledSubSat(void) {
     __asm {
-        mov     eax, dword ptr [g_or_0052ab40]
+        mov     eax, dword ptr [g_or]
         mov     dword ptr [g_eventQueueWorkType], eax
         and     eax, 0x4000
         mov     dword ptr [g_xformScratch94], eax

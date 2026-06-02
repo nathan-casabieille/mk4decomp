@@ -113,13 +113,13 @@ extern unsigned int g_fightAxisPosY;
  *     pop; chain[scaledInit*4+0x14]=g_eventQueueNotMask; ret.
  *   Body (+0x40): load state at [base*4+0x84]; clear state.
  *   state!=0: call MStackCall; if pause ret. Tail-call CallSetPause; pop esi; ret.
- *   state==0: load eax=offset g_installScaledArrBase_00542998>>2 + g_eventQueueNotMask -> g_scaledInit.
+ *   state==0: load eax=offset g_installScaledArrBase>>2 + g_eventQueueNotMask -> g_scaledInit.
  *     Init multiple globals; call Push70CallScaleArith; if pause ret.
  *     Set chain[+0x5c]=0x1b333; g_cj=scaledInit; install-self at body; state=1;
  *     g_pendingNodeType=0xb4; pause=1; ret.
  *   Tail (+0x120): set g_tickByteFlag=1; ret.
  */
-extern unsigned int g_installScaledArrBase_00542998;
+extern unsigned int g_installScaledArrBase;
 extern void CallSetPause(void);
 extern void MStackCall_00406740(void);
 
@@ -172,7 +172,7 @@ __declspec(naked) void DualEntryInstallSelfScaled(void) {
         pop     esi
         ret
         mov     ecx, dword ptr [g_eventQueueNotMask]
-        mov     eax, offset g_installScaledArrBase_00542998
+        mov     eax, offset g_installScaledArrBase
         shr     eax, 2
         add     eax, ecx
         mov     dword ptr [g_scaledInit_00542044], eax

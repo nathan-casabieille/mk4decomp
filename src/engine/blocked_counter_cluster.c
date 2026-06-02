@@ -113,7 +113,7 @@ extern unsigned int g_const_00481a80;
 extern unsigned int g_dispatchSave540_004ef290;
 extern unsigned int g_dispatchSave539_004ef2c0;
 extern unsigned int g_load_0052ab10;
-extern unsigned int g_bossArrivalState_00538124;
+extern unsigned int g_bossArrivalState;
 extern void ArgSarStoreJmp(void);
 extern void BossArrivalSequence(void);
 extern void CjDispatchCommit(void);
@@ -250,7 +250,7 @@ __declspec(naked) void BlockedCounterCluster(void)
         mov      edi, 1
         mov      dword ptr [g_eventQueueWorkType], 0x3d
         mov      dword ptr [g_walkCallback], edi
-        mov      dword ptr [g_bossArrivalState_00538124], edi
+        mov      dword ptr [g_bossArrivalState], edi
         call     Push16Call
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

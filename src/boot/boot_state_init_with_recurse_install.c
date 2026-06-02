@@ -112,15 +112,15 @@ extern unsigned int g_fightAxisPosY;
  * BootStateInitWithRecurseInstall - 230b boot self-installing state setup.
  *   chain = g_baseSel<<2; saved = chain->state; chain->state = 0.
  *   If was nonzero: tail-call StackPopDispatchTagged; pop+ret.
- *   Else: g_phaseIdx_0053a50c=5; g_walkCallback=0xa; call StorePauseImulShr16; if paused: pop+ret.
- *     g_walkCallback++; g_bootInitState_00535de4 = g_walkCallback; call TripleCallCountdown; if paused: pop+ret.
+ *   Else: g_phaseIdx=5; g_walkCallback=0xa; call StorePauseImulShr16; if paused: pop+ret.
+ *     g_walkCallback++; g_bootInitState = g_walkCallback; call TripleCallCountdown; if paused: pop+ret.
  *     Call TwoStageSelectorInit; if paused: pop+ret. push 8; call TableWalkBoundedCmp;
  *     install-self at entry; chain->state=1; load chain[+4] = g_currentNodeIdx = old cursor;
  *     mstack-push (entry + 0x01000000); g_currentNodeIdx++; chain[+4] = new cursor;
  *     clear g_baseSel*4 + 0x84; call TwoCallStatePauseJmp; g_framePauseFlag=1; pop+ret.
  */
-extern unsigned int g_bootInitState_00535de4;
-extern unsigned int g_phaseIdx_0053a50c;
+extern unsigned int g_bootInitState;
+extern unsigned int g_phaseIdx;
 extern void StorePauseImulShr16(void);
 extern void TableWalkBoundedCmp(void);
 extern void TripleCallCountdown(void);
@@ -142,7 +142,7 @@ __declspec(naked) void BootStateInitWithRecurseInstall(void)
         pop     esi
         ret
     L_init:
-        mov     dword ptr [g_phaseIdx_0053a50c], 5
+        mov     dword ptr [g_phaseIdx], 5
         mov     dword ptr [g_walkCallback], 0xa
         call    StorePauseImulShr16
         mov     eax, dword ptr [g_framePauseFlag]
@@ -151,7 +151,7 @@ __declspec(naked) void BootStateInitWithRecurseInstall(void)
         mov     eax, dword ptr [g_walkCallback]
         inc     eax
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_bootInitState_00535de4], eax
+        mov     dword ptr [g_bootInitState], eax
         call    TripleCallCountdown
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

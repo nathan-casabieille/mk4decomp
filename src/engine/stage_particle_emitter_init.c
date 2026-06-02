@@ -109,8 +109,8 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_particleEmitterNode;
-extern unsigned int g_bootHeavyState_00537f78;
-extern unsigned int g_particleInitState_00541de0;
+extern unsigned int g_bootHeavyState;
+extern unsigned int g_particleInitState;
 extern void BootPhaseGateBracketedInit(void);
 extern void InstallSelf5CallVecChain(void);
 extern void MStackCall_004063e0(void);
@@ -119,7 +119,7 @@ __declspec(naked) void StageParticleEmitterInit(void)
 {
     __asm {
         /* === h1 (0x464350): 3-stage particle spawn === */
-        mov      eax, dword ptr [g_bootHeavyState_00537f78]
+        mov      eax, dword ptr [g_bootHeavyState]
         push     esi
         test     eax, eax
         mov      dword ptr [g_walkCallback], eax
@@ -134,7 +134,7 @@ __declspec(naked) void StageParticleEmitterInit(void)
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [ecx*4 + 0x30], 0x11
         mov      eax, dword ptr [g_currentNodeIdx]
-        mov      dword ptr [g_bootHeavyState_00537f78], eax
+        mov      dword ptr [g_bootHeavyState], eax
         mov      dword ptr [eax*4 + 0x54], 0xffffb0a4
         mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [edx*4 + 0x58], 0xfffe0000
@@ -151,7 +151,7 @@ __declspec(naked) void StageParticleEmitterInit(void)
         test     eax, eax
         jne      L_4551
     L_4400:
-        mov      eax, dword ptr [g_particleInitState_00541de0]
+        mov      eax, dword ptr [g_particleInitState]
         test     eax, eax
         mov      dword ptr [g_walkCallback], eax
         jne      L_44ab
@@ -164,7 +164,7 @@ __declspec(naked) void StageParticleEmitterInit(void)
         mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [edx*4 + 0x30], 0x12
         mov      eax, dword ptr [g_currentNodeIdx]
-        mov      dword ptr [g_particleInitState_00541de0], eax
+        mov      dword ptr [g_particleInitState], eax
         mov      dword ptr [eax*4 + 0x54], 0x4f5c
         mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [eax*4 + 0x58], 0xfffe0000
@@ -231,7 +231,7 @@ __declspec(naked) void StageParticleEmitterInit(void)
         mov      dword ptr [ecx*4 + 0x34], 0xffff6667
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [g_walkCallback], eax
-        mov      ecx, OFFSET g_bootHeavyState_00537f78
+        mov      ecx, OFFSET g_bootHeavyState
         mov      dword ptr [edx*4 + 0x38], eax
         mov      eax, OFFSET g_player1NodeIdx
         shr      eax, 2
@@ -242,7 +242,7 @@ __declspec(naked) void StageParticleEmitterInit(void)
         mov      dword ptr [g_eventQueueIdx], ecx
         je       short L_45d8
         mov      edx, OFFSET g_player2NodeIdx
-        mov      eax, OFFSET g_particleInitState_00541de0
+        mov      eax, OFFSET g_particleInitState
         shr      edx, 2
         shr      eax, 2
         mov      dword ptr [g_eventQueueEnd], edx
@@ -260,7 +260,7 @@ __declspec(naked) void StageParticleEmitterInit(void)
         mov      dword ptr [ecx*4 + 0x34], 0x12b85
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [g_walkCallback], eax
-        mov      ecx, OFFSET g_bootHeavyState_00537f78
+        mov      ecx, OFFSET g_bootHeavyState
         mov      dword ptr [edx*4 + 0x38], eax
         mov      eax, OFFSET g_player1NodeIdx
         shr      eax, 2
@@ -271,7 +271,7 @@ __declspec(naked) void StageParticleEmitterInit(void)
         mov      dword ptr [g_eventQueueIdx], ecx
         je       short L_4658
         mov      edx, OFFSET g_player2NodeIdx
-        mov      eax, OFFSET g_particleInitState_00541de0
+        mov      eax, OFFSET g_particleInitState
         shr      edx, 2
         shr      eax, 2
         mov      dword ptr [g_eventQueueEnd], edx

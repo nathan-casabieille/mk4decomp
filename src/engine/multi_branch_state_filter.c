@@ -107,7 +107,7 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
-extern unsigned int g_fightTickSavedSlot_005380d8;
+extern unsigned int g_fightTickSavedSlot;
 extern unsigned int g_chain_disp_30_439a40;
 extern unsigned int g_chain_disp_40_439a40;
 
@@ -115,7 +115,7 @@ extern unsigned int g_chain_disp_40_439a40;
  *   if g_stateCountdown == 1: ret.
  *   if chain[base].slot30 != 0: jmp TwoStageWalkGate.
  *   v = chain[cj].slot40; if (v & 2): jmp TwoConditionalJmp.
- *   delta = g_gtFightTickCounter - g_fightTickSavedSlot_005380d8; if delta < 0x1e0: jmp TwoConditionalJmp.
+ *   delta = g_gtFightTickCounter - g_fightTickSavedSlot; if delta < 0x1e0: jmp TwoConditionalJmp.
  *   else: walkCallback=0x64; call AudioVolumeRescale; pause? ret;
  *     if dirty1: jmp Thunk_00439c20; else jmp TwoConditionalJmp.
  */
@@ -139,7 +139,7 @@ void MultiBranchStateFilter(void) {
         TwoConditionalJmp();
         return;
     }
-    delta = (int)g_gtFightTickCounter - (int)g_fightTickSavedSlot_005380d8;
+    delta = (int)g_gtFightTickCounter - (int)g_fightTickSavedSlot;
     g_walkCallback = (void (*)(void))delta;
     if (delta < 0x1e0) {
         TwoConditionalJmp();

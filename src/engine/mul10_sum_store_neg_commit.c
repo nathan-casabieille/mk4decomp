@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_mul10SumState_0054388c;
 extern unsigned int g_mul10SumState2_00543890;
-extern unsigned int g_dispatchTab_004ec040;
+extern unsigned int g_dispatchTab;
 extern unsigned int g_mul10TableBase_004ec050;
 extern unsigned int g_dispatchVar37_00542a58;
 extern void ScaledIndexConditionalAdd(void);
@@ -126,7 +126,7 @@ extern void ScaledClearJmp_00428d60(void);
  *   ScaledIndexConditionalAdd. Then dispatches on
  *   g_baseSel:
  *     - matches g_gtPlayerProbe2: if g_mul10SumState_0054388c is set, picks
- *       &g_mul10TableBase_004ec050>>2 (state 1) or &g_dispatchTab_004ec040>>2 (other)
+ *       &g_mul10TableBase_004ec050>>2 (state 1) or &g_dispatchTab>>2 (other)
  *       into g_eventQueueTotal, clears g_mul10SumState_0054388c, jumps to next.
  *     - matches g_gtPlayerProbe1: mirror with g_mul10SumState2_00543890.
  *     - default: both g_eventQueueTotal and 0x54204c set to the two
@@ -166,7 +166,7 @@ __declspec(naked) void StreamFlagPackedSelectChain(void) {
         cmp     eax, 1
         mov     eax, offset g_mul10TableBase_004ec050
         je      short L_sfp_useEax1
-        mov     eax, offset g_dispatchTab_004ec040
+        mov     eax, offset g_dispatchTab
     L_sfp_useEax1:
         shr     eax, 2
         mov     dword ptr [g_eventQueueTotal], eax
@@ -181,14 +181,14 @@ __declspec(naked) void StreamFlagPackedSelectChain(void) {
         cmp     eax, 1
         mov     eax, offset g_mul10TableBase_004ec050
         je      short L_sfp_useEax2
-        mov     eax, offset g_dispatchTab_004ec040
+        mov     eax, offset g_dispatchTab
     L_sfp_useEax2:
         shr     eax, 2
         mov     dword ptr [g_eventQueueTotal], eax
         mov     dword ptr [g_mul10SumState2_00543890], 0
         jmp     short L_sfp_callBlock
     L_sfp_defaultPath:
-        mov     eax, offset g_dispatchTab_004ec040
+        mov     eax, offset g_dispatchTab
         mov     ecx, offset g_mul10TableBase_004ec050
         shr     eax, 2
         shr     ecx, 2

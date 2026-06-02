@@ -109,10 +109,10 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00440730 (324b game) - audio bridge: rescale + bit0 gate + mstack-push 3 + scaledInit copy. */
-extern unsigned int g_audioBridgeSlot_0052d718;
+extern unsigned int g_audioBridgeSlot;
 extern unsigned int g_audioBridgeSlot3_0052d71c;
 extern unsigned int g_audioBridgeSlot2_0052d720;
-extern unsigned int g_audioBridgeBase_0052d740;
+extern unsigned int g_audioBridgeBase;
 extern unsigned int g_dispatchSave107_0052d744;
 extern unsigned int g_dispatchSave106_0052d748;
 extern void AudioVolumeRescale(void);
@@ -152,13 +152,13 @@ void AudioBridgeMStackChainCopy(void) {
         mov     ecx, dword ptr [g_eventQueueIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     edx, offset g_audioBridgeSlot_0052d718
+        mov     edx, offset g_audioBridgeSlot
         mov     [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_scaledInit_00542044]
         shr     edx, 2
         mov     ecx, dword ptr [eax*4 + 0x6c]
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_audioBridgeSlot_0052d718], ecx
+        mov     dword ptr [g_audioBridgeSlot], ecx
         mov     ecx, dword ptr [eax*4 + 0x70]
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_audioBridgeSlot3_0052d71c], ecx
@@ -168,14 +168,14 @@ void AudioBridgeMStackChainCopy(void) {
         mov     dword ptr [g_audioBridgeSlot2_0052d720], ecx
         mov     ecx, dword ptr [eax*4 + 0x54]
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_audioBridgeBase_0052d740], ecx
+        mov     dword ptr [g_audioBridgeBase], ecx
         mov     ecx, dword ptr [eax*4 + 0x58]
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_dispatchSave107_0052d744], ecx
         mov     eax, dword ptr [eax*4 + 0x5c]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_dispatchSave106_0052d748], eax
-        mov     eax, offset g_audioBridgeBase_0052d740
+        mov     eax, offset g_audioBridgeBase
         shr     eax, 2
         mov     dword ptr [g_eventQueueIdx], eax
         call    DoubleStackPushAndJmp7d

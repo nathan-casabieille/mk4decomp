@@ -15,14 +15,14 @@
  *   cmp     eax, edx
  *   mov     [g_walkCallback], eax
  *   sete    cl
- *   mov     [g_eq_00542098], ecx
+ *   mov     [g_eq], ecx
  *   jmp     Tail
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 #include "game/statemachine.h"
 
-extern unsigned int g_eq_00542098;
+extern unsigned int g_eq;
 
 extern void StateSwitchMStackPop(void);
 
@@ -34,7 +34,7 @@ void MStackPushSwapEqJmp_00474e80(void) {
     g_eventQueueCurrent = g_dlNalt1;
     p = g_player1NodeIdx;
     g_walkCallback = (void (*)(void))p;
-    g_eq_00542098 = (p == g_eventQueueEnd) ? 1 : 0;
+    g_eq = (p == g_eventQueueEnd) ? 1 : 0;
     StateSwitchMStackPop();
 }
 
@@ -46,6 +46,6 @@ void MStackPushSwapEqJmp_00474ed0(void) {
     g_eventQueueCurrent = g_dlNalt1;
     p = g_player1NodeIdx;
     g_walkCallback = (void (*)(void))p;
-    g_eq_00542098 = (p == g_eventQueueIdx) ? 1 : 0;
+    g_eq = (p == g_eventQueueIdx) ? 1 : 0;
     StateSwitchMStackPop();
 }

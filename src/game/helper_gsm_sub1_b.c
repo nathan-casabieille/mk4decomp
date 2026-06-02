@@ -6,7 +6,7 @@
 
 /* Menu_DirectDrawUnavailableDialog - sister of 0x4b8630 for 0x004f5070 menu. */
 extern unsigned int g_byte_00ab4308;
-extern unsigned int g_gsmVar_004f5070;
+extern unsigned int g_gsmVar;
 extern unsigned int g_dispatchSave869_004f5074;
 extern unsigned int g_dispatchSave1487_00ab4310;
 extern unsigned int g_dispatchSave1497_00ab4370;
@@ -25,7 +25,7 @@ __declspec(naked) void Menu_DirectDrawUnavailableDialog(void)
         push    esi
         jne     short L_b93_skipSet
         mov     bl, al
-        push    offset g_gsmVar_004f5070
+        push    offset g_gsmVar
         or      bl, 1
         push    0
         mov     byte ptr [g_byte_00ab4308], bl
@@ -56,7 +56,7 @@ __declspec(naked) void Menu_DirectDrawUnavailableDialog(void)
         test    bl, 1
         je      short L_b93_skipDesc
         mov     eax, dword ptr [g_dispatchSave1487_00ab4310]
-        push    offset g_gsmVar_004f5070
+        push    offset g_gsmVar
         push    eax
         call    Menu_FindPrevSelectable
         add     esp, 8
@@ -69,7 +69,7 @@ __declspec(naked) void Menu_DirectDrawUnavailableDialog(void)
         jne     short L_b93_drawMenu
         test    bl, 2
         je      short L_b93_checkBit4
-        push    offset g_gsmVar_004f5070
+        push    offset g_gsmVar
         push    eax
         call    Menu_FindNextSelectable
         add     esp, 8
@@ -92,7 +92,7 @@ __declspec(naked) void Menu_DirectDrawUnavailableDialog(void)
         mov     dword ptr [g_dispatchSave1497_00ab4370], 2
     L_b93_drawMenu:
         push    eax
-        push    offset g_gsmVar_004f5070
+        push    offset g_gsmVar
         call    DrawMenu
         mov     eax, dword ptr [g_dispatchSave1497_00ab4370]
         add     esp, 8

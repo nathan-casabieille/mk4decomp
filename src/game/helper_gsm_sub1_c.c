@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_gsmHelperBase_004f4f30;
+extern unsigned int g_gsmHelperBase;
 extern unsigned int g_dispatchSave573_004f4f34;
 extern u32 g_gsmOut4;
 extern unsigned int g_dispatchSave1480_00ab42cc;
@@ -27,7 +27,7 @@ __declspec(naked) void Menu_PauseMenu(void)
         push     esi
         jne      short L_8a5c
         mov      bl, al
-        push     OFFSET g_gsmHelperBase_004f4f30
+        push     OFFSET g_gsmHelperBase
         or       bl, 1
         push     0
         mov      byte ptr [g_dispatchSave1480_00ab42cc], bl
@@ -58,7 +58,7 @@ __declspec(naked) void Menu_PauseMenu(void)
         test     bl, 1
         je       short L_8ac2
         mov      eax, dword ptr [g_dispatchSave1483_00ab42dc]
-        push     OFFSET g_gsmHelperBase_004f4f30
+        push     OFFSET g_gsmHelperBase
         push     eax
         call     Menu_FindPrevSelectable
         add      esp, 8
@@ -71,7 +71,7 @@ __declspec(naked) void Menu_PauseMenu(void)
         jne      short L_8ae3
         test     bl, 2
         je       short L_8ae3
-        push     OFFSET g_gsmHelperBase_004f4f30
+        push     OFFSET g_gsmHelperBase
         push     eax
         call     Menu_FindNextSelectable
         add      esp, 8
@@ -126,7 +126,7 @@ __declspec(naked) void Menu_PauseMenu(void)
         mov      dword ptr [g_dispatchSave1498_00ab4380], edx
         jmp      short L_8ba2
     L_8b84:
-        push     OFFSET g_gsmHelperBase_004f4f30
+        push     OFFSET g_gsmHelperBase
         push     0
         mov      dword ptr [g_dispatchSave1498_00ab4380], 2
         call     Menu_FindNextSelectable
@@ -134,7 +134,7 @@ __declspec(naked) void Menu_PauseMenu(void)
         mov      dword ptr [g_dispatchSave1483_00ab42dc], eax
     L_8ba2:
         push     eax
-        push     OFFSET g_gsmHelperBase_004f4f30
+        push     OFFSET g_gsmHelperBase
         call     DrawMenu
         mov      eax, dword ptr [g_dispatchSave1498_00ab4380]
         add      esp, 8

@@ -109,12 +109,12 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00422720 (142b game) - 3-branch flag set:
- *   If g_audioMatchStartFlag_00543714 == 1 && g_audioTriEntryFlag_005433ec == 0:
+ *   If g_audioMatchStartFlag == 1 && g_audioTriEntryFlag == 0:
  *     if g_active_0053a408: call ClampTwoToMax_004226a0; goto setB.
  *     else: write 0x10000 to walkCallback/0x53a6dc/0x53a328.
  *     setB: if g_active_00537e88: call ClampTwoToMax_004226e0; ret.
  *     else: write 0x10000 to walkCallback/0x537f2c/0x53e348; ret.
- *   Else: clear g_audioTriEntryFlag_005433ec; write 0x10000 to all 5 globals; ret.
+ *   Else: clear g_audioTriEntryFlag; write 0x10000 to all 5 globals; ret.
  */
 extern unsigned int g_active_00537e88;
 extern unsigned int g_clamp_00537f2c;
@@ -122,19 +122,19 @@ extern unsigned int g_clamp_0053a328;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_clamp_0053a6dc;
 extern unsigned int g_clamp_0053e348;
-extern unsigned int g_audioTriEntryFlag_005433ec;
-extern unsigned int g_audioMatchStartFlag_00543714;
+extern unsigned int g_audioTriEntryFlag;
+extern unsigned int g_audioMatchStartFlag;
 extern void ClampTwoToMax_004226a0(void);
 extern void ClampTwoToMax_004226e0(void);
 
 __declspec(naked) void TriBranchFlagWrite(void) {
     __asm {
-        mov     eax, dword ptr [g_audioMatchStartFlag_00543714]
+        mov     eax, dword ptr [g_audioMatchStartFlag]
         push    esi
         cmp     eax, 1
         _emit   75h
         _emit   54h
-        mov     eax, dword ptr [g_audioTriEntryFlag_005433ec]
+        mov     eax, dword ptr [g_audioTriEntryFlag]
         test    eax, eax
         _emit   75h
         _emit   4bh
@@ -162,7 +162,7 @@ __declspec(naked) void TriBranchFlagWrite(void) {
         pop     esi
         ret
         mov     esi, 0x10000
-        mov     dword ptr [g_audioTriEntryFlag_005433ec], 0
+        mov     dword ptr [g_audioTriEntryFlag], 0
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [g_clamp_0053a6dc], esi
         mov     dword ptr [g_clamp_0053a328], esi

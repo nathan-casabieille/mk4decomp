@@ -114,9 +114,9 @@ extern void InstallSelf3WayChainCmp(void);
 extern void SweepCluster(void);
 extern void CondPickDualStore(void);
 extern void StoreTwoCall(void);
-extern unsigned int g_or_0052ab40;
+extern unsigned int g_or;
 extern unsigned int g_const_004985b0;
-extern unsigned int g_sweepClusterBase_005432f0;
+extern unsigned int g_sweepClusterBase;
 
 extern void FiveCallGuardSetTail(void);
 extern void GuardedPackedSlotInit(void);
@@ -143,7 +143,7 @@ __declspec(naked) void StageEventState4Way(void)
         pop      esi
         ret
     L_8327:
-        mov      eax, dword ptr [g_or_0052ab40]
+        mov      eax, dword ptr [g_or]
         mov      dword ptr [g_walkCallback], eax
         and      eax, 0x400
         mov      dword ptr [g_xformScratch94], eax
@@ -206,7 +206,7 @@ __declspec(naked) void StageEventState4Way(void)
         mov      ecx, dword ptr [g_baseSel]
         mov      eax, 0x30f
         mov      dword ptr [g_walkCallback], eax
-        push     OFFSET g_sweepClusterBase_005432f0
+        push     OFFSET g_sweepClusterBase
         mov      dword ptr [ecx*4 + 0x74], eax
         call     GuardedPackedSlotInit
         mov      eax, dword ptr [g_framePauseFlag]

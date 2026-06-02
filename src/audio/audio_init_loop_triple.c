@@ -119,8 +119,8 @@ extern unsigned int g_fightAxisPosY;
  *     Loop3 (esi 0..5): chain[(g_baseSel+esi)*4 + 0x48], call. DrainQueueCallEach.
  *     if [0x005433f4] == 2: tail-call PendingMatch_004a8ca0 else AudioInstallSelfStateMachine2.
  */
-extern unsigned int g_audioInstallArr_0050f114;
-extern unsigned int g_audioMicroEntry_005433f4;
+extern unsigned int g_audioInstallArr;
+extern unsigned int g_audioMicroEntry;
 extern void AudioInstallSelfStateMachine2(void);
 extern void DrainQueueCallEach(void);
 extern void MStackPush2ChainLLInsert(void);
@@ -132,7 +132,7 @@ __declspec(naked) void AudioInitLoopTriple(void)
 {
     __asm
     {
-        mov     eax, offset g_audioInstallArr_0050f114
+        mov     eax, offset g_audioInstallArr
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
         call    DispatcherComplex260_00407400
@@ -193,7 +193,7 @@ __declspec(naked) void AudioInitLoopTriple(void)
         cmp     esi, 5
         jl      short L_loop3
         call    DrainQueueCallEach
-        cmp     dword ptr [g_audioMicroEntry_005433f4], 2
+        cmp     dword ptr [g_audioMicroEntry], 2
         jne     short L_tail85c0
         call    PendingMatch_004a8ca0
         pop     esi

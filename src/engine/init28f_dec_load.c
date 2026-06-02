@@ -11,7 +11,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     eax, 0x28f
  *   mov     [g_X1], eax
  *   mov     [g_X2], eax
- *   mov     eax, [g_loaded_004f3608]
+ *   mov     eax, [g_loaded]
  *   dec     eax
  *   mov     [g_walkCallback], eax
  *   mov     [g_X3], eax
@@ -22,12 +22,12 @@ extern unsigned int g_dst_0053a6dc;
 extern unsigned int g_dst_00537f2c;
 extern unsigned int g_dst_0053a6e0;
 extern unsigned int g_dst_00537ea4;
-extern unsigned int g_loaded_004f3608;
+extern unsigned int g_loaded;
 void Init28fDecLoad(void) {
     unsigned int v;
     g_dst_0053a6dc = 0x028f;
     g_dst_00537f2c = 0x028f;
-    v = g_loaded_004f3608 - 1;
+    v = g_loaded - 1;
     g_walkCallback = (void(*)(void))v;
     g_dst_0053a6e0 = v;
     g_dst_00537ea4 = v;

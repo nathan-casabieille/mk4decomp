@@ -115,9 +115,9 @@ extern unsigned int g_player1State;
 extern unsigned int g_counter_0053a51c;
 extern unsigned int g_player2State;
 extern u32 g_dlMode;
-extern unsigned int g_audioTriEntryFlag_005433ec;
-extern unsigned int g_matchStartClr_00543568;
-extern unsigned int g_audioMatchStartFlag_00543714;
+extern unsigned int g_audioTriEntryFlag;
+extern unsigned int g_matchStartClr;
+extern unsigned int g_audioMatchStartFlag;
 extern u8 g_dlEnabledFlag;
 extern void AudioInstallSelfStatePush(void);
 extern void ClearTwoCallSetStore(void);
@@ -237,9 +237,9 @@ __declspec(naked) void MatchStartCluster(void)
         add      esp, 4
         shr      edx, 2
         shr      eax, 2
-        mov      dword ptr [g_audioMatchStartFlag_00543714], ebx
-        mov      dword ptr [g_audioTriEntryFlag_005433ec], ebx
-        mov      dword ptr [g_matchStartClr_00543568], ebx
+        mov      dword ptr [g_audioMatchStartFlag], ebx
+        mov      dword ptr [g_audioTriEntryFlag], ebx
+        mov      dword ptr [g_matchStartClr], ebx
         mov      dword ptr [g_currentNodeIdx], edx
         mov      dword ptr [g_xformEntityIdx], eax
         call     DualScaledStoreConst

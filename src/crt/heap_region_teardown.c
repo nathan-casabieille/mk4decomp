@@ -2,7 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
-extern unsigned int *g_dispatchBaseQ_00522150;
+extern unsigned int *g_dispatchBaseQ;
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
@@ -109,10 +109,10 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_virtualHeapBase_00520130;
+extern unsigned int g_virtualHeapBase;
 extern unsigned int g_iat_004d214c;
 extern unsigned int g_iat_004d2168;
-extern unsigned int g_heapTeardownSentinel_00520140;
+extern unsigned int g_heapTeardownSentinel;
 extern unsigned int g_dispatchSave1470_00fa0ee4;
 
 struct HeapRegion {
@@ -124,14 +124,14 @@ struct HeapRegion {
 
 void HeapRegionTeardown(struct HeapRegion *region) {
     ((void (__stdcall *)(void *, unsigned int, unsigned int))g_iat_004d2168)(region->memory_ptr, 0, 0x8000);
-    if ((struct HeapRegion *)g_dispatchBaseQ_00522150 == region) {
-        g_dispatchBaseQ_00522150 = (unsigned int *)region->next;
+    if ((struct HeapRegion *)g_dispatchBaseQ == region) {
+        g_dispatchBaseQ = (unsigned int *)region->next;
     }
-    if (region != (struct HeapRegion *)&g_virtualHeapBase_00520130) {
+    if (region != (struct HeapRegion *)&g_virtualHeapBase) {
         region->next->prev = region->prev;
         region->prev->next = region->next;
         ((void (__stdcall *)(unsigned int, unsigned int, void *))g_iat_004d214c)(g_dispatchSave1470_00fa0ee4, 0, region);
         return;
     }
-    g_heapTeardownSentinel_00520140 = 0xffffffff;
+    g_heapTeardownSentinel = 0xffffffff;
 }

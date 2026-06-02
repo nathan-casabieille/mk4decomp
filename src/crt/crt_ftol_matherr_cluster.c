@@ -114,7 +114,7 @@ extern unsigned int g_const_004d2c10;
 extern unsigned int g_const_004d2c18;
 extern unsigned int g_const_004d2c20;
 extern unsigned int g_const_004d2c28;
-extern unsigned int g_crtFpuExceptionMask_00522e50;
+extern unsigned int g_crtFpuExceptionMask;
 extern unsigned int g_dispatchSave1422_00f9f7f8;
 extern void Crt_fpieee_flt(void);
 extern void FpExceptionFilter(void);
@@ -131,7 +131,7 @@ __declspec(naked) void CrtFtolMatherrCluster(void)
         wait
         fnstcw   word ptr [ebp - 0xa4]
         wait
-        cmp      dword ptr [g_crtFpuExceptionMask_00522e50], 0
+        cmp      dword ptr [g_crtFpuExceptionMask], 0
         je       short L_a72f
     L_a71b:
         call     func_004ca0e7
@@ -153,7 +153,7 @@ __declspec(naked) void CrtFtolMatherrCluster(void)
         push     ebx
         wait
         fnstcw   word ptr [ebp - 0xa4]
-        cmp      dword ptr [g_crtFpuExceptionMask_00522e50], 0
+        cmp      dword ptr [g_crtFpuExceptionMask], 0
         je       short L_a773
     L_a758:
         call     FpExceptionFilter

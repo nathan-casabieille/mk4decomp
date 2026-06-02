@@ -110,9 +110,9 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave117_00522308;
 extern unsigned int g_dispatchSave116_00522310;
-extern unsigned int g_crtLocaleEnvVarTbl_00522314;
+extern unsigned int g_crtLocaleEnvVarTbl;
 extern unsigned int g_dispatchSave115_00522318;
-extern unsigned int g_crtTlsSlot_00522400;
+extern unsigned int g_crtTlsSlot;
 extern unsigned int g_dispatchSave1433_00f9f8c0;
 extern unsigned int g_byte_00f9f8c1;
 extern unsigned int g_dispatchSave1435_00f9fac8;
@@ -185,7 +185,7 @@ __declspec(naked) void CrtSetlocaleInstaller(void)
         je       L_96a0
         add      eax, 0x30
         inc      edx
-        cmp      eax, OFFSET g_crtTlsSlot_00522400
+        cmp      eax, OFFSET g_crtTlsSlot
         jb       short L_958a
         lea      edx, [esp + 0x10]
         push     edx
@@ -327,10 +327,10 @@ __declspec(naked) void CrtSetlocaleInstaller(void)
         push     eax
         mov      dword ptr [g_dispatchSave1435_00f9fac8], eax
         call     TranslateMsgId
-        mov      ecx, dword ptr [ebx + g_crtLocaleEnvVarTbl_00522314]
+        mov      ecx, dword ptr [ebx + g_crtLocaleEnvVarTbl]
         mov      edx, dword ptr [ebx + g_dispatchSave115_00522318]
         mov      dword ptr [g_dispatchSave1436_00f9facc], eax
-        lea      eax, [ebx + g_crtLocaleEnvVarTbl_00522314]
+        lea      eax, [ebx + g_crtLocaleEnvVarTbl]
         add      esp, 4
         mov      dword ptr [g_dispatchSave1437_00f9fad0], ecx
         mov      eax, dword ptr [eax + 8]

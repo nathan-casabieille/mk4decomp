@@ -109,14 +109,14 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchArg;
-extern unsigned int g_audioBitField_00541fc0;
+extern unsigned int g_audioBitField;
 extern void func_0049f336(void);
 extern void func_0049f33b(void);
 
 __declspec(naked) void GameStateTick(void)
 {
     __asm {
-        mov      eax, dword ptr [g_audioBitField_00541fc0]
+        mov      eax, dword ptr [g_audioBitField]
         mov      ecx, dword ptr [g_dispatchArg]
         mov      dword ptr [g_xformEntityIdx], eax
         add      eax, ecx

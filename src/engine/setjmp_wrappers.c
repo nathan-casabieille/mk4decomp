@@ -12,7 +12,7 @@
 
 /* New globals referenced by these wrappers. */
 extern unsigned int g_acc_00542078;   /* 0x00542078 */
-extern unsigned int g_setjmp_00ab5750;   /* 0x00ab5750 */
+extern unsigned int g_setjmp;   /* 0x00ab5750 */
 
 /* Externs for jump targets. */
 extern void ZeroAndDirty4(void);   /* 0x00405430 */
@@ -323,7 +323,7 @@ void SetJmp_004a1ad0(void) {
 
 /* @addr 0x004bea40 */
 void Helper_TitleAudioCleanup(void) {
-    g_setjmp_00ab5750 = 0x00000000;
+    g_setjmp = 0x00000000;
     IncCallVtablePushCall();
 }
 

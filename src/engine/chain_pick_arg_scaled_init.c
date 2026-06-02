@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  *   Store g_eventQueueTotal to [baseSel*4+0x64]; eax = arg0>>2; g_eventQueueEnd store at [baseSel*4+0x68];
  *   g_pendingNodeType=eax+0xf; scaledInit=eax+g_acc_00542078; eax=[scaledInit*4+0]; jmp 0x0045de60.
  */
-extern unsigned int g_phaseThunkState_0053a730;
+extern unsigned int g_phaseThunkState;
 extern void EventPacketDecoder(void);
 extern void Thunk_0045e0f0(void);
 
@@ -132,7 +132,7 @@ __declspec(naked) void ChainPickArgScaledInit(void) {
         mov     edx, dword ptr [ecx*4 + 0x54]
         mov     dword ptr [g_walkCallback], edx
         mov     ecx, dword ptr [eax*4 + 0x54]
-        mov     eax, dword ptr [g_phaseThunkState_0053a730]
+        mov     eax, dword ptr [g_phaseThunkState]
         mov     dword ptr [g_eventQueueCurrent], ecx
         test    eax, eax
         mov     dword ptr [g_eventQueueWorkType], eax

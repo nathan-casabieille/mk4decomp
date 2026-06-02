@@ -110,13 +110,13 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned char g_dispatchSave1328_004ffd40;
 extern unsigned int g_dispatchSave1590_00ab5348;
 extern unsigned int g_dispatchSave1591_00ab574c;
-extern unsigned int g_setjmp_00ab5750;
+extern unsigned int g_setjmp;
 extern unsigned int g_dispatchSave1592_00ab5754;
 extern unsigned int g_dispatchSave1593_00ab5758;
 extern u32 g_titleAudioState;
 
 void ECM_OpenTrack(const char *name, unsigned int a, unsigned int b, void *c) {
-    g_setjmp_00ab5750 = 0;
+    g_setjmp = 0;
     strcpy((char *)&g_dispatchSave1590_00ab5348, name);
     g_dispatchSave1591_00ab574c = a;
     g_dispatchSave1328_004ffd40 = (unsigned char)b;

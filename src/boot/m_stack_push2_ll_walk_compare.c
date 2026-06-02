@@ -113,7 +113,7 @@ extern void ScaledPushArg_00404c00(void);
 extern void ScaledLoadGuardedJmp(void);
 extern void MStackPush2LLWalkCompare(void);
 extern unsigned int g_dispatchArg;
-extern unsigned int g_audioVoiceCounter_00535e50;
+extern unsigned int g_audioVoiceCounter;
 
 /* @addr 0x004266d0 (162b) - 11x ScaledPushArg pattern (6x to 0x404b90,
  *   5x to 0x404c00) pushing globals 0x54206c..0x542080, 0x542048..0x535e50.
@@ -129,5 +129,5 @@ void Eleven404b90_404c00(void) {
     ((void (*)(unsigned int))ScaledPushArg_00404c00)(g_pendingNodeType);
     ((void (*)(unsigned int))ScaledPushArg_00404c00)(g_eventQueueTotal);
     ((void (*)(unsigned int))ScaledPushArg_00404c00)(g_dispatchArg);
-    ((void (*)(unsigned int))ScaledPushArg_00404c00)(g_audioVoiceCounter_00535e50);
+    ((void (*)(unsigned int))ScaledPushArg_00404c00)(g_audioVoiceCounter);
 }

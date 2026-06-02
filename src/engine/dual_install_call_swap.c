@@ -27,9 +27,9 @@ extern unsigned int g_baseSel;
 
 extern unsigned int g_dualA_00542044;     /* alias of g_scaledInit_00542044 */
 extern unsigned int g_dualB_00542020;
-extern unsigned int g_dualC_0054204c;     /* alias of g_pendingNodeType */
-extern unsigned int g_dualD_00542050;     /* alias of g_eventQueueTotal */
-extern unsigned int g_dualF_00542024;
+extern unsigned int g_dualC;     /* alias of g_pendingNodeType */
+extern unsigned int g_dualD;     /* alias of g_eventQueueTotal */
+extern unsigned int g_dualF;
 
 extern unsigned int g_dualB_00538038;     /* g_gtPlayerProbe2 */
 extern unsigned int g_dualB_0053803c;     /* g_gtPlayerProbe1 */
@@ -46,7 +46,7 @@ void DualInstallCallSwap_00489cd0(void) {
     SqDistThresholdRevertAdvance();
     if (g_framePauseFlag) return;
     g_pendingNodeType = g_xformEntityIdx;
-    g_eventQueueTotal = g_dualF_00542024;
+    g_eventQueueTotal = g_dualF;
     SqDistThresholdRevertAdvance();
 }
 

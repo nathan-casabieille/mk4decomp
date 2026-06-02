@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
  *   else: edx = eax*3; eax = edx*2 + 0x4f62a8; store → [0xab4e2c]; ret.
  */
 extern unsigned int g_dispatchSave1571_00ab4e30;
-extern unsigned int g_phaseIdx_0053a50c;
+extern unsigned int g_phaseIdx;
 extern unsigned int g_tickFlagF;
 
 void DispatchScaledLEA(void) {
@@ -29,7 +29,7 @@ void DispatchScaledLEA(void) {
         cmp     eax, 2
         _emit   75h
         _emit   16h
-        mov     eax, dword ptr [g_phaseIdx_0053a50c]
+        mov     eax, dword ptr [g_phaseIdx]
         lea     eax, [eax + eax*2]
         lea     ecx, [eax*2 + 0x004f6240]
         mov     dword ptr [g_tickCurConfig], ecx

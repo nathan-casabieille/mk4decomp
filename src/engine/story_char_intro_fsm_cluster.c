@@ -113,7 +113,7 @@ extern unsigned int g_dispatchSave705_004eb958;
 extern unsigned int g_tickFlagF;
 extern unsigned int g_byte_00538148;
 extern unsigned int g_audioStreamState;
-extern unsigned int g_installSelfCounter_005433e8;
+extern unsigned int g_installSelfCounter;
 extern void ArgSarStoreJmp(void);
 extern void CallPauseScaledStoreCopyJmp(void);
 extern void DualSlotPropagateCall(void);
@@ -177,13 +177,13 @@ __declspec(naked) void StoryCharIntroFsmCluster(void)
         jne      L_7f9b
         cmp      ecx, 1
         jne      L_7f9b
-        inc      dword ptr [g_installSelfCounter_005433e8]
+        inc      dword ptr [g_installSelfCounter]
     L_7f9b:
         cmp      al, 2
         jne      L_7faa
         cmp      ecx, 2
         jne      L_7faa
-        inc      dword ptr [g_installSelfCounter_005433e8]
+        inc      dword ptr [g_installSelfCounter]
     L_7faa:
         call     GateDispatch6c
         mov      eax, dword ptr [g_framePauseFlag]

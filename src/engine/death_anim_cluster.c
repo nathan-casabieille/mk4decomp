@@ -112,14 +112,14 @@ extern unsigned int g_dispatchSave729_004ffe4c;
 extern unsigned int g_dispatchTableArr8_00501970;
 extern u32 g_dlSomeFlag2;
 extern s32 g_dlNalt1;
-extern unsigned int g_bootHeavyState_00537f78;
+extern unsigned int g_bootHeavyState;
 extern s32 g_dlNalt2;
 extern unsigned int g_eventMusicSlot2_0053a318;
 extern u32 g_dlSomeFlag1;
 extern unsigned int g_zerotriple_00541de8;
 extern unsigned int g_zerotriple_00541dec;
 extern unsigned int g_dispatchVar3_00543564;
-extern unsigned int g_eventMusicSlot_00543594;
+extern unsigned int g_eventMusicSlot;
 extern void CallSetPause(void);
 extern void Cmp7CondStateUpdate(void);
 extern void GameMusicState4Way(void);
@@ -224,7 +224,7 @@ __declspec(naked) void DeathAnimCluster(void)
         call     ScaledLoadOrSetJmp
         cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_ed0b
-        mov      eax, dword ptr [g_bootHeavyState_00537f78]
+        mov      eax, dword ptr [g_bootHeavyState]
         mov      dword ptr [g_xformEntityIdx], eax
         mov      dword ptr [eax*4 + 0x54], esi
         mov      edx, dword ptr [g_xformEntityIdx]
@@ -255,7 +255,7 @@ __declspec(naked) void DeathAnimCluster(void)
         mov      ecx, dword ptr [g_active_00537e88]
         test     ecx, ecx
         jne      short L_ed38
-        mov      ecx, dword ptr [g_eventMusicSlot_00543594]
+        mov      ecx, dword ptr [g_eventMusicSlot]
         test     ecx, ecx
         jge      short L_ed38
         jmp      CallSetPause

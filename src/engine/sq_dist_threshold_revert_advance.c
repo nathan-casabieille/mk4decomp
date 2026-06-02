@@ -126,7 +126,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchTab64_00543554;
 extern unsigned int g_dispatchVar32_00543558;
 extern unsigned int g_installCountdownVar2_00543560;
-extern unsigned int g_installCountdownVar_00543580;
+extern unsigned int g_installCountdownVar;
 extern unsigned int g_dispatchVar31_00543584;
 extern unsigned int g_dispatchTab63_00543588;
 
@@ -173,7 +173,7 @@ __declspec(naked) void SqDistThresholdRevertAdvance(void) {
         mov     dword ptr [g_dispatchTab64_00543554], ecx
         jmp     short L_sdt_cmpRadius
     L_sdt_stashAlt:
-        mov     dword ptr [g_installCountdownVar_00543580], edx
+        mov     dword ptr [g_installCountdownVar], edx
         mov     edx, dword ptr [esi + 0x5c]
         mov     dword ptr [g_dispatchVar31_00543584], edx
         mov     dword ptr [g_dispatchTab63_00543588], ecx
@@ -219,7 +219,7 @@ __declspec(naked) void SqDistThresholdRevertAdvance(void) {
         mov     dword ptr [esi + 0x5c], edx
         jmp     short L_sdt_checkBit
     L_sdt_restoreAlt:
-        mov     eax, dword ptr [g_installCountdownVar_00543580]
+        mov     eax, dword ptr [g_installCountdownVar]
         mov     dword ptr [esi + 0x54], eax
         mov     ecx, dword ptr [g_dispatchVar31_00543584]
         mov     dword ptr [esi + 0x5c], ecx

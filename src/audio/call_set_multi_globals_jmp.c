@@ -38,8 +38,8 @@ void AppShutdown(void) {
 /* @addr 0x004a9230 (64b): call F + load 1, 0; set 5 globals; jmp T. */
 extern void DrainQueueCallEach(void);
 extern unsigned int g_tickFlagF;
-extern unsigned int g_phaseIdx_0053a50c;
-extern unsigned int g_audioPathFlag_0054355c;
+extern unsigned int g_phaseIdx;
+extern unsigned int g_audioPathFlag;
 extern unsigned int g_audioPathFlag2_00543710;
 extern unsigned int g_counter_0054359c;
 extern unsigned int g_counter_005433c8;
@@ -48,8 +48,8 @@ extern void Match_TeamOutcomeScreen(void);
 void CallSetMultiGlobalsJmp(void) {
     DrainQueueCallEach();
     g_tickFlagF = 2;
-    g_phaseIdx_0053a50c = 0x0e;
-    g_audioPathFlag_0054355c = 1;
+    g_phaseIdx = 0x0e;
+    g_audioPathFlag = 1;
     g_audioPathFlag2_00543710 = 1;
     g_counter_0054359c = 0;
     g_counter_005433c8 = 0;

@@ -137,7 +137,7 @@ extern void PreFightInstallCluster(void);
 
 extern unsigned int g_chain_disp_30_439a40;
 extern unsigned int g_chain_disp_40_439a40;
-extern unsigned int g_fightTickSavedSlot_005380d8;
+extern unsigned int g_fightTickSavedSlot;
 extern void TwoStageWalkGate(void);
 extern void TwoConditionalJmp(void);
 extern void Thunk_00439c20(void);
@@ -188,7 +188,7 @@ extern unsigned int g_phaseTimer;
 #define g_phaseTimer g_phaseTimer
 extern void BossSpinCluster(void);
 
-extern unsigned int g_bootLongChainState_00537f24;
+extern unsigned int g_bootLongChainState;
 extern unsigned int g_arr_chain_4348f0_2c;
 extern unsigned int g_arr_chain_4348f0_main;
 
@@ -196,7 +196,7 @@ extern unsigned int g_arr_chain_4348f0_main;
  *   eax = chain[scaledInit].slot2c; if 0: ret.
  *   mstack-push g_xformEntityIdx; ecx = eax; g_xformEntityIdx = ecx;
  *   while ((eax = arr[ecx]) != 0): ecx = eax; g_xformEntityIdx = ecx;
- *   At tail: arr[ecx] = g_bootLongChainState_00537f24; g_bootLongChainState_00537f24 = chain[scaledInit].slot2c;
+ *   At tail: arr[ecx] = g_bootLongChainState; g_bootLongChainState = chain[scaledInit].slot2c;
  *   mstack-pop g_xformEntityIdx.
  */
 
@@ -234,13 +234,13 @@ loopWalk:
         mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   0e8h
-        mov     eax, dword ptr [g_bootLongChainState_00537f24]
+        mov     eax, dword ptr [g_bootLongChainState]
         mov     dword ptr [g_walkCallback], eax
         mov     [ecx*4 + g_arr_chain_4348f0_main], eax
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     eax, [edx*4 + g_arr_chain_4348f0_2c]
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_bootLongChainState_00537f24], eax
+        mov     dword ptr [g_bootLongChainState], eax
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax

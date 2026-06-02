@@ -51,7 +51,7 @@ extern unsigned int g_dispatchSave1640_007b002c;
 extern unsigned int g_iat_007b0030;
 extern unsigned int g_dispatchSave1641_007b0034;
 extern unsigned int g_dispatchSave1642_007b0038;
-extern unsigned int g_PeekMessageA_007b003c;
+extern unsigned int g_PeekMessageA;
 extern unsigned int g_iat_007b0040;
 extern unsigned int g_dispatchSave1643_007b0044;
 extern unsigned int g_dispatchSave1644_007b0048;
@@ -188,7 +188,7 @@ __declspec(naked) void Helper_GlideOpen(void)
         push     ecx
         call     esi
         test     eax, eax
-        mov      dword ptr [g_PeekMessageA_007b003c], eax
+        mov      dword ptr [g_PeekMessageA], eax
         je       L_4f52
         mov      edx, dword ptr [g_glideFnTable]
         push     OFFSET g_dispatchSave849_004f4c7c

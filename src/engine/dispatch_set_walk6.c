@@ -18,12 +18,12 @@ extern unsigned int g_scaledInit_00542044;
  *       eventQueueCurrent = 1.
  *   walk = N (literal); jmp T.
  */
-extern unsigned int g_dispatchWalkVar_0053a404;
+extern unsigned int g_dispatchWalkVar;
 extern void MStackPush3MaskBit(void);
 void DispatchSetWalk6(void) {
     unsigned int v;
     if (g_gtOtherFlag) return;
-    v = g_dispatchWalkVar_0053a404;
+    v = g_dispatchWalkVar;
     g_walkCallback = (void(*)(void))v;
     if (v) return;
     g_eventQueueCurrent = v;

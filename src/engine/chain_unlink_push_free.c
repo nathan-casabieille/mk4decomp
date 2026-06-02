@@ -110,8 +110,8 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0049d150 (174b) - linked list unlink: walks g_scaledInit.chain[+0x2c]
  *   chain looking for g_xformEntityIdx; on hit unlink it and push to free list at
- *   g_bootLongChainState_00537f24. */
-extern unsigned int g_bootLongChainState_00537f24;
+ *   g_bootLongChainState. */
+extern unsigned int g_bootLongChainState;
 
 void ChainUnlinkPushFree(void) {
     __asm {
@@ -147,12 +147,12 @@ loop_top:
         _emit   0eh
         mov     eax, dword ptr [edx*4 + 0]
         mov     dword ptr [ecx*4 + 0x2c], eax
-        mov     eax, dword ptr [g_bootLongChainState_00537f24]
+        mov     eax, dword ptr [g_bootLongChainState]
         mov     ecx, dword ptr [g_xformEntityIdx]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0], eax
         mov     edx, dword ptr [g_xformEntityIdx]
-        mov     dword ptr [g_bootLongChainState_00537f24], edx
+        mov     dword ptr [g_bootLongChainState], edx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax

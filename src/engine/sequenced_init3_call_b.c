@@ -111,11 +111,11 @@ extern unsigned int g_fightAxisPosY;
 extern void BootInitGuardedCallChain(void);
 extern void CopyGlobal(void);
 extern unsigned int g_load_0052ab10;
-extern unsigned int g_stateChangeBase_005380b0;
+extern unsigned int g_stateChangeBase;
 extern unsigned int g_dispatchInit4b_005380b4;
 extern unsigned int g_phaseThunkVar7_005380b8;
 extern unsigned int g_stateChangePair2_005380a4;
-extern unsigned int g_stateChangePair_00541d6c;
+extern unsigned int g_stateChangePair;
 extern unsigned int g_stateChangePair3_0053a278;
 extern unsigned char g_dispatchSave410_0050b130;
 
@@ -141,10 +141,10 @@ void SequencedInit3CallB(void) {
     *(unsigned int *)(v + 0x58) = g_walkCallback;
     *(unsigned int *)(v + 0x5c) = 0xfff10000;
     g_walkCallback = 0;
-    g_stateChangeBase_005380b0 = 0x27;
+    g_stateChangeBase = 0x27;
     g_dispatchInit4b_005380b4 = 0x27;
     g_phaseThunkVar7_005380b8 = 0x27;
     g_stateChangePair2_005380a4 = 0;
-    g_stateChangePair_00541d6c = 0;
+    g_stateChangePair = 0;
     g_stateChangePair3_0053a278 = 0;
 }

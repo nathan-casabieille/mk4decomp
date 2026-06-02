@@ -128,8 +128,8 @@ extern void ScaledAndAl7f(void);
 extern void ScaledAndAldf(void);
 extern void ScaledAndAlbf(void);
 extern void ScaledAndAlfe(void);
-extern unsigned int g_or_0052ab40;
-extern unsigned int g_pendingMatchCmp_00543888;
+extern unsigned int g_or;
+extern unsigned int g_pendingMatchCmp;
 
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
@@ -182,13 +182,13 @@ __declspec(naked) void MainTickChain(void)
         call     MStackPushSet0004
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
-        cmp      dword ptr [g_pendingMatchCmp_00543888], esi
+        cmp      dword ptr [g_pendingMatchCmp], esi
         jne      short L_114c
         call     DualCallPauseDirtyJmp_00490c30
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
     L_114c:
-        mov      dword ptr [g_pendingMatchCmp_00543888], esi
+        mov      dword ptr [g_pendingMatchCmp], esi
         call     ScaledLoadCmp1003JmpDispatch
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
@@ -250,7 +250,7 @@ __declspec(naked) void MainTickChain(void)
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
     L_1260:
-        mov      eax, dword ptr [g_or_0052ab40]
+        mov      eax, dword ptr [g_or]
         mov      dword ptr [g_walkCallback], eax
         and      eax, 0x2000
         mov      dword ptr [g_xformScratch94], eax

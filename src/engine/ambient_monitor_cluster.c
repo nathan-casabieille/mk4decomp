@@ -134,9 +134,9 @@ extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 extern unsigned int g_phaseThunkSlot5_0053a468;
 extern unsigned int g_phaseCounter;
-extern unsigned int g_audioTriEntryFlag_005433ec;
-extern unsigned int g_audioMatchStartFlag_00543714;
-extern unsigned int g_audioStateRemapByte_00543728;
+extern unsigned int g_audioTriEntryFlag;
+extern unsigned int g_audioMatchStartFlag;
+extern unsigned int g_audioStateRemapByte;
 
 __declspec(naked) void SceneEvalFsm(void)
 {
@@ -203,7 +203,7 @@ __declspec(naked) void SceneEvalFsm(void)
         je       L_e05e
         jmp      L_e198
         push     6
-        mov      byte ptr [g_audioStateRemapByte_00543728], bl
+        mov      byte ptr [g_audioStateRemapByte], bl
         call     TableWalkBoundedCmp
         add      esp, 4
         push     2
@@ -241,11 +241,11 @@ __declspec(naked) void SceneEvalFsm(void)
         mov      dword ptr [g_walkCallback], eax
         je       L_e0fc
     L_e05e:
-        cmp      dword ptr [g_audioMatchStartFlag_00543714], ebx
+        cmp      dword ptr [g_audioMatchStartFlag], ebx
         je       L_e09d
         cmp      dword ptr [g_gtOtherFlag], ebx
         je       L_e09d
-        cmp      dword ptr [g_audioTriEntryFlag_005433ec], ebx
+        cmp      dword ptr [g_audioTriEntryFlag], ebx
         je       L_e09d
         mov      al, byte ptr [g_gtModeFlag]
         mov      dword ptr [g_stateCountdown], ebx

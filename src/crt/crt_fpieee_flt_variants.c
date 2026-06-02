@@ -113,7 +113,7 @@ extern void CrtFpuExceptionFilter(void);
 extern void SwitchErrorCode(void);
 /* extern void RetZero_004cf700(void); -- defined elsewhere with diff sig */
 extern void FpuMaskMerge(void);
-extern unsigned int g_crtFpuExceptionMask_00522e50;
+extern unsigned int g_crtFpuExceptionMask;
 
 extern void RetZero_004cf700(void);
 
@@ -186,7 +186,7 @@ __declspec(naked) void Crt_fpieee_flt(void)
         xor      eax, eax
         cmp      ecx, 8
         je       short L_ddda
-        mov      ecx, dword ptr [g_crtFpuExceptionMask_00522e50]
+        mov      ecx, dword ptr [g_crtFpuExceptionMask]
         test     ecx, ecx
         jne      short L_ddda
         push     esi

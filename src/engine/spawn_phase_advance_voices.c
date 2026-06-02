@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_phaseThunkVar4_00535de0;
 extern unsigned int g_dispatchVar7_00541fbc;
-extern unsigned int g_imageBaseHi_005a0000;
+extern unsigned int g_imageBaseHi;
 extern void MStackPush2ChainLLInsert(void);
 extern void MStackPushTableMatch(void);
 
@@ -169,7 +169,7 @@ __declspec(naked) void SpawnPhaseAdvanceVoices(void)
         test     edi, edi
         mov      dword ptr [g_walkCallback], edi
         jne      short L_e39a
-        add      eax, OFFSET g_imageBaseHi_005a0000
+        add      eax, OFFSET g_imageBaseHi
         mov      dword ptr [g_eventQueueCurrent], eax
         mov      dword ptr [ecx*4 + 0x5c], eax
         mov      esi, dword ptr [g_matrixStackTop]

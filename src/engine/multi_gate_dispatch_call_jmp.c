@@ -12,19 +12,19 @@ extern unsigned int g_scaledInit_00542044;
  *   if [0x53a408] != 0: call F1, pause → ret;
  *   if [0x537e88] != 0: tail-call F2.
  */
-extern unsigned int g_audioPathFlag_0054355c;
-extern unsigned int g_audioMatchStartFlag_00543714;
+extern unsigned int g_audioPathFlag;
+extern unsigned int g_audioMatchStartFlag;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_active_00537e88;
 extern void DualSeqBranchInit(void);
 extern void YRiseSpawnerCluster(void);
 __declspec(naked) void MultiGateDispatchCallJmp(void) {
     __asm {
-        mov     eax, dword ptr [g_audioPathFlag_0054355c]
+        mov     eax, dword ptr [g_audioPathFlag]
         test    eax, eax
         _emit   75h
         _emit   33h
-        mov     eax, dword ptr [g_audioMatchStartFlag_00543714]
+        mov     eax, dword ptr [g_audioMatchStartFlag]
         test    eax, eax
         _emit   74h
         _emit   2bh

@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *   the alloc counter.
  */
 extern unsigned int g_nodeSlotsHdr;
-extern unsigned int g_nodeUnlinkSlot_00541e4c;
+extern unsigned int g_nodeUnlinkSlot;
 
 void NodeUnlink(void) {
     __asm {
@@ -136,7 +136,7 @@ loop_top:
         je      hit
         add     eax, 0xe8
         inc     ecx
-        cmp     eax, offset g_nodeUnlinkSlot_00541e4c
+        cmp     eax, offset g_nodeUnlinkSlot
         jb      loop_top
         ret
 hit:

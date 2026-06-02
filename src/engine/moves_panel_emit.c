@@ -108,10 +108,10 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_installCountdownEnd_004ed000;
+extern unsigned int g_installCountdownEnd;
 extern unsigned int g_dispatchCmpEnd2_004ed020;
-extern unsigned int g_movesPanelEnd_004ed040;
-extern unsigned int g_dispatchCmpEnd_004ed060;
+extern unsigned int g_movesPanelEnd;
+extern unsigned int g_dispatchCmpEnd;
 extern u32 g_inLoopStep;
 extern unsigned int g_dispatchSave1626_007af958[];
 extern s16 g_vtxIn2_x;
@@ -171,13 +171,13 @@ __declspec(naked) void MovesPanelEmit(void)
         cmp      edx, edi
         jne      L_d260
         shl      eax, 2
-        cmp      eax, OFFSET g_dispatchCmpEnd_004ed060
+        cmp      eax, OFFSET g_dispatchCmpEnd
         je       L_cfb6
-        cmp      eax, OFFSET g_movesPanelEnd_004ed040
+        cmp      eax, OFFSET g_movesPanelEnd
         je       L_cfb6
         cmp      eax, OFFSET g_dispatchCmpEnd2_004ed020
         je       L_cfb6
-        cmp      eax, OFFSET g_installCountdownEnd_004ed000
+        cmp      eax, OFFSET g_installCountdownEnd
         jne      L_d260
     L_cfb6:
         mov      eax, dword ptr [g_tickW1]

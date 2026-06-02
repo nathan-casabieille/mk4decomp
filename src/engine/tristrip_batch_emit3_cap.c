@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_screenH_004f623c;
+extern unsigned int g_screenH;
 extern u32 g_inLoopStep;
 extern s16 g_vtxIn_x;
 extern s16 g_vtxIn2_x;
@@ -314,16 +314,16 @@ __declspec(naked) void TristripBatchEmit3Cap(void)
         mov      eax, dword ptr [g_dispatchSave1570_00ab4e28]
         test     eax, eax
         je       L_b8ef
-        mov      ax, word ptr [g_screenH_004f623c]
+        mov      ax, word ptr [g_screenH]
         cmp      word ptr [esi + 2], ax
         jle      L_b8d5
         mov      word ptr [esi + 2], ax
-        mov      ax, word ptr [g_screenH_004f623c]
+        mov      ax, word ptr [g_screenH]
     L_b8d5:
         cmp      word ptr [esi + 6], ax
         jle      L_b8e5
         mov      word ptr [esi + 6], ax
-        mov      ax, word ptr [g_screenH_004f623c]
+        mov      ax, word ptr [g_screenH]
     L_b8e5:
         cmp      word ptr [esi + 0xa], ax
         jle      L_b8ef

@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_loaded_004f3608;
+extern unsigned int g_loaded;
 extern unsigned int g_clamp_0053a6dc;
 extern unsigned int g_clamp_00537f2c;
 extern void Thunk_0049cbd0(void);
@@ -123,7 +123,7 @@ __declspec(naked) void TriDispatchSetupChain(void)
     __asm
     {
         mov     eax, dword ptr [g_dst_0053a6e0]
-        mov     ecx, dword ptr [g_loaded_004f3608]
+        mov     ecx, dword ptr [g_loaded]
         cmp     eax, ecx
         mov     dword ptr [g_walkCallback], eax
         je      L_tdsc_ret

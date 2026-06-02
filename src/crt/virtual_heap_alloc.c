@@ -108,9 +108,9 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_virtualHeapBase_00520130;
-extern unsigned int g_heapShrinkPtr_00520134;
-extern unsigned int g_heapTeardownSentinel_00520140;
+extern unsigned int g_virtualHeapBase;
+extern unsigned int g_heapShrinkPtr;
+extern unsigned int g_heapTeardownSentinel;
 extern unsigned int g_dispatchSave1470_00fa0ee4;
 extern unsigned int g_iat_004d20b4;
 extern unsigned int g_iat_004d2144;
@@ -120,13 +120,13 @@ extern unsigned int g_iat_004d2168;
 __declspec(naked) void VirtualHeapAlloc(void)
 {
     __asm {
-        mov      eax, dword ptr [g_heapTeardownSentinel_00520140]
+        mov      eax, dword ptr [g_heapTeardownSentinel]
         push     ebp
         push     esi
         cmp      eax, -1
         push     edi
         jne      short L_70e4
-        mov      ebp, OFFSET g_virtualHeapBase_00520130
+        mov      ebp, OFFSET g_virtualHeapBase
         jmp      short L_7101
     L_70e4:
         mov      eax, dword ptr [g_dispatchSave1470_00fa0ee4]
@@ -154,23 +154,23 @@ __declspec(naked) void VirtualHeapAlloc(void)
         call     edi
         test     eax, eax
         je       L_7207
-        cmp      ebp, OFFSET g_virtualHeapBase_00520130
+        cmp      ebp, OFFSET g_virtualHeapBase
         jne      short L_7168
-        mov      eax, dword ptr [g_virtualHeapBase_00520130]
+        mov      eax, dword ptr [g_virtualHeapBase]
         test     eax, eax
         jne      short L_7153
-        mov      dword ptr [g_virtualHeapBase_00520130], OFFSET g_virtualHeapBase_00520130
+        mov      dword ptr [g_virtualHeapBase], OFFSET g_virtualHeapBase
     L_7153:
-        mov      eax, dword ptr [g_heapShrinkPtr_00520134]
+        mov      eax, dword ptr [g_heapShrinkPtr]
         test     eax, eax
         jne      short L_7183
-        mov      dword ptr [g_heapShrinkPtr_00520134], OFFSET g_virtualHeapBase_00520130
+        mov      dword ptr [g_heapShrinkPtr], OFFSET g_virtualHeapBase
         jmp      short L_7183
     L_7168:
-        mov      dword ptr [ebp], OFFSET g_virtualHeapBase_00520130
-        mov      ecx, dword ptr [g_heapShrinkPtr_00520134]
+        mov      dword ptr [ebp], OFFSET g_virtualHeapBase
+        mov      ecx, dword ptr [g_heapShrinkPtr]
         mov      dword ptr [ebp + 4], ecx
-        mov      dword ptr [g_heapShrinkPtr_00520134], ebp
+        mov      dword ptr [g_heapShrinkPtr], ebp
         mov      edx, dword ptr [ebp + 4]
         mov      dword ptr [edx], ebp
     L_7183:
@@ -228,7 +228,7 @@ __declspec(naked) void VirtualHeapAlloc(void)
         push     esi
         call     dword ptr [g_iat_004d2168]
     L_7215:
-        cmp      ebp, OFFSET g_virtualHeapBase_00520130
+        cmp      ebp, OFFSET g_virtualHeapBase
         je       short L_722c
         mov      eax, dword ptr [g_dispatchSave1470_00fa0ee4]
         push     ebp

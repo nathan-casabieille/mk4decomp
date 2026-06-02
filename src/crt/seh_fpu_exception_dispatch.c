@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_crtSehFpuDispatch_005228f8;
+extern unsigned int g_crtSehFpuDispatch;
 extern unsigned int g_crtSehFpuDispatch2_005228fc;
 extern unsigned int g_iat_004d20f8;
 extern void ArraySearch(void);
@@ -165,7 +165,7 @@ __declspec(naked) void SehFpuExceptionDispatch(void)
         mov      ecx, dword ptr [eax + 4]
         cmp      ecx, 8
         jne      L_ba63
-        mov      ecx, dword ptr [g_crtSehFpuDispatch_005228f8]
+        mov      ecx, dword ptr [g_crtSehFpuDispatch]
         mov      ebx, dword ptr [g_crtSehFpuDispatch2_005228fc]
         add      ebx, ecx
         cmp      ecx, ebx
@@ -176,7 +176,7 @@ __declspec(naked) void SehFpuExceptionDispatch(void)
         mov      ebx, dword ptr [esi + 0x50]
         inc      ecx
         mov      dword ptr [ebx + edx + 8], edi
-        mov      ebx, dword ptr [g_crtSehFpuDispatch_005228f8]
+        mov      ebx, dword ptr [g_crtSehFpuDispatch]
         mov      ebp, dword ptr [g_crtSehFpuDispatch2_005228fc]
         add      edx, 0xc
         add      ebp, ebx

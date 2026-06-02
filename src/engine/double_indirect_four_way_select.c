@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0049ec00 (252b game) - 2-step indirect lookup + 4-way edx select.
  *   mstack-push g_scaledInit_00542044, g_dispatchArg.
- *   ecx = g_audioBitField_00541fc0; eax = g_walkCallback; g_xformEntityIdx=ecx; edx=eax;
+ *   ecx = g_audioBitField; eax = g_walkCallback; g_xformEntityIdx=ecx; edx=eax;
  *   ecx += eax (sum index); g_dispatchArg=edx (original eax).
  *   eax = [ecx*4]; g_xformEntityIdx=eax. ecx = [eax*4]; g_scaledInit_00542044=ecx;
  *   ecx = [ecx*4]; g_walkCallback=ecx. cmp ecx, 0xf;
@@ -122,7 +122,7 @@ extern unsigned int g_fightAxisPosY;
  *   g_xformEntityIdx=eax. mstack-pop pair.
  */
 extern unsigned int g_dispatchArg;
-extern unsigned int g_audioBitField_00541fc0;
+extern unsigned int g_audioBitField;
 
 void DoubleIndirectFourWaySelect(void) {
     __asm {
@@ -136,7 +136,7 @@ void DoubleIndirectFourWaySelect(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], edx
-        mov     ecx, dword ptr [g_audioBitField_00541fc0]
+        mov     ecx, dword ptr [g_audioBitField]
         mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     edx, eax

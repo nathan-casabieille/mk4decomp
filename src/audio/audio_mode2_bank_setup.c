@@ -113,8 +113,8 @@ extern unsigned char g_byte_00543840;
 extern unsigned char g_byte_0054383c;
 extern unsigned char g_byte_005435a0;
 extern unsigned char g_byte_005435b8;
-extern unsigned int g_audioModeBankFlag_00543838;
-extern unsigned int g_audioPathFlag_0054355c;
+extern unsigned int g_audioModeBankFlag;
+extern unsigned int g_audioPathFlag;
 extern unsigned int g_table_00543848;
 
 /*
@@ -123,7 +123,7 @@ extern unsigned int g_table_00543848;
  *   If was 0: dispatch on g_audioBankSel == 1/2 to increment indexed slots in g_table_00543848;
  *     call BootInitGuardedCallChain; if paused: ret.
  *     Call FiveTableWalkInit; if paused: ret.
- *     Inc g_byte_00543840; g_audioPathFlag_0054355c=1; g_audioModeBankFlag_00543838=1;
+ *     Inc g_byte_00543840; g_audioPathFlag=1; g_audioModeBankFlag=1;
  *     if hit 0xf: inc g_byte_0054383c; if also equal to (post-inc) al: zero it.
  *     Stash to g_byte_005435a0; push (&g_byte_005435b8, &g_byte_005435a0);
  *     g_byte_005435b8 = g_byte_0054383c; zero g_byte_005435a3 / g_byte_005435bb;
@@ -164,9 +164,9 @@ __declspec(naked) void AudioByteCounterChain(void)
         cmp     dword ptr [g_framePauseFlag], ebx
         jne     short L_end
         mov     al, byte ptr [g_byte_00543840]
-        mov     dword ptr [g_audioPathFlag_0054355c], 1
+        mov     dword ptr [g_audioPathFlag], 1
         inc     al
-        mov     dword ptr [g_audioModeBankFlag_00543838], 1
+        mov     dword ptr [g_audioModeBankFlag], 1
         cmp     al, 0xf
         mov     byte ptr [g_byte_00543840], al
         jne     short L_finalize

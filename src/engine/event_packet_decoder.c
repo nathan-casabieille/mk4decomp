@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern void Thunk_0045e0f0(void);
 extern void EventPacketDecoder(void);
-extern unsigned int g_phaseThunkState_0053a730;
+extern unsigned int g_phaseThunkState;
 
 /* @addr 0x0045dd90 (202b game) - chain-pick + arg-based scaledInit setup.
  *   if (g_fightGroupHead == 0) jmp Thunk_0045e0f0.
@@ -133,7 +133,7 @@ __declspec(naked) void ChainPickArgScaledInit(void) {
         mov     edx, dword ptr [ecx*4 + 0x54]
         mov     dword ptr [g_walkCallback], edx
         mov     ecx, dword ptr [eax*4 + 0x54]
-        mov     eax, dword ptr [g_phaseThunkState_0053a730]
+        mov     eax, dword ptr [g_phaseThunkState]
         mov     dword ptr [g_eventQueueCurrent], ecx
         test    eax, eax
         mov     dword ptr [g_eventQueueWorkType], eax

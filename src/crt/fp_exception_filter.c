@@ -108,9 +108,9 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_crtFpuTbyte_00522470;
+extern unsigned int g_crtFpuTbyte;
 extern unsigned int g_dispatchSave112_00522484;
-extern unsigned int g_crtFpuExceptionBase_0052248c;
+extern unsigned int g_crtFpuExceptionBase;
 
 __declspec(naked) void FpExceptionFilter(void)
 {
@@ -128,7 +128,7 @@ __declspec(naked) void FpExceptionFilter(void)
     L_a09b:
         mov      word ptr [ebp - 0xa2], bx
         fldcw    word ptr [ebp - 0xa2]
-        mov      ebx, OFFSET g_crtFpuExceptionBase_0052248c
+        mov      ebx, OFFSET g_crtFpuExceptionBase
         fxam
         mov      dword ptr [ebp - 0x94], edx
         wait
@@ -161,7 +161,7 @@ __declspec(naked) void FpExceptionFilter(void)
     L_a102:
         mov      word ptr [ebp - 0xa2], bx
         fldcw    word ptr [ebp - 0xa2]
-        mov      ebx, OFFSET g_crtFpuExceptionBase_0052248c
+        mov      ebx, OFFSET g_crtFpuExceptionBase
         fxam
         mov      dword ptr [ebp - 0x94], edx
         wait
@@ -252,7 +252,7 @@ __declspec(naked) void FpExceptionFilter(void)
         ret
         fstp     st(0)
         fstp     st(0)
-        fld      tbyte ptr [g_crtFpuTbyte_00522470]
+        fld      tbyte ptr [g_crtFpuTbyte]
         cmp      byte ptr [ebp - 0x90], 0
         jg       short L_a240
     L_a239:

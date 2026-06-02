@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave920_004dee18;
 extern unsigned int g_dispatchSave922_004df9a0;
-extern unsigned int g_assetLoadStateInit_00506c14;
+extern unsigned int g_assetLoadStateInit;
 extern unsigned int g_dispatchSave141_005080f4;
 extern void BootInitGuardedCallChain(void);
 extern void CopyGlobal(void);
@@ -138,7 +138,7 @@ __declspec(naked) void ContinueScreenFsm(void)
         call     BootInitGuardedCallChain
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3e8f
-        mov      ecx, OFFSET g_assetLoadStateInit_00506c14
+        mov      ecx, OFFSET g_assetLoadStateInit
         shr      ecx, 2
         mov      dword ptr [g_currentNodeIdx], ecx
         call     LoadGeoAsset_Default
@@ -195,13 +195,13 @@ __declspec(naked) void ContinueScreenFsm(void)
         pop      esi
         ret
     L_3d8d:
-        mov      eax, OFFSET g_assetLoadStateInit_00506c14
+        mov      eax, OFFSET g_assetLoadStateInit
         shr      eax, 2
         mov      dword ptr [g_currentNodeIdx], eax
         call     LoadGeoAsset_Default
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3e8f
-        mov      ecx, OFFSET g_assetLoadStateInit_00506c14
+        mov      ecx, OFFSET g_assetLoadStateInit
         shr      ecx, 2
         mov      dword ptr [g_currentNodeIdx], ecx
         call     LoadGeoAsset_Default

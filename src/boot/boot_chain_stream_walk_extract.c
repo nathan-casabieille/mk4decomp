@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   Push g_eventQueueTotal to mstack. g_pendingNodeType--; esi = chain[g_currentNodeIdx*4] + g_currentNodeIdx+1;
  *   g_currentNodeIdx++. If esi <= ecx: pop+ret.
  *   Loop: eax = chain[ecx*4]; g_walkCallback=eax. If eax < 0: skip pos branch.
- *     Else: g_eq_00542098 = (eax == 0); if != 0: skip to loop test.
+ *     Else: g_eq = (eax == 0); if != 0: skip to loop test.
  *       eax = chain[eax*4 + 0x20]; g_walkCallback=eax; g_pendingNodeType += 0xf; eax &= 0x100;
  *       g_xformScratch94 = eax; if 0: skip to loop test.
  *       g_walkCallback = g_xformEntityIdx[0]; call ExtractBitsToVec3; if paused: ret-noPop.
@@ -122,7 +122,7 @@ extern unsigned int g_fightAxisPosY;
  *   Loop test: if esi > ecx: loop.
  *   Pop1 mstack into g_eventQueueTotal; pop esi; ret.
  */
-extern unsigned int g_eq_00542098;
+extern unsigned int g_eq;
 extern void ExtractBitsToVec3(void);
 
 __declspec(naked) void BootChainStreamWalkExtract(void)
@@ -158,7 +158,7 @@ __declspec(naked) void BootChainStreamWalkExtract(void)
         test    eax, eax
         sete    dl
         test    edx, edx
-        mov     dword ptr [g_eq_00542098], edx
+        mov     dword ptr [g_eq], edx
         jne     L_7ae_loopTest
         mov     eax, dword ptr [eax*4 + 0x20]
         mov     edx, dword ptr [g_pendingNodeType]
@@ -183,7 +183,7 @@ __declspec(naked) void BootChainStreamWalkExtract(void)
         cmp     esi, ecx
         setg    al
         inc     edx
-        mov     dword ptr [g_eq_00542098], eax
+        mov     dword ptr [g_eq], eax
         test    eax, eax
         mov     dword ptr [g_xformEntityIdx], edx
         je      short L_7ae_pop1

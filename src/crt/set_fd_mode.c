@@ -119,8 +119,8 @@ extern unsigned int g_fightAxisPosY;
  *   Cleanup: *[table] [slot] = arg2; return 0.
  *   Fail: __errno() = 9; clear another errno-like ptr; return -1.
  */
-extern unsigned int g_SetStdHandle_004d20d4;
-extern unsigned int g_crtFdCloseSlot_00520064;
+extern unsigned int g_SetStdHandle;
+extern unsigned int g_crtFdCloseSlot;
 extern unsigned int g_dispatchSave1469_00fa0ee0;
 extern void Crt_doserrno(void);
 extern void Crt_errno(void);
@@ -148,7 +148,7 @@ __declspec(naked) void SetFdMode(void) {
         cmp     dword ptr [edx + esi], 0xffffffff
         _emit   75h
         _emit   55h
-        mov     eax, dword ptr [g_crtFdCloseSlot_00520064]
+        mov     eax, dword ptr [g_crtFdCloseSlot]
         mov     ebx, [esp + 0x14]
         cmp     eax, 1
         _emit   75h
@@ -164,7 +164,7 @@ __declspec(naked) void SetFdMode(void) {
         _emit   31h
         push    ebx
         push    0xfffffff4
-        call    dword ptr [g_SetStdHandle_004d20d4]
+        call    dword ptr [g_SetStdHandle]
         mov     eax, [edi]
         mov     [eax + esi], ebx
         xor     eax, eax
@@ -174,7 +174,7 @@ __declspec(naked) void SetFdMode(void) {
         ret
         push    ebx
         push    0xfffffff5
-        call    dword ptr [g_SetStdHandle_004d20d4]
+        call    dword ptr [g_SetStdHandle]
         mov     eax, [edi]
         mov     [eax + esi], ebx
         xor     eax, eax
@@ -184,7 +184,7 @@ __declspec(naked) void SetFdMode(void) {
         ret
         push    ebx
         push    0xfffffff6
-        call    dword ptr [g_SetStdHandle_004d20d4]
+        call    dword ptr [g_SetStdHandle]
         mov     eax, [edi]
         mov     [eax + esi], ebx
         xor     eax, eax

@@ -110,12 +110,12 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004aa8a0 (146b audio) - audio install-self with state push:
  *   chain[sel].slot84 -> eax; clear. if !=0: g_gameMode=0; tail to StackPopDispatch.
- *   If g_audioInitScaled_0054343c == 0: tail to StackPopDispatch.
+ *   If g_audioInitScaled == 0: tail to StackPopDispatch.
  *   Else: call PushPopScaledInit343c; call GuardedSetupCallTailJmp(0x4d2250, 0x64000000);
  *   install self at chain[sel]+8, set state.
  */
 extern unsigned int g_dispatchSave883_004d2250;
-extern unsigned int g_audioInitScaled_0054343c;
+extern unsigned int g_audioInitScaled;
 extern void GuardedSetupCallTailJmp(void);
 extern void PushPopScaledInit343c(void);
 
@@ -136,7 +136,7 @@ __declspec(naked) void AudioInstallSelfStatePush(void) {
         call    StackPopDispatchTagged
         pop     esi
         ret
-        cmp     dword ptr [g_audioInitScaled_0054343c], ecx
+        cmp     dword ptr [g_audioInitScaled], ecx
         _emit   74h
         _emit   07h
         call    StackPopDispatchTagged
@@ -148,7 +148,7 @@ __declspec(naked) void AudioInstallSelfStatePush(void) {
         call    GuardedSetupCallTailJmp
         mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     eax, offset AudioInstallSelfStatePush
-        mov     dword ptr [g_audioInitScaled_0054343c], ecx
+        mov     dword ptr [g_audioInitScaled], ecx
         mov     dword ptr [g_tickW1], 0x100
         mov     dword ptr [g_gameMode], eax
         mov     dword ptr [esi + 8], eax

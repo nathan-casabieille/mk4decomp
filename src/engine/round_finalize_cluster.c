@@ -112,7 +112,7 @@ extern unsigned int g_dispatchSave799_004f24a8;
 extern unsigned int g_dispatchSave800_004f2540;
 extern unsigned int g_dispatchSave801_004f2550;
 extern unsigned int g_dispatchSave802_004f2560;
-extern unsigned int g_eq_00542098;
+extern unsigned int g_eq;
 extern void ArgSarStoreJmp(void);
 extern void ArgSar_Set0_Jmp(void);
 extern void CallSetPause(void);
@@ -191,7 +191,7 @@ __declspec(naked) void RoundFinalizeCluster(void)
         xor      ecx, ecx
         test     eax, eax
         sete     cl
-        mov      dword ptr [g_eq_00542098], ecx
+        mov      dword ptr [g_eq], ecx
         mov      ecx, 0xffff6b59
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [g_walkCallback], ecx
@@ -199,7 +199,7 @@ __declspec(naked) void RoundFinalizeCluster(void)
         mov      edx, dword ptr [g_baseSel]
         mov      eax, dword ptr [edx*4 + 0x64]
         mov      dword ptr [g_xformEntityIdx], eax
-        mov      eax, dword ptr [g_eq_00542098]
+        mov      eax, dword ptr [g_eq]
         test     eax, eax
         jne      short L_b9d5
         call     MStackPush2ChainPrepend

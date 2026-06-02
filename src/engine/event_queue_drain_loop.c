@@ -113,10 +113,10 @@ extern unsigned int g_fightAxisPosY;
  *   g_eventQueueWorkType = 0x11; g_pendingNodeType = eax; call AllocNode();
  *   if (g_framePauseFlag != 0): break;
  *   g_walkCallback = 0; arr_slot[g_xformEntityIdx] = 0;
- *   ++g_xformEntityIdx; if == g_eventQueueTotal: reset to (g_eventQueueDrainBase_0053a4b8 >> 2);
+ *   ++g_xformEntityIdx; if == g_eventQueueTotal: reset to (g_eventQueueDrainBase >> 2);
  *   loop. Then call DispatchEventQueue_Commit and ret.
  */
-extern unsigned int g_eventQueueDrainBase_0053a4b8;
+extern unsigned int g_eventQueueDrainBase;
 
 extern unsigned int g_arr_slot_45c840;
 extern unsigned int g_arr_table_45c840;
@@ -150,7 +150,7 @@ __declspec(naked) void EventQueueDrainLoop(void) {
         mov     dword ptr [g_xformEntityIdx], eax
         _emit   75h
         _emit   0dh
-        mov     eax, offset g_eventQueueDrainBase_0053a4b8
+        mov     eax, offset g_eventQueueDrainBase
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
         mov     ecx, dword ptr [g_eventQueueHead]

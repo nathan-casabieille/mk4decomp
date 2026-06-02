@@ -111,11 +111,11 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00421380 (378b game) - 2-entry packed phase install + 6-call chain.
  *   Entry 1 (offset 0, 277b): phase-state install.
  *     Phase 1+: SwapOrPassSet; on no-error compares
- *       g_walkCallback with g_loaded_004f3608. If equal, tail-call
- *       PendingMatch_0042d240. Else bumps g_hitPhase_00537f30 by 1, calls
+ *       g_walkCallback with g_loaded. If equal, tail-call
+ *       PendingMatch_0042d240. Else bumps g_hitPhase by 1, calls
  *       CallPauseClear3CallTriple, then chains
  *       ScenegraphWalk + Screen_ArcadeEnding.
- *     Phase 0: g_quadEntryGate_0052d724=1, reads g_or_0052ab40 and tests
+ *     Phase 0: g_quadEntryGate=1, reads g_or and tests
  *       bit 3; if clear calls TwinMStackPushScaledChain. Either way installs Self
  *       at body with slot[+0x84]=1, packs (Self + 0x01000000) at the
  *       bumped scaled slot, calls RoundEndFsm, arms 0x541e6c=1.
@@ -126,10 +126,10 @@ extern unsigned int g_fightAxisPosY;
  *     gated by 0x541e6c. On full success, tail-jmps
  *     ScaledInitWithCounterAndType_004314f0.
  */
-extern unsigned int g_loaded_004f3608;
-extern unsigned int g_or_0052ab40;
-extern unsigned int g_quadEntryGate_0052d724;
-extern unsigned int g_hitPhase_00537f30;
+extern unsigned int g_loaded;
+extern unsigned int g_or;
+extern unsigned int g_quadEntryGate;
+extern unsigned int g_hitPhase;
 extern void CallPauseClear3CallTriple(void);
 extern void CopyJmp_00406ba0(void);
 extern void MStackPushSet0001(void);
@@ -158,17 +158,17 @@ __declspec(naked) void Phase3InstallSelfChain(void) {
         test    eax, eax
         jne     L_pis2_done
         mov     ecx, dword ptr [g_walkCallback]
-        mov     eax, dword ptr [g_loaded_004f3608]
+        mov     eax, dword ptr [g_loaded]
         cmp     ecx, eax
         jne     short L_pis2_advance
         call    PendingMatch_0042d240
         pop     esi
         ret
     L_pis2_advance:
-        mov     edx, dword ptr [g_hitPhase_00537f30]
+        mov     edx, dword ptr [g_hitPhase]
         lea     eax, [edx + 1]
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_hitPhase_00537f30], eax
+        mov     dword ptr [g_hitPhase], eax
         call    CallPauseClear3CallTriple
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -181,8 +181,8 @@ __declspec(naked) void Phase3InstallSelfChain(void) {
         pop     esi
         ret
     L_pis2_phase0:
-        mov     eax, dword ptr [g_or_0052ab40]
-        mov     dword ptr [g_quadEntryGate_0052d724], 1
+        mov     eax, dword ptr [g_or]
+        mov     dword ptr [g_quadEntryGate], 1
         mov     dword ptr [g_walkCallback], eax
         and     eax, 8
         mov     dword ptr [g_xformScratch94], eax

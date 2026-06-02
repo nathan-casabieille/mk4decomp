@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave650_004a0370;
-extern unsigned int g_poseGridGenVar_004e2864;
+extern unsigned int g_poseGridGenVar;
 extern void Eleven404b90_404c00(void);
 extern void IncWrap0fJmp(void);
 extern void InstallSelf3WaySubDec(void);
@@ -163,7 +163,7 @@ __declspec(naked) void AudioPhaseDispatch(void)
         push    0x16
         push    offset g_dispatchSave650_004a0370
         call    StoreTwoCall
-        mov     cx, word ptr [g_poseGridGenVar_004e2864]
+        mov     cx, word ptr [g_poseGridGenVar]
         add     esp, 8
         push    ecx
         call    TaggedSceneDispatch

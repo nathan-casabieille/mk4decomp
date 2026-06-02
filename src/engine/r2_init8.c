@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 /* @addr 0x004aec90 (274b engine.install) - DSound primary buffer + format callback pair.
- *   Sub-1 (112b): zero g_installCountdownBase_00544298 (108-byte WAVEFORMAT), call vtbl[0x24]
+ *   Sub-1 (112b): zero g_installCountdownBase (108-byte WAVEFORMAT), call vtbl[0x24]
  *     on g_renderer2_obj with the format callback at L_psn_cb (= 0x4aed00).
  *     If g_dispatchInit1007_0054429c stays 0, return 0; else fill format defaults
  *     (size, frequency 0x100, flags, channels) and return 1.
@@ -13,12 +13,12 @@
  *     and 0x1f matching expected layout, copies caller's struct into our buffer.
  */
 extern unsigned int g_renderer2_initVar_004f478c;
-extern unsigned int g_installCountdownBase_00544298;
+extern unsigned int g_installCountdownBase;
 extern unsigned int g_dispatchInit1007_0054429c;
 extern unsigned int g_dispatchSave15_005442a0;
 extern unsigned int g_dispatchSave14_005442a4;
-extern unsigned int g_glideTileSize_005442e0;
-extern unsigned int g_glideMipInit_00544300;
+extern unsigned int g_glideTileSize;
+extern unsigned int g_glideMipInit;
 extern unsigned int g_renderer2_obj;
 
 __declspec(naked) void R2_Init8(void) {
@@ -26,7 +26,7 @@ __declspec(naked) void R2_Init8(void) {
         push    edi
         mov     ecx, 0x1b
         xor     eax, eax
-        mov     edi, offset g_installCountdownBase_00544298
+        mov     edi, offset g_installCountdownBase
         rep     stosd
         mov     eax, dword ptr [g_renderer2_obj]
         test    eax, eax
@@ -45,12 +45,12 @@ __declspec(naked) void R2_Init8(void) {
         ret
     L_psn_fill:
         mov     eax, 0x100
-        mov     dword ptr [g_installCountdownBase_00544298], 0x6c
+        mov     dword ptr [g_installCountdownBase], 0x6c
         mov     dword ptr [g_dispatchSave14_005442a4], eax
         mov     dword ptr [g_dispatchSave15_005442a0], eax
         mov     dword ptr [g_dispatchInit1007_0054429c], 0x1007
-        mov     dword ptr [g_glideMipInit_00544300], 0x04005000
-        mov     dword ptr [g_glideTileSize_005442e0], 0x20
+        mov     dword ptr [g_glideMipInit], 0x04005000
+        mov     dword ptr [g_glideTileSize], 0x20
         mov     eax, 1
         pop     edi
         ret
@@ -79,7 +79,7 @@ __declspec(naked) void R2_Init8(void) {
         cmp     dword ptr [esi + 0x60], ecx
         jne     short L_psn_cb_alt
         mov     ecx, 0x1b
-        mov     edi, offset g_installCountdownBase_00544298
+        mov     edi, offset g_installCountdownBase
         rep     movsd
         mov     dword ptr [g_renderer2_initVar_004f478c], 1
         mov     eax, 1
@@ -97,7 +97,7 @@ __declspec(naked) void R2_Init8(void) {
         test    eax, eax
         jne     short L_psn_cb_fail
         mov     ecx, 0x1b
-        mov     edi, offset g_installCountdownBase_00544298
+        mov     edi, offset g_installCountdownBase
         rep     movsd
         mov     dword ptr [g_renderer2_initVar_004f478c], 0
     L_psn_cb_fail:

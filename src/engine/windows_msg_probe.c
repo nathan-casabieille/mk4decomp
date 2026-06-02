@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  *   write result to *arg1, *arg2, *arg3=1; update [0x7affe0]; return 1.
  *   On any fail, return 0.
  */
-extern unsigned int g_PeekMessageA_007b003c;
+extern unsigned int g_PeekMessageA;
 extern int g_renderer1_busy;
 extern int g_renderer1_active;
 
@@ -181,7 +181,7 @@ __declspec(naked) void WindowsMsgProbe(void) {
         push    0xff
         push    ebp
         push    ebp
-        call    dword ptr [g_PeekMessageA_007b003c]
+        call    dword ptr [g_PeekMessageA]
         cmp     eax, ebp
         _emit   74h
         _emit   3ch

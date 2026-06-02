@@ -6,7 +6,7 @@
 
 extern unsigned int g_dispatchSave569_004ffd50;
 extern u8 g_audioChannelTable[];
-extern unsigned int g_obj_size_00f8fad8;
+extern unsigned int g_obj_size;
 extern unsigned int g_dispatchSave1408_00f8fadc;
 extern unsigned int g_flags_00f8fade;
 extern void * g_dsoundContext;
@@ -87,7 +87,7 @@ __declspec(naked) void Helper_AudioRelease(void)
         push     eax
         call     ESF_Open
         mov      edx, dword ptr [esp + 0x3c]
-        mov      dword ptr [esi + g_obj_size_00f8fad8], eax
+        mov      dword ptr [esi + g_obj_size], eax
         mov      word ptr [esi + g_dispatchSave1408_00f8fadc], 0
         mov      al, byte ptr [esi + g_flags_00f8fade]
         add      esp, 0x10
@@ -116,7 +116,7 @@ __declspec(naked) void Helper_AudioRelease(void)
         imul     eax, ecx
         mov      dword ptr [esp + 0x30], edx
         mov      dword ptr [esp + 0x20], eax
-        mov      eax, dword ptr [esi + g_obj_size_00f8fad8]
+        mov      eax, dword ptr [esi + g_obj_size]
         mov      dword ptr [esp + 0x34], edx
         mov      dword ptr [esp + 0x38], edx
         mov      dword ptr [esp + 0x38], eax
@@ -178,7 +178,7 @@ __declspec(naked) void Helper_AudioRelease(void)
         test     ecx, ecx
         je       L_368d
         mov      edx, dword ptr [esp + 0x10]
-        mov      eax, dword ptr [esi + g_obj_size_00f8fad8]
+        mov      eax, dword ptr [esi + g_obj_size]
         cmp      edx, eax
         jb       L_368d
         push     ecx
@@ -219,7 +219,7 @@ __declspec(naked) void Helper_AudioRelease(void)
     L_36d6:
         cmp      dword ptr [ebp], 0
         je       L_36fb
-        mov      ecx, dword ptr [esi + g_obj_size_00f8fad8]
+        mov      ecx, dword ptr [esi + g_obj_size]
         mov      edx, dword ptr [g_dsoundFieldE4]
         mov      eax, dword ptr [g_dsoundFieldE8]
         add      edx, ecx

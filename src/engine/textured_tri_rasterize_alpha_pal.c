@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_viewportW;
 extern unsigned int g_viewportH;
-extern unsigned int g_texturedTriVar_004ffd4c;
+extern unsigned int g_texturedTriVar;
 extern unsigned int g_dispatchSave1336_00f4d018;
 extern unsigned int g_dispatchSave1337_00f4d01c;
 extern unsigned int g_dispatchSave1338_00f4d020;
@@ -480,7 +480,7 @@ __declspec(naked) void TexturedTriRasterizeAlphaPal(void)
         test     edi, edi
         mov      dword ptr [g_clipMinScratch], edi
         jle      L_25bf
-        mov      eax, dword ptr [g_texturedTriVar_004ffd4c]
+        mov      eax, dword ptr [g_texturedTriVar]
         test     eax, eax
         je       L_251a
     L_246b:

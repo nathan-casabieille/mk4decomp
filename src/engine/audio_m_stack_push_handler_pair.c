@@ -109,12 +109,12 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_word_004e2860;
-extern unsigned int g_poseGridGenVar_004e2864;
+extern unsigned int g_poseGridGenVar;
 extern unsigned int g_dispatchArg;
-extern unsigned int g_audioInitPeriodic_00537e90;
+extern unsigned int g_audioInitPeriodic;
 extern unsigned int g_audioInstall2State_00537f88;
 extern unsigned int g_state2_0053a1bc;
-extern unsigned int g_audioBitField_00541fc0;
+extern unsigned int g_audioBitField;
 extern u32 g_dlMode;
 extern void DualPushSetCallDualPop(void);
 extern void RoundWinTransition(void);
@@ -141,7 +141,7 @@ __declspec(naked) void AudioMStackPushHandlerPair(void)
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4], ecx
-        mov     ecx, dword ptr [g_audioBitField_00541fc0]
+        mov     ecx, dword ptr [g_audioBitField]
         mov     eax, dword ptr [g_eventQueueNotMask]
         mov     dword ptr [g_xformEntityIdx], ecx
         add     ecx, eax
@@ -165,7 +165,7 @@ __declspec(naked) void AudioMStackPushHandlerPair(void)
     L_amspp_else:
         push    0x230
         call    TripleStageRollback
-        mov     ax, word ptr [g_poseGridGenVar_004e2864]
+        mov     ax, word ptr [g_poseGridGenVar]
         add     esp, 4
         push    eax
     L_amspp_callBe690:
@@ -218,7 +218,7 @@ __declspec(naked) void AudioMStackPushHandlerPair(void)
         test    cl, al
         je      short L_amspp_sub2_check
         mov     edx, dword ptr [g_eventQueueEnd]
-        mov     ecx, dword ptr [g_audioInitPeriodic_00537e90]
+        mov     ecx, dword ptr [g_audioInitPeriodic]
         cmp     edx, ecx
         je      short L_amspp_sub2_install
     L_amspp_sub2_check:

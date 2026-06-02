@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_sehUnwindBase_00520050;
+extern unsigned int g_sehUnwindBase;
 extern void func_004d12de(void);
 
 __declspec(naked) void SehUnwindCluster(void)
@@ -200,12 +200,12 @@ __declspec(naked) void SehUnwindCluster(void)
     /* Helper 5: dual-entry __exhandler register */
         push     ebx
         push     ecx
-        mov      ebx, OFFSET g_sehUnwindBase_00520050
+        mov      ebx, OFFSET g_sehUnwindBase
         jmp      short L_6bc0
     L_6bb6:
         push     ebx
         push     ecx
-        mov      ebx, OFFSET g_sehUnwindBase_00520050
+        mov      ebx, OFFSET g_sehUnwindBase
         mov      ecx, dword ptr [ebp + 8]
     L_6bc0:
         mov      dword ptr [ebx + 8], ecx

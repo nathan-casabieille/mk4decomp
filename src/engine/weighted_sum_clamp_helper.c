@@ -123,7 +123,7 @@ extern unsigned int g_audioRestoreSlot3_0053a1f0;
 extern unsigned int g_phaseCounter;
 extern unsigned int g_audioInstallSlot2_005433f0;
 extern unsigned int g_phaseThunkSave2_00543444;
-extern unsigned int g_audioPathFlag_0054355c;
+extern unsigned int g_audioPathFlag;
 extern void AudioVolumeRescale(void);
 
 /*
@@ -139,7 +139,7 @@ __declspec(naked) void WeightedSumClampHelper(void) {
         mov     eax, dword ptr [g_stateCountdown]
         mov     edx, dword ptr [g_dispatchSave1319_004f3814]
         imul    eax, dword ptr [g_dispatchSave1321_004f381c]
-        mov     ecx, dword ptr [g_audioPathFlag_0054355c]
+        mov     ecx, dword ptr [g_audioPathFlag]
         add     eax, edx
         test    ecx, ecx
         mov     ecx, dword ptr [g_dispatchSave1320_004f3818]

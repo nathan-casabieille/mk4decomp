@@ -107,15 +107,15 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
-extern unsigned int g_eventQueueChildSrc_0053a3dc;
-extern unsigned int g_eventQueueScratch_0053a41c;
+extern unsigned int g_eventQueueChildSrc;
+extern unsigned int g_eventQueueScratch;
 
 /* @addr 0x00485d90 (214b game) - 5x Mul10Tail interpolation accumulator. */
 void Mul10Tail5xInterp(void) {
     g_eventQueueWorkType = g_table_00535ddc;
-    g_eventQueueNotMask = g_eventQueueScratch_0053a41c;
-    g_eventQueueChild = g_eventQueueChildSrc_0053a3dc;
-    g_eventQueueNotMask = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(g_table_00535ddc, g_eventQueueScratch_0053a41c);
+    g_eventQueueNotMask = g_eventQueueScratch;
+    g_eventQueueChild = g_eventQueueChildSrc;
+    g_eventQueueNotMask = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(g_table_00535ddc, g_eventQueueScratch);
     g_eventQueueChild = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(g_eventQueueWorkType, g_eventQueueChild);
     g_currentNodeFlags = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(g_acc_00542078, g_currentNodeFlags);
     g_eventQueueNotMask = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(g_currentNodeFlags, g_eventQueueNotMask);

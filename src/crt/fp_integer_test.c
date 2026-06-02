@@ -112,11 +112,11 @@ extern unsigned int g_fightAxisPosY;
  * @addr 0x004ca670 (129b crt) - FP classify+integer test helper:
  *   call Fpclass(d) to classify; if bits 0x90 set return 0
  *   (NaN/Inf path); otherwise round, compare against original to
- *   detect integer; if not integer, divide by g_dbl_004d2bf8 and
+ *   detect integer; if not integer, divide by g_dbl and
  *   round again; returns 2 for integer-after-division, 1 for
  *   integer, 0 otherwise.
  */
-extern unsigned int g_dbl_004d2bf8;
+extern unsigned int g_dbl;
 extern void Fpclass(void);
 extern void RoundDouble(void);
 
@@ -144,7 +144,7 @@ __declspec(naked) void FPIntegerTest(void) {
         test    ah, 0x40
         je      zeroRet
         fld     qword ptr [esp + 0x14]
-        fdiv    qword ptr [g_dbl_004d2bf8]
+        fdiv    qword ptr [g_dbl]
         fstp    qword ptr [esp + 0x14]
         mov     eax, dword ptr [esp + 0x18]
         mov     ecx, dword ptr [esp + 0x14]

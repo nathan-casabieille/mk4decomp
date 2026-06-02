@@ -108,14 +108,14 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-/* @addr 0x004225f0 (161b game) - 2-state copy swap based on g_hitPhase_00537f30 & 1:
+/* @addr 0x004225f0 (161b game) - 2-state copy swap based on g_hitPhase & 1:
  *   if even: copy {0x537edc, 0x53a1cc, 0x53a790, 0x541ecc, 0x541ed0, 0x537ea0}
  *     -> {0x537f48, 0x5380e0, 0x53a178, 0x541ec4, 0x541ec8, walkCallback/0x53a250}.
  *   if odd: same source set but with different mapping (swap a/c, etc).
  */
 extern unsigned int g_audioInitState6_00537ea0;
 extern unsigned int g_audioInitState5_00537edc;
-extern unsigned int g_hitPhase_00537f30;
+extern unsigned int g_hitPhase;
 extern unsigned int g_dlNalt1;
 extern unsigned int g_dlNalt2;
 extern unsigned int g_dlNalt3;
@@ -129,7 +129,7 @@ extern unsigned int g_audioInitState1_00541ed0;
 
 void TwoStateCopyDup(void) {
     __asm {
-        mov     eax, dword ptr [g_hitPhase_00537f30]
+        mov     eax, dword ptr [g_hitPhase]
         and     eax, 1
         mov     dword ptr [g_xformScratch94], eax
         _emit   75h

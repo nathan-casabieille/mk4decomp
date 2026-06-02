@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_phase4SlotArr4_0050b3d4;
 extern unsigned int g_phase4SlotArr3_0050b3f0;
-extern unsigned int g_segPoseArr_0050b40c;
+extern unsigned int g_segPoseArr;
 extern unsigned int g_phase4SlotArr2_0050b428;
 extern void SetJmp_00405420(void);
 extern void Vec3SetupQuadrupleMul10Sub(void);
@@ -253,7 +253,7 @@ __declspec(naked) void FourSegmentPoseWalk(void)
         jne      short L_2ada
         mov      dword ptr [g_eventQueueIdx], 2
     L_2ada:
-        mov      esi, OFFSET g_segPoseArr_0050b40c
+        mov      esi, OFFSET g_segPoseArr
         shr      esi, 2
         mov      dword ptr [g_xformEntityIdx], esi
         call     DispatcherComplex260_00407030

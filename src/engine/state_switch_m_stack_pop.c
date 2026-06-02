@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-/* @addr 0x00474f20 (162b game) - switch on (g_eq_00542098 ? walk : alt):
- *   v = g_eq_00542098 ? g_eventQueueCurrent : (g_eventQueueCurrent = g_dlNalt2).
+/* @addr 0x00474f20 (162b game) - switch on (g_eq ? walk : alt):
+ *   v = g_eq ? g_eventQueueCurrent : (g_eventQueueCurrent = g_dlNalt2).
  *   switch (v) {
  *     case 2: case 9: walkCallback=0; state |= 4; jmp 0x83 path.
  *     case 1: walkCallback=2; clear bit 2; mstack-pop into g_eventQueueCurrent; ret.
@@ -117,13 +117,13 @@ extern unsigned int g_fightAxisPosY;
  *   }
  */
 extern s32 g_dlNalt2;
-extern unsigned int g_eq_00542098;
+extern unsigned int g_eq;
 
 extern unsigned int g_matrixStack_arr;
 
 void StateSwitchMStackPop(void) {
     __asm {
-        mov     eax, dword ptr [g_eq_00542098]
+        mov     eax, dword ptr [g_eq]
         test    eax, eax
         _emit   75h
         _emit   0ch

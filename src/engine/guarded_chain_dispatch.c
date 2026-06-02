@@ -107,7 +107,7 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
-extern unsigned int g_loaded_004f3608;
+extern unsigned int g_loaded;
 
 /*
  * @addr 0x00421fe0 (108b) - guarded chained dispatcher: snapshot
@@ -126,7 +126,7 @@ void GuardedChainDispatch(void) {
     SwapOrPassSet();
     if (g_framePauseFlag != 0) return;
     val = (unsigned int)g_walkCallback;
-    if (val != g_loaded_004f3608) goto maskOut;
+    if (val != g_loaded) goto maskOut;
     a = g_gtPlayerProbe2;
     g_scaledInit_00542044 = a;
     if (g_eventQueueTotal == a) {

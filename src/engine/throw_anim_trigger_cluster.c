@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_audioVoiceTrioBase_0050a0f0;
+extern unsigned int g_audioVoiceTrioBase;
 extern unsigned int g_dispatchSave134_0050c0bc;
 extern unsigned int g_dispatchArg;
 extern unsigned int g_particleEmitterNode;
@@ -158,7 +158,7 @@ __declspec(naked) void ThrowAnimTriggerCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_f183
-        mov      eax, OFFSET g_audioVoiceTrioBase_0050a0f0
+        mov      eax, OFFSET g_audioVoiceTrioBase
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
         call     MStackPush4LLWalkPop4

@@ -111,15 +111,15 @@ extern unsigned int g_fightAxisPosY;
 /*
  * AudioTriEntryFlagPairInit - 207b audio 3-entry init variant of AudioModeInit.
  *   Entry 0x004a22f0: same FlagPair logic, but g_dlMode=0 and tail-jmp InstallSelfTableWalk.
- *   Entry 0x004a2370: push 6; TableWalkBoundedCmp; g_audioMatchStartFlag_00543714=1, g_audioTriEntryFlag_005433ec=1; jmp entry1.
- *   Entry 0x004a2390: push 6; TableWalkBoundedCmp; g_audioMatchStartFlag_00543714=1, g_audioTriEntryFlag_005433ec=1, g_gtOtherFlag=1;
- *     g_audioTriEntryFlag2_005433a8=0, g_installSelfCounter_005433e8=0; jmp entry1.
+ *   Entry 0x004a2370: push 6; TableWalkBoundedCmp; g_audioMatchStartFlag=1, g_audioTriEntryFlag=1; jmp entry1.
+ *   Entry 0x004a2390: push 6; TableWalkBoundedCmp; g_audioMatchStartFlag=1, g_audioTriEntryFlag=1, g_gtOtherFlag=1;
+ *     g_audioTriEntryFlag2_005433a8=0, g_installSelfCounter=0; jmp entry1.
  */
 extern u32 g_dlMode;
 extern unsigned int g_audioTriEntryFlag2_005433a8;
-extern unsigned int g_installSelfCounter_005433e8;
-extern unsigned int g_audioTriEntryFlag_005433ec;
-extern unsigned int g_audioMatchStartFlag_00543714;
+extern unsigned int g_installSelfCounter;
+extern unsigned int g_audioTriEntryFlag;
+extern unsigned int g_audioMatchStartFlag;
 extern void ClearTwoCallSetStore(void);
 extern void DualScaledStoreConst(void);
 extern void InstallSelfTableWalk(void);
@@ -171,8 +171,8 @@ __declspec(naked) void AudioTriEntryFlagPairInit(void)
         call    TableWalkBoundedCmp
         mov     eax, 1
         add     esp, 4
-        mov     dword ptr [g_audioMatchStartFlag_00543714], eax
-        mov     dword ptr [g_audioTriEntryFlag_005433ec], eax
+        mov     dword ptr [g_audioMatchStartFlag], eax
+        mov     dword ptr [g_audioTriEntryFlag], eax
         jmp     AudioTriEntryFlagPairInit
         _emit   90h
         _emit   90h
@@ -180,12 +180,12 @@ __declspec(naked) void AudioTriEntryFlagPairInit(void)
         call    TableWalkBoundedCmp
         mov     eax, 1
         add     esp, 4
-        mov     dword ptr [g_audioMatchStartFlag_00543714], eax
-        mov     dword ptr [g_audioTriEntryFlag_005433ec], eax
+        mov     dword ptr [g_audioMatchStartFlag], eax
+        mov     dword ptr [g_audioTriEntryFlag], eax
         mov     dword ptr [g_gtOtherFlag], eax
         xor     eax, eax
         mov     dword ptr [g_audioTriEntryFlag2_005433a8], eax
-        mov     dword ptr [g_installSelfCounter_005433e8], eax
+        mov     dword ptr [g_installSelfCounter], eax
         jmp     AudioTriEntryFlagPairInit
     }
 }

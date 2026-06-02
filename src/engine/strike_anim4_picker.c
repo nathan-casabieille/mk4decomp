@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_or_0052ab40;
+extern unsigned int g_or;
 extern unsigned int g_audioStreamState;
 extern s32 g_dlChar13;
 extern s32 g_dlChar24;
@@ -128,7 +128,7 @@ extern void TestStoreConstJmp(void);
 
 void StrikeAnim4Picker(void) {
     __asm {
-        mov      eax, dword ptr [g_or_0052ab40]
+        mov      eax, dword ptr [g_or]
         mov      dword ptr [g_eventQueueCurrent], eax
         and      eax, 0x20
         mov      dword ptr [g_xformScratch94], eax

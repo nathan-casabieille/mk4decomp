@@ -109,8 +109,8 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_phaseCounter;
-extern unsigned int g_phaseThunkVar_00541fb4;
-extern unsigned int g_dispatchAcc_00541fb8;
+extern unsigned int g_phaseThunkVar;
+extern unsigned int g_dispatchAcc;
 extern void CallSetPause(void);
 extern void MStackChainOrBitLoop(void);
 extern void MStackPush2LLWalkCompare(void);
@@ -124,7 +124,7 @@ __declspec(naked) void MkTowerScreenFsmCluster(void)
     __asm {
         /* === Helper 1 (0x462560): row-process column-N w/ offset === */
         mov      eax, dword ptr [g_phaseCounter]
-        mov      ecx, dword ptr [g_phaseThunkVar_00541fb4]
+        mov      ecx, dword ptr [g_phaseThunkVar]
         add      ecx, eax
         push     ebx
         mov      dword ptr [g_currentNodeIdx], ecx
@@ -132,7 +132,7 @@ __declspec(naked) void MkTowerScreenFsmCluster(void)
         test     ecx, ecx
         mov      dword ptr [g_eventQueueCurrent], ecx
         je       L_264f
-        mov      edx, dword ptr [g_dispatchAcc_00541fb8]
+        mov      edx, dword ptr [g_dispatchAcc]
         shl      eax, 2
         mov      dword ptr [g_walkCallback], eax
         add      eax, edx

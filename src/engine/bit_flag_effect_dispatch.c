@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_or_0052ab40;
+extern unsigned int g_or;
 extern void Helper_SetState_02(void);
 extern void Helper_SetState_03(void);
 extern void Helper_SetState_04(void);
@@ -129,7 +129,7 @@ extern void TripleBlockInstallSelfThunk(void);
 __declspec(naked) void BitFlagEffectDispatch(void)
 {
     __asm {
-        mov      eax, dword ptr [g_or_0052ab40]
+        mov      eax, dword ptr [g_or]
         mov      ecx, eax
         mov      dword ptr [g_walkCallback], eax
         and      ecx, 0x4000
@@ -139,7 +139,7 @@ __declspec(naked) void BitFlagEffectDispatch(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1631
-        mov      eax, dword ptr [g_or_0052ab40]
+        mov      eax, dword ptr [g_or]
     L_13e1:
         mov      edx, eax
         mov      dword ptr [g_walkCallback], eax
@@ -150,7 +150,7 @@ __declspec(naked) void BitFlagEffectDispatch(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1631
-        mov      eax, dword ptr [g_or_0052ab40]
+        mov      eax, dword ptr [g_or]
     L_140d:
         mov      ecx, eax
         mov      dword ptr [g_walkCallback], eax
@@ -161,7 +161,7 @@ __declspec(naked) void BitFlagEffectDispatch(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1631
-        mov      eax, dword ptr [g_or_0052ab40]
+        mov      eax, dword ptr [g_or]
     L_1439:
         mov      edx, eax
         mov      dword ptr [g_walkCallback], eax
@@ -172,7 +172,7 @@ __declspec(naked) void BitFlagEffectDispatch(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1631
-        mov      eax, dword ptr [g_or_0052ab40]
+        mov      eax, dword ptr [g_or]
     L_1465:
         mov      ecx, eax
         mov      dword ptr [g_walkCallback], eax
@@ -183,7 +183,7 @@ __declspec(naked) void BitFlagEffectDispatch(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1631
-        mov      eax, dword ptr [g_or_0052ab40]
+        mov      eax, dword ptr [g_or]
     L_1491:
         mov      edx, eax
         mov      dword ptr [g_walkCallback], eax
@@ -194,7 +194,7 @@ __declspec(naked) void BitFlagEffectDispatch(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1631
-        mov      eax, dword ptr [g_or_0052ab40]
+        mov      eax, dword ptr [g_or]
     L_14ba:
         mov      ecx, eax
         mov      dword ptr [g_walkCallback], eax
@@ -205,7 +205,7 @@ __declspec(naked) void BitFlagEffectDispatch(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1631
-        mov      eax, dword ptr [g_or_0052ab40]
+        mov      eax, dword ptr [g_or]
     L_14e3:
         mov      edx, eax
         mov      dword ptr [g_walkCallback], eax
@@ -216,7 +216,7 @@ __declspec(naked) void BitFlagEffectDispatch(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1631
-        mov      eax, dword ptr [g_or_0052ab40]
+        mov      eax, dword ptr [g_or]
     L_150f:
         mov      ecx, eax
         mov      dword ptr [g_walkCallback], eax
@@ -227,7 +227,7 @@ __declspec(naked) void BitFlagEffectDispatch(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1631
-        mov      eax, dword ptr [g_or_0052ab40]
+        mov      eax, dword ptr [g_or]
     L_1538:
         mov      edx, eax
         mov      dword ptr [g_walkCallback], eax
@@ -238,7 +238,7 @@ __declspec(naked) void BitFlagEffectDispatch(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1631
-        mov      eax, dword ptr [g_or_0052ab40]
+        mov      eax, dword ptr [g_or]
     L_1561:
         mov      ecx, eax
         mov      dword ptr [g_walkCallback], eax
@@ -249,7 +249,7 @@ __declspec(naked) void BitFlagEffectDispatch(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1631
-        mov      eax, dword ptr [g_or_0052ab40]
+        mov      eax, dword ptr [g_or]
     L_158a:
         mov      edx, eax
         mov      dword ptr [g_walkCallback], eax
@@ -260,7 +260,7 @@ __declspec(naked) void BitFlagEffectDispatch(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1631
-        mov      eax, dword ptr [g_or_0052ab40]
+        mov      eax, dword ptr [g_or]
     L_15b3:
         mov      ecx, eax
         mov      dword ptr [g_walkCallback], eax
@@ -271,7 +271,7 @@ __declspec(naked) void BitFlagEffectDispatch(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1631
-        mov      eax, dword ptr [g_or_0052ab40]
+        mov      eax, dword ptr [g_or]
     L_15db:
         mov      ecx, eax
         and      ecx, 0x2001
@@ -287,7 +287,7 @@ __declspec(naked) void BitFlagEffectDispatch(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1631
-        mov      eax, dword ptr [g_or_0052ab40]
+        mov      eax, dword ptr [g_or]
     L_1616:
         mov      dword ptr [g_walkCallback], eax
         and      eax, 0x2000

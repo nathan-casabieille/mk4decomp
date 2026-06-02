@@ -112,7 +112,7 @@ extern unsigned int g_dispatchSave911_004d67f8;
 extern unsigned int g_dispatchSave912_004d6808;
 extern unsigned int g_dispatchSave913_004d6818;
 extern unsigned int g_dispatchSave914_004d6828;
-extern unsigned int g_packedDispatchVar_00541ffc;
+extern unsigned int g_packedDispatchVar;
 extern void AudioMixerStep(void);
 extern void CallSetPause(void);
 extern void MStackCall_00406600(void);
@@ -208,7 +208,7 @@ __declspec(naked) void BootPackedDispatchPair_00413380(void)
     L_bpdp_main_phase0:
         mov     ecx, dword ptr [g_fightGroupHead]
         mov     edx, dword ptr [g_baseSel]
-        mov     eax, dword ptr [g_packedDispatchVar_00541ffc]
+        mov     eax, dword ptr [g_packedDispatchVar]
         mov     dword ptr [g_eventQueueEnd], ecx
         mov     dword ptr [edx*4 + 0x30], eax
         mov     dword ptr [g_eventQueueIdx], 5
@@ -329,7 +329,7 @@ __declspec(naked) void BootPackedDispatchPair_00413580(void)
     L_bpdp2_main_phase0:
         mov     ecx, dword ptr [g_fightGroupHead]
         mov     edx, dword ptr [g_baseSel]
-        mov     eax, dword ptr [g_packedDispatchVar_00541ffc]
+        mov     eax, dword ptr [g_packedDispatchVar]
         mov     dword ptr [g_eventQueueEnd], ecx
         mov     dword ptr [edx*4 + 0x30], eax
         mov     dword ptr [g_eventQueueIdx], 4

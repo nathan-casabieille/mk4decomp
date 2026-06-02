@@ -110,24 +110,24 @@ extern unsigned int g_fightAxisPosY;
 
 /*
  * @addr 0x004a1ec0 (89b) - drain a small request queue: for each
- *   of g_voicePoolHead_00543748 entries, move slot N into g_walkCallback, call
+ *   of g_voicePoolHead entries, move slot N into g_walkCallback, call
  *   MStackPush2ChainLLInsert, then zero the slot. Afterward stash the queue's
  *   "current" pointer (0x5437f0) into g_walkCallback, call again,
  *   and zero both heads.
  */
-extern unsigned int g_voicePoolHead_00543748;
-extern unsigned int g_voicePoolTail_00543750;
+extern unsigned int g_voicePoolHead;
+extern unsigned int g_voicePoolTail;
 extern void MStackPush2ChainLLInsert(void);
 
 void DrainQueueCallEach(void) {
-    int count = (int)g_voicePoolHead_00543748;
+    int count = (int)g_voicePoolHead;
     int i = 0;
     if (count > 0) {
-        unsigned int *p = &g_voicePoolTail_00543750;
+        unsigned int *p = &g_voicePoolTail;
         do {
             g_currentNodeIdx = *p;
             MStackPush2ChainLLInsert();
-            count = (int)g_voicePoolHead_00543748;
+            count = (int)g_voicePoolHead;
             *p = 0;
             i++;
             p++;
@@ -136,5 +136,5 @@ void DrainQueueCallEach(void) {
     g_currentNodeIdx = g_audioBoundNode;
     g_audioBoundNode = 0;
     MStackPush2ChainLLInsert();
-    g_voicePoolHead_00543748 = 0;
+    g_voicePoolHead = 0;
 }

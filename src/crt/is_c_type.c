@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   If ch < 0xff: return mask & pctype[ch]. Else if hi-byte is leadbyte:
  *   convert via MultiByteToWideChar; if ok: return mask & low16 of arg1.
  */
-extern unsigned int g_crtCType_00522998;
+extern unsigned int g_crtCType;
 extern void WcToMbDispatcher(void);
 
 __declspec(naked) int IsCType(void) {
@@ -124,7 +124,7 @@ __declspec(naked) int IsCType(void) {
         cmp     eax, 0x100
         _emit   77h
         _emit   15h
-        mov     edx, dword ptr [g_crtCType_00522998]
+        mov     edx, dword ptr [g_crtCType]
         xor     eax, eax
         mov     ax, word ptr [edx + ecx*2]
         mov     ecx, dword ptr [esp + 0x10]
@@ -132,7 +132,7 @@ __declspec(naked) int IsCType(void) {
         pop     esi
         pop     ecx
         ret
-        mov     esi, dword ptr [g_crtCType_00522998]
+        mov     esi, dword ptr [g_crtCType]
         mov     eax, ecx
         sar     eax, 8
         mov     edx, eax

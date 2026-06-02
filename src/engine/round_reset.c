@@ -110,27 +110,27 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_tickFlagF;
 extern u32 g_dlSomeFlag2;
-extern unsigned int g_quadEntryGate_0052d724;
+extern unsigned int g_quadEntryGate;
 extern unsigned int g_phaseTimer;
 extern unsigned int g_dst_00537ea4;
 extern unsigned int g_dispatchSave_00537ef4;
 extern unsigned int g_dispatchVar11_00537f04;
-extern unsigned int g_hitPhase_00537f30;
+extern unsigned int g_hitPhase;
 extern unsigned int g_audioBank2State_00537f98;
-extern unsigned int g_fightTickSavedSlot_005380d8;
-extern unsigned int g_roundResetSlot_0053a3e4;
-extern unsigned int g_phaseInstallSlot_0053a42c;
+extern unsigned int g_fightTickSavedSlot;
+extern unsigned int g_roundResetSlot;
+extern unsigned int g_phaseInstallSlot;
 extern unsigned int g_audioStreamState;
-extern unsigned int g_phaseThunkArr_0053a474;
+extern unsigned int g_phaseThunkArr;
 extern u32 g_dlSomeFlag1;
 extern unsigned int g_dst_0053a6e0;
 extern unsigned int g_phaseThunkSlot4_0053a6f8;
-extern unsigned int g_phaseThunkState_0053a730;
+extern unsigned int g_phaseThunkState;
 extern unsigned int g_dispatchSave39_0053a788;
 extern unsigned int g_dispatchClr1_0053e34c;
 extern unsigned int g_installCountdownSlot2_00541d84;
 extern unsigned int g_smState4Way_00541dc8;
-extern unsigned int g_titleDemoState_00541df0;
+extern unsigned int g_titleDemoState;
 extern unsigned int g_titleDemoState2_00541df4;
 extern u32 g_dlState;
 extern u32 g_dlAux;
@@ -174,7 +174,7 @@ extern unsigned int g_clusterArr541f60_6;
 extern unsigned int g_clusterArr541f60_7;
 extern unsigned int g_clusterArr541f60_8;
 extern unsigned int g_clusterArr541f60_9;
-extern unsigned int g_tripleEntryFlag_0054380c;
+extern unsigned int g_tripleEntryFlag;
 extern void Cmp2DirtyToggle(void);
 extern void TestCmpZeroFour(void);
 extern void TriBranchFlagWrite(void);
@@ -204,29 +204,29 @@ __declspec(naked) void RoundReset(void)
         jne      L_25e9
     L_242f:
         mov      eax, 0x10000
-        mov      dword ptr [g_roundResetSlot_0053a3e4], eax
-        mov      dword ptr [g_phaseThunkArr_0053a474], eax
-        mov      eax, dword ptr [g_hitPhase_00537f30]
+        mov      dword ptr [g_roundResetSlot], eax
+        mov      dword ptr [g_phaseThunkArr], eax
+        mov      eax, dword ptr [g_hitPhase]
         cmp      eax, 1
         mov      dword ptr [g_walkCallback], eax
         jne      short L_2459
         mov      dword ptr [g_dst_0053a6e0], ebx
         mov      dword ptr [g_dst_00537ea4], ebx
     L_2459:
-        mov      dword ptr [g_titleDemoState_00541df0], ebx
+        mov      dword ptr [g_titleDemoState], ebx
         mov      dword ptr [g_titleDemoState2_00541df4], ebx
-        mov      byte ptr [g_tripleEntryFlag_0054380c], bl
+        mov      byte ptr [g_tripleEntryFlag], bl
         mov      dword ptr [g_phaseThunkSlot4_0053a6f8], ebx
         mov      dword ptr [g_dispatchSave39_0053a788], ebx
         mov      dword ptr [g_dispatchClr1_0053e34c], ebx
         mov      dword ptr [g_smState4Way_00541dc8], ebx
         mov      dword ptr [g_phaseTimer], ebx
-        mov      dword ptr [g_phaseInstallSlot_0053a42c], ebx
+        mov      dword ptr [g_phaseInstallSlot], ebx
         mov      dword ptr [g_dispatchSave_00537ef4], ebx
         mov      dword ptr [g_audioBankSel], ebx
-        mov      dword ptr [g_quadEntryGate_0052d724], ebx
+        mov      dword ptr [g_quadEntryGate], ebx
         mov      dword ptr [g_audioBank2State_00537f98], ebx
-        mov      dword ptr [g_phaseThunkState_0053a730], ebx
+        mov      dword ptr [g_phaseThunkState], ebx
         mov      dword ptr [g_installCountdownSlot2_00541d84], ebx
         mov      dword ptr [g_audioStreamState], ebx
         mov      dword ptr [g_dispatchVar11_00537f04], ebx
@@ -234,7 +234,7 @@ __declspec(naked) void RoundReset(void)
         mov      dword ptr [g_dlSomeFlag2], ebx
         mov      dword ptr [g_dlState], ebx
         mov      dword ptr [g_dlAux], ebx
-        mov      dword ptr [g_fightTickSavedSlot_005380d8], ebx
+        mov      dword ptr [g_fightTickSavedSlot], ebx
         mov      dword ptr [g_clusterArr541f60_n6], ebx
         mov      dword ptr [g_dispatchSave37_00541ee8], ebx
         mov      dword ptr [g_clusterArr541f60_n4], ebx
@@ -280,7 +280,7 @@ __declspec(naked) void RoundReset(void)
         jne      short L_25e9
         mov      eax, dword ptr [g_gtFightTickCounter]
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_fightTickSavedSlot_005380d8], eax
+        mov      dword ptr [g_fightTickSavedSlot], eax
     L_25e9:
         pop      ebx
         ret

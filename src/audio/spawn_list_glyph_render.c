@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave819_004f3ee0;
 extern unsigned int g_dispatchSave121_005157a4;
 extern unsigned int g_audioFlagAggBase2_00543398;
-extern unsigned int g_audioFlagAggBase_005433d8;
+extern unsigned int g_audioFlagAggBase;
 extern void AudioFlagDispatchAggregatorAH(void);
 extern void AudioFlagDispatchAggregator(void);
 extern void BootPhaseGateBracketedInit(void);
@@ -230,7 +230,7 @@ __declspec(naked) void SpawnListGlyphRender(void)
         mov      dword ptr [eax + g_audioFlagAggBase2_00543398], esi
         jmp      short L_a791
     L_a78b:
-        mov      dword ptr [eax + g_audioFlagAggBase_005433d8], esi
+        mov      dword ptr [eax + g_audioFlagAggBase], esi
     L_a791:
         add      eax, 4
         cmp      eax, 0x10
@@ -271,7 +271,7 @@ __declspec(naked) void SpawnListGlyphRender(void)
         push     eax
         jmp      short L_a82e
     L_a827:
-        mov      ecx, dword ptr [esi + g_audioFlagAggBase_005433d8]
+        mov      ecx, dword ptr [esi + g_audioFlagAggBase]
         push     ecx
     L_a82e:
         call     SplitInt32

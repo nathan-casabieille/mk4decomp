@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *     call LinearSearchByEsi(); if (g_framePauseFlag) break;
  *     arr[g_eventQueueEnd + i] = g_walkCallback; }
  */
-extern unsigned int g_stateChangeBase_005380b0;
+extern unsigned int g_stateChangeBase;
 extern unsigned int g_dispatchArg;
 extern void LinearSearchByEsi(void);
 
@@ -122,7 +122,7 @@ extern unsigned int g_arr_459200;
 
 __declspec(naked) void ThreeCharNormalize(void) {
     __asm {
-        mov     ecx, offset g_stateChangeBase_005380b0
+        mov     ecx, offset g_stateChangeBase
         push    esi
         shr     ecx, 2
         xor     esi, esi

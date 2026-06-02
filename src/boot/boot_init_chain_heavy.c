@@ -112,9 +112,9 @@ extern unsigned int g_dispatchSave523_004d5140;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_particleEmitterNode;
 extern unsigned int g_bootChainSlot3_00537e8c;
-extern unsigned int g_bootHeavyState_00537f78;
+extern unsigned int g_bootHeavyState;
 extern unsigned int g_phaseThunkSlot8_0053a520;
-extern unsigned int g_particleInitState_00541de0;
+extern unsigned int g_particleInitState;
 extern unsigned int g_dispatchSave82_00541e7c;
 extern unsigned int g_bootChainPair0_00541e80;
 extern unsigned int g_bootChainPair1_00541e84;
@@ -129,7 +129,7 @@ extern unsigned int g_dispatchSave81_00541ea4;
 extern unsigned int g_bootChainSlot2_00541ea8;
 extern unsigned int g_dispatchSave80_00541eac;
 extern unsigned int g_bootChainState4_00541eb0;
-extern unsigned int g_audioInitScaled_0054343c;
+extern unsigned int g_audioInitScaled;
 extern void AndShlStore(void);
 extern void BootPhaseGateBracketedInit(void);
 extern void Helper_GeoLoadPre(void);
@@ -144,7 +144,7 @@ __declspec(naked) void BootInitChainHeavy(void)
     __asm {
         push    esi
         xor     esi, esi
-        mov     dword ptr [g_audioInitScaled_0054343c], esi
+        mov     dword ptr [g_audioInitScaled], esi
         call    Helper_GeoLoadPre
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
@@ -247,8 +247,8 @@ __declspec(naked) void BootInitChainHeavy(void)
         jne     L_boot_init_exit
         mov     dword ptr [g_phaseThunkSlot8_0053a520], esi
         mov     dword ptr [g_bootChainSlot3_00537e8c], esi
-        mov     dword ptr [g_bootHeavyState_00537f78], esi
-        mov     dword ptr [g_particleInitState_00541de0], esi
+        mov     dword ptr [g_bootHeavyState], esi
+        mov     dword ptr [g_particleInitState], esi
         mov     dword ptr [g_particleEmitterNode], esi
         mov     dword ptr [g_dispatchSave523_004d5140], 0x7F000000
         mov     dword ptr [g_walkCallback], esi
