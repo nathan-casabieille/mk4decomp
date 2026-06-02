@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00434f10 (128b) - install-self chain extension w/ MStackPushSet0Jmp. */
-extern void CallPauseConstStoreJmp_004350f0(void);
+extern void CallPauseConstStoreJmp_MultiThunkDispatcher_then_InstallSelfPair(void);
 extern void CallSetPause(void);
 extern void FiveCallGuardSetTail(void);
 extern void GameModeAdvanceCluster(void);
@@ -164,7 +164,7 @@ __declspec(naked) void InstallSelfChainExtendCall_004351b0(void) {
         cmp     ecx, edx
         _emit   74h
         _emit   05h
-        jmp     CallPauseConstStoreJmp_004350f0
+        jmp     CallPauseConstStoreJmp_MultiThunkDispatcher_then_InstallSelfPair
         mov     dword ptr [eax + 8], 0x004351b0
         mov     ecx, dword ptr [g_baseSel]
         push    edi

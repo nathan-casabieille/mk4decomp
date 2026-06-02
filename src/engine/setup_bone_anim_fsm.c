@@ -117,7 +117,7 @@ extern void MStackBracketedScaledStores(void);
 extern void MStackPush2ChainLLInsert(void);
 extern void MStackPush2LLWalkCompare(void);
 extern void PreFightInstallCluster(void);
-extern void ScaledSaveCallRestoreJmp_00472f40(void);
+extern void ScaledSaveCallRestoreJmp_InstallSelfMagicShift_then_MStackPush2ChainLLInsert_00472f40(void);
 extern void SetupVecFsmCluster(void);
 extern void StoreLoadJmp(void);
 extern void Thunk_ScaledNeg1SetPause(void);
@@ -286,7 +286,7 @@ __declspec(naked) void SetupBoneAnimFsm(void)
         mov      dword ptr [g_eventQueueTotal], eax
         jne      L_e139
     L_e1ac:
-        call     ScaledSaveCallRestoreJmp_00472f40
+        call     ScaledSaveCallRestoreJmp_InstallSelfMagicShift_then_MStackPush2ChainLLInsert_00472f40
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e265

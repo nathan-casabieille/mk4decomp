@@ -123,7 +123,7 @@ extern void EsiInstallDecCallChain_004294a0(void);
  *     Else: g_eventQueueChild=6; install-self at entry+0x01000000; call EsiInstallDecCallChain;
  *     pause=1; pop edi/esi/ebx; ret.
  */
-extern void ScaledLitLoadCall_00480fe0(void);
+extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0(void);
 
 __declspec(naked) void StateMachineSharedTail(void) {
     __asm {
@@ -155,7 +155,7 @@ __declspec(naked) void StateMachineSharedTail(void) {
         _emit   00h
         _emit   00h
         mov     dword ptr [g_walkCallback], 0x5f
-        call    ScaledLitLoadCall_00480fe0
+        call    ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0
         cmp     dword ptr [g_framePauseFlag], edi
         _emit   0fh
         _emit   85h

@@ -27,7 +27,7 @@ extern void InstallSelfMagicShift(void);
 extern void MStackPush2ChainLLInsert(void);
 
 /* @addr 0x00472f40 */
-void ScaledSaveCallRestoreJmp_00472f40(void) {
+void ScaledSaveCallRestoreJmp_InstallSelfMagicShift_then_MStackPush2ChainLLInsert_00472f40(void) {
     g_scaledInit_00542044 = *(unsigned int*)(g_eventQueueEnd * 4 + 0x30);
     InstallSelfMagicShift();
     if (g_framePauseFlag) return;
@@ -36,7 +36,7 @@ void ScaledSaveCallRestoreJmp_00472f40(void) {
 }
 
 /* @addr 0x00472f80 */
-void ScaledSaveCallRestoreJmp_00472f80(void) {
+void ScaledSaveCallRestoreJmp_InstallSelfMagicShift_then_MStackPush2ChainLLInsert_00472f80(void) {
     g_scaledInit_00542044 = *(unsigned int*)(g_eventQueueIdx * 4 + 0x30);
     InstallSelfMagicShift();
     if (g_framePauseFlag) return;

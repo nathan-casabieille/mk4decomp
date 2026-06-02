@@ -124,7 +124,7 @@ extern void CmpJmpConstStoreJmp(void);
 extern void InstallSelfCountdownCascade(void);
 extern void MultiBranchStateFilter(void);
 extern void RoundReadyFsmCluster(void);
-extern void GDispatch1_00439c40(void);
+extern void GDispatch1_CmpEqWalkSetCallToggleDirty_then_ScaledAddrInit_InstallSelfMStackPushDispatch(void);
 extern void TieredCmpDispatch(void);
 extern void ThreeStageGateCascade(void);
 
@@ -280,7 +280,7 @@ __declspec(naked) void HitReactionStateCluster(void)
         jne      short L_3897
         cmp      dword ptr [g_dispatchState], edi
         jne      short L_3897
-        call     GDispatch1_00439c40
+        call     GDispatch1_CmpEqWalkSetCallToggleDirty_then_ScaledAddrInit_InstallSelfMStackPushDispatch
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_3897
         mov      dword ptr [g_dispatchState], edi

@@ -40,7 +40,7 @@ extern void SqDistThresholdRevertAdvance(void);
 extern void CjChainResetThreshold(void);
 
 /* @addr 0x00489cd0 */
-void DualInstallCallSwap_00489cd0(void) {
+void DualInstallCallSwap_SqDistThresholdRevertAdvance_then_SqDistThresholdRevertAdvance(void) {
     g_pendingNodeType = g_scaledInit_00542044;
     g_eventQueueTotal = g_dualB_00542020;
     SqDistThresholdRevertAdvance();
@@ -51,7 +51,7 @@ void DualInstallCallSwap_00489cd0(void) {
 }
 
 /* @addr 0x00490c80 */
-void DualInstallCallSwap_00490c80(void) {
+void DualInstallCallSwap_CjChainResetThreshold_then_CjChainResetThreshold(void) {
     g_fightGroupHead = g_player1NodeIdx;
     g_baseSel = g_gtPlayerProbe2;
     CjChainResetThreshold();

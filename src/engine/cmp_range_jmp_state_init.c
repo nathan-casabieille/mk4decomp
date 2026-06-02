@@ -23,7 +23,7 @@ extern void Cmp30000And18000(void);
 /* @addr 0x00436250 (27b): if state_ddc > 0x30000 tail-jmp GuardedSeq_PackedSelectLoad6_then_GuardedSeq,
  * else tail-jmp PrefixThunkInstallSelf3State. Entry A of the original 85-byte packed
  * block; entries B (call + mstack-push) and C (single tail-jmp) live in
- * func_00436270 / func_Cmp30000And18000. The 5-byte nop gap is filled by 0x90-fill. */
+ * func_Cmp2CallDirtyCall_then_MstackPopScaledChainPlusThunks / func_Cmp30000And18000. The 5-byte nop gap is filled by 0x90-fill. */
 void CmpRangeJmpStateInit(void) {
     int v = (int)g_table_00535ddc;
     g_walkCallback = (void (*)(void))v;

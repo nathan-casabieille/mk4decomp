@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
 extern void PendingMatch_0040eb80(void);
 extern void PoseChainInstallCluster(void);
 extern void ScaledChainNegStore(void);
-extern void CallPauseConstStoreJmp_00481360(void);
+extern void CallPauseConstStoreJmp_BootChainMaskAndDispatch_then_MStackBitLoopTripleCall(void);
 extern void ScaledLoadCmp1003JmpDispatch(void);
 extern void PushCallPauseScaledJmpInd(void);
 extern void ScaledInit_GuardedDirtyXformFromTable_g_scaledInit(void);
@@ -137,7 +137,7 @@ extern void CallSetPause(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void GateDispatch6c(void);
 extern void ScaledAndAlf7(void);
-extern void ScaledLitLoadCall_00480fe0(void);
+extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0(void);
 
 __declspec(naked) void MainTickChain(void)
 {
@@ -207,7 +207,7 @@ __declspec(naked) void MainTickChain(void)
     L_1193:
         cmp      eax, esi
         jne      short L_11a8
-        call     CallPauseConstStoreJmp_00481360
+        call     CallPauseConstStoreJmp_BootChainMaskAndDispatch_then_MStackBitLoopTripleCall
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
     L_11a8:
@@ -305,7 +305,7 @@ __declspec(naked) void MainTickChain(void)
         /* === h2 (0x481340): wait+tail-jmp 0041f830 === */
     L_1340:
         mov      dword ptr [g_walkCallback], 0x2e
-        call     ScaledLitLoadCall_00480fe0
+        call     ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_135d

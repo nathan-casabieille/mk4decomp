@@ -115,7 +115,7 @@ extern void CameraAimSplineDriver(void);
 extern void DispatchOrInitFightGroup(void);
 extern void DualEntryInitDispatch(void);
 extern void PendingMatch_00432110(void);
-extern void PendingMatch_004326a0(void);
+extern void PendingMatch_ZeroThreeFields6c_then_ZeroThreeSlots(void);
 extern void ScaledInitWithCounterAndType_004314f0(void);
 
 __declspec(naked) void PoseFsmTriHelpers(void)
@@ -165,7 +165,7 @@ __declspec(naked) void PoseFsmTriHelpers(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1700
-        call     PendingMatch_004326a0
+        call     PendingMatch_ZeroThreeFields6c_then_ZeroThreeSlots
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1700

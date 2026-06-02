@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern void Wrapper_OrListLoop_004de3f8(void);
 extern void DualBlockChainInitBody(void);
-extern void ScaledLitLoadCall_00480fe0(void);
+extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0(void);
 extern void CallPauseScaledStoreCopyJmp(void);
 
 /* @addr 0x00467d40 (280b game) - 3-state install-self with state-dependent dispatch.
@@ -189,7 +189,7 @@ __declspec(naked) void InstallSelfStateCounter(void) {
         _emit   06h
         inc     dword ptr [g_installSelfCounter]
         mov     dword ptr [g_walkCallback], 0xac
-        call    ScaledLitLoadCall_00480fe0
+        call    ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

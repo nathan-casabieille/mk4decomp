@@ -29,7 +29,7 @@ extern void ScaledChainCallPauseSetJmp(void);
 extern void Wrapper_IterLoad_0048fd30_004ed980(void);
 
 /* @addr 0x00480fe0 */
-void ScaledLitLoadCall_00480fe0(void) {
+void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0(void) {
     unsigned int idx = ((unsigned int)&g_lit_004ef4d0 >> 2) + (unsigned int)g_walkCallback;
     g_scaledInit_00542044 = idx;
     g_scaledInit_00542048 = *(unsigned int*)(idx * 4);
@@ -39,7 +39,7 @@ void ScaledLitLoadCall_00480fe0(void) {
 }
 
 /* @addr 0x00481020 */
-void ScaledLitLoadCall_00481020(void) {
+void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00481020(void) {
     unsigned int idx = ((unsigned int)&g_lit_004ef7d8 >> 2) + (unsigned int)g_walkCallback;
     g_scaledInit_00542044 = idx;
     g_scaledInit_00542048 = *(unsigned int*)(idx * 4);

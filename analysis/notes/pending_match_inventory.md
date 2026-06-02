@@ -17,7 +17,7 @@ Total: 99 functions, sorted by size.
 - top callees: `StoreTwoCall`
 - top globals: `g_currentNodeIdx`
 
-## PendingMatch_004326a0 @ 0x4326a0 (108b)
+## PendingMatch_ZeroThreeFields6c_then_ZeroThreeSlots @ 0x4326a0 (108b)
 
 - file: `src/engine/pending_match_variants.c`
 - traits: SEH (fs:[0])
@@ -224,7 +224,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/engine/pending_match_variants.c`
 - traits: (plain)
-- top callees: `ArgSarStoreJmp`×13, `ScaledLoadJmp_00429390`×3, `ScaledLitLoadCall_00481020`×3, `Cascade3ChainInit`×3, `PushPopWalkSet1006`×2, `PackedLoadAdvanceJmp`×2, `ScaledLitAddJmp`×2, `SfxAttenuateAndApply`×2
+- top callees: `ArgSarStoreJmp`×13, `ScaledLoadJmp_00429390`×3, `ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00481020`×3, `Cascade3ChainInit`×3, `PushPopWalkSet1006`×2, `PackedLoadAdvanceJmp`×2, `ScaledLitAddJmp`×2, `SfxAttenuateAndApply`×2
 - top globals: `g_framePauseFlag`×18, `0x54206c`×12, `0x542060`×12, `0x537e94`×2, `g_currentNodeIdx`×2, `0x52ab40`, `0x542094`, `0x535ddc`
 
 ## PendingMatch_00473640 @ 0x473640 (1608b)
@@ -539,7 +539,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/engine/pending_match_variants.c`
 - traits: SEH (fs:[0]), x87 FPU, cond jmps: 11
-- top callees: `ArgSarStoreJmp`×22, `TwoCallTail_ScaledStore501Set8Jmp_then_Cascade3ChainInit_then_StoreLitRetSet2`×9, `MStackPushCallPopDirtyJmp_0042cc90`×7, `ScaledZeroFour`×3, `FiveCallGuardSetTail`×3, `CallPauseScaledStoreCopyJmp`×3, `ScaledLitLoadCall_00481020`×3, `EsiEdiAliasDualMul10`×2
+- top callees: `ArgSarStoreJmp`×22, `TwoCallTail_ScaledStore501Set8Jmp_then_Cascade3ChainInit_then_StoreLitRetSet2`×9, `MStackPushCallPopDirtyJmp_0042cc90`×7, `ScaledZeroFour`×3, `FiveCallGuardSetTail`×3, `CallPauseScaledStoreCopyJmp`×3, `ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00481020`×3, `EsiEdiAliasDualMul10`×2
 - top globals: `g_framePauseFlag`×51, `0x54206c`×12, `0x542060`×11, `g_currentNodeIdx`×9, `g_eventQueueChild`×2, `g_player1NodeIdx`×2, `g_fightGroupHead`×2, `g_eventQueueIdx`×2
 
 ## PendingMatch_004155c0 @ 0x4155c0 (2686b)

@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
  *     and 0x200 -> g_xformScratch94. If nonzero jmp PrefixThunkInstallSelf3State.
  *     Else: g_walkCallback &= 0xff; push 0x004e4668; call JumpTableDispatch; pop; ret.
  */
-extern void CallPauseConstStoreJmp_00438170(void);
+extern void CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp(void);
 extern void EntryThenDispatcherPair(void);
 extern void InstallSelfPacked0x2005(void);
 extern void JumpTableDispatch(void);
@@ -155,7 +155,7 @@ __declspec(naked) void TripleBlockInstallThresholdMasked(void) {
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
-        call    CallPauseConstStoreJmp_00438170
+        call    CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         ret

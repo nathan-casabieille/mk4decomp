@@ -114,7 +114,7 @@ extern void GatedWordPushCall(void);
 extern void GuardedSeq_DualPushCmp12Dispatch_then_ByteWordTableTaggedDispatch(void);
 extern void GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7d(void);
 extern void MStackPush4ChainCopyPop4(void);
-extern void ScaledLoadTwoCallLit_00451f70(void);
+extern void ScaledLoadTwoCallLit_MStackPush2RunCountdown_then_MStackBracket7_DispatchAndChain_then_StunDownCluster_00451f70(void);
 extern void Set2CallIncJmp(void);
 extern void Thunk_ScaledNeg1SetPause(void);
 
@@ -224,7 +224,7 @@ __declspec(naked) void JuggleFsmCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
-        call     ScaledLoadTwoCallLit_00451f70
+        call     ScaledLoadTwoCallLit_MStackPush2RunCountdown_then_MStackBracket7_DispatchAndChain_then_StunDownCluster_00451f70
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
@@ -248,7 +248,7 @@ __declspec(naked) void JuggleFsmCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
-        call     ScaledLoadTwoCallLit_00451f70
+        call     ScaledLoadTwoCallLit_MStackPush2RunCountdown_then_MStackBracket7_DispatchAndChain_then_StunDownCluster_00451f70
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0

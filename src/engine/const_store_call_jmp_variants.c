@@ -18,7 +18,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void ChainDirtyBitWalker(void);
 extern void DualScaledLoadStoreJmp(void);
-void ConstStoreCallJmp_00448fa0(void) {
+void ConstStoreCallJmp_ChainDirtyBitWalker_then_DualScaledLoadStoreJmp(void) {
     g_walkCallback = (void(*)(void))3;
     ChainDirtyBitWalker();
     if (g_framePauseFlag) return;
@@ -28,7 +28,7 @@ void ConstStoreCallJmp_00448fa0(void) {
 /* @addr 0x0046ff60 (30b): same shape, value=4 */
 extern void ByteWordTableTaggedDispatch(void);
 extern void Phase3PackedInstallSelf(void);
-void ConstStoreCallJmp_0046ff60(void) {
+void ConstStoreCallJmp_ByteWordTableTaggedDispatch_then_Phase3PackedInstallSelf(void) {
     g_walkCallback = (void(*)(void))4;
     ByteWordTableTaggedDispatch();
     if (g_framePauseFlag) return;

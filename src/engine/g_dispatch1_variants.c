@@ -10,7 +10,7 @@ extern unsigned int g_scaledInit_00542044;
 /* @addr 0x00439c40 (29b): same as above but mask=1, jne */
 extern void CmpEqWalkSetCallToggleDirty(void);
 extern void ScaledAddrInit_InstallSelfMStackPushDispatch(void);
-void GDispatch1_00439c40(void) {
+void GDispatch1_CmpEqWalkSetCallToggleDirty_then_ScaledAddrInit_InstallSelfMStackPushDispatch(void) {
     CmpEqWalkSetCallToggleDirty();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 1) return;
@@ -20,7 +20,7 @@ void GDispatch1_00439c40(void) {
 /* @addr 0x00488da0 (29b): mask=1, je (skip-then-jmp) */
 extern void DualCondMatchSet(void);
 extern void ScaledInitWithCounterAndType_004314f0(void);
-void GDispatch1_00488da0(void) {
+void GDispatch1_DualCondMatchSet_then_ScaledInitWithCounterAndType(void) {
     DualCondMatchSet();
     if (g_framePauseFlag) return;
     if (!(g_xformDirtyFlags & 1)) return;

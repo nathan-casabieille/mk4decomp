@@ -114,7 +114,7 @@ extern void DualEntryBitFlagDispatch(void);
 extern void MStackChainBit2Cascade(void);
 extern void PendingMatch_0048d7b0(void);
 extern void PushCjWalkDispatchPop(void);
-extern void ScaledLitLoadCall_00480fe0(void);
+extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0(void);
 extern void SfxAttenuateAndApply(void);
 
 __declspec(naked) void MStackChainInstallDispatch(void)
@@ -265,7 +265,7 @@ __declspec(naked) void MStackChainInstallDispatch(void)
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], ecx
-        call     ScaledLitLoadCall_00480fe0
+        call     ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d7ad

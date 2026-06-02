@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   of 0x10042 to g_eventQueueNotMask and installs self at 0x00434990.
  */
 extern unsigned int g_dispatchSave1580;
-extern void CallPauseConstStoreJmp_00438170(void);
+extern void CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp(void);
 extern void HitReactionDispatcher(void);
 extern void InstallSelf3StateDualBody(void);
 extern void Wrapper_CmpDualPatchScaledRangeJmp_004e4990(void);
@@ -185,7 +185,7 @@ __declspec(naked) void InstallSelfStatePush_00435d40(void) {
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     [eax*4 + 0x84], edx
-        call    CallPauseConstStoreJmp_00438170
+        call    CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         ret
@@ -224,7 +224,7 @@ __declspec(naked) void InstallSelfStatePush_00435b00(void) {
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     [eax*4 + 0x84], edx
-        call    CallPauseConstStoreJmp_00438170
+        call    CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         ret

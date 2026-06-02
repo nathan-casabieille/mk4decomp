@@ -34,7 +34,7 @@ extern void AlarmCountdownInstall(void);   /* 0x004609e0 */
 extern void StateDispatchYield(void);   /* 0x00471190 */
 extern void GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7d(void);   /* 0x00473f10 */
 extern void InstallSelfChainEsi(void);   /* 0x004753b0 */
-extern void ScaledLitLoadCall_00481020(void);   /* 0x00481020 */
+extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00481020(void);   /* 0x00481020 */
 extern void InstallSelfTwoTailJmp(void);   /* 0x00483f30 */
 extern void DualLoadDualStoreJmp(void);   /* 0x00485d70 */
 extern void InstallSelfMStackIndirect(void);   /* 0x00487920 */
@@ -294,7 +294,7 @@ void SetJmp_InstallSelfMStackIndirect(void) {
 /* @addr 0x00489020 */
 void SetJmp_ScaledLitLoadCall(void) {
     g_walkCallback = (void (*)(void))0x00000002;
-    ScaledLitLoadCall_00481020();
+    ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00481020();
 }
 
 /* @addr 0x0048acc0 */

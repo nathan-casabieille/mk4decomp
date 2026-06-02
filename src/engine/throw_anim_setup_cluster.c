@@ -125,7 +125,7 @@ extern void ThrowAnimSetupCluster(void);
  */
 extern void ArgSarStoreJmp(void);
 extern void ByteWordTableTaggedDispatch(void);
-extern void CallPauseScaledStoreJmp_00428820(void);
+extern void CallPauseScaledStoreJmp_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_then_CallPauseDirty1JmpDirty4StackPush(void);
 extern void CjInstallSelfRouter(void);
 extern void FiveCallGuardSetTail(void);
 extern void SlotPhaseResetInstallChain(void);
@@ -173,7 +173,7 @@ __declspec(naked) void InstallSelfMultiCascadeChainCopy(void) {
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
-        call    CallPauseScaledStoreJmp_00428820
+        call    CallPauseScaledStoreJmp_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_then_CallPauseDirty1JmpDirty4StackPush
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret

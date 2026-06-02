@@ -116,7 +116,7 @@ extern void Wrapper_PackedAdvanceCallTailJmp_004e46d0(void);
 extern void DualEntry5WayThreshold(void);
 extern void InstallSelfMStackPushDispatch(void);
 extern void HitFsmCluster(void);
-extern void CallPauseConstStoreJmp_00438170(void);
+extern void CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp(void);
 extern void SetJmp_StateDispatchYield_00438f70(void);
 extern void PrefixThunkInstallSelf3State(void);
 extern void InstallSelfDecBitCheck(void);
@@ -185,7 +185,7 @@ __declspec(naked) void MoveFsmCluster(void)
         mov      dword ptr [eax + 4], ecx
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edx
-        call     CallPauseConstStoreJmp_00438170
+        call     CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi

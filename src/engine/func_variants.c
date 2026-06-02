@@ -48,7 +48,7 @@ extern void ArgSarStoreJmp(void);
 extern void ArgSar_Set0_Jmp(void);
 extern void AudioVolumeRescale(void);
 extern void CallSetPause(void);
-extern void ConstStoreCallJmp_00448fa0(void);
+extern void ConstStoreCallJmp_ChainDirtyBitWalker_then_DualScaledLoadStoreJmp(void);
 extern void DirtyOrFlagDispatch(void);
 extern void DispatcherComplex181_00426310(void);
 extern void DispatcherComplex181_00426490(void);
@@ -134,7 +134,7 @@ void func_set_g_eventQueueChild_then_PunchDispatcherCluster_00497b40(void) {
 /* @addr 0x00436270 (47b): call Cmp2CallDirtyCall; if non-zero ret;
  * else mstack-push HitReactionStateCluster, set walkCallback=2,
  * tail-jmp MstackPopScaledChainPlusThunks. Orphan sub-entry. */
-void func_00436270(void) {
+void func_Cmp2CallDirtyCall_then_MstackPopScaledChainPlusThunks(void) {
     if (Cmp2CallDirtyCall() != 0) return;
     g_walkCallback = (void (*)(void))2;
     g_matrixStackTop++;
@@ -151,7 +151,7 @@ void func_Cmp30000And18000(void) {
 /* @addr 0x00437100 (52b): call LeaPlus22StoreSelf; if !pause set walk=3,
  * mstack-push OFFSET DualCallPauseJmpDual, tail-jmp MstackPopScaledChainPlusThunks.
  * Orphan sub-entry of the original packed block. */
-void func_00437100(void) {
+void func_LeaPlus22StoreSelf_then_MstackPopScaledChainPlusThunks(void) {
     LeaPlus22StoreSelf();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))3;
@@ -199,7 +199,7 @@ void func_CallSetPause(void) {
 
 /* @addr 0x00482700 (56b): triple call chain with pause-gates; final
  * push+call+pause gate then tail-jmp LiteralPushCallEntZero. */
-void func_00482700(void) {
+void func_GateDispatch6c_then_ScaledChainCmp61_then_ArgSarStoreJmp_then_LiteralPushCallEntZero(void) {
     GateDispatch6c();
     if (g_framePauseFlag != 0) return;
     ScaledChainCmp61();
@@ -294,7 +294,7 @@ void func_00439fa0(void) {
 
 /* h2 @ 0x00498730 (64b): threshold check + tail-jmp
  * ScaledIndirectJmp_0049c850. */
-void func_00498730(void) {
+void func_PushChainAddCallPop_then_Vec2SumMul10ChainCompute_then_ScaledIndirectJmp(void) {
     PushChainAddCallPop();
     if (g_framePauseFlag) return;
     Vec2SumMul10ChainCompute();
@@ -407,7 +407,7 @@ __declspec(naked) void func_00498790(void)
 
 /* h2 @ 0x00498930 (80b): event 004f21d0 forwarder w/ 0x30b status.
  * Sister of h7 (different imm and event addr). */
-void func_00498930(void) {
+void func_ScaledIndexConditionalAdd_then_CondPickDualStore(void) {
     unsigned int v;
     g_walkCallback = 7;
     ScaledIndexConditionalAdd();
@@ -507,7 +507,7 @@ __declspec(naked) void func_00498980(void)
 
 /* h4 @ 0x00498af0 (48b): Vec2SumMul10ChainCompute + threshold check
  * (signed cmp [70] vs [74]) -> tail-jmp ScaledIndirectJmp. */
-void func_00498af0(void) {
+void func_Vec2SumMul10ChainCompute_then_ScaledIndirectJmp(void) {
     Vec2SumMul10ChainCompute();
     if (g_framePauseFlag) return;
     if ((int)g_eventQueueCurrent <= (int)g_eventQueueWorkType) return;
@@ -597,8 +597,8 @@ void func_0047c3c0(void) {
 }
 
 /* h4 @ 0x0047c3f0 (288b naked): pose-fn 2-state. Keep naked: self-ref
- * via OFFSET L_c3f0 + cross-ref to func_0047c510 via OFFSET. */
-extern void func_0047c510(void);
+ * via OFFSET L_c3f0 + cross-ref to func_SfxAttenuateAndApply_then_PendingMatch via OFFSET. */
+extern void func_SfxAttenuateAndApply_then_PendingMatch(void);
 __declspec(naked) void func_0047c3f0(void)
 {
     __asm {
@@ -634,7 +634,7 @@ __declspec(naked) void func_0047c3f0(void)
         mov      eax, dword ptr [g_matrixStackTop]
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
-        mov      dword ptr [eax*4], OFFSET func_0047c510
+        mov      dword ptr [eax*4], OFFSET func_SfxAttenuateAndApply_then_PendingMatch
         jmp      InstallSelfIndirectJmp
     L_c4a2:
         mov      dword ptr [g_eventQueueNotMask], 0x30000
@@ -722,7 +722,7 @@ void func_00482220(void) {
 }
 
 /* h4 @ 0x00482240 (80b): 0x1b333 + ScaledMove48to58 + event 004edbf0. */
-void func_00482240(void) {
+void func_GateDispatch6c_then_Wrapper_IterLoad_0048fd30_then_ScaledMove48to58(void) {
     GateDispatch6c();
     if (g_framePauseFlag) return;
     g_walkCallback = 0x1b333;
@@ -794,7 +794,7 @@ __declspec(naked) void func_004822e0(void)
 
 /* h9 @ 0x00482360 (80b): 0x8000 + CmpP1DualInitStore + chain + event
  * 004edca8. (Comment said 0x482350 but real addr is 0x482360.) */
-void func_00482360(void) {
+void func_CmpP1DualInitStore_then_CjTableThresholdDispatch_then_GateDispatch6c(void) {
     g_walkCallback = 0x8000;
     CmpP1DualInitStore_00482ab0();
     if (g_framePauseFlag) return;
@@ -815,7 +815,7 @@ void func_CjTableThresholdDispatch_then_GateDispatch6c_then_call_ArgSarStoreJmp_
 }
 
 /* h11 @ 0x004823e0 (64b): event 004edd20 + tail-jmp Wrapper_Cascade5StageInit_004ef208. */
-void func_004823e0(void) {
+void func_CjTableThresholdDispatch_then_GateDispatch6c_then_Wrapper_Cascade5StageInit(void) {
     CjTableThresholdDispatch();
     if (g_framePauseFlag) return;
     GateDispatch6c();
@@ -827,7 +827,7 @@ void func_004823e0(void) {
 
 /* h12 @ 0x00482420 (80b): 0x8000 + CmpP1DualInitStore + chain +
  * event 004edd58 + tail-jmp Wrapper_Cascade5StageInit_004ef208. */
-void func_00482420(void) {
+void func_CmpP1DualInitStore_then_CjTableThresholdDispatch_then_GateDispatch6c_then_Wrapper_Cascade5StageInit(void) {
     g_walkCallback = 0x8000;
     CmpP1DualInitStore_00482ab0();
     if (g_framePauseFlag) return;
@@ -865,7 +865,7 @@ void func_CjTableThresholdDispatch_then_GateDispatch6c_then_call_ArgSarStoreJmp_
 
 /* h15 @ 0x004824e0 (30b): wait 6 + EntryThunkBodyStateMachine -> tail
  * EightEntryAlarmDispatch. */
-void func_004824e0(void) {
+void func_EntryThunkBodyStateMachine_then_EightEntryAlarmDispatch(void) {
     g_eventQueueNotMask = 6;
     EntryThunkBodyStateMachine();
     if (g_framePauseFlag) return;
@@ -1671,7 +1671,7 @@ __declspec(naked) void func_00448990(void) {
         dec      eax
         mov      dword ptr [g_eventQueueEnd], eax
         jns      L_8e88
-        call     ConstStoreCallJmp_00448fa0
+        call     ConstStoreCallJmp_ChainDirtyBitWalker_then_DualScaledLoadStoreJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8f95
@@ -1682,7 +1682,7 @@ __declspec(naked) void func_00448990(void) {
         dec      eax
         mov      dword ptr [g_eventQueueEnd], eax
         jns      L_8f2d
-        call     ConstStoreCallJmp_00448fa0
+        call     ConstStoreCallJmp_ChainDirtyBitWalker_then_DualScaledLoadStoreJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8f95

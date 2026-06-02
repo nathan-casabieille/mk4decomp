@@ -29,8 +29,8 @@ extern unsigned int g_scenegraphWalkEnd;
 extern unsigned int g_bootInitSaveSlot;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_xformScratch94;
-extern void DualInstallCallSwap_00489cd0(void);
-extern void DualInstallCallSwap_00490c80(void);
+extern void DualInstallCallSwap_SqDistThresholdRevertAdvance_then_SqDistThresholdRevertAdvance(void);
+extern void DualInstallCallSwap_CjChainResetThreshold_then_CjChainResetThreshold(void);
 extern void FpuSqrtMul(void);
 extern void GeoTransformDispatchAndApply(void);
 extern void Mul10Tail(void);
@@ -376,7 +376,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         test     ecx, ecx
         mov      dword ptr [g_dispatchSave_00537ef4], eax
         jge      L_97ba
-        call     DualInstallCallSwap_00489cd0
+        call     DualInstallCallSwap_SqDistThresholdRevertAdvance_then_SqDistThresholdRevertAdvance
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_983c
@@ -424,7 +424,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         test     eax, eax
         jne      L_983c
     L_9837:
-        call     DualInstallCallSwap_00490c80
+        call     DualInstallCallSwap_CjChainResetThreshold_then_CjChainResetThreshold
     L_983c:
         pop      edi
         pop      esi

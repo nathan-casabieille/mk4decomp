@@ -119,7 +119,7 @@ extern void EsiInstallDecCallChain_004294a0(void);
 extern void GuardedPackedSlotInit(void);
 extern void GuardedPushCall_CopyJmp_then_ArgSarStoreJmp_0043b980(void);
 extern void InstallSelfDoubleMStack(void);
-extern void ScaledLitLoadCall_00480fe0(void);
+extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0(void);
 extern void ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain(void);
 extern void SfxAttenuateAndApply(void);
 extern void StateMachine4ArmCascade(void);
@@ -307,7 +307,7 @@ __declspec(naked) void VersusScreenEventPoseCluster(void)
         test     eax, eax
         jne      short L_b971
         mov      dword ptr [g_walkCallback], 0x88
-        call     ScaledLitLoadCall_00480fe0
+        call     ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b971

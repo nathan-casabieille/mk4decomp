@@ -122,13 +122,13 @@ extern void TableLookupCall_g_table_004efa00(void);
  *   state==0: call MStackChainBit2Cascade; if pause ret.
  *     If bit0(0054208c): tail-call InstallSelfCascadingCalls; pop+ret.
  *     Else: call ScaledZeroFour; if pause ret. g_walkCallback=5; call DispatcherComplex131_00431530; if pause ret.
- *     chain[baseSel*4+0x74]=0x1000; g_walkCallback=0x62; call ScaledLitLoadCall_00480fe0; if pause ret.
+ *     chain[baseSel*4+0x74]=0x1000; g_walkCallback=0x62; call ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0; if pause ret.
  *     g_walkCallback=0x3e; call TableLookupCall_g_table_004efa00; if pause ret.
  *     Install-self at entry; state=1; g_pendingNodeType=0x33; pause=1; pop+ret.
  */
 extern void FiveCallGuardSetTail(void);
 extern void MStackChainBit2Cascade(void);
-extern void ScaledLitLoadCall_00480fe0(void);
+extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0(void);
 
 __declspec(naked) void Install3StateLongSeq(void) {
     __asm {
@@ -205,7 +205,7 @@ __declspec(naked) void Install3StateLongSeq(void) {
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x74], 0x1000
         mov     dword ptr [g_walkCallback], 0x62
-        call    ScaledLitLoadCall_00480fe0
+        call    ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

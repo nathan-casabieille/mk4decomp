@@ -34,7 +34,7 @@ extern int  TripleScaledChainStore(void *p);
 extern void StageEventStartCluster(void);
 
 /* @addr 0x0047fec0 */
-void FourConstCallLitCallJmp_0047fec0(void) {
+void FourConstCallLitCallJmp_Wrapper_IterLoad_0048fd30_then_TripleScaledChainStore_then_StageEventStartCluster_0047fec0(void) {
     ((ScenegraphNode *)(g_baseSel * 4))->fsm_state = 0x1011;
     g_phaseTimer = 5;
     g_walkCallback = (void(*)(void))0x8000;
@@ -47,7 +47,7 @@ void FourConstCallLitCallJmp_0047fec0(void) {
 }
 
 /* @addr 0x0047ff20 */
-void FourConstCallLitCallJmp_0047ff20(void) {
+void FourConstCallLitCallJmp_Wrapper_IterLoad_0048fd30_then_TripleScaledChainStore_then_StageEventStartCluster_0047ff20(void) {
     ((ScenegraphNode *)(g_baseSel * 4))->fsm_state = 0x1011;
     g_phaseTimer = 5;
     g_walkCallback = (void(*)(void))0x8000;

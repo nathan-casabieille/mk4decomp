@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x0047aef0 (114b)
  *   esi-alias install-self pattern: if slot used,
  *   call FiveCallGuardSetTail; pop esi; ret;
- *   else: g_walkCallback=0xa8; call ScaledLitLoadCall_00480fe0; if pause: ret;
+ *   else: g_walkCallback=0xa8; call ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0; if pause: ret;
  *   call ScaledZeroFour; if pause: ret;
  *   eax=1; install self ([esi+8]=0x47aef0); g_pendingNodeType=0x14;
  *   g_framePauseFlag=1; pop esi; ret.
@@ -126,7 +126,7 @@ void EsiInstallSetCallChain(void) {
         return;
     }
     g_walkCallback = (void (*)(void))0xa8;
-    ScaledLitLoadCall_00480fe0();
+    ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0();
     if (g_framePauseFlag != 0) return;
     ScaledZeroFour();
     if (g_framePauseFlag != 0) return;

@@ -116,7 +116,7 @@ extern void EsiEdiAliasDualMul10(void);
 extern void FiveCallGuardSetTail(void);
 extern void GuardedSeq_MStackPushSet0004_then_MoveSelectorCluster(void);
 extern void MoveSelectorCluster(void);
-extern void ScaledLitLoadCall_00480fe0(void);
+extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0(void);
 extern void ScaledZero44(void);
 extern void TableLookupCall_g_table_004efa00(void);
 extern void TwoPhaseInstallScaledPackedPtr(void);
@@ -290,7 +290,7 @@ __declspec(naked) void RunCluster(void)
         jle      short L_d954
     L_d91c:
         mov      dword ptr [g_walkCallback], 0x53
-        call     ScaledLitLoadCall_00480fe0
+        call     ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d97c

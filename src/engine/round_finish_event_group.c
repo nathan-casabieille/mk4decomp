@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern void StackPopDispatchTagged(void);
 extern void ArgSarStoreJmp(void);
-extern void ScaledLitLoadCall_00480fe0(void);
+extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0(void);
 extern void RoundFinishEventGroup(void);
 extern void CmpP1DualInitStore_00482ab0(void);
 extern void ScaledCmpJlJmp(void);
@@ -177,7 +177,7 @@ __declspec(naked) void GameModeAdvanceCluster(void)
         mov      dword ptr [g_eventQueueCurrent], eax
         jl       short L_20ab
         mov      dword ptr [g_walkCallback], 0xe
-        call     ScaledLitLoadCall_00480fe0
+        call     ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_20c6

@@ -121,7 +121,7 @@ extern unsigned int g_fightAxisPosY;
 extern void FiveCallGuardSetTail(void);
 extern void MStackPushSet0008(void);
 extern void ScaledIndexConditionalAdd(void);
-extern void ScaledLitLoadCall_00480fe0(void);
+extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0(void);
 
 extern unsigned int g_matrixStack_arr;
 
@@ -151,7 +151,7 @@ __declspec(naked) void InstallSelfCascadingCalls(void) {
         mov     ecx, dword ptr [g_baseSel]
         mov     dword ptr [ecx*4 + 0x74], 0x00001015
         mov     dword ptr [g_walkCallback], 7
-        call    ScaledLitLoadCall_00480fe0
+        call    ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

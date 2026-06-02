@@ -112,7 +112,7 @@ extern void EntryThunkBodyStateMachine(void);
 extern void EsiEdiAliasDualMul10(void);
 extern void EsiInstallSetCallChain(void);
 extern void InstallSelfPauseTwoCall(void);
-extern void ScaledLitLoadCall_00480fe0(void);
+extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0(void);
 extern void TripleFieldCopyHi(void);
 extern void TripleFieldCopyJmpHi(void);
 
@@ -132,7 +132,7 @@ __declspec(naked) void TriPhaseDecCounterListAdvance(void)
         dec     eax
         je      short L_tpdcla_phase1
         mov     dword ptr [g_walkCallback], 0x9d
-        call    ScaledLitLoadCall_00480fe0
+        call    ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_tpdcla_abort

@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void GDispatch1_00488da0(void);
+extern void GDispatch1_DualCondMatchSet_then_ScaledInitWithCounterAndType(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void InstallSelfScaledChain(void);
 extern void MStackFrameCdeclDouble(void);
@@ -137,7 +137,7 @@ __declspec(naked) void Cascade5StageInit(void) {
         mov     eax, dword ptr [esp + 4]
         sar     eax, 2
         mov     dword ptr [g_cj_00542054], eax
-        call    GDispatch1_00488da0
+        call    GDispatch1_DualCondMatchSet_then_ScaledInitWithCounterAndType
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

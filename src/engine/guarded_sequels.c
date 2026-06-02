@@ -35,11 +35,11 @@ extern void GuardedSeq_CmpP1DualInitStore_then_ScaledIndirectJmp(void);   /* 0x0
 extern void ScaledIndirectJmp_00433bf0(void);   /* 0x00433bf0 */
 extern void PackedSelectLoad6(void);   /* 0x00433c60 */
 extern void CmpP1DualInitStore_00433d30(void);   /* 0x00433d30 */
-extern void ScaledLoadTwoCallDualConst_0044ba30(void);   /* 0x0044ba30 */
+extern void ScaledLoadTwoCallDualConst_MStackPush2RunCountdown_then_MStackBracket7_DispatchAndChain_0044ba30(void);   /* 0x0044ba30 */
 extern void PendingMatch_0044baa0(void);   /* 0x0044baa0 */
 extern void PoseCopyIdleCluster(void);   /* 0x004537a0 */
 extern void BitmapBlitRunLength(void);   /* 0x004592f0 */
-extern void ScaledLoadTwoCallDualConst_00467c30(void);   /* 0x00467c30 */
+extern void ScaledLoadTwoCallDualConst_MStackPush2RunCountdown_then_MStackBracket7_DispatchAndChain_00467c30(void);   /* 0x00467c30 */
 extern void GuardedTripleCallSetTail(void);   /* 0x00467ca0 */
 extern void GuardedSeq_DualSetShiftCall_then_DualPushSet7dCallPop(void);   /* 0x00473f50 */
 extern void DualSetShiftCall(void);   /* 0x00473f90 */
@@ -150,7 +150,7 @@ void GuardedSeq_ScaledZeroFour_then_StackPopDispatchTagged(void) {
 
 /* @addr 0x0044ba10 */
 void GuardedSeq_ScaledLoadTwoCallDualConst_then_GuardedSeq_0044ba10(void) {
-    ScaledLoadTwoCallDualConst_0044ba30();
+    ScaledLoadTwoCallDualConst_MStackPush2RunCountdown_then_MStackBracket7_DispatchAndChain_0044ba30();
     if (g_framePauseFlag) return;
     GuardedSeq_DualSetShiftCall_then_DualPushSet7dCallPop();
 }
@@ -185,7 +185,7 @@ void GuardedSeq_MStackNegAwareMul10Pair_then_ChainTableWalkStore(void) {
 
 /* @addr 0x00467c10 */
 void GuardedSeq_ScaledLoadTwoCallDualConst_then_GuardedSeq_00467c10(void) {
-    ScaledLoadTwoCallDualConst_00467c30();
+    ScaledLoadTwoCallDualConst_MStackPush2RunCountdown_then_MStackBracket7_DispatchAndChain_00467c30();
     if (g_framePauseFlag) return;
     GuardedSeq_DualSetShiftCall_then_DualPushSet7dCallPop();
 }

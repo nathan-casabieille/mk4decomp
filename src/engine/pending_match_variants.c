@@ -255,7 +255,7 @@ extern void CallPauseScaledDecJmp(void);
 extern void PushPop84TripleCall(void);
 extern void Vec3DeltaDualMul10(void);
 extern void FiveCallGuardSetTail(void);
-extern void ScaledLitLoadCall_00480fe0(void);
+extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0(void);
 extern void Thunk_InstallSelfChainSetB333v2(void);
 extern void HitReactionDispatcher(void);
 extern void Cmp2DirtyToggle(void);
@@ -271,7 +271,7 @@ extern void DispatchSwitchWalkCmp(void);
 extern void Wrapper_CmpDualPatchScaledRangeJmp_004e4850(void);
 extern void ScaledAndCheckJmp(void);
 extern void AudioVolumeRescale(void);
-extern void CallPauseConstStoreJmp_004350f0(void);
+extern void CallPauseConstStoreJmp_MultiThunkDispatcher_then_InstallSelfPair(void);
 extern void InstallSelfPair(void);
 extern void MStackPushSet6Jmp(void);
 extern void MStackPushSet0Jmp(void);
@@ -418,7 +418,7 @@ extern void ScaledClearJmp_InstallSelfBitGated(void);
 extern void ScaledLoadJmp_00428d20(void);
 extern void ScaledMove74to70(void);
 extern void ScaledOrStore_004677a0(void);
-extern void ScaledSaveCallRestoreJmp_00472f80(void);
+extern void ScaledSaveCallRestoreJmp_InstallSelfMagicShift_then_MStackPush2ChainLLInsert_00472f80(void);
 extern void SlotEvent3EntryChain(void);
 extern void SwapOrPassSet(void);
 extern void Ten404c40_404bd0(void);
@@ -592,7 +592,7 @@ extern void EsiEdiAliasDualMul10(void);
 extern void EsiInstallChainCmpDualCall(void);
 extern void EsiInstallSetCbChainExtend_0048a970(void);
 extern void FiveCallScaledChainTailJmp(void);
-extern void FourConstCallLitCallJmp_0047ff20(void);
+extern void FourConstCallLitCallJmp_Wrapper_IterLoad_0048fd30_then_TripleScaledChainStore_then_StageEventStartCluster_0047ff20(void);
 extern void FourFieldCopyCallSet(void);
 extern void GDispatch4(void);
 extern void GameInstall2BodyMul10ScaledInit(void);
@@ -669,7 +669,7 @@ extern void Screen_ArcadeEnding(void);
 extern void PendingMatch_00429ef0(void);
 extern void PendingMatch_0042d240(void);
 extern void PendingMatch_00432110(void);
-extern void PendingMatch_004326a0(void);
+extern void PendingMatch_ZeroThreeFields6c_then_ZeroThreeSlots(void);
 extern void PendingMatch_0043c400(void);
 extern void PendingMatch_0043d830(void);
 extern void PendingMatch_004411d0(void);
@@ -744,8 +744,8 @@ extern void ScaledInitWithCounterAndType_004314f0(void);
 extern void ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d430(void);
 extern void ScaledInit_GuardedDirtyXformFromTable_g_scaledInit(void);
 extern void ScaledIterStep_0045c020(void);
-extern void ScaledLitLoadCall_00480fe0(void);
-extern void ScaledLitLoadCall_00481020(void);
+extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0(void);
+extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00481020(void);
 extern void ScaledLoadCmp0fJmp(void);
 extern void ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain(void);
 extern void ScaledLoadJmp_00429390(void);
@@ -3267,7 +3267,7 @@ __declspec(naked) void PoseFsmTriHelpers(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1700
-        call     PendingMatch_004326a0
+        call     PendingMatch_ZeroThreeFields6c_then_ZeroThreeSlots
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1700
@@ -4574,7 +4574,7 @@ __declspec(naked) void AerialHitDispatcher(void)
     L_c361:
         cmp      dword ptr [g_xformScratch2088], eax
         jne      short L_c36e
-        jmp      FourConstCallLitCallJmp_0047ff20
+        jmp      FourConstCallLitCallJmp_Wrapper_IterLoad_0048fd30_then_TripleScaledChainStore_then_StageEventStartCluster_0047ff20
     L_c36e:
         call     DualCallPauseDirtyJmp_00490c30
         mov      eax, dword ptr [g_framePauseFlag]
@@ -4582,7 +4582,7 @@ __declspec(naked) void AerialHitDispatcher(void)
         jne      short L_c3b9
         mov      dword ptr [g_phaseTimer], 0x5a
         mov      dword ptr [g_walkCallback], 8
-        call     ScaledLitLoadCall_00481020
+        call     ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00481020
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_c3b9
@@ -6814,7 +6814,7 @@ __declspec(naked) void PendingMatch_0043bdd0(void)
         cmp      eax, 0x14ccc
         jg       L_c329
         mov      dword ptr [g_walkCallback], 0xb2
-        call     ScaledLitLoadCall_00480fe0
+        call     ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c345
@@ -9171,7 +9171,7 @@ __declspec(naked) void PendingMatch_004506c0(void)
         call     PushPopCurrentSetFFFFFFFF
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_0d23
-        call     ScaledSaveCallRestoreJmp_00472f80
+        call     ScaledSaveCallRestoreJmp_InstallSelfMagicShift_then_MStackPush2ChainLLInsert_00472f80
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_0d23
         mov      edx, dword ptr [g_fightGroupHead]

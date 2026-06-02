@@ -2604,7 +2604,7 @@ functions:
     status: matched
     file: src/engine/scaled_dual_propagate_jmp.c
   - addr: 0x00428820
-    name: CallPauseScaledStoreJmp_00428820
+    name: CallPauseScaledStoreJmp_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_then_CallPauseDirty1JmpDirty4StackPush
     size: 38
     group: game
     status: matched
@@ -2616,7 +2616,7 @@ functions:
     status: matched
     file: src/engine/call_pause_dirty1_jmp_dirty4_stack_push_variants.c
   - addr: 0x004288b0
-    name: CallPauseScaledStoreJmp_004288b0
+    name: CallPauseScaledStoreJmp_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_then_DualGuardPushInstallJmp
     size: 38
     group: game
     status: matched
@@ -3570,7 +3570,7 @@ functions:
     status: matched
     file: src/engine/pending_match_variants.c
   - addr: 0x004326a0
-    name: PendingMatch_004326a0
+    name: PendingMatch_ZeroThreeFields6c_then_ZeroThreeSlots
     size: 108
     group: game
     status: matched
@@ -3858,7 +3858,7 @@ functions:
     status: matched
     file: src/engine/install_self_std_chain.c
   - addr: 0x004350f0
-    name: CallPauseConstStoreJmp_004350f0
+    name: CallPauseConstStoreJmp_MultiThunkDispatcher_then_InstallSelfPair
     size: 30
     group: game
     status: matched
@@ -3984,7 +3984,7 @@ functions:
     status: matched
     file: src/engine/cmp_range_jmp_state_init.c
   - addr: 0x00436270
-    name: func_00436270
+    name: func_Cmp2CallDirtyCall_then_MstackPopScaledChainPlusThunks
     size: 47
     group: game
     status: matched
@@ -4116,7 +4116,7 @@ functions:
     status: matched
     file: src/engine/call_pause_jmp_state_init.c
   - addr: 0x00437100
-    name: func_00437100
+    name: func_LeaPlus22StoreSelf_then_MstackPopScaledChainPlusThunks
     size: 52
     group: game
     status: matched
@@ -4212,7 +4212,7 @@ functions:
     status: matched
     file: src/engine/small_jmp_wrappers.c
   - addr: 0x00438170
-    name: CallPauseConstStoreJmp_00438170
+    name: CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp
     size: 30
     group: game
     status: matched
@@ -4674,7 +4674,7 @@ functions:
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x00439c40
-    name: GDispatch1_00439c40
+    name: GDispatch1_CmpEqWalkSetCallToggleDirty_then_ScaledAddrInit_InstallSelfMStackPushDispatch
     size: 29
     group: game
     status: matched
@@ -5604,7 +5604,7 @@ functions:
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x00448fa0
-    name: ConstStoreCallJmp_00448fa0
+    name: ConstStoreCallJmp_ChainDirtyBitWalker_then_DualScaledLoadStoreJmp
     size: 30
     group: game
     status: matched
@@ -5664,7 +5664,7 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x0044ba30
-    name: ScaledLoadTwoCallDualConst_0044ba30
+    name: ScaledLoadTwoCallDualConst_MStackPush2RunCountdown_then_MStackBracket7_DispatchAndChain_0044ba30
     size: 67
     group: game
     status: matched
@@ -6066,13 +6066,13 @@ functions:
     status: matched
     file: src/engine/juggle_fsm_cluster.c
   - addr: 0x00451f20
-    name: ScaledLoadTwoCallLit_00451f20
+    name: ScaledLoadTwoCallLit_MStackPush2RunCountdown_then_MStackBracket7_DispatchAndChain_then_StunDownCluster_00451f20
     size: 66
     group: game
     status: matched
     file: src/engine/scaled_load_two_call_lit.c
   - addr: 0x00451f70
-    name: ScaledLoadTwoCallLit_00451f70
+    name: ScaledLoadTwoCallLit_MStackPush2RunCountdown_then_MStackBracket7_DispatchAndChain_then_StunDownCluster_00451f70
     size: 66
     group: game
     status: matched
@@ -7536,7 +7536,7 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x00467c30
-    name: ScaledLoadTwoCallDualConst_00467c30
+    name: ScaledLoadTwoCallDualConst_MStackPush2RunCountdown_then_MStackBracket7_DispatchAndChain_00467c30
     size: 67
     group: game
     status: matched
@@ -7698,7 +7698,7 @@ functions:
     status: matched
     file: src/engine/dual_entry_push_call.c
   - addr: 0x0046b640
-    name: func_0046b640
+    name: func_ScaledAndAlfe_then_PendingMatch
     size: 43
     group: game
     status: matched
@@ -7944,7 +7944,7 @@ functions:
     status: matched
     file: src/engine/slot_event3_entry_chain.c
   - addr: 0x0046ff60
-    name: ConstStoreCallJmp_0046ff60
+    name: ConstStoreCallJmp_ByteWordTableTaggedDispatch_then_Phase3PackedInstallSelf
     size: 30
     group: game
     status: matched
@@ -8220,13 +8220,13 @@ functions:
     status: matched
     file: src/engine/m_stack_push4_chain_copy_pop4.c
   - addr: 0x00472f40
-    name: ScaledSaveCallRestoreJmp_00472f40
+    name: ScaledSaveCallRestoreJmp_InstallSelfMagicShift_then_MStackPush2ChainLLInsert_00472f40
     size: 50
     group: game
     status: matched
     file: src/engine/scaled_save_call_restore_jmp.c
   - addr: 0x00472f80
-    name: ScaledSaveCallRestoreJmp_00472f80
+    name: ScaledSaveCallRestoreJmp_InstallSelfMagicShift_then_MStackPush2ChainLLInsert_00472f80
     size: 50
     group: game
     status: matched
@@ -8994,7 +8994,7 @@ functions:
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x0047c510
-    name: func_0047c510
+    name: func_SfxAttenuateAndApply_then_PendingMatch
     size: 32
     group: game
     status: matched
@@ -9312,13 +9312,13 @@ functions:
     status: matched
     file: src/engine/stage_round_flow_cluster.c
   - addr: 0x0047fec0
-    name: FourConstCallLitCallJmp_0047fec0
+    name: FourConstCallLitCallJmp_Wrapper_IterLoad_0048fd30_then_TripleScaledChainStore_then_StageEventStartCluster_0047fec0
     size: 88
     group: game
     status: matched
     file: src/engine/four_const_call_lit_call_jmp.c
   - addr: 0x0047ff20
-    name: FourConstCallLitCallJmp_0047ff20
+    name: FourConstCallLitCallJmp_Wrapper_IterLoad_0048fd30_then_TripleScaledChainStore_then_StageEventStartCluster_0047ff20
     size: 88
     group: game
     status: matched
@@ -9426,13 +9426,13 @@ functions:
     status: matched
     file: src/engine/scaled_lit_add_jmp.c
   - addr: 0x00480fe0
-    name: ScaledLitLoadCall_00480fe0
+    name: ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0
     size: 53
     group: game
     status: matched
     file: src/engine/scaled_lit_load_call.c
   - addr: 0x00481020
-    name: ScaledLitLoadCall_00481020
+    name: ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00481020
     size: 53
     group: game
     status: matched
@@ -9450,7 +9450,7 @@ functions:
     status: matched
     file: src/engine/main_tick_chain.c
   - addr: 0x00481360
-    name: CallPauseConstStoreJmp_00481360
+    name: CallPauseConstStoreJmp_BootChainMaskAndDispatch_then_MStackBitLoopTripleCall
     size: 30
     group: game
     status: matched
@@ -9534,7 +9534,7 @@ functions:
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x00482240
-    name: func_00482240
+    name: func_GateDispatch6c_then_Wrapper_IterLoad_0048fd30_then_ScaledMove48to58
     size: 80
     group: game
     status: matched
@@ -9564,7 +9564,7 @@ functions:
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x00482360
-    name: func_00482360
+    name: func_CmpP1DualInitStore_then_CjTableThresholdDispatch_then_GateDispatch6c
     size: 80
     group: game
     status: matched
@@ -9576,13 +9576,13 @@ functions:
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x004823e0
-    name: func_004823e0
+    name: func_CjTableThresholdDispatch_then_GateDispatch6c_then_Wrapper_Cascade5StageInit
     size: 64
     group: game
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x00482420
-    name: func_00482420
+    name: func_CmpP1DualInitStore_then_CjTableThresholdDispatch_then_GateDispatch6c_then_Wrapper_Cascade5StageInit
     size: 80
     group: game
     status: matched
@@ -9606,7 +9606,7 @@ functions:
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x004824e0
-    name: func_004824e0
+    name: func_EntryThunkBodyStateMachine_then_EightEntryAlarmDispatch
     size: 30
     group: game
     status: matched
@@ -9630,7 +9630,7 @@ functions:
     status: matched
     file: src/engine/two_entry_wrapper_guarded.c
   - addr: 0x00482700
-    name: func_00482700
+    name: func_GateDispatch6c_then_ScaledChainCmp61_then_ArgSarStoreJmp_then_LiteralPushCallEntZero
     size: 56
     group: game
     status: matched
@@ -10242,7 +10242,7 @@ functions:
     status: matched
     file: src/engine/install_self_chain_plus_guarded_tail.c
   - addr: 0x00488da0
-    name: GDispatch1_00488da0
+    name: GDispatch1_DualCondMatchSet_then_ScaledInitWithCounterAndType
     size: 29
     group: game
     status: matched
@@ -10338,7 +10338,7 @@ functions:
     status: matched
     file: src/engine/dual_sub_from_field.c
   - addr: 0x00489cd0
-    name: DualInstallCallSwap_00489cd0
+    name: DualInstallCallSwap_SqDistThresholdRevertAdvance_then_SqDistThresholdRevertAdvance
     size: 64
     group: game
     status: matched
@@ -10644,7 +10644,7 @@ functions:
     status: matched
     file: src/engine/call_pause_add_dual_store.c
   - addr: 0x0048b4e0
-    name: CopyCallPauseJmp_0048b4e0
+    name: CopyCallPauseJmp_TierBranchChain_then_MStackPush3TripleMul10WithAbs
     size: 30
     group: game
     status: matched
@@ -11646,7 +11646,7 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x00490c80
-    name: DualInstallCallSwap_00490c80
+    name: DualInstallCallSwap_CjChainResetThreshold_then_CjChainResetThreshold
     size: 64
     group: game
     status: matched
@@ -12318,7 +12318,7 @@ functions:
     status: matched
     file: src/engine/quad_sub_vec2_gate_install_self_pair.c
   - addr: 0x00498730
-    name: func_00498730
+    name: func_PushChainAddCallPop_then_Vec2SumMul10ChainCompute_then_ScaledIndirectJmp
     size: 64
     group: game
     status: matched
@@ -12342,7 +12342,7 @@ functions:
     status: matched
     file: src/engine/slide_attack_event_cluster.c
   - addr: 0x00498930
-    name: func_00498930
+    name: func_ScaledIndexConditionalAdd_then_CondPickDualStore
     size: 80
     group: game
     status: matched
@@ -12354,7 +12354,7 @@ functions:
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x00498af0
-    name: func_00498af0
+    name: func_Vec2SumMul10ChainCompute_then_ScaledIndirectJmp
     size: 48
     group: game
     status: matched
@@ -13158,7 +13158,7 @@ functions:
     status: matched
     file: src/audio/scaled_init_or_self_ptr_set_type14.c
   - addr: 0x004a19a0
-    name: CopyCallPauseJmp_004a19a0
+    name: CopyCallPauseJmp_MStackPush2ChainLLInsert_then_StackPopDispatchTagged
     size: 30
     group: audio
     status: matched
@@ -13836,13 +13836,13 @@ functions:
     status: matched
     file: src/audio/push_pop_scaled_init343c.c
   - addr: 0x004aa990
-    name: TableLookupCallJmp_004aa990
+    name: TableLookupCallJmp_DispatcherComplex260_then_MStackPushComplexCallPop_004aa990
     size: 41
     group: audio
     status: matched
     file: src/audio/table_lookup_call_jmp_variants.c
   - addr: 0x004aa9c0
-    name: TableLookupCallJmp_004aa9c0
+    name: TableLookupCallJmp_DispatcherComplex260_then_MStackPushComplexCallPop_004aa9c0
     size: 41
     group: audio
     status: matched

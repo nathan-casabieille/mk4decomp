@@ -118,7 +118,7 @@ extern void InstallSelfPair3Branch(void);
 extern void Phase4DualHelperTrampoline(void);
 extern void Phase4FivePackedHelpers(void);
 extern void ScaledArrStore_GuardedChainCmpDualBitXor_00429980(void);
-extern void ScaledLitLoadCall_00480fe0(void);
+extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0(void);
 extern void ScaledLoadJmp_00428d20(void);
 extern void ScaledLoadJmp_00429390(void);
 extern void SfxAttenuateAndApply(void);
@@ -236,7 +236,7 @@ __declspec(naked) void MatchStartFsmCluster(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_9288
         mov      dword ptr [g_walkCallback], 0x88
-        call     ScaledLitLoadCall_00480fe0
+        call     ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_9288
     L_90a3:

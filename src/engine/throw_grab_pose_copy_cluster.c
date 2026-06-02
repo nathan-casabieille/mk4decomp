@@ -121,7 +121,7 @@ extern void InstallSelfStateMachine_0047f3f0(void);
  *   Merge: [scaledInit*4]=edx; inc scaledInit; chain[esi+4]=scaledInit;
  *     [baseSel*4+0x84]=0; call InstallSelfStateMachine; pause=1; pop edi/esi; ret.
  */
-extern void ScaledLitLoadCall_00480fe0(void);
+extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0(void);
 
 __declspec(naked) void Install4StateMerge(void) {
     __asm {
@@ -150,7 +150,7 @@ __declspec(naked) void Install4StateMerge(void) {
         pop     esi
         ret
         mov     dword ptr [g_walkCallback], 0x5f
-        call    ScaledLitLoadCall_00480fe0
+        call    ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0
         cmp     dword ptr [g_framePauseFlag], edi
         _emit   0fh
         _emit   85h
@@ -171,7 +171,7 @@ __declspec(naked) void Install4StateMerge(void) {
         _emit   00h
         _emit   00h
         mov     dword ptr [g_walkCallback], 0x5e
-        call    ScaledLitLoadCall_00480fe0
+        call    ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0
         cmp     dword ptr [g_framePauseFlag], edi
         _emit   0fh
         _emit   85h

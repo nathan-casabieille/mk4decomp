@@ -113,13 +113,13 @@ extern unsigned int g_fightAxisPosY;
  *   g_walkCallback = eax = chain[g_scaledInit + 0x40].
  *   g_xformScratch94 = (eax & 8); if non-zero: ecx = 1; g_eventQueueChild = 1.
  *   mstack-push ecx (= 0 or 1). call MStackPush3CmpCall. pause? -> ret.
- *   if (208c & 1): skip first call. else: g_walkCallback = 0x78; call ScaledLitLoadCall_00480fe0; pause? -> ret.
+ *   if (208c & 1): skip first call. else: g_walkCallback = 0x78; call ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0; pause? -> ret.
  *   mstack-pop into g_eventQueueChild. counter--.
  *   if (popped == 0): ret.
  *   else: push 0x004f1400; call IterLoad_0048fd30; add esp, 4; ret.
  */
 extern void IterLoad_0048fd30(void);
-extern void ScaledLitLoadCall_00480fe0(void);
+extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0(void);
 
 extern unsigned int g_matrixStack_arr;
 
@@ -151,7 +151,7 @@ void MStackBitFlagDispatch(void) {
         _emit   75h
         _emit   18h
         mov     dword ptr [g_walkCallback], 0x78
-        call    ScaledLitLoadCall_00480fe0
+        call    ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

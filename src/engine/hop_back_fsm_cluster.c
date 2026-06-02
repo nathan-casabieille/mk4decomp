@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void ScaledLitLoadCall_00480fe0(void);
+extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0(void);
 extern void MoveSelectorCluster(void);
 extern void HopBackFsmCluster(void);
 
@@ -144,7 +144,7 @@ __declspec(naked) void InstallSelf3StateFieldSet(void) {
         _emit   74h
         _emit   3ah
         mov     dword ptr [g_walkCallback], 0x5f
-        call    ScaledLitLoadCall_00480fe0
+        call    ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -161,7 +161,7 @@ __declspec(naked) void InstallSelf3StateFieldSet(void) {
         pop     esi
         ret
         mov     dword ptr [g_walkCallback], 0x5e
-        call    ScaledLitLoadCall_00480fe0
+        call    ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void CallPauseConstStoreJmp_00438170(void);
+extern void CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void EntryThenDispatcherPair(void);
 extern void ProneFsmCluster(void);
@@ -157,7 +157,7 @@ __declspec(naked) void TripleBlockInstallThresholdMasked(void) {
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
-        call    CallPauseConstStoreJmp_00438170
+        call    CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         ret

@@ -13,9 +13,9 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_walkCallback], 8
  *   jmp     T
  */
-extern void ScaledLitLoadCall_00481020(void);
+extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00481020(void);
 void ScaledStore501Set8Jmp(void) {
     ((ScenegraphNode *)(g_baseSel * 4))->fsm_state = 0x501;
     g_walkCallback = (void (*)(void))8;
-    ScaledLitLoadCall_00481020();
+    ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00481020();
 }

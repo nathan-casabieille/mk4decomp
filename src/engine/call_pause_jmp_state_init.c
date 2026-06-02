@@ -10,7 +10,7 @@ extern unsigned int g_phaseTimer;
 
 /* @addr 0x004370e0 (20b): call LeaPlus22StoreSelf; if !pause tail-jmp
  * CjInstallSelfRouter. Entry A of the original 84-byte packed block; entry B
- * (at +0x20) lives in func_00437100. The 12-byte nop gap is filled
+ * (at +0x20) lives in func_LeaPlus22StoreSelf_then_MstackPopScaledChainPlusThunks. The 12-byte nop gap is filled
  * by 0x90-fill. */
 extern void LeaPlus22StoreSelf(void);
 extern void CjInstallSelfRouter(void);

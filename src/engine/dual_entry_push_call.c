@@ -31,7 +31,7 @@ extern void ScaledAndAlfe(void);
 extern void PendingMatch_0046b670(void);
 /* @addr 0x0046b630 (14b): cdecl call ArgSarStoreJmp(&g_dispatchSave1281) + ret.
  * Entry A of the original 59-byte packed block; entry B at +0x10 lives in
- * func_0046b640. The 2-byte nop gap is filled by 0x90-fill. */
+ * func_ScaledAndAlfe_then_PendingMatch. The 2-byte nop gap is filled by 0x90-fill. */
 void DualEntryPushCall(void) {
     ArgSarStoreJmp(&g_dispatchSave1281);
 }
@@ -39,7 +39,7 @@ void DualEntryPushCall(void) {
 /* @addr 0x0046b640 (43b): orphan sub-entry - set walkCallback and
  * baseSel[+0x74] to 0x2010, call ScaledAndAlfe, then if !pause
  * tail-jmp PendingMatch_0046b670. */
-void func_0046b640(void) {
+void func_ScaledAndAlfe_then_PendingMatch(void) {
     int v = 0x2010;
     g_walkCallback = (void (*)(void))v;
     ((ScenegraphNode *)(g_baseSel * 4))->fsm_state = v;

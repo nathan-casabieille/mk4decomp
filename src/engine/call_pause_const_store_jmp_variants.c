@@ -18,7 +18,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void MultiThunkDispatcher_00460470(void);
 extern void InstallSelfPair(void);
-void CallPauseConstStoreJmp_004350f0(void) {
+void CallPauseConstStoreJmp_MultiThunkDispatcher_then_InstallSelfPair(void) {
     MultiThunkDispatcher_00460470();
     if (g_framePauseFlag) return;
     g_eventQueueChild = 0x1e;
@@ -28,7 +28,7 @@ void CallPauseConstStoreJmp_004350f0(void) {
 /* @addr 0x00438170 (30b): same shape, value=0x78 */
 extern void Push80SetWalkNegDualCallPop(void);
 extern void InstallSelfWaitCmp(void);
-void CallPauseConstStoreJmp_00438170(void) {
+void CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp(void) {
     Push80SetWalkNegDualCallPop();
     if (g_framePauseFlag) return;
     g_eventQueueChild = 0x78;
@@ -38,7 +38,7 @@ void CallPauseConstStoreJmp_00438170(void) {
 /* @addr 0x00481360 (30b): same shape, store walkCallback=0xb5 */
 extern void BootChainMaskAndDispatch(void);
 extern void MStackBitLoopTripleCall(void);
-void CallPauseConstStoreJmp_00481360(void) {
+void CallPauseConstStoreJmp_BootChainMaskAndDispatch_then_MStackBitLoopTripleCall(void) {
     BootChainMaskAndDispatch();
     if (g_framePauseFlag) return;
     g_walkCallback = (void(*)(void))0xb5;

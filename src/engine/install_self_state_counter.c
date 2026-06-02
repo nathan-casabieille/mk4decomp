@@ -124,7 +124,7 @@ extern void CallPauseScaledStoreCopyJmp(void);
 extern void CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(void);
 extern void DualBlockChainInitBody(void);
 extern void GateDispatch6c(void);
-extern void ScaledLitLoadCall_00480fe0(void);
+extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0(void);
 extern void ScaledMove48to58(void);
 extern void Wrapper_OrListLoop_004de3f8(void);
 
@@ -188,7 +188,7 @@ __declspec(naked) void InstallSelfStateCounter(void) {
         _emit   06h
         inc     dword ptr [g_installSelfCounter]
         mov     dword ptr [g_walkCallback], 0xac
-        call    ScaledLitLoadCall_00480fe0
+        call    ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

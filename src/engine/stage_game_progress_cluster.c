@@ -116,7 +116,7 @@ extern unsigned int g_dispatchSave586;
 extern unsigned int g_dispatchSave585;
 extern unsigned int g_dispatchSave584;
 extern void ArgSarStoreJmp(void);
-extern void CallPauseScaledStoreJmp_00428820(void);
+extern void CallPauseScaledStoreJmp_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_then_CallPauseDirty1JmpDirty4StackPush(void);
 extern void CjTableThresholdDispatch(void);
 extern void GateDispatch6c(void);
 extern void GuardedPushCall_Wrapper_ScaledChainPushCall_then_ArgSarStoreJmp(void);
@@ -203,7 +203,7 @@ __declspec(naked) void StageGameProgressCluster(void)
         mov      dword ptr [eax + 4], ecx
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edx
-        call     CallPauseScaledStoreJmp_00428820
+        call     CallPauseScaledStoreJmp_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_then_CallPauseDirty1JmpDirty4StackPush
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         ret

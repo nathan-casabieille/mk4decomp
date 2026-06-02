@@ -131,7 +131,7 @@ void InstallSelfHelperGate(void) {
         return;
     }
     g_walkCallback = (void (*)(void))0x43;
-    ScaledLitLoadCall_00480fe0();
+    ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0();
     if (g_framePauseFlag != 0) return;
     *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfHelperGate;
     ((ScenegraphNode *)base)->install_flag = 1;
