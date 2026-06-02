@@ -12,12 +12,12 @@ extern unsigned int g_scaledInit_00542044;
  *   eax = (g_scaledInit + walk) → g_scaledInit; eax = [g_scaledInit*4];
  *   walk = eax; jmp eax.
  */
-extern void StorePauseImulShr16_004ab630(void);
+extern void StorePauseImulShr16(void);
 void PackedAdvanceCallTailJmp_004392c0(packed_ptr arg) {
     g_scaledInit_00542044 = (unsigned int)((int)arg >> 2);
     g_walkCallback = *(void (**)(void))(g_scaledInit_00542044 * 4);
     g_scaledInit_00542044++;
-    StorePauseImulShr16_004ab630();
+    StorePauseImulShr16();
     if (g_framePauseFlag) return;
     g_scaledInit_00542044 += (unsigned int)g_walkCallback;
     g_scaledInit_00542044 = *(unsigned int *)(g_scaledInit_00542044 * 4);

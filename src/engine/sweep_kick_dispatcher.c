@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -115,10 +115,10 @@ extern void AiComboDispatcherCluster_00497470(void);
 extern void ArgSarStoreJmp(void);
 extern void ArgSar_Set0_Jmp_0049c6f0(void);
 extern void BootInstallPeriodicAudio_00413aa0(void);
-extern void CmpDivJmp_0049d080(void);
-extern void CondPickDualStore_0049c670(void);
-extern void CopyThreeFields_00404df0(void);
-extern void DualCmpSwapStore_0049c5a0(void);
+extern void CmpDivJmp(void);
+extern void CondPickDualStore(void);
+extern void CopyThreeFields(void);
+extern void DualCmpSwapStore(void);
 extern void GuardedSeq_00497450(void);
 extern void MStackPush8CallbackInit_00413b70(void);
 extern void PushCallScaledClearJmp_0040bf20(void);
@@ -126,8 +126,8 @@ extern void ScaledIndirectJmp_0049c850(void);
 extern void ScaledTripleCopy4_0049d2d0(void);
 extern void SoundSetupLoop_00413ea0(void);
 extern void TableLookupCall_00489ff0(void);
-extern void ThreeChanPackClamp_00404cc0(void);
-extern void Vec2SumMul10ChainCompute_0049bc60(void);
+extern void ThreeChanPackClamp(void);
+extern void Vec2SumMul10ChainCompute(void);
 
 __declspec(naked) void SweepKickDispatcher_004970f0(void)
 {
@@ -136,7 +136,7 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
         mov      eax, dword ptr [g_baseSel]
         mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [eax*4 + 0x74], ecx
-        call     CondPickDualStore_0049c670
+        call     CondPickDualStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_712b
@@ -156,7 +156,7 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
         /* === h2 (0x497130): main sweep-kick + 0049d2d0 + 004f20f0 === */
         push     esi
         push     edi
-        call     DualCmpSwapStore_0049c5a0
+        call     DualCmpSwapStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_739c
@@ -199,7 +199,7 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
         mov      ecx, dword ptr [eax*4 + 0x18]
         mov      dword ptr [g_walkCallback], 1
         mov      dword ptr [g_currentNodeIdx], ecx
-        call     CmpDivJmp_0049d080
+        call     CmpDivJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_739c
@@ -268,11 +268,11 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
         mov      edx, dword ptr [g_xformScratch2088]
         push     0x8000
         mov      dword ptr [esi + 0x74], edx
-        call     ThreeChanPackClamp_00404cc0
+        call     ThreeChanPackClamp
         mov      eax, dword ptr [g_fightGroupHead]
         add      esp, 4
         push     eax
-        call     CopyThreeFields_00404df0
+        call     CopyThreeFields
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      edx, dword ptr [g_baseSel]
         add      esp, 4
@@ -300,7 +300,7 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
         add      eax, edx
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x70], eax
-        call     Vec2SumMul10ChainCompute_0049bc60
+        call     Vec2SumMul10ChainCompute
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_73f7

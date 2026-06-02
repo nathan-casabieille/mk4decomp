@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -113,16 +113,16 @@ extern unsigned int g_tickFlagF;
 extern void CallPauseInc_004ab670(void);
 extern void CallSetPause(void);
 extern void ChainNodeAdvanceCallback_00408e70(void);
-extern void DirtyDoubleDeref_00408cb0(void);
+extern void DirtyDoubleDeref(void);
 extern void FramePauseScaledStore_00406c10(void);
 extern void GuardedSelfRefSet_0048d070(void);
 extern void MStackPushCallCallPop_00405e20(void);
-extern void PushPopScaled1cDoubleCall_00408510(void);
+extern void PushPopScaled1cDoubleCall(void);
 extern void ScaledStoreThree_00409260(void);
 extern void ScaledTestPauseStore_00408860(void);
 extern void SetJmp_00405420(void);
-extern void StoreDoubleNegPauseSubStore_004ab750(void);
-extern void StorePauseImulShr16_004ab630(void);
+extern void StoreDoubleNegPauseSubStore(void);
+extern void StorePauseImulShr16(void);
 extern void Wrapper_0048a260(void);
 
 __declspec(naked) void Phase4TrampolineMainHelpers_00414b90(void)
@@ -248,7 +248,7 @@ __declspec(naked) void Phase4TrampolineMainHelpers_00414b90(void)
         jmp     L_p4tmh2_H_install
     L_p4tmh2_H_phase0:
         mov     dword ptr [g_walkCallback], 0x0A
-        call    StorePauseImulShr16_004ab630
+        call    StorePauseImulShr16
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh2_H_pop_ret
@@ -299,7 +299,7 @@ __declspec(naked) void Phase4TrampolineMainHelpers_00414b90(void)
         mov     dword ptr [g_eventQueueTotal], eax
         mov     edx, dword ptr [eax*4]
         mov     dword ptr [g_walkCallback], edx
-        call    StoreDoubleNegPauseSubStore_004ab750
+        call    StoreDoubleNegPauseSubStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh2_H_pop_ret
@@ -311,7 +311,7 @@ __declspec(naked) void Phase4TrampolineMainHelpers_00414b90(void)
         inc     eax
         mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [g_eventQueueTotal], eax
-        call    StoreDoubleNegPauseSubStore_004ab750
+        call    StoreDoubleNegPauseSubStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh2_H_pop_ret
@@ -345,7 +345,7 @@ __declspec(naked) void Phase4TrampolineMainHelpers_00414b90(void)
         inc     eax
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_eventQueueTotal], eax
-        call    DirtyDoubleDeref_00408cb0
+        call    DirtyDoubleDeref
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh2_H_pop_ret
@@ -353,7 +353,7 @@ __declspec(naked) void Phase4TrampolineMainHelpers_00414b90(void)
         mov     eax, dword ptr [g_eventQueueIdx]
         mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_currentNodeIdx], eax
-        call    PushPopScaled1cDoubleCall_00408510
+        call    PushPopScaled1cDoubleCall
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh2_H_pop_ret

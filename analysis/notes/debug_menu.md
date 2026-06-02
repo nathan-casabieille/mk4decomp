@@ -31,7 +31,7 @@ GuardedSetupCallTailJmp(node_packed_ptr, mask)   ; insert as scene text node
   and **`"ON"`** (`[1]`); the remaining entries are pointers to the
   toggle-state globals (`0x004d50xx`, `0x00543368/6c/70`, ...). So a
   row resolves to e.g. `"Background ON"` / `"Background OFF"`.
-- `GuardedSetupCallTailJmp_004a1fa0(node, mask)` is the generic
+- `GuardedSetupCallTailJmp(node, mask)` is the generic
   scene-node insert (sets node event-type 4 + callback `0xa000`); it
   is NOT a text-specific primitive - the text just rides on a normal
   scene node so the 3D-font renderer picks it up.

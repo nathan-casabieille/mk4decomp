@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -108,13 +108,13 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void StoreLoadJmp_00404ef0(void);
+extern void StoreLoadJmp(void);
 extern void ChainDirtyBitWalker(void);
 extern void Chain2AxisDiffStoreTailJmp_0044cad0(void);
 extern void MStackPush3SideStore_0044cb80(void);
 extern void StunDownChainCluster_00452310(void);
 extern void func_0045231b(void);
-extern void DualScaledStore_00452740(void);
+extern void DualScaledStore(void);
 extern void PendingMatch_00452770(void);
 extern void DualPushSet7dCallPop_00474290(void);
 extern void Thunk_0049cbc0(void);
@@ -207,7 +207,7 @@ __declspec(naked) void StunDownCluster_00451fc0(void)
         ret
     L_20f9:
         push     OFFSET StunDownChainCluster_00452310 + 0x380
-        call     StoreLoadJmp_00404ef0
+        call     StoreLoadJmp
         mov      dword ptr [g_eventQueueEnd], 0x22
         mov      dword ptr [g_xformScratch2088], 0xfffffeb9
         mov      dword ptr [esi + 8], OFFSET L_2060
@@ -251,7 +251,7 @@ __declspec(naked) void StunDownCluster_00451fc0(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_22df
         push     OFFSET StunDownChainCluster_00452310 + 0x80
-        call     StoreLoadJmp_00404ef0
+        call     StoreLoadJmp
         mov      dword ptr [g_eventQueueEnd], 0x4b
         mov      dword ptr [g_xformScratch2088], 0x28f
         mov      dword ptr [esi + 8], OFFSET L_2060
@@ -277,9 +277,9 @@ __declspec(naked) void StunDownCluster_00451fc0(void)
         ret
     L_226e:
         push     OFFSET StunDownChainCluster_00452310 + 0x2d0
-        call     StoreLoadJmp_00404ef0
+        call     StoreLoadJmp
         add      esp, 4
-        call     DualScaledStore_00452740
+        call     DualScaledStore
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_22df
         call     Chain2AxisDiffStoreTailJmp_0044cad0

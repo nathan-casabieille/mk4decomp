@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -109,9 +109,9 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0043cb00 (262b game) - guarded cascade then 4-field cj copy with bit-OR.
- *   g_xformEntityIdx = 0x0050d434>>2; call MStackPushDispatchBitGate_00407330; if pause? final-ret.
+ *   g_xformEntityIdx = 0x0050d434>>2; call MStackPushDispatchBitGate; if pause? final-ret.
  *   if bit2 of g_xformDirtyFlags set: tail-jmp ScaledInitWithCounterAndType_004314f0.
- *   g_cj_0054205c = g_scaledInit_00542044. call MStackPushTwoEntryChainCall_004058c0; if pause? final-ret.
+ *   g_cj_0054205c = g_scaledInit_00542044. call MStackPushTwoEntryChainCall; if pause? final-ret.
  *   call MStackCall_00406340; if pause? final-ret.
  *   Clear cj[+0x5c] and g_eventQueueNotMask. cj[+0x64] = g_eventQueueIdx[+0x64].
  *   cj[+0x34] = (cj[+0x34] & 0xfe) | (g_eventQueueIdx[+0x34] & 1) | 0x81000.
@@ -119,8 +119,8 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_particleEmitterNode;
 extern void MStackCall_00406340(void);
-extern void MStackPushDispatchBitGate_00407330(void);
-extern void MStackPushTwoEntryChainCall_004058c0(void);
+extern void MStackPushDispatchBitGate(void);
+extern void MStackPushTwoEntryChainCall(void);
 extern void ScaledInitWithCounterAndType_004314f0(void);
 
 __declspec(naked) void GuardedCascadeCjCopyFieldsBitOr_0043cb00(void) {
@@ -128,7 +128,7 @@ __declspec(naked) void GuardedCascadeCjCopyFieldsBitOr_0043cb00(void) {
         mov     eax, 0x0050d434
         sar     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
-        call    MStackPushDispatchBitGate_00407330
+        call    MStackPushDispatchBitGate
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -143,7 +143,7 @@ __declspec(naked) void GuardedCascadeCjCopyFieldsBitOr_0043cb00(void) {
         jmp     ScaledInitWithCounterAndType_004314f0
         mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [g_cj_0054205c], ecx
-        call    MStackPushTwoEntryChainCall_004058c0
+        call    MStackPushTwoEntryChainCall
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

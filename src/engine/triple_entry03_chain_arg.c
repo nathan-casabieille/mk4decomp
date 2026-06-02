@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -110,12 +110,12 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00495d20 (124b game) - triple-entry chain.
  *   Blocks A/B (+0x00, +0x30): set baseSel[*4+0x74]=eax (0x0302/0x0303) and g_eventQueueNotMask (0x20011/0x20019);
- *     jmp HitReactionDispatcher_0045f650.
+ *     jmp HitReactionDispatcher.
  *   Block C (+0x60): push 0x004f1a10; call ArgScaledChain; if !pause: jmp Const111ScaledStoreJmp_00495da0.
  */
 extern void ArgScaledChain_004949b0(void);
 extern void Const111ScaledStoreJmp_00495da0(void);
-extern void HitReactionDispatcher_0045f650(void);
+extern void HitReactionDispatcher(void);
 
 __declspec(naked) void TripleEntry03ChainArg_00495d20(void) {
     __asm {
@@ -124,7 +124,7 @@ __declspec(naked) void TripleEntry03ChainArg_00495d20(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
         mov     dword ptr [g_eventQueueNotMask], 0x00020011
-        jmp     HitReactionDispatcher_0045f650
+        jmp     HitReactionDispatcher
         _emit   90h
         _emit   90h
         _emit   90h
@@ -140,7 +140,7 @@ __declspec(naked) void TripleEntry03ChainArg_00495d20(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
         mov     dword ptr [g_eventQueueNotMask], 0x00020019
-        jmp     HitReactionDispatcher_0045f650
+        jmp     HitReactionDispatcher
         _emit   90h
         _emit   90h
         _emit   90h

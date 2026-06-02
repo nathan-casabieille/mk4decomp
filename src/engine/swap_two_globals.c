@@ -23,7 +23,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_acc_00542078;
 extern void ScaledChainDouble_004911f0(void);
-extern void Atan2QuadrantLookup_004245b0(void);
+extern void Atan2QuadrantLookup(void);
 void SwapTwoGlobals_004911c0(void) {
     unsigned int a, b;
     ScaledChainDouble_004911f0();
@@ -32,5 +32,5 @@ void SwapTwoGlobals_004911c0(void) {
     b = g_eventQueueChild;
     g_eventQueueWorkType = a;
     g_acc_00542078 = b;
-    Atan2QuadrantLookup_004245b0();
+    Atan2QuadrantLookup();
 }

@@ -164,7 +164,7 @@ typedef struct FightGroupNode {
  * for Doppler or a position offset relative to the listener).
  *
  * CAVEAT: the same byte range is reused as scratch by non-vec3 code
- * paths (chain bookkeeping in `DualScaledStore_00452740`, flag stores
+ * paths (chain bookkeeping in `DualScaledStore`, flag stores
  * in `Alarm3EntryPhaseChain`, the overlapping `TripleFieldCopyLo/Hi`
  * pair targeting +0x5c..+0x64). Use this typedef ONLY when the
  * surrounding call-site is unambiguously treating the 3 slots as a

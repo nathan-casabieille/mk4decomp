@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -114,11 +114,11 @@ extern unsigned int g_dispatchSave509_004a2180;
 extern int GuardedScaledLookupCallJmp_004220a0(void);
 extern void AndShlStore_00409280(void);
 extern void StackPopDispatchTagged(void);
-extern void TableWalkBoundedCmp_004bd890(int);
-extern void BootInitGuardedCallChain_004265d0(void);
+extern void TableWalkBoundedCmp(int);
+extern void BootInitGuardedCallChain(void);
 extern void DualScaledLitInitJmp_00464800(void);
 extern void TableWalkPause_004bd850(void);
-extern void QuadCallPhase2_004be800(void);
+extern void QuadCallPhase2(void);
 extern void StoreTwoCall(void);
 extern void MatchInitMonsterChain_004228b0(void);
 
@@ -126,9 +126,9 @@ extern void MatchInitMonsterChain_004228b0(void);
  *   Reads phase from [g_baseSel*4 + 0x84], zeroes it, then dispatches
  *   on phase = 0, 1, 2, 3.
  *     - phase 0 / 1: jump to the heavy "first-time init" path that pushes 4
- *       on TableWalkBoundedCmp_004bd890, calls BootInitGuardedCallChain_004265d0,
+ *       on TableWalkBoundedCmp, calls BootInitGuardedCallChain,
  *       DualScaledLitInitJmp_00464800, TableWalkPause_004bd850, then runs
- *       QuadCallPhase2_004be800 with args (g_dlNalt1, g_dlNalt2,
+ *       QuadCallPhase2 with args (g_dlNalt1, g_dlNalt2,
  *       g_counter_0053a51c + 0x12, 0x1d). Pushes two StoreTwoCall calls
  *       with table pointers 0x004a2090 / 0x004a2180. Installs self at
  *       [esi+8]=0x403170 and sets [eax*4+0x84]=2 (with packed_ptr +
@@ -182,9 +182,9 @@ __declspec(naked) void Phase3InstallSelf_00403170(void) {
         ret
     L_p3i_initPath:
         push    4
-        call    TableWalkBoundedCmp_004bd890
+        call    TableWalkBoundedCmp
         add     esp, 4
-        call    BootInitGuardedCallChain_004265d0
+        call    BootInitGuardedCallChain
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_p3i_done
         call    DualScaledLitInitJmp_00464800
@@ -197,9 +197,9 @@ __declspec(naked) void Phase3InstallSelf_00403170(void) {
         push    ecx
         push    edx
         push    eax
-        call    QuadCallPhase2_004be800
+        call    QuadCallPhase2
         add     esp, 0x10
-        call    BootInitGuardedCallChain_004265d0
+        call    BootInitGuardedCallChain
         cmp     dword ptr [g_framePauseFlag], edi
         jne     short L_p3i_done
         push    edi

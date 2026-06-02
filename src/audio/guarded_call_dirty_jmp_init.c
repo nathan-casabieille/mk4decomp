@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp T2.  If walk was 0: jmp T3.
  */
 extern void PushCallTestByte4Jmp_004a1a10(void);
-extern void SaveCallRestoreOrXor_00404a00(int);
+extern void SaveCallRestoreOrXor(int);
 extern void InstallSelfPauseGate_004a1a50(void);
 void GuardedCallDirtyJmpInit_004a19c0(void) {
     unsigned int v = g_eventQueueEnd;
@@ -22,7 +22,7 @@ void GuardedCallDirtyJmpInit_004a19c0(void) {
         PushCallTestByte4Jmp_004a1a10();
         return;
     }
-    SaveCallRestoreOrXor_00404a00(0x25b);
+    SaveCallRestoreOrXor(0x25b);
     if ((g_xformDirtyFlags & 4) != 0) {
         func_0041f780_pp();
         return;

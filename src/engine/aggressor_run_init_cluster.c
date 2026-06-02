@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -120,13 +120,13 @@ extern void ArgSarStoreJmp(void);
 extern void BlockedCounterCluster_004816d0(void);
 extern void BossArrivalSequence_00481950(void);
 extern void CjDispatchCommit_004818e0(void);
-extern void DualScaledStore_00452740(void);
+extern void DualScaledStore(void);
 extern void MStackDualDiffSequencer_00477040(void);
 extern void PendingMatch_00455bd0(void);
 extern void Push267_Push44eb60_Jmp_00489220(void);
 extern void ScaledInitWithCounterAndType_004314f0(void);
 extern void ScaledXorStore_004903b0(void);
-extern void StoreLoadJmp_00404ef0(void);
+extern void StoreLoadJmp(void);
 extern void TripleEntryCountdownInstall_0046a230(void);
 
 __declspec(naked) void AggressorRunInitCluster_004813b0(void)
@@ -226,7 +226,7 @@ __declspec(naked) void AggressorRunInitCluster_004813b0(void)
         /* === h4 (0x481500): event 004ef228 w/ push PendingMatch_00455bd0+0x80 === */
         mov      eax, dword ptr [g_fightGroupHead]
         mov      dword ptr [g_eventQueueEnd], eax
-        call     DualScaledStore_00452740
+        call     DualScaledStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1561
@@ -234,7 +234,7 @@ __declspec(naked) void AggressorRunInitCluster_004813b0(void)
         push     OFFSET PendingMatch_00455bd0 + 0x80
         mov      dword ptr [g_fightGroupHead], eax
         mov      dword ptr [g_eventQueueIdx], eax
-        call     StoreLoadJmp_00404ef0
+        call     StoreLoadJmp
         add      esp, 4
         push     OFFSET g_dispatchSave774_004ef228
         call     ArgSarStoreJmp

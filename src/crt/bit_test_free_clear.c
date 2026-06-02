@@ -6,7 +6,7 @@
 
 extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
-extern void FreeImpl_004c55f0(void *);
+extern void FreeImpl(void *);
 
 struct BitTestS {
     unsigned int field0;
@@ -17,7 +17,7 @@ struct BitTestS {
 
 void BitTestFreeClear_004c8ae0(struct BitTestS *p) {
     if ((p->field_c & 0x83) != 0 && (p->field_c & 8) != 0) {
-        FreeImpl_004c55f0(p->field8);
+        FreeImpl(p->field8);
         p->field_c &= 0xfffffbf7u;
         p->field0 = 0;
         p->field8 = 0;

@@ -13,12 +13,12 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_pendingMatchSlot2_00541dc0;
 extern unsigned int g_baseSel;
-extern void BootInitGuardedCallChain_004265d0(void);
+extern void BootInitGuardedCallChain(void);
 extern void ZeroMultiGlobalsCmp_00404680(void);
 void ClearTwoCallSetStore_004a2270(void) {
     g_walkCallback = 0;
     g_pendingMatchSlot2_00541dc0 = 0;
-    BootInitGuardedCallChain_004265d0();
+    BootInitGuardedCallChain();
     if (g_framePauseFlag) return;
     ZeroMultiGlobalsCmp_00404680();
     if (g_framePauseFlag) return;

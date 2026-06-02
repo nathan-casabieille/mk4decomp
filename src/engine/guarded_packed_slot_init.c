@@ -12,7 +12,7 @@ extern unsigned int g_scaledInit_00542044;
  *   eax = g_fightGroupHead; g_scaledInit = ecx; [eax*4+0x24] = ecx;
  *   ecx = g_fightGroupHead; walk = 0; [ecx*4+0x28] = 0; ret.
  */
-void GuardedPackedSlotInit_00428760(int arg0) {
+void GuardedPackedSlotInit(int arg0) {
     unsigned int packed;
     unsigned int v;
     CopyJmp_00406ba0();

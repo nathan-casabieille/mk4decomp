@@ -31,11 +31,11 @@ extern unsigned int g_scaledInit_00542044;
  * - jmp T
  * - ret
  */
-extern void AudioVolumeRescale_004ab690(void);
+extern void AudioVolumeRescale(void);
 extern void Thunk_00439c20(void);
 void Set258Call_PauseDirtyJmp_00439b50(void) {
     g_walkCallback = (void (*)(void))0x258;
-    AudioVolumeRescale_004ab690();
+    AudioVolumeRescale();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 1) == 0) return;
     Thunk_00439c20();

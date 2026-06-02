@@ -9,7 +9,7 @@
  *   If arg0 == 0: return 0.
  *   Save arg0 into g_dispatchSave1623_007af944, clear g_renderer4_surface.
  *   RegisterWindowMessage via IAT[0x4d21b8] -> g_dispatchSave1621_007af938; if 0 -> teardown.
- *   Allocate 0x42c bytes (LoadArgPushCall_004c54b0) -> g_dispatchSave1620_007af934; if 0 -> teardown.
+ *   Allocate 0x42c bytes (LoadArgPushCall) -> g_dispatchSave1620_007af934; if 0 -> teardown.
  *   Zero struct (rep stosd 0x10b). Fill fields and call IAT[0x4d202c] (CreateWindow).
  *   Set g_renderer4_active = 1; return 1.
  */
@@ -22,7 +22,7 @@ extern int g_renderer4_surface;
 extern unsigned int g_dispatchSave1624_007af94c;
 extern unsigned int g_iat_004d202c;
 extern unsigned int g_iat_004d21b8;
-extern void LoadArgPushCall_004c54b0(void);
+extern void LoadArgPushCall(void);
 extern void RendererTeardownSW_004b2a40(void);
 
 __declspec(naked) void Helper_GfxInit2(void) {
@@ -54,7 +54,7 @@ __declspec(naked) void Helper_GfxInit2(void) {
         mov     dword ptr [g_dispatchSave1621_007af938], eax
         jz      short L_si_teardown
         push    0x42c
-        call    LoadArgPushCall_004c54b0
+        call    LoadArgPushCall
         mov     edi, eax
         add     esp, 4
         cmp     edi, esi

@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -113,17 +113,17 @@ extern unsigned int g_dispatchSave969_004eb240;
 extern unsigned int g_dispatchSave970_004eb258;
 extern void ArgSarStoreJmp(void);
 extern void ComboScriptDispatchCluster_00470530(void);
-extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void FiveCallGuardSetTail(void);
 extern void GuardedSeq_004297b0(void);
 extern void InstallSelfChainedDispatch_0046cb70(void);
-extern void InstallSelfIndirectJmp_0048f3f0(void);
+extern void InstallSelfIndirectJmp(void);
 extern void InstallSelfMStackPush_0046cc80(void);
-extern void PushPopWalkSet1006_00470ee0(void);
-extern void ScaledAndAlfe_00490390(void);
+extern void PushPopWalkSet1006(void);
+extern void ScaledAndAlfe(void);
 extern void ScaledInit_0048d450(void);
 extern void ScaledLoadIncJmp_00429840(void);
 extern void ScaledMove74to70_0046eaa0(void);
-extern void SlotEvent3EntryChain_0046fdf0(void);
+extern void SlotEvent3EntryChain(void);
 
 __declspec(naked) void HitStateCluster_0046c7c0(void)
 {
@@ -164,7 +164,7 @@ __declspec(naked) void HitStateCluster_0046c7c0(void)
         mov      eax, 0x600
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x74], eax
-        call     ScaledAndAlfe_00490390
+        call     ScaledAndAlfe
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c840
@@ -226,7 +226,7 @@ __declspec(naked) void HitStateCluster_0046c7c0(void)
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], OFFSET L_c8d0
-        jmp      InstallSelfIndirectJmp_0048f3f0
+        jmp      InstallSelfIndirectJmp
         nop
         nop
         nop
@@ -239,7 +239,7 @@ __declspec(naked) void HitStateCluster_0046c7c0(void)
         mov      dword ptr [eax + 0x84], edx
         cmp      ecx, edx
         je       L_c8ef
-        jmp      FiveCallGuardSetTail_0046f6b0
+        jmp      FiveCallGuardSetTail
     L_c8ef:
         mov      dword ptr [eax + 8], OFFSET L_c8d0
         mov      ecx, dword ptr [g_baseSel]
@@ -256,7 +256,7 @@ __declspec(naked) void HitStateCluster_0046c7c0(void)
         mov      dword ptr [eax + 4], ecx
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edx
-        call     SlotEvent3EntryChain_0046fdf0
+        call     SlotEvent3EntryChain
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         ret
@@ -268,7 +268,7 @@ __declspec(naked) void HitStateCluster_0046c7c0(void)
         mov      dword ptr [eax + 0x84], edx
         cmp      ecx, edx
         je       L_c96f
-        jmp      FiveCallGuardSetTail_0046f6b0
+        jmp      FiveCallGuardSetTail
     L_c96f:
         mov      dword ptr [eax + 8], OFFSET L_c950
         mov      ecx, dword ptr [g_baseSel]
@@ -285,7 +285,7 @@ __declspec(naked) void HitStateCluster_0046c7c0(void)
         mov      dword ptr [eax + 4], ecx
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edx
-        call     SlotEvent3EntryChain_0046fdf0
+        call     SlotEvent3EntryChain
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         ret
@@ -333,11 +333,11 @@ __declspec(naked) void HitStateCluster_0046c7c0(void)
         mov      dword ptr [g_eventQueueChild], eax
         jne      L_cac2
     L_ca74:
-        call     ScaledAndAlfe_00490390
+        call     ScaledAndAlfe
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_cb69
-        call     PushPopWalkSet1006_00470ee0
+        call     PushPopWalkSet1006
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_cb69

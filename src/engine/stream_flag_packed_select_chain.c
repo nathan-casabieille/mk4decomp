@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00469340 (364b game) - cdecl chain with stream-flag swap +
  *   packed_ptr select. Sets g_walkCallback=0x52, calls
  *   TableLookupCall_00489ff0; on no-error sets 0x54206c=0xa, calls
- *   ScaledIndexConditionalAdd_0048e400. Then dispatches on
+ *   ScaledIndexConditionalAdd. Then dispatches on
  *   g_baseSel:
  *     - matches g_gtPlayerProbe2: if g_mul10SumState_0054388c is set, picks
  *       &g_mul10TableBase_004ec050>>2 (state 1) or &g_dispatchTab_004ec040>>2 (other)
@@ -123,7 +123,7 @@ extern unsigned int g_fightAxisPosY;
  *       sets g_eventQueueChild=1 and copies 0x54204c into 0x542050; else
  *       keeps 0x542050.
  *   Tail: copies chosen base into 0x542044, calls Mul10SumStoreNegCommit_00490970, pushes
- *   0x542a58 and calls GuardedPackedSlotInit_00428760, then
+ *   0x542a58 and calls GuardedPackedSlotInit, then
  *   MStackPush3CmpCall. If bit 0 of 0x54208c set, calls
  *   PendingMatch_004694b0. Then tail-jmp ScaledChainJmp_00429470 or
  *   ScaledClearJmp_00428d60 depending on g_eventQueueChild.
@@ -133,12 +133,12 @@ extern unsigned int g_mul10TableBase_004ec050;
 extern unsigned int g_dispatchVar37_00542a58;
 extern unsigned int g_mul10SumState_0054388c;
 extern unsigned int g_mul10SumState2_00543890;
-extern void GuardedPackedSlotInit_00428760(void);
+extern void GuardedPackedSlotInit(void);
 extern void Mul10SumStoreNegCommit_00490970(void);
 extern void PendingMatch_004694b0(void);
 extern void ScaledChainJmp_00429470(void);
 extern void ScaledClearJmp_00428d60(void);
-extern void ScaledIndexConditionalAdd_0048e400(void);
+extern void ScaledIndexConditionalAdd(void);
 extern void TableLookupCall_00489ff0(void);
 
 __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
@@ -149,7 +149,7 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
         test    eax, eax
         jne     L_sfp_done
         mov     dword ptr [g_walkCallback], 0xa
-        call    ScaledIndexConditionalAdd_0048e400
+        call    ScaledIndexConditionalAdd
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_sfp_done
@@ -215,7 +215,7 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
         test    eax, eax
         jne     short L_sfp_done
         push    offset g_dispatchVar37_00542a58
-        call    GuardedPackedSlotInit_00428760
+        call    GuardedPackedSlotInit
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax

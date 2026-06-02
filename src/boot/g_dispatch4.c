@@ -17,11 +17,11 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     Tail
  *   ret
  */
-extern void MStackBracket4_ListInsertZeroFill_00408600(void);
-extern void MStackPush3LinkedListWalk_004088b0(void);
+extern void MStackBracket4_ListInsertZeroFill(void);
+extern void MStackPush3LinkedListWalk(void);
 void GDispatch4_004089c0(void) {
-    MStackBracket4_ListInsertZeroFill_00408600();
+    MStackBracket4_ListInsertZeroFill();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 4) return;
-    MStackPush3LinkedListWalk_004088b0();
+    MStackPush3LinkedListWalk();
 }

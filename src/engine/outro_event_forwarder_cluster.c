@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -117,15 +117,15 @@ extern unsigned int g_dispatchSave771_004eecc0;
 extern unsigned int g_dispatchSave772_004eece8;
 extern void ArgSarStoreJmp(void);
 extern void CmpP1DualInitStore_00482ab0(void);
-extern void FiveCallGuardSetTail_0046f6b0(void);
-extern void GateDispatch6c_00494580(void);
+extern void FiveCallGuardSetTail(void);
+extern void GateDispatch6c(void);
 extern void Phase3Packed3EntryDispatch_00486130(void);
 extern void QuadBlockDispatch_00483090(void);
 extern void QuadBlockInstallChainThunks_00483c90(void);
 extern void ScaledAndAlf7_00490310(void);
 extern void ScaledCmpJlJmp_00488ed0(void);
 extern void ScaledDecOrZero_00483b50(void);
-extern void ScaledMove48to58_00490720(void);
+extern void ScaledMove48to58(void);
 
 __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
 {
@@ -215,7 +215,7 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         ret
         nop
         nop
-        call     GateDispatch6c_00494580
+        call     GateDispatch6c
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5fa7
@@ -240,7 +240,7 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         nop
         nop
         nop
-        call     GateDispatch6c_00494580
+        call     GateDispatch6c
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5fe2
@@ -266,7 +266,7 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         nop
         nop
         nop
-        call     GateDispatch6c_00494580
+        call     GateDispatch6c
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_600b
@@ -284,11 +284,11 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_6051
-        call     ScaledMove48to58_00490720
+        call     ScaledMove48to58
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_6051
-        call     GateDispatch6c_00494580
+        call     GateDispatch6c
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_6051
@@ -322,7 +322,7 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         je       short L_60bb
         dec      ecx
         je       short L_6085
-        call     FiveCallGuardSetTail_0046f6b0
+        call     FiveCallGuardSetTail
         pop      edi
         ret
     L_6085:

@@ -17,11 +17,11 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern unsigned int g_audioStreamState;
-extern void StorePauseImulShr16_004ab630(void);
+extern void StorePauseImulShr16(void);
 void TestStoreConstJmp_004933b0(void) {
     unsigned int s = g_audioStreamState;
     g_eventQueueCurrent = s;
     if (s) return;
     g_walkCallback = (void(*)(void))0x0e;
-    StorePauseImulShr16_004ab630();
+    StorePauseImulShr16();
 }

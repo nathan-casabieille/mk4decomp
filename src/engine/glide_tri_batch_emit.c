@@ -20,29 +20,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -52,10 +52,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -170,7 +170,7 @@ extern unsigned int g_glideTriBatch_0058c7f4;
 extern unsigned int g_glideTriBatchB_0058c7f8;
 extern unsigned int g_glideTriBatchC_0058c7fc;
 extern unsigned int g_glideTriBatchD_0058c800;
-extern void DoubleToInt64_004c57d0(void);
+extern void DoubleToInt64(void);
 extern void GlidePolyClip_004ae560(void);
 extern void Renderer2_FlushBatch_D3D(void);
 
@@ -713,20 +713,20 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         mov      dword ptr [esi + 8], eax
         mov      dword ptr [esi + 4], eax
         fld      dword ptr [ebp + 0x10]
-        call     DoubleToInt64_004c57d0
+        call     DoubleToInt64
         fld      dword ptr [ebp + 0x14]
         mov      dl, al
         and      edx, 0xff
         or       edx, ebx
         shl      edx, 8
         mov      dword ptr [esp + 0x54], edx
-        call     DoubleToInt64_004c57d0
+        call     DoubleToInt64
         mov      ebx, dword ptr [esp + 0x54]
         and      eax, 0xff
         fld      dword ptr [ebp + 0x18]
         or       ebx, eax
         shl      ebx, 8
-        call     DoubleToInt64_004c57d0
+        call     DoubleToInt64
         and      eax, 0xff
         or       ebx, eax
         mov      dword ptr [esi + 0xc], ebx
@@ -742,19 +742,19 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         mov      dword ptr [esi + 0x28], eax
         mov      dword ptr [esi + 0x24], eax
         fld      dword ptr [edi + 0xc]
-        call     DoubleToInt64_004c57d0
+        call     DoubleToInt64
         mov      ecx, dword ptr [esp + 0x2c]
         mov      bl, al
         fld      dword ptr [edi + 0x10]
         and      ebx, 0xff
         or       ebx, ecx
         shl      ebx, 8
-        call     DoubleToInt64_004c57d0
+        call     DoubleToInt64
         fld      dword ptr [edi + 0x14]
         and      eax, 0xff
         or       ebx, eax
         shl      ebx, 8
-        call     DoubleToInt64_004c57d0
+        call     DoubleToInt64
         and      eax, 0xff
         or       ebx, eax
         mov      dword ptr [esi + 0x2c], ebx
@@ -770,19 +770,19 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         mov      dword ptr [esi + 0x48], eax
         mov      dword ptr [esi + 0x44], eax
         fld      dword ptr [edi + 0x28]
-        call     DoubleToInt64_004c57d0
+        call     DoubleToInt64
         mov      ecx, dword ptr [esp + 0x2c]
         mov      bl, al
         fld      dword ptr [edi + 0x2c]
         and      ebx, 0xff
         or       ebx, ecx
         shl      ebx, 8
-        call     DoubleToInt64_004c57d0
+        call     DoubleToInt64
         fld      dword ptr [edi + 0x30]
         and      eax, 0xff
         or       ebx, eax
         shl      ebx, 8
-        call     DoubleToInt64_004c57d0
+        call     DoubleToInt64
         and      eax, 0xff
         or       ebx, eax
         mov      dword ptr [esi + 0x4c], ebx

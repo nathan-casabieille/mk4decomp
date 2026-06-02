@@ -15,7 +15,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern int Mul10Tail(int, int);
 extern int Mul10Tail(int, int);
-extern void StoreDoubleNegPauseSubStore_004ab750(void);
+extern void StoreDoubleNegPauseSubStore(void);
 
 void PushImmCallSetCallAdjustCall_00446bf0(void) {
     __asm {
@@ -26,7 +26,7 @@ void PushImmCallSetCallAdjustCall_00446bf0(void) {
         add     esp, 8
         mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [g_walkCallback], 0xf5c
-        call    StoreDoubleNegPauseSubStore_004ab750
+        call    StoreDoubleNegPauseSubStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

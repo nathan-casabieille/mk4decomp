@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004a1000 (120b audio) - push-0x230 setup + 2 calls + chain check + tag-dispatch.
  *   Compute base*4 + chain[+0x34]; push 0x230; store eax to g_walkCallback and chain[g_eventQueueIdx].
- *   call TripleStageRollback; add esp,4. call RoundWinTransition_0049e7e0; pause? -> ret.
+ *   call TripleStageRollback; add esp,4. call RoundWinTransition; pause? -> ret.
  *   eax = chain[g_baseSel + 0x30]; g_walkCallback = eax;
  *   if (eax == 0): jmp Push15PushDataCallWordCallJmp_004a1080.
  *   else: push 0x16, 0x4a0370; call StoreTwoCall; add esp,8.
@@ -119,8 +119,8 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void CallSetPause(void);
 extern void Push15PushDataCallWordCallJmp_004a1080(void);
-extern void RoundWinTransition_0049e7e0(void);
-extern void TripleStageRollback_00404a50(void);
+extern void RoundWinTransition(void);
+extern void TripleStageRollback(void);
 
 extern unsigned int g_matrixStack_arr;
 
@@ -132,9 +132,9 @@ __declspec(naked) void AudioInitChainTag_004a1000(void) {
         mov     eax, [eax*4 + 0x34]
         mov     dword ptr [g_walkCallback], eax
         mov     [ecx*4 + g_matrixStack_arr], eax
-        call    TripleStageRollback_00404a50
+        call    TripleStageRollback
         add     esp, 4
-        call    RoundWinTransition_0049e7e0
+        call    RoundWinTransition
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

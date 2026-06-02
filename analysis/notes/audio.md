@@ -393,7 +393,7 @@ filename heuristic during the QQ.c auto-split. The focused set:
 | `helper_title_audio_reset.c`      | `Helper_TitleAudioReset`                   |
 | `helper_title_enter_state_a.c`    | `Helper_TitleEnterStateA`                  |
 | `helper_title_enter_state_b.c`    | `Helper_TitleEnterStateB`                  |
-| `audio_mixer_step.c`              | `AudioMixerStep_004ab700` (per-tick fold)  |
+| `audio_mixer_step.c`              | `AudioMixerStep` (per-tick fold)  |
 | `audio_mixer_knob_update.c`       | mixer knob update dispatcher               |
 | `audio_voice_sequencer_cluster.c` | voice sequencer cluster                    |
 | `voice_mixer_tick_dispatch.c`     | per-frame voice mixer fan-out              |

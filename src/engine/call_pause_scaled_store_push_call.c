@@ -13,12 +13,12 @@ extern unsigned int g_phaseTimer;
  *   load baseSel; mov eax,0x2001; store walk and [ecx*4+0x74]
  *   push lit; call F2; pause → ret; add esp,4; jmp T
  */
-extern void SlotPhaseResetInstallChain_0048e0e0(void);
+extern void SlotPhaseResetInstallChain(void);
 extern int IterStepScaledStore24_00428730(void *);
 extern void *g_dispatchSave419_00542958;
 extern void SelfInstallPhaseDispatch_0045fd30(void);
 void CallPauseScaledStorePushCall(void) {
-    SlotPhaseResetInstallChain_0048e0e0();
+    SlotPhaseResetInstallChain();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))0x2001;
     ((ScenegraphNode *)(g_baseSel * 4))->fsm_state = 0x2001;

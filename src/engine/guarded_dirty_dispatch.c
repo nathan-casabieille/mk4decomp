@@ -17,7 +17,7 @@ extern void MStackPush3CmpCall(void);
 extern void SetJmp_00438f60(void);
 extern void ScaledChain3c74Jmp_0048e780(void);
 extern void CallPauseDirtyConstJmp_00438ca0(void);
-extern void StateDispatchYield_00471190(void);
+extern void StateDispatchYield(void);
 void GuardedDirtyDispatch_00438c50(void) {
     MStackPush3CmpCall();
     if (g_framePauseFlag) return;
@@ -32,5 +32,5 @@ void GuardedDirtyDispatch_00438c50(void) {
         return;
     }
     g_walkCallback = (void(*)(void))9;
-    StateDispatchYield_00471190();
+    StateDispatchYield();
 }

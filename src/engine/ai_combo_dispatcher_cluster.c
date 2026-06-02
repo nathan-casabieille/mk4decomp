@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -117,14 +117,14 @@ extern unsigned int g_dispatchSave1703_00800000;
 extern void ArgSarStoreJmp(void);
 extern void ArgSar_Set0_Jmp_0049c6f0(void);
 extern void CallSetPause(void);
-extern void CondPickDualStore_0049c670(void);
-extern void CopyThreeFields_00404df0(void);
-extern void DualCmpSwapStore_0049c5a0(void);
+extern void CondPickDualStore(void);
+extern void CopyThreeFields(void);
+extern void DualCmpSwapStore(void);
 extern void MStackPush8SlotInitPop8_00415010(void);
-extern void PushSetXfmMaskCallPop_00407140(void);
+extern void PushSetXfmMaskCallPop(void);
 extern void ScaledIndirectJmp_0049c850(void);
-extern void ScaledStackCallPause_0049c360(void);
-extern void ThreeChanPackClamp_00404cc0(void);
+extern void ScaledStackCallPause(void);
+extern void ThreeChanPackClamp(void);
 extern void TripleEntry3Block_00498df0(void);
 extern void Vec3AccMul10ChainBlend_0049c3d0(void);
 
@@ -151,7 +151,7 @@ __declspec(naked) void AiComboDispatcherCluster_00497470(void)
         mov      eax, OFFSET g_dispatchSave910_004d6788
         shr      eax, 2
         mov      dword ptr [g_walkCallback], eax
-        call     PushSetXfmMaskCallPop_00407140
+        call     PushSetXfmMaskCallPop
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_759d
@@ -199,7 +199,7 @@ __declspec(naked) void AiComboDispatcherCluster_00497470(void)
         nop
         nop
         /* === h2 (0x4975a0): event 004f2100 forwarder w/ 0x310 === */
-        call     CondPickDualStore_0049c670
+        call     CondPickDualStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_75d2
@@ -227,12 +227,12 @@ __declspec(naked) void AiComboDispatcherCluster_00497470(void)
         nop
         /* === h3 (0x4975e0): event 004f2158 chained w/ 0x3333 ratio === */
         push     esi
-        call     DualCmpSwapStore_0049c5a0
+        call     DualCmpSwapStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_770d
         push     OFFSET g_dispatchSave793_004f2158
-        call     ScaledStackCallPause_0049c360
+        call     ScaledStackCallPause
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         test     eax, eax
@@ -244,11 +244,11 @@ __declspec(naked) void AiComboDispatcherCluster_00497470(void)
         ret
     L_761d:
         push     OFFSET g_dispatchSave1703_00800000
-        call     ThreeChanPackClamp_00404cc0
+        call     ThreeChanPackClamp
         mov      eax, dword ptr [g_fightGroupHead]
         add      esp, 4
         push     eax
-        call     CopyThreeFields_00404df0
+        call     CopyThreeFields
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_eventQueueWorkType], 0x9999
         add      esp, 4
@@ -299,11 +299,11 @@ __declspec(naked) void AiComboDispatcherCluster_00497470(void)
         nop
         /* === h4 (0x497720): combo state cycle 1→3, dec [+0x5c] === */
         push     0x100000
-        call     ThreeChanPackClamp_00404cc0
+        call     ThreeChanPackClamp
         mov      eax, dword ptr [g_fightGroupHead]
         add      esp, 4
         push     eax
-        call     CopyThreeFields_00404df0
+        call     CopyThreeFields
         mov      ecx, dword ptr [g_baseSel]
         add      esp, 4
         mov      eax, dword ptr [ecx*4 + 0x74]

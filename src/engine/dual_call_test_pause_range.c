@@ -20,7 +20,7 @@ extern void Wrapper_00439310(void);
 extern unsigned int g_table_00535ddc;
 extern void TriEntryGateMain_00435440(void);
 extern void GuardedSeq_00433bb0(void);
-extern void PrefixThunkInstallSelf3State_00438f80(void);
+extern void PrefixThunkInstallSelf3State(void);
 void DualCallTestPauseRange_004353f0(void) {
     int state_y;
     if (((int (*)(void))Cmp2CallDirtyCall)() != 0) return;
@@ -36,5 +36,5 @@ void DualCallTestPauseRange_004353f0(void) {
         GuardedSeq_00433bb0();
         return;
     }
-    PrefixThunkInstallSelf3State_00438f80();
+    PrefixThunkInstallSelf3State();
 }

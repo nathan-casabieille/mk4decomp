@@ -16,7 +16,7 @@ extern void GuardedDoubleIncCmpJmp_00429860(void);
 extern void DirtyToggleByGate(void);
 extern void InstallSelfOrChainJmp_00483a20(void);
 extern void GameDispatchValidateState(void);
-void CallPauseDirty4StackPushFn_004839d0(void) {
+void CallPauseDirty4StackPushFn(void) {
     GuardedDoubleIncCmpJmp_00429860();
     if (g_framePauseFlag != 0) return;
     DirtyToggleByGate();

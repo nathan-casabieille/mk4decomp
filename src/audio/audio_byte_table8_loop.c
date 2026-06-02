@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /*
  * CharSelect_Team - 292b audio 8-iter table loop (extended from 0x004a76e0's 6-iter).
  *   For edi in 0..7: esi=(edi*9)*4; index=g_byteTab_004f3c20[esi]; chain=baseSel+index;
- *     g_currentNodeIdx=chain[ecx*4]; call MStackPush2ChainLLInsert_00406790.
+ *     g_currentNodeIdx=chain[ecx*4]; call MStackPush2ChainLLInsert.
  *   Switch on (edi-3): case 0 → use g_audioMixerKnob2_00543440 (3-way: push 0x4f43f4/0x4f43dc/0x4f43cc);
  *                       case 1 → use g_audioMixerKnob_005433c4 (3-way: push 0x4f4434/0x4f441c/0x4f440c).
  *   If case fired: push (0x00543450) and call PrintfStub; restore.
@@ -123,9 +123,9 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_byteTab_004f3c20;
 extern unsigned int g_audioMixerKnob_005433c4;
 extern unsigned int g_audioMixerKnob2_00543440;
-extern void GuardedSetupCallTailJmp_004a1fa0(void);
+extern void GuardedSetupCallTailJmp(void);
 extern void Helper_Sprintf(void);
-extern void MStackPush2ChainLLInsert_00406790(void);
+extern void MStackPush2ChainLLInsert(void);
 
 __declspec(naked) void CharSelect_Team(void)
 {
@@ -142,7 +142,7 @@ __declspec(naked) void CharSelect_Team(void)
         add     ecx, eax
         mov     edx, dword ptr [ecx*4]
         mov     dword ptr [g_currentNodeIdx], edx
-        call    MStackPush2ChainLLInsert_00406790
+        call    MStackPush2ChainLLInsert
         mov     eax, edi
         sub     eax, 3
         je      short L_a7f_case3
@@ -189,7 +189,7 @@ __declspec(naked) void CharSelect_Team(void)
         push    ecx
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_currentNodeIdx], ecx
-        call    GuardedSetupCallTailJmp_004a1fa0
+        call    GuardedSetupCallTailJmp
         mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [esi + 0x004f3c30]
         add     esp, 8

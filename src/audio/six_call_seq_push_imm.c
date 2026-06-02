@@ -36,12 +36,12 @@ void AppShutdown(void) {
 }
 
 /* @addr 0x004a1d80 (61b): 6 push/call/add-esp sequences */
-extern void TableWalkBoundedCmp_004bd890(int);
+extern void TableWalkBoundedCmp(int);
 void SixCallSeqPushImm_004a1d80(void) {
-    TableWalkBoundedCmp_004bd890(9);
-    TableWalkBoundedCmp_004bd890(2);
-    TableWalkBoundedCmp_004bd890(3);
-    TableWalkBoundedCmp_004bd890(4);
-    TableWalkBoundedCmp_004bd890(5);
-    TableWalkBoundedCmp_004bd890(7);
+    TableWalkBoundedCmp(9);
+    TableWalkBoundedCmp(2);
+    TableWalkBoundedCmp(3);
+    TableWalkBoundedCmp(4);
+    TableWalkBoundedCmp(5);
+    TableWalkBoundedCmp(7);
 }

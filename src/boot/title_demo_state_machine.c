@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -121,19 +121,19 @@ extern unsigned int g_zerotriple_00541de8;
 extern unsigned int g_zerotriple_00541dec;
 extern unsigned int g_titleDemoState_00541df0;
 extern unsigned int g_titleDemoState2_00541df4;
-extern void AudioVolumeRescale_004ab690(void);
+extern void AudioVolumeRescale(void);
 extern void BootInitVec3PhaseInstall_00402c10(void);
 extern void BootStateInitWithRecurseInstall_00402de0(void);
 extern void BootStateMachine4Way_00402f60(void);
-extern void CopyGlobal_004ac1f0(void);
+extern void CopyGlobal(void);
 extern void InstallSelfCounter_00404920(void);
 extern void PendingMatch_00402540(void);
 extern void Screen_BestKombatants(void);
 extern void PendingMatch_004a2a80(void);
 extern void PhaseInstallSelf3Step_00402350(void);
-extern void QuadCallPhase2_004be800(void);
+extern void QuadCallPhase2(void);
 extern void SceneFrameStepWithInputs_004be250(void);
-extern void TableWalkBoundedCmp_004bd890(void);
+extern void TableWalkBoundedCmp(void);
 
 __declspec(naked) void PendingMatch_00401b70(void)
 {
@@ -158,7 +158,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         push     -1
         push     -1
         push     0x16
-        call     QuadCallPhase2_004be800
+        call     QuadCallPhase2
         add      esp, 0x10
         push     ebx
         push     ebp
@@ -204,7 +204,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      dword ptr [g_zerotriple_00541dec], ebp
         mov      dword ptr [g_titleDemoState_00541df0], ebp
         mov      dword ptr [g_titleDemoState2_00541df4], ebp
-        call     QuadCallPhase2_004be800
+        call     QuadCallPhase2
         mov      dword ptr [esi + 8], edi
         mov      edx, dword ptr [g_baseSel]
         add      edi, 0x3000000
@@ -228,7 +228,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         pop      ebx
         ret      
         push     9
-        call     TableWalkBoundedCmp_004bd890
+        call     TableWalkBoundedCmp
         add      esp, 4
         mov      dword ptr [g_eventQueueWorkType], ebp
         call     Push16Call
@@ -268,7 +268,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         push     -1
         push     -1
         push     0x1e
-        call     QuadCallPhase2_004be800
+        call     QuadCallPhase2
         mov      dword ptr [esi + 8], edi
         mov      edx, dword ptr [g_baseSel]
         add      edi, 0x5000000
@@ -311,7 +311,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         pop      ebx
         ret      
         mov      dword ptr [g_walkCallback], 0x64
-        call     AudioVolumeRescale_004ab690
+        call     AudioVolumeRescale
         mov      al, byte ptr [g_xformDirtyFlags]
         mov      dword ptr [esi + 8], edi
         test     al, bl
@@ -370,13 +370,13 @@ __declspec(naked) void PendingMatch_00401b70(void)
         pop      ebx
         ret      
         push     8
-        call     TableWalkBoundedCmp_004bd890
+        call     TableWalkBoundedCmp
         add      esp, 4
         push     -1
         push     -1
         push     -1
         push     0x1c
-        call     QuadCallPhase2_004be800
+        call     QuadCallPhase2
         mov      dword ptr [esi + 8], edi
         mov      edx, dword ptr [g_baseSel]
         add      edi, 0xb000000
@@ -402,7 +402,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         push     -1
         push     -1
         push     0x1e
-        call     QuadCallPhase2_004be800
+        call     QuadCallPhase2
         mov      dword ptr [esi + 8], edi
         mov      ecx, dword ptr [g_baseSel]
         add      edi, 0xc000000
@@ -489,13 +489,13 @@ __declspec(naked) void PendingMatch_00401b70(void)
         pop      ebx
         ret      
         push     8
-        call     TableWalkBoundedCmp_004bd890
+        call     TableWalkBoundedCmp
         add      esp, 4
         push     -1
         push     -1
         push     -1
         push     0x1e
-        call     QuadCallPhase2_004be800
+        call     QuadCallPhase2
         add      esp, 0x10
         push     ebp
         push     0x4a2180
@@ -505,7 +505,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         push     -1
         push     -1
         push     0x1c
-        call     QuadCallPhase2_004be800
+        call     QuadCallPhase2
         mov      dword ptr [esi + 8], edi
         mov      eax, dword ptr [g_baseSel]
         add      edi, 0x10000000
@@ -531,7 +531,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         push     -1
         push     -1
         push     0x1e
-        call     QuadCallPhase2_004be800
+        call     QuadCallPhase2
         mov      dword ptr [esi + 8], edi
         mov      edx, dword ptr [g_baseSel]
         add      edi, 0x11000000
@@ -615,7 +615,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         pop      ebx
         ret      
         mov      dword ptr [g_walkCallback], ebp
-        call     CopyGlobal_004ac1f0
+        call     CopyGlobal
         mov      dword ptr [esi + 8], edi
         mov      dword ptr [esi + 0x84], ebx
         pop      edi

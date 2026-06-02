@@ -12,13 +12,13 @@ extern unsigned int g_scaledInit_00542044;
  *   push eax, push notMask; walk = eax; call F2 (mixer-like);
  *   add esp 8; restore [head*4+0x70] = eax; ret.
  */
-extern void EsiEdiAliasDualMul10_004906b0(void);
+extern void EsiEdiAliasDualMul10(void);
 extern void Mul10Tail(void);
 void NotMaskCallStore70_0047e640(void) {
     unsigned int v;
     unsigned int r;
     g_walkCallback = (void (*)(void))g_eventQueueNotMask;
-    EsiEdiAliasDualMul10_004906b0();
+    EsiEdiAliasDualMul10();
     if (g_framePauseFlag != 0) return;
     v = *(unsigned int *)(g_fightGroupHead * 4 + 0x70);
     g_walkCallback = (void (*)(void))v;

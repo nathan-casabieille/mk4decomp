@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void ScaledAndAl7f_004902f0(void);
-extern void BootFrameSetup_00408190(void);
+extern void BootFrameSetup(void);
 extern void GuardedChainCmpDualBitXor(void);
 extern void ScaledXorStore_004903b0(void);
 extern void CallPauseDirtyPushCall_00488ba0(void);
@@ -119,11 +119,11 @@ extern void Wrapper_00484d90(void);
 
 /* @addr 0x00484b70 (284b game) - 5 adjacent dispatch blocks.
  *   B1 (0..0x24, +11 NOPs): mstack-push 0x00470480 with g_walkCallback=2; tail-jmp
- *     MstackPopScaledChainPlusThunks_00471250.
+ *     MstackPopScaledChainPlusThunks.
  *   B2 (0x30..0x4b, +4 NOPs): call ScaledAndAl7f_004902f0; if !pause: push 0x004ee8f8,
  *     tail-call ArgSarStoreJmp.
  *   B3 (0x50..0xa4, +11 NOPs): g_xformEntityIdx = 0x00500698>>2; 4-call chain
- *     (BootFrameSetup_00408190, GuardedChainCmpDualBitXor, ScaledXorStore, GateDispatch6c);
+ *     (BootFrameSetup, GuardedChainCmpDualBitXor, ScaledXorStore, GateDispatch6c);
  *     if all !pause: tail-jmp CallPauseDirtyPushCall_00488ba0.
  *   B4 (0xb0..0xe7, +8 NOPs): call GateDispatch6c; if !pause: call CopyJmp_0048ef90;
  *     if !pause and bit0 of state set: tail-jmp PendingMatch_00484da0; else: push 0x004ee920,
@@ -134,8 +134,8 @@ extern void Wrapper_00484d90(void);
  */
 extern void ArgSarStoreJmp(void);
 extern void DualBlockInstallSelfWithSibling_00484c90(void);
-extern void GateDispatch6c_00494580(void);
-extern void MstackPopScaledChainPlusThunks_00471250(void);
+extern void GateDispatch6c(void);
+extern void MstackPopScaledChainPlusThunks(void);
 
 __declspec(naked) void FiveBlockDispatchChain_00484b70(void) {
     __asm {
@@ -154,7 +154,7 @@ __declspec(naked) void FiveBlockDispatchChain_00484b70(void) {
         _emit   04h
         _emit   47h
         _emit   00h
-        jmp     MstackPopScaledChainPlusThunks_00471250
+        jmp     MstackPopScaledChainPlusThunks
         nop
         nop
         nop
@@ -183,7 +183,7 @@ __declspec(naked) void FiveBlockDispatchChain_00484b70(void) {
         mov     dword ptr [g_walkCallback], 0
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
-        call    BootFrameSetup_00408190
+        call    BootFrameSetup
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -198,7 +198,7 @@ __declspec(naked) void FiveBlockDispatchChain_00484b70(void) {
         test    eax, eax
         _emit   75h
         _emit   13h
-        call    GateDispatch6c_00494580
+        call    GateDispatch6c
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -216,7 +216,7 @@ __declspec(naked) void FiveBlockDispatchChain_00484b70(void) {
         nop
         nop
         nop
-        call    GateDispatch6c_00494580
+        call    GateDispatch6c
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

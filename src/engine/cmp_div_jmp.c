@@ -18,7 +18,7 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  */
 extern void MStackPush3HelperCondToggle_0049cf70(void);
-void CmpDivJmp_0049d080(void) {
+void CmpDivJmp(void) {
     int v = (int)g_walkCallback;
     if (v > 2) {
         g_walkCallback = (void (*)(void))(v / 2);

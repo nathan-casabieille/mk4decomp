@@ -8,7 +8,7 @@ extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x004ac040 (54b): triple cross-store at offsets 0x54/0x58/0x5c */
-void ScaledTripleCopy54_004ac040(void) {
+void ScaledTripleCopy54(void) {
     unsigned char *dst = (unsigned char *)(g_fightGroupHead * 4);
     unsigned char *src = (unsigned char *)(g_eventQueueEnd * 4);
     unsigned int v;

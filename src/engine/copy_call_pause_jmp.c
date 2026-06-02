@@ -23,7 +23,7 @@ extern unsigned int g_scaledInit_00542044;
 
 extern void TierBranchChain_0048b6c0(void);
 extern void MStackPush3TripleMul10WithAbs_0048b500(void);
-extern void MStackPush2ChainLLInsert_00406790(void);
+extern void MStackPush2ChainLLInsert(void);
 extern void StackPopDispatchTagged(void);
 
 /* @addr 0x0048b4e0 */
@@ -37,7 +37,7 @@ void CopyCallPauseJmp_0048b4e0(void) {
 /* @addr 0x004a19a0 */
 void CopyCallPauseJmp_004a19a0(void) {
     g_scaledInit_00542044 = g_fightGroupHead;
-    MStackPush2ChainLLInsert_00406790();
+    MStackPush2ChainLLInsert();
     if (g_framePauseFlag) return;
     StackPopDispatchTagged();
 }

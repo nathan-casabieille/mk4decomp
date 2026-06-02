@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -109,32 +109,32 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_eq_00542098;
-extern void DualGatedStateYield_0048fc80(void);
+extern void DualGatedStateYield(void);
 extern void Set1dCallSet16Jmp_004809b0(void);
 extern void ScaledChain3c7c_0048f930(void);
 extern void PunchAnimCluster_00496d80(void);
 extern void NotMaskStorePair_0045f440(void);
 extern void Install3WayChainCounter_004809e0(void);
-extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void FiveCallGuardSetTail(void);
 
 /* @addr 0x00480840 (356b game) - countdown loop install-self w/ 3-way tails.
  *   On phase = [scaled g_baseSel+0x84] == 0 jumps direct to install
  *   tail. Else runs a polling loop:
- *     DualGatedStateYield_0048fc80 → on success decrement g_eventQueueChild
+ *     DualGatedStateYield → on success decrement g_eventQueueChild
  *     and update g_eq_00542098 (sete on dec result), if <= 0 sets it
  *     to 0xc. If g_eq_00542098 != 0 calls Set1dCallSet16Jmp_004809b0.
  *     If g_xformScratch2088 == 1 tail-jmp Install3WayChainCounter_004809e0.
  *     Else calls ScaledChain3c7c_0048f930. If g_walkCallback >= 3
  *     tail-jmp Install3WayChainCounter; else sets g_walkCallback=0xb333
- *     and calls EsiEdiAliasDualMul10_004906b0, sets g_xformScratch2088=0x9999,
+ *     and calls EsiEdiAliasDualMul10, sets g_xformScratch2088=0x9999,
  *     calls PunchAnimCluster_00496d80, then NotMaskStorePair_0045f440. Selects
  *     g_eventQueueWorkType = 1 (if 0x54205c == g_player1NodeIdx) or 0x10,
  *     AND's with g_eventQueueCurrent → g_xformScratch94; if zero tail-jmp
- *     FiveCallGuardSetTail_0046f6b0; else continues loop iteration by
+ *     FiveCallGuardSetTail; else continues loop iteration by
  *     re-reading phase and jumping back if non-zero. Install tail:
  *     [eax+8]=Self, slot[+0x84]=1, g_pendingNodeType=1, 0x541e6c=1.
  */
-extern void EsiEdiAliasDualMul10_004906b0(void);
+extern void EsiEdiAliasDualMul10(void);
 
 __declspec(naked) void CountdownInstallSelfMultiTail_00480840(void) {
     __asm {
@@ -152,7 +152,7 @@ __declspec(naked) void CountdownInstallSelfMultiTail_00480840(void) {
         je      L_cis_install
         mov     ebp, 0x9999
     L_cis_loopTop:
-        call    DualGatedStateYield_0048fc80
+        call    DualGatedStateYield
         test    eax, eax
         jne     L_cis_done
         mov     eax, dword ptr [g_eventQueueChild]
@@ -181,7 +181,7 @@ __declspec(naked) void CountdownInstallSelfMultiTail_00480840(void) {
         cmp     dword ptr [g_walkCallback], 3
         jge     L_cis_call9e0
         mov     dword ptr [g_walkCallback], 0xb333
-        call    EsiEdiAliasDualMul10_004906b0
+        call    EsiEdiAliasDualMul10
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_cis_done
         mov     dword ptr [g_xformScratch2088], ebp
@@ -229,7 +229,7 @@ __declspec(naked) void CountdownInstallSelfMultiTail_00480840(void) {
         pop     ebx
         ret
     L_cis_call6b0:
-        call    FiveCallGuardSetTail_0046f6b0
+        call    FiveCallGuardSetTail
         pop     edi
         pop     esi
         pop     ebp

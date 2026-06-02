@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -110,16 +110,16 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00418e00 (379b boot) - 2-entry packed boot setup + body.
  *   Entry 1 (offset 0, 194b): sets g_walkCallback = &g_dispatchSave562_004d75e0>>2,
- *     calls PushSetXfmMaskCallPop_00407140. On no-error AND bit 2 of
+ *     calls PushSetXfmMaskCallPop. On no-error AND bit 2 of
  *     g_xformDirtyFlags clear: writes [g_fightGroupHead*4+0x30]=0xa9,
  *     +0x3c=g_particleEmitterNode, +0x70=0xffffaaab, +0x80=0xffffb334. Calls
  *     SetJmp_00408d20. On no-error writes the body label at
- *     [g_xformEntityIdx*4+0x10] and calls ScaledTripleCopy54_004ac040.
+ *     [g_xformEntityIdx*4+0x10] and calls ScaledTripleCopy54.
  *     On no-error writes g_eventQueueNotMask → +0x58 and tail-jmps
  *     0x4062f0.
  *   14b NOP align pad.
  *   Entry 2 / body (offset 0xd0, 171b): mstack-pushes
- *     g_pendingNodeType/0054205c, calls ChainWalkPushPop_00405a40.
+ *     g_pendingNodeType/0054205c, calls ChainWalkPushPop.
  *     On no-error: g_pendingNodeType = g_load_0052ab10, computes
  *     [g_fightGroupHead*4+0x58] += 0x9fd70; if greater than the new
  *     0x54204c-derived value adds 0x3be3d7 instead. Then pops both
@@ -129,10 +129,10 @@ extern unsigned int g_dispatchSave562_004d75e0;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_particleEmitterNode;
 extern unsigned int g_table_004d57b0;
-extern void ChainWalkPushPop_00405a40(void);
+extern void ChainWalkPushPop(void);
 extern void MStackCall_004062f0(void);
-extern void PushSetXfmMaskCallPop_00407140(void);
-extern void ScaledTripleCopy54_004ac040(void);
+extern void PushSetXfmMaskCallPop(void);
+extern void ScaledTripleCopy54(void);
 extern void SetJmp_00408d20(void);
 
 __declspec(naked) void BootSetupWithMStackBody_00418e00(void) {
@@ -140,7 +140,7 @@ __declspec(naked) void BootSetupWithMStackBody_00418e00(void) {
         mov     eax, offset g_dispatchSave562_004d75e0
         shr     eax, 2
         mov     dword ptr [g_walkCallback], eax
-        call    PushSetXfmMaskCallPop_00407140
+        call    PushSetXfmMaskCallPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_bsm_e1End
@@ -165,7 +165,7 @@ __declspec(naked) void BootSetupWithMStackBody_00418e00(void) {
         mov     eax, offset L_bsm_body
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x10], eax
-        call    ScaledTripleCopy54_004ac040
+        call    ScaledTripleCopy54
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bsm_e1End
@@ -200,7 +200,7 @@ __declspec(naked) void BootSetupWithMStackBody_00418e00(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_table_004d57b0], edx
-        call    ChainWalkPushPop_00405a40
+        call    ChainWalkPushPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bsm_bodyEnd

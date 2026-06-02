@@ -15,7 +15,7 @@ extern unsigned int g_acc_00542078;   /* 0x00542078 */
 extern unsigned int g_setjmp_00ab5750;   /* 0x00ab5750 */
 
 /* Externs for jump targets. */
-extern void ZeroAndDirty4_00405430(void);   /* 0x00405430 */
+extern void ZeroAndDirty4(void);   /* 0x00405430 */
 extern void CallPauseScaledStoreAdd_004078f0(void);   /* 0x004078f0 */
 extern void BootStateTriple_00408d30(void);   /* 0x00408d30 */
 extern void EsiInstallDecCallChain_004294a0(void);   /* 0x004294a0 */
@@ -29,9 +29,9 @@ extern void SetJmp_00451b50(void);   /* 0x00451b50 */
 extern void JuggleFsmCluster_00451b90(void);   /* 0x00451b90 */
 extern void CharSelectFsmCluster_004561f0(void);   /* 0x004561f0 */
 extern void SixSubdispatchSpan_0045ec10(void);   /* 0x0045ec10 */
-extern void HitReactionDispatcher_0045f650(void);   /* 0x0045f650 */
+extern void HitReactionDispatcher(void);   /* 0x0045f650 */
 extern void AlarmCountdownInstall_004609e0(void);   /* 0x004609e0 */
-extern void StateDispatchYield_00471190(void);   /* 0x00471190 */
+extern void StateDispatchYield(void);   /* 0x00471190 */
 extern void GuardedSeq_00473f10(void);   /* 0x00473f10 */
 extern void InstallSelfChainEsi_004753b0(void);   /* 0x004753b0 */
 extern void ScaledLitLoadCall_00481020(void);   /* 0x00481020 */
@@ -48,7 +48,7 @@ extern void IncCallVtablePushCall_004b0d80(void);   /* 0x004b0d80 */
 /* @addr 0x00405420 */
 void SetJmp_00405420(void) {
     g_walkCallback = (void (*)(void))0x0000f333;
-    ZeroAndDirty4_00405430();
+    ZeroAndDirty4();
 }
 
 /* @addr 0x004078e0 */
@@ -96,25 +96,25 @@ void SetJmp_0042d080(void) {
 /* @addr 0x00438f50 */
 void SetJmp_00438f50(void) {
     g_walkCallback = (void (*)(void))0x00000004;
-    StateDispatchYield_00471190();
+    StateDispatchYield();
 }
 
 /* @addr 0x00438f60 */
 void SetJmp_00438f60(void) {
     g_walkCallback = (void (*)(void))0x00000005;
-    StateDispatchYield_00471190();
+    StateDispatchYield();
 }
 
 /* @addr 0x00438f70 */
 void SetJmp_00438f70(void) {
     g_walkCallback = (void (*)(void))0x00000006;
-    StateDispatchYield_00471190();
+    StateDispatchYield();
 }
 
 /* @addr 0x00439c30 */
 void SetJmp_00439c30(void) {
     g_eventQueueNotMask = 0x00010029;
-    HitReactionDispatcher_0045f650();
+    HitReactionDispatcher();
 }
 
 /* @addr 0x00440710 */

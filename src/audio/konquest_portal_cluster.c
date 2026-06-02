@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -126,14 +126,14 @@ extern void CharSelect_CpuBattlesToggle(void);
 extern void AudioInitArgs3_004a1f20(void);
 extern void AudioState50b4BitDispatcher_004a32c0(void);
 extern void FiveTableWalkInit_00403c90(void);
-extern void InstallSelfPackedF80_00426000(void);
-extern void MStackPush2ChainLLInsert_00406790(void);
+extern void InstallSelfPackedF80(void);
+extern void MStackPush2ChainLLInsert(void);
 extern void MStackPushComplexCallPop_00406430(void);
 extern void PendingMatch_004a2a80(void);
 extern void RetZero_004a1c40(void);
 extern void ScaledByteIdxDualCopy_004a3260(void);
 extern void SetJmp_004a1ac0(void);
-extern void TableWalkBoundedCmp_004bd890(void);
+extern void TableWalkBoundedCmp(void);
 extern void TripleCallByteCheck_004a1bf0(void);
 extern void TripleCallSetCopy_004a4880(void);
 
@@ -175,7 +175,7 @@ __declspec(naked) void EnduranceMode_Handler(void)
         cmp      eax, ebp
         je       short L_52e0
         mov      dword ptr [g_currentNodeIdx], eax
-        call     MStackPush2ChainLLInsert_00406790
+        call     MStackPush2ChainLLInsert
     L_52e0:
         mov      eax, dword ptr [g_count]
         cmp      eax, 4
@@ -254,7 +254,7 @@ __declspec(naked) void EnduranceMode_Handler(void)
         mov      dword ptr [edi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], ebp
-        call     InstallSelfPackedF80_00426000
+        call     InstallSelfPackedF80
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
@@ -265,7 +265,7 @@ __declspec(naked) void EnduranceMode_Handler(void)
         mov      ebx, 1
         push     8
         mov      dword ptr [g_bootInitState_00535de4], ebx
-        call     TableWalkBoundedCmp_004bd890
+        call     TableWalkBoundedCmp
         add      esp, 4
         call     FiveTableWalkInit_00403c90
         cmp      dword ptr [g_framePauseFlag], ebp

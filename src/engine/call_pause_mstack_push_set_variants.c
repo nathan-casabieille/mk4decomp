@@ -32,7 +32,7 @@ void CallPauseMStackPushSet0Jmp_0045fcf0(void) {
     top++;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = (unsigned int)&SelfInstallPhaseDispatch_0045fd30;
-    MstackPopScaledChainPlusThunks_00471250();
+    MstackPopScaledChainPlusThunks();
 }
 
 /* @addr 0x0045ffc0 (52b): same shape, value=9 */
@@ -47,12 +47,12 @@ void CallPauseMStackPushSet9Jmp_0045ffc0(void) {
     top++;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = (unsigned int)&SelfInstallPhaseDispatch_00460000;
-    MstackPopScaledChainPlusThunks_00471250();
+    MstackPopScaledChainPlusThunks();
 }
 
 /* @addr 0x00460d00 (52b): same shape, value=3, OFFSET 0x00470480 */
 extern void LeaPlus22StoreSelf(void);
-extern void CjInstallSelfRouter_00470480(void);
+extern void CjInstallSelfRouter(void);
 void CallPauseMStackPushSet3Jmp_00460d00(void) {
     unsigned int top;
     LeaPlus22StoreSelf();
@@ -61,8 +61,8 @@ void CallPauseMStackPushSet3Jmp_00460d00(void) {
     g_walkCallback = (void (*)(void))3;
     top++;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = (unsigned int)&CjInstallSelfRouter_00470480;
-    MstackPopScaledChainPlusThunks_00471250();
+    *(unsigned int *)(top * 4) = (unsigned int)&CjInstallSelfRouter;
+    MstackPopScaledChainPlusThunks();
 }
 
 /* @addr 0x00460d40 (52b): same shape, value=4 */
@@ -75,6 +75,6 @@ void CallPauseMStackPushSet4Jmp_00460d40(void) {
     g_walkCallback = (void (*)(void))4;
     top++;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = (unsigned int)&CjInstallSelfRouter_00470480;
-    MstackPopScaledChainPlusThunks_00471250();
+    *(unsigned int *)(top * 4) = (unsigned int)&CjInstallSelfRouter;
+    MstackPopScaledChainPlusThunks();
 }

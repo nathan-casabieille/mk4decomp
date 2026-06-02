@@ -21,12 +21,12 @@ extern unsigned int g_scaledInit_00542044;
  *   add     esp, 4
  *   ret
  */
-extern void ScaledMove48to58_00490720(void);
+extern void ScaledMove48to58(void);
 extern void Wrapper_0048a280(void);
 extern int ArgSarStoreJmp(void *p);
 extern void *g_dispatchSave1312_004ef080;
 void TwoCallsPushCall_004887d0(void) {
-    ScaledMove48to58_00490720();
+    ScaledMove48to58();
     if (g_framePauseFlag != 0) return;
     Wrapper_0048a280();
     if (g_framePauseFlag != 0) return;

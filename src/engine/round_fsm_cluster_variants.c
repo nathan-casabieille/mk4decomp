@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -114,10 +114,10 @@ extern unsigned int g_fightAxisPosY;
 extern void ScaledChainJmp_00429470(void);
 extern void TriPhaseDecCounterListAdvance_0047ad20(void);
 extern void RoundFsmCluster_0047aff0(void);
-extern void MStackPushSet0008_004901a0(void);
+extern void MStackPushSet0008(void);
 extern void IterStepDualStore(void);
-extern void CmpEqInitCallElseJmp_0048d4b0(void);
-extern void ScaledIndexConditionalAdd_0048e400(void);
+extern void CmpEqInitCallElseJmp(void);
+extern void ScaledIndexConditionalAdd(void);
 extern unsigned int g_dispatchSave735_004ed138;
 extern unsigned int g_dispatchSave736_004ed15c;
 extern unsigned int g_bootInitSaveSlot;
@@ -125,10 +125,10 @@ extern unsigned int g_bootInitSaveSlot;
 extern unsigned int g_dispatchSave924_004e39c0;
 extern unsigned int g_load_0052ab10;
 extern void ArgSarStoreJmp(void);
-extern void Atan2QuadrantLookup_004245b0(void);
-extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void Atan2QuadrantLookup(void);
+extern void FiveCallGuardSetTail(void);
 extern void GuardedArithDualCallChain_00431e90(void);
-extern void ScaledZero44_00491500(void);
+extern void ScaledZero44(void);
 extern void TripleScaledChainStore54_004313d0(void);
 extern void Wrapper_0048a300(void);
 
@@ -175,7 +175,7 @@ __declspec(naked) void CinematicFsmCluster_0047aaf0(void)
         nop
         /* === Helper 3: 0x215 event + post-stage === */
         mov      dword ptr [g_walkCallback], 0xc
-        call     ScaledIndexConditionalAdd_0048e400
+        call     ScaledIndexConditionalAdd
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_abac
@@ -202,7 +202,7 @@ __declspec(naked) void CinematicFsmCluster_0047aaf0(void)
         je       short L_ac89
         dec      eax
         je       short L_abe1
-        call     FiveCallGuardSetTail_0046f6b0
+        call     FiveCallGuardSetTail
         pop      esi
         ret
     L_abe1:
@@ -214,11 +214,11 @@ __declspec(naked) void CinematicFsmCluster_0047aaf0(void)
         dec      eax
         mov      dword ptr [g_eventQueueChild], eax
         jne      L_aca9
-        call     MStackPushSet0008_004901a0
+        call     MStackPushSet0008
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_ad1e
-        call     ScaledZero44_00491500
+        call     ScaledZero44
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_ad1e
@@ -255,7 +255,7 @@ __declspec(naked) void CinematicFsmCluster_0047aaf0(void)
         mov      dword ptr [g_walkCallback], 0x16
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], ecx
-        call     CmpEqInitCallElseJmp_0048d4b0
+        call     CmpEqInitCallElseJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_ad1e
@@ -302,7 +302,7 @@ __declspec(naked) void RoundFsmCluster_004308a0(void)
         sub      eax, ecx
         mov      dword ptr [g_acc_00542078], eax
         mov      dword ptr [g_eventQueueNotMask], eax
-        call     Atan2QuadrantLookup_004245b0
+        call     Atan2QuadrantLookup
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_098f
@@ -325,7 +325,7 @@ __declspec(naked) void RoundFsmCluster_004308a0(void)
         mov      ecx, dword ptr [ecx + 0x54]
         sub      ecx, eax
         mov      dword ptr [g_acc_00542078], ecx
-        call     Atan2QuadrantLookup_004245b0
+        call     Atan2QuadrantLookup
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_098f

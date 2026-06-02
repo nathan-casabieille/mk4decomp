@@ -12,11 +12,11 @@ extern unsigned int g_scaledInit_00542044;
  *   load dirty | 4; mov ax,4; restore walk = esi;
  *   if (g_scaledInit != 0) dirty ^= 4 (clear it again); store dirty; ret.
  */
-extern void MStackPush2LLWalkCompare_004069b0(void);
-void SaveCallRestoreOrXor_00404a00(int arg) {
+extern void MStackPush2LLWalkCompare(void);
+void SaveCallRestoreOrXor(int arg) {
     void (*save)(void) = g_walkCallback;
     g_walkCallback = (void (*)(void))arg;
-    MStackPush2LLWalkCompare_004069b0();
+    MStackPush2LLWalkCompare();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = save;
     g_xformDirtyFlags |= 4;

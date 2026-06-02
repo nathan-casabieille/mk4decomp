@@ -15,9 +15,9 @@ extern unsigned int g_scaledInit_00542044;
  *   inc     dword ptr [g_walkCallback]
  *   ret
  */
-extern void StorePauseImulShr16_004ab630(void);
+extern void StorePauseImulShr16(void);
 void CallPauseInc_004ab670(void) {
-    StorePauseImulShr16_004ab630();
+    StorePauseImulShr16();
     if (g_framePauseFlag == 0) {
         g_walkCallback = (void (*)(void))((unsigned int)g_walkCallback + 1);
     }

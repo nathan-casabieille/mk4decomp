@@ -11,12 +11,12 @@ extern unsigned int g_scaledInit_00542044;
  *   [+0x28]→g_eventQueueIdx; eax = g_walkCallback;
  *   if eax == 2: jmp T (0x407030); else call F2; load pause; ret.
  */
-extern void DirtyDoubleDeref_00408cb0(void);
+extern void DirtyDoubleDeref(void);
 extern void DispatcherComplex260_00407400(void);
 extern void DispatcherComplex260_00407030(void);
 int GuardedCallStoreSlotsCmp_00440990(void) {
     unsigned int s;
-    DirtyDoubleDeref_00408cb0();
+    DirtyDoubleDeref();
     if (g_framePauseFlag != 0) return g_framePauseFlag;
     s = g_scaledInit_00542044;
     g_xformEntityIdx = ((ScenegraphNode *)(s * 4))->queue_end;

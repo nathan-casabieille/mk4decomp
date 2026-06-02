@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
  *   OR's bit 9 into [resolved+0x20]. Pops the snapshot back into 0x542044,
  *   writes 0x95 into [snapshot+0x30], copies the 3-component vec at
  *   [g_eventQueueIdx *4 + 0/4/8] into [snapshot+0x54/+0x58/+0x5c]. Calls
- *   AudioMixerStep_004ab700. On no-error reads g_walkCallback, adds
+ *   AudioMixerStep. On no-error reads g_walkCallback, adds
  *   0xa3d, writes into [snapshot+0x70], sets g_eventQueueWorkType=0xc4, advances
  *   g_currentNodeIdx by 0x1b, calls TripleVecAccCallStore.
  *   On no-error subtracts 0x1b back from 0x542044, calls MStackCall_00406340,
@@ -123,7 +123,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_vecSetupArrBase_0051204c;
 extern unsigned int g_table_004d57b0;
-extern void AudioMixerStep_004ab700(void);
+extern void AudioMixerStep(void);
 extern void MStackCall_00406340(void);
 
 void MStackVecSetupScopedRun_004749a0(void) {
@@ -172,7 +172,7 @@ void MStackVecSetupScopedRun_004749a0(void) {
         mov     eax, dword ptr [edx*4 + 8]
         mov     dword ptr [ecx*4 + 0x5c], eax
         mov     dword ptr [g_walkCallback], 0x28f
-        call    AudioMixerStep_004ab700
+        call    AudioMixerStep
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_mvss_done

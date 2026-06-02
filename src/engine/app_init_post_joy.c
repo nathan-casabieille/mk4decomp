@@ -14,7 +14,7 @@ extern unsigned int g_fp_004d29d8;
 extern unsigned int g_fp_004d29e0;
 extern unsigned int g_fp_004d29e8;
 extern void CrtPowCluster_004c6540(void);
-extern void DoubleToInt64_004c57d0(void);
+extern void DoubleToInt64(void);
 
 __declspec(naked) void AppInit_PostJoy(void) {
     __asm {
@@ -31,7 +31,7 @@ loop4b5a10:
         fcos
         fmul    st(0), st(1)
         fsub    qword ptr [g_fp_004d29e8]
-        call    DoubleToInt64_004c57d0
+        call    DoubleToInt64
         mov     ecx, dword ptr [esp + 4]
         mov     dword ptr [esi], eax
         add     esi, 4

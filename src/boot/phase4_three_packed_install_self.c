@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -117,14 +117,14 @@ extern unsigned int g_load_0052ab08;
 extern unsigned int g_counter_0053a51c;
 extern unsigned int g_installOwner2_0053a7a0;
 extern unsigned int g_dispatchSave71_00542ce8;
-extern void AudioMixerStep_004ab700(void);
+extern void AudioMixerStep(void);
 extern void CallSetPause(void);
 extern void EsiInstallSetCbChainExtend_0048a810(void);
 extern void MStackCall_00406600(void);
 extern void MStackPushZeroCallPop_004066f0(void);
-extern void StoreDoubleNegPauseSubStore_004ab750(void);
-extern void StoreLoadJmp_00404ef0(void);
-extern void StorePauseImulShr16_004ab630(void);
+extern void StoreDoubleNegPauseSubStore(void);
+extern void StoreLoadJmp(void);
+extern void StorePauseImulShr16(void);
 extern void Thunk_0049cbc0(void);
 
 __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
@@ -168,7 +168,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
         mov     eax, 0xFFFE4CCD
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x58], eax
-        call    StoreLoadJmp_00404ef0
+        call    StoreLoadJmp
         mov     ecx, dword ptr [g_counter_0053a51c]
         mov     eax, offset g_dispatchSave917_004d7b88
         shr     eax, 2
@@ -178,7 +178,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
         add     esp, 4
         mov     edx, dword ptr [eax*4]
         mov     dword ptr [g_walkCallback], edx
-        call    StorePauseImulShr16_004ab630
+        call    StorePauseImulShr16
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_p4tpis_A_ret
         mov     ecx, dword ptr [g_walkCallback]
@@ -199,7 +199,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
         mov     dword ptr [g_eventQueueNotMask], edi
         mov     dword ptr [g_eventQueueEnd], edx
         mov     dword ptr [g_walkCallback], 0xC4
-        call    AudioMixerStep_004ab700
+        call    AudioMixerStep
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_p4tpis_A_ret
         mov     eax, dword ptr [g_walkCallback]
@@ -315,7 +315,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
         mov     dword ptr [eax*4], ecx
         mov     eax, dword ptr [g_pendingMatchVar]
         mov     dword ptr [g_walkCallback], eax
-        call    AudioMixerStep_004ab700
+        call    AudioMixerStep
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tpis_C_ret
@@ -324,7 +324,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
         mov     dword ptr [edx*4 + 0x3C], ecx
         mov     eax, dword ptr [g_pendingMatchVar]
         mov     dword ptr [g_walkCallback], eax
-        call    AudioMixerStep_004ab700
+        call    AudioMixerStep
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tpis_C_ret
@@ -333,7 +333,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
         mov     dword ptr [edx*4 + 0x40], ecx
         mov     eax, dword ptr [g_pendingMatchVar]
         mov     dword ptr [g_walkCallback], eax
-        call    AudioMixerStep_004ab700
+        call    AudioMixerStep
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tpis_C_ret
@@ -341,7 +341,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [edx*4 + 0x44], ecx
         mov     dword ptr [g_walkCallback], 0x6666
-        call    AudioMixerStep_004ab700
+        call    AudioMixerStep
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tpis_C_ret
@@ -350,7 +350,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
         add     eax, 0x9999
         mov     dword ptr [ecx*4 + 0x48], eax
         mov     dword ptr [g_walkCallback], 0x6666
-        call    StoreDoubleNegPauseSubStore_004ab750
+        call    StoreDoubleNegPauseSubStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tpis_C_ret

@@ -25,7 +25,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern void MStackBracket5_LinkedListUnlink_00409aa0(void);
+extern void MStackBracket5_LinkedListUnlink(void);
 extern void PendingMatch_00407d50(void);
 
 /* @addr 0x004066f0 */
@@ -34,7 +34,7 @@ void MStackPushZeroCallPop_004066f0(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_xformEntityIdx;
     g_xformEntityIdx = 0;
-    MStackBracket5_LinkedListUnlink_00409aa0();
+    MStackBracket5_LinkedListUnlink();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     g_xformEntityIdx = *(unsigned int *)(top * 4);

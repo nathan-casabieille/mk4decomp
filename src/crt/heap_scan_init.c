@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x004c9440 (217b crt) - heap-region scan with per-slot init.
  *   Lock(2). For esi=0..[g_dispatchSave1466_00fa0dc0]-1:
  *     slot = (*g_dispatchSave1465_00f9fdb4)[esi]
- *     If slot == 0: allocate 0x38 bytes via LoadArgPushCall_004c54b0,
+ *     If slot == 0: allocate 0x38 bytes via LoadArgPushCall,
  *       store into slot; init critsec at slot+0x20 via IAT[0x4d215c],
  *       acquire via IAT[0x4d2140], reload slot ptr into edi, fall to finalize.
  *     Else:
@@ -127,7 +127,7 @@ extern unsigned int g_dispatchSave1465_00f9fdb4;
 extern unsigned int g_dispatchSave1466_00fa0dc0;
 extern unsigned int g_iat_004d2140;
 extern unsigned int g_iat_004d215c;
-extern void LoadArgPushCall_004c54b0(void);
+extern void LoadArgPushCall(void);
 extern void Lock_004c6f50(void);
 extern void TableLookupIatCall_004c6fd0(void);
 extern void TwoPathIATDispatch_004c7030(void);
@@ -180,7 +180,7 @@ __declspec(naked) void HeapScanInit_004c9440(void) {
     L_hsi_alloc:
         push    0x38
         shl     esi, 2
-        call    LoadArgPushCall_004c54b0
+        call    LoadArgPushCall
         mov     ecx, dword ptr [g_dispatchSave1465_00f9fdb4]
         add     esp, 4
         mov     [ecx + esi], eax

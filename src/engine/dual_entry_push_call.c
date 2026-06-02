@@ -27,7 +27,7 @@ extern unsigned int g_acc_00542078;
  */
 extern int ArgSarStoreJmp(void *);
 extern void *g_dispatchSave1281_004eafb8;
-extern void ScaledAndAlfe_00490390(void);
+extern void ScaledAndAlfe(void);
 extern void PendingMatch_0046b670(void);
 /* @addr 0x0046b630 (14b): cdecl call ArgSarStoreJmp(&g_dispatchSave1281_004eafb8) + ret.
  * Entry A of the original 59-byte packed block; entry B at +0x10 lives in
@@ -37,13 +37,13 @@ void DualEntryPushCall_0046b630(void) {
 }
 
 /* @addr 0x0046b640 (43b): orphan sub-entry - set walkCallback and
- * baseSel[+0x74] to 0x2010, call ScaledAndAlfe_00490390, then if !pause
+ * baseSel[+0x74] to 0x2010, call ScaledAndAlfe, then if !pause
  * tail-jmp PendingMatch_0046b670. */
 void func_0046b640(void) {
     int v = 0x2010;
     g_walkCallback = (void (*)(void))v;
     ((ScenegraphNode *)(g_baseSel * 4))->fsm_state = v;
-    ScaledAndAlfe_00490390();
+    ScaledAndAlfe();
     if (g_framePauseFlag != 0) return;
     PendingMatch_0046b670();
 }

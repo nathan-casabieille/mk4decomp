@@ -19,12 +19,12 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     +5
  *   ret
  */
-extern void AudioVolumeRescale_004ab690(void);
+extern void AudioVolumeRescale(void);
 extern void RoundCleanupCluster_00487510(void);
 extern void Quad4SequencerInstall_00483900(void);
 void Set1f4CallDirtyJmp_004838d0(void) {
     g_walkCallback = (void (*)(void))0x01f4;
-    AudioVolumeRescale_004ab690();
+    AudioVolumeRescale();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 1) != 0) {
         RoundCleanupCluster_00487510();

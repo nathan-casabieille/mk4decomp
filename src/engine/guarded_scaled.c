@@ -36,12 +36,12 @@ extern unsigned int g_table_004ecb48;   /* 0x004ecb48 */
 extern void PendingMatch_0040cd50(void);   /* 0x0040cd50 */
 extern void LinkedListSearch_004750f0(void);   /* 0x004750f0 */
 extern void TestP1ReplaceCurrent_004751c0(void);   /* 0x004751c0 */
-extern void MStackPush8_004ab790(void);   /* 0x004ab790 */
+extern void MStackPush8(void);   /* 0x004ab790 */
 
 /* The wrappers. */
 /* @addr 0x0040cd20 */
 void GuardedScaled_0040cd20(void) {
-    MStackPush8_004ab790();
+    MStackPush8();
     if (g_framePauseFlag == 0) {
         g_eventQueueTotal = (unsigned int)&g_table_004d7238 >> 2;
         PendingMatch_0040cd50();

@@ -22,11 +22,11 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     +3
  *   ret
  */
-extern void ScaledChain3c74_0048f910(void);
+extern void ScaledChain3c74(void);
 extern void Push84CallTestInstallJmp_00460940(void);
 void CallPauseTriCmpJmp_00460910(void) {
     unsigned int v;
-    ScaledChain3c74_0048f910();
+    ScaledChain3c74();
     if (g_framePauseFlag != 0) return;
     v = (unsigned int)g_walkCallback;
     if (v == 0x1010) return;

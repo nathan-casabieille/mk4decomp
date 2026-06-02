@@ -22,7 +22,7 @@ extern unsigned int g_dispatchSave1164_004d5104;
 extern unsigned int g_dispatchSave404_0053814c;
 extern void Mul10Tail(int, int);
 
-__declspec(naked) void AudioMixerStep_004ab700(void) {
+__declspec(naked) void AudioMixerStep(void) {
     __asm {
         mov     eax, dword ptr [g_dispatchSave1163_004d5100]
         mov     edx, dword ptr [g_dispatchSave1164_004d5104]

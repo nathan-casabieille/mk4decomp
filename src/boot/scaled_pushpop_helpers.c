@@ -56,7 +56,7 @@ void PushPopScaled14_00405ad0(void) {
 /* @addr 0x00408510 (99b): variant with double pause check + g_fightGroupHead +0x1c */
 extern void func_00409970_ii(void);
 extern void PushSetCallCleanup_00408580(void);
-void PushPopScaled1cDoubleCall_00408510(void) {
+void PushPopScaled1cDoubleCall(void) {
     unsigned int v;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_xformEntityIdx;

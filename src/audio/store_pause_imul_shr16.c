@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_dispatchSave_00538150;
 extern void DualAddSar_004ab600(void);
-void StorePauseImulShr16_004ab630(void) {
+void StorePauseImulShr16(void) {
     g_dispatchSave_00538150 = (unsigned int)g_walkCallback;
     DualAddSar_004ab600();
     if (g_framePauseFlag != 0) {

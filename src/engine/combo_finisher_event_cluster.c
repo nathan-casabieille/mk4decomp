@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -113,20 +113,20 @@ extern unsigned int g_dispatchSave781_004f1628;
 extern unsigned int g_dispatchSave782_004f163c;
 extern unsigned int g_dispatchTab69_005431b8;
 extern void ArgSarStoreJmp(void);
-extern void DualGatedStateYield_0048fc80(void);
-extern void EsiEdiAliasDualMul10_004906b0(void);
-extern void FiveCallGuardSetTail_0046f6b0(void);
-extern void GuardedPackedSlotInit_00428760(void);
+extern void DualGatedStateYield(void);
+extern void EsiEdiAliasDualMul10(void);
+extern void FiveCallGuardSetTail(void);
+extern void GuardedPackedSlotInit(void);
 extern void IterStepNegStore_00490b10(void);
 extern void NotMaskStorePair_0045f440(void);
 extern void PunchAnimCluster_00496d80(void);
-extern void PushPopWalkSet1006_00470ee0(void);
+extern void PushPopWalkSet1006(void);
 extern void ScaledChain3c7c_0048f930(void);
 extern void ScaledClearJmp_00428d40(void);
 extern void ScaledInit_0048d490(void);
 extern void ScaledLoadJmp_00428d20(void);
 extern void ScaledLoadJmp_24_00429790(void);
-extern void ScaledLookupGuardJmpIndirect_004949f0(void);
+extern void ScaledLookupGuardJmpIndirect(void);
 extern void TableLookupCall_00489ff0(void);
 extern void TournamentMenuFsmCluster_004960e0(void);
 
@@ -135,7 +135,7 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
     __asm {
         /* === h1 (0x495dc0): event 004f1610 forwarder === */
         push     OFFSET g_dispatchSave780_004f1610
-        call     ScaledLookupGuardJmpIndirect_004949f0
+        call     ScaledLookupGuardJmpIndirect
         add      esp, 4
         ret
         nop
@@ -194,7 +194,7 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         jge      L_5fe8
     L_5e90:
         mov      dword ptr [g_walkCallback], 0xe666
-        call     EsiEdiAliasDualMul10_004906b0
+        call     EsiEdiAliasDualMul10
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_60d0
         mov      dword ptr [g_xformScratch2088], 0x10000
@@ -216,10 +216,10 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         and      eax, dword ptr [g_walkCallback]
         mov      dword ptr [g_xformScratch94], eax
         jne      L_6067
-        call     PushPopWalkSet1006_00470ee0
+        call     PushPopWalkSet1006
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_60d0
-        call     FiveCallGuardSetTail_0046f6b0
+        call     FiveCallGuardSetTail
         pop      edi
         pop      esi
         pop      ebx
@@ -230,7 +230,7 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_60d0
         push     OFFSET g_dispatchTab69_005431b8
-        call     GuardedPackedSlotInit_00428760
+        call     GuardedPackedSlotInit
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         cmp      eax, edi
@@ -292,7 +292,7 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         pop      ebx
         ret
     L_6067:
-        call     DualGatedStateYield_0048fc80
+        call     DualGatedStateYield
         test     eax, eax
         jne      short L_60d0
         call     ScaledLoadJmp_24_00429790

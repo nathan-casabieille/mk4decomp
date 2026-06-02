@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -110,18 +110,18 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave717_004ed590;
 extern unsigned int g_dispatchSave718_004ed5a8;
-extern void MStackPushSet0008_004901a0(void);
+extern void MStackPushSet0008(void);
 extern void MStackPushSet0020_004901d0(void);
-extern void CmpEqInitCallElseJmp_0048d4b0(void);
+extern void CmpEqInitCallElseJmp(void);
 extern void TriPhaseDualPathInstallChain_0047e420(void);
 extern void TailJmpInstallSelfPair_0047e690(void);
 extern void ScaledAndAldf_00490330(void);
-extern void EsiEdiAliasDualMul10_004906b0(void);
+extern void EsiEdiAliasDualMul10(void);
 extern void InstallSelfThresholdDispatch_0047e310(void);
 
 /* @addr 0x0047e1a0 (355b game) - 3-entry packed phase chain w/ alarms.
  *   Entry 1 (offset 0, 51b): writes 0x1012 into [g_baseSel*4+0x74]
- *     (mirrored 0x54206c), calls MStackPushSet0008_004901a0, on no-error
+ *     (mirrored 0x54206c), calls MStackPushSet0008, on no-error
  *     pushes 0x4ed590 (alarm string) and calls ArgSarStoreJmp.
  *   13b NOP align pad.
  *   Entry 2 (offset 0x40, 67b): same shape but writes [scaled+0x68]=0x402,
@@ -130,10 +130,10 @@ extern void InstallSelfThresholdDispatch_0047e310(void);
  *   13b NOP align pad.
  *   Entry 3 / body (offset 0x90, 211b): phase-state install. Phase 0 →
  *     install Self body at [esi+8], slot[+0x84]=1, arms 0x541e6c. Phase 1 →
- *     CmpEqInitCallElseJmp_0048d4b0, on no-error: if bit 0 of 0x54208c set
+ *     CmpEqInitCallElseJmp, on no-error: if bit 0 of 0x54208c set
  *     tail-call TriPhaseDualPathInstallChain_0047e420; else call TailJmpInstallSelfPair_0047e690.
  *     If g_walkCallback < 0x26666 (threshold) tail-installs Self.
- *     Else chains ScaledAndAldf_00490330 → EsiEdiAliasDualMul10_004906b0,
+ *     Else chains ScaledAndAldf_00490330 → EsiEdiAliasDualMul10,
  *     writes 0x28f into [g_fightGroupHead*4+0x4c], calls
  *     InstallSelfThresholdDispatch_0047e310.
  */
@@ -145,7 +145,7 @@ __declspec(naked) void Alarm3EntryPhaseChain_0047e1a0(void) {
         mov     eax, 0x1012
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
-        call    MStackPushSet0008_004901a0
+        call    MStackPushSet0008
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a3e_e1End
@@ -211,7 +211,7 @@ __declspec(naked) void Alarm3EntryPhaseChain_0047e1a0(void) {
         test    eax, eax
         je      L_a3e_installPhase0
         mov     dword ptr [g_walkCallback], 2
-        call    CmpEqInitCallElseJmp_0048d4b0
+        call    CmpEqInitCallElseJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_a3e_doneNoPop
@@ -233,7 +233,7 @@ __declspec(naked) void Alarm3EntryPhaseChain_0047e1a0(void) {
         test    eax, eax
         jne     short L_a3e_doneNoPop
         mov     dword ptr [g_walkCallback], 0x4ccc
-        call    EsiEdiAliasDualMul10_004906b0
+        call    EsiEdiAliasDualMul10
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a3e_doneNoPop

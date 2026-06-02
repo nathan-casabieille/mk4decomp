@@ -11,7 +11,7 @@ extern unsigned int g_baseSel;
  *   PushPopWalk save/restore around setting walk = 0x1006 and
  *   storing it into g_baseSel[+0x74]. Symmetric stack frame.
  */
-void PushPopWalkSet1006_00470ee0(void) {
+void PushPopWalkSet1006(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = (unsigned int)g_walkCallback;
     g_walkCallback = (void (*)(void))0x1006;

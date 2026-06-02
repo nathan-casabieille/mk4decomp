@@ -8,7 +8,7 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_baseSel;
 
 /* @addr 0x00490390 (28b): same shape, and al, 0xfe */
-void ScaledAndAlfe_00490390(void) {
+void ScaledAndAlfe(void) {
     unsigned int idx = g_fightGroupHead;
     unsigned int v = ((FightGroupNode *)(idx * 4))->bits & 0xFFFFFFFEu;
     g_eventQueueCurrent = v;

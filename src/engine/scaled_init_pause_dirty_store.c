@@ -24,14 +24,14 @@ extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_phase4ThreePackedBase_004ec8f8;
 
-extern void MStackBracket1_TreeWalkRecursive2_00406dd0(void);
+extern void MStackBracket1_TreeWalkRecursive2(void);
 extern void FramePauseScaledStore_00406c10(void);
 
 /* @addr 0x00445f00 */
 extern unsigned int g_table_00511444;
 void ScaledInitPauseDirtyStore_00445f00(void) {
     g_xformEntityIdx = (unsigned int)&g_table_00511444 >> 2;
-    MStackBracket1_TreeWalkRecursive2_00406dd0();
+    MStackBracket1_TreeWalkRecursive2();
     if (g_framePauseFlag != 0) {
         return;
     }

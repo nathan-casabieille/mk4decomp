@@ -12,14 +12,14 @@ extern unsigned int g_scaledInit_00542044;
  *                  load dirty flag; bl=4; if (dirty & bl) break; } while (1)
  *   pop ebx; ret
  */
-extern void SaveCallRestore_004049d0(int);
-extern void SaveCallRestoreOrXor_00404a00(int);
-void Push1eCallTestDirtyLoop_004923b0(void) {
-    SaveCallRestore_004049d0(0x1e);
-    SaveCallRestoreOrXor_00404a00(0x1e);
+extern void SaveCallRestore(int);
+extern void SaveCallRestoreOrXor(int);
+void Push1eCallTestDirtyLoop(void) {
+    SaveCallRestore(0x1e);
+    SaveCallRestoreOrXor(0x1e);
     if ((g_xformDirtyFlags & 4) != 0) return;
     do {
-        SaveCallRestore_004049d0(0x1e);
-        SaveCallRestoreOrXor_00404a00(0x1e);
+        SaveCallRestore(0x1e);
+        SaveCallRestoreOrXor(0x1e);
     } while ((g_xformDirtyFlags & 4) == 0);
 }

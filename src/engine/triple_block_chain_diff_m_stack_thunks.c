@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x0049ca10 (302b game) - 3-block: chain-diff mstack-push + push-call thunks.
  *   Block A (0..0x6c): mstack-push g_eventQueueChild. Compute diffs between [baseSel*4+0x38] and g_cj fields.
  *     g_eventQueueWorkType = [scaledInit*4+0x54] - [cj*4+0x54]; g_acc = [scaledInit*4+0x5c] - [cj*4+0x5c].
- *     Call Atan2QuadrantLookup_004245b0; if pause skip. Call BootMod6487eClampAndChainMul10; if pause skip.
+ *     Call Atan2QuadrantLookup; if pause skip. Call BootMod6487eClampAndChainMul10; if pause skip.
  *     chain[baseSel*4+0x70] = g_walkCallback. Mstack-pop into g_eventQueueChild. Pop esi; ret.
  *   Block B (+0xc0): call CondPickDualStore; if pause ret. Push 0x004f2778; call ArgSarStoreJmp; pop; ret.
  *   Block C (+0xe0): call DualCmpSwapStore; if pause ret. Push 0x004f27b8; call ScaledStackCallPause; pop; if pause ret.
@@ -120,12 +120,12 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void ArgSarStoreJmp(void);
 extern void ArgSar_Set1_Jmp_0049c6d0(void);
-extern void Atan2QuadrantLookup_004245b0(void);
+extern void Atan2QuadrantLookup(void);
 extern void CallSetPause(void);
-extern void CondPickDualStore_0049c670(void);
-extern void DualCmpSwapStore_0049c5a0(void);
+extern void CondPickDualStore(void);
+extern void DualCmpSwapStore(void);
 extern void DualMul10AndDispatchChain_0049c220(void);
-extern void ScaledStackCallPause_0049c360(void);
+extern void ScaledStackCallPause(void);
 
 extern unsigned int g_matrixStack_arr;
 
@@ -152,7 +152,7 @@ __declspec(naked) void TripleBlockChainDiffMStackThunks_0049ca10(void) {
         sub     eax, ecx
         mov     dword ptr [g_eventQueueWorkType], esi
         mov     dword ptr [g_acc_00542078], eax
-        call    Atan2QuadrantLookup_004245b0
+        call    Atan2QuadrantLookup
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -182,7 +182,7 @@ __declspec(naked) void TripleBlockChainDiffMStackThunks_0049ca10(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        call    CondPickDualStore_0049c670
+        call    CondPickDualStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -195,13 +195,13 @@ __declspec(naked) void TripleBlockChainDiffMStackThunks_0049ca10(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        call    DualCmpSwapStore_0049c5a0
+        call    DualCmpSwapStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   3fh
         push    0x004f27b8
-        call    ScaledStackCallPause_0049c360
+        call    ScaledStackCallPause
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax

@@ -17,8 +17,8 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T1
  *   jmp     T2
  */
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void ScaledLoadDecJmp_00429710(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void ScaledLoadDecJmp(void);
 void ScaledIncCmpJmp_004297d0(void) {
     unsigned int idx;
     unsigned int scaled;
@@ -30,8 +30,8 @@ void ScaledIncCmpJmp_004297d0(void) {
     g_eventQueueCurrent = v;
     cmp_val = *(int *)(scaled * 4 + 4);
     if ((int)v < cmp_val) {
-        ScaledStoreCurDirtyClear_004296f0();
+        ScaledStoreCurDirtyClear();
         return;
     }
-    ScaledLoadDecJmp_00429710();
+    ScaledLoadDecJmp();
 }

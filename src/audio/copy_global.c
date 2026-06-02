@@ -11,6 +11,6 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern unsigned int g_target_0053a6fc;
-void CopyGlobal_004ac1f0(void) {
+void CopyGlobal(void) {
     g_target_0053a6fc = (unsigned int)g_walkCallback;
 }

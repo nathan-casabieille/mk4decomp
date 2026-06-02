@@ -14,8 +14,8 @@
 extern unsigned int g_dispatchSave1426_00f9f820;
 extern u32 g_initRet;
 extern void CmpCallPushIATCall_004c6e60(void);
-extern void FreeImpl_004c55f0(void);
-extern void LoadArgPushCall_004c54b0(void);
+extern void FreeImpl(void);
+extern void LoadArgPushCall(void);
 
 __declspec(naked) void _init_main(void) {
     __asm {
@@ -47,7 +47,7 @@ __declspec(naked) void _init_main(void) {
     L_ep_alloc:
         lea     eax, [esi*4 + 4]
         push    eax
-        call    LoadArgPushCall_004c54b0
+        call    LoadArgPushCall
         mov     esi, eax
         add     esp, 4
         test    esi, esi
@@ -74,7 +74,7 @@ __declspec(naked) void _init_main(void) {
         cmp     dl, 0x3d
         jz      short L_ep_advance
         push    ebx
-        call    LoadArgPushCall_004c54b0
+        call    LoadArgPushCall
         add     esp, 4
         mov     [esi], eax
         test    eax, eax
@@ -109,7 +109,7 @@ __declspec(naked) void _init_main(void) {
     L_ep_finalize:
         mov     eax, dword ptr [g_initRet]
         push    eax
-        call    FreeImpl_004c55f0
+        call    FreeImpl
         add     esp, 4
         mov     dword ptr [g_initRet], 0
         mov     dword ptr [esi], 0

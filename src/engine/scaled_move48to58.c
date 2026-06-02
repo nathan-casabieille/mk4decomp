@@ -47,7 +47,7 @@ void ScaledAndAhfe_00490390(void) {
  *   jmp     +2
  */
 extern void ScaledZeroFour(void);
-void ScaledMove48to58_00490720(void) {
+void ScaledMove48to58(void) {
     packed_ptr fg = g_fightGroupHead;
     unsigned int v = *(unsigned int *)(fg * 4 + 0x48);
     g_walkCallback = (void (*)(void))v;

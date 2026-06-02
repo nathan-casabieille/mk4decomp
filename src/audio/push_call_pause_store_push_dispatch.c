@@ -12,16 +12,16 @@ extern unsigned int g_scaledInit_00542044;
  *   push 0x15; push lit; call F3; mov ax,[m16]; add esp 8; push eax;
  *   call F4; add esp 4; jmp T; ret.
  */
-extern void TripleStageRollback_00404a50(int);
-extern void RoundWinTransition_0049e7e0(void);
+extern void TripleStageRollback(int);
+extern void RoundWinTransition(void);
 extern int StoreTwoCall(void *, int);
 extern int TaggedSceneDispatch(unsigned short);
 extern void *g_const_004a0060;
 extern unsigned short g_word_004e2860;
 extern void InstallSelf3WaySubDec_004a1320(void);
 void PushCallPauseStorePushDispatch_004a12e0(void) {
-    TripleStageRollback_00404a50(0x22f);
-    RoundWinTransition_0049e7e0();
+    TripleStageRollback(0x22f);
+    RoundWinTransition();
     if (g_framePauseFlag) return;
     StoreTwoCall(&g_const_004a0060, 0x15);
     TaggedSceneDispatch(g_word_004e2860);

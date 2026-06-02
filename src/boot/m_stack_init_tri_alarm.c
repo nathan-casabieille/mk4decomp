@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -109,17 +109,17 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0040e190 (369b boot) - 3-entry packed mstack-scoped init + alarms.
- *   Entry 1 (offset 0, 180b): MStackPush8_004ab790, then on no-error
+ *   Entry 1 (offset 0, 180b): MStackPush8, then on no-error
  *     mstack-pushes g_eventQueueNotMask, caches g_fightGroupHead into 0x542054,
  *     sets g_walkCallback = &g_phaseChainArr2_004d62e8>>2 (stored also in 0x5381 3c),
  *     g_eventQueueIdx = &g_dispatchSave522_004d61d8>>2, g_eventQueueNotMask = 0xc1.
  *     Pushes 0x49db40, 0xc0 onto StoreTwoCall. If bit 0 of
  *     0x54208c clear, calls StackPushAdd15CallPop_0040a7e0 +
  *     ZeroThreeFields_0040a8b0. Pops the snapshot back and tail-jmps
- *     MStackPop8_004ab860.
+ *     MStackPop8.
  *   12b NOP align pad.
  *   Entry 2 (offset 0xc0, 83b): sets 0x54207c=0x2666, 0x54206c=0x170a;
- *     calls StoreDoubleNegPauseSubStore_004ab750; on no-error computes
+ *     calls StoreDoubleNegPauseSubStore; on no-error computes
  *     g_walkCallback += 0x10000, multiplies via Mul10Tail
  *     (push twice with the cur cj), negates, and tail-jmps PendingMatch_0040e310.
  *   13b NOP align pad.
@@ -130,16 +130,16 @@ extern unsigned int g_dispatchSave522_004d61d8;
 extern unsigned int g_phaseChainArr2_004d62e8;
 extern unsigned int g_alarmTriState_0053813c;
 extern unsigned int g_table_004d57b0;
-extern void MStackPop8_004ab860(void);
-extern void MStackPush8_004ab790(void);
+extern void MStackPop8(void);
+extern void MStackPush8(void);
 extern void PendingMatch_0040e310(void);
 extern void StackPushAdd15CallPop_0040a7e0(void);
-extern void StoreDoubleNegPauseSubStore_004ab750(void);
+extern void StoreDoubleNegPauseSubStore(void);
 extern void ZeroThreeFields_0040a8b0(void);
 
 __declspec(naked) void MStackInitTriAlarm_0040e190(void) {
     __asm {
-        call    MStackPush8_004ab790
+        call    MStackPush8
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_msi_e1Ret
@@ -179,7 +179,7 @@ __declspec(naked) void MStackInitTriAlarm_0040e190(void) {
         dec     eax
         mov     dword ptr [g_eventQueueNotMask], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        jmp     MStackPop8_004ab860
+        jmp     MStackPop8
     L_msi_e1Ret:
         ret
         nop
@@ -198,7 +198,7 @@ __declspec(naked) void MStackInitTriAlarm_0040e190(void) {
     L_msi_entry2:
         mov     dword ptr [g_eventQueueNotMask], 0x2666
         mov     dword ptr [g_walkCallback], 0x170a
-        call    StoreDoubleNegPauseSubStore_004ab750
+        call    StoreDoubleNegPauseSubStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_msi_e2End
@@ -233,7 +233,7 @@ __declspec(naked) void MStackInitTriAlarm_0040e190(void) {
     L_msi_entry3:
         mov     dword ptr [g_eventQueueNotMask], 0x3333
         mov     dword ptr [g_walkCallback], 0x7ae
-        call    StoreDoubleNegPauseSubStore_004ab750
+        call    StoreDoubleNegPauseSubStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_msi_e3End

@@ -15,7 +15,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_walkCallback], ecx
  *   ret
  */
-void ScaledChain3c74_0048f910(void) {
+void ScaledChain3c74(void) {
     unsigned int v = ((ScenegraphNode *)(g_baseSel * 4))->child_a;
     g_scaledInit_00542044 = v;
     g_walkCallback = (void (*)(void))((ScenegraphNode *)(v * 4))->fsm_state;

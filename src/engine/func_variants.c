@@ -46,26 +46,26 @@ extern void DualCallPauseJmpDual_00439190(void);
 extern void AllocSlotPushTripleGlobals(void);
 extern void ArgSarStoreJmp(void);
 extern void ArgSar_Set0_Jmp_0049c6f0(void);
-extern void AudioVolumeRescale_004ab690(void);
+extern void AudioVolumeRescale(void);
 extern void CallSetPause(void);
 extern void ConstStoreCallJmp_00448fa0(void);
 extern void DirtyOrFlagDispatch_00476e60(void);
 extern void DispatcherComplex181_00426310(void);
 extern void DispatcherComplex181_00426490(void);
 extern void DispatcherComplex260_00407030(void);
-extern void DualCmpSwapStore_0049c5a0(void);
-extern void DualPushSetCallDualPop_00404b10(void);
-extern void EntryThunkBodyStateMachine_00457bb0(void);
-extern void FiveCallGuardSetTail_0046f6b0(void);
-extern void GatedWordPushCall_00489f90(void);
+extern void DualCmpSwapStore(void);
+extern void DualPushSetCallDualPop(void);
+extern void EntryThunkBodyStateMachine(void);
+extern void FiveCallGuardSetTail(void);
+extern void GatedWordPushCall(void);
 extern void GuardedDispatch4_00489080(void);
 extern void GuardedSeq_00472840(void);
 extern void GuardedSeq_00476de0(void);
 extern void GuardedSeq_00476f10(void);
 extern void InitZeroChainLookupJmp_00494210(void);
-extern void InstallSelf3WayChainCmp_00428d80(void);
+extern void InstallSelf3WayChainCmp(void);
 extern void InstallSelfCmpJlJmp_00480b20(void);
-extern void InstallSelfIndirectJmp_0048f3f0(void);
+extern void InstallSelfIndirectJmp(void);
 extern void InstallSelfWithDispatch_00428f70(void);
 extern void LoadStoreDoubleCallSet_00448fc0(void);
 extern void LoopGuardedDecJmp_0042c790(void);
@@ -79,11 +79,11 @@ extern void PendingMatch_00432ed0(void);
 extern void Phase3DispatchScaleInstallSelf_004125e0(void);
 extern void Push70CallScaleArith2_00457b40(void);
 extern void RoundCleanupCluster_00427690(void);
-extern void ScaledZero44_00491500(void);
+extern void ScaledZero44(void);
 extern void Set2CallIncJmp_00472860(void);
 extern void SlideAttackEventCluster_00498900(void);
 extern void StoreIncrMStackPush6_004275c0(void);
-extern void StoreLoadJmp_00404ef0(void);
+extern void StoreLoadJmp(void);
 extern void StoreTwoCall(void);
 extern void StreamChainStringInstall(void);
 extern void TableLookupCall_00489ff0(void);
@@ -116,7 +116,7 @@ __declspec(naked) void func_00428390(void) {
 void func_004391b0(void) {
     DualScaledInitClear_00433c10();
     if (g_framePauseFlag != 0) return;
-    FiveCallGuardSetTail_0046f6b0();
+    FiveCallGuardSetTail();
 }
 
 /* @addr 0x00497b30 (15b): set g_eventQueueChild = 1; tail-jmp PunchDispatcher. */
@@ -133,14 +133,14 @@ void func_00497b40(void) {
 
 /* @addr 0x00436270 (47b): call Cmp2CallDirtyCall; if non-zero ret;
  * else mstack-push HitReactionStateCluster_004335f0, set walkCallback=2,
- * tail-jmp MstackPopScaledChainPlusThunks_00471250. Orphan sub-entry. */
+ * tail-jmp MstackPopScaledChainPlusThunks. Orphan sub-entry. */
 void func_00436270(void) {
     if (Cmp2CallDirtyCall() != 0) return;
     g_walkCallback = (void (*)(void))2;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) =
         (unsigned int)&HitReactionStateCluster_004335f0;
-    MstackPopScaledChainPlusThunks_00471250();
+    MstackPopScaledChainPlusThunks();
 }
 
 /* @addr 0x004362a0 (5b): orphan tail-jmp into Cmp30000And18000_004362b0. */
@@ -149,7 +149,7 @@ void func_004362a0(void) {
 }
 
 /* @addr 0x00437100 (52b): call LeaPlus22StoreSelf; if !pause set walk=3,
- * mstack-push OFFSET DualCallPauseJmpDual_00439190, tail-jmp MstackPopScaledChainPlusThunks_00471250.
+ * mstack-push OFFSET DualCallPauseJmpDual_00439190, tail-jmp MstackPopScaledChainPlusThunks.
  * Orphan sub-entry of the original packed block. */
 void func_00437100(void) {
     LeaPlus22StoreSelf();
@@ -158,7 +158,7 @@ void func_00437100(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) =
         (unsigned int)&DualCallPauseJmpDual_00439190;
-    MstackPopScaledChainPlusThunks_00471250();
+    MstackPopScaledChainPlusThunks();
 }
 
 /* @addr 0x0048e3c0 (20b): call DualEntryInitDispatch_00431360; if !pause tail-jmp
@@ -200,7 +200,7 @@ void func_004667e0(void) {
 /* @addr 0x00482700 (56b): triple call chain with pause-gates; final
  * push+call+pause gate then tail-jmp LiteralPushCallEntZero. */
 void func_00482700(void) {
-    GateDispatch6c_00494580();
+    GateDispatch6c();
     if (g_framePauseFlag != 0) return;
     ScaledChainCmp61_00482740();
     if (g_framePauseFlag != 0) return;
@@ -266,7 +266,7 @@ void func_004613a0(void) {
 void func_0042ce70(void) {
     GuardedTripleCallSwapJmp_0048fee0();
     if (g_framePauseFlag != 0) return;
-    CjInstallSelfRouter_00470480();
+    CjInstallSelfRouter();
 }
 
 /* @addr 0x0042ce90 (34b): double call/pause chain - GuardedTriple,
@@ -276,7 +276,7 @@ void func_0042ce90(void) {
     if (g_framePauseFlag != 0) return;
     SetJmp_0042d080();
     if (g_framePauseFlag != 0) return;
-    CjInstallSelfRouter_00470480();
+    CjInstallSelfRouter();
 }
 
 /* @addr 0x00439fa0 (35b): cmp state_ddc with 0x13333, store at g_walkCallback;
@@ -297,7 +297,7 @@ void func_00439fa0(void) {
 void func_00498730(void) {
     PushChainAddCallPop_00493c80();
     if (g_framePauseFlag) return;
-    Vec2SumMul10ChainCompute_0049bc60();
+    Vec2SumMul10ChainCompute();
     if (g_framePauseFlag) return;
     if ((int)g_eventQueueCurrent <= (int)g_eventQueueWorkType) return;
     ScaledIndirectJmp_0049c850();
@@ -355,7 +355,7 @@ __declspec(naked) void func_00498790(void)
         mov     dword ptr [g_walkCallback], eax
         je      short L_qsv_install1
         mov     dword ptr [g_walkCallback], 0x12c
-        call    AudioVolumeRescale_004ab690
+        call    AudioVolumeRescale
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_qsv_ret
@@ -410,9 +410,9 @@ __declspec(naked) void func_00498790(void)
 void func_00498930(void) {
     unsigned int v;
     g_walkCallback = 7;
-    ScaledIndexConditionalAdd_0048e400();
+    ScaledIndexConditionalAdd();
     if (g_framePauseFlag) return;
-    CondPickDualStore_0049c670();
+    CondPickDualStore();
     if (g_framePauseFlag) return;
     v = 0x30b;
     g_walkCallback = v;
@@ -433,7 +433,7 @@ __declspec(naked) void func_00498980(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8ae4
-        call     DualCmpSwapStore_0049c5a0
+        call     DualCmpSwapStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8ae4
@@ -508,7 +508,7 @@ __declspec(naked) void func_00498980(void)
 /* h4 @ 0x00498af0 (48b): Vec2SumMul10ChainCompute + threshold check
  * (signed cmp [70] vs [74]) -> tail-jmp ScaledIndirectJmp. */
 void func_00498af0(void) {
-    Vec2SumMul10ChainCompute_0049bc60();
+    Vec2SumMul10ChainCompute();
     if (g_framePauseFlag) return;
     if ((int)g_eventQueueCurrent <= (int)g_eventQueueWorkType) return;
     ScaledIndirectJmp_0049c850();
@@ -571,7 +571,7 @@ void func_00498bb0(void) {
  * Sister of h2 with different imm and event addr. */
 void func_00498bd0(void) {
     unsigned int v;
-    CondPickDualStore_0049c670();
+    CondPickDualStore();
     if (g_framePauseFlag) return;
     v = 0x309;
     g_walkCallback = v;
@@ -582,7 +582,7 @@ void func_00498bd0(void) {
 /* h8 @ 0x00498c10 (42b): chained DualCmpSwapStore +
  * MstackPushPackChainInit + ArgSar_Set0_Jmp w/ event 004f2298. */
 void func_00498c10(void) {
-    DualCmpSwapStore_0049c5a0();
+    DualCmpSwapStore();
     if (g_framePauseFlag) return;
     MstackPushPackChainInit_00498c40();
     if (g_framePauseFlag) return;
@@ -610,7 +610,7 @@ __declspec(naked) void func_0047c3f0(void)
         mov      dword ptr [eax + 0x84], 0
         test     ecx, ecx
         je       L_c4a2
-        call     ScaledZero44_00491500
+        call     ScaledZero44
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c50e
@@ -635,7 +635,7 @@ __declspec(naked) void func_0047c3f0(void)
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], OFFSET func_0047c510
-        jmp      InstallSelfIndirectJmp_0048f3f0
+        jmp      InstallSelfIndirectJmp
     L_c4a2:
         mov      dword ptr [g_eventQueueNotMask], 0x30000
         mov      dword ptr [eax + 8], OFFSET L_c3f0
@@ -709,36 +709,36 @@ void func_0047c580(void) {
 
 /* h2 @ 0x00482200 (32b): event 004edb98 forwarder. */
 void func_00482200(void) {
-    GateDispatch6c_00494580();
+    GateDispatch6c();
     if (g_framePauseFlag) return;
     ((void (*)(void *))ArgSarStoreJmp)(&g_dispatchSave747_004edb98);
 }
 
 /* h3 @ 0x00482220 (32b): event 004edba8 forwarder. */
 void func_00482220(void) {
-    GateDispatch6c_00494580();
+    GateDispatch6c();
     if (g_framePauseFlag) return;
     ((void (*)(void *))ArgSarStoreJmp)(&g_dispatchSave748_004edba8);
 }
 
 /* h4 @ 0x00482240 (80b): 0x1b333 + ScaledMove48to58 + event 004edbf0. */
 void func_00482240(void) {
-    GateDispatch6c_00494580();
+    GateDispatch6c();
     if (g_framePauseFlag) return;
     g_walkCallback = 0x1b333;
     g_eventQueueCurrent = 0;
     Wrapper_0048ff30();
     if (g_framePauseFlag) return;
-    ScaledMove48to58_00490720();
+    ScaledMove48to58();
     if (g_framePauseFlag) return;
     ((void (*)(void *))ArgSarStoreJmp)(&g_dispatchSave749_004edbf0);
 }
 
 /* h5 @ 0x00482290 (48b): 488f00 + 494580 + event 004edc18. */
 void func_00482290(void) {
-    CjTableThresholdDispatch_00488f00();
+    CjTableThresholdDispatch();
     if (g_framePauseFlag) return;
-    GateDispatch6c_00494580();
+    GateDispatch6c();
     if (g_framePauseFlag) return;
     ((void (*)(void *))ArgSarStoreJmp)(&g_dispatchSave750_004edc18);
 }
@@ -768,7 +768,7 @@ __declspec(naked) void func_004822e0(void)
         mov      dword ptr [eax + 0x84], edx
         cmp      ecx, edx
         je       short L_22ff
-        jmp      FiveCallGuardSetTail_0046f6b0
+        jmp      FiveCallGuardSetTail
     L_22ff:
         mov      dword ptr [eax + 8], OFFSET L_22e0
         mov      ecx, dword ptr [g_baseSel]
@@ -798,27 +798,27 @@ void func_00482360(void) {
     g_walkCallback = 0x8000;
     CmpP1DualInitStore_00482ab0();
     if (g_framePauseFlag) return;
-    CjTableThresholdDispatch_00488f00();
+    CjTableThresholdDispatch();
     if (g_framePauseFlag) return;
-    GateDispatch6c_00494580();
+    GateDispatch6c();
     if (g_framePauseFlag) return;
     ((void (*)(void *))ArgSarStoreJmp)(&g_dispatchSave753_004edca8);
 }
 
 /* h10 @ 0x004823b0 (48b): 488f00 + 494580 + event 004edcf0. */
 void func_004823b0(void) {
-    CjTableThresholdDispatch_00488f00();
+    CjTableThresholdDispatch();
     if (g_framePauseFlag) return;
-    GateDispatch6c_00494580();
+    GateDispatch6c();
     if (g_framePauseFlag) return;
     ((void (*)(void *))ArgSarStoreJmp)(&g_dispatchSave754_004edcf0);
 }
 
 /* h11 @ 0x004823e0 (64b): event 004edd20 + tail-jmp Wrapper_00488c60. */
 void func_004823e0(void) {
-    CjTableThresholdDispatch_00488f00();
+    CjTableThresholdDispatch();
     if (g_framePauseFlag) return;
-    GateDispatch6c_00494580();
+    GateDispatch6c();
     if (g_framePauseFlag) return;
     ((void (*)(void *))ArgSarStoreJmp)(&g_dispatchSave755_004edd20);
     if (g_framePauseFlag) return;
@@ -831,9 +831,9 @@ void func_00482420(void) {
     g_walkCallback = 0x8000;
     CmpP1DualInitStore_00482ab0();
     if (g_framePauseFlag) return;
-    CjTableThresholdDispatch_00488f00();
+    CjTableThresholdDispatch();
     if (g_framePauseFlag) return;
-    GateDispatch6c_00494580();
+    GateDispatch6c();
     if (g_framePauseFlag) return;
     ((void (*)(void *))ArgSarStoreJmp)(&g_dispatchSave756_004edd58);
     if (g_framePauseFlag) return;
@@ -847,18 +847,18 @@ void func_00482470(void) {
 
 /* h13 @ 0x00482480 (48b): 488f00 + 494580 + event 004eddb8. */
 void func_00482480(void) {
-    CjTableThresholdDispatch_00488f00();
+    CjTableThresholdDispatch();
     if (g_framePauseFlag) return;
-    GateDispatch6c_00494580();
+    GateDispatch6c();
     if (g_framePauseFlag) return;
     ((void (*)(void *))ArgSarStoreJmp)(&g_dispatchSave758_004eddb8);
 }
 
 /* h14 @ 0x004824b0 (48b): 488f00 + 494580 + event 004ede00. */
 void func_004824b0(void) {
-    CjTableThresholdDispatch_00488f00();
+    CjTableThresholdDispatch();
     if (g_framePauseFlag) return;
-    GateDispatch6c_00494580();
+    GateDispatch6c();
     if (g_framePauseFlag) return;
     ((void (*)(void *))ArgSarStoreJmp)(&g_dispatchSave759_004ede00);
 }
@@ -867,7 +867,7 @@ void func_004824b0(void) {
  * EightEntryAlarmDispatch. */
 void func_004824e0(void) {
     g_eventQueueNotMask = 6;
-    EntryThunkBodyStateMachine_00457bb0();
+    EntryThunkBodyStateMachine();
     if (g_framePauseFlag) return;
     EightEntryAlarmDispatch_00482500();
 }
@@ -977,7 +977,7 @@ __declspec(naked) void func_00432710(void) {
         test     byte ptr [g_xformDirtyFlags], 1
         je       L_2a19
         push     0x228
-        call     DualPushSetCallDualPop_00404b10
+        call     DualPushSetCallDualPop
         mov      al, byte ptr [g_xformDirtyFlags]
         add      esp, 4
         test     al, 1
@@ -1149,7 +1149,7 @@ __declspec(naked) void func_00432710(void) {
         test     byte ptr [g_xformDirtyFlags], 1
         je       L_2e71
         push     0x229
-        call     DualPushSetCallDualPop_00404b10
+        call     DualPushSetCallDualPop
         mov      al, byte ptr [g_xformDirtyFlags]
         add      esp, 4
         test     al, 1
@@ -1351,7 +1351,7 @@ __declspec(naked) void func_00432710(void) {
 void func_00448810(void) {
     *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0x3b;
     g_walkCallback = 0x1c;
-    GatedWordPushCall_00489f90();
+    GatedWordPushCall();
     if (g_framePauseFlag != 0) return;
     ((void (*)(int))ArgSarStoreJmp)(0x4e62c8);
 }
@@ -1359,7 +1359,7 @@ void func_00448810(void) {
 void func_00448850(void) {
     *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0x83;
     g_walkCallback = 0x29;
-    GatedWordPushCall_00489f90();
+    GatedWordPushCall();
     if (g_framePauseFlag != 0) return;
     ((void (*)(int))ArgSarStoreJmp)(0x4e62d8);
 }
@@ -1367,7 +1367,7 @@ void func_00448850(void) {
 void func_00448890(void) {
     *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0x94;
     g_walkCallback = 0x1b;
-    GatedWordPushCall_00489f90();
+    GatedWordPushCall();
     if (g_framePauseFlag != 0) return;
     ((void (*)(int))ArgSarStoreJmp)(0x4e62e8);
 }
@@ -1375,7 +1375,7 @@ void func_00448890(void) {
 void func_004488d0(void) {
     *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0xa6;
     g_walkCallback = 0x2a;
-    GatedWordPushCall_00489f90();
+    GatedWordPushCall();
     if (g_framePauseFlag != 0) return;
     ((void (*)(int))ArgSarStoreJmp)(0x4e62f8);
 }
@@ -1383,7 +1383,7 @@ void func_004488d0(void) {
 void func_00448910(void) {
     *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0xb9;
     g_walkCallback = 0x1b;
-    GatedWordPushCall_00489f90();
+    GatedWordPushCall();
     if (g_framePauseFlag != 0) return;
     ((void (*)(int))ArgSarStoreJmp)(0x4e6308);
 }
@@ -1391,7 +1391,7 @@ void func_00448910(void) {
 void func_00448950(void) {
     *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0xce;
     g_walkCallback = 0x2b;
-    GatedWordPushCall_00489f90();
+    GatedWordPushCall();
     if (g_framePauseFlag != 0) return;
     ((void (*)(int))ArgSarStoreJmp)(0x4e6318);
 }
@@ -1416,7 +1416,7 @@ __declspec(naked) void func_00448990(void) {
         test     eax, eax
         jne      L_8b40
         mov      dword ptr [g_eventQueueNotMask], 5
-        call     EntryThunkBodyStateMachine_00457bb0
+        call     EntryThunkBodyStateMachine
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8b40
@@ -1430,12 +1430,12 @@ __declspec(naked) void func_00448990(void) {
         mov      ecx, dword ptr [g_fightGroupHead]
         mov      dword ptr [ecx*4 + 0x28], 0x116
         mov      dword ptr [g_walkCallback], 0x12
-        call     GatedWordPushCall_00489f90
+        call     GatedWordPushCall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8b40
         mov      dword ptr [g_eventQueueNotMask], 5
-        call     EntryThunkBodyStateMachine_00457bb0
+        call     EntryThunkBodyStateMachine
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8b40
@@ -1462,7 +1462,7 @@ __declspec(naked) void func_00448990(void) {
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      edx, dword ptr [eax*4 + 0x68]
         mov      dword ptr [g_eventQueueIdx], edx
-        call     StoreLoadJmp_00404ef0
+        call     StoreLoadJmp
         mov      dword ptr [g_eventQueueChild], 0x115
         mov      dword ptr [esi + 8], 0x448990
         mov      eax, dword ptr [g_baseSel]
@@ -1480,7 +1480,7 @@ __declspec(naked) void func_00448990(void) {
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], 0
-        call     InstallSelf3WayChainCmp_00428d80
+        call     InstallSelf3WayChainCmp
         mov      dword ptr [g_framePauseFlag], 1
     L_8b40:
         pop      esi
@@ -1511,7 +1511,7 @@ __declspec(naked) void func_00448990(void) {
         test     eax, eax
         jne      L_8cd2
         mov      dword ptr [g_walkCallback], 0x16
-        call     GatedWordPushCall_00489f90
+        call     GatedWordPushCall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8cd2
@@ -1550,10 +1550,10 @@ __declspec(naked) void func_00448990(void) {
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      edx, dword ptr [eax*4 + 0x68]
         mov      dword ptr [g_eventQueueIdx], edx
-        call     StoreLoadJmp_00404ef0
+        call     StoreLoadJmp
         add      esp, 4
         push     0x448e10
-        call     StoreLoadJmp_00404ef0
+        call     StoreLoadJmp
         add      esp, 4
         mov      dword ptr [g_walkCallback], 0xb
         call     GuardedSeq_00476de0
@@ -1625,12 +1625,12 @@ __declspec(naked) void func_00448990(void) {
         mov      eax, dword ptr [g_fightGroupHead]
         mov      dword ptr [eax*4 + 0x28], 0x7b
         mov      dword ptr [g_walkCallback], 0x17
-        call     GatedWordPushCall_00489f90
+        call     GatedWordPushCall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8dcd
         mov      dword ptr [g_eventQueueNotMask], 9
-        call     EntryThunkBodyStateMachine_00457bb0
+        call     EntryThunkBodyStateMachine
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8dcd
@@ -1642,12 +1642,12 @@ __declspec(naked) void func_00448990(void) {
         nop      
         nop      
         mov      dword ptr [g_walkCallback], 0x17
-        call     GatedWordPushCall_00489f90
+        call     GatedWordPushCall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8e0d
         mov      dword ptr [g_eventQueueNotMask], 9
-        call     EntryThunkBodyStateMachine_00457bb0
+        call     EntryThunkBodyStateMachine
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8e0d

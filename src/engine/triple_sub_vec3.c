@@ -13,7 +13,7 @@ extern void Mul10Tail(void);
  *   a = [g_xformEntityIdx*4], b = [g_pendingNodeType*4],
  *   out = [g_currentNodeIdx*4]
  */
-void TripleSubVec3_004250f0(void) {
+void TripleSubVec3(void) {
     unsigned int op = g_scaledInit_00542044;
     unsigned int ap = g_xformEntityIdx;
     unsigned int bp = g_pendingNodeType;

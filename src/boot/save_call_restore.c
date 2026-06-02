@@ -22,7 +22,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void MStackPush2DirtyCall_00427f90(void);
-void SaveCallRestore_004049d0(unsigned int arg) {
+void SaveCallRestore(unsigned int arg) {
     void (*saved)(void) = g_walkCallback;
     g_walkCallback = (void (*)(void))arg;
     MStackPush2DirtyCall_00427f90();

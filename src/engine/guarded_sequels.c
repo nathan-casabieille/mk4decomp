@@ -16,11 +16,11 @@
 
 /* Externs for guarded-sequel targets. */
 extern void PendingMatch_00401b70(void);   /* 0x00401b70 */
-extern void MStackPushTwoEntryChainCall_004058c0(void);   /* 0x004058c0 */
+extern void MStackPushTwoEntryChainCall(void);   /* 0x004058c0 */
 extern void MStackCall_00406740(void);   /* 0x00406740 */
 extern void CopyJmp_00406ba0(void);   /* 0x00406ba0 */
 extern void ChainDirtyBitWalker(void);   /* 0x00408c10 */
-extern void DirtyDoubleDeref_00408cb0(void);   /* 0x00408cb0 */
+extern void DirtyDoubleDeref(void);   /* 0x00408cb0 */
 extern void BootStateInitLongChain_0041ab90(void);   /* 0x0041ab90 */
 extern void StackPopDispatchTagged(void);   /* 0x0041f780 */
 extern void CallSetPause(void);   /* 0x0041f830 */
@@ -60,7 +60,7 @@ extern void CmpJmpTwoBranch_004871d0(void);   /* 0x004871d0 */
 extern void RoundTextMenuEventCluster_004888b0(void);   /* 0x004888b0 */
 extern void GuardedSeq_00488be0(void);   /* 0x00488be0 */
 extern void LiteralPushCallEntZero(void);   /* 0x00488c00 */
-extern void CjTableThresholdDispatch_00488f00(void);   /* 0x00488f00 */
+extern void CjTableThresholdDispatch(void);   /* 0x00488f00 */
 extern void ByteWordTableTaggedDispatch_0048a050(void);   /* 0x0048a050 */
 extern void Wrapper_0048a3a0(void);   /* 0x0048a3a0 */
 extern void MStackPushSet0004_00490230(void);   /* 0x00490230 */
@@ -68,7 +68,7 @@ extern void ScaledXorStore_004903b0(void);   /* 0x004903b0 */
 extern void ScaledZeroFour(void);   /* 0x00490740 */
 extern void DualCallPauseDirtyJmp_00490c30(void);   /* 0x00490c30 */
 extern void MStackNegAwareMul10Pair_004910b0(void);   /* 0x004910b0 */
-extern void ChainTableWalkStore_004917e0(void);   /* 0x004917e0 */
+extern void ChainTableWalkStore(void);   /* 0x004917e0 */
 
 /* The wrappers - naked __asm to force the exact `call/test/jne/jmp/ret` sequence. */
 /* @addr 0x0041aad0 */
@@ -171,7 +171,7 @@ void GuardedSeq_004515a0(void) {
 
 /* @addr 0x00453780 */
 void GuardedSeq_00453780(void) {
-    MStackPushTwoEntryChainCall_004058c0();
+    MStackPushTwoEntryChainCall();
     if (g_framePauseFlag) return;
     PoseCopyIdleCluster_004537a0();
 }
@@ -180,7 +180,7 @@ void GuardedSeq_00453780(void) {
 void GuardedSeq_004605b0(void) {
     MStackNegAwareMul10Pair_004910b0();
     if (g_framePauseFlag) return;
-    ChainTableWalkStore_004917e0();
+    ChainTableWalkStore();
 }
 
 /* @addr 0x00467c10 */
@@ -255,21 +255,21 @@ void GuardedSeq_00473f70(void) {
 
 /* @addr 0x00476de0 */
 void GuardedSeq_00476de0(void) {
-    DirtyDoubleDeref_00408cb0();
+    DirtyDoubleDeref();
     if (g_framePauseFlag) return;
     ScaledOr4Jmp_00476e00();
 }
 
 /* @addr 0x00476f10 */
 void GuardedSeq_00476f10(void) {
-    DirtyDoubleDeref_00408cb0();
+    DirtyDoubleDeref();
     if (g_framePauseFlag) return;
     ChainSlotSetupInstallSelf_00476f30();
 }
 
 /* @addr 0x00476fc0 */
 void GuardedSeq_00476fc0(void) {
-    DirtyDoubleDeref_00408cb0();
+    DirtyDoubleDeref();
     if (g_framePauseFlag) return;
     ScaledAndFBJmp_00476fe0();
 }
@@ -297,7 +297,7 @@ void GuardedSeq_004871b0(void) {
 
 /* @addr 0x00488890 */
 void GuardedSeq_00488890(void) {
-    CjTableThresholdDispatch_00488f00();
+    CjTableThresholdDispatch();
     if (g_framePauseFlag) return;
     RoundTextMenuEventCluster_004888b0();
 }

@@ -45,7 +45,7 @@ void _init_premain(void) {
 extern unsigned int g_table_004ab4e78_ee[];
 extern void GeoLoadFixupLoop_004bd8e0(void);
 extern unsigned int g_dispatchSave1579_00ab5034;
-void TableWalkBoundedCmp_004bd890(int arg) {
+void TableWalkBoundedCmp(int arg) {
     unsigned int *p = g_table_004ab4e78_ee;
     do {
         unsigned int v = *p;

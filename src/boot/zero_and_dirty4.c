@@ -14,7 +14,7 @@ extern unsigned int g_baseSel;
  *   mov     [g_xformDirtyFlags], eax
  *   ret
  */
-void ZeroAndDirty4_00405430(void) {
+void ZeroAndDirty4(void) {
     unsigned int v = g_xformDirtyFlags;
     g_walkCallback = 0;
     g_xformDirtyFlags = v | 4;

@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
 extern int g_dispatchSave1577_00ab4e6c;
 extern int g_dispatchSave1575_00ab4e5c;
 extern int g_dispatchSave1576_00ab4e60;
-void ClampMulShiftStore_004ba0e0(void) {
+void ClampMulShiftStore(void) {
     int v = ((int)((ScenegraphNode *)(g_xformEntityIdx * 4))->not_mask * g_dispatchSave1577_00ab4e6c) >> 8;
     g_dispatchSave1575_00ab4e5c = v;
     if (v < 0) {

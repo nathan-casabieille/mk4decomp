@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0042ee40 (370b game) - boot-init: clears slot 0x52ab10, seeds
  *   bookkeeping globals, and zero-fills a counted region.
- *   Calls BootInitGuardedCallChain_004265d0 first. On no-error: reads the
+ *   Calls BootInitGuardedCallChain first. On no-error: reads the
  *   slot index from g_load_0052ab10 into g_currentNodeIdx, calls
  *   ZeroThreeFields_00404ed0 then writes (0, 0, 0xfffc0000) into
  *   [slot+0x54/+0x58/+0x5c]. Mirrors with g_particleEmitterNode slot getting
@@ -121,8 +121,8 @@ extern unsigned int g_fightAxisPosY;
  *   index each iteration) - counted zero-fill. After: stashes 0xa into
  *   0x52aabc.
  *
- *   Calls CopyGlobal_004ac1f0; on no-error pushes 2 onto
- *   TableWalkBoundedCmp_004bd890, sets byte 0x54371c=1, sets 0x54206c
+ *   Calls CopyGlobal; on no-error pushes 2 onto
+ *   TableWalkBoundedCmp, sets byte 0x54371c=1, sets 0x54206c
  *   from g_dlNalt1, calls DownloadPlayerChar; on no-error sets
  *   0x542070=1 and 0x54206c from g_dlNalt2, calls DownloadPlayerChar
  *   again; on no-error sets 0x542044 = &g_installCountdownArr2_0050b214>>2 (packed_ptr),
@@ -140,10 +140,10 @@ extern unsigned int g_dispatchSave96_0053a170;
 extern unsigned int g_eventMusicVar_00541dd8;
 extern unsigned int g_dispatchVar7_00541fbc;
 extern u8 g_dlEnabledFlag;
-extern void BootInitGuardedCallChain_004265d0(void);
-extern void CopyGlobal_004ac1f0(void);
+extern void BootInitGuardedCallChain(void);
+extern void CopyGlobal(void);
 extern void DownloadPlayerChar(void);
-extern void TableWalkBoundedCmp_004bd890(void);
+extern void TableWalkBoundedCmp(void);
 extern void ZeroThreeFields_00404ed0(void);
 
 __declspec(naked) void BootInitClearSlotSeed_0042ee40(void) {
@@ -151,7 +151,7 @@ __declspec(naked) void BootInitClearSlotSeed_0042ee40(void) {
         push    ebx
         push    esi
         push    edi
-        call    BootInitGuardedCallChain_004265d0
+        call    BootInitGuardedCallChain
         mov     eax, dword ptr [g_framePauseFlag]
         xor     ebx, ebx
         cmp     eax, ebx
@@ -191,13 +191,13 @@ __declspec(naked) void BootInitClearSlotSeed_0042ee40(void) {
         jns     short L_bic_zeroLoop
         mov     dword ptr [g_phaseThunkVar2_0052aabc], eax
         mov     dword ptr [g_walkCallback], ebx
-        call    CopyGlobal_004ac1f0
+        call    CopyGlobal
         cmp     dword ptr [g_framePauseFlag], ebx
         jne     L_bic_done
         mov     esi, dword ptr [g_walkCallback]
         mov     edi, dword ptr [g_eventQueueCurrent]
         push    2
-        call    TableWalkBoundedCmp_004bd890
+        call    TableWalkBoundedCmp
         mov     eax, dword ptr [g_dlNalt1]
         add     esp, 4
         mov     byte ptr [g_dlEnabledFlag], 1

@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -115,16 +115,16 @@ extern unsigned int g_dispatchSave69_00542ba0;
 extern void Alarm3EntryPhaseChain_0047e1a0(void);
 extern void ArgSarStoreJmp(void);
 extern void Cascade3ChainInit_0048fa50(void);
-extern void CmpEqInitCallElseJmp_0048d4b0(void);
+extern void CmpEqInitCallElseJmp(void);
 extern void EsiInstallDecCallChain_004294a0(void);
-extern void FiveCallGuardSetTail_0046f6b0(void);
-extern void GuardedPackedSlotInit_00428760(void);
+extern void FiveCallGuardSetTail(void);
+extern void GuardedPackedSlotInit(void);
 extern void GuardedRangeCmpFpuJmp_0042b8d0(void);
 extern void ScaledLoadJmp_00428d20(void);
-extern void ScaledZero44_00491500(void);
+extern void ScaledZero44(void);
 extern void SetJmp_00483b40(void);
 extern void StoreLitRetSet2_0042c3b0(void);
-extern void StreamInitCountdownBody_00494830(void);
+extern void StreamInitCountdownBody(void);
 extern void TableLookupCall_00489ff0(void);
 extern void TableLookupCall_0048a130(void);
 
@@ -148,7 +148,7 @@ __declspec(naked) void AggressorModeCluster_0047df30(void)
         test     eax, eax
         je       L_e004
         mov      dword ptr [g_walkCallback], 3
-        call     CmpEqInitCallElseJmp_0048d4b0
+        call     CmpEqInitCallElseJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e0fd
@@ -196,7 +196,7 @@ __declspec(naked) void AggressorModeCluster_0047df30(void)
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x74], eax
-        call     StreamInitCountdownBody_00494830
+        call     StreamInitCountdownBody
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         test     eax, eax
@@ -207,7 +207,7 @@ __declspec(naked) void AggressorModeCluster_0047df30(void)
         test     eax, eax
         jne      L_e0fd
         push     OFFSET g_dispatchSave69_00542ba0
-        call     GuardedPackedSlotInit_00428760
+        call     GuardedPackedSlotInit
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         test     eax, eax
@@ -246,11 +246,11 @@ __declspec(naked) void AggressorModeCluster_0047df30(void)
         mov      dword ptr [eax + 0x84], 0
         test     ecx, ecx
         je       short L_e12f
-        call     ScaledZero44_00491500
+        call     ScaledZero44
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_e191
-        jmp      FiveCallGuardSetTail_0046f6b0
+        jmp      FiveCallGuardSetTail
     L_e12f:
         mov      dword ptr [eax + 8], OFFSET L_e100
         mov      ecx, dword ptr [g_baseSel]

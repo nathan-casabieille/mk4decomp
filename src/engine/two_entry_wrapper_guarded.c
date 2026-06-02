@@ -12,7 +12,7 @@ extern unsigned int g_scaledInit_00542044;
  * by 0x90-fill. */
 extern unsigned int g_dispatchSave1307_004edf38;
 extern unsigned int g_dispatchSave1308_004edf68;
-extern void GateDispatch6c_00494580(void);
+extern void GateDispatch6c(void);
 extern void ScaledChainCmp61_00482740(void);
 extern void LiteralPushCallEntZero(void);
 void TwoEntryWrapperGuarded_004826f0(void) {

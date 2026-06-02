@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -119,8 +119,8 @@ extern unsigned int g_dispatchSave1457_00f9fc6c;
 extern unsigned int g_dispatchSave1458_00f9fc70;
 extern unsigned int g_dispatchSave1461_00f9fc9a;
 extern void CrtGetLocaleInfo_004d0bc0(void);
-extern void FreeImpl_004c55f0(void);
-extern void LoadArgPushCall_004c54b0(void);
+extern void FreeImpl(void);
+extern void LoadArgPushCall(void);
 extern void StringStripSlotReplace_004d0140(void);
 
 __declspec(naked) void CrtTimeFmtPrefsCluster_004cfe40(void)
@@ -165,7 +165,7 @@ __declspec(naked) void CrtTimeFmtPrefsCluster_004cfe40(void)
         ret
     L_fe9f:
         push     0xd
-        call     LoadArgPushCall_004c54b0
+        call     LoadArgPushCall
         mov      ecx, dword ptr [esp + 0x1c]
         add      esp, 4
         mov      dword ptr [ecx + 0xa8], eax
@@ -227,7 +227,7 @@ __declspec(naked) void CrtTimeFmtPrefsCluster_004cfe40(void)
         mov      byte ptr [eax + 1], 0
         mov      edx, dword ptr [esp + 0x14]
         push     edx
-        call     FreeImpl_004c55f0
+        call     FreeImpl
         add      esp, 4
         xor      eax, eax
         pop      edi
@@ -283,15 +283,15 @@ __declspec(naked) void CrtTimeFmtPrefsCluster_004cfe40(void)
         je       short L_ffee
         mov      ecx, dword ptr [g_dispatchSave1456_00f9fc68]
         push     ecx
-        call     FreeImpl_004c55f0
+        call     FreeImpl
         mov      edx, dword ptr [g_dispatchSave1457_00f9fc6c]
         add      esp, 4
         push     edx
-        call     FreeImpl_004c55f0
+        call     FreeImpl
         mov      eax, dword ptr [g_dispatchSave1458_00f9fc70]
         add      esp, 4
         push     eax
-        call     FreeImpl_004c55f0
+        call     FreeImpl
         add      esp, 4
         mov      dword ptr [g_dispatchSave1456_00f9fc68], ebx
         mov      dword ptr [g_dispatchSave1457_00f9fc6c], ebx
@@ -307,17 +307,17 @@ __declspec(naked) void CrtTimeFmtPrefsCluster_004cfe40(void)
         cmp      eax, OFFSET g_dispatchSave110_005236b0
         je       short L_002a
         push     eax
-        call     FreeImpl_004c55f0
+        call     FreeImpl
         mov      edx, dword ptr [g_crtTimeFmtPrefs_005236e8]
         add      esp, 4
         mov      eax, dword ptr [edx + 4]
         push     eax
-        call     FreeImpl_004c55f0
+        call     FreeImpl
         mov      ecx, dword ptr [g_crtTimeFmtPrefs_005236e8]
         add      esp, 4
         mov      edx, dword ptr [ecx + 8]
         push     edx
-        call     FreeImpl_004c55f0
+        call     FreeImpl
         add      esp, 4
     L_002a:
         mov      ecx, dword ptr [g_crtTimeFmtPrefs_005236e8]
@@ -333,21 +333,21 @@ __declspec(naked) void CrtTimeFmtPrefsCluster_004cfe40(void)
     L_0059:
         mov      eax, dword ptr [g_dispatchSave1456_00f9fc68]
         push     eax
-        call     FreeImpl_004c55f0
+        call     FreeImpl
         mov      ecx, dword ptr [g_dispatchSave1457_00f9fc6c]
         add      esp, 4
         push     ecx
-        call     FreeImpl_004c55f0
+        call     FreeImpl
         mov      edx, dword ptr [g_dispatchSave1458_00f9fc70]
         add      esp, 4
         push     edx
-        call     FreeImpl_004c55f0
+        call     FreeImpl
         add      esp, 4
         mov      dword ptr [g_dispatchSave1456_00f9fc68], ebx
         mov      dword ptr [g_dispatchSave1457_00f9fc6c], ebx
         mov      dword ptr [g_dispatchSave1458_00f9fc70], ebx
         push     2
-        call     LoadArgPushCall_004c54b0
+        call     LoadArgPushCall
         mov      ecx, dword ptr [g_crtTimeFmtPrefs_005236e8]
         add      esp, 4
         mov      dword ptr [ecx], eax
@@ -364,7 +364,7 @@ __declspec(naked) void CrtTimeFmtPrefsCluster_004cfe40(void)
         mov      cx, word ptr [g_dispatchSave871_004f5924]
         push     2
         mov      word ptr [eax], cx
-        call     LoadArgPushCall_004c54b0
+        call     LoadArgPushCall
         mov      edx, dword ptr [g_crtTimeFmtPrefs_005236e8]
         add      esp, 4
         mov      dword ptr [edx + 4], eax
@@ -380,7 +380,7 @@ __declspec(naked) void CrtTimeFmtPrefsCluster_004cfe40(void)
     L_00ec:
         push     2
         mov      byte ptr [eax], bl
-        call     LoadArgPushCall_004c54b0
+        call     LoadArgPushCall
         mov      ecx, dword ptr [g_crtTimeFmtPrefs_005236e8]
         add      esp, 4
         mov      dword ptr [ecx + 8], eax

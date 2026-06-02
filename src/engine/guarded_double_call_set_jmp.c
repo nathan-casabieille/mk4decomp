@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
 extern void ScaledZeroFour(void);
 extern void ScaledInit_0048f720(void);
 extern void func_004602b0_pp(void);
-extern void MstackPopScaledChainPlusThunks_00471250(void);
+extern void MstackPopScaledChainPlusThunks(void);
 void GuardedDoubleCallSetJmp_00460260(void) {
     unsigned int top;
     ScaledZeroFour();
@@ -30,5 +30,5 @@ void GuardedDoubleCallSetJmp_00460260(void) {
     top++;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = (unsigned int)&func_004602b0_pp;
-    MstackPopScaledChainPlusThunks_00471250();
+    MstackPopScaledChainPlusThunks();
 }

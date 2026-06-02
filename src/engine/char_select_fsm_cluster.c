@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -117,10 +117,10 @@ extern unsigned int g_fightAxisPosY;
 /*    + event 004e7f28; state 1 install state 1 w/ 0x41 wait.         */
 /*  h3 (0x4558f0): set wait=0x16 → tail-jmp RoundCleanupCluster_00455920.*/
 /* ------------------------------------------------------------------ */
-extern void MStackPushTwoEntryChainCall_004058c0(void);
+extern void MStackPushTwoEntryChainCall(void);
 extern void MStackCall_00406600(void);
-extern void PushSetXfmMaskCallPop_00407140(void);
-extern void MStackPushDispatchBitGate_00407330(void);
+extern void PushSetXfmMaskCallPop(void);
+extern void MStackPushDispatchBitGate(void);
 extern void RoundCleanupCluster_00455920(void);
 extern void CharSelectFsmCluster_004561f0(void);
 extern void ChainGatedNegAccum_0048b740(void);
@@ -131,10 +131,10 @@ extern unsigned int g_dispatchSave129_0050d434;
 extern unsigned int g_pendingMatchVar;
 extern unsigned int g_particleEmitterNode;
 extern void ArgSarStoreJmp(void);
-extern void AudioMixerStep_004ab700(void);
-extern void DualScaledStore_00452740(void);
+extern void AudioMixerStep(void);
+extern void DualScaledStore(void);
 extern void MStackCall_00406340(void);
-extern void StoreLoadJmp_00404ef0(void);
+extern void StoreLoadJmp(void);
 extern void Thunk_0049cbc0(void);
 
 __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
@@ -157,7 +157,7 @@ __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], ecx
-        call     PushSetXfmMaskCallPop_00407140
+        call     PushSetXfmMaskCallPop
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5721
@@ -194,7 +194,7 @@ __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
         mov      dword ptr [ecx*4 + 0x5c], eax
         mov      edx, dword ptr [g_pendingMatchVar]
         mov      dword ptr [g_walkCallback], edx
-        call     AudioMixerStep_004ab700
+        call     AudioMixerStep
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5721
@@ -229,7 +229,7 @@ __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
         mov      ecx, OFFSET g_dispatchSave129_0050d434
         shr      ecx, 2
         mov      dword ptr [g_xformEntityIdx], ecx
-        call     MStackPushDispatchBitGate_00407330
+        call     MStackPushDispatchBitGate
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_58ff
@@ -241,7 +241,7 @@ __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
     L_5786:
         mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_fightGroupHead], edx
-        call     MStackPushTwoEntryChainCall_004058c0
+        call     MStackPushTwoEntryChainCall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_58ff
@@ -250,7 +250,7 @@ __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
         test     eax, eax
         jne      L_58ff
         push     OFFSET CharSelectFsmCluster_004561f0 + 0x320
-        call     StoreLoadJmp_00404ef0
+        call     StoreLoadJmp
         mov      eax, dword ptr [g_eventQueueIdx]
         add      esp, 4
         mov      dword ptr [g_currentNodeIdx], eax
@@ -302,7 +302,7 @@ __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
         pop      esi
         ret
     L_58d0:
-        call     DualScaledStore_00452740
+        call     DualScaledStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_58ff

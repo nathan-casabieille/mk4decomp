@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   Entry 0x004a0610: g_walkCallback=g_dlMode. If eax==0 OR g_state2_0053a354 != 0:
  *     tail-call CallSetPause; pop+ret. Else: chain=g_baseSel;
  *     g_state2_0053a354=1, g_state2_00537ea8=0, g_audioPeriodicSlot_0053a2e8=0, g_audioInitPeriodic_00537e90=4,
- *     g_walkCallback=0, chain[+0xc]=0; call RoundWinTransition_0049e7e0; if !paused: pop+ret;
+ *     g_walkCallback=0, chain[+0xc]=0; call RoundWinTransition; if !paused: pop+ret;
  *     else CallSetPause; pop+ret.
  *   Entry 0x004a0680 (body): chain = g_baseSel*4; saved=chain->state; chain->state=0.
  *     If was 0: countdown g_eventQueueEnd; if not yet 0: skip; else tail-jmp CallSetPause.
@@ -128,7 +128,7 @@ extern unsigned int g_installSelfStride5_00538090;
 extern unsigned int g_audioPeriodicSlot_0053a2e8;
 extern void CallSetPause(void);
 extern void InstallSelfStride5_004a06f0(void);
-extern void RoundWinTransition_0049e7e0(void);
+extern void RoundWinTransition(void);
 
 __declspec(naked) void AudioInitInstallSelfPeriodic_004a0610(void)
 {
@@ -151,7 +151,7 @@ __declspec(naked) void AudioInitInstallSelfPeriodic_004a0610(void)
         mov     dword ptr [g_audioInitPeriodic_00537e90], 4
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [eax*4 + 0xc], esi
-        call    RoundWinTransition_0049e7e0
+        call    RoundWinTransition
         cmp     dword ptr [g_framePauseFlag], esi
         jne     short L_pop_ret
     L_pause:

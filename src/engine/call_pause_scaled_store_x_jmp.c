@@ -18,11 +18,11 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  *   ret
  */
-extern void DirtyDoubleDeref_00408cb0(void);
-extern void MStackPushDispatchBitGate_00407330(void);
+extern void DirtyDoubleDeref(void);
+extern void MStackPushDispatchBitGate(void);
 void CallPauseScaledStoreXJmp_00453750(void) {
-    DirtyDoubleDeref_00408cb0();
+    DirtyDoubleDeref();
     if (g_framePauseFlag != 0) return;
     g_xformEntityIdx = ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->queue_end;
-    MStackPushDispatchBitGate_00407330();
+    MStackPushDispatchBitGate();
 }

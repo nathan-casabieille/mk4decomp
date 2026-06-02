@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -109,54 +109,54 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00413b70 (359b boot) - MStack push-8 + slot init with callback addr.
- *   Pushes 0x1000 to ThreeChanPackClamp_00404cc0, then [g_fightGroupHead] to
- *   CopyThreeFields_00404df0. Sets g_walkCallback=0x3333 and calls
- *   AudioMixerStep_004ab700, on no-error adds 0xd999 to it and calls
- *   ZeroAndDirty4_00405430. On no-error AND bit 2 of g_xformDirtyFlags set:
- *   calls MStackPush8_004ab790; if it returns OK loads
+ *   Pushes 0x1000 to ThreeChanPackClamp, then [g_fightGroupHead] to
+ *   CopyThreeFields. Sets g_walkCallback=0x3333 and calls
+ *   AudioMixerStep, on no-error adds 0xd999 to it and calls
+ *   ZeroAndDirty4. On no-error AND bit 2 of g_xformDirtyFlags set:
+ *   calls MStackPush8; if it returns OK loads
  *   g_eventQueueEnd = old g_fightGroupHead, g_walkCallback = &g_dispatchSave514_004d67b8>>2,
- *   calls PushSetXfmMaskCallPop_00407140. On no-error AND bit 2 NOT set,
+ *   calls PushSetXfmMaskCallPop. On no-error AND bit 2 NOT set,
  *   writes 0x9e into [g_fightGroupHead*4+0x30], calls
- *   ScaledTripleCopy54_004ac040 then MStackPushNegMul10_0040a690.
+ *   ScaledTripleCopy54 then MStackPushNegMul10.
  *   Then for the resolved leaf slot writes 0xb333 at +0x48, OR's bit 3
  *   into +0x0, 0xff at +0x14, and 0x00413e60 (callback addr) at +0x10.
- *   Calls MStackCall_004065b0, tail-jmp MStackPop8_004ab860.
+ *   Calls MStackCall_004065b0, tail-jmp MStackPop8.
  */
 extern unsigned int g_dispatchSave514_004d67b8;
-extern void AudioMixerStep_004ab700(void);
-extern void CopyThreeFields_00404df0(void);
+extern void AudioMixerStep(void);
+extern void CopyThreeFields(void);
 extern void MStackCall_004065b0(void);
-extern void MStackPop8_004ab860(void);
-extern void MStackPush8_004ab790(void);
-extern void MStackPushNegMul10_0040a690(void);
-extern void PushSetXfmMaskCallPop_00407140(void);
-extern void ScaledTripleCopy54_004ac040(void);
-extern void ThreeChanPackClamp_00404cc0(void);
-extern void ZeroAndDirty4_00405430(void);
+extern void MStackPop8(void);
+extern void MStackPush8(void);
+extern void MStackPushNegMul10(void);
+extern void PushSetXfmMaskCallPop(void);
+extern void ScaledTripleCopy54(void);
+extern void ThreeChanPackClamp(void);
+extern void ZeroAndDirty4(void);
 extern void func_00413e60(void);
 
 __declspec(naked) void MStackPush8CallbackInit_00413b70(void) {
     __asm {
         push    0x1000
-        call    ThreeChanPackClamp_00404cc0
+        call    ThreeChanPackClamp
         mov     eax, dword ptr [g_fightGroupHead]
         add     esp, 4
         push    eax
-        call    CopyThreeFields_00404df0
+        call    CopyThreeFields
         add     esp, 4
         mov     dword ptr [g_walkCallback], 0x3333
-        call    AudioMixerStep_004ab700
+        call    AudioMixerStep
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mp8c_ret
         add     dword ptr [g_walkCallback], 0xd999
-        call    ZeroAndDirty4_00405430
+        call    ZeroAndDirty4
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mp8c_ret
         test    byte ptr [g_xformDirtyFlags], 4
         je      L_mp8c_ret
-        call    MStackPush8_004ab790
+        call    MStackPush8
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mp8c_ret
@@ -165,7 +165,7 @@ __declspec(naked) void MStackPush8CallbackInit_00413b70(void) {
         shr     edx, 2
         mov     dword ptr [g_eventQueueEnd], ecx
         mov     dword ptr [g_walkCallback], edx
-        call    PushSetXfmMaskCallPop_00407140
+        call    PushSetXfmMaskCallPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mp8c_ret
@@ -175,12 +175,12 @@ __declspec(naked) void MStackPush8CallbackInit_00413b70(void) {
         mov     eax, 0x9e
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x30], eax
-        call    ScaledTripleCopy54_004ac040
+        call    ScaledTripleCopy54
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mp8c_ret
         mov     dword ptr [g_walkCallback], 0xfffffeb9
-        call    MStackPushNegMul10_0040a690
+        call    MStackPushNegMul10
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_mp8c_ret
@@ -210,7 +210,7 @@ __declspec(naked) void MStackPush8CallbackInit_00413b70(void) {
         test    eax, eax
         jne     short L_mp8c_ret
     L_mp8c_tailJmp:
-        jmp     MStackPop8_004ab860
+        jmp     MStackPop8
     L_mp8c_ret:
         ret
     }

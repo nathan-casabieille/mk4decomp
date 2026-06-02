@@ -14,7 +14,7 @@
  */
 #include "engine/scenegraph.h"
 
-extern void InstallSelf3WayChainCmp_00428d80(void);
+extern void InstallSelf3WayChainCmp(void);
 extern void EsiInstallBitCallChain_00429530(void);
 extern void InstallSelfBitGated_00428eb0(void);
 
@@ -22,7 +22,7 @@ extern void InstallSelfBitGated_00428eb0(void);
 void ScaledClearJmp_00428d40(void) {
     g_walkCallback = (void (*)(void))0;
     ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = 0;
-    InstallSelf3WayChainCmp_00428d80();
+    InstallSelf3WayChainCmp();
 }
 
 /* @addr 0x00428d60 */

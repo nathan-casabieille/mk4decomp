@@ -22,7 +22,7 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_struct_00ab4e50;
 extern unsigned int g_struct_00ab4e54;
 extern unsigned int g_struct_00ab4e58;
-void CopyThreeFields_00404df0(unsigned int arg) {
+void CopyThreeFields(unsigned int arg) {
     if (arg == 0) return;
     g_struct_00ab4e50 = ((ScenegraphNode *)(arg * 4))->position_x;
     g_struct_00ab4e54 = ((ScenegraphNode *)(arg * 4))->position_y;

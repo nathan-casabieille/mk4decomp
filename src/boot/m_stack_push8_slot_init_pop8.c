@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -109,32 +109,32 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00415010 (356b boot) - mstack-push-8 + slot-init chain + pop-8.
- *   MStackPush8_004ab790 reserves 8 slots; on no-error stashes
+ *   MStackPush8 reserves 8 slots; on no-error stashes
  *   g_fightGroupHead into g_eventQueueEnd and sets g_walkCallback =
- *   &g_dispatchSave561_004d78a8>>2. Calls PushSetXfmMaskCallPop_00407140. On
+ *   &g_dispatchSave561_004d78a8>>2. Calls PushSetXfmMaskCallPop. On
  *   no-error AND bit 2 of g_xformDirtyFlags clear: writes 0xa1 into
  *   [g_fightGroupHead*4+0x30], copies [old_054054*4+0x34] into the new
- *   slot's +0x34, calls ScaledTripleCopy54_004ac040. On no-error:
+ *   slot's +0x34, calls ScaledTripleCopy54. On no-error:
  *   copies [old+0x68] into new+0x68, sets g_walkCallback=0xfffffeb9
- *   and calls MStackPushNegMul10_0040a690. On no-error: copies edx*4
+ *   and calls MStackPushNegMul10. On no-error: copies edx*4
  *   indirection chain through new slot's +0x6c/+0x74/+0x18, then
  *   OR's bit 3 into [scaled+0]. Writes 0xe666 into [scaled+0x48],
  *   sets &g_dispatchSave567_004ba0e0 at +0x10, 0xff at +0x14, then calls
- *   MStackCall_004065b0. Tail-jmp MStackPop8_004ab860 on success;
+ *   MStackCall_004065b0. Tail-jmp MStackPop8 on success;
  *   bit-2-set branch also tail-jmps to MStackPop8 directly.
  */
 extern unsigned int g_dispatchSave567_004ba0e0;
 extern unsigned int g_dispatchSave561_004d78a8;
 extern void MStackCall_004065b0(void);
-extern void MStackPop8_004ab860(void);
-extern void MStackPush8_004ab790(void);
-extern void MStackPushNegMul10_0040a690(void);
-extern void PushSetXfmMaskCallPop_00407140(void);
-extern void ScaledTripleCopy54_004ac040(void);
+extern void MStackPop8(void);
+extern void MStackPush8(void);
+extern void MStackPushNegMul10(void);
+extern void PushSetXfmMaskCallPop(void);
+extern void ScaledTripleCopy54(void);
 
 __declspec(naked) void MStackPush8SlotInitPop8_00415010(void) {
     __asm {
-        call    MStackPush8_004ab790
+        call    MStackPush8
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mp8_ret
@@ -143,7 +143,7 @@ __declspec(naked) void MStackPush8SlotInitPop8_00415010(void) {
         shr     ecx, 2
         mov     dword ptr [g_eventQueueEnd], eax
         mov     dword ptr [g_walkCallback], ecx
-        call    PushSetXfmMaskCallPop_00407140
+        call    PushSetXfmMaskCallPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mp8_ret
@@ -158,7 +158,7 @@ __declspec(naked) void MStackPush8SlotInitPop8_00415010(void) {
         mov     eax, dword ptr [eax*4 + 0x34]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x34], eax
-        call    ScaledTripleCopy54_004ac040
+        call    ScaledTripleCopy54
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mp8_ret
@@ -167,7 +167,7 @@ __declspec(naked) void MStackPush8SlotInitPop8_00415010(void) {
         mov     eax, dword ptr [edx*4 + 0x68]
         mov     dword ptr [ecx*4 + 0x68], eax
         mov     dword ptr [g_walkCallback], 0xfffffeb9
-        call    MStackPushNegMul10_0040a690
+        call    MStackPushNegMul10
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mp8_ret
@@ -199,7 +199,7 @@ __declspec(naked) void MStackPush8SlotInitPop8_00415010(void) {
         test    eax, eax
         jne     short L_mp8_ret
     L_mp8_tailJmp:
-        jmp     MStackPop8_004ab860
+        jmp     MStackPop8
     L_mp8_ret:
         ret
     }

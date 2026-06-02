@@ -9,7 +9,7 @@
 
 extern void CallDualStoreXorBit_004285e0(void);
 extern void InstallSelfTri_00484a90(void);
-extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void FiveCallGuardSetTail(void);
 extern void DirtyToggleByGate(void);
 extern void ScaledClearJmp_00428d60(void);
 extern void InstallSelfReentry_004890b0(void);
@@ -22,7 +22,7 @@ void GuardedDispatch4_00484b40(void) {
         InstallSelfTri_00484a90();
         return;
     }
-    FiveCallGuardSetTail_0046f6b0();
+    FiveCallGuardSetTail();
 }
 
 /* @addr 0x00489080 */

@@ -11,20 +11,20 @@ extern unsigned int g_scaledInit_00542044;
  *   3 calls + pause-test chain; testb 1,[dirty] → ret;
  *   push 0x4ee2f0; call F4; add esp 4; ret.
  */
-extern void CjTableThresholdDispatch_00488f00(void);
-extern void GateDispatch6c_00494580(void);
+extern void CjTableThresholdDispatch(void);
+extern void GateDispatch6c(void);
 extern void ScaledLoadJmp_74_0048e7b0(void);
 extern void ArgSarStoreJmp(void);
 extern unsigned int g_dispatchSave1309_004ee2f0;
 
 void TripleCallPauseTestPush_00482e60(void) {
     __asm {
-        call    CjTableThresholdDispatch_00488f00
+        call    CjTableThresholdDispatch
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   37h
-        call    GateDispatch6c_00494580
+        call    GateDispatch6c
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

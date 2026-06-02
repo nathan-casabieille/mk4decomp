@@ -20,7 +20,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern double g_const_004d27b0;
 extern double g_const_004d27b8;
-extern int DoubleToInt64_004c57d0(void);
+extern int DoubleToInt64(void);
 
 void FpuSqrtMul(void) {
     __asm {
@@ -32,7 +32,7 @@ void FpuSqrtMul(void) {
         fmul    qword ptr [g_const_004d27b0]
         fsqrt
         fmul    qword ptr [g_const_004d27b8]
-        call    DoubleToInt64_004c57d0
+        call    DoubleToInt64
         mov     dword ptr [g_walkCallback], eax
         }
 }

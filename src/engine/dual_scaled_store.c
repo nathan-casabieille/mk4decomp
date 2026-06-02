@@ -16,7 +16,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [edx*4 + 0x68], eax
  *   ret
  */
-void DualScaledStore_00452740(void) {
+void DualScaledStore(void) {
     *(unsigned int *)(g_baseSel * 4 + 0x64) = g_eventQueueEnd;
     *(unsigned int *)(g_baseSel * 4 + 0x68) = g_eventQueueIdx;
 }

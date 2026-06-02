@@ -107,7 +107,7 @@ Structural observations:
   treating a zero op as stream terminator).
 - **`0x48e0d0` is a shared catch-all**, reused by 8 opcodes
   (`0x56, 0x59, 0x5c, 0x5d, 0x60`..`0x65`). It sits 16 bytes before
-  `SlotPhaseResetInstallChain_0048e0e0` and is almost certainly the
+  `SlotPhaseResetInstallChain` and is almost certainly the
   default 'ignore this opcode' stub.
 - **Opcode pairs 0x10 apart share a handler**: `0x37`/`0x47`,
   `0x38`/`0x48`, `0x3b`/`0x4b`, `0x3f`/`0x4f` each point at the same

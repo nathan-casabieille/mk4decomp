@@ -47,7 +47,7 @@ extern unsigned int g_player2State;
 extern unsigned int g_lit16_004e286c;
 
 extern void Cmp3DirtyToggle_0049fa20(void);
-extern void RoundWinTransition_0049e7e0(void);
+extern void RoundWinTransition(void);
 extern void StateAdd5Capped_0049fa00(void);
 extern int  TaggedSceneDispatch(int);
 
@@ -76,7 +76,7 @@ __declspec(naked) void DispatcherComplex115_0049f900(void) {
         mov     dword ptr [g_active_0053a408], 2
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_player1State], eax
-        call    RoundWinTransition_0049e7e0
+        call    RoundWinTransition
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -118,7 +118,7 @@ __declspec(naked) void DispatcherComplex115_0049f980(void) {
         mov     dword ptr [g_active_00537e88], 2
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_player2State], eax
-        call    RoundWinTransition_0049e7e0
+        call    RoundWinTransition
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

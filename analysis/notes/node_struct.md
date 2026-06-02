@@ -169,7 +169,7 @@ RE, since naming the busiest unlocks the most call sites:
 | +0x28 |  970 | scenegraph.h `queue_idx` - written at alloc from `g_eventQueueIdx`. |
 | +0x64 |  910 | scenegraph.h `AuxVec3Node.aux_y` (secondary vec3 Y, +0x60/+0x64/+0x68); plain `_60[]` user state on the base view. |
 | +0x6c |  834 | **TBD, strong lead** - horizontal facing/offset component (see "+0x6c facing lead" below). |
-| +0x48 |  822 | first of scenegraph.h's `_48[3]`. `ScaledMove48to58_00490720` copies it directly into `position_y` (+0x58) - a staged/next-Y committed to the live Y position; combat_fsm.md notes +0x40/+0x48 read together in some walkers. (Polymorphic `_48` slot - meaning likely varies by node type, like +0x38.) |
+| +0x48 |  822 | first of scenegraph.h's `_48[3]`. `ScaledMove48to58` copies it directly into `position_y` (+0x58) - a staged/next-Y committed to the live Y position; combat_fsm.md notes +0x40/+0x48 read together in some walkers. (Polymorphic `_48` slot - meaning likely varies by node type, like +0x38.) |
 | +0x68 |  795 | scenegraph.h `AuxVec3Node.aux_z` (secondary vec3 Z). |
 | +0x38 |  757 | polymorphic user state (anchor ref vs 16.16 scalar) - see cross-cutting table above. |
 | +0x14 |  552 | scenegraph.h `not_mask` - written at alloc from `g_eventQueueNotMask`. |

@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -127,15 +127,15 @@ extern unsigned int g_dispatchSave59_00501250;
 extern unsigned int g_gameCountdown;
 extern void ArgSarStoreJmp(void);
 extern void ChainGatedNegAccum_0048b740(void);
-extern void DualScaledStore_00452740(void);
-extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void DualScaledStore(void);
+extern void FiveCallGuardSetTail(void);
 extern void InstallSelfPackedTailJmp_004751f0(void);
 extern void MStackPush2GlobalSwap_00477400(void);
 extern void PendingMatch_00455bd0(void);
-extern void SaveCallRestoreOrXor_00404a00(void);
-extern void SaveCallRestore_004049d0(void);
+extern void SaveCallRestoreOrXor(void);
+extern void SaveCallRestore(void);
 extern void SetJmp_004753a0(void);
-extern void StoreLoadJmp_00404ef0(void);
+extern void StoreLoadJmp(void);
 extern void func_004569f0(void);
 
 extern unsigned int g_dispatchSave583_004eef18;
@@ -153,10 +153,10 @@ __declspec(naked) void PollThenInit_00477920(void) {
     __asm {
         push    ebx
         push    0x22
-        call    SaveCallRestore_004049d0
+        call    SaveCallRestore
         add     esp, 4
         push    0x22
-        call    SaveCallRestoreOrXor_00404a00
+        call    SaveCallRestoreOrXor
         mov     al, byte ptr [g_xformDirtyFlags]
         mov     bl, 4
         add     esp, 4
@@ -166,10 +166,10 @@ __declspec(naked) void PollThenInit_00477920(void) {
         _emit   1dh
 loopPoll:
         push    0x22
-        call    SaveCallRestore_004049d0
+        call    SaveCallRestore
         add     esp, 4
         push    0x22
-        call    SaveCallRestoreOrXor_00404a00
+        call    SaveCallRestoreOrXor
         mov     al, byte ptr [g_xformDirtyFlags]
         add     esp, 4
         _emit   84h
@@ -303,7 +303,7 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
         test     byte ptr [g_xformDirtyFlags], bl
         jne      short L_763f
     L_7637:
-        call     FiveCallGuardSetTail_0046f6b0
+        call     FiveCallGuardSetTail
         pop      esi
         pop      ebx
         ret
@@ -396,7 +396,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
     L_597d:
         /* case 1: 4569f0 text dispatch */
         push     OFFSET func_004569f0
-        call     StoreLoadJmp_00404ef0
+        call     StoreLoadJmp
         mov      dword ptr [esi + 8], OFFSET L_5950
         mov      dword ptr [esi + 0x84], 2
         add      esp, 4
@@ -454,7 +454,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         ret
     L_5a88:
         /* case 0: pre-stage */
-        call     DualScaledStore_00452740
+        call     DualScaledStore
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_5b22
         mov      eax, 1

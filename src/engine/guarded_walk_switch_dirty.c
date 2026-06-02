@@ -13,10 +13,10 @@ extern unsigned int g_scaledInit_00542044;
  *   The second arm loads g_xformDirtyFlags BEFORE the conditional
  *   branch (codegen quirk: cmp flags preserved across load).
  */
-extern void ScaledChain3c74_0048f910(void);
+extern void ScaledChain3c74(void);
 void GuardedWalkSwitchDirty_0048ea40(void) {
     unsigned int v;
-    ScaledChain3c74_0048f910();
+    ScaledChain3c74();
     if (g_framePauseFlag != 0) return;
     v = (unsigned int)g_walkCallback;
     if (v == 0x2005) {

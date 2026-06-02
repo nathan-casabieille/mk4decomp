@@ -25,7 +25,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  *   nop * 8 (int 3 padding)
  */
-__declspec(naked) void DoubleToInt64_004c57d0(void) {
+__declspec(naked) void DoubleToInt64(void) {
     __asm {
         push    ebp
         mov     ebp, esp

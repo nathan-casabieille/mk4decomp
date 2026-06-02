@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -125,9 +125,9 @@ extern void IntroFsmCluster_0044d580(void);
 extern void GuardedDualScaledChainCopy_0044dd00(void);
 extern void PendingMatch_0044dd80(void);
 extern void GuardedScaled_00475060(void);
-extern void InstallSelfChainAccumPath_004752b0(void);
+extern void InstallSelfChainAccumPath(void);
 extern void GameInstall2BodyMul10ScaledInit_00475590(void);
-extern void GatedWordPushCall_00489f90(void);
+extern void GatedWordPushCall(void);
 extern void PoseChainAdvanceCluster_0044ef50(void);
 extern unsigned int g_dispatchSave685_004e6580;
 extern unsigned int g_dispatchSave686_004e6590;
@@ -137,7 +137,7 @@ extern unsigned int g_dispatchSave57_005117c4;
 
 extern void ArgSarStoreJmp(void);
 extern void FramePauseScaledStore_00406c10(void);
-extern void StoreLoadJmp_00404ef0(void);
+extern void StoreLoadJmp(void);
 
 __declspec(naked) void IntroInitCluster_0044d280(void)
 {
@@ -242,7 +242,7 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         test     eax, eax
         jne      L_d4f9
         mov      dword ptr [g_walkCallback], 0x30
-        call     GatedWordPushCall_00489f90
+        call     GatedWordPushCall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d4f9
@@ -267,16 +267,16 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], 0
-        call     InstallSelfChainAccumPath_004752b0
+        call     InstallSelfChainAccumPath
         mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_d48e:
         push     OFFSET IntroFsmCluster_0044d580 + 0x40
-        call     StoreLoadJmp_00404ef0
+        call     StoreLoadJmp
         add      esp, 4
         push     OFFSET PoseChainAdvanceCluster_0044ef50 + 0x290
-        call     StoreLoadJmp_00404ef0
+        call     StoreLoadJmp
         add      esp, 4
         call     DoubleCallChainInit_0043d780
         mov      eax, dword ptr [g_framePauseFlag]
@@ -306,7 +306,7 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         mov      eax, dword ptr [g_fightGroupHead]
         mov      dword ptr [eax*4 + 0x28], 0x35
         mov      dword ptr [g_walkCallback], 0x27
-        call     GatedWordPushCall_00489f90
+        call     GatedWordPushCall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d535

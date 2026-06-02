@@ -7,7 +7,7 @@
  */
 
 /* Externs for wrapper targets. */
-extern void SaveCallRestore_004049d0(unsigned int arg);   /* 0x004049d0 */
+extern void SaveCallRestore(unsigned int arg);   /* 0x004049d0 */
 extern void OrListLoop_0041fcc0(unsigned int arg);   /* 0x0041fcc0 */
 extern void PackedAdvanceCallTailJmp_004392c0(unsigned int arg);   /* 0x004392c0 */
 extern void CmpDualPatchScaledRangeJmp_004399c0(unsigned int arg);   /* 0x004399c0 */
@@ -145,5 +145,5 @@ void Wrapper_0048fbc0(void) { IterLoad_0048fd30(0x004f12a8u); }
 void Wrapper_0048ff30(void) { IterLoad_0048fd30(0x004f12acu); }
 
 /* @addr 0x0049eb10 */
-void Wrapper_0049eb10(void) { SaveCallRestore_004049d0(0x00000266u); }
+void Wrapper_0049eb10(void) { SaveCallRestore(0x00000266u); }
 

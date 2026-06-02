@@ -12,11 +12,11 @@ extern unsigned int g_scaledInit_00542044;
  *   jz +5 → jmp T1; load g_scaledInit → ecx; mov eax,0xfffb0000;
  *   store walk and [ecx*4 + 0x6c]; jmp T2.
  */
-extern void SaveCallRestoreOrXor_00404a00(int);
+extern void SaveCallRestoreOrXor(int);
 extern void StackPopDispatchTagged(void);
 extern void InstallSelfPauseGate_004a1a50(void);
 void PushCallTestByte4Jmp_004a1a10(void) {
-    SaveCallRestoreOrXor_00404a00(0x25a);
+    SaveCallRestoreOrXor(0x25a);
     if ((g_xformDirtyFlags & 4) != 0) {
         StackPopDispatchTagged();
         return;

@@ -22,7 +22,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void LeaPlus22StoreSelf(void);
 extern void InstallSelfThreeStateLeaPlus22_00437970(void);
-extern void MstackPopScaledChainPlusThunks_00471250(void);
+extern void MstackPopScaledChainPlusThunks(void);
 void CallPauseMStackPushSet2Jmp_00437930(void) {
     unsigned int top;
     LeaPlus22StoreSelf();
@@ -32,5 +32,5 @@ void CallPauseMStackPushSet2Jmp_00437930(void) {
     top++;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = (unsigned int)&InstallSelfThreeStateLeaPlus22_00437970;
-    MstackPopScaledChainPlusThunks_00471250();
+    MstackPopScaledChainPlusThunks();
 }

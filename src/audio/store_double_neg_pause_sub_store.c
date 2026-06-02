@@ -13,8 +13,8 @@ extern unsigned int g_scaledInit_00542044;
  *   load g_dispatchSave_00538130 - walk → walk.
  */
 extern unsigned int g_dispatchSave_00538130;
-extern void AudioMixerStep_004ab700(void);
-void StoreDoubleNegPauseSubStore_004ab750(void) {
+extern void AudioMixerStep(void);
+void StoreDoubleNegPauseSubStore(void) {
     int saved;
     int v;
     saved = (int)g_walkCallback;
@@ -25,7 +25,7 @@ void StoreDoubleNegPauseSubStore_004ab750(void) {
         v = -v;
         g_walkCallback = (void (*)(void))v;
     }
-    AudioMixerStep_004ab700();
+    AudioMixerStep();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))((unsigned int)g_walkCallback - g_dispatchSave_00538130);
 }

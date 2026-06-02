@@ -15,11 +15,11 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_eventQueueNotMask], 0x0002000f
  *   jmp     T
  */
-extern void HitReactionDispatcher_0045f650(void);
+extern void HitReactionDispatcher(void);
 void Const0303InitJmp_00495cf0(void) {
     unsigned int v = 0x0303;
     g_walkCallback = (void (*)(void))v;
     ((ScenegraphNode *)(g_baseSel * 4))->fsm_state = v;
     g_eventQueueNotMask = 0x0002000f;
-    HitReactionDispatcher_0045f650();
+    HitReactionDispatcher();
 }

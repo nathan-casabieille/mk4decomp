@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  *   stores [ecx*4 + 0] into g_scaledInit; calls 0x406790; loop.
  */
 extern signed char g_table_004f3260[];
-extern void MStackPush2ChainLLInsert_00406790(void);
+extern void MStackPush2ChainLLInsert(void);
 
 void TableWalkChainCall_004a30f0(void) {
     __asm {
@@ -24,7 +24,7 @@ loop_start2:
         add     ecx, eax
         mov     edx, dword ptr [ecx*4 + 0]
         mov     dword ptr [g_scaledInit_00542044], edx
-        call    MStackPush2ChainLLInsert_00406790
+        call    MStackPush2ChainLLInsert
         add     esi, 0x24
         cmp     esi, 0x004f33c8
         _emit   72h

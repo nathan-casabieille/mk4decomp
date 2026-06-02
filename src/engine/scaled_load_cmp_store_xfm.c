@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_secondary_00535d04;
 extern unsigned int g_primary_0053a774;
-void ScaledLoadCmpStoreXfm_0048f2a0(void) {
+void ScaledLoadCmpStoreXfm(void) {
     unsigned int s1 = g_player1NodeIdx;
     unsigned int fg = g_fightGroupHead;
     unsigned int s2 = g_secondary_00535d04;

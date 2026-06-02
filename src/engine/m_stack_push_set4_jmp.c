@@ -9,7 +9,7 @@ extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x004384f0 (37b): same shape value=4 */
 extern void func_00438520(void);
-extern void MstackPopScaledChainPlusThunks_00471250(void);
+extern void MstackPopScaledChainPlusThunks(void);
 extern void StackPopDispatchTagged(void);
 void MStackPushSet4Jmp_004384f0(void) {
     int top = g_matrixStackTop;
@@ -17,5 +17,5 @@ void MStackPushSet4Jmp_004384f0(void) {
     top++;
     g_matrixStackTop = top;
     *(void(**)(void))((unsigned int)top * 4) = func_00438520;
-    MstackPopScaledChainPlusThunks_00471250();
+    MstackPopScaledChainPlusThunks();
 }

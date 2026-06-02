@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -112,13 +112,13 @@ extern unsigned int g_fightAxisPosY;
  *   mstack-push + 3-call rescale.
  *   Entry 1 (offset 0, 85b): scales a vec component. Pushes
  *     g_eventQueueCurrent onto Mul10Tail with 0x13333 weight, then
- *     0x54206c = 0xf5c → StoreDoubleNegPauseSubStore_004ab750. On
+ *     0x54206c = 0xf5c → StoreDoubleNegPauseSubStore. On
  *     no-error adds 0x10000 to 0x54206c, calls Mul10Tail again with that
  *     value, stores result in g_eventQueueCurrent.
  *   11b NOP align pad.
  *   Entry 2 (offset 0x60, 293b): pushes g_fightGroupHead onto mstack,
- *     calls ChainWalkPushPop_00405a40. On no-error sets 0x54206c=0x12c
- *     → AudioVolumeRescale_004ab690. If bit 0 of 0x54208c set also
+ *     calls ChainWalkPushPop. On no-error sets 0x54206c=0x12c
+ *     → AudioVolumeRescale. If bit 0 of 0x54208c set also
  *     calls MStackPush2VolumeCascade_00444e00. Then for each of the
  *     3 components at [g_fightGroupHead*4 + 0x6c/0x70/0x74]:
  *       - copy into g_eventQueueCurrent
@@ -130,10 +130,10 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_dispatchVar43_004e6070;
 extern unsigned int g_table_004d57b0;
-extern void AudioVolumeRescale_004ab690(void);
-extern void ChainWalkPushPop_00405a40(void);
+extern void AudioVolumeRescale(void);
+extern void ChainWalkPushPop(void);
 extern void MStackPush2VolumeCascade_00444e00(void);
-extern void StoreDoubleNegPauseSubStore_004ab750(void);
+extern void StoreDoubleNegPauseSubStore(void);
 
 __declspec(naked) void VecScaleMStackTripleCall_00446980(void) {
     __asm {
@@ -144,7 +144,7 @@ __declspec(naked) void VecScaleMStackTripleCall_00446980(void) {
         add     esp, 8
         mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [g_walkCallback], 0xf5c
-        call    StoreDoubleNegPauseSubStore_004ab750
+        call    StoreDoubleNegPauseSubStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_vsm_e1End
@@ -178,12 +178,12 @@ __declspec(naked) void VecScaleMStackTripleCall_00446980(void) {
         push    esi
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_table_004d57b0], ecx
-        call    ChainWalkPushPop_00405a40
+        call    ChainWalkPushPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_vsm_pop1
         mov     dword ptr [g_walkCallback], 0x12c
-        call    AudioVolumeRescale_004ab690
+        call    AudioVolumeRescale
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_vsm_pop1

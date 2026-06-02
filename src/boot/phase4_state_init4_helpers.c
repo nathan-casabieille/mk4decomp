@@ -19,29 +19,29 @@ extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10_00431d50(void);
+extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
 extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader_00477710(void);
+extern void SpawnListBatchLoader(void);
 extern void MStackPush2TableNot(void);
 extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp_00429710(void);
-extern void ScaledStoreCurDirtyClear_004296f0(void);
-extern void MStackBitmaskIncMod_00492450(void);
-extern void MStackBitmaskUpdate_00492510(void);
-extern void Push1eCallTestDirtyLoop_004923b0(void);
-extern void MStackLoopFieldInit_00492280(void);
+extern void ScaledLoadDecJmp(void);
+extern void ScaledStoreCurDirtyClear(void);
+extern void MStackBitmaskIncMod(void);
+extern void MStackBitmaskUpdate(void);
+extern void Push1eCallTestDirtyLoop(void);
+extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty4StackPushFn(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void InstallSelfChainSet84_80CallW(void);
 extern void Wrapper_00436490(void);
-extern void MoveFsmCluster_004364a0(void);
+extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain_0047a950(void);
+extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
@@ -51,10 +51,10 @@ extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
 extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore_004917e0(void);
+extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
-extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
@@ -110,14 +110,14 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave909_004d6758;
 extern void CallSetPause(void);
-extern void ChainListVecAdd_0049d200(void);
-extern void ClampMulShiftStore_004ba0e0(void);
-extern void CopyThreeFields_00404df0(void);
+extern void ChainListVecAdd(void);
+extern void ClampMulShiftStore(void);
+extern void CopyThreeFields(void);
 extern void MStackCall_00406600(void);
-extern void MStackPushNegMul10_0040a690(void);
+extern void MStackPushNegMul10(void);
 extern void MStackPushZeroCallPop_004066f0(void);
-extern void PushSetXfmMaskCallPop_00407140(void);
-extern void ThreeChanPackClamp_00404cc0(void);
+extern void PushSetXfmMaskCallPop(void);
+extern void ThreeChanPackClamp(void);
 
 __declspec(naked) void Phase4StateInit4Helpers_004130c0(void)
 {
@@ -133,7 +133,7 @@ __declspec(naked) void Phase4StateInit4Helpers_004130c0(void)
         shr     ecx, 2
         mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_walkCallback], ecx
-        call    PushSetXfmMaskCallPop_00407140
+        call    PushSetXfmMaskCallPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p44_ret
@@ -158,11 +158,11 @@ __declspec(naked) void Phase4StateInit4Helpers_004130c0(void)
         mov     edx, dword ptr [eax + 0x18]
         mov     dword ptr [eax + 0x5C], ecx
         mov     dword ptr [g_currentNodeIdx], edx
-        call    ThreeChanPackClamp_00404cc0
+        call    ThreeChanPackClamp
         mov     eax, dword ptr [g_fightGroupHead]
         add     esp, 4
         push    eax
-        call    CopyThreeFields_00404df0
+        call    CopyThreeFields
         mov     ecx, dword ptr [g_currentNodeIdx]
         add     esp, 4
         mov     eax, dword ptr [ecx*4 + 0x28]
@@ -194,7 +194,7 @@ __declspec(naked) void Phase4StateInit4Helpers_004130c0(void)
         nop
         nop
     L_p44_helperA:
-        call    ClampMulShiftStore_004ba0e0
+        call    ClampMulShiftStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p44_helperA_ret
@@ -232,7 +232,7 @@ __declspec(naked) void Phase4StateInit4Helpers_004130c0(void)
         test    eax, eax
         jne     L_p44_helperB_ret
         mov     dword ptr [g_walkCallback], 0xCCC
-        call    MStackPushNegMul10_0040a690
+        call    MStackPushNegMul10
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p44_helperB_ret
@@ -289,12 +289,12 @@ __declspec(naked) void Phase4StateInit4Helpers_004130c0(void)
         sub     eax, 0x147
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x48], eax
-        call    ChainListVecAdd_0049d200
+        call    ChainListVecAdd
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p44_helperC_ret
     L_p44_helperC_tail:
-        jmp     ClampMulShiftStore_004ba0e0
+        jmp     ClampMulShiftStore
     L_p44_helperC_ret:
         ret
     }

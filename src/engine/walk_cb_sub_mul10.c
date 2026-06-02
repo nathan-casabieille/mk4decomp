@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_acc_00542078;
 extern void MStackMagicModMul10_00424410(void);
 extern void ModMagicMul10Index_00424350(void);
-void WalkCbSubMul10_00431d50(void) {
+void WalkCbSubMul10(void) {
     unsigned int v = 0x1921f - (unsigned int)g_walkCallback;
     g_walkCallback = (void(*)(void))v;
     g_eventQueueWorkType = v;

@@ -16,7 +16,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_xformDirtyFlags], eax
  *   ret
  */
-void ScaledStoreCurDirtyClear_004296f0(void) {
+void ScaledStoreCurDirtyClear(void) {
     unsigned int idx = g_fightGroupHead;
     ((ScenegraphNode *)(idx * 4))->queue_idx = g_eventQueueCurrent;
     g_xformDirtyFlags = g_xformDirtyFlags & 0xFFFFFFFEu;
