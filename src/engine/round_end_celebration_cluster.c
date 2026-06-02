@@ -120,7 +120,7 @@ extern void ScaledIndexConditionalAdd(void);
 extern void ScaledLoadIncJmp_00428d00(void);
 extern void ScaledLoadIncJmp_00429840(void);
 
-__declspec(naked) void RoundEndCelebrationCluster_0047b6e0(void)
+__declspec(naked) void RoundEndCelebrationCluster(void)
 {
     __asm {
         /* H1 */

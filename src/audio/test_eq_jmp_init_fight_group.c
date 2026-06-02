@@ -12,16 +12,16 @@ extern unsigned int g_scaledInit_00542044;
  *   set fightGroup[+0x30] = 0x25a, set walk = 0x50000, set
  *   fightGroup[+0x6c] = walk, jmp T1.
  */
-extern void SetWorkType02CountFFB_004a1790(void);
-extern void AudioInstall3StateSubXform_004a17d0(void);
-void TestEqJmpInitFightGroup_004a1740(void) {
+extern void SetWorkType02CountFFB(void);
+extern void AudioInstall3StateSubXform(void);
+void TestEqJmpInitFightGroup(void) {
     if (g_eventQueueEnd) {
-        SetWorkType02CountFFB_004a1790();
+        SetWorkType02CountFFB();
         return;
     }
     g_eventQueueWorkType = 0xfef20000;
     ((FightGroupNode *)(g_fightGroupHead * 4))->tag = 0x25a;
     g_walkCallback = (void(*)(void))0x50000;
     *(unsigned int *)(g_fightGroupHead * 4 + 0x6c) = 0x50000;
-    AudioInstall3StateSubXform_004a17d0();
+    AudioInstall3StateSubXform();
 }

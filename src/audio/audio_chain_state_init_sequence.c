@@ -109,28 +109,28 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * AudioChainStateInitSequence_004a1610 - 294b audio multi-stage chain init.
+ * AudioChainStateInitSequence - 294b audio multi-stage chain init.
  *   g_xformEntityIdx = (0x0050f1bc >> 2); call FramePauseScaledStore. If paused: ret.
- *   If g_xformDirtyFlags & 4: tail-jmp TestEqJmpInitFightGroup_004a1740.
+ *   If g_xformDirtyFlags & 4: tail-jmp TestEqJmpInitFightGroup.
  *   Else: chain[g_currentNodeIdx + 0x1c] = g_pendingNodeType; g_xformEntityIdx = g_eventQueueTotal;
  *     call MStackPush2ChainPrepend. If paused: ret.
  *   chain[+0x30] = g_walkCallback = 0x80000; chain[+0x34] = g_walkCallback;
  *   chain[+0x38] = g_walkCallback = 0x83; g_currentNodeIdx = g_fightGroupHead; call MStackBracket4_ListInsertZeroFill.
  *   If paused: ret. If g_xformDirtyFlags & 4: jmp 0x004a173f.
  *   Else call MStackPush3LinkedListWalk. If paused: ret.
- *   If g_xformDirtyFlags & 4: tail-jmp TestEqJmpInitFightGroup_004a1740.
+ *   If g_xformDirtyFlags & 4: tail-jmp TestEqJmpInitFightGroup.
  *   Else g_walkCallback = g_pendingNodeType; call ChainDirtyBitWalker. If paused: ret.
  *   chain[g_xformEntityIdx*4 + 0x14] = 0x80; chain[+0x10] = g_walkCallback = 0x004ba0e0;
- *   tail-jmp TestEqJmpInitFightGroup_004a1740.
+ *   tail-jmp TestEqJmpInitFightGroup.
  */
 extern unsigned int g_dispatchSave126_0050f1bc;
 extern void FramePauseScaledStore(void);
 extern void MStackBracket4_ListInsertZeroFill(void);
 extern void MStackPush2ChainPrepend(void);
 extern void MStackPush3LinkedListWalk(void);
-extern void TestEqJmpInitFightGroup_004a1740(void);
+extern void TestEqJmpInitFightGroup(void);
 
-__declspec(naked) void AudioChainStateInitSequence_004a1610(void)
+__declspec(naked) void AudioChainStateInitSequence(void)
 {
     __asm
     {
@@ -143,7 +143,7 @@ __declspec(naked) void AudioChainStateInitSequence_004a1610(void)
         jne     L_a16_ret
         test    byte ptr [g_xformDirtyFlags], 4
         je      short L_a16_continue
-        jmp     TestEqJmpInitFightGroup_004a1740
+        jmp     TestEqJmpInitFightGroup
     L_a16_continue:
         mov     ecx, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_pendingNodeType]
@@ -173,7 +173,7 @@ __declspec(naked) void AudioChainStateInitSequence_004a1610(void)
         jne     short L_a16_ret
         test    byte ptr [g_xformDirtyFlags], 4
         je      short L_a16_callPush3
-        jmp     TestEqJmpInitFightGroup_004a1740
+        jmp     TestEqJmpInitFightGroup
     L_a16_callPush3:
         call    MStackPush3LinkedListWalk
         mov     eax, dword ptr [g_framePauseFlag]
@@ -181,7 +181,7 @@ __declspec(naked) void AudioChainStateInitSequence_004a1610(void)
         jne     short L_a16_ret
         test    byte ptr [g_xformDirtyFlags], 4
         je      short L_a16_callDirty
-        jmp     TestEqJmpInitFightGroup_004a1740
+        jmp     TestEqJmpInitFightGroup
     L_a16_callDirty:
         mov     eax, dword ptr [g_pendingNodeType]
         mov     dword ptr [g_walkCallback], eax
@@ -195,7 +195,7 @@ __declspec(naked) void AudioChainStateInitSequence_004a1610(void)
         mov     edx, dword ptr [g_xformEntityIdx]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x10], eax
-        jmp     TestEqJmpInitFightGroup_004a1740
+        jmp     TestEqJmpInitFightGroup
     L_a16_ret:
         ret
     }

@@ -112,16 +112,16 @@ extern unsigned int g_fightAxisPosY;
  *   eax = base*4; ecx = [eax+0x84]; clear; if (ecx == 0) install-path;
  *   else: call DirtyToggleByGate; pause? -> end;
  *     if (g_xformDirtyFlags & 4): mstack-push 0x00484000; jmp GameDispatchValidateState;
- *     else: jmp InstallSelfMultiCascadeChainCopy_00484000.
+ *     else: jmp InstallSelfMultiCascadeChainCopy.
  *   install-path: g_eventQueueChild = 4; install self; chain[base+0x84] = 1;
  *     packed_ptr[scaledInit] = 0x00483f30 + 0x01000000; g_scaledInit++; [eax+4] = scaledInit;
  *     chain[base+0x84] = 0; call EsiInstallDecCallChain; g_framePauseFlag = 1.
  */
 extern unsigned int g_matrixStack_arr;
 extern void EsiInstallDecCallChain_004294a0(void);
-extern void InstallSelfMultiCascadeChainCopy_00484000(void);
+extern void InstallSelfMultiCascadeChainCopy(void);
 
-__declspec(naked) void InstallSelfTwoTailJmp_00483f30(void) {
+__declspec(naked) void InstallSelfTwoTailJmp(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         shl     eax, 2
@@ -147,7 +147,7 @@ __declspec(naked) void InstallSelfTwoTailJmp_00483f30(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_matrixStack_arr], 0x00484000
         jmp     GameDispatchValidateState
-        jmp     InstallSelfMultiCascadeChainCopy_00484000
+        jmp     InstallSelfMultiCascadeChainCopy
         mov     dword ptr [g_eventQueueChild], 4
         mov     dword ptr [eax + 8], 0x00483f30
         mov     ecx, dword ptr [g_baseSel]

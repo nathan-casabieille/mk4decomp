@@ -115,11 +115,11 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_table_004f7868;
 extern unsigned int g_dispatchSave1525_00ab4838;
-extern void ScaledNegThreeWords_004be210(void);
+extern void ScaledNegThreeWords(void);
 
 extern unsigned int g_arr_4ba040;
 
-void VtableDispatchSetDirty_004ba040(void) {
+void VtableDispatchSetDirty(void) {
     __asm {
         mov     ecx, dword ptr [g_currentNodeFlags]
         mov     eax, ecx
@@ -155,7 +155,7 @@ void VtableDispatchSetDirty_004ba040(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   0eh
-        call    ScaledNegThreeWords_004be210
+        call    ScaledNegThreeWords
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

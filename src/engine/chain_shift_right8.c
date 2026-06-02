@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_matrixStack_arr;
 
-void ChainShiftRight8_0045d9b0(void) {
+void ChainShiftRight8(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueTotal]
         mov     ecx, [eax*4 + 0x18]

@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_matrixStack_arr;
 extern void FiveCallGuardSetTail(void);
 
-void MStackPush2GlobalSwap_00477400(void) {
+void MStackPush2GlobalSwap(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_scaledInit_00542044]

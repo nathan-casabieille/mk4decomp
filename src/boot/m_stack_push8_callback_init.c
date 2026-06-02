@@ -135,7 +135,7 @@ extern void ThreeChanPackClamp(void);
 extern void ZeroAndDirty4(void);
 extern void func_00413e60(void);
 
-__declspec(naked) void MStackPush8CallbackInit_00413b70(void) {
+__declspec(naked) void MStackPush8CallbackInit(void) {
     __asm {
         push    0x1000
         call    ThreeChanPackClamp

@@ -17,10 +17,10 @@ extern unsigned int g_scaledInit_00542044;
  *   clear dirty bit 1; ret.
  */
 extern void Helper_TickAlt(void);
-extern void BootGatedInitInstallPair_00412280(void);
-extern void SlotInitAndChainLink_004191b0(void);
+extern void BootGatedInitInstallPair(void);
+extern void SlotInitAndChainLink(void);
 
-void ScaledLoadCallSet1c_004084b0(void) {
+void ScaledLoadCallSet1c(void) {
     __asm {
         mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     edx, dword ptr [g_eventQueueCurrent]
@@ -51,7 +51,7 @@ void ScaledLoadCallSet1c_004084b0(void) {
  *     dirty ^= 4 (back); load scaled+0x18 → scaled; load scaled+0x28 → eax;
  *     set walk = 0x414600 + store at [eax*4 + 0x10]; ret.
  */
-void SetDirty4XorScaledLoad_004147b0(void) {
+void SetDirty4XorScaledLoad(void) {
     __asm {
         mov     eax, dword ptr [g_xformDirtyFlags]
         mov     ecx, 4
@@ -84,13 +84,13 @@ void SetDirty4XorScaledLoad_004147b0(void) {
  *   jmp T.
  */
 void CallPauseDirty4ScaledSet_004196c0(void) {
-    SlotInitAndChainLink_004191b0();
+    SlotInitAndChainLink();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 4) return;
     ((FightGroupNode *)(g_eventQueueEnd * 4))->tag = 0x81;
     g_walkCallback = (void(*)(void))0x14ccc;
     *(unsigned int *)(g_xformEntityIdx * 4 + 0x48) = 0x14ccc;
     g_scaledInit_00542044 = g_eventQueueEnd + 0x15;
-    BootGatedInitInstallPair_00412280();
+    BootGatedInitInstallPair();
 }
 

@@ -16,14 +16,14 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_walkCallback], 2
  *   inc     eax
  *   mov     [g_matrixStackTop], eax
- *   mov     [eax*4 + 0], OFFSET InstallSelfThreeStateLeaPlus22_00437970
+ *   mov     [eax*4 + 0], OFFSET InstallSelfThreeStateLeaPlus22
  *   jmp     T
  *   ret
  */
 extern void LeaPlus22StoreSelf(void);
-extern void InstallSelfThreeStateLeaPlus22_00437970(void);
+extern void InstallSelfThreeStateLeaPlus22(void);
 extern void MstackPopScaledChainPlusThunks(void);
-void CallPauseMStackPushSet2Jmp_00437930(void) {
+void CallPauseMStackPushSet2Jmp(void) {
     unsigned int top;
     LeaPlus22StoreSelf();
     if (g_framePauseFlag != 0) return;
@@ -31,6 +31,6 @@ void CallPauseMStackPushSet2Jmp_00437930(void) {
     g_walkCallback = (void (*)(void))2;
     top++;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = (unsigned int)&InstallSelfThreeStateLeaPlus22_00437970;
+    *(unsigned int *)(top * 4) = (unsigned int)&InstallSelfThreeStateLeaPlus22;
     MstackPopScaledChainPlusThunks();
 }

@@ -22,7 +22,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void MStackMagicModMul10(void);
 extern void ModMagicMul10Index(void);
-void AddStoreCallPauseJmp_00431da0(void) {
+void AddStoreCallPauseJmp(void) {
     g_eventQueueWorkType = g_xformScratch2088 + 0x0001921f;
     MStackMagicModMul10();
     if (g_framePauseFlag != 0) return;

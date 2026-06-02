@@ -114,8 +114,8 @@ extern void Wrapper_0048a3c0(void);
 extern void PhaseDispatchListAdvance(void);
 extern void CallPauseDirtyMStackPushFn(void);
 extern void InstallSelfMStackOverwrite(void);
-extern void FiveEntryAlarmInstallChain_0046ee00(void);
-extern void MStackJmpInstallSelf_0046ed40(void);
+extern void FiveEntryAlarmInstallChain(void);
+extern void MStackJmpInstallSelf(void);
 extern unsigned int g_dispatchSave701_004eb6c8;
 
 /* @addr 0x0046eac0 (339b game) - 5-thunk dispatcher with mstack-push chain (state-machine via mstack callback ptrs).
@@ -125,16 +125,16 @@ extern unsigned int g_dispatchSave701_004eb6c8;
  *     g_eventQueueEnd = (0x004eb6c8 >> 2); tail-jmp PhaseDispatchListAdvance. ret. 15-NOP pad.
  *   Thunk C (+0x80): if bit0(0054208c): jmp CallPauseDirtyMStackPushFn.
  *     g_eventQueueChild=g_eventQueueNotMask=7. Mstack-push body_eb80; tail-jmp InstallSelfMStackOverwrite. 8-NOP pad.
- *   Thunk D body_eb80 (+0xc0): if bit0: jmp FiveEntryAlarmInstallChain_0046ee00.
+ *   Thunk D body_eb80 (+0xc0): if bit0: jmp FiveEntryAlarmInstallChain.
  *     g_eventQueueChild=8; g_eventQueueNotMask=7. Mstack-push body_ebc0; tail-jmp InstallSelfMStackOverwrite. 3-NOP pad.
  *   Thunk E body_ebc0 (+0x100): same as D but state_00542080=9; mstack-push body_ec00. 3-NOP pad.
- *   Thunk F body_ec00 (+0x140): if bit0 jmp FiveEntryAlarmInstallChain_0046ee00; else jmp MStackJmpInstallSelf.
+ *   Thunk F body_ec00 (+0x140): if bit0 jmp FiveEntryAlarmInstallChain; else jmp MStackJmpInstallSelf.
  */
 extern void ArgSarStoreJmp(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void FiveThunkMStackDispatcher_0046eac0(void) {
+__declspec(naked) void FiveThunkMStackDispatcher(void) {
     __asm {
         call    ScaledAndAlfe
         mov     eax, dword ptr [g_framePauseFlag]
@@ -204,7 +204,7 @@ __declspec(naked) void FiveThunkMStackDispatcher_0046eac0(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_matrixStack_arr], offset FiveThunkMStackDispatcher_0046eac0 + 0xc0
+        mov     [eax*4 + g_matrixStack_arr], offset FiveThunkMStackDispatcher + 0xc0
         jmp     InstallSelfMStackOverwrite
         _emit   90h
         _emit   90h
@@ -218,13 +218,13 @@ __declspec(naked) void FiveThunkMStackDispatcher_0046eac0(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
-        jmp     FiveEntryAlarmInstallChain_0046ee00
+        jmp     FiveEntryAlarmInstallChain
         mov     eax, dword ptr [g_matrixStackTop]
         mov     dword ptr [g_eventQueueChild], 8
         inc     eax
         mov     dword ptr [g_eventQueueNotMask], 7
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_matrixStack_arr], offset FiveThunkMStackDispatcher_0046eac0 + 0x100
+        mov     [eax*4 + g_matrixStack_arr], offset FiveThunkMStackDispatcher + 0x100
         jmp     InstallSelfMStackOverwrite
         _emit   90h
         _emit   90h
@@ -233,13 +233,13 @@ __declspec(naked) void FiveThunkMStackDispatcher_0046eac0(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
-        jmp     FiveEntryAlarmInstallChain_0046ee00
+        jmp     FiveEntryAlarmInstallChain
         mov     eax, dword ptr [g_matrixStackTop]
         mov     dword ptr [g_eventQueueChild], 9
         inc     eax
         mov     dword ptr [g_eventQueueNotMask], 7
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_matrixStack_arr], offset FiveThunkMStackDispatcher_0046eac0 + 0x140
+        mov     [eax*4 + g_matrixStack_arr], offset FiveThunkMStackDispatcher + 0x140
         jmp     InstallSelfMStackOverwrite
         _emit   90h
         _emit   90h
@@ -248,7 +248,7 @@ __declspec(naked) void FiveThunkMStackDispatcher_0046eac0(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
-        jmp     FiveEntryAlarmInstallChain_0046ee00
-        jmp     MStackJmpInstallSelf_0046ed40
+        jmp     FiveEntryAlarmInstallChain
+        jmp     MStackJmpInstallSelf
     }
 }

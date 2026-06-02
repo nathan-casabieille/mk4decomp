@@ -31,7 +31,7 @@ extern void *g_lit_004ed7e0;
 extern void *g_lit_004ed7f0;
 extern void Wrapper_0048ff30(void);
 extern int  TripleScaledChainStore(void *p);
-extern void StageEventStartCluster_0047ff80(void);
+extern void StageEventStartCluster(void);
 
 /* @addr 0x0047fec0 */
 void FourConstCallLitCallJmp_0047fec0(void) {
@@ -43,7 +43,7 @@ void FourConstCallLitCallJmp_0047fec0(void) {
     if (g_framePauseFlag) return;
     TripleScaledChainStore(&g_lit_004ed7e0);
     if (g_framePauseFlag) return;
-    StageEventStartCluster_0047ff80();
+    StageEventStartCluster();
 }
 
 /* @addr 0x0047ff20 */
@@ -56,5 +56,5 @@ void FourConstCallLitCallJmp_0047ff20(void) {
     if (g_framePauseFlag) return;
     TripleScaledChainStore(&g_lit_004ed7f0);
     if (g_framePauseFlag) return;
-    StageEventStartCluster_0047ff80();
+    StageEventStartCluster();
 }

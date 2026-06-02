@@ -109,14 +109,14 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void Chain2AxisDiffStoreTailJmp(void);
-extern void DualPushAddCallDualPopJmp_0044cc50(void);
+extern void DualPushAddCallDualPopJmp(void);
 extern void GuardedSeq_00473f50(void);
 extern void MStackPush3SideStore(void);
 extern void PendingMatch_004492f0(void);
 extern void StoreLoadJmp(void);
 extern void Thunk_0049cbc0(void);
 
-__declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
+__declspec(naked) void MatchEndFadeFsmCluster(void)
 {
     __asm {
         /* === h1 (0x449010): pre-fade init → tail-jmp 473f50 === */
@@ -197,7 +197,7 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         mov      dword ptr [g_eventQueueWorkType], 0xfffee667
         mov      edx, dword ptr [ecx*4 + 0x68]
         mov      dword ptr [g_eventQueueIdx], edx
-        call     DualPushAddCallDualPopJmp_0044cc50
+        call     DualPushAddCallDualPopJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_92d8
@@ -246,7 +246,7 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         test     eax, eax
         jne      short L_92d8
         mov      dword ptr [g_eventQueueWorkType], 0x1999
-        call     DualPushAddCallDualPopJmp_0044cc50
+        call     DualPushAddCallDualPopJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_92d8

@@ -135,14 +135,14 @@ extern unsigned int g_dispatchSave1570_00ab4e28;
 extern unsigned int g_dispatchSave1574_00ab4e3c;
 extern unsigned int g_dispatchSave1576_00ab4e60;
 extern void AdvanceTriStripRing(void);
-extern void AltCamMatrixProject_004b9840(void);
+extern void AltCamMatrixProject(void);
 extern void Helper_DrawCursor(void);
 extern void MaxOfThree(void);
-extern void MinOfThree_004b3d70(void);
+extern void MinOfThree(void);
 extern void ProjectTwoVertices(void);
 extern void ProjectVertex(void);
 
-__declspec(naked) void TristripBatchEmit3Cap_004bb680(void)
+__declspec(naked) void TristripBatchEmit3Cap(void)
 {
     __asm {
         mov      eax, dword ptr [g_inLoopStep]
@@ -165,7 +165,7 @@ __declspec(naked) void TristripBatchEmit3Cap_004bb680(void)
         jge      L_b6c4
         push     1
         push     OFFSET g_dispatchSave1501_00ab4398
-        call     AltCamMatrixProject_004b9840
+        call     AltCamMatrixProject
         add      esp, 8
     L_b6c4:
         mov      eax, dword ptr [edi + 8]
@@ -291,7 +291,7 @@ __declspec(naked) void TristripBatchEmit3Cap_004bb680(void)
         test     eax, eax
         mov      word ptr [esi + 0x1a], cx
         jne      L_b878
-        call     MinOfThree_004b3d70
+        call     MinOfThree
         jmp      L_b87d
     L_b878:
         call     MaxOfThree

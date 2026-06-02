@@ -112,25 +112,25 @@ extern unsigned int g_table_00535ddc;
 /* @addr 0x00434b60 (147b game) - 8-way dispatch on g_walkCallback:
  *   call ScaledChain3c74; pause? ret.
  *   v = g_walkCallback; switch (v) {
- *     case 0x20c: jmp Install3StateMStackCounterDispatch_00434c10;
- *     case 0x218: jmp RangeDispatch4_00434ec0; (wait or Thunk_00434eb0?)
+ *     case 0x20c: jmp Install3StateMStackCounterDispatch;
+ *     case 0x218: jmp RangeDispatch4; (wait or Thunk_00434eb0?)
  *     ... cascading je-jmp ladder.
  *   default: if (g_table_00535ddc <= 0x30000): jmp Wrapper_00438ee0;
  *            else: jmp PrefixThunkInstallSelf3State.
  */
-void DispatchWcSwitch_00434b60(void) {
+void DispatchWcSwitch(void) {
     unsigned int v;
     int x;
     ScaledChain3c74();
     if (g_framePauseFlag != 0) return;
     v = (unsigned int)g_walkCallback;
-    if (v == 0x20c) { Install3StateMStackCounterDispatch_00434c10(); return; }
+    if (v == 0x20c) { Install3StateMStackCounterDispatch(); return; }
     if (v == 0x218) { Thunk_00434eb0(); return; }
-    if (v == 0x202) { CallPauseCmpDoubleJmp_00435230(); return; }
+    if (v == 0x202) { CallPauseCmpDoubleJmp(); return; }
     if (v == 0x20a) { FiveBlockDispatch_00435340(); return; }
-    if (v == 0x21c) { RangeDispatch4_00434ec0(); return; }
+    if (v == 0x21c) { RangeDispatch4(); return; }
     if (v == 0x216) { Thunk_00435330(); return; }
-    if (v == 0x20e) { InstallSelfStateCountdown_00434db0(); return; }
+    if (v == 0x20e) { InstallSelfStateCountdown(); return; }
     if (v == 0x209) { Thunk_00434c00(); return; }
     x = (int)g_table_00535ddc;
     g_walkCallback = (void (*)(void))x;

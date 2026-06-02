@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *   if eax<edx: jmp ScaledLoadDecJmp;
  *   else: jmp ScaledStoreCurDirtyClear.
  */
-void GuardedDoubleIncCmpJmp_00429860(void) {
+void GuardedDoubleIncCmpJmp(void) {
     unsigned int idx_cj;
     unsigned int idx_scaled;
     unsigned int val;

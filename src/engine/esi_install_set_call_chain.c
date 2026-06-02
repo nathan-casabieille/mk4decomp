@@ -116,8 +116,8 @@ extern unsigned int g_fightAxisPosY;
  *   eax=1; install self ([esi+8]=0x47aef0); g_pendingNodeType=0x14;
  *   g_framePauseFlag=1; pop esi; ret.
  */
-extern void EsiInstallSetCallChain_0047aef0(void);
-void EsiInstallSetCallChain_0047aef0(void) {
+extern void EsiInstallSetCallChain(void);
+void EsiInstallSetCallChain(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int prev = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
@@ -130,7 +130,7 @@ void EsiInstallSetCallChain_0047aef0(void) {
     if (g_framePauseFlag != 0) return;
     ScaledZeroFour();
     if (g_framePauseFlag != 0) return;
-    *(unsigned int *)(base + 8) = (unsigned int)&EsiInstallSetCallChain_0047aef0;
+    *(unsigned int *)(base + 8) = (unsigned int)&EsiInstallSetCallChain;
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 0x14;
     g_framePauseFlag = 1;

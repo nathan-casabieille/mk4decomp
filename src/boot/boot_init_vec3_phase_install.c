@@ -111,13 +111,13 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave144_00506d7c;
 extern unsigned int g_particleEmitterNode;
 extern unsigned int g_phaseIdx_0053a50c;
-extern void BootMultiAssetLoadStateInit_00403b10(void);
+extern void BootMultiAssetLoadStateInit(void);
 extern void FiveTableWalkInit(void);
 extern void InstallSelfPackedF80(void);
 extern void MStackCall_00406340(void);
 extern void TableWalkBoundedCmp(void);
 
-__declspec(naked) void BootInitVec3PhaseInstall_00402c10(void)
+__declspec(naked) void BootInitVec3PhaseInstall(void)
 {
     __asm
     {
@@ -144,7 +144,7 @@ __declspec(naked) void BootInitVec3PhaseInstall_00402c10(void)
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_bivpi_pop
         mov     dword ptr [g_phaseIdx_0053a50c], 0xa
-        call    BootMultiAssetLoadStateInit_00403b10
+        call    BootMultiAssetLoadStateInit
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_bivpi_pop
         push    edi
@@ -161,9 +161,9 @@ __declspec(naked) void BootInitVec3PhaseInstall_00402c10(void)
         je      short L_bivpi_doVec3Init
     L_bivpi_phase1:
         mov     dword ptr [g_eventQueueCurrent], 3
-        mov     dword ptr [esi + 8], offset BootInitVec3PhaseInstall_00402c10
+        mov     dword ptr [esi + 8], offset BootInitVec3PhaseInstall
         mov     edx, dword ptr [g_baseSel]
-        mov     ecx, offset BootInitVec3PhaseInstall_00402c10
+        mov     ecx, offset BootInitVec3PhaseInstall
         add     ecx, 0x2000000
         mov     dword ptr [edx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
@@ -215,7 +215,7 @@ __declspec(naked) void BootInitVec3PhaseInstall_00402c10(void)
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x7c], eax
         mov     eax, 1
-        mov     dword ptr [esi + 8], offset BootInitVec3PhaseInstall_00402c10
+        mov     dword ptr [esi + 8], offset BootInitVec3PhaseInstall
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], 0x180
         mov     dword ptr [g_framePauseFlag], eax

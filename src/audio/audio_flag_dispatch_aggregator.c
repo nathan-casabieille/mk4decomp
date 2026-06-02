@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * AudioFlagDispatchAggregator_004aa430 - 226b audio multi-bit-flag dispatcher.
+ * AudioFlagDispatchAggregator - 226b audio multi-bit-flag dispatcher.
  *   Six independent bit tests on g_byte_004d50d4/d8; for each set bit, push (channel<<16, &table)
  *   and call ShiftDownThreeAndAppend.
  *   Final aggregator: combine low nibble of g_byte_004d50d4 into a 4-bit value, shl 16; if nonzero,
@@ -120,7 +120,7 @@ extern unsigned int g_byte_004d50d8;
 extern unsigned int g_audioFlagAggBase2_00543398;
 extern void ShiftDownThreeAndAppend(void);
 
-void AudioFlagDispatchAggregator_004aa430(void) {
+void AudioFlagDispatchAggregator(void) {
     __asm {
         test    byte ptr [g_byte_004d50d4], 0x10
         je      short L_skip0

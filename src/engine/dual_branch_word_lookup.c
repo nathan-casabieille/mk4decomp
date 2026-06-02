@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  *   [walk*4 + idx*2]; if non-zero call TaggedSceneDispatch.
  */
 
-void DualBranchWordLookup_0048a290(void) {
+void DualBranchWordLookup(void) {
     __asm {
         mov     ecx, dword ptr [g_walkCallback]
         mov     eax, 0x00542ce0

@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  *   jmp MStackPushComplexCallPop_00406430.
  */
 extern unsigned int g_dispatchSave413_0050f408;
-void GuardedSetupTailMStackJmp_00492210(void) {
+void GuardedSetupTailMStackJmp(void) {
     unsigned int v;
     g_xformEntityIdx = (unsigned int)&g_dispatchSave413_0050f408 >> 2;
     DispatcherComplex260_00407400();

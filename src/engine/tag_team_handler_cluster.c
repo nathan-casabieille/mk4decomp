@@ -115,18 +115,18 @@ extern unsigned int g_fightAxisPosY;
 /*    each case installs next state via 0043f3a0/43ede0/43f2c0/copy. */
 /*  h3 (0x43ebe0): pose-fn 2-state w/ 0x7ae increment + 00476af0.     */
 /* ------------------------------------------------------------------ */
-extern void DispatchCopyFields_0043ec80(void);
-extern void StackPushCallPopChain_0043ed70(void);
-extern void TagTeamHandlerCluster_0043ede0(void);
-extern void InstallSelfChainStateInit_0043f2c0(void);
-extern void ComboMenuFsmCluster_0043f3a0(void);
+extern void DispatchCopyFields(void);
+extern void StackPushCallPopChain(void);
+extern void TagTeamHandlerCluster(void);
+extern void InstallSelfChainStateInit(void);
+extern void ComboMenuFsmCluster(void);
 extern unsigned int g_pendingMatchAudio2_0053a7a8;
 
 extern unsigned int g_load_0052ab10;
 extern void MStackAngleRatioSubchain(void);
 extern void Thunk_0049cbc0(void);
 
-__declspec(naked) void ThrowEventCluster_0043e960(void)
+__declspec(naked) void ThrowEventCluster(void)
 {
     __asm {
         /* === h1 (0x43e960): inner state save + 00408c10 === */
@@ -187,7 +187,7 @@ __declspec(naked) void ThrowEventCluster_0043e960(void)
         jmp      dword ptr [eax*4 + L_jmptbl_ebc8]
     L_ea2d:
         /* case 1: 43ec80 + install state 2 */
-        call     DispatchCopyFields_0043ec80
+        call     DispatchCopyFields
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_ebc3
         mov      dword ptr [esi + 8], OFFSET L_ea00
@@ -204,7 +204,7 @@ __declspec(naked) void ThrowEventCluster_0043e960(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edi
-        call     ComboMenuFsmCluster_0043f3a0
+        call     ComboMenuFsmCluster
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
@@ -213,7 +213,7 @@ __declspec(naked) void ThrowEventCluster_0043e960(void)
         /* case 2: set 0054205c, 43ed70, install state 3 */
         mov      ecx, dword ptr [g_load_0052ab10]
         mov      dword ptr [g_fightGroupHead], ecx
-        call     StackPushCallPopChain_0043ed70
+        call     StackPushCallPopChain
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_ebc3
         mov      dword ptr [esi + 8], OFFSET L_ea00
@@ -230,7 +230,7 @@ __declspec(naked) void ThrowEventCluster_0043e960(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], edi
-        call     TagTeamHandlerCluster_0043ede0
+        call     TagTeamHandlerCluster
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
@@ -251,7 +251,7 @@ __declspec(naked) void ThrowEventCluster_0043e960(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], edi
-        call     InstallSelfChainStateInit_0043f2c0
+        call     InstallSelfChainStateInit
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi

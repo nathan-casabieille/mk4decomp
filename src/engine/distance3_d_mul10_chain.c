@@ -124,7 +124,7 @@ extern unsigned int g_eventQueueChildSrc_0053a3dc;
 extern unsigned int g_eventQueueScratch_0053a41c;
 extern void DualCallPauseDirtyJmp_00490c30(void);
 
-__declspec(naked) void Distance3DMul10Chain_0042d090(void) {
+__declspec(naked) void Distance3DMul10Chain(void) {
     __asm {
         mov     eax, dword ptr [g_dual_0053a1a8]
         mov     ecx, dword ptr [g_dual_0053a1a4]

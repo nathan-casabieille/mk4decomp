@@ -113,9 +113,9 @@ extern unsigned int g_fightAxisPosY;
  *   convert via MultiByteToWideChar; if ok: return mask & low16 of arg1.
  */
 extern unsigned int g_crtCType_00522998;
-extern void WcToMbDispatcher_004cdae0(void);
+extern void WcToMbDispatcher(void);
 
-__declspec(naked) int IsCType_004cc650(void) {
+__declspec(naked) int IsCType(void) {
     __asm {
         push    ecx
         mov     ecx, dword ptr [esp + 8]
@@ -158,7 +158,7 @@ __declspec(naked) int IsCType_004cc650(void) {
         push    eax
         push    edx
         push    1
-        call    WcToMbDispatcher_004cdae0
+        call    WcToMbDispatcher
         add     esp, 0x1c
         test    eax, eax
         _emit   75h

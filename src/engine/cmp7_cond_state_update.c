@@ -118,11 +118,11 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave_00537f8c;
 extern unsigned int g_eventMusicSlot2_0053a318;
 extern void CallSetPause(void);
-extern void Cmp7DirtyToggle_0042ee10(void);
+extern void Cmp7DirtyToggle(void);
 
-__declspec(naked) void Cmp7CondStateUpdate_0042ed90(void) {
+__declspec(naked) void Cmp7CondStateUpdate(void) {
     __asm {
-        call    Cmp7DirtyToggle_0042ee10
+        call    Cmp7DirtyToggle
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     done

@@ -113,7 +113,7 @@ extern void DualEntryRecursiveInstall(void);
 extern void GuardedSeq_00471670(void);
 extern void TripleCallBitJmp(void);
 
-__declspec(naked) void FsmPoseDualEntry_00472560(void)
+__declspec(naked) void FsmPoseDualEntry(void)
 {
     __asm {
     L_2560:

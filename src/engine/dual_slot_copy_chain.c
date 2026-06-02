@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  *   edx = [ecx+0x64]; g_walkCallback=edx; [eax+0x64]=edx;
  *   ecx = [ecx+0x68]; g_walkCallback=ecx; [eax+0x68]=ecx; ret.
  */
-void DualSlotCopyChain_004756f0(void) {
+void DualSlotCopyChain(void) {
     unsigned int a;
     unsigned int c;
     unsigned int v;

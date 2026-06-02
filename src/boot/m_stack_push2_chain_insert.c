@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * MStackPush2ChainInsert_00409870 - 243b boot linked-list insert with mstack push2.
+ * MStackPush2ChainInsert - 243b boot linked-list insert with mstack push2.
  *   Push g_chainInsertSlot_0053a168, g_pendingNodeType to mstack. base=g_xformEntityIdx (packed_ptr).
  *   esi = base[+8]; ecx = g_currentNodeIdx + esi; chain[ecx*4 + 4] = base; g_walkCallback = 0;
  *   chain[ecx*4 + 8] = 0; esi = base[0]; g_walkCallback = esi; chain[ecx*4] = esi.
@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_chainInsertSlot_0053a168;
 
-__declspec(naked) void MStackPush2ChainInsert_00409870(void)
+__declspec(naked) void MStackPush2ChainInsert(void)
 {
     __asm
     {

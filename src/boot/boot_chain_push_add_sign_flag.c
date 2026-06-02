@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * BootChainPushAddSignFlag_004077b0 - 297b boot mstack-push1 + sign-add + bit-flag toggle.
+ * BootChainPushAddSignFlag - 297b boot mstack-push1 + sign-add + bit-flag toggle.
  *   g_eq_00542098 = (g_walkCallback < 0); push g_xformEntityIdx to mstack.
  *   ecx = g_fightGroupHead[+0x24]; g_xformEntityIdx = ecx. If sign flag was set:
  *     edx = g_currentNodeIdx[+0x28] + g_walkCallback; g_walkCallback = edx. If sign cleared (jns):
@@ -123,7 +123,7 @@ extern unsigned int g_fightAxisPosY;
  *     pop+ret.
  */
 
-__declspec(naked) void BootChainPushAddSignFlag_004077b0(void)
+__declspec(naked) void BootChainPushAddSignFlag(void)
 {
     __asm
     {

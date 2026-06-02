@@ -133,7 +133,7 @@ extern void TableLookupIatCall(void);
 extern void TwoPathIATDispatch_004c7030(void);
 extern void TwoPathIATDispatch_004c70a0(void);
 
-__declspec(naked) void HeapScanInit_004c9440(void) {
+__declspec(naked) void HeapScanInit(void) {
     __asm {
         push    ebx
         push    ebp

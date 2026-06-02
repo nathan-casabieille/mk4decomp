@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  *   not C0/C2/C3 conditions in fnstsw ax bits 0x41), else 0.
  */
 extern double g_dispatchSave1160_004d2b58;
-void FPUPrecisionCheck_004c8400(void) {
+void FPUPrecisionCheck(void) {
     __asm {
         push    ebp
         mov     ebp, esp

@@ -120,7 +120,7 @@ extern void MStackPushSet0008(void);
 extern void ScaledArrStore_00429980(void);
 extern void ScaledInitOrSelfPtrSetType_0047a620(void);
 
-__declspec(naked) void InstallSelf4Cascade_0047a560(void) {
+__declspec(naked) void InstallSelf4Cascade(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    ebx

@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void ScaledMaskByte(void);
 extern unsigned int g_table_0053a53c;
-void SetTagsCallCmpToggleDirty_00458c70(void) {
+void SetTagsCallCmpToggleDirty(void) {
     g_eventQueueCurrent = (unsigned int)g_walkCallback;
     g_pendingNodeType = ((unsigned int)&g_table_0053a53c >> 2) + 0x3b;
     ScaledMaskByte();

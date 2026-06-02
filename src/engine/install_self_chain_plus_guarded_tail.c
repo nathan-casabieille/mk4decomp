@@ -125,7 +125,7 @@ extern void ScaledInitWithCounterAndType_004314f0(void);
 extern void ScaledLoadJmp_00428d20(void);
 extern void ScaledLoadOrSetJmp(void);
 
-__declspec(naked) void InstallSelfChainPlusGuardedTail_00488ca0(void) {
+__declspec(naked) void InstallSelfChainPlusGuardedTail(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi

@@ -117,11 +117,11 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void CallPauseScaledStoreCopyJmp(void);
 extern void CjInstallSelfRouter(void);
-extern void GameModeAdvanceCluster_00482000(void);
+extern void GameModeAdvanceCluster(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void InstallSelf3WayState_00481f30(void) {
+__declspec(naked) void InstallSelf3WayState(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -166,7 +166,7 @@ __declspec(naked) void InstallSelf3WayState_00481f30(void) {
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
-        call    GameModeAdvanceCluster_00482000
+        call    GameModeAdvanceCluster
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret

@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *   Pop edi/esi; ret.
  */
 
-__declspec(naked) void LoopUnrolledTripleMul10_0049d550(void) {
+__declspec(naked) void LoopUnrolledTripleMul10(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]
         push    esi

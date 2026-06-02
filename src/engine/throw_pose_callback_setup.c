@@ -117,7 +117,7 @@ extern void MStackPush3LinkedListWalk(void);
 extern void MStackPushComplexCallPop_00406430(void);
 extern void ScaledOrStore_004903d0(void);
 
-__declspec(naked) void ThrowPoseCallbackSetup_00491f10(void)
+__declspec(naked) void ThrowPoseCallbackSetup(void)
 {
     __asm {
         mov      eax, dword ptr [g_walkCallback]

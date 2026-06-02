@@ -15,14 +15,14 @@ extern int IterStepDualStore(void *);
 extern int ArgSarStoreJmp(void *);
 extern void *g_dispatchSave1310_004ee340;
 extern void *g_dispatchSave1311_004ee348;
-extern void Chain3CallGuarded_00482ef0(void);
-void DualPushCallPause_00482eb0(void) {
+extern void Chain3CallGuarded(void);
+void DualPushCallPause(void) {
     IterStepDualStore(&g_dispatchSave1310_004ee340);
     if (g_framePauseFlag != 0) return;
     ArgSarStoreJmp(&g_dispatchSave1311_004ee348);
 }
 
-/* @addr 0x00482ee0 (5b): tail-jmp into Chain3CallGuarded_00482ef0 sub-entry. */
+/* @addr 0x00482ee0 (5b): tail-jmp into Chain3CallGuarded sub-entry. */
 void func_00482ee0(void) {
-    Chain3CallGuarded_00482ef0();
+    Chain3CallGuarded();
 }

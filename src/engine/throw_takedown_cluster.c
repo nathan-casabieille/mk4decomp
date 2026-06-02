@@ -113,15 +113,15 @@ extern unsigned int g_fightAxisPosY;
 /* ------------------------------------------------------------------ */
 extern void FiveCallGuardSetTail(void);
 extern void SlotEvent3EntryChain(void);
-extern void DualSetCallPair_0047dbc0(void);
-extern void ThrowTakedownCluster_0047dc20(void);
-extern void InstallSelfCmpJmpIndirect_0048f470(void);
+extern void DualSetCallPair(void);
+extern void ThrowTakedownCluster(void);
+extern void InstallSelfCmpJmpIndirect(void);
 extern void InstallSelfIndirectJmpNeg(void);
 extern void Wrapper_0048ff30(void);
 extern void ZeroThreeSlots_00490780(void);
 extern void TripleScaledChainStore(int);
 extern void DualCallPauseDirtyJmp_00490c30(void);
-extern void ZeroSixStores6080_00490e40(void);
+extern void ZeroSixStores6080(void);
 extern void ScaledZero44(void);
 extern unsigned int g_dispatchSave739_004ed490;
 extern unsigned int g_dispatchSave740_004ed4a0;
@@ -169,7 +169,7 @@ __declspec(naked) void MoveSelectorCluster(void)
     L_da43:
         cmp      eax, 7
         jne      short L_da5b
-        call     ThrowTakedownCluster_0047dc20
+        call     ThrowTakedownCluster
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_dac7
@@ -177,7 +177,7 @@ __declspec(naked) void MoveSelectorCluster(void)
     L_da5b:
         cmp      eax, 0xe
         jne      short L_da73
-        call     ThrowTakedownCluster_0047dc20
+        call     ThrowTakedownCluster
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_dac7
@@ -185,7 +185,7 @@ __declspec(naked) void MoveSelectorCluster(void)
     L_da73:
         cmp      eax, 0xc
         jne      short L_da8b
-        call     ThrowTakedownCluster_0047dc20
+        call     ThrowTakedownCluster
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_dac7
@@ -193,12 +193,12 @@ __declspec(naked) void MoveSelectorCluster(void)
     L_da8b:
         cmp      eax, 9
         jne      short L_da9e
-        call     ThrowTakedownCluster_0047dc20
+        call     ThrowTakedownCluster
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_dac7
     L_da9e:
-        call     DualSetCallPair_0047dbc0
+        call     DualSetCallPair
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_dac7
@@ -224,7 +224,7 @@ __declspec(naked) void MoveSelectorCluster(void)
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], OFFSET L_db00
-        jmp      InstallSelfCmpJmpIndirect_0048f470
+        jmp      InstallSelfCmpJmpIndirect
         nop
         nop
         nop
@@ -242,7 +242,7 @@ __declspec(naked) void MoveSelectorCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_db37
-        call     ZeroSixStores6080_00490e40
+        call     ZeroSixStores6080
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_db37

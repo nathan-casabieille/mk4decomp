@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
  *   g_scaledInit += 0x1b; call TripleVecAccCallStore;
  *   if no pause: g_scaledInit -= 0x1b; ret.
  */
-void DualPackedStoreCallSubBack_0043e270(void) {
+void DualPackedStoreCallSubBack(void) {
     unsigned int val;
     ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->fsm_state = 0xffffcccd;
     val = 0xffffd70b;

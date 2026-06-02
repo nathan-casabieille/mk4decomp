@@ -26,21 +26,21 @@ void CallPauseConstStoreJmp_004350f0(void) {
 }
 
 /* @addr 0x00438170 (30b): same shape, value=0x78 */
-extern void Push80SetWalkNegDualCallPop_004393b0(void);
-extern void InstallSelfWaitCmp_00438190(void);
+extern void Push80SetWalkNegDualCallPop(void);
+extern void InstallSelfWaitCmp(void);
 void CallPauseConstStoreJmp_00438170(void) {
-    Push80SetWalkNegDualCallPop_004393b0();
+    Push80SetWalkNegDualCallPop();
     if (g_framePauseFlag) return;
     g_eventQueueChild = 0x78;
-    InstallSelfWaitCmp_00438190();
+    InstallSelfWaitCmp();
 }
 
 /* @addr 0x00481360 (30b): same shape, store walkCallback=0xb5 */
-extern void BootChainMaskAndDispatch_00416cb0(void);
-extern void MStackBitLoopTripleCall_0049cc30(void);
+extern void BootChainMaskAndDispatch(void);
+extern void MStackBitLoopTripleCall(void);
 void CallPauseConstStoreJmp_00481360(void) {
-    BootChainMaskAndDispatch_00416cb0();
+    BootChainMaskAndDispatch();
     if (g_framePauseFlag) return;
     g_walkCallback = (void(*)(void))0xb5;
-    MStackBitLoopTripleCall_0049cc30();
+    MStackBitLoopTripleCall();
 }

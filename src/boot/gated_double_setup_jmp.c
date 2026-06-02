@@ -113,7 +113,7 @@ extern unsigned int g_byte_004f360c;
 /*
  * @addr 0x00412450 (111b boot) - guarded double-push setup + tail jmp.
  */
-void GatedDoubleSetupJmp_00412450(void) {
+void GatedDoubleSetupJmp(void) {
     if (g_byte_004f360c == 0) {
         g_xformDirtyFlags |= 4;
         return;
@@ -125,5 +125,5 @@ void GatedDoubleSetupJmp_00412450(void) {
     _set_eqwt(g_scaledInit_00542044);
     _set_x74(g_walkCallback);
     _set_wc(((unsigned int)&g_dispatchSave1179_004d5888) >> 2);
-    BootChainBuildAndStep_004124c0();
+    BootChainBuildAndStep();
 }

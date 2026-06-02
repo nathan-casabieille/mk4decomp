@@ -7,7 +7,7 @@
 /* @addr 0x004afd10 (297b engine.install) - twin of R2_Init4 for 320x240 mode.
  *   Same structure, different state globals: 0x004f47a8 (mode), 0058c858 (saved coords),
  *   0058c860 (DSound), 0058c87c (window). Sets 320x240 (0x140 x 0xf0) instead of 640x480.
- *   Calls DialogProbeDispatch_004afe40 (sister helper).
+ *   Calls DialogProbeDispatch (sister helper).
  */
 extern unsigned int g_dispatchSave500_004f47a8;
 extern unsigned int g_dd3SurfaceCreate_0058c858;
@@ -18,7 +18,7 @@ extern unsigned int g_960_iface;
 extern unsigned int g_iat_004d219c;
 extern unsigned int g_iat_004d21a4;
 extern unsigned int g_iat_004d21ac;
-extern void DialogProbeDispatch_004afe40(void);
+extern void DialogProbeDispatch(void);
 
 __declspec(naked) void DDraw3_CreateSurface(void) {
     __asm {
@@ -40,7 +40,7 @@ __declspec(naked) void DDraw3_CreateSurface(void) {
         call    dword ptr [g_iat_004d21ac]
         push    0
         call    dword ptr [g_iat_004d219c]
-        call    DialogProbeDispatch_004afe40
+        call    DialogProbeDispatch
         mov     eax, dword ptr [g_dsmi_b70_main]
         test    eax, eax
         jz      short L_dms2_skipPair
@@ -62,7 +62,7 @@ __declspec(naked) void DDraw3_CreateSurface(void) {
         call    dword ptr [ecx + 0x54]
         mov     dword ptr [g_dsmi_b70_ret], eax
     L_dms2_skipPair:
-        call    DialogProbeDispatch_004afe40
+        call    DialogProbeDispatch
         mov     ecx, 0x1b
         xor     eax, eax
         lea     edi, [esp + 4]

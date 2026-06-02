@@ -17,7 +17,7 @@ extern unsigned int g_dispatchSave1571_00ab4e30;
 extern unsigned int g_phaseIdx_0053a50c;
 extern unsigned int g_tickFlagF;
 
-void DispatchScaledLEA_004b8f50(void) {
+void DispatchScaledLEA(void) {
     __asm {
         mov     ecx, dword ptr [g_tickCurConfig]
         mov     edx, dword ptr [g_dispatchSave1571_00ab4e30]

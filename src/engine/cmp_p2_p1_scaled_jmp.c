@@ -17,11 +17,11 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_scaledInit_00542044], eax
  *   jmp     +0x1d
  */
-extern void ScaledSubStore_0048ee90(void);
-void CmpP2P1ScaledJmp_0048ee50(void) {
+extern void ScaledSubStore(void);
+void CmpP2P1ScaledJmp(void) {
     g_scaledInit_00542044 = g_player2NodeIdx;
     if (g_fightGroupHead == g_player2NodeIdx) {
         g_scaledInit_00542044 = g_player1NodeIdx;
     }
-    ScaledSubStore_0048ee90();
+    ScaledSubStore();
 }

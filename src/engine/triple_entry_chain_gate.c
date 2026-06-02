@@ -112,13 +112,13 @@ extern unsigned int g_fightAxisPosY;
  *   Block A: ecx=baseSel; g_walkCallback=0x3e; eax = [ecx*4+0x68]-1; g_eventQueueCurrent=eax;
  *     if eax==0 set eax=0x46, g_eventQueueCurrent=0x46; [ecx*4+0x68]=eax; if g_eventQueueCurrent!=0x14 ret; else jmp TableLookupCall_00489ff0.
  *   Block B (+0x40): push 0x004ed838; [eax*4+0x68]=0x316; chain[*4+0x74]=0x407; call ArgSarStoreJmp; ret.
- *   Block C (+0x80): g_walkCallback=0x1d; call TableLookupCall_00489ff0; if !pause: g_eventQueueChild=0xc; jmp CountdownInstallSelfMultiTail_00480840.
+ *   Block C (+0x80): g_walkCallback=0x1d; call TableLookupCall_00489ff0; if !pause: g_eventQueueChild=0xc; jmp CountdownInstallSelfMultiTail.
  */
 extern void ArgSarStoreJmp(void);
-extern void CountdownInstallSelfMultiTail_00480840(void);
+extern void CountdownInstallSelfMultiTail(void);
 extern void TableLookupCall_00489ff0(void);
 
-__declspec(naked) void TripleEntryChainGate_00480790(void) {
+__declspec(naked) void TripleEntryChainGate(void) {
     __asm {
         mov     ecx, dword ptr [g_baseSel]
         mov     dword ptr [g_walkCallback], 0x3e
@@ -164,7 +164,7 @@ __declspec(naked) void TripleEntryChainGate_00480790(void) {
         _emit   75h
         _emit   0fh
         mov     dword ptr [g_eventQueueChild], 0x0c
-        jmp     CountdownInstallSelfMultiTail_00480840
+        jmp     CountdownInstallSelfMultiTail
         ret
     }
 }

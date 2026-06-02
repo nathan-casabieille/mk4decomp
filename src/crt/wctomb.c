@@ -111,11 +111,11 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave1464_00f9fdb0;
 extern unsigned int g_dispatchSave1463_00f9fdac;
 /* g_iat_004d20cc/d0 declared as unsigned int below */
-extern int  Wctomb_004cc350(int, int);
+extern int  Wctomb(int, int);
 
 /*
  * @addr 0x004cc2e0 (108b crt) - thread-safe wrapper around
- *   Wctomb_004cc350: enters critsec (with lazy-init path that takes a
+ *   Wctomb: enters critsec (with lazy-init path that takes a
  *   _lock(0x13) when init flag set), calls inner, then unlocks /
  *   leaves critsec; returns the inner's result.
  */
@@ -124,7 +124,7 @@ extern unsigned int g_iat_004d20d0;
 extern void Lock(void);
 extern void TableLookupIatCall(void);
 
-__declspec(naked) void CritSecWrap350_004cc2e0(void) {
+__declspec(naked) void CritSecWrap350(void) {
     __asm {
         push    ebx
         push    esi
@@ -149,7 +149,7 @@ skip:
         mov     ecx, dword ptr [esp + 0x10]
         push    eax
         push    ecx
-        call    Wctomb_004cc350
+        call    Wctomb
         add     esp, 8
         mov     ebx, eax
         test    esi, esi

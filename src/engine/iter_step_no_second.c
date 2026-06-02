@@ -17,7 +17,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_eventQueueTotal], eax
  *   ret
  */
-void IterStepNoSecond_0048e5e0(int arg) {
+void IterStepNoSecond(int arg) {
     unsigned int packed = (unsigned int)(arg >> 2);
     g_eventQueueTotal = packed;
     g_walkCallback = (void (*)(void))*(unsigned int *)(packed * 4);

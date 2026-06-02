@@ -25,7 +25,7 @@ extern unsigned int g_scaledInit_00542044;
  *   pop     esi
  *   ret
  */
-void MemcpyByteN_004a5680(unsigned char *dst, unsigned char *src, int n) {
+void MemcpyByteN(unsigned char *dst, unsigned char *src, int n) {
     if (n <= 0) return;
     do {
         *dst++ = *src++;

@@ -346,7 +346,7 @@ form a ping-pong:
 void DispatchEventQueue(void) {
     g_eventQueueTotal = ((u32)&g_eventQueueDrainBase + 80) >> 2;
     g_xformEntityIdx  = g_eventQueueActive;
-    EventQueueDrainLoop_0045c840();   /* walks pending events */
+    EventQueueDrainLoop();   /* walks pending events */
 }
 
 void DispatchEventQueue_Commit(void) {
@@ -480,7 +480,7 @@ trace):
 | 0x0045f650 | `HitReactionDispatcher`       | flag-driven reaction dispatch (tests node `+0x40` bit 0x200, `g_dispatchSave34_0054207e` bits) |
 | 0x0046c7c0 | `HitStateCluster`             | hit-state handler |
 | 0x00480240 | `HitContactDispatcherCluster` | move + horizontal-distance leash (`dx^2+dz^2 <= g_rangeSqLimit`) |
-| 0x004816d0 | `BlockedCounterCluster`       | 3 packed helpers: H1 decrements node `+0x64` by `0x191eb` (~1.57 in 16.16); H2 fires a paired event (id 0x26, ground-impact); H3 is a task-FSM (reads `+0x6c`/`move_state`) that tail-calls `BossArrivalSequence_00481950` (same file). Name only loosely fits - it is boss-arrival-adjacent. |
+| 0x004816d0 | `BlockedCounterCluster`       | 3 packed helpers: H1 decrements node `+0x64` by `0x191eb` (~1.57 in 16.16); H2 fires a paired event (id 0x26, ground-impact); H3 is a task-FSM (reads `+0x6c`/`move_state`) that tail-calls `BossArrivalSequence` (same file). Name only loosely fits - it is boss-arrival-adjacent. |
 | 0x00451b90 | `JuggleFsmCluster`            | air-juggle FSM |
 | 0x004539d0 | `JuggleSetupCluster`          | juggle setup |
 
@@ -497,7 +497,7 @@ larger **per-player fight-state blocks**, 0x320 bytes apart:
 | `g_player1State`  | `0x0053a3e0` | P1 fight-state block (was `g_state4_0053a3e0`) |
 | `g_player2State`  | `0x0053a700` | P2 fight-state block (was `g_state4_0053a700`) |
 
-`HealthBarTickDriver_00458cc0` reads one of these (selected by
+`HealthBarTickDriver` reads one of these (selected by
 `g_stateFlag` = current side) as the value that drives the
 health-bar segment loop; `globals_reset_init` clears both at match
 reset; the AI walk counter and `GameMode_EnterScene` (mode entry) also
@@ -552,7 +552,7 @@ the main sub-tree at `0x538070`. Each pass primes
 `Helper_TickInner` (or `Helper_TickAlt` if a sticky flag is set).
 
 The callback for fight-mode sub-trees is `Helper_FightSceneCallback`
-(`0x004ba1c0`) - in fact, that's `RenderSceneGraphIterate_004ba1c0`,
+(`0x004ba1c0`) - in fact, that's `RenderSceneGraphIterate`,
 the camera-transform + frustum-cull + RenderSceneNode wrapper.
 
 This is the unification point: **the fight FSM updates the player

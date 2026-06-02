@@ -110,11 +110,11 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave133_0050c97c;
 extern unsigned int g_dispatchSave124_005108d0;
-extern void InstallSelfDispatch_00407620(void);
+extern void InstallSelfDispatch(void);
 extern void MStackBracket4_ListInsertZeroFill(void);
 extern void MStackCall_00406390(void);
 
-void MStackChainPackedDispatch_00463c80(void) {
+void MStackChainPackedDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_currentNodeIdx]
@@ -163,7 +163,7 @@ void MStackChainPackedDispatch_00463c80(void) {
         mov     dword ptr [g_xformEntityIdx], eax
         mov     edx, dword ptr [ecx*4 + 0x18]
         mov     dword ptr [g_currentNodeIdx], edx
-        call    InstallSelfDispatch_00407620
+        call    InstallSelfDispatch
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mscpd_ret

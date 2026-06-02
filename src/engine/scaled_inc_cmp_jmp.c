@@ -19,7 +19,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void ScaledStoreCurDirtyClear(void);
 extern void ScaledLoadDecJmp(void);
-void ScaledIncCmpJmp_004297d0(void) {
+void ScaledIncCmpJmp(void) {
     unsigned int idx;
     unsigned int scaled;
     unsigned int v;

@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void IndirectOpcodeDispatch3Entry_0049f3a0(void);
+extern void IndirectOpcodeDispatch3Entry(void);
 extern unsigned int g_state2_00541d88;
 extern unsigned int g_state2_00537ea8;
 
@@ -119,8 +119,8 @@ extern unsigned int g_state2_00537ea8;
  *   Else: chain[scaledInit*4]=g_walkCallback; copy g_dispatchArg to g_eventQueueCurrent;
  *     call RoundWinTransition; if pause CallSetPause; load chain[g_xformEntityIdx*4+8];
  *     call GuardedScaledCall; if !pause CallSetPause; pop esi/ebx; ret.
- *   Tail thunk_1 (+0xe0): if g_state2_00541d88!=0 jmp CallSetPause else g_dispatchArg=0; jmp IndirectOpcodeDispatch3Entry_0049f3a0.
- *   Tail thunk_2 (+0x110): if g_state2_00537ea8!=0 jmp CallSetPause else g_dispatchArg=1; jmp IndirectOpcodeDispatch3Entry_0049f3a0.
+ *   Tail thunk_1 (+0xe0): if g_state2_00541d88!=0 jmp CallSetPause else g_dispatchArg=0; jmp IndirectOpcodeDispatch3Entry.
+ *   Tail thunk_2 (+0x110): if g_state2_00537ea8!=0 jmp CallSetPause else g_dispatchArg=1; jmp IndirectOpcodeDispatch3Entry.
  */
 extern unsigned int g_dispatchArg;
 extern void CallSetPause(void);
@@ -128,7 +128,7 @@ extern void GuardedScaledCall(void);
 extern void LinkedListIndirectDirtyToggle(void);
 extern void RoundWinTransition(void);
 
-__declspec(naked) void StateCascadeDualThunkContin_0049f260(void) {
+__declspec(naked) void StateCascadeDualThunkContin(void) {
     __asm {
         cmp     eax, ebx
         _emit   74h
@@ -243,7 +243,7 @@ __declspec(naked) void StateCascadeDualThunkContin_0049f260(void) {
         _emit   05h
         jmp     CallSetPause
         mov     dword ptr [g_dispatchArg], 0
-        jmp     IndirectOpcodeDispatch3Entry_0049f3a0
+        jmp     IndirectOpcodeDispatch3Entry
         _emit   90h
         _emit   90h
         _emit   90h

@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern double g_fp_004d2f38;
-extern int FpClassify_004cde80(void);
+extern int FpClassify(void);
 
 /* @addr 0x004ce010 (155b crt) - _fpclass: classify a double:
  *   If exp == 0x7ff (inf/nan): call FpClassify; switch on result.
@@ -117,7 +117,7 @@ extern int FpClassify_004cde80(void);
  *   Else: normal positive/negative (compare to 0.0).
  *   Returns FP class flags 1/2/4/0x200/etc.
  */
-int Fpclass_004ce010(void) {
+int Fpclass(void) {
     __asm {
         mov     eax, dword ptr [esp + 0x0a]
         mov     ecx, eax
@@ -129,7 +129,7 @@ int Fpclass_004ce010(void) {
         mov     ecx, dword ptr [esp + 4]
         push    eax
         push    ecx
-        call    FpClassify_004cde80
+        call    FpClassify
         add     esp, 8
         dec     eax
         _emit   74h

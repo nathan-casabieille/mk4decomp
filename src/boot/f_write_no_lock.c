@@ -114,17 +114,17 @@ extern unsigned int g_fightAxisPosY;
  *     - dirty/text translation bits (0x10c): take the buffered fast path
  *       (rep movsd/movsb into [ebx], decrement remaining at [ebx+4]).
  *     - line-buffered/needs-flush bits (0x108): walk one byte at a time via
- *       Flsbuf_004c77f0 (the slow path).
+ *       Flsbuf (the slow path).
  *     - otherwise: chunk via IOWrapper_004c9ae0 (write syscall), passing the
  *       file descriptor at [ebx+0x10].
  *   On error sets the FILE error flag (or 0x20) and returns count of bytes
  *   transferred via div by 'size'.
  */
-extern void FFlushImpl_004c69a0(void);
-extern void Flsbuf_004c77f0(void);
+extern void FFlushImpl(void);
+extern void Flsbuf(void);
 extern void IOWrapper_004c9ae0(void);
 
-__declspec(naked) void FWriteNoLock_004c5fc0(void) {
+__declspec(naked) void FWriteNoLock(void) {
     __asm {
         push    ecx
         push    ebx
@@ -193,7 +193,7 @@ __declspec(naked) void FWriteNoLock_004c5fc0(void) {
         test    ecx, ecx
         je      short L_fwr_doIO
         push    ebx
-        call    FFlushImpl_004c69a0
+        call    FFlushImpl
         add     esp, 4
         test    eax, eax
         jne     L_fwr_errPath
@@ -227,7 +227,7 @@ __declspec(naked) void FWriteNoLock_004c5fc0(void) {
         movsx   ecx, byte ptr [esi]
         push    ebx
         push    ecx
-        call    Flsbuf_004c77f0
+        call    Flsbuf
         add     esp, 8
         cmp     eax, -1
         je      short L_fwr_errPath

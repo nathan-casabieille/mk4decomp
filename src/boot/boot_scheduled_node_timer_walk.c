@@ -109,9 +109,9 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave105_00535d14;
-extern void NodeUnlink_0041f710(void);
+extern void NodeUnlink(void);
 
-__declspec(naked) void BootScheduledNodeTimerWalk_0041f570(void)
+__declspec(naked) void BootScheduledNodeTimerWalk(void)
 {
     __asm
     {
@@ -194,7 +194,7 @@ __declspec(naked) void BootScheduledNodeTimerWalk_0041f570(void)
         jne     short L_bsntw_nextNode
         mov     edi, dword ptr [esi + 0xe4]
         push    esi
-        call    NodeUnlink_0041f710
+        call    NodeUnlink
         add     esp, 4
         mov     esi, edi
         jmp     short L_bsntw_loopEnd

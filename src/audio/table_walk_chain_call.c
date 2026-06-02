@@ -15,7 +15,7 @@ extern unsigned int g_scaledInit_00542044;
 extern signed char g_table_004f3260[];
 extern void MStackPush2ChainLLInsert(void);
 
-void TableWalkChainCall_004a30f0(void) {
+void TableWalkChainCall(void) {
     __asm {
         mov     esi, OFFSET g_table_004f3260
 loop_start2:

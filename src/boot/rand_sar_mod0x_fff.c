@@ -9,7 +9,7 @@ extern unsigned int g_scaledInit_00542044;
 extern void Mul10Tail(void);
 
 /* @addr 0x0041f230 (49b): same shape, no `sub`, esp adjust earlier */
-void RandSarMod0xFFF_0041f230(void) {
+void RandSarMod0xFFF(void) {
     int r;
     unsigned int idx;
     r = ((int (*)(int, int))Mul10Tail)(0x028be602, (int)g_eventQueueWorkType);

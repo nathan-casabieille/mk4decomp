@@ -121,7 +121,7 @@ extern unsigned int g_dispatchSave605_004dfd18;
 extern unsigned int g_counter_0053a51c;
 extern unsigned int g_tickFlagF;
 extern unsigned int g_hitPhase_00537f30;
-int GuardedScaledLookupCallJmp_004220a0(void) {
+int GuardedScaledLookupCallJmp(void) {
     unsigned int idx;
     unsigned int scaled;
     unsigned int st;

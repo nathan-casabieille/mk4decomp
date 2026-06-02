@@ -122,7 +122,7 @@ extern void TableHitOrSchedule(void);
 extern void Thunk_0049cbc0(void);
 extern void WorldCellSetupCluster(void);
 
-__declspec(naked) void CharSelectSetupCluster_004565a0(void)
+__declspec(naked) void CharSelectSetupCluster(void)
 {
     __asm {
         /* === h1 (0x4565a0): main init chain → tail 408600 === */

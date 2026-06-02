@@ -114,9 +114,9 @@ extern unsigned int g_fightAxisPosY;
  *   Zero out chain entries 0x6c/0x70/0x74/0x78/0x7c/0x80/0x4c; sync. Select 538038/53803c.
  *   Call ScaledLoadJmpIfNonzero; pop edi/esi; ret.
  */
-extern void ScaledLoadJmpIfNonzero_00490e00(void);
+extern void ScaledLoadJmpIfNonzero(void);
 
-__declspec(naked) void CjChainResetThreshold_00490cc0(void) {
+__declspec(naked) void CjChainResetThreshold(void) {
     __asm {
         mov     ecx, dword ptr [g_cj_0054205c]
         push    esi
@@ -208,7 +208,7 @@ __declspec(naked) void CjChainResetThreshold_00490cc0(void) {
         _emit   0ch
         mov     ecx, dword ptr [g_gtPlayerProbe1]
         mov     dword ptr [g_xformEntityIdx], ecx
-        call    ScaledLoadJmpIfNonzero_00490e00
+        call    ScaledLoadJmpIfNonzero
         pop     edi
         pop     esi
         ret

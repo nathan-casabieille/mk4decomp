@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void ScaledAndAlfe(void);
 
-void PushCallSignClampDualStore_0046fc60(void) {
+void PushCallSignClampDualStore(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_walkCallback]

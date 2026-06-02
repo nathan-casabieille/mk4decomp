@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void CallPauseDirtyMStackPush484b40_00484b00(void);
-extern void GuardedDualConst1AndToggle_0048eb20(void);
+extern void CallPauseDirtyMStackPush484b40(void);
+extern void GuardedDualConst1AndToggle(void);
 extern void FiveBlockDispatchChain_00484b70(void);
 
 /*
@@ -119,8 +119,8 @@ extern void FiveBlockDispatchChain_00484b70(void);
  *   clear, if state bit 0 set tail-jmp FiveBlockDispatchChain_00484b70 else tail-jmp
  *   _00484b00; else install self with tag.
  */
-extern void InstallSelfTri_00484a90(void);
-void InstallSelfTri_00484a90(void) {
+extern void InstallSelfTri(void);
+void InstallSelfTri(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int v = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
@@ -128,19 +128,19 @@ void InstallSelfTri_00484a90(void) {
         unsigned int wt = g_audioBankSel;
         g_walkCallback = (void (*)(void))wt;
         if (wt != 0) {
-            CallPauseDirtyMStackPush484b40_00484b00();
+            CallPauseDirtyMStackPush484b40();
             return;
         }
-        GuardedDualConst1AndToggle_0048eb20();
+        GuardedDualConst1AndToggle();
         if (g_framePauseFlag != 0) return;
         if ((g_xformDirtyFlags & 1) != 0) {
             FiveBlockDispatchChain_00484b70();
             return;
         }
-        CallPauseDirtyMStackPush484b40_00484b00();
+        CallPauseDirtyMStackPush484b40();
         return;
     }
-    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfTri_00484a90;
+    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfTri;
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;
@@ -154,17 +154,17 @@ void InstallSelfTri_00484a90(void) {
  *   B3 (0x80..0xbf): if bit0 of state set: tail-jmp CallPauseDirtyMStackPushFn.
  *     Else: g_eventQueueChild=8, g_eventQueueNotMask=8, mstack-push 0x0046ece0 (B4 addr);
  *     tail-jmp InstallSelfMStackOverwrite.
- *   B4 (0xc0..0xff): if bit0 of state set: tail-jmp MatchOverCluster_0046ef70.
+ *   B4 (0xc0..0xff): if bit0 of state set: tail-jmp MatchOverCluster.
  *     Else: g_eventQueueChild=9, g_eventQueueNotMask=8, mstack-push 0x0046ed20 (B5 addr);
  *     tail-jmp InstallSelfMStackOverwrite.
- *   B5 (0x100..0x112): if bit0 of state set: tail-jmp MatchOverCluster_0046ef70.
- *     Else: tail-jmp MStackJmpInstallSelf_0046ed40.
+ *   B5 (0x100..0x112): if bit0 of state set: tail-jmp MatchOverCluster.
+ *     Else: tail-jmp MStackJmpInstallSelf.
  */
 extern void ArgSarStoreJmp(void);
 extern void CallPauseDirtyMStackPushFn(void);
 extern void InstallSelfMStackOverwrite(void);
-extern void MStackJmpInstallSelf_0046ed40(void);
-extern void MatchOverCluster_0046ef70(void);
+extern void MStackJmpInstallSelf(void);
+extern void MatchOverCluster(void);
 extern void PhaseDispatchListAdvance(void);
 extern void ScaledAndAlfe(void);
 extern void TripleCallPauseJmp(void);
@@ -263,7 +263,7 @@ __declspec(naked) void FiveBlockDispatchChain_0046ec20(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
-        jmp     MatchOverCluster_0046ef70
+        jmp     MatchOverCluster
         mov     eax, dword ptr [g_matrixStackTop]
         mov     dword ptr [g_eventQueueChild], 9
         inc     eax
@@ -287,7 +287,7 @@ __declspec(naked) void FiveBlockDispatchChain_0046ec20(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
-        jmp     MatchOverCluster_0046ef70
-        jmp     MStackJmpInstallSelf_0046ed40
+        jmp     MatchOverCluster
+        jmp     MStackJmpInstallSelf
     }
 }

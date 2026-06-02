@@ -114,35 +114,35 @@ extern unsigned int g_fightAxisPosY;
  *   Block B (+0x60): call GateDispatch6c; if !pause: jmp ScaledInitWithCounterAndType_00446940; ret.
  */
 extern unsigned int g_phaseTimer;
-extern void Cmp2OrSet0b_0048e3e0(void);
+extern void Cmp2OrSet0b(void);
 extern void GateDispatch6c(void);
-extern void PackedAdvanceCallContinue_0048e630(void);
+extern void PackedAdvanceCallContinue(void);
 extern void ScaledInitWithCounterAndType_00446940(void);
 
-__declspec(naked) void TripleStringPauseChain_004468c0(void) {
+__declspec(naked) void TripleStringPauseChain(void) {
     __asm {
         push    0x004e5468
-        call    PackedAdvanceCallContinue_0048e630
+        call    PackedAdvanceCallContinue
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h
         _emit   49h
         push    0x004e5470
-        call    PackedAdvanceCallContinue_0048e630
+        call    PackedAdvanceCallContinue
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h
         _emit   33h
         push    0x004e5478
-        call    PackedAdvanceCallContinue_0048e630
+        call    PackedAdvanceCallContinue
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h
         _emit   1dh
-        call    Cmp2OrSet0b_0048e3e0
+        call    Cmp2OrSet0b
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

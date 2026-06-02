@@ -113,16 +113,16 @@ extern unsigned int g_mat3x3_007af994;
 extern unsigned int g_mat3x3_007af998;
 extern unsigned int g_mat3x3_007af99c;
 extern unsigned short g_word_007af9a0;
-extern void MatrixTransform3x3Q12_004b3b80(int, int);
+extern void MatrixTransform3x3Q12(int, int);
 
 /*
  * @addr 0x004bda70 (98b engine.geo) - snapshot 5 fields of the wt
  *   slot (dwords +0,+4,+8,+0xc and word +0x10) into mirror globals
  *   at 0x7af990 then push (walk_arr, eq_end_arr) and call
- *   MatrixTransform3x3Q12_004b3b80.
+ *   MatrixTransform3x3Q12.
  */
 
-void WtSnapshotPushCall_004bda70(void) {
+void WtSnapshotPushCall(void) {
     __asm {
         mov     eax, dword ptr [g_xformEntityIdx]
         lea     ecx, [eax*4 + 0]
@@ -142,7 +142,7 @@ void WtSnapshotPushCall_004bda70(void) {
         mov     ecx, dword ptr [g_pendingNodeType]
         lea     edx, [ecx*4 + 0]
         push    edx
-        call    MatrixTransform3x3Q12_004b3b80
+        call    MatrixTransform3x3Q12
         add     esp, 8
         }
 }

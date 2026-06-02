@@ -111,13 +111,13 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave604_004e4b48;
 extern void ArgSarStoreJmp(void);
 extern void CmpDispatchPushCallPop(void);
-extern void CrouchCounterCluster_0043b1d0(void);
+extern void CrouchCounterCluster(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
-extern void InstallSelfDoubleMStack_0043b9a0(void);
+extern void InstallSelfDoubleMStack(void);
 extern void ScaledLoadIncJmp_00428d00(void);
 extern void StateMachine4ArmCascade(void);
 
-__declspec(naked) void GameStateProgressCluster_0043aff0(void)
+__declspec(naked) void GameStateProgressCluster(void)
 {
     __asm {
         /* H1 */
@@ -192,7 +192,7 @@ __declspec(naked) void GameStateProgressCluster_0043aff0(void)
         mov      dword ptr [eax + 4], ecx
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edx
-        call     InstallSelfDoubleMStack_0043b9a0
+        call     InstallSelfDoubleMStack
         mov      dword ptr [g_framePauseFlag], esi
         pop      edi
         pop      esi
@@ -212,7 +212,7 @@ __declspec(naked) void GameStateProgressCluster_0043aff0(void)
         mov      dword ptr [esi + 0x84], 0
         test     eax, eax
         je       short L_b149
-        call     CrouchCounterCluster_0043b1d0
+        call     CrouchCounterCluster
         pop      esi
         ret
     L_b149:

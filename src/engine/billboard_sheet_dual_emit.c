@@ -137,13 +137,13 @@ extern unsigned int g_dispatchSave1502_00ab439c;
 extern unsigned int g_dispatchSave1503_00ab43a0;
 extern unsigned int g_dispatchSave1559_00ab4d9c;
 extern unsigned int g_dispatchSave1576_00ab4e60;
-extern void CopyArgs16ToGlobals_004b2ff0(void);
+extern void CopyArgs16ToGlobals(void);
 extern void Helper_DrawCursor(void);
 extern void MaxOfThree(void);
 extern void ProjectTwoVertices(void);
 extern void ProjectVertex(void);
 
-__declspec(naked) void BillboardSheetDualEmit_004bbda0(void)
+__declspec(naked) void BillboardSheetDualEmit(void)
 {
     __asm {
         mov      eax, dword ptr [g_inLoopStep]
@@ -323,7 +323,7 @@ __declspec(naked) void BillboardSheetDualEmit_004bbda0(void)
         add      ax, word ptr [esi + 6]
         push     eax
         push     edi
-        call     CopyArgs16ToGlobals_004b2ff0
+        call     CopyArgs16ToGlobals
         add      esp, 0xc
         call     ProjectVertex
         movsx    eax, word ptr [g_triStripRingA]
@@ -535,7 +535,7 @@ __declspec(naked) void BillboardSheetDualEmit_004bbda0(void)
         add      cx, word ptr [esi + 6]
         push     ecx
         push     edi
-        call     CopyArgs16ToGlobals_004b2ff0
+        call     CopyArgs16ToGlobals
         add      esp, 0xc
         call     ProjectVertex
         movsx    eax, word ptr [g_triStripRingA]

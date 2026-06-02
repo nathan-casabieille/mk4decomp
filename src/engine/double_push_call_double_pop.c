@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   call MStackPush2ChainSwap; if pause: ret;
  *   pop g_eventQueueCurrent; pop g_walkCallback; ret.
  */
-void DoublePushCallDoublePop_004905e0(void) {
+void DoublePushCallDoublePop(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = (unsigned int)g_walkCallback;
     g_matrixStackTop++;

@@ -109,8 +109,8 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00480b20 (93b) - twin of 0x00480ac0 with `jl` instead of `jg`. */
-extern void InstallSelfCmpJlJmp_00480b20(void);
-void InstallSelfCmpJlJmp_00480b20(void) {
+extern void InstallSelfCmpJlJmp(void);
+void InstallSelfCmpJlJmp(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int v = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
@@ -122,7 +122,7 @@ void InstallSelfCmpJlJmp_00480b20(void) {
             return;
         }
     }
-    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfCmpJlJmp_00480b20;
+    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfCmpJlJmp;
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;

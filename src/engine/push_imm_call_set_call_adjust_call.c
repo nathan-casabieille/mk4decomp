@@ -17,7 +17,7 @@ extern int Mul10Tail(int, int);
 extern int Mul10Tail(int, int);
 extern void StoreDoubleNegPauseSubStore(void);
 
-void PushImmCallSetCallAdjustCall_00446bf0(void) {
+void PushImmCallSetCallAdjustCall(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueCurrent]
         push    eax

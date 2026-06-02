@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   al gets test/or per single-bit flags (0x10,8,4,2,1 → 1,4,8,0x10,0x20),
  *   ah gets 2-bit fields from edx[8:9] and edx[16:17], plus bit 0x10 from edx[18].
  */
-__declspec(naked) unsigned int EncodeModeFlags_004cc5c0(void) {
+__declspec(naked) unsigned int EncodeModeFlags(void) {
     __asm {
         mov     edx, dword ptr [esp + 4]
         xor     eax, eax

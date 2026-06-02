@@ -10,7 +10,7 @@ extern unsigned int g_scaledInit_00542044;
 /* === ScaledInitOrSelfPtrSetType cluster (68b each) === */
 
 /* @addr 0x0048a7c0 (68b): zero 6 dwords at offsets 0x6c..0x80 of fightGroupHead*4 */
-void ZeroSixStores6c80_0048a7c0(void) {
+void ZeroSixStores6c80(void) {
     unsigned char *base = (unsigned char *)(g_fightGroupHead * 4);
     g_walkCallback = 0;
     *(unsigned int *)(base + 0x6c) = 0;

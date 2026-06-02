@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void Mem_Free_004b5b10(void *);
+extern void Mem_Free(void *);
 extern void Helper_GeoLoadPost(void);
 extern u32 g_curTexSlot;
 extern u16 g_texSlots[];
@@ -120,11 +120,11 @@ extern u32 g_texCount[];
  *   for each entry in walk[+4] (offset 4): walks word table at ecx,
  *   each word indexes a u16 table at 0x00ab4e00 set to esi (negated
  *   index); reaches the final dword[+0] for a second pair of u16
- *   tables; calls Mem_Free_004b5b10 with the entry pointer and
+ *   tables; calls Mem_Free with the entry pointer and
  *   Helper_GeoLoadPost.
  */
 
-__declspec(naked) void GeoLoadFixupLoop_004bd8e0(void) {
+__declspec(naked) void GeoLoadFixupLoop(void) {
     __asm {
         push    esi
         push    edi
@@ -160,7 +160,7 @@ skipInner:
         mov     dword ptr [ecx*4 + g_texCount], esi
         mov     edx, dword ptr [edi*4 + 4]
         push    edx
-        call    Mem_Free_004b5b10
+        call    Mem_Free
         add     esp, 4
         mov     dword ptr [g_curTexSlot], esi
         call    Helper_GeoLoadPost

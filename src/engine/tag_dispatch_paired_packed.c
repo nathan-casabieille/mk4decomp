@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004667f0 (190b game) - tag dispatch + paired packed_ptr install with bit-0 branch.
  *   g_walkCallback = 0; call GatedWordPushCall; pause? ret.
- *   g_walkCallback = [0x537f9c]; call PushSearchToggleBit0_004577a0; pause? ret.
+ *   g_walkCallback = [0x537f9c]; call PushSearchToggleBit0; pause? ret.
  *   if (g_xformDirtyFlags & 1):
  *     mstack-push g_scaledInit; g_walkCallback = packed_ptr(0x4e28c8); call GuardedScaledCall;
  *     pause? ret; jmp end-section.
@@ -122,11 +122,11 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave47_00537f9c;
 extern void GatedWordPushCall(void);
 extern void GuardedScaledCall(void);
-extern void PushSearchToggleBit0_004577a0(void);
+extern void PushSearchToggleBit0(void);
 
 extern unsigned int g_matrixStack_arr;
 
-void TagDispatchPairedPacked_004667f0(void) {
+void TagDispatchPairedPacked(void) {
     __asm {
         mov     dword ptr [g_walkCallback], 0
         call    GatedWordPushCall
@@ -140,7 +140,7 @@ void TagDispatchPairedPacked_004667f0(void) {
         _emit   00h
         mov     eax, dword ptr [g_dispatchSave47_00537f9c]
         mov     dword ptr [g_walkCallback], eax
-        call    PushSearchToggleBit0_004577a0
+        call    PushSearchToggleBit0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

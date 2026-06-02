@@ -19,7 +19,7 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  */
 extern void MStackFrameCdeclDouble(void);
-void IterStepNegStore_00490b10(int arg) {
+void IterStepNegStore(int arg) {
     unsigned int packed = (unsigned int)(arg >> 2);
     int v;
     g_eventQueueEnd = packed;

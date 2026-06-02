@@ -113,9 +113,9 @@ extern unsigned int g_fightAxisPosY;
  *   for each dword from bit-index down to 0, mask off lowest set bit
  *   and call helper. When the dword reaches 0, drop to next dword.
  */
-extern void AddOverflowCheck_004ce1f0(void);
+extern void AddOverflowCheck(void);
 
-__declspec(naked) void BitsetIterClear_004cc8f0(void) {
+__declspec(naked) void BitsetIterClear(void) {
     __asm {
         mov     ecx, dword ptr [esp + 8]
         push    ebx
@@ -144,7 +144,7 @@ __declspec(naked) void BitsetIterClear_004cc8f0(void) {
         push    edi
         push    eax
         push    ecx
-        call    AddOverflowCheck_004ce1f0
+        call    AddOverflowCheck
         add     esp, 0xc
         dec     esi
         js      done
@@ -156,7 +156,7 @@ inner:
         push    edi
         push    1
         push    edx
-        call    AddOverflowCheck_004ce1f0
+        call    AddOverflowCheck
         add     esp, 0xc
         dec     esi
         sub     edi, 4

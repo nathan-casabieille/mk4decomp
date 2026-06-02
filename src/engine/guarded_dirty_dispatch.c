@@ -15,20 +15,20 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void MStackPush3CmpCall(void);
 extern void SetJmp_00438f60(void);
-extern void ScaledChain3c74Jmp_0048e780(void);
-extern void CallPauseDirtyConstJmp_00438ca0(void);
+extern void ScaledChain3c74Jmp(void);
+extern void CallPauseDirtyConstJmp(void);
 extern void StateDispatchYield(void);
-void GuardedDirtyDispatch_00438c50(void) {
+void GuardedDirtyDispatch(void) {
     MStackPush3CmpCall();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 1) {
         SetJmp_00438f60();
         return;
     }
-    ScaledChain3c74Jmp_0048e780();
+    ScaledChain3c74Jmp();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 1) {
-        CallPauseDirtyConstJmp_00438ca0();
+        CallPauseDirtyConstJmp();
         return;
     }
     g_walkCallback = (void(*)(void))9;

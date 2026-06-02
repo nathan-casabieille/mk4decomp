@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void PushPopState70Mask(void);
 
-void DualConstMaskFlagToggle8_0048ed70(void) {
+void DualConstMaskFlagToggle8(void) {
     __asm {
         mov     dword ptr [g_eventQueueCurrent], 8
         mov     dword ptr [g_eventQueueWorkType], 0x800

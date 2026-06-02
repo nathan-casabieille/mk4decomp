@@ -15,8 +15,8 @@ extern unsigned int g_scaledInit_00542044;
  *   Either way, if write returned -1 store -1 at *counter, else
  *   increment *counter.
  */
-extern int Flsbuf_004c77f0(void);
-void WriteCharBuffered_004c82b0(void) {
+extern int Flsbuf(void);
+void WriteCharBuffered(void) {
     __asm {
         mov     ecx, dword ptr [esp + 8]
         mov     eax, dword ptr [ecx + 4]
@@ -35,7 +35,7 @@ void WriteCharBuffered_004c82b0(void) {
         mov     eax, dword ptr [esp + 4]
         push    ecx
         push    eax
-        call    Flsbuf_004c77f0
+        call    Flsbuf
         add     esp, 8
 cont:
         cmp     eax, -1

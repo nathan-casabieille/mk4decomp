@@ -113,12 +113,12 @@ extern unsigned int g_quadEntryGate_0052d724;
 extern unsigned int g_clamp_00537f2c;
 extern unsigned int g_clamp_0053a6dc;
 extern void Cmp2DirtyToggle(void);
-extern void DualAddSar_004ab600(void);
+extern void DualAddSar(void);
 extern void SaveCallRestore(void);
 extern void TableLookupCall_00489ff0(void);
 extern void func_004214a0(void);
 
-__declspec(naked) void MkIntroFsm_004218b0(void)
+__declspec(naked) void MkIntroFsm(void)
 {
     __asm {
     L_18b0:
@@ -241,7 +241,7 @@ __declspec(naked) void MkIntroFsm_004218b0(void)
         jl       L_1920
         cmp      eax, 0x10000
         je       L_192f
-        call     DualAddSar_004ab600
+        call     DualAddSar
         test     byte ptr [g_walkCallback], bl
         jne      L_1920
     L_1ae4:

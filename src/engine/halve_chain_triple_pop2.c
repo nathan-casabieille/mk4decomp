@@ -116,7 +116,7 @@ extern void PreFightInstallCluster(void);
 extern unsigned int g_chain_arr_4348f0;
 extern unsigned int g_matrixStack_arr;
 
-void HalveChainTriplePop2_004740d0(void) {
+void HalveChainTriplePop2(void) {
     __asm {
         call    PreFightInstallCluster
         mov     eax, dword ptr [g_framePauseFlag]

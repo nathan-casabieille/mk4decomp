@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void PendingMatch_004c7920(void *, void *, void *, void *);
-extern void Flsbuf_004c77f0(void *, int);
+extern void Flsbuf(void *, int);
 
 /*
  * @addr 0x004c5580 (104b boot) - vfprintf-style char-writer with
@@ -153,7 +153,7 @@ overflow:
         lea     ecx, [esp + 4]
         push    ecx
         push    0
-        call    Flsbuf_004c77f0
+        call    Flsbuf
         add     esp, 8
         mov     eax, esi
         pop     esi

@@ -113,9 +113,9 @@ extern unsigned int g_fightAxisPosY;
  *   call DualEntryBitFlagDispatch; if pause unset & bit0 set jmp StackPopDispatchTagged;
  *   else if g_table_00535ddc > 0x30000 jmp ScaledPopSaveJmp; else set
  *   walk=0x28a, call AudioVolumeRescale; if pause unset & bit0 set jmp
- *   MStackPushSet4Jmp; call PushPop84TripleCall; if pause clear jmp InstallSelfPathSelfLoop_004383b0.
+ *   MStackPushSet4Jmp; call PushPop84TripleCall; if pause clear jmp InstallSelfPathSelfLoop.
  */
-void ThreeStageGateCascade_00438340(void) {
+void ThreeStageGateCascade(void) {
     unsigned int v;
     DualEntryBitFlagDispatch();
     if (g_framePauseFlag != 0) return;
@@ -133,10 +133,10 @@ void ThreeStageGateCascade_00438340(void) {
     AudioVolumeRescale();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 1) != 0) {
-        MStackPushSet4Jmp_004384f0();
+        MStackPushSet4Jmp();
         return;
     }
     PushPop84TripleCall();
     if (g_framePauseFlag != 0) return;
-    InstallSelfPathSelfLoop_004383b0();
+    InstallSelfPathSelfLoop();
 }

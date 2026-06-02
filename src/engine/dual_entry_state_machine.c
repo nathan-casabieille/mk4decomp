@@ -109,30 +109,30 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0045a180 (313b game) - dual-entry: mstack-push prefix + state-machine body.
- *   Prefix (0..0x1f): mstack-push body addr (0x0045a1a0); tail-jmp ComboMoveSelectFsmCluster_0045a2c0.
+ *   Prefix (0..0x1f): mstack-push body addr (0x0045a1a0); tail-jmp ComboMoveSelectFsmCluster.
  *   Body (+0x20): load state. state==0: tail block; state!=0: dual-call sequence:
  *     Call ScaledStoreOrFlagXor; if pause ret. If bit2(0054208c): tail-call PendingMatch_00459510, ret.
  *     Dec g_eventQueueChild; if 0: tail-call PendingMatch_00459510, ret.
  *     Call ScaledStoreOrFlagXor again; if pause ret. Same bit2 + counter sequence.
  *     Then recursive tail-call self (prefix entry); ret.
  *   Tail block (state==0): g_eventQueueCurrent=g_walkCallback+1; cmp with chain[scaledInit*4+4].
- *     If equal: mstack-push PendingMatch_00459510 addr; tail-call ComboMoveSelectFsmCluster_0045a2c0; ret.
+ *     If equal: mstack-push PendingMatch_00459510 addr; tail-call ComboMoveSelectFsmCluster; ret.
  *     Else: g_eventQueueEnd=[g_cj*4+0x24]; g_walkCallback=0x8000; call MStackPushZeroCallPop;
  *       if pause ret. Install-self at body; state=1; g_pendingNodeType=1; pause=1; ret.
  */
-extern void ComboMoveSelectFsmCluster_0045a2c0(void);
+extern void ComboMoveSelectFsmCluster(void);
 extern void PendingMatch_00459510(void);
-extern void ScaledStoreOrFlagXor_00428560(void);
+extern void ScaledStoreOrFlagXor(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void DualEntryStateMachine_0045a180(void) {
+__declspec(naked) void DualEntryStateMachine(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], offset body_1a0
-        jmp     ComboMoveSelectFsmCluster_0045a2c0
+        jmp     ComboMoveSelectFsmCluster
         _emit   90h
         _emit   90h
         _emit   90h
@@ -147,7 +147,7 @@ __declspec(naked) void DualEntryStateMachine_0045a180(void) {
         test    eax, eax
         _emit   74h
         _emit   73h
-        call    ScaledStoreOrFlagXor_00428560
+        call    ScaledStoreOrFlagXor
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -170,7 +170,7 @@ __declspec(naked) void DualEntryStateMachine_0045a180(void) {
         call    PendingMatch_00459510
         pop     esi
         ret
-        call    ScaledStoreOrFlagXor_00428560
+        call    ScaledStoreOrFlagXor
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -193,7 +193,7 @@ __declspec(naked) void DualEntryStateMachine_0045a180(void) {
         call    PendingMatch_00459510
         pop     esi
         ret
-        call    DualEntryStateMachine_0045a180
+        call    DualEntryStateMachine
         pop     esi
         ret
         mov     ecx, dword ptr [g_walkCallback]
@@ -208,7 +208,7 @@ __declspec(naked) void DualEntryStateMachine_0045a180(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], offset PendingMatch_00459510
-        call    ComboMoveSelectFsmCluster_0045a2c0
+        call    ComboMoveSelectFsmCluster
         pop     esi
         ret
         mov     eax, dword ptr [g_cj_0054205c]

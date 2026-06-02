@@ -119,17 +119,17 @@ extern unsigned int g_fightAxisPosY;
  *     Push 0x004f27c8; call ArgSar_Set1_Jmp; pop; ret.
  */
 extern void ArgSarStoreJmp(void);
-extern void ArgSar_Set1_Jmp_0049c6d0(void);
+extern void ArgSar_Set1_Jmp(void);
 extern void Atan2QuadrantLookup(void);
 extern void CallSetPause(void);
 extern void CondPickDualStore(void);
 extern void DualCmpSwapStore(void);
-extern void DualMul10AndDispatchChain_0049c220(void);
+extern void DualMul10AndDispatchChain(void);
 extern void ScaledStackCallPause(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void TripleBlockChainDiffMStackThunks_0049ca10(void) {
+__declspec(naked) void TripleBlockChainDiffMStackThunks(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueChild]
@@ -211,13 +211,13 @@ __declspec(naked) void TripleBlockChainDiffMStackThunks_0049ca10(void) {
         _emit   74h
         _emit   05h
         jmp     CallSetPause
-        call    DualMul10AndDispatchChain_0049c220
+        call    DualMul10AndDispatchChain
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0dh
         push    0x004f27c8
-        call    ArgSar_Set1_Jmp_0049c6d0
+        call    ArgSar_Set1_Jmp
         add     esp, 4
         ret
     }

@@ -108,18 +108,18 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void CameraAimSplineDriver_00430e60(void);
+extern void CameraAimSplineDriver(void);
 extern void QuadMul10TailFpuChain(void);
 
 /*
  * @addr 0x0042ffa0 (115b game) - dual mul-scale store:
- *   call CameraAimSplineDriver_00430e60; gate; call QuadMul10TailFpuChain; gate; load g_eventQueueNotMask
+ *   call CameraAimSplineDriver; gate; call QuadMul10TailFpuChain; gate; load g_eventQueueNotMask
  *   and scale via Mul10Tail(0x1999, val) -> store into g_eventQueueNotMask;
  *   load g_eventQueueChild, scale similarly, store back; finally store
  *   both into cj[+0x6c] and cj[+0x74].
  */
-void DualMulScaleStore_0042ffa0(void) {
-    CameraAimSplineDriver_00430e60();
+void DualMulScaleStore(void) {
+    CameraAimSplineDriver();
     if (g_framePauseFlag != 0) return;
     QuadMul10TailFpuChain();
     if (g_framePauseFlag != 0) return;

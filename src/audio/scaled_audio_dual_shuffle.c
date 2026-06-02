@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_byteTab_004f3088;
 
-void ScaledAudioDualShuffle_004a2970(void) {
+void ScaledAudioDualShuffle(void) {
     __asm {
         mov     ecx, dword ptr [g_baseSel]
         mov     eax, dword ptr [ecx*4 + 0x30]

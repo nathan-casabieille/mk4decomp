@@ -22,7 +22,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void MStackBracket4_ListInsertZeroFill(void);
 extern void MStackPushTwoEntryChainCall(void);
-void TripleSetCallPauseDirtyJmp_00446150(void) {
+void TripleSetCallPauseDirtyJmp(void) {
     unsigned int v = g_eventQueueIdx;
     g_fightGroupHead = v;
     g_scaledInit_00542044 = v;

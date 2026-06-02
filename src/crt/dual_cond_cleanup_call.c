@@ -12,7 +12,7 @@ extern unsigned int g_crtCleanupFlag_00f9f84c;
 extern unsigned int g_crtFdCloseSlot_00520064;
 extern void (*g_dispatchSave1442_00f9fbfc)(void);
 extern void func_004cc070_gg(int);
-void DualCondCleanupCall_004cc030(void) {
+void DualCondCleanupCall(void) {
     unsigned int v = g_crtCleanupFlag_00f9f84c;
     if (v != 1) {
         if (v != 0) return;

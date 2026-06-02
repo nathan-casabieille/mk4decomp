@@ -9,7 +9,7 @@
  *   linearly scan for entry whose dword == arg1; return matching slot or 0.
  */
 extern unsigned int g_crtArraySearchCount_00522904;
-__declspec(naked) void ArraySearch_004cba90(void) {
+__declspec(naked) void ArraySearch(void) {
     __asm {
         mov     edx, dword ptr [esp + 4]
         push    esi

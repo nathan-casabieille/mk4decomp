@@ -1,6 +1,6 @@
 // === EXTERNS ===
 
-__declspec(naked) void BigDataBlob_004d1080(void)
+__declspec(naked) void BigDataBlob(void)
 {
     __asm {
         _emit    0xa1

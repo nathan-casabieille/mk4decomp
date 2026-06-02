@@ -111,14 +111,14 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x004288e0 (106b)
  *   call GuardedSeq_004297b0; if pause: ret;
  *   if (bit0 of g_xformDirtyFlags)!=0: jmp ScaledInitOrSelfPtr_00429680;
- *   push 0x4e2908; call GuardedScaledChainJmpIndirect_00460e40; pop;
+ *   push 0x4e2908; call GuardedScaledChainJmpIndirect; pop;
  *   if pause: ret; call DirtyToggleByGate; if pause: ret;
  *   if (bit2 of g_xformDirtyFlags)==0: jmp ScaledInitOrSelfPtr_00428950;
  *   inc mstack; [esp*4] = 0x428950; jmp GameDispatchValidateState.
  */
 extern void ScaledInitOrSelfPtr_00429680(void);
-extern void GuardedScaledChainJmpIndirect_00460e40(void);
-void DualGuardPushInstallJmp_004288e0(void) {
+extern void GuardedScaledChainJmpIndirect(void);
+void DualGuardPushInstallJmp(void) {
     unsigned int top;
     GuardedSeq_004297b0();
     if (g_framePauseFlag != 0) return;
@@ -126,7 +126,7 @@ void DualGuardPushInstallJmp_004288e0(void) {
         ScaledInitOrSelfPtr_00429680();
         return;
     }
-    ((void (*)(int))GuardedScaledChainJmpIndirect_00460e40)(0x004e2908);
+    ((void (*)(int))GuardedScaledChainJmpIndirect)(0x004e2908);
     if (g_framePauseFlag != 0) return;
     DirtyToggleByGate();
     if (g_framePauseFlag != 0) return;

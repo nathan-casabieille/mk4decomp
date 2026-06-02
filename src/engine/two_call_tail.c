@@ -16,20 +16,20 @@
  */
 #include "game/tick.h"
 
-extern void ScaledStore501Set8Jmp_0042c390(void);
+extern void ScaledStore501Set8Jmp(void);
 extern void Cascade3ChainInit(void);
-extern void StoreLitRetSet2_0042c3b0(void);
+extern void StoreLitRetSet2(void);
 extern void GateDispatch6c(void);
 extern void CjTableThresholdDispatch(void);
-extern void AggressorRunInitCluster_004813b0(void);
+extern void AggressorRunInitCluster(void);
 
 /* @addr 0x0042b690 */
 void TwoCallTail_0042b690(void) {
-    ScaledStore501Set8Jmp_0042c390();
+    ScaledStore501Set8Jmp();
     if (g_framePauseFlag) return;
     Cascade3ChainInit();
     if (g_framePauseFlag) return;
-    StoreLitRetSet2_0042c3b0();
+    StoreLitRetSet2();
 }
 
 /* @addr 0x00481380 */
@@ -38,5 +38,5 @@ void TwoCallTail_00481380(void) {
     if (g_framePauseFlag) return;
     CjTableThresholdDispatch();
     if (g_framePauseFlag) return;
-    AggressorRunInitCluster_004813b0();
+    AggressorRunInitCluster();
 }

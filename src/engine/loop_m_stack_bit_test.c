@@ -118,11 +118,11 @@ extern unsigned int g_fightAxisPosY;
  *   Bit-set exit: mstack-pop -> g_scaledInit; pop esi; pop ebx; ret.
  */
 extern void DispatcherComplex138_004760f0(void);
-extern void ScaledAndFBJmp_00476fe0(void);
+extern void ScaledAndFBJmp(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void LoopMStackBitTest_00441fd0(void) {
+__declspec(naked) void LoopMStackBitTest(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_scaledInit_00542044]
@@ -155,7 +155,7 @@ __declspec(naked) void LoopMStackBitTest_00441fd0(void) {
         mov     eax, dword ptr [g_scaledInit_00542044]
         mov     ecx, [eax*4 + 0x18]
         mov     dword ptr [g_scaledInit_00542044], ecx
-        call    ScaledAndFBJmp_00476fe0
+        call    ScaledAndFBJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

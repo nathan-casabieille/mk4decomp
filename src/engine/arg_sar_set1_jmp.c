@@ -14,9 +14,9 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_eventQueueEnd], eax
  *   jmp     +0x25
  */
-extern void InstallSelfBit2LoopIndirect_0049c710(void);
-void ArgSar_Set1_Jmp_0049c6d0(int arg) {
+extern void InstallSelfBit2LoopIndirect(void);
+void ArgSar_Set1_Jmp(int arg) {
     g_eventQueueChild = 1;
     g_eventQueueEnd = (unsigned int)(arg >> 2);
-    InstallSelfBit2LoopIndirect_0049c710();
+    InstallSelfBit2LoopIndirect();
 }

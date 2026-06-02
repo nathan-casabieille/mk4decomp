@@ -118,7 +118,7 @@ extern void MStackBracket5_LinkedListUnlink(void);
 
 extern unsigned int g_matrixStack_arr;
 
-void MStackChainSwapTraversal_00493d00(void) {
+void MStackChainSwapTraversal(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_scaledInit_00542044]

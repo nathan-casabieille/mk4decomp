@@ -132,7 +132,7 @@ extern unsigned int g_viewportX;
 extern unsigned int g_viewportY;
 extern unsigned int g_dispatchSave1404_00f85b58;
 
-__declspec(naked) void ScanlineTexBlitAlpha_004c0b70(void)
+__declspec(naked) void ScanlineTexBlitAlpha(void)
 {
     __asm {
         mov      eax, dword ptr [g_viewportX]

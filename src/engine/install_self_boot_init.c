@@ -125,7 +125,7 @@ extern void InstallSelfPackedF80(void);
 extern void InstallSelfTableWalk(void);
 extern void ScenegraphWalk(void);
 
-__declspec(naked) void InstallSelfBootInit_00462980(void) {
+__declspec(naked) void InstallSelfBootInit(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi

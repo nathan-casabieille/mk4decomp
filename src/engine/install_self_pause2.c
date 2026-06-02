@@ -114,8 +114,8 @@ extern unsigned int g_fightAxisPosY;
  *   Phase3InstallPackedSelf; else call _00423720, gate, call _00461220, gate,
  *   install self with tag 0x1e and raise framePause.
  */
-extern void InstallSelfPause2_00423630(void);
-void InstallSelfPause2_00423630(void) {
+extern void InstallSelfPause2(void);
+void InstallSelfPause2(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int prev = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
@@ -127,7 +127,7 @@ void InstallSelfPause2_00423630(void) {
     if (g_framePauseFlag != 0) return;
     CallPauseScaledStoreCopyJmp();
     if (g_framePauseFlag != 0) return;
-    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfPause2_00423630;
+    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfPause2;
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 0x1e;
     g_framePauseFlag = 1;

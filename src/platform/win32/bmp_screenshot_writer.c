@@ -111,9 +111,9 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave830_004f47bc;
 extern void Helper_FClose(void);
 extern void Helper_FOpen(void);
-extern void WrapThreeDispatch_004c5f80(void);
+extern void WrapThreeDispatch(void);
 
-__declspec(naked) void BmpScreenshotWriter_004c4600(void)
+__declspec(naked) void BmpScreenshotWriter(void)
 {
     __asm {
         sub      esp, 0xc40
@@ -170,7 +170,7 @@ __declspec(naked) void BmpScreenshotWriter_004c4600(void)
         lea      eax, [esp + 0x20]
         push     0xe
         push     eax
-        call     WrapThreeDispatch_004c5f80
+        call     WrapThreeDispatch
         mov      ecx, dword ptr [esp + 0x20]
         add      esp, 0x10
         lea      edx, [esp + 0x28]
@@ -178,7 +178,7 @@ __declspec(naked) void BmpScreenshotWriter_004c4600(void)
         push     1
         push     0x28
         push     edx
-        call     WrapThreeDispatch_004c5f80
+        call     WrapThreeDispatch
         mov      eax, edi
         lea      ecx, [esi - 1]
         cdq
@@ -292,7 +292,7 @@ __declspec(naked) void BmpScreenshotWriter_004c4600(void)
         lea      edx, [esp + 0x58]
         push     ecx
         push     edx
-        call     WrapThreeDispatch_004c5f80
+        call     WrapThreeDispatch
         mov      eax, dword ptr [esp + 0xc6c]
         mov      ecx, dword ptr [esp + 0xc68]
         neg      eax

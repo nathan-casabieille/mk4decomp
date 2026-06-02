@@ -113,7 +113,7 @@ extern unsigned int g_pendingMatchVar3_004d5320;
 extern unsigned int g_pendingMatchVar;
 extern unsigned int g_pendingMatchVar5_004d532c;
 
-__declspec(naked) void RangeClampThree_0042ae40(void) {
+__declspec(naked) void RangeClampThree(void) {
     __asm {
         mov     edx, dword ptr [g_pendingMatchVar3_004d5320]
         mov     ecx, dword ptr [g_pendingMatchVar]

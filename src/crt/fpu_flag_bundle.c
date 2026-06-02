@@ -120,11 +120,11 @@ extern unsigned int g_crtFpuStack_005236ac;
 extern unsigned int g_dispatchSave1447_00f9fc1c;
 extern unsigned int g_dispatchSave1455_00f9fc64;
 extern void Calloc(void);
-extern void CrtInitLocaleInfo_004cf880(void);
-extern void CrtLocaleInfoFreeAll_004cfc00(void);
+extern void CrtInitLocaleInfo(void);
+extern void CrtLocaleInfoFreeAll(void);
 extern void FreeImpl(void);
 
-__declspec(naked) void FpuFlagBundle_004cf770(void) {
+__declspec(naked) void FpuFlagBundle(void) {
     __asm {
         /* sub-1: FPU flag-driven constant loader (0x4cf770..0x4cf7c8) */
         push    ebp
@@ -194,12 +194,12 @@ __declspec(naked) void FpuFlagBundle_004cf770(void) {
         ret
     L_sm_install:
         push    esi
-        call    CrtInitLocaleInfo_004cf880
+        call    CrtInitLocaleInfo
         add     esp, 4
         test    eax, eax
         jz      short L_sm_storePath
         push    esi
-        call    CrtLocaleInfoFreeAll_004cfc00
+        call    CrtLocaleInfoFreeAll
         add     esp, 4
         push    esi
         call    FreeImpl
@@ -211,7 +211,7 @@ __declspec(naked) void FpuFlagBundle_004cf770(void) {
         mov     eax, dword ptr [g_dispatchSave1455_00f9fc64]
         mov     dword ptr [g_crtFpuStack_005236ac], esi
         push    eax
-        call    CrtLocaleInfoFreeAll_004cfc00
+        call    CrtLocaleInfoFreeAll
         mov     ecx, dword ptr [g_dispatchSave1455_00f9fc64]
         add     esp, 4
         push    ecx
@@ -225,7 +225,7 @@ __declspec(naked) void FpuFlagBundle_004cf770(void) {
         mov     edx, dword ptr [g_dispatchSave1455_00f9fc64]
         mov     dword ptr [g_crtFpuStack_005236ac], offset g_crtFpuStateBuf_00523600
         push    edx
-        call    CrtLocaleInfoFreeAll_004cfc00
+        call    CrtLocaleInfoFreeAll
         mov     eax, dword ptr [g_dispatchSave1455_00f9fc64]
         add     esp, 4
         push    eax

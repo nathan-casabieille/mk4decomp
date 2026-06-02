@@ -50,7 +50,7 @@ extern unsigned int g_scaledInit_00542044;
  * Total: 7+2+5+2+3+6+2+3+2+1 = 33 ✓
  */
 extern int g_list_004ffdec;
-void ListInitLoop_00401310(void) {
+void ListInitLoop(void) {
     __asm {
         cmp     dword ptr [g_list_004ffdec], -1
         _emit   74h

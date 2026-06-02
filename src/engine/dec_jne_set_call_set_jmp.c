@@ -22,7 +22,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void TableLookupCall_00489f60(void);
 
-void DecJneSetCallSetJmp_004389b0(void) {
+void DecJneSetCallSetJmp(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueNotMask]
         dec     eax

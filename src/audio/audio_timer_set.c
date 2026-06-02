@@ -23,7 +23,7 @@ extern u32 g_audioState0C;
 extern unsigned int g_iat_004d2240;
 extern unsigned int g_iat_004d2244;
 extern u32 g_audioPreState;
-extern void Audio_TimerTeardown_004ac5f0(void);
+extern void Audio_TimerTeardown(void);
 extern void Helper_AuxAudio_PostInit(void);
 
 __declspec(naked) void Audio_TimerSet(void) {
@@ -32,7 +32,7 @@ __declspec(naked) void Audio_TimerSet(void) {
         push    ebx
         push    esi
         push    edi
-        call    Audio_TimerTeardown_004ac5f0
+        call    Audio_TimerTeardown
         mov     eax, [esp + 0x34]
         mov     ebx, [esp + 0x28]
         mov     esi, [esp + 0x2c]

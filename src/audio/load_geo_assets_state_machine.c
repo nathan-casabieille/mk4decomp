@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-__declspec(naked) void LoadGeoAssetsStateMachine_004a38d0(void)
+__declspec(naked) void LoadGeoAssetsStateMachine(void)
 {
     __asm {
         _emit    0xa1

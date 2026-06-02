@@ -15,9 +15,9 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_dual_0053a1a8;
 extern unsigned int g_dual_0053a1a4;
-extern void Mul10Tail5xInterp_00485d90(void);
-void DualLoadDualStoreJmp_00485d70(void) {
+extern void Mul10Tail5xInterp(void);
+void DualLoadDualStoreJmp(void) {
     g_walkCallback        = (void (*)(void))g_dual_0053a1a8;
     g_eventQueueCurrent   = g_dual_0053a1a4;
-    Mul10Tail5xInterp_00485d90();
+    Mul10Tail5xInterp();
 }

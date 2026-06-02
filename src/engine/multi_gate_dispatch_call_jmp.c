@@ -16,9 +16,9 @@ extern unsigned int g_audioPathFlag_0054355c;
 extern unsigned int g_audioMatchStartFlag_00543714;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_active_00537e88;
-extern void DualSeqBranchInit_00477a20(void);
-extern void YRiseSpawnerCluster_00477bd0(void);
-__declspec(naked) void MultiGateDispatchCallJmp_004779d0(void) {
+extern void DualSeqBranchInit(void);
+extern void YRiseSpawnerCluster(void);
+__declspec(naked) void MultiGateDispatchCallJmp(void) {
     __asm {
         mov     eax, dword ptr [g_audioPathFlag_0054355c]
         test    eax, eax
@@ -32,7 +32,7 @@ __declspec(naked) void MultiGateDispatchCallJmp_004779d0(void) {
         test    eax, eax
         _emit   74h
         _emit   0eh
-        call    DualSeqBranchInit_00477a20
+        call    DualSeqBranchInit
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -41,14 +41,14 @@ __declspec(naked) void MultiGateDispatchCallJmp_004779d0(void) {
         test    eax, eax
         _emit   74h
         _emit   0ah
-        call    YRiseSpawnerCluster_00477bd0
+        call    YRiseSpawnerCluster
         mov     eax, dword ptr [g_framePauseFlag]
 ret_label:
         ret
-        call    DualSeqBranchInit_00477a20
+        call    DualSeqBranchInit
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     ret_label
-        jmp     YRiseSpawnerCluster_00477bd0
+        jmp     YRiseSpawnerCluster
     }
 }

@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0048f880 (93b) - twin of 0x0048f7b0 mapping to 0x54/0x58/0x5c. */
-void TripleFieldCopyLo_0048f880(void) {
+void TripleFieldCopyLo(void) {
     unsigned int val;
     val = *(unsigned int *)(g_baseSel * 4 + 0x5c);
     g_walkCallback = (void (*)(void))val;

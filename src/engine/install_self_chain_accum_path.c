@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void DualSlotCopyChain_004756f0(void);
+extern void DualSlotCopyChain(void);
 extern void InstallSelfChainAccumPath(void);
 
 /* @addr 0x004751f0 (188b game) - install-self variant with packed_ptr store and tail-jmp.
@@ -133,7 +133,7 @@ __declspec(naked) void InstallSelfPackedTailJmp(void) {
         _emit   23h
         mov     ecx, dword ptr [g_eventQueueEnd]
         mov     dword ptr [g_fightGroupHead], ecx
-        call    DualSlotCopyChain_004756f0
+        call    DualSlotCopyChain
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

@@ -117,15 +117,15 @@ extern unsigned int g_eventMusicSlot_00543594;
 extern unsigned int g_dispatchTab61_00550000;
 extern unsigned int g_dispatchSave1705_008c0000;
 extern void CallSetPause(void);
-extern void Cmp7DirtyToggle_0042ee10(void);
+extern void Cmp7DirtyToggle(void);
 extern void DispatcherComplex181_00426310(void);
-extern void GuardedDualMaskFlagToggle_004261d0(void);
+extern void GuardedDualMaskFlagToggle(void);
 extern void RoundCleanupCluster_00427690(void);
 extern void SaveCallRestore(void);
 extern void SetWalkCurCallPauseDirty(void);
 extern void StoreIncrMStackPush6(void);
 
-__declspec(naked) void Event23bMusicCluster_0042f540(void)
+__declspec(naked) void Event23bMusicCluster(void)
 {
     __asm {
         /* === Main: event 0x23b dispatch === */
@@ -220,7 +220,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         nop
         nop
         /* === Helper 2 (0x42f6a0): event 0x225 tail === */
-        call     Cmp7DirtyToggle_0042ee10
+        call     Cmp7DirtyToggle
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f6ce
@@ -254,7 +254,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         test     eax, eax
         mov      dword ptr [g_walkCallback], eax
         je       short L_f72b
-        call     GuardedDualMaskFlagToggle_004261d0
+        call     GuardedDualMaskFlagToggle
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f75c

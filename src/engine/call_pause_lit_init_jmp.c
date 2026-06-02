@@ -22,7 +22,7 @@ extern unsigned int g_scaledInit_00542044;
 extern void ScaledXorStore_004903b0(void);
 extern void Wrapper_00488c60(void);
 extern int g_dispatchSave405_005006e0;
-void CallPauseLitInitJmp_00488c30(void) {
+void CallPauseLitInitJmp(void) {
     ScaledXorStore_004903b0();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))0;

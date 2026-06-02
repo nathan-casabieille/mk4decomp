@@ -119,7 +119,7 @@ extern unsigned int g_vertexInitFlag_00541e74;
 extern unsigned int g_vertexInitVar_00541e78;
 extern void VertexSlotInitFlagWalk(void);
 
-__declspec(naked) void DualEntryInitCmp_00425b20(void) {
+__declspec(naked) void DualEntryInitCmp(void) {
     __asm {
         mov     eax, dword ptr [g_vertexInitFlagAlt_00541e70]
         mov     ecx, dword ptr [g_vertexInitFlag_00541e74]

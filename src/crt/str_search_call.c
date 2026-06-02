@@ -6,7 +6,7 @@
 extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
-void StrSearchCall_004c89b0(char *arg1, int arg2) {
+void StrSearchCall(char *arg1, int arg2) {
     if (arg2 == 0) return;
-    CrtMemMove_004c61c0(arg1 + arg2, arg1, strlen(arg1) + 1);
+    CrtMemMove(arg1 + arg2, arg1, strlen(arg1) + 1);
 }

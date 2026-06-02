@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00474290 (116b) - double mstack push (g_cj_0054205c +
  *   g_scaledInit) + set g_scaledInit=0x7d + call PreFightInstallCluster +
  *   double pop on success. */
-void DualPushSet7dCallPop_00474290(void) {
+void DualPushSet7dCallPop(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_cj_0054205c;
     g_matrixStackTop++;

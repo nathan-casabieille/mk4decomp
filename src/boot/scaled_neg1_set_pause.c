@@ -17,7 +17,7 @@ extern unsigned int g_scaledInit_00542044;
  * .skip:
  *   ret
  */
-void ScaledNeg1SetPause_0041f840(void) {
+void ScaledNeg1SetPause(void) {
     ScenegraphNode *node = (ScenegraphNode *)(g_baseSel * 4);
     if (node->ptr_field != 0) {
         node->ptr_field = 0xffffffff;

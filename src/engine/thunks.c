@@ -11,27 +11,27 @@
 /* Externs for thunk targets. */
 extern void BootMod6487eClampAndChainMul10(void);     /* 0x00407510 */
 extern void MStackPush2ChainPrepend(void);     /* 0x00409970 */
-extern void ZeroLargeBlock_0041f270(void);     /* 0x0041f270 */
-extern void BootScheduledNodeTimerWalk_0041f570(void);     /* 0x0041f570 */
+extern void ZeroLargeBlock(void);     /* 0x0041f270 */
+extern void BootScheduledNodeTimerWalk(void);     /* 0x0041f570 */
 extern void StackPopDispatchTagged(void);     /* 0x0041f780 */
-extern void LoadShlDerefCallSkip_0041f810(void);     /* 0x0041f810 */
-extern void ScaledNeg1SetPause_0041f840(void);     /* 0x0041f840 */
-extern void NodeChainMaskMatch_0041f870(void);     /* 0x0041f870 */
-extern void LinkedListBitMaskSearch_0041f8f0(void);     /* 0x0041f8f0 */
-extern void ChainNodeInit_0041fa50(void);     /* 0x0041fa50 */
-extern void StructArrayWalkCondCall_0041fc50(void);     /* 0x0041fc50 */
+extern void LoadShlDerefCallSkip(void);     /* 0x0041f810 */
+extern void ScaledNeg1SetPause(void);     /* 0x0041f840 */
+extern void NodeChainMaskMatch(void);     /* 0x0041f870 */
+extern void LinkedListBitMaskSearch(void);     /* 0x0041f8f0 */
+extern void ChainNodeInit(void);     /* 0x0041fa50 */
+extern void StructArrayWalkCondCall(void);     /* 0x0041fc50 */
 extern void ScaledLoadInstallOrCall_00433960(void);     /* 0x00433960 */
 extern void GuardedSeq_00433bb0(void);     /* 0x00433bb0 */
-extern void InstallSelfThreeStateDispatch_00436030(void);     /* 0x00436030 */
+extern void InstallSelfThreeStateDispatch(void);     /* 0x00436030 */
 extern void ScaledAddrInit_004368f0(void);     /* 0x004368f0 */
 extern void InstallSelfPacked0x2005(void);     /* 0x00437a90 */
-extern void InstallSelfChainSetB333_00437b60(void);     /* 0x00437b60 */
+extern void InstallSelfChainSetB333(void);     /* 0x00437b60 */
 extern void InstallSelfChainSetB333v2(void);     /* 0x00437f00 */
 extern void Wrapper_00438ee0(void);     /* 0x00438ee0 */
 extern void PrefixThunkInstallSelf3State(void);     /* 0x00438f80 */
 extern void SetJmp_00439c30(void);     /* 0x00439c30 */
 extern void InstallSelfChainSet2011(void);     /* 0x00439ec0 */
-extern void GuardedDoubleCallSetJmp_00460260(void);     /* 0x00460260 */
+extern void GuardedDoubleCallSetJmp(void);     /* 0x00460260 */
 extern void Thunk_0049cbc0(void);     /* 0x0049cbc0 */
 extern void Thunk_0049cbd0(void);     /* 0x0049cbd0 */
 extern void AppInit_Misc2(void);     /* 0x004b5a80 */
@@ -54,13 +54,13 @@ void Thunk_004296e0(void) { StackPopDispatchTagged(); }
 void Thunk_00433950(void) { ScaledLoadInstallOrCall_00433960(); }
 
 /* @addr 0x004344a0 */
-void Thunk_004344a0(void) { InstallSelfChainSetB333_00437b60(); }
+void Thunk_004344a0(void) { InstallSelfChainSetB333(); }
 
 /* @addr 0x00434c00 */
 void Thunk_00434c00(void) { PrefixThunkInstallSelf3State(); }
 
 /* @addr 0x00434eb0 */
-void Thunk_00434eb0(void) { InstallSelfThreeStateDispatch_00436030(); }
+void Thunk_00434eb0(void) { InstallSelfThreeStateDispatch(); }
 
 /* @addr 0x00435330 */
 void Thunk_00435330(void) { InstallSelfPacked0x2005(); }
@@ -93,37 +93,37 @@ void Thunk_0045dae0(void) { Thunk_0049cbd0(); }
 void Thunk_0045e0f0(void) { Thunk_0049cbc0(); }
 
 /* @addr 0x00460250 */
-void Thunk_00460250(void) { GuardedDoubleCallSetJmp_00460260(); }
+void Thunk_00460250(void) { GuardedDoubleCallSetJmp(); }
 
 /* @addr 0x004647f0 */
 void Thunk_004647f0(void) { StackPopDispatchTagged(); }
 
 /* @addr 0x0049cb70 */
-void Thunk_0049cb70(void) { NodeChainMaskMatch_0041f870(); }
+void Thunk_0049cb70(void) { NodeChainMaskMatch(); }
 
 /* @addr 0x0049cb80 */
-void Thunk_0049cb80(void) { LoadShlDerefCallSkip_0041f810(); }
+void Thunk_0049cb80(void) { LoadShlDerefCallSkip(); }
 
 /* @addr 0x0049cba0 */
-void Thunk_0049cba0(void) { LinkedListBitMaskSearch_0041f8f0(); }
+void Thunk_0049cba0(void) { LinkedListBitMaskSearch(); }
 
 /* @addr 0x0049cbb0 */
 void Thunk_0049cbb0(void) { Thunk_0049cbc0(); }
 
 /* @addr 0x0049cbc0 */
-void Thunk_0049cbc0(void) { ScaledNeg1SetPause_0041f840(); }
+void Thunk_0049cbc0(void) { ScaledNeg1SetPause(); }
 
 /* @addr 0x0049cbd0 */
-void Thunk_0049cbd0(void) { ChainNodeInit_0041fa50(); }
+void Thunk_0049cbd0(void) { ChainNodeInit(); }
 
 /* @addr 0x0049cbe0 */
-void Helper_TickFrame_PostFight(void) { BootScheduledNodeTimerWalk_0041f570(); }
+void Helper_TickFrame_PostFight(void) { BootScheduledNodeTimerWalk(); }
 
 /* @addr 0x0049cbf0 */
-void Thunk_0049cbf0(void) { ZeroLargeBlock_0041f270(); }
+void Thunk_0049cbf0(void) { ZeroLargeBlock(); }
 
 /* @addr 0x0049cc00 */
-void Thunk_0049cc00(void) { StructArrayWalkCondCall_0041fc50(); }
+void Thunk_0049cc00(void) { StructArrayWalkCondCall(); }
 
 /* @addr 0x004b5ac0 */
 void Thunk_004b5ac0(void) { AppInit_Misc2(); }

@@ -122,10 +122,10 @@ extern s32 g_dlNalt3;
 extern s32 g_dlNalt4;
 extern unsigned int g_rangeBase;
 extern unsigned int g_counter_0053a51c;
-extern void ScenePostInitSequencer_00429b70(void);
-extern void TablePushAccumTailJmp_00429e30(void);
+extern void ScenePostInitSequencer(void);
+extern void TablePushAccumTailJmp(void);
 
-__declspec(naked) void FourGlobalsEqualFInitTail_004236a0(void) {
+__declspec(naked) void FourGlobalsEqualFInitTail(void) {
     __asm {
         mov     ecx, dword ptr [g_dlNalt1]
         mov     eax, 0xf
@@ -144,7 +144,7 @@ __declspec(naked) void FourGlobalsEqualFInitTail_004236a0(void) {
         xor     eax, eax
         mov     dword ptr [g_counter_0053a51c], eax
         mov     dword ptr [g_walkCallback], eax
-        call    TablePushAccumTailJmp_00429e30
+        call    TablePushAccumTailJmp
         mov     ecx, dword ptr [g_counter_0053a51c]
         mov     eax, offset g_dispatchSave623_004dfd48
         shr     eax, 2
@@ -160,6 +160,6 @@ __declspec(naked) void FourGlobalsEqualFInitTail_004236a0(void) {
         add     esp, 8
         mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [g_rangeSqLimit], eax
-        jmp     ScenePostInitSequencer_00429b70
+        jmp     ScenePostInitSequencer
     }
 }

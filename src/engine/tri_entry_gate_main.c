@@ -108,17 +108,17 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void EntryThenDispatcherPair_00438cd0(void);
-extern void EsiInstallTwoCallCmpInstall_00438b10(void);
+extern void EntryThenDispatcherPair(void);
+extern void EsiInstallTwoCallCmpInstall(void);
 extern void GuardedSeq_00433bb0(void);
-extern void InstallSelfBitGate_00438aa0(void);
-extern void JumpTableDispatch_0043a550(void);
+extern void InstallSelfBitGate(void);
+extern void JumpTableDispatch(void);
 extern void MStackPushPtr1Jmp_00438e70(void);
 extern void PrefixThunkInstallSelf3State(void);
-extern void ProneFsmCluster_004355f0(void);
-extern void TriPhaseGateInstallSelfBig_00437140(void);
+extern void ProneFsmCluster(void);
+extern void TriPhaseGateInstallSelfBig(void);
 
-__declspec(naked) void TriEntryGateMain_00435440(void)
+__declspec(naked) void TriEntryGateMain(void)
 {
     __asm
     {
@@ -139,7 +139,7 @@ __declspec(naked) void TriEntryGateMain_00435440(void)
         push    0x4e4600
         and     edx, 0xff
         mov     dword ptr [g_walkCallback], edx
-        call    JumpTableDispatch_0043a550
+        call    JumpTableDispatch
         add     esp, 4
         ret
     L_tegm_main:
@@ -171,7 +171,7 @@ __declspec(naked) void TriEntryGateMain_00435440(void)
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
-        call    EsiInstallTwoCallCmpInstall_00438b10
+        call    EsiInstallTwoCallCmpInstall
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
@@ -190,7 +190,7 @@ __declspec(naked) void TriEntryGateMain_00435440(void)
         cmp     eax, 0x200e
         mov     dword ptr [g_walkCallback], eax
         jne     short L_tegm_cmp2
-        call    TriPhaseGateInstallSelfBig_00437140
+        call    TriPhaseGateInstallSelfBig
         pop     esi
         ret
     L_tegm_cmp2:
@@ -198,13 +198,13 @@ __declspec(naked) void TriEntryGateMain_00435440(void)
         cmp     eax, 0x20000
         mov     dword ptr [g_walkCallback], eax
         jge     short L_tegm_cmp3
-        call    EntryThenDispatcherPair_00438cd0
+        call    EntryThenDispatcherPair
         pop     esi
         ret
     L_tegm_cmp3:
         cmp     eax, 0x40000
         jge     short L_tegm_install0
-        call    ProneFsmCluster_004355f0
+        call    ProneFsmCluster
         pop     esi
         ret
     L_tegm_install0:
@@ -222,7 +222,7 @@ __declspec(naked) void TriEntryGateMain_00435440(void)
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
-        call    InstallSelfBitGate_00438aa0
+        call    InstallSelfBitGate
         mov     dword ptr [g_framePauseFlag], 1
     L_tegm_ret:
         pop     esi

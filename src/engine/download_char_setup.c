@@ -117,9 +117,9 @@ extern u32 g_dlSomeFlag2;
 extern s32 g_dlNalt2;
 extern unsigned int g_particleInitState_00541de0;
 extern void DownloadPlayerChar(void);
-extern void GuardedDualPushTailJmp_004231f0(void);
+extern void GuardedDualPushTailJmp(void);
 
-void DownloadCharSetup_00422ef0(void) {
+void DownloadCharSetup(void) {
     __asm {
         mov     eax, dword ptr [g_dlNalt2]
         mov     dword ptr [g_eventQueueCurrent], 1
@@ -138,7 +138,7 @@ void DownloadCharSetup_00422ef0(void) {
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_eventQueueCurrent], 1
         mov     dword ptr [g_eventQueueWorkType], edx
-        call    GuardedDualPushTailJmp_004231f0
+        call    GuardedDualPushTailJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

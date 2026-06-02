@@ -117,7 +117,7 @@ extern void BootStateTriple(void);
 extern void MStackBracket1_TreeWalkRecursive2(void);
 extern void Thunk_00405ac0(void);
 
-__declspec(naked) void Phase2InitSlotTreeWalk_0041ad60(void)
+__declspec(naked) void Phase2InitSlotTreeWalk(void)
 {
     __asm {
         mov     dword ptr [g_walkCallback], 0

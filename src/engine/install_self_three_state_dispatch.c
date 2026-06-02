@@ -108,24 +108,24 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void CmpRangeJmpStateInit_00436250(void);
+extern void CmpRangeJmpStateInit(void);
 extern void DualCallPauseDirtyJmp_00435f20(void);
-extern void InstallSelfThreeStateDispatch_00436030(void);
+extern void InstallSelfThreeStateDispatch(void);
 
 /* @addr 0x00435f50 (209b game) - 4-block dual-Mul10Tail + thresholded state dispatcher.
- *   A: Mul10Tail pair on cj[+0x6c]/[+0x74]; if sum zero call CmpRangeJmpStateInit_00436250.
+ *   A: Mul10Tail pair on cj[+0x6c]/[+0x74]; if sum zero call CmpRangeJmpStateInit.
  *     Else threshold checks on g_table_00535ddc: <0x13333 jmp PrefixThunkInstallSelf3State, >0x28000 jmp GuardedSeq_00433bb0,
  *     else jmp PrefixThunkInstallSelf3State.
  *   B/C (+0x80/+0x90): jmp DualCallPauseDirtyJmp_00435f20.
  *   D (+0xa0): call Cmp2CallDirtyCall; if nz ret; threshold dispatch state_00535ddc: <0x2b333 jmp Wrapper_00438ee0,
- *     >0x14ccc jmp PoseFsm4StateInstall_00437c10, else jmp InstallSelfThreeStateDispatch_00436030. ret.
+ *     >0x14ccc jmp PoseFsm4StateInstall, else jmp InstallSelfThreeStateDispatch. ret.
  */
 extern void GuardedSeq_00433bb0(void);
-extern void PoseFsm4StateInstall_00437c10(void);
+extern void PoseFsm4StateInstall(void);
 extern void PrefixThunkInstallSelf3State(void);
 extern void Wrapper_00438ee0(void);
 
-__declspec(naked) void Mul10ThresholdQuad_00435f50(void) {
+__declspec(naked) void Mul10ThresholdQuad(void) {
     __asm {
         mov     ecx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [ecx*4 + 0x6c]
@@ -147,7 +147,7 @@ __declspec(naked) void Mul10ThresholdQuad_00435f50(void) {
         mov     dword ptr [g_eventQueueCurrent], eax
         _emit   74h
         _emit   05h
-        jmp     CmpRangeJmpStateInit_00436250
+        jmp     CmpRangeJmpStateInit
         mov     eax, dword ptr [g_table_00535ddc]
         cmp     eax, 0x00013333
         mov     dword ptr [g_walkCallback], eax
@@ -204,8 +204,8 @@ __declspec(naked) void Mul10ThresholdQuad_00435f50(void) {
         cmp     eax, 0x00014ccc
         _emit   7dh
         _emit   05h
-        jmp     PoseFsm4StateInstall_00437c10
-        jmp     InstallSelfThreeStateDispatch_00436030
+        jmp     PoseFsm4StateInstall
+        jmp     InstallSelfThreeStateDispatch
         ret
     }
 }

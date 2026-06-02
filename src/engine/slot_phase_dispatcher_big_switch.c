@@ -109,21 +109,21 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_phaseThunkState2_00538094;
-extern void CallPauseCallTestStackPushJmp_00460c60(void);
-extern void CallPauseMStackPushSet0Jmp_0045fcf0(void);
-extern void CallPauseTriCmpJmp_00460910(void);
+extern void CallPauseCallTestStackPushJmp(void);
+extern void CallPauseMStackPushSet0Jmp(void);
+extern void CallPauseTriCmpJmp(void);
 extern void CjInstallSelfRouter(void);
-extern void CjMaskedFlagProbe_0048ecf0(void);
+extern void CjMaskedFlagProbe(void);
 extern void DualGatedStateYield(void);
 extern void GuardedDispatch_00460ca0(void);
 extern void GuardedDispatch_00460cd0(void);
-extern void GuardedDoubleCallSetJmp_00460260(void);
+extern void GuardedDoubleCallSetJmp(void);
 extern void NotShrCmp1Store(void);
 extern void PerSlotPhaseRouter_004605d0(void);
 extern void PerSlotPhaseRouter_00460770(void);
 extern void UnlinkChainInstall_00460dd0(void);
 
-__declspec(naked) void SlotPhaseDispatcherBigSwitch_0045fac0(void)
+__declspec(naked) void SlotPhaseDispatcherBigSwitch(void)
 {
     __asm
     {
@@ -144,7 +144,7 @@ __declspec(naked) void SlotPhaseDispatcherBigSwitch_0045fac0(void)
         jne     L_spdbs_ret
         test    byte ptr [g_xformDirtyFlags], bl
         jne     L_spdbs_b4
-        call    CjMaskedFlagProbe_0048ecf0
+        call    CjMaskedFlagProbe
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_spdbs_ret
         test    byte ptr [g_xformDirtyFlags], 1
@@ -190,7 +190,7 @@ __declspec(naked) void SlotPhaseDispatcherBigSwitch_0045fac0(void)
         mov     edx, dword ptr [g_fightGroupHead]
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [edx*4 + 0x74], ecx
-        call    CallPauseTriCmpJmp_00460910
+        call    CallPauseTriCmpJmp
         cmp     dword ptr [g_framePauseFlag], edi
         jne     short L_spdbs_ret
         mov     eax, dword ptr [g_baseSel]
@@ -214,7 +214,7 @@ __declspec(naked) void SlotPhaseDispatcherBigSwitch_0045fac0(void)
         ret
     L_spdbs_install:
         mov     eax, 1
-        mov     dword ptr [esi + 8], offset SlotPhaseDispatcherBigSwitch_0045fac0
+        mov     dword ptr [esi + 8], offset SlotPhaseDispatcherBigSwitch
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_framePauseFlag], eax
@@ -230,7 +230,7 @@ __declspec(naked) void SlotPhaseDispatcherBigSwitch_0045fac0(void)
         pop     ebx
         ret
     L_spdbs_b1:
-        call    GuardedDoubleCallSetJmp_00460260
+        call    GuardedDoubleCallSetJmp
         pop     edi
         pop     esi
         pop     ebx
@@ -248,7 +248,7 @@ __declspec(naked) void SlotPhaseDispatcherBigSwitch_0045fac0(void)
         pop     ebx
         ret
     L_spdbs_b1a:
-        call    CallPauseCallTestStackPushJmp_00460c60
+        call    CallPauseCallTestStackPushJmp
         pop     edi
         pop     esi
         pop     ebx
@@ -266,7 +266,7 @@ __declspec(naked) void SlotPhaseDispatcherBigSwitch_0045fac0(void)
         pop     ebx
         ret
     L_spdbs_b2:
-        call    CallPauseMStackPushSet0Jmp_0045fcf0
+        call    CallPauseMStackPushSet0Jmp
         pop     edi
         pop     esi
         pop     ebx

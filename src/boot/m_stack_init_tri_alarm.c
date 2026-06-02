@@ -137,7 +137,7 @@ extern void StackPushAdd15CallPop(void);
 extern void StoreDoubleNegPauseSubStore(void);
 extern void ZeroThreeFields_0040a8b0(void);
 
-__declspec(naked) void MStackInitTriAlarm_0040e190(void) {
+__declspec(naked) void MStackInitTriAlarm(void) {
     __asm {
         call    MStackPush8
         mov     eax, dword ptr [g_framePauseFlag]

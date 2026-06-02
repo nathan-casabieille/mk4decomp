@@ -122,7 +122,7 @@ extern void MStackCall_00406600(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void MStackPushDispatchBitGate(void);
 extern void RoundCleanupCluster_00455920(void);
-extern void CharSelectFsmCluster_004561f0(void);
+extern void CharSelectFsmCluster(void);
 extern void ChainGatedNegAccum(void);
 extern unsigned int g_dispatchSave951_004e7f28;
 extern unsigned int g_dispatchSave954_004e8158;
@@ -137,7 +137,7 @@ extern void MStackCall_00406340(void);
 extern void StoreLoadJmp(void);
 extern void Thunk_0049cbc0(void);
 
-__declspec(naked) void ThrowInitLinkCluster_004555f0(void)
+__declspec(naked) void ThrowInitLinkCluster(void)
 {
     __asm {
         /* === h1 (0x4555f0): main link/init chain === */
@@ -249,7 +249,7 @@ __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_58ff
-        push     OFFSET CharSelectFsmCluster_004561f0 + 0x320
+        push     OFFSET CharSelectFsmCluster + 0x320
         call     StoreLoadJmp
         mov      eax, dword ptr [g_eventQueueIdx]
         add      esp, 4

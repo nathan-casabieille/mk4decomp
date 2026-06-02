@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern void ScaledPushArg_00404b90(void);
 extern void ScaledPushArg_00404c00(void);
-extern void ScaledLoadGuardedJmp_004066d0(void);
+extern void ScaledLoadGuardedJmp(void);
 extern void MStackPush2LLWalkCompare(void);
 extern unsigned int g_dispatchArg;
 extern unsigned int g_audioVoiceCounter_00535e50;

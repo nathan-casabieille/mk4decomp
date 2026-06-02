@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void ScaledChainDouble(void);
 
-__declspec(naked) void Mul10TailPairChain_00470390(void) {
+__declspec(naked) void Mul10TailPairChain(void) {
     __asm {
         mov     edx, dword ptr [g_fightGroupHead]
         push    esi

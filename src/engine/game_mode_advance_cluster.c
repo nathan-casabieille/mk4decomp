@@ -110,9 +110,9 @@ extern unsigned int g_fightAxisPosY;
 
 extern void ScaledChainJmp_00429470(void);
 extern void ScaledInitWithCounterAndType_004314f0(void);
-extern void GameModeAdvanceCluster_00482000(void);
+extern void GameModeAdvanceCluster(void);
 extern void CallSetPause(void);
-extern void InitZeroChainLookupJmp_00494210(void);
+extern void InitZeroChainLookupJmp(void);
 
 /* @addr 0x0047de60 (128b) - install-self chain extension variant
  *   w/ FiveCallGuardSetTail bypass + ScaledChainJmp tail. */

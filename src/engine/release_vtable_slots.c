@@ -120,7 +120,7 @@ extern u8 g_renderer2_buf2[];
 extern u8 g_renderer2_buf1[];
 extern int g_renderer2_present_rc;
 
-__declspec(naked) void ReleaseVtableSlots_004af130(void) {
+__declspec(naked) void ReleaseVtableSlots(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         cmp     al, 0x10

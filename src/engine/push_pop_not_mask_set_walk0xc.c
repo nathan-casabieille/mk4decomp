@@ -12,7 +12,7 @@ extern unsigned int g_scaledInit_00542044;
  *   call F; pause-test → ret; pop stack value back into g_eventQueueNotMask.
  */
 extern void TableLookupCall_0048a160(void);
-void PushPopNotMaskSetWalk0xc_0047d510(void) {
+void PushPopNotMaskSetWalk0xc(void) {
     unsigned int top;
     top = g_matrixStackTop + 1;
     g_matrixStackTop = top;

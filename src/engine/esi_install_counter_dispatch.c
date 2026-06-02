@@ -113,10 +113,10 @@ extern unsigned int g_fightAxisPosY;
  *   if state==1: jmp StackPopDispatchTagged;
  *   else: call TripleFieldCopyJmpLo + chain[+0x58]=0x320000 + install w/ walk=3.
  */
-extern void TripleFieldCopyJmpLo_0048f810(void);
-extern void TripleFieldCopyLo_0048f880(void);
+extern void TripleFieldCopyJmpLo(void);
+extern void TripleFieldCopyLo(void);
 
-__declspec(naked) void EsiInstallCounterDispatch_0049b120(void) {
+__declspec(naked) void EsiInstallCounterDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -132,7 +132,7 @@ __declspec(naked) void EsiInstallCounterDispatch_0049b120(void) {
         call    StackPopDispatchTagged
         pop     esi
         ret
-        call    TripleFieldCopyLo_0048f880
+        call    TripleFieldCopyLo
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -143,7 +143,7 @@ __declspec(naked) void EsiInstallCounterDispatch_0049b120(void) {
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
-        call    TripleFieldCopyJmpLo_0048f810
+        call    TripleFieldCopyJmpLo
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

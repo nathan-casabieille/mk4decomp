@@ -113,21 +113,21 @@ extern unsigned int g_fightAxisPosY;
  *   On miss + (short)arg <= 100: call Snd3DSourceCleanup(arg+0x7d0, 0).
  *   On miss + > 100: call Snd3DSourceCleanup(arg/10, 0) using 0x66666667 magic.
  */
-extern void Audio_TimerTeardown_004ac5f0(void);
+extern void Audio_TimerTeardown(void);
 extern void Snd3DSourceCleanup(void);
-extern void TableSearch_004be760(void);
+extern void TableSearch(void);
 
 __declspec(naked) void TableHitOrSchedule(void) {
     __asm {
         push    esi
         mov     esi, dword ptr [esp + 8]
         push    esi
-        call    TableSearch_004be760
+        call    TableSearch
         add     esp, 4
         test    eax, eax
         _emit   74h
         _emit   07h
-        call    Audio_TimerTeardown_004ac5f0
+        call    Audio_TimerTeardown
         pop     esi
         ret
         cmp     si, 0x64

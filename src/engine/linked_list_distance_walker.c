@@ -108,24 +108,24 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void LinkedListDistanceWalker_0045f950(void);
+extern void LinkedListDistanceWalker(void);
 extern void MstackPopScaledChainPlusThunks(void);
 extern void MStackPushPtr1Jmp_00438ef0(void);
-extern void Set0xaCmpEqSet0x26Jmp_0046a1e0(void);
+extern void Set0xaCmpEqSet0x26Jmp(void);
 extern void SetJmp_00439c30(void);
 
 /* @addr 0x00439ba0 (128b game) - dual-entry pause/bit gated.
- *   Block A: call LinkedListDistanceWalker_0045f950; if !pause: cl=g_xformDirtyFlags; if (al=1 & cl): g_dispatchState=1,
+ *   Block A: call LinkedListDistanceWalker; if !pause: cl=g_xformDirtyFlags; if (al=1 & cl): g_dispatchState=1,
  *     mstack-push 0x00439bf0, jmp MstackPopScaledChainPlusThunks; ret.
- *   Block B (+0x50): call LinkedListDistanceWalker_0045f950; if !pause: if bitfield set jmp MStackPushPtr1Jmp_00438ef0;
+ *   Block B (+0x50): call LinkedListDistanceWalker; if !pause: if bitfield set jmp MStackPushPtr1Jmp_00438ef0;
  *     call Set0xaCmpEqSet0x26Jmp; if !pause jmp SetJmp_00439c30; ret.
  */
 extern unsigned int g_matrixStack_arr;
 extern unsigned int g_dispatchState;
 
-__declspec(naked) void DualEntryBitGated_00439ba0(void) {
+__declspec(naked) void DualEntryBitGated(void) {
     __asm {
-        call    LinkedListDistanceWalker_0045f950
+        call    LinkedListDistanceWalker
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -152,7 +152,7 @@ __declspec(naked) void DualEntryBitGated_00439ba0(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        call    LinkedListDistanceWalker_0045f950
+        call    LinkedListDistanceWalker
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -161,7 +161,7 @@ __declspec(naked) void DualEntryBitGated_00439ba0(void) {
         _emit   75h
         _emit   05h
         jmp     MStackPushPtr1Jmp_00438ef0
-        call    Set0xaCmpEqSet0x26Jmp_0046a1e0
+        call    Set0xaCmpEqSet0x26Jmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

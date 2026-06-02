@@ -20,7 +20,7 @@
  */
 extern u32 g_ecmReserved;
 
-void IncCallVtablePushCall_004b0d80(void) {
+void IncCallVtablePushCall(void) {
     g_ecmReserved++;
     if (g_ecmDSBuffer != 0) {
         g_ecmDSBuffer->vtbl->Stop(g_ecmDSBuffer);

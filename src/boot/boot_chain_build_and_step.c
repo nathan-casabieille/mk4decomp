@@ -110,6 +110,6 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned char g_byte_004f360c;
 extern unsigned int g_dispatchSave1179_004d5888;
-extern void BootChainBuildAndStep_004124c0(void);
+extern void BootChainBuildAndStep(void);
 
 static __inline void _set_eqwt(unsigned int v) { g_eventQueueWorkType = v; }

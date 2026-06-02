@@ -8,14 +8,14 @@ extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x004c54d0 (68b)
  *   CRT _new_handler-style malloc retry: takes (size, retry_flag).
- *   Calls SmallMalloc_004c5520(size); if NULL and retry_flag, invokes
- *   IndirectCall_004c6ec0(size) and loops back. Returns NULL if size > -32
+ *   Calls SmallMalloc(size); if NULL and retry_flag, invokes
+ *   IndirectCall(size) and loops back. Returns NULL if size > -32
  *   (overflow guard).
  */
-extern void *SmallMalloc_004c5520(unsigned int n);
-extern int IndirectCall_004c6ec0(unsigned int n);
+extern void *SmallMalloc(unsigned int n);
+extern int IndirectCall(unsigned int n);
 
-__declspec(naked) void TryAllocWithHandler_004c54d0(void) {
+__declspec(naked) void TryAllocWithHandler(void) {
     __asm {
         push    esi
         mov     esi, dword ptr [esp + 8]
@@ -33,7 +33,7 @@ loop_top:
         _emit   77h
         _emit   0bh
         push    esi
-        call    SmallMalloc_004c5520
+        call    SmallMalloc
         add     esp, 4
         jmp     short skip_zero
         xor     eax, eax
@@ -45,7 +45,7 @@ skip_zero:
         _emit   74h
         _emit   0fh
         push    esi
-        call    IndirectCall_004c6ec0
+        call    IndirectCall
         add     esp, 4
         test    eax, eax
         jne     loop_top

@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
  *   if zero: jmp Thunk_0043a540;
  *   else: jmp HitReactionDispatcher.
  */
-void CmpDualPatchScaledRangeJmp_004399c0(int arg) {
+void CmpDualPatchScaledRangeJmp(int arg) {
     unsigned int idx = (unsigned int)(arg >> 2);
     unsigned int walk;
     unsigned int chain;

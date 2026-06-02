@@ -18,7 +18,7 @@ extern unsigned int g_scaledInit_00542044;
  * .skip:
  *   ret
  */
-void CmpP1ScaledInit_004709c0(void) {
+void CmpP1ScaledInit(void) {
     g_scaledInit_00542044 = g_player2NodeIdx;
     if (g_fightGroupHead != g_player1NodeIdx) {
         g_scaledInit_00542044 = g_player1NodeIdx;

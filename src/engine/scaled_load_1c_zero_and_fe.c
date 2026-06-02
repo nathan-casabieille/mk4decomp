@@ -22,7 +22,7 @@ extern unsigned int g_phaseTimer;
  *   mov     [ecx*4 + 0x20], eax
  *   ret
  */
-void ScaledLoad1cZeroAndFE_00446640(void) {
+void ScaledLoad1cZeroAndFE(void) {
     unsigned int s;
     unsigned int v;
     s = *(unsigned int *)(g_baseSel * 4 + 0x30);

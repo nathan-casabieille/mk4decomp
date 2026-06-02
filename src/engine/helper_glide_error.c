@@ -19,7 +19,7 @@ extern int g_renderer1_active;
  */
 void Helper_GlideError(void) {
     Renderer1_EndScene_Glide();
-    EarlyOutDualPushIATStore_004b4600();
+    EarlyOutDualPushIATStore();
     ((int(*)(int))Helper_GlidePostInit)(0);
     if (g_glideFnTable != 0) {
         if (g_glideF8 != 0) {

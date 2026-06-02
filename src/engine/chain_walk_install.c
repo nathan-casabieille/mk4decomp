@@ -149,7 +149,7 @@ extern void PushSetCallPop(void);
  *   The 0x426da0 imm is the in-body label of GameMusicState4Way.
  */
 extern unsigned int g_bootClampMod6Base_004e2670;
-void PushSetEventQueueCallStore_00426d30(void) {
+void PushSetEventQueueCallStore(void) {
     unsigned int top;
     top = g_matrixStackTop + 1;
     g_matrixStackTop = top;

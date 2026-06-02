@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
  *   clear_and_ret: g_walkCallback = 0, ret.
  */
 
-void GuardedBitMaskFlagOrClear_0048c510(void) {
+void GuardedBitMaskFlagOrClear(void) {
     __asm {
         mov     eax, dword ptr [g_audioBankSel]
         test    eax, eax

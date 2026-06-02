@@ -115,8 +115,8 @@ extern unsigned int g_fightAxisPosY;
  *   StackPopDispatchTagged; else install self with tag 0x1e (slot
  *   value 0x439250) and raise framePause.
  */
-extern void InstallSelfNoCheck_00439250(void);
-void InstallSelfNoCheck_00439250(void) {
+extern void InstallSelfNoCheck(void);
+void InstallSelfNoCheck(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     ((ScenegraphNode *)base)->install_flag = 0;
     g_eventQueueCurrent = 0xf0;
@@ -127,7 +127,7 @@ void InstallSelfNoCheck_00439250(void) {
         StackPopDispatchTagged();
         return;
     }
-    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfNoCheck_00439250;
+    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfNoCheck;
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;

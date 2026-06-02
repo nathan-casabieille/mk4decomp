@@ -15,8 +15,8 @@ extern unsigned int g_scaledInit_00542044;
  *   exceeds 0xab4194.
  */
 extern u8 g_memHeapStart[];
-extern void Mem_Free_004b5b10(void *);
-__declspec(naked) void PackedListVisitor_004b5c90(void) {
+extern void Mem_Free(void *);
+__declspec(naked) void PackedListVisitor(void) {
     __asm {
         push    esi
         push    edi
@@ -45,7 +45,7 @@ loop_top:
         _emit   03h
         lea     eax, [esi + 0x0c]
         push    eax
-        call    Mem_Free_004b5b10
+        call    Mem_Free
         add     esp, 4
         mov     eax, dword ptr [esi]
         and     eax, 0xffffff

@@ -25,7 +25,7 @@ extern unsigned int g_byte_004d50b4;
 extern unsigned int g_byte_004d50b8;
 extern unsigned int g_byte_004d50c0;
 
-int TripleByteCheck20_004a1c80(void) {
+int TripleByteCheck20(void) {
     if (g_byte_004d50b8 & 0x10) return 1;
     if (g_byte_004d50b4 & 0x1000) return 1;
     __asm {

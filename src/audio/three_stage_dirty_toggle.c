@@ -12,7 +12,7 @@ extern unsigned int g_scaledInit_00542044;
  *   stage compares walk against a different global (538158, 538158
  *   again, 53815c) and either keeps or removes the bit-4 flag.
  */
-void ThreeStageDirtyToggle_004ac1a0(void) {
+void ThreeStageDirtyToggle(void) {
     unsigned int dirty;
     g_xformDirtyFlags |= 4;
     if (g_walkCallback == g_player1NodeIdx) return;

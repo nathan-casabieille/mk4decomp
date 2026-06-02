@@ -112,23 +112,23 @@ extern unsigned char g_dataArr_00535cfc;
 extern unsigned char g_dataArr_0053a1d0;
 extern u8 g_dlEnabledFlag;
 extern void TableWalkBoundedCmp(int);
-extern void TripleCallCountdown_00428080(void);
+extern void TripleCallCountdown(void);
 extern void DownloadPlayerChar(void);
-extern void TableWalkPause_004bd850(void);
+extern void TableWalkPause(void);
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 
 /* @addr 0x00402ed0 (141b boot) - 2-stage selector init:
- *   TableWalkBoundedCmp(6); TripleCallCountdown_00428080; pause? ret.
+ *   TableWalkBoundedCmp(6); TripleCallCountdown; pause? ret.
  *   Stage1: write g_eventQueueEnd = (0x535cfc >> 2); g_dlEnabledFlag = 1;
  *   g_walkCallback = g_dlNalt1; g_eventQueueCurrent = 0; call DownloadPlayerChar.
  *   Stage2 (after pause check): g_walkCallback = g_dlNalt2; g_eventQueueEnd = (0x53a1d0 >> 2);
  *   g_eventQueueCurrent = 1; call DownloadPlayerChar.
  *   Then: g_dlEnabledFlag = 0; jmp TableWalkPause.
  */
-void TwoStageSelectorInit_00402ed0(void) {
+void TwoStageSelectorInit(void) {
     TableWalkBoundedCmp(6);
-    TripleCallCountdown_00428080();
+    TripleCallCountdown();
     if (g_framePauseFlag != 0) return;
     g_eventQueueEnd = (unsigned int)&g_dataArr_00535cfc >> 2;
     g_dlEnabledFlag = 1;
@@ -145,5 +145,5 @@ void TwoStageSelectorInit_00402ed0(void) {
     DownloadPlayerChar();
     if (g_framePauseFlag != 0) return;
     g_dlEnabledFlag = 0;
-    TableWalkPause_004bd850();
+    TableWalkPause();
 }

@@ -108,9 +108,9 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void PopCallBitCmpPushCall_0047cb00(void);
-extern void InstallSelfCountdownStr_0047cb90(void);
-extern void InstallSelfMStackPackedFlow_0047c990(void);
+extern void PopCallBitCmpPushCall(void);
+extern void InstallSelfCountdownStr(void);
+extern void InstallSelfMStackPackedFlow(void);
 extern void ScaledChain3c7c(void);
 
 /* @addr 0x0047c8f0 (154b game) - install-self with 2-stage 3-way dispatch.
@@ -136,7 +136,7 @@ __declspec(naked) void InstallSelfCountdown2Stage_0047c8f0(void) {
         mov     dword ptr [g_eventQueueChild], ecx
         _emit   75h
         _emit   13h
-        call    PopCallBitCmpPushCall_0047cb00
+        call    PopCallBitCmpPushCall
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -146,10 +146,10 @@ __declspec(naked) void InstallSelfCountdown2Stage_0047c8f0(void) {
         cmp     eax, ecx
         _emit   75h
         _emit   05h
-        jmp     InstallSelfCountdownStr_0047cb90
+        jmp     InstallSelfCountdownStr
         _emit   7dh
         _emit   05h
-        jmp     InstallSelfMStackPackedFlow_0047c990
+        jmp     InstallSelfMStackPackedFlow
         call    ScaledChain3c7c
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -158,8 +158,8 @@ __declspec(naked) void InstallSelfCountdown2Stage_0047c8f0(void) {
         cmp     dword ptr [g_walkCallback], 3
         _emit   7ch
         _emit   05h
-        jmp     InstallSelfCountdownStr_0047cb90
-        jmp     InstallSelfMStackPackedFlow_0047c990
+        jmp     InstallSelfCountdownStr
+        jmp     InstallSelfMStackPackedFlow
         mov     ecx, 1
         mov     dword ptr [eax + 0x08], 0x0047c8f0
         mov     dword ptr [eax + 0x84], ecx

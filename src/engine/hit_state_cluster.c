@@ -115,17 +115,17 @@ extern void ArgSarStoreJmp(void);
 extern void ComboScriptDispatchCluster(void);
 extern void FiveCallGuardSetTail(void);
 extern void GuardedSeq_004297b0(void);
-extern void InstallSelfChainedDispatch_0046cb70(void);
+extern void InstallSelfChainedDispatch(void);
 extern void InstallSelfIndirectJmp(void);
 extern void InstallSelfMStackPush_0046cc80(void);
 extern void PushPopWalkSet1006(void);
 extern void ScaledAndAlfe(void);
 extern void ScaledInit_0048d450(void);
 extern void ScaledLoadIncJmp_00429840(void);
-extern void ScaledMove74to70_0046eaa0(void);
+extern void ScaledMove74to70(void);
 extern void SlotEvent3EntryChain(void);
 
-__declspec(naked) void HitStateCluster_0046c7c0(void)
+__declspec(naked) void HitStateCluster(void)
 {
     __asm {
         mov      eax, dword ptr [g_fightGroupHead]
@@ -156,7 +156,7 @@ __declspec(naked) void HitStateCluster_0046c7c0(void)
         nop      
         nop      
         nop      
-        call     ScaledMove74to70_0046eaa0
+        call     ScaledMove74to70
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c840
@@ -374,7 +374,7 @@ __declspec(naked) void HitStateCluster_0046c7c0(void)
         test     al, bl
         mov      dword ptr [g_eventQueueChild], edx
         je       L_cb32
-        call     InstallSelfChainedDispatch_0046cb70
+        call     InstallSelfChainedDispatch
         pop      esi
         pop      ebx
         ret      

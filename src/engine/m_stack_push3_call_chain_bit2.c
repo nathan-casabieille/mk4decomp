@@ -108,13 +108,13 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void MStackPush3CallChainBit2_004431e0(void);
+extern void MStackPush3CallChainBit2(void);
 extern void MStackPush1MagicMod2(void);
 extern unsigned int g_dispatchSave682_004e5a00;
 
 /* @addr 0x00442740 (311b game) - field-setup with chain init + Mul10 ops + multi-field bulk store.
  *   Save [baseSel*4+0x64] to g_eventQueueEnd, [baseSel*4+0x68] to g_eventQueueIdx.
- *   g_eventQueueTotal = (0x004e5a00 >> 2). Call MStackPush3CallChainBit2_004431e0; if pause ret. If bit2(0054208c) ret.
+ *   g_eventQueueTotal = (0x004e5a00 >> 2). Call MStackPush3CallChainBit2; if pause ret. If bit2(0054208c) ret.
  *   chain[scaledInit*4+0x30]=0x94; eax = chain[+0x64] - 0x5b333; g_eventQueueWorkType=eax.
  *   Call MStackPush1MagicMod2; if pause ret.
  *   Mul10Tail(0x247, g_eventQueueCurrent) -> g_eventQueueCurrent.
@@ -125,7 +125,7 @@ extern unsigned int g_dispatchSave682_004e5a00;
  *   g_walkCallback=0x28f. ret.
  */
 
-void ChainInitMul10BulkStore_00442740(void) {
+void ChainInitMul10BulkStore(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         mov     ecx, dword ptr [eax*4 + 0x64]
@@ -135,7 +135,7 @@ void ChainInitMul10BulkStore_00442740(void) {
         mov     dword ptr [g_eventQueueIdx], edx
         shr     eax, 2
         mov     dword ptr [g_eventQueueTotal], eax
-        call    MStackPush3CallChainBit2_004431e0
+        call    MStackPush3CallChainBit2
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

@@ -113,13 +113,13 @@ extern unsigned int g_fightAxisPosY;
  *   Read g_eventQueueEnd[0] (state push); if signed >= 0: indirect call [eax*4]; ret.
  *   Else: call ScaledArrStore; if pause? ret.
  *   Check baseSel[+0x3c][+0x74] == 0x2001 OR g_currentNodeFlags != 0: skip middle call.
- *   Else: call MStackIndirectCallBit_00470e20; if pause? ret.
+ *   Else: call MStackIndirectCallBit; if pause? ret.
  *   Install-self via baseSel[+4] chain push; pause=1; ret.
  */
-extern void MStackIndirectCallBit_00470e20(void);
+extern void MStackIndirectCallBit(void);
 extern void ScaledArrStore_00429980(void);
 
-__declspec(naked) void InstallSelfBranchIndirect_00470d10(void) {
+__declspec(naked) void InstallSelfBranchIndirect(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -168,7 +168,7 @@ __declspec(naked) void InstallSelfBranchIndirect_00470d10(void) {
         test    eax, eax
         _emit   75h
         _emit   0eh
-        call    MStackIndirectCallBit_00470e20
+        call    MStackIndirectCallBit
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

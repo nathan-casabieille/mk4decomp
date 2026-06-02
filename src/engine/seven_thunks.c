@@ -112,20 +112,20 @@ extern unsigned int g_fightAxisPosY;
  *   B1 (0..31): call MStackBitFlagDispatch; if !pause: push 0x004ed8b0, tail-call ArgSarStoreJmp.
  *   B2 (32..95): set baseSel[+0x74]=0x10f; call internal 0x00465ba0 (inside AppInit_Misc7);
  *     if !pause: push 0x004ed340, tail-call ArgSarStoreJmp.
- *   B3 (96..127): g_eventQueueEnd = 0x004ed358>>2; tail-jmp InstallSelfMStackBranchIndirect_00470b90.
+ *   B3 (96..127): g_eventQueueEnd = 0x004ed358>>2; tail-jmp InstallSelfMStackBranchIndirect.
  *   B4 (128..143): push 0x004ed378; tail-call ArgSarStoreJmp.
  *   B5 (144..207): set baseSel[+0x74]=0x114; call 0x00465ba0; if !pause: push 0x004ed388,
  *     tail-call ArgSarStoreJmp.
- *   B6 (208..239): g_eventQueueEnd = 0x004ed3a0>>2; tail-jmp InstallSelfMStackBranchIndirect_00470b90.
+ *   B6 (208..239): g_eventQueueEnd = 0x004ed3a0>>2; tail-jmp InstallSelfMStackBranchIndirect.
  *   B7 (240..253): push 0x004ed3c0; tail-call ArgSarStoreJmp.
  */
 extern void ArgSarStoreJmp(void);
-extern void InstallSelfMStackBranchIndirect_00470b90(void);
-extern void MStackBitFlagDispatch_00494750(void);
+extern void InstallSelfMStackBranchIndirect(void);
+extern void MStackBitFlagDispatch(void);
 
-__declspec(naked) void SevenThunks_0047cc50(void) {
+__declspec(naked) void SevenThunks(void) {
     __asm {
-        call    MStackBitFlagDispatch_00494750
+        call    MStackBitFlagDispatch
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -171,7 +171,7 @@ __declspec(naked) void SevenThunks_0047cc50(void) {
         mov     eax, 0x004ed358
         sar     eax, 2
         mov     dword ptr [g_eventQueueEnd], eax
-        jmp     InstallSelfMStackBranchIndirect_00470b90
+        jmp     InstallSelfMStackBranchIndirect
         nop
         nop
         nop
@@ -225,7 +225,7 @@ __declspec(naked) void SevenThunks_0047cc50(void) {
         mov     eax, 0x004ed3a0
         sar     eax, 2
         mov     dword ptr [g_eventQueueEnd], eax
-        jmp     InstallSelfMStackBranchIndirect_00470b90
+        jmp     InstallSelfMStackBranchIndirect
         nop
         nop
         nop

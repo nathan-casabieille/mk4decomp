@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void NotMaskStorePair(void);
 
-void CdeclArgScaledLookupAndStore_0045f470(void) {
+void CdeclArgScaledLookupAndStore(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         sar     eax, 2

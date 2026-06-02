@@ -65,14 +65,14 @@ scenegraph ([scenegraph.md](scenegraph.md)) feed work into each frame.
 | Address    | Name                              | Size (b) | Role |
 |------------|-----------------------------------|---------:|------|
 | 0x0045c820 | `DispatchEventQueue`              |      170 | Seeds the drain cursor from `g_eventQueueActive`, pins the ring end, tail-calls the drain loop. |
-| 0x0045c840 | `EventQueueDrainLoop_0045c840`    |      138 | Walks the ring from the cursor to `g_eventQueueHead`, materializes each queued event node (`AllocNode`, node-kind 0x11), consumes the slot, wraps at the ring end. Aborts mid-walk if `g_framePauseFlag` is set. Commits at the end. |
+| 0x0045c840 | `EventQueueDrainLoop`    |      138 | Walks the ring from the cursor to `g_eventQueueHead`, materializes each queued event node (`AllocNode`, node-kind 0x11), consumes the slot, wraps at the ring end. Aborts mid-walk if `g_framePauseFlag` is set. Commits at the end. |
 | 0x0045c8d0 | `DispatchEventQueue_Commit`       |       11 | `g_eventQueueActive = g_eventQueuePending` - publishes the queue tail produced this frame. |
-| 0x0045de60 | `EventPacketDecoder_0045de60`     |      582 | Decodes the per-node `(opcode, arg)` packed-pointer stream at `g_currentNodeIdx`. Recognizes opcodes `0xdd`/`0xaa` (accumulator presets) plus a set of collision / fighter-state-flag checks; dispatches matched opcodes to their handlers. |
-| 0x0045e0b0 | `ConditionalAcc4or3_0045e0b0`     |       30 | `g_acc = 4; if (g_xformScratch2088) g_acc = 3;` - opcode `0xdd` helper. |
-| 0x0045e0d0 | `ConditionalAcc3or4_0045e0d0`     |       30 | Mirror: default 3, override 4 - opcode `0xaa` helper. |
-| 0x0045e100 | `Event_InvokeHandler_0045e100`    |      201 | Saves the 3 live decoder-state words on the matrix stack, indirect-calls the per-opcode handler from `g_eventHandlerTable_004e9ea8[g_eventQueueCurrent]`, restores them, and (unless the frame went dirty) tail-jumps to `IncJmp` to advance. (Was `MStackPush3IndirectCall_0045e100`.) |
-| 0x0045e1d0 | `IncJmp_0045e1d0`                  |       11 | Increments the decode cursor (`g_scaledInit_00542044`) and re-enters `EventGateCluster`. The decoder's per-opcode 'advance and continue'. |
-| 0x0045e1e0 | `EventGateCluster_0045e1e0`       |      942 | Packed cluster of event-driven sub-functions. Anchor: loads the current entity's script cursor pair from `entity[+0x64]/[+0x68]` into `g_eventQueueTotal/End` and jumps into `EventPacketDecoder`. Following sub-functions (NOP-separated) are `TripleEntryGate` + frame-pause + fight-tick gates that arm per-frame fighter state. (Was the misnamed `InputCheckCluster_0045e1e0`.) |
+| 0x0045de60 | `EventPacketDecoder`     |      582 | Decodes the per-node `(opcode, arg)` packed-pointer stream at `g_currentNodeIdx`. Recognizes opcodes `0xdd`/`0xaa` (accumulator presets) plus a set of collision / fighter-state-flag checks; dispatches matched opcodes to their handlers. |
+| 0x0045e0b0 | `ConditionalAcc4or3`     |       30 | `g_acc = 4; if (g_xformScratch2088) g_acc = 3;` - opcode `0xdd` helper. |
+| 0x0045e0d0 | `ConditionalAcc3or4`     |       30 | Mirror: default 3, override 4 - opcode `0xaa` helper. |
+| 0x0045e100 | `Event_InvokeHandler`    |      201 | Saves the 3 live decoder-state words on the matrix stack, indirect-calls the per-opcode handler from `g_eventHandlerTable_004e9ea8[g_eventQueueCurrent]`, restores them, and (unless the frame went dirty) tail-jumps to `IncJmp` to advance. (Was `MStackPush3IndirectCall_0045e100`.) |
+| 0x0045e1d0 | `IncJmp`                  |       11 | Increments the decode cursor (`g_scaledInit_00542044`) and re-enters `EventGateCluster`. The decoder's per-opcode 'advance and continue'. |
+| 0x0045e1e0 | `EventGateCluster`       |      942 | Packed cluster of event-driven sub-functions. Anchor: loads the current entity's script cursor pair from `entity[+0x64]/[+0x68]` into `g_eventQueueTotal/End` and jumps into `EventPacketDecoder`. Following sub-functions (NOP-separated) are `TripleEntryGate` + frame-pause + fight-tick gates that arm per-frame fighter state. (Was the misnamed `InputCheckCluster_0045e1e0`.) |
 
 ## Globals
 
@@ -122,7 +122,7 @@ Structural observations:
 | 0x01 | `0x0045f2d0` | (unnamed) |
 | 0x02 | `0x0045f020` | (unnamed) |
 | 0x03 | `0x0045efb0` | (unnamed) |
-| 0x04 | `0x0045ede0` | `DualStreamSqDistThresh_0045ede0` |
+| 0x04 | `0x0045ede0` | `DualStreamSqDistThresh` |
 | 0x05 | `0x0045f210` | (unnamed) |
 | 0x06 | `0x0045edd0` | (unnamed) |
 | 0x07 | `0x0045f120` | (unnamed) |
@@ -145,7 +145,7 @@ Structural observations:
 | 0x18 | `0x0045ea30` | (unnamed) |
 | 0x19 | `0x0045e9f0` | (unnamed) |
 | 0x1a | `0x0045e600` | (unnamed) |
-| 0x1b | `0x0045e5d0` | `TripleEntryGate_0045e5d0` |
+| 0x1b | `0x0045e5d0` | `TripleEntryGate` |
 | 0x1c | `0x0045e4c0` | (unnamed) |
 | 0x1d | `0x0045e880` | (unnamed) |
 | 0x1e | `0x0045e9b0` | (unnamed) |
@@ -155,7 +155,7 @@ Structural observations:
 | 0x22 | `0x0045e840` | (unnamed) |
 | 0x23 | `0x0045e800` | (unnamed) |
 | 0x24 | `0x0045e770` | (unnamed) |
-| 0x25 | `0x0045e590` | `RangeCheckJmp_0045e590` |
+| 0x25 | `0x0045e590` | `RangeCheckJmp` |
 | 0x26 | `0x0045e470` | (unnamed) |
 | 0x27 | `0x0045e410` | (unnamed) |
 | 0x29 | `0x0045e3c0` | (unnamed) |
@@ -169,12 +169,12 @@ Structural observations:
 | 0x32 | `0x0045e700` | (unnamed) |
 | 0x33 | `0x0045e550` | (unnamed) |
 | 0x35 | `0x00460a50` | (unnamed) |
-| 0x37 | `0x00460c60` | `CallPauseCallTestStackPushJmp_00460c60` |
-| 0x38 | `0x0045fcf0` | `CallPauseMStackPushSet0Jmp_0045fcf0` |
+| 0x37 | `0x00460c60` | `CallPauseCallTestStackPushJmp` |
+| 0x38 | `0x0045fcf0` | `CallPauseMStackPushSet0Jmp` |
 | 0x3b | `0x00460cd0` | `GuardedDispatch_00460cd0` |
 | 0x3f | `0x00460ca0` | `GuardedDispatch_00460ca0` |
-| 0x47 | `0x00460c60` | `CallPauseCallTestStackPushJmp_00460c60` |
-| 0x48 | `0x0045fcf0` | `CallPauseMStackPushSet0Jmp_0045fcf0` |
+| 0x47 | `0x00460c60` | `CallPauseCallTestStackPushJmp` |
+| 0x48 | `0x0045fcf0` | `CallPauseMStackPushSet0Jmp` |
 | 0x4b | `0x00460cd0` | `GuardedDispatch_00460cd0` |
 | 0x4f | `0x00460ca0` | `GuardedDispatch_00460ca0` |
 | 0x56 | `0x0048e0d0` | (shared catch-all) |
@@ -193,11 +193,11 @@ Structural observations:
 | 0x63 | `0x0048e0d0` | (shared catch-all) |
 | 0x64 | `0x0048e0d0` | (shared catch-all) |
 | 0x65 | `0x0048e0d0` | (shared catch-all) |
-| 0x66 | `0x00460fa0` | `DualEntryStateGated_00460fa0` |
+| 0x66 | `0x00460fa0` | `DualEntryStateGated` |
 | 0x67 | `0x00461010` | (unnamed) |
-| 0x68 | `0x00460260` | `GuardedDoubleCallSetJmp_00460260` |
-| 0x69 | `0x00461090` | `SixEntryYieldThunks_00461090` |
-| 0x6a | `0x00461020` | `PushFourCallPopBitJmp_00461020` |
+| 0x68 | `0x00460260` | `GuardedDoubleCallSetJmp` |
+| 0x69 | `0x00461090` | `SixEntryYieldThunks` |
+| 0x6a | `0x00461020` | `PushFourCallPopBitJmp` |
 | 0x6c | `0x00461120` | (unnamed) |
 | 0x6d | `0x00461130` | (unnamed) |
 | 0x6e | `0x00461190` | (unnamed) |
@@ -213,8 +213,8 @@ No-op opcodes (NULL slot, decoder ignores): `0x00, 0x28, 0x30, 0x34,
 
 | Opcode | Handler | Effect |
 |-------:|---------|--------|
-| `0xdd` | `ConditionalAcc4or3_0045e0b0` | Set `g_acc` to 4, or 3 if `g_xformScratch2088` is set. |
-| `0xaa` | `ConditionalAcc3or4_0045e0d0` | Set `g_acc` to 3, or 4 if `g_xformScratch2088` is set. |
+| `0xdd` | `ConditionalAcc4or3` | Set `g_acc` to 4, or 3 if `g_xformScratch2088` is set. |
+| `0xaa` | `ConditionalAcc3or4` | Set `g_acc` to 3, or 4 if `g_xformScratch2088` is set. |
 
 `0xdd` and `0xaa` are handled by an explicit compare in
 `EventPacketDecoder` *before* the table lookup, so they sit outside

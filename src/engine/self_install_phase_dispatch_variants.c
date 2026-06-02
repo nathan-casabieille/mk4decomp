@@ -117,13 +117,13 @@ extern void SelfInstallPhaseDispatch_00428990(void);
  *   g_cj_00542054=baseSel[*4+0x64], g_cj_00542058=baseSel[*4+0x68]; jmp StackPopDispatchTagged.
  */
 extern unsigned int g_dispatchSave961_004ea058;
-extern void CallPauseMStackPushSet9Jmp_0045ffc0(void);
+extern void CallPauseMStackPushSet9Jmp(void);
 extern void CjInstallSelfRouter(void);
-extern void CjMaskedFlagProbe_0048ecf0(void);
+extern void CjMaskedFlagProbe(void);
 extern void DualGatedStateYield(void);
 extern void GuardedDirtyXformFromTable(void);
 extern void GuardedDualAndFlagToggle(void);
-extern void InstallSelfChainCascade_0045feb0(void);
+extern void InstallSelfChainCascade(void);
 extern void MStackPushSet0001(void);
 extern void MstackPopScaledChainPlusThunks(void);
 extern void MultiThunkDispatcher_00460470(void);
@@ -138,7 +138,7 @@ extern void ScaledZeroFour(void);
 extern void SelfInstallPhaseDispatch_00460000(void);
 extern void SelfInstallPhaseDispatch_004943f0(void);
 
-__declspec(naked) void InstallSelfChainEsi_004753b0(void) {
+__declspec(naked) void InstallSelfChainEsi(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         xor     edx, edx
@@ -193,7 +193,7 @@ __declspec(naked) void InstallSelfChainEsi_004753b0(void) {
  *   state==1: install-self at func entry +0x02000000. State=2; call ScaledChainJmp; pause=1; ret.
  *   state>=2: call ScaledZeroFour; if pause ret. Tail-call SelfInstallPhaseDispatch_00460000; ret.
  */
-__declspec(naked) void InstallSelf3StateDualEntry_00486ff0(void) {
+__declspec(naked) void InstallSelf3StateDualEntry(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -220,9 +220,9 @@ __declspec(naked) void InstallSelf3StateDualEntry_00486ff0(void) {
         call    SelfInstallPhaseDispatch_00460000
         pop     esi
         ret
-        mov     dword ptr [esi + 8], offset InstallSelf3StateDualEntry_00486ff0
+        mov     dword ptr [esi + 8], offset InstallSelf3StateDualEntry
         mov     ecx, dword ptr [g_baseSel]
-        mov     edx, offset InstallSelf3StateDualEntry_00486ff0
+        mov     edx, offset InstallSelf3StateDualEntry
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x02000000
@@ -248,9 +248,9 @@ __declspec(naked) void InstallSelf3StateDualEntry_00486ff0(void) {
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     edx, dword ptr [g_xformEntityIdx]
         mov     dword ptr [ecx*4 + 0x24], edx
-        mov     dword ptr [esi + 8], offset InstallSelf3StateDualEntry_00486ff0
+        mov     dword ptr [esi + 8], offset InstallSelf3StateDualEntry
         mov     eax, dword ptr [g_baseSel]
-        mov     ecx, offset InstallSelf3StateDualEntry_00486ff0
+        mov     ecx, offset InstallSelf3StateDualEntry
         add     ecx, 0x01000000
         mov     dword ptr [eax*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
@@ -389,13 +389,13 @@ __declspec(naked) void SelfInstallPhaseDispatch_0045fd30(void)
         call    DualGatedStateYield
         test    eax, eax
         jne     L_sipd2_retCommon
-        call    CjMaskedFlagProbe_0048ecf0
+        call    CjMaskedFlagProbe
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_sipd2_retCommon
         test    byte ptr [g_xformDirtyFlags], bl
         je      short L_sipd2_continue
-        call    CallPauseMStackPushSet9Jmp_0045ffc0
+        call    CallPauseMStackPushSet9Jmp
         pop     esi
         pop     ebx
         ret
@@ -420,7 +420,7 @@ __declspec(naked) void SelfInstallPhaseDispatch_0045fd30(void)
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
-        call    InstallSelfChainCascade_0045feb0
+        call    InstallSelfChainCascade
         mov     dword ptr [g_framePauseFlag], ebx
         pop     esi
         pop     ebx

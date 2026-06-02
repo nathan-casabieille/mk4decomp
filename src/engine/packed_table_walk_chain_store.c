@@ -124,7 +124,7 @@ extern void SaveCallRestore(void);
 
 extern unsigned int g_matrixStack_arr;
 
-void PackedTableWalkChainStore_00463e20(void) {
+void PackedTableWalkChainStore(void) {
     __asm {
         push    0x26f
         call    SaveCallRestore

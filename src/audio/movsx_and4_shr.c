@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern char g_byte_004d50c0;
-void MovsxAnd4Shr_004a1ce0(void) {
+void MovsxAnd4Shr(void) {
     __asm {
         movsx   eax, byte ptr [g_byte_004d50c0]
         and     eax, 4

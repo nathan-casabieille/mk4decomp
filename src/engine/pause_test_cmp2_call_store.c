@@ -27,7 +27,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned char g_byte_00542071;
 extern void ScaledIterStep_0045c020(void);
-void PauseTestCmp2CallStore_0045bfe0(void) {
+void PauseTestCmp2CallStore(void) {
     unsigned int pause;
     unsigned int b;
     pause = g_framePauseFlag;

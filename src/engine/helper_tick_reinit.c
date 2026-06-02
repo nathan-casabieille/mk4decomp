@@ -48,8 +48,8 @@ extern unsigned int g_dispatchSave1557_00ab4d64;
 extern unsigned int g_dispatchSave1558_00ab4d68;
 extern void AdvanceTriStripRing(void);
 extern void Helper_DrawCursor(void);
-extern void Init16BitFields_004bcc50(void);
-extern void Mat3x3VecMul_004b3630(void);
+extern void Init16BitFields(void);
+extern void Mat3x3VecMul(void);
 extern void MaxOfThree(void);
 extern void ProjectTwoVertices(void);
 extern void ProjectVertex(void);
@@ -67,7 +67,7 @@ __declspec(naked) void Helper_TickReinit(void)
         jne      L_cc3c
         cmp      dword ptr [g_tickX2], esi
         je       L_cc3c
-        call     Init16BitFields_004bcc50
+        call     Init16BitFields
         mov      eax, dword ptr [g_tickX2]
         mov      ecx, dword ptr [g_table_00ab4878]
         cdq
@@ -133,7 +133,7 @@ __declspec(naked) void Helper_TickReinit(void)
         push     ecx
         push     edx
         mov      dword ptr [esp + 0x34], eax
-        call     Mat3x3VecMul_004b3630
+        call     Mat3x3VecMul
         mov      eax, dword ptr [esp + 0x3c]
         mov      ecx, dword ptr [esp + 0x38]
         movsx    ebp, word ptr [g_word_00ab47f8]
@@ -164,7 +164,7 @@ __declspec(naked) void Helper_TickReinit(void)
         push     edx
         push     eax
         mov      dword ptr [esp + 0x4c], ecx
-        call     Mat3x3VecMul_004b3630
+        call     Mat3x3VecMul
         mov      eax, dword ptr [esp + 0x54]
         mov      ecx, dword ptr [esp + 0x50]
         movsx    ebp, word ptr [g_word_00ab47f8]

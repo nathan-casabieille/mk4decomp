@@ -121,8 +121,8 @@ extern unsigned int g_iat_004d20b8;
 extern unsigned int g_iat_004d20bc;
 extern unsigned int g_iat_004d20e4;
 extern u32 g_demoModeFlag;
-extern void AuxAudioDevCapsQuery_004ac3f0(void);
-extern void DSoundQueryProperty_004ac3a0(void);
+extern void AuxAudioDevCapsQuery(void);
+extern void DSoundQueryProperty(void);
 extern void FreeImpl(void);
 extern void Helper_AuxAudio_PostInit(void);
 
@@ -228,30 +228,30 @@ extern unsigned int g_dispatchSave1462_00f9fd9c;
 extern unsigned int g_arr_00fa0de0;
 extern unsigned int g_iid_004d28f0;
 extern void Calloc(void);
-extern void CfltcvtFormat_004c8650(void);
+extern void CfltcvtFormat(void);
 extern void CmpCallPushIATCall(void);
-extern void CrtCodepageDispatcher_004cd6f0(void);
-extern void CrtFreeLocaleInfo_004d0400(void);
-extern void CrtInitLocaleInfo_004cf880(void);
-extern void CrtLocaleInfoFreeAll_004cfc00(void);
+extern void CrtCodepageDispatcher(void);
+extern void CrtFreeLocaleInfo(void);
+extern void CrtInitLocaleInfo(void);
+extern void CrtLocaleInfoFreeAll(void);
 extern void DSCreateThunk_004d12d2(void);
 extern void DSEnumeratorThunk_004d12cc(void);
 extern void DSoundSetAxisPan123_004aec10(void);
-extern void DialogProbeDispatch640_004b0670(void);
-extern void FormatHelper_004c8750(void);
-extern void FpFormatRound_004ccda0(void);
+extern void DialogProbeDispatch640(void);
+extern void FormatHelper(void);
+extern void FpFormatRound(void);
 extern void Helper_DrawCursor(void);
 extern void Helper_TexUpload(void);
 extern void IOWrapper_004c8fc0(void);
-extern void LeaScaledCall_004bd510(void);
-extern void LocaleInfoFill_004d0270(void);
-extern void PackDoubleFromInts_004cde40(void);
-extern void PaletteFillLineHybrid_004b5ce0(void);
-extern void PrintfStubSigned_004c85d0(void);
-extern void RendererTeardownSW_004b2a40(void);
-extern void Shl96By1_004ce290(void);
-extern void StreamAllocInit_004cc250(void);
-extern void TimeValAdd3_004ce220(void);
+extern void LeaScaledCall(void);
+extern void LocaleInfoFill(void);
+extern void PackDoubleFromInts(void);
+extern void PaletteFillLineHybrid(void);
+extern void PrintfStubSigned(void);
+extern void RendererTeardownSW(void);
+extern void Shl96By1(void);
+extern void StreamAllocInit(void);
+extern void TimeValAdd3(void);
 
 __declspec(naked) void AppInit_Misc8(void) {
     __asm {
@@ -279,14 +279,14 @@ __declspec(naked) void AppInit_Misc8(void) {
         call    Helper_AuxAudio_PostInit
         test    eax, eax
         jz      short L_c51_done
-        call    DSoundQueryProperty_004ac3a0
+        call    DSoundQueryProperty
         cmp     eax, 0x0f
         jne     short L_c51_done
         mov     esi, 1
         lea     edi, [esp + 0x0c]
     L_c51_loop:
         push    esi
-        call    AuxAudioDevCapsQuery_004ac3f0
+        call    AuxAudioDevCapsQuery
         mov     edx, dword ptr [edi - 4]
         add     esp, 4
         sub     eax, edx
@@ -313,7 +313,7 @@ extern void *g_iat_004d202c;
 
 
 extern s32 Mem_Malloc(void **out_ptr, s32 size, s32 tag);
-/* extern void DialogProbeDispatch_004afe40(void); */
+/* extern void DialogProbeDispatch(void); */
 extern unsigned int g_iat_004d21c4;
 extern int FSYS_fopen(const char *path, const char *mode);
 extern int FSYS_fclose(int fh);
@@ -328,7 +328,7 @@ extern unsigned int g_iat_004d2134;
  *   State 1 conversion path: allocate via Calloc, WideCharToMultiByte via
  *   IAT[0x4d20e4], MultiByteToWideChar(?) via IAT[0x4d20b8], free temp via FreeImpl.
  */
-__declspec(naked) void WcToMbDispatcher_004cdae0(void) {
+__declspec(naked) void WcToMbDispatcher(void) {
     __asm {
         push    ecx
         mov     eax, dword ptr [g_dispatchSave1451_00f9fc30]

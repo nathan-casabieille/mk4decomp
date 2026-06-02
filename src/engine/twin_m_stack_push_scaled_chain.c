@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void TwinMStackPushScaledChain_00422110(void);
+extern void TwinMStackPushScaledChain(void);
 extern void InstallSelfPackedF80(void);
 
 /*
@@ -117,7 +117,7 @@ extern void InstallSelfPackedF80(void);
  *   sub eax, 0 → flags. If state == 0: g_eventQueueWorkType=0; Push16Call; install-self with chain->state=1
  *     and g_pendingNodeType=1, pause=1; pop+ret.
  *   If state == 1: call FiveTableWalkInit; if paused: pop+ret. Else tail StackPopDispatchTagged; pop+ret.
- *   Otherwise: call TwinMStackPushScaledChain_00422110; if paused: pop+ret. g_eventQueueCurrent=5; install-self;
+ *   Otherwise: call TwinMStackPushScaledChain; if paused: pop+ret. g_eventQueueCurrent=5; install-self;
  *     chain->state=2; mstack-push (entry+0x02000000); g_currentNodeIdx++; clear g_baseSel*4+0x84;
  *     call InstallSelfPackedF80; g_framePauseFlag=1; pop+ret.
  */
@@ -144,7 +144,7 @@ __declspec(naked) void BootDualStateInstallSelf(void)
         pop     esi
         ret
     L_state2:
-        call    TwinMStackPushScaledChain_00422110
+        call    TwinMStackPushScaledChain
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_ret

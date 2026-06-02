@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  *   if zero: skip; eax = 6; g_eventQueueCurrent = 6;
  *   skip: g_walkCallback = eax; jmp 0x471190.
  */
-void PushFourCallPopBitJmp_00461020(void) {
+void PushFourCallPopBitJmp(void) {
     unsigned int v;
     g_eventQueueCurrent = 4;
     g_matrixStackTop++;

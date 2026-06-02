@@ -117,15 +117,15 @@ extern unsigned int g_crtTlsSlot_00522400;
  *   Calloc; if NULL fail. TlsSetValue(slot, ptr); if fail return 0.
  *   Else: call InitFields50and14, GetCurrentThreadId; *ptr = tid, ptr[+4] = -1. Return 1.
  */
-int TlsSlotInit_004c9d70(void) {
+int TlsSlotInit(void) {
     unsigned int *ptr;
-    FourIndirectCalls_004c6f20();
+    FourIndirectCalls();
     g_crtTlsSlot_00522400 = ((unsigned int (__stdcall *)(void))g_iat_004d20fc)();
     if (g_crtTlsSlot_00522400 != 0xffffffff) {
         ptr = (unsigned int *)Calloc(1, 0x74);
         if (ptr != 0) {
             if (((int (__stdcall *)(unsigned int, void *))g_iat_004d210c)(g_crtTlsSlot_00522400, ptr) != 0) {
-                InitFields50and14_004c9dd0(ptr);
+                InitFields50and14(ptr);
                 ptr[0] = ((unsigned int (__stdcall *)(void))g_iat_004d2104)();
                 ptr[1] = 0xffffffff;
                 return 1;

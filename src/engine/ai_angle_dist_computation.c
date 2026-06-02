@@ -110,24 +110,24 @@ extern unsigned int g_fightAxisPosY;
 
 /* ------------------------------------------------------------------ */
 /* Pose-FSM 3-helper cluster (720b game):                             */
-/*  h1 (0x431650): table-index wrapper, tail-jmp to AiAngleDistComputation_00431920.    */
+/*  h1 (0x431650): table-index wrapper, tail-jmp to AiAngleDistComputation.    */
 /*  h2 (0x431680): pause-guarded 31360→31920→326a0 chain ending in    */
 /*                 tail-jmp to ScaledInitWithCounterAndType_004314f0.                         */
 /*  h3 (0x431710): 3-case pose dispatch (state 0: 31360 chain;        */
 /*                 state 1: 30e60 install; state 2: scaleInit copy).  */
 /* ------------------------------------------------------------------ */
-extern void DispatchOrInitFightGroup_0042f850(void);
-extern void CameraAimSplineDriver_00430e60(void);
-extern void DualEntryInitDispatch_00431360(void);
+extern void DispatchOrInitFightGroup(void);
+extern void CameraAimSplineDriver(void);
+extern void DualEntryInitDispatch(void);
 extern void ScaledInitWithCounterAndType_004314f0(void);
-extern void AiAngleDistComputation_00431920(void);
+extern void AiAngleDistComputation(void);
 extern void PendingMatch_00432110(void);
 extern void PendingMatch_004326a0(void);
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_dispatchArr_00542188;
 
 
-__declspec(naked) void PoseFsmTriHelpers_00431650(void)
+__declspec(naked) void PoseFsmTriHelpers(void)
 {
     __asm {
         /* === h1 (0x431650): table-index wrapper, tail-jmp 31920 === */
@@ -138,7 +138,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         mov      dword ptr [g_currentNodeIdx], eax
         mov      eax, dword ptr [eax*4]
         mov      dword ptr [g_currentNodeIdx], eax
-        jmp      AiAngleDistComputation_00431920
+        jmp      AiAngleDistComputation
         nop
         nop
         nop
@@ -150,7 +150,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         nop
         nop
         /* === h2 (0x431680): pause-guarded chain → 4314f0 tail-jmp === */
-        call     DualEntryInitDispatch_00431360
+        call     DualEntryInitDispatch
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1700
@@ -170,7 +170,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         mov      dword ptr [g_currentNodeIdx], eax
         mov      ecx, dword ptr [eax*4]
         mov      dword ptr [g_currentNodeIdx], ecx
-        call     AiAngleDistComputation_00431920
+        call     AiAngleDistComputation
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1700
@@ -211,7 +211,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         je       L_1823
         dec      eax
         je       short L_1747
-        call     DispatchOrInitFightGroup_0042f850
+        call     DispatchOrInitFightGroup
         pop      edi
         pop      esi
         ret
@@ -224,7 +224,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         mov      dword ptr [eax + 0x40], edi
         mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [eax + 0x48], ecx
-        call     CameraAimSplineDriver_00430e60
+        call     CameraAimSplineDriver
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_191d
         mov      edx, dword ptr [g_baseSel]
@@ -269,7 +269,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         pop      esi
         ret
     L_1853:
-        call     DualEntryInitDispatch_00431360
+        call     DualEntryInitDispatch
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_191d
         mov      edx, dword ptr [g_eventQueueEnd]
@@ -288,7 +288,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         mov      dword ptr [g_currentNodeIdx], eax
         mov      eax, dword ptr [eax*4]
         mov      dword ptr [g_currentNodeIdx], eax
-        call     AiAngleDistComputation_00431920
+        call     AiAngleDistComputation
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_191d
         mov      dword ptr [esi + 8], OFFSET L_1710

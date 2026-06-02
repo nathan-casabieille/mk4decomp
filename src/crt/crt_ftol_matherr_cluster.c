@@ -116,11 +116,11 @@ extern unsigned int g_const_004d2c20;
 extern unsigned int g_const_004d2c28;
 extern unsigned int g_crtFpuExceptionMask_00522e50;
 extern unsigned int g_dispatchSave1422_00f9f7f8;
-extern void Crt_fpieee_flt_004cdd20(void);
-extern void FpExceptionFilter_004ca080(void);
+extern void Crt_fpieee_flt(void);
+extern void FpExceptionFilter(void);
 extern void func_004ca0e7(void);
 
-__declspec(naked) void CrtFtolMatherrCluster_004ca700(void)
+__declspec(naked) void CrtFtolMatherrCluster(void)
 {
     __asm {
         /* === Helper 1 (0x4ca700): 2-arg matherr-trigger via fxch === */
@@ -156,7 +156,7 @@ __declspec(naked) void CrtFtolMatherrCluster_004ca700(void)
         cmp      dword ptr [g_crtFpuExceptionMask_00522e50], 0
         je       short L_a773
     L_a758:
-        call     FpExceptionFilter_004ca080
+        call     FpExceptionFilter
         or       byte ptr [ebp - 0x2c8], 1
         and      byte ptr [ebp - 0x2c8], 0xfd
         call     L_a7ca
@@ -293,7 +293,7 @@ __declspec(naked) void CrtFtolMatherrCluster_004ca700(void)
         mov      al, byte ptr [ebx + 0xe]
         movsx    eax, al
         push     eax
-        call     Crt_fpieee_flt_004cdd20
+        call     Crt_fpieee_flt
         add      esp, 0xc
         pop      edi
         pop      esi
@@ -311,7 +311,7 @@ __declspec(naked) void CrtFtolMatherrCluster_004ca700(void)
         wait
         fnstcw   word ptr [ebp - 0xa4]
         and      byte ptr [ebp - 0x2c8], 0xfd
-        call     FpExceptionFilter_004ca080
+        call     FpExceptionFilter
         call     L_a7c3
         pop      ebx
         leave

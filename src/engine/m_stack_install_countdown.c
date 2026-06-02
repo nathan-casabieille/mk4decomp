@@ -109,23 +109,23 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00486370 (146b game) - dual-entry mstack-push + install-self with countdown.
- *   Block A (+0x00): mstack-push 0x004863a0; g_currentNodeFlags=0xccc; jmp NegInstallNegSelfTrigPair_00486610.
- *   Block B (+0x30): if chain[+0x84]!=0 (already armed): g_eventQueueChild=3, jmp MStackPushWaitChain_00486410;
+ *   Block A (+0x00): mstack-push 0x004863a0; g_currentNodeFlags=0xccc; jmp NegInstallNegSelfTrigPair.
+ *   Block B (+0x30): if chain[+0x84]!=0 (already armed): g_eventQueueChild=3, jmp MStackPushWaitChain;
  *     else countdown g_eventQueueChild; on zero: install-self at +0x08=0x004863a0, chain[+0x84]=1,
  *     g_pendingNodeType=0x58, g_pause=1; otherwise self-jmp.
  */
 extern unsigned int g_matrixStack_arr;
-extern void MStackPushWaitChain_00486410(void);
-extern void NegInstallNegSelfTrigPair_00486610(void);
+extern void MStackPushWaitChain(void);
+extern void NegInstallNegSelfTrigPair(void);
 
-__declspec(naked) void MStackInstallCountdown_00486370(void) {
+__declspec(naked) void MStackInstallCountdown(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     dword ptr [g_currentNodeFlags], 0x00000ccc
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_matrixStack_arr], 0x004863a0
-        jmp     NegInstallNegSelfTrigPair_00486610
+        jmp     NegInstallNegSelfTrigPair
         _emit   90h
         _emit   90h
         _emit   90h
@@ -145,13 +145,13 @@ __declspec(naked) void MStackInstallCountdown_00486370(void) {
         _emit   74h
         _emit   0fh
         mov     dword ptr [g_eventQueueChild], 3
-        jmp     MStackPushWaitChain_00486410
+        jmp     MStackPushWaitChain
         mov     ecx, dword ptr [g_eventQueueChild]
         dec     ecx
         mov     dword ptr [g_eventQueueChild], ecx
         _emit   74h
         _emit   05h
-        jmp     MStackInstallCountdown_00486370
+        jmp     MStackInstallCountdown
         mov     ecx, 1
         mov     dword ptr [eax + 0x08], 0x004863a0
         mov     dword ptr [eax + 0x84], ecx

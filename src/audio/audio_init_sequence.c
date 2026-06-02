@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   Copy chain: [0x541ec4] = [0x541ecc]; [0x541ec8] = [0x541ed0]; [0x537f48] = [0x53a790];
  *               [0x5380e0] = [0x537ea0]; [0x53a178] = [0x537edc]; [0x53a250] = [0x53a1cc];
  *               g_walkCallback = [0x53a51c].
- *   call TablePushAccumTailJmp_00429e30; pause? -> end.
+ *   call TablePushAccumTailJmp; pause? -> end.
  *   call TestCmpZeroFour; pause? -> end.
  *   push 0x1000, 0x004202c0; call StoreTwoCall; add esp, 8.
  *   [0x543800] = -1; g_walkCallback = 0; [0x52aac4] = 0.
@@ -135,10 +135,10 @@ extern unsigned int g_audioInitState1_00541ed0;
 extern unsigned int g_byte_00542040;
 extern void BootInitGuardedCallChain(void);
 extern void CopyGlobal(void);
-extern void TablePushAccumTailJmp_00429e30(void);
+extern void TablePushAccumTailJmp(void);
 extern void TestCmpZeroFour(void);
 
-void AudioInitSequence_004a41a0(void) {
+void AudioInitSequence(void) {
     __asm {
         mov     byte ptr [g_byte_00542040], 1
         mov     dword ptr [g_walkCallback], 0
@@ -158,7 +158,7 @@ void AudioInitSequence_004a41a0(void) {
         mov     dword ptr [g_dlNalt3], ecx
         mov     dword ptr [g_dlNalt4], edx
         mov     dword ptr [g_walkCallback], eax
-        call    TablePushAccumTailJmp_00429e30
+        call    TablePushAccumTailJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

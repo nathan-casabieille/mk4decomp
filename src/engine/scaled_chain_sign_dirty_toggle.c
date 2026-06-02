@@ -23,7 +23,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_xformDirtyFlags], eax
  *   ret
  */
-void ScaledChainSignDirtyToggle_00439680(void) {
+void ScaledChainSignDirtyToggle(void) {
     unsigned int v = *(unsigned int *)(g_baseSel * 4 + 0x38);
     g_scaledInit_00542044 = v;
     v = *(unsigned int *)(v * 4 + 0x70);

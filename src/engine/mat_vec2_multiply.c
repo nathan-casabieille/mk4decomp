@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004b31e0 (301b engine.app) - 2x3-vector × 3x3-matrix Q12 multiply.
- *   Calls Word9Reorder_004b3b30(0x007af990, &local) to pull 9 words into local
+ *   Calls Word9Reorder(0x007af990, &local) to pull 9 words into local
  *   stack buf. Computes 6 Q12 dot products:
  *     out[0..2] = M_row0 . v0,  M_row0 . v1
  *     out[3..5] = M_row1 . v0,  M_row1 . v1
@@ -129,9 +129,9 @@ extern s32 g_vtxLight0_z;
 extern s32 g_vtxLight1_x;
 extern s32 g_vtxLight1_z;
 extern s32 g_vtxLight1_y;
-extern void Word9Reorder_004b3b30(void);
+extern void Word9Reorder(void);
 
-__declspec(naked) void MatVec2Multiply_004b31e0(void) {
+__declspec(naked) void MatVec2Multiply(void) {
     __asm {
         sub     esp, 0x20
         _emit   8dh
@@ -144,7 +144,7 @@ __declspec(naked) void MatVec2Multiply_004b31e0(void) {
         push    edi
         push    eax
         push    offset g_vtxMat
-        call    Word9Reorder_004b3b30
+        call    Word9Reorder
         movsx   esi, word ptr [esp + 0x18]
         movsx   edx, word ptr [esp + 0x1a]
         mov     eax, dword ptr [g_arr_007af9c0]

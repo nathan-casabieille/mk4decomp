@@ -23,13 +23,13 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern void InstallSelfMagicShift_00472fe0(void);
+extern void InstallSelfMagicShift(void);
 extern void MStackPush2ChainLLInsert(void);
 
 /* @addr 0x00472f40 */
 void ScaledSaveCallRestoreJmp_00472f40(void) {
     g_scaledInit_00542044 = *(unsigned int*)(g_eventQueueEnd * 4 + 0x30);
-    InstallSelfMagicShift_00472fe0();
+    InstallSelfMagicShift();
     if (g_framePauseFlag) return;
     g_scaledInit_00542044 = g_eventQueueEnd;
     MStackPush2ChainLLInsert();
@@ -38,7 +38,7 @@ void ScaledSaveCallRestoreJmp_00472f40(void) {
 /* @addr 0x00472f80 */
 void ScaledSaveCallRestoreJmp_00472f80(void) {
     g_scaledInit_00542044 = *(unsigned int*)(g_eventQueueIdx * 4 + 0x30);
-    InstallSelfMagicShift_00472fe0();
+    InstallSelfMagicShift();
     if (g_framePauseFlag) return;
     g_scaledInit_00542044 = g_eventQueueIdx;
     MStackPush2ChainLLInsert();

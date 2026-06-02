@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *   zero, computes quotient via div, corrects for overshoot. Trails
  *   with 8 bytes of 0xcc int3 padding.
  */
-__declspec(naked) void ULongLongDivRem_004cc3d0(void) {
+__declspec(naked) void ULongLongDivRem(void) {
     __asm {
         push    ebx
         push    esi

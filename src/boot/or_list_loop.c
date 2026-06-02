@@ -29,7 +29,7 @@ extern unsigned int g_scaledInit_00542044;
  *   pop     esi
  *   ret
  */
-__declspec(naked) void OrListLoop_0041fcc0(void) {
+__declspec(naked) void OrListLoop(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         push    esi

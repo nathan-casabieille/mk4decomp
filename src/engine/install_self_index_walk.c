@@ -122,12 +122,12 @@ extern unsigned int g_dispatchSave946_004e7528;
 extern void DualScaledStore(void);
 extern void Thunk_0049cbc0(void);
 
-__declspec(naked) void InstallSelfIndexWalk_00450de0(void) {
+__declspec(naked) void InstallSelfIndexWalk(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
         push    edi
-        mov     edi, OFFSET InstallSelfIndexWalk_00450de0
+        mov     edi, OFFSET InstallSelfIndexWalk
         lea     esi, [eax*4 + 0]
         mov     eax, dword ptr [eax*4 + 0x84]
         mov     dword ptr [esi + 0x84], 0

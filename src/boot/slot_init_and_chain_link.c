@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void SlotInitAndChainLink_004191b0(void);
-extern void BootFlagChainAudioPause_00412080(void);
+extern void SlotInitAndChainLink(void);
+extern void BootFlagChainAudioPause(void);
 
-extern void TripleChainTailJmp_00419900(void);
+extern void TripleChainTailJmp(void);

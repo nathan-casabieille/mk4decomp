@@ -117,7 +117,7 @@ extern void ModMagicMul10Index(void);
 
 extern unsigned int g_matrixStack_arr;
 
-void Chain2CallMul10Accum_00426a30(void) {
+void Chain2CallMul10Accum(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueWorkType]

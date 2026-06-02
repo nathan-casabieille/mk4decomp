@@ -11,7 +11,7 @@ extern unsigned int g_scaledInit_00542044;
 extern void func_00438520(void);
 extern void MstackPopScaledChainPlusThunks(void);
 extern void StackPopDispatchTagged(void);
-void MStackPushSet4Jmp_004384f0(void) {
+void MStackPushSet4Jmp(void) {
     int top = g_matrixStackTop;
     g_walkCallback = (void(*)(void))4;
     top++;

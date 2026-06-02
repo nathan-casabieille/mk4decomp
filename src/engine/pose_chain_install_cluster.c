@@ -116,17 +116,17 @@ extern unsigned int g_fightAxisPosY;
 /*  h2 (0x481340): wait + tail-jmp CallSetPause.                     */
 /* ------------------------------------------------------------------ */
 extern void PendingMatch_0040eb80(void);
-extern void PoseChainInstallCluster_00427b60(void);
+extern void PoseChainInstallCluster(void);
 extern void ScaledChainNegStore(void);
 extern void CallPauseConstStoreJmp_00481360(void);
-extern void ScaledLoadCmp1003JmpDispatch_00486530(void);
-extern void PushCallPauseScaledJmpInd_0048e2f0(void);
+extern void ScaledLoadCmp1003JmpDispatch(void);
+extern void PushCallPauseScaledJmpInd(void);
 extern void ScaledInit_0048f720(void);
 extern void ClearBit2x34(void);
 extern void MStackPushSet0004(void);
 extern void ScaledAndAl7f(void);
 extern void ScaledAndAldf(void);
-extern void ScaledAndAlbf_00490350(void);
+extern void ScaledAndAlbf(void);
 extern void ScaledAndAlfe(void);
 extern unsigned int g_or_0052ab40;
 extern unsigned int g_pendingMatchCmp_00543888;
@@ -136,7 +136,7 @@ extern s32 g_dlNalt2;
 extern void CallSetPause(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void GateDispatch6c(void);
-extern void ScaledAndAlf7_00490310(void);
+extern void ScaledAndAlf7(void);
 extern void ScaledLitLoadCall_00480fe0(void);
 
 __declspec(naked) void MainTickChain(void)
@@ -167,7 +167,7 @@ __declspec(naked) void MainTickChain(void)
         call     ScaledAndAldf
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
-        call     ScaledAndAlbf_00490350
+        call     ScaledAndAlbf
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
         call     ScaledAndAl7f
@@ -176,7 +176,7 @@ __declspec(naked) void MainTickChain(void)
         call     ScaledAndAlfe
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
-        call     ScaledAndAlf7_00490310
+        call     ScaledAndAlf7
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
         call     MStackPushSet0004
@@ -189,7 +189,7 @@ __declspec(naked) void MainTickChain(void)
         jne      L_1336
     L_114c:
         mov      dword ptr [g_pendingMatchCmp_00543888], esi
-        call     ScaledLoadCmp1003JmpDispatch_00486530
+        call     ScaledLoadCmp1003JmpDispatch
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
         mov      ecx, dword ptr [g_baseSel]
@@ -260,7 +260,7 @@ __declspec(naked) void MainTickChain(void)
         cmp      eax, 0x6666
         mov      dword ptr [g_walkCallback], eax
         jle      L_1336
-        call     PoseChainInstallCluster_00427b60
+        call     PoseChainInstallCluster
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
         mov      ecx, dword ptr [g_baseSel]
@@ -268,7 +268,7 @@ __declspec(naked) void MainTickChain(void)
         cmp      eax, 3
         mov      dword ptr [g_walkCallback], eax
         jl       short L_12cb
-        call     PushCallPauseScaledJmpInd_0048e2f0
+        call     PushCallPauseScaledJmpInd
         cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_1336
     L_12cb:

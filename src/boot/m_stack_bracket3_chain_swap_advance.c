@@ -116,7 +116,7 @@ extern void PushDualDerefClearPop(void);
 extern void PushPopScaled18(void);
 extern void ScaledTripleCopy54(void);
 
-void MStackBracket3_ChainSwapAdvance_0041d560(void) {
+void MStackBracket3_ChainSwapAdvance(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_xformEntityIdx]

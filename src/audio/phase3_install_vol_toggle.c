@@ -111,14 +111,14 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x004a8310 (377b audio) - phase-state install w/ vol-up/down on input.
  *   Phase 0: sets [0x52aac4]=2, [0x53a50c]=0xe, installs Self with
  *     slot[+0x84]=1, g_pendingNodeType=1, arms 0x541e6c=1.
- *   Phase 1+: AudioSwap2ChainBank3State_004a8490; reads slot[+0x30]:
+ *   Phase 1+: AudioSwap2ChainBank3State; reads slot[+0x30]:
  *     if 4 → reads vol byte at [g_byte_005435a0 + 0x542070*0x18],
  *     if 3 → similar with g_counter_0054359c stride. Then
- *     DualListInit_004a8290 + [g_gtModeFlag]==1 ? DebugStub_NoOp_A :
+ *     DualListInit + [g_gtModeFlag]==1 ? DebugStub_NoOp_A :
  *     DebugStub_NoOp_B. Tests [g_byte_004d50b4] al/ah bit 2 / 3 for
  *     vol-down / vol-up (via dec/inc cl on the 0x18-stride byte table),
  *     wrapping at 0/0xe. Final call TripleCallByteCheck; on
- *     zero, calls AudioMicroEntries_004a7600 with the current vol byte
+ *     zero, calls AudioMicroEntries with the current vol byte
  *     and tail-jmps StackPopDispatchTagged. Else: stores
  *     g_eventQueueEnd into 0x542044, vol byte into 0x54206c, calls
  *     ScaledChainStore24 and falls through to install tail.
@@ -129,16 +129,16 @@ extern unsigned int g_phaseIdx_0053a50c;
 extern unsigned int g_counter_005433c8;
 extern unsigned int g_counter_0054359c;
 extern unsigned int g_byte_005435a0;
-extern void AudioMicroEntries_004a7600(void);
-extern void AudioSwap2ChainBank3State_004a8490(void);
+extern void AudioMicroEntries(void);
+extern void AudioSwap2ChainBank3State(void);
 extern void DebugStub_NoOp_A(void);
 extern void DebugStub_NoOp_B(void);
-extern void DualListInit_004a8290(void);
+extern void DualListInit(void);
 extern void ScaledChainStore24(void);
 extern void SetJmp_004a1ad0(void);
 extern void TripleCallByteCheck(void);
 
-__declspec(naked) void Phase3InstallVolToggle_004a8310(void) {
+__declspec(naked) void Phase3InstallVolToggle(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -147,7 +147,7 @@ __declspec(naked) void Phase3InstallVolToggle_004a8310(void) {
         mov     dword ptr [esi + 0x84], 0
         test    eax, eax
         je      L_p3v_phase0
-        call    AudioSwap2ChainBank3State_004a8490
+        call    AudioSwap2ChainBank3State
         mov     ecx, dword ptr [g_baseSel]
         mov     eax, dword ptr [ecx*4 + 0x30]
         sub     eax, 3
@@ -168,7 +168,7 @@ __declspec(naked) void Phase3InstallVolToggle_004a8310(void) {
     L_p3v_storeVol:
         mov     dword ptr [g_eventQueueCurrent], eax
     L_p3v_afterSnap:
-        call    DualListInit_004a8290
+        call    DualListInit
         cmp     byte ptr [g_gtModeFlag], 1
         jne     short L_p3v_useStubB
         call    DebugStub_NoOp_A
@@ -216,7 +216,7 @@ __declspec(naked) void Phase3InstallVolToggle_004a8310(void) {
         lea     eax, [eax + eax*2]
         movsx   ecx, byte ptr [eax*8 + g_byte_005435a0]
         push    ecx
-        call    AudioMicroEntries_004a7600
+        call    AudioMicroEntries
         add     esp, 4
         call    StackPopDispatchTagged
         pop     esi
@@ -234,7 +234,7 @@ __declspec(naked) void Phase3InstallVolToggle_004a8310(void) {
         mov     dword ptr [g_phaseIdx_0053a50c], 0xe
     L_p3v_installTail:
         mov     eax, 1
-        mov     dword ptr [esi + 8], offset Phase3InstallVolToggle_004a8310
+        mov     dword ptr [esi + 8], offset Phase3InstallVolToggle
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_framePauseFlag], eax

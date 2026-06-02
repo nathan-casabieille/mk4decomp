@@ -112,20 +112,20 @@ extern unsigned int g_dispatchSave684_004e6408;
 extern void ArgSarStoreJmp(void);
 extern void DirtyDoubleDeref(void);
 extern void DualScaledLoadStoreJmp(void);
-extern void DualSlotCopyChain_004756f0(void);
+extern void DualSlotCopyChain(void);
 extern void GuardedScaled_00475090(void);
 extern void GuardedSeq_00473f10(void);
 extern void GuardedSeq_00476de0(void);
 extern void GuardedSeq_00476f10(void);
-extern void GuardedTripleSetTailJmp8_0044a500(void);
-extern void IntroInitCluster_0044d280(void);
+extern void GuardedTripleSetTailJmp8(void);
+extern void IntroInitCluster(void);
 extern void MStackCall_00406340(void);
 extern void PendingMatch_0044a7f0(void);
 extern void PushPopScaled1cDoubleCall(void);
 extern void StoreLoadJmp(void);
 extern void Thunk_0049cbc0(void);
 
-__declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
+__declspec(naked) void ScaledRunCountdownCluster(void)
 {
     __asm {
     L_a090:
@@ -173,7 +173,7 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         jne      L_a274
         mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_xformEntityIdx], edx
-        call     IntroInitCluster_0044d280
+        call     IntroInitCluster
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a274
@@ -207,7 +207,7 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         mov      dword ptr [eax*4], edx
         mov      eax, dword ptr [g_fightGroupHead]
         mov      dword ptr [g_eventQueueEnd], eax
-        call     DualSlotCopyChain_004756f0
+        call     DualSlotCopyChain
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a274
@@ -318,7 +318,7 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], ecx
-        call     GuardedTripleSetTailJmp8_0044a500
+        call     GuardedTripleSetTailJmp8
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a4fa
@@ -377,7 +377,7 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], ecx
-        call     GuardedTripleSetTailJmp8_0044a500
+        call     GuardedTripleSetTailJmp8
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a4fa

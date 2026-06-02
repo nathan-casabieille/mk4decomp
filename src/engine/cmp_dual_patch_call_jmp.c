@@ -115,10 +115,10 @@ extern unsigned int g_fightAxisPosY;
  *   skip1: cmp eax,0x11; if ne: skip2; eax=7; g_walkCallback=7;
  *   skip2: cmp eax,0xd; if eq: call Wrapper_0048a3a0;
  *                         if pause: ret; else jmp Wrapper_0048a350;
- *          else tail-jmp DualEntry4002Chain_00482b60.
+ *          else tail-jmp DualEntry4002Chain.
  */
-extern void DualEntry4002Chain_00482b60(void);
-void CmpDualPatchCallJmp_00482b00(void) {
+extern void DualEntry4002Chain(void);
+void CmpDualPatchCallJmp(void) {
     unsigned int field;
     field = ((ScenegraphNode *)(g_baseSel * 4))->child_a;
     g_scaledInit_00542044 = field;
@@ -133,7 +133,7 @@ void CmpDualPatchCallJmp_00482b00(void) {
         g_walkCallback = (void (*)(void))field;
     }
     if (field != 0xd) {
-        DualEntry4002Chain_00482b60();
+        DualEntry4002Chain();
         return;
     }
     Wrapper_0048a3a0();

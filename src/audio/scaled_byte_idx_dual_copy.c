@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
  *   edx = g_audioBoundNode; ecx = [eax*4 + 0x5c]; [edx*4+0x5c]=ecx;
  *   ret.
  */
-void ScaledByteIdxDualCopy_004a3260(void) {
+void ScaledByteIdxDualCopy(void) {
     __asm {
         mov     ecx, dword ptr [g_baseSel]
         mov     edx, dword ptr [esp + 4]

@@ -116,8 +116,8 @@ extern unsigned int g_fightAxisPosY;
  *     [esi+8] = 0x484650; [esi+0x84] = 1;
  *     g_pendingNodeType = 0x14; g_framePauseFlag = 1; ret.
  */
-extern void EsiAliasInstallSelf_00484650(void);
-void EsiAliasInstallSelf_00484650(void) {
+extern void EsiAliasInstallSelf(void);
+void EsiAliasInstallSelf(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int prev = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
@@ -127,7 +127,7 @@ void EsiAliasInstallSelf_00484650(void) {
     }
     LeaPlus22StoreSelf();
     if (g_framePauseFlag != 0) return;
-    *(unsigned int *)(base + 8) = (unsigned int)&EsiAliasInstallSelf_00484650;
+    *(unsigned int *)(base + 8) = (unsigned int)&EsiAliasInstallSelf;
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 0x14;
     g_framePauseFlag = 1;

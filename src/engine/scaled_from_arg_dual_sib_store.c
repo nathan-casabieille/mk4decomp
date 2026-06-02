@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
  *   ecx=[eax*4]; ++eax → g_scaledInit; g_walkCallback=ecx;
  *   [edx*4+0x4c]=ecx; ret.
  */
-void ScaledFromArgDualSibStore_00490890(int arg0) {
+void ScaledFromArgDualSibStore(int arg0) {
     unsigned int p;
     unsigned int v;
     p = (unsigned int)(arg0 >> 2);

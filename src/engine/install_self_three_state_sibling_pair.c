@@ -123,7 +123,7 @@ extern void ScaledAndAlfe(void);
 extern void InstallSelf3WayChainCmp(void);
 extern void ScaledLoadJmp_00428d20(void);
 
-__declspec(naked) void InstallSelfThreeStateSiblingPair_00495480(void) {
+__declspec(naked) void InstallSelfThreeStateSiblingPair(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi

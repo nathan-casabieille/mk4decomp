@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
 /* per-node compute pos = parent_pos + bone_offset * scale.            */
 /* ------------------------------------------------------------------ */
 extern void BootMod6487eClampAndChainMul10(void);
-extern void Mul10HeavyTransform_00424bf0(void);
+extern void Mul10HeavyTransform(void);
 extern void MStackPush8(void);
 extern void MStackPop8(void);
 extern unsigned int g_dispatchSave6_00541f94;
@@ -123,7 +123,7 @@ extern unsigned int g_mul10TransformVar_00541f9c;
 extern void QuadInterpolator(void);
 extern void StoreDoubleNegPauseSubStore(void);
 
-__declspec(naked) void PoseTreeBlendWalker_0049d680(void)
+__declspec(naked) void PoseTreeBlendWalker(void)
 {
     __asm {
         push     ebx
@@ -248,7 +248,7 @@ __declspec(naked) void PoseTreeBlendWalker_0049d680(void)
         mov      eax, dword ptr [g_eventQueueTotal]
         mov      dword ptr [g_currentNodeIdx], edx
         mov      dword ptr [g_xformEntityIdx], eax
-        call     Mul10HeavyTransform_00424bf0
+        call     Mul10HeavyTransform
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d8d0

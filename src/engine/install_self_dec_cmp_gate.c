@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   + g_table_00535ddc < g_currentNodeFlags cmp gate. */
 extern void PushCallSet2147Jmp(void);
 
-__declspec(naked) void InstallSelfDecCmpGate_00439410(void) {
+__declspec(naked) void InstallSelfDecCmpGate(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi

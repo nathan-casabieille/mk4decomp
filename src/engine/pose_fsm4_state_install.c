@@ -108,21 +108,21 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void InstallSelfSetTagJmp_00439e40(void);
-extern void PoseFsm4StateInstall_00437c10(void);
+extern void InstallSelfSetTagJmp(void);
+extern void PoseFsm4StateInstall(void);
 extern void Wrapper_00438ee0(void);
 extern void SetJmp_00438f70(void);
-extern void ThresholdedTailJmps_00436390(void);
+extern void ThresholdedTailJmps(void);
 extern void PrefixThunkInstallSelf3State(void);
 
 /* @addr 0x004362f0 (149b game) - 3-block: A: jmp 0x00439e40. B: Cmp2CallDirtyCall;
  *   threshold-dispatch on g_table_00535ddc to {0x00437c10, Wrapper_00438ee0, PrefixThunkInstallSelf3State}.
  *   C: similar threshold-dispatch with diff thresholds to {0x00438ee0, SetJmp_00438f70, PrefixThunkInstallSelf3State}.
- *   D (+0x90): jmp ThresholdedTailJmps_00436390.
+ *   D (+0x90): jmp ThresholdedTailJmps.
  */
-__declspec(naked) void TripleThresholdDispatch_004362f0(void) {
+__declspec(naked) void TripleThresholdDispatch(void) {
     __asm {
-        jmp     InstallSelfSetTagJmp_00439e40
+        jmp     InstallSelfSetTagJmp
         _emit   90h
         _emit   90h
         _emit   90h
@@ -143,7 +143,7 @@ __declspec(naked) void TripleThresholdDispatch_004362f0(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   7dh
         _emit   05h
-        jmp     PoseFsm4StateInstall_00437c10
+        jmp     PoseFsm4StateInstall
         cmp     eax, 0x00020000
         _emit   7eh
         _emit   05h
@@ -196,7 +196,7 @@ __declspec(naked) void TripleThresholdDispatch_004362f0(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        jmp     ThresholdedTailJmps_00436390
+        jmp     ThresholdedTailJmps
     }
 }
 

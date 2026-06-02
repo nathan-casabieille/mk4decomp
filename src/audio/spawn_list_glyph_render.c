@@ -112,15 +112,15 @@ extern unsigned int g_dispatchSave819_004f3ee0;
 extern unsigned int g_dispatchSave121_005157a4;
 extern unsigned int g_audioFlagAggBase2_00543398;
 extern unsigned int g_audioFlagAggBase_005433d8;
-extern void AudioFlagDispatchAggregatorAH_004aa520(void);
-extern void AudioFlagDispatchAggregator_004aa430(void);
+extern void AudioFlagDispatchAggregatorAH(void);
+extern void AudioFlagDispatchAggregator(void);
 extern void BootPhaseGateBracketedInit(void);
 extern void MStackBracket5_FieldClear_StateAdvance(void);
-extern void MStackPush3HelperCondToggle_0049cf70(void);
+extern void MStackPush3HelperCondToggle(void);
 extern void MStackPushComplexCallPop_00406430(void);
-extern void SplitInt32_004aa410(void);
+extern void SplitInt32(void);
 
-__declspec(naked) void SpawnListGlyphRender_004aa610(void)
+__declspec(naked) void SpawnListGlyphRender(void)
 {
     __asm {
         /* === Helper 1 (0x4aa610): linked-list walker w/ stride pos === */
@@ -146,7 +146,7 @@ __declspec(naked) void SpawnListGlyphRender_004aa610(void)
         mov      dword ptr [edi*4 + 0x18], eax
         mov      dword ptr [eax*4 + 0x18], edi
         mov      dword ptr [g_walkCallback], ebx
-        call     MStackPush3HelperCondToggle_0049cf70
+        call     MStackPush3HelperCondToggle
         mov      eax, dword ptr [g_currentNodeIdx]
         mov      ecx, OFFSET g_dispatchSave121_005157a4
         shr      ecx, 2
@@ -254,10 +254,10 @@ __declspec(naked) void SpawnListGlyphRender_004aa610(void)
         mov      eax, dword ptr [g_gtPlayerProbe2]
         cmp      edx, eax
         jne      short L_a7f8
-        call     AudioFlagDispatchAggregator_004aa430
+        call     AudioFlagDispatchAggregator
         jmp      short L_a7fd
     L_a7f8:
-        call     AudioFlagDispatchAggregatorAH_004aa520
+        call     AudioFlagDispatchAggregatorAH
     L_a7fd:
         mov      eax, dword ptr [g_baseSel]
         mov      ecx, dword ptr [eax*4 + 0x30]
@@ -274,7 +274,7 @@ __declspec(naked) void SpawnListGlyphRender_004aa610(void)
         mov      ecx, dword ptr [esi + g_audioFlagAggBase_005433d8]
         push     ecx
     L_a82e:
-        call     SplitInt32_004aa410
+        call     SplitInt32
         mov      edx, dword ptr [g_eventQueueCurrent]
         mov      ecx, dword ptr [g_currentNodeIdx]
         add      esi, 4

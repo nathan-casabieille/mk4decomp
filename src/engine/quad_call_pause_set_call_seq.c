@@ -14,7 +14,7 @@ extern void func_004089e0_kk(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void GuardedSeq_004515a0(void);
 extern void GuardedSeq_004515a0(void);
-void QuadCallPauseSetCallSeq_00451550(void) {
+void QuadCallPauseSetCallSeq(void) {
     func_004089e0_kk();
     if (g_framePauseFlag != 0) return;
     MStackBracket7_DispatchAndChain();

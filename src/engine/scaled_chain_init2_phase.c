@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_particleEmitterNode;
 extern void MStackCall_00406340(void);
 
-__declspec(naked) void ScaledChainInit2Phase_0042e800(void) {
+__declspec(naked) void ScaledChainInit2Phase(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]
         push    esi

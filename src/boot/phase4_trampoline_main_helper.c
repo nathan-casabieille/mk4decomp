@@ -117,7 +117,7 @@ extern void CallSetPause(void);
 extern void ChainListVecAdd(void);
 extern void ClampMulShiftStore(void);
 extern void CmpDivJmp(void);
-extern void LoopUnrolledTripleMul10_0049d550(void);
+extern void LoopUnrolledTripleMul10(void);
 extern void MStackCall_004065b0(void);
 extern void MStackPush1MagicMod2(void);
 extern void PushSetXfmMaskCallPop(void);
@@ -125,7 +125,7 @@ extern void ScaledTripleCopy10(void);
 extern void SetJmp_00405420(void);
 extern void SetJmp_00408d20(void);
 
-__declspec(naked) void Phase4TrampolineMainHelper_00415180(void)
+__declspec(naked) void Phase4TrampolineMainHelper(void)
 {
     __asm {
         push    0xB3
@@ -366,7 +366,7 @@ __declspec(naked) void Phase4TrampolineMainHelper_00415180(void)
         shr     ecx, 2
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_xformEntityIdx], ecx
-        call    LoopUnrolledTripleMul10_0049d550
+        call    LoopUnrolledTripleMul10
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh_H_ret

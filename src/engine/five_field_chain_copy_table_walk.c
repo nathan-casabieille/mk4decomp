@@ -123,7 +123,7 @@ extern unsigned int g_load_0052ab10;
  *   Set g_pendingClear_0053a3cc=0, g_walkBoundsSlot_00535d68=0, g_walkCallback=0xffff0000,
  *   g_walkBoundsLimit_00535d60=0xffff0000; ret.
  */
-void FiveFieldChainCopyTableWalk_00431260(void) {
+void FiveFieldChainCopyTableWalk(void) {
     g_scaledInit_00542044 = g_load_0052ab10;
     g_xformEntityIdx = g_xformEntityIdxSrc_00541fac;
     g_walkCallback = *(unsigned int *)(g_xformEntityIdx * 4);

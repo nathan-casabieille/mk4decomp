@@ -122,7 +122,7 @@ extern unsigned int g_fightAxisPosY;
  *   5b NOP align pad.
  *   Entry 3 (offset 0x130, 70b): FiveCallScaledChainTailJmp;
  *     on no-error reads [scaled+0x34] as state code; if 0x11 → 7. If
- *     != 0xf, tail-call Install3StateRouterTail_0046b4e0; else pushes
+ *     != 0xf, tail-call Install3StateRouterTail; else pushes
  *     0x4eaee0 → ArgSarStoreJmp.
  */
 extern unsigned int g_dispatchSave967_004eaee0;
@@ -131,11 +131,11 @@ extern unsigned int g_dispatchSave64_00542a70;
 extern unsigned int g_dispatchSave65_00542a78;
 extern void ArgSarStoreJmp(void);
 extern void ArgScaledTestStore(void);
-extern void Install3StateRouterTail_0046b4e0(void);
+extern void Install3StateRouterTail(void);
 extern void ScaledAndAlfe(void);
 extern void ScaledClearJmp_00428d60(void);
 
-__declspec(naked) void StateRemapPackedInstall_0046b360(void) {
+__declspec(naked) void StateRemapPackedInstall(void) {
     __asm {
         mov     ecx, dword ptr [g_baseSel]
         mov     eax, offset g_dispatchTableArr7_005019d0
@@ -229,7 +229,7 @@ __declspec(naked) void StateRemapPackedInstall_0046b360(void) {
     L_srp_e3check15:
         cmp     eax, 0xf
         jne     short L_srp_e3pushAlarm
-        jmp     Install3StateRouterTail_0046b4e0
+        jmp     Install3StateRouterTail
     L_srp_e3pushAlarm:
         push    offset g_dispatchSave967_004eaee0
         call    ArgSarStoreJmp

@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
 extern void CondInstallDispatch_00476ed0(void);
 extern void DirtyDoubleDeref(void);
 
-__declspec(naked) void DirtyOrFlagDispatch_00476e60(void) {
+__declspec(naked) void DirtyOrFlagDispatch(void) {
     __asm {
         call    DirtyDoubleDeref
         mov     eax, dword ptr [g_framePauseFlag]

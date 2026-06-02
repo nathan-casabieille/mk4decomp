@@ -120,10 +120,10 @@ extern unsigned int g_fightAxisPosY;
 /*    jmp 49c850.                                                      */
 /* ------------------------------------------------------------------ */
 extern void PushChainAddCallPop(void);
-extern void StageEventCluster_00497e80(void);
-extern void SweepCluster_004984e0(void);
+extern void StageEventCluster(void);
+extern void SweepCluster(void);
 extern void Vec2SumMul10ChainCompute(void);
-extern void TripleBlockChainDiffMStackThunks_0049ca10(void);
+extern void TripleBlockChainDiffMStackThunks(void);
 extern unsigned int g_dispatchSave643_004f2178;
 extern unsigned int g_dispatchSave642_004f2190;
 extern unsigned int g_dispatchSave641_004f21a0;
@@ -136,7 +136,7 @@ extern void FiveCallGuardSetTail(void);
 extern void ScaledIndirectJmp_0049c850(void);
 extern void ScaledLoadIncJmp_00428d00(void);
 
-__declspec(naked) void PunchDispatcherCluster_00497b50(void)
+__declspec(naked) void PunchDispatcherCluster(void)
 {
     __asm {
         /* === h1 (0x497b50): event 004f2178 forwarder === */
@@ -183,7 +183,7 @@ __declspec(naked) void PunchDispatcherCluster_00497b50(void)
         pop      esi
         ret
     L_7be9:
-        call     SweepCluster_004984e0
+        call     SweepCluster
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7ca3
@@ -279,7 +279,7 @@ __declspec(naked) void PunchDispatcherCluster_00497b50(void)
         mov      eax, dword ptr [g_eventQueueCurrent]
         add      esp, 8
         mov      dword ptr [esi + 0x5c], eax
-        call     TripleBlockChainDiffMStackThunks_0049ca10
+        call     TripleBlockChainDiffMStackThunks
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7e3c
@@ -322,7 +322,7 @@ __declspec(naked) void PunchDispatcherCluster_00497b50(void)
         nop
         nop
         /* === h4 (0x497e40): chained dispatcher → tail-jmp 49c850 === */
-        call     StageEventCluster_00497e80
+        call     StageEventCluster
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_7e7e

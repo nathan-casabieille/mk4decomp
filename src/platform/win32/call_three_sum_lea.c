@@ -27,7 +27,7 @@ extern unsigned int g_scaledInit_00542044;
 extern s32 g_clientHeight;
 extern unsigned int g_iat_004d21b0;
 
-void CallThreeSumLea_004c45d0(void) {
+void CallThreeSumLea(void) {
     typedef unsigned int (__stdcall *fn_t)(unsigned int);
     fn_t fn = (fn_t)g_iat_004d21b0;
     unsigned int s;

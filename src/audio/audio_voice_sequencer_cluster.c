@@ -114,7 +114,7 @@ extern unsigned int g_audioVoiceCounter_00535e50;
 extern unsigned int g_audioBitField_00541fc0;
 extern unsigned int g_audioSequencerSlot_00541fc4;
 extern unsigned int g_dispatchTab65_00543320;
-extern void AudioInitChainTag_004a1000(void);
+extern void AudioInitChainTag(void);
 extern void Eleven404b90_404c00(void);
 extern void GuardedScaledCall(void);
 extern void LinkedListIndirectDirtyToggle(void);
@@ -122,7 +122,7 @@ extern void RoundWinTransition(void);
 extern void StorePauseImulShr16(void);
 extern void Ten404c40_404bd0(void);
 
-__declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
+__declspec(naked) void AudioVoiceSequencerCluster(void)
 {
     __asm {
         /* === Helper 1 (0x4a0d60): sample-pick from mul-5 stride === */
@@ -240,7 +240,7 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
         cmp      eax, esi
         mov      dword ptr [g_walkCallback], eax
         jne      short L_0f40
-        call     AudioInitChainTag_004a1000
+        call     AudioInitChainTag
         pop      edi
         pop      esi
         pop      ebp

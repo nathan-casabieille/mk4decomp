@@ -24,13 +24,13 @@ extern unsigned int g_acc_00542078;
  *   ret
  */
 extern void GuardedDirtyXformFromTable(void);
-extern void OneSetCmpJmpLoadCall_0047c620(void);
+extern void OneSetCmpJmpLoadCall(void);
 extern int g_dispatchSave1304_004ed3e0;
-void Set200dCallPauseJmp_0047c5e0(void) {
+void Set200dCallPauseJmp(void) {
     g_walkCallback = (void (*)(void))0x200d;
     ((ScenegraphNode *)(g_baseSel * 4))->fsm_state = 0x200d;
     g_scaledInit_00542044 = ((unsigned int)&g_dispatchSave1304_004ed3e0) >> 2;
     GuardedDirtyXformFromTable();
     if (g_framePauseFlag != 0) return;
-    OneSetCmpJmpLoadCall_0047c620();
+    OneSetCmpJmpLoadCall();
 }

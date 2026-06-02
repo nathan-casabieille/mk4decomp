@@ -108,16 +108,16 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void CrtFpieeeFlt_004cf060(void);
-extern void CrtFpuExceptionFilter_004cf3a0(void);
-extern void SwitchErrorCode_004cf6d0(void);
+extern void CrtFpieeeFlt(void);
+extern void CrtFpuExceptionFilter(void);
+extern void SwitchErrorCode(void);
 /* extern void RetZero_004cf700(void); -- defined elsewhere with diff sig */
-extern void FpuMaskMerge_004cf740(void);
+extern void FpuMaskMerge(void);
 extern unsigned int g_crtFpuExceptionMask_00522e50;
 
 extern void RetZero_004cf700(void);
 
-__declspec(naked) void Crt_fpieee_flt_004cdd20(void)
+__declspec(naked) void Crt_fpieee_flt(void)
 {
     __asm {
         sub      esp, 0x58
@@ -141,7 +141,7 @@ __declspec(naked) void Crt_fpieee_flt_004cdd20(void)
         push     eax
         push     ebx
         push     edi
-        call     CrtFpuExceptionFilter_004cf3a0
+        call     CrtFpuExceptionFilter
         add      esp, 0xc
         test     eax, eax
         jne      short L_ddac
@@ -173,14 +173,14 @@ __declspec(naked) void Crt_fpieee_flt_004cdd20(void)
         lea      eax, [esp + 0x1c]
         push     edx
         push     eax
-        call     CrtFpieeeFlt_004cf060
+        call     CrtFpieeeFlt
         add      esp, 0x18
     L_ddac:
         mov      eax, dword ptr [esp + 0x70]
     L_ddb0:
         push     0xffff
         push     eax
-        call     FpuMaskMerge_004cf740
+        call     FpuMaskMerge
         mov      ecx, dword ptr [esi]
         add      esp, 8
         xor      eax, eax
@@ -197,7 +197,7 @@ __declspec(naked) void Crt_fpieee_flt_004cdd20(void)
         jne      short L_dde9
         mov      ecx, dword ptr [esi]
         push     ecx
-        call     SwitchErrorCode_004cf6d0
+        call     SwitchErrorCode
         add      esp, 4
     L_dde9:
         pop      edi

@@ -12,8 +12,8 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_framePauseFlag], 1
  *   ret
  */
-extern void ScaledNeg1SetPause_0041f840(void);
+extern void ScaledNeg1SetPause(void);
 void CallSetPause(void) {
-    ScaledNeg1SetPause_0041f840();
+    ScaledNeg1SetPause();
     g_framePauseFlag = 1;
 }

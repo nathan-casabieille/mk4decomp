@@ -26,15 +26,15 @@ int Crt_rand(void) {
  *   call 0x4c6940(0x4d5000, 0x4d5018); add esp 8; ret.
  */
 extern void (*g_iat_0051ffd8)(void);
-extern int IterFnPtrs_004c6940(void *, void *);
+extern int IterFnPtrs(void *, void *);
 extern void *g_dispatchSave550_004d5000;
 extern void *g_dispatchSave549_004d5018;
 extern void *g_dispatchSave548_004d501c;
 extern void *g_dispatchSave547_004d5024;
 void _init_premain(void) {
     if (g_iat_0051ffd8) g_iat_0051ffd8();
-    IterFnPtrs_004c6940(&g_dispatchSave548_004d501c, &g_dispatchSave547_004d5024);
-    IterFnPtrs_004c6940(&g_dispatchSave550_004d5000, &g_dispatchSave549_004d5018);
+    IterFnPtrs(&g_dispatchSave548_004d501c, &g_dispatchSave547_004d5024);
+    IterFnPtrs(&g_dispatchSave550_004d5000, &g_dispatchSave549_004d5018);
 }
 
 /* @addr 0x004c5d70 (55b)
@@ -42,14 +42,14 @@ void _init_premain(void) {
  *   call 0x4c9200(arg1, arg2, arg3, state); store ret;
  *   call 0x4c7040(state); restore ret; ret.
  */
-extern void * HeapScanInit_004c9440(void);
-extern int FopenMode_004c9270(int, int, int, void *);
+extern void * HeapScanInit(void);
+extern int FopenMode(int, int, int, void *);
 extern void RangePathIATDispatch_004c7060(void *);
-int WrapperCallSelf_004c5d70(int a, int b, int c) {
+int WrapperCallSelf(int a, int b, int c) {
     int ret;
-    void *state = HeapScanInit_004c9440();
+    void *state = HeapScanInit();
     if (state == 0) return (int)state;
-    ret = FopenMode_004c9270(a, b, c, state);
+    ret = FopenMode(a, b, c, state);
     RangePathIATDispatch_004c7060(state);
     return ret;
 }

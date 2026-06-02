@@ -21,8 +21,8 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void CallPauseInc(void);
-extern void InstallSelfMStackCountdown_00437020(void);
-void Set14CallAddJmp_00436ff0(void) {
+extern void InstallSelfMStackCountdown(void);
+void Set14CallAddJmp(void) {
     unsigned int v;
     g_walkCallback = (void (*)(void))0x14;
     CallPauseInc();
@@ -30,5 +30,5 @@ void Set14CallAddJmp_00436ff0(void) {
     v = (unsigned int)g_walkCallback + 8;
     g_walkCallback = (void (*)(void))v;
     g_eventQueueChild = v;
-    InstallSelfMStackCountdown_00437020();
+    InstallSelfMStackCountdown();
 }

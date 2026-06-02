@@ -108,13 +108,13 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-/* @addr 0x0044cb80 (203b game) - mstack-push 3 values (g_eventQueueWorkType/70/6c); call Add0fJmp_0044ccd0;
+/* @addr 0x0044cb80 (203b game) - mstack-push 3 values (g_eventQueueWorkType/70/6c); call Add0fJmp;
  *   if !pause: mstack-pop into g_walkCallback with side-store to scaledInit*4+0x58;
  *   then more side-stores to chain[+0x54] (g_eventQueueCurrent) and chain[+0x5c] (g_eventQueueWorkType);
  *   mstack-pop g_eventQueueCurrent, g_eventQueueWorkType. ret.
  */
 extern unsigned int g_matrixStack_arr;
-extern void Add0fJmp_0044ccd0(void);
+extern void Add0fJmp(void);
 
 void MStackPush3SideStore(void) {
     __asm {
@@ -133,7 +133,7 @@ void MStackPush3SideStore(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
-        call    Add0fJmp_0044ccd0
+        call    Add0fJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

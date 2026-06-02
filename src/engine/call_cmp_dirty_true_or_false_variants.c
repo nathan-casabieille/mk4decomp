@@ -23,9 +23,9 @@ extern unsigned int g_scaledInit_00542044;
  *   xor     eax, eax
  *   ret
  */
-extern void CmpP1ScaledLoad74_0045f5d0(void);
+extern void CmpP1ScaledLoad74(void);
 int CallCmpDirtyTrueOrFalse_0045f570(void) {
-    CmpP1ScaledLoad74_0045f5d0();
+    CmpP1ScaledLoad74();
     if ((unsigned int)g_walkCallback != g_eventQueueCurrent) {
         g_xformDirtyFlags = g_xformDirtyFlags & 0xFFFFFFFEu;
         return 1;
@@ -35,9 +35,9 @@ int CallCmpDirtyTrueOrFalse_0045f570(void) {
 }
 
 /* @addr 0x0045f5a0 (48b): same shape, swapped: jne (75) instead of je (74) */
-extern void CmpP1ScaledLoad74_0045f5d0(void);
+extern void CmpP1ScaledLoad74(void);
 int CallCmpDirtyTrueOrFalse_0045f5a0(void) {
-    CmpP1ScaledLoad74_0045f5d0();
+    CmpP1ScaledLoad74();
     if ((unsigned int)g_walkCallback == g_eventQueueCurrent) {
         g_xformDirtyFlags = g_xformDirtyFlags & 0xFFFFFFFEu;
         return 1;

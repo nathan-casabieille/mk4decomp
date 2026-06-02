@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
  *   ecx = g_xformEntityIdx; eax = 0xa0000;
  *   g_walkCallback = eax; [ecx*4+0x34] = eax; jmp MStackBracket7_DispatchAndChain.
  */
-void GuardedSetCallOrJmp_00453420(void) {
+void GuardedSetCallOrJmp(void) {
     unsigned int v;
     MStackPush2RunCountdown();
     if (g_framePauseFlag != 0) return;

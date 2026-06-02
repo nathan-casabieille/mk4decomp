@@ -15,10 +15,10 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_walkCallback], ecx
  *   jmp     +0x2d
  */
-extern void WalkCallbackSetClearDirty_0048e7d0(void);
-void ScaledChain3c74Jmp_0048e780(void) {
+extern void WalkCallbackSetClearDirty(void);
+void ScaledChain3c74Jmp(void) {
     unsigned int v = ((ScenegraphNode *)(g_baseSel * 4))->child_a;
     g_scaledInit_00542044 = v;
     g_walkCallback = (void (*)(void))((ScenegraphNode *)(v * 4))->fsm_state;
-    WalkCallbackSetClearDirty_0048e7d0();
+    WalkCallbackSetClearDirty();
 }

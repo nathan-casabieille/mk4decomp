@@ -109,17 +109,17 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void AudioMixerStep(void);
-extern void EsiTripleMul10Vec_00440660(void);
+extern void EsiTripleMul10Vec(void);
 extern void GatedWordPushCall(void);
-extern void ScaledAddStore_004406e0(void);
+extern void ScaledAddStore(void);
 extern void SetJmp_00440720(void);
 extern void StoreDoubleNegPauseSubStore(void);
 
-__declspec(naked) void CameraBounceUpdate_00440430(void)
+__declspec(naked) void CameraBounceUpdate(void)
 {
     __asm {
         push     esi
-        call     ScaledAddStore_004406e0
+        call     ScaledAddStore
         mov      eax, dword ptr [g_framePauseFlag]
         xor      esi, esi
         cmp      eax, esi
@@ -234,7 +234,7 @@ __declspec(naked) void CameraBounceUpdate_00440430(void)
         add      esp, 8
         mov      dword ptr [ecx*4 + 0x74], eax
         mov      dword ptr [g_eventQueueCurrent], 0xffff0ccd
-        call     EsiTripleMul10Vec_00440660
+        call     EsiTripleMul10Vec
     L_0657:
         pop      esi
         ret

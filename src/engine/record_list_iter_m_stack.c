@@ -112,15 +112,15 @@ extern unsigned int g_fightAxisPosY;
  *   For each record from g_eventQueueIdx stream: read 3 fields (g_xformEntityIdx, g_eventQueueWorkType, g_currentNodeFlags).
  *   If 3rd field (g_currentNodeFlags) == 0xffff0000: terminate.
  *   Else: read 4th field (g_xformScratch2088). mstack-push g_eventQueueWorkType, g_eventQueueCurrent, g_xformEntityIdx.
- *   g_walkCallback=0x6c. Call StateMachineInit_00493000. If pause: ret.
+ *   g_walkCallback=0x6c. Call StateMachineInit. If pause: ret.
  *   Mstack-pop: g_xformEntityIdx, g_eventQueueCurrent, g_eventQueueWorkType. If g_eventQueueWorkType!=0: [g_cj*4+0x58]=g_eventQueueWorkType.
  *   Re-read next field from g_eventQueueIdx stream, if !=0xffff0000 loop. Pop edi/esi; ret.
  */
-extern void StateMachineInit_00493000(void);
+extern void StateMachineInit(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void RecordListIterMStack_00422ce0(void) {
+__declspec(naked) void RecordListIterMStack(void) {
     __asm {
         mov     ecx, dword ptr [g_eventQueueIdx]
         push    esi
@@ -165,7 +165,7 @@ __declspec(naked) void RecordListIterMStack_00422ce0(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], edx
         mov     dword ptr [g_walkCallback], edi
-        call    StateMachineInit_00493000
+        call    StateMachineInit
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

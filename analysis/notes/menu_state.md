@@ -115,7 +115,7 @@ knows to tear down the match and return to the title.
 | 0x004b7260 | `Helper_GSM_Tournament`       |     2004 | State handler for the tournament setup screen (character roster, bracket). |
 | 0x004b7a40 | `Input_RebindButtonToAction`  |      193 | Joystick analog of `Input_RebindKeyToAction`. Scans the 9-slot button binding table at `0x543b20..b60` (per-player via the `idx` argument). Same swap semantics. |
 | 0x004b7b10 | `Helper_GSM_Practice`         |      464 | State handler for the practice-mode setup screen. |
-| 0x004b7ce0 | `FormatMenuItemsAndDraw_004b7ce0` | 272  | (TODO - hand-rolled byte-stream, exact role still unclear; appears to fetch a row from `g_dispatchVar40_004d52d8` and format it via `Menu_FillColonField`.) |
+| 0x004b7ce0 | `FormatMenuItemsAndDraw` | 272  | (TODO - hand-rolled byte-stream, exact role still unclear; appears to fetch a row from `g_dispatchVar40_004d52d8` and format it via `Menu_FillColonField`.) |
 | 0x004b7df0 | `Helper_GSM_Options`          |      656 | State handler for the audio/video options page. |
 | 0x004b8080 | `Menu_FillOptionValues` |    360 | Options-page value formatter (was `MenuPageTailDispatch`). Walks the options rows; per row, a jump table on the row type (`[row+4] - 0x3c`, 0..5) picks the value string - ON/OFF, difficulty name ("VERY EASY".."ULTIMATE"), control style ("ARCADE STYLE"/"KEYB FRIENDLY"), or an sprintf'd number - and fills it after the colon via `Menu_FillColonField`. Called as the render tail of `Helper_GSM_Options`/`Config`. |
 | 0x004b81f0 | `Helper_GSM_Config`           |      722 | State handler for the controls config page. Calls `Input_RebindKeyToAction` / `Input_RebindButtonToAction` when the user assigns a new VK / button to an action. |
@@ -232,7 +232,7 @@ skipped during up/down navigation.
   PAUSE menu, the windowed-color-depth error, and the insert-CD
   dialog. Renamed `Helper_GSM_Sub18/19/1A/1B/1C/Other1/Other2` to the
   `Menu_*` names in the function table above.
-- **`FormatMenuItemsAndDraw_004b7ce0`** is still a hand-emit byte
+- **`FormatMenuItemsAndDraw`** is still a hand-emit byte
   stream; the role above is a hypothesis. Worth a focused decompile
   pass to confirm.
 - ~~**`Menu_FillOptionValues`** role~~ - DONE. It is the options-page
@@ -243,4 +243,4 @@ skipped during up/down navigation.
   0x18/0x19/0x1a/0x1b/0x1c/0x45 (each switches to a state of the
   same value) - but the inputs that produce each return value
   haven't been traced. Likely tied to the cutscene packet decoder
-  at `EventPacketDecoder_0045de60`.
+  at `EventPacketDecoder`.

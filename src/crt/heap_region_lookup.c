@@ -9,7 +9,7 @@
  *   On match (16-byte aligned, page-offset >= 0x100): returns metadata ptr;
  *   else: returns 0.
  */
-void* HeapRegionLookup_004c7370(void) {
+void* HeapRegionLookup(void) {
     __asm {
         mov     ecx, dword ptr [esp + 4]
         mov     eax, 0x520130

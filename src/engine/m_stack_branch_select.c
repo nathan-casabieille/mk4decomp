@@ -113,18 +113,18 @@ extern unsigned int g_fightAxisPosY;
  *   g_walkCallback = 1; call DualBranchWordLookup; pause? ret.
  *   mstack-pop into g_baseSel.
  *   g_acc_00542078 = chain[g_fightGroupHead + 0x54]; g_eventQueueNotMask = chain[+0x5c];
- *   call StoreTwoCallSubMain_00426b60; pause? ret.
+ *   call StoreTwoCallSubMain; pause? ret.
  *   g_eventQueueNotMask = 0; call EntryThunkBodyStateMachine; pause? ret.
  *   g_walkCallback = 0x13; jmp TableLookupCall.
  */
-extern void DualBranchWordLookup_0048a290(void);
+extern void DualBranchWordLookup(void);
 extern void EntryThunkBodyStateMachine(void);
-extern void StoreTwoCallSubMain_00426b60(void);
+extern void StoreTwoCallSubMain(void);
 extern void TableLookupCall_00489f60(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void MStackBranchSelect_00457d10(void) {
+__declspec(naked) void MStackBranchSelect(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_baseSel]
@@ -141,7 +141,7 @@ __declspec(naked) void MStackBranchSelect_00457d10(void) {
         mov     ecx, dword ptr [g_gtPlayerProbe1]
         mov     dword ptr [g_baseSel], ecx
         mov     dword ptr [g_walkCallback], 1
-        call    DualBranchWordLookup_0048a290
+        call    DualBranchWordLookup
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -156,7 +156,7 @@ __declspec(naked) void MStackBranchSelect_00457d10(void) {
         mov     dword ptr [g_acc_00542078], ecx
         mov     edx, [eax*4 + 0x5c]
         mov     dword ptr [g_eventQueueNotMask], edx
-        call    StoreTwoCallSubMain_00426b60
+        call    StoreTwoCallSubMain
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

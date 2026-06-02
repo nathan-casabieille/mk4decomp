@@ -109,8 +109,8 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void DirtyDoubleDeref(void);
-extern void PoseCopyIdleCluster_004537a0(void);
-extern void Bit2GatedChainInit_00453620(void);
+extern void PoseCopyIdleCluster(void);
+extern void Bit2GatedChainInit(void);
 extern void GDispatch4(void);
 
 extern unsigned char g_dispatchSave622_004ebee0;
@@ -122,7 +122,7 @@ extern unsigned int g_gtPlayerProbe1;
 extern void Thunk_0049cbd0(void);
 extern void FiveCallScaledChainTailJmp(void);
 
-extern void TwinLoopSlotFinder_00429a40(void);
+extern void TwinLoopSlotFinder(void);
 extern void LoadGeoAsset_Default(void);
 
 extern void CjInstallSelfRouter(void);
@@ -140,7 +140,7 @@ extern void func_004244d0_fwd(void);
 extern unsigned int g_chain_disp_64_40a690_fwd;
 #define g_chain_disp_64_40a690 g_chain_disp_64_40a690_fwd
 
-extern void GuardedClampStoreJmp_00428bd0(void);
+extern void GuardedClampStoreJmp(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 
 extern unsigned int g_counter_0053a51c;
@@ -148,7 +148,7 @@ extern unsigned int g_counter_0053a51c;
 extern void SixCallSeqPushImm(void);
 extern unsigned int g_phaseTimer;
 #define g_phaseTimer g_phaseTimer
-extern void BossSpinCluster_00487e80(void);
+extern void BossSpinCluster(void);
 
 extern unsigned int g_bootLongChainState_00537f24;
 extern unsigned int g_arr_chain_4348f0_2c;
@@ -164,7 +164,7 @@ extern unsigned int g_arr_chain_4348f0_main;
 
 extern unsigned int g_matrixStack_arr;
 
-void LinkedListSwapHead_0049d0a0(void) {
+void LinkedListSwapHead(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]
         mov     eax, [eax*4 + g_arr_chain_4348f0_2c]

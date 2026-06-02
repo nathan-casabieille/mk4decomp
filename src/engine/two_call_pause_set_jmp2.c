@@ -23,7 +23,7 @@ extern u32 g_framePauseFlag;
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void GuardedSeq_00473f70(void);
-void TwoCallPauseSetJmp2_00456180(void) {
+void TwoCallPauseSetJmp2(void) {
     MStackPush2RunCountdown();
     if (g_framePauseFlag != 0) return;
     MStackBracket7_DispatchAndChain();

@@ -119,7 +119,7 @@ extern unsigned int g_byte_005435a0;
 extern void ScaledChainStore24(void);
 extern void SetJmp_004a1ad0(void);
 
-__declspec(naked) void AudioMixerKnobUpdate_004a8aa0(void)
+__declspec(naked) void AudioMixerKnobUpdate(void)
 {
     __asm {
         mov      eax, dword ptr [g_audioMixerKnob2_00543440]

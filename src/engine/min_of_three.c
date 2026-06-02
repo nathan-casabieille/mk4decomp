@@ -21,7 +21,7 @@ extern unsigned int g_scaledInit_00542044;
 extern int g_min_007af984;
 extern int g_min_007af988;
 extern int g_min_007af98c;
-int MinOfThree_004b3d70(void) {
+int MinOfThree(void) {
     int a = g_min_007af984;
     int b = g_min_007af988;
     if (b < a) a = b;

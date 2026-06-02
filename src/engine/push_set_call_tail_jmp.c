@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *   g_xformEntityIdx = edx; g_matrixStackTop = eax;
  *   jmp LoadCmpAddrJmp.
  */
-void PushSetCallTailJmp_00493e40(void) {
+void PushSetCallTailJmp(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_xformEntityIdx;
     g_walkCallback = (void (*)(void))((FightGroupNode *)(g_cj_0054205c * 4))->tag;

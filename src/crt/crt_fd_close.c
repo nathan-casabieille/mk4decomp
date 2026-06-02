@@ -123,7 +123,7 @@ extern void Crt_errno(void);
 
 extern unsigned int g_arr_00fa0de0;
 
-__declspec(naked) int CrtFdClose_004cd1c0(void) {
+__declspec(naked) int CrtFdClose(void) {
     __asm {
         mov     ecx, dword ptr [esp + 4]
         mov     eax, dword ptr [g_dispatchSave1469_00fa0ee0]

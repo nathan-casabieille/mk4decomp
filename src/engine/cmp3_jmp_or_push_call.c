@@ -18,7 +18,7 @@ extern unsigned int g_stateCountdown;
 extern void CallPauseDirtyLit_00433910(void);
 extern int PackedAdvanceCallTailJmp(void *);
 extern void *g_dispatchSave1226_004e44c0;
-void Cmp3JmpOrPushCall_004338e0(void) {
+void Cmp3JmpOrPushCall(void) {
     int v = (int)g_stateCountdown;
     g_walkCallback = (void (*)(void))v;
     if (v > 3) {

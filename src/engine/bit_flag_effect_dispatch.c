@@ -122,11 +122,11 @@ extern void Helper_SetState_0E(void);
 extern void Helper_SetState_0F(void);
 extern void Helper_SetState_10(void);
 extern void Helper_SetState_1A(void);
-extern void TableWalk3StrideCall_00461640(void);
-extern void TenThunkDualSave_004616e0(void);
-extern void TripleBlockInstallSelfThunk_00461930(void);
+extern void TableWalk3StrideCall(void);
+extern void TenThunkDualSave(void);
+extern void TripleBlockInstallSelfThunk(void);
 
-__declspec(naked) void BitFlagEffectDispatch_004613b0(void)
+__declspec(naked) void BitFlagEffectDispatch(void)
 {
     __asm {
         mov      eax, dword ptr [g_or_0052ab40]
@@ -168,7 +168,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         and      edx, 0x200
         mov      dword ptr [g_xformScratch94], edx
         je       short L_1465
-        call     TenThunkDualSave_004616e0
+        call     TenThunkDualSave
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1631
@@ -190,7 +190,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         and      edx, 2
         mov      dword ptr [g_xformScratch94], edx
         je       short L_14ba
-        call     TripleBlockInstallSelfThunk_00461930
+        call     TripleBlockInstallSelfThunk
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1631
@@ -267,7 +267,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         and      ecx, 0x80
         mov      dword ptr [g_xformScratch94], ecx
         je       short L_15db
-        call     TableWalk3StrideCall_00461640
+        call     TableWalk3StrideCall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1631

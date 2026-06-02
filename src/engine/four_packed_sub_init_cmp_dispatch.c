@@ -108,23 +108,23 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void TripleMStackPushChainStores_00476180(void);
-extern void StoreFightFieldCallTailJmp_004667a0(void);
-extern void FourPackedSubInitCmpDispatch_004665b0(void);
+extern void TripleMStackPushChainStores(void);
+extern void StoreFightFieldCallTailJmp(void);
+extern void FourPackedSubInitCmpDispatch(void);
 
 /* @addr 0x00466490 (285b game) - dual block: thunk + 4-field copy + cj setup.
  *   B1 (0..0xf, +2 NOPs): push 0x004eaa08; tail-call ArgSarStoreJmp.
- *   B2 (0x10..0x11c): call TripleMStackPushChainStores_00476180; if pause? ret.
- *     If bit2 of g_xformDirtyFlags set: tail-jmp StoreFightFieldCallTailJmp_004667a0.
+ *   B2 (0x10..0x11c): call TripleMStackPushChainStores; if pause? ret.
+ *     If bit2 of g_xformDirtyFlags set: tail-jmp StoreFightFieldCallTailJmp.
  *     Else: copy cj[+0x58/+0x3c/+0x64] to scaledInit fields with intermediate via
  *     g_eventQueueIdx (for +0x38). cj[+0x30]=0x7e. Call MStackCall_00406340; if pause? ret.
  *     baseSel[+0x30]=2, baseSel[+0x34]=g_scaledInit, baseSel[+0x38]=g_eventQueueIdx,
- *     baseSel[+0x3c]=g_cj_0054205c. Tail-jmp FourPackedSubInitCmpDispatch_004665b0; ret.
+ *     baseSel[+0x3c]=g_cj_0054205c. Tail-jmp FourPackedSubInitCmpDispatch; ret.
  */
 extern void ArgSarStoreJmp(void);
 extern void MStackCall_00406340(void);
 
-__declspec(naked) void ThunkPlus4FieldCjCopy_00466490(void) {
+__declspec(naked) void ThunkPlus4FieldCjCopy(void) {
     __asm {
         push    0x004eaa08
         call    ArgSarStoreJmp
@@ -132,7 +132,7 @@ __declspec(naked) void ThunkPlus4FieldCjCopy_00466490(void) {
         ret
         nop
         nop
-        call    TripleMStackPushChainStores_00476180
+        call    TripleMStackPushChainStores
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -144,7 +144,7 @@ __declspec(naked) void ThunkPlus4FieldCjCopy_00466490(void) {
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   74h
         _emit   05h
-        jmp     StoreFightFieldCallTailJmp_004667a0
+        jmp     StoreFightFieldCallTailJmp
         mov     eax, dword ptr [g_eventQueueEnd]
         mov     edx, dword ptr [g_cj_0054205c]
         mov     ecx, dword ptr [eax*4 + 0x38]
@@ -186,7 +186,7 @@ __declspec(naked) void ThunkPlus4FieldCjCopy_00466490(void) {
         mov     ecx, dword ptr [g_baseSel]
         mov     eax, dword ptr [g_cj_0054205c]
         mov     dword ptr [ecx*4 + 0x3c], eax
-        jmp     FourPackedSubInitCmpDispatch_004665b0
+        jmp     FourPackedSubInitCmpDispatch
         ret
     }
 }

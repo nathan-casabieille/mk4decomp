@@ -113,16 +113,16 @@ extern unsigned int g_fightAxisPosY;
  *   g_eventQueueChild = g_currentNodeFlags;
  *   g_acc_00542078 = chain[g_eventQueueIdx].slot54;
  *   g_eventQueueNotMask = chain[g_eventQueueIdx].slot5c;
- *   call BossSpinCluster_00487e80; pause? ret;
+ *   call BossSpinCluster; pause? ret;
  *   chain[cj].slot54 = g_eventQueueCurrent; chain[cj].slot5c = walkCallback;
  *   g_xformScratch2088 += 0x4ccc; g_currentNodeFlags += 0x28f; if > 0x30000: = 0x50000.
  */
 extern unsigned int g_phaseTimer;
-extern void BossSpinCluster_00487e80(void);
+extern void BossSpinCluster(void);
 
 extern unsigned int g_chain_arr_4348f0;
 
-void SnapshotDispatchAccum_00487dd0(void) {
+void SnapshotDispatchAccum(void) {
     __asm {
         mov     ecx, dword ptr [g_xformScratch2088]
         mov     eax, 2
@@ -136,7 +136,7 @@ void SnapshotDispatchAccum_00487dd0(void) {
         mov     dword ptr [g_acc_00542078], edx
         mov     eax, [eax*4 + g_chain_arr_4348f0 + 0x5c]
         mov     dword ptr [g_eventQueueNotMask], eax
-        call    BossSpinCluster_00487e80
+        call    BossSpinCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

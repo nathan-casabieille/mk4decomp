@@ -110,16 +110,16 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave603_004e51c8;
 extern void ArgSarStoreJmp(void);
-extern void ComboLoopCluster_00440070(void);
-extern void EntitySetupCountdownFsm_0043fcf0(void);
+extern void ComboLoopCluster(void);
+extern void EntitySetupCountdownFsm(void);
 extern void GuardedSeq_00476de0(void);
 extern void GuardedSeq_00476f10(void);
 extern void GuardedSeq_00476fc0(void);
 extern void MStackPush2BitLoop(void);
 extern void PushPopCurrentSetFFFFFFFF(void);
-extern void TwoCallScaledOr1600_0043f8f0(void);
+extern void TwoCallScaledOr1600(void);
 
-__declspec(naked) void SpecialMoveChainCluster_0043f9c0(void)
+__declspec(naked) void SpecialMoveChainCluster(void)
 {
     __asm {
         /* === h1 (0x43f9c0): 7-stage status sequence + event 4e51c8 === */
@@ -153,7 +153,7 @@ __declspec(naked) void SpecialMoveChainCluster_0043f9c0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_fb81
-        call     TwoCallScaledOr1600_0043f8f0
+        call     TwoCallScaledOr1600
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_fb81
@@ -259,7 +259,7 @@ __declspec(naked) void SpecialMoveChainCluster_0043f9c0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_fc4b
-        jmp      ComboLoopCluster_00440070
+        jmp      ComboLoopCluster
     L_fbe9:
         mov      dword ptr [eax + 8], OFFSET L_fbb0
         mov      ecx, dword ptr [g_baseSel]
@@ -275,7 +275,7 @@ __declspec(naked) void SpecialMoveChainCluster_0043f9c0(void)
         mov      dword ptr [eax + 4], ecx
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], 0
-        call     EntitySetupCountdownFsm_0043fcf0
+        call     EntitySetupCountdownFsm
         mov      dword ptr [g_framePauseFlag], 1
     L_fc4b:
         ret
@@ -296,7 +296,7 @@ __declspec(naked) void SpecialMoveChainCluster_0043f9c0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_fceb
-        jmp      ComboLoopCluster_00440070
+        jmp      ComboLoopCluster
     L_fc89:
         mov      dword ptr [eax + 8], OFFSET L_fc50
         mov      ecx, dword ptr [g_baseSel]
@@ -312,7 +312,7 @@ __declspec(naked) void SpecialMoveChainCluster_0043f9c0(void)
         mov      dword ptr [eax + 4], ecx
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], 0
-        call     EntitySetupCountdownFsm_0043fcf0
+        call     EntitySetupCountdownFsm
         mov      dword ptr [g_framePauseFlag], 1
     L_fceb:
         ret

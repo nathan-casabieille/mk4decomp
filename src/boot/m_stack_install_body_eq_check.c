@@ -112,7 +112,7 @@ extern unsigned int g_dispatchSave589_004d5134;
 extern unsigned int g_bootChainPair1_00541e84;
 extern void MStackPush2ChainLLInsert(void);
 
-void MStackInstallBodyEqCheck_00406910(void) {
+void MStackInstallBodyEqCheck(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueCurrent]

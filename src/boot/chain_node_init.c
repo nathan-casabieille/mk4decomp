@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_matrixStack_arr;
 
-void ChainNodeInit_0041fa50(void) {
+void ChainNodeInit(void) {
     __asm {
         mov     ecx, dword ptr [g_scaledInit_00542044]
         test    ecx, ecx

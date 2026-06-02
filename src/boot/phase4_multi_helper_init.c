@@ -114,7 +114,7 @@ extern unsigned int g_dispatchSave612_004d75a0;
 extern unsigned int g_dispatchSave611_004d7610;
 extern unsigned int g_dispatchSave95_0053a29c;
 extern unsigned int g_phase4HelperSlot_0053a400;
-extern void BootSetupWithMStackBody_00418e00(void);
+extern void BootSetupWithMStackBody(void);
 extern void CallSetPause(void);
 extern void ClampMulShiftStore(void);
 extern void Helper_MenuStub_8EB0(void);
@@ -127,7 +127,7 @@ extern void ScaledTripleCopy54(void);
 extern void SetJmp_00408d20(void);
 extern void TableWalkBoundedCmp(void);
 
-__declspec(naked) void Phase4MultiHelperInit_00418af0(void)
+__declspec(naked) void Phase4MultiHelperInit(void)
 {
     __asm {
         call    MStackPush8
@@ -264,7 +264,7 @@ __declspec(naked) void Phase4MultiHelperInit_00418af0(void)
     L_p4mh_C_after_init:
         mov     dword ptr [g_eventQueueTotal], 6
         mov     dword ptr [g_eventQueueNotMask], 0x003C0000
-        call    BootSetupWithMStackBody_00418e00
+        call    BootSetupWithMStackBody
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4mh_C_exit
@@ -276,7 +276,7 @@ __declspec(naked) void Phase4MultiHelperInit_00418af0(void)
         mov     dword ptr [g_eventQueueNotMask], ecx
         mov     dword ptr [g_eventQueueTotal], eax
         js      L_p4mh_C_loop_done
-        call    BootSetupWithMStackBody_00418e00
+        call    BootSetupWithMStackBody
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         je      L_p4mh_C_loop

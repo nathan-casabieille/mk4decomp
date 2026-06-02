@@ -121,9 +121,9 @@ extern void FSYS_fread(void);
 extern void FSYS_fseek(void);
 extern void FSYS_ftell(void);
 extern void Helper_Sprintf(void);
-extern void ListInitLoop_00401310(void);
+extern void ListInitLoop(void);
 extern void LoadArgPushCall(void);
-extern void MemcpyByteN_004a5680(void);
+extern void MemcpyByteN(void);
 extern void ShowErrorMessage(void);
 
 __declspec(naked) void Anim_LoadPackFile(void)
@@ -253,9 +253,9 @@ __declspec(naked) void Anim_LoadPackFile(void)
         push    0x200
         push    edx
         push    offset g_fileLoaderArr_00524158
-        call    MemcpyByteN_004a5680
+        call    MemcpyByteN
         add     esp, 0xC
-        call    ListInitLoop_00401310
+        call    ListInitLoop
         mov     esi, dword ptr [g_fileLoaderState_00524358]
         xor     eax, eax
         mov     ax, word ptr [esi + 0x200]

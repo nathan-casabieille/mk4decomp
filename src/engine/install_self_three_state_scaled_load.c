@@ -119,7 +119,7 @@ extern void FiveCallGuardSetTail(void);
 extern void InstallSelf3WayChainCmp(void);
 extern void ScaledLoadJmp_00428d20(void);
 
-__declspec(naked) void InstallSelfThreeStateScaledLoad_0047f2e0(void) {
+__declspec(naked) void InstallSelfThreeStateScaledLoad(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi

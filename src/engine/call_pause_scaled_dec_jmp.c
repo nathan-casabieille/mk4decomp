@@ -23,7 +23,7 @@
  */
 extern void GuardedChainCmpDualBitXor(void);
 extern void ScaledStoreCurDirtyClear(void);
-extern void ScaledStoreCurDirtyOr1_00429730(void);
+extern void ScaledStoreCurDirtyOr1(void);
 extern u32 g_framePauseFlag;
 
 __declspec(naked) void CallPauseScaledDecJmp(void) {
@@ -40,7 +40,7 @@ __declspec(naked) void CallPauseScaledDecJmp(void) {
         jmp     ScaledStoreCurDirtyClear
 L_cpsdj_neg:
         mov     dword ptr [g_eventQueueCurrent], 0
-        jmp     ScaledStoreCurDirtyOr1_00429730
+        jmp     ScaledStoreCurDirtyOr1
 L_cpsdj_ret:
         ret
     }

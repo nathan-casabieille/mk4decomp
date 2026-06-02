@@ -117,7 +117,7 @@ extern void ArgSarStoreJmp(void);
 extern void ScaledAndAlfe(void);
 extern void ThresholdSetMatchDispatch(void);
 
-void QuadEntryChainPush_0046dd00(void) {
+void QuadEntryChainPush(void) {
     __asm {
         call    ScaledAndAlfe
         mov     eax, dword ptr [g_framePauseFlag]

@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
  *   Then set walk=0xc8, call AudioVolumeRescale, gate again, and if
  *   state-bit 0 set jmp Thunk_00439c20.
  */
-void TwoStageWalkGate_00439ae0(void) {
+void TwoStageWalkGate(void) {
     int walk;
     int state_val;
     g_walkCallback = (void (*)(void))0x0e;
@@ -127,7 +127,7 @@ void TwoStageWalkGate_00439ae0(void) {
     g_eventQueueCurrent = (unsigned int)state_val;
     if (state_val < 0x20000) return;
     if (walk > 0x258) {
-        Set258Call_PauseDirtyJmp_00439b50();
+        Set258Call_PauseDirtyJmp();
         return;
     }
     g_walkCallback = (void (*)(void))0xc8;

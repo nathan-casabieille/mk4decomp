@@ -109,10 +109,10 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0049cc30 (267b game) - mstack-push + bit-gated loop with 3 helper calls. */
-extern void AndStoreJmp_0049cc10(void);
+extern void AndStoreJmp(void);
 extern void Thunk_0049cb80(void);
 
-__declspec(naked) void MStackBitLoopTripleCall_0049cc30(void) {
+__declspec(naked) void MStackBitLoopTripleCall(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_scaledInit_00542044]
@@ -161,7 +161,7 @@ __declspec(naked) void MStackBitLoopTripleCall_0049cc30(void) {
         mov     edx, dword ptr [g_eventQueueWorkType]
         mov     dword ptr [g_eventQueueCurrent], esi
         mov     dword ptr [g_walkCallback], edx
-        call    AndStoreJmp_0049cc10
+        call    AndStoreJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

@@ -18,7 +18,7 @@ extern unsigned int g_dlNalt2;
 extern unsigned char g_byte_0054372c;
 extern unsigned char g_byte_00543724;
 
-void StateCmpAndStoreByte_004a98f0(void) {
+void StateCmpAndStoreByte(void) {
     __asm {
         mov     ecx, dword ptr [g_audioBankSel]
         mov     edx, 1

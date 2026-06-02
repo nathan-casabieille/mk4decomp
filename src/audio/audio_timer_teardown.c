@@ -124,7 +124,7 @@ extern void Helper_AuxAudio_PostInit(void);
  *   invoke iat_004d2244 with (preState, 0x808, 2, 0) and clear
  *   all timer-state globals.
  */
-void Audio_TimerTeardown_004ac5f0(void) {
+void Audio_TimerTeardown(void) {
     unsigned int zero = 0;
     if (g_timerFlag != zero) {
         if (((int (*)(void))Helper_AuxAudio_PostInit)() != 0) {

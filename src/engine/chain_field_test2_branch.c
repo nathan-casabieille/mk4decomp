@@ -119,11 +119,11 @@ extern unsigned int g_fightAxisPosY;
  *   eax (a1 5b) and keeps old_scaled in ecx, saving 3 bytes in the cmp block
  *   (compensated by 3 nop pads at end). Reg-allocation divergence; non-coaxable.
  */
-extern void MStackSignedMod_0042fee0(void);
-extern void Mul10Triple0xd999Interp_0042fa10(void);
-extern void SubCmpCallPauseJmp_0042fc40(void);
+extern void MStackSignedMod(void);
+extern void Mul10Triple0xd999Interp(void);
+extern void SubCmpCallPauseJmp(void);
 
-__declspec(naked) void ChainFieldTest2Branch_0042fbc0(void) {
+__declspec(naked) void ChainFieldTest2Branch(void) {
     __asm {
         mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     eax, dword ptr [ecx*4 + 0x40]
@@ -140,7 +140,7 @@ __declspec(naked) void ChainFieldTest2Branch_0042fbc0(void) {
         mov     eax, dword ptr [g_player2NodeIdx]
         mov     dword ptr [g_scaledInit_00542044], eax
     L_notEqual:
-        call    MStackSignedMod_0042fee0
+        call    MStackSignedMod
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_exit
@@ -150,9 +150,9 @@ __declspec(naked) void ChainFieldTest2Branch_0042fbc0(void) {
         mov     dword ptr [g_acc_00542078], 0
         mov     dword ptr [g_eventQueueWorkType], eax
         jle     L_mul10
-        jmp     SubCmpCallPauseJmp_0042fc40
+        jmp     SubCmpCallPauseJmp
     L_mul10:
-        jmp     Mul10Triple0xd999Interp_0042fa10
+        jmp     Mul10Triple0xd999Interp
     L_exit:
         ret
     }

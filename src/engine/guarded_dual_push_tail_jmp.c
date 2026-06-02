@@ -115,7 +115,7 @@ extern unsigned int g_dispatchSave22_00535dac;
  *   call DownloadPlayerChar_Variant; on pause clear, pop them, and
  *   tail-jmp TripleStateSwapCall.
  */
-void GuardedDualPushTailJmp_004231f0(void) {
+void GuardedDualPushTailJmp(void) {
     unsigned int v;
     v = g_dispatchSave22_00535dac;
     g_eventQueueNotMask = v;

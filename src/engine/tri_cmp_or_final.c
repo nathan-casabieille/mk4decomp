@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY;
  *   [eax*4+0x34] = edx; ret.
  */
 
-void TriCmpOrFinal_0043c390(void) {
+void TriCmpOrFinal(void) {
     __asm {
         mov     ecx, dword ptr [g_eventQueueChild]
         xor     eax, eax

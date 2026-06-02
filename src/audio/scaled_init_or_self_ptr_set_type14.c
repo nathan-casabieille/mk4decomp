@@ -12,7 +12,7 @@ extern unsigned int g_scaledInit_00542044;
  *     also clears [fightGroupHead*4 + 0x6c] before recursing.
  */
 extern void func_0041f780_nn(void);
-void ScaledInitOrSelfPtrSetType14_004a1940(void) {
+void ScaledInitOrSelfPtrSetType14(void) {
     unsigned int *base = (unsigned int *)(g_baseSel * 4);
     unsigned int prev = base[0x84 / 4];
     base[0x84 / 4] = 0;

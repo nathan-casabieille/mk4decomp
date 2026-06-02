@@ -124,7 +124,7 @@ extern unsigned int g_phaseThunkVar_00541fb4;
 extern unsigned int g_dispatchAcc_00541fb8;
 extern unsigned int g_phaseCounter;
 
-__declspec(naked) void BitShiftExtract_00464090(void) {
+__declspec(naked) void BitShiftExtract(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueCurrent]

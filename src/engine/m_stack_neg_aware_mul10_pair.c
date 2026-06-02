@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_phaseThunkState_0053a730;
 extern void ScaledChainDouble(void);
 
-void MStackNegAwareMul10Pair_004910b0(void) {
+void MStackNegAwareMul10Pair(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueCurrent]

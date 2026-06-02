@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   call DownloadPlayerChar_Variant (DownloadPlayerChar_Variant); if pause: ret;
  *   pop g_walkCallback; pop g_eventQueueWorkType; jmp TripleStateSwapCall.
  */
-void DoublePushCallDualPopJmp_00423270(void) {
+void DoublePushCallDualPopJmp(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_eventQueueWorkType;
     g_matrixStackTop++;

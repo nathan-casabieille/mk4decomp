@@ -45,7 +45,7 @@ extern unsigned int g_audioStreamState;
 extern unsigned int g_tickFlagF;
 extern void *g_lit_004e39d8;
 extern void *g_lit_004e3a28;
-extern int  PackedAdvanceCallContinue_0048e630(void *p);
+extern int  PackedAdvanceCallContinue(void *p);
 
 /* @addr 0x00431530 */
 void DispatcherComplex131_00431530(void) {
@@ -63,7 +63,7 @@ void DispatcherComplex131_00431530(void) {
     top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = (unsigned int)g_walkCallback;
-    PackedAdvanceCallContinue_0048e630(&g_lit_004e39d8);
+    PackedAdvanceCallContinue(&g_lit_004e39d8);
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     scaled = g_scaledInit_00542044;
@@ -94,7 +94,7 @@ void DispatcherComplex131_004315c0(void) {
     top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = (unsigned int)g_walkCallback;
-    PackedAdvanceCallContinue_0048e630(&g_lit_004e3a28);
+    PackedAdvanceCallContinue(&g_lit_004e3a28);
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     scaled = g_scaledInit_00542044;

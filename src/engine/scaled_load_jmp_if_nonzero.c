@@ -22,7 +22,7 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     eax
  *   ret
  */
-void ScaledLoadJmpIfNonzero_00490e00(void) {
+void ScaledLoadJmpIfNonzero(void) {
     unsigned int idx = g_xformEntityIdx;
     unsigned int v = *(unsigned int *)(idx * 4 + 0x4c);
     g_pendingNodeType = v;

@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  *   if pause: ret; jmp end. (end is a ret).
  */
 
-void OneSetCmpJmpLoadCall_0047c620(void) {
+void OneSetCmpJmpLoadCall(void) {
     __asm {
         mov     ecx, dword ptr [g_baseSel]
         mov     eax, 1

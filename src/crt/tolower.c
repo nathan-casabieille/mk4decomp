@@ -109,13 +109,13 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned char g_dispatchSave1444_00f9fc10;
-extern void Tolower_004cc780(int);
+extern void Tolower(int);
 
 /*
  * @addr 0x004cc6f0 (130b crt) - locale-aware tolower w/ critsec
  *   gate: if locale init flag is unset and char is ASCII 'A'-'Z',
  *   shortcut by adding 0x20; otherwise enter critsec (with lazy
- *   init taking a global _lock(0x13)), call Tolower_004cc780, exit.
+ *   init taking a global _lock(0x13)), call Tolower, exit.
  */
 extern unsigned int g_iat_004d20cc;
 extern unsigned int g_iat_004d20d0;
@@ -124,7 +124,7 @@ extern unsigned int g_dispatchSave1464_00f9fdb0;
 extern void Lock(void);
 extern void TableLookupIatCall(void);
 
-__declspec(naked) void TolowerLocale_004cc6f0(void) {
+__declspec(naked) void TolowerLocale(void) {
     __asm {
         mov     eax, dword ptr [g_dispatchSave1444_00f9fc10]
         test    eax, eax
@@ -158,7 +158,7 @@ noLock:
 callInner:
         mov     eax, dword ptr [esp + 0x10]
         push    eax
-        call    Tolower_004cc780
+        call    Tolower
         add     esp, 4
         mov     ebx, eax
         test    esi, esi

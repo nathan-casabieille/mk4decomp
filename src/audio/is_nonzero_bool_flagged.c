@@ -20,11 +20,11 @@ extern unsigned int g_scaledInit_00542044;
  *   neg     eax
  *   ret
  */
-extern int MovsxAnd4Shr_004a1ce0(void);
-extern int MovsxAnd20Shr5_004a1cf0(void);
-int IsNonzeroBoolFlagged_004a1d00(void) {
-    if (MovsxAnd4Shr_004a1ce0() != 0) {
+extern int MovsxAnd4Shr(void);
+extern int MovsxAnd20Shr5(void);
+int IsNonzeroBoolFlagged(void) {
+    if (MovsxAnd4Shr() != 0) {
         return 1;
     }
-    return MovsxAnd20Shr5_004a1cf0() != 0 ? 1 : 0;
+    return MovsxAnd20Shr5() != 0 ? 1 : 0;
 }

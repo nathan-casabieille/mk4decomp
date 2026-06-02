@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void PreFightInstallCluster(void);
 
-void MStackPush2CjMul10Triple_00474170(void) {
+void MStackPush2CjMul10Triple(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_scaledInit_00542044]

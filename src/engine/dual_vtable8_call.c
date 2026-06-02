@@ -13,7 +13,7 @@
 extern Mk4ComObj *g_renderer2_r7_data_0058c7d4;
 extern Mk4ComObj *g_renderer2_state7_0058c7c4;
 extern int g_renderer2_present_rc;
-void DualVtable8Call_004af650(void) {
+void DualVtable8Call(void) {
     Mk4ComObj *p1 = g_renderer2_r7_data_0058c7d4;
     Mk4ComObj *p2;
     if (p1) {

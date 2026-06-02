@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern void TripleStageRollback(void);
 extern void RoundWinTransition(void);
-extern void Push15PushDataCallWordCallJmp_004a1080(void);
+extern void Push15PushDataCallWordCallJmp(void);
 extern void CallSetPause(void);
 extern void TaggedSceneDispatch(void);
 
@@ -118,7 +118,7 @@ extern void TaggedSceneDispatch(void);
  *   Compute base*4 + chain[+0x34]; push 0x230; store eax to g_walkCallback and chain[g_eventQueueIdx].
  *   call TripleStageRollback; add esp,4. call RoundWinTransition; pause? -> ret.
  *   eax = chain[g_baseSel + 0x30]; g_walkCallback = eax;
- *   if (eax == 0): jmp Push15PushDataCallWordCallJmp_004a1080.
+ *   if (eax == 0): jmp Push15PushDataCallWordCallJmp.
  *   else: push 0x16, 0x4a0370; call StoreTwoCall; add esp,8.
  *     push (word)[0x4e2864]; call TaggedSceneDispatch; add esp,4;
  *     jmp CallSetPause.
@@ -126,7 +126,7 @@ extern void TaggedSceneDispatch(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void AudioInitChainTag_004a1000(void) {
+__declspec(naked) void AudioInitChainTag(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         mov     ecx, dword ptr [g_eventQueueIdx]
@@ -147,7 +147,7 @@ __declspec(naked) void AudioInitChainTag_004a1000(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   05h
-        jmp     Push15PushDataCallWordCallJmp_004a1080
+        jmp     Push15PushDataCallWordCallJmp
         push    0x16
         push    0x004a0370
         call    StoreTwoCall

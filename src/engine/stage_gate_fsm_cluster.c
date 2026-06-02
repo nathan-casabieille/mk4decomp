@@ -116,10 +116,10 @@ extern unsigned int g_fightAxisPosY;
 /*                 jump table @0x47b29c, each case installs next state.*/
 /* ------------------------------------------------------------------ */
 extern void ScaledLoadIncJmp_00428d00(void);
-extern void EsiInstallChainCmpDualCall_00429300(void);
+extern void EsiInstallChainCmpDualCall(void);
 extern void ScaledLoadJmp_00429390(void);
 extern void GuardedSeq_004297b0(void);
-extern void StageGateFsmCluster_0047b2c0(void);
+extern void StageGateFsmCluster(void);
 extern void EsiEdiAliasDualMul10(void);
 extern unsigned int g_dispatchSave737_004ed160;
 
@@ -191,7 +191,7 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
     L_b09d:
         /* case 1: bit 0x13, call 0047b2c0, install state 2 */
         mov      dword ptr [g_eventQueueChild], 0x13
-        call     StageGateFsmCluster_0047b2c0
+        call     StageGateFsmCluster
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_b297
         mov      eax, 1
@@ -205,7 +205,7 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
     L_b0db:
         /* case 2: bit 0x12, call 0047b2c0, install state 3 */
         mov      dword ptr [g_eventQueueChild], 0x12
-        call     StageGateFsmCluster_0047b2c0
+        call     StageGateFsmCluster
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_b297
         mov      eax, 1
@@ -221,7 +221,7 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         mov      dword ptr [g_eventQueueNotMask], 6
         jmp      short L_b19a
     L_b125:
-        /* case 4: install state 5 via EsiInstallChainCmpDualCall_00429300 */
+        /* case 4: install state 5 via EsiInstallChainCmpDualCall */
         mov      dword ptr [g_eventQueueChild], 0x13
         mov      dword ptr [esi + 8], OFFSET L_b070
         mov      ecx, dword ptr [g_baseSel]
@@ -237,7 +237,7 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edi
-        call     EsiInstallChainCmpDualCall_00429300
+        call     EsiInstallChainCmpDualCall
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
@@ -294,7 +294,7 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         /* case 0: clear wait, bit 0x12, call 0047b2c0, install state 1 */
         mov      dword ptr [g_eventQueueNotMask], edi
         mov      dword ptr [g_eventQueueChild], 0x12
-        call     StageGateFsmCluster_0047b2c0
+        call     StageGateFsmCluster
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_b297
         mov      eax, 1

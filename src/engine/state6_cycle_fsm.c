@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void CallPauseTestByte4ZeroCB_00451a60(void);
+extern void CallPauseTestByte4ZeroCB(void);
 extern void SetJmp_00451aa0(void);
 extern void SetJmp_00451ab0(void);
 extern void SetJmp_00451ac0(void);
@@ -122,7 +122,7 @@ extern void SetJmp_00451b60(void);
 extern void SetJmp_00451b70(void);
 extern void SetJmp_00451b80(void);
 
-__declspec(naked) void State6CycleFsm_004517e0(void)
+__declspec(naked) void State6CycleFsm(void)
 {
     __asm {
     L_17e0:
@@ -136,7 +136,7 @@ __declspec(naked) void State6CycleFsm_004517e0(void)
         jmp      dword ptr [eax*4 + L_jmptbl_1a48]
     L_180e:
         /* case 1 (state 1 → 2) */
-        call     CallPauseTestByte4ZeroCB_00451a60
+        call     CallPauseTestByte4ZeroCB
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1a45
@@ -160,7 +160,7 @@ __declspec(naked) void State6CycleFsm_004517e0(void)
         ret
     L_186f:
         /* case 2 (state 2 → 3) */
-        call     CallPauseTestByte4ZeroCB_00451a60
+        call     CallPauseTestByte4ZeroCB
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1a45
@@ -184,7 +184,7 @@ __declspec(naked) void State6CycleFsm_004517e0(void)
         ret
     L_18d0:
         /* case 3 (state 3 → 4) */
-        call     CallPauseTestByte4ZeroCB_00451a60
+        call     CallPauseTestByte4ZeroCB
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1a45
@@ -208,7 +208,7 @@ __declspec(naked) void State6CycleFsm_004517e0(void)
         ret
     L_1931:
         /* case 4 (state 4 → 5) */
-        call     CallPauseTestByte4ZeroCB_00451a60
+        call     CallPauseTestByte4ZeroCB
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1a45
@@ -232,7 +232,7 @@ __declspec(naked) void State6CycleFsm_004517e0(void)
         ret
     L_1992:
         /* case 5 (state 5 → 6) */
-        call     CallPauseTestByte4ZeroCB_00451a60
+        call     CallPauseTestByte4ZeroCB
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1a45
@@ -256,7 +256,7 @@ __declspec(naked) void State6CycleFsm_004517e0(void)
         ret
     L_19ef:
         /* case 0 (state 0 → 1) */
-        call     CallPauseTestByte4ZeroCB_00451a60
+        call     CallPauseTestByte4ZeroCB
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1a45

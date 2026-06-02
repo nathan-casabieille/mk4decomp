@@ -26,7 +26,7 @@ extern unsigned int g_dispatchSave1563_00ab4dac;
 extern unsigned int g_dispatchSave1564_00ab4db0;
 extern unsigned int g_dispatchSave1565_00ab4db4;
 extern unsigned int g_dispatchSave1566_00ab4db8;
-void ZeroEightFields_004b8f20(void) {
+void ZeroEightFields(void) {
     g_dispatchSave1559_00ab4d9c = 0;
     g_dispatchSave1560_00ab4da0 = 0;
     g_dispatchSave1561_00ab4da4 = 0;

@@ -108,12 +108,12 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void MStackPush3LinkedListZeroWalk_0049ce00(void);
+extern void MStackPush3LinkedListZeroWalk(void);
 
 /* @addr 0x0049cf70 (259b game) - mstack-push triple, call helper, conditional cj update + bit toggle.
  *   mstack-push g_xformEntityIdx, g_pendingNodeType, g_eventQueueTotal.
  *   g_eventQueueTotal = g_scaledInit_00542044.
- *   call MStackPush3LinkedListZeroWalk_0049ce00; if pause? final-ret.
+ *   call MStackPush3LinkedListZeroWalk; if pause? final-ret.
  *   if bit2 of g_xformDirtyFlags set, skip middle block.
  *   else: g_pendingNodeType=[g_eventQueueTotal*4 + 0x2c]; [g_xformEntityIdx*4]=g_pendingNodeType;
  *     [g_eventQueueTotal*4 + 0x2c]=g_scaledInit_00542044.
@@ -121,7 +121,7 @@ extern void MStackPush3LinkedListZeroWalk_0049ce00(void);
  *   else g_xformDirtyFlags ^= 4 (clear bit2); ret.
  */
 
-void MStackPush3HelperCondToggle_0049cf70(void) {
+void MStackPush3HelperCondToggle(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_xformEntityIdx]
@@ -140,7 +140,7 @@ void MStackPush3HelperCondToggle_0049cf70(void) {
         mov     dword ptr [eax*4 + 0], ecx
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [g_eventQueueTotal], edx
-        call    MStackPush3LinkedListZeroWalk_0049ce00
+        call    MStackPush3LinkedListZeroWalk
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

@@ -108,30 +108,30 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void PushCallPauseSetMaxThenCallPauseJmp_0048e380(void);
-extern void HandWalkCluster_00475cd0(void);
+extern void PushCallPauseSetMaxThenCallPauseJmp(void);
+extern void HandWalkCluster(void);
 extern void MoveCommitPackedDispatcher(void);
 extern void PushPopCurrentSetFFFFFFFF(void);
-extern void TripleStringPauseChain_004468c0(void);
-extern void PoseStateInitNode_0043cd60(void);
+extern void TripleStringPauseChain(void);
+extern void PoseStateInitNode(void);
 
 /* @addr 0x0043cc10 (326b game) - dual-block: state-0 chain-init + state-1 body.
  *   state==0: if g_tickFlagF==2: set byte g_byte_00538148=1. g_audioStreamState=g_walkCallback.
- *     Call CallPauseScaledStoreCopyJmp; if pause ret. Call PushCallPauseSetMaxThenCallPauseJmp_0048e380; if pause ret.
+ *     Call CallPauseScaledStoreCopyJmp; if pause ret. Call PushCallPauseSetMaxThenCallPauseJmp; if pause ret.
  *     g_eventQueueIdx=g_cj; push 0x90, push body addr; g_eventQueueEnd=[baseSel*4+0x38]; call StoreTwoCall.
  *     Install-self at entry; state=1; g_pendingNodeType=0x64; pause=1; pop+ret. 15-NOP pad.
  *   Body (+0xc0): chain[baseSel*4+0x64]=g_eventQueueEnd; chain[baseSel*4+0x68]=g_eventQueueIdx.
- *     Call HandWalkCluster_00475cd0; if pause ret. Call MoveCommitPackedDispatcher; if pause ret.
+ *     Call HandWalkCluster; if pause ret. Call MoveCommitPackedDispatcher; if pause ret.
  *     g_cj=g_eventQueueEnd. Call MoveCommitPackedDispatcher; if pause ret.
  *     g_walkCallback=0x80. Call PushPopCurrentSetFFFFFFFF; if pause ret.
- *     Call TripleStringPauseChain; if pause ret. Tail-jmp PoseStateInitNode_0043cd60.
+ *     Call TripleStringPauseChain; if pause ret. Tail-jmp PoseStateInitNode.
  */
 extern unsigned int g_tickFlagF;
 extern unsigned int g_byte_00538148;
 extern unsigned int g_audioStreamState;
 extern void CallPauseScaledStoreCopyJmp(void);
 
-__declspec(naked) void DualBlockChainInitBody_0043cc10(void) {
+__declspec(naked) void DualBlockChainInitBody(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -152,7 +152,7 @@ __declspec(naked) void DualBlockChainInitBody_0043cc10(void) {
         test    eax, eax
         _emit   75h
         _emit   63h
-        call    PushCallPauseSetMaxThenCallPauseJmp_0048e380
+        call    PushCallPauseSetMaxThenCallPauseJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -166,7 +166,7 @@ __declspec(naked) void DualBlockChainInitBody_0043cc10(void) {
         mov     dword ptr [g_eventQueueEnd], ecx
         call    StoreTwoCall
         add     esp, 8
-        mov     dword ptr [esi + 8], offset DualBlockChainInitBody_0043cc10
+        mov     dword ptr [esi + 8], offset DualBlockChainInitBody
         mov     dword ptr [esi + 0x84], 1
         mov     dword ptr [g_pendingNodeType], 0x64
         mov     dword ptr [g_framePauseFlag], 1
@@ -194,7 +194,7 @@ __declspec(naked) void DualBlockChainInitBody_0043cc10(void) {
         mov     edx, dword ptr [g_baseSel]
         mov     eax, dword ptr [g_eventQueueIdx]
         mov     dword ptr [edx*4 + 0x68], eax
-        call    HandWalkCluster_00475cd0
+        call    HandWalkCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -217,12 +217,12 @@ __declspec(naked) void DualBlockChainInitBody_0043cc10(void) {
         test    eax, eax
         _emit   75h
         _emit   13h
-        call    TripleStringPauseChain_004468c0
+        call    TripleStringPauseChain
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     PoseStateInitNode_0043cd60
+        jmp     PoseStateInitNode
         ret
     }
 }

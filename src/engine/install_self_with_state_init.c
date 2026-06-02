@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00438060 (249b game) - install-self with state init.
- *   snapshot+clear chain[+0x84]. If was nonzero: call IndirectJmp_00438160; ret.
+ *   snapshot+clear chain[+0x84]. If was nonzero: call IndirectJmp; ret.
  *   Else: call LeaPlus22StoreSelf; if pause? ret.
  *   set g_walkCallback=5; call StorePauseImulShr16; if pause? ret.
  *   eax = (0x004e4db8>>2) + g_walkCallback*2 -> g_xformEntityIdx; load eax[+0]/eax[+4]
@@ -118,11 +118,11 @@ extern unsigned int g_fightAxisPosY;
  *   scaledInit-chain push 0x00438060+0x01000000;
  *   call StateGateMStackOverlap; pause=1; ret.
  */
-extern void IndirectJmp_00438160(void);
+extern void IndirectJmp(void);
 extern void StateGateMStackOverlap(void);
 extern void StorePauseImulShr16(void);
 
-__declspec(naked) void InstallSelfWithStateInit_00438060(void) {
+__declspec(naked) void InstallSelfWithStateInit(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -132,7 +132,7 @@ __declspec(naked) void InstallSelfWithStateInit_00438060(void) {
         test    eax, eax
         _emit   74h
         _emit   07h
-        call    IndirectJmp_00438160
+        call    IndirectJmp
         pop     esi
         ret
         call    LeaPlus22StoreSelf

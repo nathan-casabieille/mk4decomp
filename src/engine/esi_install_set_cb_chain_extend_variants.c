@@ -122,7 +122,7 @@ void EsiInstallSetCbChainExtend_0048a810(void) {
         return;
     }
     g_fightGroupHead = g_load_0052ab10;
-    ZeroSixStores6c80_0048a7c0();
+    ZeroSixStores6c80();
     g_eventQueueChild = 0x0048aad0;
     *(unsigned int *)(base + 8) = (unsigned int)&EsiInstallSetCbChainExtend_0048a810;
     ((ScenegraphNode *)(g_baseSel * 4))->install_flag = 1;
@@ -149,7 +149,7 @@ void EsiInstallSetCbChainExtend_0048a8c0(void) {
         return;
     }
     g_fightGroupHead = g_load_0052ab10;
-    ZeroSixStores6c80_0048a7c0();
+    ZeroSixStores6c80();
     g_eventQueueChild = 0x0048ab40;
     *(unsigned int *)(base + 8) = (unsigned int)&EsiInstallSetCbChainExtend_0048a8c0;
     ((ScenegraphNode *)(g_baseSel * 4))->install_flag = 1;
@@ -176,7 +176,7 @@ void EsiInstallSetCbChainExtend_0048a970(void) {
         return;
     }
     g_fightGroupHead = g_load_0052ab10;
-    ZeroSixStores6c80_0048a7c0();
+    ZeroSixStores6c80();
     g_eventQueueChild = 0x0048abc0;
     *(unsigned int *)(base + 8) = (unsigned int)&EsiInstallSetCbChainExtend_0048a970;
     ((ScenegraphNode *)(g_baseSel * 4))->install_flag = 1;

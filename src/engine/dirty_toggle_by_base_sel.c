@@ -114,19 +114,19 @@ extern unsigned int g_fightAxisPosY;
  *   mismatch / helper-tail pattern with secondary g_active_00537e88
  *   guarded toggle.
  */
-void DirtyToggleByBaseSel_0048f2e0(void) {
+void DirtyToggleByBaseSel(void) {
     unsigned int p38;
     unsigned int v;
     p38 = *(unsigned int *)(g_baseSel * 4 + 0x38);
     g_xformDirtyFlags |= 4;
     g_walkCallback = (void(*)(void))p38;
     if (p38 == g_player1NodeIdx) {
-        DirtyFlagsManipB_0048f3c0();
+        DirtyFlagsManipB();
         return;
     }
     g_xformDirtyFlags ^= 4;
     if (p38 == g_player1NodeIdx) {
-        DirtyFlagsManipB_0048f3c0();
+        DirtyFlagsManipB();
         return;
     }
     g_xformDirtyFlags |= 4;

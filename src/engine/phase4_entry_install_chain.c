@@ -115,8 +115,8 @@ extern unsigned int g_fightAxisPosY;
  *   call CallPauseScaledStoreCopyJmp; if pause: ret;
  *   pop g_eventQueueChild; jmp 0x43bbb0.
  */
-extern void Phase4EntryInstallChain_0043bbb0(void);
-void Push80TripleCallTailJmp_0043bb50(void) {
+extern void Phase4EntryInstallChain(void);
+void Push80TripleCallTailJmp(void) {
     unsigned int top;
     top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
@@ -130,5 +130,5 @@ void Push80TripleCallTailJmp_0043bb50(void) {
     top = g_matrixStackTop;
     g_eventQueueChild = *(unsigned int *)(top * 4);
     g_matrixStackTop = top - 1;
-    Phase4EntryInstallChain_0043bbb0();
+    Phase4EntryInstallChain();
 }

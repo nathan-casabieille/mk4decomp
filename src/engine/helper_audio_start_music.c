@@ -16,7 +16,7 @@
  *   record pointer is NULL or, when g_audioMute is set, the +0x16 flag
  *   bit 0 is clear. Reads the round-robin cursor word at [+0x14]; if the
  *   per-cursor busy byte at [cursor + +0x17] is set, returns -1.
- *   Allocates a free voice via FreeSlotFinder_004c3900 -> byte index; on
+ *   Allocates a free voice via FreeSlotFinder -> byte index; on
  *   success writes (soundId, cursor) into the 4-byte g_audioChannelQueue
  *   entries. If the two byte args pan/vol [esp+0x18]/[esp+0x1c] are both
  *   <= 0x64 (0..100), looks up a (pan*25 + vol) offset in g_table_00f85b60
@@ -34,7 +34,7 @@ extern unsigned int g_flags_00f8fadf;
 extern u16 g_audioChannelQueue[];
 extern unsigned int g_dispatchSave1412_00f9eb82;
 extern u8 g_audioMute;
-extern void FreeSlotFinder_004c3900(void);
+extern void FreeSlotFinder(void);
 
 __declspec(naked) void Audio_PlaySoundId(void) {
     __asm {
@@ -62,7 +62,7 @@ __declspec(naked) void Audio_PlaySoundId(void) {
         mov     cl, byte ptr [eax + ebp + g_flags_00f8fadf]
         test    cl, cl
         jne     L_tsa_failNeg
-        call    FreeSlotFinder_004c3900
+        call    FreeSlotFinder
         mov     cl, al
         cmp     cl, 0xff
         mov     byte ptr [esp + 0x14], cl

@@ -108,14 +108,14 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void MatchPredicateCluster_0045ef50(void);
+extern void MatchPredicateCluster(void);
 extern void Mul10Tail(void);
 extern void SixSubdispatchSpan(void);
 
 /* @addr 0x0045ede0 (356b game) - 2-entry packed dual-stream diff+mul wrapper.
  *   Entry 1 (offset 0, 301b): for each of two streams identified by
  *   g_player1NodeIdx and g_player2NodeIdx, stores into g_currentNodeIdx and
- *   calls MatchPredicateCluster_0045ef50. If both succeed and bit 0 of g_xformDirtyFlags is
+ *   calls MatchPredicateCluster. If both succeed and bit 0 of g_xformDirtyFlags is
  *   set on each, computes the per-component (x,y,z) differences between
  *   the two stream slot's +0x54/+0x58/+0x5c fields, multiplies each diff
  *   by itself via Mul10Tail (push twice → call), accumulates the
@@ -128,13 +128,13 @@ extern void SixSubdispatchSpan(void);
  *     and returns; else sets g_eventQueueCurrent=4 and tail-jmp SixSubdispatchSpan.
  */
 
-__declspec(naked) void DualStreamSqDistThresh_0045ede0(void) {
+__declspec(naked) void DualStreamSqDistThresh(void) {
     __asm {
         mov     eax, dword ptr [g_player1NodeIdx]
         push    esi
         push    edi
         mov     dword ptr [g_currentNodeIdx], eax
-        call    MatchPredicateCluster_0045ef50
+        call    MatchPredicateCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_dsd_skip
@@ -142,7 +142,7 @@ __declspec(naked) void DualStreamSqDistThresh_0045ede0(void) {
         je      L_dsd_skip
         mov     ecx, dword ptr [g_player2NodeIdx]
         mov     dword ptr [g_currentNodeIdx], ecx
-        call    MatchPredicateCluster_0045ef50
+        call    MatchPredicateCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_dsd_skip

@@ -110,13 +110,13 @@ extern unsigned int g_fightAxisPosY;
 
 /* ------------------------------------------------------------------ */
 /* Boss-room init cluster (640b game, 3 packed helpers)                */
-/* Cross-references jump table inside sibling stub BossRoomBootstrap_004105c0.      */
+/* Cross-references jump table inside sibling stub BossRoomBootstrap.      */
 /* ------------------------------------------------------------------ */
 extern void ScaledChainOr8(void);
-extern void Copy3Fields3c4044_00404e90(void);
+extern void Copy3Fields3c4044(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void MStackPush2RunCountdown(void);
-extern void BossRoomBootstrap_004105c0(void);
+extern void BossRoomBootstrap(void);
 extern void func_0041062b(void);
 extern void func_00410725(void);
 extern void func_0041076b(void);
@@ -129,7 +129,7 @@ extern unsigned int g_dispatchSave880_004107b8;
 extern void MStackCall_004062f0(void);
 extern void TableLookupCall_00489ff0(void);
 
-__declspec(naked) void BossRoomInitCluster_00410340(void)
+__declspec(naked) void BossRoomInitCluster(void)
 {
     __asm {
         /* === Helper 1 (0x410340): pack-hi16 into 004d5814[0] === */
@@ -208,7 +208,7 @@ __declspec(naked) void BossRoomInitCluster_00410340(void)
         mov      eax, 0x9a
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x30], eax
-        call     Copy3Fields3c4044_00404e90
+        call     Copy3Fields3c4044
         call     ScaledChainOr8
         mov      edx, dword ptr [g_xformEntityIdx]
         mov      eax, 0x14ccc
@@ -238,7 +238,7 @@ __declspec(naked) void BossRoomInitCluster_00410340(void)
         mov      eax, dword ptr [eax*4 + 0x20]
         mov      dword ptr [eax*4 + 0x38], 0xffff0000
         mov      dword ptr [g_eventQueueNotMask], 3
-        jmp      BossRoomBootstrap_004105c0
+        jmp      BossRoomBootstrap
         mov      eax, OFFSET g_dispatchSave902_004d57c8
         mov      dword ptr [g_walkCallback], 0x707070
         shr      eax, 2

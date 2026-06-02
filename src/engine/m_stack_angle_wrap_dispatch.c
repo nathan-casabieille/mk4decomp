@@ -108,10 +108,10 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void RandSarMod0xFFFSub400_0041f1f0(void);
-extern void RandSarMod0xFFF_0041f230(void);
+extern void RandSarMod0xFFFSub400(void);
+extern void RandSarMod0xFFF(void);
 
-__declspec(naked) void MStackAngleWrapDispatch_0048b800(void)
+__declspec(naked) void MStackAngleWrapDispatch(void)
 {
     __asm {
         mov      eax, dword ptr [g_matrixStackTop]
@@ -182,7 +182,7 @@ __declspec(naked) void MStackAngleWrapDispatch_0048b800(void)
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], ecx
-        call     RandSarMod0xFFF_0041f230
+        call     RandSarMod0xFFF
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_bab2
@@ -192,7 +192,7 @@ __declspec(naked) void MStackAngleWrapDispatch_0048b800(void)
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [g_eventQueueWorkType], ecx
         mov      dword ptr [eax*4], edx
-        call     RandSarMod0xFFFSub400_0041f1f0
+        call     RandSarMod0xFFFSub400
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_bab2

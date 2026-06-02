@@ -17,7 +17,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_eventQueueCurrent], edx
  *   ret
  */
-void ScaledChainTwoStores_00480d20(void) {
+void ScaledChainTwoStores(void) {
     unsigned int v = *(unsigned int *)(g_baseSel * 4 + 0x38);
     g_scaledInit_00542044 = v;
     g_walkCallback = (void (*)(void))((ScenegraphNode *)(v * 4))->position_x;

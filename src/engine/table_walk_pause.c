@@ -40,7 +40,7 @@ __declspec(naked) void AppInit_Misc2(void) {
  *   each entry's high bit triggers a call after clearing it
  *   into g_scaledInit_00542044; pause-test breaks the loop.
  */
-void TableWalkPause_004bd850(void) {
+void TableWalkPause(void) {
     unsigned int *p = &g_table_004ab4e78;
     do {
         unsigned int v = *p;

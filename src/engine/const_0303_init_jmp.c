@@ -16,7 +16,7 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  */
 extern void HitReactionDispatcher(void);
-void Const0303InitJmp_00495cf0(void) {
+void Const0303InitJmp(void) {
     unsigned int v = 0x0303;
     g_walkCallback = (void (*)(void))v;
     ((ScenegraphNode *)(g_baseSel * 4))->fsm_state = v;

@@ -125,7 +125,7 @@ extern void MStackPushComplexCallPop_00406430(void);
 extern void RoundCleanupCluster_00427690(void);
 extern void StoreIncrMStackPush6(void);
 
-void MStackPushChainDispatchInit5_004925d0(void) {
+void MStackPushChainDispatchInit5(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_scaledInit_00542044]

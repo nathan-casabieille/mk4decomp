@@ -126,7 +126,7 @@ extern unsigned int g_dispatchSave1452_00f9fc34;
 extern unsigned int g_dispatchSave1453_00f9fc38;
 extern unsigned int g_dispatchSave1454_00f9fc3c;
 
-__declspec(naked) void LazyLoadInvoke_004ce150(void) {
+__declspec(naked) void LazyLoadInvoke(void) {
     __asm {
         mov     eax, dword ptr [g_dispatchSave1452_00f9fc34]
         push    ebx

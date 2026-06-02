@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
  *   if (bit0 of g_xformDirtyFlags == 0): ret;
  *   jmp 0x46cd30.
  */
-void QuadCmpBitGateJmp_0046c560(void) {
+void QuadCmpBitGateJmp(void) {
     ScaledChain3c74();
     if (g_framePauseFlag != 0) return;
     if ((unsigned int)g_walkCallback != 0x4004) {

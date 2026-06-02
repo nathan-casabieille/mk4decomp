@@ -108,13 +108,13 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void BitShiftMultiPrecision_004cca50(void);
-extern void BitsetReserve_004cc960(void);
-extern void Copy3Dwords_004cca00(void);
-extern void LinearSearchArray_004cca30(void);
-extern void ZeroThreeFromArg_004cca20(void);
+extern void BitShiftMultiPrecision(void);
+extern void BitsetReserve(void);
+extern void Copy3Dwords(void);
+extern void LinearSearchArray(void);
+extern void ZeroThreeFromArg(void);
 
-__declspec(naked) void FpExtendedToFloat_004ccb10(void)
+__declspec(naked) void FpExtendedToFloat(void)
 {
     __asm {
         sub      esp, 0x18
@@ -144,13 +144,13 @@ __declspec(naked) void FpExtendedToFloat_004ccb10(void)
         lea      ecx, [esp + 0x10]
         xor      esi, esi
         push     ecx
-        call     LinearSearchArray_004cca30
+        call     LinearSearchArray
         add      esp, 4
         test     eax, eax
         jne      L_cc8f
         lea      edx, [esp + 0x10]
         push     edx
-        call     ZeroThreeFromArg_004cca20
+        call     ZeroThreeFromArg
         add      esp, 4
         mov      eax, 2
         jmp      L_cc91
@@ -159,13 +159,13 @@ __declspec(naked) void FpExtendedToFloat_004ccb10(void)
         lea      ecx, [esp + 0x1c]
         push     eax
         push     ecx
-        call     Copy3Dwords_004cca00
+        call     Copy3Dwords
         mov      edx, dword ptr [edi + 8]
         add      esp, 8
         lea      eax, [esp + 0x10]
         push     edx
         push     eax
-        call     BitsetReserve_004cc960
+        call     BitsetReserve
         add      esp, 8
         test     eax, eax
         je       short L_cbb2
@@ -179,7 +179,7 @@ __declspec(naked) void FpExtendedToFloat_004ccb10(void)
         jge      short L_cbd9
         lea      edx, [esp + 0x10]
         push     edx
-        call     ZeroThreeFromArg_004cca20
+        call     ZeroThreeFromArg
         add      esp, 4
         xor      esi, esi
         mov      eax, 2
@@ -193,25 +193,25 @@ __declspec(naked) void FpExtendedToFloat_004ccb10(void)
         lea      eax, [esp + 0x1c]
         push     eax
         push     ecx
-        call     Copy3Dwords_004cca00
+        call     Copy3Dwords
         add      esp, 8
         lea      edx, [esp + 0x10]
         push     esi
         push     edx
-        call     BitShiftMultiPrecision_004cca50
+        call     BitShiftMultiPrecision
         mov      eax, dword ptr [edi + 8]
         add      esp, 8
         lea      ecx, [esp + 0x10]
         push     eax
         push     ecx
-        call     BitsetReserve_004cc960
+        call     BitsetReserve
         mov      edx, dword ptr [edi + 0xc]
         add      esp, 8
         inc      edx
         lea      eax, [esp + 0x10]
         push     edx
         push     eax
-        call     BitShiftMultiPrecision_004cca50
+        call     BitShiftMultiPrecision
         add      esp, 8
         xor      esi, esi
         mov      eax, 2
@@ -221,7 +221,7 @@ __declspec(naked) void FpExtendedToFloat_004ccb10(void)
         jl       short L_cc6b
         lea      ecx, [esp + 0x10]
         push     ecx
-        call     ZeroThreeFromArg_004cca20
+        call     ZeroThreeFromArg
         mov      ebx, dword ptr [esp + 0x14]
         mov      edx, dword ptr [edi + 0xc]
         add      esp, 4
@@ -230,7 +230,7 @@ __declspec(naked) void FpExtendedToFloat_004ccb10(void)
         push     edx
         push     eax
         mov      dword ptr [esp + 0x18], ebx
-        call     BitShiftMultiPrecision_004cca50
+        call     BitShiftMultiPrecision
         mov      esi, dword ptr [edi + 0x14]
         mov      eax, dword ptr [edi]
         add      esp, 8
@@ -247,7 +247,7 @@ __declspec(naked) void FpExtendedToFloat_004ccb10(void)
         push     ecx
         push     edx
         mov      dword ptr [esp + 0x18], ebx
-        call     BitShiftMultiPrecision_004cca50
+        call     BitShiftMultiPrecision
         add      esp, 8
     L_cc8f:
         xor      eax, eax

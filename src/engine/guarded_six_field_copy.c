@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY;
  *   ecx = [ecx+0x20]; g_walkCallback=ecx; [eax+0x48]=ecx; ret.
  */
 extern void DirtyDoubleDeref(void);
-void GuardedSixFieldCopy_00446190(void) {
+void GuardedSixFieldCopy(void) {
     unsigned char *base;
     unsigned char *src;
     unsigned int v;

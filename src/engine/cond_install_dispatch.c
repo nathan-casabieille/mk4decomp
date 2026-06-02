@@ -27,9 +27,9 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern void ScaledOr4Jmp_00476e00(void);
+extern void ScaledOr4Jmp(void);
 extern void func_00476e90(void);
-extern void ScaledAndFBJmp_00476fe0(void);
+extern void ScaledAndFBJmp(void);
 extern void Helper_TickAlt(void);
 
 /* @addr 0x00476e20 */
@@ -37,7 +37,7 @@ void CondInstallDispatch_00476e20(void) {
     unsigned int cb = ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->alloc_work_type;
     g_walkCallback = (void(*)(void))cb;
     if (cb) {
-        g_walkCallback = ScaledOr4Jmp_00476e00;
+        g_walkCallback = ScaledOr4Jmp;
         Helper_TickAlt();
         if (g_framePauseFlag) return;
     }
@@ -61,7 +61,7 @@ void CondInstallDispatch_00477000(void) {
     unsigned int cb = ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->alloc_work_type;
     g_walkCallback = (void(*)(void))cb;
     if (cb) {
-        g_walkCallback = ScaledAndFBJmp_00476fe0;
+        g_walkCallback = ScaledAndFBJmp;
         Helper_TickAlt();
         if (g_framePauseFlag) return;
     }

@@ -18,7 +18,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_audioStreamState;
 extern void StorePauseImulShr16(void);
-void TestStoreConstJmp_004933b0(void) {
+void TestStoreConstJmp(void) {
     unsigned int s = g_audioStreamState;
     g_eventQueueCurrent = s;
     if (s) return;

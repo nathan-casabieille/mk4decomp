@@ -121,7 +121,7 @@ extern unsigned int g_eventQueueDrainBase_0053a4b8;
 extern unsigned int g_arr_slot_45c840;
 extern unsigned int g_arr_table_45c840;
 
-__declspec(naked) void EventQueueDrainLoop_0045c840(void) {
+__declspec(naked) void EventQueueDrainLoop(void) {
     __asm {
         mov     ecx, dword ptr [g_eventQueueHead]
         mov     eax, dword ptr [g_xformEntityIdx]

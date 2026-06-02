@@ -114,9 +114,9 @@ extern unsigned int g_fightAxisPosY;
  *   stash state; on pause clear, install self with tag from 0x542068
  *   and raise framePause.
  */
-extern void InstallSelfPairedGate_004048b0(void);
+extern void InstallSelfPairedGate(void);
 extern unsigned int g_pendingNodeTypeSrc_00542068;
-void InstallSelfPairedGate_004048b0(void) {
+void InstallSelfPairedGate(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int prev = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
@@ -129,7 +129,7 @@ void InstallSelfPairedGate_004048b0(void) {
     Eleven404b90_404c00();
     if (g_framePauseFlag != 0) return;
     g_pendingNodeType = g_pendingNodeTypeSrc_00542068;
-    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfPairedGate_004048b0;
+    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfPairedGate;
     ((ScenegraphNode *)base)->install_flag = 1;
     g_framePauseFlag = 1;
 }

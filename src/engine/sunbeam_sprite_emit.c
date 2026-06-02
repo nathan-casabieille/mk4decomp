@@ -127,7 +127,7 @@ extern void AdvanceTriStripRing(void);
 extern void Helper_DrawCursor(void);
 extern void ProjectVertex(void);
 
-__declspec(naked) void SunbeamSpriteEmit_004bd270(void)
+__declspec(naked) void SunbeamSpriteEmit(void)
 {
     __asm {
         mov      eax, dword ptr [g_sunbeamSpriteVar_004f6580]

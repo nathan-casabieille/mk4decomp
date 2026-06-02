@@ -20,15 +20,15 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void PushPop84TripleCall(void);
-extern void InstallSelfCountdownDispatch_00438a10(void);
-extern void InstallSelfCountdownDispatch_00438a10(void);
+extern void InstallSelfCountdownDispatch(void);
+extern void InstallSelfCountdownDispatch(void);
 void CmpJmpConstStoreJmp(void) {
     PushPop84TripleCall();
     if (g_framePauseFlag) return;
     if ((int)g_eventQueueChild < 0x64) {
-        InstallSelfCountdownDispatch_00438a10();
+        InstallSelfCountdownDispatch();
         return;
     }
     g_eventQueueChild = 0x1e;
-    InstallSelfCountdownDispatch_00438a10();
+    InstallSelfCountdownDispatch();
 }

@@ -47,11 +47,11 @@ void ScaledAndAhfe_00490390(void) {
  *   je      ret_label
  *   jmp     +5
  */
-extern void StrikeAnim4Picker_00493100(void);
-void ScaledLoadCmp0fJmp_004930e0(void) {
+extern void StrikeAnim4Picker(void);
+void ScaledLoadCmp0fJmp(void) {
     unsigned int v = ((ScenegraphNode *)(g_baseSel * 4))->state_mask;
     g_walkCallback = (void (*)(void))v;
     if (v != 0x0f) {
-        StrikeAnim4Picker_00493100();
+        StrikeAnim4Picker();
     }
 }

@@ -13,7 +13,7 @@ extern unsigned int g_phaseTimer;
  *   if !=, set walk=2 (always); cmp 0x11; if !=, set walk=4 (always);
  *   add eax, walk → g_scaledInit; load *4+0 → g_scaledInit; jmp eax.
  */
-void ScaledChainCmpDispatch_0048e4f0(int arg) {
+void ScaledChainCmpDispatch(int arg) {
     unsigned int idx = (unsigned int)(arg >> 2);
     unsigned int walk;
     unsigned int target;

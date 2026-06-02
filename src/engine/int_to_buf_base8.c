@@ -113,12 +113,12 @@ extern unsigned int g_fightAxisPosY;
  *   Setup edi to point at digit table base ([0x523690] or [0x5237f0]) depending on sign.
  *   If positive arg2==0, write null word at start of dst.
  *   Loop: digit = num & 7; num >>= 3; lookup 3-word entry at edi[digit*4]; copy to stack;
- *     dec count; push (&stack, dst); call Crt80BitFloatMul_004d0800 (probably emit to dst);
+ *     dec count; push (&stack, dst); call Crt80BitFloatMul (probably emit to dst);
  *     edi += 0x54 each iter.
  */
-extern void Crt80BitFloatMul_004d0800(void);
+extern void Crt80BitFloatMul(void);
 
-__declspec(naked) void IntToBufBase8_004d0ac0(void) {
+__declspec(naked) void IntToBufBase8(void) {
     __asm {
         sub     esp, 0x0c
         push    ebx
@@ -168,7 +168,7 @@ __declspec(naked) void IntToBufBase8_004d0ac0(void) {
         lea     eax, [esp + 0x0c]
         push    eax
         push    ebx
-        call    Crt80BitFloatMul_004d0800
+        call    Crt80BitFloatMul
         add     esp, 8
         test    esi, esi
         _emit   75h

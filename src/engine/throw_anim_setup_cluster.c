@@ -108,19 +108,19 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void InstallSelfTwoTailJmp_00483f30(void);
-extern void TradePlaceChain_004933d0(void);
-extern void ThrowAnimSetupCluster_00484150(void);
+extern void InstallSelfTwoTailJmp(void);
+extern void TradePlaceChain(void);
+extern void ThrowAnimSetupCluster(void);
 
 /* @addr 0x00484000 (336b game) - install-self with multi-call cascade + chain field-copy thunk.
  *   state!=0: tail-call FiveCallGuardSetTail; pop+ret.
- *   state==0: dec g_eventQueueNotMask; if non-zero tail-call InstallSelfTwoTailJmp_00483f30.
+ *   state==0: dec g_eventQueueNotMask; if non-zero tail-call InstallSelfTwoTailJmp.
  *     Call SlotPhaseResetInstallChain; if pause ret.
  *     g_eventQueueCurrent=[cj*4+0x28]. Install-self at entry+0x01000000; state=1; call CallPauseScaledStoreJmp; pause=1; ret.
  *   Tail (+0xc0): g_walkCallback=3; call ByteWordTableTaggedDispatch; if pause ret.
- *     Call TradePlaceChain_004933d0; if pause ret. g_eventQueueEnd=g_scaledInit. If zero: tail-jmp CjInstallSelfRouter.
- *     Push 0x70, push (ThrowAnimSetupCluster_00484150 + 0x10); call StoreTwoCall; pop. Copy chain[baseSel*4+0x3c] to [scaledInit*4+0x3c].
- *     Call CopyJmp; if pause ret. If bit0(0054208c): jmp ThrowAnimSetupCluster_00484150.
+ *     Call TradePlaceChain; if pause ret. g_eventQueueEnd=g_scaledInit. If zero: tail-jmp CjInstallSelfRouter.
+ *     Push 0x70, push (ThrowAnimSetupCluster + 0x10); call StoreTwoCall; pop. Copy chain[baseSel*4+0x3c] to [scaledInit*4+0x3c].
+ *     Call CopyJmp; if pause ret. If bit0(0054208c): jmp ThrowAnimSetupCluster.
  *     Else: push 0x004ee800; call ArgSarStoreJmp; pop; ret.
  */
 extern void ArgSarStoreJmp(void);
@@ -130,7 +130,7 @@ extern void CjInstallSelfRouter(void);
 extern void FiveCallGuardSetTail(void);
 extern void SlotPhaseResetInstallChain(void);
 
-__declspec(naked) void InstallSelfMultiCascadeChainCopy_00484000(void) {
+__declspec(naked) void InstallSelfMultiCascadeChainCopy(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -148,7 +148,7 @@ __declspec(naked) void InstallSelfMultiCascadeChainCopy_00484000(void) {
         mov     dword ptr [g_eventQueueNotMask], eax
         _emit   74h
         _emit   07h
-        call    InstallSelfTwoTailJmp_00483f30
+        call    InstallSelfTwoTailJmp
         pop     esi
         ret
         call    SlotPhaseResetInstallChain
@@ -158,9 +158,9 @@ __declspec(naked) void InstallSelfMultiCascadeChainCopy_00484000(void) {
         _emit   72h
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     edx, dword ptr [ecx*4 + 0x28]
-        mov     ecx, offset InstallSelfMultiCascadeChainCopy_00484000
+        mov     ecx, offset InstallSelfMultiCascadeChainCopy
         mov     dword ptr [g_eventQueueCurrent], edx
-        mov     dword ptr [esi + 8], offset InstallSelfMultiCascadeChainCopy_00484000
+        mov     dword ptr [esi + 8], offset InstallSelfMultiCascadeChainCopy
         mov     eax, dword ptr [g_baseSel]
         add     ecx, 0x01000000
         mov     dword ptr [eax*4 + 0x84], 1
@@ -184,7 +184,7 @@ __declspec(naked) void InstallSelfMultiCascadeChainCopy_00484000(void) {
         test    eax, eax
         _emit   75h
         _emit   77h
-        call    TradePlaceChain_004933d0
+        call    TradePlaceChain
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -196,7 +196,7 @@ __declspec(naked) void InstallSelfMultiCascadeChainCopy_00484000(void) {
         _emit   05h
         jmp     CjInstallSelfRouter
         push    0x70
-        push    offset ThrowAnimSetupCluster_00484150 + 0x10
+        push    offset ThrowAnimSetupCluster + 0x10
         call    StoreTwoCall
         mov     eax, dword ptr [g_baseSel]
         mov     ecx, dword ptr [g_scaledInit_00542044]
@@ -212,7 +212,7 @@ __declspec(naked) void InstallSelfMultiCascadeChainCopy_00484000(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
-        jmp     ThrowAnimSetupCluster_00484150
+        jmp     ThrowAnimSetupCluster
         push    0x004ee800
         call    ArgSarStoreJmp
         add     esp, 4

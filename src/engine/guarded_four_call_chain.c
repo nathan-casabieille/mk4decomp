@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *   movzx ax, [0x4e28b8]; push eax; call TaggedSceneDispatch; pop arg;
  *   end: ret.
  */
-void GuardedFourCallChain_004928c0(void) {
+void GuardedFourCallChain(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueCurrent]
         test    eax, eax

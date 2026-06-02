@@ -21,7 +21,7 @@ extern unsigned int g_baseSel;
  * .ret:
  *   ret
  */
-__declspec(naked) void StrLen_004578e0(void) {
+__declspec(naked) void StrLen(void) {
     __asm {
         mov     ecx, dword ptr [esp + 4]
         xor     eax, eax

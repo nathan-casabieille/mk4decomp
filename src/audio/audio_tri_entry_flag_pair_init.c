@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * AudioTriEntryFlagPairInit_004a22f0 - 207b audio 3-entry init variant of AudioModeInit_004a2610.
+ * AudioTriEntryFlagPairInit - 207b audio 3-entry init variant of AudioModeInit.
  *   Entry 0x004a22f0: same FlagPair logic, but g_dlMode=0 and tail-jmp InstallSelfTableWalk.
  *   Entry 0x004a2370: push 6; TableWalkBoundedCmp; g_audioMatchStartFlag_00543714=1, g_audioTriEntryFlag_005433ec=1; jmp entry1.
  *   Entry 0x004a2390: push 6; TableWalkBoundedCmp; g_audioMatchStartFlag_00543714=1, g_audioTriEntryFlag_005433ec=1, g_gtOtherFlag=1;
@@ -120,13 +120,13 @@ extern unsigned int g_audioTriEntryFlag2_005433a8;
 extern unsigned int g_installSelfCounter_005433e8;
 extern unsigned int g_audioTriEntryFlag_005433ec;
 extern unsigned int g_audioMatchStartFlag_00543714;
-extern void ClearTwoCallSetStore_004a2270(void);
+extern void ClearTwoCallSetStore(void);
 extern void DualScaledStoreConst(void);
 extern void InstallSelfTableWalk(void);
 extern void SixCallSeqPushImm(void);
 extern void TableWalkBoundedCmp(void);
 
-__declspec(naked) void AudioTriEntryFlagPairInit_004a22f0(void)
+__declspec(naked) void AudioTriEntryFlagPairInit(void)
 {
     __asm
     {
@@ -148,7 +148,7 @@ __declspec(naked) void AudioTriEntryFlagPairInit_004a22f0(void)
         mov     dword ptr [g_xformEntityIdx], eax
     L_common:
         call    DualScaledStoreConst
-        call    ClearTwoCallSetStore_004a2270
+        call    ClearTwoCallSetStore
         mov     dword ptr [g_dlMode], 0
         call    SixCallSeqPushImm
         mov     dword ptr [g_eventQueueWorkType], 0
@@ -173,7 +173,7 @@ __declspec(naked) void AudioTriEntryFlagPairInit_004a22f0(void)
         add     esp, 4
         mov     dword ptr [g_audioMatchStartFlag_00543714], eax
         mov     dword ptr [g_audioTriEntryFlag_005433ec], eax
-        jmp     AudioTriEntryFlagPairInit_004a22f0
+        jmp     AudioTriEntryFlagPairInit
         _emit   90h
         _emit   90h
         push    6
@@ -186,6 +186,6 @@ __declspec(naked) void AudioTriEntryFlagPairInit_004a22f0(void)
         xor     eax, eax
         mov     dword ptr [g_audioTriEntryFlag2_005433a8], eax
         mov     dword ptr [g_installSelfCounter_005433e8], eax
-        jmp     AudioTriEntryFlagPairInit_004a22f0
+        jmp     AudioTriEntryFlagPairInit
     }
 }

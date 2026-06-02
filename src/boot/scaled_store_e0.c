@@ -13,6 +13,6 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [ecx*4 + 0xe0], eax
  *   ret
  */
-void ScaledStoreE0_0041f550(int x) {
+void ScaledStoreE0(int x) {
     ((ScenegraphNode *)(g_baseSel * 4))->work_type = (unsigned int)x;
 }

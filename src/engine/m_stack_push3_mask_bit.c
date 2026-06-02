@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-/* @addr 0x00492920 (182b game) - same pattern as MStackPush3MaskBit0_004929e0 but with mask 0x01.
+/* @addr 0x00492920 (182b game) - same pattern as MStackPush3MaskBit0 but with mask 0x01.
  *   Push g_walkCallback, g_eventQueueCurrent, g_eventQueueWorkType; call MStackPush2TableNot; pause? -> end.
  *   edx = g_walkCallback & 1; eax = g_xformDirtyFlags; g_xformScratch94 = edx;
  *   if (edx != 0): or al, 1; else: and al, 0xfe.
@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_matrixStack_arr;
 
-void MStackPush3MaskBit_00492920(void) {
+void MStackPush3MaskBit(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_walkCallback]

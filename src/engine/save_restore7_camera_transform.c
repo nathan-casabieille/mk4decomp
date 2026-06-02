@@ -112,7 +112,7 @@ extern unsigned int g_load_0052ab10;
 extern void MStackMagicModMul10(void);
 extern void ModMagicMul10Index(void);
 
-void SaveRestore7CameraTransform_004267f0(void) {
+void SaveRestore7CameraTransform(void) {
     __asm {
         mov      eax, dword ptr [g_matrixStackTop]
         mov      ecx, dword ptr [g_walkCallback]

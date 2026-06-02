@@ -8,18 +8,18 @@
 #include "game/tick.h"
 
 extern void CallDualStoreXorBit(void);
-extern void InstallSelfTri_00484a90(void);
+extern void InstallSelfTri(void);
 extern void FiveCallGuardSetTail(void);
 extern void DirtyToggleByGate(void);
 extern void ScaledClearJmp_00428d60(void);
-extern void InstallSelfReentry_004890b0(void);
+extern void InstallSelfReentry(void);
 
 /* @addr 0x00484b40 */
 void GuardedDispatch4_00484b40(void) {
     CallDualStoreXorBit();
     if (g_framePauseFlag) return;
     if (!(g_xformDirtyFlags & 4)) {
-        InstallSelfTri_00484a90();
+        InstallSelfTri();
         return;
     }
     FiveCallGuardSetTail();
@@ -33,5 +33,5 @@ void GuardedDispatch4_00489080(void) {
         ScaledClearJmp_00428d60();
         return;
     }
-    InstallSelfReentry_004890b0();
+    InstallSelfReentry();
 }

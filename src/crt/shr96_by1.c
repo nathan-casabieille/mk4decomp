@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 /* @addr 0x004ce2c0 (45b)
- *   96-bit shift right by 1: counterpart of Shl96By1_004ce290.
+ *   96-bit shift right by 1: counterpart of Shl96By1.
  */
 /*
  * NON-COAXABLE: MSVC /O2 assigns edi to the first-used callee-saved
@@ -13,7 +13,7 @@
  * stores p[2] early and uses a different instruction interleaving.
  * esi/edi allocation order is not controllable from C source.
  */
-__declspec(naked) void Shr96By1_004ce2c0(void) {
+__declspec(naked) void Shr96By1(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         push    esi

@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
  *   edx = g_walkCallback; eax = g_acc_00542078;
  *   cmp edx,eax; if le: ret; else: jmp 0x42b930.
  */
-void GuardedRangeCmpFpuJmp_0042b8d0(void) {
+void GuardedRangeCmpFpuJmp(void) {
     ScaledLoadCmpStoreXfm();
     if (g_framePauseFlag != 0) return;
     if ((int)g_walkCallback < (int)g_eventQueueCurrent) return;

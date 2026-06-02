@@ -118,7 +118,7 @@ extern void GuardedSeq_00433bb0(void);
 extern void PackedAdvanceCallTailJmp(void);
 extern void PrefixThunkInstallSelf3State(void);
 
-__declspec(naked) void QuadStringStateGate_0043bd50(void) {
+__declspec(naked) void QuadStringStateGate(void) {
     __asm {
         push    0x004e4c58
         call    PackedAdvanceCallTailJmp

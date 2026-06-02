@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void MStackPushComplexCallPop_00406430(void);
 
-void AudioChainInit_004a77c0(void) {
+void AudioChainInit(void) {
     __asm {
         mov     ecx, dword ptr [g_walkCallback]
         mov     eax, 0x0050a0f0

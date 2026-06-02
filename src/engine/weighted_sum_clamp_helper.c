@@ -134,7 +134,7 @@ extern void AudioVolumeRescale(void);
  * (push esi/edi) vs orig's single push esi. The volatile-register-survives-
  * branch + register-reuse pattern is not coaxable from pure C.
  */
-__declspec(naked) void WeightedSumClampHelper_00439920(void) {
+__declspec(naked) void WeightedSumClampHelper(void) {
     __asm {
         mov     eax, dword ptr [g_stateCountdown]
         mov     edx, dword ptr [g_dispatchSave1319_004f3814]

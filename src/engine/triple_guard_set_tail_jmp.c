@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  *     [ecx*4 + 0x70] = eax; jmp TwoEntryWrapperGuarded;
  *   else: jmp TwoEntryWrapperGuarded; ret.
  */
-void TripleGuardSetTailJmp_00482680(void) {
+void TripleGuardSetTailJmp(void) {
     unsigned int v;
     CjTableThresholdDispatch();
     if (g_framePauseFlag != 0) return;

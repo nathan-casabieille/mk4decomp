@@ -22,14 +22,14 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern unsigned int g_counter_0053a51c;
-extern void IncOrZero9_00422080(void);
-extern void TablePushAccumTailJmp_00429e30(void);
+extern void IncOrZero9(void);
+extern void TablePushAccumTailJmp(void);
 extern void RoundStartCluster_004919c0(void);
-void TwoCallStatePauseJmp_00491990(void) {
-    IncOrZero9_00422080();
+void TwoCallStatePauseJmp(void) {
+    IncOrZero9();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))g_counter_0053a51c;
-    TablePushAccumTailJmp_00429e30();
+    TablePushAccumTailJmp();
     if (g_framePauseFlag != 0) return;
     RoundStartCluster_004919c0();
 }

@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  *   edx = g_cj_00542058; ecx = g_scaledInit;
  *   eax = [edx*4+0x5c]; g_walkCallback = eax; [ecx*4+0x5c] = eax; ret.
  */
-void TripleFieldChainSub_00446400(void) {
+void TripleFieldChainSub(void) {
     unsigned int scaled;
     unsigned int val;
     scaled = *(unsigned int *)(g_baseSel * 4 + 0x4c);

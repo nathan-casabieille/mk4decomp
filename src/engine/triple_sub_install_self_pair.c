@@ -112,11 +112,11 @@ extern void ArgSarStoreJmp(void);
 extern void CmpEqInitCallElseJmp(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void FiveCallGuardSetTail(void);
-extern void InstallSelfOrChainCmpJmp_0047a8f0(void);
+extern void InstallSelfOrChainCmpJmp(void);
 extern void ScaledIndexConditionalAdd(void);
 extern void ScaledLoadJmp_00428d20(void);
 
-__declspec(naked) void TripleSubInstallSelfPair_0047a670(void)
+__declspec(naked) void TripleSubInstallSelfPair(void)
 {
     __asm
     {
@@ -129,10 +129,10 @@ __declspec(naked) void TripleSubInstallSelfPair_0047a670(void)
         je      short L_tsisp_install1
         jmp     FiveCallGuardSetTail
     L_tsisp_install1:
-        mov     dword ptr [eax + 8], offset TripleSubInstallSelfPair_0047a670
+        mov     dword ptr [eax + 8], offset TripleSubInstallSelfPair
         mov     ecx, dword ptr [g_baseSel]
         push    edi
-        mov     edi, offset TripleSubInstallSelfPair_0047a670
+        mov     edi, offset TripleSubInstallSelfPair
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x1000000
@@ -198,7 +198,7 @@ __declspec(naked) void TripleSubInstallSelfPair_0047a670(void)
         test    al, bl
         mov     dword ptr [g_eventQueueChild], edx
         je      short L_tsisp_sub3_skipInstall
-        call    InstallSelfOrChainCmpJmp_0047a8f0
+        call    InstallSelfOrChainCmpJmp
         pop     esi
         pop     ebx
         ret

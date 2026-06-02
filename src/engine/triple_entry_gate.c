@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_counter_0053a51c;
 extern void PendingMatch_0045e640(void);
 
-__declspec(naked) void TripleEntryGate_0045e5d0(void) {
+__declspec(naked) void TripleEntryGate(void) {
     __asm {
         mov     eax, dword ptr [g_table_00535ddc]
         cmp     eax, 0x00010000

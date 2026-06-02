@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x004577a0 (140b) - linear search through 0x4e83d0 chain
  *   for g_walkCallback; set/clear bit0 of g_xformDirtyFlags. */
 
-void PushSearchToggleBit0_004577a0(void) {
+void PushSearchToggleBit0(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_scaledInit_00542044]

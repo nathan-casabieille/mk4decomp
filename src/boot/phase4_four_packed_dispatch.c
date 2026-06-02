@@ -108,24 +108,24 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void BootInstallerPair_004101f0(void);
-extern void SetWorkTypeScaledCallStoreCcc_0041aa80(void);
+extern void BootInstallerPair(void);
+extern void SetWorkTypeScaledCallStoreCcc(void);
 extern void DualCallPauseAddrSetRecurse_00419720(void);
 extern void DualCallPauseAddrSetRecurse_00419b60(void);
 extern void DualCallPauseAddrSetRecurse_00419aa0(void);
 extern void DualCallPauseAddrSetRecurse_004199e0(void);
 extern void DualCallPauseAddrSetRecurse_004197e0(void);
 extern void DualCallPauseAddrSetRecurse_004198a0(void);
-extern void TripleChainTailJmp_00419900(void);
-extern void Phase1SlotLinkAndInit_00419470(void);
+extern void TripleChainTailJmp(void);
+extern void Phase1SlotLinkAndInit(void);
 extern void GuardedScaled_0040cd20(void);
-extern void BootOneShotMStackPush3_0040c100(void);
-extern void Phase4FourPackedDispatch_0041b900(void);
+extern void BootOneShotMStackPush3(void);
+extern void Phase4FourPackedDispatch(void);
 
 extern void CallSetPause(void);
 extern void FlagThunk4EntryDispatcher(void);
 
-__declspec(naked) void Phase4DispatchMultiInit_0041b610(void)
+__declspec(naked) void Phase4DispatchMultiInit(void)
 {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -139,11 +139,11 @@ __declspec(naked) void Phase4DispatchMultiInit_0041b610(void)
         je      L_p4dmi_A_phase1
         dec     eax
         je      L_p4dmi_A_phase2
-        call    BootInstallerPair_004101f0
+        call    BootInstallerPair
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
-        call    SetWorkTypeScaledCallStoreCcc_0041aa80
+        call    SetWorkTypeScaledCallStoreCcc
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
@@ -171,11 +171,11 @@ __declspec(naked) void Phase4DispatchMultiInit_0041b610(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
-        call    TripleChainTailJmp_00419900
+        call    TripleChainTailJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
-        call    Phase1SlotLinkAndInit_00419470
+        call    Phase1SlotLinkAndInit
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
@@ -236,11 +236,11 @@ __declspec(naked) void Phase4DispatchMultiInit_0041b610(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
-        call    BootOneShotMStackPush3_0040c100
+        call    BootOneShotMStackPush3
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
-        call    BootInstallerPair_004101f0
+        call    BootInstallerPair
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
@@ -273,7 +273,7 @@ __declspec(naked) void Phase4DispatchMultiInit_0041b610(void)
         mov     dword ptr [g_eventQueueEnd], eax
         jns     L_p4dmi_B_call
         mov     dword ptr [g_eventQueueNotMask], 1
-        call    Phase4FourPackedDispatch_0041b900
+        call    Phase4FourPackedDispatch
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_B_exit
@@ -284,7 +284,7 @@ __declspec(naked) void Phase4DispatchMultiInit_0041b610(void)
         mov     dword ptr [g_eventQueueEnd], 0x14
         mov     dword ptr [g_eventQueueNotMask], 0
     L_p4dmi_B_call:
-        call    Phase4FourPackedDispatch_0041b900
+        call    Phase4FourPackedDispatch
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_B_exit

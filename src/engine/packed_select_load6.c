@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void PackedSelectLoad6_00433c60(void) {
+__declspec(naked) void PackedSelectLoad6(void) {
     __asm {
         mov     edx, dword ptr [g_fightGroupHead]
         push    esi

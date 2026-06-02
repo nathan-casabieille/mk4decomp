@@ -111,40 +111,40 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_counter_0053a51c;
 extern unsigned int g_dispatchSave881_004a2090;
 extern unsigned int g_dispatchSave509_004a2180;
-extern int GuardedScaledLookupCallJmp_004220a0(void);
-extern void AndShlStore_00409280(void);
+extern int GuardedScaledLookupCallJmp(void);
+extern void AndShlStore(void);
 extern void StackPopDispatchTagged(void);
 extern void TableWalkBoundedCmp(int);
 extern void BootInitGuardedCallChain(void);
-extern void DualScaledLitInitJmp_00464800(void);
-extern void TableWalkPause_004bd850(void);
+extern void DualScaledLitInitJmp(void);
+extern void TableWalkPause(void);
 extern void QuadCallPhase2(void);
 extern void StoreTwoCall(void);
-extern void MatchInitMonsterChain_004228b0(void);
+extern void MatchInitMonsterChain(void);
 
 /* @addr 0x00403170 (348b boot) - 3-state install-self phase dispatcher.
  *   Reads phase from [g_baseSel*4 + 0x84], zeroes it, then dispatches
  *   on phase = 0, 1, 2, 3.
  *     - phase 0 / 1: jump to the heavy "first-time init" path that pushes 4
  *       on TableWalkBoundedCmp, calls BootInitGuardedCallChain,
- *       DualScaledLitInitJmp_00464800, TableWalkPause_004bd850, then runs
+ *       DualScaledLitInitJmp, TableWalkPause, then runs
  *       QuadCallPhase2 with args (g_dlNalt1, g_dlNalt2,
  *       g_counter_0053a51c + 0x12, 0x1d). Pushes two StoreTwoCall calls
  *       with table pointers 0x004a2090 / 0x004a2180. Installs self at
  *       [esi+8]=0x403170 and sets [eax*4+0x84]=2 (with packed_ptr +
- *       0x02000000 tag), then calls MatchInitMonsterChain_004228b0 and asserts the error
+ *       0x02000000 tag), then calls MatchInitMonsterChain and asserts the error
  *       flag g_framePauseFlag = 1.
  *     - phase 2: install self at [esi+8]=0x403170, zero [esi+0x84]=3,
  *       set g_pendingNodeType=4, set g_framePauseFlag=1, return.
- *     - phase 3: call GuardedScaledLookupCallJmp_004220a0, on no-error set
- *       g_walkCallback=3, call AndShlStore_00409280, call
+ *     - phase 3: call GuardedScaledLookupCallJmp, on no-error set
+ *       g_walkCallback=3, call AndShlStore, call
  *       StackPopDispatchTagged, return.
  */
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 extern unsigned int g_smState4Way_00541dc8;
 
-__declspec(naked) void Phase3InstallSelf_00403170(void) {
+__declspec(naked) void Phase3InstallSelf(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -159,11 +159,11 @@ __declspec(naked) void Phase3InstallSelf_00403170(void) {
         je      L_p3i_initPath
         dec     eax
         je      short L_p3i_phase2
-        call    GuardedScaledLookupCallJmp_004220a0
+        call    GuardedScaledLookupCallJmp
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_p3i_done
         mov     dword ptr [g_walkCallback], 3
-        call    AndShlStore_00409280
+        call    AndShlStore
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_p3i_done
         call    StackPopDispatchTagged
@@ -173,7 +173,7 @@ __declspec(naked) void Phase3InstallSelf_00403170(void) {
     L_p3i_phase2:
         mov     dword ptr [g_walkCallback], edi
         mov     dword ptr [g_smState4Way_00541dc8], edi
-        mov     dword ptr [esi + 8], offset Phase3InstallSelf_00403170
+        mov     dword ptr [esi + 8], offset Phase3InstallSelf
         mov     dword ptr [esi + 0x84], 3
         mov     dword ptr [g_pendingNodeType], 4
         mov     dword ptr [g_framePauseFlag], 1
@@ -187,8 +187,8 @@ __declspec(naked) void Phase3InstallSelf_00403170(void) {
         call    BootInitGuardedCallChain
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_p3i_done
-        call    DualScaledLitInitJmp_00464800
-        call    TableWalkPause_004bd850
+        call    DualScaledLitInitJmp
+        call    TableWalkPause
         mov     ecx, dword ptr [g_counter_0053a51c]
         mov     edx, dword ptr [g_dlNalt2]
         mov     eax, dword ptr [g_dlNalt1]
@@ -209,9 +209,9 @@ __declspec(naked) void Phase3InstallSelf_00403170(void) {
         push    edi
         push    offset g_dispatchSave509_004a2180
         call    StoreTwoCall
-        mov     dword ptr [esi + 8], offset Phase3InstallSelf_00403170
+        mov     dword ptr [esi + 8], offset Phase3InstallSelf
         mov     ecx, dword ptr [g_baseSel]
-        mov     edx, offset Phase3InstallSelf_00403170
+        mov     edx, offset Phase3InstallSelf
         add     esp, 8
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
@@ -224,7 +224,7 @@ __declspec(naked) void Phase3InstallSelf_00403170(void) {
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edi
-        call    MatchInitMonsterChain_004228b0
+        call    MatchInitMonsterChain
         mov     dword ptr [g_framePauseFlag], 1
     L_p3i_done:
         pop     edi

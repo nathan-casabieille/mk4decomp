@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x004cc520 (150b crt) - inverse of EncodeModeFlags: decode 16-bit
  *   packed flags to 32-bit mode bits.
  */
-__declspec(naked) unsigned int DecodeModeFlags_004cc520(void) {
+__declspec(naked) unsigned int DecodeModeFlags(void) {
     __asm {
         push    ebx
         mov     ebx, dword ptr [esp + 8]

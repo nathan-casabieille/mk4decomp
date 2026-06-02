@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *   set g_scaledInit_00542044 = 0x4ece68>>2; jmp SpawnListBatchLoader.
  */
 extern unsigned int g_dispatchSave1303_004ece68;
-void DoublePushWalkInitJmp_004776b0(void) {
+void DoublePushWalkInitJmp(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_scaledInit_00542044;
     g_matrixStackTop++;

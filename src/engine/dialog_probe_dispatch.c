@@ -120,7 +120,7 @@ extern unsigned int g_960_state;
  *   clamped to >=0x140, then calls iat-2190 with 8 args (display
  *   coords + 0x44 + hwnd).
  */
-void DialogProbeDispatch_004afe40(void) {
+void DialogProbeDispatch(void) {
     void (__stdcall *setStyle)(unsigned int, int, unsigned int);
     int (__stdcall *getMetrics)(int);
     int width;

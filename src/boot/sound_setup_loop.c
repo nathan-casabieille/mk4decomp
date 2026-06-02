@@ -124,7 +124,7 @@ extern void PendingMatch_00413f40(void);
 extern void SetJmp_00405420(void);
 extern void ThreeChanPackClamp(void);
 
-__declspec(naked) void SoundSetupLoop_00413ea0(void) {
+__declspec(naked) void SoundSetupLoop(void) {
     __asm {
         push    ebx
         push    offset g_dispatchSave1130_00408000

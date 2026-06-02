@@ -136,7 +136,7 @@ extern unsigned int g_dispatchSave1576_00ab4e60;
 extern void Helper_DrawCursor(void);
 extern void ProjectTwoVertices(void);
 
-__declspec(naked) void BillboardChainRender_004bb030(void)
+__declspec(naked) void BillboardChainRender(void)
 {
     __asm {
         mov      eax, dword ptr [g_inLoopStep]

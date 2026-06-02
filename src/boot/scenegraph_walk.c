@@ -12,7 +12,7 @@ extern unsigned int g_scaledInit_00542044;
  *   for each entry whose [+0xd8] != 0, set g_scaledInit_00542044 to (esi >> 2)
  *   and call F if it differs from g_baseSel.
  */
-extern void NodeUnlink_0041f710(void *p);
+extern void NodeUnlink(void *p);
 extern unsigned int g_scenegraphWalkEnd_00541d68;
 void ScenegraphWalk(void) {
     unsigned char *p = (unsigned char *)&g_nodeSlotsArea;
@@ -22,7 +22,7 @@ void ScenegraphWalk(void) {
         v = (unsigned int)((int)(unsigned int)p >> 2);
         g_scaledInit_00542044 = v;
         if (v == g_baseSel) goto advance;
-        NodeUnlink_0041f710(p);
+        NodeUnlink(p);
     advance:
         p += 0xe8;
     } while ((unsigned int)p < (unsigned int)&g_scenegraphWalkEnd_00541d68);

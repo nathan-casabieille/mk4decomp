@@ -17,7 +17,7 @@ extern unsigned int g_baseSel;
  *   jmp     +0xf
  */
 extern void Thunk_004296e0(void);
-void DirtyOrJmp_004296c0(void) {
+void DirtyOrJmp(void) {
     g_xformDirtyFlags = g_xformDirtyFlags | 1;
     Thunk_004296e0();
 }
@@ -31,7 +31,7 @@ void DirtyOrJmp_004296c0(void) {
  */
 extern unsigned int g_zerotriple_00541de8;
 extern unsigned int g_zerotriple_00541dec;
-void ZeroTriple_00421c20(void) {
+void ZeroTriple(void) {
     g_walkCallback        = 0;
     g_zerotriple_00541de8 = 0;
     g_zerotriple_00541dec = 0;
@@ -43,10 +43,10 @@ void ZeroTriple_00421c20(void) {
  *   mov     [g_scaledInit_00542044], eax
  *   jmp     +0xe
  */
-extern void GuardedChainDualAdd_0044ccf0(void);
-void Add0fJmp_0044ccd0(void) {
+extern void GuardedChainDualAdd(void);
+void Add0fJmp(void) {
     g_scaledInit_00542044 = g_baseSel + 0x0f;
-    GuardedChainDualAdd_0044ccf0();
+    GuardedChainDualAdd();
 }
 
 /* @addr 0x00489f50 (16b)

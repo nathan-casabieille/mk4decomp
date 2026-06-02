@@ -135,7 +135,7 @@ extern void PushSetXfmMaskCallPop(void);
 extern void ScaledTripleCopy54(void);
 extern void SetJmp_00408d20(void);
 
-__declspec(naked) void BootSetupWithMStackBody_00418e00(void) {
+__declspec(naked) void BootSetupWithMStackBody(void) {
     __asm {
         mov     eax, offset g_dispatchSave562_004d75e0
         shr     eax, 2

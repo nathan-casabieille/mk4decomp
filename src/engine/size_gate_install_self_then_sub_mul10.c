@@ -115,7 +115,7 @@ extern void PendingMatch_00473640(void);
 extern void ScaledStoreThree_00409260(void);
 extern void StoreDoubleNegPauseSubStore(void);
 
-__declspec(naked) void SizeGateInstallSelfThenSubMul10_00473480(void)
+__declspec(naked) void SizeGateInstallSelfThenSubMul10(void)
 {
     __asm
     {
@@ -186,7 +186,7 @@ __declspec(naked) void SizeGateInstallSelfThenSubMul10_00473480(void)
         cmp     eax, esi
         mov     dword ptr [g_walkCallback], eax
         je      short L_sgis_clear
-        mov     dword ptr [g_walkCallback], offset SizeGateInstallSelfThenSubMul10_00473480
+        mov     dword ptr [g_walkCallback], offset SizeGateInstallSelfThenSubMul10
         call    Helper_TickAlt
         cmp     dword ptr [g_framePauseFlag], esi
         jne     short L_sgis_ret

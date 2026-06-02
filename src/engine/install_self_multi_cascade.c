@@ -110,18 +110,18 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004388f0 (190b game) - install-self with multi-stage cascade.
  *   chain[+0x84]!=0 path: call DecOrZeroDirty4; if !pause and !bit-2 ret; else call GuardedSeq_00438630; ret.
- *     Continuing: esi=g_eventQueueChild; call Push84CallTestInstallJmp_00460940; if !pause:
- *     call DecJneSetCallSetJmp_004389b0; if !pause: mstack-push 0x00438990; jmp GameDispatchValidateState; ret.
+ *     Continuing: esi=g_eventQueueChild; call Push84CallTestInstallJmp; if !pause:
+ *     call DecJneSetCallSetJmp; if !pause: mstack-push 0x00438990; jmp GameDispatchValidateState; ret.
  *   chain[+0x84]==0 path: install-self at +0x08=0x004388f0, g_pendingNodeType=1, pause=1; pop+ret.
  *   Block B (+0xa0): cmp g_table_00535ddc vs g_currentNodeFlags; if le jmp self; else jmp GuardedSeq_00438630.
  */
 extern unsigned int g_matrixStack_arr;
-extern void DecJneSetCallSetJmp_004389b0(void);
-extern void DecOrZeroDirty4_00438650(void);
+extern void DecJneSetCallSetJmp(void);
+extern void DecOrZeroDirty4(void);
 extern void GuardedSeq_00438630(void);
-extern void Push84CallTestInstallJmp_00460940(void);
+extern void Push84CallTestInstallJmp(void);
 
-__declspec(naked) void InstallSelfMultiCascade_004388f0(void) {
+__declspec(naked) void InstallSelfMultiCascade(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -131,7 +131,7 @@ __declspec(naked) void InstallSelfMultiCascade_004388f0(void) {
         test    ecx, ecx
         _emit   74h
         _emit   63h
-        call    DecOrZeroDirty4_00438650
+        call    DecOrZeroDirty4
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -143,12 +143,12 @@ __declspec(naked) void InstallSelfMultiCascade_004388f0(void) {
         pop     esi
         ret
         mov     esi, dword ptr [g_eventQueueChild]
-        call    Push84CallTestInstallJmp_00460940
+        call    Push84CallTestInstallJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   4fh
-        call    DecJneSetCallSetJmp_004389b0
+        call    DecJneSetCallSetJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -174,7 +174,7 @@ __declspec(naked) void InstallSelfMultiCascade_004388f0(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   05h
-        jmp     InstallSelfMultiCascade_004388f0
+        jmp     InstallSelfMultiCascade
         jmp     GuardedSeq_00438630
     }
 }

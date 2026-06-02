@@ -123,7 +123,7 @@ extern void PushPopScaled1cDoubleCall(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void InstallChainInitTailJmp_004a7030(void) {
+__declspec(naked) void InstallChainInitTailJmp(void) {
     __asm {
         mov     eax, 0x0050d418
         shr     eax, 2

@@ -115,7 +115,7 @@ extern s32 g_dlNalt4;
 extern unsigned int g_counter_0053a51c;
 extern unsigned int g_rangeBase;
 extern unsigned char g_dispatchSave623_004dfd48;
-extern void TablePushAccumTailJmp_00429e30(void);
+extern void TablePushAccumTailJmp(void);
 extern unsigned int g_dispatchSave658_004d5308;
 extern unsigned int g_dispatchSave659_004d530c;
 extern unsigned int g_dispatchSave656_004d5300;
@@ -123,24 +123,24 @@ extern unsigned int g_dispatchSave657_004d5304;
 extern unsigned int g_particleEmitterNode;
 extern unsigned int g_pendingMatchAudio2_0053a7a8;
 extern void MStackPush8(void);
-extern void TwinLoopSlotFinder_00429a40(void);
+extern void TwinLoopSlotFinder(void);
 extern void *AllocNode(void);
 extern void CopyGlobal(void);
 extern void PendingMatch_00429ef0(void);
 extern void MStackPushDispatchBitGate(void);
 extern void MStackPush4LLWalkPop4(void);
-extern void InstallSelfDispatch_00407620(void);
+extern void InstallSelfDispatch(void);
 extern void MStackCall_00406390(void);
 extern void MStackPop8(void);
 
 /* @addr 0x00429b70 (691b game) */
-void ScenePostInitSequencer_00429b70(void) {
+void ScenePostInitSequencer(void) {
     __asm {
         call     MStackPush8
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_9e22
-        call     TwinLoopSlotFinder_00429a40
+        call     TwinLoopSlotFinder
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_9e22
@@ -244,7 +244,7 @@ void ScenePostInitSequencer_00429b70(void) {
         mov      dword ptr [g_xformEntityIdx], ecx
         mov      eax, dword ptr [edx*4 + 0x18]
         mov      dword ptr [g_scaledInit_00542044], eax
-        call     InstallSelfDispatch_00407620
+        call     InstallSelfDispatch
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_9e22

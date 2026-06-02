@@ -113,12 +113,12 @@ extern unsigned int g_fightAxisPosY;
  *   call func_4b3a90(arr_main[g_pendingNodeType], esp). Else: write ecx to
  *   arr_main[g_pendingNodeType]+0,+8,+10 and zero +4,+0xc. Always set state |= 0x30.
  */
-extern void Transform9Words_004b3a90(void);
+extern void Transform9Words(void);
 
 extern unsigned int g_arr_ba630_disp_48;
 extern unsigned int g_arr_ba630_main;
 
-void DirtyBitTripleWriteOrCall_004ba630(void) {
+void DirtyBitTripleWriteOrCall(void) {
     __asm {
         mov     eax, dword ptr [g_xformEntityIdx]
         sub     esp, 0x0c
@@ -155,7 +155,7 @@ void DirtyBitTripleWriteOrCall_004ba630(void) {
         lea     edx, [ecx*4 + g_arr_ba630_main]
         push    eax
         push    edx
-        call    Transform9Words_004b3a90
+        call    Transform9Words
         mov     eax, dword ptr [g_xformDirtyFlags]
         add     esp, 8
         or      al, 0x30

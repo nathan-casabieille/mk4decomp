@@ -22,10 +22,10 @@ extern unsigned int g_acc_00542078;
  *   jmp     eax
  *   ret
  */
-extern void MStackBitFlagDispatch_00494750(void);
-void CallPauseTripleScaledJmp_0046c520(void) {
+extern void MStackBitFlagDispatch(void);
+void CallPauseTripleScaledJmp(void) {
     unsigned int v;
-    MStackBitFlagDispatch_00494750();
+    MStackBitFlagDispatch();
     if (g_framePauseFlag) return;
     v = g_eventQueueNotMask;
     g_scaledInit_00542044 = v;

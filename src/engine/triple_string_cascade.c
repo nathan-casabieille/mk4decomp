@@ -109,11 +109,11 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004867b0 (174b game) - 3-block string-cascade. */
-extern void Alarm4EntryInstallChain_00481d40(void);
+extern void Alarm4EntryInstallChain(void);
 extern void ArgSarStoreJmp(void);
 extern void GateDispatch6c(void);
 
-__declspec(naked) void TripleStringCascade_004867b0(void) {
+__declspec(naked) void TripleStringCascade(void) {
     __asm {
         call    GateDispatch6c
         mov     eax, dword ptr [g_framePauseFlag]
@@ -171,7 +171,7 @@ __declspec(naked) void TripleStringCascade_004867b0(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
-        jmp     Alarm4EntryInstallChain_00481d40
+        jmp     Alarm4EntryInstallChain
         push    0x004eee1c
         call    IterStepDualStore
         mov     eax, dword ptr [g_framePauseFlag]

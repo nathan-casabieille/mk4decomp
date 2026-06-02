@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * GameMode_EnterScene - 149b audio deinit variant of AudioModeInit_004a2610.
+ * GameMode_EnterScene - 149b audio deinit variant of AudioModeInit.
  *   Main (0x004a2720): if g_gtModeFlag == 1 → store (0x53a408,0x53a3e0)>>2 to
  *     (g_currentNodeIdx,g_xformEntityIdx); else (0x537e88,0x53a700)>>2; call
  *     DualScaledStoreConst, ClearTwoCallSetStore; g_dlMode=0; call
@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
  *   Pad-aligned tail-jmp Thunk_004c48b0 (0x004a27b0).
  */
 extern u32 g_dlMode;
-extern void ClearTwoCallSetStore_004a2270(void);
+extern void ClearTwoCallSetStore(void);
 extern void DualScaledStoreConst(void);
 extern void PendingMatch_004a3400(void);
 extern void SixCallSeqPushImm(void);
@@ -147,7 +147,7 @@ __declspec(naked) void GameMode_EnterScene(void)
         mov     dword ptr [g_xformEntityIdx], eax
     L_common:
         call    DualScaledStoreConst
-        call    ClearTwoCallSetStore_004a2270
+        call    ClearTwoCallSetStore
         mov     dword ptr [g_dlMode], 0
         call    SixCallSeqPushImm
         mov     dword ptr [g_eventQueueWorkType], 0

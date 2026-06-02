@@ -123,7 +123,7 @@ extern unsigned int g_dispatchSave1625_007af950;
  *   IAT-21a8(0x7af944); if 0x7af93c set call IAT-2030; clear 0x7af940;
  *   if 0x7af950 set call IAT-2210(esi, esi, 1) and clear.
  */
-void RendererTeardownSW_004b2a40(void) {
+void RendererTeardownSW(void) {
     unsigned int zero = 0;
     Renderer4_EndScene_SW_Win();
     if (g_dispatchSave1620_007af934 != zero) {

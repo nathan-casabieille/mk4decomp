@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *   name_out (esp+0x24), ext_out (esp+0x28).
  *   1. Computes path length via repne scasb.
  *   2. If length >= 1 and path[1] == ':', extracts the 2-char drive
- *      to drive_out via FgetsImpl_004c9a30(out, src, 2), advances ebp
+ *      to drive_out via FgetsImpl(out, src, 2), advances ebp
  *      past the drive. Else nulls drive_out if non-null.
  *   3. Walks the path identifying alphanumeric chars via the ctype
  *      table at g_byte_00f9f8c1 (bit 4 = "valid path char"), records
@@ -125,9 +125,9 @@ extern unsigned int g_fightAxisPosY;
  *   Returns nothing (void).
  */
 extern unsigned int g_byte_00f9f8c1;
-extern void FgetsImpl_004c9a30(void);
+extern void FgetsImpl(void);
 
-__declspec(naked) void SplitPath_004c5e00(void) {
+__declspec(naked) void SplitPath(void) {
     __asm {
         push    ecx
         push    ebx
@@ -152,7 +152,7 @@ __declspec(naked) void SplitPath_004c5e00(void) {
         push    2
         push    ebp
         push    esi
-        call    FgetsImpl_004c9a30
+        call    FgetsImpl
         add     esp, 0xc
         mov     byte ptr [esi + 2], 0
     L_sp_skipDrive:
@@ -212,7 +212,7 @@ __declspec(naked) void SplitPath_004c5e00(void) {
         push    edi
         push    ebp
         push    ebx
-        call    FgetsImpl_004c9a30
+        call    FgetsImpl
         add     esp, 0xc
         mov     byte ptr [edi + ebx], 0
     L_sp_skipDirCopy:
@@ -241,7 +241,7 @@ __declspec(naked) void SplitPath_004c5e00(void) {
         push    edi
         push    ebp
         push    ebx
-        call    FgetsImpl_004c9a30
+        call    FgetsImpl
         add     esp, 0xc
         mov     byte ptr [edi + ebx], 0
     L_sp_nameOnly:
@@ -257,7 +257,7 @@ __declspec(naked) void SplitPath_004c5e00(void) {
         push    esi
         push    eax
         push    edi
-        call    FgetsImpl_004c9a30
+        call    FgetsImpl
         add     esp, 0xc
         mov     byte ptr [esi + edi], 0
         pop     edi
@@ -278,7 +278,7 @@ __declspec(naked) void SplitPath_004c5e00(void) {
         push    esi
         push    ebp
         push    edi
-        call    FgetsImpl_004c9a30
+        call    FgetsImpl
         add     esp, 0xc
         mov     byte ptr [esi + edi], 0
     L_sp_extNull:

@@ -23,7 +23,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [eax + 0x5c], ecx
  *   ret
  */
-void Copy3Fields3c4044_00404e90(void) {
+void Copy3Fields3c4044(void) {
     unsigned char *dst = (unsigned char *)(g_fightGroupHead * 4);
     ScenegraphNode *src = (ScenegraphNode *)(g_pendingNodeType * 4);
     unsigned int v;

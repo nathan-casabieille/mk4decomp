@@ -114,14 +114,14 @@ extern unsigned int g_fightAxisPosY;
  *   Call MStackPush2RunCountdown; if pause ret. Call MStackBracket7_DispatchAndChain; if pause ret.
  *   g_walkCallback=3; call ChainDirtyBitWalker; if pause ret.
  *   Copy [g_xformEntityIdx*4 + 0x3c]->g_acc, [g_xformEntityIdx*4 + 0x44]->g_eventQueueNotMask.
- *   Call StoreTwoCallSubMain_00426b60; if pause ret.
+ *   Call StoreTwoCallSubMain; if pause ret.
  *   Mstack-pop 4: g_cj_0054205c, g_xformEntityIdx, g_eventQueueNotMask, g_acc_00542078; ret.
  */
-extern void StoreTwoCallSubMain_00426b60(void);
+extern void StoreTwoCallSubMain(void);
 
 extern unsigned int g_matrixStack_arr;
 
-void MStackPush4ChainCopyPop4_00472e10(void) {
+void MStackPush4ChainCopyPop4(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_acc_00542078]
@@ -175,7 +175,7 @@ void MStackPush4ChainCopyPop4_00472e10(void) {
         mov     dword ptr [g_acc_00542078], edx
         mov     eax, dword ptr [eax*4 + 0x44]
         mov     dword ptr [g_eventQueueNotMask], eax
-        call    StoreTwoCallSubMain_00426b60
+        call    StoreTwoCallSubMain
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

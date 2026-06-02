@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave1441_00f9fae0;
 extern void LoadArgPushCall(void);
 
-void StreamAllocInit_004cc250(void) {
+void StreamAllocInit(void) {
     __asm {
         mov     eax, dword ptr [g_dispatchSave1441_00f9fae0]
         push    0x1000

@@ -53,10 +53,10 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern void Sprintf2WaySelect_00426550(void);
+extern void Sprintf2WaySelect(void);
 extern void StreamChainStringInstall(void);
 extern void Push70CallScaleArith(void);
-extern void Push70CallScaleArith2_00457b40(void);
+extern void Push70CallScaleArith2(void);
 
 #define BODY(WORKER_FN)                                                       \
     __asm {                                                                   \
@@ -70,7 +70,7 @@ extern void Push70CallScaleArith2_00457b40(void);
         __asm inc     eax                                                     \
         __asm mov     dword ptr [g_matrixStackTop], eax                       \
         __asm mov     dword ptr [eax*4 + 0], edx                              \
-        __asm call    Sprintf2WaySelect_00426550                                           \
+        __asm call    Sprintf2WaySelect                                           \
         __asm mov     eax, dword ptr [g_framePauseFlag]                       \
         __asm test    eax, eax                                                \
         __asm _emit   75h                                                     \
@@ -115,4 +115,4 @@ __declspec(naked) void DispatcherComplex181_00426310(void) { BODY(StreamChainStr
 __declspec(naked) void DispatcherComplex181_004263d0(void) { BODY(Push70CallScaleArith) }
 
 /* @addr 0x00426490 */
-__declspec(naked) void DispatcherComplex181_00426490(void) { BODY(Push70CallScaleArith2_00457b40) }
+__declspec(naked) void DispatcherComplex181_00426490(void) { BODY(Push70CallScaleArith2) }

@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *   skip: pop g_scaledInit; ret.
  */
 extern unsigned char g_scaledIncLoopBase_00541d70;
-void PushScaledIdxBitToggle_0048c2f0(void) {
+void PushScaledIdxBitToggle(void) {
     unsigned int top;
     unsigned int p;
     unsigned int v;

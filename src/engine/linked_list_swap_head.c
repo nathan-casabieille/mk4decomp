@@ -121,7 +121,7 @@ extern unsigned int g_arr_chain_4348f0_2c;
 extern unsigned int g_arr_chain_4348f0_main;
 extern unsigned int g_matrixStack_arr;
 
-void LinkedListSwapHead_0049d0a0(void) {
+void LinkedListSwapHead(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]
         mov     eax, [eax*4 + g_arr_chain_4348f0_2c]

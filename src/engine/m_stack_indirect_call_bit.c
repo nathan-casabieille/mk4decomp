@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_matrixStack_arr;
 
-void MStackIndirectCallBit_00470e20(void) {
+void MStackIndirectCallBit(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_xformEntityIdx]

@@ -120,18 +120,18 @@ extern unsigned int g_matchStartClr_00543568;
 extern unsigned int g_audioMatchStartFlag_00543714;
 extern u8 g_dlEnabledFlag;
 extern void AudioInstallSelfStatePush(void);
-extern void ClearTwoCallSetStore_004a2270(void);
+extern void ClearTwoCallSetStore(void);
 extern void DownloadPlayerChar(void);
 extern void DualScaledStoreConst(void);
-extern void IncOrZero9_00422080(void);
+extern void IncOrZero9(void);
 extern void InstallSelfTableWalk(void);
-extern void ScaledClearTripleCallJmp_004202c0(void);
+extern void ScaledClearTripleCallJmp(void);
 extern void SixCallSeqPushImm(void);
-extern void TablePushAccumTailJmp_00429e30(void);
+extern void TablePushAccumTailJmp(void);
 extern void TableWalkBoundedCmp(void);
 extern void TestCmpZeroFour(void);
 
-__declspec(naked) void MatchStartCluster_004a23c0(void)
+__declspec(naked) void MatchStartCluster(void)
 {
     __asm {
         /* === Helper 1 (0x4a23c0): match init === */
@@ -152,7 +152,7 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         mov      dword ptr [g_currentNodeIdx], edx
         mov      dword ptr [g_xformEntityIdx], eax
         call     DualScaledStoreConst
-        call     ClearTwoCallSetStore_004a2270
+        call     ClearTwoCallSetStore
         mov      dword ptr [g_dlMode], 0
         call     SixCallSeqPushImm
         mov      dword ptr [g_eventQueueWorkType], 0
@@ -196,7 +196,7 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         jne      L_260c
         mov      ecx, dword ptr [g_counter_0053a51c]
         mov      dword ptr [g_walkCallback], ecx
-        call     TablePushAccumTailJmp_00429e30
+        call     TablePushAccumTailJmp
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_260c
         call     TestCmpZeroFour
@@ -220,7 +220,7 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_260c
         mov      byte ptr [g_dlEnabledFlag], 0
-        call     ScaledClearTripleCallJmp_004202c0
+        call     ScaledClearTripleCallJmp
         pop      edi
         pop      esi
         pop      ebx
@@ -250,11 +250,11 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [g_xformEntityIdx], edx
         call     DualScaledStoreConst
-        call     ClearTwoCallSetStore_004a2270
+        call     ClearTwoCallSetStore
         mov      dword ptr [g_dlMode], edi
         mov      dword ptr [g_dlNalt1], edi
         mov      dword ptr [g_dlNalt2], edi
-        call     IncOrZero9_00422080
+        call     IncOrZero9
         call     SixCallSeqPushImm
         mov      dword ptr [esi + 8], OFFSET L_2450
         mov      eax, dword ptr [g_baseSel]

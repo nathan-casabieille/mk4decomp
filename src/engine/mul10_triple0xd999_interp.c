@@ -108,19 +108,19 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void MStackSignedMod_0042fee0(void);
-extern void SubCmpCallPauseJmp_0042fc40(void);
-extern void Mul10Triple0xd999Interp_0042fa10(void);
+extern void MStackSignedMod(void);
+extern void SubCmpCallPauseJmp(void);
+extern void Mul10Triple0xd999Interp(void);
 
 /*
  * @addr 0x0042fbc0 (116b game) - chain field-test then 2-branch:
  *   walk = walk[+0x40]; g_xformScratch94 = walk & 0x40; if zero exit.
  *   Else stash walk into wt, swap to 0x538158 (or 0x53815c if equal),
- *   call MStackSignedMod_0042fee0; on pause clear, walk=0x4ccc; if walk <= old
- *   tail-jmp SubCmpCallPauseJmp else tail-jmp Mul10Triple0xd999Interp_0042fa10.
+ *   call MStackSignedMod; on pause clear, walk=0x4ccc; if walk <= old
+ *   tail-jmp SubCmpCallPauseJmp else tail-jmp Mul10Triple0xd999Interp.
  */
 
-__declspec(naked) void ChainFieldTest2Branch_0042fbc0(void) {
+__declspec(naked) void ChainFieldTest2Branch(void) {
     __asm {
         mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     eax, dword ptr [ecx*4 + 0x40]
@@ -137,7 +137,7 @@ __declspec(naked) void ChainFieldTest2Branch_0042fbc0(void) {
         mov     eax, dword ptr [g_player2NodeIdx]
         mov     dword ptr [g_scaledInit_00542044], eax
 after:
-        call    MStackSignedMod_0042fee0
+        call    MStackSignedMod
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     done
@@ -147,9 +147,9 @@ after:
         mov     dword ptr [g_acc_00542078], 0
         mov     dword ptr [g_eventQueueWorkType], eax
         jle     tail2
-        jmp     SubCmpCallPauseJmp_0042fc40
+        jmp     SubCmpCallPauseJmp
 tail2:
-        jmp     Mul10Triple0xd999Interp_0042fa10
+        jmp     Mul10Triple0xd999Interp
 done:
         ret
     }

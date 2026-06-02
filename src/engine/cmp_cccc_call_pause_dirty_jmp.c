@@ -26,20 +26,20 @@ extern unsigned int g_acc_00542078;
  */
 extern unsigned int g_table_00535ddc;
 extern void Wrapper_0048ec20(void);
-extern void DualCallPauseJmpDual_00439190(void);
+extern void DualCallPauseJmpDual(void);
 extern void CallPauseTestByteJmpCalls(void);
-extern void GuardedDirtyDispatch_00438c50(void);
-void CmpccccCallPauseDirtyJmp_004390b0(void) {
+extern void GuardedDirtyDispatch(void);
+void CmpccccCallPauseDirtyJmp(void) {
     unsigned int v = g_table_00535ddc;
     g_walkCallback = (void (*)(void))v;
     if ((int)v > 0xcccc) {
-        DualCallPauseJmpDual_00439190();
+        DualCallPauseJmpDual();
         return;
     }
     Wrapper_0048ec20();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 1) != 0) {
-        GuardedDirtyDispatch_00438c50();
+        GuardedDirtyDispatch();
         return;
     }
     CallPauseTestByteJmpCalls();

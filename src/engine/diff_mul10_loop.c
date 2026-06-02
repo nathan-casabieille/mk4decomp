@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void DivLongPushCall(void);
 
-__declspec(naked) void DiffMul10Loop_00432000(void) {
+__declspec(naked) void DiffMul10Loop(void) {
     __asm {
         mov     ecx, dword ptr [g_pendingNodeType]
         mov     eax, dword ptr [g_walkCallback]

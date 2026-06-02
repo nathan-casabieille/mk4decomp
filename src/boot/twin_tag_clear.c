@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void MStackInitCallToggle(void);
 
-void TwinTagClear_00416db0(void) {
+void TwinTagClear(void) {
     __asm {
         mov     dword ptr [g_walkCallback], 0xffffffec
         call    MStackInitCallToggle

@@ -7,7 +7,7 @@
 extern unsigned int g_dispatchSave1566_00ab4db8;
 extern unsigned int g_dispatchSave1575_00ab4e5c;
 extern unsigned int g_dispatchSave1576_00ab4e60;
-extern void ZeroEightFields_004b8f20(void);
+extern void ZeroEightFields(void);
 
 __declspec(naked) void Helper_TickAlt(void)
 {
@@ -141,7 +141,7 @@ __declspec(naked) void Helper_TickAlt(void)
         mov     eax, dword ptr [g_dispatchSave1566_00ab4db8]
         test    eax, eax
         je      short L_amw_skipCall
-        call    ZeroEightFields_004b8f20
+        call    ZeroEightFields
         pop     edi
         pop     esi
         pop     ebx

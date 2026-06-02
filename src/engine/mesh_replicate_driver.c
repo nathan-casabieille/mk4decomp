@@ -115,10 +115,10 @@ extern void MStackBracket1_TreeWalkRecursive2(void);
 extern void MStackBracket4_ListInsertZeroFill(void);
 extern void MStackPush3LinkedListWalk(void);
 extern void PushPopScaled1cDoubleCall(void);
-extern void ScaledLoadDirtyOrSetJmp_00473450(void);
+extern void ScaledLoadDirtyOrSetJmp(void);
 extern void StoreLoadJmp(void);
 
-__declspec(naked) void MeshReplicateDriver_00473220(void)
+__declspec(naked) void MeshReplicateDriver(void)
 {
     __asm {
         push     ebx
@@ -234,7 +234,7 @@ __declspec(naked) void MeshReplicateDriver_00473220(void)
         jne      short L_3440
         test     byte ptr [g_xformDirtyFlags], bl
         jne      short L_3440
-        call     ScaledLoadDirtyOrSetJmp_00473450
+        call     ScaledLoadDirtyOrSetJmp
     L_3440:
         pop      esi
         pop      ebx

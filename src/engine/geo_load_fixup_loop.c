@@ -126,9 +126,9 @@ extern u32 g_curTexSlot;
 extern unsigned int g_table_004ab4e78;
 extern u32 g_texCount[];
 extern void Helper_GeoLoadPost(void);
-extern void Mem_Free_004b5b10(void);
+extern void Mem_Free(void);
 
-__declspec(naked) void GeoLoadFixupLoop_004bd8e0(void) {
+__declspec(naked) void GeoLoadFixupLoop(void) {
     __asm {
         push    esi
         push    edi
@@ -164,7 +164,7 @@ skipInner:
         mov     dword ptr [ecx*4 + g_texCount], esi
         mov     edx, dword ptr [edi*4 + 4]
         push    edx
-        call    Mem_Free_004b5b10
+        call    Mem_Free
         add     esp, 4
         mov     dword ptr [g_curTexSlot], esi
         call    Helper_GeoLoadPost

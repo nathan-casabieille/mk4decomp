@@ -108,27 +108,27 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void ModelRenderDispatch_004b9510(void);
-extern void TripleMul10TailIndexed_00425970(void);
+extern void ModelRenderDispatch(void);
+extern void TripleMul10TailIndexed(void);
 extern void TripleAddVec3(void);
-extern void MStackBracket3_FieldSequentialCopy_00411d80(void);
+extern void MStackBracket3_FieldSequentialCopy(void);
 extern unsigned int g_dispatchSave607_004d78d8;
 extern unsigned int g_savedNode;
 
 /*
- * BootInitTripleAddChain_00419bc0 - 203b boot pause-gated init.
- *   Call ModelRenderDispatch_004b9510; if paused: ret.
+ * BootInitTripleAddChain - 203b boot pause-gated init.
+ *   Call ModelRenderDispatch; if paused: ret.
  *   Snapshot g_currentNodeIdx → g_xformEntityIdx; g_currentNodeIdx = g_savedNode; g_pendingNodeType = (0x004d78d8>>2).
  *   Call QuadInterpolator; if paused: ret.
  *   g_eventQueueCurrent = 0xcccc; g_eventQueueWorkType = 0x13333; call TripleMul10TailIndexed; if paused: ret.
- *   g_xformEntityIdx = g_fightGroupHead + 0x15; call MStackBracket3_FieldSequentialCopy_00411d80; if paused or g_xformDirtyFlags & 4: ret.
+ *   g_xformEntityIdx = g_fightGroupHead + 0x15; call MStackBracket3_FieldSequentialCopy; if paused or g_xformDirtyFlags & 4: ret.
  *   eax = g_currentNodeIdx; g_xformEntityIdx = eax + 0x1b; g_currentNodeIdx = eax + 0x15; g_pendingNodeType = eax + 0x15.
  *   Call TripleAddVec3; if paused: ret. Call TripleAddVec3; if paused: ret. Tail-jmp TripleAddVec3.
  */
-void BootInitTripleAddChain_00419bc0(void)
+void BootInitTripleAddChain(void)
 {
     unsigned int v;
-    ModelRenderDispatch_004b9510();
+    ModelRenderDispatch();
     if (g_framePauseFlag != 0) return;
     g_xformEntityIdx = g_currentNodeIdx;
     g_currentNodeIdx = g_savedNode;
@@ -137,10 +137,10 @@ void BootInitTripleAddChain_00419bc0(void)
     if (g_framePauseFlag != 0) return;
     g_eventQueueCurrent = 0xcccc;
     g_eventQueueWorkType = 0x13333;
-    TripleMul10TailIndexed_00425970();
+    TripleMul10TailIndexed();
     if (g_framePauseFlag != 0) return;
     g_xformEntityIdx = g_fightGroupHead + 0x15;
-    MStackBracket3_FieldSequentialCopy_00411d80();
+    MStackBracket3_FieldSequentialCopy();
     if (g_framePauseFlag != 0) return;
     if (g_xformDirtyFlags & 4) return;
     v = g_currentNodeIdx;

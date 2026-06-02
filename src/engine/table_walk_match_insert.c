@@ -121,7 +121,7 @@ extern unsigned int g_dispatchSave957_004e8948;
 extern unsigned int g_stateChangeBase_005380b0;
 extern void StorePauseImulShr16(void);
 
-__declspec(naked) void TableWalkMatchInsert_00459030(void) {
+__declspec(naked) void TableWalkMatchInsert(void) {
     __asm {
         mov     eax, offset g_dispatchSave956_004e8860
         mov     edx, offset g_stateChangeBase_005380b0

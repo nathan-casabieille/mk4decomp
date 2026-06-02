@@ -113,10 +113,10 @@ extern unsigned int g_dispatchSave254_00501160;
 extern unsigned int g_arr_005d83a4_indexed_24;
 extern unsigned int g_arr_005d83a4_indexed_28;
 extern unsigned char g_str_0043d8c0;
-extern void DualEntryStub_0043d510(void);
+extern void DualEntryStub(void);
 extern void StoreTwoCall(int, int);
 extern void WorldCellSetupCluster(int);
-extern void StateMachineDualModuloInstall_0043d620(void);
+extern void StateMachineDualModuloInstall(void);
 
 /* @addr 0x0043d5a0 (123b) - decrement counter; if nonzero tail-jmp to 0x43d510.
  *   Else: write (0x501160 >> 2) into table_24[g_cj_0054205c],
@@ -126,7 +126,7 @@ extern void StateMachineDualModuloInstall_0043d620(void);
  */
 extern unsigned int g_throwEventTime_0053a3a0;
 
-__declspec(naked) void CountdownStoreCallChain_0043d5a0(void) {
+__declspec(naked) void CountdownStoreCallChain(void) {
     __asm {
         mov     eax, dword ptr [g_phaseThunkVar8_0053a2d4]
         dec     eax
@@ -134,7 +134,7 @@ __declspec(naked) void CountdownStoreCallChain_0043d5a0(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_phaseThunkVar8_0053a2d4], eax
         je      short L_csc_body
-        jmp     DualEntryStub_0043d510
+        jmp     DualEntryStub
 L_csc_body:
         mov     edx, dword ptr [g_cj_0054205c]
         mov     ecx, offset g_dispatchSave254_00501160
@@ -155,6 +155,6 @@ L_csc_body:
         call    WorldCellSetupCluster
         add     esp, 4
         mov     dword ptr [g_currentNodeFlags], eax
-        jmp     StateMachineDualModuloInstall_0043d620
+        jmp     StateMachineDualModuloInstall
     }
 }

@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   state==1 (dec,je): chain[baseSel*4+0x74]=0; g_walkCallback=0x1eb8; call SfxAttenuateAndApply; if pause ret.
  *     g_walkCallback=8; call ScaledIndexConditionalAdd; if pause ret.
  *     Install-self at entry; state=2; g_pendingNodeType=0xe; pause=1; pop+ret.
- *   state==0: call MStackChainBit2Cascade_0048e8f0; if pause ret.
+ *   state==0: call MStackChainBit2Cascade; if pause ret.
  *     If bit0(0054208c): tail-call InstallSelfCascadingCalls; pop+ret.
  *     Else: call ScaledZeroFour; if pause ret. g_walkCallback=5; call DispatcherComplex131_00431530; if pause ret.
  *     chain[baseSel*4+0x74]=0x1000; g_walkCallback=0x62; call ScaledLitLoadCall_00480fe0; if pause ret.
@@ -122,14 +122,14 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void DispatcherComplex131_00431530(void);
 extern void FiveCallGuardSetTail(void);
-extern void InstallSelfCascadingCalls_004806c0(void);
-extern void MStackChainBit2Cascade_0048e8f0(void);
+extern void InstallSelfCascadingCalls(void);
+extern void MStackChainBit2Cascade(void);
 extern void ScaledIndexConditionalAdd(void);
 extern void ScaledLitLoadCall_00480fe0(void);
 extern void SfxAttenuateAndApply(void);
 extern void TableLookupCall_00489ff0(void);
 
-__declspec(naked) void Install3StateLongSeq_00480570(void) {
+__declspec(naked) void Install3StateLongSeq(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -169,13 +169,13 @@ __declspec(naked) void Install3StateLongSeq_00480570(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     dword ptr [esi + 8], offset Install3StateLongSeq_00480570
+        mov     dword ptr [esi + 8], offset Install3StateLongSeq
         mov     dword ptr [esi + 0x84], 2
         mov     dword ptr [g_pendingNodeType], 0xe
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
-        call    MStackChainBit2Cascade_0048e8f0
+        call    MStackChainBit2Cascade
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -187,7 +187,7 @@ __declspec(naked) void Install3StateLongSeq_00480570(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   07h
-        call    InstallSelfCascadingCalls_004806c0
+        call    InstallSelfCascadingCalls
         pop     esi
         ret
         call    ScaledZeroFour
@@ -215,7 +215,7 @@ __declspec(naked) void Install3StateLongSeq_00480570(void) {
         test    eax, eax
         _emit   75h
         _emit   25h
-        mov     dword ptr [esi + 8], offset Install3StateLongSeq_00480570
+        mov     dword ptr [esi + 8], offset Install3StateLongSeq
         mov     dword ptr [esi + 0x84], 1
         mov     dword ptr [g_pendingNodeType], 0x33
         mov     dword ptr [g_framePauseFlag], 1

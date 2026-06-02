@@ -18,7 +18,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 
-void ScaledSubStore_0048ee90(void) {
+void ScaledSubStore(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]
         mov     ecx, dword ptr [eax*4 + 0x48]

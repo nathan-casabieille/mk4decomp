@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void BootMStackBracket3SubdispatchPair_00407920(void);
+extern void BootMStackBracket3SubdispatchPair(void);
 extern void MStackPushZeroCallPop_00407d00_thunk_dup(void);
 
 /* @addr 0x0048fe40 (158b) - install-self pattern w/ g_xformScratch2088 +=

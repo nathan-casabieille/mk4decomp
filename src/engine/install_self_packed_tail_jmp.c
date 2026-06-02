@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  *     install self with [eax+8]=0x004751f0, chain[+0x84]=1, packed_ptr store, g_scaledInit++,
  *     chain[+0x84]=0; call InstallSelfChainAccumPath; pause = 1.
  */
-extern void DualSlotCopyChain_004756f0(void);
+extern void DualSlotCopyChain(void);
 extern void InstallSelfChainAccumPath(void);
 
 extern unsigned int g_matrixStack_arr;
@@ -132,7 +132,7 @@ __declspec(naked) void InstallSelfPackedTailJmp(void) {
         _emit   23h
         mov     ecx, dword ptr [g_eventQueueEnd]
         mov     dword ptr [g_fightGroupHead], ecx
-        call    DualSlotCopyChain_004756f0
+        call    DualSlotCopyChain
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

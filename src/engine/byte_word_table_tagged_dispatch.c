@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern void Wrapper_0048a280(void);
 extern void EntryThunkBodyStateMachine(void);
 extern void ByteWordTableTaggedDispatch(void);
-extern void StoreTwoCallSubMain_00426b60(void);
+extern void StoreTwoCallSubMain(void);
 extern unsigned int g_chain_arr_485cc0;
 
 /* @addr 0x00485cc0 (151b game) - sequential 5-call setup chain:
@@ -120,12 +120,12 @@ extern unsigned int g_chain_arr_485cc0;
  *   g_eventQueueNotMask = 0; EntryThunkBodyStateMachine -> pause? ret;
  *   g_walkCallback = 6; ByteWordTableTaggedDispatch -> pause? ret;
  *   g_acc_00542078 = chain[cj].slot54; g_eventQueueNotMask = chain[cj].slot5c;
- *   StoreTwoCallSubMain_00426b60 -> pause? ret.
+ *   StoreTwoCallSubMain -> pause? ret.
  *   g_walkCallback = chain[cj].slot48; chain[cj].slot58 = walkCallback.
  */
 extern void GateDispatch6c(void);
 
-void FiveStageSetupChain_00485cc0(void) {
+void FiveStageSetupChain(void) {
     __asm {
         call    GateDispatch6c
         mov     eax, dword ptr [g_framePauseFlag]
@@ -158,7 +158,7 @@ void FiveStageSetupChain_00485cc0(void) {
         mov     dword ptr [g_acc_00542078], ecx
         mov     edx, [eax*4 + g_chain_arr_485cc0 + 0x5c]
         mov     dword ptr [g_eventQueueNotMask], edx
-        call    StoreTwoCallSubMain_00426b60
+        call    StoreTwoCallSubMain
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

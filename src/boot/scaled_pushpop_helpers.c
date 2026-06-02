@@ -16,7 +16,7 @@ extern unsigned int g_scaledInit_00542044;
  *   if non-zero, set scaled, call F, pause-test;
  *   then pop stack back into g_scaledInit. Standard "save-restore" wrapper.
  */
-extern void ScaledAndMaskInitJmp_00405a00(void);
+extern void ScaledAndMaskInitJmp(void);
 void PushPopScaled18(void) {
     unsigned int v;
     g_matrixStackTop++;
@@ -25,7 +25,7 @@ void PushPopScaled18(void) {
     g_walkCallback = (void (*)(void))v;
     if (v != 0) {
         g_scaledInit_00542044 = v;
-        ScaledAndMaskInitJmp_00405a00();
+        ScaledAndMaskInitJmp();
         if (g_framePauseFlag != 0) {
             return;
         }
@@ -36,7 +36,7 @@ void PushPopScaled18(void) {
 
 /* @addr 0x00405ad0 (90b): same shape but uses g_xformEntityIdx, field +0x14 */
 extern void MStackPush2ChainPrepend(void);
-void PushPopScaled14_00405ad0(void) {
+void PushPopScaled14(void) {
     unsigned int v;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_xformEntityIdx;
@@ -55,7 +55,7 @@ void PushPopScaled14_00405ad0(void) {
 
 /* @addr 0x00408510 (99b): variant with double pause check + g_fightGroupHead +0x1c */
 extern void func_00409970_ii(void);
-extern void PushSetCallCleanup_00408580(void);
+extern void PushSetCallCleanup(void);
 void PushPopScaled1cDoubleCall(void) {
     unsigned int v;
     g_matrixStackTop++;
@@ -65,7 +65,7 @@ void PushPopScaled1cDoubleCall(void) {
     v = ((ScenegraphNode *)(g_fightGroupHead * 4))->alloc_flags;
     g_xformEntityIdx = v;
     if (v != 0) {
-        PushSetCallCleanup_00408580();
+        PushSetCallCleanup();
         if (g_framePauseFlag != 0) return;
     }
     g_xformEntityIdx = *(unsigned int *)(g_matrixStackTop * 4);

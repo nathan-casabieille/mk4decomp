@@ -112,25 +112,25 @@ extern unsigned int g_fightAxisPosY;
  *   snapshot+clear chain[+0x84].
  *   If was nonzero: cj[+0x4c]=0x28f; mstack-push 0x0046e2a0; tail-call
  *     InstallSelfIndirectJmp; pop esi; ret.
- *   If was zero: call DirtyTestScaledCmpJmp_0046ea70; if pause? ret.
+ *   If was zero: call DirtyTestScaledCmpJmp; if pause? ret.
  *     call ScaledZeroFour; if pause? ret.
  *     call CopyJmp_0048ee80; if pause? ret.
  *     if g_walkCallback <= 0xcccc: push 0x004eb268, tail-call ArgSarStoreJmp; ret.
  *     else: call ScaledMove48to58; if pause? ret.
- *     call MStackPushSet0200_00490140; if pause? ret.
+ *     call MStackPushSet0200; if pause? ret.
  *     scaledInit = 0x004ec0a8 >> 2; call GuardedDirtyXformFromTable; if pause? ret.
  *     else: install-self at [esi+8]=0x0046cb70; chain[+0x84]=1; g_pendingNodeType=0xc; pause=1; ret.
  */
 extern void ArgSarStoreJmp(void);
 extern void CopyJmp_0048ee80(void);
-extern void DirtyTestScaledCmpJmp_0046ea70(void);
+extern void DirtyTestScaledCmpJmp(void);
 extern void GuardedDirtyXformFromTable(void);
 extern void InstallSelfIndirectJmp(void);
-extern void MStackPushSet0200_00490140(void);
+extern void MStackPushSet0200(void);
 extern void ScaledMove48to58(void);
 extern void TripleFieldCopyJmpHi(void);
 
-__declspec(naked) void InstallSelfChainedDispatch_0046cb70(void) {
+__declspec(naked) void InstallSelfChainedDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -151,7 +151,7 @@ __declspec(naked) void InstallSelfChainedDispatch_0046cb70(void) {
         call    InstallSelfIndirectJmp
         pop     esi
         ret
-        call    DirtyTestScaledCmpJmp_0046ea70
+        call    DirtyTestScaledCmpJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -188,7 +188,7 @@ __declspec(naked) void InstallSelfChainedDispatch_0046cb70(void) {
         test    eax, eax
         _emit   75h
         _emit   4bh
-        call    MStackPushSet0200_00490140
+        call    MStackPushSet0200
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

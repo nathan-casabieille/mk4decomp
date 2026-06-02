@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void AnimSequence4Way_004515c0(void);
+extern void AnimSequence4Way(void);
 extern void SetJmp_00451aa0(void);
 extern void SetJmp_00451ab0(void);
 extern void SetJmp_00451ac0(void);
@@ -124,7 +124,7 @@ extern void SetJmp_00451b80(void);
 
 extern void SetJmp_00405420(void);
 
-__declspec(naked) void AnimSequence4Way_004515c0(void)
+__declspec(naked) void AnimSequence4Way(void)
 {
     __asm {
         mov      eax, dword ptr [g_baseSel]
@@ -156,7 +156,7 @@ __declspec(naked) void AnimSequence4Way_004515c0(void)
         jne      L_17c7
     L_163f:
         mov      eax, 1
-        mov      dword ptr [esi + 8], OFFSET AnimSequence4Way_004515c0
+        mov      dword ptr [esi + 8], OFFSET AnimSequence4Way
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_framePauseFlag], eax
@@ -183,7 +183,7 @@ __declspec(naked) void AnimSequence4Way_004515c0(void)
         jne      L_17c7
     L_16b2:
         mov      eax, 1
-        mov      dword ptr [esi + 8], OFFSET AnimSequence4Way_004515c0
+        mov      dword ptr [esi + 8], OFFSET AnimSequence4Way
         mov      dword ptr [esi + 0x84], 3
         mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_framePauseFlag], eax
@@ -210,7 +210,7 @@ __declspec(naked) void AnimSequence4Way_004515c0(void)
         jne      short L_17c7
     L_1725:
         mov      eax, 1
-        mov      dword ptr [esi + 8], OFFSET AnimSequence4Way_004515c0
+        mov      dword ptr [esi + 8], OFFSET AnimSequence4Way
         mov      dword ptr [esi + 0x84], 4
         mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_framePauseFlag], eax
@@ -245,7 +245,7 @@ __declspec(naked) void AnimSequence4Way_004515c0(void)
         jne      short L_17c7
     L_17a4:
         mov      eax, 1
-        mov      dword ptr [esi + 8], OFFSET AnimSequence4Way_004515c0
+        mov      dword ptr [esi + 8], OFFSET AnimSequence4Way
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_framePauseFlag], eax

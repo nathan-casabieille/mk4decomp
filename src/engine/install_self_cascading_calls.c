@@ -125,7 +125,7 @@ extern void ScaledLitLoadCall_00480fe0(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void InstallSelfCascadingCalls_004806c0(void) {
+__declspec(naked) void InstallSelfCascadingCalls(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi

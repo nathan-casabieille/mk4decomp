@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern u32 g_dlMode;
 extern void DualScaledStoreConst(void);
-extern void ClearTwoCallSetStore_004a2270(void);
+extern void ClearTwoCallSetStore(void);
 extern void SixCallSeqPushImm(void);
 extern void Push16Call(void);
 extern void InstallSelfTableWalk(void);
@@ -124,7 +124,7 @@ extern void InstallSelfTableWalk(void);
  */
 extern unsigned int g_player1State;
 extern unsigned int g_player2State;
-void AudioModeInit_004a2610(void) {
+void AudioModeInit(void) {
     if (g_gtModeFlag == 1) {
         g_currentNodeIdx = (unsigned int)&g_active_0053a408 >> 2;
         g_xformEntityIdx = (unsigned int)&g_player1State >> 2;
@@ -133,7 +133,7 @@ void AudioModeInit_004a2610(void) {
         g_xformEntityIdx = (unsigned int)&g_player2State >> 2;
     }
     DualScaledStoreConst();
-    ClearTwoCallSetStore_004a2270();
+    ClearTwoCallSetStore();
     g_dlMode = 1;
     SixCallSeqPushImm();
     g_eventQueueWorkType = 0;

@@ -112,8 +112,8 @@ extern void ThreeChanPackClamp(void);
 extern void CopyThreeFields(void);
 
 /* @addr 0x0048f650 (127b) - twin of 0x0048f5d0 with `jg` instead of `jl`. */
-extern void InstallSelfPushDualCallCmpGt_0048f650(void);
-void InstallSelfPushDualCallCmpGt_0048f650(void) {
+extern void InstallSelfPushDualCallCmpGt(void);
+void InstallSelfPushDualCallCmpGt(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int prev = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
@@ -128,7 +128,7 @@ void InstallSelfPushDualCallCmpGt_0048f650(void) {
             return;
         }
     }
-    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfPushDualCallCmpGt_0048f650;
+    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfPushDualCallCmpGt;
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;

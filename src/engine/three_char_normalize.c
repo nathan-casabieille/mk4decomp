@@ -116,11 +116,11 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_stateChangeBase_005380b0;
 extern unsigned int g_dispatchArg;
-extern void LinearSearchByEsi_00459290(void);
+extern void LinearSearchByEsi(void);
 
 extern unsigned int g_arr_459200;
 
-__declspec(naked) void ThreeCharNormalize_00459200(void) {
+__declspec(naked) void ThreeCharNormalize(void) {
     __asm {
         mov     ecx, offset g_stateChangeBase_005380b0
         push    esi
@@ -151,7 +151,7 @@ __declspec(naked) void ThreeCharNormalize_00459200(void) {
         _emit   74h
         _emit   06h
         mov     dword ptr [g_walkCallback], esi
-        call    LinearSearchByEsi_00459290
+        call    LinearSearchByEsi
         cmp     dword ptr [g_framePauseFlag], esi
         _emit   75h
         _emit   2ah

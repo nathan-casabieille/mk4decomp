@@ -14,11 +14,11 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_X2], eax
  *   ret
  */
-extern void Loop16Init_004c4370(void);
+extern void Loop16Init(void);
 extern unsigned int g_zero_00541fa8;
 extern unsigned int g_zero_00541fa4;
-void CallZero2_004be610(void) {
-    Loop16Init_004c4370();
+void CallZero2(void) {
+    Loop16Init();
     g_zero_00541fa8 = 0;
     g_zero_00541fa4 = 0;
 }

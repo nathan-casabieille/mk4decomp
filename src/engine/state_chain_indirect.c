@@ -116,12 +116,12 @@ extern unsigned int g_fightAxisPosY;
  *   eax = baseSel[*4+0x30]; scaledInit=eax; ecx=[eax*4+0]; sub 0x60;
  *   eax = ecx + 0x004f1b28>>2; scaledInit=eax; eax=[eax*4+0]; scaledInit=eax; call eax. ret.
  */
-extern void MStackBitFlagDispatch_00494750(void);
-extern void ScaledLoadCmp0fJmp_004930e0(void);
+extern void MStackBitFlagDispatch(void);
+extern void ScaledLoadCmp0fJmp(void);
 
-__declspec(naked) void StateChainIndirect_00494670(void) {
+__declspec(naked) void StateChainIndirect(void) {
     __asm {
-        call    ScaledLoadCmp0fJmp_004930e0
+        call    ScaledLoadCmp0fJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -130,7 +130,7 @@ __declspec(naked) void StateChainIndirect_00494670(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        call    MStackBitFlagDispatch_00494750
+        call    MStackBitFlagDispatch
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

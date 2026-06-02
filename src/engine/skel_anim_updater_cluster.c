@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void SkelAnimUpdaterCluster_0049d940(void);
+extern void SkelAnimUpdaterCluster(void);
 extern unsigned int g_dispatchSave544_004d6948;
 extern unsigned int g_audioPreloadBase2_0050bbb4;
 
@@ -120,7 +120,7 @@ extern void ScaledChainOr8(void);
 extern void SetJmp_00405420(void);
 extern void ZeroThreeFields_0040a8b0(void);
 
-__declspec(naked) void Phase4DualHelperTrampoline_00412900(void)
+__declspec(naked) void Phase4DualHelperTrampoline(void)
 {
     __asm {
         push    0x8A
@@ -219,7 +219,7 @@ __declspec(naked) void Phase4DualHelperTrampoline_00412900(void)
         mov     dword ptr [g_eventQueueNotMask], 0x99
         shr     ecx, 2
         mov     dword ptr [g_xformEntityIdx], ecx
-        call    SkelAnimUpdaterCluster_0049d940
+        call    SkelAnimUpdaterCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dht_A_exit

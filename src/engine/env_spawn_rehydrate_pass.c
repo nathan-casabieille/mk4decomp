@@ -108,21 +108,21 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void InstallSelfBranchCascade_00471840(void);
+extern void InstallSelfBranchCascade(void);
 extern void GuardedSeq_00471670(void);
 extern void DualEntryRecursiveInstall(void);
-extern void EnvSpawnRehydratePass_004719f0(void);
+extern void EnvSpawnRehydratePass(void);
 extern void TripleCallBitJmp(void);
 
 /* @addr 0x00471920 (193b game) - dual-entry: A: g_walkCallback=[g_fightGroupHead*4+0x18];
- *   if zero jmp GuardedSeq_00471670; else jmp InstallSelfBranchCascade_00471840.
+ *   if zero jmp GuardedSeq_00471670; else jmp InstallSelfBranchCascade.
  *   B (+0x20): install-self path with countdown; chain[+0x84]!=0 path: g_eventQueueCurrent=0x10000,
- *   g_eventQueueWorkType=0x10000; call DualEntryRecursiveInstall; pause-check; jmp EnvSpawnRehydratePass_004719f0.
+ *   g_eventQueueWorkType=0x10000; call DualEntryRecursiveInstall; pause-check; jmp EnvSpawnRehydratePass.
  *   chain[+0x84]==0 path: install-self at +0x08=0x00471940, scaledInit-chain push 0x00471940|0x01000000,
  *   call TripleCallBitJmp; g_pause=1; ret.
  */
 
-__declspec(naked) void DualEntryInstall00471920_00471920(void) {
+__declspec(naked) void DualEntryInstall00471920(void) {
     __asm {
         mov     eax, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [eax*4 + 0x18]
@@ -130,7 +130,7 @@ __declspec(naked) void DualEntryInstall00471920_00471920(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   05h
-        jmp     InstallSelfBranchCascade_00471840
+        jmp     InstallSelfBranchCascade
         jmp     GuardedSeq_00471670
         _emit   90h
         mov     eax, dword ptr [g_baseSel]
@@ -148,7 +148,7 @@ __declspec(naked) void DualEntryInstall00471920_00471920(void) {
         test    eax, eax
         _emit   75h
         _emit   67h
-        jmp     EnvSpawnRehydratePass_004719f0
+        jmp     EnvSpawnRehydratePass
         mov     dword ptr [eax + 0x08], 0x00471940
         mov     ecx, dword ptr [g_baseSel]
         mov     edx, 0x00471940

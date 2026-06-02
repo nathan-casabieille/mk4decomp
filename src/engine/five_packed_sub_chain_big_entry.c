@@ -118,7 +118,7 @@ extern void ScaledLookupGuardJmpIndirect(void);
 extern void StreamInitCountdownBody(void);
 extern void ThresholdSetMatchDispatch(void);
 
-__declspec(naked) void FivePackedSubChainBigEntry_004966d0(void)
+__declspec(naked) void FivePackedSubChainBigEntry(void)
 {
     __asm
     {

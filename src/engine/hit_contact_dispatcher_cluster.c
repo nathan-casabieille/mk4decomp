@@ -112,17 +112,17 @@ extern unsigned int g_dispatchSave745_004ed818;
 extern void ArgSarStoreJmp(void);
 extern void EsiEdiAliasDualMul10(void);
 extern void FiveCallGuardSetTail(void);
-extern void Install3StateLongSeq_00480570(void);
+extern void Install3StateLongSeq(void);
 extern void MStackPushSet0008(void);
 extern void NotMaskStorePair(void);
 extern void PunchAnimCluster(void);
-extern void PushCallScaledStore_004143c0(void);
+extern void PushCallScaledStore(void);
 extern void ScaledChainJmp_004298e0(void);
 extern void ScaledIndexConditionalAdd(void);
 extern void ScaledZero44(void);
-extern void TripleEntryChainGate_00480790(void);
+extern void TripleEntryChainGate(void);
 
-__declspec(naked) void HitContactDispatcherCluster_00480240(void)
+__declspec(naked) void HitContactDispatcherCluster(void)
 {
     __asm {
         /* === h1 (0x480240): velocity/angle update === */
@@ -229,7 +229,7 @@ __declspec(naked) void HitContactDispatcherCluster_00480240(void)
         mov      eax, 0x20a
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x74], eax
-        call     PushCallScaledStore_004143c0
+        call     PushCallScaledStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_03f2
@@ -278,12 +278,12 @@ __declspec(naked) void HitContactDispatcherCluster_00480240(void)
         cmp      eax, 0x10000
         mov      dword ptr [g_walkCallback], eax
         jge      short L_046d
-        call     Install3StateLongSeq_00480570
+        call     Install3StateLongSeq
         pop      edi
         pop      esi
         ret
     L_046d:
-        call     TripleEntryChainGate_00480790
+        call     TripleEntryChainGate
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_0567

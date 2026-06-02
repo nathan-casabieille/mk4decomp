@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *   Else: check fcomp 0x004d2a10; if outside range, re-init to 0x3ff1_9999_9999_999a
  *     / 0xbf78_9374_bc6a_7efa.
  *   Convert via DoubleToInt64, write to g_walkCallback, shift right by 4,
- *   call Transform9Words_004b3a90(esi, &local); OR bit 0x30 of high byte of g_xformDirtyFlags.
+ *   call Transform9Words(esi, &local); OR bit 0x30 of high byte of g_xformDirtyFlags.
  */
 extern unsigned int g_dispatchSave887_004d2a00;
 extern unsigned int g_dispatchSave888_004d2a10;
@@ -127,9 +127,9 @@ extern unsigned int g_dispatchSave553_004f6574;
 extern unsigned int g_dispatchSave502_004f6578;
 extern unsigned int g_dispatchSave552_004f657c;
 extern void DoubleToInt64(void);
-extern void Transform9Words_004b3a90(void);
+extern void Transform9Words(void);
 
-__declspec(naked) void VibrationFrameUpdate_004b9640(void) {
+__declspec(naked) void VibrationFrameUpdate(void) {
     __asm {
         mov     eax, dword ptr [g_fightGroupHead]
         sub     esp, 0x0c
@@ -188,7 +188,7 @@ __declspec(naked) void VibrationFrameUpdate_004b9640(void) {
         lea     eax, [esp + 4]
         push    eax
         push    esi
-        call    Transform9Words_004b3a90
+        call    Transform9Words
         mov     eax, dword ptr [g_xformDirtyFlags]
         add     esp, 8
         or      al, 0x30

@@ -16,10 +16,10 @@ extern unsigned int g_cj_0054205c;   /* 0x0054205c */
 
 /* Externs for jump targets. */
 extern void GuardedChainPushSetCallPop(void);   /* 0x00406bb0 */
-extern void QuadFieldEarlyJmpThenInstall_0043a670(void);   /* 0x0043a670 */
-extern void GuardedSixFieldCopy_00446190(void);   /* 0x00446190 */
-extern void ScaledSubStore_0048ee90(void);   /* 0x0048ee90 */
-extern void SlotCmp3way_0048efa0(void);   /* 0x0048efa0 */
+extern void QuadFieldEarlyJmpThenInstall(void);   /* 0x0043a670 */
+extern void GuardedSixFieldCopy(void);   /* 0x00446190 */
+extern void ScaledSubStore(void);   /* 0x0048ee90 */
+extern void SlotCmp3way(void);   /* 0x0048efa0 */
 
 /* The wrappers. */
 /* @addr 0x00406ba0 */
@@ -31,30 +31,30 @@ void CopyJmp_00406ba0(void) {
 /* @addr 0x0043a620 */
 void CopyJmp_0043a620(void) {
     g_currentNodeIdx = g_cj_00535df0;
-    QuadFieldEarlyJmpThenInstall_0043a670();
+    QuadFieldEarlyJmpThenInstall();
 }
 
 /* @addr 0x00445ec0 */
 void CopyJmp_00445ec0(void) {
     g_cj_0054205c = g_cj_00542058;
-    GuardedSixFieldCopy_00446190();
+    GuardedSixFieldCopy();
 }
 
 /* @addr 0x00446180 */
 void CopyJmp_00446180(void) {
     g_cj_0054205c = g_cj_00542054;
-    GuardedSixFieldCopy_00446190();
+    GuardedSixFieldCopy();
 }
 
 /* @addr 0x0048ee80 */
 void CopyJmp_0048ee80(void) {
     g_currentNodeIdx = g_cj_0054205c;
-    ScaledSubStore_0048ee90();
+    ScaledSubStore();
 }
 
 /* @addr 0x0048ef90 */
 void CopyJmp_0048ef90(void) {
     g_currentNodeIdx = g_cj_0054205c;
-    SlotCmp3way_0048efa0();
+    SlotCmp3way();
 }
 

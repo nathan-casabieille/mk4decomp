@@ -114,11 +114,11 @@ extern unsigned int g_stateChangeBase_005380b0;
 extern unsigned int g_stateChangePair3_0053a278;
 extern unsigned int g_stateChangePair_00541d6c;
 extern void CallSetPause(void);
-extern void MStackPush2ClampLookup_00459160(void);
-extern void SpawnTrioInitCluster_00458440(void);
-extern void TripleEntryDispatch_00458810(void);
+extern void MStackPush2ClampLookup(void);
+extern void SpawnTrioInitCluster(void);
+extern void TripleEntryDispatch(void);
 
-__declspec(naked) void GuardedStateChangePair_00458630(void)
+__declspec(naked) void GuardedStateChangePair(void)
 {
     __asm
     {
@@ -147,7 +147,7 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4], ecx
-        call    MStackPush2ClampLookup_00459160
+        call    MStackPush2ClampLookup
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_gscp_ret
@@ -170,7 +170,7 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
         jmp     CallSetPause
     L_gscp_setSlot:
         mov     dword ptr [g_stateChangePair2_005380a4], eax
-        call    SpawnTrioInitCluster_00458440
+        call    SpawnTrioInitCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_gscp_ret
@@ -194,7 +194,7 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
         mov     dword ptr [g_walkCallback], 0x27
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4], 0x27
-        call    SpawnTrioInitCluster_00458440
+        call    SpawnTrioInitCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_gscp_ret
@@ -240,7 +240,7 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
         je      short L_gscp_sub3_jmp
         jmp     CallSetPause
     L_gscp_sub3_jmp:
-        jmp     TripleEntryDispatch_00458810
+        jmp     TripleEntryDispatch
         nop
         nop
         nop
@@ -256,6 +256,6 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
         jne     short L_gscp_sub4_jmp
         jmp     CallSetPause
     L_gscp_sub4_jmp:
-        jmp     TripleEntryDispatch_00458810
+        jmp     TripleEntryDispatch
     }
 }

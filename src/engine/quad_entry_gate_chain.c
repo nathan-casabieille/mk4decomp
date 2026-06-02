@@ -117,10 +117,10 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_quadEntryGate_0052d724;
 extern void ArgSarStoreJmp(void);
-extern void CallPauseCmpStateJmp_0046a520(void);
+extern void CallPauseCmpStateJmp(void);
 extern void ScaledInitOrSelfPtrSetType_0046a5e0(void);
 
-__declspec(naked) void QuadEntryGateChain_0046a630(void) {
+__declspec(naked) void QuadEntryGateChain(void) {
     __asm {
         mov     eax, dword ptr [g_quadEntryGate_0052d724]
         test    eax, eax
@@ -128,7 +128,7 @@ __declspec(naked) void QuadEntryGateChain_0046a630(void) {
         _emit   75h
         _emit   05h
         jmp     ScaledInitOrSelfPtrSetType_0046a5e0
-        jmp     CallPauseCmpStateJmp_0046a520
+        jmp     CallPauseCmpStateJmp
         _emit   90h
         _emit   90h
         _emit   90h

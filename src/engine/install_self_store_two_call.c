@@ -121,7 +121,7 @@ extern void ScaledClearJmp_00428d40(void);
 
 extern unsigned int g_matrixStack_arr;
 
-void InstallSelfStoreTwoCall_0049a410(void) {
+void InstallSelfStoreTwoCall(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         shl     eax, 2

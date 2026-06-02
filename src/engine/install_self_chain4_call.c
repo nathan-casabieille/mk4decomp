@@ -109,13 +109,13 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004376f0 (207b game) - install-self with 4-call cascade and scaledInit-chain push. */
-extern void DualBlockPauseAbsDirty_00439560(void);
+extern void DualBlockPauseAbsDirty(void);
 extern void DualScaledInitClear(void);
 extern void HitReactionStateCluster(void);
-extern void MStackPushSet4Jmp_004384f0(void);
+extern void MStackPushSet4Jmp(void);
 extern void Wrapper_004377c0(void);
 
-__declspec(naked) void InstallSelfChain4Call_004376f0(void) {
+__declspec(naked) void InstallSelfChain4Call(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -137,7 +137,7 @@ __declspec(naked) void InstallSelfChain4Call_004376f0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        call    DualBlockPauseAbsDirty_00439560
+        call    DualBlockPauseAbsDirty
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -171,7 +171,7 @@ __declspec(naked) void InstallSelfChain4Call_004376f0(void) {
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
-        call    MStackPushSet4Jmp_004384f0
+        call    MStackPushSet4Jmp
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret

@@ -11,7 +11,7 @@ extern unsigned int g_scaledInit_00542044;
  *   inc fightGroupHead[+0x28]; load fightGroupHead[+0x24] → scaled;
  *   or dirty |= 4; cmp [scaled+4], walk; if !=, dirty ^= 4 (clear).
  */
-void ScaledStoreOrFlagXor_00428560(void) {
+void ScaledStoreOrFlagXor(void) {
     unsigned int v;
     unsigned int s;
     v = ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx + 1;

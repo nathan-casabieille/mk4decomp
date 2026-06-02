@@ -117,7 +117,7 @@ extern void GuardedSeq_0049a650(void);
 extern void Set43DualCallJmp(void);
 extern void Vec2SumMul10ChainCompute(void);
 
-__declspec(naked) void EsiInstallQuadCallBitDispatch_0049a050(void) {
+__declspec(naked) void EsiInstallQuadCallBitDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi

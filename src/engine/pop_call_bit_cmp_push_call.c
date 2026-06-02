@@ -116,7 +116,7 @@ extern void CmpEqInitCallElseJmp(void);
 extern void ScaledChain3c74(void);
 extern void TableLookupCall_00489ff0(void);
 
-void PopCallBitCmpPushCall_0047cb00(void) {
+void PopCallBitCmpPushCall(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [eax*4 + 0]

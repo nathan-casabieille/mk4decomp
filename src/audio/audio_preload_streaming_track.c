@@ -109,14 +109,14 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void PendingMatch_004a62b0(void);
-extern void AudioPreloadStreamingTrack_004a6e70(void);
+extern void AudioPreloadStreamingTrack(void);
 extern void FiveTableWalkInit(void);
 extern void CallSetPause(void);
 extern void BootInitGuardedCallChain(void);
-extern void IncCapped3e7_00491920(void);
+extern void IncCapped3e7(void);
 /* extern void AllocNode(void); -- defined elsewhere with diff sig */
 extern void TripleCallSetCopy(void);
-extern void MemcpyByteN_004a5680(void);
+extern void MemcpyByteN(void);
 extern void AudioInstallSelfStatePush(void);
 extern void LoadGeoAsset_Default(void);
 extern void TableWalkBoundedCmp(int);
@@ -132,7 +132,7 @@ extern unsigned int g_byte_005435b8;
 extern unsigned int g_audioPreloadState_00543830;
 
 
-__declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
+__declspec(naked) void AudioPreloadStreamingTrack(void)
 {
     __asm {
         mov      eax, dword ptr [g_baseSel]
@@ -148,7 +148,7 @@ __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
         call     TableWalkBoundedCmp
         add      esp, 4
         call     BootInitGuardedCallChain
-        call     IncCapped3e7_00491920
+        call     IncCapped3e7
         push     -1
         push     -1
         push     -1
@@ -207,7 +207,7 @@ __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
         push     ecx
         lea      eax, [edx*8 + g_byte_005435a0]
         push     eax
-        call     MemcpyByteN_004a5680
+        call     MemcpyByteN
         mov      ecx, dword ptr [g_audioPreloadState_00543830]
         add      esp, 0xc
         inc      ecx
@@ -220,9 +220,9 @@ __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
         jne      short L_702b
         jmp      CallSetPause
     L_6fc9:
-        mov      dword ptr [eax + 8], OFFSET AudioPreloadStreamingTrack_004a6e70
+        mov      dword ptr [eax + 8], OFFSET AudioPreloadStreamingTrack
         mov      ecx, dword ptr [g_baseSel]
-        mov      edx, OFFSET AudioPreloadStreamingTrack_004a6e70
+        mov      edx, OFFSET AudioPreloadStreamingTrack
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      ecx, dword ptr [eax + 4]
         add      edx, 0x1000000

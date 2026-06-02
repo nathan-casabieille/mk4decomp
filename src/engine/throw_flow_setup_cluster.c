@@ -112,7 +112,7 @@ extern void SaveCallRestore(void);
 extern void SaveCallRestoreOrXor(void);
 extern void DispatcherComplex260_00407030(void);
 extern void MStackCall_004062a0(void);
-extern void ThrowFlowSetupCluster_0049ed00(void);
+extern void ThrowFlowSetupCluster(void);
 extern unsigned int g_state2_0053a1bc;
 
 /* @addr 0x0049ea30 (216b game) - dual-guard then state-machine init. */
@@ -170,7 +170,7 @@ void DualGuardStateMachine_0049ea30(void) {
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_walkCallback], 2
-        call    ThrowFlowSetupCluster_0049ed00
+        call    ThrowFlowSetupCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

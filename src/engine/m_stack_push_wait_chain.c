@@ -109,25 +109,25 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00486410 (114b game) - mstack-push self-handler & wait-then-chain.
- *   Block A (+0x00): g_matrixStack_arr[++g_state]=0x00486440; g_currentNodeFlags=0xccc; jmp NegInstallNegSelfTrigPair_00486610.
- *   Block B (+0x30): countdown wait on g_eventQueueChild; on zero call MStackPush2TripleCallChain_0048cf50; pause-check then
+ *   Block A (+0x00): g_matrixStack_arr[++g_state]=0x00486440; g_currentNodeFlags=0xccc; jmp NegInstallNegSelfTrigPair.
+ *   Block B (+0x30): countdown wait on g_eventQueueChild; on zero call MStackPush2TripleCallChain; pause-check then
  *     two more sub-calls and tail-jmps. Self-jmp at +0x3d when timer not yet expired.
  */
 extern unsigned int g_matrixStack_arr;
 extern void DualEntryInstallScaledChain_00486580(void);
 extern void FiveCallGuardSetTail(void);
-extern void MStackPush2TripleCallChain_0048cf50(void);
-extern void NegInstallNegSelfTrigPair_00486610(void);
+extern void MStackPush2TripleCallChain(void);
+extern void NegInstallNegSelfTrigPair(void);
 extern void ScaledMove48to58(void);
 
-__declspec(naked) void MStackPushWaitChain_00486410(void) {
+__declspec(naked) void MStackPushWaitChain(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     dword ptr [g_currentNodeFlags], 0x00000ccc
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_matrixStack_arr], 0x00486440
-        jmp     NegInstallNegSelfTrigPair_00486610
+        jmp     NegInstallNegSelfTrigPair
         _emit   90h
         _emit   90h
         _emit   90h
@@ -144,8 +144,8 @@ __declspec(naked) void MStackPushWaitChain_00486410(void) {
         mov     dword ptr [g_eventQueueChild], eax
         _emit   74h
         _emit   05h
-        jmp     MStackPushWaitChain_00486410
-        call    MStackPush2TripleCallChain_0048cf50
+        jmp     MStackPushWaitChain
+        call    MStackPush2TripleCallChain
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

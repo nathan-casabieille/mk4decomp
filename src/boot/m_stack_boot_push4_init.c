@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void MStackBootPush4Init_00408350(void);
+extern void MStackBootPush4Init(void);
 
 extern s32 g_vtxValid;
 extern s16 g_vtxMat[];

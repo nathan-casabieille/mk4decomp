@@ -16,7 +16,7 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  */
 extern void CondInstallDispatch_00476e20(void);
-void ScaledOr4Jmp_00476e00(void) {
+void ScaledOr4Jmp(void) {
     unsigned int scaled = g_scaledInit_00542044;
     unsigned int v = ((ScenegraphNode *)(scaled * 4))->flags | 4;
     g_walkCallback = (void (*)(void))v;
@@ -26,7 +26,7 @@ void ScaledOr4Jmp_00476e00(void) {
 
 /* @addr 0x00476fe0 (32b): same shape, and al, 0xfb */
 extern void CondInstallDispatch_00477000(void);
-void ScaledAndFBJmp_00476fe0(void) {
+void ScaledAndFBJmp(void) {
     unsigned int scaled = g_scaledInit_00542044;
     unsigned int v = ((ScenegraphNode *)(scaled * 4))->flags & 0xfffffffbu;
     g_walkCallback = (void (*)(void))v;

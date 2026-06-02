@@ -109,11 +109,11 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void MStackPushDispatchBitGate(void);
-extern void PollThenInit_00477920(void);
-extern void MultiGateDispatchCallJmp_004779d0(void);
-extern void SpawnLeftRightProps_00478140(void);
-extern void BulletVolleySpawner_00478350(void);
-extern void EnduranceStateInitWalk_004785a0(void);
+extern void PollThenInit(void);
+extern void MultiGateDispatchCallJmp(void);
+extern void SpawnLeftRightProps(void);
+extern void BulletVolleySpawner(void);
+extern void EnduranceStateInitWalk(void);
 extern void ScaledOrStore_004903d0(void);
 
 extern void MStackPushComplexCallPop_00406430(void);
@@ -201,23 +201,23 @@ __declspec(naked) void SpawnListBatchLoader(void)
         mov      dword ptr [g_currentNodeIdx], eax
         jne      L_7733
     L_7882:
-        call     PollThenInit_00477920
+        call     PollThenInit
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_790f
-        call     MultiGateDispatchCallJmp_004779d0
+        call     MultiGateDispatchCallJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_790f
-        call     EnduranceStateInitWalk_004785a0
+        call     EnduranceStateInitWalk
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_790f
-        call     SpawnLeftRightProps_00478140
+        call     SpawnLeftRightProps
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_790f
-        call     BulletVolleySpawner_00478350
+        call     BulletVolleySpawner
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       short L_78e4

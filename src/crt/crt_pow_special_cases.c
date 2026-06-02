@@ -111,20 +111,20 @@ extern unsigned int g_fightAxisPosY;
 /* ------------------------------------------------------------------ */
 /* CRT pow() helper cluster (544b boot/crt)                            */
 /* ------------------------------------------------------------------ */
-extern void TwinEntryFpHelper_004ca250(void);
-extern void FloatTransientHelpers_004ca2b0(void);
+extern void TwinEntryFpHelper(void);
+extern void FloatTransientHelpers(void);
 extern void func_004ca2c5(void);
 extern void func_004ca2f5(void);
 extern void func_004ca34e(void);
 extern void func_004ca399(void);
-extern void CrtPowSpecialCases_004ca440(void);
+extern void CrtPowSpecialCases(void);
 extern unsigned int g_dispatchSave118_0051fff0;
 extern unsigned int g_crtPowConstBase_0051fff8;
 extern unsigned int g_dispatchSave113_00522410;
 extern unsigned int g_crtFpuTbyte_00522470;
 extern unsigned int g_dispatchSave1422_00f9f7f8;
 
-__declspec(naked) void CrtPowCluster_004c6540(void)
+__declspec(naked) void CrtPowCluster(void)
 {
     __asm {
         sub      esp, 0x10
@@ -160,7 +160,7 @@ __declspec(naked) void CrtPowCluster_004c6540(void)
         jne      L_6710
     L_65af:
         fyl2x
-        call     FloatTransientHelpers_004ca2b0
+        call     FloatTransientHelpers
         cmp      cl, 1
         jne      short L_65bd
         fchs
@@ -175,7 +175,7 @@ __declspec(naked) void CrtPowCluster_004c6540(void)
         jne      func_004ca34e
         lea      ecx, [g_crtPowConstBase_0051fff8]
         mov      edx, 0x1d
-        call     TwinEntryFpHelper_004ca250
+        call     TwinEntryFpHelper
         pop      edx
         ret
     L_65f9:
@@ -226,7 +226,7 @@ __declspec(naked) void CrtPowCluster_004c6540(void)
         fstp     qword ptr [esp + 8]
         wait
         fnsave   dword ptr [ecx + 8]
-        call     CrtPowSpecialCases_004ca440
+        call     CrtPowSpecialCases
         add      esp, 0x10
         pop      ecx
         frstor   dword ptr [ecx + 8]

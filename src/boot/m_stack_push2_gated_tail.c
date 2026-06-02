@@ -114,16 +114,16 @@ extern unsigned int g_fightAxisPosY;
  *   g_xformEntityIdx = chain[g_scaledInit+0x24];
  *   call MStackPushDispatchBitGate; pause? ret;
  *   mstack-pop into g_fightGroupHead; if (g_xformDirtyFlags & 4) ret;
- *   jmp MStackBracket2_StateAdvance6_004094d0.
+ *   jmp MStackBracket2_StateAdvance6.
  */
 extern void BootStateTriple(void);
-extern void MStackBracket2_StateAdvance6_004094d0(void);
+extern void MStackBracket2_StateAdvance6(void);
 extern void MStackPushDispatchBitGate(void);
 
 extern unsigned int g_chain_disp_24_409420;
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void MStackPush2GatedTail_00409420(void) {
+__declspec(naked) void MStackPush2GatedTail(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_xformEntityIdx]
@@ -164,7 +164,7 @@ __declspec(naked) void MStackPush2GatedTail_00409420(void) {
         mov     dword ptr [g_fightGroupHead], ecx
         _emit   75h
         _emit   05h
-        jmp     MStackBracket2_StateAdvance6_004094d0
+        jmp     MStackBracket2_StateAdvance6
         ret
     }
 }

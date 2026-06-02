@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * ChainStreamMatMulVecAdd_004bd9a0 - 208b engine.geo chain-stream MatMul+Vec3Add.
+ * ChainStreamMatMulVecAdd - 208b engine.geo chain-stream MatMul+Vec3Add.
  *   stream = g_eventQueueTotal; advance: g_walkCallback = stream[0]; g_eventQueueCurrent = stream[1];
  *   g_eventQueueTotal = stream[2] (next stream ptr). Unpack g_xformEntityIdx base:
  *   load 4 dwords + 1 word into g_vtxMat..g_word_007af9a0.
@@ -121,9 +121,9 @@ extern s16 g_vtxMat[];
 extern unsigned int g_mat3x3_007af994;
 extern unsigned int g_mat3x3_007af998;
 extern unsigned int g_mat3x3_007af99c;
-extern void Mat3x3VecMul6Bit_004b3590(void);
+extern void Mat3x3VecMul6Bit(void);
 
-void ChainStreamMatMulVecAdd_004bd9a0(void) {
+void ChainStreamMatMulVecAdd(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueTotal]
         mov     ecx, dword ptr [eax*4]
@@ -150,7 +150,7 @@ void ChainStreamMatMulVecAdd_004bd9a0(void) {
         mov     edx, dword ptr [g_pendingNodeType]
         lea     eax, [edx*4]
         push    eax
-        call    Mat3x3VecMul6Bit_004b3590
+        call    Mat3x3VecMul6Bit
         mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_walkCallback]
         add     esp, 8

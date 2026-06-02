@@ -124,7 +124,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_matrixStack_arr;
 
-void LinkedListBitMaskSearch_0041f8f0(void) {
+void LinkedListBitMaskSearch(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_eventQueueWorkType]

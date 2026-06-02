@@ -14,8 +14,8 @@
  */
 #include "engine/scenegraph.h"
 
-extern void InstallSelfMStackPushDispatch_00436910(void);
-extern void IntroComboFsmCluster_00467800(void);
+extern void InstallSelfMStackPushDispatch(void);
+extern void IntroComboFsmCluster(void);
 
 /* Table-base externs - referenced only by `&` so the linker emits a
  * DIR32 reloc into the imm32 slot; that keeps `addr >> 2` from being
@@ -26,17 +26,17 @@ extern unsigned int g_table_004e56d8;   /* 0x004e56d8 */
 /* @addr 0x004368f0 */
 void ScaledAddrInit_004368f0(void) {
     g_eventQueueEnd = (unsigned int)((int)&g_table_004e4780 >> 2);
-    InstallSelfMStackPushDispatch_00436910();
+    InstallSelfMStackPushDispatch();
 }
 
 /* @addr 0x004677c0 */
 void ScaledAddrInit_004677c0(void) {
     g_walkCallback = (void (*)(void))((int)&g_table_004e56d8 >> 2);
-    IntroComboFsmCluster_00467800();
+    IntroComboFsmCluster();
 }
 
 /* @addr 0x004677e0 */
 void ScaledAddrInit_004677e0(void) {
     g_walkCallback = (void (*)(void))((int)&g_table_004e56d8 >> 2);
-    IntroComboFsmCluster_00467800();
+    IntroComboFsmCluster();
 }

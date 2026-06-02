@@ -121,7 +121,7 @@ extern void SetJmp_004753a0(void);
 extern void StoreLoadJmp(void);
 extern void Thunk_0049cbc0(void);
 
-__declspec(naked) void IntroFsmCluster_0044d580(void)
+__declspec(naked) void IntroFsmCluster(void)
 {
     __asm {
     L_d580:

@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
  *   g_scaledInit++; [esi+4] = g_scaledInit; chain[base + 0x84] = 0;
  *   call StateGateMStackOverlap; g_framePauseFlag = 1.
  */
-extern void GuardedDirtyDispatch_00438c50(void);
+extern void GuardedDirtyDispatch(void);
 extern void StateGateMStackOverlap(void);
 
 extern unsigned int g_matrixStack_arr;
@@ -134,7 +134,7 @@ __declspec(naked) void InstallSelfPacked0x2005(void) {
         test    eax, eax
         _emit   74h
         _emit   07h
-        call    GuardedDirtyDispatch_00438c50
+        call    GuardedDirtyDispatch
         pop     esi
         ret
         call    LeaPlus22StoreSelf

@@ -16,7 +16,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [eax*4 + 0x1c], ecx
  *   ret
  */
-void ScaledStoreConst2_00446320(void) {
+void ScaledStoreConst2(void) {
     unsigned int v = *(unsigned int *)(g_baseSel * 4 + 0x5c);
     g_walkCallback = (void (*)(void))2;
     g_scaledInit_00542044 = v;

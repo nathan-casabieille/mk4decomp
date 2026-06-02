@@ -110,10 +110,10 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00434f90 (148b) - install-self chain extend w/ g_currentNodeFlags=0x18000
  *   + g_eventQueueChild=0x1e init + StateGateMStackOverlap call. */
-extern void InstallSelfStdChain_00435030(void);
+extern void InstallSelfStdChain(void);
 extern void StateGateMStackOverlap(void);
 
-__declspec(naked) void InstallSelfChainSet84_80Call_00434f90(void) {
+__declspec(naked) void InstallSelfChainSet84_80Call(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         xor     edx, edx
@@ -123,7 +123,7 @@ __declspec(naked) void InstallSelfChainSet84_80Call_00434f90(void) {
         cmp     ecx, edx
         _emit   74h
         _emit   05h
-        jmp     InstallSelfStdChain_00435030
+        jmp     InstallSelfStdChain
         mov     dword ptr [g_currentNodeFlags], 0x18000
         mov     dword ptr [g_eventQueueChild], 0x1e
         mov     dword ptr [eax + 8], 0x00434f90

@@ -13,12 +13,12 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_phaseTimer;
 extern unsigned int g_dispatchSave1305_004ed4e0;
-extern void AggressorModeCluster_0047df30(void);
+extern void AggressorModeCluster(void);
 extern void ScaledIndexConditionalAdd(void);
 extern int ArgSarStoreJmp(unsigned int *p);
-void GuardedSetCallSetCall_0047dee0(void) {
+void GuardedSetCallSetCall(void) {
     if (g_xformScratch2088 == 1) {
-        AggressorModeCluster_0047df30();
+        AggressorModeCluster();
         return;
     }
     g_walkCallback = (void(*)(void))2;

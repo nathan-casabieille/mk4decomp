@@ -15,12 +15,12 @@ extern unsigned int g_scaledInit_00542044;
 /* @addr 0x0040a7e0 (69b)
  *   push g_eventQueueEnd, add 0x15, restore at end after call.
  */
-extern void Copy3Fields38_0040a870(void);
+extern void Copy3Fields38(void);
 void StackPushAdd15CallPop(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_eventQueueEnd;
     g_eventQueueEnd = g_eventQueueEnd + 0x15;
-    Copy3Fields38_0040a870();
+    Copy3Fields38();
     g_eventQueueEnd = *(unsigned int *)(g_matrixStackTop * 4);
     g_matrixStackTop--;
 }
@@ -34,15 +34,15 @@ extern void *g_dispatchSave1131_00408040;
 extern void ThreeChanPackClamp(void *);
 extern void CopyThreeFields(int);
 extern void func_00405420_ii(void);
-extern void BootMStackBracketedScaledStores_0040bf70(void);
-void PushCallScaledClearJmp_0040bf20(void) {
+extern void BootMStackBracketedScaledStores(void);
+void PushCallScaledClearJmp(void) {
     ThreeChanPackClamp(&g_dispatchSave1131_00408040);
     CopyThreeFields(g_fightGroupHead);
     g_scaledInit_00542044 = 0;
     func_00405420_ii();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 4) {
-        BootMStackBracketedScaledStores_0040bf70();
+        BootMStackBracketedScaledStores();
         return;
     }
 }
@@ -52,7 +52,7 @@ void PushCallScaledClearJmp_0040bf20(void) {
  *   store each into a 3-vec at g_pendingNodeType*4 with stride 4.
  */
 
-void ExtractBitsToVec3_00407c00(void) {
+void ExtractBitsToVec3(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
         mov     ecx, dword ptr [g_pendingNodeType]

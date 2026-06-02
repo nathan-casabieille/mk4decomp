@@ -23,7 +23,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [eax + 0x38], ecx
  *   ret
  */
-void ScaledInitOrSet13b6_00446600(void) {
+void ScaledInitOrSet13b6(void) {
     unsigned int idx;
     unsigned int one;
     unsigned int field;

@@ -120,7 +120,7 @@ extern unsigned int g_chain_arr_41f9c0;
 extern unsigned int g_chain_disp_0c_41f9c0;
 extern unsigned int g_chain_disp_2c_41f9c0;
 
-__declspec(naked) void ChainSearch_0041f9c0(void) {
+__declspec(naked) void ChainSearch(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]
         push    esi

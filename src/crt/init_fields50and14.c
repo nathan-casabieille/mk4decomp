@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void *g_table_00522880;
-void InitFields50and14_004c9dd0(char *p) {
+void InitFields50and14(char *p) {
     *(void **)(p + 0x50) = &g_table_00522880;
     *(int  *)(p + 0x14) = 1;
 }

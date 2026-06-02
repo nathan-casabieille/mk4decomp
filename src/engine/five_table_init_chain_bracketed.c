@@ -115,7 +115,7 @@ extern unsigned int g_dispatchSave66_00542ab8;
 extern unsigned int g_dispatchSave67_00542b00;
 extern void ScaledDerefStore(void);
 
-void FiveTableInitChainBracketed_004774f0(void) {
+void FiveTableInitChainBracketed(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueWorkType]

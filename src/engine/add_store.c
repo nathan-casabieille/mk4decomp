@@ -14,6 +14,6 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_dispatchSave1401_00f85b38;
 extern unsigned int g_dispatchSave1340_00f4d028;
-void AddStore_004bf0b0(void) {
+void AddStore(void) {
     g_dispatchSave1340_00f4d028 = g_dispatchSave1401_00f85b38 + 0x00200000;
 }

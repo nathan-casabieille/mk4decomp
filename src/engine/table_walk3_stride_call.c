@@ -118,7 +118,7 @@ extern unsigned int g_str_00461980;
 
 extern unsigned int g_arr_461640;
 
-__declspec(naked) void TableWalk3StrideCall_00461640(void) {
+__declspec(naked) void TableWalk3StrideCall(void) {
     __asm {
         push    esi
         mov     esi, offset g_dispatchSave1277_004ea070

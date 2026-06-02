@@ -14,8 +14,8 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_gameCountdown;
 extern void TableLookupCall_00489ff0(void);
-extern void PollThenInit_00477920(void);
-void DecBoundCheckCallJmp_00421be0(void) {
+extern void PollThenInit(void);
+void DecBoundCheckCallJmp(void) {
     int s = (int)g_gameCountdown;
     g_eventQueueChild = 0x28;
     s--;
@@ -26,5 +26,5 @@ void DecBoundCheckCallJmp_00421be0(void) {
         TableLookupCall_00489ff0();
         if (g_framePauseFlag) return;
     }
-    PollThenInit_00477920();
+    PollThenInit();
 }

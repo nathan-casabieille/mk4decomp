@@ -15,7 +15,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern u32 g_dlSomeFlag2;
 extern u32 g_dlSomeFlag1;
-void DispatchSetDirtyToggle_004ac150(void) {
+void DispatchSetDirtyToggle(void) {
     unsigned int v = g_dlSomeFlag1;
     g_walkCallback = (void (*)(void))v;
     if (g_fightGroupHead != g_player1NodeIdx) {

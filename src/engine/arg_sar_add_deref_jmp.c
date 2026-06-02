@@ -19,7 +19,7 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     eax
  */
 extern unsigned int g_tickFlagF;
-void ArgSarAddDerefJmp_0048e710(int arg) {
+void ArgSarAddDerefJmp(int arg) {
     unsigned int c = g_tickFlagF;
     unsigned int v = (unsigned int)(arg >> 2) + c;
     g_walkCallback = (void (*)(void))c;

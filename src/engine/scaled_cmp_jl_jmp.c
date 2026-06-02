@@ -17,7 +17,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void CjTableThresholdDispatch(void);
-void ScaledCmpJlJmp_00488ed0(void) {
+void ScaledCmpJlJmp(void) {
     unsigned int walk = (unsigned int)g_walkCallback;
     unsigned int v = *(unsigned int *)(g_baseSel * 4 + 0x7c);
     g_eventQueueCurrent = v;

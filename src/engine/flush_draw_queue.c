@@ -30,21 +30,21 @@ extern u32 g_drawQueueSize;
 extern unsigned int g_dispatchSave1403_00f85b4c;
 extern unsigned int g_viewportX;
 extern unsigned int g_viewportY;
-extern void BlitBlend16bpp_004c05e0(void);
-extern void DecodeTableAllocaCall_004b4450(void);
-extern void GlideTriBatchEmit_004adca0(void);
-extern void GlideTriColorFlush_004b46f0(void);
-extern void PadEnumDeviceRebind_004ad850(void);
-extern void ScanlineTexBlitAdditive_004c0e10(void);
-extern void ScanlineTexBlitAlpha_004c0b70(void);
-extern void ScanlineTexBlitInterlaced_004c1130(void);
-extern void ScanlineTexBlitPaletted_004c0360(void);
-extern void ScanlineTexBlit_004c0920(void);
-extern void TexturedTriRasterizeAlphaPal_004c1fe0(void);
-extern void TexturedTriRasterizeAlpha_004c19c0(void);
-extern void TexturedTriRasterizeDithered_004c2650(void);
-extern void TexturedTriRasterizeShaded_004c2cb0(void);
-extern void TexturedTriRasterize_004c13f0(void);
+extern void BlitBlend16bpp(void);
+extern void DecodeTableAllocaCall(void);
+extern void GlideTriBatchEmit(void);
+extern void GlideTriColorFlush(void);
+extern void PadEnumDeviceRebind(void);
+extern void ScanlineTexBlitAdditive(void);
+extern void ScanlineTexBlitAlpha(void);
+extern void ScanlineTexBlitInterlaced(void);
+extern void ScanlineTexBlitPaletted(void);
+extern void ScanlineTexBlit(void);
+extern void TexturedTriRasterizeAlphaPal(void);
+extern void TexturedTriRasterizeAlpha(void);
+extern void TexturedTriRasterizeDithered(void);
+extern void TexturedTriRasterizeShaded(void);
+extern void TexturedTriRasterize(void);
 
 __declspec(naked) void FlushDrawQueue(void)
 {
@@ -120,7 +120,7 @@ __declspec(naked) void FlushDrawQueue(void)
         add      eax, edi
         push     eax
         push     esi
-        call     DecodeTableAllocaCall_004b4450
+        call     DecodeTableAllocaCall
         add      esp, 8
         mov      byte ptr [esi + g_dispatchSave1352_00f6e058], bl
     L_f547:
@@ -232,7 +232,7 @@ __declspec(naked) void FlushDrawQueue(void)
         and      dl, 0xf
         push     ecx
         push     edx
-        call     GlideTriColorFlush_004b46f0
+        call     GlideTriColorFlush
         fild     dword ptr [g_dispatchSave1383_00f70fc0]
         mov      eax, dword ptr [ebp]
         mov      dl, byte ptr [g_dispatchSave1377_00f70fa0]
@@ -275,7 +275,7 @@ __declspec(naked) void FlushDrawQueue(void)
         mov      dl, byte ptr [esp + ecx + 0x4c]
         push     edx
         push     eax
-        call     GlideTriColorFlush_004b46f0
+        call     GlideTriColorFlush
         add      esp, 0x44
         xor      ebx, ebx
         jmp      L_f887
@@ -398,7 +398,7 @@ __declspec(naked) void FlushDrawQueue(void)
         mov      cl, byte ptr [esp + ecx + 0x4c]
         push     ecx
         push     edx
-        call     GlideTriColorFlush_004b46f0
+        call     GlideTriColorFlush
         add      esp, 0x44
     L_f887:
         mov      eax, dword ptr [esp + 0x14]
@@ -427,7 +427,7 @@ __declspec(naked) void FlushDrawQueue(void)
         add      eax, edi
         push     eax
         push     esi
-        call     PadEnumDeviceRebind_004ad850
+        call     PadEnumDeviceRebind
         add      esp, 8
         mov      byte ptr [esi + g_dispatchSave1352_00f6e058], bl
     L_f8de:
@@ -539,7 +539,7 @@ __declspec(naked) void FlushDrawQueue(void)
         and      dl, 0xf
         push     ecx
         push     edx
-        call     GlideTriBatchEmit_004adca0
+        call     GlideTriBatchEmit
         fild     dword ptr [g_dispatchSave1383_00f70fc0]
         mov      eax, dword ptr [ebp]
         mov      dl, byte ptr [g_dispatchSave1377_00f70fa0]
@@ -582,7 +582,7 @@ __declspec(naked) void FlushDrawQueue(void)
         mov      dl, byte ptr [esp + ecx + 0x50]
         push     edx
         push     eax
-        call     GlideTriBatchEmit_004adca0
+        call     GlideTriBatchEmit
         add      esp, 0x44
         xor      ebx, ebx
         jmp      L_fc1e
@@ -705,7 +705,7 @@ __declspec(naked) void FlushDrawQueue(void)
         mov      cl, byte ptr [esp + ecx + 0x50]
         push     ecx
         push     edx
-        call     GlideTriBatchEmit_004adca0
+        call     GlideTriBatchEmit
         add      esp, 0x44
     L_fc1e:
         mov      eax, dword ptr [esp + 0x10]
@@ -911,7 +911,7 @@ __declspec(naked) void FlushDrawQueue(void)
     L_fedb:
         cmp      word ptr [eax + 0x14], 0x7fff
         jae      L_feed
-        call     ScanlineTexBlitPaletted_004c0360
+        call     ScanlineTexBlitPaletted
         jmp      L_ff7f
     L_feed:
         mov      ax, word ptr [eax + 0x1a]
@@ -919,26 +919,26 @@ __declspec(naked) void FlushDrawQueue(void)
         and      ecx, 0x180
         cmp      cx, 0x80
         jne      L_ff07
-        call     ScanlineTexBlitInterlaced_004c1130
+        call     ScanlineTexBlitInterlaced
         jmp      L_ff7f
     L_ff07:
         cmp      cx, 0x100
         jne      L_ff15
-        call     ScanlineTexBlitInterlaced_004c1130
+        call     ScanlineTexBlitInterlaced
         jmp      L_ff7f
     L_ff15:
         cmp      cx, 0x180
         jne      L_ff23
-        call     ScanlineTexBlitInterlaced_004c1130
+        call     ScanlineTexBlitInterlaced
         jmp      L_ff7f
     L_ff23:
         shr      al, 6
         test     al, 1
         je       L_ff31
-        call     BlitBlend16bpp_004c05e0
+        call     BlitBlend16bpp
         jmp      L_ff7f
     L_ff31:
-        call     ScanlineTexBlit_004c0920
+        call     ScanlineTexBlit
         jmp      L_ff7f
     L_ff38:
         cmp      word ptr [eax + 0x14], 0x7fff
@@ -949,23 +949,23 @@ __declspec(naked) void FlushDrawQueue(void)
         and      eax, 0x180
         cmp      ax, 0x80
         jne      L_ff59
-        call     TexturedTriRasterizeDithered_004c2650
+        call     TexturedTriRasterizeDithered
         jmp      L_ff7f
     L_ff59:
         cmp      ax, 0x100
         jne      L_ff66
-        call     TexturedTriRasterizeDithered_004c2650
+        call     TexturedTriRasterizeDithered
         jmp      L_ff7f
     L_ff66:
         cmp      ax, 0x180
         jne      L_ff73
-        call     TexturedTriRasterizeDithered_004c2650
+        call     TexturedTriRasterizeDithered
         jmp      L_ff7f
     L_ff73:
-        call     TexturedTriRasterize_004c13f0
+        call     TexturedTriRasterize
         jmp      L_ff7f
     L_ff7a:
-        call     TexturedTriRasterizeShaded_004c2cb0
+        call     TexturedTriRasterizeShaded
     L_ff7f:
         mov      edx, dword ptr [esp + 0x1c]
         mov      eax, dword ptr [esp + 0x18]
@@ -1183,7 +1183,7 @@ __declspec(naked) void FlushDrawQueue(void)
     L_027c:
         cmp      word ptr [eax + 0x14], 0x7fff
         jae      L_028e
-        call     ScanlineTexBlitPaletted_004c0360
+        call     ScanlineTexBlitPaletted
         jmp      L_0321
     L_028e:
         mov      ax, word ptr [eax + 0x1a]
@@ -1191,26 +1191,26 @@ __declspec(naked) void FlushDrawQueue(void)
         and      ecx, 0x180
         cmp      cx, 0x80
         jne      L_02a8
-        call     ScanlineTexBlitAdditive_004c0e10
+        call     ScanlineTexBlitAdditive
         jmp      L_0321
     L_02a8:
         cmp      cx, 0x100
         jne      L_02b6
-        call     ScanlineTexBlitInterlaced_004c1130
+        call     ScanlineTexBlitInterlaced
         jmp      L_0321
     L_02b6:
         cmp      cx, 0x180
         jne      L_02c4
-        call     ScanlineTexBlitAlpha_004c0b70
+        call     ScanlineTexBlitAlpha
         jmp      L_0321
     L_02c4:
         shr      al, 6
         test     al, 1
         je       L_02d2
-        call     BlitBlend16bpp_004c05e0
+        call     BlitBlend16bpp
         jmp      L_0321
     L_02d2:
-        call     ScanlineTexBlit_004c0920
+        call     ScanlineTexBlit
         jmp      L_0321
     L_02d9:
         cmp      word ptr [eax + 0x14], 0x7fff
@@ -1221,23 +1221,23 @@ __declspec(naked) void FlushDrawQueue(void)
         and      eax, 0x180
         cmp      ax, 0x80
         jne      L_02fb
-        call     TexturedTriRasterizeAlphaPal_004c1fe0
+        call     TexturedTriRasterizeAlphaPal
         jmp      L_0321
     L_02fb:
         cmp      ax, 0x100
         jne      L_0308
-        call     TexturedTriRasterizeDithered_004c2650
+        call     TexturedTriRasterizeDithered
         jmp      L_0321
     L_0308:
         cmp      ax, 0x180
         jne      L_0315
-        call     TexturedTriRasterizeAlpha_004c19c0
+        call     TexturedTriRasterizeAlpha
         jmp      L_0321
     L_0315:
-        call     TexturedTriRasterize_004c13f0
+        call     TexturedTriRasterize
         jmp      L_0321
     L_031c:
-        call     TexturedTriRasterizeShaded_004c2cb0
+        call     TexturedTriRasterizeShaded
     L_0321:
         mov      edx, dword ptr [esp + 0x1c]
         mov      eax, dword ptr [esp + 0x18]

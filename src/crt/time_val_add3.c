@@ -111,12 +111,12 @@ extern unsigned int g_fightAxisPosY;
 /*
  * @addr 0x004ce220 (104b crt) - 3-stage timeval-like add with carry:
  *   adds three pairs (acc[0]+=b[0], +1 carry if overflow into acc[1],
- *   etc.), via AddOverflowCheck_004ce1f0 with bumps to acc[+8] on
+ *   etc.), via AddOverflowCheck with bumps to acc[+8] on
  *   overflow.
  */
-extern void AddOverflowCheck_004ce1f0(void);
+extern void AddOverflowCheck(void);
 
-__declspec(naked) void TimeValAdd3_004ce220(void) {
+__declspec(naked) void TimeValAdd3(void) {
     __asm {
         push    esi
         mov     esi, dword ptr [esp + 8]
@@ -127,7 +127,7 @@ __declspec(naked) void TimeValAdd3_004ce220(void) {
         mov     eax, dword ptr [edi]
         push    eax
         push    ecx
-        call    AddOverflowCheck_004ce1f0
+        call    AddOverflowCheck
         add     esp, 0xc
         test    eax, eax
         je      stage2
@@ -136,7 +136,7 @@ __declspec(naked) void TimeValAdd3_004ce220(void) {
         push    eax
         push    1
         push    edx
-        call    AddOverflowCheck_004ce1f0
+        call    AddOverflowCheck
         add     esp, 0xc
         test    eax, eax
         je      stage2
@@ -148,7 +148,7 @@ stage2:
         push    eax
         push    ecx
         push    edx
-        call    AddOverflowCheck_004ce1f0
+        call    AddOverflowCheck
         add     esp, 0xc
         test    eax, eax
         je      stage3
@@ -160,7 +160,7 @@ stage3:
         push    eax
         push    ecx
         push    edx
-        call    AddOverflowCheck_004ce1f0
+        call    AddOverflowCheck
         add     esp, 0xc
         pop     edi
         pop     esi

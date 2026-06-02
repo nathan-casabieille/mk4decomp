@@ -123,8 +123,8 @@ extern unsigned int g_dispatchSave697_004ea000;
 extern void ArgSarStoreJmp(void);
 extern void ArgSar_Set0_Jmp(void);
 extern void ArgScaledTestStore(void);
-extern void CallPauseCallTestStackPushJmp_00460c60(void);
-extern void CallPauseMStackPushSet0Jmp_0045fcf0(void);
+extern void CallPauseCallTestStackPushJmp(void);
+extern void CallPauseMStackPushSet0Jmp(void);
 extern void CallSetPause(void);
 extern void CondPickDualStore(void);
 extern void DualCmpSwapStore(void);
@@ -312,7 +312,7 @@ __declspec(naked) void MultiThunkDispatcher_00460470(void) {
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     CallPauseCallTestStackPushJmp_00460c60
+        jmp     CallPauseCallTestStackPushJmp
         ret
         _emit   90h
         _emit   90h
@@ -331,7 +331,7 @@ __declspec(naked) void MultiThunkDispatcher_00460470(void) {
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     CallPauseMStackPushSet0Jmp_0045fcf0
+        jmp     CallPauseMStackPushSet0Jmp
         ret
         _emit   90h
         _emit   90h

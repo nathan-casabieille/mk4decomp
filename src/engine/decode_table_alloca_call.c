@@ -122,7 +122,7 @@ extern void Helper_ChkStk(void);
 
 extern unsigned int g_arr_007afa28;
 
-__declspec(naked) int DecodeTableAllocaCall_004b4450(void) {
+__declspec(naked) int DecodeTableAllocaCall(void) {
     __asm {
         mov     eax, 0x20000
         call    Helper_ChkStk

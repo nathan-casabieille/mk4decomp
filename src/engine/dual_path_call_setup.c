@@ -122,7 +122,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned char g_dispatchSave411_0050cd34;
 extern unsigned char g_dispatchSave412_0050cd50;
 extern unsigned int g_stateFlag;
-void DualPathCallSetup_00458030(void) {
+void DualPathCallSetup(void) {
     unsigned int v = g_stateFlag;
     g_walkCallback = (void (*)(void))v;
     if (v == 0) {

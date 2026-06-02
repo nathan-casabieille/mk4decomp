@@ -13,8 +13,8 @@ extern unsigned int g_scaledInit_00542044;
  * before entry B is filled by 0x90-fill. */
 extern void MStackCall_00406740(void);
 extern void CallSetPause(void);
-extern void PunchDispatcherCluster_00497b50(void);
-void CallPauseJmpThenSetChild_00497b10(void) {
+extern void PunchDispatcherCluster(void);
+void CallPauseJmpThenSetChild(void) {
     MStackCall_00406740();
     if (g_framePauseFlag != 0) return;
     CallSetPause();

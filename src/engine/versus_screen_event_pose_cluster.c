@@ -118,13 +118,13 @@ extern void EsiInstallClampAddCall(void);
 extern void EsiInstallDecCallChain_004294a0(void);
 extern void GuardedPackedSlotInit(void);
 extern void GuardedPushCall_0043b980(void);
-extern void InstallSelfDoubleMStack_0043b9a0(void);
+extern void InstallSelfDoubleMStack(void);
 extern void ScaledLitLoadCall_00480fe0(void);
 extern void ScaledLoadIncJmp_00428d00(void);
 extern void SfxAttenuateAndApply(void);
 extern void StateMachine4ArmCascade(void);
 
-__declspec(naked) void VersusScreenEventPoseCluster_0043b680(void)
+__declspec(naked) void VersusScreenEventPoseCluster(void)
 {
     __asm {
         /* === h1 (0x43b680): event 004e4c20 forwarder === */
@@ -199,7 +199,7 @@ __declspec(naked) void VersusScreenEventPoseCluster_0043b680(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edi
-        call     InstallSelfDoubleMStack_0043b9a0
+        call     InstallSelfDoubleMStack
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi

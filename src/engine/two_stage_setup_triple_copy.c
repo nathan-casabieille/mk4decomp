@@ -118,7 +118,7 @@ extern void PushSetXfmMaskCallPop(void);
 
 extern unsigned int g_chain_arr_4348f0;
 
-void TwoStageSetupTripleCopy_00441e50(void) {
+void TwoStageSetupTripleCopy(void) {
     __asm {
         call    PushSetXfmMaskCallPop
         mov     eax, dword ptr [g_framePauseFlag]

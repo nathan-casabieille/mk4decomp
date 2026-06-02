@@ -113,10 +113,10 @@ extern unsigned int g_fightAxisPosY;
 /* Helper 1: 0x96-fighter-id-vs-default branch + mat-copy.             */
 /* Helper 2: simple dispatcher → func_004745e0 callback.               */
 /* ------------------------------------------------------------------ */
-extern void NodeWalkPoseUpdate_00474630(void);
+extern void NodeWalkPoseUpdate(void);
 extern void MStackPushVec3Mul10(void);
 extern void TripleVecAccCallStore(void);
-extern void DoublePushAddCallDoublePop_00476930(void);
+extern void DoublePushAddCallDoublePop(void);
 extern unsigned int g_dispatchSave731_004eca50;
 extern unsigned int g_dispatchSave136_0050b268;
 
@@ -252,7 +252,7 @@ __declspec(naked) void PreFightInstallCluster(void)
         cmp      eax, 0x96
         mov      dword ptr [g_walkCallback], eax
         je       short L_45bc
-        call     DoublePushAddCallDoublePop_00476930
+        call     DoublePushAddCallDoublePop
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_45d4
@@ -280,7 +280,7 @@ __declspec(naked) void PreFightInstallCluster(void)
         push     esi
         mov      dword ptr [eax*4 + 0x84], 0
         lea      esi, [eax*4]
-        call     NodeWalkPoseUpdate_00474630
+        call     NodeWalkPoseUpdate
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_4622

@@ -121,10 +121,10 @@ extern unsigned int g_fightAxisPosY;
  *   state==0: install-self at tail+0; state=1; g_pendingNodeType=0x78; pause=1; ret.
  */
 extern void CallPauseInc(void);
-extern void InstallSelfTableDispatch_00461a60(void);
+extern void InstallSelfTableDispatch(void);
 extern void StorePauseImulShr16(void);
 
-__declspec(naked) void TripleBlockInstallSelfThunk_00461930(void) {
+__declspec(naked) void TripleBlockInstallSelfThunk(void) {
     __asm {
         push    0x30
         push    offset tail_a00
@@ -163,7 +163,7 @@ __declspec(naked) void TripleBlockInstallSelfThunk_00461930(void) {
         _emit   13h
         mov     ecx, dword ptr [g_eventQueueNotMask]
         mov     dword ptr [g_walkCallback], ecx
-        call    InstallSelfTableDispatch_00461a60
+        call    InstallSelfTableDispatch
         pop     esi
         ret
         mov     dword ptr [g_walkCallback], 0x14
@@ -204,7 +204,7 @@ __declspec(naked) void TripleBlockInstallSelfThunk_00461930(void) {
         test    eax, eax
         _emit   75h
         _emit   27h
-        jmp     InstallSelfTableDispatch_00461a60
+        jmp     InstallSelfTableDispatch
         mov     ecx, 1
         mov     dword ptr [eax + 8], offset tail_a00
         mov     dword ptr [eax + 0x84], ecx

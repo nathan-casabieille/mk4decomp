@@ -108,10 +108,10 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void Set14CallAddJmp_00436ff0(void);
+extern void Set14CallAddJmp(void);
 extern void GameStateDispatch4Way(void);
-extern void Push80SetWalkDualCallPop_00439350(void);
-extern void Push80SetWalkNegDualCallPop_004393b0(void);
+extern void Push80SetWalkDualCallPop(void);
+extern void Push80SetWalkNegDualCallPop(void);
 extern void CjInstallSelfRouter(void);
 extern void AudioVolumeRescale(void);
 
@@ -130,7 +130,7 @@ __declspec(naked) void GameStateDispatch4Way(void)
         ja       L_6fcd
         jmp      dword ptr [eax*4 + L_e50_jmptbl]
     L_6e7d:
-        call     Push80SetWalkNegDualCallPop_004393b0
+        call     Push80SetWalkNegDualCallPop
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_6fd2
         mov      dword ptr [esi + 8], OFFSET GameStateDispatch4Way
@@ -148,7 +148,7 @@ __declspec(naked) void GameStateDispatch4Way(void)
         jne      L_6fd2
         test     byte ptr [g_xformDirtyFlags], 1
         jne      L_6fcd
-        call     Push80SetWalkDualCallPop_00439350
+        call     Push80SetWalkDualCallPop
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_6fd2
         mov      dword ptr [esi + 8], OFFSET GameStateDispatch4Way
@@ -160,7 +160,7 @@ __declspec(naked) void GameStateDispatch4Way(void)
         add      edx, 0x3000000
         jmp      short L_6f9a
     L_6f24:
-        call     Push80SetWalkNegDualCallPop_004393b0
+        call     Push80SetWalkNegDualCallPop
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_6fd2
         mov      dword ptr [esi + 8], OFFSET GameStateDispatch4Way
@@ -172,7 +172,7 @@ __declspec(naked) void GameStateDispatch4Way(void)
         add      edx, 0x4000000
         jmp      short L_6f9a
     L_6f62:
-        call     Push80SetWalkDualCallPop_00439350
+        call     Push80SetWalkDualCallPop
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_6fd2
         mov      dword ptr [esi + 8], OFFSET GameStateDispatch4Way
@@ -190,7 +190,7 @@ __declspec(naked) void GameStateDispatch4Way(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edi
-        call     Set14CallAddJmp_00436ff0
+        call     Set14CallAddJmp
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi

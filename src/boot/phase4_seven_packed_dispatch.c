@@ -116,7 +116,7 @@ extern void SetJmp_00408d20(void);
 extern void StoreDoubleNegPauseSubStore(void);
 extern void ZeroThreeFields_0040a8b0(void);
 
-__declspec(naked) void Phase4SevenPackedDispatch_00417e40(void)
+__declspec(naked) void Phase4SevenPackedDispatch(void)
 {
     __asm {
         call    MStackPush2RunCountdown

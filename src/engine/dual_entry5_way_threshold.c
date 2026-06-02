@@ -114,15 +114,15 @@ extern unsigned int g_fightAxisPosY;
  *   Block B (+0x30): call Cmp2CallDirtyCall+ScaledChainSignDirtyToggle; if !pause & bit-clear: jmp GuardedSeq;
  *     else cascade 3 state-threshold gates jumping to Wrapper_00436760/70/80 or GuardedSeq.
  */
-extern void CallPauseMStackPushSet2Jmp_00437930(void);
+extern void CallPauseMStackPushSet2Jmp(void);
 extern void GuardedSeq_00433bb0(void);
-extern void MultiThunkDispatcher9_00436780(void);
+extern void MultiThunkDispatcher9(void);
 extern void PackedAdvanceCallTailJmp(void);
-extern void ScaledChainSignDirtyToggle_00439680(void);
+extern void ScaledChainSignDirtyToggle(void);
 extern void Wrapper_00436760(void);
 extern void Wrapper_00436770(void);
 
-__declspec(naked) void DualEntry5WayThreshold_004366d0(void) {
+__declspec(naked) void DualEntry5WayThreshold(void) {
     __asm {
         mov     eax, dword ptr [g_table_00535ddc]
         cmp     eax, 0x0003cccc
@@ -133,7 +133,7 @@ __declspec(naked) void DualEntry5WayThreshold_004366d0(void) {
         cmp     eax, 0x00018000
         _emit   7dh
         _emit   05h
-        jmp     CallPauseMStackPushSet2Jmp_00437930
+        jmp     CallPauseMStackPushSet2Jmp
         push    0x004e46f0
         call    PackedAdvanceCallTailJmp
         add     esp, 4
@@ -142,7 +142,7 @@ __declspec(naked) void DualEntry5WayThreshold_004366d0(void) {
         test    eax, eax
         _emit   75h
         _emit   4fh
-        call    ScaledChainSignDirtyToggle_00439680
+        call    ScaledChainSignDirtyToggle
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -156,7 +156,7 @@ __declspec(naked) void DualEntry5WayThreshold_004366d0(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   7dh
         _emit   05h
-        jmp     MultiThunkDispatcher9_00436780
+        jmp     MultiThunkDispatcher9
         cmp     eax, 0x00030000
         _emit   7dh
         _emit   05h

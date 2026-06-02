@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * AudioState50b4BitDispatcher_004a32c0 - 309b 4-bit dispatcher on g_byte_004d50b4 (cl/ch).
+ * AudioState50b4BitDispatcher - 309b 4-bit dispatcher on g_byte_004d50b4 (cl/ch).
  *   edi = 0x1c20 (channel id?). For bits 0x01, 0x02 (movsx byte from table at esi[chain*9*4 + N]):
  *     if !=-1: store back at chain[+0x30]; SetJmp_004a1ad0. Then g_eventQueueChild = edi.
  *   For bits 0x04, 0x08 (dword load from esi[chain*9*4 + 4/+8] → g_currentNodeIdx): if !=0: clear
@@ -121,7 +121,7 @@ extern unsigned int g_byte_004d50b4;
 extern void SetJmp_004a1ac0(void);
 extern void SetJmp_004a1ad0(void);
 
-__declspec(naked) void AudioState50b4BitDispatcher_004a32c0(void)
+__declspec(naked) void AudioState50b4BitDispatcher(void)
 {
     __asm
     {

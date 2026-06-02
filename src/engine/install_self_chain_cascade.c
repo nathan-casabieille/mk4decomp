@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0045feb0 (272b game) - install-self with 4-call chain + cj copy.
  *   baseSel<<2 -> eax; snapshot+clear chain[+0x84].
- *   If was zero: push 0x0054295c, call IterStepScaledStore24_00428730; if pause? ret.
+ *   If was zero: push 0x0054295c, call IterStepScaledStore24; if pause? ret.
  *     call DualCallPauseDirtyJmp_00490c30; if pause? ret.
  *     push 0x00542960; call ArgScaledTestStore; if pause? ret.
  *     call DualScaledStoreZero; if pause? ret.
@@ -118,15 +118,15 @@ extern unsigned int g_fightAxisPosY;
  *   If was nonzero: g_eventQueueIdx = cj[+0x24]; g_xformEntityIdx = 0x005009c8>>2;
  *     install-self at [eax+8]=0x0045feb0; chain[+0x84]=1;
  *     scaledInit-chain push 0x0045feb0+0x01000000;
- *     call ScaledStoreEntZeroJmp_00428e40; pause=1; ret.
+ *     call ScaledStoreEntZeroJmp; pause=1; ret.
  */
 extern void ArgScaledTestStore(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void DualScaledStoreZero(void);
-extern void IterStepScaledStore24_00428730(void);
-extern void ScaledStoreEntZeroJmp_00428e40(void);
+extern void IterStepScaledStore24(void);
+extern void ScaledStoreEntZeroJmp(void);
 
-__declspec(naked) void InstallSelfChainCascade_0045feb0(void) {
+__declspec(naked) void InstallSelfChainCascade(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         shl     eax, 2
@@ -136,7 +136,7 @@ __declspec(naked) void InstallSelfChainCascade_0045feb0(void) {
         _emit   74h
         _emit   70h
         push    0x0054295c
-        call    IterStepScaledStore24_00428730
+        call    IterStepScaledStore24
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
@@ -199,7 +199,7 @@ __declspec(naked) void InstallSelfChainCascade_0045feb0(void) {
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
-        call    ScaledStoreEntZeroJmp_00428e40
+        call    ScaledStoreEntZeroJmp
         mov     dword ptr [g_framePauseFlag], 1
         ret
     }

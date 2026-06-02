@@ -108,13 +108,13 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-/* @addr 0x00437fb0 (172b game) - same install-self pattern; CallPauseDirtyConstJmp_00438ca0 error path; chain[+0x84]=0xb333. */
-extern void CallPauseDirtyConstJmp_00438ca0(void);
+/* @addr 0x00437fb0 (172b game) - same install-self pattern; CallPauseDirtyConstJmp error path; chain[+0x84]=0xb333. */
+extern void CallPauseDirtyConstJmp(void);
 extern void StateGateMStackOverlap(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void InstallSelfChainSetB333v3_00437fb0(void) {
+__declspec(naked) void InstallSelfChainSetB333v3(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -124,7 +124,7 @@ __declspec(naked) void InstallSelfChainSetB333v3_00437fb0(void) {
         test    eax, eax
         _emit   74h
         _emit   07h
-        call    CallPauseDirtyConstJmp_00438ca0
+        call    CallPauseDirtyConstJmp
         pop     esi
         ret
         call    LeaPlus22StoreSelf

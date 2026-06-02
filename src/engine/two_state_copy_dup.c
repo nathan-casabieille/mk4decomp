@@ -127,7 +127,7 @@ extern s32 g_dlChar24;
 extern unsigned int g_audioInitState2_00541ecc;
 extern unsigned int g_audioInitState1_00541ed0;
 
-void TwoStateCopyDup_004225f0(void) {
+void TwoStateCopyDup(void) {
     __asm {
         mov     eax, dword ptr [g_hitPhase_00537f30]
         and     eax, 1

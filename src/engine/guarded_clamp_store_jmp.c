@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp T.
  */
 extern void CopyJmp_00406ba0(void);
-void GuardedClampStoreJmp_00428bd0(void) {
+void GuardedClampStoreJmp(void) {
     unsigned int scaled, walk;
     CopyJmp_00406ba0();
     if (g_framePauseFlag) return;

@@ -16,7 +16,7 @@ extern unsigned int g_baseSel;
  *   ret
  */
 extern unsigned int g_acc_00542078;
-void ConditionalAcc4or3_0045e0b0(void) {
+void ConditionalAcc4or3(void) {
     g_acc_00542078 = 4;
     if (g_xformScratch2088) {
         g_acc_00542078 = 3;

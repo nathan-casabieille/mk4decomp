@@ -115,7 +115,7 @@ extern unsigned int g_mul10TableBase_004ec050;
 extern unsigned int g_dispatchVar37_00542a58;
 extern void ScaledIndexConditionalAdd(void);
 extern void GuardedDualConst2AndToggle(void);
-extern void Mul10SumStoreNegCommit_00490970(void);
+extern void Mul10SumStoreNegCommit(void);
 extern void MStackPush3CmpCall(void);
 extern void PendingMatch_004694b0(void);
 extern void ScaledClearJmp_00428d60(void);
@@ -134,7 +134,7 @@ extern void ScaledClearJmp_00428d60(void);
  *       GuardedDualConst2AndToggle. If bit 0 of 0x54208c set,
  *       sets g_eventQueueChild=1 and copies 0x54204c into 0x542050; else
  *       keeps 0x542050.
- *   Tail: copies chosen base into 0x542044, calls Mul10SumStoreNegCommit_00490970, pushes
+ *   Tail: copies chosen base into 0x542044, calls Mul10SumStoreNegCommit, pushes
  *   0x542a58 and calls GuardedPackedSlotInit, then
  *   MStackPush3CmpCall. If bit 0 of 0x54208c set, calls
  *   PendingMatch_004694b0. Then tail-jmp ScaledChainJmp_00429470 or
@@ -144,7 +144,7 @@ extern void GuardedPackedSlotInit(void);
 extern void ScaledChainJmp_00429470(void);
 extern void TableLookupCall_00489ff0(void);
 
-__declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
+__declspec(naked) void StreamFlagPackedSelectChain(void) {
     __asm {
         mov     dword ptr [g_walkCallback], 0x52
         call    TableLookupCall_00489ff0
@@ -213,7 +213,7 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
         mov     eax, dword ptr [g_eventQueueTotal]
     L_sfp_callBlock:
         mov     dword ptr [g_currentNodeIdx], eax
-        call    Mul10SumStoreNegCommit_00490970
+        call    Mul10SumStoreNegCommit
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_sfp_done

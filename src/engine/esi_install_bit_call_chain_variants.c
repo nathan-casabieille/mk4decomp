@@ -121,7 +121,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void CopyJmp_00406ba0(void);
 extern void GuardedSeq_004297b0(void);
-extern void GuardedDoubleIncCmpJmp_00429860(void);
+extern void GuardedDoubleIncCmpJmp(void);
 extern void CallPauseScaledDecJmp(void);
 extern void ScaledInitOrSelfPtr_00429680(void);
 
@@ -179,7 +179,7 @@ __declspec(naked) void EsiInstallBitCallChain_004295a0(void) {
         test    eax, eax
         _emit   75h
         _emit   3bh
-        call    GuardedDoubleIncCmpJmp_00429860
+        call    GuardedDoubleIncCmpJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

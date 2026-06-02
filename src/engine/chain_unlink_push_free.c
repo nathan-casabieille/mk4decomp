@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   g_bootLongChainState_00537f24. */
 extern unsigned int g_bootLongChainState_00537f24;
 
-void ChainUnlinkPushFree_0049d150(void) {
+void ChainUnlinkPushFree(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_pendingNodeType]

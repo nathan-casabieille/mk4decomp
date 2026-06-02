@@ -121,7 +121,7 @@ extern unsigned int g_load_0052ab10;
  *   ecx = [eax*4]; ++eax; g_walkCallback = ecx;
  *   g_scaledInit = eax; [edx*4+0x5c] = ecx; ret.
  */
-void TripleScaledChainStore54_004313d0(int arg) {
+void TripleScaledChainStore54(int arg) {
     unsigned int cj = g_load_0052ab10;
     unsigned int idx;
     unsigned int v;

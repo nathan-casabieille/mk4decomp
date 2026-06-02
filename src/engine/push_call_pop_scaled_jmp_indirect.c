@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
  *   g_scaledInit = edx; g_matrixStackTop = ecx;
  *   eax = [eax*4 + 8]; g_walkCallback = eax; jmp eax.
  */
-void PushCallPopScaledJmpIndirect_0048ce00(void) {
+void PushCallPopScaledJmpIndirect(void) {
     unsigned int top;
     unsigned int saved_scaled;
     unsigned int popped;

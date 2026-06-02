@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_load_0052ab10;
 
 /* @addr 0x00431450 (124b) - twin of 0x004313d0 with chain offsets 0x60/0x64/0x68. */
-void TripleScaledChainStore60_00431450(int arg) {
+void TripleScaledChainStore60(int arg) {
     unsigned int cj = g_load_0052ab10;
     unsigned int idx;
     unsigned int v;

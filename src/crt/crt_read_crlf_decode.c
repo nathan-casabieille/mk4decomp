@@ -113,10 +113,10 @@ extern unsigned int g_iat_004d209c;
 extern unsigned int g_iat_004d2124;
 extern void Crt_doserrno(void);
 extern void Crt_errno(void);
-extern void DosMapErr_004c8b20(void);
+extern void DosMapErr(void);
 extern void LseekImpl(void);
 
-__declspec(naked) void CrtReadCrlfDecode_004c9040(void)
+__declspec(naked) void CrtReadCrlfDecode(void)
 {
     __asm {
         mov      eax, dword ptr [esp + 0xc]
@@ -187,7 +187,7 @@ __declspec(naked) void CrtReadCrlfDecode_004c9040(void)
         cmp      eax, 0x6d
         je       L_925b
         push     eax
-        call     DosMapErr_004c8b20
+        call     DosMapErr
         add      esp, 4
         or       eax, 0xffffffff
         pop      edi

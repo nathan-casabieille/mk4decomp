@@ -14,13 +14,13 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_pendingMatchSlot2_00541dc0;
 extern unsigned int g_baseSel;
 extern void BootInitGuardedCallChain(void);
-extern void ZeroMultiGlobalsCmp_00404680(void);
-void ClearTwoCallSetStore_004a2270(void) {
+extern void ZeroMultiGlobalsCmp(void);
+void ClearTwoCallSetStore(void) {
     g_walkCallback = 0;
     g_pendingMatchSlot2_00541dc0 = 0;
     BootInitGuardedCallChain();
     if (g_framePauseFlag) return;
-    ZeroMultiGlobalsCmp_00404680();
+    ZeroMultiGlobalsCmp();
     if (g_framePauseFlag) return;
     g_walkCallback = (void(*)(void))0x1000;
     ((ScenegraphNode *)(g_baseSel * 4))->alloc_work_type = 0x1000;

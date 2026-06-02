@@ -112,14 +112,14 @@ extern unsigned int g_fightAxisPosY;
  *   B1 (0..0xf, +2 NOPs): push 0x004f12b0; tail-call IterStepDualStore.
  *   B2 (0x10..0x10e): load cj[+0x6c] / cj[+0x74]; 4x Mul10Tail combining each pair
  *     with 0xe666 mod, results stored back to cj[+0x6c] and cj[+0x74].
- *     push 0x004f12b4; call IterStepNoSecond_0048e5e0; if pause? ret.
+ *     push 0x004f12b4; call IterStepNoSecond; if pause? ret.
  *     If g_eventQueueCurrent > g_walkCallback: ret. Else: call ScaledZero44;
  *     if pause? ret. Else: cj[+0x6c]/cj[+0x74] = g_walkCallback << 16. ret.
  */
-extern void IterStepNoSecond_0048e5e0(void);
+extern void IterStepNoSecond(void);
 extern void ScaledZero44(void);
 
-void ThunkPlusCjMul10Accum_004913f0(void) {
+void ThunkPlusCjMul10Accum(void) {
     __asm {
         push    0x004f12b0
         call    IterStepDualStore
@@ -164,7 +164,7 @@ void ThunkPlusCjMul10Accum_004913f0(void) {
         add     eax, ecx
         push    0x004f12b4
         mov     dword ptr [g_eventQueueCurrent], eax
-        call    IterStepNoSecond_0048e5e0
+        call    IterStepNoSecond
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax

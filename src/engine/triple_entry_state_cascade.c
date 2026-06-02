@@ -111,17 +111,17 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x0042c7e0 (218b game) - triple-entry chain.
  *   A: call Cascade3ChainInit; if !pause: push 0x004e3828, call ArgSarStoreJmp; ret.
  *   B (+0x20): chain[*4+0x68]=0; g_walkCallback=0; push 0x004e34d8; call ArgSarStoreJmp; ret.
- *   C (+0x50): call GameSectionSwitcher_0042cac0; if !pause: if bit-0 set call InstallSelfDualStateDispatch_0042c9f0; ret.
+ *   C (+0x50): call GameSectionSwitcher; if !pause: if bit-0 set call InstallSelfDualStateDispatch; ret.
  *     Else load chain at [g_baseSel*4+0x38]; copy fields +0x54/+0x58/+0x5c → g_walkCallback/70/74;
- *     store back to chain+0x5c/+0x60/+0x64; call TripleBlockCjCopy_0042c8c0; pop+ret.
+ *     store back to chain+0x5c/+0x60/+0x64; call TripleBlockCjCopy; pop+ret.
  */
 extern void ArgSarStoreJmp(void);
 extern void Cascade3ChainInit(void);
-extern void GameSectionSwitcher_0042cac0(void);
-extern void InstallSelfDualStateDispatch_0042c9f0(void);
-extern void TripleBlockCjCopy_0042c8c0(void);
+extern void GameSectionSwitcher(void);
+extern void InstallSelfDualStateDispatch(void);
+extern void TripleBlockCjCopy(void);
 
-__declspec(naked) void TripleEntryStateCascade_0042c7e0(void) {
+__declspec(naked) void TripleEntryStateCascade(void) {
     __asm {
         call    Cascade3ChainInit
         mov     eax, dword ptr [g_framePauseFlag]
@@ -159,7 +159,7 @@ __declspec(naked) void TripleEntryStateCascade_0042c7e0(void) {
         _emit   90h
         _emit   90h
         push    esi
-        call    GameSectionSwitcher_0042cac0
+        call    GameSectionSwitcher
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -167,7 +167,7 @@ __declspec(naked) void TripleEntryStateCascade_0042c7e0(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   75h
         _emit   07h
-        call    InstallSelfDualStateDispatch_0042c9f0
+        call    InstallSelfDualStateDispatch
         pop     esi
         ret
         mov     ecx, dword ptr [g_baseSel]
@@ -186,7 +186,7 @@ __declspec(naked) void TripleEntryStateCascade_0042c7e0(void) {
         mov     eax, dword ptr [g_baseSel]
         mov     ecx, dword ptr [g_eventQueueWorkType]
         mov     dword ptr [eax*4 + 0x64], ecx
-        call    TripleBlockCjCopy_0042c8c0
+        call    TripleBlockCjCopy
         pop     esi
         ret
     }

@@ -112,14 +112,14 @@ extern unsigned int g_dispatchTableArr4_00514d78;
 extern unsigned int g_dispatchTableArr3_00514de8;
 extern unsigned int g_dispatchClr0_0052ab48;
 extern unsigned int g_player1State;
-extern void BootMstackInit_0041fb10(void);
+extern void BootMstackInit(void);
 extern void DispatcherComplex181_00426310(void);
 extern void MStackPushComplexCallPop_00406430(void);
 extern void RoundCleanupCluster_00427690(void);
 extern void SaveCallRestore(void);
 extern void StoreIncrMStackPush6(void);
 
-void DualSeqBranchInit_00477a20(void) {
+void DualSeqBranchInit(void) {
     __asm {
         mov     eax, dword ptr [g_active_0053a408]
         test    eax, eax
@@ -197,7 +197,7 @@ void DualSeqBranchInit_00477a20(void) {
         push    0x477ee0
         mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [g_dispatchClr0_0052ab48], 0
-        call    BootMstackInit_0041fb10
+        call    BootMstackInit
         add     esp, 8
     L_dsbi_ret:
         }

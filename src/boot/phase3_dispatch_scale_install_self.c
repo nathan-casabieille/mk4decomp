@@ -114,15 +114,15 @@ extern void Vec2SumMul10ChainCompute(void);
 extern void ScaledIndirectJmp_0049c850(void);
 extern void MStackCall_00406740(void);
 extern void CallSetPause(void);
-extern void MStackChainSwapTraversal_00493d00(void);
-extern void SlideAttackEventCluster_00498900(void);
+extern void MStackChainSwapTraversal(void);
+extern void SlideAttackEventCluster(void);
 extern void AudioVolumeRescale(void);
-extern void InitZeroChainLookupJmp_00494210(void);
-extern void Phase3DispatchScaleInstallSelf_004125e0(void);
+extern void InitZeroChainLookupJmp(void);
+extern void Phase3DispatchScaleInstallSelf(void);
 
 extern unsigned int g_dispatchSave720_004f21c0;
 
 /* h1 @ 0x00498720 (16b): bare event 004f21c0 forwarder. */
-void QuadSubVec2GateInstallSelfPair_00498720(void) {
+void QuadSubVec2GateInstallSelfPair(void) {
     ((void (*)(void *))ArgSar_Set0_Jmp)(&g_dispatchSave720_004f21c0);
 }

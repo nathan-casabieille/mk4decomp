@@ -16,7 +16,7 @@ extern unsigned int g_acc_00542078;
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void GuardedSeq_00473f50(void);
-void LoadStoreDoubleCallSet_00448fc0(void) {
+void LoadStoreDoubleCallSet(void) {
     g_fightGroupHead = *(unsigned int *)(g_baseSel * 4 + 0x4c);
     MStackPush2RunCountdown();
     if (g_framePauseFlag) return;

@@ -29,23 +29,23 @@
 
 extern void RangePathIATDispatch_004c6ff0(int);
 extern void RangePathIATDispatch_004c7060(int);
-extern int  Fread_004c5bb0(int a, int b, int c, int d);
-extern int  FWriteNoLock_004c5fc0(int a, int b, int c, int d);
+extern int  Fread(int a, int b, int c, int d);
+extern int  FWriteNoLock(int a, int b, int c, int d);
 
 /* @addr 0x004c5b70 */
 int Helper_FRead(int a, int b, int c, int fd) {
     int ret;
     RangePathIATDispatch_004c6ff0(fd);
-    ret = Fread_004c5bb0(a, b, c, fd);
+    ret = Fread(a, b, c, fd);
     RangePathIATDispatch_004c7060(fd);
     return ret;
 }
 
 /* @addr 0x004c5f80 */
-int WrapThreeDispatch_004c5f80(int a, int b, int c, int fd) {
+int WrapThreeDispatch(int a, int b, int c, int fd) {
     int ret;
     RangePathIATDispatch_004c6ff0(fd);
-    ret = FWriteNoLock_004c5fc0(a, b, c, fd);
+    ret = FWriteNoLock(a, b, c, fd);
     RangePathIATDispatch_004c7060(fd);
     return ret;
 }

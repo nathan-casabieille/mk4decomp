@@ -121,7 +121,7 @@ extern void MStackCall_00406340(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void ThreeChanPackClamp(void);
 
-void TwoCallScaledOr1600_0043f8f0(void) {
+void TwoCallScaledOr1600(void) {
     __asm {
         mov     eax, 0x004e5650
         shr     eax, 2

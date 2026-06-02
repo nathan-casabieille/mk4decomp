@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave907_004d6478;
 
 /*
- * BootCallChainDoubleMul10_0040b890 - 217b boot init via StoreTwoCall + dual Mul10.
+ * BootCallChainDoubleMul10 - 217b boot init via StoreTwoCall + dual Mul10.
  *   Snapshot g_fightGroupHead → g_eventQueueEnd; g_cj_00542058 = (0x004d6478 >> 2);
  *   g_eventQueueNotMask = 0xc1; push 0xc0, 0x0049db40; call StoreTwoCall.
  *   If g_xformDirtyFlags & 1: ret. Call StackPushAdd15CallPop; if paused: ret.
@@ -120,7 +120,7 @@ extern unsigned int g_dispatchSave907_004d6478;
  *   load g_fightGroupHead[+0x74] → eax → g_walkCallback; push (eax, g_eventQueueCurrent);
  *   call Mul10Tail; chain[+0x4c] = result; ret.
  */
-void BootCallChainDoubleMul10_0040b890(void) {
+void BootCallChainDoubleMul10(void) {
     unsigned int v;
     g_eventQueueEnd = g_fightGroupHead;
     g_cj_00542058 = (unsigned int)&g_dispatchSave907_004d6478 >> 2;

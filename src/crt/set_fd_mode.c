@@ -127,7 +127,7 @@ extern void Crt_errno(void);
 
 extern unsigned int g_arr_00fa0de0;
 
-__declspec(naked) void SetFdMode_004cd110(void) {
+__declspec(naked) void SetFdMode(void) {
     __asm {
         mov     ecx, [esp + 4]
         mov     eax, dword ptr [g_dispatchSave1469_00fa0ee0]

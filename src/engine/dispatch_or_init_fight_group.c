@@ -14,19 +14,19 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_tickFlagF;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_baseSel;
-extern void StoreByteJmp_0042f840(void);
-extern void CameraAimSplineDriver_00430e60(void);
-extern void PhaseInstall2DInterpDispatch_0042f8a0(void);
-void DispatchOrInitFightGroup_0042f850(void) {
+extern void StoreByteJmp(void);
+extern void CameraAimSplineDriver(void);
+extern void PhaseInstall2DInterpDispatch(void);
+void DispatchOrInitFightGroup(void) {
     unsigned int v = g_tickFlagF;
     g_walkCallback = (void(*)(void))v;
     if (v == 2) {
-        StoreByteJmp_0042f840();
+        StoreByteJmp();
         return;
     }
     g_fightGroupHead = g_load_0052ab10;
-    CameraAimSplineDriver_00430e60();
+    CameraAimSplineDriver();
     if (g_framePauseFlag) return;
     *(unsigned int *)(g_baseSel * 4 + 0x64) = (unsigned int)g_walkCallback;
-    PhaseInstall2DInterpDispatch_0042f8a0();
+    PhaseInstall2DInterpDispatch();
 }

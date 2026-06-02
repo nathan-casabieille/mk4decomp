@@ -124,7 +124,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void InstallSelfSearchAccum_00402b40(void) {
+__declspec(naked) void InstallSelfSearchAccum(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi

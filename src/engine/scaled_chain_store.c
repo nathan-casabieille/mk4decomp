@@ -16,7 +16,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [ecx*4 + 0x28], eax
  *   ret
  */
-void ScaledChainStore_004462c0(void) {
+void ScaledChainStore(void) {
     unsigned int base = g_baseSel;
     unsigned int v = *(unsigned int *)(base * 4 + 0x5c);
     unsigned int v2;

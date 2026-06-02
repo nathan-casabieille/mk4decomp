@@ -17,7 +17,7 @@
  *   ret
  */
 extern unsigned int g_tickFlagF;
-void Cmp7DirtyToggle_0042ee10(void) {
+void Cmp7DirtyToggle(void) {
     unsigned int state = g_tickFlagF;
     g_walkCallback = (void (*)(void))state;
     if (state != 7) {

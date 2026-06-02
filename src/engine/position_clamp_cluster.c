@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void Mul10Tail(void);
-extern void PositionClampCluster_00489a30(void);
+extern void PositionClampCluster(void);
 extern unsigned int g_primary_0052d74c;
 extern unsigned int g_secondary_00538068;
 extern unsigned int g_dispatchVar20_0054200c;
@@ -117,7 +117,7 @@ extern unsigned int g_dispatchVar20_0054200c;
 extern unsigned int g_secondary_00535d04;
 extern unsigned int g_primary_0053a774;
 
-__declspec(naked) void GeoTransformDispatchAndApply_00489840(void)
+__declspec(naked) void GeoTransformDispatchAndApply(void)
 {
     __asm {
         /* H1 */
@@ -245,6 +245,6 @@ __declspec(naked) void GeoTransformDispatchAndApply_00489840(void)
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_eventQueueChild], edx
         mov      dword ptr [g_currentNodeFlags], eax
-        jmp      PositionClampCluster_00489a30
+        jmp      PositionClampCluster
     }
 }

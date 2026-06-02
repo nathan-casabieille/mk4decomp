@@ -26,15 +26,15 @@ int Crt_rand(void) {
  *   call 0x4c6940(0x4d5000, 0x4d5018); add esp 8; ret.
  */
 extern void (*g_iat_0051ffd8)(void);
-extern int IterFnPtrs_004c6940(void *, void *);
+extern int IterFnPtrs(void *, void *);
 extern void *g_dispatchSave550_004d5000;
 extern void *g_dispatchSave549_004d5018;
 extern void *g_dispatchSave548_004d501c;
 extern void *g_dispatchSave547_004d5024;
 void _init_premain(void) {
     if (g_iat_0051ffd8) g_iat_0051ffd8();
-    IterFnPtrs_004c6940(&g_dispatchSave548_004d501c, &g_dispatchSave547_004d5024);
-    IterFnPtrs_004c6940(&g_dispatchSave550_004d5000, &g_dispatchSave549_004d5018);
+    IterFnPtrs(&g_dispatchSave548_004d501c, &g_dispatchSave547_004d5024);
+    IterFnPtrs(&g_dispatchSave550_004d5000, &g_dispatchSave549_004d5018);
 }
 
 /* @addr 0x004c6e90 (39b)
@@ -43,13 +43,13 @@ void _init_premain(void) {
  *   (variant of 0x004c6e60 with different IAT.)
  */
 extern unsigned int g_crtCleanupFlag_00f9f84c;
-extern void DualCondCleanupCall_004cc030(void);
-extern void RaiseAbortLocalized_004cc070(int);
+extern void DualCondCleanupCall(void);
+extern void RaiseAbortLocalized(int);
 extern void (__stdcall *g_iat_004d2154)(int);
-void CmpCallPushIATCall2_004c6e90(int arg) {
+void CmpCallPushIATCall2(int arg) {
     if (g_crtCleanupFlag_00f9f84c == 1) {
-        DualCondCleanupCall_004cc030();
+        DualCondCleanupCall();
     }
-    RaiseAbortLocalized_004cc070(arg);
+    RaiseAbortLocalized(arg);
     g_iat_004d2154(0xff);
 }

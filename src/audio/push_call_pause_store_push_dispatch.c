@@ -18,12 +18,12 @@ extern int StoreTwoCall(void *, int);
 extern int TaggedSceneDispatch(unsigned short);
 extern void *g_const_004a0060;
 extern unsigned short g_word_004e2860;
-extern void InstallSelf3WaySubDec_004a1320(void);
-void PushCallPauseStorePushDispatch_004a12e0(void) {
+extern void InstallSelf3WaySubDec(void);
+void PushCallPauseStorePushDispatch(void) {
     TripleStageRollback(0x22f);
     RoundWinTransition();
     if (g_framePauseFlag) return;
     StoreTwoCall(&g_const_004a0060, 0x15);
     TaggedSceneDispatch(g_word_004e2860);
-    ((int (*)(void))InstallSelf3WaySubDec_004a1320)();
+    ((int (*)(void))InstallSelf3WaySubDec)();
 }

@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
-void PackedAdvanceCallContinue_0048e630(int arg0) {
+void PackedAdvanceCallContinue(int arg0) {
     unsigned int packed;
     packed = (unsigned int)(arg0 >> 2);
     g_eventQueueTotal = packed;

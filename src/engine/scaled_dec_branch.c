@@ -21,10 +21,10 @@
 
 extern unsigned int g_baseSel;
 
-extern void ThunkPlus4FieldCjCopy_00466490(void);
-extern void FourEntryAlarmInstall_004662e0(void);
-extern void StoreFightFieldCallTailJmp_004667a0(void);
-extern void FourPackedSubInitCmpDispatch_004665b0(void);
+extern void ThunkPlus4FieldCjCopy(void);
+extern void FourEntryAlarmInstall(void);
+extern void StoreFightFieldCallTailJmp(void);
+extern void FourPackedSubInitCmpDispatch(void);
 
 /* @addr 0x00466460 */
 void ScaledDecBranch_00466460(void) {
@@ -32,11 +32,11 @@ void ScaledDecBranch_00466460(void) {
     unsigned int v = *(unsigned int*)(idx*4 + 0x30) - 1;
     g_walkCallback = v;
     if (v == 0) {
-        ThunkPlus4FieldCjCopy_00466490();
+        ThunkPlus4FieldCjCopy();
         return;
     }
     *(unsigned int*)(idx*4 + 0x30) = v;
-    FourEntryAlarmInstall_004662e0();
+    FourEntryAlarmInstall();
 }
 
 /* @addr 0x00466770 */
@@ -45,9 +45,9 @@ void ScaledDecBranch_00466770(void) {
     unsigned int v = *(unsigned int*)(idx*4 + 0x30) - 1;
     g_walkCallback = v;
     if (v == 0) {
-        StoreFightFieldCallTailJmp_004667a0();
+        StoreFightFieldCallTailJmp();
         return;
     }
     *(unsigned int*)(idx*4 + 0x30) = v;
-    FourPackedSubInitCmpDispatch_004665b0();
+    FourPackedSubInitCmpDispatch();
 }

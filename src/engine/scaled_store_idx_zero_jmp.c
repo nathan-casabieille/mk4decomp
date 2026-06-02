@@ -15,7 +15,7 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     +0xf
  */
 extern void ScaledArrStore_00428330(void);
-void ScaledStoreIdxZeroJmp_00428300(void) {
+void ScaledStoreIdxZeroJmp(void) {
     ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end = g_eventQueueIdx;
     g_walkCallback = 0;
     ScaledArrStore_00428330();

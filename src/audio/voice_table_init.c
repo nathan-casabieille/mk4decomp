@@ -125,7 +125,7 @@ extern unsigned int g_arr_voice_disp_5c;
 extern unsigned int g_arr_voice_disp_6c;
 extern unsigned int g_arr_voice_disp_70;
 
-__declspec(naked) void VoiceTableInit_004a28d0(void) {
+__declspec(naked) void VoiceTableInit(void) {
     __asm {
         push    esi
         mov     esi, dword ptr [esp + 8]

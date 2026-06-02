@@ -111,17 +111,17 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x004609e0 (383b game) - 2-entry packed: 3-call chain + countdown
  *   install. Entry 1 (offset 0, 104b): writes g_walkCallback into
  *     [scaled+0x6c], sets 0x54206c=0x2147, chains
- *     MStackFrameCdeclDouble → NineEntryFlagDispatch_00461260 →
- *     0x54206c=0x51e / 0x542070=0x28 / GatedScaledSubSat_0048fb40 → push
- *     0x4e9f78 → StateSnapshotDispatch_00460b60.
+ *     MStackFrameCdeclDouble → NineEntryFlagDispatch →
+ *     0x54206c=0x51e / 0x542070=0x28 / GatedScaledSubSat → push
+ *     0x4e9f78 → StateSnapshotDispatch.
  *   8b NOP align pad.
  *   Entry 2 / body (offset 0x70, 271b): phase-state install.
- *     phase != 0: push 0x4e9f80 → GuardedScaledChainJmpIndirect_00460e40
- *       → DispatchThroughBaseSel6c_00460f20. If bit 0 of 0x54208c set,
+ *     phase != 0: push 0x4e9f80 → GuardedScaledChainJmpIndirect
+ *       → DispatchThroughBaseSel6c. If bit 0 of 0x54208c set,
  *       0x54206c=0x51e + 0x542070=0x28 + GatedScaledSubSat. If
  *       g_eventQueueCurrent > 0: decrement g_eventQueueChild; if zero call
- *       NineEntryFlagDispatch_00461260; else fall through to install
- *       success tail. Else tail-call ZeroScaledZeroCallPauseJmp_0045fa90.
+ *       NineEntryFlagDispatch; else fall through to install
+ *       success tail. Else tail-call ZeroScaledZeroCallPauseJmp.
  *     phase 0: sets g_xformEntityIdx = &g_dispatchTableArr10_00500c50>>2, calls
  *       DualScaledStoreZero. On no-error writes 0xb into
  *       [g_fightGroupHead*4 + 0x28], g_eventQueueChild=1, installs Self
@@ -130,15 +130,15 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave959_004e9f78;
 extern unsigned int g_dispatchSave960_004e9f80;
 extern unsigned int g_dispatchTableArr10_00500c50;
-extern void DispatchThroughBaseSel6c_00460f20(void);
+extern void DispatchThroughBaseSel6c(void);
 extern void DualScaledStoreZero(void);
-extern void GatedScaledSubSat_0048fb40(void);
-extern void GuardedScaledChainJmpIndirect_00460e40(void);
-extern void NineEntryFlagDispatch_00461260(void);
-extern void StateSnapshotDispatch_00460b60(void);
-extern void ZeroScaledZeroCallPauseJmp_0045fa90(void);
+extern void GatedScaledSubSat(void);
+extern void GuardedScaledChainJmpIndirect(void);
+extern void NineEntryFlagDispatch(void);
+extern void StateSnapshotDispatch(void);
+extern void ZeroScaledZeroCallPauseJmp(void);
 
-__declspec(naked) void AlarmCountdownInstall_004609e0(void) {
+__declspec(naked) void AlarmCountdownInstall(void) {
     __asm {
         mov     ecx, dword ptr [g_baseSel]
         mov     eax, dword ptr [g_walkCallback]
@@ -148,18 +148,18 @@ __declspec(naked) void AlarmCountdownInstall_004609e0(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_aci_e1End
-        call    NineEntryFlagDispatch_00461260
+        call    NineEntryFlagDispatch
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_aci_e1End
         mov     dword ptr [g_walkCallback], 0x51e
         mov     dword ptr [g_eventQueueCurrent], 0x28
-        call    GatedScaledSubSat_0048fb40
+        call    GatedScaledSubSat
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_aci_e1End
         push    offset g_dispatchSave959_004e9f78
-        call    StateSnapshotDispatch_00460b60
+        call    StateSnapshotDispatch
         add     esp, 4
     L_aci_e1End:
         ret
@@ -182,12 +182,12 @@ __declspec(naked) void AlarmCountdownInstall_004609e0(void) {
         test    eax, eax
         je      L_aci_phase0
         push    offset g_dispatchSave960_004e9f80
-        call    GuardedScaledChainJmpIndirect_00460e40
+        call    GuardedScaledChainJmpIndirect
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         jne     L_aci_doneNoPop
-        call    DispatchThroughBaseSel6c_00460f20
+        call    DispatchThroughBaseSel6c
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_aci_doneNoPop
@@ -197,7 +197,7 @@ __declspec(naked) void AlarmCountdownInstall_004609e0(void) {
         je      short L_aci_checkVel
         mov     dword ptr [g_walkCallback], 0x51e
         mov     dword ptr [g_eventQueueCurrent], 0x28
-        call    GatedScaledSubSat_0048fb40
+        call    GatedScaledSubSat
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_aci_doneNoPop
@@ -205,7 +205,7 @@ __declspec(naked) void AlarmCountdownInstall_004609e0(void) {
         test    eax, eax
         jg      short L_aci_doCountdown
     L_aci_checkVel:
-        call    ZeroScaledZeroCallPauseJmp_0045fa90
+        call    ZeroScaledZeroCallPauseJmp
         pop     esi
         pop     ebx
         ret
@@ -214,7 +214,7 @@ __declspec(naked) void AlarmCountdownInstall_004609e0(void) {
         dec     eax
         mov     dword ptr [g_eventQueueChild], eax
         jne     short L_aci_installTail
-        call    NineEntryFlagDispatch_00461260
+        call    NineEntryFlagDispatch
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_aci_doneNoPop

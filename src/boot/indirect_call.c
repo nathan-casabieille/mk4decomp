@@ -23,7 +23,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern int (*g_dispatchSave1431_00f9f854)(int);
-int IndirectCall_004c6ec0(int arg) {
+int IndirectCall(int arg) {
     if (g_dispatchSave1431_00f9f854 != 0 && g_dispatchSave1431_00f9f854(arg) != 0) {
         return 1;
     }

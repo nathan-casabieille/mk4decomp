@@ -114,14 +114,14 @@ extern unsigned int g_fightAxisPosY;
  *   magic-divide (val/10 if >100, else +0x7d0), call Snd3DSourceCleanup.
  *   loop2: for di 0x157c..0x158f (20 entries), same convert+call.
  */
-extern void Audio_TimerTeardown_004ac5f0(void);
+extern void Audio_TimerTeardown(void);
 extern void Snd3DSourceCleanup(void);
 
-__declspec(naked) void TwinRecordIter_004be590(void) {
+__declspec(naked) void TwinRecordIter(void) {
     __asm {
         push    esi
         push    edi
-        call    Audio_TimerTeardown_004ac5f0
+        call    Audio_TimerTeardown
         xor     esi, esi
         xor     edi, edi
 loop1Top:

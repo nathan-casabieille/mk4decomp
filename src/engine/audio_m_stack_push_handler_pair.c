@@ -122,7 +122,7 @@ extern void SetOnePairJmp_004a0110(void);
 extern void TripleStageRollback(void);
 extern void TripleTestInstallJmp_004a0130(void);
 
-__declspec(naked) void AudioMStackPushHandlerPair_0049ff30(void)
+__declspec(naked) void AudioMStackPushHandlerPair(void)
 {
     __asm
     {

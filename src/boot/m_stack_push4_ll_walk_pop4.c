@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   Pushes g_currentNodeIdx/00542048/0054204c/0054205c onto mstack, then
  *   walks the linked list rooted at g_xformEntityIdx stepping through
  *   [cur*4]. For each non-zero entry:
- *     - SplitHi8Lo24_004abfc0 (with bl=4 sentinel for bit-2 toggle)
+ *     - SplitHi8Lo24 (with bl=4 sentinel for bit-2 toggle)
  *     - MStackInitCallToggle (with g_eventQueueCurrent primed)
  *     - if bit 2 of g_xformDirtyFlags clear, also reads [scaled+0x28]; if
  *       non-zero advances g_xformEntityIdx to it (sar 2), saves the prior
@@ -122,7 +122,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_table_004d57b0;
 extern void MStackInitCallToggle(void);
 extern void ScaledStoreThree_00409260(void);
-extern void SplitHi8Lo24_004abfc0(void);
+extern void SplitHi8Lo24(void);
 
 __declspec(naked) void MStackPush4LLWalkPop4(void) {
     __asm {
@@ -159,7 +159,7 @@ __declspec(naked) void MStackPush4LLWalkPop4(void) {
         je      L_m4w_pop4
         mov     bl, 4
     L_m4w_loopTop:
-        call    SplitHi8Lo24_004abfc0
+        call    SplitHi8Lo24
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_m4w_doneNoPop

@@ -114,7 +114,7 @@ extern void AudioMixerStep(void);
 extern void MStackCall_00406340(void);
 extern void PushSetXfmMaskCallPop(void);
 
-void MStackBracketedScaledStores_00475b30(void) {
+void MStackBracketedScaledStores(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_currentNodeIdx]

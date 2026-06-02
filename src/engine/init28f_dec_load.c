@@ -23,7 +23,7 @@ extern unsigned int g_dst_00537f2c;
 extern unsigned int g_dst_0053a6e0;
 extern unsigned int g_dst_00537ea4;
 extern unsigned int g_loaded_004f3608;
-void Init28fDecLoad_00421d20(void) {
+void Init28fDecLoad(void) {
     unsigned int v;
     g_dst_0053a6dc = 0x028f;
     g_dst_00537f2c = 0x028f;

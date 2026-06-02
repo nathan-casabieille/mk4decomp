@@ -110,21 +110,21 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_bootChainPair0_00541e80;
 extern void GuardedChainPushSetCallPop(void);
-extern void ScaledLoadGuardedJmp_004066d0(void);
-extern void PvsMergeDriver_00425db0(void);
+extern void ScaledLoadGuardedJmp(void);
+extern void PvsMergeDriver(void);
 extern void MStackBracket2_TreeWalkRecursive(void);
-extern void LinkedListInsert_004ab440(void);
+extern void LinkedListInsert(void);
 
 /* @addr 0x00406790 (377b boot) - mstack-push-2 scope + 2-call chain + LL insert.
  *   Sets bit 2 of g_xformDirtyFlags. If g_currentNodeIdx is zero, takes the
  *   short path: clears bit 2 again and returns. Otherwise pushes
  *   g_xformEntityIdx / g_fightGroupHead onto mstack, calls
- *   GuardedChainPushSetCallPop + ScaledLoadGuardedJmp_004066d0.
+ *   GuardedChainPushSetCallPop + ScaledLoadGuardedJmp.
  *   Sets g_fightGroupHead = old g_currentNodeIdx, reads [scaled+0x1c]; if
- *   non-zero, toggles bit 2 off and calls PvsMergeDriver_00425db0. Zeroes
+ *   non-zero, toggles bit 2 off and calls PvsMergeDriver. Zeroes
  *   g_walkCallback and [scaled+0x1c]. Reads [scaled+0x18]; if non-zero,
  *   toggles bit 2 off and calls MStackBracket2_TreeWalkRecursive. Then writes g_bootChainPair0_00541e80
- *   into g_xformEntityIdx and calls LinkedListInsert_004ab440. Pops the 2
+ *   into g_xformEntityIdx and calls LinkedListInsert. Pops the 2
  *   mstack entries back and clears bit 0 of g_xformDirtyFlags via and 0xfe.
  */
 extern unsigned int g_table_004d57b0;
@@ -158,7 +158,7 @@ __declspec(naked) void MStackPush2ChainLLInsert(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mpl_doneNoFE
-        call    ScaledLoadGuardedJmp_004066d0
+        call    ScaledLoadGuardedJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mpl_doneNoFE
@@ -176,7 +176,7 @@ __declspec(naked) void MStackPush2ChainLLInsert(void) {
         test    eax, eax
         mov     dword ptr [g_xformDirtyFlags], ecx
         je      short L_mpl_skipCall1
-        call    PvsMergeDriver_00425db0
+        call    PvsMergeDriver
     L_mpl_skipCall1:
         mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_walkCallback], 0
@@ -203,7 +203,7 @@ __declspec(naked) void MStackPush2ChainLLInsert(void) {
         mov     eax, dword ptr [g_bootChainPair0_00541e80]
         mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_xformEntityIdx], eax
-        call    LinkedListInsert_004ab440
+        call    LinkedListInsert
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_mpl_doneNoFE

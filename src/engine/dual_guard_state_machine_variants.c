@@ -116,7 +116,7 @@ extern unsigned int g_audioBitField_00541fc0;
 extern void MStackCall_004062a0(void);
 extern void SaveCallRestoreOrXor(void);
 extern void SaveCallRestore(void);
-extern void ThrowFlowSetupCluster_0049ed00(void);
+extern void ThrowFlowSetupCluster(void);
 extern void Wrapper_0049eb10(void);
 
 void DualGuardStateMachine_0049ea30(void) {
@@ -170,7 +170,7 @@ void DualGuardStateMachine_0049ea30(void) {
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_walkCallback], 2
-        call    ThrowFlowSetupCluster_0049ed00
+        call    ThrowFlowSetupCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -237,7 +237,7 @@ __declspec(naked) void DualGuardStateMachine_0049eb20(void) {
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_walkCallback], 4
-        call    ThrowFlowSetupCluster_0049ed00
+        call    ThrowFlowSetupCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

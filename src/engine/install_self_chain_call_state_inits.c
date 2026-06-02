@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   g_eventQueueChild=0x48af40 callback + multiple state inits. */
 extern void SetJmp_0048acc0(void);
 
-__declspec(naked) void InstallSelfChainCallStateInits_0048a710(void) {
+__declspec(naked) void InstallSelfChainCallStateInits(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         xor     edx, edx

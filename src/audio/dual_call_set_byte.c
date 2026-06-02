@@ -23,15 +23,15 @@ extern unsigned int g_scaledInit_00542044;
  *   xor     eax, eax
  *   ret
  */
-extern int TripleByteCheck_004a1c50(void);
-extern int TripleByteCheck20_004a1c80(void);
+extern int TripleByteCheck(void);
+extern int TripleByteCheck20(void);
 extern unsigned char g_byte_00543590;
-int DualCallSetByte_004a1cb0(void) {
-    if (TripleByteCheck_004a1c50() != 0) {
+int DualCallSetByte(void) {
+    if (TripleByteCheck() != 0) {
         g_byte_00543590 = 1;
         return 1;
     }
-    if (TripleByteCheck20_004a1c80() != 0) {
+    if (TripleByteCheck20() != 0) {
         g_byte_00543590 = 2;
         return 1;
     }

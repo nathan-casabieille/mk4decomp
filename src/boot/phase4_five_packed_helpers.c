@@ -115,13 +115,13 @@ extern void CallSetPause(void);
 extern void ChainListVecAdd(void);
 extern void ClampMulShiftStore(void);
 extern void CmpDivJmp(void);
-extern void MStackPushSet9Jmp_00413040(void);
-extern void PoseTreeBlendWalker_0049d680(void);
-extern void PushStackCallPauseSet0xa_00413070(void);
+extern void MStackPushSet9Jmp(void);
+extern void PoseTreeBlendWalker(void);
+extern void PushStackCallPauseSet0xa(void);
 extern void ScaledStoreThree_00409260(void);
 extern void ZeroAndDirty4(void);
 
-__declspec(naked) void Phase4FivePackedHelpers_00412cb0(void)
+__declspec(naked) void Phase4FivePackedHelpers(void)
 {
     __asm {
         push    0x8B
@@ -172,7 +172,7 @@ __declspec(naked) void Phase4FivePackedHelpers_00412cb0(void)
         jne     L_p4fph_B_exit
         test    byte ptr [g_xformDirtyFlags], 4
         je      L_p4fph_B_skip_call
-        call    PushStackCallPauseSet0xa_00413070
+        call    PushStackCallPauseSet0xa
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fph_B_exit
@@ -221,11 +221,11 @@ __declspec(naked) void Phase4FivePackedHelpers_00412cb0(void)
         jns     L_p4fph_C_phase2_dec
         mov     dword ptr [g_eventQueueIdx], 0x28
     L_p4fph_C_phase3_call:
-        call    PushStackCallPauseSet0xa_00413070
+        call    PushStackCallPauseSet0xa
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fph_C_exit
-        call    MStackPushSet9Jmp_00413040
+        call    MStackPushSet9Jmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fph_C_exit
@@ -243,11 +243,11 @@ __declspec(naked) void Phase4FivePackedHelpers_00412cb0(void)
         jns     L_p4fph_C_phase1_call
         mov     dword ptr [g_eventQueueIdx], 6
     L_p4fph_C_phase2_dec:
-        call    PushStackCallPauseSet0xa_00413070
+        call    PushStackCallPauseSet0xa
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fph_C_exit
-        call    MStackPushSet9Jmp_00413040
+        call    MStackPushSet9Jmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fph_C_exit
@@ -261,11 +261,11 @@ __declspec(naked) void Phase4FivePackedHelpers_00412cb0(void)
     L_p4fph_C_phase0:
         mov     dword ptr [g_eventQueueIdx], 5
     L_p4fph_C_phase1_call:
-        call    PushStackCallPauseSet0xa_00413070
+        call    PushStackCallPauseSet0xa
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fph_C_exit
-        call    MStackPushSet9Jmp_00413040
+        call    MStackPushSet9Jmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fph_C_exit
@@ -303,7 +303,7 @@ __declspec(naked) void Phase4FivePackedHelpers_00412cb0(void)
     L_p4fph_D_phase0:
         mov     dword ptr [g_eventQueueIdx], 3
     L_p4fph_D_call:
-        call    PushStackCallPauseSet0xa_00413070
+        call    PushStackCallPauseSet0xa
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fph_D_exit
@@ -338,7 +338,7 @@ __declspec(naked) void Phase4FivePackedHelpers_00412cb0(void)
         mov     edx, offset g_dispatchSave546_004d5d38
         shr     edx, 2
         mov     dword ptr [g_xformEntityIdx], edx
-        call    PoseTreeBlendWalker_0049d680
+        call    PoseTreeBlendWalker
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fph_D_exit

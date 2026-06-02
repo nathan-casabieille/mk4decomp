@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
  *   g_scaledInit = ecx; [g_cj_0054205c*4 + 0x40] = ecx;
  *   pop g_scaledInit; ret.
  */
-void PushBitFieldMergePop_0048bae0(void) {
+void PushBitFieldMergePop(void) {
     unsigned int shifted;
     unsigned int cj;
     unsigned int merged;

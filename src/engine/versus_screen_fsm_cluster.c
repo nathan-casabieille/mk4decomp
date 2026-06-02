@@ -118,7 +118,7 @@ extern void StoreLoadJmp(void);
 extern void StoreTwoCall(void);
 extern void DoubleCallChainInit(void);
 extern void InstallSelfChainAccumPath(void);
-extern void VersusScreenFsmCluster_0044f670(void);
+extern void VersusScreenFsmCluster(void);
 
 __declspec(naked) void DualSubInstallChain(void)
 {
@@ -229,6 +229,6 @@ __declspec(naked) void DualSubInstallChain(void)
         call    StoreTwoCall
         add     esp, 8
         mov     dword ptr [g_eventQueueEnd], 0xd
-        jmp     VersusScreenFsmCluster_0044f670
+        jmp     VersusScreenFsmCluster
     }
 }

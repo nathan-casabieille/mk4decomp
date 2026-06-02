@@ -12,8 +12,8 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_scaledInit_00542044], ecx
  *   jmp     +0x29
  */
-extern void ScaledIncCmpJmp_004297d0(void);
+extern void ScaledIncCmpJmp(void);
 void ScaledLoadJmp_24(void) {
     g_scaledInit_00542044 = ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end;
-    ScaledIncCmpJmp_004297d0();
+    ScaledIncCmpJmp();
 }

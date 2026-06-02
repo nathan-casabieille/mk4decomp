@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-/* @addr 0x00437f00 (172b game) - same install-self pattern; GuardedDirtyDispatch_00438c50 error path; chain[+0x84]=0xb333. */
-extern void GuardedDirtyDispatch_00438c50(void);
+/* @addr 0x00437f00 (172b game) - same install-self pattern; GuardedDirtyDispatch error path; chain[+0x84]=0xb333. */
+extern void GuardedDirtyDispatch(void);
 extern void StateGateMStackOverlap(void);
 
 extern unsigned int g_matrixStack_arr;
@@ -124,7 +124,7 @@ __declspec(naked) void InstallSelfChainSetB333v2(void) {
         test    eax, eax
         _emit   74h
         _emit   07h
-        call    GuardedDirtyDispatch_00438c50
+        call    GuardedDirtyDispatch
         pop     esi
         ret
         call    LeaPlus22StoreSelf

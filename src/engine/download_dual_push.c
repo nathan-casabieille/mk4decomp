@@ -121,9 +121,9 @@ extern s32 g_dlNalt1;
 extern unsigned int g_bootHeavyState_00537f78;
 extern u32 g_dlSomeFlag1;
 extern void DownloadPlayerChar(void);
-extern void GuardedDualPushTailJmp_004231f0(void);
+extern void GuardedDualPushTailJmp(void);
 
-void DownloadDualPush_00422e20(void) {
+void DownloadDualPush(void) {
     __asm {
         mov     eax, dword ptr [g_dlNalt1]
         mov     dword ptr [g_eventQueueCurrent], 0
@@ -142,7 +142,7 @@ void DownloadDualPush_00422e20(void) {
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_eventQueueCurrent], 0
         mov     dword ptr [g_eventQueueWorkType], edx
-        call    GuardedDualPushTailJmp_004231f0
+        call    GuardedDualPushTailJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

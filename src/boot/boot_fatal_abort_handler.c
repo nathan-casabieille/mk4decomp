@@ -126,11 +126,11 @@ extern unsigned int g_dispatchSave1472_00fa0ef0;
 extern unsigned int g_iat_004d2060;
 extern unsigned int g_iat_004d20a4;
 extern unsigned int g_iat_004d2154;
-extern void IterFnPtrs_004c6940(void);
+extern void IterFnPtrs(void);
 extern void PushConstCall_004c6920(void);
 extern void PushConstCall_004c6930(void);
 
-__declspec(naked) void BootFatalAbortHandler_004c6860(void) {
+__declspec(naked) void BootFatalAbortHandler(void) {
     __asm {
         push    ebx
         push    ebp
@@ -171,12 +171,12 @@ __declspec(naked) void BootFatalAbortHandler_004c6860(void) {
     L_ab_msg1:
         push    0x004d5030
         push    0x004d5028
-        call    IterFnPtrs_004c6940
+        call    IterFnPtrs
         add     esp, 8
     L_ab_skipwalk:
         push    0x004d5038
         push    0x004d5034
-        call    IterFnPtrs_004c6940
+        call    IterFnPtrs
         add     esp, 8
         test    ebx, ebx
         jz      short L_ab_reentry

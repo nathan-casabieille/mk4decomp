@@ -116,7 +116,7 @@ extern unsigned int g_matrixStack_arr;
 extern void AudioVolumeRescale(void);
 extern void PendingMatch_00444ef0(void);
 
-__declspec(naked) void MStackPush2VolumeCascade_00444e00(void) {
+__declspec(naked) void MStackPush2VolumeCascade(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_scaledInit_00542044]

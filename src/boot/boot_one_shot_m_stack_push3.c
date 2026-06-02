@@ -125,7 +125,7 @@ extern void CopyThreeFields(void);
  *   PushSetDualDeref → MStackCall_00406600. Pops the 3
  *   mstack entries back into 0054205c/00542054/00542048 in reverse.
  */
-void BootOneShotMStackPush3_0040c100(void) {
+void BootOneShotMStackPush3(void) {
     ((void (*)(int))ThreeChanPackClamp)(0x806000);
     ((void (*)(unsigned int))CopyThreeFields)(g_fightGroupHead);
     SetJmp_00405420();

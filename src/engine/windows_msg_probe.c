@@ -122,7 +122,7 @@ extern unsigned int g_PeekMessageA_007b003c;
 extern int g_renderer1_busy;
 extern int g_renderer1_active;
 
-__declspec(naked) void WindowsMsgProbe_004b4530(void) {
+__declspec(naked) void WindowsMsgProbe(void) {
     __asm {
         sub     esp, 0x14
         mov     eax, dword ptr [g_renderer1_active]

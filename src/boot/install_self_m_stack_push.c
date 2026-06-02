@@ -110,14 +110,14 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0041aaf0 (152b boot) - install-self with mstack push:
  *   chain[sel].slot84 -> eax; clear. If !=0: tail to StackPopDispatchTagged.
- *   Else: call BootStateInitLongChain_0041ab90; pause? ret.
+ *   Else: call BootStateInitLongChain; pause? ret.
  *   install self at chain[sel]+8; chain[base].slot84 = 1;
  *   mstack-push 0x141aaf0 (self + 0x01000000) via custom arr;
  *   ++chain[sel].slot4; clear chain[base].slot84;
- *   call KnockbackPositionReset_00472a90; g_framePauseFlag = 1; ret.
+ *   call KnockbackPositionReset; g_framePauseFlag = 1; ret.
  */
-extern void BootStateInitLongChain_0041ab90(void);
-extern void KnockbackPositionReset_00472a90(void);
+extern void BootStateInitLongChain(void);
+extern void KnockbackPositionReset(void);
 
 extern unsigned int g_arr_41aaf0_mstack;
 extern void FiveCallGuardSetTail(void);
@@ -135,7 +135,7 @@ __declspec(naked) void InstallSelfMStackPush_0041aaf0(void) {
         call    StackPopDispatchTagged
         pop     esi
         ret
-        call    BootStateInitLongChain_0041ab90
+        call    BootStateInitLongChain
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -154,7 +154,7 @@ __declspec(naked) void InstallSelfMStackPush_0041aaf0(void) {
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
-        call    KnockbackPositionReset_00472a90
+        call    KnockbackPositionReset
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret

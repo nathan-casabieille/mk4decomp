@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dest_0053a6e4;
 extern unsigned int g_eq_00542098;
 
-__declspec(naked) void ZBucketClampStore_004ba5d0(void) {
+__declspec(naked) void ZBucketClampStore(void) {
     __asm {
         mov     ecx, dword ptr [g_currentNodeFlags]
         push    esi

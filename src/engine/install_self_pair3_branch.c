@@ -119,13 +119,13 @@ extern unsigned int g_fightAxisPosY;
  *     install self with [esi+0x84]=2; pause = ebx (=1).
  *   install-second-state: install self with [esi+0x84]=ebx (=1).
  */
-extern void GuardedDoubleIncCmpJmp_00429860(void);
+extern void GuardedDoubleIncCmpJmp(void);
 extern void ScaledArrStore_00429980(void);
 extern void ScaledInitOrSelfPtr_00429680(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void InstallSelfPair3Branch_00429240(void) {
+__declspec(naked) void InstallSelfPair3Branch(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    ebx
@@ -143,7 +143,7 @@ __declspec(naked) void InstallSelfPair3Branch_00429240(void) {
         pop     esi
         pop     ebx
         ret
-        call    GuardedDoubleIncCmpJmp_00429860
+        call    GuardedDoubleIncCmpJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

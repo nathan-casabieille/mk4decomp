@@ -125,7 +125,7 @@ extern void PendingMatch_0049a670(void);
 extern void ScaledLoadJmp_00428d20(void);
 extern void ThreeChanPackClamp(void);
 
-__declspec(naked) void DualBlockInstallMul10Tail_0049a4e0(void) {
+__declspec(naked) void DualBlockInstallMul10Tail(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         xor     edx, edx
@@ -141,9 +141,9 @@ __declspec(naked) void DualBlockInstallMul10Tail_0049a4e0(void) {
         mov     esi, dword ptr [g_baseSel]
         mov     ecx, 0x1016
         mov     dword ptr [g_walkCallback], ecx
-        mov     edi, offset DualBlockInstallMul10Tail_0049a4e0
+        mov     edi, offset DualBlockInstallMul10Tail
         mov     dword ptr [esi*4 + 0x74], ecx
-        mov     dword ptr [eax + 8], offset DualBlockInstallMul10Tail_0049a4e0
+        mov     dword ptr [eax + 8], offset DualBlockInstallMul10Tail
         mov     ecx, dword ptr [g_baseSel]
         mov     esi, 1
         add     edi, 0x01000000

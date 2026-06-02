@@ -118,8 +118,8 @@ extern unsigned int g_fightAxisPosY;
  *   eax = 1; [esi+8] = 0x439e40; [esi+0x84] = 1;
  *   g_pendingNodeType = 6; g_framePauseFlag = 1; pop esi; ret.
  */
-extern void InstallSelfSetTagJmp_00439e40(void);
-void InstallSelfSetTagJmp_00439e40(void) {
+extern void InstallSelfSetTagJmp(void);
+void InstallSelfSetTagJmp(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int prev = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
@@ -131,7 +131,7 @@ void InstallSelfSetTagJmp_00439e40(void) {
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))0x2011;
     ((ScenegraphNode *)(g_baseSel * 4))->fsm_state = 0x2011;
-    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfSetTagJmp_00439e40;
+    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfSetTagJmp;
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 6;
     g_framePauseFlag = 1;

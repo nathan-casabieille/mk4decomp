@@ -116,12 +116,12 @@ extern void CallSetPause(void);
 extern void DualPushSetCallDualPop(void);
 extern void MStackPush2ChainLLInsert(void);
 extern void MStackPushComplexCallPop_00406430(void);
-extern void MultiGateDispatchCallJmp_004779d0(void);
+extern void MultiGateDispatchCallJmp(void);
 extern void SaveCallRestoreOrXor(void);
-extern void ScaledLoadGuardedJmp_004066d0(void);
+extern void ScaledLoadGuardedJmp(void);
 extern void SwapOrPassSet(void);
 
-__declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
+__declspec(naked) void AiWalkCounterDualCluster(void)
 {
     __asm {
         /* === h1 (0x477e20): mstack lookup + counter inc === */
@@ -163,7 +163,7 @@ __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
         mov      dword ptr [g_walkCallback], eax
         jae      short L_7ec2
         mov      dword ptr [ecx*4], eax
-        call     MultiGateDispatchCallJmp_004779d0
+        call     MultiGateDispatchCallJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_7eda
@@ -266,7 +266,7 @@ __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
         cmp      eax, edi
         mov      dword ptr [g_xformDirtyFlags], ecx
         je       short L_804d
-        call     ScaledLoadGuardedJmp_004066d0
+        call     ScaledLoadGuardedJmp
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_8119
     L_804d:
@@ -282,7 +282,7 @@ __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
         cmp      eax, edi
         mov      dword ptr [g_xformDirtyFlags], ecx
         je       short L_8088
-        call     ScaledLoadGuardedJmp_004066d0
+        call     ScaledLoadGuardedJmp
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_8119
     L_8088:
@@ -294,7 +294,7 @@ __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
         mov      dword ptr [g_walkCallback], edi
         mov      dword ptr [ecx*4 + 0xc], edi
     L_80ae:
-        call     MultiGateDispatchCallJmp_004779d0
+        call     MultiGateDispatchCallJmp
     L_80b3:
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_8119

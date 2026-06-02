@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *   mstack-pop 3.
  */
 
-void MStackPush3TripleMul10WithAbs_0048b500(void) {
+void MStackPush3TripleMul10WithAbs(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueChild]

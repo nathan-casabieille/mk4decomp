@@ -29,7 +29,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern int g_table_004f7d40[16];
-void TableSearch_004be760(void) {
+void TableSearch(void) {
     __asm {
         mov     ax, word ptr [esp + 4]
         cmp     ax, 0x64

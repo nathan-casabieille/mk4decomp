@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_savedNode;
 extern void TripleSubVec3(void);
 
-void DualSetShiftCall_00473f90(void) {
+void DualSetShiftCall(void) {
     __asm {
         call    ChainDirtyBitWalker
         mov     eax, dword ptr [g_framePauseFlag]

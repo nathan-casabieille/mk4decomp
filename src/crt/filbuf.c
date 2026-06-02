@@ -122,9 +122,9 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_crtFilbufBase_005222e0;
 extern unsigned int g_arr_00fa0de0;
 extern void IOWrapper_004c8fc0(void);
-extern void StreamAllocInit_004cc250(void);
+extern void StreamAllocInit(void);
 
-__declspec(naked) void Filbuf_004c8ed0(void) {
+__declspec(naked) void Filbuf(void) {
     __asm {
         push    esi
         mov     esi, [esp + 8]
@@ -148,7 +148,7 @@ __declspec(naked) void Filbuf_004c8ed0(void) {
         mov     [esi + 0xc], eax
         jne     short L_fb_haveBuf
         push    esi
-        call    StreamAllocInit_004cc250
+        call    StreamAllocInit
         add     esp, 4
         jmp     short L_fb_doRead
     L_fb_haveBuf:

@@ -120,7 +120,7 @@ extern unsigned int g_struct_00ab4e50;
 extern unsigned int g_struct_00ab4e54;
 extern unsigned int g_struct_00ab4e58;
 
-__declspec(naked) void ScaledThreeChanPack_00404d50(void) {
+__declspec(naked) void ScaledThreeChanPack(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         push    esi

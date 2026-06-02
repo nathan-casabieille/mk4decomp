@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *   call ChainTableWalkStore; if pause: ret;
  *   pop g_eventQueueChild; ret.
  */
-void Push80SetWalkDualCallPop_00439350(void) {
+void Push80SetWalkDualCallPop(void) {
     unsigned int top;
     top = g_matrixStackTop + 1;
     g_matrixStackTop = top;

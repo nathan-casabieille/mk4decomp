@@ -8,13 +8,13 @@ extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00474b10 (64b): ScaledInitOrSelfPtr, store=own, jmp=0x474b50 */
-extern void NetEntityScanAndPunish_00474b50(void);
+extern void NetEntityScanAndPunish(void);
 void ScaledInitOrSelfPtr_00474b10(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int ptr = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
     if (ptr) {
-        NetEntityScanAndPunish_00474b50();
+        NetEntityScanAndPunish();
         return;
     }
     *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_00474b10;
@@ -40,13 +40,13 @@ void ScaledInitOrSelfPtr_00489130(void) {
 }
 
 /* @addr 0x00421f00 (64b): ScaledInitOrSelfPtr, store=own, jmp=0x421f40 */
-extern void InstallSelfStackReset_00421f40(void);
+extern void InstallSelfStackReset(void);
 void ScaledInitOrSelfPtr_00421f00(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int ptr = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
     if (ptr) {
-        InstallSelfStackReset_00421f40();
+        InstallSelfStackReset();
         return;
     }
     *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_00421f00;
@@ -88,13 +88,13 @@ void ScaledInitOrSelfPtr_00429680(void) {
 }
 
 /* @addr 0x00442d90 (64b): ScaledInitOrSelfPtr, store=own, jmp=0x442dd0 */
-extern void DualSeqLoopDispatch_00442dd0(void);
+extern void DualSeqLoopDispatch(void);
 void ScaledInitOrSelfPtr_00442d90(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int ptr = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
     if (ptr) {
-        DualSeqLoopDispatch_00442dd0();
+        DualSeqLoopDispatch();
         return;
     }
     *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_00442d90;

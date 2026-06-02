@@ -16,7 +16,7 @@ extern unsigned int g_dispatchSave1180_004d5c20;
 extern unsigned int g_dispatchSave1181_004d5c38;
 extern void PendingMatch_00411210(void);
 extern void PendingMatch_00411210(void);
-void TestByteSelectInit_004111d0(void) {
+void TestByteSelectInit(void) {
     if (g_byte_004f360c == 0) return;
     g_eventQueueIdx = (unsigned int)&g_dispatchSave1181_004d5c38 >> 2;
     PendingMatch_00411210();

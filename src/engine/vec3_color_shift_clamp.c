@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * Vec3ColorShiftClamp_004b3490 - 256b RGB-channel sar+pack into a 16-bit color word triplet.
+ * Vec3ColorShiftClamp - 256b RGB-channel sar+pack into a 16-bit color word triplet.
  *   For each of 3 channels (R, G, B), reads g_triStripRingB/988/98c, arithmetic-shift-right by cl
  *   (with negative clamp to 0, max clamp to 0x1f), computes (0xffff - channel) XOR with existing
  *   channel bits at word [esi + 0x14/0x16/0x18], packs the resulting 5-bit field into bits [0:5],
@@ -119,7 +119,7 @@ extern unsigned int g_triStripRingB;
 extern s32 g_vtxOut2_z;
 extern s32 g_vtxOut_z;
 
-__declspec(naked) void Vec3ColorShiftClamp_004b3490(void)
+__declspec(naked) void Vec3ColorShiftClamp(void)
 {
     __asm
     {

@@ -16,7 +16,7 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned short g_word_00ab47fc;
 extern unsigned short g_word_00ab47f8;
 extern unsigned short g_word_00ab47fa;
-void Init16BitFields_004bcc50(void) {
+void Init16BitFields(void) {
     g_word_00ab47fc = 0x1000;
     g_word_00ab47f8 = 0;
     g_word_00ab47fa = 0;

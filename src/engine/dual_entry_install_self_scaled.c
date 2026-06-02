@@ -123,7 +123,7 @@ extern unsigned int g_installScaledArrBase_00542998;
 extern void CallSetPause(void);
 extern void MStackCall_00406740(void);
 
-__declspec(naked) void DualEntryInstallSelfScaled_00461b70(void) {
+__declspec(naked) void DualEntryInstallSelfScaled(void) {
     __asm {
         mov     eax, dword ptr [g_walkStateIndex]
         test    eax, eax

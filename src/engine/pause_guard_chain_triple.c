@@ -114,6 +114,6 @@ extern void ArgSarStoreJmp(void);
  * ArgSarStoreJmp + cleanup + ret. Entry A of the original 82-byte triple-
  * helper block; entries B and C live in func_0042ce70 / func_0042ce90.
  * The 2/12-byte nop gaps are filled by 0x90-fill. */
-void PauseGuardChainTriple_0042ce60(void) {
+void PauseGuardChainTriple(void) {
     ((void (*)(int))ArgSarStoreJmp)(0x004e36a0);
 }

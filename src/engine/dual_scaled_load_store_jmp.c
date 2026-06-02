@@ -15,10 +15,10 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_eventQueueCurrent], edx
  *   jmp     +0x0c
  */
-extern void MStackBracket3PackedSlotInit_004757c0(void);
+extern void MStackBracket3PackedSlotInit(void);
 void DualScaledLoadStoreJmp(void) {
     unsigned int idx = g_xformEntityIdx;
     g_walkCallback = (void (*)(void))((ScenegraphNode *)(idx * 4))->child_a;
     g_eventQueueCurrent = ((ScenegraphNode *)(idx * 4))->child_c;
-    MStackBracket3PackedSlotInit_004757c0();
+    MStackBracket3PackedSlotInit();
 }

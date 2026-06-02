@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void MStackPushMul10TailSqrt_00424a90(void) {
+__declspec(naked) void MStackPushMul10TailSqrt(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueWorkType]

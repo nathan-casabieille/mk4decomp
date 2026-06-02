@@ -16,7 +16,7 @@ extern unsigned int g_arr_00fa0de0;
 extern void Crt_doserrno(void);
 extern void Crt_errno(void);
 
-void CRTHandleLookup_004cd260(void) {
+void CRTHandleLookup(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         mov     ecx, dword ptr [g_dispatchSave1469_00fa0ee0]

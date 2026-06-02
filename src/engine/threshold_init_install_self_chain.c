@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void ThresholdInitInstallSelfChain_00436120(void);
-extern void InstallSelfDecBitCheck_004391d0(void);
+extern void ThresholdInitInstallSelfChain(void);
+extern void InstallSelfDecBitCheck(void);
 extern void MStackPushSet0Jmp(void);
 
 /* @addr 0x00436030 (240b game) - 3-state install-self dispatcher.
@@ -117,12 +117,12 @@ extern void MStackPushSet0Jmp(void);
  *     scaledInit-chain push 0x00436030 + 0x01000000; call MStackPushSet0Jmp;
  *     pause=1; ret.
  *   state 1 (chain[+0x84]==1): g_eventQueueChild=0x78; install-self; chain[+0x84]=2;
- *     scaledInit-chain push 0x00436030 + 0x02000000; call InstallSelfDecBitCheck_004391d0;
+ *     scaledInit-chain push 0x00436030 + 0x02000000; call InstallSelfDecBitCheck;
  *     pause=1; ret.
- *   state >=2: tail-call ThresholdInitInstallSelfChain_00436120; ret.
+ *   state >=2: tail-call ThresholdInitInstallSelfChain; ret.
  */
 
-__declspec(naked) void InstallSelfThreeStateDispatch_00436030(void) {
+__declspec(naked) void InstallSelfThreeStateDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         xor     edx, edx
@@ -137,7 +137,7 @@ __declspec(naked) void InstallSelfThreeStateDispatch_00436030(void) {
         dec     ecx
         _emit   74h
         _emit   08h
-        call    ThresholdInitInstallSelfChain_00436120
+        call    ThresholdInitInstallSelfChain
         pop     edi
         pop     esi
         ret
@@ -156,7 +156,7 @@ __declspec(naked) void InstallSelfThreeStateDispatch_00436030(void) {
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
-        call    InstallSelfDecBitCheck_004391d0
+        call    InstallSelfDecBitCheck
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         pop     esi

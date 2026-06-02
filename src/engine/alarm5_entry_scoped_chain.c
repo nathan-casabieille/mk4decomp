@@ -128,27 +128,27 @@ extern unsigned int g_fightAxisPosY;
  *     g_eventQueueCurrent vs g_eventQueueWorkType: if le tail-jmp Phase1ChainSetupCallScale6,
  *     else tail-jmp ScaledIndirectJmp_0049c850.
  *   8b NOP pad.
- *   Entry 5 (offset 0x150, 34b): Phase1ContextSetupHelper_0040c260 + BootCallChainDoubleMul10_0040b890;
- *     on no-error tail-jmps Triple3PathDispatch_0049bf90.
+ *   Entry 5 (offset 0x150, 34b): Phase1ContextSetupHelper + BootCallChainDoubleMul10;
+ *     on no-error tail-jmps Triple3PathDispatch.
  */
 extern unsigned int g_dispatchSave640_004f25d8;
 extern unsigned int g_dispatchSave639_004f2640;
 extern unsigned int g_dispatchSave638_004f2650;
 extern void ArgSarStoreJmp(void);
 extern void ArgSar_Set0_Jmp(void);
-extern void BootCallChainDoubleMul10_0040b890(void);
+extern void BootCallChainDoubleMul10(void);
 extern void CallSetPause(void);
 extern void CondPickDualStore(void);
 extern void DualCmpSwapStore(void);
 extern void MStackCall_00406740(void);
 extern void Phase1ChainSetupCallScale6(void);
-extern void Phase1ContextSetupHelper_0040c260(void);
+extern void Phase1ContextSetupHelper(void);
 extern void ScaledIndirectJmp_0049c850(void);
 extern void ScaledStackCallPause(void);
-extern void Triple3PathDispatch_0049bf90(void);
+extern void Triple3PathDispatch(void);
 extern void Vec2SumMul10ChainCompute(void);
 
-__declspec(naked) void Alarm5EntryScopedChain_0049be10(void) {
+__declspec(naked) void Alarm5EntryScopedChain(void) {
     __asm {
         call    MStackCall_00406740
         mov     eax, dword ptr [g_framePauseFlag]
@@ -273,15 +273,15 @@ __declspec(naked) void Alarm5EntryScopedChain_0049be10(void) {
         nop
         /* entry 5 (offset 0x150) */
     L_a5e_entry5:
-        call    Phase1ContextSetupHelper_0040c260
+        call    Phase1ContextSetupHelper
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a5e_e5End
-        call    BootCallChainDoubleMul10_0040b890
+        call    BootCallChainDoubleMul10
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a5e_e5End
-        jmp     Triple3PathDispatch_0049bf90
+        jmp     Triple3PathDispatch
     L_a5e_e5End:
         ret
     }

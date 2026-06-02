@@ -13,8 +13,8 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_eventQueueCurrent], ecx
  *   jmp     +8
  */
-extern void ScaledStoreCurDirtyOr1_00429730(void);
+extern void ScaledStoreCurDirtyOr1(void);
 void ScaledLoadDecJmp(void) {
     g_eventQueueCurrent = *(unsigned int*)(g_scaledInit_00542044 * 4 + 4) - 1;
-    ScaledStoreCurDirtyOr1_00429730();
+    ScaledStoreCurDirtyOr1();
 }

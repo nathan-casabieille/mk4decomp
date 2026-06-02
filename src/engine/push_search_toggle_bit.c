@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   Wraps in mstack push/pop of g_pendingNodeType (0x54204c).
  */
 
-void PushSearchToggleBit_00476750(void) {
+void PushSearchToggleBit(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_pendingNodeType]

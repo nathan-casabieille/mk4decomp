@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void OpcodeStreamDispatch_00423ea0(void);
+extern void OpcodeStreamDispatch(void);
 
 /* @addr 0x00423b80 (152b game) - 3-call init sequence ending in tail-jmp.
  *   call BootInitGuardedCallChain; pause? -> ret.
@@ -117,11 +117,11 @@ extern void OpcodeStreamDispatch_00423ea0(void);
  *   g_eventQueueCurrent = 4; g_acc_00542078 = 0; g_eventQueueNotMask = 0xff9c0000.
  *   call Push70CallScaleArith; pause? -> ret.
  *   chain[g_scaledInit + 0x5c] = 0x10000; g_eventQueueIdx = packed_ptr(0x4dfb50);
- *   g_walkCallback = 0x10000. jmp OpcodeStreamDispatch_00423ea0.
+ *   g_walkCallback = 0x10000. jmp OpcodeStreamDispatch.
  */
 extern unsigned int g_dispatchSave666_004dedf8;
 extern unsigned int g_dispatchSave667_004dfb50;
-void ChainInit3CallTailJmp_00423b80(void) {
+void ChainInit3CallTailJmp(void) {
     BootInitGuardedCallChain();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = 0;
@@ -137,5 +137,5 @@ void ChainInit3CallTailJmp_00423b80(void) {
     g_walkCallback = 0x10000;
     *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x5c) = 0x10000;
     g_eventQueueIdx = (unsigned int)&g_dispatchSave667_004dfb50 >> 2;
-    OpcodeStreamDispatch_00423ea0();
+    OpcodeStreamDispatch();
 }

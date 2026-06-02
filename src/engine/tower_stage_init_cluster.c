@@ -109,18 +109,18 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void Cmp2DirtyToggle(void);
-extern void TowerStageInitCluster_00430560(void);
+extern void TowerStageInitCluster(void);
 
 /*
  * @addr 0x004304e0 (119b game) - 2-branch chain-into-indirect:
  *   call Cmp2DirtyToggle; if not paused: peek state stack, pop;
  *   stash entry into 0x541dc4; if state-bit 0 set, tail-jmp
- *   TowerStageInitCluster_00430560; else build scaled chain (++cj, walk, [eax*4+r]
+ *   TowerStageInitCluster; else build scaled chain (++cj, walk, [eax*4+r]
  *   = idx) and tail-jmp through g_eventQueueWorkType.
  */
 extern unsigned int g_bootInitSaveSlot;
 
-__declspec(naked) void StackPeekDispatchIndirect_004304e0(void) {
+__declspec(naked) void StackPeekDispatchIndirect(void) {
     __asm {
         call    Cmp2DirtyToggle
         mov     eax, dword ptr [g_framePauseFlag]
@@ -133,7 +133,7 @@ __declspec(naked) void StackPeekDispatchIndirect_004304e0(void) {
         dec     eax
         mov     dword ptr [g_bootInitSaveSlot], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        jmp     TowerStageInitCluster_00430560
+        jmp     TowerStageInitCluster
 buildChain:
         mov     edx, dword ptr [g_baseSel]
         dec     eax

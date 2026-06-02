@@ -15,7 +15,7 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_eventQueueCurrent_mm;
 extern unsigned int g_zero_0053a470;
 
-__declspec(naked) void PushPopWalkDecMod_004923f0(void) {
+__declspec(naked) void PushPopWalkDecMod(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueCurrent_mm]

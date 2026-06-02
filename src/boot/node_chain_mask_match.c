@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
  *   path, set bit 0 of state and exit; else clear bit 0 and exit.
  */
 
-__declspec(naked) void NodeChainMaskMatch_0041f870(void) {
+__declspec(naked) void NodeChainMaskMatch(void) {
     __asm {
         mov     edx, dword ptr [g_walkCallback]
         mov     ecx, dword ptr [g_nodeListTail]

@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   + chain[+walk] + bit OR/XOR toggle + pop. */
 extern void ScaledShrAnd(void);
 
-void PushSarCallBitToggle_0048bb60(void) {
+void PushSarCallBitToggle(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_scaledInit_00542044]

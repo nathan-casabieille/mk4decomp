@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00446040 (118b) - 4-field copy + ScaledClear1c + set type 2. */
-void FourFieldCopyCallSet_00446040(void) {
+void FourFieldCopyCallSet(void) {
     unsigned char *src;
     unsigned char *dst;
     unsigned int v;

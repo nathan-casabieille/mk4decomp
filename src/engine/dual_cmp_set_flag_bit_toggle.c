@@ -121,7 +121,7 @@ extern unsigned int g_fightAxisPosY;
  *   clear: eax &= 0xfb; g_xformDirtyFlags = eax; ret.
  */
 
-void DualCmpSetFlagBitToggle_00460eb0(void) {
+void DualCmpSetFlagBitToggle(void) {
     __asm {
         mov     ecx, dword ptr [g_player1NodeIdx]
         mov     edx, dword ptr [g_cj_0054205c]

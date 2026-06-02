@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   guard + chain[+0x74] & 0xf00 check before install.
  */
 
-__declspec(naked) void InstallSelfDecBitCheck_004391d0(void) {
+__declspec(naked) void InstallSelfDecBitCheck(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         shl     eax, 2

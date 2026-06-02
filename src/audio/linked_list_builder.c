@@ -124,7 +124,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void LinkedListBuilder_004ab380(void) {
+__declspec(naked) void LinkedListBuilder(void) {
     __asm {
         push    ebx
         mov     ebx, dword ptr [g_xformEntityIdx]

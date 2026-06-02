@@ -109,15 +109,15 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00446b10 (224b game) - 7-entry-point self-recursive dispatcher with table addresses.
- *   A: call BossPunchCluster_00446c50; if !pause: chain[g_xformEntityIdx*4+0x10]=0; ret.
+ *   A: call BossPunchCluster; if !pause: chain[g_xformEntityIdx*4+0x10]=0; ret.
  *   B-G (+0x20..+0xc0): call self; eax = const>>2; chain[*4+0x14]=eax. Constants: 0x004e6080, 0x004e6090,
  *     0x004e60a0, 0x004e60b0, 0x004e60c0, 0x004e60d0.
  */
-extern void BossPunchCluster_00446c50(void);
+extern void BossPunchCluster(void);
 
-void SevenEntrySelfCallTable_00446b10(void) {
+void SevenEntrySelfCallTable(void) {
     __asm {
-        call    BossPunchCluster_00446c50
+        call    BossPunchCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -126,42 +126,42 @@ void SevenEntrySelfCallTable_00446b10(void) {
         mov     dword ptr [eax*4 + 0x10], 0
         ret
         _emit   90h
-        call    SevenEntrySelfCallTable_00446b10
+        call    SevenEntrySelfCallTable
         mov     ecx, dword ptr [g_xformEntityIdx]
         mov     eax, 0x004e6080
         shr     eax, 2
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x14], eax
         ret
-        call    SevenEntrySelfCallTable_00446b10
+        call    SevenEntrySelfCallTable
         mov     ecx, dword ptr [g_xformEntityIdx]
         mov     eax, 0x004e6090
         shr     eax, 2
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x14], eax
         ret
-        call    SevenEntrySelfCallTable_00446b10
+        call    SevenEntrySelfCallTable
         mov     ecx, dword ptr [g_xformEntityIdx]
         mov     eax, 0x004e60a0
         shr     eax, 2
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x14], eax
         ret
-        call    SevenEntrySelfCallTable_00446b10
+        call    SevenEntrySelfCallTable
         mov     ecx, dword ptr [g_xformEntityIdx]
         mov     eax, 0x004e60b0
         shr     eax, 2
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x14], eax
         ret
-        call    SevenEntrySelfCallTable_00446b10
+        call    SevenEntrySelfCallTable
         mov     ecx, dword ptr [g_xformEntityIdx]
         mov     eax, 0x004e60c0
         shr     eax, 2
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x14], eax
         ret
-        call    SevenEntrySelfCallTable_00446b10
+        call    SevenEntrySelfCallTable
         mov     ecx, dword ptr [g_xformEntityIdx]
         mov     eax, 0x004e60d0
         shr     eax, 2

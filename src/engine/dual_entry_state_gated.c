@@ -114,13 +114,13 @@ extern unsigned int g_fightAxisPosY;
  *     g_eventQueueCurrent=0xb; g_walkCallback=g_eventQueueCurrent; jmp StateDispatchYield.
  *   Block B (+0x70): g_walkCallback=0x8; jmp StateDispatchYield.
  */
-extern void ScaledChainAndF000DirtyToggle_0048e740(void);
+extern void ScaledChainAndF000DirtyToggle(void);
 extern void StateDispatchYield(void);
 
-__declspec(naked) void DualEntryStateGated_00460fa0(void) {
+__declspec(naked) void DualEntryStateGated(void) {
     __asm {
         mov     dword ptr [g_eventQueueCurrent], 0x0b
-        call    ScaledChainAndF000DirtyToggle_0048e740
+        call    ScaledChainAndF000DirtyToggle
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

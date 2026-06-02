@@ -127,7 +127,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void ScaledSearchSum_00457830(void) {
+__declspec(naked) void ScaledSearchSum(void) {
     __asm {
         push    ecx
         mov     eax, dword ptr [g_eventQueueCurrent]

@@ -122,7 +122,7 @@ extern unsigned int g_particleEmitterNode;
  */
 extern unsigned int g_load_0052ab10;
 
-void ChainInitDoublePushCall_004a47c0(void) {
+void ChainInitDoublePushCall(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [g_walkCallback], 0

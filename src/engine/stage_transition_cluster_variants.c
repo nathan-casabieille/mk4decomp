@@ -109,18 +109,18 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void ScaledMove48to58(void);
-extern void SixEntryYieldThunks_00461090(void);
-extern void InstallSelfPlusTrampoline_0046c5d0(void);
+extern void SixEntryYieldThunks(void);
+extern void InstallSelfPlusTrampoline(void);
 extern void FlagCascadeStateSet(void);
 extern void StageTransitionCluster_0046f250(void);
 extern void StateDispatchYield(void);
-extern void QuadEntryChainPush_0046dd00(void);
-extern void MStackBitFlagDispatch_00494750(void);
-extern void PushFourCallPopBitJmp_00461020(void);
+extern void QuadEntryChainPush(void);
+extern void MStackBitFlagDispatch(void);
+extern void PushFourCallPopBitJmp(void);
 
 /* @addr 0x0046c6e0 (212b game) - four adjacent state-handler blocks.
- *   B1 (0..19, +12 NOPs): call ScaledMove48to58; if !pause jmp SixEntryYieldThunks_00461090; ret.
- *   B2 (32..71, +8 NOPs): call ScaledMove48to58; if !pause call InstallSelfPlusTrampoline_0046c5d0; if !pause
+ *   B1 (0..19, +12 NOPs): call ScaledMove48to58; if !pause jmp SixEntryYieldThunks; ret.
+ *   B2 (32..71, +8 NOPs): call ScaledMove48to58; if !pause call InstallSelfPlusTrampoline; if !pause
  *     call FlagCascadeStateSet; if !pause test bit0 of g_xformDirtyFlags (clear=>jmp
  *     StageTransitionCluster_0046f250; set=>store 5 at g_walkCallback and tail-jmp StateDispatchYield); ret.
  *   B3 (112..187, +4 NOPs): scaled chain via baseSel[+0x30]; if eax==0 jmp
@@ -134,17 +134,17 @@ extern void ArgSarStoreJmp(void);
 extern void GatedWordPushCall(void);
 extern void PendingMatch_00452770(void);
 extern void StoreLoadJmp(void);
-extern void ThrowInitLinkCluster_004555f0(void);
+extern void ThrowInitLinkCluster(void);
 extern void Thunk_0049cbc0(void);
 
-__declspec(naked) void QuadStateHandler_0046c6e0(void) {
+__declspec(naked) void QuadStateHandler(void) {
     __asm {
         call    ScaledMove48to58
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     SixEntryYieldThunks_00461090
+        jmp     SixEntryYieldThunks
         ret
         nop
         nop
@@ -163,7 +163,7 @@ __declspec(naked) void QuadStateHandler_0046c6e0(void) {
         test    eax, eax
         _emit   75h
         _emit   39h
-        call    InstallSelfPlusTrampoline_0046c5d0
+        call    InstallSelfPlusTrampoline
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -194,8 +194,8 @@ __declspec(naked) void QuadStateHandler_0046c6e0(void) {
         mov     dword ptr [g_eventQueueNotMask], eax
         _emit   75h
         _emit   05h
-        jmp     QuadEntryChainPush_0046dd00
-        call    MStackBitFlagDispatch_00494750
+        jmp     QuadEntryChainPush
+        call    MStackBitFlagDispatch
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -216,7 +216,7 @@ __declspec(naked) void QuadStateHandler_0046c6e0(void) {
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     PushFourCallPopBitJmp_00461020
+        jmp     PushFourCallPopBitJmp
         ret
     }
 }
@@ -398,7 +398,7 @@ __declspec(naked) void StageTransitionCluster_00455340(void)
         mov      dword ptr [g_eventQueueEnd], 0x28
         mov      dword ptr [g_fightGroupHead], ecx
     L_5598:
-        call     ThrowInitLinkCluster_004555f0
+        call     ThrowInitLinkCluster
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_55e9

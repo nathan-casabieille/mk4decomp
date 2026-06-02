@@ -108,9 +108,9 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void CjDispatchCommit_004818e0(void);
-extern void BossArrivalSequence_00481950(void);
-extern void SwapTwoGlobals_004911c0(void);
+extern void CjDispatchCommit(void);
+extern void BossArrivalSequence(void);
+extern void SwapTwoGlobals(void);
 extern void TableHitOrSchedule(void);
 extern unsigned int g_dispatchSave540_004ef290;
 extern unsigned int g_dispatchSave539_004ef2c0;
@@ -122,14 +122,14 @@ extern unsigned int g_load_0052ab10;
 extern void ArgSarStoreJmp(void);
 extern void ScaledInitWithCounterAndType_004314f0(void);
 
-__declspec(naked) void BlockedCounterCluster_004816d0(void)
+__declspec(naked) void BlockedCounterCluster(void)
 {
     __asm {
     L_16d0:
         /* H1: counter update */
         mov      eax, dword ptr [g_fightGroupHead]
         and      dword ptr [eax*4 + 0x34], 0xfffffffe
-        call     SwapTwoGlobals_004911c0
+        call     SwapTwoGlobals
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1707
@@ -180,7 +180,7 @@ __declspec(naked) void BlockedCounterCluster_004816d0(void)
         mov      dword ptr [eax + 0x84], 0
         test     ecx, ecx
         je       short L_1791
-        call     CjDispatchCommit_004818e0
+        call     CjDispatchCommit
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1813
@@ -209,7 +209,7 @@ __declspec(naked) void BlockedCounterCluster_004816d0(void)
         mov      dword ptr [eax + 4], ecx
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], 0
-        call     BossArrivalSequence_00481950
+        call     BossArrivalSequence
         mov      dword ptr [g_framePauseFlag], 1
     L_1813:
         ret

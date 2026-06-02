@@ -24,7 +24,7 @@ extern unsigned int g_scaledInit_00542044;
 extern int func_0049cb40_t(void *, int);
 extern void *g_dispatchSave1148_004573e0;
 extern void *g_dispatchSave1137_00422200;
-void TwoPushCallSetDirty_00422050(void) {
+void TwoPushCallSetDirty(void) {
     func_0049cb40_t(&g_dispatchSave1148_004573e0, 0x29);
     func_0049cb40_t(&g_dispatchSave1137_00422200, 0x2c);
     g_xformDirtyFlags = g_xformDirtyFlags | 1;

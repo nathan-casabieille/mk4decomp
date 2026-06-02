@@ -109,8 +109,8 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * AudioFlagDispatchAggregatorAH_004aa520 - 229b audio variant using high-byte bit tests.
- *   Same shape as AudioFlagDispatchAggregator_004aa430 but tests AH bits in 0x004d50d4 dword
+ * AudioFlagDispatchAggregatorAH - 229b audio variant using high-byte bit tests.
+ *   Same shape as AudioFlagDispatchAggregator but tests AH bits in 0x004d50d4 dword
  *   (blocks 0/1/5) and CH bits in the aggregator (bits 8-11 instead of 0-3).
  *   Middle blocks test byte at 0x004d50d8 bits 0x10/0x20/0x40, push to g_audioFlagAggBase_005433d8 table.
  */
@@ -119,7 +119,7 @@ extern unsigned int g_byte_004d50d4;
 extern unsigned int g_audioFlagAggBase_005433d8;
 extern void ShiftDownThreeAndAppend(void);
 
-void AudioFlagDispatchAggregatorAH_004aa520(void) {
+void AudioFlagDispatchAggregatorAH(void) {
     __asm {
         mov     eax, dword ptr [g_byte_004d50d4]
         test    ah, 0x10

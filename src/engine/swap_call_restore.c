@@ -21,11 +21,11 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_fightGroupHead], eax
  *   ret
  */
-extern void DualMaskCmpJmp_00490090(void);
-void SwapCallRestore_00490030(void) {
+extern void DualMaskCmpJmp(void);
+void SwapCallRestore(void) {
     g_scaledInit_00542044 = g_fightGroupHead;
     g_fightGroupHead = *(unsigned int *)(g_baseSel * 4 + 0x38);
-    DualMaskCmpJmp_00490090();
+    DualMaskCmpJmp();
     if (g_framePauseFlag != 0) return;
     g_fightGroupHead = g_scaledInit_00542044;
 }

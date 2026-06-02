@@ -19,10 +19,10 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern unsigned int g_acc_00542078;
-extern void CmpDirectOrIndirectChain_0048b610(void);
-void StoreCallPauseStore_0048b450(void) {
+extern void CmpDirectOrIndirectChain(void);
+void StoreCallPauseStore(void) {
     g_eventQueueWorkType = g_eventQueueChild;
-    CmpDirectOrIndirectChain_0048b610();
+    CmpDirectOrIndirectChain();
     if (g_framePauseFlag != 0) return;
     g_currentNodeFlags = g_acc_00542078;
 }

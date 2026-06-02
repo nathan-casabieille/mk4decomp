@@ -190,7 +190,7 @@ n->state_mask = v;    /* MSVC caches `n` in callee-saved register */
 
 For these patterns, use inline casts at each access site so MSVC
 sees a fresh global load each time. This was caught when lifting
-`BitSavePushCallMergePop_0045dc60` regressed (92 bytes differ) then
+`BitSavePushCallMergePop` regressed (92 bytes differ) then
 matched again after switching to inline-cast.
 
 **Rule of thumb**: bind `ScenegraphNode *n = ...` only when the
@@ -214,7 +214,7 @@ v = n->fsm_state;
 MSVC may emit `mov eax, [g_baseSel]; shl eax, 2; mov [eax + 0x70], ecx`
 (2 instructions to compute the pointer, then a `[reg + disp]` store)
 instead of the orig's `mov [eax*4 + 0x70], ecx` (1-instruction SIB
-form). 14 byte difference observed in `ScaledMove74to70_0046eaa0`.
+form). 14 byte difference observed in `ScaledMove74to70`.
 
 **Fix**: keep the packed_ptr (`idx = g_baseSel`) as a local u32 and
 write the cast inline at each access site:
@@ -518,11 +518,11 @@ unit whose full-circle period is **`0x6487e` (411262)**. Angles are
 normalised into `[0, 0x6487e)` before use. Confirmed across a naming
 family that all wrap by this constant:
 
-- `TripleMod411262_00424740` - 3-unrolled mod-`0x6487e` over a node's
+- `TripleMod411262` - 3-unrolled mod-`0x6487e` over a node's
   three consecutive `+0x00 / +0x04 / +0x08` slots (the rotation-angle
   triple in the xform-record view), normalising each into one
   revolution.
-- `ModuloMagic_0042afc0`, `m_stack_angle_wrap_dispatch`,
+- `ModuloMagic`, `m_stack_angle_wrap_dispatch`,
   `BootMod6487eClampAndChainMul10`, `triple_mod411262` - same
   `0x6487e` wrap.
 
@@ -753,8 +753,8 @@ In `src/engine/scenegraph.c`:
   `AllocNode` (the 15-byte wrapper),
   `NodeApplyTransform_A`, `_B`, `_C`, `_C_Inverse`,
   `_A_Direct`, `_B_Direct`, `_C_Direct`,
-  `DispatchProbeOrTransformB_004bdc70`,
-  `DispatchProbeOrTransformC_004bddc0`.
+  `DispatchProbeOrTransformB`,
+  `DispatchProbeOrTransformC`.
 
 - **Hybrid C+__asm**:
   `NodeApplyMatrix` (push/loop/pop matrix-stack body, C-call wrapper).
@@ -773,7 +773,7 @@ In `src/engine/render_scene_node.c`:
   too big and too register-allocator-sensitive to convert.
 
 In `src/boot/`:
-- `NodeUnlink_0041f710` - hybrid asm body (C wrapper +
+- `NodeUnlink` - hybrid asm body (C wrapper +
   `__asm` block). The asm fits naturally; conversion is possible
   but adds 6+ instruction-byte diffs.
 

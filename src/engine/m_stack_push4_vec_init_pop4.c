@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *   [g_xformEntityIdx*4 + 0/4/8] into [g_currentNodeIdx*4 + 0x38/0x3c/0x40],
  *   then zeroes [scaled+0x44/0x48/0x4c]. Pops the 4 mstack entries back.
  */
-void MStackPush4VecInitPop4_00471350(void) {
+void MStackPush4VecInitPop4(void) {
     unsigned int v;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_eventQueueNotMask;

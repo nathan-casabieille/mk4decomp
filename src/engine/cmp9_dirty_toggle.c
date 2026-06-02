@@ -9,7 +9,7 @@ extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00464320 (36b): same shape as 0x0042ee10 (Cmp7DirtyToggle) but cmp=9 */
 extern unsigned int g_tickFlagF;
-void Cmp9DirtyToggle_00464320(void) {
+void Cmp9DirtyToggle(void) {
     unsigned int state = g_tickFlagF;
     g_walkCallback = (void(*)(void))state;
     if (state != 9) {

@@ -35,7 +35,7 @@ __declspec(naked) void AppInit_Misc2(void) {
  *   scaled load; 16-bit neg of 3 word fields at offsets 0,2,4;
  *   set g_xformDirtyFlags |= 0x30.
  */
-void ScaledNegThreeWords_004be210(void) {
+void ScaledNegThreeWords(void) {
     unsigned int idx;
     short a;
     short b;

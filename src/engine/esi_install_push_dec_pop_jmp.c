@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   GuardedSeq_004297b0 + dec popped value to install or dispatch. */
 extern void GuardedSeq_004297b0(void);
 
-__declspec(naked) void EsiInstallPushDecPopJmp_0043ba90(void) {
+__declspec(naked) void EsiInstallPushDecPopJmp(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi

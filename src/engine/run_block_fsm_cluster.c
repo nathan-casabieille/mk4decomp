@@ -109,26 +109,26 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void StoreTwoCall(void);
-extern void RunBlockFsmCluster_00499c80(void);
+extern void RunBlockFsmCluster(void);
 extern void ScaledClearJmp_00428d40(void);
 extern void CondPickDualStore(void);
-extern void InstallSelfStoreTwoCall_0049a410(void);
+extern void InstallSelfStoreTwoCall(void);
 
 /* @addr 0x0049a2f0 (280b game) - install-self with dual-path tail.
  *   state nonzero (init path): push 0x47, 0x0049a580; call StoreTwoCall;
  *     push 0x004f2770; tail-call ArgSarStoreJmp; eax=g_pause; ret.
- *   state zero: call RunBlockFsmCluster_00499c80; if !pause: push 0x0054331c, call
+ *   state zero: call RunBlockFsmCluster; if !pause: push 0x0054331c, call
  *     GuardedPackedSlotInit; if !pause: g_eventQueueChild=4; install-self;
  *     chain[+0x84]=1; scaledInit-chain push 0x0049a2f0+0x01000000;
  *     call ScaledClearJmp_00428d40; pause=1; ret.
  *   After 12 NOPs (alignment-only): tail block for another entry/sibling that
- *     calls CondPickDualStore; if !pause: RunBlockFsmCluster_00499c80; if !pause:
- *     push 0x00543318, GuardedPackedSlotInit; if !pause: tail-jmp InstallSelfStoreTwoCall_0049a410; ret.
+ *     calls CondPickDualStore; if !pause: RunBlockFsmCluster; if !pause:
+ *     push 0x00543318, GuardedPackedSlotInit; if !pause: tail-jmp InstallSelfStoreTwoCall; ret.
  */
 extern void ArgSarStoreJmp(void);
 extern void GuardedPackedSlotInit(void);
 
-__declspec(naked) void InstallSelfDualPathInit_0049a2f0(void) {
+__declspec(naked) void InstallSelfDualPathInit(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -148,7 +148,7 @@ __declspec(naked) void InstallSelfDualPathInit_0049a2f0(void) {
         add     esp, 4
         pop     esi
         ret
-        call    RunBlockFsmCluster_00499c80
+        call    RunBlockFsmCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -196,7 +196,7 @@ __declspec(naked) void InstallSelfDualPathInit_0049a2f0(void) {
         test    eax, eax
         _emit   75h
         _emit   29h
-        call    RunBlockFsmCluster_00499c80
+        call    RunBlockFsmCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -208,7 +208,7 @@ __declspec(naked) void InstallSelfDualPathInit_0049a2f0(void) {
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     InstallSelfStoreTwoCall_0049a410
+        jmp     InstallSelfStoreTwoCall
         ret
     }
 }

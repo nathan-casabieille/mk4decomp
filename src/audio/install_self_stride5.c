@@ -124,7 +124,7 @@ extern void GuardedScaledCall(void);
 extern unsigned int g_chain_arr_4348f0;
 extern void FiveCallGuardSetTail(void);
 
-__declspec(naked) void InstallSelfStride5_004a06f0(void) {
+__declspec(naked) void InstallSelfStride5(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -157,7 +157,7 @@ __declspec(naked) void InstallSelfStride5_004a06f0(void) {
         test    eax, eax
         _emit   75h
         _emit   1dh
-        mov     dword ptr [esi + 8], offset InstallSelfStride5_004a06f0
+        mov     dword ptr [esi + 8], offset InstallSelfStride5
         mov     dword ptr [esi + 0x84], edi
         mov     dword ptr [g_pendingNodeType], 0x32
         mov     dword ptr [g_framePauseFlag], edi

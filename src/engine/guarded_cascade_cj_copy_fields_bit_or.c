@@ -123,7 +123,7 @@ extern void MStackPushDispatchBitGate(void);
 extern void MStackPushTwoEntryChainCall(void);
 extern void ScaledInitWithCounterAndType_004314f0(void);
 
-__declspec(naked) void GuardedCascadeCjCopyFieldsBitOr_0043cb00(void) {
+__declspec(naked) void GuardedCascadeCjCopyFieldsBitOr(void) {
     __asm {
         mov     eax, 0x0050d434
         sar     eax, 2

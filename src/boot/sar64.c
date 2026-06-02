@@ -24,7 +24,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  *   nop * 12  (alignment)
  */
-__declspec(naked) void Sar64_004c5660(void) {
+__declspec(naked) void Sar64(void) {
     __asm {
         cmp     cl, 0x40
         _emit   73h

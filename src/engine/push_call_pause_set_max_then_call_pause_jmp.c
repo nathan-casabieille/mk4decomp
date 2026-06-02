@@ -14,13 +14,13 @@ extern unsigned int g_phaseTimer;
  * block; entry B (call+pause+tail-jmp) lives in func_0048e3c0. The
  * 2-byte nop gap is filled by 0x90-fill. */
 extern void *g_dispatchSave1317_004f12f8;
-extern int PackedAdvanceCallContinue_0048e630(void *);
+extern int PackedAdvanceCallContinue(void *);
 extern void Push16Call(void);
-extern void DualEntryInitDispatch_00431360(void);
+extern void DualEntryInitDispatch(void);
 extern void ScaledInitWithCounterAndType_004314f0(void);
-void PushCallPauseSetMaxThenCallPauseJmp_0048e380(void) {
+void PushCallPauseSetMaxThenCallPauseJmp(void) {
     int v;
-    PackedAdvanceCallContinue_0048e630(&g_dispatchSave1317_004f12f8);
+    PackedAdvanceCallContinue(&g_dispatchSave1317_004f12f8);
     if (g_framePauseFlag != 0) return;
     g_eventQueueWorkType = 0x3c;
     Push16Call();

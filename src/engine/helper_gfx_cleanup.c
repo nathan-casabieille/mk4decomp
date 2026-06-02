@@ -10,7 +10,7 @@ extern void Thunk_004bf320(void);
 extern void R2_Cleanup(void);
 extern void DDraw3_Cleanup(void);
 extern void DDraw5_Cleanup(void);
-extern void RendererTeardownSW_004b2a40(void);
+extern void RendererTeardownSW(void);
 extern int g_currentRendererMode;
 void Helper_GfxCleanup(void) {
     Helper_GSM_PlayMusic(4);
@@ -19,7 +19,7 @@ void Helper_GfxCleanup(void) {
     R2_Cleanup();
     DDraw3_Cleanup();
     DDraw5_Cleanup();
-    RendererTeardownSW_004b2a40();
+    RendererTeardownSW();
     g_currentRendererMode = 0;
 }
 

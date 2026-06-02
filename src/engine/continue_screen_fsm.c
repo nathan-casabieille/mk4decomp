@@ -115,10 +115,10 @@ extern unsigned int g_dispatchSave141_005080f4;
 extern void BootInitGuardedCallChain(void);
 extern void CopyGlobal(void);
 extern void InstallSelfPackedF80(void);
-extern void OpcodeStreamDispatch_00423ea0(void);
+extern void OpcodeStreamDispatch(void);
 extern void RegistryPushBindPop(void);
 
-__declspec(naked) void ContinueScreenFsm_00423c20(void)
+__declspec(naked) void ContinueScreenFsm(void)
 {
     __asm {
     L_3c20:
@@ -169,7 +169,7 @@ __declspec(naked) void ContinueScreenFsm_00423c20(void)
         shr      edx, 2
         mov      dword ptr [ecx*4 + 0x5c], eax
         mov      dword ptr [g_eventQueueIdx], edx
-        call     OpcodeStreamDispatch_00423ea0
+        call     OpcodeStreamDispatch
         pop      edi
         pop      esi
         ret

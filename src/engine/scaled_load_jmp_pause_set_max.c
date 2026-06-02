@@ -24,11 +24,11 @@ extern unsigned int g_phaseTimer;
  *   ret
  */
 extern void MStackCall_00406340(void);
-extern void Cmp2OrSet0b_0048e3e0(void);
+extern void Cmp2OrSet0b(void);
 /* Entry A (23b @ 0x00446880): load baseSel[+0x4c] into g_scaledInit,
  * tail-jmp MStackCall_00406340. Entry B (sub-entry at +0x20) lives in
  * func_004468a0. The 9-byte nop gap is filled by 0x90-fill. */
-void ScaledLoadJmpPauseSetMax_00446880(void) {
+void ScaledLoadJmpPauseSetMax(void) {
     g_scaledInit_00542044 = *(unsigned int *)(g_baseSel * 4 + 0x4c);
     MStackCall_00406340();
 }
@@ -38,7 +38,7 @@ void ScaledLoadJmpPauseSetMax_00446880(void) {
  * original packed 62-byte block. */
 void func_004468a0(void) {
     int v;
-    Cmp2OrSet0b_0048e3e0();
+    Cmp2OrSet0b();
     if (g_framePauseFlag != 0) return;
     v = 0xfff;
     g_walkCallback = (void (*)(void))v;

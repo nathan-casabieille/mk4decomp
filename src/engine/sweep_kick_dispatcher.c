@@ -111,25 +111,25 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave790_004f20c0;
 extern unsigned int g_dispatchSave791_004f20f0;
 extern unsigned int g_savedNode;
-extern void AiComboDispatcherCluster_00497470(void);
+extern void AiComboDispatcherCluster(void);
 extern void ArgSarStoreJmp(void);
 extern void ArgSar_Set0_Jmp(void);
-extern void BootInstallPeriodicAudio_00413aa0(void);
+extern void BootInstallPeriodicAudio(void);
 extern void CmpDivJmp(void);
 extern void CondPickDualStore(void);
 extern void CopyThreeFields(void);
 extern void DualCmpSwapStore(void);
 extern void GuardedSeq_00497450(void);
-extern void MStackPush8CallbackInit_00413b70(void);
-extern void PushCallScaledClearJmp_0040bf20(void);
+extern void MStackPush8CallbackInit(void);
+extern void PushCallScaledClearJmp(void);
 extern void ScaledIndirectJmp_0049c850(void);
 extern void ScaledTripleCopy4(void);
-extern void SoundSetupLoop_00413ea0(void);
+extern void SoundSetupLoop(void);
 extern void TableLookupCall_00489ff0(void);
 extern void ThreeChanPackClamp(void);
 extern void Vec2SumMul10ChainCompute(void);
 
-__declspec(naked) void SweepKickDispatcher_004970f0(void)
+__declspec(naked) void SweepKickDispatcher(void)
 {
     __asm {
         /* === h1 (0x4970f0): event 004f20c0 forwarder === */
@@ -140,7 +140,7 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_712b
-        call     BootInstallPeriodicAudio_00413aa0
+        call     BootInstallPeriodicAudio
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_712b
@@ -171,7 +171,7 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
     L_7168:
         mov      edx, dword ptr [eax*4 + 0x74]
         mov      dword ptr [g_eventQueueChild], edx
-        call     AiComboDispatcherCluster_00497470
+        call     AiComboDispatcherCluster
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_739c
@@ -289,7 +289,7 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
         ret
         nop
         /* === h3 (0x4973a0): 413b70 + add + 49bc60 → tail 49c850 === */
-        call     MStackPush8CallbackInit_00413b70
+        call     MStackPush8CallbackInit
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_73f7
@@ -330,11 +330,11 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_744d
-        call     PushCallScaledClearJmp_0040bf20
+        call     PushCallScaledClearJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_744d
-        call     SoundSetupLoop_00413ea0
+        call     SoundSetupLoop
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_744d

@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_dispatchSave1279_004eaa58;
 extern void CallSetPause(void);
-void StoreFightFieldCallTailJmp_004667a0(void) {
+void StoreFightFieldCallTailJmp(void) {
     unsigned int fg = (unsigned int)g_fightGroupHead;
     unsigned int eq = g_eventQueueEnd;
     unsigned int v = *(unsigned int *)(fg * 4 + 0x64) - 0x4ccc;

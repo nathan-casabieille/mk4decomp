@@ -21,43 +21,43 @@ extern void MStackCall_00406740(void);   /* 0x00406740 */
 extern void CopyJmp_00406ba0(void);   /* 0x00406ba0 */
 extern void ChainDirtyBitWalker(void);   /* 0x00408c10 */
 extern void DirtyDoubleDeref(void);   /* 0x00408cb0 */
-extern void BootStateInitLongChain_0041ab90(void);   /* 0x0041ab90 */
+extern void BootStateInitLongChain(void);   /* 0x0041ab90 */
 extern void StackPopDispatchTagged(void);   /* 0x0041f780 */
 extern void CallSetPause(void);   /* 0x0041f830 */
-extern void ZeroTriple_00421c20(void);   /* 0x00421c20 */
-extern void MStackPushDualJmp_00428370(void);   /* 0x00428370 */
-extern void GuardedLoopWithCallback_004284a0(void);   /* 0x004284a0 */
-extern void ScaledIncCmpJmp_004297d0(void);   /* 0x004297d0 */
+extern void ZeroTriple(void);   /* 0x00421c20 */
+extern void MStackPushDualJmp(void);   /* 0x00428370 */
+extern void GuardedLoopWithCallback(void);   /* 0x004284a0 */
+extern void ScaledIncCmpJmp(void);   /* 0x004297d0 */
 extern void GuardedChainCmpDualBitXor(void);   /* 0x004299a0 */
-extern void PhaseInstall2DInterpDispatch_0042f8a0(void);   /* 0x0042f8a0 */
-extern void DualMulScaleStore_0042ffa0(void);   /* 0x0042ffa0 */
+extern void PhaseInstall2DInterpDispatch(void);   /* 0x0042f8a0 */
+extern void DualMulScaleStore(void);   /* 0x0042ffa0 */
 extern void GuardedSeq_00433bd0(void);   /* 0x00433bd0 */
 extern void ScaledIndirectJmp_00433bf0(void);   /* 0x00433bf0 */
-extern void PackedSelectLoad6_00433c60(void);   /* 0x00433c60 */
+extern void PackedSelectLoad6(void);   /* 0x00433c60 */
 extern void CmpP1DualInitStore_00433d30(void);   /* 0x00433d30 */
 extern void ScaledLoadTwoCallDualConst_0044ba30(void);   /* 0x0044ba30 */
 extern void PendingMatch_0044baa0(void);   /* 0x0044baa0 */
-extern void PoseCopyIdleCluster_004537a0(void);   /* 0x004537a0 */
-extern void BitmapBlitRunLength_004592f0(void);   /* 0x004592f0 */
+extern void PoseCopyIdleCluster(void);   /* 0x004537a0 */
+extern void BitmapBlitRunLength(void);   /* 0x004592f0 */
 extern void ScaledLoadTwoCallDualConst_00467c30(void);   /* 0x00467c30 */
-extern void GuardedTripleCallSetTail_00467ca0(void);   /* 0x00467ca0 */
+extern void GuardedTripleCallSetTail(void);   /* 0x00467ca0 */
 extern void GuardedSeq_00473f50(void);   /* 0x00473f50 */
-extern void DualSetShiftCall_00473f90(void);   /* 0x00473f90 */
-extern void DoubleStackPushAndJmp_00474010(void);   /* 0x00474010 */
-extern void DoubleStackPushAndJmp7d_00474050(void);   /* 0x00474050 */
-extern void DoubleStackPushAndJmp7b_00474090(void);   /* 0x00474090 */
-extern void MStackPush2CjMul10Triple_00474170(void);   /* 0x00474170 */
-extern void DualPushSet7dCallPop_00474290(void);   /* 0x00474290 */
-extern void DualPushCmp12Dispatch_00474d40(void);   /* 0x00474d40 */
-extern void DualPushCmp12Dispatch68_00474de0(void);   /* 0x00474de0 */
+extern void DualSetShiftCall(void);   /* 0x00473f90 */
+extern void DoubleStackPushAndJmp(void);   /* 0x00474010 */
+extern void DoubleStackPushAndJmp7d(void);   /* 0x00474050 */
+extern void DoubleStackPushAndJmp7b(void);   /* 0x00474090 */
+extern void MStackPush2CjMul10Triple(void);   /* 0x00474170 */
+extern void DualPushSet7dCallPop(void);   /* 0x00474290 */
+extern void DualPushCmp12Dispatch(void);   /* 0x00474d40 */
+extern void DualPushCmp12Dispatch68(void);   /* 0x00474de0 */
 extern void DualScaledLoadStoreJmp(void);   /* 0x00475790 */
-extern void ScaledOr4Jmp_00476e00(void);   /* 0x00476e00 */
-extern void ChainSlotSetupInstallSelf_00476f30(void);   /* 0x00476f30 */
-extern void ScaledAndFBJmp_00476fe0(void);   /* 0x00476fe0 */
-extern void FiveTableInitChainBracketed_004774f0(void);   /* 0x004774f0 */
+extern void ScaledOr4Jmp(void);   /* 0x00476e00 */
+extern void ChainSlotSetupInstallSelf(void);   /* 0x00476f30 */
+extern void ScaledAndFBJmp(void);   /* 0x00476fe0 */
+extern void FiveTableInitChainBracketed(void);   /* 0x004774f0 */
 extern void MoveSelectorCluster(void);   /* 0x0047d9a0 */
-extern void CmpJmpTwoBranch_004871d0(void);   /* 0x004871d0 */
-extern void RoundTextMenuEventCluster_004888b0(void);   /* 0x004888b0 */
+extern void CmpJmpTwoBranch(void);   /* 0x004871d0 */
+extern void RoundTextMenuEventCluster(void);   /* 0x004888b0 */
 extern void GuardedSeq_00488be0(void);   /* 0x00488be0 */
 extern void LiteralPushCallEntZero(void);   /* 0x00488c00 */
 extern void CjTableThresholdDispatch(void);   /* 0x00488f00 */
@@ -67,20 +67,20 @@ extern void MStackPushSet0004(void);   /* 0x00490230 */
 extern void ScaledXorStore_004903b0(void);   /* 0x004903b0 */
 extern void ScaledZeroFour(void);   /* 0x00490740 */
 extern void DualCallPauseDirtyJmp_00490c30(void);   /* 0x00490c30 */
-extern void MStackNegAwareMul10Pair_004910b0(void);   /* 0x004910b0 */
+extern void MStackNegAwareMul10Pair(void);   /* 0x004910b0 */
 extern void ChainTableWalkStore(void);   /* 0x004917e0 */
 
 /* The wrappers - naked __asm to force the exact `call/test/jne/jmp/ret` sequence. */
 /* @addr 0x0041aad0 */
 void GuardedSeq_0041aad0(void) {
-    BootStateInitLongChain_0041ab90();
+    BootStateInitLongChain();
     if (g_framePauseFlag) return;
     StackPopDispatchTagged();
 }
 
 /* @addr 0x004200b0 */
 void GuardedSeq_004200b0(void) {
-    ZeroTriple_00421c20();
+    ZeroTriple();
     if (g_framePauseFlag) return;
     PendingMatch_00401b70();
 }
@@ -89,47 +89,47 @@ void GuardedSeq_004200b0(void) {
 void GuardedSeq_00428350(void) {
     CopyJmp_00406ba0();
     if (g_framePauseFlag) return;
-    MStackPushDualJmp_00428370();
+    MStackPushDualJmp();
 }
 
 /* @addr 0x00428480 */
 void GuardedSeq_00428480(void) {
     CopyJmp_00406ba0();
     if (g_framePauseFlag) return;
-    GuardedLoopWithCallback_004284a0();
+    GuardedLoopWithCallback();
 }
 
 /* @addr 0x004297b0 */
 void GuardedSeq_004297b0(void) {
     GuardedChainCmpDualBitXor();
     if (g_framePauseFlag) return;
-    ScaledIncCmpJmp_004297d0();
+    ScaledIncCmpJmp();
 }
 
 /* @addr 0x0042fb80 */
 void GuardedSeq_0042fb80(void) {
-    DualMulScaleStore_0042ffa0();
+    DualMulScaleStore();
     if (g_framePauseFlag) return;
-    PhaseInstall2DInterpDispatch_0042f8a0();
+    PhaseInstall2DInterpDispatch();
 }
 
 /* @addr 0x0042fba0 */
 void GuardedSeq_0042fba0(void) {
-    DualMulScaleStore_0042ffa0();
+    DualMulScaleStore();
     if (g_framePauseFlag) return;
-    PhaseInstall2DInterpDispatch_0042f8a0();
+    PhaseInstall2DInterpDispatch();
 }
 
 /* @addr 0x004335d0 */
 void GuardedSeq_004335d0(void) {
-    BitmapBlitRunLength_004592f0();
+    BitmapBlitRunLength();
     if (g_framePauseFlag) return;
-    FiveTableInitChainBracketed_004774f0();
+    FiveTableInitChainBracketed();
 }
 
 /* @addr 0x00433bb0 */
 void GuardedSeq_00433bb0(void) {
-    PackedSelectLoad6_00433c60();
+    PackedSelectLoad6();
     if (g_framePauseFlag) return;
     GuardedSeq_00433bd0();
 }
@@ -173,12 +173,12 @@ void GuardedSeq_004515a0(void) {
 void GuardedSeq_00453780(void) {
     MStackPushTwoEntryChainCall();
     if (g_framePauseFlag) return;
-    PoseCopyIdleCluster_004537a0();
+    PoseCopyIdleCluster();
 }
 
 /* @addr 0x004605b0 */
 void GuardedSeq_004605b0(void) {
-    MStackNegAwareMul10Pair_004910b0();
+    MStackNegAwareMul10Pair();
     if (g_framePauseFlag) return;
     ChainTableWalkStore();
 }
@@ -192,7 +192,7 @@ void GuardedSeq_00467c10(void) {
 
 /* @addr 0x00467c80 */
 void GuardedSeq_00467c80(void) {
-    GuardedTripleCallSetTail_00467ca0();
+    GuardedTripleCallSetTail();
     if (g_framePauseFlag) return;
     GuardedSeq_00473f50();
 }
@@ -206,72 +206,72 @@ void GuardedSeq_00471670(void) {
 
 /* @addr 0x00472820 */
 void GuardedSeq_00472820(void) {
-    DualPushCmp12Dispatch68_00474de0();
+    DualPushCmp12Dispatch68();
     if (g_framePauseFlag) return;
     ByteWordTableTaggedDispatch();
 }
 
 /* @addr 0x00472840 */
 void GuardedSeq_00472840(void) {
-    DualPushCmp12Dispatch_00474d40();
+    DualPushCmp12Dispatch();
     if (g_framePauseFlag) return;
     ByteWordTableTaggedDispatch();
 }
 
 /* @addr 0x00473ef0 */
 void GuardedSeq_00473ef0(void) {
-    DualSetShiftCall_00473f90();
+    DualSetShiftCall();
     if (g_framePauseFlag) return;
-    DoubleStackPushAndJmp7b_00474090();
+    DoubleStackPushAndJmp7b();
 }
 
 /* @addr 0x00473f10 */
 void GuardedSeq_00473f10(void) {
-    DualSetShiftCall_00473f90();
+    DualSetShiftCall();
     if (g_framePauseFlag) return;
-    DoubleStackPushAndJmp7d_00474050();
+    DoubleStackPushAndJmp7d();
 }
 
 /* @addr 0x00473f30 */
 void GuardedSeq_00473f30(void) {
-    DualSetShiftCall_00473f90();
+    DualSetShiftCall();
     if (g_framePauseFlag) return;
-    DoubleStackPushAndJmp_00474010();
+    DoubleStackPushAndJmp();
 }
 
 /* @addr 0x00473f50 */
 void GuardedSeq_00473f50(void) {
-    DualSetShiftCall_00473f90();
+    DualSetShiftCall();
     if (g_framePauseFlag) return;
-    DualPushSet7dCallPop_00474290();
+    DualPushSet7dCallPop();
 }
 
 /* @addr 0x00473f70 */
 void GuardedSeq_00473f70(void) {
-    DualSetShiftCall_00473f90();
+    DualSetShiftCall();
     if (g_framePauseFlag) return;
-    MStackPush2CjMul10Triple_00474170();
+    MStackPush2CjMul10Triple();
 }
 
 /* @addr 0x00476de0 */
 void GuardedSeq_00476de0(void) {
     DirtyDoubleDeref();
     if (g_framePauseFlag) return;
-    ScaledOr4Jmp_00476e00();
+    ScaledOr4Jmp();
 }
 
 /* @addr 0x00476f10 */
 void GuardedSeq_00476f10(void) {
     DirtyDoubleDeref();
     if (g_framePauseFlag) return;
-    ChainSlotSetupInstallSelf_00476f30();
+    ChainSlotSetupInstallSelf();
 }
 
 /* @addr 0x00476fc0 */
 void GuardedSeq_00476fc0(void) {
     DirtyDoubleDeref();
     if (g_framePauseFlag) return;
-    ScaledAndFBJmp_00476fe0();
+    ScaledAndFBJmp();
 }
 
 /* @addr 0x0047d980 */
@@ -290,7 +290,7 @@ void GuardedSeq_00485ca0(void) {
 
 /* @addr 0x004871b0 */
 void GuardedSeq_004871b0(void) {
-    CmpJmpTwoBranch_004871d0();
+    CmpJmpTwoBranch();
     if (g_framePauseFlag) return;
     Wrapper_0048a3a0();
 }
@@ -299,7 +299,7 @@ void GuardedSeq_004871b0(void) {
 void GuardedSeq_00488890(void) {
     CjTableThresholdDispatch();
     if (g_framePauseFlag) return;
-    RoundTextMenuEventCluster_004888b0();
+    RoundTextMenuEventCluster();
 }
 
 /* @addr 0x00488be0 */

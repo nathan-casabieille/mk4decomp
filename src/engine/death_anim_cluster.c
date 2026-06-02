@@ -121,12 +121,12 @@ extern unsigned int g_zerotriple_00541dec;
 extern unsigned int g_dispatchVar3_00543564;
 extern unsigned int g_eventMusicSlot_00543594;
 extern void CallSetPause(void);
-extern void Cmp7CondStateUpdate_0042ed90(void);
+extern void Cmp7CondStateUpdate(void);
 extern void GameMusicState4Way(void);
-extern void GuardedDualPushTailJmp_004231f0(void);
+extern void GuardedDualPushTailJmp(void);
 extern void ScaledLoadOrSetJmp(void);
 
-__declspec(naked) void DeathAnimCluster_0042eaf0(void)
+__declspec(naked) void DeathAnimCluster(void)
 {
     __asm {
         /* === Helper 1 (0x42eaf0): death-pose install + post-rotation === */
@@ -166,7 +166,7 @@ __declspec(naked) void DeathAnimCluster_0042eaf0(void)
         mov      dword ptr [g_eventQueueWorkType], eax
     L_eb8b:
         mov      dword ptr [g_eventQueueCurrent], esi
-        call     GuardedDualPushTailJmp_004231f0
+        call     GuardedDualPushTailJmp
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_ed0b
         mov      eax, dword ptr [g_matrixStackTop]
@@ -264,7 +264,7 @@ __declspec(naked) void DeathAnimCluster_0042eaf0(void)
         mov      dword ptr [g_eventQueueCurrent], eax
         shr      ecx, 2
         mov      dword ptr [g_currentNodeIdx], ecx
-        jmp      Cmp7CondStateUpdate_0042ed90
+        jmp      Cmp7CondStateUpdate
         /* === Helper 3: p2 death gate → 0042ed90 === */
         mov      eax, dword ptr [g_active_0053a408]
         test     eax, eax
@@ -280,6 +280,6 @@ __declspec(naked) void DeathAnimCluster_0042eaf0(void)
         mov      dword ptr [g_eventQueueCurrent], 2
         shr      eax, 2
         mov      dword ptr [g_currentNodeIdx], eax
-        jmp      Cmp7CondStateUpdate_0042ed90
+        jmp      Cmp7CondStateUpdate
     }
 }

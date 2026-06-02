@@ -112,12 +112,12 @@ extern void CjTableThresholdDispatch(void);
 extern void MainTickChain(void);
 extern void PendingMatch_00416e20(void);
 extern void ByteWordTableTaggedDispatch(void);
-extern void GameModeAdvanceCluster_00482000(void);
+extern void GameModeAdvanceCluster(void);
 
 /* @addr 0x00483c90 (334b game) - 4-block: thunk + install-self body + 2 small thunks. */
 extern void ArgSarStoreJmp(void);
 extern void CjInstallSelfRouter(void);
-extern void DualBlockChainCallInstall_00483de0(void);
+extern void DualBlockChainCallInstall(void);
 
 __declspec(naked) void QuadBlockInstallChainThunks(void) {
     __asm {
@@ -182,7 +182,7 @@ __declspec(naked) void QuadBlockInstallChainThunks(void) {
         mov     dword ptr [g_walkCallback], 0
         _emit   75h
         _emit   08h
-        call    DualBlockChainCallInstall_00483de0
+        call    DualBlockChainCallInstall
         pop     esi
         pop     ebx
         ret
@@ -206,7 +206,7 @@ __declspec(naked) void QuadBlockInstallChainThunks(void) {
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
-        call    GameModeAdvanceCluster_00482000
+        call    GameModeAdvanceCluster
         mov     dword ptr [g_framePauseFlag], ebx
         pop     esi
         pop     ebx
@@ -218,7 +218,7 @@ __declspec(naked) void QuadBlockInstallChainThunks(void) {
         _emit   75h
         _emit   0fh
         mov     dword ptr [g_walkCallback], 0x2013
-        jmp     DualBlockChainCallInstall_00483de0
+        jmp     DualBlockChainCallInstall
         ret
         _emit   90h
         _emit   90h
@@ -228,7 +228,7 @@ __declspec(naked) void QuadBlockInstallChainThunks(void) {
         _emit   75h
         _emit   0fh
         mov     dword ptr [g_walkCallback], 0x1013
-        jmp     DualBlockChainCallInstall_00483de0
+        jmp     DualBlockChainCallInstall
         ret
     }
 }

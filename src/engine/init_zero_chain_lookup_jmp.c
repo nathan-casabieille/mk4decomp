@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY;
  *   g_eventQueueEnd = eax; jmp 0x494290.
  */
 extern unsigned int g_dispatchSave422_005431c0;
-void InitZeroChainLookupJmp_00494210(void) {
+void InitZeroChainLookupJmp(void) {
     unsigned int idx;
     unsigned int eax_val;
     unsigned int adj;

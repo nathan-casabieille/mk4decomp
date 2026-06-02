@@ -121,7 +121,7 @@ extern unsigned int g_fightAxisPosY;
 extern void FiveCallGuardSetTail(void);
 extern void ScaledLoadIncJmp_00428d00(void);
 
-__declspec(naked) void DualBlockInstallSelfWithSibling_00484c90(void) {
+__declspec(naked) void DualBlockInstallSelfWithSibling(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         shl     eax, 2
@@ -178,7 +178,7 @@ __declspec(naked) void DualBlockInstallSelfWithSibling_00484c90(void) {
         mov     dword ptr [g_eventQueueChild], ecx
         _emit   74h
         _emit   07h
-        call    DualBlockInstallSelfWithSibling_00484c90
+        call    DualBlockInstallSelfWithSibling
         pop     edi
         ret
         mov     dword ptr [eax + 8], 0x00484cf0

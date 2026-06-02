@@ -13,15 +13,15 @@ extern unsigned int g_scaledInit_00542044;
  *   walk → g_eventQueueWorkType; call F again; pause → ret;
  *   jmp T.
  */
-extern void ChainShiftRight8_0045d9b0(void);
-void DualSwapTwoCallsJmp_0045d960(void) {
+extern void ChainShiftRight8(void);
+void DualSwapTwoCallsJmp(void) {
     g_eventQueueTotal = g_xformEntityIdx;
     g_eventQueueWorkType = g_gtFightTickCounter;
-    ChainShiftRight8_0045d9b0();
+    ChainShiftRight8();
     if (g_framePauseFlag) return;
     g_eventQueueTotal = g_scaledInit_00542044;
     g_eventQueueWorkType = (unsigned int)g_walkCallback;
-    ChainShiftRight8_0045d9b0();
+    ChainShiftRight8();
     if (g_framePauseFlag) return;
     CallSetPause();
 }

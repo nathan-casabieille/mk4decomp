@@ -109,22 +109,22 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void DrainQueueCallEach(void);
-extern void PhaseClampInstallSlot_0049e1c0(void);
+extern void PhaseClampInstallSlot(void);
 extern void PendingMatch_0045c8e0(void);
-extern void Init0AndMax_00401370(void);
+extern void Init0AndMax(void);
 extern void CopyGlobal(void);
-extern void Init6Struct_00404e20(void);
+extern void Init6Struct(void);
 extern void ScenegraphWalk(void);
-extern void CallPauseClear3CallTriple_00428030(void);
-extern void SlideAttackEventCluster_00498900(void);
-extern void AndStorePushCallZero_0048a220(void);
+extern void CallPauseClear3CallTriple(void);
+extern void SlideAttackEventCluster(void);
+extern void AndStorePushCallZero(void);
 
 /* @addr 0x004265d0 (249b game) - boot-style init sequence then guarded call chain.
- *   8 setup calls (DrainQueueCallEach, PendingMatch_0045c8e0, Init0AndMax_00401370,
- *     g_walkCallback=0, CopyGlobal, Init6Struct_00404e20, ScenegraphWalk,
- *     CallPauseClear3CallTriple_00428030). If pause? ret.
+ *   8 setup calls (DrainQueueCallEach, PendingMatch_0045c8e0, Init0AndMax,
+ *     g_walkCallback=0, CopyGlobal, Init6Struct, ScenegraphWalk,
+ *     CallPauseClear3CallTriple). If pause? ret.
  *   mstack-push 3 (0, g_eventQueueCurrent, g_eventQueueWorkType); clear g_dualBitGate;
- *   call SlideAttackEventCluster_00498900; if pause? ret. call AndStorePushCallZero_0048a220; if pause? ret.
+ *   call SlideAttackEventCluster; if pause? ret. call AndStorePushCallZero; if pause? ret.
  *   mstack-pop 3 into g_eventQueueWorkType, g_eventQueueCurrent, g_walkCallback.
  *   set g_tickW1 = 0x100; ret.
  */
@@ -133,12 +133,12 @@ void BootInitGuardedCallChain(void) {
     __asm {
         call    DrainQueueCallEach
         call    PendingMatch_0045c8e0
-        call    Init0AndMax_00401370
+        call    Init0AndMax
         mov     dword ptr [g_walkCallback], 0
         call    CopyGlobal
-        call    Init6Struct_00404e20
+        call    Init6Struct
         call    ScenegraphWalk
-        call    CallPauseClear3CallTriple_00428030
+        call    CallPauseClear3CallTriple
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -163,12 +163,12 @@ void BootInitGuardedCallChain(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], edx
-        call    SlideAttackEventCluster_00498900
+        call    SlideAttackEventCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   56h
-        call    AndStorePushCallZero_0048a220
+        call    AndStorePushCallZero
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

@@ -25,8 +25,8 @@ extern unsigned int g_scaledInit_00542044;
 extern void ScaledZeroFour(void);
 extern void DirtyToggleByGate(void);
 extern void CjInstallSelfRouter(void);
-extern void Install3StateDualArmQuad_004602b0(void);
-void DualCallPauseDirtyDoubleJmp_00486fc0(void) {
+extern void Install3StateDualArmQuad(void);
+void DualCallPauseDirtyDoubleJmp(void) {
     ScaledZeroFour();
     if (g_framePauseFlag != 0) return;
     DirtyToggleByGate();
@@ -35,5 +35,5 @@ void DualCallPauseDirtyDoubleJmp_00486fc0(void) {
         CjInstallSelfRouter();
         return;
     }
-    Install3StateDualArmQuad_004602b0();
+    Install3StateDualArmQuad();
 }

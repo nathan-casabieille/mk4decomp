@@ -125,7 +125,7 @@ extern void Cmp2DirtyToggle(void);
 extern unsigned int g_arr_4237d0;
 extern unsigned int g_chain_arr_4348f0;
 
-void TwoStateLookupDirty_004237d0(void) {
+void TwoStateLookupDirty(void) {
     __asm {
         mov     eax, offset g_dispatchSave1198_004ded70
         mov     ecx, offset g_dispatchSave1199_004ded80

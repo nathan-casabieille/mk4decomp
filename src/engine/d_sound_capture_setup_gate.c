@@ -126,7 +126,7 @@ extern int g_renderer2_present_rc;
 extern int g_renderer2_active;
 extern int g_renderer2_paused;
 
-__declspec(naked) void DSoundCaptureSetupGate_004ad4a0(void) {
+__declspec(naked) void DSoundCaptureSetupGate(void) {
     __asm {
         mov     eax, dword ptr [g_renderer2_active]
         sub     esp, 0x6c

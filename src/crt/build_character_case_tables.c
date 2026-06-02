@@ -113,10 +113,10 @@ extern unsigned int g_dispatchSave1434_00f9f9c8;
 extern unsigned int g_dispatchSave1435_00f9fac8;
 extern unsigned int g_dispatchSave1436_00f9facc;
 extern unsigned int g_iat_004d2114;
-extern void CrtCodepageDispatcher_004cd6f0(void);
-extern void WcToMbDispatcher_004cdae0(void);
+extern void CrtCodepageDispatcher(void);
+extern void WcToMbDispatcher(void);
 
-__declspec(naked) void BuildCharacterCaseTables_004c9840(void)
+__declspec(naked) void BuildCharacterCaseTables(void)
 {
     __asm {
         mov      ecx, dword ptr [g_dispatchSave1435_00f9fac8]
@@ -179,7 +179,7 @@ __declspec(naked) void BuildCharacterCaseTables_004c9840(void)
         push     0x100
         push     edx
         push     1
-        call     WcToMbDispatcher_004cdae0
+        call     WcToMbDispatcher
         mov      eax, dword ptr [g_dispatchSave1435_00f9fac8]
         add      esp, 0x1c
         lea      ecx, [esp + 0x120]
@@ -193,7 +193,7 @@ __declspec(naked) void BuildCharacterCaseTables_004c9840(void)
         push     edx
         push     0x100
         push     eax
-        call     CrtCodepageDispatcher_004cd6f0
+        call     CrtCodepageDispatcher
         mov      ecx, dword ptr [g_dispatchSave1435_00f9fac8]
         add      esp, 0x20
         lea      edx, [esp + 0x220]
@@ -207,7 +207,7 @@ __declspec(naked) void BuildCharacterCaseTables_004c9840(void)
         push     eax
         push     0x200
         push     ecx
-        call     CrtCodepageDispatcher_004cd6f0
+        call     CrtCodepageDispatcher
         add      esp, 0x20
         xor      eax, eax
         lea      edx, [esp + 0x320]

@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  *   gate pause; set ecx |= 1 in state, then clear bit 0 if wt!=0.
  */
 
-void DirtyToggleInstall_00408b90(void) {
+void DirtyToggleInstall(void) {
     __asm {
         mov     eax, dword ptr [g_xformDirtyFlags]
         mov     ecx, dword ptr [g_eventQueueCurrent]

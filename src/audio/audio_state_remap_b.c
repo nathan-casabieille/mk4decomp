@@ -109,10 +109,10 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * @addr 0x004a04a0 (122b audio) - twin of AudioStateRemap_004a0190
+ * @addr 0x004a04a0 (122b audio) - twin of AudioStateRemap
  *   keyed off 0x53a2e8 instead of 0x541dd4; stores into 0x5380e0;
  *   tests ch instead of al for the 0x20 flag, and bit 0x40 instead
- *   of 0x04 in the second gate; tail-jmp AudioInstallSelfChannel8_004a0520.
+ *   of 0x04 in the second gate; tail-jmp AudioInstallSelfChannel8.
  */
 extern s32 g_dlNalt2;
 extern unsigned int g_audioPeriodicSlot_0053a2e8;
@@ -120,7 +120,7 @@ extern unsigned int g_byte_00543724;
 extern unsigned int g_audioStateRemapByte_00543728;
 extern unsigned int g_byte_0054372c;
 extern unsigned int g_byte_00543730;
-extern void AudioInstallSelfChannel8_004a0520(void);
+extern void AudioInstallSelfChannel8(void);
 
 /*
  * NON-COAXABLE: orig uses `test ch, 0x20` (3b, F6 C5 20) to check bit 13 of
@@ -129,7 +129,7 @@ extern void AudioInstallSelfChannel8_004a0520(void);
  * MSVC SP3 won't choose CH byte addressing for a 32-bit unsigned masked test
  * (no equivalent C construct). The 3b vs 6b delta breaks byte identity.
  */
-__declspec(naked) void AudioStateRemapB_004a04a0(void) {
+__declspec(naked) void AudioStateRemapB(void) {
     __asm {
         mov     ecx, dword ptr [g_audioPeriodicSlot_0053a2e8]
         mov     eax, dword ptr [g_acc_00542078]
@@ -163,6 +163,6 @@ skip6:
         jne     tail
         mov     dword ptr [g_dlNalt2], 0x11
 tail:
-        jmp     AudioInstallSelfChannel8_004a0520
+        jmp     AudioInstallSelfChannel8
     }
 }

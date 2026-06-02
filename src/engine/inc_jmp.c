@@ -9,8 +9,8 @@ extern unsigned int g_scaledInit_00542044;
  *   inc     dword ptr [g_scaledInit_00542044]
  *   jmp     +5
  */
-extern void EventGateCluster_0045e1e0(void);
-void IncJmp_0045e1d0(void) {
+extern void EventGateCluster(void);
+void IncJmp(void) {
     g_scaledInit_00542044++;
-    EventGateCluster_0045e1e0();
+    EventGateCluster();
 }

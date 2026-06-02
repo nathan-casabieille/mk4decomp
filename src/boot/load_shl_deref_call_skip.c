@@ -18,10 +18,10 @@ extern unsigned int g_scaledInit_00542044;
  *   add     esp, 4
  *   ret
  */
-extern void NodeUnlink_0041f710(unsigned int);
-void LoadShlDerefCallSkip_0041f810(void) {
+extern void NodeUnlink(unsigned int);
+void LoadShlDerefCallSkip(void) {
     unsigned int p = g_pendingNodeType * 4;
     if (((ScenegraphNode *)p)->ptr_field) {
-        NodeUnlink_0041f710(p);
+        NodeUnlink(p);
     }
 }

@@ -17,7 +17,7 @@ extern unsigned int g_mat3x3_007af994;
 extern unsigned int g_mat3x3_007af998;
 extern unsigned int g_mat3x3_007af99c;
 extern unsigned short g_word_007af9a0;
-void DirtyTestScaledCopy_004ba6c0(void) {
+void DirtyTestScaledCopy(void) {
     __asm {
         test    byte ptr [g_xformDirtyFlags], 0x10
         _emit   74h

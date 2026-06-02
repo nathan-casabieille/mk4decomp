@@ -15,9 +15,9 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_tickFlagF;
 extern void DualTestDirtyToggle_004282c0(void);
 extern void StackPopDispatchTagged(void);
-extern void IncCapped3e7_00491920(void);
+extern void IncCapped3e7(void);
 extern void RoundStartCluster_004919c0(void);
-void Set5CallPauseTestByteJmpCall_00491950(void) {
+void Set5CallPauseTestByteJmpCall(void) {
     g_walkCallback = (void (*)(void))5;
     g_tickFlagF = 5;
     DualTestDirtyToggle_004282c0();
@@ -28,6 +28,6 @@ void Set5CallPauseTestByteJmpCall_00491950(void) {
         StackPopDispatchTagged();
         return;
     }
-    IncCapped3e7_00491920();
+    IncCapped3e7();
     RoundStartCluster_004919c0();
 }

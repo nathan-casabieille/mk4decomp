@@ -116,13 +116,13 @@ extern unsigned int g_load_0052ab10;
 extern unsigned int g_dispatchArg;
 extern unsigned int g_dispatchSave32_00542a08;
 extern void DirtyDoubleDeref(void);
-extern void InstallSelfDispatch_00407620(void);
+extern void InstallSelfDispatch(void);
 extern void MStackBracket4_ListInsertZeroFill(void);
 extern void MStackCall_00406340(void);
 extern void MStackPush3LinkedListWalk(void);
 extern void MStackPush4LLWalkPop4(void);
 
-__declspec(naked) void CombatChainWalkExpand_00463870(void)
+__declspec(naked) void CombatChainWalkExpand(void)
 {
     __asm {
         mov      eax, dword ptr [g_pendingNodeType]
@@ -230,7 +230,7 @@ __declspec(naked) void CombatChainWalkExpand_00463870(void)
         mov      dword ptr [g_xformEntityIdx], edx
         mov      ecx, dword ptr [eax*4 + 0x18]
         mov      dword ptr [g_currentNodeIdx], ecx
-        call     InstallSelfDispatch_00407620
+        call     InstallSelfDispatch
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3c6e

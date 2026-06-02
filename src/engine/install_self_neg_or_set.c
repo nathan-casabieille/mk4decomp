@@ -110,17 +110,17 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0047aa40 (167b game) - install-self 3-way with neg-or-set chain[+0x84].
  *   esi = base*4; flag = [esi+0x84]; clear.
- *   if (flag == 0): set g_currentNodeFlags = 0xccc; call CinematicFsmCluster_0047aaf0; pause? -> end;
+ *   if (flag == 0): set g_currentNodeFlags = 0xccc; call CinematicFsmCluster; pause? -> end;
  *     install with [esi+0x84]=1, g_pendingNodeType=2, pause=1.
- *   if (flag == 1): g_currentNodeFlags = -g_currentNodeFlags; call CinematicFsmCluster_0047aaf0; pause? -> end;
+ *   if (flag == 1): g_currentNodeFlags = -g_currentNodeFlags; call CinematicFsmCluster; pause? -> end;
  *     install with [esi+0x84]=2 (eax), g_pendingNodeType=2, pause=1.
  *   else: call StackPopDispatchTagged; pop esi; ret.
  */
-extern void CinematicFsmCluster_0047aaf0(void);
+extern void CinematicFsmCluster(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void InstallSelfNegOrSet_0047aa40(void) {
+__declspec(naked) void InstallSelfNegOrSet(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -139,7 +139,7 @@ __declspec(naked) void InstallSelfNegOrSet_0047aa40(void) {
         mov     ecx, dword ptr [g_currentNodeFlags]
         neg     ecx
         mov     dword ptr [g_currentNodeFlags], ecx
-        call    CinematicFsmCluster_0047aaf0
+        call    CinematicFsmCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -152,7 +152,7 @@ __declspec(naked) void InstallSelfNegOrSet_0047aa40(void) {
         pop     esi
         ret
         mov     dword ptr [g_currentNodeFlags], 0x0ccc
-        call    CinematicFsmCluster_0047aaf0
+        call    CinematicFsmCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_pendingMatchVar;
 
-void TripleVecModClamp_0042af10(void) {
+void TripleVecModClamp(void) {
     __asm {
         mov     edx, dword ptr [esp + 4]
         mov     ecx, dword ptr [g_pendingMatchVar]

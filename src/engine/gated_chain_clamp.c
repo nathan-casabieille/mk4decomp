@@ -112,27 +112,27 @@ extern unsigned int g_chain_disp_30_486e80;
 /* @addr 0x00486e80 (150b game) - 5-stage gated chain w/ count-bracket + clamp:
  *   walkCallback=0; call F1; pause? ret.
  *   if (g_eventQueueChild >= 0x10): call F2; pause? ret. else: call F3; pause? ret.
- *   call F4; pause? ret. if (g_xformDirtyFlags & 1): jmp InstallSelf3StateDualEntry_00486ff0.
+ *   call F4; pause? ret. if (g_xformDirtyFlags & 1): jmp InstallSelf3StateDualEntry.
  *   eax = chain[sel].slot30; walkCallback=eax; if eax != 0: jmp Wrapper_00487140.
- *   else: if (g_eventQueueNotMask > 3): g_eventQueueNotMask = 3. jmp MStackChainCountdown_00486f20.
+ *   else: if (g_eventQueueNotMask > 3): g_eventQueueNotMask = 3. jmp MStackChainCountdown.
  */
-void GatedChainClamp_00486e80(void) {
+void GatedChainClamp(void) {
     unsigned int v;
     g_walkCallback = (void (*)(void))0;
     ScaledIndexConditionalAdd();
     if (g_framePauseFlag != 0) return;
     if ((int)g_eventQueueChild >= 0x10) {
-        ScaledTestCallPauseJmpFar_00487150();
+        ScaledTestCallPauseJmpFar();
         if (g_framePauseFlag != 0) return;
     }
     if ((int)g_eventQueueChild < 0x10) {
-        ScaledTestCallPauseJmp_00487180();
+        ScaledTestCallPauseJmp();
         if (g_framePauseFlag != 0) return;
     }
     GuardedDualConst2AndToggle();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 1) != 0) {
-        InstallSelf3StateDualEntry_00486ff0();
+        InstallSelf3StateDualEntry();
         return;
     }
     v = ((unsigned int *)&g_chain_disp_30_486e80)[g_baseSel];
@@ -144,5 +144,5 @@ void GatedChainClamp_00486e80(void) {
     if ((int)g_eventQueueNotMask > 3) {
         g_eventQueueNotMask = 3;
     }
-    MStackChainCountdown_00486f20();
+    MStackChainCountdown();
 }

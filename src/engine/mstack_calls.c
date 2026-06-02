@@ -26,15 +26,15 @@
 
 /* Externs for call targets. */
 extern void MStackCall_004062a0(void);   /* 0x545ecf1e */
-extern void MStackPush2ChainInsert_00409870(void);   /* 0x545ecf6e */
+extern void MStackPush2ChainInsert(void);   /* 0x545ecf6e */
 extern void MStackCall_00406340(void);   /* 0x545ecfbe */
 extern void MStackPush2ChainPrepend(void);   /* 0x545ed00e */
 extern void MStackPush2ChainPrepend(void);   /* 0x545ed05e */
 extern void MStackPush2ChainPrepend(void);   /* 0x545ed0ae */
-extern void MStackPush2ChainInsert_00409870(void);   /* 0x545ed27e */
+extern void MStackPush2ChainInsert(void);   /* 0x545ed27e */
 extern void MStackPush2ChainPrepend(void);   /* 0x545ed2ce */
 extern void MStackPush2ChainLLInsert(void);   /* 0x545ed40e */
-extern void MStackPush2ChainInsert_00409870(void);   /* 0x545ed81e */
+extern void MStackPush2ChainInsert(void);   /* 0x545ed81e */
 extern void PushPopScaled1cDoubleCall(void);   /* 0x54633efe */
 
 /* The wrappers. */
@@ -57,7 +57,7 @@ void MStackCall_004062a0(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_currentNodeIdx;
     g_currentNodeIdx = g_fightGroupHead;
-    MStackPush2ChainInsert_00409870();
+    MStackPush2ChainInsert();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     g_currentNodeIdx = *(unsigned int *)(top * 4);
@@ -122,7 +122,7 @@ void MStackCall_004065b0(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_currentNodeIdx;
     g_currentNodeIdx = g_fightGroupHead;
-    MStackPush2ChainInsert_00409870();
+    MStackPush2ChainInsert();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     g_currentNodeIdx = *(unsigned int *)(top * 4);
@@ -161,7 +161,7 @@ void MStackCall_00406b50(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_currentNodeIdx;
     g_currentNodeIdx = g_fightGroupHead;
-    MStackPush2ChainInsert_00409870();
+    MStackPush2ChainInsert();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     g_currentNodeIdx = *(unsigned int *)(top * 4);

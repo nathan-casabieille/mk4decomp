@@ -118,10 +118,10 @@ extern unsigned int g_fightAxisPosY;
  *   Clear bit, zero remaining dwords (3 - esi entries with rep stosd).
  *   Return edx.
  */
-extern void BitsetIterClear_004cc8f0(void);
-extern void BitsetTrailZeroCheck_004cc880(void);
+extern void BitsetIterClear(void);
+extern void BitsetTrailZeroCheck(void);
 
-__declspec(naked) void BitsetReserve_004cc960(void) {
+__declspec(naked) void BitsetReserve(void) {
     __asm {
         push    ecx
         mov     eax, [esp + 0x0c]
@@ -158,7 +158,7 @@ __declspec(naked) void BitsetReserve_004cc960(void) {
         inc     ebp
         push    ebp
         push    ebx
-        call    BitsetTrailZeroCheck_004cc880
+        call    BitsetTrailZeroCheck
         add     esp, 8
         test    eax, eax
         _emit   75h
@@ -166,7 +166,7 @@ __declspec(naked) void BitsetReserve_004cc960(void) {
         mov     eax, [esp + 0x1c]
         push    eax
         push    ebx
-        call    BitsetIterClear_004cc8f0
+        call    BitsetIterClear
         add     esp, 8
         mov     edx, eax
         _emit   0ebh

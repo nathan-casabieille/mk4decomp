@@ -121,7 +121,7 @@ extern unsigned int g_dispatchSave1632_007b0004;
 extern unsigned int g_dispatchSave1652_007b0074;
 extern unsigned int g_dispatchSave1653_007b0078;
 
-__declspec(naked) void GlideTriColorFlush_004b46f0(void)
+__declspec(naked) void GlideTriColorFlush(void)
 {
     __asm {
         mov      eax, dword ptr [g_renderer1_active]

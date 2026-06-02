@@ -115,12 +115,12 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void BootStateTriple(void);
 extern void GDispatch4(void);
-extern void MStackBracket2_StateAdvance6_004094d0(void);
+extern void MStackBracket2_StateAdvance6(void);
 
 extern unsigned int g_chain_disp_24_4096b0;
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void MStackPush2DispatchChain_004096b0(void) {
+__declspec(naked) void MStackPush2DispatchChain(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_xformEntityIdx]
@@ -158,7 +158,7 @@ __declspec(naked) void MStackPush2DispatchChain_004096b0(void) {
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   75h
         _emit   05h
-        jmp     MStackBracket2_StateAdvance6_004094d0
+        jmp     MStackBracket2_StateAdvance6
         ret
     }
 }

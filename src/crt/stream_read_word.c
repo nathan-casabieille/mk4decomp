@@ -13,7 +13,7 @@
  *   movzx   eax, dx
  *   ret
  */
-unsigned short StreamReadWord_004c83c0(unsigned char **stream) {
+unsigned short StreamReadWord(unsigned char **stream) {
     unsigned char *p = *stream;
     *stream = p + 4;
     p = *stream;

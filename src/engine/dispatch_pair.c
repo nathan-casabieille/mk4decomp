@@ -118,12 +118,12 @@ extern unsigned int g_fightAxisPosY;
 extern void MStackPop8(void);
 extern void MStackPush8(void);
 extern void TableWalkBoundedCmp(void);
-extern void TwinLoopSlotFinder_00429a40(void);
+extern void TwinLoopSlotFinder(void);
 
 extern unsigned int g_chain_arr_4348f0;
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void DispatchPair_00429ac0(void) {
+__declspec(naked) void DispatchPair(void) {
     __asm {
         push    7
         call    TableWalkBoundedCmp
@@ -142,7 +142,7 @@ __declspec(naked) void DispatchPair_00429ac0(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], ecx
-        call    TwinLoopSlotFinder_00429a40
+        call    TwinLoopSlotFinder
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

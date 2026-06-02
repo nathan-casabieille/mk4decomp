@@ -7,7 +7,7 @@ extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 typedef unsigned int (__stdcall *DivLongFn)(int, int, __int64);
-extern void Alldiv_004c5690(void);
+extern void Alldiv(void);
 
 void DivLongPushCall(void) {
     int v = (int)g_walkCallback;
@@ -15,5 +15,5 @@ void DivLongPushCall(void) {
         g_walkCallback = (void (*)(void))v;
         return;
     }
-    g_walkCallback = (void (*)(void))((DivLongFn)Alldiv_004c5690)(0, 1, (__int64)v);
+    g_walkCallback = (void (*)(void))((DivLongFn)Alldiv)(0, 1, (__int64)v);
 }

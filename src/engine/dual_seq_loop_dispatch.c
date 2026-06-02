@@ -110,15 +110,15 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00442dd0 (176b game) - dual sequence: A: esi=0x94, scaledInit=0; loop:
  *   set g_walkCallback=esi; call DispatcherComplex138; pause-check; if bit-2 (bl=4) test fails:
- *   call CameraBounceOverflow_00442f90; pause-check; reset. Block B (+0x58): same shape with esi=0x7e and
- *   ScaledChainAccumThreshold_00442e80; falls through to call ScaledInitOrSelfPtr_00442d90.
+ *   call CameraBounceOverflow; pause-check; reset. Block B (+0x58): same shape with esi=0x7e and
+ *   ScaledChainAccumThreshold; falls through to call ScaledInitOrSelfPtr_00442d90.
  */
-extern void CameraBounceOverflow_00442f90(void);
+extern void CameraBounceOverflow(void);
 extern void DispatcherComplex138_004760f0(void);
-extern void ScaledChainAccumThreshold_00442e80(void);
+extern void ScaledChainAccumThreshold(void);
 extern void ScaledInitOrSelfPtr_00442d90(void);
 
-__declspec(naked) void DualSeqLoopDispatch_00442dd0(void) {
+__declspec(naked) void DualSeqLoopDispatch(void) {
     __asm {
         push    ebx
         push    esi
@@ -138,7 +138,7 @@ __declspec(naked) void DualSeqLoopDispatch_00442dd0(void) {
         test    byte ptr [g_xformDirtyFlags], bl
         _emit   75h
         _emit   25h
-        call    CameraBounceOverflow_00442f90
+        call    CameraBounceOverflow
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -163,7 +163,7 @@ __declspec(naked) void DualSeqLoopDispatch_00442dd0(void) {
         test    byte ptr [g_xformDirtyFlags], bl
         _emit   75h
         _emit   25h
-        call    ScaledChainAccumThreshold_00442e80
+        call    ScaledChainAccumThreshold
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

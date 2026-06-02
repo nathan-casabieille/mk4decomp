@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  *   g_walkCallback = ecx; [eax*4 + 0x5c] = ecx; ret.
  */
 
-void DualSubFromField_00489c70(void) {
+void DualSubFromField(void) {
     __asm {
         mov     eax, dword ptr [g_pendingNodeType]
         mov     ecx, dword ptr [eax*4 + 0x54]

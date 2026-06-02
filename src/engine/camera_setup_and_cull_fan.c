@@ -150,14 +150,14 @@ extern unsigned int g_struct_00ab4e58;
 extern unsigned int g_dispatchSave1575_00ab4e5c;
 extern unsigned int g_dispatchSave1576_00ab4e60;
 extern unsigned int g_dispatchSave1577_00ab4e6c;
-extern void AltCamMatrixProject_004b9840(void);
-extern void Color15BitPacker_004b3030(void);
+extern void AltCamMatrixProject(void);
+extern void Color15BitPacker(void);
 extern void DoubleToInt64(void);
-extern void Mat3x3VecMul6Bit_004b3590(void);
-extern void PackColor_004b30c0(void);
-extern void Vec3NormalizeScaleStore_004b3130(void);
+extern void Mat3x3VecMul6Bit(void);
+extern void PackColor(void);
+extern void Vec3NormalizeScaleStore(void);
 
-__declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
+__declspec(naked) void CameraSetupAndCullFan(void)
 {
     __asm {
         sub      esp, 0x18
@@ -244,7 +244,7 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         mov      dword ptr [g_mat3x3_007af998], ecx
         mov      dword ptr [g_mat3x3_007af99c], edx
         mov      word ptr [g_mat3x3_007af9a0], ax
-        call     Mat3x3VecMul6Bit_004b3590
+        call     Mat3x3VecMul6Bit
         mov      edi, dword ptr [g_dispatchSave1525_00ab4838]
         mov      ecx, dword ptr [g_dispatchSave1526_00ab483c]
         mov      ebx, dword ptr [g_dispatchSave1527_00ab4840]
@@ -310,18 +310,18 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         push     eax
         push     ecx
         push     0
-        call     Vec3NormalizeScaleStore_004b3130
+        call     Vec3NormalizeScaleStore
         add      esp, 0x10
         push     0x50
         push     0x50
         push     0x50
-        call     Color15BitPacker_004b3030
+        call     Color15BitPacker
         add      esp, 0xc
         push     esi
         push     esi
         push     esi
         push     0
-        call     PackColor_004b30c0
+        call     PackColor
         mov      eax, dword ptr [g_xformEntityIdx]
         mov      ecx, dword ptr [g_struct_00ab4e50]
         mov      esi, dword ptr [g_struct_00ab4e54]
@@ -432,7 +432,7 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         push     eax
         push     ecx
         push     1
-        call     Vec3NormalizeScaleStore_004b3130
+        call     Vec3NormalizeScaleStore
         movsx    edx, word ptr [g_dispatchSave1512_00ab44e8]
         movsx    eax, word ptr [g_dispatchSave1509_00ab44e2]
         movsx    ecx, word ptr [g_dispatchSave1506_00ab44dc]
@@ -441,7 +441,7 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         push     eax
         push     ecx
         push     1
-        call     PackColor_004b30c0
+        call     PackColor
         add      esp, 0x10
     L_9df0:
         mov      eax, dword ptr [g_fightGroupHead]
@@ -459,7 +459,7 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         jl       L_9e2d
         push     0
         push     OFFSET g_dispatchSave1550_00ab4cd8
-        call     AltCamMatrixProject_004b9840
+        call     AltCamMatrixProject
         add      esp, 8
     L_9e2d:
         mov      edx, dword ptr [esp + 0x20]

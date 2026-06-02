@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void ECM_Cleanup(void);
 extern unsigned int g_rendererCheckVal;
-void CallZero_004bea30(void) {
+void CallZero(void) {
     ECM_Cleanup();
     g_rendererCheckVal = 0;
 }

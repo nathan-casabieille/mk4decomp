@@ -112,8 +112,8 @@ extern unsigned int g_fightAxisPosY;
  *   Big stack frame (4100b via Helper_ChkStk). Saves the current
  *   file position with LseekImpl(fd, 0, 1) and remembers it. Probes the
  *   file size via LseekImpl(fd, 0, 2). If size > 0, sets up a 4KB scratch
- *   buffer on the stack, switches the fd to binary via Setmode_004d0b50,
- *   then loops reading via FileWriteWithLfToCrlf_004c9b60 (read), decrementing remaining
+ *   buffer on the stack, switches the fd to binary via Setmode,
+ *   then loops reading via FileWriteWithLfToCrlf (read), decrementing remaining
  *   bytes by the amount returned. On EOF or error, dispatches via
  *   Crt_errno / Crt_doserrno to set errno=0xd (EBADF) if the
  *   underlying error code was 5. Finally restores binary→text via Setmode
@@ -123,15 +123,15 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_iat_004d209c;
 extern unsigned int g_dispatchSave651_004d20b0;
-extern void CRTHandleLookup_004cd260(void);
+extern void CRTHandleLookup(void);
 extern void Crt_doserrno(void);
 extern void Crt_errno(void);
-extern void FileWriteWithLfToCrlf_004c9b60(void);
+extern void FileWriteWithLfToCrlf(void);
 extern void Helper_ChkStk(void);
 extern void LseekImpl(void);
-extern void Setmode_004d0b50(void);
+extern void Setmode(void);
 
-__declspec(naked) void TextModeReadStream_004cef10(void) {
+__declspec(naked) void TextModeReadStream(void) {
     __asm {
         mov     eax, 0x1004
         call    Helper_ChkStk
@@ -168,7 +168,7 @@ __declspec(naked) void TextModeReadStream_004cef10(void) {
         push    0x8000
         rep stosd
         push    ebx
-        call    Setmode_004d0b50
+        call    Setmode
         add     esp, 8
         mov     edi, eax
     L_tmr_readLoop:
@@ -181,7 +181,7 @@ __declspec(naked) void TextModeReadStream_004cef10(void) {
         lea     eax, [esp + 0x18]
         push    eax
         push    ebx
-        call    FileWriteWithLfToCrlf_004c9b60
+        call    FileWriteWithLfToCrlf
         add     esp, 0xc
         cmp     eax, -1
         je      short L_tmr_readErr
@@ -200,7 +200,7 @@ __declspec(naked) void TextModeReadStream_004cef10(void) {
     L_tmr_readDone:
         push    edi
         push    ebx
-        call    Setmode_004d0b50
+        call    Setmode
         mov     edi, dword ptr [esp + 0x18]
         add     esp, 8
         push    0
@@ -223,7 +223,7 @@ __declspec(naked) void TextModeReadStream_004cef10(void) {
         call    LseekImpl
         add     esp, 0xc
         push    ebx
-        call    CRTHandleLookup_004cd260
+        call    CRTHandleLookup
         add     esp, 4
         push    eax
         call    dword ptr [g_dispatchSave651_004d20b0]

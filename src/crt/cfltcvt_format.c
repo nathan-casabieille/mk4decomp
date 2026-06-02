@@ -108,18 +108,18 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void CfltcvtFormat_004c8650(int, int, void *, int, void *);
+extern void CfltcvtFormat(int, int, void *, int, void *);
 
 /*
  * @addr 0x004c85d0 (115b crt) - signed-int print helper twin of
- *   FormatHelper_004c8750: parses argp, computes length adjustment
- *   accounting for sign, calls FpFormatRound_004ccda0 for the digits, then
- *   CfltcvtFormat_004c8650 to write out.
+ *   FormatHelper: parses argp, computes length adjustment
+ *   accounting for sign, calls FpFormatRound for the digits, then
+ *   CfltcvtFormat to write out.
  */
-extern void CrtDoubleToStringImpl_004cce40(void);
-extern void FpFormatRound_004ccda0(void);
+extern void CrtDoubleToStringImpl(void);
+extern void FpFormatRound(void);
 
-__declspec(naked) void PrintfStubSigned_004c85d0(void) {
+__declspec(naked) void PrintfStubSigned(void) {
     __asm {
         sub     esp, 0x28
         lea     eax, [esp + 0x10]
@@ -136,7 +136,7 @@ __declspec(naked) void PrintfStubSigned_004c85d0(void) {
         mov     eax, dword ptr [eax]
         push    edx
         push    eax
-        call    CrtDoubleToStringImpl_004cce40
+        call    CrtDoubleToStringImpl
         mov     esi, dword ptr [esp + 0x4c]
         mov     edi, dword ptr [esp + 0x48]
         add     esp, 0x10
@@ -155,7 +155,7 @@ __declspec(naked) void PrintfStubSigned_004c85d0(void) {
         add     edx, eax
         add     ecx, edx
         push    ecx
-        call    FpFormatRound_004ccda0
+        call    FpFormatRound
         mov     ecx, dword ptr [esp + 0x4c]
         add     esp, 0xc
         lea     eax, [esp + 8]
@@ -164,7 +164,7 @@ __declspec(naked) void PrintfStubSigned_004c85d0(void) {
         push    ecx
         push    esi
         push    edi
-        call    CfltcvtFormat_004c8650
+        call    CfltcvtFormat
         add     esp, 0x14
         mov     eax, edi
         pop     edi

@@ -17,7 +17,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_xformDirtyFlags], eax
  *   ret
  */
-void ScaledAnd4InvDirtyClear_00409350(void) {
+void ScaledAnd4InvDirtyClear(void) {
     ScenegraphNode *n = (ScenegraphNode *)(g_scaledInit_00542044 * 4);
     n->state_mask &= 0xFFFFFFFBu;
     g_xformDirtyFlags = g_xformDirtyFlags & 0xFFFFFFFEu;

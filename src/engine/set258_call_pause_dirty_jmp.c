@@ -33,7 +33,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void AudioVolumeRescale(void);
 extern void Thunk_00439c20(void);
-void Set258Call_PauseDirtyJmp_00439b50(void) {
+void Set258Call_PauseDirtyJmp(void) {
     g_walkCallback = (void (*)(void))0x258;
     AudioVolumeRescale();
     if (g_framePauseFlag != 0) return;

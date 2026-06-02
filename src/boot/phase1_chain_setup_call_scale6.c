@@ -109,14 +109,14 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void Phase1ChainSetupCallScale6(void);
-extern void InstallSelfHelper2_0047e8a0(void);
+extern void InstallSelfHelper2(void);
 extern void GuardedSeq_004297b0(void);
 extern void InstallSelfCountdown2Stage_0047e910(void);
 
 /* @addr 0x0047e800 (148b game) - install-self with dual-branch dirty check:
  *   chain[sel].slot84 -> eax; clear. If !=0: call Phase1ChainSetupCallScale6; pause? ret.
  *     g_walkCallback=1; call CmpEqInitCallElseJmp; pause? ret.
- *     if (g_xformDirtyFlags & 1): call InstallSelfHelper2_0047e8a0; ret.
+ *     if (g_xformDirtyFlags & 1): call InstallSelfHelper2; ret.
  *   Else (or after first branch via 0x5a): call GuardedSeq_004297b0; pause? ret.
  *     if (g_xformDirtyFlags & 1): call InstallSelfCountdown2Stage_0047e910; ret.
  *     else: install self, set slot84=1, g_pendingNodeType=1, pause flag.
@@ -125,7 +125,7 @@ extern void CmpEqInitCallElseJmp(void);
 
 extern void FiveCallGuardSetTail(void);
 
-__declspec(naked) void InstallSelfDualBranch_0047e800(void) {
+__declspec(naked) void InstallSelfDualBranch(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    ebx
@@ -151,7 +151,7 @@ __declspec(naked) void InstallSelfDualBranch_0047e800(void) {
         test    byte ptr [g_xformDirtyFlags], bl
         _emit   74h
         _emit   08h
-        call    InstallSelfHelper2_0047e8a0
+        call    InstallSelfHelper2
         pop     esi
         pop     ebx
         ret
@@ -167,7 +167,7 @@ __declspec(naked) void InstallSelfDualBranch_0047e800(void) {
         pop     esi
         pop     ebx
         ret
-        mov     dword ptr [esi + 8], offset InstallSelfDualBranch_0047e800
+        mov     dword ptr [esi + 8], offset InstallSelfDualBranch
         mov     dword ptr [esi + 0x84], ebx
         mov     dword ptr [g_pendingNodeType], ebx
         mov     dword ptr [g_framePauseFlag], ebx

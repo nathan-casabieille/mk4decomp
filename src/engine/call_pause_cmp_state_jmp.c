@@ -27,7 +27,7 @@ extern void ScaledZeroFour(void);
 extern void ArgSarStoreJmp(void *p);
 extern void *g_dispatchSave1280_004eabb0;
 extern void GuardedPushCall_0046a560(void);
-void CallPauseCmpStateJmp_0046a520(void) {
+void CallPauseCmpStateJmp(void) {
     unsigned int v;
     ScaledZeroFour();
     if (g_framePauseFlag != 0) return;

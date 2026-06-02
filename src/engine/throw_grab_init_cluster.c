@@ -110,14 +110,14 @@ extern unsigned int g_fightAxisPosY;
 
 extern void CallPauseScaledStoreCopyJmp(void);
 extern void GameStateDispatch4Way(void);
-extern void InstallSelfPlusTailThunk_00436a10(void);
-extern void MStackChainBit2Cascade_0048e8f0(void);
+extern void InstallSelfPlusTailThunk(void);
+extern void MStackChainBit2Cascade(void);
 extern void MstackPopScaledChainPlusThunks(void);
 extern void ScaledInit_00495590(void);
 extern void ScaledInit_004955b0(void);
 extern void StateGateMStackOverlap(void);
 
-__declspec(naked) void ThrowGrabInitCluster_00436b30(void)
+__declspec(naked) void ThrowGrabInitCluster(void)
 {
     __asm {
         /* === h1 (0x436b30): timer + tail-jmp 471250 === */
@@ -129,7 +129,7 @@ __declspec(naked) void ThrowGrabInitCluster_00436b30(void)
         mov      dword ptr [g_walkCallback], 0xa
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
-        mov      dword ptr [eax*4], OFFSET InstallSelfPlusTailThunk_00436a10 + 0x100
+        mov      dword ptr [eax*4], OFFSET InstallSelfPlusTailThunk + 0x100
         jmp      MstackPopScaledChainPlusThunks
     L_6b63:
         ret
@@ -249,7 +249,7 @@ __declspec(naked) void ThrowGrabInitCluster_00436b30(void)
         pop      ebx
         ret
     L_6d0d:
-        call     MStackChainBit2Cascade_0048e8f0
+        call     MStackChainBit2Cascade
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_6d78

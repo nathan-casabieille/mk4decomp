@@ -19,19 +19,19 @@ extern unsigned int g_scaledInit_00542044;
  *   walk = N (literal); jmp T.
  */
 extern unsigned int g_dispatchWalkVar_0053a404;
-extern void MStackPush3MaskBit_00492920(void);
-void DispatchSetWalk6_004926e0(void) {
+extern void MStackPush3MaskBit(void);
+void DispatchSetWalk6(void) {
     unsigned int v;
     if (g_gtOtherFlag) return;
     v = g_dispatchWalkVar_0053a404;
     g_walkCallback = (void(*)(void))v;
     if (v) return;
     g_eventQueueCurrent = v;
-    MStackPush3MaskBit_00492920();
+    MStackPush3MaskBit();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 1) {
         g_eventQueueCurrent = 1;
     }
     g_walkCallback = (void(*)(void))6;
-    GuardedFourCallChain_004928c0();
+    GuardedFourCallChain();
 }

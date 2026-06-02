@@ -17,7 +17,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_eventQueueCurrent], eax
  *   ret
  */
-void SplitInt32_004aa410(int arg) {
+void SplitInt32(int arg) {
     g_walkCallback = (void (*)(void))((unsigned int)arg & 0xffff);
     g_eventQueueCurrent = ((unsigned int)(arg >> 16)) & 0xffff;
 }

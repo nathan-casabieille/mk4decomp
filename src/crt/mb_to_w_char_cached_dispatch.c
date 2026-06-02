@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY;
  *              with code-page 0x220; on failure return 0. Else
  *              calloc(len*2+2) via LoadArgPushCall, populate via
  *              [0x4d20e0] again with proper Unicode flags, verify the
- *              sentinel 0xffff at end+0, end-1 if intact, call CrtMemMove_004c61c0
+ *              sentinel 0xffff at end+0, end-1 if intact, call CrtMemMove
  *              (likely WideCharToMultiByte). Free both bufs via FreeImpl.
  */
 extern unsigned int g_iat_004d20b8;
@@ -132,11 +132,11 @@ extern unsigned int g_dispatchSave1444_00f9fc10;
 extern unsigned int g_dispatchSave1448_00f9fc20;
 extern unsigned int g_dispatchSave1450_00f9fc2c;
 extern void Calloc(void);
-extern void CrtMemMove_004c61c0(void);
+extern void CrtMemMove(void);
 extern void FreeImpl(void);
 extern void LoadArgPushCall(void);
 
-__declspec(naked) void MBToWCharCachedDispatch_004cd950(void) {
+__declspec(naked) void MBToWCharCachedDispatch(void) {
     __asm {
         push    ecx
         mov     eax, dword ptr [g_dispatchSave1450_00f9fc2c]
@@ -295,7 +295,7 @@ __declspec(naked) void MBToWCharCachedDispatch_004cd950(void) {
         push    edi
         push    ebx
         push    edx
-        call    CrtMemMove_004c61c0
+        call    CrtMemMove
         add     esp, 0xc
         jmp     short L_mbw_freeAndExit
     L_mbw_zeroFinal:

@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   A: call MStackCall_00406740; if !pause jmp CallSetPause; ret.
  *   B (+0x20): push 0x41f04; call ThreeChanPackClamp; push g_fightGroupHead; call CopyThreeFields;
  *     call CondPickDualStore; if !pause and g_eventQueueCurrent>g_eventQueueWorkType: jmp ScaledIndirectJmp_0049c850.
- *   C (+0x60): push 0x808; call ScaledThreeChanPack_00404d50; push g_fightGroupHead; call CopyThreeFields;
+ *   C (+0x60): push 0x808; call ScaledThreeChanPack; push g_fightGroupHead; call CopyThreeFields;
  *     call CondPickDualStore; same comparison + jmp.
  *   D (+0xa0): call CondPickDualStore; pause-check; same comparison + jmp ScaledIndirectJmp.
  */
@@ -120,11 +120,11 @@ extern void CallSetPause(void);
 extern void CopyThreeFields(void);
 extern void MStackCall_00406740(void);
 extern void ScaledIndirectJmp_0049c850(void);
-extern void ScaledThreeChanPack_00404d50(void);
+extern void ScaledThreeChanPack(void);
 extern void ThreeChanPackClamp(void);
 extern void Vec2SumMul10ChainCompute(void);
 
-__declspec(naked) void QuadBlockSoundInit_0049bb90(void) {
+__declspec(naked) void QuadBlockSoundInit(void) {
     __asm {
         call    MStackCall_00406740
         mov     eax, dword ptr [g_framePauseFlag]
@@ -167,7 +167,7 @@ __declspec(naked) void QuadBlockSoundInit_0049bb90(void) {
         _emit   90h
         _emit   90h
         push    0x00000808
-        call    ScaledThreeChanPack_00404d50
+        call    ScaledThreeChanPack
         mov     eax, dword ptr [g_fightGroupHead]
         add     esp, 4
         push    eax

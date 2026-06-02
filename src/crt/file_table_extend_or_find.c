@@ -119,19 +119,19 @@ extern unsigned int g_fightAxisPosY;
  *   offset using 0x38e38e39 reciprocal-multiply (= /0x24). If no
  *   existing block has room, allocates a new 0x480-byte block via
  *   LoadArgPushCall(0x480), seeds entries with type=0xa, then
- *   calls CritSecLazyEnter_004cd2b0(idx*0x20). Exits crit-sec 0x12.
+ *   calls CritSecLazyEnter(idx*0x20). Exits crit-sec 0x12.
  */
 extern unsigned int g_iat_004d213c;
 extern unsigned int g_iat_004d2140;
 extern unsigned int g_iat_004d215c;
 extern unsigned int g_arr_00fa0de0;
 extern unsigned int g_dispatchSave1469_00fa0ee0;
-extern void CritSecLazyEnter_004cd2b0(void);
+extern void CritSecLazyEnter(void);
 extern void LoadArgPushCall(void);
 extern void Lock(void);
 extern void TableLookupIatCall(void);
 
-__declspec(naked) void FileTableExtendOrFind_004ccfa0(void) {
+__declspec(naked) void FileTableExtendOrFind(void) {
     __asm {
         sub     esp, 8
         push    ebx
@@ -241,7 +241,7 @@ __declspec(naked) void FileTableExtendOrFind_004ccfa0(void) {
         mov     eax, edi
         push    eax
         mov     dword ptr [esp + 0x14], eax
-        call    CritSecLazyEnter_004cd2b0
+        call    CritSecLazyEnter
         add     esp, 4
     L_fte_doneFound:
         push    0x12

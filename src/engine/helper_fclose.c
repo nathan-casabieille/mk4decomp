@@ -9,7 +9,7 @@
  *   call 0x4c7060(arg); restore eax; return.
  */
 extern void func_004c6ff0_hh(void *);
-extern int FCloseImpl_004c5840(void *);
+extern int FCloseImpl(void *);
 extern void func_004c7060_hh(void *);
 __declspec(naked) void Helper_FClose(void) {
     __asm {
@@ -29,7 +29,7 @@ __declspec(naked) void Helper_FClose(void) {
         call    func_004c6ff0_hh
         add     esp, 4
         push    esi
-        call    FCloseImpl_004c5840
+        call    FCloseImpl
         add     esp, 4
         mov     edi, eax
         push    esi

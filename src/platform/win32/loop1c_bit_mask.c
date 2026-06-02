@@ -26,7 +26,7 @@ extern unsigned int g_scaledInit_00542044;
  * 7c ee              jl .loop
  * c3                 ret
  */
-void Loop1cBitMask_004c4450(void) {
+void Loop1cBitMask(void) {
     __asm {
         mov     eax, 0x00f8fade
         mov     cl, byte ptr [eax]

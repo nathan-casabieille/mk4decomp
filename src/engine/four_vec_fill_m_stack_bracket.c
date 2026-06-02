@@ -113,7 +113,7 @@ extern unsigned int g_packedDispatchSlot3_00541ff0;
 extern unsigned int g_packedDispatchSlot2_00541ff4;
 extern unsigned int g_packedDispatchSlot1_00541ff8;
 
-__declspec(naked) void FourVecFillMStackBracket_00428130(void)
+__declspec(naked) void FourVecFillMStackBracket(void)
 {
     __asm
     {

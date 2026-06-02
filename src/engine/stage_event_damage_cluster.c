@@ -111,17 +111,17 @@ extern unsigned int g_fightAxisPosY;
 extern void CjInstallSelfRouter(void);
 extern void ScaledChainCallPauseSetJmp(void);
 extern void FiveCallScaledChainTailJmp(void);
-extern void StageEventDamageCluster_0042c5a0(void);
+extern void StageEventDamageCluster(void);
 
 /* @addr 0x0042c4f0 (116b game) - dual-entry install-self.
  *   Block A (+0x00): esi=baseSel*4; eax=chain[+0x84]; clear chain[+0x84]; if eax==0 pop+ret;
  *     else call CjInstallSelfRouter, pop, ret. Else (after install): set g_xformEntityIdx=0x42b6f0,
  *     call ScaledChainCallPauseSetJmp; if !pause: install-self at chain[+8], chain[+0x84]=1,
  *     g_pendingNodeType=1, g_pause=1; pop+ret.
- *   Block B (+0x60): call FiveCallScaledChainTailJmp; if !pause: jmp StageEventDamageCluster_0042c5a0; else ret.
+ *   Block B (+0x60): call FiveCallScaledChainTailJmp; if !pause: jmp StageEventDamageCluster; else ret.
  */
 
-__declspec(naked) void InstallSelfDualEsi_0042c4f0(void) {
+__declspec(naked) void InstallSelfDualEsi(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -153,7 +153,7 @@ __declspec(naked) void InstallSelfDualEsi_0042c4f0(void) {
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     StageEventDamageCluster_0042c5a0
+        jmp     StageEventDamageCluster
         ret
     }
 }

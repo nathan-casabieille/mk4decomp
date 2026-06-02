@@ -121,7 +121,7 @@ extern unsigned int g_fightAxisPosY;
 extern void ChainListVecAdd(void);
 extern void GuardedSeq_00471670(void);
 
-__declspec(naked) void ChainGetterStateInstaller_00412140(void) {
+__declspec(naked) void ChainGetterStateInstaller(void) {
     __asm {
         mov     eax, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [eax*4 + 0x18]
@@ -172,7 +172,7 @@ __declspec(naked) void ChainGetterStateInstaller_00412140(void) {
         mov     dword ptr [ecx*4 + 0x48], eax
         mov     dword ptr [g_eventQueueNotMask], 0x0a
     L_cgsi_tailCall:
-        call    ChainGetterStateInstaller_00412140
+        call    ChainGetterStateInstaller
         mov     eax, dword ptr [g_walkCallback]
         mov     edx, dword ptr [g_xformEntityIdx]
         sub     eax, 0x7ae

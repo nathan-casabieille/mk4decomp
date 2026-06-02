@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_arr_48f980_src;
 extern unsigned int g_chain_arr_4348f0;
 
-void NineFieldCopy_0048f980(void) {
+void NineFieldCopy(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         mov     edx, dword ptr [g_cj_0054205c]

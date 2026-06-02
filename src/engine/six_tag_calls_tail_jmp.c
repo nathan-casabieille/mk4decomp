@@ -111,9 +111,9 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00441f00 (197b game) - 6 pause-gated calls with different tag values, then chain bit-clear and tail-jmp.
  *   For tag in [0x93, 0x7e, 0x7b, 0x94, 0x77, 0x7f]: g_walkCallback = tag; call F; pause? ret.
  *   First uses PushPopCurrent (0x473070); rest use MStackPush2BitLoop.
- *   chain[g_baseSel + 0x64] = g_fightGroupHead; chain[g_fightGroupHead + 0x34] &= 0xfffffffb; jmp LoopMStackBitTest_00441fd0.
+ *   chain[g_baseSel + 0x64] = g_fightGroupHead; chain[g_fightGroupHead + 0x34] &= 0xfffffffb; jmp LoopMStackBitTest.
  */
-void SixTagCallsTailJmp_00441f00(void) {
+void SixTagCallsTailJmp(void) {
     unsigned int new_cj;
     unsigned int dirty;
     g_walkCallback = 0x93;
@@ -139,5 +139,5 @@ void SixTagCallsTailJmp_00441f00(void) {
     dirty = ((ScenegraphNode *)(new_cj * 4))->state_mask & 0xfffffffbu;
     g_walkCallback = dirty;
     ((ScenegraphNode *)(new_cj * 4))->state_mask = dirty;
-    LoopMStackBitTest_00441fd0();
+    LoopMStackBitTest();
 }

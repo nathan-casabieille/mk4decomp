@@ -117,7 +117,7 @@ extern unsigned int g_dispatchSave89_0053a428;
 extern unsigned int g_packedTripleSlot2_00541f88;
 extern void QuadInterpolator(void);
 
-__declspec(naked) void Vec3PackedTripleCallBracket_004764d0(void)
+__declspec(naked) void Vec3PackedTripleCallBracket(void)
 {
     __asm
     {

@@ -108,9 +108,9 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void DualBlockThunkPlus3State_0043aed0(void);
+extern void DualBlockThunkPlus3State(void);
 extern void StateGateMStackOverlap(void);
-extern void CrouchCounterCluster_0043b1d0(void);
+extern void CrouchCounterCluster(void);
 
 /* @addr 0x0043a950 (290b game) - quad-block: arg-thunk + push-call + install-self + dispatch.
  *   Block A (0..0x37): [arg>>2] indexed table; load ecx=table[i]; if [baseSel*4+0x34]==0xf jmp ecx else ret.
@@ -118,7 +118,7 @@ extern void CrouchCounterCluster_0043b1d0(void);
  *   Block C (+0x50): install-self body; state!=0: tail-call DualBlockThunkPlus3State.
  *     state==0: call LeaPlus22StoreSelf; if pause ret. Set g_currentNodeFlags=0x20000, g_eventQueueChild=0x3c;
  *     install-self at body+0x01000000, call StateGateMStackOverlap, pause=1; ret.
- *   Block D (+0x100): call MStackPush3CmpCall; if pause ret. If bit0(0054208c) jmp CrouchCounterCluster_0043b1d0;
+ *   Block D (+0x100): call MStackPush3CmpCall; if pause ret. If bit0(0054208c) jmp CrouchCounterCluster;
  *     else jmp GuardedDispatch_0042b6c0.
  */
 extern void PackedAdvanceCallTailJmp(void);
@@ -163,7 +163,7 @@ __declspec(naked) void QuadBlockArgInstallChain(void) {
         test    eax, eax
         _emit   74h
         _emit   07h
-        call    DualBlockThunkPlus3State_0043aed0
+        call    DualBlockThunkPlus3State
         pop     esi
         ret
         call    LeaPlus22StoreSelf
@@ -203,7 +203,7 @@ __declspec(naked) void QuadBlockArgInstallChain(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
-        jmp     CrouchCounterCluster_0043b1d0
+        jmp     CrouchCounterCluster
         jmp     GuardedDispatch_0042b6c0
         ret
     }

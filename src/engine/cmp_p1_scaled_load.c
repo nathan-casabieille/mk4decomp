@@ -23,7 +23,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_walkCallback], edx
  *   ret
  */
-void CmpP1ScaledLoad74_0045f5d0(void) {
+void CmpP1ScaledLoad74(void) {
     unsigned int v = g_gtPlayerProbe1;
     g_scaledInit_00542044 = v;
     if (g_fightGroupHead != g_player1NodeIdx) {
@@ -34,7 +34,7 @@ void CmpP1ScaledLoad74_0045f5d0(void) {
 }
 
 /* @addr 0x0045f610 (50b): same shape with offset 0x7c */
-void CmpP1ScaledLoad7c_0045f610(void) {
+void CmpP1ScaledLoad7c(void) {
     unsigned int v = g_gtPlayerProbe1;
     g_scaledInit_00542044 = v;
     if (g_fightGroupHead != g_player1NodeIdx) {

@@ -32,7 +32,7 @@ options overlay drawn from the same cluster is in
 | 0x004a93c0 | `Match_TeamOutcomeScreen` (`PendingMatch_004a93c0`) | "GAME OVER", "TEAM 1/2 WINS", "TEAM 1/2 LOSES", "ACTION Keys Continue" - team-mode result |
 | 0x004a9940 | `TeamMode_JoinScreen` (`PendingMatch_004a9940`) | "JOIN IN", "READY" - team/2P join-in screen; also the TEAM row's `on_select` handler (see mode table) |
 
-(`RoundDisplayInitCluster_004a4f00` - the Kombat Rating / Body Count /
+(`RoundDisplayInitCluster` - the Kombat Rating / Body Count /
 Perfect Kills / Fatalities stat readout - and the two `DebugMenu_*`
 option drawers live in the same cluster; see
 [debug_menu.md](debug_menu.md). They were left under their existing
@@ -50,7 +50,7 @@ screens outside the `0x4a` cluster:
 | 0x00420300 | `Screen_ArcadeEnding` (`PendingMatch_00420300`) | "CHAMPION OF MORTAL KOMBAT", "SHINNOK'S MENACE IS OVER", "YOU ARE THE SUPREME" - arcade victory ending |
 | 0x004580a0 | `Screen_EnterInitials` (`TriplePackedTagged_004580a0`) | "ENTER INITIALS", "GREAT WINNING STREAK", "PLAYER 1/2" - high-score initials entry |
 
-(`MultiPlayerWinStringFormat_0042efc0` - "PLAYER 1/2", "PRESS START",
+(`MultiPlayerWinStringFormat` - "PLAYER 1/2", "PRESS START",
 "TO CONTINUE" - was already aptly named and is left as is.)
 
 ## Animation pack loader
@@ -88,8 +88,8 @@ already plausible, so they are left pending a fuller read:
 
 | Address    | Name | String seen | Hypothesis |
 |------------|------|-------------|-----------|
-| 0x00423c20 | `ContinueScreenFsm_00423c20` | "MORTAL KOMBAT 4 DESIGN TEAM" | continue screen that rolls into credits, or the credits roll itself |
-| 0x00423b80 | `ChainInit3CallTailJmp_00423b80` | "GAME ANALYSTS" | credits (testers) - adjacent to the above |
+| 0x00423c20 | `ContinueScreenFsm` | "MORTAL KOMBAT 4 DESIGN TEAM" | continue screen that rolls into credits, or the credits roll itself |
+| 0x00423b80 | `ChainInit3CallTailJmp` | "GAME ANALYSTS" | credits (testers) - adjacent to the above |
 | 0x0042d240 | `PendingMatch_0042d240` | "GAME OVER" | a game-over handler (string too common to be sure) |
 | 0x004a62b0 | `PendingMatch_004a62b0` | "PRESS ACTION KEY", "WAITING" | the largest (3004b) unidentified screen - likely the VS / pre-fight matchup |
 

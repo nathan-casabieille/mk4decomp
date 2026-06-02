@@ -8,9 +8,9 @@
  *   FPU control word transactional update via two helpers (4cc520, 4cc5c0).
  *   Reads cw, computes new value, then sets new cw and returns the masked old value.
  */
-extern int DecodeModeFlags_004cc520(int);
-extern int EncodeModeFlags_004cc5c0(int);
-__declspec(naked) void FpuCwTxn_004cc4c0(void) {
+extern int DecodeModeFlags(int);
+extern int EncodeModeFlags(int);
+__declspec(naked) void FpuCwTxn(void) {
     __asm {
         push    ebp
         mov     ebp, esp
@@ -19,7 +19,7 @@ __declspec(naked) void FpuCwTxn_004cc4c0(void) {
         fstcw   word ptr [ebp - 4]
         mov     eax, dword ptr [ebp - 4]
         push    eax
-        call    DecodeModeFlags_004cc520
+        call    DecodeModeFlags
         mov     ecx, dword ptr [ebp + 0x0c]
         mov     edx, dword ptr [ebp + 8]
         mov     esi, ecx
@@ -29,7 +29,7 @@ __declspec(naked) void FpuCwTxn_004cc4c0(void) {
         and     ecx, eax
         or      esi, ecx
         push    esi
-        call    EncodeModeFlags_004cc5c0
+        call    EncodeModeFlags
         add     esp, 4
         mov     dword ptr [ebp + 0x0c], eax
         fldcw   word ptr [ebp + 0x0c]

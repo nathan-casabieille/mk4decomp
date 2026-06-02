@@ -123,13 +123,13 @@ extern unsigned int g_dataArr_0053a1d0;
 extern s32 g_dlNalt4;
 extern s32 g_dlChar13;
 extern s32 g_dlChar24;
-extern void BitShiftExtract_00464090(void);
+extern void BitShiftExtract(void);
 extern void DownloadPlayerChar(void);
 
-__declspec(naked) void PlayerCharSelector_004636d0(void) {
+__declspec(naked) void PlayerCharSelector(void) {
     __asm {
         push    esi
-        call    BitShiftExtract_00464090
+        call    BitShiftExtract
         mov     eax, dword ptr [g_framePauseFlag]
         xor     esi, esi
         cmp     eax, esi

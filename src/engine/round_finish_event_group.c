@@ -111,9 +111,9 @@ extern unsigned int g_fightAxisPosY;
 extern void StackPopDispatchTagged(void);
 extern void ArgSarStoreJmp(void);
 extern void ScaledLitLoadCall_00480fe0(void);
-extern void RoundFinishEventGroup_004821b0(void);
+extern void RoundFinishEventGroup(void);
 extern void CmpP1DualInitStore_00482ab0(void);
-extern void ScaledCmpJlJmp_00488ed0(void);
+extern void ScaledCmpJlJmp(void);
 extern void TableLookupCall_00489ff0(void);
 extern void TableLookupCall_0048a160(void);
 extern void Wrapper_0048fbc0(void);
@@ -127,7 +127,7 @@ extern unsigned int g_primary_0053a774;
 
 extern void GateDispatch6c(void);
 
-__declspec(naked) void GameModeAdvanceCluster_00482000(void)
+__declspec(naked) void GameModeAdvanceCluster(void)
 {
     __asm {
         /* H1: */
@@ -207,7 +207,7 @@ __declspec(naked) void GameModeAdvanceCluster_00482000(void)
         test     eax, eax
         jne      short L_2129
         mov      dword ptr [g_walkCallback], 2
-        call     ScaledCmpJlJmp_00488ed0
+        call     ScaledCmpJlJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2129
@@ -254,7 +254,7 @@ __declspec(naked) void GameModeAdvanceCluster_00482000(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_218d
-        jmp      RoundFinishEventGroup_004821b0
+        jmp      RoundFinishEventGroup
     L_218d:
         ret
         nop
@@ -265,7 +265,7 @@ __declspec(naked) void GameModeAdvanceCluster_00482000(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_21ad
-        jmp      RoundFinishEventGroup_004821b0
+        jmp      RoundFinishEventGroup
     L_21ad:
         ret
     }

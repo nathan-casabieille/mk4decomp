@@ -112,15 +112,15 @@ extern unsigned int g_dispatchSave645_004eefd8;
 extern unsigned int g_dispatchSave644_004ef010;
 extern unsigned int g_dispatchTableArr6_00500710;
 extern void ArgSarStoreJmp(void);
-extern void CinematicCFsmCluster_004884a0(void);
+extern void CinematicCFsmCluster(void);
 extern void FlagThunk4EntryDispatcher(void);
-extern void IncThunkPlusCjDispatch_00483b80(void);
+extern void IncThunkPlusCjDispatch(void);
 extern void InstallSelfIndirectJmpNeg(void);
 extern void InstallSelfIndirectJmp(void);
-extern void InstallSelfOrCmpJmp_0048f570(void);
+extern void InstallSelfOrCmpJmp(void);
 extern void TableLookupCall_00489ff0(void);
 
-__declspec(naked) void BossRoarCluster_00488210(void)
+__declspec(naked) void BossRoarCluster(void)
 {
     __asm {
         /* === Helper 1 (0x488210): set 0x83 + push 488250 continuation === */
@@ -194,7 +194,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], 0
-        call     InstallSelfOrCmpJmp_0048f570
+        call     InstallSelfOrCmpJmp
         mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
@@ -265,7 +265,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_8446
-        call     IncThunkPlusCjDispatch_00483b80
+        call     IncThunkPlusCjDispatch
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_8446
@@ -296,7 +296,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_847d
-        jmp      CinematicCFsmCluster_004884a0
+        jmp      CinematicCFsmCluster
     L_847d:
         ret
         nop
@@ -307,7 +307,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_849d
-        jmp      CinematicCFsmCluster_004884a0
+        jmp      CinematicCFsmCluster
     L_849d:
         ret
     }

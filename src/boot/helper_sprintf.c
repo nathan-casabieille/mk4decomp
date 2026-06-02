@@ -11,7 +11,7 @@
  *   on negative residual length calls overflow helper, else writes
  *   trailing NUL.
  */
-extern void Flsbuf_004c77f0(void);
+extern void Flsbuf(void);
 extern void PendingMatch_004c7920(void);
 
 __declspec(naked) void Helper_Sprintf(void) {
@@ -49,7 +49,7 @@ overflow:
         lea     ecx, [esp + 4]
         push    ecx
         push    0
-        call    Flsbuf_004c77f0
+        call    Flsbuf
         add     esp, 8
         mov     eax, esi
         pop     esi

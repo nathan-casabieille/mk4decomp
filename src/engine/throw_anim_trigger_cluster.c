@@ -115,14 +115,14 @@ extern unsigned int g_particleEmitterNode;
 extern unsigned int g_state2_00537ea8;
 extern unsigned int g_state2_00541d88;
 extern void CallSetPause(void);
-extern void GameStateTick_0049f1f0(void);
+extern void GameStateTick(void);
 extern void MStackBracket4_ListInsertZeroFill(void);
 extern void MStackCall_00406340(void);
 extern void MStackPush3LinkedListWalk(void);
 extern void MStackPush4LLWalkPop4(void);
 extern void RoundWinTransition(void);
 
-__declspec(naked) void ThrowAnimTriggerCluster_0049efa0(void)
+__declspec(naked) void ThrowAnimTriggerCluster(void)
 {
     __asm {
         /* === Helper 1 (0x49efa0): throw setup with mstack save === */
@@ -242,7 +242,7 @@ __declspec(naked) void ThrowAnimTriggerCluster_0049efa0(void)
         jmp      CallSetPause
     L_f1a3:
         mov      dword ptr [g_dispatchArg], 0
-        jmp      GameStateTick_0049f1f0
+        jmp      GameStateTick
         nop
         nop
         nop
@@ -265,6 +265,6 @@ __declspec(naked) void ThrowAnimTriggerCluster_0049efa0(void)
         jmp      CallSetPause
     L_f1d3:
         mov      dword ptr [g_dispatchArg], 1
-        jmp      GameStateTick_0049f1f0
+        jmp      GameStateTick
     }
 }

@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * DualBitFlagAudioChain_004a29d0 - 175b audio dispatcher with two parallel bit-flag branches.
+ * DualBitFlagAudioChain - 175b audio dispatcher with two parallel bit-flag branches.
  *   Reads g_byte_004d50b4 as byte pair (al,ah).
  *   Branch 0 (al bit 0 OR ah bit 0): movsx slot from g_byteTab_004f3080[edx*4];
  *     if slot != -1 set chain->field_30 = slot and SetJmp; push 0x00160000;
@@ -121,7 +121,7 @@ extern unsigned int g_byte_004d50b4;
 extern void Helper_AudioStub_2960(void);
 extern void SetJmp_004a1ad0(void);
 
-void DualBitFlagAudioChain_004a29d0(void) {
+void DualBitFlagAudioChain(void) {
     __asm {
         mov     eax, dword ptr [g_byte_004d50b4]
         test    al, 1

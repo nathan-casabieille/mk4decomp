@@ -13,7 +13,7 @@ extern DDSurface *g_comptr_0058c7b4;
  *   and stashes the return into g_renderer2_present_rc before clearing
  *   the mode flag.
  */
-void VtRelease_Modal_004ad590(void) {
+void VtRelease_Modal(void) {
     DDSurface *p;
     if (g_renderer2_active == 0) return;
     if (g_renderer2_paused == 0) return;

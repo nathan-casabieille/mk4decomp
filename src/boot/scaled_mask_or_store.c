@@ -18,7 +18,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [ecx*4 + 0x20], eax
  *   ret
  */
-void ScaledMaskOrStore_00405880(void) {
+void ScaledMaskOrStore(void) {
     unsigned int idx = g_scaledInit_00542044;
     unsigned int walk = (unsigned int)g_walkCallback;
     unsigned int v;

@@ -109,15 +109,15 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00486d90 (234b game) - mstack-push 3 (g_eventQueueNotMask, g_eventQueueChild, g_eventQueueWorkType);
- *   negate g_walkCallback; if g_eventQueueCurrent != 0 call StanceFsmCluster_004871f0; pause-check.
+ *   negate g_walkCallback; if g_eventQueueCurrent != 0 call StanceFsmCluster; pause-check.
  *   call MStackFrameCdeclDouble; pause-check. push 0x004eee48; call IterStepDualStore;
  *   pause-check. mstack-pop g_eventQueueWorkType (with test); if zero skip call; else call CjTableThresholdDispatch;
- *   pause-check. mstack-pop g_eventQueueChild, g_eventQueueNotMask. jmp GatedChainClamp_00486e80.
+ *   pause-check. mstack-pop g_eventQueueChild, g_eventQueueNotMask. jmp GatedChainClamp.
  */
 extern unsigned int g_matrixStack_arr;
 extern void CjTableThresholdDispatch(void);
-extern void GatedChainClamp_00486e80(void);
-extern void StanceFsmCluster_004871f0(void);
+extern void GatedChainClamp(void);
+extern void StanceFsmCluster(void);
 
 __declspec(naked) void MStackPush3CallCascade(void) {
     __asm {
@@ -143,7 +143,7 @@ __declspec(naked) void MStackPush3CallCascade(void) {
         test    eax, eax
         _emit   74h
         _emit   0eh
-        call    StanceFsmCluster_004871f0
+        call    StanceFsmCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -182,7 +182,7 @@ __declspec(naked) void MStackPush3CallCascade(void) {
         dec     eax
         mov     dword ptr [g_eventQueueNotMask], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        jmp     GatedChainClamp_00486e80
+        jmp     GatedChainClamp
         ret
     }
 }

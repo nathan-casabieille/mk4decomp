@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00446470 (117b) - 3-field copy + bit-merge into chain[+0x34]. */
 
-void TripleFieldCopyBitMerge_00446470(void) {
+void TripleFieldCopyBitMerge(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         mov     ecx, dword ptr [g_cj_00542058]

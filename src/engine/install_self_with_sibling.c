@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void SelfInstallPhaseDispatch_00428990(void);
 
-__declspec(naked) void InstallSelfWithSibling_00475490(void) {
+__declspec(naked) void InstallSelfWithSibling(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         xor     edx, edx

@@ -114,7 +114,7 @@ extern void MStackCall_00406340(void);
 extern void MStackPush1MagicMod2(void);
 extern void StoreDoubleNegPauseSubStore(void);
 
-__declspec(naked) void Vec3SetupQuadrupleMul10Sub_00442bc0(void)
+__declspec(naked) void Vec3SetupQuadrupleMul10Sub(void)
 {
     __asm
     {

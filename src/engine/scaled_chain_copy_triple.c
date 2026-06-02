@@ -24,7 +24,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [ecx + 0x38], eax
  *   ret
  */
-void ScaledChainCopyTriple_00446280(void) {
+void ScaledChainCopyTriple(void) {
     unsigned char *src;
     unsigned char *dst;
     unsigned int v;

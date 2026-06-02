@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  *   push g_acc_00542078, g_currentNodeFlags;
  *   call Mul10Tail; store to g_acc_00542078; ret.
  */
-void GuardedTimeBudgetDualMul10_00431cf0(void) {
+void GuardedTimeBudgetDualMul10(void) {
     BootMod6487eClampAndChainMul10();
     if (g_framePauseFlag != 0) return;
     WalkCbSubMul10();

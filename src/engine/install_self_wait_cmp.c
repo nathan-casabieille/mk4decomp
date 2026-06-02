@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_matrixStack_arr;
 extern void GuardedSeq_00438630(void);
 
-__declspec(naked) void InstallSelfWaitCmp_00438190(void) {
+__declspec(naked) void InstallSelfWaitCmp(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         shl     eax, 2
@@ -158,7 +158,7 @@ __declspec(naked) void InstallSelfWaitCmp_00438190(void) {
         mov     dword ptr [g_eventQueueChild], eax
         _emit   74h
         _emit   05h
-        jmp     InstallSelfWaitCmp_00438190
+        jmp     InstallSelfWaitCmp
         jmp     StackPopDispatchTagged
     }
 }

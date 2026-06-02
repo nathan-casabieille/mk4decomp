@@ -21,7 +21,7 @@ extern unsigned int g_dispatchSave1171_004d5308;
 extern unsigned int g_dispatchSave1172_004d530c;
 extern unsigned int g_dispatchSave1169_004d5300;
 extern unsigned int g_dispatchSave1170_004d5304;
-void Init4Globals_0042ae10(void) {
+void Init4Globals(void) {
     g_dispatchSave1171_004d5308 = 0x00020000;
     g_dispatchSave1172_004d530c = 0x00020000;
     g_dispatchSave1169_004d5300 = 0x00010000;

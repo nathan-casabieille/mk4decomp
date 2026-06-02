@@ -21,35 +21,35 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern void QuadStageStateDispatch_0042c3e0(void);
-extern void InstallSelfDualEsi_0042c4f0(void);
-extern void EightPackedSubInstallSelfWalk_0042b6f0(void);
-extern void EsiAliasInstallChainCall_0042c490(void);
-extern void StageEventDamageCluster_0042c5a0(void);
+extern void QuadStageStateDispatch(void);
+extern void InstallSelfDualEsi(void);
+extern void EightPackedSubInstallSelfWalk(void);
+extern void EsiAliasInstallChainCall(void);
+extern void StageEventDamageCluster(void);
 extern void MStackPush2ChainSwap(void);
-extern void CallPauseMStackPushSet3Jmp_00460d00(void);
-extern void CallPauseMStackPushSet4Jmp_00460d40(void);
+extern void CallPauseMStackPushSet3Jmp(void);
+extern void CallPauseMStackPushSet4Jmp(void);
 
 /* @addr 0x0042b6c0 */
 void GuardedDispatch_0042b6c0(void) {
-    QuadStageStateDispatch_0042c3e0();
+    QuadStageStateDispatch();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 1) {
-        InstallSelfDualEsi_0042c4f0();
+        InstallSelfDualEsi();
         return;
     }
-    EightPackedSubInstallSelfWalk_0042b6f0();
+    EightPackedSubInstallSelfWalk();
 }
 
 /* @addr 0x0042c570 */
 void GuardedDispatch_0042c570(void) {
-    QuadStageStateDispatch_0042c3e0();
+    QuadStageStateDispatch();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 1) {
-        EsiAliasInstallChainCall_0042c490();
+        EsiAliasInstallChainCall();
         return;
     }
-    StageEventDamageCluster_0042c5a0();
+    StageEventDamageCluster();
 }
 
 /* @addr 0x00460ca0 */
@@ -57,10 +57,10 @@ void GuardedDispatch_00460ca0(void) {
     MStackPush2ChainSwap();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 1) {
-        CallPauseMStackPushSet3Jmp_00460d00();
+        CallPauseMStackPushSet3Jmp();
         return;
     }
-    CallPauseMStackPushSet4Jmp_00460d40();
+    CallPauseMStackPushSet4Jmp();
 }
 
 /* @addr 0x00460cd0 */
@@ -68,8 +68,8 @@ void GuardedDispatch_00460cd0(void) {
     MStackPush2ChainSwap();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 1) {
-        CallPauseMStackPushSet4Jmp_00460d40();
+        CallPauseMStackPushSet4Jmp();
         return;
     }
-    CallPauseMStackPushSet3Jmp_00460d00();
+    CallPauseMStackPushSet3Jmp();
 }

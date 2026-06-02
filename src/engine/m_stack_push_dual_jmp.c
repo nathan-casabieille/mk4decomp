@@ -7,12 +7,12 @@
 extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 extern void func_00428390(void);
-extern void EsiInstallChainCallIndirect_00428680(void);
+extern void EsiInstallChainCallIndirect(void);
 
-void MStackPushDualJmp_00428370(void) {
+void MStackPushDualJmp(void) {
     int top = g_matrixStackTop;
     top++;
     g_matrixStackTop = top;
     *(void(**)(void))((unsigned int)top * 4) = func_00428390;
-    EsiInstallChainCallIndirect_00428680();
+    EsiInstallChainCallIndirect();
 }

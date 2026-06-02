@@ -120,7 +120,7 @@ extern unsigned int g_pendingMatchVar;
 extern unsigned int g_pendingMatchVar3_004d5320;
 extern unsigned int g_eq_00542098;
 
-__declspec(naked) void TripleArrayDiffClamp_004251f0(void) {
+__declspec(naked) void TripleArrayDiffClamp(void) {
     __asm {
         push    ebx
         push    esi

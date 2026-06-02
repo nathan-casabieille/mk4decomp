@@ -10,14 +10,14 @@ extern unsigned int g_scaledInit_00542044;
 /* === ScaledInitOrSelfPtrSetType cluster (68b each) === */
 
 /* @addr 0x00434d60: jmp=0x00436120, type=8, ptr=own */
-extern void ThresholdInitInstallSelfChain_00436120(void);
+extern void ThresholdInitInstallSelfChain(void);
 extern void ScaledInitOrSelfPtrSetType_00434d60(void);
 void ScaledInitOrSelfPtrSetType_00434d60(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int v = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
     if (v != 0) {
-        ThresholdInitInstallSelfChain_00436120();
+        ThresholdInitInstallSelfChain();
         return;
     }
     *(unsigned int *)(base + 8) = (unsigned int)&ScaledInitOrSelfPtrSetType_00434d60;
@@ -27,14 +27,14 @@ void ScaledInitOrSelfPtrSetType_00434d60(void) {
 }
 
 /* @addr 0x0046a5e0: jmp=0x0046a630, type=3, ptr=own */
-extern void QuadEntryGateChain_0046a630(void);
+extern void QuadEntryGateChain(void);
 extern void ScaledInitOrSelfPtrSetType_0046a5e0(void);
 void ScaledInitOrSelfPtrSetType_0046a5e0(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int v = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
     if (v != 0) {
-        QuadEntryGateChain_0046a630();
+        QuadEntryGateChain();
         return;
     }
     *(unsigned int *)(base + 8) = (unsigned int)&ScaledInitOrSelfPtrSetType_0046a5e0;
@@ -44,14 +44,14 @@ void ScaledInitOrSelfPtrSetType_0046a5e0(void) {
 }
 
 /* @addr 0x0047a620: jmp=0x0047a670, type=0xa, ptr=own */
-extern void TripleSubInstallSelfPair_0047a670(void);
+extern void TripleSubInstallSelfPair(void);
 extern void ScaledInitOrSelfPtrSetType_0047a620(void);
 void ScaledInitOrSelfPtrSetType_0047a620(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int v = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
     if (v != 0) {
-        TripleSubInstallSelfPair_0047a670();
+        TripleSubInstallSelfPair();
         return;
     }
     *(unsigned int *)(base + 8) = (unsigned int)&ScaledInitOrSelfPtrSetType_0047a620;

@@ -126,7 +126,7 @@ extern void BootInitGuardedCallChain(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void InstallSelfCounter_00404920(void) {
+__declspec(naked) void InstallSelfCounter(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi

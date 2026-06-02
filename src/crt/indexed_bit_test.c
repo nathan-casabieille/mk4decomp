@@ -10,7 +10,7 @@
  */
 extern unsigned char g_byte_00f9f8c1[];
 extern unsigned short g_word_005229a2[];
-void IndexedBitTest_004cbaf0(void) {
+void IndexedBitTest(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         mov     cl,  byte  ptr [esp + 0x0c]

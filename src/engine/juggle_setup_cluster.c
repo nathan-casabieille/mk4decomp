@@ -116,7 +116,7 @@ extern void MStackCall_004062f0(void);
 extern void Chain2AxisDiffStoreTailJmp(void);
 extern void MStackPush3SideStore(void);
 extern void DualScaledStore(void);
-extern void JuggleSetupCluster_004539d0(void);
+extern void JuggleSetupCluster(void);
 extern void func_00453a01(void);
 extern void Thunk_0049cbc0(void);
 extern unsigned int g_dispatchSave952_004e7fd0;
@@ -124,7 +124,7 @@ extern unsigned int g_dispatchSave953_004e8020;
 extern unsigned int g_installOwner2_0053a7a0;
 
 
-__declspec(naked) void PoseCopyIdleCluster_004537a0(void)
+__declspec(naked) void PoseCopyIdleCluster(void)
 {
     __asm {
         /* === Helper 1: pose-copy from slot ECX to slot EAX === */
@@ -229,7 +229,7 @@ __declspec(naked) void PoseCopyIdleCluster_004537a0(void)
         mov      eax, dword ptr [esi + 4]
         mov      dword ptr [g_currentNodeIdx], eax
         add      ecx, 0x2000000
-        jmp      JuggleSetupCluster_004539d0
+        jmp      JuggleSetupCluster
     L_3935:
         call     DualScaledStore
         cmp      dword ptr [g_framePauseFlag], edi
@@ -256,6 +256,6 @@ __declspec(naked) void PoseCopyIdleCluster_004537a0(void)
         mov      eax, dword ptr [esi + 4]
         mov      dword ptr [g_currentNodeIdx], eax
         add      ecx, 0x1000000
-        /* Fall-through to JuggleSetupCluster_004539d0 (sibling immediately after). */
+        /* Fall-through to JuggleSetupCluster (sibling immediately after). */
     }
 }

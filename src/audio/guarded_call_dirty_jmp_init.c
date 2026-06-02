@@ -12,14 +12,14 @@ extern unsigned int g_scaledInit_00542044;
  *   ecx = g_scaledInit; walk = 0x50000; [ecx*4+0x6c] = 0x50000;
  *   jmp T2.  If walk was 0: jmp T3.
  */
-extern void PushCallTestByte4Jmp_004a1a10(void);
+extern void PushCallTestByte4Jmp(void);
 extern void SaveCallRestoreOrXor(int);
-extern void InstallSelfPauseGate_004a1a50(void);
-void GuardedCallDirtyJmpInit_004a19c0(void) {
+extern void InstallSelfPauseGate(void);
+void GuardedCallDirtyJmpInit(void) {
     unsigned int v = g_eventQueueEnd;
     g_walkCallback = (void (*)(void))v;
     if (v == 0) {
-        PushCallTestByte4Jmp_004a1a10();
+        PushCallTestByte4Jmp();
         return;
     }
     SaveCallRestoreOrXor(0x25b);
@@ -29,5 +29,5 @@ void GuardedCallDirtyJmpInit_004a19c0(void) {
     }
     g_walkCallback = (void (*)(void))0x00050000;
     *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x6c) = 0x00050000;
-    InstallSelfPauseGate_004a1a50();
+    InstallSelfPauseGate();
 }

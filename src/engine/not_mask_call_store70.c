@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void EsiEdiAliasDualMul10(void);
 extern void Mul10Tail(void);
-void NotMaskCallStore70_0047e640(void) {
+void NotMaskCallStore70(void) {
     unsigned int v;
     unsigned int r;
     g_walkCallback = (void (*)(void))g_eventQueueNotMask;

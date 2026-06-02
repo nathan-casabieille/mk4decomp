@@ -8,7 +8,7 @@
  *   switch (arg) { case 1: errno=0x21; default: ret; case 2..3: errno=0x22; }
  */
 extern int *Crt_errno(void);
-void SwitchErrorCode_004cf6d0(int arg) {
+void SwitchErrorCode(int arg) {
     int *errno_ptr;
     switch (arg) {
     case 1:

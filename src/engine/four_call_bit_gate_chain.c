@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void MStackPush2LLWalkCompare(void);
 
-__declspec(naked) void FourCallBitGateChain_004334d0(void) {
+__declspec(naked) void FourCallBitGateChain(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueIdx]
         push    ebx

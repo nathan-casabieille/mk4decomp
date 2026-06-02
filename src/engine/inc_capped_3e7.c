@@ -19,7 +19,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern unsigned int g_bootInitState_00535de4;
-void IncCapped3e7_00491920(void) {
+void IncCapped3e7(void) {
     int v = (int)g_bootInitState_00535de4 + 1;
     g_walkCallback = (void (*)(void))v;
     if (v > 0x03e7) {

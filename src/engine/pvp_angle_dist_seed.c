@@ -114,11 +114,11 @@ extern unsigned int g_dispatchSave98_00538044;
 extern s32 g_dlNalt2;
 extern s32 g_dlNalt3;
 extern s32 g_dlNalt4;
-extern void CallPauseLoadAndDispatch_004235f0(void);
-extern void InstallSelfPause2_00423630(void);
+extern void CallPauseLoadAndDispatch(void);
+extern void InstallSelfPause2(void);
 extern void FixedDiv16(void);
 
-__declspec(naked) void PvpAngleDistSeed_004232e0(void)
+__declspec(naked) void PvpAngleDistSeed(void)
 {
     __asm {
         /* === h1 (0x4232e0): main diff/ratio + angle install === */
@@ -214,7 +214,7 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         shr      eax, 2
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [edx*4 + 0x44], eax
-        jmp      CallPauseLoadAndDispatch_004235f0
+        jmp      CallPauseLoadAndDispatch
         nop
         nop
         nop
@@ -243,7 +243,7 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         shr      eax, 2
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [edx*4 + 0x44], eax
-        jmp      CallPauseLoadAndDispatch_004235f0
+        jmp      CallPauseLoadAndDispatch
         nop
         nop
         nop
@@ -272,7 +272,7 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         shr      eax, 2
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [edx*4 + 0x44], eax
-        jmp      InstallSelfPause2_00423630
+        jmp      InstallSelfPause2
         nop
         nop
         nop
@@ -301,6 +301,6 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         shr      eax, 2
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [edx*4 + 0x44], eax
-        jmp      InstallSelfPause2_00423630
+        jmp      InstallSelfPause2
     }
 }

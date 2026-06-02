@@ -112,11 +112,11 @@ extern unsigned int g_fightAxisPosY;
  *   eax = g_baseSel; ecx = g_eventQueueWorkType;
  *   eax += 0xf; g_scaledInit = eax;
  *   Push g_eventQueueWorkType then g_scaledInit on mstack;
- *   call Triple3VecMul10Tail_00424a20; if pause: ret;
+ *   call Triple3VecMul10Tail; if pause: ret;
  *   pop g_scaledInit; pop g_eventQueueWorkType; jmp 0x44ccf0.
  */
-extern void Triple3VecMul10Tail_00424a20(void);
-void DualPushAddCallDualPopJmp_0044cc50(void) {
+extern void Triple3VecMul10Tail(void);
+void DualPushAddCallDualPopJmp(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         mov     ecx, dword ptr [g_eventQueueWorkType]
@@ -131,7 +131,7 @@ void DualPushAddCallDualPopJmp_0044cc50(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], edx
-        call    Triple3VecMul10Tail_00424a20
+        call    Triple3VecMul10Tail
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

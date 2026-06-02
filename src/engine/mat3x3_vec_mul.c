@@ -123,7 +123,7 @@ extern unsigned int g_mat3x3_007af99c;
 extern unsigned int g_mat3x3_007af99e;
 extern unsigned int g_mat3x3_007af9a0;
 
-__declspec(naked) void Mat3x3VecMul_004b3630(void) {
+__declspec(naked) void Mat3x3VecMul(void) {
     __asm {
         mov     edx, dword ptr [esp + 4]
         push    ebx

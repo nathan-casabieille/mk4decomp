@@ -7,7 +7,7 @@
 extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
-void ZeroNDwords_004a5660(int *p, int n) {
+void ZeroNDwords(int *p, int n) {
     if (n <= 0) return;
     memset(p, 0, n * 4);
 }

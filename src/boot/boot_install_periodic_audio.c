@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * BootInstallPeriodicAudio_00413aa0 - 197b 2-body boot init.
+ * BootInstallPeriodicAudio - 197b 2-body boot init.
  *   Entry 0x00413aa0: push 0x8c size and pointer to body2; call StoreTwoCall; ret.
  *   Body2 0x00413ac0: chain via g_baseSel packed_ptr; save & clear chain->state.
  *     If state was != 0: countdown g_eventQueueIdx; if not yet 0: jump to mainloop;
@@ -117,15 +117,15 @@ extern unsigned int g_fightAxisPosY;
  *     If state == 0 (or countdown done): reset g_eventQueueIdx=0x14;
  *     mainloop: g_walkCallback=0x3333; AudioMixerStep; if paused: pop+ret. Else
  *     g_walkCallback += 0xd999; ZeroAndDirty4; if paused: pop+ret. If g_xformDirtyFlags & 4:
- *     call BootMStackBracketChain_00413ce0; if paused: pop+ret. Install-self at body2; chain->state=1;
+ *     call BootMStackBracketChain; if paused: pop+ret. Install-self at body2; chain->state=1;
  *     g_pendingNodeType=1; g_framePauseFlag=1; pop+ret.
  */
 extern void AudioMixerStep(void);
-extern void BootMStackBracketChain_00413ce0(void);
+extern void BootMStackBracketChain(void);
 extern void CallSetPause(void);
 extern void ZeroAndDirty4(void);
 
-__declspec(naked) void BootInstallPeriodicAudio_00413aa0(void)
+__declspec(naked) void BootInstallPeriodicAudio(void)
 {
     __asm
     {
@@ -177,7 +177,7 @@ __declspec(naked) void BootInstallPeriodicAudio_00413aa0(void)
         jne     short L_b2_ret
         test    byte ptr [g_xformDirtyFlags], 4
         je      short L_install_self
-        call    BootMStackBracketChain_00413ce0
+        call    BootMStackBracketChain
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_b2_ret

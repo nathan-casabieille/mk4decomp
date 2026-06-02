@@ -115,7 +115,7 @@ extern void AudioMixerStep(void);
 extern void MStackCall_00406340(void);
 extern void PushSetXfmMaskCallPop(void);
 
-__declspec(naked) void MStackBracket3PackedSlotInit_004757c0(void)
+__declspec(naked) void MStackBracket3PackedSlotInit(void)
 {
     __asm
     {

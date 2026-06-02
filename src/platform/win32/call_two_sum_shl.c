@@ -25,7 +25,7 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     +0x0b
  */
 extern s32 g_clientWidth;
-extern void CallThreeSumLea_004c45d0(void);
+extern void CallThreeSumLea(void);
 extern unsigned int g_iat_004d21b0;
 
 /*
@@ -33,7 +33,7 @@ extern unsigned int g_iat_004d21b0;
  * the orig shl edi,1+mov [g],edi; scheduler frees edi early for a3 -
  * same byte count, different encoding, not controllable from C source.
  */
-__declspec(naked) void CallTwoSumShl_004c45a0(void) {
+__declspec(naked) void CallTwoSumShl(void) {
     __asm {
         push    esi
         mov     esi, dword ptr [g_iat_004d21b0]

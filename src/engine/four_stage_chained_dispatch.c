@@ -113,16 +113,16 @@ extern unsigned int g_fightAxisPosY;
  *   g_xformEntityIdx = chain[scaledInit].slot24; DispatcherComplex260; pause? ret;
  *   if (g_xformDirtyFlags & 4) ret; else g_cj = scaledInit; chain[chain[scaledInit].slot18].slot30 = 1;
  *   g_walkCallback=1; g_scaledInit = g_cj; GDispatch4; pause? ret;
- *   if (g_xformDirtyFlags & 4) ret; call PoseCopyIdleCluster_004537a0; pause? jmp Bit2GatedChainInit_00453620.
+ *   if (g_xformDirtyFlags & 4) ret; call PoseCopyIdleCluster; pause? jmp Bit2GatedChainInit.
  */
-extern void Bit2GatedChainInit_00453620(void);
+extern void Bit2GatedChainInit(void);
 extern void DirtyDoubleDeref(void);
 extern void GDispatch4(void);
-extern void PoseCopyIdleCluster_004537a0(void);
+extern void PoseCopyIdleCluster(void);
 
 extern unsigned int g_chain_arr_4348f0;
 
-__declspec(naked) void FourStageChainedDispatch_00453540(void) {
+__declspec(naked) void FourStageChainedDispatch(void) {
     __asm {
         mov     dword ptr [g_walkCallback], 3
         call    DirtyDoubleDeref
@@ -161,12 +161,12 @@ __declspec(naked) void FourStageChainedDispatch_00453540(void) {
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   75h
         _emit   13h
-        call    PoseCopyIdleCluster_004537a0
+        call    PoseCopyIdleCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     Bit2GatedChainInit_00453620
+        jmp     Bit2GatedChainInit
         ret
     }
 }

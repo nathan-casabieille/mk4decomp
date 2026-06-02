@@ -120,7 +120,7 @@ extern void StackPushAdd15CallPop(void);
 extern void ThreeChanPackClamp(void);
 extern void ZeroThreeFields_0040a8b0(void);
 
-__declspec(naked) void Phase1ContextSetup3Helpers_0040d990(void)
+__declspec(naked) void Phase1ContextSetup3Helpers(void)
 {
     __asm {
         push    0x00FB43FB

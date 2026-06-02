@@ -115,7 +115,7 @@ extern unsigned int g_dispatchSave1592_00ab5754;
 extern unsigned int g_dispatchSave1593_00ab5758;
 extern u32 g_titleAudioState;
 
-void ECM_OpenTrack_004be9c0(const char *name, unsigned int a, unsigned int b, void *c) {
+void ECM_OpenTrack(const char *name, unsigned int a, unsigned int b, void *c) {
     g_setjmp_00ab5750 = 0;
     strcpy((char *)&g_dispatchSave1590_00ab5348, name);
     g_dispatchSave1591_00ab574c = a;

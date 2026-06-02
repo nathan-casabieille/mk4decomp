@@ -108,14 +108,14 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void TradePlaceChain_004933d0(void);
+extern void TradePlaceChain(void);
 extern unsigned int g_or_0052ab40;
 
 /*
  * @addr 0x00494580 (107b game) - gate-then-dispatch:
  *   walk = baseSel*4[+0x30]; if zero ret. Else walk = scaled[walk];
  *   if walk == 0x6c, fall through; else gate via g_or_0052ab40 & 0x400.
- *   If gate passes, call TradePlaceChain_004933d0; on pause clear, push (0x60,
+ *   If gate passes, call TradePlaceChain; on pause clear, push (0x60,
  *   0x4945f0), set cj/walk slot, and call StoreTwoCall.
  */
 void GateDispatch6c(void) {
@@ -133,7 +133,7 @@ void GateDispatch6c(void) {
         g_xformScratch94 = v;
         if (v != 0) return;
     }
-    TradePlaceChain_004933d0();
+    TradePlaceChain();
     if (g_framePauseFlag != 0) return;
     g_eventQueueEnd = g_scaledInit_00542044;
     StoreTwoCall(0x004945f0, 0x60);

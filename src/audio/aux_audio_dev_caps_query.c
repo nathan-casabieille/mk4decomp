@@ -124,7 +124,7 @@ extern unsigned int g_iat_004d2244;
 extern u32 g_audioPreState;
 extern void Helper_AuxAudio_PostInit(void);
 
-__declspec(naked) void AuxAudioDevCapsQuery_004ac3f0(void) {
+__declspec(naked) void AuxAudioDevCapsQuery(void) {
     __asm {
         sub     esp, 0x1c
         push    esi

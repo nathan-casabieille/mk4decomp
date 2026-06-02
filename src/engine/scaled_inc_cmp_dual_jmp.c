@@ -22,7 +22,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void ScaledChainJmp_004298e0(void);
 extern void ScaledArrStore_00429960(void);
-void ScaledIncCmpDualJmp_00429800(void) {
+void ScaledIncCmpDualJmp(void) {
     unsigned int idx;
     unsigned int scaled;
     unsigned int v;

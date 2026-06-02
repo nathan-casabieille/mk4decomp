@@ -15,7 +15,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_table_00fa0de0[];
 extern void (__stdcall *g_iat_004d213c)(void *);
-void DivMod32IAT_004cd320(int arg) {
+void DivMod32IAT(int arg) {
     int lo = arg & 0x1f;
     int hi = arg >> 5;
     void *p = (char *)g_table_00fa0de0[hi] + lo * 9 * 4 + 0x0c;

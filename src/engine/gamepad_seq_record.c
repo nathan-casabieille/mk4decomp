@@ -119,7 +119,7 @@ extern unsigned int g_dispatchSave1537_00ab48be;
 extern unsigned int g_dispatchSave1538_00ab48c0;
 extern unsigned int g_dispatchSave1539_00ab48c2;
 
-__declspec(naked) void GamepadSeqRecord_004bcc70(void)
+__declspec(naked) void GamepadSeqRecord(void)
 {
     __asm {
         push     esi

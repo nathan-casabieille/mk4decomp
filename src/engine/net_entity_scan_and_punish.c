@@ -115,7 +115,7 @@ extern void MStackPush2ChainLLInsert(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void ScaledInitOrSelfPtr_00474b10(void);
 
-__declspec(naked) void NetEntityScanAndPunish_00474b50(void)
+__declspec(naked) void NetEntityScanAndPunish(void)
 {
     __asm {
         mov      eax, dword ptr [g_cj_00535df0]

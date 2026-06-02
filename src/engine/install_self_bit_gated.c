@@ -117,15 +117,15 @@ extern unsigned int g_fightAxisPosY;
  *     call ScaledChainJmp; pause? ret.
  *     call StackPopDispatchTagged; ret.
  *   install-path: install self with [esi+0x84]=ebx, packed_ptr store, g_scaledInit++,
- *     chain[+0x84]=0, call Install3WayChainStateAdvance_00429130; pause = 1.
+ *     chain[+0x84]=0, call Install3WayChainStateAdvance; pause = 1.
  */
-extern void Install3WayChainStateAdvance_00429130(void);
+extern void Install3WayChainStateAdvance(void);
 extern void ScaledChainJmp_004298e0(void);
 extern void ScaledLoadJmp_24(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void InstallSelfBitGated_00428eb0(void) {
+__declspec(naked) void InstallSelfBitGated(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    ebx
@@ -181,7 +181,7 @@ __declspec(naked) void InstallSelfBitGated_00428eb0(void) {
         mov     [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
-        call    Install3WayChainStateAdvance_00429130
+        call    Install3WayChainStateAdvance
         mov     dword ptr [g_framePauseFlag], ebx
         pop     esi
         pop     ebx

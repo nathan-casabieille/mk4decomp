@@ -119,7 +119,7 @@ extern void RoundOverFsmCluster(void);
  */
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void InstallSelfCountdownBit_0049aef0(void) {
+__declspec(naked) void InstallSelfCountdownBit(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    ebx

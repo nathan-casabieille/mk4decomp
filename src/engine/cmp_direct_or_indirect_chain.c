@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   complex offset (idx*3 - 8) + chain load + call + pop. */
 extern void ChainGatedNegAccum(void);
 
-void CmpDirectOrIndirectChain_0048b610(void) {
+void CmpDirectOrIndirectChain(void) {
     __asm {
         cmp     dword ptr [g_eventQueueWorkType], 2
         _emit   7fh

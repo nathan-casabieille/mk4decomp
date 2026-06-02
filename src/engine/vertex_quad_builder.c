@@ -112,15 +112,15 @@ extern unsigned int g_fightAxisPosY;
  *   arg0 (esp+8): poly index. Reads [0x542048]+4 (base table); fetches 16-byte
  *   entry; reads bp = count (entry+0xe), ebx = entry+0xc. If ebp == 0, free slot
  *   in [edx*4 + 0x48] table and return.
- *   Allocates a vertex block via LeaScaledCall_004bd510 + Mem_Malloc; iterates
+ *   Allocates a vertex block via LeaScaledCall + Mem_Malloc; iterates
  *   `ebp` times copying UV (3 u16) + reading color index (byte) -> palette
  *   byte, masking into output.
  */
 extern unsigned int g_dispatchSave1572_00ab4e34;
-extern void LeaScaledCall_004bd510(void);
+extern void LeaScaledCall(void);
 extern void Mem_Malloc(void);
 
-__declspec(naked) void VertexQuadBuilder_004bc470(void) {
+__declspec(naked) void VertexQuadBuilder(void) {
     __asm {
         push    ecx
         mov     ecx, dword ptr [g_xformEntityIdx]
@@ -161,7 +161,7 @@ __declspec(naked) void VertexQuadBuilder_004bc470(void) {
         jle     short L_vqb_useExisting
     L_vqb_allocFallback:
         push    2
-        call    LeaScaledCall_004bd510
+        call    LeaScaledCall
         mov     eax, [esp + 0x1c]
         add     esp, 4
     L_vqb_directAlloc:

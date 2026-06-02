@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * BootStateInitWithRecurseInstall_00402de0 - 230b boot self-installing state setup.
+ * BootStateInitWithRecurseInstall - 230b boot self-installing state setup.
  *   chain = g_baseSel<<2; saved = chain->state; chain->state = 0.
  *   If was nonzero: tail-call StackPopDispatchTagged; pop+ret.
  *   Else: g_phaseIdx_0053a50c=5; g_walkCallback=0xa; call StorePauseImulShr16; if paused: pop+ret.
@@ -123,11 +123,11 @@ extern unsigned int g_bootInitState_00535de4;
 extern unsigned int g_phaseIdx_0053a50c;
 extern void StorePauseImulShr16(void);
 extern void TableWalkBoundedCmp(void);
-extern void TripleCallCountdown_00428080(void);
-extern void TwoCallStatePauseJmp_00491990(void);
-extern void TwoStageSelectorInit_00402ed0(void);
+extern void TripleCallCountdown(void);
+extern void TwoCallStatePauseJmp(void);
+extern void TwoStageSelectorInit(void);
 
-__declspec(naked) void BootStateInitWithRecurseInstall_00402de0(void)
+__declspec(naked) void BootStateInitWithRecurseInstall(void)
 {
     __asm
     {
@@ -152,19 +152,19 @@ __declspec(naked) void BootStateInitWithRecurseInstall_00402de0(void)
         inc     eax
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_bootInitState_00535de4], eax
-        call    TripleCallCountdown_00428080
+        call    TripleCallCountdown
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pop_ret
-        call    TwoStageSelectorInit_00402ed0
+        call    TwoStageSelectorInit
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pop_ret
         push    8
         call    TableWalkBoundedCmp
-        mov     dword ptr [esi + 8], offset BootStateInitWithRecurseInstall_00402de0
+        mov     dword ptr [esi + 8], offset BootStateInitWithRecurseInstall
         mov     ecx, dword ptr [g_baseSel]
-        mov     edx, offset BootStateInitWithRecurseInstall_00402de0
+        mov     edx, offset BootStateInitWithRecurseInstall
         add     esp, 4
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
@@ -177,7 +177,7 @@ __declspec(naked) void BootStateInitWithRecurseInstall_00402de0(void)
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
-        call    TwoCallStatePauseJmp_00491990
+        call    TwoCallStatePauseJmp
         mov     dword ptr [g_framePauseFlag], 1
     L_pop_ret:
         pop     esi

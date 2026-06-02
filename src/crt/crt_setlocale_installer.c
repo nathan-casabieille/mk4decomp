@@ -123,16 +123,16 @@ extern unsigned int g_dispatchSave1439_00f9fad8;
 extern unsigned int g_dispatchSave1440_00f9fadc;
 extern unsigned int g_dispatchSave1467_00fa0dc4;
 extern unsigned int g_iat_004d2114;
-extern void BuildCharacterCaseTables_004c9840(void);
-extern void CRTSignalDispatch_004c9750(void);
-extern void InitGlobalsAndZero_004c9800(void);
+extern void BuildCharacterCaseTables(void);
+extern void CRTSignalDispatch(void);
+extern void InitGlobalsAndZero(void);
 extern void Lock(void);
 extern void TableLookupIatCall(void);
-extern void TranslateMsgId_004c97a0(void);
+extern void TranslateMsgId(void);
 
 extern unsigned int g_dispatchSave114_00522320;
 
-__declspec(naked) void CrtSetlocaleInstaller_004c9520(void)
+__declspec(naked) void CrtSetlocaleInstaller(void)
 {
     __asm {
         sub      esp, 0x14
@@ -145,7 +145,7 @@ __declspec(naked) void CrtSetlocaleInstaller_004c9520(void)
         mov      eax, dword ptr [esp + 0x2c]
         add      esp, 4
         push     eax
-        call     CRTSignalDispatch_004c9750
+        call     CRTSignalDispatch
         mov      ecx, eax
         mov      eax, dword ptr [g_dispatchSave1435_00f9fac8]
         add      esp, 4
@@ -165,8 +165,8 @@ __declspec(naked) void CrtSetlocaleInstaller_004c9520(void)
     L_9561:
         test     ecx, ecx
         jne      short L_9583
-        call     InitGlobalsAndZero_004c9800
-        call     BuildCharacterCaseTables_004c9840
+        call     InitGlobalsAndZero
+        call     BuildCharacterCaseTables
         push     0x19
         call     TableLookupIatCall
         add      esp, 4
@@ -241,7 +241,7 @@ __declspec(naked) void CrtSetlocaleInstaller_004c9520(void)
         cmp      eax, 0xff
         jb       short L_961f
         push     edi
-        call     TranslateMsgId_004c97a0
+        call     TranslateMsgId
         add      esp, 4
         mov      dword ptr [g_dispatchSave1436_00f9facc], eax
         mov      dword ptr [g_dispatchSave1467_00fa0dc4], esi
@@ -258,9 +258,9 @@ __declspec(naked) void CrtSetlocaleInstaller_004c9520(void)
         mov      eax, dword ptr [g_dispatchSave1440_00f9fadc]
         test     eax, eax
         je       short L_968b
-        call     InitGlobalsAndZero_004c9800
+        call     InitGlobalsAndZero
     L_9672:
-        call     BuildCharacterCaseTables_004c9840
+        call     BuildCharacterCaseTables
         push     0x19
         call     TableLookupIatCall
         add      esp, 4
@@ -326,7 +326,7 @@ __declspec(naked) void CrtSetlocaleInstaller_004c9520(void)
         mov      dword ptr [g_dispatchSave1467_00fa0dc4], 1
         push     eax
         mov      dword ptr [g_dispatchSave1435_00f9fac8], eax
-        call     TranslateMsgId_004c97a0
+        call     TranslateMsgId
         mov      ecx, dword ptr [ebx + g_crtLocaleEnvVarTbl_00522314]
         mov      edx, dword ptr [ebx + g_dispatchSave115_00522318]
         mov      dword ptr [g_dispatchSave1436_00f9facc], eax

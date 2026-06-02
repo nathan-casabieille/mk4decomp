@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
  *   test (bit0 of g_xformDirtyFlags); if zero: jmp Wrapper_00438c40;
  *   else: jmp DispatchSwitchWalkCmp.
  */
-void GuardedBitChainCmpJmp_00470f90(void) {
+void GuardedBitChainCmpJmp(void) {
     int v;
     ScaledAndCheckJmp();
     if (g_framePauseFlag != 0) return;

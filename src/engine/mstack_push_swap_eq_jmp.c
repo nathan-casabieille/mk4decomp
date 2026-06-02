@@ -24,7 +24,7 @@
 
 extern unsigned int g_eq_00542098;
 
-extern void StateSwitchMStackPop_00474f20(void);
+extern void StateSwitchMStackPop(void);
 
 /* @addr 0x00474e80 */
 void MStackPushSwapEqJmp_00474e80(void) {
@@ -35,7 +35,7 @@ void MStackPushSwapEqJmp_00474e80(void) {
     p = g_player1NodeIdx;
     g_walkCallback = (void (*)(void))p;
     g_eq_00542098 = (p == g_eventQueueEnd) ? 1 : 0;
-    StateSwitchMStackPop_00474f20();
+    StateSwitchMStackPop();
 }
 
 /* @addr 0x00474ed0 */
@@ -47,5 +47,5 @@ void MStackPushSwapEqJmp_00474ed0(void) {
     p = g_player1NodeIdx;
     g_walkCallback = (void (*)(void))p;
     g_eq_00542098 = (p == g_eventQueueIdx) ? 1 : 0;
-    StateSwitchMStackPop_00474f20();
+    StateSwitchMStackPop();
 }

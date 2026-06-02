@@ -20,7 +20,7 @@
 extern void *g_lit_004ed6d0;
 extern void *g_lit_004f17a8;
 extern void DualEntryInstallScaledChain_0047ef60(void);
-extern void Alarm4EntryInstallCountdown_00496960(void);
+extern void Alarm4EntryInstallCountdown(void);
 extern int  ArgSarStoreJmp(void *p);
 
 /* @addr 0x0047ef40 */
@@ -35,7 +35,7 @@ void DirtyGuardLitOrJmp_0047ef40(void) {
 /* @addr 0x00496940 */
 void DirtyGuardLitOrJmp_00496940(void) {
     if (g_xformScratch2088 == 1) {
-        Alarm4EntryInstallCountdown_00496960();
+        Alarm4EntryInstallCountdown();
         return;
     }
     ArgSarStoreJmp(&g_lit_004f17a8);

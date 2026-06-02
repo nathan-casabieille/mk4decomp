@@ -109,12 +109,12 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave773_004eee3c;
-extern void GatedChainClamp_00486e80(void);
+extern void GatedChainClamp(void);
 extern void MStackPush3CallCascade(void);
-extern void Phase2InitDispatchInstallSelf_0040ba70(void);
+extern void Phase2InitDispatchInstallSelf(void);
 extern void ScaledChainDouble(void);
 
-__declspec(naked) void RoundResultSlotInitTable_00486860(void)
+__declspec(naked) void RoundResultSlotInitTable(void)
 {
     __asm {
         mov      eax, dword ptr [g_matrixStackTop]
@@ -170,7 +170,7 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         shr      eax, 2
         mov      dword ptr [edx*4 + 8], ecx
         mov      dword ptr [g_xformEntityIdx], eax
-        call     Phase2InitDispatchInstallSelf_0040ba70
+        call     Phase2InitDispatchInstallSelf
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_69c8
@@ -454,6 +454,6 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         mov      dword ptr [g_eventQueueNotMask], 2
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_eventQueueChild], eax
-        jmp      GatedChainClamp_00486e80
+        jmp      GatedChainClamp
     }
 }

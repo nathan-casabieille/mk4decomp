@@ -26,7 +26,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [eax + 0x38], ecx
  *   ret
  */
-void Copy3FieldsNeg_0041aa40(void) {
+void Copy3FieldsNeg(void) {
     unsigned char *src;
     unsigned char *dst;
     int v;

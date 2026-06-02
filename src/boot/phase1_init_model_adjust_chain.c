@@ -121,7 +121,7 @@ extern void ScaledTestPauseStore(void);
 extern void ScaledTripleCopy54(void);
 extern void Thunk_00405ac0(void);
 
-__declspec(naked) void Phase1InitModelAdjustChain_00410fb0(void)
+__declspec(naked) void Phase1InitModelAdjustChain(void)
 {
     __asm {
         mov     eax, offset g_dispatchSave620_004d59e8

@@ -113,7 +113,7 @@ extern void CjInstallSelfRouter(void);
 extern void PushPopWalkSet1006(void);
 extern void ScaledLoadJmp_00428d20(void);
 
-__declspec(naked) void InstallSelfChain494d60_00494d60(void) {
+__declspec(naked) void InstallSelfChain494d60(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi

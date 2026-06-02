@@ -12,7 +12,7 @@ extern unsigned int g_baseSel;
  *   [g_eventQueueIdx*4+0x3c]→walk; copies into eax-slot+0x3c.
  *   Then re-reads idx slot's +0x3c → walk and back into ecx-slot.
  */
-void SlotFieldSwap3c_004463b0(void) {
+void SlotFieldSwap3c(void) {
     unsigned int idx;
     unsigned int v;
     idx = *(unsigned int *)(g_baseSel * 4 + 0x4c);

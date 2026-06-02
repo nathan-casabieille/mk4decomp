@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x004708c0 (186b game) - dual-guarded packed-table search by chain[+0x34].
  *   call MStackPush3CmpCall. if (!(g_xformDirtyFlags & 1)): return 0.
  *   eax = [0x535ddc]; g_walkCallback = eax; if (eax > 0x10000): return 0.
- *   call CmpP1GTSetup_00470980; g_scaledInit = packed_ptr(0x4ebe90);
+ *   call CmpP1GTSetup; g_scaledInit = packed_ptr(0x4ebe90);
  *   ecx = chain[scaledInit]; scaledInit++;
  *   loop: g_eventQueueWorkType = ecx; if (ecx < 0) break;
  *     esi = g_xformEntityIdx; if (chain[esi+0x34] == ecx) goto found.
@@ -122,12 +122,12 @@ extern unsigned int g_fightAxisPosY;
  *     call ScaledZeroFour; return 1.
  */
 extern unsigned int g_table_00535ddc;
-extern void CmpP1GTSetup_00470980(void);
-extern void SnapshotDispatchMStack_00491350(void);
+extern void CmpP1GTSetup(void);
+extern void SnapshotDispatchMStack(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void DualGuardedTableSearch_004708c0(void) {
+__declspec(naked) void DualGuardedTableSearch(void) {
     __asm {
         push    esi
         call    MStackPush3CmpCall
@@ -145,7 +145,7 @@ __declspec(naked) void DualGuardedTableSearch_004708c0(void) {
         xor     eax, eax
         pop     esi
         ret
-        call    CmpP1GTSetup_00470980
+        call    CmpP1GTSetup
         mov     eax, 0x004ebe90
         shr     eax, 2
         mov     dword ptr [g_scaledInit_00542044], eax
@@ -180,7 +180,7 @@ __declspec(naked) void DualGuardedTableSearch_004708c0(void) {
         inc     eax
         mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [g_scaledInit_00542044], eax
-        call    SnapshotDispatchMStack_00491350
+        call    SnapshotDispatchMStack
         call    ScaledZeroFour
         mov     eax, 1
         pop     esi

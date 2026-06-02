@@ -26,23 +26,23 @@ int Crt_rand(void) {
  *   call 0x4c6940(0x4d5000, 0x4d5018); add esp 8; ret.
  */
 extern void (*g_iat_0051ffd8)(void);
-extern int IterFnPtrs_004c6940(void *, void *);
+extern int IterFnPtrs(void *, void *);
 extern void *g_dispatchSave550_004d5000;
 extern void *g_dispatchSave549_004d5018;
 extern void *g_dispatchSave548_004d501c;
 extern void *g_dispatchSave547_004d5024;
 void _init_premain(void) {
     if (g_iat_0051ffd8) g_iat_0051ffd8();
-    IterFnPtrs_004c6940(&g_dispatchSave548_004d501c, &g_dispatchSave547_004d5024);
-    IterFnPtrs_004c6940(&g_dispatchSave550_004d5000, &g_dispatchSave549_004d5018);
+    IterFnPtrs(&g_dispatchSave548_004d501c, &g_dispatchSave547_004d5024);
+    IterFnPtrs(&g_dispatchSave550_004d5000, &g_dispatchSave549_004d5018);
 }
 
 /* @addr 0x004c8300 (57b)
  *   loop: call 0x4c82b0(arg1, arg2, arg3); decrement count;
  *   break if [arg3] == -1 or count == 0. Calls with raw 3 args.
  */
-extern void WriteCharBuffered_004c82b0(int, int, int);
-__declspec(naked) void PaddedLoopFunc_004c8300(void) {
+extern void WriteCharBuffered(int, int, int);
+__declspec(naked) void PaddedLoopFunc(void) {
     __asm {
         push    ebx
         push    ebp
@@ -61,7 +61,7 @@ loop_top:
         push    esi
         push    edi
         push    ebx
-        call    WriteCharBuffered_004c82b0
+        call    WriteCharBuffered
         mov     eax, dword ptr [esi]
         add     esp, 0x0c
         cmp     eax, 0xffffffff

@@ -111,8 +111,8 @@ extern unsigned int g_fightAxisPosY;
 extern void DualScaledStoreZero(void);
 extern void DirtyToggleByGate(void);
 extern void NotShrCmp1Store(void);
-extern void CallPauseCallTestStackPushJmp_00460c60(void);
-extern void CallPauseMStackPushSet0Jmp_0045fcf0(void);
+extern void CallPauseCallTestStackPushJmp(void);
+extern void CallPauseMStackPushSet0Jmp(void);
 extern void PerSlotPhaseRouter_00460770(void);
 extern void GuardedDispatch_00460cd0(void);
 extern void PerSlotPhaseRouter_004605d0(void);
@@ -128,8 +128,8 @@ extern unsigned int g_dispatchSave697_004ea000;
  */
 extern void ArgScaledTestStore(void);
 
-extern void CallPauseCallTestStackPushJmp_00460c60(void);
-extern void CallPauseMStackPushSet0Jmp_0045fcf0(void);
+extern void CallPauseCallTestStackPushJmp(void);
+extern void CallPauseMStackPushSet0Jmp(void);
 extern void DirtyToggleByGate(void);
 extern void DualScaledStoreZero(void);
 extern void GuardedDispatch_00460ca0(void);
@@ -187,7 +187,7 @@ __declspec(naked) void MultiThunkDispatcher_00460470(void) {
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     CallPauseCallTestStackPushJmp_00460c60
+        jmp     CallPauseCallTestStackPushJmp
         ret
         _emit   90h
         _emit   90h
@@ -206,7 +206,7 @@ __declspec(naked) void MultiThunkDispatcher_00460470(void) {
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     CallPauseMStackPushSet0Jmp_0045fcf0
+        jmp     CallPauseMStackPushSet0Jmp
         ret
         _emit   90h
         _emit   90h

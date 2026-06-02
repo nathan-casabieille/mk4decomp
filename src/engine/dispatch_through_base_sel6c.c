@@ -115,12 +115,12 @@ extern unsigned int g_fightAxisPosY;
  *   walk=DualConstMaskFlagToggle8 (default) and wt=...Toggle4; if
  *   baseSel[+0x6c] set replace walk with that; tail-jmp through walk.
  */
-extern void ArgScaledLoadCmpP1_0048e550(void);
+extern void ArgScaledLoadCmpP1(void);
 
-__declspec(naked) void DispatchThroughBaseSel6c_00460f20(void) {
+__declspec(naked) void DispatchThroughBaseSel6c(void) {
     __asm {
         push    0x00542990
-        call    ArgScaledLoadCmpP1_0048e550
+        call    ArgScaledLoadCmpP1
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax

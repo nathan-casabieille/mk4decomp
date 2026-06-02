@@ -114,13 +114,13 @@ extern unsigned int g_fightAxisPosY;
  *   If g_currentNodeIdx == 0: pop+ret. g_xformDirtyFlags ^= 4. If still ==0: pop+ret.
  *   ecx = chain[+0x1c]; g_walkCallback = ecx; if <=0: skip recurse.
  *   edx = g_fightGroupHead; if 0: skip recurse. Else ecx = chain2[+0x1c]; g_walkCallback = ecx;
- *     if 0: skip recurse. Else call BootChainTreeRecurseWalk_00405b80 (sister); if paused: ret-noPop.
+ *     if 0: skip recurse. Else call BootChainTreeRecurseWalk (sister); if paused: ret-noPop.
  *   ecx = chain[+0x14]; g_walkCallback = ecx; if !=0: g_xformEntityIdx = 4; call MStackBracket5_LinkedListUnlink;
  *     if paused: ret-noPop; else pop+ret.
  *   Else: eax = chain[+0x18]; g_walkCallback = eax; if 0: pop+ret. Else g_walkCallback = 0;
  *     chain[+0x18] = 0; pop+ret.
  */
-extern void BootChainTreeRecurseWalk_00405b80(void);
+extern void BootChainTreeRecurseWalk(void);
 extern void MStackBracket5_LinkedListUnlink(void);
 
 void BootChainBidirRecurseWalk(void) {
@@ -158,7 +158,7 @@ void BootChainBidirRecurseWalk(void) {
         test    ecx, ecx
         mov     dword ptr [g_walkCallback], ecx
         je      short L_ca0_chain1
-        call    BootChainTreeRecurseWalk_00405b80
+        call    BootChainTreeRecurseWalk
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_ca0_justRet

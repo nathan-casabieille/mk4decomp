@@ -11,7 +11,7 @@ extern unsigned int g_scaledInit_00542044;
  *   pack a double from 3 dword args: high/low 32 bits + biased exponent.
  *   builds the 16-bit sign+exponent word at [esp+6], then fld it.
  */
-void PackDoubleFromInts_004cde40(void) {
+void PackDoubleFromInts(void) {
     __asm {
         sub     esp, 8
         mov     eax, dword ptr [esp + 0x0c]

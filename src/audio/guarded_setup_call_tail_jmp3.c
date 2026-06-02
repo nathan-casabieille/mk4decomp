@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
  *   g_eventQueueCurrent=4; g_acc_00542078=ecx; g_eventQueueNotMask=edx;
  *   call StreamChainStringInstall; if no pause: jmp MStackPop4Rewrite; else ret.
  */
-void GuardedSetupCallTailJmp3_004a2000(unsigned int arg0, unsigned int arg1, unsigned int arg2) {
+void GuardedSetupCallTailJmp3(unsigned int arg0, unsigned int arg1, unsigned int arg2) {
     AllocSlotPushTripleGlobals();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))0xa000;

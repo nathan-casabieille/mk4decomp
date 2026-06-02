@@ -118,7 +118,7 @@ extern u8 g_vtxRGBScale0_b;
 extern u8 g_vtxRGBScale0_g;
 extern u8 g_vtxRGBScale0_r;
 
-__declspec(naked) void PackColor_004b30c0(void) {
+__declspec(naked) void PackColor(void) {
     __asm {
         mov     eax, dword ptr [esp + 8]
         push    esi

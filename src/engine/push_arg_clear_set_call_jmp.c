@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *   jmp ScaledInitOrSelfPtrSetType_0046a5e0.
  */
 extern unsigned char g_dispatchSave420_00542a64;
-void PushArgClearSetCallJmp_0046a580(void) {
+void PushArgClearSetCallJmp(void) {
     g_walkCallback = 0;
     *(unsigned int *)(g_baseSel * 4 + 0x80) = 0;
     *(unsigned int *)(g_baseSel * 4 + 0x7c) = (unsigned int)g_walkCallback;

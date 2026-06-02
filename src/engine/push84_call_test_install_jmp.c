@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  *   ++eax; g_walkCallback = 5; g_matrixStackTop = eax;
  *   [eax*4] = 0x470480; jmp MstackPopScaledChainPlusThunks.
  */
-void Push84CallTestInstallJmp_00460940(void) {
+void Push84CallTestInstallJmp(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_currentNodeFlags;

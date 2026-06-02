@@ -109,10 +109,10 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void Eleven404b90_404c00(void);
-extern void InstallSelfCountedAccum_0042e1d0(void);
+extern void InstallSelfCountedAccum(void);
 extern void Ten404c40_404bd0(void);
 
-__declspec(naked) void BootMStackPopPush3Install_004046d0(void)
+__declspec(naked) void BootMStackPopPush3Install(void)
 {
     __asm
     {
@@ -191,9 +191,9 @@ __declspec(naked) void BootMStackPopPush3Install_004046d0(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bmpp3i_ret
-        mov     dword ptr [esi + 8], offset BootMStackPopPush3Install_004046d0
+        mov     dword ptr [esi + 8], offset BootMStackPopPush3Install
         mov     eax, dword ptr [g_baseSel]
-        mov     ecx, offset BootMStackPopPush3Install_004046d0
+        mov     ecx, offset BootMStackPopPush3Install
         mov     dword ptr [eax*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     ecx, 0x1000000
@@ -205,7 +205,7 @@ __declspec(naked) void BootMStackPopPush3Install_004046d0(void)
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
-        call    InstallSelfCountedAccum_0042e1d0
+        call    InstallSelfCountedAccum
         mov     dword ptr [g_framePauseFlag], 1
     L_bmpp3i_ret:
         pop     esi

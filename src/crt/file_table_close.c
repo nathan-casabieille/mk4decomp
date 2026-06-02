@@ -116,17 +116,17 @@ extern unsigned int g_dispatchSave1465_00f9fdb4;
 extern unsigned int g_dispatchSave1466_00fa0dc0;
 extern unsigned int g_arr_00fa0de0;
 extern unsigned int g_dispatchSave1469_00fa0ee0;
-extern void CRTHandleLookup_004cd260(void);
+extern void CRTHandleLookup(void);
 extern void Calloc(void);
 extern void CmpCallPushIATCall(void);
-extern void CritSecLazyEnter_004cd2b0(void);
+extern void CritSecLazyEnter(void);
 extern void Crt_doserrno(void);
 extern void Crt_errno(void);
-extern void DivMod32IAT_004cd320(void);
+extern void DivMod32IAT(void);
 extern void PushConstCall_004c6a10(void);
-extern void StreamCleanupLoop_004ce0b0(void);
+extern void StreamCleanupLoop(void);
 
-__declspec(naked) void FileTableClose_004cb700(void) {
+__declspec(naked) void FileTableClose(void) {
     __asm {
         mov     eax, dword ptr [g_dispatchSave1469_00fa0ee0]
         push    ebp
@@ -146,13 +146,13 @@ __declspec(naked) void FileTableClose_004cb700(void) {
         test    byte ptr [ecx + esi + 4], 1
         je      short L_ftc_failEBADF
         push    edi
-        call    CritSecLazyEnter_004cd2b0
+        call    CritSecLazyEnter
         mov     edx, dword ptr [ebp]
         add     esp, 4
         test    byte ptr [edx + esi + 4], 1
         je      short L_ftc_setErr9
         push    edi
-        call    CRTHandleLookup_004cd260
+        call    CRTHandleLookup
         add     esp, 4
         push    eax
         call    dword ptr [g_dispatchSave882_004d20f0]
@@ -174,7 +174,7 @@ __declspec(naked) void FileTableClose_004cb700(void) {
         or      esi, 0xffffffff
     L_ftc_skipErr:
         push    edi
-        call    DivMod32IAT_004cd320
+        call    DivMod32IAT
         add     esp, 4
         mov     eax, esi
         pop     edi
@@ -270,7 +270,7 @@ __declspec(naked) void FileTableClose_004cb700(void) {
         mov     al, byte ptr [g_byte_00f9f838]
         test    al, al
         je      short L_ftc_e3End
-        jmp     StreamCleanupLoop_004ce0b0
+        jmp     StreamCleanupLoop
     L_ftc_e3End:
         ret
     }

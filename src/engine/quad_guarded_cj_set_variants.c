@@ -110,10 +110,10 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00422fc0 (237b game) - 4-call guarded sequence ending with cj field set.
  *   call DownloadPlayerChar with g_eventQueueCurrent=2; if pause? ret.
- *   call GuardedDualPushTailJmp_004231f0; if pause? ret.
+ *   call GuardedDualPushTailJmp; if pause? ret.
  *   mstack-push g_scaledInit_00542044, call ScaledOr4DirtyClear, mstack-pop.
  *   cj[+0x30]=3, cj[+0x34] |= 0x1c0000.
- *   call TwoStateLookupDirty_004237d0; if !pause: cj[+0x3c] = g_bootHeavyState_00537f78; ret.
+ *   call TwoStateLookupDirty; if !pause: cj[+0x3c] = g_bootHeavyState_00537f78; ret.
  */
 extern u32 g_dlState;
 extern u32 g_dlAux;
@@ -122,9 +122,9 @@ extern s32 g_dlNalt3;
 extern s32 g_dlNalt4;
 extern unsigned int g_particleInitState_00541de0;
 extern void DownloadPlayerChar(void);
-extern void GuardedDualPushTailJmp_004231f0(void);
+extern void GuardedDualPushTailJmp(void);
 extern void ScaledOr4DirtyClear(void);
-extern void TwoStateLookupDirty_004237d0(void);
+extern void TwoStateLookupDirty(void);
 
 void QuadGuardedCjSet_00422fc0(void) {
     __asm {
@@ -145,7 +145,7 @@ void QuadGuardedCjSet_00422fc0(void) {
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_eventQueueCurrent], 2
         mov     dword ptr [g_eventQueueWorkType], edx
-        call    GuardedDualPushTailJmp_004231f0
+        call    GuardedDualPushTailJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -184,7 +184,7 @@ void QuadGuardedCjSet_00422fc0(void) {
         _emit   00h
         _emit   1ch
         _emit   00h
-        call    TwoStateLookupDirty_004237d0
+        call    TwoStateLookupDirty
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -222,7 +222,7 @@ void QuadGuardedCjSet_004230b0(void) {
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_eventQueueCurrent], 3
         mov     dword ptr [g_eventQueueWorkType], edx
-        call    GuardedDualPushTailJmp_004231f0
+        call    GuardedDualPushTailJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -249,7 +249,7 @@ void QuadGuardedCjSet_004230b0(void) {
         mov     dword ptr [g_player4NodeIdx], eax
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x30], ecx
-        call    TwoStateLookupDirty_004237d0
+        call    TwoStateLookupDirty
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *   bit; tests dword[bit>>5] first masked, then walks until 3 dwords
  *   max. Returns 1 if any set bit found, else 0.
  */
-__declspec(naked) void BitsetTrailZeroCheck_004cc880(void) {
+__declspec(naked) void BitsetTrailZeroCheck(void) {
     __asm {
         mov     ecx, dword ptr [esp + 8]
         push    esi

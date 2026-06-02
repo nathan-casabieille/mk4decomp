@@ -116,17 +116,17 @@ extern void TableWalkBoundedCmp(void);
 
 /* @addr 0x004a6180 (162b audio) - 2-stage init w/ flags:
  *   TableWalkBoundedCmp(4); SixCallSeqPushImm; walkCallback = g_counter_0053a51c;
- *   TablePushAccumTailJmp_00429e30; pause? ret; TestCmpZeroFour; pause? ret;
+ *   TablePushAccumTailJmp; pause? ret; TestCmpZeroFour; pause? ret;
  *   stage1: g_eventQueueEnd = (0x535cfc>>2); g_dlEnabledFlag=1; g_walkCallback=g_dlNalt1;
  *     g_eventQueueCurrent=0; DownloadPlayerChar; pause? ret;
  *   stage2: g_walkCallback = g_dlNalt2; g_eventQueueCurrent=1; DownloadPlayerChar; pause? ret;
  *   g_dlEnabledFlag = 0; TableWalkPause; jmp ScaledClearTripleCallJmp.
  */
-void TwoStageAudioInit_004a6180(void) {
+void TwoStageAudioInit(void) {
     ((void (*)(int))TableWalkBoundedCmp)(4);
     SixCallSeqPushImm();
     g_walkCallback = (void (*)(void))g_counter_0053a51c;
-    TablePushAccumTailJmp_00429e30();
+    TablePushAccumTailJmp();
     if (g_framePauseFlag != 0) return;
     TestCmpZeroFour();
     if (g_framePauseFlag != 0) return;
@@ -141,6 +141,6 @@ void TwoStageAudioInit_004a6180(void) {
     DownloadPlayerChar();
     if (g_framePauseFlag != 0) return;
     g_dlEnabledFlag = 0;
-    TableWalkPause_004bd850();
-    ScaledClearTripleCallJmp_004202c0();
+    TableWalkPause();
+    ScaledClearTripleCallJmp();
 }

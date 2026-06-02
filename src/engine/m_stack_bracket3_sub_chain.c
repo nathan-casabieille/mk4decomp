@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-void MStackBracket3SubChain_00493ad0(void) {
+void MStackBracket3SubChain(void) {
     unsigned int v;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_currentNodeIdx;

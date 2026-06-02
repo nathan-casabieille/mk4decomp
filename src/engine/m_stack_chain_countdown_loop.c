@@ -117,9 +117,9 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_matrixStack_arr;
 extern unsigned int g_dispatchAcc_00541fb8;
 extern unsigned int g_phaseCounter;
-extern void MStackPushSearchLoop_00463ed0(void);
+extern void MStackPushSearchLoop(void);
 
-__declspec(naked) void MStackChainCountdownLoop_00463fb0(void) {
+__declspec(naked) void MStackChainCountdownLoop(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_scaledInit_00542044]
@@ -128,7 +128,7 @@ __declspec(naked) void MStackChainCountdownLoop_00463fb0(void) {
         mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
         mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [g_eventQueueWorkType], edx
-        call    MStackPushSearchLoop_00463ed0
+        call    MStackPushSearchLoop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

@@ -113,11 +113,11 @@ extern unsigned int g_dispatchSave503_004f3a30;
 extern unsigned int g_audioStateMachineVar_004f3a38;
 extern unsigned int g_audioVoiceTrioBase_0050a0f0;
 extern unsigned int g_voiceTrioBaseB_0050c618;
-extern void GuardedSetupCallTailJmp3_004a2000(void);
+extern void GuardedSetupCallTailJmp3(void);
 extern void MStackPushComplexCallPop_00406430(void);
 extern void ScaledOr4DirtyClear(void);
 
-__declspec(naked) void VoiceTrioBindAndKick_004a5ea0(void)
+__declspec(naked) void VoiceTrioBindAndKick(void)
 {
     __asm {
         push     ebx
@@ -206,7 +206,7 @@ __declspec(naked) void VoiceTrioBindAndKick_004a5ea0(void)
         mov      eax, dword ptr [edx*4 + g_audioStateMachineVar_004f3a38]
         push     eax
         mov      dword ptr [g_currentNodeIdx], eax
-        call     GuardedSetupCallTailJmp3_004a2000
+        call     GuardedSetupCallTailJmp3
         mov      edx, dword ptr [g_currentNodeIdx]
         add      ebp, 0x10000
         add      esp, 0xc
@@ -220,7 +220,7 @@ __declspec(naked) void VoiceTrioBindAndKick_004a5ea0(void)
         push     ebx
         push     eax
         mov      dword ptr [g_currentNodeIdx], eax
-        call     GuardedSetupCallTailJmp3_004a2000
+        call     GuardedSetupCallTailJmp3
         mov      eax, dword ptr [g_currentNodeIdx]
         add      esp, 0xc
         add      edi, 0x1e0000
@@ -233,7 +233,7 @@ __declspec(naked) void VoiceTrioBindAndKick_004a5ea0(void)
         push     ebx
         push     eax
         mov      dword ptr [g_currentNodeIdx], eax
-        call     GuardedSetupCallTailJmp3_004a2000
+        call     GuardedSetupCallTailJmp3
         mov      eax, dword ptr [g_currentNodeIdx]
         add      esp, 0xc
         mov      dword ptr [eax*4 + 0x5c], ebp

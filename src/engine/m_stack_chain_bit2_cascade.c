@@ -108,17 +108,17 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void GuardedWalkSwitchDirty_0048ea40(void);
-extern void MStackChainBit2Cascade_0048e8f0(void);
+extern void GuardedWalkSwitchDirty(void);
+extern void MStackChainBit2Cascade(void);
 
 /* @addr 0x0048e820 (205b game) - dual-entry bit-flag dispatcher.
  *   A: load chain via baseSel[*4+0x38] then *4+0x40; g_xformScratch94 = & 4; toggle bit-0 based on result. ret.
- *   B (+0x40): call DirtyToggleByBaseSel; pause-check; if bit-2 set jmp GuardedWalkSwitchDirty_0048ea40;
- *     call MStackChainBit2Cascade_0048e8f0; pause-check; if bit-0 clear ret. call PushPopState70Mask; pause-check;
+ *   B (+0x40): call DirtyToggleByBaseSel; pause-check; if bit-2 set jmp GuardedWalkSwitchDirty;
+ *     call MStackChainBit2Cascade; pause-check; if bit-0 clear ret. call PushPopState70Mask; pause-check;
  *     load g_player1NodeIdx vs g_fightGroupHead; if eq eax=0x200 else eax=2; g_xformScratch94=eax & g_walkCallback;
  *     toggle bit-0; ret.
  */
-extern void DirtyToggleByBaseSel_0048f2e0(void);
+extern void DirtyToggleByBaseSel(void);
 extern void PushPopState70Mask(void);
 
 __declspec(naked) void DualEntryBitFlagDispatch(void) {
@@ -143,7 +143,7 @@ __declspec(naked) void DualEntryBitFlagDispatch(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        call    DirtyToggleByBaseSel_0048f2e0
+        call    DirtyToggleByBaseSel
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -151,8 +151,8 @@ __declspec(naked) void DualEntryBitFlagDispatch(void) {
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   74h
         _emit   05h
-        jmp     GuardedWalkSwitchDirty_0048ea40
-        call    MStackChainBit2Cascade_0048e8f0
+        jmp     GuardedWalkSwitchDirty
+        call    MStackChainBit2Cascade
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

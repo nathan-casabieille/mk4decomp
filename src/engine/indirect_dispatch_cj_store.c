@@ -112,14 +112,14 @@ extern unsigned int g_fightAxisPosY;
  *   mstack-push g_currentNodeFlags and g_xformScratch2088. g_eventQueueCurrent = g_currentNodeFlags.
  *   g_scaledInit_00542044 = g_eventQueueEnd; g_xformEntityIdx = g_eventQueueIdx.
  *   g_walkCallback = 0; indirect call [g_eventQueueChild] (cdecl callback).
- *   If pause? final-ret. call AerialKickComboCluster_0048b090; if pause? final-ret.
+ *   If pause? final-ret. call AerialKickComboCluster; if pause? final-ret.
  *   cj[+0x58] = g_walkCallback; cj[+0x54] = g_currentNodeFlags; cj[+0x5c] = g_xformScratch2088.
  *   mstack-pop g_xformScratch2088, g_currentNodeFlags. g_walkCallback = 1; tail-jmp [g_eventQueueChild].
  *   ret. Followed by small tail block: if g_walkCallback == 0, g_eventQueueTotal = 0x00537ec0>>2; ret.
  */
-extern void AerialKickComboCluster_0048b090(void);
+extern void AerialKickComboCluster(void);
 
-__declspec(naked) void IndirectDispatchCjStore_0048ae50(void) {
+__declspec(naked) void IndirectDispatchCjStore(void) {
     __asm {
         mov     ecx, dword ptr [g_matrixStackTop]
         mov     eax, dword ptr [g_currentNodeFlags]
@@ -146,7 +146,7 @@ __declspec(naked) void IndirectDispatchCjStore_0048ae50(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        call    AerialKickComboCluster_0048b090
+        call    AerialKickComboCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

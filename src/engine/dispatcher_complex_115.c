@@ -46,16 +46,16 @@ extern unsigned int g_player1State;
 extern unsigned int g_player2State;
 extern unsigned int g_lit16_004e286c;
 
-extern void Cmp3DirtyToggle_0049fa20(void);
+extern void Cmp3DirtyToggle(void);
 extern void RoundWinTransition(void);
-extern void StateAdd5Capped_0049fa00(void);
+extern void StateAdd5Capped(void);
 extern int  TaggedSceneDispatch(int);
 
 /* @addr 0x0049f900 */
 
 __declspec(naked) void DispatcherComplex115_0049f900(void) {
     __asm {
-        call    Cmp3DirtyToggle_0049fa20
+        call    Cmp3DirtyToggle
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -81,7 +81,7 @@ __declspec(naked) void DispatcherComplex115_0049f900(void) {
         test    eax, eax
         _emit   75h
         _emit   1dh
-        call    StateAdd5Capped_0049fa00
+        call    StateAdd5Capped
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -97,7 +97,7 @@ __declspec(naked) void DispatcherComplex115_0049f900(void) {
 /* @addr 0x0049f980 */
 __declspec(naked) void DispatcherComplex115_0049f980(void) {
     __asm {
-        call    Cmp3DirtyToggle_0049fa20
+        call    Cmp3DirtyToggle
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -123,7 +123,7 @@ __declspec(naked) void DispatcherComplex115_0049f980(void) {
         test    eax, eax
         _emit   75h
         _emit   1dh
-        call    StateAdd5Capped_0049fa00
+        call    StateAdd5Capped
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

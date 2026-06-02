@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  *   B4 (160..175): push 0x004ee1b8; tail-call ArgSarStoreJmp.
  *   B5 (176..191): push 0x004ee1d0; tail-call ArgSarStoreJmp.
  *   B6 (192..255): call CjTableThresholdDispatch; if !pause: call GateDispatch6c; if !pause:
- *     push 0x004ee1e8; call CrouchFsmCluster_00482c30+0x1c0 (0x00482df0); pop;
+ *     push 0x004ee1e8; call CrouchFsmCluster+0x1c0 (0x00482df0); pop;
  *     if !pause: push 0x004ee1f0, tail-call ArgSarStoreJmp; ret.
  */
 extern void ArgSarStoreJmp(void);
@@ -124,7 +124,7 @@ extern void CjTableThresholdDispatch(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void GateDispatch6c(void);
 
-void SixBlockCjCascade_004829b0(void) {
+void SixBlockCjCascade(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         mov     eax, dword ptr [eax*4 + 0x60]

@@ -21,7 +21,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern s32 g_dlNalt1;       /* 0x00537f48 */
 extern s32 g_dlNalt2;
-void TestP1ReplaceCurrent_004751c0(void) {
+void TestP1ReplaceCurrent(void) {
     g_eventQueueCurrent = (unsigned int)g_dlNalt1;
     g_walkCallback = (void (*)(void))g_player1NodeIdx;
     if (g_eventQueueEnd == g_player1NodeIdx) return;

@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-void MStackBracketedStoreTwoCall_004714e0(void) {
+void MStackBracketedStoreTwoCall(void) {
     unsigned int v;
     if ((int)g_nodeAllocCounter > 0x38) return;
     g_matrixStackTop++;

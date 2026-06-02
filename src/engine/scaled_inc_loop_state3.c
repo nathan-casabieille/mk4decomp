@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  *   load g_scaledInit, g_xformLoopCounter; inc both, store back; if not zero loop back.
  */
 extern unsigned int g_scaledIncLoopBase_00541d70;
-void ScaledIncLoopState3_0048c210(void) {
+void ScaledIncLoopState3(void) {
     unsigned int p = (unsigned int)&g_scaledIncLoopBase_00541d70 >> 2;
     g_walkCallback = (void (*)(void))0;
     g_scaledInit_00542044 = p;

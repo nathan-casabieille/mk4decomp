@@ -13,8 +13,8 @@ extern unsigned int g_baseSel;
  * block; entry B (loop body) lives in func_0042c7c0. */
 extern unsigned int g_dispatchSave1219_004e37d0;
 extern void Cascade3ChainInit(void);
-extern void TripleEntryStateCascade_0042c7e0(void);
-void LoopGuardedDecJmp_0042c790(void) {
+extern void TripleEntryStateCascade(void);
+void LoopGuardedDecJmp(void) {
     ((ScenegraphNode *)(g_baseSel * 4))->position_z = (unsigned int)g_walkCallback;
     Cascade3ChainInit();
     if (g_framePauseFlag != 0) return;

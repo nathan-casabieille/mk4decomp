@@ -110,17 +110,17 @@ extern unsigned int g_fightAxisPosY;
 
 /*
  * @addr 0x004ca670 (129b crt) - FP classify+integer test helper:
- *   call Fpclass_004ce010(d) to classify; if bits 0x90 set return 0
+ *   call Fpclass(d) to classify; if bits 0x90 set return 0
  *   (NaN/Inf path); otherwise round, compare against original to
  *   detect integer; if not integer, divide by g_dbl_004d2bf8 and
  *   round again; returns 2 for integer-after-division, 1 for
  *   integer, 0 otherwise.
  */
 extern unsigned int g_dbl_004d2bf8;
-extern void Fpclass_004ce010(void);
-extern void RoundDouble_004cdff0(void);
+extern void Fpclass(void);
+extern void RoundDouble(void);
 
-__declspec(naked) void FPIntegerTest_004ca670(void) {
+__declspec(naked) void FPIntegerTest(void) {
     __asm {
         sub     esp, 8
         push    esi
@@ -129,13 +129,13 @@ __declspec(naked) void FPIntegerTest_004ca670(void) {
         mov     edi, dword ptr [esp + 0x14]
         push    esi
         push    edi
-        call    Fpclass_004ce010
+        call    Fpclass
         add     esp, 8
         test    al, 0x90
         jne     zeroRet
         push    esi
         push    edi
-        call    RoundDouble_004cdff0
+        call    RoundDouble
         fstp    qword ptr [esp + 0x10]
         fld     qword ptr [esp + 0x10]
         fcomp   qword ptr [esp + 0x1c]
@@ -150,7 +150,7 @@ __declspec(naked) void FPIntegerTest_004ca670(void) {
         mov     ecx, dword ptr [esp + 0x14]
         push    eax
         push    ecx
-        call    RoundDouble_004cdff0
+        call    RoundDouble
         fcomp   qword ptr [esp + 0x1c]
         add     esp, 8
         fnstsw  ax

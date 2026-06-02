@@ -17,13 +17,13 @@
  *   jmp     T
  */
 extern void SwapOrPassSet(void);
-extern void BulletVolleySpawner_00478350(void);
-void CallPauseEvtPushJmp_00422880(void) {
+extern void BulletVolleySpawner(void);
+void CallPauseEvtPushJmp(void) {
     unsigned int v;
     SwapOrPassSet();
     if (g_framePauseFlag != 0) return;
     v = (unsigned int)g_walkCallback + 1;
     g_walkCallback = (void (*)(void))v;
     *(unsigned int *)(g_xformEntityIdx * 4) = v;
-    BulletVolleySpawner_00478350();
+    BulletVolleySpawner();
 }

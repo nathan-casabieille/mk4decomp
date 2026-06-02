@@ -113,9 +113,9 @@ extern unsigned int g_phase4SlotArr3_0050b3f0;
 extern unsigned int g_segPoseArr_0050b40c;
 extern unsigned int g_phase4SlotArr2_0050b428;
 extern void SetJmp_00405420(void);
-extern void Vec3SetupQuadrupleMul10Sub_00442bc0(void);
+extern void Vec3SetupQuadrupleMul10Sub(void);
 
-__declspec(naked) void FourSegmentPoseWalk_00442880(void)
+__declspec(naked) void FourSegmentPoseWalk(void)
 {
     __asm {
         mov      eax, dword ptr [g_baseSel]
@@ -191,7 +191,7 @@ __declspec(naked) void FourSegmentPoseWalk_00442880(void)
     L_29de:
         test     byte ptr [g_xformDirtyFlags], bl
         jne      L_2bb9
-        call     Vec3SetupQuadrupleMul10Sub_00442bc0
+        call     Vec3SetupQuadrupleMul10Sub
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2bb9
@@ -227,7 +227,7 @@ __declspec(naked) void FourSegmentPoseWalk_00442880(void)
     L_2a6e:
         test     byte ptr [g_xformDirtyFlags], bl
         jne      L_2bb9
-        call     Vec3SetupQuadrupleMul10Sub_00442bc0
+        call     Vec3SetupQuadrupleMul10Sub
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2bb9
@@ -263,7 +263,7 @@ __declspec(naked) void FourSegmentPoseWalk_00442880(void)
     L_2afa:
         test     byte ptr [g_xformDirtyFlags], bl
         jne      L_2bb9
-        call     Vec3SetupQuadrupleMul10Sub_00442bc0
+        call     Vec3SetupQuadrupleMul10Sub
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2bb9
@@ -299,7 +299,7 @@ __declspec(naked) void FourSegmentPoseWalk_00442880(void)
     L_2b82:
         test     byte ptr [g_xformDirtyFlags], bl
         jne      short L_2bb9
-        call     Vec3SetupQuadrupleMul10Sub_00442bc0
+        call     Vec3SetupQuadrupleMul10Sub
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2bb9

@@ -117,11 +117,11 @@ extern unsigned int g_fightAxisPosY;
  *     if (g_eventQueueIdx != 0) call g_eventQueueIdx; pause? ret;
  *     install self, slot84=1, g_pendingNodeType=1, framePauseFlag=1.
  */
-extern void GuardedClampStoreJmp_00428bd0(void);
+extern void GuardedClampStoreJmp(void);
 
 extern void FiveCallGuardSetTail(void);
 
-__declspec(naked) void InstallSelfAccumOverflow_00428b20(void) {
+__declspec(naked) void InstallSelfAccumOverflow(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -141,7 +141,7 @@ __declspec(naked) void InstallSelfAccumOverflow_00428b20(void) {
         call    StackPopDispatchTagged
         pop     esi
         ret
-        call    GuardedClampStoreJmp_00428bd0
+        call    GuardedClampStoreJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -165,7 +165,7 @@ __declspec(naked) void InstallSelfAccumOverflow_00428b20(void) {
         _emit   75h
         _emit   1ch
         mov     eax, 1
-        mov     dword ptr [esi + 8], offset InstallSelfAccumOverflow_00428b20
+        mov     dword ptr [esi + 8], offset InstallSelfAccumOverflow
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_framePauseFlag], eax

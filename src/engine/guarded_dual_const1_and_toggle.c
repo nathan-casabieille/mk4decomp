@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x0048eb20 (118b) - 4-call guard cascade with dual-const path */
 extern void PushPopState70Mask(void);
 
-void GuardedDualConst1AndToggle_0048eb20(void) {
+void GuardedDualConst1AndToggle(void) {
     __asm {
         call    DirtyToggleByGate
         mov     eax, dword ptr [g_framePauseFlag]

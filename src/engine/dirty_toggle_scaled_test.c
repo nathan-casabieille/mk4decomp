@@ -25,8 +25,8 @@ extern unsigned int g_acc_00542078;
  *   jmp     +7
  *   ret
  */
-extern void QuadFieldEarlyJmpThenInstall_0043a670(void);
-void DirtyToggleScaledTest_0043a630(void) {
+extern void QuadFieldEarlyJmpThenInstall(void);
+void DirtyToggleScaledTest(void) {
     unsigned int s = *(unsigned int *)(g_scaledInit_00542044 * 4);
     g_scaledInit_00542044 = s;
     g_xformDirtyFlags = g_xformDirtyFlags | 4;
@@ -34,6 +34,6 @@ void DirtyToggleScaledTest_0043a630(void) {
         g_xformDirtyFlags = g_xformDirtyFlags ^ 4;
     }
     if (s != 0) {
-        QuadFieldEarlyJmpThenInstall_0043a670();
+        QuadFieldEarlyJmpThenInstall();
     }
 }

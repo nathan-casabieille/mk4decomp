@@ -154,7 +154,7 @@ extern unsigned int g_viewportX;
 extern unsigned int g_viewportY;
 extern unsigned int g_dispatchSave1404_00f85b58;
 
-__declspec(naked) void TexturedTriRasterizeAlphaPal_004c1fe0(void)
+__declspec(naked) void TexturedTriRasterizeAlphaPal(void)
 {
     __asm {
         mov      eax, dword ptr [g_viewportX]

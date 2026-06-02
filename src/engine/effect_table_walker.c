@@ -108,25 +108,25 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void RecordIter170_004be950(int);
-extern void EffectTableWalker_004be870(int);
-extern void IterateCallSkip_004c4210(void);
-extern void Loop1cBitMask_004c4450(void);
+extern void RecordIter170(int);
+extern void EffectTableWalker(int);
+extern void IterateCallSkip(void);
+extern void Loop1cBitMask(void);
 
 /*
- * @addr 0x004be800 (107b) - phase-2 dispatcher: invokes RecordIter170_004be950
+ * @addr 0x004be800 (107b) - phase-2 dispatcher: invokes RecordIter170
  *   once per of 4 args, runs two shared post-helpers, then invokes
- *   EffectTableWalker_004be870 once per arg. Caller-saved regs hold each arg.
+ *   EffectTableWalker once per arg. Caller-saved regs hold each arg.
  */
 void QuadCallPhase2(int a, int b, int c, int d) {
-    RecordIter170_004be950(a);
-    RecordIter170_004be950(b);
-    RecordIter170_004be950(c);
-    RecordIter170_004be950(d);
-    IterateCallSkip_004c4210();
-    Loop1cBitMask_004c4450();
-    EffectTableWalker_004be870(a);
-    EffectTableWalker_004be870(b);
-    EffectTableWalker_004be870(c);
-    EffectTableWalker_004be870(d);
+    RecordIter170(a);
+    RecordIter170(b);
+    RecordIter170(c);
+    RecordIter170(d);
+    IterateCallSkip();
+    Loop1cBitMask();
+    EffectTableWalker(a);
+    EffectTableWalker(b);
+    EffectTableWalker(c);
+    EffectTableWalker(d);
 }

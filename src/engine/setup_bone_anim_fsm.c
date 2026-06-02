@@ -108,12 +108,12 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void DualPackedStoreCallSubBack_0043e270(void);
-extern void EsiTripleMul10Vec_00440660(void);
+extern void DualPackedStoreCallSubBack(void);
+extern void EsiTripleMul10Vec(void);
 extern void GatedWordPushCall(void);
-extern void GuardedCascadeCjLink70Mul10_0043e850(void);
-extern void HelperCallTripleMul10_0043e2d0(void);
-extern void MStackBracketedScaledStores_00475b30(void);
+extern void GuardedCascadeCjLink70Mul10(void);
+extern void HelperCallTripleMul10(void);
+extern void MStackBracketedScaledStores(void);
 extern void MStackPush2ChainLLInsert(void);
 extern void MStackPush2LLWalkCompare(void);
 extern void PreFightInstallCluster(void);
@@ -121,9 +121,9 @@ extern void ScaledSaveCallRestoreJmp_00472f40(void);
 extern void SetupVecFsmCluster(void);
 extern void StoreLoadJmp(void);
 extern void Thunk_0049cbc0(void);
-extern void Vec3PackedTripleCallBracket_004764d0(void);
+extern void Vec3PackedTripleCallBracket(void);
 
-__declspec(naked) void SetupBoneAnimFsm_0043dea0(void)
+__declspec(naked) void SetupBoneAnimFsm(void)
 {
     __asm {
         mov      eax, dword ptr [g_baseSel]
@@ -149,7 +149,7 @@ __declspec(naked) void SetupBoneAnimFsm_0043dea0(void)
         mov      edx, dword ptr [g_fightGroupHead]
         add      edx, 0x15
         mov      dword ptr [g_pendingNodeType], edx
-        call     Vec3PackedTripleCallBracket_004764d0
+        call     Vec3PackedTripleCallBracket
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e265
@@ -166,7 +166,7 @@ __declspec(naked) void SetupBoneAnimFsm_0043dea0(void)
         inc      ecx
         mov      dword ptr [g_matrixStackTop], ecx
         mov      dword ptr [ecx*4], eax
-        call     MStackBracketedScaledStores_00475b30
+        call     MStackBracketedScaledStores
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e265
@@ -212,11 +212,11 @@ __declspec(naked) void SetupBoneAnimFsm_0043dea0(void)
         mov      edx, dword ptr [g_fightGroupHead]
         mov      dword ptr [g_eventQueueCurrent], 0xffff199a
         mov      dword ptr [g_currentNodeIdx], edx
-        call     EsiTripleMul10Vec_00440660
+        call     EsiTripleMul10Vec
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e265
-        mov      dword ptr [esi + 8], OFFSET SetupBoneAnimFsm_0043dea0
+        mov      dword ptr [esi + 8], OFFSET SetupBoneAnimFsm
         mov      dword ptr [esi + 0x84], 3
         mov      dword ptr [g_pendingNodeType], 0x28
         mov      dword ptr [g_framePauseFlag], 1
@@ -238,14 +238,14 @@ __declspec(naked) void SetupBoneAnimFsm_0043dea0(void)
         mov      eax, 0x79
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x30], eax
-        call     HelperCallTripleMul10_0043e2d0
+        call     HelperCallTripleMul10
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e265
         mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_fightGroupHead], edx
     L_e0f6:
-        mov      dword ptr [esi + 8], OFFSET SetupBoneAnimFsm_0043dea0
+        mov      dword ptr [esi + 8], OFFSET SetupBoneAnimFsm
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_pendingNodeType], 3
         mov      dword ptr [g_framePauseFlag], 1
@@ -264,7 +264,7 @@ __declspec(naked) void SetupBoneAnimFsm_0043dea0(void)
         inc      eax
         mov      dword ptr [g_eventQueueCurrent], ecx
         mov      dword ptr [g_eventQueueTotal], eax
-        call     GuardedCascadeCjLink70Mul10_0043e850
+        call     GuardedCascadeCjLink70Mul10
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e265
@@ -320,12 +320,12 @@ __declspec(naked) void SetupBoneAnimFsm_0043dea0(void)
         mov      eax, 0x75
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x30], eax
-        call     DualPackedStoreCallSubBack_0043e270
+        call     DualPackedStoreCallSubBack
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e265
         mov      eax, 1
-        mov      dword ptr [esi + 8], OFFSET SetupBoneAnimFsm_0043dea0
+        mov      dword ptr [esi + 8], OFFSET SetupBoneAnimFsm
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_framePauseFlag], eax

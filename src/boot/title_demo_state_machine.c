@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void ZeroMultiGlobalsCmp_00404680(void);
-extern void TitleDemoStateMachine_004032d0(void);
+extern void ZeroMultiGlobalsCmp(void);
+extern void TitleDemoStateMachine(void);
 extern void Screen_GreatestWarrior(void);
 extern unsigned int g_pendingMatchSlot_0053a19c;
 extern unsigned int g_pendingMatchSlot2_00541dc0;
@@ -122,15 +122,15 @@ extern unsigned int g_zerotriple_00541dec;
 extern unsigned int g_titleDemoState_00541df0;
 extern unsigned int g_titleDemoState2_00541df4;
 extern void AudioVolumeRescale(void);
-extern void BootInitVec3PhaseInstall_00402c10(void);
-extern void BootStateInitWithRecurseInstall_00402de0(void);
+extern void BootInitVec3PhaseInstall(void);
+extern void BootStateInitWithRecurseInstall(void);
 extern void BootStateMachine4Way(void);
 extern void CopyGlobal(void);
-extern void InstallSelfCounter_00404920(void);
+extern void InstallSelfCounter(void);
 extern void PendingMatch_00402540(void);
 extern void Screen_BestKombatants(void);
 extern void PendingMatch_004a2a80(void);
-extern void PhaseInstallSelf3Step_00402350(void);
+extern void PhaseInstallSelf3Step(void);
 extern void QuadCallPhase2(void);
 extern void SceneFrameStepWithInputs(void);
 extern void TableWalkBoundedCmp(void);
@@ -242,7 +242,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         call     Push16Call
         cmp      dword ptr [g_framePauseFlag], ebp
         jne      L_1cb3
-        call     ZeroMultiGlobalsCmp_00404680
+        call     ZeroMultiGlobalsCmp
         cmp      dword ptr [g_framePauseFlag], ebp
         jne      L_1cb3
         mov      dword ptr [g_walkCallback], ebp
@@ -283,7 +283,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], ebp
-        call     PhaseInstallSelf3Step_00402350
+        call     PhaseInstallSelf3Step
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
@@ -342,7 +342,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], ebp
-        call     TitleDemoStateMachine_004032d0
+        call     TitleDemoStateMachine
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
@@ -437,7 +437,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      dword ptr [esi + 4], eax
         mov      ecx, dword ptr [g_baseSel]
         mov      dword ptr [ecx*4 + 0x84], ebp
-        call     BootInitVec3PhaseInstall_00402c10
+        call     BootInitVec3PhaseInstall
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
@@ -461,7 +461,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], ebp
-        call     BootStateInitWithRecurseInstall_00402de0
+        call     BootStateInitWithRecurseInstall
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
@@ -566,7 +566,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], ebp
-        call     InstallSelfCounter_00404920
+        call     InstallSelfCounter
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
@@ -587,7 +587,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      dword ptr [esi + 4], eax
         mov      ecx, dword ptr [g_baseSel]
         mov      dword ptr [ecx*4 + 0x84], ebp
-        call     BootStateInitWithRecurseInstall_00402de0
+        call     BootStateInitWithRecurseInstall
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
@@ -607,7 +607,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], ebp
-        call     TitleDemoStateMachine_004032d0
+        call     TitleDemoStateMachine
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi

@@ -111,13 +111,13 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00495d20 (124b game) - triple-entry chain.
  *   Blocks A/B (+0x00, +0x30): set baseSel[*4+0x74]=eax (0x0302/0x0303) and g_eventQueueNotMask (0x20011/0x20019);
  *     jmp HitReactionDispatcher.
- *   Block C (+0x60): push 0x004f1a10; call ArgScaledChain; if !pause: jmp Const111ScaledStoreJmp_00495da0.
+ *   Block C (+0x60): push 0x004f1a10; call ArgScaledChain; if !pause: jmp Const111ScaledStoreJmp.
  */
 extern void ArgScaledChain(void);
-extern void Const111ScaledStoreJmp_00495da0(void);
+extern void Const111ScaledStoreJmp(void);
 extern void HitReactionDispatcher(void);
 
-__declspec(naked) void TripleEntry03ChainArg_00495d20(void) {
+__declspec(naked) void TripleEntry03ChainArg(void) {
     __asm {
         mov     ecx, dword ptr [g_baseSel]
         mov     eax, 0x00000302
@@ -158,7 +158,7 @@ __declspec(naked) void TripleEntry03ChainArg_00495d20(void) {
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     Const111ScaledStoreJmp_00495da0
+        jmp     Const111ScaledStoreJmp
         ret
     }
 }

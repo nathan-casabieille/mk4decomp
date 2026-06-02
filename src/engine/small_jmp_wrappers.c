@@ -2,13 +2,13 @@
  * Small game-state jump wrappers.
  *
  * Two tiny one-shot functions that don't belong elsewhere:
- *   IndirectJmp_00438160:  jmp [g_eventQueueChild] - indirect call wrapper
- *   Init3333Jmp_00460400:  init 0x3333 state + tail-jmp
+ *   IndirectJmp:  jmp [g_eventQueueChild] - indirect call wrapper
+ *   Init3333Jmp:  init 0x3333 state + tail-jmp
  */
 #include "engine/scenegraph.h"
 
 /* @addr 0x00438160 (6b): jmp [g_eventQueueIdx]  (indirect jump through global) */
-void IndirectJmp_00438160(void) {
+void IndirectJmp(void) {
     ((void (*)(void))g_eventQueueIdx)();
 }
 
@@ -19,11 +19,11 @@ void IndirectJmp_00438160(void) {
  *   mov     [g_currentNodeFlags], eax
  *   jmp     T
  */
-extern void InstallSelfAccumCheck_00428c20(void);
-void Init3333Jmp_00460400(void) {
+extern void InstallSelfAccumCheck(void);
+void Init3333Jmp(void) {
     unsigned int v = 0x3333;
     g_eventQueueIdx = 0x00460490;
     g_xformScratch2088 = v;
     g_currentNodeFlags = v;
-    InstallSelfAccumCheck_00428c20();
+    InstallSelfAccumCheck();
 }

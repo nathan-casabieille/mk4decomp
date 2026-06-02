@@ -21,8 +21,8 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_counter_0053a51c;
 extern void InstallSelfStatePush_00434990(void);
 extern void InstallSelfStatePush_004348f0(void);
-extern void FlagInitTableSelector_00434560(void);
-void TriBranchJmp_00434530(void) {
+extern void FlagInitTableSelector(void);
+void TriBranchJmp(void) {
     unsigned int v = g_counter_0053a51c;
     g_walkCallback = (void (*)(void))v;
     if (v == 8) {
@@ -33,5 +33,5 @@ void TriBranchJmp_00434530(void) {
         InstallSelfStatePush_004348f0();
         return;
     }
-    FlagInitTableSelector_00434560();
+    FlagInitTableSelector();
 }

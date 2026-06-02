@@ -21,11 +21,11 @@ extern unsigned int g_scaledInit_00542044;
  *   pop     esi
  *   ret
  */
-extern void MStackPush2DirtyCall_00427f90(void);
+extern void MStackPush2DirtyCall(void);
 void SaveCallRestore(unsigned int arg) {
     void (*saved)(void) = g_walkCallback;
     g_walkCallback = (void (*)(void))arg;
-    MStackPush2DirtyCall_00427f90();
+    MStackPush2DirtyCall();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = saved;
 }

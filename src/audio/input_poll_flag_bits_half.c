@@ -15,7 +15,7 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_byte_004d50b4;
 extern unsigned int g_byte_004d50b8;
 
-void InputPollFlagBitsHalf_004a1b50(void) {
+void InputPollFlagBitsHalf(void) {
     __asm {
         mov     cl, byte ptr [g_byte_004d50b8]
         test    cl, 0x20

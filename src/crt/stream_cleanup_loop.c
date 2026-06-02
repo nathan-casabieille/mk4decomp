@@ -123,7 +123,7 @@ extern void Helper_FClose(void);
 extern void Lock(void);
 extern void TableLookupIatCall(void);
 
-__declspec(naked) int StreamCleanupLoop_004ce0b0(void) {
+__declspec(naked) int StreamCleanupLoop(void) {
     __asm {
         push    ebp
         push    esi

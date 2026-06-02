@@ -114,15 +114,15 @@ extern unsigned int g_fightAxisPosY;
  *     set: tail-call StackPopDispatchTagged; else fall through to install-self.
  *   If was zero (advance path): mstack-push g_eventQueueEnd incrementing twice with
  *     state copy to g_eventQueueChild and chain push of edx (scaledInit base+4).
- *     call IncStoreCallIATDec_00439520; if pause? ret. If bit0 of state set:
+ *     call IncStoreCallIATDec; if pause? ret. If bit0 of state set:
  *     tail-call StackPopDispatchTagged; else: call PushPop84TripleCall;
  *     if !pause: install-self at [esi+8]=0x00436910; chain[+0x84]=1; g_pendingNodeType=1; pause=1.
  *   ret.
  */
-extern void IncStoreCallIATDec_00439520(void);
+extern void IncStoreCallIATDec(void);
 extern void PushPop84TripleCall(void);
 
-__declspec(naked) void InstallSelfMStackPushDispatch_00436910(void) {
+__declspec(naked) void InstallSelfMStackPushDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    ebx
@@ -133,7 +133,7 @@ __declspec(naked) void InstallSelfMStackPushDispatch_00436910(void) {
         test    eax, eax
         _emit   74h
         _emit   2ch
-        call    IncStoreCallIATDec_00439520
+        call    IncStoreCallIATDec
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -175,7 +175,7 @@ __declspec(naked) void InstallSelfMStackPushDispatch_00436910(void) {
         inc     eax
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     dword ptr [ecx], eax
-        call    IncStoreCallIATDec_00439520
+        call    IncStoreCallIATDec
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

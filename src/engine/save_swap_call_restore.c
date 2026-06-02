@@ -13,13 +13,13 @@ extern unsigned int g_scaledInit_00542044;
  *   fightGroupHead from g_pendingNodeType; ret.
  */
 extern unsigned int g_baseSel;
-extern void GatedScaledSubSat_0048fb40(void);
-void SaveSwapCallRestore_00489030(void) {
+extern void GatedScaledSubSat(void);
+void SaveSwapCallRestore(void) {
     g_pendingNodeType = g_fightGroupHead;
     g_fightGroupHead = *(unsigned int *)(g_baseSel * 4 + 0x38);
     g_walkCallback = (void (*)(void))0x10000;
     g_eventQueueCurrent = 0x3c;
-    GatedScaledSubSat_0048fb40();
+    GatedScaledSubSat();
     if (g_framePauseFlag != 0) return;
     g_fightGroupHead = g_pendingNodeType;
 }

@@ -116,11 +116,11 @@ extern unsigned int g_byte_0054361a;
 extern unsigned int g_dispatchSave1701_00600000;
 extern unsigned int g_glideFnTable;
 extern unsigned int g_dispatchSave1710_00c00000;
-extern void AudioChainInit_004a77c0(void);
-extern void AudioInitLoopTriple_004a7840(void);
+extern void AudioChainInit(void);
+extern void AudioInitLoopTriple(void);
 extern void ScaledChainStore24(void);
 
-__declspec(naked) void SpawnLeftRightAudioCrew_004a8080(void)
+__declspec(naked) void SpawnLeftRightAudioCrew(void)
 {
     __asm {
         mov      eax, dword ptr [g_audioStateMachine0_004f3ae4]
@@ -140,7 +140,7 @@ __declspec(naked) void SpawnLeftRightAudioCrew_004a8080(void)
         mov      ebx, 0xfde40000
     L_80b1:
         mov      dword ptr [g_walkCallback], 0x10
-        call     AudioChainInit_004a77c0
+        call     AudioChainInit
         mov      edx, dword ptr [g_baseSel]
         mov      ecx, dword ptr [g_currentNodeIdx]
         lea      eax, [edi + edx]
@@ -162,7 +162,7 @@ __declspec(naked) void SpawnLeftRightAudioCrew_004a8080(void)
         call     ScaledChainStore24
         cmp      byte ptr [esi], 0
         je       short L_816c
-        call     AudioInitLoopTriple_004a7840
+        call     AudioInitLoopTriple
         mov      eax, dword ptr [g_audioCrewState_00541d8c]
         mov      edx, ebp
         sub      edx, eax
@@ -193,7 +193,7 @@ __declspec(naked) void SpawnLeftRightAudioCrew_004a8080(void)
         mov      ebx, 0x12c0000
     L_81b0:
         mov      dword ptr [g_walkCallback], 0x10
-        call     AudioChainInit_004a77c0
+        call     AudioChainInit
         mov      edx, dword ptr [g_baseSel]
         mov      ecx, dword ptr [g_currentNodeIdx]
         lea      eax, [edi + edx]
@@ -215,7 +215,7 @@ __declspec(naked) void SpawnLeftRightAudioCrew_004a8080(void)
         call     ScaledChainStore24
         cmp      byte ptr [esi], 0
         je       short L_826b
-        call     AudioInitLoopTriple_004a7840
+        call     AudioInitLoopTriple
         mov      eax, dword ptr [g_audioCrewState_00541d8c]
         mov      edx, ebp
         sub      edx, eax

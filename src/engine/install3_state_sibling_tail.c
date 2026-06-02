@@ -115,7 +115,7 @@ extern void FiveCallGuardSetTail(void);
 extern void GuardedPackedSlotInit(void);
 extern void ScaledAndAl7f(void);
 
-__declspec(naked) void Install3StateSiblingTail_00484950(void) {
+__declspec(naked) void Install3StateSiblingTail(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -150,9 +150,9 @@ __declspec(naked) void Install3StateSiblingTail_00484950(void) {
         _emit   00h
         _emit   00h
         mov     dword ptr [g_eventQueueCurrent], edi
-        mov     dword ptr [esi + 8], offset Install3StateSiblingTail_00484950
+        mov     dword ptr [esi + 8], offset Install3StateSiblingTail
         mov     ecx, dword ptr [g_baseSel]
-        mov     edx, offset Install3StateSiblingTail_00484950
+        mov     edx, offset Install3StateSiblingTail
         add     edx, 0x02000000
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
@@ -171,9 +171,9 @@ __declspec(naked) void Install3StateSiblingTail_00484950(void) {
         ret
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     edx, dword ptr [ecx*4 + 0x28]
-        mov     ecx, offset Install3StateSiblingTail_00484950
+        mov     ecx, offset Install3StateSiblingTail
         mov     dword ptr [g_eventQueueCurrent], edx
-        mov     dword ptr [esi + 8], offset Install3StateSiblingTail_00484950
+        mov     dword ptr [esi + 8], offset Install3StateSiblingTail
         mov     eax, dword ptr [g_baseSel]
         add     ecx, 0x01000000
         mov     dword ptr [eax*4 + 0x84], 1

@@ -36,15 +36,15 @@ extern unsigned int g_dispatchSave1570_00ab4e28;
 extern unsigned int g_dispatchSave1574_00ab4e3c;
 extern unsigned int g_dispatchSave1576_00ab4e60;
 extern void AdvanceTriStripRing(void);
-extern void AltCamMatrixProject_004b9840(void);
+extern void AltCamMatrixProject(void);
 extern void Helper_DrawCursor(void);
-extern void MatVec2Multiply_004b31e0(void);
+extern void MatVec2Multiply(void);
 extern void MaxOfThree(void);
-extern void MinOfThree_004b3d70(void);
+extern void MinOfThree(void);
 extern void ProjectTwoVertices(void);
 extern void ProjectVertex(void);
 extern void TransformVertex(void);
-extern void TristripBatchEmit3Cap_004bb680(void);
+extern void TristripBatchEmit3Cap(void);
 
 /*
  * @addr 0x004bb250 - per-block triangle-strip mesh walker.
@@ -95,7 +95,7 @@ __declspec(naked) void DrawMeshBlock(void)
         push     eax
         push     ecx
         push     edx
-        call     TristripBatchEmit3Cap_004bb680
+        call     TristripBatchEmit3Cap
         add      esp, 0xc
     L_b280:
         pop      edi
@@ -117,7 +117,7 @@ __declspec(naked) void DrawMeshBlock(void)
         jge      L_b2b4
         push     1
         push     OFFSET g_dispatchSave1501_00ab4398
-        call     AltCamMatrixProject_004b9840
+        call     AltCamMatrixProject
         add      esp, 8
     L_b2b4:
         mov      eax, dword ptr [g_dispatchSave1576_00ab4e60]
@@ -139,7 +139,7 @@ __declspec(naked) void DrawMeshBlock(void)
         lea      ebx, [eax + edi + 8]
         lea      edi, [edi + ecx + 4]
         lea      esi, [edx + 4]
-        call     MatVec2Multiply_004b31e0
+        call     MatVec2Multiply
     L_b2f2:
         mov      bp, word ptr [ebx]
         xor      ecx, ecx
@@ -357,7 +357,7 @@ __declspec(naked) void DrawMeshBlock(void)
         mov      eax, dword ptr [esp + 0x28]
         test     eax, eax
         jne      L_b5dc
-        call     MinOfThree_004b3d70
+        call     MinOfThree
         jmp      L_b5e1
     L_b5dc:
         call     MaxOfThree

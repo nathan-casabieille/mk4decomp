@@ -111,20 +111,20 @@ extern unsigned int g_fightAxisPosY;
 extern void CallPauseDirtyLit_00488c70(void);
 extern void Wrapper_0048a380(void);
 extern void DirtyToggleByGate(void);
-extern void RoundCutsceneCluster_004831c0(void);
+extern void RoundCutsceneCluster(void);
 
 /* @addr 0x00483090 (146b game) - 4-block sequencer.
  *   A: push str 0x004ee418, call ArgSarStoreJmp, if !pause jmp CallPauseDirtyLit.
  *   B (+0x20): cascade GateDispatch6c, Wrapper_0048a380, ScaledMove48to58, push 0x004ee448.
  *   C (+0x60): push 0x004ee480, call ArgSarStoreJmp; ret.
- *   D (+0x70): call DirtyToggleByGate; if !pause, bit-4 selects RoundCutsceneCluster_004831c0 vs InstallSelfReenterSelfJmp_00483130.
+ *   D (+0x70): call DirtyToggleByGate; if !pause, bit-4 selects RoundCutsceneCluster vs InstallSelfReenterSelfJmp.
  */
 extern void ArgSarStoreJmp(void);
 extern void GateDispatch6c(void);
-extern void InstallSelfReenterSelfJmp_00483130(void);
+extern void InstallSelfReenterSelfJmp(void);
 extern void ScaledMove48to58(void);
 
-__declspec(naked) void QuadBlockDispatch_00483090(void) {
+__declspec(naked) void QuadBlockDispatch(void) {
     __asm {
         push    0x004ee418
         call    ArgSarStoreJmp
@@ -180,8 +180,8 @@ __declspec(naked) void QuadBlockDispatch_00483090(void) {
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   75h
         _emit   05h
-        jmp     RoundCutsceneCluster_004831c0
-        jmp     InstallSelfReenterSelfJmp_00483130
+        jmp     RoundCutsceneCluster
+        jmp     InstallSelfReenterSelfJmp
         ret
     }
 }

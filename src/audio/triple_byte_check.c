@@ -21,7 +21,7 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned char g_byte_004d50b8;
 extern unsigned char g_byte_004d50b4;
 extern char g_byte_004d50c0;
-int TripleByteCheck_004a1c50(void) {
+int TripleByteCheck(void) {
     int v = 1;
     if (g_byte_004d50b8 & v) return v;
     if (g_byte_004d50b4 & 0x10) return v;

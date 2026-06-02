@@ -113,7 +113,7 @@ extern unsigned int g_dispatchArg;
 extern unsigned int g_bootLongChainState_00537f24;
 extern unsigned int g_savedNode;
 
-void ScaledChainAccumLoop_0049cd40(void) {
+void ScaledChainAccumLoop(void) {
     __asm {
         mov     eax, 0x0052d718
         mov     dword ptr [g_dispatchArg], 0xfffffff9

@@ -11,7 +11,7 @@ extern unsigned int g_scaledInit_00542044;
  *   arg1 = [esp+4]; arg2 = [esp+0xc]; ecx = arg2 + arg1;
  *   eax = (ecx < arg1 || ecx >= arg2) ? 1 : 0; *(arg3) = ecx; ret eax.
  */
-int AddOverflowCheck_004ce1f0(unsigned int arg1, unsigned int arg2, unsigned int *result) {
+int AddOverflowCheck(unsigned int arg1, unsigned int arg2, unsigned int *result) {
     unsigned int sum = arg2 + arg1;
     int ret = 0;
     if (sum < arg1) {

@@ -125,7 +125,7 @@ extern void EsiInstallDecCallChain_004294a0(void);
  */
 extern void ScaledLitLoadCall_00480fe0(void);
 
-__declspec(naked) void StateMachineSharedTail_0047baf0(void) {
+__declspec(naked) void StateMachineSharedTail(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    ebx
@@ -205,9 +205,9 @@ __declspec(naked) void StateMachineSharedTail_0047baf0(void) {
         pop     ebx
         ret
         mov     dword ptr [g_eventQueueChild], 6
-        mov     dword ptr [esi + 8], offset StateMachineSharedTail_0047baf0
+        mov     dword ptr [esi + 8], offset StateMachineSharedTail
         mov     edx, dword ptr [g_baseSel]
-        mov     ecx, offset StateMachineSharedTail_0047baf0
+        mov     ecx, offset StateMachineSharedTail
         add     ecx, 0x01000000
         mov     dword ptr [edx*4 + 0x84], ebx
         mov     eax, dword ptr [esi + 4]

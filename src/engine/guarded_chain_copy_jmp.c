@@ -121,7 +121,7 @@ extern unsigned int g_fightAxisPosY;
 extern void MStackPush2ChainLLInsert(void);
 extern void ScaledLitAddJmp(void);
 
-void GuardedChainCopyJmp_0049b730(void) {
+void GuardedChainCopyJmp(void) {
     __asm {
         mov     eax, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_scaledInit_00542044], eax

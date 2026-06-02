@@ -111,7 +111,7 @@ extern unsigned int g_dispatchSave906_004d5e88;
 extern void ThreeChanPackClamp(void);
 extern void CopyThreeFields(void);
 
-void BootMStackBracketedScaledStores_0040bf70(void) {
+void BootMStackBracketedScaledStores(void) {
     unsigned int v;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_xformEntityIdx;

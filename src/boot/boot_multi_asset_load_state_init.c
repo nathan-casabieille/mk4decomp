@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * BootMultiAssetLoadStateInit_00403b10 - 258b boot multi-asset loader chain.
+ * BootMultiAssetLoadStateInit - 258b boot multi-asset loader chain.
  *   push 8; TableWalkBoundedCmp; g_currentNodeIdx = (0x00506c14>>2);
  *   call LoadGeoAsset_Default; if paused: ret. g_currentNodeIdx = (0x00506c14>>2) again;
  *   call LoadGeoAsset_Default; if paused: ret. g_xformEntityIdx = (0x005080d8>>2);
@@ -125,7 +125,7 @@ extern unsigned int g_dispatchSave142_005080d8;
 extern void RegistryPushBindPop(void);
 extern void TableWalkBoundedCmp(void);
 
-__declspec(naked) void BootMultiAssetLoadStateInit_00403b10(void)
+__declspec(naked) void BootMultiAssetLoadStateInit(void)
 {
     __asm
     {

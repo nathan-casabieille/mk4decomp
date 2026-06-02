@@ -130,7 +130,7 @@ extern void ChainGatedNegAccum(void);
 extern void DualScaledStore(void);
 extern void FiveCallGuardSetTail(void);
 extern void InstallSelfPackedTailJmp(void);
-extern void MStackPush2GlobalSwap_00477400(void);
+extern void MStackPush2GlobalSwap(void);
 extern void PendingMatch_00455bd0(void);
 extern void SaveCallRestoreOrXor(void);
 extern void SaveCallRestore(void);
@@ -141,7 +141,7 @@ extern void func_004569f0(void);
 extern unsigned int g_dispatchSave583_004eef18;
 extern unsigned int g_dispatchSave582_004eef20;
 extern void DualEntryBitFlagDispatch(void);
-extern void GameLoaderHandlerCluster_004876f0(void);
+extern void GameLoaderHandlerCluster(void);
 extern void IterStepDualStore(void);
 extern void MStackPush3CallCascade(void);
 extern void MStackPush3CmpCall(void);
@@ -149,7 +149,7 @@ extern void MStackPushSet0004(void);
 extern void RoundCleanupCluster_00487510(void);
 extern void TableLookupCall_00489f60(void);
 
-__declspec(naked) void PollThenInit_00477920(void) {
+__declspec(naked) void PollThenInit(void) {
     __asm {
         push    ebx
         push    0x22
@@ -321,7 +321,7 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
         cmp      eax, 0x10a
         mov      dword ptr [g_walkCallback], eax
         jne      short L_768b
-        call     GameLoaderHandlerCluster_004876f0
+        call     GameLoaderHandlerCluster
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_76ea
@@ -329,7 +329,7 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
     L_768b:
         cmp      eax, 0x10b
         jne      short L_76a0
-        call     GameLoaderHandlerCluster_004876f0
+        call     GameLoaderHandlerCluster
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_76ea
@@ -536,7 +536,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         dec      eax
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [g_matrixStackTop], eax
-        call     MStackPush2GlobalSwap_00477400
+        call     MStackPush2GlobalSwap
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5bb4

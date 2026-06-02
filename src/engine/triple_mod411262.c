@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  *   pop esi; ret.
  */
 
-__declspec(naked) void TripleMod411262_00424740(void) {
+__declspec(naked) void TripleMod411262(void) {
     __asm {
         push    esi
         mov     esi, dword ptr [g_scaledInit_00542044]

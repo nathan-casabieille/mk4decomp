@@ -21,17 +21,17 @@
 
 extern unsigned int g_scaledInit_00542044;
 
-extern void TierBranchChain_0048b6c0(void);
-extern void MStackPush3TripleMul10WithAbs_0048b500(void);
+extern void TierBranchChain(void);
+extern void MStackPush3TripleMul10WithAbs(void);
 extern void MStackPush2ChainLLInsert(void);
 extern void StackPopDispatchTagged(void);
 
 /* @addr 0x0048b4e0 */
 void CopyCallPauseJmp_0048b4e0(void) {
     g_eventQueueWorkType = g_eventQueueChild;
-    TierBranchChain_0048b6c0();
+    TierBranchChain();
     if (g_framePauseFlag) return;
-    MStackPush3TripleMul10WithAbs_0048b500();
+    MStackPush3TripleMul10WithAbs();
 }
 
 /* @addr 0x004a19a0 */

@@ -13,8 +13,8 @@ extern unsigned int g_baseSel;
  *   mov     [g_walkCallback], ecx
  *   jmp     +9
  */
-extern void WalkCallbackSetClearDirty_0048e7d0(void);
-void ScaledLoadJmp_74_0048e7b0(void) {
+extern void WalkCallbackSetClearDirty(void);
+void ScaledLoadJmp_74(void) {
     g_walkCallback = (void (*)(void))((ScenegraphNode *)(g_baseSel * 4))->fsm_state;
-    WalkCallbackSetClearDirty_0048e7d0();
+    WalkCallbackSetClearDirty();
 }

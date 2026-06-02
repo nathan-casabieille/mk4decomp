@@ -14,8 +14,8 @@
  *   If all pass, set g_demoModeFlag = 1.
  */
 extern u32 g_demoModeFlag;
-extern void AuxAudioDevCapsQuery_004ac3f0(void);
-extern void DSoundQueryProperty_004ac3a0(void);
+extern void AuxAudioDevCapsQuery(void);
+extern void DSoundQueryProperty(void);
 extern void Helper_AuxAudio_PostInit(void);
 
 __declspec(naked) void AppInit_Misc8(void) {
@@ -44,14 +44,14 @@ __declspec(naked) void AppInit_Misc8(void) {
         call    Helper_AuxAudio_PostInit
         test    eax, eax
         jz      short L_c51_done
-        call    DSoundQueryProperty_004ac3a0
+        call    DSoundQueryProperty
         cmp     eax, 0x0f
         jne     short L_c51_done
         mov     esi, 1
         lea     edi, [esp + 0x0c]
     L_c51_loop:
         push    esi
-        call    AuxAudioDevCapsQuery_004ac3f0
+        call    AuxAudioDevCapsQuery
         mov     edx, dword ptr [edi - 4]
         add     esp, 4
         sub     eax, edx

@@ -20,7 +20,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void StorePauseImulShr16(void);
 extern void GatedWordPushCall(void);
-void Set4CallAddJmp_00472890(void) {
+void Set4CallAddJmp(void) {
     g_walkCallback = (void (*)(void))4;
     StorePauseImulShr16();
     if (g_framePauseFlag != 0) return;

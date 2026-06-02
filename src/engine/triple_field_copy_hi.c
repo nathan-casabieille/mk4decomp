@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   3-field copy: g_baseSel[*4+0x5c/0x60/0x64] →
  *                 g_cj_0054205c[*4+0x6c/0x70/0x74] (via walkCallback).
  */
-void TripleFieldCopyHi_0048f7b0(void) {
+void TripleFieldCopyHi(void) {
     unsigned int val;
     val = *(unsigned int *)(g_baseSel * 4 + 0x5c);
     g_walkCallback = (void (*)(void))val;

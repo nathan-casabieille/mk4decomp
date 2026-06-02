@@ -117,23 +117,23 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_phaseTimer;
 extern unsigned int g_bootInitSaveSlot;
-extern void CallPauseDirtyScaledSet7_00480ef0(void);
-extern void CmpP1GTSetup_00470980(void);
+extern void CallPauseDirtyScaledSet7(void);
+extern void CmpP1GTSetup(void);
 extern void TableLookupCall_00489f60(void);
 
-__declspec(naked) void DualEntryDecLoop_00480f20(void) {
+__declspec(naked) void DualEntryDecLoop(void) {
     __asm {
         mov     eax, dword ptr [g_xformEntityIdx]
         mov     dword ptr [eax*4 + 0x5c], 7
         mov     dword ptr [g_walkCallback], 0x29
         jmp     TableLookupCall_00489f60
         _emit   90h
-        call    CallPauseDirtyScaledSet7_00480ef0
+        call    CallPauseDirtyScaledSet7
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   47h
-        call    CmpP1GTSetup_00470980
+        call    CmpP1GTSetup
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -152,7 +152,7 @@ __declspec(naked) void DualEntryDecLoop_00480f20(void) {
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     DualEntryDecLoop_00480f20
+        jmp     DualEntryDecLoop
         ret
         _emit   90h
         _emit   90h

@@ -110,12 +110,12 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_load_0052ab10;
 extern void CallSetPause(void);
-extern void MStackChainCountdownLoop_00463fb0(void);
+extern void MStackChainCountdownLoop(void);
 extern void PendingMatch_00432110(void);
 extern void FixedDiv16(void);
 extern void SaveCallRestoreOrXor(void);
 
-__declspec(naked) void PoseFnInstallDualCluster_00463090(void)
+__declspec(naked) void PoseFnInstallDualCluster(void)
 {
     __asm {
         /* === h1 (0x463090): pose-fn 1-state install w/ 463fb0 + 432110 === */
@@ -139,7 +139,7 @@ __declspec(naked) void PoseFnInstallDualCluster_00463090(void)
         mov      dword ptr [ecx*4 + 0x30], edx
         mov      eax, dword ptr [g_eventQueueEnd]
         mov      dword ptr [g_walkCallback], eax
-        call     MStackChainCountdownLoop_00463fb0
+        call     MStackChainCountdownLoop
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_321c
         mov      edx, dword ptr [g_baseSel]
@@ -157,7 +157,7 @@ __declspec(naked) void PoseFnInstallDualCluster_00463090(void)
         mov      dword ptr [g_eventQueueWorkType], eax
         mov      dword ptr [ecx*4 + 0x38], eax
         mov      dword ptr [g_walkCallback], edi
-        call     MStackChainCountdownLoop_00463fb0
+        call     MStackChainCountdownLoop
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_321c
         mov      eax, dword ptr [g_acc_00542078]
@@ -229,7 +229,7 @@ __declspec(naked) void PoseFnInstallDualCluster_00463090(void)
         mov      ecx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [g_fightGroupHead], eax
         mov      dword ptr [g_walkCallback], ecx
-        call     MStackChainCountdownLoop_00463fb0
+        call     MStackChainCountdownLoop
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3388
         mov      eax, dword ptr [g_eventQueueCurrent]

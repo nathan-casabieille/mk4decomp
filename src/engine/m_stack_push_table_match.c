@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_matrixStack_arr;
 extern unsigned int g_dispatchVar7_00541fbc;
 
-void MStackPushTableMatch_0042e720(void) {
+void MStackPushTableMatch(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_scaledInit_00542044]

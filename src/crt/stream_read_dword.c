@@ -15,7 +15,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     eax, [eax-4]
  *   ret
  */
-int StreamReadDword_004c8380(int **stream) {
+int StreamReadDword(int **stream) {
     int *p = *stream;
     *stream = p + 1;
     p = *stream;

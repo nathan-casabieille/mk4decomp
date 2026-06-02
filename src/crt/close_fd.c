@@ -109,21 +109,21 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave1469_00fa0ee0;
-extern int CloseFd_004c8a50(void);
-extern void DivMod32IAT_004cd320(int);
+extern int CloseFd(void);
+extern void DivMod32IAT(int);
 extern void Crt_errno(void);
 extern void Crt_doserrno(void);
 
 /*
  * @addr 0x004c89e0 (104b crt) - _close(fd): validates fd against
  *   g_dispatchSave1469_00fa0ee0; if in-range and entry flag bit 0 set, enter
- *   critsec, call CloseFd_004c8a50, exit critsec; else set errno=9 and
+ *   critsec, call CloseFd, exit critsec; else set errno=9 and
  *   _doserrno=0; return -1.
  */
 extern unsigned int g_arr_00fa0de0;
-extern void CritSecLazyEnter_004cd2b0(void);
+extern void CritSecLazyEnter(void);
 
-__declspec(naked) void CloseImpl_004c89e0(void) {
+__declspec(naked) void CloseImpl(void) {
     __asm {
         mov     eax, dword ptr [g_dispatchSave1469_00fa0ee0]
         push    esi
@@ -140,14 +140,14 @@ __declspec(naked) void CloseImpl_004c89e0(void) {
         test    byte ptr [eax + edx*4 + 4], 1
         je      errorPath
         push    esi
-        call    CritSecLazyEnter_004cd2b0
+        call    CritSecLazyEnter
         add     esp, 4
         push    esi
-        call    CloseFd_004c8a50
+        call    CloseFd
         add     esp, 4
         mov     edi, eax
         push    esi
-        call    DivMod32IAT_004cd320
+        call    DivMod32IAT
         add     esp, 4
         mov     eax, edi
         pop     edi

@@ -114,10 +114,10 @@ extern unsigned int g_fightAxisPosY;
  *   use Filbuf byte-by-byte. EOF sets flag 0x10, error sets 0x20. Returns
  *   bytes_read/element_size.
  */
-extern void Filbuf_004c8ed0(void);
+extern void Filbuf(void);
 extern void IOWrapper_004c8fc0(void);
 
-__declspec(naked) void Fread_004c5bb0(void) {
+__declspec(naked) void Fread(void) {
     __asm {
         push    ecx
         push    ebx
@@ -206,7 +206,7 @@ __declspec(naked) void Fread_004c5bb0(void) {
         jmp     short L_fread_testEbp
     L_fread_byteRead:
         push    ebx
-        call    Filbuf_004c8ed0
+        call    Filbuf
         add     esp, 4
         cmp     eax, -1
         jz      short L_fread_eofShort

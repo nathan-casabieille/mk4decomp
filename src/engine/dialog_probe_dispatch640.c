@@ -117,7 +117,7 @@ extern unsigned int g_190_state;
  * @addr 0x004b0670 (123b engine.ecm) - twin of DialogProbeDispatch
  *   but for the 0x58c908/0x58c8fc handle pair and 640x480 clamp.
  */
-void DialogProbeDispatch640_004b0670(void) {
+void DialogProbeDispatch640(void) {
     void (__stdcall *setStyle)(unsigned int, int, unsigned int);
     int (__stdcall *getMetrics)(int);
     int width;

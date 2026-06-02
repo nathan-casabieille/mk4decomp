@@ -109,8 +109,8 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void GameStateLinearAdvance4Way(void);
-extern void EsiAliasInstallSelf_00484650(void);
-extern void RunFsmCluster_004846b0(void);
+extern void EsiAliasInstallSelf(void);
+extern void RunFsmCluster(void);
 
 
 __declspec(naked) void GameStateLinearAdvance4Way(void)
@@ -141,7 +141,7 @@ __declspec(naked) void GameStateLinearAdvance4Way(void)
         mov      dword ptr [eax + 4], edx
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], ecx
-        call     RunFsmCluster_004846b0
+        call     RunFsmCluster
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
@@ -161,7 +161,7 @@ __declspec(naked) void GameStateLinearAdvance4Way(void)
         mov      dword ptr [eax + 4], edx
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], ecx
-        call     RunFsmCluster_004846b0
+        call     RunFsmCluster
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
@@ -181,7 +181,7 @@ __declspec(naked) void GameStateLinearAdvance4Way(void)
         mov      dword ptr [eax + 4], edx
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], ecx
-        call     RunFsmCluster_004846b0
+        call     RunFsmCluster
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
@@ -202,13 +202,13 @@ __declspec(naked) void GameStateLinearAdvance4Way(void)
         mov      dword ptr [eax + 4], edx
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], ecx
-        call     RunFsmCluster_004846b0
+        call     RunFsmCluster
         mov      dword ptr [g_framePauseFlag], esi
         pop      edi
         pop      esi
         ret
     L_4629:
-        call     EsiAliasInstallSelf_00484650
+        call     EsiAliasInstallSelf
         pop      edi
         pop      esi
         ret

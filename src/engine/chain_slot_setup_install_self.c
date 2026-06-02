@@ -121,7 +121,7 @@ extern unsigned int g_arr_476f30_disp_30;
 extern unsigned int g_arr_476f30_disp_34;
 extern unsigned int g_arr_476f30_disp_38;
 
-void ChainSlotSetupInstallSelf_00476f30(void) {
+void ChainSlotSetupInstallSelf(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]
         mov     edx, [eax*4 + g_arr_476f30_disp_20]
@@ -142,7 +142,7 @@ void ChainSlotSetupInstallSelf_00476f30(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   18h
-        mov     dword ptr [g_walkCallback], offset ChainSlotSetupInstallSelf_00476f30
+        mov     dword ptr [g_walkCallback], offset ChainSlotSetupInstallSelf
         call    Helper_TickAlt
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

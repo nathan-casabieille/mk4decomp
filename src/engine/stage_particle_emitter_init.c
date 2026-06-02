@@ -112,10 +112,10 @@ extern unsigned int g_particleEmitterNode;
 extern unsigned int g_bootHeavyState_00537f78;
 extern unsigned int g_particleInitState_00541de0;
 extern void BootPhaseGateBracketedInit(void);
-extern void InstallSelf5CallVecChain_00464660(void);
+extern void InstallSelf5CallVecChain(void);
 extern void MStackCall_004063e0(void);
 
-__declspec(naked) void StageParticleEmitterInit_00464350(void)
+__declspec(naked) void StageParticleEmitterInit(void)
 {
     __asm {
         /* === h1 (0x464350): 3-stage particle spawn === */
@@ -248,7 +248,7 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         mov      dword ptr [g_eventQueueEnd], edx
         mov      dword ptr [g_eventQueueIdx], eax
     L_45d8:
-        jmp      InstallSelf5CallVecChain_00464660
+        jmp      InstallSelf5CallVecChain
         nop
         nop
         nop
@@ -277,6 +277,6 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         mov      dword ptr [g_eventQueueEnd], edx
         mov      dword ptr [g_eventQueueIdx], eax
     L_4658:
-        jmp      InstallSelf5CallVecChain_00464660
+        jmp      InstallSelf5CallVecChain
     }
 }

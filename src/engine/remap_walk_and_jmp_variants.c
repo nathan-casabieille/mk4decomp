@@ -12,7 +12,7 @@ extern unsigned int g_scaledInit_00542044;
  *   eventQueueCurrent = 1; eventQueueWorkType = 0xffff0000; jmp T.
  */
 extern s32 g_dlNalt1;
-extern void ThrowPoseCallbackSetup_00491f10(void);
+extern void ThrowPoseCallbackSetup(void);
 void RemapWalkAndJmp_00491e70(void) {
     unsigned int v = g_dlNalt1;
     g_walkCallback = (void (*)(void))v;
@@ -29,7 +29,7 @@ void RemapWalkAndJmp_00491e70(void) {
     }
     g_eventQueueCurrent = 1;
     g_eventQueueWorkType = 0xffff0000;
-    ThrowPoseCallbackSetup_00491f10();
+    ThrowPoseCallbackSetup();
 }
 
 /* @addr 0x00491ec0 (80b)
@@ -53,5 +53,5 @@ void RemapWalkAndJmp_00491ec0(void) {
     }
     g_eventQueueCurrent = 0;
     g_eventQueueWorkType = 0x10000;
-    ThrowPoseCallbackSetup_00491f10();
+    ThrowPoseCallbackSetup();
 }

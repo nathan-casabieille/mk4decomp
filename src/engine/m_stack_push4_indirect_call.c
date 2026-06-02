@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_matrixStack_arr;
 
-void MStackPush4IndirectCall_0048fd60(void) {
+void MStackPush4IndirectCall(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_cj_00542054]

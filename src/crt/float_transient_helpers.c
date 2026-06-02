@@ -115,10 +115,10 @@ extern unsigned int g_const_004d2bc4;
 extern unsigned int g_const_004d2bcc;
 extern unsigned int g_const_004d2bd4;
 extern unsigned int g_const_004d2bdc;
-extern void TwinEntryFpHelper_004ca250(void);
+extern void TwinEntryFpHelper(void);
 extern void func_004ca267(void);
 
-__declspec(naked) void FloatTransientHelpers_004ca2b0(void)
+__declspec(naked) void FloatTransientHelpers(void)
 {
     __asm {
         /* H1: __2_to_x */
@@ -253,7 +253,7 @@ __declspec(naked) void FloatTransientHelpers_004ca2b0(void)
         pop      edx
         ret
     L_a3de:
-        call     TwinEntryFpHelper_004ca250
+        call     TwinEntryFpHelper
         pop      edx
         ret
     L_a3e5:

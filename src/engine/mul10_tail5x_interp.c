@@ -111,7 +111,7 @@ extern unsigned int g_eventQueueChildSrc_0053a3dc;
 extern unsigned int g_eventQueueScratch_0053a41c;
 
 /* @addr 0x00485d90 (214b game) - 5x Mul10Tail interpolation accumulator. */
-void Mul10Tail5xInterp_00485d90(void) {
+void Mul10Tail5xInterp(void) {
     g_eventQueueWorkType = g_table_00535ddc;
     g_eventQueueNotMask = g_eventQueueScratch_0053a41c;
     g_eventQueueChild = g_eventQueueChildSrc_0053a3dc;

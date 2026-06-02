@@ -114,10 +114,10 @@ extern void BootPhaseGateBracketedInit(void);
 extern void GuardedChainPushSetCallPop(void);
 extern void MStackCall_00406340(void);
 extern void MStackInitCallToggle(void);
-extern void ScaledLoadGuardedJmp_004066d0(void);
+extern void ScaledLoadGuardedJmp(void);
 extern void ScaledTestPauseStore(void);
 
-__declspec(naked) void Phase1SlotLinkAndInit_00419470(void)
+__declspec(naked) void Phase1SlotLinkAndInit(void)
 {
     __asm {
         mov     eax, dword ptr [g_fightGroupHead]
@@ -126,7 +126,7 @@ __declspec(naked) void Phase1SlotLinkAndInit_00419470(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1sli_ret
-        call    ScaledLoadGuardedJmp_004066d0
+        call    ScaledLoadGuardedJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1sli_ret

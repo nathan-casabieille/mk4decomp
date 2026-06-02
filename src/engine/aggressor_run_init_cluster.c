@@ -117,19 +117,19 @@ extern unsigned int g_load_0052ab10;
 extern unsigned int g_dispatchSave_00537ef4;
 extern unsigned int g_dispatchSave70_00542be8;
 extern void ArgSarStoreJmp(void);
-extern void BlockedCounterCluster_004816d0(void);
-extern void BossArrivalSequence_00481950(void);
-extern void CjDispatchCommit_004818e0(void);
+extern void BlockedCounterCluster(void);
+extern void BossArrivalSequence(void);
+extern void CjDispatchCommit(void);
 extern void DualScaledStore(void);
 extern void MStackDualDiffSequencer(void);
 extern void PendingMatch_00455bd0(void);
-extern void Push267_Push44eb60_Jmp_00489220(void);
+extern void Push267_Push44eb60_Jmp(void);
 extern void ScaledInitWithCounterAndType_004314f0(void);
 extern void ScaledXorStore_004903b0(void);
 extern void StoreLoadJmp(void);
-extern void TripleEntryCountdownInstall_0046a230(void);
+extern void TripleEntryCountdownInstall(void);
 
-__declspec(naked) void AggressorRunInitCluster_004813b0(void)
+__declspec(naked) void AggressorRunInitCluster(void)
 {
     __asm {
         /* === h1 (0x4813b0): event 004ed988 forwarder === */
@@ -218,7 +218,7 @@ __declspec(naked) void AggressorRunInitCluster_004813b0(void)
         mov      dword ptr [eax + 4], ecx
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edx
-        call     Push267_Push44eb60_Jmp_00489220
+        call     Push267_Push44eb60_Jmp
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         ret
@@ -257,7 +257,7 @@ __declspec(naked) void AggressorRunInitCluster_004813b0(void)
         nop
         /* === h5 (0x481560): timer install + event 004ef258 === */
         push     0x26
-        push     OFFSET TripleEntryCountdownInstall_0046a230 + 0xb0
+        push     OFFSET TripleEntryCountdownInstall + 0xb0
         call     StoreTwoCall
         add      esp, 8
         push     OFFSET g_dispatchSave775_004ef258
@@ -275,7 +275,7 @@ __declspec(naked) void AggressorRunInitCluster_004813b0(void)
         mov      dword ptr [eax + 0x84], 0
         test     ecx, ecx
         je       short L_15cd
-        call     BlockedCounterCluster_004816d0
+        call     BlockedCounterCluster
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_15ef
@@ -301,7 +301,7 @@ __declspec(naked) void AggressorRunInitCluster_004813b0(void)
         mov      dword ptr [esi + 0x84], 0
         test     eax, eax
         je       short L_1638
-        call     CjDispatchCommit_004818e0
+        call     CjDispatchCommit
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_16c4
@@ -335,7 +335,7 @@ __declspec(naked) void AggressorRunInitCluster_004813b0(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], 0
-        call     BossArrivalSequence_00481950
+        call     BossArrivalSequence
         mov      dword ptr [g_framePauseFlag], 1
     L_16c4:
         pop      esi

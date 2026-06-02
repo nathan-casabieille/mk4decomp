@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  *   eax &= 0xfe; eax |= ecx; g_eventQueueCurrent = eax;
  *   [edx*4+0x34] = eax; ret.
  */
-void BitSavePushCallMergePop_0045dc60(void) {
+void BitSavePushCallMergePop(void) {
     unsigned int top;
     unsigned int bit;
     unsigned int merged;

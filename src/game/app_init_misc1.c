@@ -6,7 +6,7 @@
 
 /* @addr 0x004b6180 (300b game.menu) - HUD font precache: trims dot-prefix names,
  *   opens font file, fread'd page-by-page into a backbuffer, then issues two
- *   matched draw passes via PaletteFillLineHybrid_004b5ce0 with float positions for each glyph.
+ *   matched draw passes via PaletteFillLineHybrid with float positions for each glyph.
  */
 extern unsigned int g_dispatchSave529_004d29f8;
 extern unsigned int g_dispatchSave528_004d29fc;
@@ -22,7 +22,7 @@ extern void FSYS_fopen(void);
 extern void FSYS_fread(void);
 extern void FSYS_fseek(void);
 extern void Helper_TexUpload(void);
-extern void PaletteFillLineHybrid_004b5ce0(void);
+extern void PaletteFillLineHybrid(void);
 
 __declspec(naked) void AppInit_Misc1(void) {
     __asm {
@@ -98,7 +98,7 @@ __declspec(naked) void AppInit_Misc1(void) {
         push    0
         push    0x50
         push    esi
-        call    PaletteFillLineHybrid_004b5ce0
+        call    PaletteFillLineHybrid
         add     esp, 0x28
         push    0x3f800000
         push    0
@@ -110,7 +110,7 @@ __declspec(naked) void AppInit_Misc1(void) {
         push    0
         push    0x55
         push    esi
-        call    PaletteFillLineHybrid_004b5ce0
+        call    PaletteFillLineHybrid
         mov     edx, [esp + 0x34]
         add     esp, 0x28
         add     esi, 3

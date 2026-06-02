@@ -116,7 +116,7 @@ extern unsigned int g_loaded_004f3608;
  *   Compare g_eventQueueTotal against g_gtPlayerProbe2, branch to one of
  *   two scaled lookups; if eax != 0xf tail-jmp TwoPushCallSetDirty.
  */
-void GuardedChainDispatch_00421fe0(void) {
+void GuardedChainDispatch(void) {
     unsigned int val;
     unsigned int a;
     unsigned int field;
@@ -136,7 +136,7 @@ void GuardedChainDispatch_00421fe0(void) {
     field = ((ScenegraphNode *)(a * 4))->state_mask;
     g_walkCallback = (void (*)(void))field;
     if (field == 0xf) goto maskOut;
-    TwoPushCallSetDirty_00422050();
+    TwoPushCallSetDirty();
     return;
 maskOut:
     g_xformDirtyFlags &= 0xfffffffe;

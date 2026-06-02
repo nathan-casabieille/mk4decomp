@@ -116,21 +116,21 @@ extern unsigned int g_word_004e2860;
 extern unsigned int g_audioInitPeriodic_00537e90;
 extern unsigned int g_audioInstall2State_00537f88;
 extern unsigned int g_state2_00541d88;
-extern void AudioMStackPushHandlerPair_0049ff30(void);
-extern void BitSetByIndex_004a07a0(void);
-extern void Cmp3DirtyToggle_0049fa20(void);
+extern void AudioMStackPushHandlerPair(void);
+extern void BitSetByIndex(void);
+extern void Cmp3DirtyToggle(void);
 extern void DualPushSetCallDualPop(void);
-extern void MStackDualPushSaveRestore_004a09c0(void);
+extern void MStackDualPushSaveRestore(void);
 extern void RoundWinTransition(void);
 extern void SetWalkCurCallPauseDirty(void);
 extern void TripleStageRollback(void);
 
-__declspec(naked) void GameNetSyncState_0049fb70(void)
+__declspec(naked) void GameNetSyncState(void)
 {
     __asm {
         push     ebx
         push     esi
-        call     Cmp3DirtyToggle_0049fa20
+        call     Cmp3DirtyToggle
         mov      eax, dword ptr [g_framePauseFlag]
         xor      esi, esi
         cmp      eax, esi
@@ -186,7 +186,7 @@ __declspec(naked) void GameNetSyncState_0049fb70(void)
         pop      ebx
         ret
     L_fc58:
-        call     MStackDualPushSaveRestore_004a09c0
+        call     MStackDualPushSaveRestore
         cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_fd46
         test     byte ptr [g_xformDirtyFlags], bl
@@ -203,7 +203,7 @@ __declspec(naked) void GameNetSyncState_0049fb70(void)
         je       short L_fd46
     L_fc9e:
         mov      dword ptr [g_walkCallback], esi
-        call     BitSetByIndex_004a07a0
+        call     BitSetByIndex
         cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_fd46
         mov      eax, dword ptr [g_acc_00542078]
@@ -248,7 +248,7 @@ __declspec(naked) void GameNetSyncState_0049fb70(void)
     L_fd3c:
         cmp      eax, 0x12
         jne      short L_fd46
-        call     AudioMStackPushHandlerPair_0049ff30
+        call     AudioMStackPushHandlerPair
     L_fd46:
         pop      esi
         pop      ebx

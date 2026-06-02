@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  * [eax*4+0x78] (7b SIB) with eax=si before eax is overwritten with v. MSVC's
  * choice to keep the raw index vs. the pre-scaled pointer is not coaxable.
  */
-__declspec(naked) void EsiTripleMul10Vec_00440660(void) {
+__declspec(naked) void EsiTripleMul10Vec(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]
         mov     ecx, dword ptr [g_eventQueueCurrent]

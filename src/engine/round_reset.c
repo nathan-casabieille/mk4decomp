@@ -177,10 +177,10 @@ extern unsigned int g_clusterArr541f60_9;
 extern unsigned int g_tripleEntryFlag_0054380c;
 extern void Cmp2DirtyToggle(void);
 extern void TestCmpZeroFour(void);
-extern void TriBranchFlagWrite_00422720(void);
-extern void TwoStateCopyDup_004225f0(void);
+extern void TriBranchFlagWrite(void);
+extern void TwoStateCopyDup(void);
 
-__declspec(naked) void RoundReset_004223e0(void)
+__declspec(naked) void RoundReset(void)
 {
     __asm {
         push     ebx
@@ -191,7 +191,7 @@ __declspec(naked) void RoundReset_004223e0(void)
         jne      L_25e9
         test     byte ptr [g_xformDirtyFlags], 1
         je       short L_240f
-        call     TwoStateCopyDup_004225f0
+        call     TwoStateCopyDup
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_25e9
     L_240f:
@@ -275,7 +275,7 @@ __declspec(naked) void RoundReset_004223e0(void)
         mov      dword ptr [g_clusterArr541f60_6], ebx
         mov      dword ptr [g_clusterArr541f60_9], ebx
         mov      dword ptr [g_clusterArr541f60_8], ebx
-        call     TriBranchFlagWrite_00422720
+        call     TriBranchFlagWrite
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      short L_25e9
         mov      eax, dword ptr [g_gtFightTickCounter]

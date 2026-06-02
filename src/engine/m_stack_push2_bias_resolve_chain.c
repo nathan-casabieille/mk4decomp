@@ -108,13 +108,13 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void MStackPush2BiasResolveChain_0048cca0(void);
-extern void PushBitFieldMergePop_0048bae0(void);
-extern void PushCallPopScaledJmpIndirect_0048ce00(void);
+extern void MStackPush2BiasResolveChain(void);
+extern void PushBitFieldMergePop(void);
+extern void PushCallPopScaledJmpIndirect(void);
 
 /*
  * @addr 0x0048cc40 (95b game) - 3-stage walk swap pause-gated:
- *   snapshot walk/g_eventQueueCurrent/g_eventQueueWorkType, call MStackPush2BiasResolveChain_0048cca0;
+ *   snapshot walk/g_eventQueueCurrent/g_eventQueueWorkType, call MStackPush2BiasResolveChain;
  *   if not paused and state-bit 2 clear, swap walk to mirror, call
  *   PushBitFieldMergePop; if still not paused, restore globals and
  *   tail-call PushCallPopScaledJmpIndirect.
@@ -123,14 +123,14 @@ void TripleStateSwapCall(void) {
     unsigned int save_70 = g_eventQueueCurrent;
     unsigned int save_walk = (unsigned int)g_walkCallback;
     unsigned int save_74 = g_eventQueueWorkType;
-    MStackPush2BiasResolveChain_0048cca0();
+    MStackPush2BiasResolveChain();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 4) != 0) return;
     g_walkCallback = (void (*)(void))save_70;
-    PushBitFieldMergePop_0048bae0();
+    PushBitFieldMergePop();
     if (g_framePauseFlag != 0) return;
     g_scaledInit_00542044 = g_cj_0054205c;
     g_walkCallback = (void (*)(void))save_walk;
     g_eventQueueWorkType = save_74;
-    PushCallPopScaledJmpIndirect_0048ce00();
+    PushCallPopScaledJmpIndirect();
 }

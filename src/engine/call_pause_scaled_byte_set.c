@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  *   testb 1,[g_xformDirtyFlags]; set g_eventQueueChild based on dirty bit.
  */
 extern void MStackPush2ChainSwap(void);
-void CallPauseScaledByteSet_0043c350(void) {
+void CallPauseScaledByteSet(void) {
     MStackPush2ChainSwap();
     if (g_framePauseFlag != 0) {
         return;

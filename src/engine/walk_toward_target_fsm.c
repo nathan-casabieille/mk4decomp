@@ -108,40 +108,40 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void Distance2DSaturationClamp_004300a0(void);
-extern void ChainFieldTest2Branch_0042fbc0(void);
-extern void LoadSetCallPauseStoreJmp_0042fea0(void);
-extern void MStackPush4DualCallAbsPop4_00430d30(void);
-extern void WalkTowardTargetFsm_004301e0(void);
-extern void DualMul10ChainAcc7C_00430020(void);
-extern void EsiInstallChainCallCmpThreshold_0042fad0(void);
+extern void Distance2DSaturationClamp(void);
+extern void ChainFieldTest2Branch(void);
+extern void LoadSetCallPauseStoreJmp(void);
+extern void MStackPush4DualCallAbsPop4(void);
+extern void WalkTowardTargetFsm(void);
+extern void DualMul10ChainAcc7C(void);
+extern void EsiInstallChainCallCmpThreshold(void);
 extern void GuardedSeq_0042fba0(void);
-extern void Mul10Triple0xd999Interp_0042fa10(void);
-extern void SubCmpCallPauseJmp_0042fc40(void);
+extern void Mul10Triple0xd999Interp(void);
+extern void SubCmpCallPauseJmp(void);
 extern void GuardedSeq_0042fb80(void);
 
 /* @addr 0x0042f8a0 (355b game) - install-self phase dispatcher with 2D
  *   interpolation tails. Phase 0: installs Self at [eax+8] with slot[+0x84]=1
  *   and arms g_framePauseFlag.
- *   Phase 1+ path: chains Distance2DSaturationClamp_004300a0 → load
- *   g_player1NodeIdx → ChainFieldTest2Branch_0042fbc0 → load g_player2NodeIdx
- *   → ChainFieldTest2Branch_0042fbc0 → LoadSetCallPauseStoreJmp_0042fea0 →
- *   MStackPush4DualCallAbsPop4_00430d30. After the chain:
- *     - if g_acc_00542078 > 0xa3d, tail-call WalkTowardTargetFsm_004301e0.
- *     - else call DualMul10ChainAcc7C_00430020, then if g_eventQueueNotMask <
- *       0x300000 tail-call EsiInstallChainCallCmpThreshold_0042fad0.
+ *   Phase 1+ path: chains Distance2DSaturationClamp → load
+ *   g_player1NodeIdx → ChainFieldTest2Branch → load g_player2NodeIdx
+ *   → ChainFieldTest2Branch → LoadSetCallPauseStoreJmp →
+ *   MStackPush4DualCallAbsPop4. After the chain:
+ *     - if g_acc_00542078 > 0xa3d, tail-call WalkTowardTargetFsm.
+ *     - else call DualMul10ChainAcc7C, then if g_eventQueueNotMask <
+ *       0x300000 tail-call EsiInstallChainCallCmpThreshold.
  *     - else (>= 0x370000): compute eax = g_eventQueueWorkType - 0x1999,
  *       store into g_acc_00542078, compare 0x54206c/0x542070 against it
  *       and select one of three tails:
  *         - if 0x54206c <  threshold: GuardedSeq_0042fba0
  *         - else if 0x542070 < threshold: GuardedSeq_0042fba0
- *         - else if 0x54206c < 0x542074: pick Mul10Triple0xd999Interp_0042fa10
- *           or SubCmpCallPauseJmp_0042fc40 (after stashing 0x5381cc into
+ *         - else if 0x54206c < 0x542074: pick Mul10Triple0xd999Interp
+ *           or SubCmpCallPauseJmp (after stashing 0x5381cc into
  *           g_currentNodeIdx)
  *         - else (>= 0x542074): GuardedSeq_0042fb80 or SubCmpCallPauseJmp.
  */
 
-__declspec(naked) void PhaseInstall2DInterpDispatch_0042f8a0(void) {
+__declspec(naked) void PhaseInstall2DInterpDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -150,44 +150,44 @@ __declspec(naked) void PhaseInstall2DInterpDispatch_0042f8a0(void) {
         mov     dword ptr [eax + 0x84], 0
         test    ecx, ecx
         je      L_pii_phase0
-        call    Distance2DSaturationClamp_004300a0
+        call    Distance2DSaturationClamp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pii_done
         mov     ecx, dword ptr [g_player1NodeIdx]
         mov     dword ptr [g_currentNodeIdx], ecx
-        call    ChainFieldTest2Branch_0042fbc0
+        call    ChainFieldTest2Branch
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pii_done
         mov     edx, dword ptr [g_player2NodeIdx]
         mov     dword ptr [g_currentNodeIdx], edx
-        call    ChainFieldTest2Branch_0042fbc0
+        call    ChainFieldTest2Branch
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pii_done
-        call    LoadSetCallPauseStoreJmp_0042fea0
+        call    LoadSetCallPauseStoreJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pii_done
-        call    MStackPush4DualCallAbsPop4_00430d30
+        call    MStackPush4DualCallAbsPop4
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pii_done
         cmp     dword ptr [g_acc_00542078], 0xa3d
         jle     short L_pii_check2
-        call    WalkTowardTargetFsm_004301e0
+        call    WalkTowardTargetFsm
         pop     esi
         ret
     L_pii_check2:
-        call    DualMul10ChainAcc7C_00430020
+        call    DualMul10ChainAcc7C
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pii_done
         mov     eax, dword ptr [g_eventQueueNotMask]
         cmp     eax, 0x300000
         jge     short L_pii_check3
-        call    EsiInstallChainCallCmpThreshold_0042fad0
+        call    EsiInstallChainCallCmpThreshold
         pop     esi
         ret
     L_pii_check3:
@@ -214,14 +214,14 @@ __declspec(naked) void PhaseInstall2DInterpDispatch_0042f8a0(void) {
         jge     short L_pii_storeEdx
         cmp     edx, ecx
         jge     short L_pii_storeEsi
-        call    Mul10Triple0xd999Interp_0042fa10
+        call    Mul10Triple0xd999Interp
         pop     esi
         ret
     L_pii_storeEsi:
         mov     eax, dword ptr [g_player2NodeIdx]
         mov     dword ptr [g_acc_00542078], esi
         mov     dword ptr [g_currentNodeIdx], eax
-        call    SubCmpCallPauseJmp_0042fc40
+        call    SubCmpCallPauseJmp
         pop     esi
         ret
     L_pii_storeEdx:
@@ -232,12 +232,12 @@ __declspec(naked) void PhaseInstall2DInterpDispatch_0042f8a0(void) {
         ret
     L_pii_writeEdx:
         mov     dword ptr [g_acc_00542078], edx
-        call    SubCmpCallPauseJmp_0042fc40
+        call    SubCmpCallPauseJmp
         pop     esi
         ret
     L_pii_phase0:
         mov     ecx, 1
-        mov     dword ptr [eax + 8], offset PhaseInstall2DInterpDispatch_0042f8a0
+        mov     dword ptr [eax + 8], offset PhaseInstall2DInterpDispatch
         mov     dword ptr [eax + 0x84], ecx
         mov     dword ptr [g_pendingNodeType], ecx
         mov     dword ptr [g_framePauseFlag], ecx

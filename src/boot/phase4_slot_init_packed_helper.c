@@ -113,7 +113,7 @@ extern unsigned int g_load_0052ab10;
 extern unsigned int g_particleEmitterNode;
 extern unsigned int g_phase1ModelChain_0053e35c;
 extern void AudioMixerStep(void);
-extern void BootSetJmpStoreThenChainTriple_0040b970(void);
+extern void BootSetJmpStoreThenChainTriple(void);
 extern void ChainWalkPushPop(void);
 extern void MStackCall_004062f0(void);
 extern void MStackCall_00406740(void);
@@ -125,7 +125,7 @@ extern void SetJmp_00408d20(void);
 extern void StoreDoubleNegPauseSubStore(void);
 extern void TableLookupCall_00489ff0(void);
 
-__declspec(naked) void Phase4SlotInitPackedHelper_00416040(void)
+__declspec(naked) void Phase4SlotInitPackedHelper(void)
 {
     __asm {
         push    esi
@@ -289,7 +289,7 @@ __declspec(naked) void Phase4SlotInitPackedHelper_00416040(void)
         add     eax, 0x1B
         mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_xformEntityIdx], eax
-        call    BootSetJmpStoreThenChainTriple_0040b970
+        call    BootSetJmpStoreThenChainTriple
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sip_B_ret

@@ -22,7 +22,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern unsigned int g_active_0053a408;
-void DirtyFlagsManipB_0048f3c0(void) {
+void DirtyFlagsManipB(void) {
     unsigned int v = g_active_0053a408;
     g_walkCallback = (void (*)(void))v;
     g_xformDirtyFlags = g_xformDirtyFlags | 4;

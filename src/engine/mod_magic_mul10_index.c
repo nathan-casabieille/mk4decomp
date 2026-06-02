@@ -110,13 +110,13 @@ extern unsigned int g_fightAxisPosY;
 
 extern void ModMagicMul10Index(void);
 extern void MStackMagicModMul10(void);
-extern void TripleFieldCopyLo_0048f880(void);
-extern void TripleFieldCopyJmpLo_0048f810(void);
+extern void TripleFieldCopyLo(void);
+extern void TripleFieldCopyJmpLo(void);
 
 /* @addr 0x00431e90 (170b) - sub-from-const + 2x guarded calls + neg-sub +
  *   shl 3 mul + chain[+0x54,+0x5c,+0x64] stores. */
 
-void GuardedArithDualCallChain_00431e90(void) {
+void GuardedArithDualCallChain(void) {
     __asm {
         mov     ecx, dword ptr [g_xformScratch2088]
         mov     eax, 0xfffe6de1

@@ -8,7 +8,7 @@
  *   FPU control word read/modify (preserves FPU state across helper).
  *   fstcw [ebp-4]; ((arg2 & arg1) | (~arg2 & cw)) → ebp+0xc; fldcw; ret movsx (cw).
  */
-__declspec(naked) void FpuMaskMerge_004cf740(void) {
+__declspec(naked) void FpuMaskMerge(void) {
     __asm {
         push    ebp
         mov     ebp, esp

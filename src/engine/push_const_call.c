@@ -9,19 +9,19 @@
  * forward to a shared callee.
  */
 
-extern int __cdecl MStackAngleWrapDispatch_0048b800(int);
-extern int __cdecl LockIterTwoPath_004c6a20(int);
+extern int __cdecl MStackAngleWrapDispatch(int);
+extern int __cdecl LockIterTwoPath(int);
 extern int __cdecl Lock(int);
 extern int __cdecl TableLookupIatCall(int);
 
 /* @addr 0x0048bac0 */
 void PushConstCall_0048bac0(void) {
-    MStackAngleWrapDispatch_0048b800(1);
+    MStackAngleWrapDispatch(1);
 }
 
 /* @addr 0x004c6a10 */
 void PushConstCall_004c6a10(void) {
-    LockIterTwoPath_004c6a20(1);
+    LockIterTwoPath(1);
 }
 
 /* @addr 0x004c6920 */

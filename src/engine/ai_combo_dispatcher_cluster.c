@@ -120,15 +120,15 @@ extern void CallSetPause(void);
 extern void CondPickDualStore(void);
 extern void CopyThreeFields(void);
 extern void DualCmpSwapStore(void);
-extern void MStackPush8SlotInitPop8_00415010(void);
+extern void MStackPush8SlotInitPop8(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void ScaledIndirectJmp_0049c850(void);
 extern void ScaledStackCallPause(void);
 extern void ThreeChanPackClamp(void);
-extern void TripleEntry3Block_00498df0(void);
-extern void Vec3AccMul10ChainBlend_0049c3d0(void);
+extern void TripleEntry3Block(void);
+extern void Vec3AccMul10ChainBlend(void);
 
-__declspec(naked) void AiComboDispatcherCluster_00497470(void)
+__declspec(naked) void AiComboDispatcherCluster(void)
 {
     __asm {
         /* === h1 (0x497470): main combo install === */
@@ -181,11 +181,11 @@ __declspec(naked) void AiComboDispatcherCluster_00497470(void)
         shr      edx, 2
         mov      dword ptr [eax*4], ecx
         mov      dword ptr [g_eventQueueTotal], edx
-        call     Vec3AccMul10ChainBlend_0049c3d0
+        call     Vec3AccMul10ChainBlend
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_759d
-        call     TripleEntry3Block_00498df0
+        call     TripleEntry3Block
         mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_walkCallback], 0
         mov      dword ptr [eax*4 + 0x64], 0
@@ -317,7 +317,7 @@ __declspec(naked) void AiComboDispatcherCluster_00497470(void)
         mov      eax, dword ptr [g_walkCallback]
         test     eax, eax
         jne      short L_7768
-        call     MStackPush8SlotInitPop8_00415010
+        call     MStackPush8SlotInitPop8
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_7789

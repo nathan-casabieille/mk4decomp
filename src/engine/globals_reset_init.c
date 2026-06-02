@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004222a0 (224b game) - reset/init: clears ~17 globals, sets g_pendingNodeType=0x004200b0,
  *   g_eventQueueWorkType=0x1000, call AllocNode; if !pause: clears more globals and stores eax=0xc
- *   to g_walkCallback/0x0053a3e8; call ResetSceneCallbacks_00420090; if !pause: clears 6 more globals; ret.
+ *   to g_walkCallback/0x0053a3e8; call ResetSceneCallbacks; if !pause: clears 6 more globals; ret.
  */
 extern unsigned int g_dispatchSave109_0052aab4;
 extern unsigned int g_dispatchSave108_0052ab44;
@@ -134,9 +134,9 @@ extern unsigned int g_dst_00537ea4;
 extern unsigned int g_counter_0053a51c;
 extern unsigned int g_dispatchVar9_00541dc0;
 extern unsigned int g_nodeUnlinkSlot_00541e4c;
-extern void ResetSceneCallbacks_00420090(void);
+extern void ResetSceneCallbacks(void);
 
-__declspec(naked) void GlobalsResetInit_004222a0(void) {
+__declspec(naked) void GlobalsResetInit(void) {
     __asm {
         push    esi
         xor     esi, esi
@@ -172,7 +172,7 @@ __declspec(naked) void GlobalsResetInit_004222a0(void) {
         mov     dword ptr [g_dispatchSave109_0052aab4], 8
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_pendingMatchAcc_0053a3e8], eax
-        call    ResetSceneCallbacks_00420090
+        call    ResetSceneCallbacks
         cmp     dword ptr [g_framePauseFlag], esi
         _emit   75h
         _emit   24h

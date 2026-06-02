@@ -119,7 +119,7 @@ extern void StateGateMStackOverlap(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void InstallSelfChainSet13333_00437880(void) {
+__declspec(naked) void InstallSelfChainSet13333(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi

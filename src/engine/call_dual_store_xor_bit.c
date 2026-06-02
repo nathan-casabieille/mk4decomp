@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /*
  * @addr 0x004285e0 (99b game) - call gate then dual-store:
- *   call BootMStackBracket3SubdispatchPair_00407920; on pause clear, cj[+0x28] = ++walk; load &
+ *   call BootMStackBracket3SubdispatchPair; on pause clear, cj[+0x28] = ++walk; load &
  *   stash cj[+0x24] into both g_cj_00542058 and g_walkCallback; set
  *   bit 2 of g_xformDirtyFlags; if [eax+4] mismatches walk, toggle
  *   bit 2 back off.
@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
 void CallDualStoreXorBit(void) {
     unsigned int v;
     unsigned int new_cj;
-    BootMStackBracket3SubdispatchPair_00407920();
+    BootMStackBracket3SubdispatchPair();
     if (g_framePauseFlag != 0) return;
     v = ((ScenegraphNode *)(g_cj_0054205c * 4))->queue_idx + 1;
     g_walkCallback = (void (*)(void))v;

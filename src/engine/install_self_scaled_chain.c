@@ -110,20 +110,20 @@ extern unsigned int g_fightAxisPosY;
 
 extern void GDispatch1_00488da0(void);
 extern void GuardedDualConst2AndToggle(void);
-extern void InstallSelfScaledChain_004916f0(void);
+extern void InstallSelfScaledChain(void);
 extern void MStackFrameCdeclDouble(void);
-extern void StoreGuardedBitInstallJmp_004915f0(void);
+extern void StoreGuardedBitInstallJmp(void);
 
 /* @addr 0x00491520 (205b game) - 5-stage cascade init.
  *   call ScaledMove48to58; if !pause: scaledInit=(arg0>>2); call GDispatch1; if !pause: call DirtyToggleByGate;
  *   if !pause: bit-2 check; if not set call GuardedDualConst2AndToggle; if !pause: bit-0 check;
- *   if set jmp InstallSelfScaledChain_004916f0; baseSel[*4+0x74]=0x200e; eax=[g_cj_00542054*4 + 0]; g_walkCallback=eax;
+ *   if set jmp InstallSelfScaledChain; baseSel[*4+0x74]=0x200e; eax=[g_cj_00542054*4 + 0]; g_walkCallback=eax;
  *   call MStackFrameCdeclDouble; if !pause: g_xformEntityIdx = [g_cj_00542054*4 + 4],
- *   store to [g_fightGroupHead*4 + 0x24], clear g_walkCallback; jmp StoreGuardedBitInstallJmp_004915f0. ret.
+ *   store to [g_fightGroupHead*4 + 0x24], clear g_walkCallback; jmp StoreGuardedBitInstallJmp. ret.
  */
 extern void ScaledMove48to58(void);
 
-__declspec(naked) void Cascade5StageInit_00491520(void) {
+__declspec(naked) void Cascade5StageInit(void) {
     __asm {
         call    ScaledMove48to58
         mov     eax, dword ptr [g_framePauseFlag]
@@ -166,7 +166,7 @@ __declspec(naked) void Cascade5StageInit_00491520(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
-        jmp     InstallSelfScaledChain_004916f0
+        jmp     InstallSelfScaledChain
         mov     ecx, dword ptr [g_baseSel]
         mov     eax, 0x0000200e
         mov     dword ptr [g_walkCallback], eax
@@ -185,7 +185,7 @@ __declspec(naked) void Cascade5StageInit_00491520(void) {
         mov     dword ptr [g_xformEntityIdx], eax
         mov     dword ptr [edx*4 + 0x24], eax
         mov     dword ptr [g_walkCallback], 0
-        jmp     StoreGuardedBitInstallJmp_004915f0
+        jmp     StoreGuardedBitInstallJmp
         ret
     }
 }

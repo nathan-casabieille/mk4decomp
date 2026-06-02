@@ -117,10 +117,10 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_matrixStack_arr;
 extern void CmpEqInitCallElseJmp(void);
-extern void EsiInstallPushDecPopJmp_0043ba90(void);
+extern void EsiInstallPushDecPopJmp(void);
 extern void GuardedSeq_004297b0(void);
 
-__declspec(naked) void InstallSelfDoubleMStack_0043b9a0(void) {
+__declspec(naked) void InstallSelfDoubleMStack(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -179,7 +179,7 @@ __declspec(naked) void InstallSelfDoubleMStack_0043b9a0(void) {
         _emit   0c8h
         _emit   74h
         _emit   07h
-        call    EsiInstallPushDecPopJmp_0043ba90
+        call    EsiInstallPushDecPopJmp
         pop     esi
         ret
         mov     dword ptr [esi + 0x08], 0x0043b9a0

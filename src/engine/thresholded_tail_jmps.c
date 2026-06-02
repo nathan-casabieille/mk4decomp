@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  *   cmp eax,0x10000; if >: jmp MoveFsmCluster;
  *   else: jmp CallPauseTestByteJmpCalls.
  */
-void ThresholdedTailJmps_00436390(void) {
+void ThresholdedTailJmps(void) {
     int state;
     if (((int (*)(void))Cmp2CallDirtyCall)() != 0) return;
     ((void (*)(int))QuadBlockArgInstallChain)(0x004e4a10);

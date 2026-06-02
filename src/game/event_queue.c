@@ -11,13 +11,13 @@ extern unsigned int g_eventQueueDrainBase_0053a4b8;
  * linker pads the gap between this function's tail jmp and the loop
  * entry to 16-byte alignment, producing the orig's `jmp +3; 90 90 90`
  * pattern. */
-extern void EventQueueDrainLoop_0045c840(void);
+extern void EventQueueDrainLoop(void);
 
 /*
  * Snapshot the active event-queue cursor (g_eventQueueActive) into the
  * working slot (g_xformEntityIdx), pin the buffer-end packed pointer
  * (&g_eventQueueDrainBase_0053a4b8 + 80 == 0x0053a508 >> 2) in g_eventQueueTotal,
- * then tail-call into EventQueueDrainLoop_0045c840 to walk the queue.
+ * then tail-call into EventQueueDrainLoop to walk the queue.
  *
  * The shr survives const-folding because (&g_data + 80) carries a
  * DIR32 link-time reloc; MSVC SP3 /O2 emits the runtime
@@ -31,7 +31,7 @@ void DispatchEventQueue(void)
     unsigned int total = ((unsigned int)&g_eventQueueDrainBase_0053a4b8 + 80) >> 2;
     g_xformEntityIdx = g_eventQueueActive;
     g_eventQueueTotal = total;
-    EventQueueDrainLoop_0045c840();
+    EventQueueDrainLoop();
 }
 
 /*

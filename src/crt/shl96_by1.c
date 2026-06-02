@@ -13,7 +13,7 @@
  * (reuses edx for low/carry/high sequentially); orig is 46 bytes.
  * MSVC's optimizer eliminates the need for the edi callee-save entirely.
  */
-__declspec(naked) void Shl96By1_004ce290(void) {
+__declspec(naked) void Shl96By1(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         push    esi

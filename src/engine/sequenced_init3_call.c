@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00464190 (173b game) - sequenced init: call BootInitGuardedCallChain; pause-check;
- *   call Init4Globals_0042ae10; pause-check; setup scaledInit/0053a734/0053a350 from g_load_0052ab10;
+ *   call Init4Globals; pause-check; setup scaledInit/0053a734/0053a350 from g_load_0052ab10;
  *   init 5 fields of struct[*4+0x54..0x68]; call CopyGlobal; pause-check;
  *   scaledInit = 0x0050b124>>2; call LoadGeoAsset_Default; pause-check; repeat; ret.
  */
@@ -118,9 +118,9 @@ extern unsigned int g_dispatchSave42_0053a350;
 extern unsigned int g_dispatchSave40_0053a734;
 extern void BootInitGuardedCallChain(void);
 extern void CopyGlobal(void);
-extern void Init4Globals_0042ae10(void);
+extern void Init4Globals(void);
 
-__declspec(naked) void SequencedInit3Call_00464190(void) {
+__declspec(naked) void SequencedInit3Call(void) {
     __asm {
         push    esi
         call    BootInitGuardedCallChain
@@ -133,7 +133,7 @@ __declspec(naked) void SequencedInit3Call_00464190(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        call    Init4Globals_0042ae10
+        call    Init4Globals
         cmp     dword ptr [g_framePauseFlag], esi
         _emit   0fh
         _emit   85h

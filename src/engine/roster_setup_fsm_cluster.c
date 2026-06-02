@@ -112,13 +112,13 @@ extern void ChainGatedNegAccum(void);
 extern void TripleVecAccCallStore(void);
 extern void ScaledInit_00450ed0(void);
 extern void ScaledInit_00450ef0(void);
-extern void RosterSetupFsmCluster_00451060(void);
+extern void RosterSetupFsmCluster(void);
 
 /* @addr 0x00450f10 (324b game) - 3-block: chain-init + ScaledInit dual thunks. */
 extern void MStackCall_00406600(void);
 extern void PushSetXfmMaskCallPop(void);
 
-__declspec(naked) void TripleBlockChainScaledInits_00450f10(void) {
+__declspec(naked) void TripleBlockChainScaledInits(void) {
     __asm {
         call    PushSetXfmMaskCallPop
         mov     eax, dword ptr [g_framePauseFlag]
@@ -210,7 +210,7 @@ __declspec(naked) void TripleBlockChainScaledInits_00450f10(void) {
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     RosterSetupFsmCluster_00451060
+        jmp     RosterSetupFsmCluster
         ret
         _emit   90h
         _emit   90h
@@ -229,7 +229,7 @@ __declspec(naked) void TripleBlockChainScaledInits_00450f10(void) {
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     RosterSetupFsmCluster_00451060
+        jmp     RosterSetupFsmCluster
         ret
     }
 }

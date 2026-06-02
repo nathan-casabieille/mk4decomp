@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY;
  *   clear: g_xformDirtyFlags &= 0xfe; ret.
  */
 
-void GuardedRangeCmpToggle_0048f210(void) {
+void GuardedRangeCmpToggle(void) {
     __asm {
         call    ScaledLoadCmpStoreXfm
         mov     eax, dword ptr [g_framePauseFlag]

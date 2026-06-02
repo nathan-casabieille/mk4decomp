@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x0047e310 (268b game) - 3-state install-self with threshold dispatch.
  *   sub eax, 0; je state-0 path.
  *   state >= 2: tail-call FiveCallGuardSetTail.
- *   state 1: load cj[+0x70] (must >= 0 else jmp state-0 install path); call TailJmpInstallSelfPair_0047e690;
+ *   state 1: load cj[+0x70] (must >= 0 else jmp state-0 install path); call TailJmpInstallSelfPair;
  *     if pause? final-ret. If g_walkCallback > 0x18ccc, jmp install path.
  *     Else: call CopyJmp_00406ba0; if pause? final-ret.
  *     g_xformEntityIdx = 0x0050014c >> 2; install-self at [esi+8]=0x0047e310;
@@ -123,9 +123,9 @@ extern unsigned int g_fightAxisPosY;
 extern void CopyJmp_00406ba0(void);
 extern void FiveCallGuardSetTail(void);
 extern void ScaledArrStore_00429450(void);
-extern void TailJmpInstallSelfPair_0047e690(void);
+extern void TailJmpInstallSelfPair(void);
 
-__declspec(naked) void InstallSelfThresholdDispatch_0047e310(void) {
+__declspec(naked) void InstallSelfThresholdDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -155,7 +155,7 @@ __declspec(naked) void InstallSelfThresholdDispatch_0047e310(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        call    TailJmpInstallSelfPair_0047e690
+        call    TailJmpInstallSelfPair
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

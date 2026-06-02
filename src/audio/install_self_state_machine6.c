@@ -123,7 +123,7 @@ extern void MStackPushComplexCallPop_00406430(void);
 extern void PushPopScaledInit343c(void);
 extern void SceneFrameStepWithInputs(void);
 
-__declspec(naked) void InstallSelfStateMachine6_004a48e0(void)
+__declspec(naked) void InstallSelfStateMachine6(void)
 {
     __asm {
         mov      eax, dword ptr [g_baseSel]

@@ -14,8 +14,8 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void func_004089e0_hh(void);
 extern void func_004b8fa0_hh(void);
-extern void Phase4StateInit4Helpers_004130c0(void);
-void PushStackCallPauseSet0xa_00413070(void) {
+extern void Phase4StateInit4Helpers(void);
+void PushStackCallPauseSet0xa(void) {
     unsigned int top = g_matrixStackTop;
     unsigned int v = g_fightGroupHead;
     top++;
@@ -26,5 +26,5 @@ void PushStackCallPauseSet0xa_00413070(void) {
     func_004b8fa0_hh();
     if (g_framePauseFlag) return;
     g_walkCallback = (void(*)(void))0xa;
-    Phase4StateInit4Helpers_004130c0();
+    Phase4StateInit4Helpers();
 }

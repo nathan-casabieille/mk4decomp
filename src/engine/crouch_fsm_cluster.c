@@ -109,19 +109,19 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void TableLookupCall_0048a160(void);
-extern void CrouchFsmCluster_00482c30(void);
-extern void CallPauseFourSet_00482be0(void);
+extern void CrouchFsmCluster(void);
+extern void CallPauseFourSet(void);
 
 /* @addr 0x00482b60 (124b game) - dual-entry.
  *   Block A: set g_walkCallback=1; jmp TableLookupCall_0048a160.
  *   Block A2 (+0x10): set baseSel[*4+0x74]=0x4002; call CmpDualPatchCallJmp; if pause ret;
- *     set g_walkCallback=0x9999; call CmpP1DualInitStore; if pause ret; jmp CrouchFsmCluster_00482c30.
- *   Block B (+0x60): set baseSel[*4+0x74]=0x4005; jmp CallPauseFourSet_00482be0.
+ *     set g_walkCallback=0x9999; call CmpP1DualInitStore; if pause ret; jmp CrouchFsmCluster.
+ *   Block B (+0x60): set baseSel[*4+0x74]=0x4005; jmp CallPauseFourSet.
  */
-extern void CmpDualPatchCallJmp_00482b00(void);
+extern void CmpDualPatchCallJmp(void);
 extern void CmpP1DualInitStore_00482ab0(void);
 
-__declspec(naked) void DualEntry4002Chain_00482b60(void) {
+__declspec(naked) void DualEntry4002Chain(void) {
     __asm {
         mov     dword ptr [g_walkCallback], 1
         jmp     TableLookupCall_0048a160
@@ -130,7 +130,7 @@ __declspec(naked) void DualEntry4002Chain_00482b60(void) {
         mov     eax, 0x00004002
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
-        call    CmpDualPatchCallJmp_00482b00
+        call    CmpDualPatchCallJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -141,7 +141,7 @@ __declspec(naked) void DualEntry4002Chain_00482b60(void) {
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     CrouchFsmCluster_00482c30
+        jmp     CrouchFsmCluster
         ret
         _emit   90h
         _emit   90h
@@ -160,6 +160,6 @@ __declspec(naked) void DualEntry4002Chain_00482b60(void) {
         mov     eax, 0x00004005
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
-        jmp     CallPauseFourSet_00482be0
+        jmp     CallPauseFourSet
     }
 }

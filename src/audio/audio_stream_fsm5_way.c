@@ -109,8 +109,8 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void AudioStreamFsm5Way(void);
-extern void TwoCallsTwoBranchTail_004a3c50(void);
-extern void RoundDisplayInitCluster_004a4f00(void);
+extern void TwoCallsTwoBranchTail(void);
+extern void RoundDisplayInitCluster(void);
 extern void CopyGlobal(void);
 extern unsigned int g_audioStreamState;
 
@@ -138,7 +138,7 @@ __declspec(naked) void AudioStreamFsm5Way(void)
         mov      eax, dword ptr [g_audioStreamState]
         cmp      eax, edi
         jne      short L_3fd3
-        call     TwoCallsTwoBranchTail_004a3c50
+        call     TwoCallsTwoBranchTail
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_411a
         mov      dword ptr [esi + 8], OFFSET AudioStreamFsm5Way
@@ -184,7 +184,7 @@ __declspec(naked) void AudioStreamFsm5Way(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], edi
-        call     RoundDisplayInitCluster_004a4f00
+        call     RoundDisplayInitCluster
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi

@@ -24,12 +24,12 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned char g_byte_0052435c;
 extern void *g_dispatchSave1161_004d5084;
 extern int Anim_LoadPackFile(void *p, int a, int b);
-extern void Init0AndMax_00401370(void);
-void OnceCall_00401340(void) {
+extern void Init0AndMax(void);
+void OnceCall(void) {
     if (g_byte_0052435c != 0) {
         return;
     }
     g_byte_0052435c = 1;
     Anim_LoadPackFile(&g_dispatchSave1161_004d5084, 0, 0);
-    Init0AndMax_00401370();
+    Init0AndMax();
 }

@@ -114,12 +114,12 @@ extern unsigned int g_fightAxisPosY;
  *   chain[+0x84]==0 path: g_eventQueueNotMask=g_cj_00542058, [0x00535cf8]=g_cj_00542058,
  *   g_cj_00542054=[0x00537e9c], g_cj_00542058=0x004e55f8>>2, g_xformScratch2088=0x7ae,
  *   g_currentNodeFlags=0x32666, install-self at +0x08=0x0043f2c0, scaledInit-chain push,
- *   call QuadPackedInstallSelfChain_0048aa20, g_pause=1. pop edi; ret.
+ *   call QuadPackedInstallSelfChain, g_pause=1. pop edi; ret.
  */
 extern unsigned int g_dispatchCopyField_00537e9c;
-extern void QuadPackedInstallSelfChain_0048aa20(void);
+extern void QuadPackedInstallSelfChain(void);
 
-__declspec(naked) void InstallSelfChainStateInit_0043f2c0(void) {
+__declspec(naked) void InstallSelfChainStateInit(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         xor     edx, edx
@@ -160,7 +160,7 @@ __declspec(naked) void InstallSelfChainStateInit_0043f2c0(void) {
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
-        call    QuadPackedInstallSelfChain_0048aa20
+        call    QuadPackedInstallSelfChain
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         ret

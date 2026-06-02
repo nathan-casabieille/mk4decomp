@@ -112,7 +112,7 @@ extern void PendingMatch_004a3400(void);
 extern void Thunk_004c48b0(void);
 
 /*
- * GameMode_EnterScene - 149b audio deinit variant of AudioModeInit_004a2610.
+ * GameMode_EnterScene - 149b audio deinit variant of AudioModeInit.
  *   Main (0x004a2720): if g_gtModeFlag == 1 → store (0x53a408,0x53a3e0)>>2 to
  *     (g_currentNodeIdx,g_xformEntityIdx); else (0x537e88,0x53a700)>>2; call
  *     DualScaledStoreConst, ClearTwoCallSetStore; g_dlMode=0; call
@@ -152,30 +152,30 @@ extern unsigned int g_counter_005433c8;
 extern void CharSelect_HelpPrompts(void);
 extern void Title_PressStartScreen(void);
 extern void CallDualStoreXorBit(void);
-extern void ChainInitDoublePushCall_004a47c0(void);
-extern void ClearTwoCallSetStore_004a2270(void);
+extern void ChainInitDoublePushCall(void);
+extern void ClearTwoCallSetStore(void);
 extern void CopyGlobal(void);
-extern void DoublePushCallDualPopJmp_00423270(void);
+extern void DoublePushCallDualPopJmp(void);
 extern void DownloadPlayerChar(void);
-extern void DualAddSar_004ab600(void);
+extern void DualAddSar(void);
 extern void DualScaledStoreConst(void);
 extern void GuardedSetupCallTailJmp(void);
-extern void InstallChainInitTailJmp_004a7030(void);
+extern void InstallChainInitTailJmp(void);
 extern void EnduranceMode_Handler(void);
-extern void MStackBracket3_FieldSequentialCopy_00411d80(void);
+extern void MStackBracket3_FieldSequentialCopy(void);
 extern void MStackPush2ChainLLInsert(void);
 extern void MStackPushComplexCallPop_004064b0(void);
 extern void PendingMatch_00401b70(void);
-extern void Phase1ChainAdvanceCallScale_00418f80(void);
-extern void ScaledAnd4InvDirtyClear_00409350(void);
+extern void Phase1ChainAdvanceCallScale(void);
+extern void ScaledAnd4InvDirtyClear(void);
 extern void ScaledArrStore_004285c0(void);
-extern void ScaledClearTripleCallJmp_004202c0(void);
+extern void ScaledClearTripleCallJmp(void);
 extern void ScaledOr4DirtyClear(void);
-extern void ScaledSet1OnNonZero_0048c190(void);
+extern void ScaledSet1OnNonZero(void);
 extern void SetJmp_004a1ac0(void);
 extern void SetJmp_004a1ad0(void);
 extern void SixCallSeqPushImm(void);
-extern void TablePushAccumTailJmp_00429e30(void);
+extern void TablePushAccumTailJmp(void);
 extern void TestCmpZeroFour(void);
 extern void DebugMenu_DrawMatchOptions(void);
 
@@ -205,26 +205,26 @@ extern unsigned int g_byte_0054372c;
 extern unsigned int g_byte_00543730;
 extern unsigned int g_voicePoolTickFlag_005437f4;
 extern unsigned int g_audioPreloadState_00543830;
-extern void AudioBindEntry_004a1e40(void);
+extern void AudioBindEntry(void);
 extern void AudioInitArgs3(void);
-extern void AudioInstallSelfStateMachine2_004a85c0(void);
+extern void AudioInstallSelfStateMachine2(void);
 extern void AudioInstallSelfStatePush(void);
-extern void AudioPreloadStreamingTrack_004a6e70(void);
-extern void AudioState50b4BitDispatcher_004a32c0(void);
+extern void AudioPreloadStreamingTrack(void);
+extern void AudioState50b4BitDispatcher(void);
 extern void BootInitGuardedCallChain(void);
 extern void CallSetPause(void);
-extern void CmpByteJmp_004a4180(void);
+extern void CmpByteJmp(void);
 extern void DispatcherComplex260_00407400(void);
 extern void DrainQueueCallEach(void);
-extern void DualCallSetByte_004a1cb0(void);
+extern void DualCallSetByte(void);
 extern void FiveTableWalkInit(void);
-extern void IncCapped3e7_00491920(void);
+extern void IncCapped3e7(void);
 extern void InstallSelfPackedF80(void);
-extern void IsNonzeroBoolFlagged_004a1d00(void);
+extern void IsNonzeroBoolFlagged(void);
 extern void LoadGeoAsset_Default(void);
 extern void MStackPushComplexCallPop_00406430(void);
-extern void MemcpyByteN_004a5680(void);
-extern void Memset18Step_004a56a0(void);
+extern void MemcpyByteN(void);
+extern void Memset18Step(void);
 extern void PendingMatch_004a2a80(void);
 extern void PendingMatch_004a56c0(void);
 extern void PendingMatch_004a62b0(void);
@@ -233,11 +233,11 @@ extern void Match_TeamOutcomeScreen(void);
 extern void PendingMatch_004aa9f0(void);
 extern void Push16Call(void);
 extern void QuadCallPhase2(void);
-extern void ScaledByteIdxDualCopy_004a3260(void);
-extern void SnapshotDirtyMark_004a1dc0(void);
+extern void ScaledByteIdxDualCopy(void);
+extern void SnapshotDirtyMark(void);
 extern void TableWalkBoundedCmp(void);
-extern void TableWalkChainCall_004a30f0(void);
-extern void TestByteOrAndCheck_004a1ae0(void);
+extern void TableWalkChainCall(void);
+extern void TestByteOrAndCheck(void);
 extern void TripleCallByteCheck(void);
 extern void TripleCallSetCopy(void);
 extern void DebugMenu_DrawUnlockToggles(void);
@@ -275,7 +275,7 @@ __declspec(naked) void GameMode_EnterScene(void)
         mov     dword ptr [g_xformEntityIdx], eax
     L_common:
         call    DualScaledStoreConst
-        call    ClearTwoCallSetStore_004a2270
+        call    ClearTwoCallSetStore
         mov     dword ptr [g_dlMode], 0
         call    SixCallSeqPushImm
         mov     dword ptr [g_eventQueueWorkType], 0
@@ -316,7 +316,7 @@ __declspec(naked) void GameMode_EnterScene(void)
 
 
 /*
- * AudioInitLoopTriple_004a7840 - 237b audio 2-entry init + triple-loop body.
+ * AudioInitLoopTriple - 237b audio 2-entry init + triple-loop body.
  *   Entry 0x004a7840: g_xformEntityIdx = (0x0050f114 >> 2); call DispatcherComplex260;
  *     if paused: ret. push 0x13333; SnapshotDirtyMark; MStackPushComplexCallPop;
  *     if paused: ret. chain[g_currentNodeIdx*4 + 0x5c] = 0x00100000; ret.
@@ -324,9 +324,9 @@ __declspec(naked) void GameMode_EnterScene(void)
  *     Loop1 (esi: byte-table at 0x004f3b48 to 0x004f3c20 step 0x24): chain[(g_baseSel+byte)*4],
  *       call MStackPush2ChainLLInsert. Loop2 (esi 0..5): chain[(g_baseSel+esi)*4 + 0x34], call.
  *     Loop3 (esi 0..5): chain[(g_baseSel+esi)*4 + 0x48], call. DrainQueueCallEach.
- *     if [0x005433f4] == 2: tail-call PendingMatch_004a8ca0 else AudioInstallSelfStateMachine2_004a85c0.
+ *     if [0x005433f4] == 2: tail-call PendingMatch_004a8ca0 else AudioInstallSelfStateMachine2.
  */
-__declspec(naked) void AudioInitLoopTriple_004a7840(void)
+__declspec(naked) void AudioInitLoopTriple(void)
 {
     __asm
     {
@@ -338,7 +338,7 @@ __declspec(naked) void AudioInitLoopTriple_004a7840(void)
         test    eax, eax
         jne     short L_e0_ret
         push    0x13333
-        call    SnapshotDirtyMark_004a1dc0
+        call    SnapshotDirtyMark
         add     esp, 4
         call    MStackPushComplexCallPop_00406430
         mov     eax, dword ptr [g_framePauseFlag]
@@ -397,17 +397,17 @@ __declspec(naked) void AudioInitLoopTriple_004a7840(void)
         pop     esi
         ret
     L_tail85c0:
-        call    AudioInstallSelfStateMachine2_004a85c0
+        call    AudioInstallSelfStateMachine2
         pop     esi
         ret
     }
 }
 
-extern void IncOrZero9_00422080(void);
+extern void IncOrZero9(void);
 
 /*
- * AudioBank2StatePickerWalk_004a9270 - 324b audio 2-bank state picker and roundrobin walk.
- *   g_walkCallback=0; CopyGlobal; IncOrZero9_00422080.
+ * AudioBank2StatePickerWalk - 324b audio 2-bank state picker and roundrobin walk.
+ *   g_walkCallback=0; CopyGlobal; IncOrZero9.
  *   eax = g_audioBankSel; edx = g_counter_0054359c; edi = g_counter_005433c8.
  *   If eax == 1: chain low table [edi*24 + 0x0054361a/19] += 1.
  *   Else: chain high table [edx*24 + 0x005435a2/a1] += 1.
@@ -420,7 +420,7 @@ extern void IncOrZero9_00422080(void);
  *     If eax==1: roundrobin edi through ebp slots looking for g_byte_0054361a[edi*24]!=0; store to g_counter_005433c8.
  *     call Match_TeamOutcomeScreen; pop+ret.
  */
-__declspec(naked) void AudioBank2StatePickerWalk_004a9270(void)
+__declspec(naked) void AudioBank2StatePickerWalk(void)
 {
     __asm
     {
@@ -429,7 +429,7 @@ __declspec(naked) void AudioBank2StatePickerWalk_004a9270(void)
         push    edi
         mov     dword ptr [g_walkCallback], 0
         call    CopyGlobal
-        call    IncOrZero9_00422080
+        call    IncOrZero9
         mov     eax, dword ptr [g_audioBankSel]
         mov     edx, dword ptr [g_counter_0054359c]
         mov     edi, dword ptr [g_counter_005433c8]
@@ -538,7 +538,7 @@ __declspec(naked) void AudioBank2StatePickerWalk_004a9270(void)
 
 extern int RetZero_004a1c40(void);
 
-__declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
+__declspec(naked) void AudioStateInitMultiInstall(void)
 {
     __asm
     {
@@ -562,10 +562,10 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
     L_asimi_phase1:
         call    DebugMenu_DrawUnlockToggles
         push    0x4f3830
-        call    ScaledByteIdxDualCopy_004a3260
+        call    ScaledByteIdxDualCopy
         add     esp, 4
         push    0x4f3830
-        call    AudioState50b4BitDispatcher_004a32c0
+        call    AudioState50b4BitDispatcher
         add     esp, 4
         call    TripleCallByteCheck
         test    eax, eax
@@ -594,9 +594,9 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
         call    Push16Call
         call    DebugMenu_DrawUnlockToggles
         mov     dword ptr [g_eventQueueCurrent], 0x20
-        mov     dword ptr [edi + 8], offset AudioStateInitMultiInstall_004a4d20
+        mov     dword ptr [edi + 8], offset AudioStateInitMultiInstall
         mov     eax, dword ptr [g_baseSel]
-        mov     ecx, offset AudioStateInitMultiInstall_004a4d20
+        mov     ecx, offset AudioStateInitMultiInstall
         add     ecx, 0x2000000
         mov     dword ptr [eax*4 + 0x84], 2
         mov     eax, dword ptr [edi + 4]
@@ -643,12 +643,12 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
         mov     dword ptr [edx*4], 0
         jb      short L_asimi_loop
         push    0x4f6358
-        call    AudioBindEntry_004a1e40
+        call    AudioBindEntry
         mov     eax, dword ptr [g_baseSel]
         add     esp, 4
         mov     dword ptr [eax*4 + 0x30], 5
     L_asimi_install2:
-        mov     dword ptr [edi + 8], offset AudioStateInitMultiInstall_004a4d20
+        mov     dword ptr [edi + 8], offset AudioStateInitMultiInstall
         mov     dword ptr [edi + 0x84], ebx
         mov     dword ptr [g_pendingNodeType], ebx
         mov     dword ptr [g_framePauseFlag], ebx
@@ -662,7 +662,7 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
 
 /* extern void AllocNode(void); -- defined elsewhere with diff sig */
 
-__declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
+__declspec(naked) void AudioPreloadStreamingTrack(void)
 {
     __asm {
         mov      eax, dword ptr [g_baseSel]
@@ -678,7 +678,7 @@ __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
         call     TableWalkBoundedCmp
         add      esp, 4
         call     BootInitGuardedCallChain
-        call     IncCapped3e7_00491920
+        call     IncCapped3e7
         push     -1
         push     -1
         push     -1
@@ -737,7 +737,7 @@ __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
         push     ecx
         lea      eax, [edx*8 + g_byte_005435a0]
         push     eax
-        call     MemcpyByteN_004a5680
+        call     MemcpyByteN
         mov      ecx, dword ptr [g_audioPreloadState_00543830]
         add      esp, 0xc
         inc      ecx
@@ -750,9 +750,9 @@ __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
         jne      short L_702b
         jmp      CallSetPause
     L_6fc9:
-        mov      dword ptr [eax + 8], OFFSET AudioPreloadStreamingTrack_004a6e70
+        mov      dword ptr [eax + 8], OFFSET AudioPreloadStreamingTrack
         mov      ecx, dword ptr [g_baseSel]
-        mov      edx, OFFSET AudioPreloadStreamingTrack_004a6e70
+        mov      edx, OFFSET AudioPreloadStreamingTrack
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      ecx, dword ptr [eax + 4]
         add      edx, 0x1000000
@@ -794,7 +794,7 @@ __declspec(naked) void Match_ChampionScreen(void)
         mov      edx, dword ptr [g_fightGroupHead]
         mov      dword ptr [edx*4 + 0x28], 0x2a
     L_714c:
-        call     DualAddSar_004ab600
+        call     DualAddSar
         test     byte ptr [g_walkCallback], 0xf
         jne      L_724e
         call     MStackPush2RunCountdown
@@ -819,7 +819,7 @@ __declspec(naked) void Match_ChampionScreen(void)
         mov      dword ptr [eax*4 + 8], edi
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [ecx*4 + 4], 0x28f
-        call     MStackBracket3_FieldSequentialCopy_00411d80
+        call     MStackBracket3_FieldSequentialCopy
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         mov      eax, dword ptr [g_currentNodeIdx]
@@ -907,7 +907,7 @@ __declspec(naked) void Match_ChampionScreen(void)
         jne      L_75fb
         mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_pendingMatchAudio2_0053a7a8], eax
-        call     ChainInitDoublePushCall_004a47c0
+        call     ChainInitDoublePushCall
         mov      ecx, dword ptr [g_pendingMatchAudio2_0053a7a8]
         mov      edx, 0x5063dc
         shr      edx, 2
@@ -985,7 +985,7 @@ __declspec(naked) void Match_ChampionScreen(void)
         movsx    eax, byte ptr [eax + g_table_004f3ac8]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_dlNalt1], eax
-        call     DoublePushCallDualPopJmp_00423270
+        call     DoublePushCallDualPopJmp
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         mov      eax, dword ptr [g_fightGroupHead]
@@ -1014,11 +1014,11 @@ __declspec(naked) void Match_ChampionScreen(void)
         mov      ecx, 0x50b238
         shr      ecx, 2
         mov      dword ptr [g_currentNodeIdx], ecx
-        call     ScaledSet1OnNonZero_0048c190
+        call     ScaledSet1OnNonZero
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
-        call     Phase1ChainAdvanceCallScale_00418f80
-        call     InstallChainInitTailJmp_004a7030
+        call     Phase1ChainAdvanceCallScale
+        call     InstallChainInitTailJmp
         mov      dword ptr [g_eventQueueWorkType], 9
         call     Push16Call
     L_75df:
@@ -1068,7 +1068,7 @@ __declspec(naked) void PendingMatch_004a3400(void)
         jle      L_3483
         mov      dword ptr [g_eventQueueWorkType], 0xcc6
         call     Push16Call
-        call     AudioStateInitMultiInstall_004a4d20
+        call     AudioStateInitMultiInstall
         pop      edi
         pop      esi
         pop      ebp
@@ -1083,13 +1083,13 @@ __declspec(naked) void PendingMatch_004a3400(void)
     L_349b:
         mov      dword ptr [g_audioPendingBcSlot_005433bc], ebx
     L_34a1:
-        call     CmpByteJmp_004a4180
+        call     CmpByteJmp
         call     DebugMenu_DrawMatchOptions
         push     0x4f3250
-        call     ScaledByteIdxDualCopy_004a3260
+        call     ScaledByteIdxDualCopy
         add      esp, 4
         push     0x4f3250
-        call     AudioState50b4BitDispatcher_004a32c0
+        call     AudioState50b4BitDispatcher
         add      esp, 4
         call     TripleCallByteCheck
         test     eax, eax
@@ -1178,7 +1178,7 @@ __declspec(naked) void PendingMatch_004a3400(void)
         pop      ebp
         pop      ebx
         ret      
-        call     TableWalkChainCall_004a30f0
+        call     TableWalkChainCall
         call     FiveTableWalkInit
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_38b1
@@ -1271,7 +1271,7 @@ __declspec(naked) void PendingMatch_004a3400(void)
         mov      dword ptr [eax*4], ebx
         jb       L_379b
         push     0x4f6358
-        call     AudioBindEntry_004a1e40
+        call     AudioBindEntry
         mov      ecx, dword ptr [g_baseSel]
         add      esp, 4
         mov      dword ptr [ecx*4 + 0x30], 7
@@ -1292,7 +1292,7 @@ __declspec(naked) void PendingMatch_004a3400(void)
     L_381d:
         mov      edx, dword ptr [g_counter_0053a51c]
         mov      dword ptr [g_walkCallback], edx
-        call     TablePushAccumTailJmp_00429e30
+        call     TablePushAccumTailJmp
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_38b1
         call     TestCmpZeroFour
@@ -1318,7 +1318,7 @@ __declspec(naked) void PendingMatch_004a3400(void)
         mov      byte ptr [g_dlEnabledFlag], bl
         mov      dword ptr [g_tickFlagF], ebp
         mov      dword ptr [g_gtState438], esi
-        call     ScaledClearTripleCallJmp_004202c0
+        call     ScaledClearTripleCallJmp
     L_38b1:
         pop      edi
         pop      esi
@@ -1513,7 +1513,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         call     ScaledOr4DirtyClear
         jmp      L_594d
     L_5948:
-        call     ScaledAnd4InvDirtyClear_00409350
+        call     ScaledAnd4InvDirtyClear
     L_594d:
         mov      eax, dword ptr [esi + 4]
         test     eax, eax
@@ -1678,7 +1678,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         mov      eax, dword ptr [g_baseSel]
     L_5be3:
         mov      esi, dword ptr [eax*4 + 0x30]
-        call     TestByteOrAndCheck_004a1ae0
+        call     TestByteOrAndCheck
         test     eax, eax
         je       L_5c1a
         lea      eax, [esi + esi*2]
@@ -1724,7 +1724,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
     L_5c7a:
         call     SetJmp_004a1ac0
     L_5c7f:
-        call     IsNonzeroBoolFlagged_004a1d00
+        call     IsNonzeroBoolFlagged
         test     eax, eax
         je       L_5ce6
         mov      dword ptr [g_eventQueueWorkType], 0x32a
@@ -1743,7 +1743,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         jl       L_5cb1
         call     PendingMatch_004a56c0
         mov      dword ptr [g_audioPreloadState_00543830], ebp
-        call     Memset18Step_004a56a0
+        call     Memset18Step
         call     PendingMatch_004a62b0
         pop      edi
         pop      esi
@@ -1752,7 +1752,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         add      esp, 0xc
         ret      
     L_5ce6:
-        call     DualCallSetByte_004a1cb0
+        call     DualCallSetByte
         test     eax, eax
         je       L_5d0c
         lea      eax, [esi + esi*2]
@@ -1812,7 +1812,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         mov      esi, 0x5435a4
     L_5de2:
         mov      byte ptr [esi - 2], 0
-        call     DualAddSar_004ab600
+        call     DualAddSar
         mov      eax, dword ptr [g_walkCallback]
         mov      ecx, 0xf
         and      eax, 0xffff

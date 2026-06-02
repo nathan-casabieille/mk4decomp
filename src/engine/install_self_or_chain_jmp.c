@@ -116,8 +116,8 @@ extern unsigned int g_fightAxisPosY;
  *   else: store 0x483a20 at [eax+8], store 1 at [eax+0x84],
  *         g_pendingNodeType = 1, g_framePauseFlag = 1, ret.
  */
-extern void InstallSelfOrChainJmp_00483a20(void);
-void InstallSelfOrChainJmp_00483a20(void) {
+extern void InstallSelfOrChainJmp(void);
+void InstallSelfOrChainJmp(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int v = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
@@ -129,7 +129,7 @@ void InstallSelfOrChainJmp_00483a20(void) {
         CallPauseDirty1JmpDirty4StackPush_00483a80();
         return;
     }
-    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfOrChainJmp_00483a20;
+    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfOrChainJmp;
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;

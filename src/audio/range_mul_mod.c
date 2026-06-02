@@ -19,7 +19,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_eventQueueCurrent_mm2;
 extern void func_004c5740_mm(void);
-extern int Alldiv_004c5690(int, int, int, int);
+extern int Alldiv(int, int, int, int);
 
 __declspec(naked) void FixedDiv16(void) {
     __asm {
@@ -58,7 +58,7 @@ __declspec(naked) void FixedDiv16(void) {
         push    eax
         push    edi
         push    ecx
-        call    Alldiv_004c5690
+        call    Alldiv
         pop     edi
         mov     dword ptr [g_walkCallback], eax
         pop     esi

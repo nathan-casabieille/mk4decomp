@@ -125,7 +125,7 @@ extern unsigned int g_fightAxisPosY;
  *       pause=1; ret.
  */
 extern void IterLoad_0048e680(void);
-extern void MStackPushMul10TailSqrt_00424a90(void);
+extern void MStackPushMul10TailSqrt(void);
 extern void Wrapper_0048ff30(void);
 
 __declspec(naked) void GameInstall2BodyMul10ScaledInit(void)
@@ -177,7 +177,7 @@ __declspec(naked) void GameInstall2BodyMul10ScaledInit(void)
         mov     dword ptr [g_currentNodeIdx], eax
         add     eax, 0x15
         mov     dword ptr [g_pendingNodeType], eax
-        call    MStackPushMul10TailSqrt_00424a90
+        call    MStackPushMul10TailSqrt
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_b2_ret

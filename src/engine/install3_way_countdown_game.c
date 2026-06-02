@@ -110,10 +110,10 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00421b00 (214b game) - 3-way install-self with countdown. */
 extern u32 g_texXorKey;
-extern void DecBoundCheckCallJmp_00421be0(void);
-extern void ScaledStoreE0_0041f550(void);
+extern void DecBoundCheckCallJmp(void);
+extern void ScaledStoreE0(void);
 
-__declspec(naked) void Install3WayCountdownGame_00421b00(void) {
+__declspec(naked) void Install3WayCountdownGame(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -132,7 +132,7 @@ __declspec(naked) void Install3WayCountdownGame_00421b00(void) {
         test    eax, eax
         _emit   75h
         _emit   12h
-        call    DecBoundCheckCallJmp_00421be0
+        call    DecBoundCheckCallJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -159,7 +159,7 @@ __declspec(naked) void Install3WayCountdownGame_00421b00(void) {
         pop     esi
         ret
         push    0x00001000
-        call    ScaledStoreE0_0041f550
+        call    ScaledStoreE0
         mov     eax, dword ptr [g_texXorKey]
         add     esp, 4
         neg     eax

@@ -121,7 +121,7 @@ extern unsigned int g_particleEmitterNode;
 extern void Title_PressStartScreen(void);
 extern void MStackCall_00406340(void);
 
-void ChainInitDoublePushCall_004a47c0(void) {
+void ChainInitDoublePushCall(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [g_walkCallback], 0

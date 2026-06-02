@@ -36,27 +36,27 @@ extern unsigned int g_dualB_0053803c;     /* g_gtPlayerProbe1 */
 extern unsigned int g_dualA_00538158;     /* g_player1NodeIdx */
 extern unsigned int g_player2NodeIdx;     /* g_player2NodeIdx */
 
-extern void SqDistThresholdRevertAdvance_00489d10(void);
-extern void CjChainResetThreshold_00490cc0(void);
+extern void SqDistThresholdRevertAdvance(void);
+extern void CjChainResetThreshold(void);
 
 /* @addr 0x00489cd0 */
 void DualInstallCallSwap_00489cd0(void) {
     g_pendingNodeType = g_scaledInit_00542044;
     g_eventQueueTotal = g_dualB_00542020;
-    SqDistThresholdRevertAdvance_00489d10();
+    SqDistThresholdRevertAdvance();
     if (g_framePauseFlag) return;
     g_pendingNodeType = g_xformEntityIdx;
     g_eventQueueTotal = g_dualF_00542024;
-    SqDistThresholdRevertAdvance_00489d10();
+    SqDistThresholdRevertAdvance();
 }
 
 /* @addr 0x00490c80 */
 void DualInstallCallSwap_00490c80(void) {
     g_fightGroupHead = g_player1NodeIdx;
     g_baseSel = g_gtPlayerProbe2;
-    CjChainResetThreshold_00490cc0();
+    CjChainResetThreshold();
     if (g_framePauseFlag) return;
     g_fightGroupHead = g_player2NodeIdx;
     g_baseSel = g_gtPlayerProbe1;
-    CjChainResetThreshold_00490cc0();
+    CjChainResetThreshold();
 }

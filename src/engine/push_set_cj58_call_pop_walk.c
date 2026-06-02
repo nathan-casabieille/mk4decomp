@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   ++eax; g_eventQueueWorkType=edx; g_cj_00542058=eax;
  *   call Push16Call; if no pause: pop g_walkCallback; ret.
  */
-void PushSetCj58CallPopWalk_00424020(void) {
+void PushSetCj58CallPopWalk(void) {
     unsigned int top;
     unsigned int cj;
     top = g_matrixStackTop + 1;

@@ -11,7 +11,7 @@ extern unsigned int g_scaledInit_00542044;
  *   load g_baseSel and g_fightGroupHead, scaled by 4;
  *   six cross-stores: [edx + N] from [eax + M] for (M,N) pairs at +0x38..+0x4c → +0x54..+0x74.
  */
-void SixCrossStores_0049d8e0(void) {
+void SixCrossStores(void) {
     unsigned char *src = (unsigned char *)(g_baseSel * 4);
     unsigned char *dst = (unsigned char *)(g_fightGroupHead * 4);
     unsigned int v;

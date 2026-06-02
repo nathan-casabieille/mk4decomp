@@ -112,20 +112,20 @@ extern unsigned int g_pendingMatchVar;
 extern unsigned int g_dispatchSave930_004e5798;
 extern unsigned int g_dispatchSave931_004e57d0;
 extern void AudioMixerStep(void);
-extern void ChainInitMul10BulkStore_00442740(void);
+extern void ChainInitMul10BulkStore(void);
 extern void CopyThreeFields(void);
 extern void DispatcherComplex138_004760f0(void);
-extern void FourSegmentPoseWalk_00442880(void);
+extern void FourSegmentPoseWalk(void);
 extern void MStackCall_00406600(void);
 extern void PendingMatch_004411d0(void);
 extern void PushSetXfmMaskCallPop(void);
-extern void ScaledOr4Jmp_00476e00(void);
-extern void SpawnFreezeProjectileChain_00442530(void);
+extern void ScaledOr4Jmp(void);
+extern void SpawnFreezeProjectileChain(void);
 extern void StoreLoadJmp(void);
 extern void ThreeChanPackClamp(void);
 extern void Thunk_0049cbc0(void);
 
-__declspec(naked) void SpawnEffectCluster_004420a0(void)
+__declspec(naked) void SpawnEffectCluster(void)
 {
     __asm {
     L_20a0:
@@ -155,7 +155,7 @@ __declspec(naked) void SpawnEffectCluster_004420a0(void)
         mov      eax, dword ptr [g_currentNodeIdx]
         mov      ecx, dword ptr [eax*4 + 0x18]
         mov      dword ptr [g_currentNodeIdx], ecx
-        call     ScaledOr4Jmp_00476e00
+        call     ScaledOr4Jmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2165
@@ -349,7 +349,7 @@ __declspec(naked) void SpawnEffectCluster_004420a0(void)
         ja       L_24f7
         jmp      dword ptr [eax*4 + L_jmptbl]
     L_23ee:
-        call     SpawnFreezeProjectileChain_00442530
+        call     SpawnFreezeProjectileChain
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2518
@@ -374,7 +374,7 @@ __declspec(naked) void SpawnEffectCluster_004420a0(void)
         pop      esi
         ret
     L_2476:
-        call     FourSegmentPoseWalk_00442880
+        call     FourSegmentPoseWalk
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2518
@@ -399,11 +399,11 @@ __declspec(naked) void SpawnEffectCluster_004420a0(void)
         pop      esi
         ret      
     L_24f7:
-        call     FourSegmentPoseWalk_00442880
+        call     FourSegmentPoseWalk
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2518
-        call     ChainInitMul10BulkStore_00442740
+        call     ChainInitMul10BulkStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2518

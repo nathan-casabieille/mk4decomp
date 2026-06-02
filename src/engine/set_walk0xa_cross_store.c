@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void DirtyDoubleDeref(void);
 extern void PushPopScaled1cDoubleCall(void);
-void SetWalk0xaCrossStore_00445fb0(void) {
+void SetWalk0xaCrossStore(void) {
     g_fightGroupHead = g_eventQueueIdx;
     g_walkCallback = (void (*)(void))0xa;
     DirtyDoubleDeref();

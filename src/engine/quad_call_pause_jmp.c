@@ -16,17 +16,17 @@ extern void Mul10Tail(void);
  *   jmp     T
  *   ret
  */
-extern void DoublePackedPtrInstall_00458ba0(void);
-extern void DualPathCallSetup_00458030(void);
+extern void DoublePackedPtrInstall(void);
+extern void DualPathCallSetup(void);
 extern void Screen_EnterInitials(void);
-extern void CameraProjectionInitSweep_00458160(void);
-extern void SpawnTrioInitCluster_00458440(void);
-void QuadCallPauseJmp_00457ff0(void) {
-    DoublePackedPtrInstall_00458ba0();
+extern void CameraProjectionInitSweep(void);
+extern void SpawnTrioInitCluster(void);
+void QuadCallPauseJmp(void) {
+    DoublePackedPtrInstall();
     if (g_framePauseFlag != 0) {
         return;
     }
-    DualPathCallSetup_00458030();
+    DualPathCallSetup();
     if (g_framePauseFlag != 0) {
         return;
     }
@@ -34,9 +34,9 @@ void QuadCallPauseJmp_00457ff0(void) {
     if (g_framePauseFlag != 0) {
         return;
     }
-    CameraProjectionInitSweep_00458160();
+    CameraProjectionInitSweep();
     if (g_framePauseFlag != 0) {
         return;
     }
-    SpawnTrioInitCluster_00458440();
+    SpawnTrioInitCluster();
 }

@@ -15,7 +15,7 @@ extern void ScaledZeroFour(void);
 extern void ScaledInit_0048f720(void);
 extern void func_004602b0_pp(void);
 extern void MstackPopScaledChainPlusThunks(void);
-void GuardedDoubleCallSetJmp_00460260(void) {
+void GuardedDoubleCallSetJmp(void) {
     unsigned int top;
     ScaledZeroFour();
     if (g_framePauseFlag != 0) {

@@ -117,7 +117,7 @@ extern void DualGatedStateYield(void);
 extern void EsiEdiAliasDualMul10(void);
 extern void FiveCallGuardSetTail(void);
 extern void GuardedPackedSlotInit(void);
-extern void IterStepNegStore_00490b10(void);
+extern void IterStepNegStore(void);
 extern void NotMaskStorePair(void);
 extern void PunchAnimCluster(void);
 extern void PushPopWalkSet1006(void);
@@ -128,9 +128,9 @@ extern void ScaledLoadJmp_00428d20(void);
 extern void ScaledLoadJmp_24(void);
 extern void ScaledLookupGuardJmpIndirect(void);
 extern void TableLookupCall_00489ff0(void);
-extern void TournamentMenuFsmCluster_004960e0(void);
+extern void TournamentMenuFsmCluster(void);
 
-__declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
+__declspec(naked) void ComboFinisherEventCluster(void)
 {
     __asm {
         /* === h1 (0x495dc0): event 004f1610 forwarder === */
@@ -265,7 +265,7 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         jne      short L_6067
     L_5fe8:
         push     OFFSET g_dispatchSave782_004f163c
-        call     IterStepNegStore_00490b10
+        call     IterStepNegStore
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         cmp      eax, edi
@@ -285,7 +285,7 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], edi
-        call     TournamentMenuFsmCluster_004960e0
+        call     TournamentMenuFsmCluster
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi

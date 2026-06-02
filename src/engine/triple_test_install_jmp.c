@@ -37,11 +37,11 @@ extern unsigned int g_state2_0053a354;
 extern unsigned int g_finalDest_0053a178;
 extern unsigned int g_finalDest_0053a250;
 
-extern void AudioVoiceSequencerCluster_004a0d60(void);
-extern void AudioStateRemap_004a0190(void);
-extern void AudioInstallSelfShiftedChainInit_004a0210(void);
-extern void AudioStateRemapB_004a04a0(void);
-extern void AudioInstallSelfChannel8_004a0520(void);
+extern void AudioVoiceSequencerCluster(void);
+extern void AudioStateRemap(void);
+extern void AudioInstallSelfShiftedChainInit(void);
+extern void AudioStateRemapB(void);
+extern void AudioInstallSelfChannel8(void);
 
 /* @addr 0x004a0130 */
 void TripleTestInstallJmp_004a0130(void) {
@@ -49,22 +49,22 @@ void TripleTestInstallJmp_004a0130(void) {
     v = g_eventQueueEnd;
     g_eventQueueWorkType = v;
     g_acc_00542078 = v;
-    AudioVoiceSequencerCluster_004a0d60();
+    AudioVoiceSequencerCluster();
     if (g_framePauseFlag) return;
     v = g_dlMode;
     g_walkCallback = (void(*)(void))v;
     if (!v) {
-        AudioStateRemap_004a0190();
+        AudioStateRemap();
         return;
     }
     v = g_state2_0053a1bc;
     g_walkCallback = (void(*)(void))v;
     if (!v) {
-        AudioStateRemap_004a0190();
+        AudioStateRemap();
         return;
     }
     g_finalDest_0053a178 = g_acc_00542078;
-    AudioInstallSelfShiftedChainInit_004a0210();
+    AudioInstallSelfShiftedChainInit();
 }
 
 /* @addr 0x004a0440 */
@@ -73,20 +73,20 @@ void TripleTestInstallJmp_004a0440(void) {
     v = g_eventQueueEnd;
     g_eventQueueWorkType = v;
     g_acc_00542078 = v;
-    AudioVoiceSequencerCluster_004a0d60();
+    AudioVoiceSequencerCluster();
     if (g_framePauseFlag) return;
     v = g_dlMode;
     g_walkCallback = (void(*)(void))v;
     if (!v) {
-        AudioStateRemapB_004a04a0();
+        AudioStateRemapB();
         return;
     }
     v = g_state2_0053a354;
     g_walkCallback = (void(*)(void))v;
     if (!v) {
-        AudioStateRemapB_004a04a0();
+        AudioStateRemapB();
         return;
     }
     g_finalDest_0053a250 = g_acc_00542078;
-    AudioInstallSelfChannel8_004a0520();
+    AudioInstallSelfChannel8();
 }

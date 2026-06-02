@@ -111,12 +111,12 @@ extern unsigned int g_fightAxisPosY;
 /*
  * @addr 0x00419900 (118b boot) - 3-stage chain then tail-jmp:
  *   call MStackPush2RunCountdown; gate; call MStackBracket7_DispatchAndChain; gate; set up
- *   g_eventQueueWorkType=3 and g_pendingNodeType=0x004d7afe; call SlotInitAndChainLink_004191b0;
+ *   g_eventQueueWorkType=3 and g_pendingNodeType=0x004d7afe; call SlotInitAndChainLink;
  *   gate; if state-bit 2 clear, set walk=0x11999 into wt[+0x48] and
- *   bump g_eventQueueEnd by 0x15, then tail-jmp BootFlagChainAudioPause_00412080.
+ *   bump g_eventQueueEnd by 0x15, then tail-jmp BootFlagChainAudioPause.
  */
-extern void BootFlagChainAudioPause_00412080(void);
-extern void SlotInitAndChainLink_004191b0(void);
+extern void BootFlagChainAudioPause(void);
+extern void SlotInitAndChainLink(void);
 
 /*
  * NON-COAXABLE: MSVC /O2 assigns xform to eax (a1, 5b) and val to ecx (b9, 5b),
@@ -124,7 +124,7 @@ extern void SlotInitAndChainLink_004191b0(void);
  * Orig has xform in ecx (8b 0d, 6b) and val in eax (b8), giving a3 (5b) and
  * 8b15+8915 (12b). MSVC's choice is more optimal; register layout not coaxable.
  */
-__declspec(naked) void TripleChainTailJmp_00419900(void) {
+__declspec(naked) void TripleChainTailJmp(void) {
     __asm {
         call    MStackPush2RunCountdown
         mov     eax, dword ptr [g_framePauseFlag]
@@ -138,7 +138,7 @@ __declspec(naked) void TripleChainTailJmp_00419900(void) {
         mov     dword ptr [g_eventQueueWorkType], 3
         shr     eax, 2
         mov     dword ptr [g_pendingNodeType], eax
-        call    SlotInitAndChainLink_004191b0
+        call    SlotInitAndChainLink
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     done
@@ -151,7 +151,7 @@ __declspec(naked) void TripleChainTailJmp_00419900(void) {
         mov     edx, dword ptr [g_eventQueueEnd]
         add     edx, 0x15
         mov     dword ptr [g_currentNodeIdx], edx
-        jmp     BootFlagChainAudioPause_00412080
+        jmp     BootFlagChainAudioPause
 done:
         ret
     }

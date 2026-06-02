@@ -24,13 +24,13 @@ extern unsigned int g_acc_00542078;
  */
 extern unsigned int g_cj_00535df0;
 extern unsigned int g_dispatchSave_0053a2c0;
-extern void WalkCj58Loop43Toggle_00439700(void);
-extern void WalkCj58Loop43Toggle_00439700(void);
-void StoreCallPauseDirtyStoreJmp_004396c0(void) {
+extern void WalkCj58Loop43Toggle(void);
+extern void WalkCj58Loop43Toggle(void);
+void StoreCallPauseDirtyStoreJmp(void) {
     g_eventQueueIdx = g_cj_00535df0;
-    WalkCj58Loop43Toggle_00439700();
+    WalkCj58Loop43Toggle();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 1) != 0) return;
     g_eventQueueIdx = g_dispatchSave_0053a2c0;
-    WalkCj58Loop43Toggle_00439700();
+    WalkCj58Loop43Toggle();
 }

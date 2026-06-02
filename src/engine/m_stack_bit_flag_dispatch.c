@@ -123,7 +123,7 @@ extern void ScaledLitLoadCall_00480fe0(void);
 
 extern unsigned int g_matrixStack_arr;
 
-void MStackBitFlagDispatch_00494750(void) {
+void MStackBitFlagDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         xor     ecx, ecx

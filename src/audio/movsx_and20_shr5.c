@@ -20,7 +20,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_byte_004d50c0;
 
-void MovsxAnd20Shr5_004a1cf0(void) {
+void MovsxAnd20Shr5(void) {
     __asm {
         movsx   eax, byte ptr [g_byte_004d50c0]
         and     eax, 0x20

@@ -304,7 +304,7 @@ The big one (~3.8 KB, still naked). Two passes:
 3. **Dispatch**: walk the queue a second time. For each entry, look
    up `g_drawQueueBuckets[entry.sort_key]++` to get the sorted output
    index. Dispatch each triangle to the per-mode submitter:
-   - Glide: `GlideTriBatchEmit_004adca0` / `GlideTriColorFlush_004b46f0`
+   - Glide: `GlideTriBatchEmit` / `GlideTriColorFlush`
    - D3D: queued into `g_renderer2_vertexBatch`, flushed via
      `Renderer2_FlushBatch_D3D` at EndScene
    - SW: one of the
@@ -576,13 +576,13 @@ specializes in a particular kind of geometry / overlay:
 | `Helper_DrawMenuText`          | `0x004b21d0` | 3D menu text glyphs (perspective-projected font3d_g)   |
 | `DrawMenu`                     | `0x004b65c0` | 2D menu items + background sprites                     |
 | `Helper_DrawMenu_PostRender`   | `0x004b6880` | Menu cursor + post-pass overlay                        |
-| `BillboardChainRender_004bb030`| `0x004bb030` | Single-billboard chain (camera-facing quads)           |
-| `BillboardSheetDualEmit_004bbda0`| `0x004bbda0`| Multi-sprite sheet emitter (dual-pass)                |
-| `MovesPanelEmit_004bcf60`      | `0x004bcf60` | Move-list overlay panel (character select screen)      |
-| `SunbeamSpriteEmit_004bd270`   | `0x004bd270` | Sunbeam / lens flare sprite effect                     |
-| `TristripBatchEmit_004bbb80`   | `0x004bbb80` | Triangle-strip batch (generic stripped geometry)       |
-| `TristripBatchEmit2_004bb930`  | `0x004bb930` | Triangle-strip batch variant 2                         |
-| `TristripBatchEmit3Cap_004bb680`| `0x004bb680`| Triangle-strip batch variant 3 with end-cap            |
+| `BillboardChainRender`| `0x004bb030` | Single-billboard chain (camera-facing quads)           |
+| `BillboardSheetDualEmit`| `0x004bbda0`| Multi-sprite sheet emitter (dual-pass)                |
+| `MovesPanelEmit`      | `0x004bcf60` | Move-list overlay panel (character select screen)      |
+| `SunbeamSpriteEmit`   | `0x004bd270` | Sunbeam / lens flare sprite effect                     |
+| `TristripBatchEmit`   | `0x004bbb80` | Triangle-strip batch (generic stripped geometry)       |
+| `TristripBatchEmit2`  | `0x004bb930` | Triangle-strip batch variant 2                         |
+| `TristripBatchEmit3Cap`| `0x004bb680`| Triangle-strip batch variant 3 with end-cap            |
 | `Helper_TickReinit`            | (varies)     | Re-init path that flushes residual entries             |
 
 All 12 are still naked. Each has a specific 28-byte entry layout
@@ -612,24 +612,24 @@ families:
 
 | Function                            | VA           | Family    | Role                                   |
 |-------------------------------------|--------------|-----------|----------------------------------------|
-| `ScanlineTexBlitPaletted_004c0360`  | `0x004c0360` | sprite    | Default sprite blit (palette LUT)      |
-| `ScanlineTexBlit_004c0920`          | `0x004c0920` | sprite    | Plain opaque copy (no blend)           |
-| `ScanlineTexBlitAlpha_004c0b70`     | `0x004c0b70` | sprite    | Alpha-blend src over dst               |
-| `ScanlineTexBlitAdditive_004c0e10`  | `0x004c0e10` | sprite    | Additive blend (saturated add)         |
-| `ScanlineTexBlitInterlaced_004c1130`| `0x004c1130` | sprite    | Skip every other scanline (low-res)    |
-| `TexturedTriRasterize_004c13f0`     | `0x004c13f0` | triangle  | Plain textured triangle                |
-| `TexturedTriRasterizeAlpha_004c19c0`| `0x004c19c0` | triangle  | Triangle with alpha-blend              |
-| `TexturedTriRasterizeAlphaPal_004c1fe0`| `0x004c1fe0`| triangle | Triangle with alpha + palette          |
-| `TexturedTriRasterizeDithered_004c2650`| `0x004c2650`| triangle | Triangle with dithered output (4:4:4)  |
-| `TexturedTriRasterizeShaded_004c2cb0`| `0x004c2cb0`| triangle  | Triangle with Gouraud shading          |
+| `ScanlineTexBlitPaletted`  | `0x004c0360` | sprite    | Default sprite blit (palette LUT)      |
+| `ScanlineTexBlit`          | `0x004c0920` | sprite    | Plain opaque copy (no blend)           |
+| `ScanlineTexBlitAlpha`     | `0x004c0b70` | sprite    | Alpha-blend src over dst               |
+| `ScanlineTexBlitAdditive`  | `0x004c0e10` | sprite    | Additive blend (saturated add)         |
+| `ScanlineTexBlitInterlaced`| `0x004c1130` | sprite    | Skip every other scanline (low-res)    |
+| `TexturedTriRasterize`     | `0x004c13f0` | triangle  | Plain textured triangle                |
+| `TexturedTriRasterizeAlpha`| `0x004c19c0` | triangle  | Triangle with alpha-blend              |
+| `TexturedTriRasterizeAlphaPal`| `0x004c1fe0`| triangle | Triangle with alpha + palette          |
+| `TexturedTriRasterizeDithered`| `0x004c2650`| triangle | Triangle with dithered output (4:4:4)  |
+| `TexturedTriRasterizeShaded`| `0x004c2cb0`| triangle  | Triangle with Gouraud shading          |
 
 Plus one auxiliary blitter outside the rasterizer block:
 
 | Function                  | VA           | Role                             |
 |---------------------------|--------------|----------------------------------|
-| `BlitBlend16bpp_004c05e0` | `0x004c05e0` | 16bpp two-source blend (sprites) |
-| `GlideTriBatchEmit_004adca0`| `0x004adca0`| D3D path (batched)               |
-| `GlideTriColorFlush_004b46f0`| `0x004b46f0`| Glide path (per-triangle)        |
+| `BlitBlend16bpp` | `0x004c05e0` | 16bpp two-source blend (sprites) |
+| `GlideTriBatchEmit`| `0x004adca0`| D3D path (batched)               |
+| `GlideTriColorFlush`| `0x004b46f0`| Glide path (per-triangle)        |
 
 All 10 rasterizers are still naked - they each have 300-650 lines of
 inner-loop asm with FPU-driven edge interpolation, sub-pixel offsets,

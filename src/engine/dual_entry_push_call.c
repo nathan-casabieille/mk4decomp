@@ -32,7 +32,7 @@ extern void PendingMatch_0046b670(void);
 /* @addr 0x0046b630 (14b): cdecl call ArgSarStoreJmp(&g_dispatchSave1281_004eafb8) + ret.
  * Entry A of the original 59-byte packed block; entry B at +0x10 lives in
  * func_0046b640. The 2-byte nop gap is filled by 0x90-fill. */
-void DualEntryPushCall_0046b630(void) {
+void DualEntryPushCall(void) {
     ArgSarStoreJmp(&g_dispatchSave1281_004eafb8);
 }
 

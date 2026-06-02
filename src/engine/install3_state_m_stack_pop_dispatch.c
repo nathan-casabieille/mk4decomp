@@ -115,7 +115,7 @@ extern void FiveCallGuardSetTail(void);
 extern void PushPopWalkSet1006(void);
 extern void ScaledLoadJmp_00428d20(void);
 
-__declspec(naked) void Install3StateMStackPopDispatch_0046f560(void) {
+__declspec(naked) void Install3StateMStackPopDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -155,7 +155,7 @@ __declspec(naked) void Install3StateMStackPopDispatch_0046f560(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     dword ptr [esi + 8], offset Install3StateMStackPopDispatch_0046f560
+        mov     dword ptr [esi + 8], offset Install3StateMStackPopDispatch
         mov     dword ptr [esi + 0x84], 2
         mov     dword ptr [g_pendingNodeType], 0x1c
         mov     dword ptr [g_framePauseFlag], 1
@@ -180,9 +180,9 @@ __declspec(naked) void Install3StateMStackPopDispatch_0046f560(void) {
         inc     ecx
         mov     dword ptr [g_scaledInit_00542044], ecx
         mov     dword ptr [eax], ecx
-        mov     dword ptr [esi + 8], offset Install3StateMStackPopDispatch_0046f560
+        mov     dword ptr [esi + 8], offset Install3StateMStackPopDispatch
         mov     eax, dword ptr [g_baseSel]
-        mov     ecx, offset Install3StateMStackPopDispatch_0046f560
+        mov     ecx, offset Install3StateMStackPopDispatch
         mov     dword ptr [eax*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     ecx, 0x01000000

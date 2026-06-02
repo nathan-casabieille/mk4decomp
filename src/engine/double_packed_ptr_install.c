@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void RegistryPushBindPop(void);
 
-__declspec(naked) void DoublePackedPtrInstall_00458ba0(void) {
+__declspec(naked) void DoublePackedPtrInstall(void) {
     __asm {
         mov     eax, 0x0050f1f4
         push    esi

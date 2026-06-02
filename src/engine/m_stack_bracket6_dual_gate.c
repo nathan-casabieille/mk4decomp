@@ -114,7 +114,7 @@ extern unsigned int g_clamp_00537f2c;
 extern unsigned int g_walkCallbackSrc_0053a2d0;
 extern unsigned int g_clamp_0053a6dc;
 
-void MStackBracket6_DualGate_004788e0(void) {
+void MStackBracket6_DualGate(void) {
     unsigned int v;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_xformDirtyFlags;
@@ -133,7 +133,7 @@ void MStackBracket6_DualGate_004788e0(void) {
         g_walkCallback = g_walkCallbackSrc_0053a2d0;
         if (g_walkCallbackSrc_0053a2d0 == 0) {
             g_fightGroupHead = (unsigned int)&g_dispatchSave711_004ecea0 >> 2;
-            VersusSwapCluster_00478a90();
+            VersusSwapCluster();
             if (g_framePauseFlag != 0) return;
             g_walkCallbackSrc_0053a2d0 = 1;
         }
@@ -144,7 +144,7 @@ void MStackBracket6_DualGate_004788e0(void) {
         g_walkCallback = g_walkCallbackSrc2_00535db0;
         if (g_walkCallbackSrc2_00535db0 == 0) {
             g_fightGroupHead = (unsigned int)&g_dispatchSave712_004eceb0 >> 2;
-            VersusSwapCluster_00478a90();
+            VersusSwapCluster();
             if (g_framePauseFlag != 0) return;
             g_walkCallback = 1;
             g_walkCallbackSrc2_00535db0 = 1;

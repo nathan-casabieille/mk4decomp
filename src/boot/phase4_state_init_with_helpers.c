@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* ============================================================
- * Phase4StateInitWithHelpers_004143f0 - 626b boot.
+ * Phase4StateInitWithHelpers - 626b boot.
  *
  * Three packed entries in one .text block:
  *
@@ -129,7 +129,7 @@ extern unsigned int g_fightAxisPosY;
  *   - Helper B at 0x414600 (98b, ends with jmp ClampMulShiftStore):
  *     bumps slot[+0x48] += 0x28F (cap 0x14CCC) and
  *     slot[+0x14] -= 6 (floor 0); tail-jumps to ClampMulShiftStore.
- *     Installed externally (SetDirty4XorScaledLoad_004147b0
+ *     Installed externally (SetDirty4XorScaledLoad
  *     uses the literal `mov ecx, 0x00414600`).
  *
  * Padding between sections is `nop` (0x90) - 3 bytes after the
@@ -148,7 +148,7 @@ extern void PushSetXfmMaskCallPop(void);
 extern void ZeroAndDirty4(void);
 extern void ClampMulShiftStore(void);
 
-__declspec(naked) void Phase4StateInitWithHelpers_004143f0(void)
+__declspec(naked) void Phase4StateInitWithHelpers(void)
 {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]

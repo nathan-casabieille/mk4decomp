@@ -14,9 +14,9 @@ extern unsigned int g_phaseTimer;
  * by 0x90-fill. */
 extern void LeaPlus22StoreSelf(void);
 extern void CjInstallSelfRouter(void);
-extern void DualCallPauseJmpDual_00439190(void);
+extern void DualCallPauseJmpDual(void);
 extern void MstackPopScaledChainPlusThunks(void);
-void CallPauseJmpStateInit_004370e0(void) {
+void CallPauseJmpStateInit(void) {
     LeaPlus22StoreSelf();
     if (g_framePauseFlag != 0) return;
     CjInstallSelfRouter();

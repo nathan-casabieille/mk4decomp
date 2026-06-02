@@ -119,7 +119,7 @@ extern void StoreLoadJmp(void);
 extern void ThrowFsmCluster_0044eaf0(void);
 extern void Thunk_0049cbc0(void);
 
-__declspec(naked) void ThrowChargeCluster_0044e750(void)
+__declspec(naked) void ThrowChargeCluster(void)
 {
     __asm {
         mov      eax, dword ptr [g_currentNodeIdx]

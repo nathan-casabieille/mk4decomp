@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_phaseTimer;
 extern void CallDualStoreXorBit(void);
 extern void DualHelperCallStoreCjFields(void);
-extern void DualMul10AccCj_00491230(void);
+extern void DualMul10AccCj(void);
 extern void EsiEdiAliasDualMul10(void);
 extern void FiveCallGuardSetTail(void);
 extern void GuardedSeq_0047d980(void);
@@ -121,7 +121,7 @@ extern void ScaledZero44(void);
 extern void TableLookupCall_00489ff0(void);
 extern void TwoPhaseInstallScaledPackedPtr(void);
 
-__declspec(naked) void RunCluster_0047d6e0(void)
+__declspec(naked) void RunCluster(void)
 {
     __asm {
         /* === Helper 1 (0x47d6e0): ramp+blend driver === */
@@ -279,7 +279,7 @@ __declspec(naked) void RunCluster_0047d6e0(void)
         mov      ecx, dword ptr [g_baseSel]
         mov      edx, dword ptr [ecx*4 + 0x38]
         mov      dword ptr [g_currentNodeIdx], edx
-        call     DualMul10AccCj_00491230
+        call     DualMul10AccCj
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d97c

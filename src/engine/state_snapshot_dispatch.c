@@ -116,17 +116,17 @@ extern unsigned int g_fightAxisPosY;
  *   arr[g_currentNodeIdx] = arr[key];
  *   ++g_currentNodeIdx; *ptr = g_currentNodeIdx.
  *   chain[cj].slot24 = g_eventQueueIdx;
- *   g_walkCallback = 0; chain[cj].slot28 = 0; jmp PushCallPauseIncStoreSelfRecurse_00460c00.
+ *   g_walkCallback = 0; chain[cj].slot28 = 0; jmp PushCallPauseIncStoreSelfRecurse.
  */
 extern void CopyJmp_00406ba0(void);
-extern void PushCallPauseIncStoreSelfRecurse_00460c00(void);
+extern void PushCallPauseIncStoreSelfRecurse(void);
 
 extern unsigned int g_arr_460b60_main;
 extern unsigned int g_chain_disp_24_460b60;
 extern unsigned int g_chain_disp_28_460b60;
 extern void FiveCallGuardSetTail(void);
 
-__declspec(naked) void StateSnapshotDispatch_00460b60(void) {
+__declspec(naked) void StateSnapshotDispatch(void) {
     __asm {
         call    CopyJmp_00406ba0
         mov     eax, dword ptr [g_framePauseFlag]
@@ -160,7 +160,7 @@ __declspec(naked) void StateSnapshotDispatch_00460b60(void) {
         mov     eax, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_walkCallback], 0
         mov     [eax*4 + g_chain_disp_28_460b60], 0
-        jmp     PushCallPauseIncStoreSelfRecurse_00460c00
+        jmp     PushCallPauseIncStoreSelfRecurse
         ret
     }
 }

@@ -11,17 +11,17 @@
 
 extern void Wrapper_0041fcf0(void);
 extern void PendingMatch_0043bdd0(void);
-extern void TestCallPush4Zero_004bd590(void);
+extern void TestCallPush4Zero(void);
 extern void Helper_GeoLoadPost(void);
 
 /* @addr 0x00467d30 */
-void CallJmp_00467d30(void) {
+void CallJmp(void) {
     Wrapper_0041fcf0();
     PendingMatch_0043bdd0();
 }
 
 /* @addr 0x004bd990 */
 void XformChainAdvance(void) {
-    TestCallPush4Zero_004bd590();
+    TestCallPush4Zero();
     Helper_GeoLoadPost();
 }

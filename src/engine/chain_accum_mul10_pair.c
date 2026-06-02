@@ -118,7 +118,7 @@ extern unsigned int g_matrixStack_arr;
  *   g_eventQueueWorkType = result; chain[g_fightGroupHead + 0x54] += g_walkCallback; g_eventQueueCurrent = sum.
  *   chain[g_fightGroupHead + 0x5c] += g_eventQueueWorkType; g_eventQueueCurrent = sum.
  */
-void ChainAccumMul10Pair_00490b70(void) {
+void ChainAccumMul10Pair(void) {
     unsigned int v;
     v = g_walkCallback + ((ScenegraphNode *)(g_fightGroupHead * 4))->position_y;
     g_eventQueueWorkType = v;

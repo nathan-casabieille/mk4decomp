@@ -115,8 +115,8 @@ extern unsigned int g_fightAxisPosY;
  *   if lt: call StackPopDispatchTagged; pop esi, ret;
  *   else: install self ([esi+8]=0x438b10, etc); g_pendingNodeType=1.
  */
-extern void EsiInstallTwoCallCmpInstall_00438b10(void);
-void EsiInstallTwoCallCmpInstall_00438b10(void) {
+extern void EsiInstallTwoCallCmpInstall(void);
+void EsiInstallTwoCallCmpInstall(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int prev = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
@@ -130,7 +130,7 @@ void EsiInstallTwoCallCmpInstall_00438b10(void) {
         StackPopDispatchTagged();
         return;
     }
-    *(unsigned int *)(base + 8) = (unsigned int)&EsiInstallTwoCallCmpInstall_00438b10;
+    *(unsigned int *)(base + 8) = (unsigned int)&EsiInstallTwoCallCmpInstall;
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;

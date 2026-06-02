@@ -115,7 +115,7 @@ extern void GatedWordPushCall(void);
 extern void StorePauseImulShr16(void);
 extern void Thunk_0049cbc0(void);
 
-__declspec(naked) void GuardedSetInitInstallChain_004728c0(void)
+__declspec(naked) void GuardedSetInitInstallChain(void)
 {
     __asm
     {

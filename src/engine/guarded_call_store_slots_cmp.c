@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
 extern void DirtyDoubleDeref(void);
 extern void DispatcherComplex260_00407400(void);
 extern void DispatcherComplex260_00407030(void);
-int GuardedCallStoreSlotsCmp_00440990(void) {
+int GuardedCallStoreSlotsCmp(void) {
     unsigned int s;
     DirtyDoubleDeref();
     if (g_framePauseFlag != 0) return g_framePauseFlag;

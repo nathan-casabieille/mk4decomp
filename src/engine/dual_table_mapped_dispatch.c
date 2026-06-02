@@ -117,7 +117,7 @@ extern void BootInitGuardedCallChain(void);
 extern void TableWalkBoundedCmp(void);
 extern void ZeroThreeFields_00404ed0(void);
 
-__declspec(naked) void DualTableMappedDispatch_00492e60(void)
+__declspec(naked) void DualTableMappedDispatch(void)
 {
     __asm
     {

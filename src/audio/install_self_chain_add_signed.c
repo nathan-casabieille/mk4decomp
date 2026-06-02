@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x004a18d0 (98b) - install-self pattern w/ chain[+0x6c] += 0x4000;
  *   if result negative: install self, else: jmp 0x4a1940. */
 
-void InstallSelfChainAddSigned_004a18d0(void) {
+void InstallSelfChainAddSigned(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         shl     eax, 2

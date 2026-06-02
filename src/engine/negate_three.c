@@ -21,7 +21,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [eax + 8], ecx
  *   ret
  */
-void NegateThree_00425360(void) {
+void NegateThree(void) {
     int *base;
     int a, b, c;
     base = (int *)(g_scaledInit_00542044 * 4);

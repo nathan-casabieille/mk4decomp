@@ -16,33 +16,33 @@ extern unsigned int g_setjmp_00ab5750;   /* 0x00ab5750 */
 
 /* Externs for jump targets. */
 extern void ZeroAndDirty4(void);   /* 0x00405430 */
-extern void CallPauseScaledStoreAdd_004078f0(void);   /* 0x004078f0 */
+extern void CallPauseScaledStoreAdd(void);   /* 0x004078f0 */
 extern void BootStateTriple(void);   /* 0x00408d30 */
 extern void EsiInstallDecCallChain_004294a0(void);   /* 0x004294a0 */
 extern void EsiInstallBitCallChain_004295a0(void);   /* 0x004295a0 */
 extern void ScaledArrStore_00429960(void);   /* 0x00429960 */
-extern void Distance3DMul10Chain_0042d090(void);   /* 0x0042d090 */
-extern void AudioBridgeMStackChainCopy_00440730(void);   /* 0x00440730 */
+extern void Distance3DMul10Chain(void);   /* 0x0042d090 */
+extern void AudioBridgeMStackChainCopy(void);   /* 0x00440730 */
 extern void SetJmp_00451ad0(void);   /* 0x00451ad0 */
 extern void SetJmp_00451b10(void);   /* 0x00451b10 */
 extern void SetJmp_00451b50(void);   /* 0x00451b50 */
-extern void JuggleFsmCluster_00451b90(void);   /* 0x00451b90 */
-extern void CharSelectFsmCluster_004561f0(void);   /* 0x004561f0 */
+extern void JuggleFsmCluster(void);   /* 0x00451b90 */
+extern void CharSelectFsmCluster(void);   /* 0x004561f0 */
 extern void SixSubdispatchSpan(void);   /* 0x0045ec10 */
 extern void HitReactionDispatcher(void);   /* 0x0045f650 */
-extern void AlarmCountdownInstall_004609e0(void);   /* 0x004609e0 */
+extern void AlarmCountdownInstall(void);   /* 0x004609e0 */
 extern void StateDispatchYield(void);   /* 0x00471190 */
 extern void GuardedSeq_00473f10(void);   /* 0x00473f10 */
-extern void InstallSelfChainEsi_004753b0(void);   /* 0x004753b0 */
+extern void InstallSelfChainEsi(void);   /* 0x004753b0 */
 extern void ScaledLitLoadCall_00481020(void);   /* 0x00481020 */
-extern void InstallSelfTwoTailJmp_00483f30(void);   /* 0x00483f30 */
-extern void DualLoadDualStoreJmp_00485d70(void);   /* 0x00485d70 */
-extern void InstallSelfMStackIndirect_00487920(void);   /* 0x00487920 */
+extern void InstallSelfTwoTailJmp(void);   /* 0x00483f30 */
+extern void DualLoadDualStoreJmp(void);   /* 0x00485d70 */
+extern void InstallSelfMStackIndirect(void);   /* 0x00487920 */
 extern void Push16Call(void);   /* 0x00489f50 */
-extern void Phase3InstallTableCheck_0048acd0(void);   /* 0x0048acd0 */
-extern void MStackPush4IndirectCall_0048fd60(void);   /* 0x0048fd60 */
+extern void Phase3InstallTableCheck(void);   /* 0x0048acd0 */
+extern void MStackPush4IndirectCall(void);   /* 0x0048fd60 */
 extern void Thunk_0049cba0(void);   /* 0x0049cba0 */
-extern void IncCallVtablePushCall_004b0d80(void);   /* 0x004b0d80 */
+extern void IncCallVtablePushCall(void);   /* 0x004b0d80 */
 
 /* The wrappers - naked __asm to lock the encoding. */
 /* @addr 0x00405420 */
@@ -54,7 +54,7 @@ void SetJmp_00405420(void) {
 /* @addr 0x004078e0 */
 void SetJmp_004078e0(void) {
     g_walkCallback = (void (*)(void))0x00000001;
-    CallPauseScaledStoreAdd_004078f0();
+    CallPauseScaledStoreAdd();
 }
 
 /* @addr 0x00408d20 */
@@ -84,13 +84,13 @@ void SetJmp_00429950(void) {
 /* @addr 0x0042d070 */
 void SetJmp_0042d070(void) {
     g_currentNodeFlags = 0x00010000;
-    Distance3DMul10Chain_0042d090();
+    Distance3DMul10Chain();
 }
 
 /* @addr 0x0042d080 */
 void SetJmp_0042d080(void) {
     g_currentNodeFlags = 0xffff0000;
-    Distance3DMul10Chain_0042d090();
+    Distance3DMul10Chain();
 }
 
 /* @addr 0x00438f50 */
@@ -120,13 +120,13 @@ void SetJmp_00439c30(void) {
 /* @addr 0x00440710 */
 void SetJmp_00440710(void) {
     g_walkCallback = (void (*)(void))0x000001f4;
-    AudioBridgeMStackChainCopy_00440730();
+    AudioBridgeMStackChainCopy();
 }
 
 /* @addr 0x00440720 */
 void SetJmp_00440720(void) {
     g_walkCallback = (void (*)(void))0x0000002d;
-    AudioBridgeMStackChainCopy_00440730();
+    AudioBridgeMStackChainCopy();
 }
 
 /* @addr 0x00451aa0 */
@@ -204,37 +204,37 @@ void SetJmp_00451b50(void) {
 /* @addr 0x00451b60 */
 void SetJmp_00451b60(void) {
     g_walkCallback = (void (*)(void))0x00000006;
-    JuggleFsmCluster_00451b90();
+    JuggleFsmCluster();
 }
 
 /* @addr 0x00451b70 */
 void SetJmp_00451b70(void) {
     g_walkCallback = (void (*)(void))0x00000002;
-    JuggleFsmCluster_00451b90();
+    JuggleFsmCluster();
 }
 
 /* @addr 0x00451b80 */
 void SetJmp_00451b80(void) {
     g_walkCallback = (void (*)(void))0x00000003;
-    JuggleFsmCluster_00451b90();
+    JuggleFsmCluster();
 }
 
 /* @addr 0x004561c0 */
 void SetJmp_004561c0(void) {
     g_walkCallback = (void (*)(void))0x00000003;
-    CharSelectFsmCluster_004561f0();
+    CharSelectFsmCluster();
 }
 
 /* @addr 0x004561d0 */
 void SetJmp_004561d0(void) {
     g_walkCallback = (void (*)(void))0x00000009;
-    CharSelectFsmCluster_004561f0();
+    CharSelectFsmCluster();
 }
 
 /* @addr 0x004561e0 */
 void SetJmp_004561e0(void) {
     g_walkCallback = (void (*)(void))0x0000000a;
-    CharSelectFsmCluster_004561f0();
+    CharSelectFsmCluster();
 }
 
 /* @addr 0x0045ebf0 */
@@ -252,43 +252,43 @@ void SetJmp_0045ec00(void) {
 /* @addr 0x004609c0 */
 void SetJmp_004609c0(void) {
     g_walkCallback = (void (*)(void))0x00000000;
-    AlarmCountdownInstall_004609e0();
+    AlarmCountdownInstall();
 }
 
 /* @addr 0x004609d0 */
 void SetJmp_004609d0(void) {
     g_walkCallback = (void (*)(void))0x00000001;
-    AlarmCountdownInstall_004609e0();
+    AlarmCountdownInstall();
 }
 
 /* @addr 0x004753a0 */
 void SetJmp_004753a0(void) {
     g_eventQueueIdx = 0x00475570;
-    InstallSelfChainEsi_004753b0();
+    InstallSelfChainEsi();
 }
 
 /* @addr 0x00483b40 */
 void SetJmp_00483b40(void) {
     g_currentNodeIdx = 0x00494580;
-    MStackPush4IndirectCall_0048fd60();
+    MStackPush4IndirectCall();
 }
 
 /* @addr 0x00483f20 */
 void SetJmp_00483f20(void) {
     g_eventQueueNotMask = 0x0000000a;
-    InstallSelfTwoTailJmp_00483f30();
+    InstallSelfTwoTailJmp();
 }
 
 /* @addr 0x00485d60 */
 void SetJmp_00485d60(void) {
     g_acc_00542078 = 0x00010000;
-    DualLoadDualStoreJmp_00485d70();
+    DualLoadDualStoreJmp();
 }
 
 /* @addr 0x00487910 */
 void SetJmp_00487910(void) {
     g_eventQueueEnd = 0x00000000;
-    InstallSelfMStackIndirect_00487920();
+    InstallSelfMStackIndirect();
 }
 
 /* @addr 0x00489020 */
@@ -300,7 +300,7 @@ void SetJmp_00489020(void) {
 /* @addr 0x0048acc0 */
 void SetJmp_0048acc0(void) {
     g_currentNodeFlags = 0x00010000;
-    Phase3InstallTableCheck_0048acd0();
+    Phase3InstallTableCheck();
 }
 
 /* @addr 0x0049cb90 */
@@ -324,6 +324,6 @@ void SetJmp_004a1ad0(void) {
 /* @addr 0x004bea40 */
 void Helper_TitleAudioCleanup(void) {
     g_setjmp_00ab5750 = 0x00000000;
-    IncCallVtablePushCall_004b0d80();
+    IncCallVtablePushCall();
 }
 

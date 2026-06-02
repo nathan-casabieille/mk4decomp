@@ -121,7 +121,7 @@ extern void MStackBracket4_ListInsertZeroFill(void);
 extern void MStackPush3LinkedListWalk(void);
 extern void MStackPushTwoEntryChainCall(void);
 
-void GuardedChainMaskOr_00446790(void) {
+void GuardedChainMaskOr(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         mov     ecx, dword ptr [eax*4 + 0x4c]

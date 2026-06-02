@@ -120,7 +120,7 @@ extern void ScaledLoadIncJmp_00428d00(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void InstallSelfPackedF190_0046f190(void) {
+__declspec(naked) void InstallSelfPackedF190(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi

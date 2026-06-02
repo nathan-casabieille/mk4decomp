@@ -127,7 +127,7 @@ extern void StoreLoadJmp(void);
 extern void StorePauseImulShr16(void);
 extern void Thunk_0049cbc0(void);
 
-__declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
+__declspec(naked) void Phase4ThreePackedInstallSelf(void)
 {
     __asm {
         mov     eax, dword ptr [g_baseSel]

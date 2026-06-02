@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void PainStateCluster_0047e9f0(void);
+extern void PainStateCluster(void);
 extern void ScaledChainJmp_004298e0(void);
 
 /*
@@ -117,20 +117,20 @@ extern void ScaledChainJmp_004298e0(void);
  *   ScaledZeroFour; on pause clear, call ScaledChainJmp; on pause
  *   clear, install self with tag 0xa.
  */
-extern void InstallSelfHelper2_0047e8a0(void);
-void InstallSelfHelper2_0047e8a0(void) {
+extern void InstallSelfHelper2(void);
+void InstallSelfHelper2(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int prev = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
     if (prev != 0) {
-        PainStateCluster_0047e9f0();
+        PainStateCluster();
         return;
     }
     ScaledZeroFour();
     if (g_framePauseFlag != 0) return;
     ScaledChainJmp_004298e0();
     if (g_framePauseFlag != 0) return;
-    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfHelper2_0047e8a0;
+    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfHelper2;
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 0xa;
     g_framePauseFlag = 1;

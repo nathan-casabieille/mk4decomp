@@ -114,21 +114,21 @@ extern unsigned int g_fightAxisPosY;
  *   Thunk B (+0x80): call ScaledMove48to58; if pause ret. g_eventQueueNotMask=[baseSel*4+0x30].
  *     If nonzero: jmp CallPauseTripleScaledJmp. Else call MStackPush3CmpCall; if pause ret.
  *     If bit0(0054208c): jmp DualEntryStateGated. Else cmp g_table_00535ddc<=0xcccc;
- *     if yes: jmp IntroSettingsFsmCluster_0046bea0; else jmp DualEntryStateGated. Ret.
+ *     if yes: jmp IntroSettingsFsmCluster; else jmp DualEntryStateGated. Ret.
  *   Thunk C (+0xe0): call ScaledMove48to58; if pause ret. Same state_0054207c gate.
  *     If nonzero jmp CallPauseTripleScaledJmp; else jmp DualEntryStateGated.
  *   Thunk D (+0x110, 2-NOP pad): call ScaledMove48to58; if pause ret. Call QuadCmpBitGateJmp; if pause ret.
  *     Same state_0054207c gate; jmp CallPauseTripleScaledJmp or DualEntryStateGated; ret.
  */
-extern void CallPauseTripleScaledJmp_0046c520(void);
-extern void DualEntryStateGated_00460fa0(void);
+extern void CallPauseTripleScaledJmp(void);
+extern void DualEntryStateGated(void);
 extern void FiveCallGuardSetTail(void);
-extern void IntroSettingsFsmCluster_0046bea0(void);
-extern void QuadCmpBitGateJmp_0046c560(void);
+extern void IntroSettingsFsmCluster(void);
+extern void QuadCmpBitGateJmp(void);
 extern void ScaledLoadIncJmp_00428d00(void);
 extern void ScaledMove48to58(void);
 
-__declspec(naked) void InstallSelfMultiThunkDispatch_0046c3d0(void) {
+__declspec(naked) void InstallSelfMultiThunkDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         xor     edx, edx
@@ -139,10 +139,10 @@ __declspec(naked) void InstallSelfMultiThunkDispatch_0046c3d0(void) {
         _emit   74h
         _emit   05h
         jmp     FiveCallGuardSetTail
-        mov     dword ptr [eax + 8], offset InstallSelfMultiThunkDispatch_0046c3d0
+        mov     dword ptr [eax + 8], offset InstallSelfMultiThunkDispatch
         mov     ecx, dword ptr [g_baseSel]
         push    edi
-        mov     edi, offset InstallSelfMultiThunkDispatch_0046c3d0
+        mov     edi, offset InstallSelfMultiThunkDispatch
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x01000000
@@ -169,7 +169,7 @@ __declspec(naked) void InstallSelfMultiThunkDispatch_0046c3d0(void) {
         mov     dword ptr [g_eventQueueNotMask], eax
         _emit   74h
         _emit   05h
-        jmp     CallPauseTripleScaledJmp_0046c520
+        jmp     CallPauseTripleScaledJmp
         call    MStackPush3CmpCall
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -178,14 +178,14 @@ __declspec(naked) void InstallSelfMultiThunkDispatch_0046c3d0(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
-        jmp     DualEntryStateGated_00460fa0
+        jmp     DualEntryStateGated
         mov     eax, dword ptr [g_table_00535ddc]
         cmp     eax, 0xcccc
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   05h
-        jmp     DualEntryStateGated_00460fa0
-        jmp     IntroSettingsFsmCluster_0046bea0
+        jmp     DualEntryStateGated
+        jmp     IntroSettingsFsmCluster
         ret
         call    ScaledMove48to58
         mov     eax, dword ptr [g_framePauseFlag]
@@ -198,8 +198,8 @@ __declspec(naked) void InstallSelfMultiThunkDispatch_0046c3d0(void) {
         mov     dword ptr [g_eventQueueNotMask], eax
         _emit   74h
         _emit   05h
-        jmp     CallPauseTripleScaledJmp_0046c520
-        jmp     DualEntryStateGated_00460fa0
+        jmp     CallPauseTripleScaledJmp
+        jmp     DualEntryStateGated
         ret
         _emit   90h
         _emit   90h
@@ -208,7 +208,7 @@ __declspec(naked) void InstallSelfMultiThunkDispatch_0046c3d0(void) {
         test    eax, eax
         _emit   75h
         _emit   2dh
-        call    QuadCmpBitGateJmp_0046c560
+        call    QuadCmpBitGateJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -219,8 +219,8 @@ __declspec(naked) void InstallSelfMultiThunkDispatch_0046c3d0(void) {
         mov     dword ptr [g_eventQueueNotMask], eax
         _emit   74h
         _emit   05h
-        jmp     CallPauseTripleScaledJmp_0046c520
-        jmp     DualEntryStateGated_00460fa0
+        jmp     CallPauseTripleScaledJmp
+        jmp     DualEntryStateGated
         ret
     }
 }

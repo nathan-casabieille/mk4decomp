@@ -145,7 +145,7 @@ extern void StoreLoadJmp(void);
 extern void ThrowFsmCluster_0044eaf0(void);
 extern void Thunk_0049cbc0(void);
 
-__declspec(naked) void Phase3PackedInstallSelf_0046ff80(void) {
+__declspec(naked) void Phase3PackedInstallSelf(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -171,9 +171,9 @@ __declspec(naked) void Phase3PackedInstallSelf_0046ff80(void) {
         test    eax, eax
         jne     L_pis_done
         mov     dword ptr [g_eventQueueChild], 4
-        mov     dword ptr [esi + 8], offset Phase3PackedInstallSelf_0046ff80
+        mov     dword ptr [esi + 8], offset Phase3PackedInstallSelf
         mov     ecx, dword ptr [g_baseSel]
-        mov     edx, offset Phase3PackedInstallSelf_0046ff80
+        mov     edx, offset Phase3PackedInstallSelf
         add     edx, 0x02000000
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
@@ -200,9 +200,9 @@ __declspec(naked) void Phase3PackedInstallSelf_0046ff80(void) {
         mov     dword ptr [g_eventQueueChild], 2
         shr     ecx, 2
         mov     dword ptr [g_eventQueueIdx], ecx
-        mov     dword ptr [esi + 8], offset Phase3PackedInstallSelf_0046ff80
+        mov     dword ptr [esi + 8], offset Phase3PackedInstallSelf
         mov     edx, dword ptr [g_baseSel]
-        mov     ecx, offset Phase3PackedInstallSelf_0046ff80
+        mov     ecx, offset Phase3PackedInstallSelf
         add     ecx, 0x01000000
         mov     dword ptr [edx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
@@ -223,7 +223,7 @@ __declspec(naked) void Phase3PackedInstallSelf_0046ff80(void) {
 }
 
 
-__declspec(naked) void ThrowChargeCluster_0044e750(void)
+__declspec(naked) void ThrowChargeCluster(void)
 {
     __asm {
         mov      eax, dword ptr [g_currentNodeIdx]

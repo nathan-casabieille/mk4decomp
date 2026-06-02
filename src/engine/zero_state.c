@@ -10,6 +10,6 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern unsigned int g_zero_00541fa4;
-void ZeroState_0048a1b0(void) {
+void ZeroState(void) {
     g_zero_00541fa4 = 0;
 }

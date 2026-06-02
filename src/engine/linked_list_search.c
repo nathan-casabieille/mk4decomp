@@ -121,7 +121,7 @@ extern unsigned int g_bootInitSaveSlot;
 
 extern unsigned int g_matrixStack_arr;
 
-void LinkedListSearch_004750f0(void) {
+void LinkedListSearch(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_xformEntityIdx]

@@ -16,6 +16,6 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [eax-0xc], ecx
  *   ret
  */
-void SetHi6_004b5ae0(unsigned int *p, unsigned int v) {
+void SetHi6(unsigned int *p, unsigned int v) {
     p[-3] = (p[-3] & 0xc0ffffffu) | ((v & 0x3fu) << 24);
 }

@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0048f810 (97b) - twin of 0x0048f740 with source offsets 0x54/0x58/0x5c. */
-void TripleFieldCopyJmpLo_0048f810(void) {
+void TripleFieldCopyJmpLo(void) {
     unsigned int val;
     val = ((ScenegraphNode *)(g_cj_0054205c * 4))->position_x;
     g_walkCallback = (void (*)(void))val;

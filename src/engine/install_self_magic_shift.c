@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
 extern void ThreeChanPackClamp(void);
 extern void Thunk_0049cbc0(void);
 
-__declspec(naked) void InstallSelfMagicShift_00472fe0(void) {
+__declspec(naked) void InstallSelfMagicShift(void) {
     __asm {
         mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     eax, 0x00538158

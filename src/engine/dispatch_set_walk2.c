@@ -7,18 +7,18 @@
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_dispatchWalkVar_0053a404;
 
-void DispatchSetWalk2_00492820(void) {
+void DispatchSetWalk2(void) {
     unsigned int v;
     if (g_gtOtherFlag) return;
     v = g_dispatchWalkVar_0053a404;
     g_walkCallback = (void(*)(void))v;
     if (v) return;
     g_eventQueueCurrent = v;
-    MStackPush3MaskBit0_004929e0();
+    MStackPush3MaskBit0();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 1) {
         g_eventQueueCurrent = 1;
     }
     g_walkCallback = (void(*)(void))2;
-    GuardedFourCallChain_004928c0();
+    GuardedFourCallChain();
 }

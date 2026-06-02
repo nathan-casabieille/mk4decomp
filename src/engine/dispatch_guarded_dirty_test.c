@@ -14,20 +14,20 @@ extern unsigned int g_scaledInit_00542044;
  *   eventQueueCurrent = 1; walk = 1; jmp T.
  */
 extern unsigned int g_dispatchWalkVar_0053a404;
-extern void MStackPush3MaskBit0_004929e0(void);
-extern void GuardedFourCallChain_004928c0(void);
-void DispatchGuardedDirtyTest_00492870(void) {
+extern void MStackPush3MaskBit0(void);
+extern void GuardedFourCallChain(void);
+void DispatchGuardedDirtyTest(void) {
     unsigned int v;
     if (g_gtOtherFlag != 0) return;
     v = g_dispatchWalkVar_0053a404;
     g_walkCallback = (void (*)(void))v;
     if (v != 0) return;
     g_eventQueueCurrent = 0;
-    MStackPush3MaskBit0_004929e0();
+    MStackPush3MaskBit0();
     if (g_framePauseFlag != 0) return;
     if (g_xformDirtyFlags & 1) {
         g_eventQueueCurrent = 1;
     }
     g_walkCallback = (void (*)(void))1;
-    GuardedFourCallChain_004928c0();
+    GuardedFourCallChain();
 }

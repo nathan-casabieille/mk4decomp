@@ -119,7 +119,7 @@ extern void PushStackAllocCall(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void LazyAllocOrPush_0048abe0(void) {
+__declspec(naked) void LazyAllocOrPush(void) {
     __asm {
         mov     ecx, dword ptr [g_currentNodeFlags]
         cmp     ecx, 0x30000

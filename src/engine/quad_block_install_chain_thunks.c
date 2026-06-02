@@ -109,11 +109,11 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void Wrapper_0048a380(void);
-extern void ScaledDecOrZero_00483b50(void);
-extern void ScaledAndAlf7_00490310(void);
+extern void ScaledDecOrZero(void);
+extern void ScaledAndAlf7(void);
 extern void DirtyToggleByGate(void);
 extern void QuadBlockInstallChainThunks(void);
-extern void DualPushCallPause_00482eb0(void);
+extern void DualPushCallPause(void);
 
 /* @addr 0x00483b80 (264b game) - dual block: counter inc thunk + cj cascade dispatch.
  *   B1 (0..0x1a, +5 NOPs): ++baseSel[+0x7c]; g_walkCallback = new value; ret.
@@ -123,9 +123,9 @@ extern void DualPushCallPause_00482eb0(void);
  */
 extern void ArgSarStoreJmp(void);
 extern void FlagCascadeStateSet(void);
-extern void SixBlockCjCascade_004829b0(void);
+extern void SixBlockCjCascade(void);
 
-__declspec(naked) void IncThunkPlusCjDispatch_00483b80(void) {
+__declspec(naked) void IncThunkPlusCjDispatch(void) {
     __asm {
         mov     ecx, dword ptr [g_baseSel]
         mov     eax, dword ptr [ecx*4 + 0x7c]
@@ -147,7 +147,7 @@ __declspec(naked) void IncThunkPlusCjDispatch_00483b80(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        call    SixBlockCjCascade_004829b0
+        call    SixBlockCjCascade
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -159,8 +159,8 @@ __declspec(naked) void IncThunkPlusCjDispatch_00483b80(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
-        jmp     DualPushCallPause_00482eb0
-        call    ScaledDecOrZero_00483b50
+        jmp     DualPushCallPause
+        call    ScaledDecOrZero
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -169,7 +169,7 @@ __declspec(naked) void IncThunkPlusCjDispatch_00483b80(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        call    ScaledAndAlf7_00490310
+        call    ScaledAndAlf7
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

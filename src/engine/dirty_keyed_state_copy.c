@@ -116,7 +116,7 @@ extern unsigned int g_clamp_0053a6dc;
  *   (53815c,53803c,538164); set bit 2 of state; if final walk==0
  *   clear bit 2 back.
  */
-void DirtyKeyedStateCopy_00421ca0(void) {
+void DirtyKeyedStateCopy(void) {
     unsigned int wt;
     unsigned int walk;
     unsigned int cj;

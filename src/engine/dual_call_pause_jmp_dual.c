@@ -15,7 +15,7 @@ extern void DualScaledInitClear(void);
 extern void DualScaledInitClear(void);
 extern void CjInstallSelfRouter(void);
 extern void FiveCallGuardSetTail(void);
-void DualCallPauseJmpDual_00439190(void) {
+void DualCallPauseJmpDual(void) {
     DualScaledInitClear();
     if (g_framePauseFlag != 0) return;
     CjInstallSelfRouter();

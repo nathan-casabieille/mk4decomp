@@ -16,7 +16,7 @@ extern int DualGatedStateYield(void);
 extern unsigned int g_matrixStackTop;
 extern void MstackPopScaledChainPlusThunks(void);
 extern void FiveCallGuardSetTail(void);
-void CallPauseCallTestStackPushJmp_00460c60(void) {
+void CallPauseCallTestStackPushJmp(void) {
     unsigned int top;
     LeaPlus22StoreSelf();
     if (g_framePauseFlag != 0) {

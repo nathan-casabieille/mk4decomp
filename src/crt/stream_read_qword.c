@@ -15,7 +15,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     edx, [ecx-4]
  *   ret
  */
-u64 StreamReadQword_004c83a0(u32 *stream) {
+u64 StreamReadQword(u32 *stream) {
     u32 newpos = *stream + 8;
     *stream = newpos;
     return *(u64 *)(newpos - 8);

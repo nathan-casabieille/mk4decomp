@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  *   if eq: ret;
  *   else: jmp ScaledXorStore_004900f0.
  */
-void DualMaskCmpJmp_00490090(void) {
+void DualMaskCmpJmp(void) {
     unsigned int v;
     unsigned int a;
     unsigned int c;

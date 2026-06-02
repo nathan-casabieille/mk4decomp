@@ -49,10 +49,10 @@ void ScaledAndAhfe_00490390(void) {
  *   ret
  */
 extern void ScaledLitLoadCall_00480fe0(void);
-extern void InstallSelfFourStatePauseChain_0049b000(void);
-void Const7cCallJmp_0049afe0(void) {
+extern void InstallSelfFourStatePauseChain(void);
+void Const7cCallJmp(void) {
     g_walkCallback = (void(*)(void))0x7c;
     ScaledLitLoadCall_00480fe0();
     if (g_framePauseFlag) return;
-    InstallSelfFourStatePauseChain_0049b000();
+    InstallSelfFourStatePauseChain();
 }

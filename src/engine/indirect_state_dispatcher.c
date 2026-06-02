@@ -123,7 +123,7 @@ extern void GuardedScaledCall(void);
 extern void LinkedListIndirectDirtyToggle(void);
 extern void RoundWinTransition(void);
 
-__declspec(naked) void IndirectStateDispatcher_0049f6a0(void) {
+__declspec(naked) void IndirectStateDispatcher(void) {
     __asm {
         mov     eax, dword ptr [g_audioBitField_00541fc0]
         mov     ecx, dword ptr [g_dispatchArg]

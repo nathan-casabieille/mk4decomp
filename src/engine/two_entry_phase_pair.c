@@ -114,7 +114,7 @@ extern void FiveCallGuardSetTail(void);
 extern void ScaledLoadJmp_00428d20(void);
 extern void StateDispatchTable(void);
 
-__declspec(naked) void TwoEntryPhasePair_004952e0(void)
+__declspec(naked) void TwoEntryPhasePair(void)
 {
     __asm
     {
@@ -127,10 +127,10 @@ __declspec(naked) void TwoEntryPhasePair_004952e0(void)
         je      short L_tepp_install1
         jmp     FiveCallGuardSetTail
     L_tepp_install1:
-        mov     dword ptr [eax + 8], offset TwoEntryPhasePair_004952e0
+        mov     dword ptr [eax + 8], offset TwoEntryPhasePair
         mov     ecx, dword ptr [g_baseSel]
         push    edi
-        mov     edi, offset TwoEntryPhasePair_004952e0
+        mov     edi, offset TwoEntryPhasePair
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x1000000

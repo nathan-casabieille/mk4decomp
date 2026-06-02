@@ -22,11 +22,11 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void Helper_TickAlt(void);
-extern void ScaledAndMaskInitJmp_00405a00(void);
-void ScaledAndMaskInitJmp_00405a00(void) {
+extern void ScaledAndMaskInitJmp(void);
+void ScaledAndMaskInitJmp(void) {
     unsigned int v;
     ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->flags &= 0xffffff7fu;
-    g_walkCallback = (void (*)(void))&ScaledAndMaskInitJmp_00405a00;
+    g_walkCallback = (void (*)(void))&ScaledAndMaskInitJmp;
     v = *(unsigned int *)(g_scaledInit_00542044 * 4);
     g_eventQueueCurrent = v;
     if (v == 0) return;

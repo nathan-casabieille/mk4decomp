@@ -124,13 +124,13 @@ extern void * g_dsoundContext;
 extern void * g_dsoundPrimary;
 extern unsigned int g_dispatchSave1417_00f9eff0;
 extern void Audio_UpdateChannels(void);
-extern void BuildMaskFromArray_004c38d0(void);
+extern void BuildMaskFromArray(void);
 extern void Helper_DSI_post1(void);
 extern void Helper_TitleSetMaxVolume(void);
-extern void IterateCallSkip_004c4210(void);
-extern void Loop1cBitMask_004c4450(void);
+extern void IterateCallSkip(void);
+extern void Loop1cBitMask(void);
 
-__declspec(naked) void AudioShutdownSequence_004c4240(void) {
+__declspec(naked) void AudioShutdownSequence(void) {
     __asm {
         push    ebx
         push    esi
@@ -141,7 +141,7 @@ __declspec(naked) void AudioShutdownSequence_004c4240(void) {
         _emit   3ch
         mov     ebx, dword ptr [g_iat_004d2240]
 loopShutdown:
-        call    BuildMaskFromArray_004c38d0
+        call    BuildMaskFromArray
         test    eax, eax
         _emit   74h
         _emit   2dh
@@ -165,8 +165,8 @@ loopShutdown:
         _emit   7fh
         _emit   0cah
         mov     dword ptr [g_dispatchSave1417_00f9eff0], 1
-        call    Loop1cBitMask_004c4450
-        call    IterateCallSkip_004c4210
+        call    Loop1cBitMask
+        call    IterateCallSkip
         push    0
         mov     dword ptr [g_dispatchSave1417_00f9eff0], 0
         call    Helper_DSI_post1

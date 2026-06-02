@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *   call ScaledZeroFour; if pause: ret;
  *   jmp GuardedDispatch_0042b6c0.
  */
-void QuadGuardBitGateJmp_00439130(void) {
+void QuadGuardBitGateJmp(void) {
     MStackPush3CmpCall();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 1) != 0) {

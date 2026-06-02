@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *     jmp GameDispatchValidateState;
  *   else: jmp CrouchAttackFsmCluster.
  */
-void BitGateInstallChainJmp_0046f740(void) {
+void BitGateInstallChainJmp(void) {
     g_walkCallback = (void (*)(void))g_xformScratch2088;
     g_eventQueueCurrent = 0;
     MStackPushZeroCallPop_00407d00();

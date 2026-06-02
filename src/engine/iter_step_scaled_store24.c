@@ -20,7 +20,7 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  */
 extern void ScaledChainJmp_004298e0(void);
-void IterStepScaledStore24_00428730(int arg) {
+void IterStepScaledStore24(int arg) {
     unsigned int packed = (unsigned int)(arg >> 2);
     unsigned int v;
     g_eventQueueTotal = packed;

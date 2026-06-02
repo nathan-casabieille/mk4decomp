@@ -114,13 +114,13 @@ extern unsigned int g_fightAxisPosY;
  *   sub-2 (~101b at 0x4c8940): format dispatch on 'e'/'E'/'f'/'g' char.
  *   Bundled into one 293-byte entry (with 10-byte nop pad between subs).
  */
-extern void CfltcvtFormat_004c8650(void);
-extern void FcvtFormatDecimal_004c87c0(void);
-extern void FormatHelper_004c8750(void);
-extern void FpFormatRound_004ccda0(void);
-extern void PrintfStubSigned_004c85d0(void);
+extern void CfltcvtFormat(void);
+extern void FcvtFormatDecimal(void);
+extern void FormatHelper(void);
+extern void FpFormatRound(void);
+extern void PrintfStubSigned(void);
 
-__declspec(naked) void FloatToStringBundle_004c8880(void) {
+__declspec(naked) void FloatToStringBundle(void) {
     __asm {
         /* sub-1: digit conversion + format dispatch */
         sub     esp, 0x28
@@ -160,7 +160,7 @@ __declspec(naked) void FloatToStringBundle_004c8880(void) {
         push    eax
         push    ebx
         push    esi
-        call    FpFormatRound_004ccda0
+        call    FpFormatRound
         mov     ecx, [esp + 0x20]
         add     esp, 0xc
         lea     eax, [ecx - 1]
@@ -190,7 +190,7 @@ __declspec(naked) void FloatToStringBundle_004c8880(void) {
         push    ecx
         push    ebx
         push    ebp
-        call    FcvtFormatDecimal_004c87c0
+        call    FcvtFormatDecimal
         add     esp, 0x10
         pop     edi
         pop     esi
@@ -206,7 +206,7 @@ __declspec(naked) void FloatToStringBundle_004c8880(void) {
         push    eax
         push    ebx
         push    ebp
-        call    CfltcvtFormat_004c8650
+        call    CfltcvtFormat
         add     esp, 0x14
         pop     edi
         pop     esi
@@ -238,7 +238,7 @@ __declspec(naked) void FloatToStringBundle_004c8880(void) {
         push    eax
         push    ecx
         push    edx
-        call    FormatHelper_004c8750
+        call    FormatHelper
         add     esp, 0xc
         ret
     L_fts_gFmt:
@@ -250,7 +250,7 @@ __declspec(naked) void FloatToStringBundle_004c8880(void) {
         push    ecx
         push    edx
         push    eax
-        call    FloatToStringBundle_004c8880
+        call    FloatToStringBundle
         add     esp, 0x10
         ret
     L_fts_eFmt:
@@ -262,7 +262,7 @@ __declspec(naked) void FloatToStringBundle_004c8880(void) {
         push    edx
         push    eax
         push    ecx
-        call    PrintfStubSigned_004c85d0
+        call    PrintfStubSigned
         add     esp, 0x10
         ret
     }

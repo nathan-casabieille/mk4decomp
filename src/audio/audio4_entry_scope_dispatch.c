@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  *     into g_bootInitSaveSlot, clears bit 0, calls DecOrDirty_004a7de0; if the
  *     slot[+0x30] == 3 restores from snapshot.
  *   (9b NOP padding to 0x4a7e70.)
- *   Entry 3 (offset 0x70): mirror of entry 2 but calls IncBoundedDirty_004a7db0
+ *   Entry 3 (offset 0x70): mirror of entry 2 but calls IncBoundedDirty
  *     first, then this function's own entry 1 (call -0x8b → 0x4a7e00); same
  *     +0x30==3 conditional restore tail.
  *   (9b NOP padding to 0x4a7eb0.)
@@ -124,21 +124,21 @@ extern unsigned int g_fightAxisPosY;
  *     walks 24-byte-stride records at 0x004f3c20..0x004f3d40 calling
  *     MStackPush2ChainLLInsert for each; then iterates g_audioStateMachine0_004f3ae4 records at +0x34
  *     stride 0x24, then g_audioStateMachine1_004f3ae8 records at +0x48 stride 0x24, and
- *     finally calls CallSetMultiGlobalsJmp_004a9230.
+ *     finally calls CallSetMultiGlobalsJmp.
  */
 extern unsigned int g_audioStateMachine0_004f3ae4;
 extern unsigned int g_audioStateMachine1_004f3ae8;
 extern unsigned int g_bootInitSaveSlot;
 extern unsigned int g_counter_005433c8;
-extern void CallSetMultiGlobalsJmp_004a9230(void);
+extern void CallSetMultiGlobalsJmp(void);
 extern void DecOrDirty_004a7d90(void);
 extern void DecOrDirty_004a7de0(void);
 extern void DrainQueueCallEach(void);
-extern void IncBoundedDirty_004a7db0(void);
+extern void IncBoundedDirty(void);
 extern void MStackPush2ChainLLInsert(void);
 extern void SetJmp_004a1ac0(void);
 
-__declspec(naked) void Audio4EntryScopeDispatch_004a7e00(void) {
+__declspec(naked) void Audio4EntryScopeDispatch(void) {
     __asm {
         /* entry 1 (offset 0) */
         mov     eax, dword ptr [g_audioStateMachine1_004f3ae8]
@@ -193,12 +193,12 @@ __declspec(naked) void Audio4EntryScopeDispatch_004a7e00(void) {
         nop
         /* entry 3 (offset 0x70) */
     L_a4s_entry3:
-        call    IncBoundedDirty_004a7db0
+        call    IncBoundedDirty
         mov     eax, dword ptr [g_xformDirtyFlags]
         mov     dword ptr [g_bootInitSaveSlot], eax
         and     al, 0xfe
         mov     dword ptr [g_xformDirtyFlags], eax
-        call    Audio4EntryScopeDispatch_004a7e00
+        call    Audio4EntryScopeDispatch
         mov     eax, dword ptr [g_baseSel]
         cmp     dword ptr [eax*4 + 0x30], 3
         jne     short L_a4s_e3End
@@ -262,7 +262,7 @@ __declspec(naked) void Audio4EntryScopeDispatch_004a7e00(void) {
         cmp     esi, eax
         jl      short L_a4s_loop3
     L_a4s_skip3:
-        call    CallSetMultiGlobalsJmp_004a9230
+        call    CallSetMultiGlobalsJmp
         pop     esi
         ret
     }

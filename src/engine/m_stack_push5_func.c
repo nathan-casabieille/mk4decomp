@@ -17,7 +17,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void StateMachine4ArmCascade(void);
 extern void MstackPopScaledChainPlusThunks(void);
-void MStackPush5Func_0043aa80(void) {
+void MStackPush5Func(void) {
     unsigned int top = g_matrixStackTop;
     g_walkCallback = (void(*)(void))5;
     top++;

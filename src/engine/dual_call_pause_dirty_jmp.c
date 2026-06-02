@@ -23,21 +23,21 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern int Cmp2CallDirtyCall(void);
-extern void DualMul10Tail_004395d0(void);
+extern void DualMul10Tail(void);
 extern void PrefixThunkInstallSelf3State(void);
-extern void Mul10ThresholdQuad_00435f50(void);
+extern void Mul10ThresholdQuad(void);
 void DualCallPauseDirtyJmp_00435f20(void) {
     if (Cmp2CallDirtyCall() != 0) {
         return;
     }
-    DualMul10Tail_004395d0();
+    DualMul10Tail();
     if (g_framePauseFlag != 0) {
         return;
     }
     if ((g_xformDirtyFlags & 1) != 0) {
         PrefixThunkInstallSelf3State();
     } else {
-        Mul10ThresholdQuad_00435f50();
+        Mul10ThresholdQuad();
     }
 }
 

@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
  *   Entry 2 (offset 0x60, 293b): pushes g_fightGroupHead onto mstack,
  *     calls ChainWalkPushPop. On no-error sets 0x54206c=0x12c
  *     → AudioVolumeRescale. If bit 0 of 0x54208c set also
- *     calls MStackPush2VolumeCascade_00444e00. Then for each of the
+ *     calls MStackPush2VolumeCascade. Then for each of the
  *     3 components at [g_fightGroupHead*4 + 0x6c/0x70/0x74]:
  *       - copy into g_eventQueueCurrent
  *       - call entry 1 (the scaler)
@@ -132,10 +132,10 @@ extern unsigned int g_dispatchVar43_004e6070;
 extern unsigned int g_table_004d57b0;
 extern void AudioVolumeRescale(void);
 extern void ChainWalkPushPop(void);
-extern void MStackPush2VolumeCascade_00444e00(void);
+extern void MStackPush2VolumeCascade(void);
 extern void StoreDoubleNegPauseSubStore(void);
 
-__declspec(naked) void VecScaleMStackTripleCall_00446980(void) {
+__declspec(naked) void VecScaleMStackTripleCall(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueCurrent]
         push    eax
@@ -189,7 +189,7 @@ __declspec(naked) void VecScaleMStackTripleCall_00446980(void) {
         jne     L_vsm_pop1
         test    byte ptr [g_xformDirtyFlags], 1
         je      short L_vsm_doVecScale
-        call    MStackPush2VolumeCascade_00444e00
+        call    MStackPush2VolumeCascade
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_vsm_pop1
@@ -198,17 +198,17 @@ __declspec(naked) void VecScaleMStackTripleCall_00446980(void) {
         mov     eax, dword ptr [edx*4 + 0x6c]
         lea     esi, [edx*4]
         mov     dword ptr [g_eventQueueCurrent], eax
-        call    VecScaleMStackTripleCall_00446980
+        call    VecScaleMStackTripleCall
         mov     ecx, dword ptr [g_eventQueueCurrent]
         mov     edx, dword ptr [esi + 0x70]
         mov     dword ptr [esi + 0x6c], ecx
         mov     dword ptr [g_eventQueueCurrent], edx
-        call    VecScaleMStackTripleCall_00446980
+        call    VecScaleMStackTripleCall
         mov     eax, dword ptr [g_eventQueueCurrent]
         mov     ecx, dword ptr [esi + 0x74]
         mov     dword ptr [esi + 0x70], eax
         mov     dword ptr [g_eventQueueCurrent], ecx
-        call    VecScaleMStackTripleCall_00446980
+        call    VecScaleMStackTripleCall
         mov     edx, dword ptr [g_eventQueueCurrent]
         mov     ecx, 0xffffd99a
         mov     dword ptr [esi + 0x74], edx

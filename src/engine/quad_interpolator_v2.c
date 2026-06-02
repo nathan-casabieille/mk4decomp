@@ -108,22 +108,22 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void ScaledTestChainDispatch_00424ba0(void);
-extern void NegateThree_00425360(void);
-extern void QuadInterpolatorV2_004255b0(void);
+extern void ScaledTestChainDispatch(void);
+extern void NegateThree(void);
+extern void QuadInterpolatorV2(void);
 
 /* @addr 0x00408350 (349b boot) - mstack-push-4 scope with +0x18 cj advance.
  *   Pushes g_xformEntityIdx/4c/50/54 onto mstack, advances cj by 0x18, sets
  *   esi from local frame (lea [esp+4] then sar 2 - encodes "frame slot 1"),
- *   calls ScaledTestChainDispatch_00424ba0. On no-error: reads
+ *   calls ScaledTestChainDispatch. On no-error: reads
  *   [g_fightGroupHead*4 + 0x34] into 0x54206c, mirrors low bit to 0x542094,
- *   conditionally calls NegateThree_00425360, then sets up a 2nd scope
- *   advancing cj by 0x15 and calls QuadInterpolatorV2_004255b0. Finally pops the 4
+ *   conditionally calls NegateThree, then sets up a 2nd scope
+ *   advancing cj by 0x15 and calls QuadInterpolatorV2. Finally pops the 4
  *   originals back to 0054204c/50/54/48 in reverse order.
  */
 extern unsigned int g_table_004d57b0;
 
-__declspec(naked) void MStackBootPush4Init_00408350(void) {
+__declspec(naked) void MStackBootPush4Init(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_xformEntityIdx]
@@ -155,7 +155,7 @@ __declspec(naked) void MStackBootPush4Init_00408350(void) {
         mov     dword ptr [g_eventQueueEnd], eax
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     dword ptr [g_currentNodeIdx], esi
-        call    ScaledTestChainDispatch_00424ba0
+        call    ScaledTestChainDispatch
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mp4i_cleanup
@@ -165,7 +165,7 @@ __declspec(naked) void MStackBootPush4Init_00408350(void) {
         and     eax, 1
         mov     dword ptr [g_xformScratch94], eax
         je      short L_mp4i_skipCall
-        call    NegateThree_00425360
+        call    NegateThree
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mp4i_cleanup
@@ -177,7 +177,7 @@ __declspec(naked) void MStackBootPush4Init_00408350(void) {
         lea     eax, [ecx + 0x15]
         mov     dword ptr [g_eventQueueTotal], eax
         mov     dword ptr [g_currentNodeIdx], eax
-        call    QuadInterpolatorV2_004255b0
+        call    QuadInterpolatorV2
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_mp4i_cleanup

@@ -21,11 +21,11 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_matrixStackTop], eax
  *   ret
  */
-extern void Copy3Fields38_0040a870(void);
-void MStackPushCallPop_0040a830(void) {
+extern void Copy3Fields38(void);
+void MStackPushCallPop(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_eventQueueEnd;
-    Copy3Fields38_0040a870();
+    Copy3Fields38();
     g_eventQueueEnd = *(unsigned int *)(g_matrixStackTop * 4);
     g_matrixStackTop--;
 }

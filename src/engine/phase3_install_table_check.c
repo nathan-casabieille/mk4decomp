@@ -111,25 +111,25 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x0048acd0 (384b game) - phase-state install-self with table check.
  *   Phase 0: indirect-call [g_eventQueueChild]; on no-error copies the
  *     3-vec at [g_fightGroupHead*4+0x54/0x58/0x5c] into [g_eventQueueTotal*4
- *     + 0/4/8], then IndirectDispatchCjStore_0048ae50, installs Self
+ *     + 0/4/8], then IndirectDispatchCjStore, installs Self
  *     at body with slot[+0x84]=1, g_pendingNodeType=1, arms 0x541e6c.
  *   Phase non-0: if byte g_byte_00538148 != 0, checks the scaled
  *     g_eventQueueIdx ptr against the 4 sentinel addresses
  *     {0x4efe18, 0x4eff00, 0x4effe8, 0x4f00d0}; on match tail-call
  *     CallSetPause. Otherwise byte g_byte_00538148 = 0, then
  *     indirect-call [g_eventQueueChild] (vtable advance), call
- *     MStackPush6OpPop6_0048af60. Reads g_currentNodeFlags cap;
+ *     MStackPush6OpPop6. Reads g_currentNodeFlags cap;
  *     [g_eventQueueIdx*4] + 0x30000 is the next target; if cap >= that
  *     target, store target into g_currentNodeFlags and tail-call
- *     IndirectDispatchCjStore_0048ae50, then StackPopDispatchTagged.
+ *     IndirectDispatchCjStore, then StackPopDispatchTagged.
  *     Else tail-call IndirectDispatchCjStore directly.
  */
 extern unsigned int g_byte_00538148;
 extern void CallSetPause(void);
-extern void IndirectDispatchCjStore_0048ae50(void);
-extern void MStackPush6OpPop6_0048af60(void);
+extern void IndirectDispatchCjStore(void);
+extern void MStackPush6OpPop6(void);
 
-__declspec(naked) void Phase3InstallTableCheck_0048acd0(void) {
+__declspec(naked) void Phase3InstallTableCheck(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    ebx
@@ -158,7 +158,7 @@ __declspec(naked) void Phase3InstallTableCheck_0048acd0(void) {
         call    dword ptr [g_eventQueueChild]
         cmp     dword ptr [g_framePauseFlag], ebx
         jne     L_p3itc_done
-        call    MStackPush6OpPop6_0048af60
+        call    MStackPush6OpPop6
         cmp     dword ptr [g_framePauseFlag], ebx
         jne     L_p3itc_done
         mov     edx, dword ptr [g_eventQueueIdx]
@@ -169,7 +169,7 @@ __declspec(naked) void Phase3InstallTableCheck_0048acd0(void) {
         mov     dword ptr [g_walkCallback], eax
         jl      L_p3itc_dispatchOnly
         mov     dword ptr [g_currentNodeFlags], eax
-        call    IndirectDispatchCjStore_0048ae50
+        call    IndirectDispatchCjStore
         cmp     dword ptr [g_framePauseFlag], ebx
         jne     L_p3itc_done
         call    StackPopDispatchTagged
@@ -197,11 +197,11 @@ __declspec(naked) void Phase3InstallTableCheck_0048acd0(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 8], eax
     L_p3itc_dispatchOnly:
-        call    IndirectDispatchCjStore_0048ae50
+        call    IndirectDispatchCjStore
         cmp     dword ptr [g_framePauseFlag], ebx
         jne     short L_p3itc_done
         mov     eax, 1
-        mov     dword ptr [esi + 8], offset Phase3InstallTableCheck_0048acd0
+        mov     dword ptr [esi + 8], offset Phase3InstallTableCheck
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_framePauseFlag], eax

@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave1580_00ab51f8;
 extern void CallPauseConstStoreJmp_00438170(void);
 extern void HitReactionDispatcher(void);
-extern void InstallSelf3StateDualBody_00434a30(void);
+extern void InstallSelf3StateDualBody(void);
 extern void Wrapper_00438ee0(void);
 
 extern unsigned int g_chain_arr_4348f0;
@@ -149,7 +149,7 @@ __declspec(naked) void InstallSelfStatePush_00434990(void) {
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     [eax*4 + 0x84], edx
-        call    InstallSelf3StateDualBody_00434a30
+        call    InstallSelf3StateDualBody
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         ret
@@ -265,7 +265,7 @@ __declspec(naked) void InstallSelfStatePush_004348f0(void) {
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     [eax*4 + 0x84], edx
-        call    InstallSelf3StateDualBody_00434a30
+        call    InstallSelf3StateDualBody
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         ret

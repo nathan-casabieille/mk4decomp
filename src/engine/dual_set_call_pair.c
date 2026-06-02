@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  *   if pause: ret; push 0x4ed4b8; call IterStepDualStore; ret.
  */
 extern unsigned int g_dispatchTableArr_00500c08;
-void DualSetCallPair_0047dbc0(void) {
+void DualSetCallPair(void) {
     g_xformEntityIdx = (unsigned int)&g_dispatchTableArr_00500c08 >> 2;
     ScaledArrStore_004298c0();
     if (g_framePauseFlag != 0) return;

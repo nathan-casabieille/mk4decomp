@@ -119,7 +119,7 @@ extern void MStackPushZeroCallPop_004066f0(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void ThreeChanPackClamp(void);
 
-__declspec(naked) void Phase4StateInit4Helpers_004130c0(void)
+__declspec(naked) void Phase4StateInit4Helpers(void)
 {
     __asm {
         call    ChainDirtyBitWalker

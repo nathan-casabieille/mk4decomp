@@ -109,16 +109,16 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void DispatcherComplex260_00407400(void);
-extern void SnapshotDirtyMark_004a1dc0(void);
+extern void SnapshotDirtyMark(void);
 extern void MStackPushComplexCallPop_00406430(void);
 extern void DrainQueueCallEach(void);
 extern void PendingMatch_004a8ca0(void);
-extern void AudioInstallSelfStateMachine2_004a85c0(void);
+extern void AudioInstallSelfStateMachine2(void);
 extern unsigned int g_audioInstallArr_0050f114;
 extern unsigned int g_audioMicroEntry_005433f4;
 
 /*
- * AudioInitLoopTriple_004a7840 - 237b audio 2-entry init + triple-loop body.
+ * AudioInitLoopTriple - 237b audio 2-entry init + triple-loop body.
  *   Entry 0x004a7840: g_xformEntityIdx = (0x0050f114 >> 2); call DispatcherComplex260;
  *     if paused: ret. push 0x13333; SnapshotDirtyMark; MStackPushComplexCallPop;
  *     if paused: ret. chain[g_currentNodeIdx*4 + 0x5c] = 0x00100000; ret.
@@ -126,11 +126,11 @@ extern unsigned int g_audioMicroEntry_005433f4;
  *     Loop1 (esi: byte-table at 0x004f3b48 to 0x004f3c20 step 0x24): chain[(g_baseSel+byte)*4],
  *       call MStackPush2ChainLLInsert. Loop2 (esi 0..5): chain[(g_baseSel+esi)*4 + 0x34], call.
  *     Loop3 (esi 0..5): chain[(g_baseSel+esi)*4 + 0x48], call. DrainQueueCallEach.
- *     if [0x005433f4] == 2: tail-call PendingMatch_004a8ca0 else AudioInstallSelfStateMachine2_004a85c0.
+ *     if [0x005433f4] == 2: tail-call PendingMatch_004a8ca0 else AudioInstallSelfStateMachine2.
  */
 extern void MStackPush2ChainLLInsert(void);
 
-__declspec(naked) void AudioInitLoopTriple_004a7840(void)
+__declspec(naked) void AudioInitLoopTriple(void)
 {
     __asm
     {
@@ -142,7 +142,7 @@ __declspec(naked) void AudioInitLoopTriple_004a7840(void)
         test    eax, eax
         jne     short L_e0_ret
         push    0x13333
-        call    SnapshotDirtyMark_004a1dc0
+        call    SnapshotDirtyMark
         add     esp, 4
         call    MStackPushComplexCallPop_00406430
         mov     eax, dword ptr [g_framePauseFlag]
@@ -201,7 +201,7 @@ __declspec(naked) void AudioInitLoopTriple_004a7840(void)
         pop     esi
         ret
     L_tail85c0:
-        call    AudioInstallSelfStateMachine2_004a85c0
+        call    AudioInstallSelfStateMachine2
         pop     esi
         ret
     }

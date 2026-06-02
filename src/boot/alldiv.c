@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   Absolutize both operands tracking sign in edi, divide via div/shift,
  *   conditionally negate result. Returns edx:eax (quotient), ret 0x10.
  */
-__declspec(naked) void Alldiv_004c5690(void) {
+__declspec(naked) void Alldiv(void) {
     __asm {
         push    edi
         push    esi

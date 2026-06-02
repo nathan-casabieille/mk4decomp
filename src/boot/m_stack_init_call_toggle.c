@@ -110,5 +110,5 @@ extern unsigned int g_fightAxisPosY;
 
 extern void MStackInitCallToggle(void);
 
-extern void TwinTagClear_00416db0(void);
+extern void TwinTagClear(void);
 

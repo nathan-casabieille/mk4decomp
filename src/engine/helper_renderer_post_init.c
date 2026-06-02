@@ -12,10 +12,10 @@
  */
 extern int g_currentRendererMode;
 extern void Helper_AppStub_2890(void);
-extern void PaletteRampInit_004ad5f0(void);
+extern void PaletteRampInit(void);
 extern void ComSoundSetup_004af6c0(void);
 extern void ComSoundSetup_004afef0(void);
-extern void AbsClampIATCall_004b44f0(void);
+extern void AbsClampIATCall(void);
 
 __declspec(naked) void Helper_RendererPostInit(void) {
     __asm {
@@ -33,12 +33,12 @@ __declspec(naked) void Helper_RendererPostInit(void) {
         _emit   00h
         mov     ecx, dword ptr [esp + 4]
         push    ecx
-        call    AbsClampIATCall_004b44f0
+        call    AbsClampIATCall
         add     esp, 4
         ret
         mov     edx, dword ptr [esp + 4]
         push    edx
-        call    PaletteRampInit_004ad5f0
+        call    PaletteRampInit
         add     esp, 4
         ret
         mov     eax, dword ptr [esp + 4]

@@ -18,16 +18,16 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  *   ret
  */
-extern void CmpP2P1ScaledJmp_0048ee50(void);
-extern void InstallSelfDualPath_00435260(void);
+extern void CmpP2P1ScaledJmp(void);
+extern void InstallSelfDualPath(void);
 extern void InstallSelfPacked0x2005(void);
-void CallPauseCmpDoubleJmp_00435230(void) {
-    CmpP2P1ScaledJmp_0048ee50();
+void CallPauseCmpDoubleJmp(void) {
+    CmpP2P1ScaledJmp();
     if (g_framePauseFlag != 0) {
         return;
     }
     if ((int)g_walkCallback > 0x13333) {
-        InstallSelfDualPath_00435260();
+        InstallSelfDualPath();
     } else {
         InstallSelfPacked0x2005();
     }

@@ -15,8 +15,8 @@ extern u8 g_memHeapStart[];
 extern unsigned int g_dispatchSave1654_007b41a8;
 extern unsigned int g_dispatchSave1583_00ab5204;
 extern unsigned int g_dispatchSave1582_00ab5200;
-extern void SetHi6_004b5ae0(void);
-extern void StoreAtMinus8_004b5b00(void);
+extern void SetHi6(void);
+extern void StoreAtMinus8(void);
 
 __declspec(naked) void AppInit_Misc2(void) {
     __asm {
@@ -42,10 +42,10 @@ __declspec(naked) void AppInit_Misc2(void) {
  *     g_dispatchSave1582_00ab5200 = 1; *arg = 0;
  *   }
  */
-void CleanupCallTwice_004bd530(int *arg) {
+void CleanupCallTwice(int *arg) {
     if (*arg != 0) {
-        SetHi6_004b5ae0(*arg, 4);
-        StoreAtMinus8_004b5b00(*arg, (int)&g_dispatchSave1583_00ab5204);
+        SetHi6(*arg, 4);
+        StoreAtMinus8(*arg, (int)&g_dispatchSave1583_00ab5204);
         g_dispatchSave1582_00ab5200 = 1;
         *arg = 0;
     }

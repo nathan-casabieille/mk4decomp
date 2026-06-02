@@ -12,7 +12,7 @@
  *   mov     [g_xformEntityIdx], eax
  *   jmp     eax
  */
-void AddDerefJmp_00433e70(void) {
+void AddDerefJmp(void) {
     unsigned int v = g_xformEntityIdx + g_eventQueueCurrent;
     g_xformEntityIdx = v;
     v = *(unsigned int *)(v * 4);

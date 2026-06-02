@@ -28,7 +28,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_audioBank2State_00537f98;
 
-void CmpEax1OrSetDirty_00488e90(void) {
+void CmpEax1OrSetDirty(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
         mov     ecx, 1

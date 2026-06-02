@@ -112,7 +112,7 @@ extern unsigned int g_crtFpuTbyte_00522470;
 extern unsigned int g_dispatchSave112_00522484;
 extern unsigned int g_crtFpuExceptionBase_0052248c;
 
-__declspec(naked) void FpExceptionFilter_004ca080(void)
+__declspec(naked) void FpExceptionFilter(void)
 {
     __asm {
     /* Entry A: single-operand */

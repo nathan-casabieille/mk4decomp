@@ -118,7 +118,7 @@ extern void FiveCallGuardSetTail(void);
 extern void MStackPushSet0008(void);
 extern void ScaledMove48to58(void);
 
-__declspec(naked) void DualEntryInstallSelfChain_00487430(void) {
+__declspec(naked) void DualEntryInstallSelfChain(void) {
     __asm {
         call    MStackPushSet0008
         mov     eax, dword ptr [g_framePauseFlag]

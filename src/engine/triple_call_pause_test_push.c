@@ -13,11 +13,11 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void CjTableThresholdDispatch(void);
 extern void GateDispatch6c(void);
-extern void ScaledLoadJmp_74_0048e7b0(void);
+extern void ScaledLoadJmp_74(void);
 extern void ArgSarStoreJmp(void);
 extern unsigned int g_dispatchSave1309_004ee2f0;
 
-void TripleCallPauseTestPush_00482e60(void) {
+void TripleCallPauseTestPush(void) {
     __asm {
         call    CjTableThresholdDispatch
         mov     eax, dword ptr [g_framePauseFlag]
@@ -29,7 +29,7 @@ void TripleCallPauseTestPush_00482e60(void) {
         test    eax, eax
         _emit   75h
         _emit   29h
-        call    ScaledLoadJmp_74_0048e7b0
+        call    ScaledLoadJmp_74
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

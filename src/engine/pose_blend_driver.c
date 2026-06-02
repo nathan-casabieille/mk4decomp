@@ -108,14 +108,14 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void MStackSignedMod_0042fee0(void);
+extern void MStackSignedMod(void);
 
-__declspec(naked) void PoseBlendDriver_0042fc80(void)
+__declspec(naked) void PoseBlendDriver(void)
 {
     __asm {
         push     esi
         push     edi
-        call     MStackSignedMod_0042fee0
+        call     MStackSignedMod
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_fe9d
@@ -157,7 +157,7 @@ __declspec(naked) void PoseBlendDriver_0042fc80(void)
         mov      eax, dword ptr [g_fightGroupHead]
         mov      ecx, dword ptr [g_acc_00542078]
         mov      dword ptr [eax*4 + 0x5c], ecx
-        call     MStackSignedMod_0042fee0
+        call     MStackSignedMod
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_fe9d

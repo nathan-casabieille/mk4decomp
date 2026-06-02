@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave905_004d5dd8;
 
 /*
- * MStackPush3InitCallChain_0040bcf0 - 239b boot 3-arg mstack-push + xfm chain.
+ * MStackPush3InitCallChain - 239b boot 3-arg mstack-push + xfm chain.
  *   Push g_xformEntityIdx, g_eventQueueEnd, g_fightGroupHead to mstack.
  *   Snapshot g_fightGroupHead → g_eventQueueEnd; g_walkCallback = (0x004d5dd8 >> 2).
  *   Call PushSetXfmMaskCallPop; if paused: pop 3 + ret.
@@ -119,7 +119,7 @@ extern unsigned int g_dispatchSave905_004d5dd8;
  *   call ScaledTripleCopy54; if paused: pop+ret. Call MStackCall_004062f0;
  *   if paused: pop+ret. Pop 3 from mstack into g_fightGroupHead, g_eventQueueEnd, g_xformEntityIdx; ret.
  */
-void MStackPush3InitCallChain_0040bcf0(void) {
+void MStackPush3InitCallChain(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_xformEntityIdx;
     g_matrixStackTop++;

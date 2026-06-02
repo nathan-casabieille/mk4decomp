@@ -111,16 +111,16 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00461a60 (268b game) - install-self with table-walk init dispatch.
  *   If chain[+0x84] was nonzero: g_walkCallback=2 unless was already 2 (then 6);
  *     scaledInit = 0x00543200>>2 + g_walkCallback; nested chain load;
- *     call StateMachineInit_00493000; if pause? ret. If bit2 of state set tail-call CallSetPause; ret.
+ *     call StateMachineInit; if pause? ret. If bit2 of state set tail-call CallSetPause; ret.
  *   If was zero: g_eventQueueEnd = g_cj_0054205c; cj[+0x58] = 0xfffb0000; install-self;
  *     chain[+0x84]=1; scaledInit-chain push 0x00461a60+0x01000000;
- *     call InitZeroChainLookupJmp_00494210; pause=1; ret.
+ *     call InitZeroChainLookupJmp; pause=1; ret.
  */
 extern void CallSetPause(void);
-extern void InitZeroChainLookupJmp_00494210(void);
-extern void StateMachineInit_00493000(void);
+extern void InitZeroChainLookupJmp(void);
+extern void StateMachineInit(void);
 
-__declspec(naked) void InstallSelfTableDispatch_00461a60(void) {
+__declspec(naked) void InstallSelfTableDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -146,7 +146,7 @@ __declspec(naked) void InstallSelfTableDispatch_00461a60(void) {
         mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [eax*4 + 4]
         mov     dword ptr [g_xformEntityIdx], edx
-        call    StateMachineInit_00493000
+        call    StateMachineInit
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -180,7 +180,7 @@ __declspec(naked) void InstallSelfTableDispatch_00461a60(void) {
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
-        call    InitZeroChainLookupJmp_00494210
+        call    InitZeroChainLookupJmp
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret

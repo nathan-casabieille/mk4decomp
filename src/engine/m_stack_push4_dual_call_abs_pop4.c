@@ -110,16 +110,16 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00430d30 (289b game) - mstack-push 4 + dual call + abs-diff store + pop 4.
  *   Push g_eventQueueChild, g_walkCallback, g_eventQueueCurrent, g_eventQueueWorkType onto mstack.
- *   Call CameraAimSplineDriver_00430e60; if pause: ret.
+ *   Call CameraAimSplineDriver; if pause: ret.
  *   Call BootMod6487eClampAndChainMul10; if pause: ret. Save current 6c->70, load [g_cj*4+0x64]->6c.
  *   Call BootMod6487eClampAndChainMul10; if pause: ret. Compute |6c - 70|; store to 6c and g_acc_00542078.
  *   Pop 4 entries back: mstack[top..top-3] -> g_eventQueueWorkType, g_eventQueueCurrent, g_walkCallback, g_eventQueueChild.
  */
-extern void CameraAimSplineDriver_00430e60(void);
+extern void CameraAimSplineDriver(void);
 
 extern unsigned int g_matrixStack_arr;
 
-void MStackPush4DualCallAbsPop4_00430d30(void) {
+void MStackPush4DualCallAbsPop4(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueChild]
@@ -141,7 +141,7 @@ void MStackPush4DualCallAbsPop4_00430d30(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], edx
-        call    CameraAimSplineDriver_00430e60
+        call    CameraAimSplineDriver
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

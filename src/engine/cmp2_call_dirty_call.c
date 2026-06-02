@@ -27,7 +27,7 @@ extern unsigned int g_acc_00542078;
  */
 extern unsigned int g_tickFlagF;
 extern void Thunk_004399b0(void);
-extern void WeightedSumClampHelper_00439920(void);
+extern void WeightedSumClampHelper(void);
 extern void Thunk_004399b0(void);
 int Cmp2CallDirtyCall(void) {
     unsigned int v = g_tickFlagF;
@@ -36,7 +36,7 @@ int Cmp2CallDirtyCall(void) {
         Thunk_004399b0();
         return 1;
     }
-    WeightedSumClampHelper_00439920();
+    WeightedSumClampHelper();
     if ((g_xformDirtyFlags & 1) == 0) {
         Thunk_004399b0();
         return 1;

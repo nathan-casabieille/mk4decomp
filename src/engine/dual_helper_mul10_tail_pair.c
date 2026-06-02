@@ -108,28 +108,28 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void DualHelperMul10TailPair_00490ec0(void);
+extern void DualHelperMul10TailPair(void);
 extern void CjTableThresholdDispatch(void);
 extern void FlagThunk4EntryDispatcher(void);
-extern void RoundTextMenuEventCluster_004888b0(void);
+extern void RoundTextMenuEventCluster(void);
 extern void GuardedSeq_00488890(void);
 
 /* @addr 0x00488800 (142b game) - dual-entry state-load + cascade.
  *   Block A (+0x00): eax = g_load_0052ab10; g_eventQueueChild = 0x4ccc; g_cj_00542058 = eax;
- *     jmp DualHelperMul10TailPair_00490ec0.
+ *     jmp DualHelperMul10TailPair.
  *   Block A2 (+0x20): call CjTableThresholdDispatch; if !pause: g_walkCallback=9; call FlagThunk4EntryDispatcher;
- *     if !pause: g_walkCallback=0x6666; call CmpP1DualInitStore_00482ab0; if !pause: jmp RoundTextMenuEventCluster_004888b0.
+ *     if !pause: g_walkCallback=0x6666; call CmpP1DualInitStore_00482ab0; if !pause: jmp RoundTextMenuEventCluster.
  *   Block B (+0x70): g_walkCallback=0; call FlagThunk4EntryDispatcher; if !pause: jmp GuardedSeq_00488890.
  */
 extern unsigned int g_load_0052ab10;
 extern void CmpP1DualInitStore_00482ab0(void);
 
-__declspec(naked) void DualEntryStateLoadCascade_00488800(void) {
+__declspec(naked) void DualEntryStateLoadCascade(void) {
     __asm {
         mov     eax, dword ptr [g_load_0052ab10]
         mov     dword ptr [g_eventQueueChild], 0x00004ccc
         mov     dword ptr [g_cj_00542058], eax
-        jmp     DualHelperMul10TailPair_00490ec0
+        jmp     DualHelperMul10TailPair
         _emit   90h
         _emit   90h
         _emit   90h
@@ -154,7 +154,7 @@ __declspec(naked) void DualEntryStateLoadCascade_00488800(void) {
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     RoundTextMenuEventCluster_004888b0
+        jmp     RoundTextMenuEventCluster
         ret
         _emit   90h
         _emit   90h

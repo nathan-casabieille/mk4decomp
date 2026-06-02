@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern int Helper_ECM_PostCleanup(int);
 extern void ECM_Cleanup(void);
-extern void EcmFrameDecode_004bec30(void);
+extern void EcmFrameDecode(void);
 /* extern void DoubleToInt64(void); -- defined elsewhere with diff sig */
 extern unsigned int g_const_004d2998;
 extern unsigned int g_const_004d29a0;
@@ -137,7 +137,7 @@ extern unsigned int g_iat_004d2084;
 extern unsigned int g_iat_004d2240;
 extern void DoubleToInt64(void);
 
-__declspec(naked) void EcmStreamTickAdvance_004b0db0(void)
+__declspec(naked) void EcmStreamTickAdvance(void)
 {
     __asm {
         mov      eax, dword ptr [g_ecmFile]
@@ -264,7 +264,7 @@ __declspec(naked) void EcmStreamTickAdvance_004b0db0(void)
         imul     eax, eax, 0x5ab5c
         add      eax, OFFSET g_ecmAudioSlots
         push     eax
-        call     EcmFrameDecode_004bec30
+        call     EcmFrameDecode
         add      esp, 0x10
         test     eax, eax
         jne      L_1077

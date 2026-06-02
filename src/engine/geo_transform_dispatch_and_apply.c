@@ -113,9 +113,9 @@ extern unsigned int g_secondary_00535d04;
 extern unsigned int g_secondary_00538068;
 extern unsigned int g_primary_0053a774;
 extern unsigned int g_dispatchVar20_0054200c;
-extern void PositionClampCluster_00489a30(void);
+extern void PositionClampCluster(void);
 
-__declspec(naked) void GeoTransformDispatchAndApply_00489840(void)
+__declspec(naked) void GeoTransformDispatchAndApply(void)
 {
     __asm {
         /* H1 */
@@ -243,6 +243,6 @@ __declspec(naked) void GeoTransformDispatchAndApply_00489840(void)
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_eventQueueChild], edx
         mov      dword ptr [g_currentNodeFlags], eax
-        jmp      PositionClampCluster_00489a30
+        jmp      PositionClampCluster
     }
 }

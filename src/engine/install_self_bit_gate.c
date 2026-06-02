@@ -111,14 +111,14 @@ extern unsigned int g_fightAxisPosY;
 /*
  * @addr 0x00438aa0 (109b game) - install-self with two pause-guarded
  *   helpers and a bit-test exit: capture/zero base[+0x84]; if non-zero
- *   call InstallSelfPathSelfLoop_004383b0 path (PushPop84TripleCall + dirty-store); on
+ *   call InstallSelfPathSelfLoop path (PushPop84TripleCall + dirty-store); on
  *   pause clear and bit0 set tail-jmp StackPopDispatchTagged; else
  *   install self with tag 0xa0 and raise framePause.
  */
 extern void PushPop84TripleCall(void);
-extern void StoreCallPauseDirtyStoreJmp_004396c0(void);
+extern void StoreCallPauseDirtyStoreJmp(void);
 
-__declspec(naked) void InstallSelfBitGate_00438aa0(void) {
+__declspec(naked) void InstallSelfBitGate(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -138,7 +138,7 @@ __declspec(naked) void InstallSelfBitGate_00438aa0(void) {
         test    eax, eax
         jne     epi
 stage2:
-        call    StoreCallPauseDirtyStoreJmp_004396c0
+        call    StoreCallPauseDirtyStoreJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     epi

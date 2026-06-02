@@ -112,14 +112,14 @@ extern unsigned int g_fightAxisPosY;
  * @addr 0x0045daf0 (125b game) - chain-walking self-recursive
  *   dispatcher: if walk != 0, store into _4204c[+0x14], call Thunk;
  *   else walk a singly-linked chain (advance wt += g_eventQueueCurrent,
- *   deref scaled), call MStackPush3CallChain_0045db70 at each step, tail-recurse on
+ *   deref scaled), call MStackPush3CallChain at each step, tail-recurse on
  *   self.
  */
-extern void MStackPush3CallChain_0045db70(void);
+extern void MStackPush3CallChain(void);
 extern void Thunk_0045dae0(void);
 extern void HitReactionDispatcher(void);
 
-int ChainWalkSelfRecursive_0045daf0(void) {
+int ChainWalkSelfRecursive(void) {
     unsigned int link = *(unsigned int *)(g_pendingNodeType * 4 + 0x40);
     g_eventQueueWorkType = link;
     if ((unsigned int)g_walkCallback != 0) {
@@ -132,7 +132,7 @@ int ChainWalkSelfRecursive_0045daf0(void) {
     g_xformEntityIdx += g_eventQueueCurrent;
     g_xformEntityIdx = *(unsigned int *)(g_xformEntityIdx * 4);
     if (g_xformEntityIdx == 0) return;
-    MStackPush3CallChain_0045db70();
+    MStackPush3CallChain();
     if (g_framePauseFlag != 0) return;
     if (g_xformEntityIdx == 0) return;
     return ((int(*)())Thunk_0045dae0)();

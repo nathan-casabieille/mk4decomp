@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
 extern void GuardedSeq_004297b0(void);
 extern void ScaledInitOrSelfPtr_00489130(void);
 
-__declspec(naked) void InstallSelfReentry_004890b0(void) {
+__declspec(naked) void InstallSelfReentry(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi

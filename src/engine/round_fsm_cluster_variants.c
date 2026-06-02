@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
 /* Cinematic FSM cluster (560b game, 4 packed helpers)                 */
 /* ------------------------------------------------------------------ */
 extern void ScaledChainJmp_00429470(void);
-extern void TriPhaseDecCounterListAdvance_0047ad20(void);
+extern void TriPhaseDecCounterListAdvance(void);
 extern void RoundFsmCluster_0047aff0(void);
 extern void MStackPushSet0008(void);
 extern void IterStepDualStore(void);
@@ -127,12 +127,12 @@ extern unsigned int g_load_0052ab10;
 extern void ArgSarStoreJmp(void);
 extern void Atan2QuadrantLookup(void);
 extern void FiveCallGuardSetTail(void);
-extern void GuardedArithDualCallChain_00431e90(void);
+extern void GuardedArithDualCallChain(void);
 extern void ScaledZero44(void);
-extern void TripleScaledChainStore54_004313d0(void);
+extern void TripleScaledChainStore54(void);
 extern void Wrapper_0048a300(void);
 
-__declspec(naked) void CinematicFsmCluster_0047aaf0(void)
+__declspec(naked) void CinematicFsmCluster(void)
 {
     __asm {
         /* === Helper 1 (0x47aaf0): tiny accumulator === */
@@ -268,7 +268,7 @@ __declspec(naked) void CinematicFsmCluster_0047aaf0(void)
         test     cl, al
         mov      dword ptr [g_eventQueueChild], edx
         je       short L_ad07
-        call     TriPhaseDecCounterListAdvance_0047ad20
+        call     TriPhaseDecCounterListAdvance
         pop      esi
         ret
     L_ad07:
@@ -427,7 +427,7 @@ __declspec(naked) void RoundFsmCluster_004308a0(void)
         jmp      L_0b7c
     L_0ad7:
         push     OFFSET g_dispatchSave924_004e39c0
-        call     TripleScaledChainStore54_004313d0
+        call     TripleScaledChainStore54
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         test     eax, eax
@@ -547,7 +547,7 @@ __declspec(naked) void RoundFsmCluster_004308a0(void)
         jg       L_0cb6
     L_0c72:
         sub      dword ptr [g_xformScratch2088], eax
-        call     GuardedArithDualCallChain_00431e90
+        call     GuardedArithDualCallChain
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_0d25
@@ -563,7 +563,7 @@ __declspec(naked) void RoundFsmCluster_004308a0(void)
         mov      dword ptr [g_currentNodeFlags], eax
     L_0cb6:
         sub      dword ptr [g_xformScratch2088], eax
-        call     GuardedArithDualCallChain_00431e90
+        call     GuardedArithDualCallChain
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_0d25
@@ -576,7 +576,7 @@ __declspec(naked) void RoundFsmCluster_004308a0(void)
         ret      
     L_0cec:
         mov      dword ptr [g_xformScratch2088], 0x1921f
-        call     GuardedArithDualCallChain_00431e90
+        call     GuardedArithDualCallChain
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_0d25

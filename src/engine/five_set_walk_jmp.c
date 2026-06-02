@@ -7,7 +7,7 @@
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00461360 (15b) walk=4 entry */
-void FiveSetWalkJmp_00461360(void) {
+void FiveSetWalkJmp(void) {
     g_walkCallback = (void (*)(void))4;
     OrDualStore_0048e4b0();
 }

@@ -110,12 +110,12 @@ extern unsigned int g_fightAxisPosY;
 
 /*
  * @addr 0x0046fd70 (127b game) - timer-window threshold dispatch:
- *   if state < 0xcccc (signed) set walk=0x11 and call SnapshotDispatchMStack_00491350;
+ *   if state < 0xcccc (signed) set walk=0x11 and call SnapshotDispatchMStack;
  *   else call CmpP1ScaledInit, loop until pause set; then compute
  *   delta = walk[+0x58] - cj[+0x58]; set walk = 0x10 (or 0x11 if
- *   delta > 0x6666) and tail-jmp SnapshotDispatchMStack_00491350.
+ *   delta > 0x6666) and tail-jmp SnapshotDispatchMStack.
  */
-int TimerWindowThreshDispatch_0046fd70(void) {
+int TimerWindowThreshDispatch(void) {
     unsigned int v;
     unsigned int a;
     unsigned int c;
@@ -123,10 +123,10 @@ int TimerWindowThreshDispatch_0046fd70(void) {
     g_walkCallback = (void (*)(void))v;
     if ((int)v < 0xcccc) {
         g_walkCallback = (void (*)(void))0x11;
-        SnapshotDispatchMStack_00491350();
+        SnapshotDispatchMStack();
         return g_framePauseFlag;
     }
-    CmpP1ScaledInit_004709c0();
+    CmpP1ScaledInit();
     if (g_framePauseFlag != 0) return g_framePauseFlag;
     a = ((ScenegraphNode *)((unsigned int)g_scaledInit_00542044 * 4))->position_y;
     g_eventQueueWorkType = a;
@@ -136,5 +136,5 @@ int TimerWindowThreshDispatch_0046fd70(void) {
     g_eventQueueWorkType = a;
     g_walkCallback = (void (*)(void))0x10;
     if ((int)a > 0x6666) g_walkCallback = (void (*)(void))0x11;
-    return ((int (*)(void))SnapshotDispatchMStack_00491350)();
+    return ((int (*)(void))SnapshotDispatchMStack)();
 }

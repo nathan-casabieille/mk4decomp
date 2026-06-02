@@ -114,13 +114,13 @@ extern unsigned int g_fightAxisPosY;
  *   else: g_walkCallback=1; chain[g_fightGroupHead+0x28]=1; jmp StackPopDispatchTagged.
  *   install-path: g_eventQueueChild=0; g_eventQueueIdx=0; g_currentNodeFlags=0xa3d; g_xformScratch2088=0x4000.
  *     install self: [eax+8]=0x45bd80, push edi for packed_ptr store,
- *     g_scaledInit++; chain[+0x84]=0; call InstallSelfAccumOverflow_00428b20; pause=1.
+ *     g_scaledInit++; chain[+0x84]=0; call InstallSelfAccumOverflow; pause=1.
  */
-extern void InstallSelfAccumOverflow_00428b20(void);
+extern void InstallSelfAccumOverflow(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void InstallSelfMidPush_0045bd80(void) {
+__declspec(naked) void InstallSelfMidPush(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         xor     edx, edx
@@ -153,7 +153,7 @@ __declspec(naked) void InstallSelfMidPush_0045bd80(void) {
         mov     [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     [eax*4 + 0x84], edx
-        call    InstallSelfAccumOverflow_00428b20
+        call    InstallSelfAccumOverflow
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         ret

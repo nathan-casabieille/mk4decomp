@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *   g_eventQueueCurrent=eax; eax&=0xffff; push eax;
  *   g_eventQueueWorkType=eax; call TaggedSceneDispatch; pop esp; ret.
  */
-void ScaledChainPushCall_00489ee0(int arg0) {
+void ScaledChainPushCall(int arg0) {
     unsigned int packed = (unsigned int)(arg0 >> 2);
     unsigned int v;
     g_eventQueueTotal = packed;

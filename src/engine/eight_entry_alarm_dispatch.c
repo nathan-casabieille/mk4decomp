@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00482500 (382b game) - 8-entry packed mini-alarm dispatcher.
  *   Entry 1 (offset 0, 80b): set 0x54206c=0x6666 → CmpP1DualInitStore_00482ab0
  *     → CjTableThresholdDispatch → GateDispatch6c →
- *     SaveSwapCallRestore_00489030 → push 0x4ede38 → ArgSarStoreJmp.
+ *     SaveSwapCallRestore → push 0x4ede38 → ArgSarStoreJmp.
  *   Entry 2 (offset 0x50, 70b): 0x54206c=0xfffff852 → read slot+0x7c;
  *     if > 1 set 0x54206c=0xfffff0a4. MStackFrameCdeclDouble
  *     → push 0x4ede68 → ArgSarStoreJmp.
@@ -129,10 +129,10 @@ extern unsigned int g_fightAxisPosY;
  *     → ArgSarStoreJmp.
  *   4b NOP align pad.
  *   Entry 7 (offset 0x140, 30b): 0x54206c=6 → TableLookupCall_0048a160
- *     → tail-jmp TripleGuardSetTailJmp_00482680.
+ *     → tail-jmp TripleGuardSetTailJmp.
  *   2b NOP align pad.
  *   Entry 8 (offset 0x160, 30b): 0x54206c=8 → TableLookupCall_00489ff0
- *     → tail-jmp TripleGuardSetTailJmp_00482680.
+ *     → tail-jmp TripleGuardSetTailJmp.
  */
 extern unsigned int g_dispatchSave760_004ede38;
 extern unsigned int g_dispatchSave761_004ede68;
@@ -145,12 +145,12 @@ extern void CjTableThresholdDispatch(void);
 extern void CmpP1DualInitStore_00482ab0(void);
 extern void DualScaledInitClear(void);
 extern void GateDispatch6c(void);
-extern void SaveSwapCallRestore_00489030(void);
+extern void SaveSwapCallRestore(void);
 extern void TableLookupCall_00489ff0(void);
 extern void TableLookupCall_0048a160(void);
-extern void TripleGuardSetTailJmp_00482680(void);
+extern void TripleGuardSetTailJmp(void);
 
-__declspec(naked) void EightEntryAlarmDispatch_00482500(void) {
+__declspec(naked) void EightEntryAlarmDispatch(void) {
     __asm {
         mov     dword ptr [g_walkCallback], 0x6666
         call    CmpP1DualInitStore_00482ab0
@@ -165,7 +165,7 @@ __declspec(naked) void EightEntryAlarmDispatch_00482500(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eae_e1End
-        call    SaveSwapCallRestore_00489030
+        call    SaveSwapCallRestore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eae_e1End
@@ -291,7 +291,7 @@ __declspec(naked) void EightEntryAlarmDispatch_00482500(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eae_e7End
-        jmp     TripleGuardSetTailJmp_00482680
+        jmp     TripleGuardSetTailJmp
     L_eae_e7End:
         ret
         nop
@@ -303,7 +303,7 @@ __declspec(naked) void EightEntryAlarmDispatch_00482500(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eae_e8End
-        jmp     TripleGuardSetTailJmp_00482680
+        jmp     TripleGuardSetTailJmp
     L_eae_e8End:
         ret
     }

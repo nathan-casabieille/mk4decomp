@@ -116,7 +116,7 @@ extern unsigned int g_tickFlagF;
  *   else gate flag for 2; if matches, set walk=0x96, AudioVolume;
  *   gate pause; if bit 0 set jmp _00437b60 else jmp TriBranch.
  */
-void TriStageChainGate_004344b0(void) {
+void TriStageChainGate(void) {
     unsigned int v;
     ((void (*)(int))QuadBlockArgInstallChain)(0x004e4a00);
     if (g_framePauseFlag != 0) return;
@@ -129,15 +129,15 @@ void TriStageChainGate_004344b0(void) {
     v = g_tickFlagF;
     g_walkCallback = (void (*)(void))v;
     if (v == 2) {
-        FlagInitTableSelector_00434560();
+        FlagInitTableSelector();
         return;
     }
     g_walkCallback = (void (*)(void))0x96;
     AudioVolumeRescale();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 1) == 0) {
-        InstallSelfChainSetB333_00437b60();
+        InstallSelfChainSetB333();
         return;
     }
-    TriBranchJmp_00434530();
+    TriBranchJmp();
 }

@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_arr_00f9eb80;
 extern unsigned int g_byte_00f9efdc;
 
-__declspec(naked) char FreeSlotFinder_004c3900(void) {
+__declspec(naked) char FreeSlotFinder(void) {
     __asm {
         movsx   eax, byte ptr [g_byte_00f9efdc]
         inc     eax

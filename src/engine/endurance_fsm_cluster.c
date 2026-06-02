@@ -110,13 +110,13 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave921_004df6f0;
 extern void BootInitGuardedCallChain(void);
-extern void BootMultiAssetLoadStateInit_00403b10(void);
+extern void BootMultiAssetLoadStateInit(void);
 extern void CallSetPause(void);
 extern void InstallSelfPackedF80(void);
 extern void MStackCall_00406740(void);
 extern void TableWalkBoundedCmp(void);
 
-__declspec(naked) void EnduranceFsmCluster_004238e0(void)
+__declspec(naked) void EnduranceFsmCluster(void)
 {
     __asm {
         /* === Helper 1 (0x4238e0): 4-state FSM w/ jump table === */
@@ -168,7 +168,7 @@ __declspec(naked) void EnduranceFsmCluster_004238e0(void)
         mov      dword ptr [g_walkCallback], edi
         mov      dword ptr [g_active_0053a408], edi
         mov      dword ptr [g_active_00537e88], edi
-        call     BootMultiAssetLoadStateInit_00403b10
+        call     BootMultiAssetLoadStateInit
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3a73
         mov      eax, OFFSET g_dispatchSave921_004df6f0

@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *   install: state=1; [ecx+8]=self; g_pendingNodeType=1; g_pause=1; ret.
  */
 
-__declspec(naked) void InstallSelfScaledAdv3d7Cmp_0043a830(void) {
+__declspec(naked) void InstallSelfScaledAdv3d7Cmp(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -166,7 +166,7 @@ __declspec(naked) void InstallSelfScaledAdv3d7Cmp_0043a830(void) {
         mov     dword ptr [eax*4 + 0x70], edx
     install:
         mov     eax, 1
-        mov     dword ptr [ecx + 8], offset InstallSelfScaledAdv3d7Cmp_0043a830
+        mov     dword ptr [ecx + 8], offset InstallSelfScaledAdv3d7Cmp
         mov     dword ptr [ecx + 0x84], eax
         mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_framePauseFlag], eax

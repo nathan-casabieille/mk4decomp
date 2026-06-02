@@ -108,9 +108,9 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void FFlushImpl_004c69a0(void *fp);
-extern void BitTestFreeClear_004c8ae0(void *fp);
-extern void CloseImpl_004c89e0(int fd);
+extern void FFlushImpl(void *fp);
+extern void BitTestFreeClear(void *fp);
+extern void CloseImpl(int fd);
 extern void FreeImpl(void *fp);
 
 /*
@@ -119,7 +119,7 @@ extern void FreeImpl(void *fp);
  *   call _close_flag, then _close on its fd; if rc<0 clears state
  *   and returns -1; else also frees buf at +0x1c via free helper.
  */
-__declspec(naked) void FCloseImpl_004c5840(void) {
+__declspec(naked) void FCloseImpl(void) {
     __asm {
         push    esi
         mov     esi, dword ptr [esp + 8]
@@ -128,15 +128,15 @@ __declspec(naked) void FCloseImpl_004c5840(void) {
         test    byte ptr [esi + 0xc], 0x83
         je      noFlush
         push    esi
-        call    FFlushImpl_004c69a0
+        call    FFlushImpl
         add     esp, 4
         mov     edi, eax
         push    esi
-        call    BitTestFreeClear_004c8ae0
+        call    BitTestFreeClear
         mov     eax, dword ptr [esi + 0x10]
         add     esp, 4
         push    eax
-        call    CloseImpl_004c89e0
+        call    CloseImpl
         add     esp, 4
         test    eax, eax
         jge     freeBuf

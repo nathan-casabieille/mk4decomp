@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_pendingMatchVar3_004d5320;
 extern unsigned int g_pendingMatchVar;
 extern unsigned int g_pendingMatchVar5_004d532c;
-__declspec(naked) void ModuloMagic_0042afc0(void) {
+__declspec(naked) void ModuloMagic(void) {
     __asm {
         mov     ecx, dword ptr [esp + 4]
         mov     eax, dword ptr [g_pendingMatchVar3_004d5320]

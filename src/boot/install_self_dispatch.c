@@ -114,14 +114,14 @@ extern unsigned int g_fightAxisPosY;
  *   On pause: ret. install self; if arr_final[g_scaledInit] != 0: call F3;
  *   pause? ret. clear bit 0 of g_xformDirtyFlags.
  */
-extern void ExtractBitsToVec3_00407c00(void);
-extern void ThreeChan11BitPack_00407c60(void);
+extern void ExtractBitsToVec3(void);
+extern void ThreeChan11BitPack(void);
 
 extern unsigned int g_arr_407620_disp_20;
 extern unsigned int g_arr_407620_final;
 extern unsigned int g_arr_407620_mstack;
 
-void InstallSelfDispatch_00407620(void) {
+void InstallSelfDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]
         lea     ecx, [eax + 0xf]
@@ -135,20 +135,20 @@ void InstallSelfDispatch_00407620(void) {
         test    ch, 1
         _emit   74h
         _emit   10h
-        call    ExtractBitsToVec3_00407c00
+        call    ExtractBitsToVec3
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   49h
         _emit   0ebh
         _emit   0eh
-        call    ThreeChan11BitPack_00407c60
+        call    ThreeChan11BitPack
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   39h
         mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [g_walkCallback], offset InstallSelfDispatch_00407620
+        mov     dword ptr [g_walkCallback], offset InstallSelfDispatch
         mov     eax, [eax*4 + g_arr_407620_final]
         test    eax, eax
         mov     dword ptr [g_eventQueueCurrent], eax

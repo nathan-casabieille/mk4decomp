@@ -113,7 +113,7 @@ extern void AudioInstallSelfStatePush(void);
 extern void PushPopScaledInit343c(void);
 extern void SceneFrameStepWithInputs(void);
 
-__declspec(naked) void Install3StateAudioChain_00424200(void) {
+__declspec(naked) void Install3StateAudioChain(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -153,7 +153,7 @@ __declspec(naked) void Install3StateAudioChain_00424200(void) {
         cmp     edx, 0x11
         _emit   75h
         _emit   27h
-        mov     dword ptr [esi + 8], offset Install3StateAudioChain_00424200
+        mov     dword ptr [esi + 8], offset Install3StateAudioChain
         mov     dword ptr [esi + 0x84], 2
         mov     dword ptr [g_pendingNodeType], 1
         mov     dword ptr [g_framePauseFlag], 1
@@ -170,9 +170,9 @@ __declspec(naked) void Install3StateAudioChain_00424200(void) {
         mov     dword ptr [g_scaledInit_00542044], ecx
         mov     dword ptr [eax], ecx
         call    PushPopScaledInit343c
-        mov     dword ptr [esi + 8], offset Install3StateAudioChain_00424200
+        mov     dword ptr [esi + 8], offset Install3StateAudioChain
         mov     edx, dword ptr [g_baseSel]
-        mov     ecx, offset Install3StateAudioChain_00424200
+        mov     ecx, offset Install3StateAudioChain
         mov     dword ptr [edx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     ecx, 0x01000000

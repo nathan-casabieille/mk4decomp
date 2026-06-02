@@ -26,15 +26,15 @@ int Crt_rand(void) {
  *   call 0x4c6940(0x4d5000, 0x4d5018); add esp 8; ret.
  */
 extern void (*g_iat_0051ffd8)(void);
-extern int IterFnPtrs_004c6940(void *, void *);
+extern int IterFnPtrs(void *, void *);
 extern void *g_dispatchSave550_004d5000;
 extern void *g_dispatchSave549_004d5018;
 extern void *g_dispatchSave548_004d501c;
 extern void *g_dispatchSave547_004d5024;
 void _init_premain(void) {
     if (g_iat_0051ffd8) g_iat_0051ffd8();
-    IterFnPtrs_004c6940(&g_dispatchSave548_004d501c, &g_dispatchSave547_004d5024);
-    IterFnPtrs_004c6940(&g_dispatchSave550_004d5000, &g_dispatchSave549_004d5018);
+    IterFnPtrs(&g_dispatchSave548_004d501c, &g_dispatchSave547_004d5024);
+    IterFnPtrs(&g_dispatchSave550_004d5000, &g_dispatchSave549_004d5018);
 }
 
 /* @addr 0x004c6ee0 (55b)
@@ -46,12 +46,12 @@ void _init_premain(void) {
 extern void * (__stdcall *g_iat_004d216c)(int, int, int);
 extern void (__stdcall *g_iat_004d2158)(void *);
 extern void * g_dispatchSave1470_00fa0ee4;
-extern int VirtualHeapAlloc_004c70d0(void);
-int CallIATIfThenCall_004c6ee0(void) {
+extern int VirtualHeapAlloc(void);
+int CallIATIfThenCall(void) {
     void *p = g_iat_004d216c(0, 0x1000, 0);
     g_dispatchSave1470_00fa0ee4 = p;
     if (p == 0) return 0;
-    if (VirtualHeapAlloc_004c70d0() == 0) {
+    if (VirtualHeapAlloc() == 0) {
         g_iat_004d2158(g_dispatchSave1470_00fa0ee4);
         return 0;
     }

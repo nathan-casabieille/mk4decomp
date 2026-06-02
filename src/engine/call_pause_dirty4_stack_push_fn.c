@@ -12,20 +12,20 @@ extern unsigned int g_scaledInit_00542044;
  *   testb 4,[dirty]; jz +0x1b →ret; inc g_matrixStackTop;
  *   push 0x00483a20 onto stack[idx*4]; jmp T.
  */
-extern void GuardedDoubleIncCmpJmp_00429860(void);
+extern void GuardedDoubleIncCmpJmp(void);
 extern void DirtyToggleByGate(void);
-extern void InstallSelfOrChainJmp_00483a20(void);
+extern void InstallSelfOrChainJmp(void);
 extern void GameDispatchValidateState(void);
 void CallPauseDirty4StackPushFn(void) {
-    GuardedDoubleIncCmpJmp_00429860();
+    GuardedDoubleIncCmpJmp();
     if (g_framePauseFlag != 0) return;
     DirtyToggleByGate();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 4) != 0) {
         g_matrixStackTop++;
-        *(unsigned int *)(g_matrixStackTop * 4) = (unsigned int)&InstallSelfOrChainJmp_00483a20;
+        *(unsigned int *)(g_matrixStackTop * 4) = (unsigned int)&InstallSelfOrChainJmp;
         GameDispatchValidateState();
         return;
     }
-    InstallSelfOrChainJmp_00483a20();
+    InstallSelfOrChainJmp();
 }

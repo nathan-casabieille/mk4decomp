@@ -11,7 +11,7 @@ extern unsigned int g_scaledInit_00542044;
  *   6× push 0, push imm; call F; add esp 8; ret. Pattern of 6 unique 2-arg calls.
  */
 extern void Snd3DSourceCleanup(int, int);
-void SixDoublePushCall_004be630(void) {
+void SixDoublePushCall(void) {
     Snd3DSourceCleanup(0x138, 0);
     Snd3DSourceCleanup(0x333, 0);
     Snd3DSourceCleanup(0x3ec, 0);

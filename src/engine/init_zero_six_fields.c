@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
  *   ecx=g_walkCallback; [eax+0x44]=ecx; ret.
  */
 
-void InitZeroSixFields_00445f40(void) {
+void InitZeroSixFields(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         xor     ecx, ecx

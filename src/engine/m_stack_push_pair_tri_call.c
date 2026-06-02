@@ -108,22 +108,22 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void InstallSelfHelperGate_00486490(void);
-extern void MStackPushPairTriCall_0048ce60(void);
+extern void InstallSelfHelperGate(void);
+extern void MStackPushPairTriCall(void);
 
 /* @addr 0x00486290 (215b game) - chain dispatcher with 4-call cascade.
  *   g_walkCallback = 0x8000; if baseSel*4+0x7c <= 0: g_walkCallback = 0x4ccc.
- *   call CmpP1DualInitStore_00482ab0; if !pause: g_walkCallback=baseSel*4+0x60; if != 0x1003 jmp InstallSelfHelperGate_00486490.
+ *   call CmpP1DualInitStore_00482ab0; if !pause: g_walkCallback=baseSel*4+0x60; if != 0x1003 jmp InstallSelfHelperGate.
  *   Else baseSel*4+0x74=0x1003; call MStackPushSet0008; pause-check; g_walkCallback=1; call TableLookupCall_00489ff0; pause-check;
- *   call MStackPushPairTriCall_0048ce60; pause-check; g_eventQueueNotMask=0; call CopyJmp_0048ef90; pause-check;
- *   if bit-0 set g_eventQueueNotMask=1; g_eventQueueChild=6; jmp MStackInstallCountdown_00486370.
+ *   call MStackPushPairTriCall; pause-check; g_eventQueueNotMask=0; call CopyJmp_0048ef90; pause-check;
+ *   if bit-0 set g_eventQueueNotMask=1; g_eventQueueChild=6; jmp MStackInstallCountdown.
  */
 extern void CmpP1DualInitStore_00482ab0(void);
-extern void MStackInstallCountdown_00486370(void);
+extern void MStackInstallCountdown(void);
 extern void MStackPushSet0008(void);
 extern void TableLookupCall_00489ff0(void);
 
-__declspec(naked) void ChainDispatcher4Call_00486290(void) {
+__declspec(naked) void ChainDispatcher4Call(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [g_walkCallback], 0x00008000
@@ -149,7 +149,7 @@ __declspec(naked) void ChainDispatcher4Call_00486290(void) {
         mov     dword ptr [g_walkCallback], ecx
         _emit   75h
         _emit   05h
-        jmp     InstallSelfHelperGate_00486490
+        jmp     InstallSelfHelperGate
         mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [eax*4 + 0x74], edx
         call    MStackPushSet0008
@@ -163,7 +163,7 @@ __declspec(naked) void ChainDispatcher4Call_00486290(void) {
         test    eax, eax
         _emit   75h
         _emit   48h
-        call    MStackPushPairTriCall_0048ce60
+        call    MStackPushPairTriCall
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -179,7 +179,7 @@ __declspec(naked) void ChainDispatcher4Call_00486290(void) {
         _emit   0ah
         mov     dword ptr [g_eventQueueNotMask], 1
         mov     dword ptr [g_eventQueueChild], 6
-        jmp     MStackInstallCountdown_00486370
+        jmp     MStackInstallCountdown
         ret
     }
 }

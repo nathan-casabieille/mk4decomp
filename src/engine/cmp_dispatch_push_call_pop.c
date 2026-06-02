@@ -113,11 +113,11 @@ extern unsigned int g_fightAxisPosY;
  *   cmp eax,ecx; g_walkCallback = eax;
  *   if lt: jmp StackPopDispatchTagged;
  *   else: push g_eventQueueChild on mstack;
- *         call Push80SetWalkDualCallPop_00439350;
- *         if pause: ret; pop g_eventQueueChild; tail-jmp InstallSelfBit4Gate_00438590.
+ *         call Push80SetWalkDualCallPop;
+ *         if pause: ret; pop g_eventQueueChild; tail-jmp InstallSelfBit4Gate.
  */
-extern void Push80SetWalkDualCallPop_00439350(void);
-extern void InstallSelfBit4Gate_00438590(void);
+extern void Push80SetWalkDualCallPop(void);
+extern void InstallSelfBit4Gate(void);
 void CmpDispatchPushCallPop(void) {
     unsigned int v;
     unsigned int top;
@@ -131,11 +131,11 @@ void CmpDispatchPushCallPop(void) {
     top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_eventQueueChild;
-    Push80SetWalkDualCallPop_00439350();
+    Push80SetWalkDualCallPop();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     saved = *(unsigned int *)(top * 4);
     g_eventQueueChild = saved;
     g_matrixStackTop = top - 1;
-    InstallSelfBit4Gate_00438590();
+    InstallSelfBit4Gate();
 }

@@ -15,7 +15,7 @@ extern unsigned int g_scaledInit_00542044;
  *   add     esp, 4
  *   ret
  */
-extern int CleanupCallTwice_004bd530(void *);
-void LeaScaledCall_004bd510(void) {
-    CleanupCallTwice_004bd530((void *)(g_scaledInit_00542044 * 4 + 0x48));
+extern int CleanupCallTwice(void *);
+void LeaScaledCall(void) {
+    CleanupCallTwice((void *)(g_scaledInit_00542044 * 4 + 0x48));
 }

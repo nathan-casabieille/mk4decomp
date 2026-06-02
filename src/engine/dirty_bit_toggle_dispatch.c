@@ -126,7 +126,7 @@ extern void MStackCall_00406340(void);
 extern unsigned int g_arr_463390;
 extern unsigned int g_chain_disp_30_463390;
 
-void DirtyBitToggleDispatch_00463390(void) {
+void DirtyBitToggleDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_active_0053a408]
         mov     ecx, dword ptr [g_dlNalt1]

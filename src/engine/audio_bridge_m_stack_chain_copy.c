@@ -116,11 +116,11 @@ extern unsigned int g_audioBridgeBase_0052d740;
 extern unsigned int g_dispatchSave107_0052d744;
 extern unsigned int g_dispatchSave106_0052d748;
 extern void AudioVolumeRescale(void);
-extern void DoubleStackPushAndJmp7d_00474050(void);
+extern void DoubleStackPushAndJmp7d(void);
 
 extern unsigned int g_matrixStack_arr;
 
-void AudioBridgeMStackChainCopy_00440730(void) {
+void AudioBridgeMStackChainCopy(void) {
     __asm {
         call    AudioVolumeRescale
         mov     eax, dword ptr [g_framePauseFlag]
@@ -178,7 +178,7 @@ void AudioBridgeMStackChainCopy_00440730(void) {
         mov     eax, offset g_audioBridgeBase_0052d740
         shr     eax, 2
         mov     dword ptr [g_eventQueueIdx], eax
-        call    DoubleStackPushAndJmp7d_00474050
+        call    DoubleStackPushAndJmp7d
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

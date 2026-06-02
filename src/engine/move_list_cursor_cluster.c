@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern void PendingMatch_00459510(void);
 extern void ScaledIterStep_0045c020(void);
 
-__declspec(naked) void MoveListCursorCluster_0045b420(void)
+__declspec(naked) void MoveListCursorCluster(void)
 {
     __asm {
     L_b420:

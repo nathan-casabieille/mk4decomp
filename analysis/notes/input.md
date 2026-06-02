@@ -134,12 +134,12 @@ above) for what looks like an outer-deadzone threshold.
 - `AppInit_Misc1` (0x004b6180) - HUD font precache. Uses `MapVirtualKeyA`
   but on the loop index (`MapVirtualKeyA(i, MAPVK_VK_TO_CHAR=2)`) to
   patch the first byte of dot-prefixed asset names. Not input handling.
-- `EventGateCluster_0045e1e0` (was `InputCheckCluster_0045e1e0`) -
+- `EventGateCluster` (was `InputCheckCluster_0045e1e0`) -
   NOT input. A packed cluster of event-queue sub-functions; its anchor
   loads the current entity's event cursor and jumps into
   `EventPacketDecoder`. Renamed in the event-decoder pass; see
   [events.md](events.md).
-- `InputPollFlagBits_004a1b00` and `InputPollFlagBitsHalf_004a1b50` -
+- `InputPollFlagBits` and `InputPollFlagBitsHalf` -
   read individual bits of `g_byte_004d50b8` and `g_byte_004d50b4`
   (which look like already-aggregated per-player action accumulators).
   Used from the audio path. Without knowing the exact slot meanings
@@ -165,9 +165,9 @@ above) for what looks like an outer-deadzone threshold.
   variant). One is likely the inner deadzone, the other the
   edge-triggered max threshold. Need a runtime test.
 - ~~**`InputCheckCluster_0045e1e0` rename**~~ - DONE. Renamed to
-  `EventGateCluster_0045e1e0`; it's event-queue machinery, not input.
+  `EventGateCluster`; it's event-queue machinery, not input.
   See [events.md](events.md).
-- **`InputPollFlagBits_004a1b00` / `_004a1b50` clarification**. These
+- **`InputPollFlagBits` / `_004a1b50` clarification**. These
   two read `g_byte_004d50b4/b8` - which the hidden debug menu treats as
   toggle-state bytes (see [debug_menu.md](debug_menu.md)). So they may
   be debug-menu/option predicates rather than gameplay input checks;

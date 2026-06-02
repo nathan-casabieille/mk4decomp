@@ -110,10 +110,10 @@ extern unsigned int g_fightAxisPosY;
 
 extern void AudioMixerStep(void);
 extern void CallSetPause(void);
-extern void DirtyToggleScaledTest_0043a630(void);
-extern void InstallSelfScaledAdv3d7Cmp_0043a830(void);
+extern void DirtyToggleScaledTest(void);
+extern void InstallSelfScaledAdv3d7Cmp(void);
 
-__declspec(naked) void QuadFieldEarlyJmpThenInstall_0043a670(void)
+__declspec(naked) void QuadFieldEarlyJmpThenInstall(void)
 {
     __asm
     {
@@ -122,25 +122,25 @@ __declspec(naked) void QuadFieldEarlyJmpThenInstall_0043a670(void)
         cmp     ecx, 0x6c
         mov     dword ptr [g_eventQueueCurrent], ecx
         je      short L_qfeji_cont1
-        jmp     DirtyToggleScaledTest_0043a630
+        jmp     DirtyToggleScaledTest
     L_qfeji_cont1:
         mov     ecx, dword ptr [eax*4 + 0x6c]
         test    ecx, ecx
         mov     dword ptr [g_walkCallback], ecx
         je      short L_qfeji_cont2
-        jmp     DirtyToggleScaledTest_0043a630
+        jmp     DirtyToggleScaledTest
     L_qfeji_cont2:
         mov     ecx, dword ptr [eax*4 + 0x70]
         test    ecx, ecx
         mov     dword ptr [g_walkCallback], ecx
         je      short L_qfeji_cont3
-        jmp     DirtyToggleScaledTest_0043a630
+        jmp     DirtyToggleScaledTest
     L_qfeji_cont3:
         mov     ecx, dword ptr [eax*4 + 0x74]
         test    ecx, ecx
         mov     dword ptr [g_walkCallback], ecx
         je      short L_qfeji_install
-        jmp     DirtyToggleScaledTest_0043a630
+        jmp     DirtyToggleScaledTest
     L_qfeji_install:
         mov     ecx, dword ptr [g_matrixStackTop]
         inc     ecx
@@ -159,7 +159,7 @@ __declspec(naked) void QuadFieldEarlyJmpThenInstall_0043a670(void)
         dec     eax
         mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        jmp     DirtyToggleScaledTest_0043a630
+        jmp     DirtyToggleScaledTest
     L_qfeji_ret:
         ret
         nop
@@ -215,7 +215,7 @@ __declspec(naked) void QuadFieldEarlyJmpThenInstall_0043a670(void)
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
-        call    InstallSelfScaledAdv3d7Cmp_0043a830
+        call    InstallSelfScaledAdv3d7Cmp
         mov     dword ptr [g_framePauseFlag], 1
     L_qfeji_sub2_ret:
         pop     esi

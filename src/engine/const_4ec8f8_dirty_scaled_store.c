@@ -24,7 +24,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void FramePauseScaledStore(void);
 extern int g_phase4ThreePackedBase_004ec8f8;
-void Const4ec8f8DirtyScaledStore_00446580(void) {
+void Const4ec8f8DirtyScaledStore(void) {
     g_xformEntityIdx = ((unsigned int)&g_phase4ThreePackedBase_004ec8f8) >> 2;
     FramePauseScaledStore();
     if (g_framePauseFlag != 0) return;

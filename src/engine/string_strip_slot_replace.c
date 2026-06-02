@@ -120,11 +120,11 @@ extern unsigned int g_crtTimeFmtPrefs_005236e8;
 extern unsigned int g_dispatchSave1445_00f9fc14;
 extern unsigned int g_dispatchSave1459_00f9fc74;
 extern void Calloc(void);
-extern void CrtFreeLocaleInfo_004d0400(void);
+extern void CrtFreeLocaleInfo(void);
 extern void FreeImpl(void);
-extern void LocaleInfoFill_004d0270(void);
+extern void LocaleInfoFill(void);
 
-__declspec(naked) void StringStripSlotReplace_004d0140(void) {
+__declspec(naked) void StringStripSlotReplace(void) {
     __asm {
         /* sub-1 (in-place string strip) */
         mov     ecx, [esp + 4]
@@ -188,12 +188,12 @@ __declspec(naked) void StringStripSlotReplace_004d0140(void) {
         ret
     L_srr_haveBuf:
         push    esi
-        call    LocaleInfoFill_004d0270
+        call    LocaleInfoFill
         add     esp, 4
         test    eax, eax
         jz      short L_srr_install
         push    esi
-        call    CrtFreeLocaleInfo_004d0400
+        call    CrtFreeLocaleInfo
         add     esp, 4
         push    esi
         call    FreeImpl
@@ -214,7 +214,7 @@ __declspec(naked) void StringStripSlotReplace_004d0140(void) {
         mov     eax, dword ptr [g_dispatchSave1459_00f9fc74]
         push    eax
         mov     dword ptr [g_crtTimeFmtPrefs_005236e8], esi
-        call    CrtFreeLocaleInfo_004d0400
+        call    CrtFreeLocaleInfo
         mov     ecx, dword ptr [g_dispatchSave1459_00f9fc74]
         add     esp, 4
         push    ecx
@@ -235,7 +235,7 @@ __declspec(naked) void StringStripSlotReplace_004d0140(void) {
         mov     dword ptr [g_dispatchPair_005236b8 + 8], edx
         push    eax
         mov     dword ptr [g_crtTimeFmtPrefs_005236e8], offset g_dispatchPair_005236b8
-        call    CrtFreeLocaleInfo_004d0400
+        call    CrtFreeLocaleInfo
         mov     ecx, dword ptr [g_dispatchSave1459_00f9fc74]
         add     esp, 4
         push    ecx

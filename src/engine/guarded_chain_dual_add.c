@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  *   ecx = [edx*4 + 0x44]; eax += ecx; g_eventQueueWorkType = eax;
  *   ret.
  */
-void GuardedChainDualAdd_0044ccf0(void) {
+void GuardedChainDualAdd(void) {
     MStackPushVec3Mul10();
     if (g_framePauseFlag) return;
     g_scaledInit_00542044 = g_installOwnerNode;

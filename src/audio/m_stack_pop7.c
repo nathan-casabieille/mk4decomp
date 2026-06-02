@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_matrixStack_arr;
 
-void MStackPop7_004ab9b0(void) {
+void MStackPop7(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, [eax*4 + g_matrixStack_arr]

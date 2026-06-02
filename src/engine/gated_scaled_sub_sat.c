@@ -109,9 +109,9 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0048fb40 (127b) - if (g_or_0052ab40 & 0x4000) ret;
- *   call ArgScaledLoadCmpP1_0048e550(str_542fa0); pause? ret;
+ *   call ArgScaledLoadCmpP1(str_542fa0); pause? ret;
  *   arr1[sel] = g_eventQueueCurrent;
- *   call ArgScaledLoadCmpP1_0048e550(str_542fa8); pause? ret;
+ *   call ArgScaledLoadCmpP1(str_542fa8); pause? ret;
  *   diff = arr2[sel] - g_walkCallback; g_eventQueueCurrent = diff;
  *   if (diff < 0) { diff=0; g_eventQueueCurrent=0; }
  *   arr2[sel] = diff.
@@ -119,12 +119,12 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_str_00542fa0;
 extern unsigned int g_str_00542fa8;
 extern unsigned int g_or_0052ab40;
-extern void ArgScaledLoadCmpP1_0048e550(void);
+extern void ArgScaledLoadCmpP1(void);
 
 extern unsigned int g_arr_005d8208;
 extern unsigned int g_arr_005d83a4;
 
-void GatedScaledSubSat_0048fb40(void) {
+void GatedScaledSubSat(void) {
     __asm {
         mov     eax, dword ptr [g_or_0052ab40]
         mov     dword ptr [g_eventQueueWorkType], eax
@@ -133,7 +133,7 @@ void GatedScaledSubSat_0048fb40(void) {
         _emit   75h
         _emit   68h
         push    offset g_str_00542fa0
-        call    ArgScaledLoadCmpP1_0048e550
+        call    ArgScaledLoadCmpP1
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
@@ -143,7 +143,7 @@ void GatedScaledSubSat_0048fb40(void) {
         mov     ecx, dword ptr [g_eventQueueCurrent]
         push    offset g_str_00542fa8
         mov     [eax*4 + g_arr_005d83a4], ecx
-        call    ArgScaledLoadCmpP1_0048e550
+        call    ArgScaledLoadCmpP1
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax

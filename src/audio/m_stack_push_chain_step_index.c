@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * MStackPushChainStepIndex_004ab510 - 240b audio chain-step with mstack push2.
+ * MStackPushChainStepIndex - 240b audio chain-step with mstack push2.
  *   ecx = g_currentNodeIdx[0]; g_walkCallback = ecx; g_xformDirtyFlags |= 4.
  *   If ecx == 0: g_currentNodeIdx = 0; ret. Else: g_xformDirtyFlags ^= 4.
  *   If ecx == 0 (still): g_currentNodeIdx = 0; ret. Else: mstack-push ecx, then g_xformEntityIdx;
@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *   chain[g_xformEntityIdx*4 + 4] = 0; chain[g_xformEntityIdx*4] = g_walkCallback; pop2 mstack into
  *   g_xformEntityIdx and g_walkCallback; g_currentNodeIdx = (last popped); ret.
  */
-void MStackPushChainStepIndex_004ab510(void)
+void MStackPushChainStepIndex(void)
 {
     unsigned int chain;
     unsigned int idx;

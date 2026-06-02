@@ -22,7 +22,7 @@ extern int TaggedSceneDispatch(unsigned short v);
 extern void *g_const_004a0060;
 extern unsigned short g_word_004e2860;
 extern void CallSetPause(void);
-int Push15PushDataCallWordCallJmp_004a1080(void) {
+int Push15PushDataCallWordCallJmp(void) {
     StoreTwoCall(&g_const_004a0060, 0x15);
     TaggedSceneDispatch(g_word_004e2860);
     return ((int (*)(void))CallSetPause)();

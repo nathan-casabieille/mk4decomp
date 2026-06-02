@@ -112,23 +112,23 @@ extern unsigned int g_dispatchSave741_004ed518;
 extern unsigned int g_dispatchSave742_004ed550;
 extern unsigned int g_dispatchSave743_004ed560;
 extern unsigned int g_dispatchSave69_00542ba0;
-extern void Alarm3EntryPhaseChain_0047e1a0(void);
+extern void Alarm3EntryPhaseChain(void);
 extern void ArgSarStoreJmp(void);
 extern void Cascade3ChainInit(void);
 extern void CmpEqInitCallElseJmp(void);
 extern void EsiInstallDecCallChain_004294a0(void);
 extern void FiveCallGuardSetTail(void);
 extern void GuardedPackedSlotInit(void);
-extern void GuardedRangeCmpFpuJmp_0042b8d0(void);
+extern void GuardedRangeCmpFpuJmp(void);
 extern void ScaledLoadJmp_00428d20(void);
 extern void ScaledZero44(void);
 extern void SetJmp_00483b40(void);
-extern void StoreLitRetSet2_0042c3b0(void);
+extern void StoreLitRetSet2(void);
 extern void StreamInitCountdownBody(void);
 extern void TableLookupCall_00489ff0(void);
 extern void TableLookupCall_0048a130(void);
 
-__declspec(naked) void AggressorModeCluster_0047df30(void)
+__declspec(naked) void AggressorModeCluster(void)
 {
     __asm {
         /* === Helper 1 (0x47df30): tiny event 004ed518 forwarder === */
@@ -155,18 +155,18 @@ __declspec(naked) void AggressorModeCluster_0047df30(void)
         mov      eax, dword ptr [g_xformScratch2088]
         test     eax, eax
         jne      short L_df92
-        call     Alarm3EntryPhaseChain_0047e1a0
+        call     Alarm3EntryPhaseChain
         pop      esi
         ret
     L_df92:
         cmp      eax, 1
         jne      short L_df9e
-        call     Alarm3EntryPhaseChain_0047e1a0
+        call     Alarm3EntryPhaseChain
         pop      esi
         ret
     L_df9e:
         mov      dword ptr [g_eventQueueWorkType], 0x20000
-        call     GuardedRangeCmpFpuJmp_0042b8d0
+        call     GuardedRangeCmpFpuJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e0fd
@@ -178,7 +178,7 @@ __declspec(naked) void AggressorModeCluster_0047df30(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e0fd
-        call     StoreLitRetSet2_0042c3b0
+        call     StoreLitRetSet2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e0fd

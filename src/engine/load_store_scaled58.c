@@ -16,7 +16,7 @@ extern unsigned int g_baseSel;
  *   ret
  */
 extern unsigned int g_load_0052ab10;
-void LoadStoreScaled58_004314d0(void) {
+void LoadStoreScaled58(void) {
     unsigned int idx = g_load_0052ab10;
     g_fightGroupHead = idx;
     g_walkCallback   = (void(*)(void))0xfffe8000;

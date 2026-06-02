@@ -21,7 +21,7 @@ extern unsigned int g_scaledInit_00542044;
  *   pop     esi
  *   ret
  */
-__declspec(naked) void Copy3Dwords_004cca00(void) {
+__declspec(naked) void Copy3Dwords(void) {
     __asm {
         mov     eax, dword ptr [esp + 8]
         mov     ecx, dword ptr [esp + 4]

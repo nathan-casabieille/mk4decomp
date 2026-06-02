@@ -109,11 +109,11 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_pendingMatchVar3_004d5320;
-extern void RandSarMod0xFFFSub400_0041f1f0(void);
-extern void RandSarMod0xFFF_0041f230(void);
+extern void RandSarMod0xFFFSub400(void);
+extern void RandSarMod0xFFF(void);
 extern void WorldCellSetupCluster(void);
 
-void RandPushTrigPair_0043f120(void) {
+void RandPushTrigPair(void) {
     __asm {
         mov     ecx, dword ptr [g_eventQueueIdx]
         mov     eax, dword ptr [g_pendingMatchVar3_004d5320]
@@ -124,7 +124,7 @@ void RandPushTrigPair_0043f120(void) {
         call    WorldCellSetupCluster
         add     esp, 4
         mov     dword ptr [g_eventQueueWorkType], eax
-        call    RandSarMod0xFFF_0041f230
+        call    RandSarMod0xFFF
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_rptp_ret
@@ -142,7 +142,7 @@ void RandPushTrigPair_0043f120(void) {
         call    WorldCellSetupCluster
         add     esp, 4
         mov     dword ptr [g_eventQueueWorkType], eax
-        call    RandSarMod0xFFFSub400_0041f1f0
+        call    RandSarMod0xFFFSub400
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_rptp_ret

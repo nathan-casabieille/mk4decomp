@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
 extern void FiveCallGuardSetTail(void);
 extern void MStackPushSet0008(void);
 
-__declspec(naked) void InstallSelfPauseTwoCall_0047af70(void) {
+__declspec(naked) void InstallSelfPauseTwoCall(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -147,7 +147,7 @@ __declspec(naked) void InstallSelfPauseTwoCall_0047af70(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     [ecx*4 + 0x74], eax
         mov     eax, 1
-        mov     dword ptr [esi + 0x08], offset InstallSelfPauseTwoCall_0047af70
+        mov     dword ptr [esi + 0x08], offset InstallSelfPauseTwoCall
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], 0x28
         mov     dword ptr [g_framePauseFlag], eax

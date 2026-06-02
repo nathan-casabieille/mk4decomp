@@ -111,8 +111,8 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x004c5ad0 (151b boot/crt) - fseek-like wrapper (file flush + IO + errno).
  *   arg2 (whence) must be in {0,1,2}; else: set errno=EINVAL, return -1.
  *   FILE* esi = arg1; if (!(flags & 0x83)) errno fail.
- *   Mask bit 4 in flags; if (whence == 1): offset += saved_pos (call FileTellAdjusted_004c58e0).
- *   call FFlushImpl_004c69a0; reload flags.
+ *   Mask bit 4 in flags; if (whence == 1): offset += saved_pos (call FileTellAdjusted).
+ *   call FFlushImpl; reload flags.
  *   if (flag&0x80): flags &= ~3; jmp do-io.
  *   else: skip if flag & (1|8) or (ah & 4); set [esi+0x18] = 0x200.
  *   do-io: call IOWrapper_004c8dd0(offset, whence, [esi+0x10], 0); add esp,c.
@@ -120,11 +120,11 @@ extern unsigned int g_fightAxisPosY;
  *   Fail: call CallAdd8; *eax = EINVAL (0x16); return -1.
  */
 extern void Crt_errno(void);
-extern void FFlushImpl_004c69a0(void);
-extern void FileTellAdjusted_004c58e0(void);
+extern void FFlushImpl(void);
+extern void FileTellAdjusted(void);
 extern void IOWrapper_004c8dd0(void);
 
-__declspec(naked) void FSeekImpl_004c5ad0(void) {
+__declspec(naked) void FSeekImpl(void) {
     __asm {
         push    esi
         mov     esi, [esp + 8]
@@ -149,14 +149,14 @@ __declspec(naked) void FSeekImpl_004c5ad0(void) {
         _emit   75h
         _emit   15h
         push    esi
-        call    FileTellAdjusted_004c58e0
+        call    FileTellAdjusted
         mov     ecx, [esp + 0x14]
         add     esp, 4
         add     ecx, eax
         xor     edi, edi
         mov     [esp + 0x10], ecx
         push    esi
-        call    FFlushImpl_004c69a0
+        call    FFlushImpl
         mov     eax, [esi + 0x0c]
         add     esp, 4
         test    al, 0x80

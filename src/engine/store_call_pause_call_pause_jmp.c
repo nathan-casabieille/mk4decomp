@@ -24,7 +24,7 @@ extern unsigned int g_scaledInit_00542044;
 extern void GuardedChainPushSetCallPop(void);
 extern void ScaledZeroFour(void);
 extern void MStackPushSet0004(void);
-void StoreCallPauseCallPauseJmp_0048fa20(void) {
+void StoreCallPauseCallPauseJmp(void) {
     g_scaledInit_00542044 = g_fightGroupHead;
     GuardedChainPushSetCallPop();
     if (g_framePauseFlag != 0) return;

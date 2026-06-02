@@ -11,11 +11,11 @@ extern unsigned int g_scaledInit_00542044;
  *   set 0xa → walk; call F; pause → ret;
  *   load g_fightGroupHead, g_player1NodeIdx; cmp; set 0x26 (or 0x27 if !eq); jmp T.
  */
-extern void SpecialAnimBuilder_004937b0(void);
+extern void SpecialAnimBuilder(void);
 extern void TableLookupCall_00489ff0(void);
-void Set0xaCmpEqSet0x26Jmp_0046a1e0(void) {
+void Set0xaCmpEqSet0x26Jmp(void) {
     g_walkCallback = (void(*)(void))0x0a;
-    SpecialAnimBuilder_004937b0();
+    SpecialAnimBuilder();
     if (g_framePauseFlag) return;
     g_walkCallback = (void(*)(void))0x26;
     if (g_fightGroupHead != g_player1NodeIdx) {

@@ -13,7 +13,7 @@ extern unsigned int g_baseSel;
  *   jmp     T
  */
 extern void Thunk_0049cc00(void);
-void DualConstJmpNeg1_0048cc20(void) {
+void DualConstJmpNeg1(void) {
     g_walkCallback = (void(*)(void))0x71;
     g_eventQueueCurrent = 0xffffffff;
     Thunk_0049cc00();

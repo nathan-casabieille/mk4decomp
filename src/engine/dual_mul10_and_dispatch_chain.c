@@ -113,19 +113,19 @@ extern unsigned int g_fightAxisPosY;
  *     store results to scaledInit[+0x6c/+0x74]; g_cj_0054205c = scaledInit;
  *     baseSel[+0x5c]=0x30; baseSel[+0x74]=1; ret.
  *   B2 (0x80..0xe3, +12 NOPs): dec baseSel[+0x74] (clamp to 3 if was 0); if
- *     orig was 0: call Phase1ChainExtendedInitLoop_0040c460. If !pause: dec baseSel[+0x5c]; if was 0:
+ *     orig was 0: call Phase1ChainExtendedInitLoop. If !pause: dec baseSel[+0x5c]; if was 0:
  *     tail-jmp ScaledIndirectJmp_0049c850. ret.
- *   B3 (0xf0..0x111): call BootOneShotSetup_0040bde0; if !pause: call PendingMatch_0040a8d0;
+ *   B3 (0xf0..0x111): call BootOneShotSetup; if !pause: call PendingMatch_0040a8d0;
  *     if !pause: tail-jmp GuardedSeq_0049c340; ret.
  */
 extern unsigned int g_bootInitSaveSlot;
-extern void BootOneShotSetup_0040bde0(void);
+extern void BootOneShotSetup(void);
 extern void GuardedSeq_0049c340(void);
 extern void PendingMatch_0040a8d0(void);
-extern void Phase1ChainExtendedInitLoop_0040c460(void);
+extern void Phase1ChainExtendedInitLoop(void);
 extern void ScaledIndirectJmp_0049c850(void);
 
-__declspec(naked) void DualMul10AndDispatchChain_0049c220(void) {
+__declspec(naked) void DualMul10AndDispatchChain(void) {
     __asm {
         mov     edx, dword ptr [g_currentNodeFlags]
         mov     eax, dword ptr [g_scaledInit_00542044]
@@ -173,7 +173,7 @@ __declspec(naked) void DualMul10AndDispatchChain_0049c220(void) {
         test    eax, eax
         _emit   75h
         _emit   0eh
-        call    Phase1ChainExtendedInitLoop_0040c460
+        call    Phase1ChainExtendedInitLoop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -199,7 +199,7 @@ __declspec(naked) void DualMul10AndDispatchChain_0049c220(void) {
         nop
         nop
         nop
-        call    BootOneShotSetup_0040bde0
+        call    BootOneShotSetup
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

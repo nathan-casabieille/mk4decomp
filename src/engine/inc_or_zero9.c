@@ -18,7 +18,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern unsigned int g_counter_0053a51c;
-void IncOrZero9_00422080(void) {
+void IncOrZero9(void) {
     unsigned int v = g_counter_0053a51c + 1;
     g_walkCallback = (void (*)(void))v;
     if ((int)v > 9) {

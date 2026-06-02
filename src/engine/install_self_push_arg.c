@@ -121,7 +121,7 @@ extern void ScaledArrStore_00429450(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void InstallSelfPushArg_00460190(void) {
+__declspec(naked) void InstallSelfPushArg(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi

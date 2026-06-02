@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 
-void DualPushCmp12Dispatch_00474d40(void) {
+void DualPushCmp12Dispatch(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_scaledInit_00542044]

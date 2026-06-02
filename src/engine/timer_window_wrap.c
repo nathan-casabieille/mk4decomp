@@ -118,7 +118,7 @@ extern unsigned int g_scenegraphWalkEnd_00541d68;
  *   - 0x3243f; clamp into [-0, g_dispatchSave1167_004d517c] via two-sided fix-up,
  *   storing back into g_walkCallback.
  */
-void TimerWindowWrap_004310c0(void) {
+void TimerWindowWrap(void) {
     int edx_val;
     int ref;
     int eax_val;

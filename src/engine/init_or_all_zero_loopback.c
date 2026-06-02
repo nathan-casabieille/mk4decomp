@@ -15,7 +15,7 @@ extern unsigned int g_scaledInit_00542044;
  *   else loop back to entry.
  */
 extern void NodeApplyTransform_A(void);
-__declspec(naked) void InitOrAllZeroLoopback_004bdb00(void) {
+__declspec(naked) void InitOrAllZeroLoopback(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]
         mov     edx, 0x1000

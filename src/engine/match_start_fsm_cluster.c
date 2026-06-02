@@ -114,18 +114,18 @@ extern void EntryThunkBodyStateMachine(void);
 extern void FiveCallGuardSetTail(void);
 extern void GuardedPackedSlotInit(void);
 extern void InstallSelf3WayChainCmp(void);
-extern void InstallSelfPair3Branch_00429240(void);
-extern void Phase4DualHelperTrampoline_00412900(void);
-extern void Phase4FivePackedHelpers_00412cb0(void);
+extern void InstallSelfPair3Branch(void);
+extern void Phase4DualHelperTrampoline(void);
+extern void Phase4FivePackedHelpers(void);
 extern void ScaledArrStore_00429980(void);
 extern void ScaledLitLoadCall_00480fe0(void);
 extern void ScaledLoadJmp_00428d20(void);
 extern void ScaledLoadJmp_00429390(void);
 extern void SfxAttenuateAndApply(void);
-extern void StreamFlagPackedSelectChain_00469340(void);
+extern void StreamFlagPackedSelectChain(void);
 extern void TableLookupCall_00489ff0(void);
 
-__declspec(naked) void MatchStartFsmCluster_00468eb0(void)
+__declspec(naked) void MatchStartFsmCluster(void)
 {
     __asm {
         mov      eax, dword ptr [g_baseSel]
@@ -142,9 +142,9 @@ __declspec(naked) void MatchStartFsmCluster_00468eb0(void)
         pop      esi
         ret      
     L_8ed5:
-        mov      dword ptr [eax + 8], OFFSET MatchStartFsmCluster_00468eb0
+        mov      dword ptr [eax + 8], OFFSET MatchStartFsmCluster
         mov      ecx, dword ptr [g_baseSel]
-        mov      esi, OFFSET MatchStartFsmCluster_00468eb0
+        mov      esi, OFFSET MatchStartFsmCluster
         mov      dword ptr [ecx*4 + 0x84], 2
         mov      ecx, dword ptr [eax + 4]
         add      esi, 0x2000000
@@ -162,7 +162,7 @@ __declspec(naked) void MatchStartFsmCluster_00468eb0(void)
         ret      
     L_8f35:
         mov      ecx, 1
-        mov      dword ptr [eax + 8], OFFSET MatchStartFsmCluster_00468eb0
+        mov      dword ptr [eax + 8], OFFSET MatchStartFsmCluster
         mov      dword ptr [eax + 0x84], ecx
         mov      dword ptr [g_pendingNodeType], 0x14
         mov      dword ptr [g_framePauseFlag], ecx
@@ -188,7 +188,7 @@ __declspec(naked) void MatchStartFsmCluster_00468eb0(void)
         ja       L_9283
         jmp      dword ptr [eax*4 + L_jmptbl]
     L_8f8d:
-        call     Phase4FivePackedHelpers_00412cb0
+        call     Phase4FivePackedHelpers
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_9288
         mov      dword ptr [g_eventQueueChild], 0x23
@@ -213,7 +213,7 @@ __declspec(naked) void MatchStartFsmCluster_00468eb0(void)
         pop      ebx
         ret      
     L_9007:
-        call     Phase4DualHelperTrampoline_00412900
+        call     Phase4DualHelperTrampoline
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_9288
         mov      dword ptr [g_walkCallback], 0x50
@@ -340,7 +340,7 @@ __declspec(naked) void MatchStartFsmCluster_00468eb0(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], edi
-        call     InstallSelfPair3Branch_00429240
+        call     InstallSelfPair3Branch
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
@@ -415,10 +415,10 @@ __declspec(naked) void MatchStartFsmCluster_00468eb0(void)
         mov      dword ptr [eax + 4], ecx
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edx
-        call     StreamFlagPackedSelectChain_00469340
+        call     StreamFlagPackedSelectChain
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         ret      
-        jmp      StreamFlagPackedSelectChain_00469340
+        jmp      StreamFlagPackedSelectChain
     }
 }

@@ -119,33 +119,33 @@ extern void ArgSarStoreJmp(void);
 extern void CmpP1DualInitStore_00482ab0(void);
 extern void FiveCallGuardSetTail(void);
 extern void GateDispatch6c(void);
-extern void Phase3Packed3EntryDispatch_00486130(void);
-extern void QuadBlockDispatch_00483090(void);
+extern void Phase3Packed3EntryDispatch(void);
+extern void QuadBlockDispatch(void);
 extern void QuadBlockInstallChainThunks(void);
-extern void ScaledAndAlf7_00490310(void);
-extern void ScaledCmpJlJmp_00488ed0(void);
-extern void ScaledDecOrZero_00483b50(void);
+extern void ScaledAndAlf7(void);
+extern void ScaledCmpJlJmp(void);
+extern void ScaledDecOrZero(void);
 extern void ScaledMove48to58(void);
 
-__declspec(naked) void OutroEventForwarderCluster_00485e70(void)
+__declspec(naked) void OutroEventForwarderCluster(void)
 {
     __asm {
     L_5e70:
-        call     ScaledAndAlf7_00490310
+        call     ScaledAndAlf7
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5e8d
         mov      dword ptr [g_walkCallback], 3
-        jmp      ScaledCmpJlJmp_00488ed0
+        jmp      ScaledCmpJlJmp
     L_5e8d:
         ret
         nop
         nop
-        call     ScaledDecOrZero_00483b50
+        call     ScaledDecOrZero
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5efc
-        call     ScaledAndAlf7_00490310
+        call     ScaledAndAlf7
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5efc
@@ -174,11 +174,11 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         nop
         nop
         nop
-        call     ScaledDecOrZero_00483b50
+        call     ScaledDecOrZero
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5f54
-        call     ScaledAndAlf7_00490310
+        call     ScaledAndAlf7
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5f54
@@ -225,7 +225,7 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         jne      short L_5fa7
         test     byte ptr [g_xformDirtyFlags], 1
         je       short L_5f9a
-        jmp      QuadBlockDispatch_00483090
+        jmp      QuadBlockDispatch
     L_5f9a:
         push     OFFSET g_dispatchSave769_004eec68
         call     ArgSarStoreJmp
@@ -354,7 +354,7 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         mov      dword ptr [eax + 4], ecx
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edx
-        call     Phase3Packed3EntryDispatch_00486130
+        call     Phase3Packed3EntryDispatch
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         ret

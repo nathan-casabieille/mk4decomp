@@ -22,7 +22,7 @@ extern unsigned int g_scaledInit_00542044;
 extern void MStackPush3CmpCall(void);
 extern void SetJmp_00438f60(void);
 extern void StateDispatchYield(void);
-void CallPauseDirtyConstJmp_00438ca0(void) {
+void CallPauseDirtyConstJmp(void) {
     MStackPush3CmpCall();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 1) {

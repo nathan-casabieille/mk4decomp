@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
  *   clear: g_xformDirtyFlags &= 0xfe; ret.
  */
 
-void WalkCj58Loop43Toggle_00439700(void) {
+void WalkCj58Loop43Toggle(void) {
     __asm {
         mov     eax, dword ptr [g_cj_00542058]
         test    eax, eax

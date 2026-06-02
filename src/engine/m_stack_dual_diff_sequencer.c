@@ -121,7 +121,7 @@ extern void MStackDualDiffSequencer(void);
  */
 extern unsigned int g_load_0052ab10;
 
-__declspec(naked) void HelperCallTripleMul10_0043e2d0(void) {
+__declspec(naked) void HelperCallTripleMul10(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_cj_0054205c]

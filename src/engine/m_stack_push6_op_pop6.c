@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   Op: g_pendingNodeType = g_eventQueueNotMask; g_currentNodeFlags += g_xformScratch2088.
  *   Pop 6 in reverse: 7c, 4c, 80, 78, 74, 70.
  */
-void MStackPush6OpPop6_0048af60(void) {
+void MStackPush6OpPop6(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_eventQueueCurrent;
     g_matrixStackTop++;

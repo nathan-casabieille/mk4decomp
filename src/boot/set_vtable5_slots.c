@@ -43,7 +43,7 @@ extern void func_004c84e0(void);
 extern void func_004c8570(void);
 extern void func_004c8480(void);
 extern void func_004c8550(void);
-void SetVtable5Slots_004c5790(void) {
+void SetVtable5Slots(void) {
     void *fn = (void *)func_004c8940;
     g_iat_00522164 = (void *)func_004c84e0;
     g_iat_00522160 = fn;

@@ -113,12 +113,12 @@ extern void EntryThunkBodyStateMachine(void);
 extern void GatedWordPushCall(void);
 extern void GuardedSeq_00472840(void);
 extern void GuardedSeq_00473f10(void);
-extern void MStackPush4ChainCopyPop4_00472e10(void);
+extern void MStackPush4ChainCopyPop4(void);
 extern void ScaledLoadTwoCallLit_00451f70(void);
 extern void Set2CallIncJmp(void);
 extern void Thunk_0049cbc0(void);
 
-__declspec(naked) void JuggleFsmCluster_00451b90(void)
+__declspec(naked) void JuggleFsmCluster(void)
 {
     __asm {
         mov      dword ptr [g_acc_00542078], 0xb
@@ -216,7 +216,7 @@ __declspec(naked) void JuggleFsmCluster_00451b90(void)
         pop      esi
         ret
     L_1d98:
-        call     MStackPush4ChainCopyPop4_00472e10
+        call     MStackPush4ChainCopyPop4
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
@@ -240,7 +240,7 @@ __declspec(naked) void JuggleFsmCluster_00451b90(void)
         pop      esi
         ret
     L_1e11:
-        call     MStackPush4ChainCopyPop4_00472e10
+        call     MStackPush4ChainCopyPop4
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0

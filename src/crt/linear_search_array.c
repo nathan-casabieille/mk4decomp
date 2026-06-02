@@ -21,7 +21,7 @@ extern unsigned int g_scaledInit_00542044;
  *   xor     eax, eax
  *   ret
  */
-int LinearSearchArray_004cca30(const int *arr) {
+int LinearSearchArray(const int *arr) {
     int i;
     for (i = 0; i < 3; i++) {
         if (arr[i] != 0) {

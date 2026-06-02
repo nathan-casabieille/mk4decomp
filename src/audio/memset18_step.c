@@ -22,7 +22,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_count;
 extern unsigned char g_target_005435a2;
-void Memset18Step_004a56a0(void) {
+void Memset18Step(void) {
     int n = (int)g_count;
     unsigned char *p;
     if (n <= 0) return;

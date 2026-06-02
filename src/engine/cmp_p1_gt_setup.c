@@ -22,7 +22,7 @@ extern unsigned int g_acc_00542078;
  *   mov     [g_eventQueueIdx], eax
  *   ret
  */
-void CmpP1GTSetup_00470980(void) {
+void CmpP1GTSetup(void) {
     unsigned int p1 = g_player1NodeIdx;
     g_xformEntityIdx = g_gtPlayerProbe2;
     g_scaledInit_00542044 = p1;

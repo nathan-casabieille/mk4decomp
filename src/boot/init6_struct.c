@@ -24,7 +24,7 @@ extern unsigned int g_struct_00ab4e4c;
 extern unsigned int g_struct_00ab4e50;
 extern unsigned int g_struct_00ab4e54;
 extern unsigned int g_struct_00ab4e58;
-void Init6Struct_00404e20(void) {
+void Init6Struct(void) {
     g_struct_00ab4e50 = 0;
     g_struct_00ab4e54 = 0;
     g_struct_00ab4e58 = 0;

@@ -117,10 +117,10 @@ extern unsigned int g_fightAxisPosY;
  *   16-bit exponent at [esi+0xa]. exp = 0x404e (starting) decremented by 0x10
  *   each rough normalize step.
  */
-extern void Shl96By1_004ce290(void);
-extern void TimeValAdd3_004ce220(void);
+extern void Shl96By1(void);
+extern void TimeValAdd3(void);
 
-__declspec(naked) void StrToLongDouble_004ce2f0(void) {
+__declspec(naked) void StrToLongDouble(void) {
     __asm {
         mov     eax, [esp + 8]
         sub     esp, 0xc
@@ -147,18 +147,18 @@ __declspec(naked) void StrToLongDouble_004ce2f0(void) {
         mov     [esp + 0x18], edx
         mov     eax, [eax + 8]
         mov     [esp + 0x1c], eax
-        call    Shl96By1_004ce290
+        call    Shl96By1
         add     esp, 4
         push    esi
-        call    Shl96By1_004ce290
+        call    Shl96By1
         add     esp, 4
         lea     ecx, [esp + 0x10]
         push    ecx
         push    esi
-        call    TimeValAdd3_004ce220
+        call    TimeValAdd3
         add     esp, 8
         push    esi
-        call    Shl96By1_004ce290
+        call    Shl96By1
         movsx   edx, byte ptr [ebx]
         add     esp, 4
         lea     eax, [esp + 0x10]
@@ -167,7 +167,7 @@ __declspec(naked) void StrToLongDouble_004ce2f0(void) {
         push    eax
         push    esi
         mov     [esp + 0x20], ebp
-        call    TimeValAdd3_004ce220
+        call    TimeValAdd3
         mov     eax, [esp + 0x30]
         add     esp, 8
         inc     ebx
@@ -201,7 +201,7 @@ __declspec(naked) void StrToLongDouble_004ce2f0(void) {
         jne     short L_stld_storeExp
     L_stld_normBit:
         push    esi
-        call    Shl96By1_004ce290
+        call    Shl96By1
         mov     eax, [esi + 8]
         add     esp, 4
         add     edi, 0xffff

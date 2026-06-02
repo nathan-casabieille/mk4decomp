@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern void StackPopDispatchTagged(void);
 extern void BootFrameSetup(void);
 extern void CopyJmp_00406ba0(void);
-extern void MStackPushTripleFields_00407d50(void);
+extern void MStackPushTripleFields(void);
 
 __declspec(naked) void SelfInstallPhaseDispatch_00428990(void)
 {
@@ -185,7 +185,7 @@ __declspec(naked) void SelfInstallPhaseDispatch_00428990(void)
         mov     eax, dword ptr [g_eventQueueNotMask]
         mov     dword ptr [g_eventQueueCurrent], edx
         mov     dword ptr [g_eventQueueTotal], eax
-        call    MStackPushTripleFields_00407d50
+        call    MStackPushTripleFields
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_sipd3_ret

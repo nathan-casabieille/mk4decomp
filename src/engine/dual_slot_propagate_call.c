@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void DualWalkRange(void);
 
-void DualSlotPropagateCall_004683e0(void) {
+void DualSlotPropagateCall(void) {
     unsigned int base, field38, field3c, tmp;
     base = g_baseSel;
     field38 = *(unsigned int *)(base * 4 + 0x38);

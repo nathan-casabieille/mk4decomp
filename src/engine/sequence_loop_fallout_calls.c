@@ -110,22 +110,22 @@ extern unsigned int g_fightAxisPosY;
 
 /*
  * @addr 0x0042e150 (122b game) - sequence loop with state-bit-2 fall-out:
- *   set walk=0x238, call MStackPush2DirtyCall_00427f90; gate; call MStackPush2LLWalkCompare;
+ *   set walk=0x238, call MStackPush2DirtyCall; gate; call MStackPush2LLWalkCompare;
  *   gate; if state-bit 2 set issue 3 trailing CallRestore(0x249,
- *   0x24a, 0x23b); else repeat call MStackPush2DirtyCall_00427f90 + gate until
+ *   0x24a, 0x23b); else repeat call MStackPush2DirtyCall + gate until
  *   pause set.
  */
-extern void MStackPush2DirtyCall_00427f90(void);
+extern void MStackPush2DirtyCall(void);
 extern void MStackPush2LLWalkCompare(void);
 extern void SaveCallRestore(void);
 
-__declspec(naked) void SequenceLoopFalloutCalls_0042e150(void) {
+__declspec(naked) void SequenceLoopFalloutCalls(void) {
     __asm {
         push    ebx
         push    esi
         mov     esi, 0x238
         mov     dword ptr [g_walkCallback], esi
-        call    MStackPush2DirtyCall_00427f90
+        call    MStackPush2DirtyCall
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     done
@@ -139,7 +139,7 @@ loopBody:
         test    byte ptr [g_xformDirtyFlags], bl
         jne     falloutCalls
         mov     dword ptr [g_walkCallback], esi
-        call    MStackPush2DirtyCall_00427f90
+        call    MStackPush2DirtyCall
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         je      loopBody

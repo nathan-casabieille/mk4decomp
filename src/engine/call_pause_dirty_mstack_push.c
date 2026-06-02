@@ -26,7 +26,7 @@ extern void DirtyToggleByGate(void);
 extern void GuardedDispatch4_00484b40(void);
 extern void GameDispatchValidateState(void);
 extern void GuardedDispatch4_00484b40(void);
-void CallPauseDirtyMStackPush484b40_00484b00(void) {
+void CallPauseDirtyMStackPush484b40(void) {
     unsigned int v;
     DirtyToggleByGate();
     if (g_framePauseFlag != 0) return;

@@ -118,17 +118,17 @@ extern unsigned int g_fightAxisPosY;
  *       Install-self at entry+0x02000000; state=2; call Init3333Jmp; pause=ebx=1; ret.
  *   state>=2 (fall): tail-call CjInstallSelfRouter; pop esi/ebx; ret.
  */
-extern void CallPauseMStackPushSet0Jmp_0045fcf0(void);
-extern void CallPauseTriCmpJmp_00460910(void);
+extern void CallPauseMStackPushSet0Jmp(void);
+extern void CallPauseTriCmpJmp(void);
 extern void CjInstallSelfRouter(void);
-extern void CjMaskedFlagProbe_0048ecf0(void);
+extern void CjMaskedFlagProbe(void);
 extern void DualGatedStateYield(void);
-extern void Init3333Jmp_00460400(void);
-extern void PushCallStoreClearJmp_00460420(void);
+extern void Init3333Jmp(void);
+extern void PushCallStoreClearJmp(void);
 extern void ScaledInit_0048f720(void);
 extern void SlotPhaseResetInstallChain(void);
 
-__declspec(naked) void Install3StateDualArmQuad_004602b0(void) {
+__declspec(naked) void Install3StateDualArmQuad(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    ebx
@@ -161,7 +161,7 @@ __declspec(naked) void Install3StateDualArmQuad_004602b0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        call    CjMaskedFlagProbe_0048ecf0
+        call    CjMaskedFlagProbe
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -182,9 +182,9 @@ __declspec(naked) void Install3StateDualArmQuad_004602b0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     dword ptr [esi + 8], offset Install3StateDualArmQuad_004602b0
+        mov     dword ptr [esi + 8], offset Install3StateDualArmQuad
         mov     ecx, dword ptr [g_baseSel]
-        mov     edx, offset Install3StateDualArmQuad_004602b0
+        mov     edx, offset Install3StateDualArmQuad
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x02000000
@@ -196,7 +196,7 @@ __declspec(naked) void Install3StateDualArmQuad_004602b0(void) {
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
-        call    Init3333Jmp_00460400
+        call    Init3333Jmp
         mov     dword ptr [g_framePauseFlag], ebx
         pop     esi
         pop     ebx
@@ -209,11 +209,11 @@ __declspec(naked) void Install3StateDualArmQuad_004602b0(void) {
         test    byte ptr [g_xformDirtyFlags], bl
         _emit   74h
         _emit   08h
-        call    CallPauseMStackPushSet0Jmp_0045fcf0
+        call    CallPauseMStackPushSet0Jmp
         pop     esi
         pop     ebx
         ret
-        call    CallPauseTriCmpJmp_00460910
+        call    CallPauseTriCmpJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -230,12 +230,12 @@ __declspec(naked) void Install3StateDualArmQuad_004602b0(void) {
         test    eax, eax
         _emit   75h
         _emit   27h
-        call    PushCallStoreClearJmp_00460420
+        call    PushCallStoreClearJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   19h
-        mov     dword ptr [esi + 8], offset Install3StateDualArmQuad_004602b0
+        mov     dword ptr [esi + 8], offset Install3StateDualArmQuad
         mov     dword ptr [esi + 0x84], ebx
         mov     dword ptr [g_pendingNodeType], ebx
         mov     dword ptr [g_framePauseFlag], ebx

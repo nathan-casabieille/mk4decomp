@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x004b3a90 (159b engine.geo) - in-place 9-word transform:
  *   For i=0..8: arg1[i] = (signed short)arg1[i] * arg2[(i%3)*4] >> 12.
  */
-__declspec(naked) void Transform9Words_004b3a90(void) {
+__declspec(naked) void Transform9Words(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         mov     ecx, dword ptr [esp + 8]

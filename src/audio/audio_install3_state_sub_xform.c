@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * AudioInstall3StateSubXform_004a17d0 - 245b audio 3-state install-self.
+ * AudioInstall3StateSubXform - 245b audio 3-state install-self.
  *   chain = g_baseSel<<2; saved=chain->state; chain->state=0.
  *   state 2+: ecx=g_fightGroupHead; eax=chain[+0x6c]-0x4000; g_walkCallback=eax; chain[+0x6c]=eax;
  *     if eax>0 jump installSelf; else call ScaledInitOrSelfPtrSetType14; pop+ret.
@@ -120,11 +120,11 @@ extern unsigned int g_fightAxisPosY;
  *     g_pendingNodeType=0x1c; pause=1. pop+ret.
  *   installSelf: install-self at entry; chain->state=2; g_pendingNodeType=1; pause=1; pop+ret.
  */
-extern void InstallSelfChainAddSigned_004a18d0(void);
+extern void InstallSelfChainAddSigned(void);
 extern void MStackPushComplexCallPop_00406430(void);
-extern void ScaledInitOrSelfPtrSetType14_004a1940(void);
+extern void ScaledInitOrSelfPtrSetType14(void);
 
-__declspec(naked) void AudioInstall3StateSubXform_004a17d0(void)
+__declspec(naked) void AudioInstall3StateSubXform(void)
 {
     __asm
     {
@@ -145,7 +145,7 @@ __declspec(naked) void AudioInstall3StateSubXform_004a17d0(void)
         mov     eax, dword ptr [g_walkCallback]
         test    eax, eax
         jg      short L_a17_installSelf
-        call    ScaledInitOrSelfPtrSetType14_004a1940
+        call    ScaledInitOrSelfPtrSetType14
         pop     esi
         ret
     L_a17_state1:
@@ -153,12 +153,12 @@ __declspec(naked) void AudioInstall3StateSubXform_004a17d0(void)
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         je      short L_a17_installSelf
-        call    InstallSelfChainAddSigned_004a18d0
+        call    InstallSelfChainAddSigned
         pop     esi
         ret
     L_a17_installSelf:
         mov     eax, 1
-        mov     dword ptr [esi + 8], offset AudioInstall3StateSubXform_004a17d0
+        mov     dword ptr [esi + 8], offset AudioInstall3StateSubXform
         mov     dword ptr [esi + 0x84], 2
         mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_framePauseFlag], eax
@@ -178,7 +178,7 @@ __declspec(naked) void AudioInstall3StateSubXform_004a17d0(void)
         test    eax, eax
         jne     short L_a17_s0_ret
         mov     eax, 1
-        mov     dword ptr [esi + 8], offset AudioInstall3StateSubXform_004a17d0
+        mov     dword ptr [esi + 8], offset AudioInstall3StateSubXform
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], 0x1c
         mov     dword ptr [g_framePauseFlag], eax

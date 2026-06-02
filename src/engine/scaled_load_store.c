@@ -13,6 +13,6 @@ extern unsigned int g_baseSel;
  *   mov     [g_fightGroupHead], ecx
  *   ret
  */
-void ScaledLoadStore_00473ed0(void) {
+void ScaledLoadStore(void) {
     g_fightGroupHead = *(unsigned int *)(g_baseSel * 4 + 0x68);
 }

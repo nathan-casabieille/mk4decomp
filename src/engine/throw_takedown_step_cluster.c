@@ -113,14 +113,14 @@ extern void ArgSarStoreJmp(void);
 extern void CmpEqInitCallElseJmp(void);
 extern void FiveCallGuardSetTail(void);
 extern void InstallSelf3StateDualChain(void);
-extern void InstallSelf3StateFieldSet_0047a090(void);
-extern void MStackPushSet0020_004901d0(void);
-extern void Push8e_Push413690_00413560(void);
+extern void InstallSelf3StateFieldSet(void);
+extern void MStackPushSet0020(void);
+extern void Push8e_Push413690(void);
 extern void ScaledArrStore_00429980(void);
 extern void ScaledChainJmp_00429470(void);
-extern void ScoreAiStatusFsmCluster_00479b50(void);
+extern void ScoreAiStatusFsmCluster(void);
 
-__declspec(naked) void ThrowTakedownStepCluster_00479e40(void)
+__declspec(naked) void ThrowTakedownStepCluster(void)
 {
     __asm {
         /* === Helper 1 (0x479e40): trigger dispatcher === */
@@ -188,7 +188,7 @@ __declspec(naked) void ThrowTakedownStepCluster_00479e40(void)
         mov      eax, 0x219
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x74], eax
-        call     ScoreAiStatusFsmCluster_00479b50
+        call     ScoreAiStatusFsmCluster
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_9f52
@@ -231,11 +231,11 @@ __declspec(naked) void ThrowTakedownStepCluster_00479e40(void)
         pop      esi
         ret
     L_9fb1:
-        call     Push8e_Push413690_00413560
+        call     Push8e_Push413690
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a08e
-        call     MStackPushSet0020_004901d0
+        call     MStackPushSet0020
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a08e
@@ -269,7 +269,7 @@ __declspec(naked) void ThrowTakedownStepCluster_00479e40(void)
         mov      eax, 1
         test     cl, al
         je       short L_a077
-        call     InstallSelf3StateFieldSet_0047a090
+        call     InstallSelf3StateFieldSet
         pop      esi
         ret
     L_a077:

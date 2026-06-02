@@ -118,7 +118,7 @@ extern void Crt_errno(void);
 
 extern unsigned int g_arr_00fa0de0;
 
-__declspec(naked) int Setmode_004d0b50(void) {
+__declspec(naked) int Setmode(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         push    esi

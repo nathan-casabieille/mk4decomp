@@ -115,8 +115,8 @@ extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 extern void CallSetPause(void);
 extern void DispatcherComplex181_00426310(void);
-extern void DualAddSar_004ab600(void);
-extern void GuardedRangeCmpFpuJmp_0042b8d0(void);
+extern void DualAddSar(void);
+extern void GuardedRangeCmpFpuJmp(void);
 extern void GuardedScaledCall(void);
 extern void MStackPushComplexCallPop_00406430(void);
 extern void PendingMatch_00459510(void);
@@ -125,7 +125,7 @@ extern void SaveCallRestore(void);
 extern void StoreIncrMStackPush6(void);
 extern void TableLookupCall_0048a130(void);
 
-__declspec(naked) void HitReactionCluster_0045c080(void)
+__declspec(naked) void HitReactionCluster(void)
 {
     __asm {
         mov      eax, dword ptr [g_eventQueueCurrent]
@@ -152,7 +152,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         nop      
         nop      
         mov      dword ptr [g_eventQueueWorkType], 0x20000
-        call     GuardedRangeCmpFpuJmp_0042b8d0
+        call     GuardedRangeCmpFpuJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c0cd
@@ -171,7 +171,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], edx
-        call     DualAddSar_004ab600
+        call     DualAddSar
         mov      al, byte ptr [g_walkCallback]
         mov      dword ptr [g_eventQueueWorkType], 0x64a
         test     al, 1

@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  *   ecx = [eax*4 + 4]; g_xformEntityIdx = ecx;
  *   g_matrixStackTop = eax; ret.
  */
-void PushSetAddCallPop_004769b0(void) {
+void PushSetAddCallPop(void) {
     unsigned int sc;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_xformEntityIdx;

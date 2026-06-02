@@ -117,23 +117,23 @@ extern unsigned int g_dispatchTab67_00543250;
 extern unsigned int g_dispatchTab66_005432a0;
 extern void DirtyDoubleDeref(void);
 extern void MStackBracket1_TreeWalkRecursive2(void);
-extern void MStackChainDecodeCall_004936f0(void);
+extern void MStackChainDecodeCall(void);
 extern void MStackPush2ChainPrepend(void);
 extern void MStackPushCallCallPop_00405e20(void);
-extern void PushSetCallCleanup_00408580(void);
+extern void PushSetCallCleanup(void);
 extern void ScaledAddDeref(void);
 extern void ScaledLoadJmp30_00493eb0(void);
 extern void ScaledTestPauseStore(void);
-extern void TestStoreConstJmp_004933b0(void);
+extern void TestStoreConstJmp(void);
 
-void StrikeAnim4Picker_00493100(void) {
+void StrikeAnim4Picker(void) {
     __asm {
         mov      eax, dword ptr [g_or_0052ab40]
         mov      dword ptr [g_eventQueueCurrent], eax
         and      eax, 0x20
         mov      dword ptr [g_xformScratch94], eax
         je       short L_3126
-        call     TestStoreConstJmp_004933b0
+        call     TestStoreConstJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_33a1
@@ -228,13 +228,13 @@ void StrikeAnim4Picker_00493100(void) {
         mov      eax, dword ptr [g_fightGroupHead]
         mov      ecx, dword ptr [eax*4 + 0x1c]
         mov      dword ptr [g_xformEntityIdx], ecx
-        call     PushSetCallCleanup_00408580
+        call     PushSetCallCleanup
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_33a1
         mov      edx, dword ptr [g_eventQueueTotal]
         mov      dword ptr [g_currentNodeIdx], edx
-        call     MStackChainDecodeCall_004936f0
+        call     MStackChainDecodeCall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_33a1

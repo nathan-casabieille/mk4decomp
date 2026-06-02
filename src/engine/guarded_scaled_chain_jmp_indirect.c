@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  *   g_eventQueueTotal = ecx; eax = [ecx*4];
  *   if zero: ret; else: jmp eax.
  */
-void GuardedScaledChainJmpIndirect_00460e40(int arg) {
+void GuardedScaledChainJmpIndirect(int arg) {
     unsigned int idx;
     unsigned int walk;
     unsigned int newIdx;

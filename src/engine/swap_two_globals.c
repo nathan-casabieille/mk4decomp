@@ -24,7 +24,7 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_acc_00542078;
 extern void ScaledChainDouble(void);
 extern void Atan2QuadrantLookup(void);
-void SwapTwoGlobals_004911c0(void) {
+void SwapTwoGlobals(void) {
     unsigned int a, b;
     ScaledChainDouble();
     if (g_framePauseFlag != 0) return;

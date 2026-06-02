@@ -18,7 +18,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern packed_ptr g_player1NodeIdx;
 extern packed_ptr g_player2NodeIdx;
-void CmpP1ScaledInitB_004ac100(void) {
+void CmpP1ScaledInitB(void) {
     g_scaledInit_00542044 = g_player1NodeIdx;
     if (g_fightGroupHead == g_player1NodeIdx) {
         g_scaledInit_00542044 = g_player2NodeIdx;

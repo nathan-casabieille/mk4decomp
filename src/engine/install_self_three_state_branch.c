@@ -109,20 +109,20 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00439d20 (261b game) - 3-state install-self.
- *   state >=2: tail-call CallPauseDirtyConstJmp_00438ca0.
+ *   state >=2: tail-call CallPauseDirtyConstJmp.
  *   state 1: call Wrapper_0048ec20; if pause? ret. If bit0 of state set:
- *     tail-call StoreCallPauseTestByte_DualCmpStoreClear_00439f70.
+ *     tail-call StoreCallPauseTestByte_DualCmpStoreClear.
  *     Else: install-self with g_currentNodeFlags=0xcccc, chain[+0x84]=2,
  *     scaledInit push 0x00439d20+0x02000000.
  *   state 0: install-self with g_currentNodeFlags=0x10000, chain[+0x84]=1,
  *     scaledInit push 0x00439d20+0x01000000.
  *   Common tail: call StateGateMStackOverlap; pause=1; ret.
  */
-extern void CallPauseDirtyConstJmp_00438ca0(void);
+extern void CallPauseDirtyConstJmp(void);
 extern void StateGateMStackOverlap(void);
-extern void StoreCallPauseTestByte_DualCmpStoreClear_00439f70(void);
+extern void StoreCallPauseTestByte_DualCmpStoreClear(void);
 
-__declspec(naked) void InstallSelfThreeStateBranch_00439d20(void) {
+__declspec(naked) void InstallSelfThreeStateBranch(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -135,7 +135,7 @@ __declspec(naked) void InstallSelfThreeStateBranch_00439d20(void) {
         dec     eax
         _emit   74h
         _emit   07h
-        call    CallPauseDirtyConstJmp_00438ca0
+        call    CallPauseDirtyConstJmp
         pop     esi
         ret
         call    Wrapper_0048ec20
@@ -150,7 +150,7 @@ __declspec(naked) void InstallSelfThreeStateBranch_00439d20(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   75h
         _emit   07h
-        call    StoreCallPauseTestByte_DualCmpStoreClear_00439f70
+        call    StoreCallPauseTestByte_DualCmpStoreClear
         pop     esi
         ret
         mov     dword ptr [g_currentNodeFlags], 0xcccc

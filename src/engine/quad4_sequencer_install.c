@@ -113,10 +113,10 @@ extern void ArgSarStoreJmp(void);
 extern void CjTableThresholdDispatch(void);
 extern void CmpP1DualInitStore_00482ab0(void);
 extern void GateDispatch6c(void);
-extern void GatedScaledChainSetup_00427390(void);
-extern void InstallSelfDualEntry_00426ae0(void);
+extern void GatedScaledChainSetup(void);
+extern void InstallSelfDualEntry(void);
 
-__declspec(naked) void Quad4SequencerInstall_00483900(void) {
+__declspec(naked) void Quad4SequencerInstall(void) {
     __asm {
         mov     ecx, dword ptr [g_fightGroupHead]
         mov     eax, 0x0000028f
@@ -143,7 +143,7 @@ __declspec(naked) void Quad4SequencerInstall_00483900(void) {
         ret
         _emit   90h
         _emit   90h
-        call    InstallSelfDualEntry_00426ae0
+        call    InstallSelfDualEntry
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -173,7 +173,7 @@ __declspec(naked) void Quad4SequencerInstall_00483900(void) {
         mov     dword ptr [g_acc_00542078], ecx
         mov     edx, dword ptr [eax*4 + 0x5c]
         mov     dword ptr [g_eventQueueNotMask], edx
-        call    GatedScaledChainSetup_00427390
+        call    GatedScaledChainSetup
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

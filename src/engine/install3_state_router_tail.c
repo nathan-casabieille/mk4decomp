@@ -126,7 +126,7 @@ extern void CjInstallSelfRouter(void);
 extern void EsiInstallClampAddCall(void);
 extern void StateDispatchTable(void);
 
-__declspec(naked) void Install3StateRouterTail_0046b4e0(void) {
+__declspec(naked) void Install3StateRouterTail(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -166,7 +166,7 @@ __declspec(naked) void Install3StateRouterTail_0046b4e0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     dword ptr [esi + 8], offset Install3StateRouterTail_0046b4e0
+        mov     dword ptr [esi + 8], offset Install3StateRouterTail
         mov     dword ptr [esi + 0x84], 2
         mov     dword ptr [g_pendingNodeType], 1
         mov     dword ptr [g_framePauseFlag], 1
@@ -185,9 +185,9 @@ __declspec(naked) void Install3StateRouterTail_0046b4e0(void) {
         mov     dword ptr [g_currentNodeFlags], 0x1999
         mov     dword ptr [g_eventQueueEnd], ecx
         mov     dword ptr [g_eventQueueNotMask], 0
-        mov     dword ptr [esi + 8], offset Install3StateRouterTail_0046b4e0
+        mov     dword ptr [esi + 8], offset Install3StateRouterTail
         mov     edx, dword ptr [g_baseSel]
-        mov     ecx, offset Install3StateRouterTail_0046b4e0
+        mov     ecx, offset Install3StateRouterTail
         mov     dword ptr [edx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     ecx, 0x01000000

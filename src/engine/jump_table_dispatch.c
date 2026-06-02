@@ -109,15 +109,15 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void InstallSelfPacked0x2005(void);
-extern void JumpTableDispatch_0043a550(void);
-extern void DualCallTestPauseRange_004353f0(void);
+extern void JumpTableDispatch(void);
+extern void DualCallTestPauseRange(void);
 
 /* @addr 0x00435340 (165b game) - 5-block dispatcher.
  *   Block A: gate g_table_00535ddc>0x20000? jmp Wrapper_00438ee0 : jmp InstallSelfPacked0x2005.
  *   Block B (+0x20): jmp GuardedSeq_00433bb0.
- *   Block C (+0x30): g_walkCallback=g_walkCallback & 0xff; push 0x004e45b0; call JumpTableDispatch_0043a550; ret.
+ *   Block C (+0x30): g_walkCallback=g_walkCallback & 0xff; push 0x004e45b0; call JumpTableDispatch; ret.
  *   Block D (+0x50): call Cmp2CallDirtyCall; if nonzero ret; threshold-dispatch.
- *   Blocks E/F/G (+0x80/+0x90/+0xa0): all jmp DualCallTestPauseRange_004353f0.
+ *   Blocks E/F/G (+0x80/+0x90/+0xa0): all jmp DualCallTestPauseRange.
  */
 extern void GuardedSeq_00433bb0(void);
 extern void PrefixThunkInstallSelf3State(void);
@@ -153,7 +153,7 @@ __declspec(naked) void FiveBlockDispatch_00435340(void) {
         push    0x004e45b0
         and     edx, 0xff
         mov     dword ptr [g_walkCallback], edx
-        call    JumpTableDispatch_0043a550
+        call    JumpTableDispatch
         add     esp, 4
         ret
         call    Cmp2CallDirtyCall
@@ -179,7 +179,7 @@ __declspec(naked) void FiveBlockDispatch_00435340(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        jmp     DualCallTestPauseRange_004353f0
+        jmp     DualCallTestPauseRange
         _emit   90h
         _emit   90h
         _emit   90h
@@ -191,7 +191,7 @@ __declspec(naked) void FiveBlockDispatch_00435340(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        jmp     DualCallTestPauseRange_004353f0
+        jmp     DualCallTestPauseRange
         _emit   90h
         _emit   90h
         _emit   90h
@@ -203,6 +203,6 @@ __declspec(naked) void FiveBlockDispatch_00435340(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        jmp     DualCallTestPauseRange_004353f0
+        jmp     DualCallTestPauseRange
     }
 }

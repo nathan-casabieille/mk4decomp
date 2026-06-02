@@ -121,7 +121,7 @@ extern unsigned int g_eq_00542098;
 
 extern unsigned int g_matrixStack_arr;
 
-void StateSwitchMStackPop_00474f20(void) {
+void StateSwitchMStackPop(void) {
     __asm {
         mov     eax, dword ptr [g_eq_00542098]
         test    eax, eax

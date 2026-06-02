@@ -109,12 +109,12 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0045e100 (201b game) - mstack-push 3 values, indirect call from table at 0x004e9ea8>>2,
- *   pause-check, mstack-pop 3 in reverse, bit-0 test, jmp IncJmp_0045e1d0 or ret.
+ *   pause-check, mstack-pop 3 in reverse, bit-0 test, jmp IncJmp or ret.
  */
 extern unsigned int g_matrixStack_arr;
-extern void IncJmp_0045e1d0(void);
+extern void IncJmp(void);
 
-__declspec(naked) void Event_InvokeHandler_0045e100(void) {
+__declspec(naked) void Event_InvokeHandler(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_scaledInit_00542044]
@@ -163,7 +163,7 @@ __declspec(naked) void Event_InvokeHandler_0045e100(void) {
         mov     eax, edx
         dec     eax
         mov     dword ptr [g_scaledInit_00542044], eax
-        jmp     IncJmp_0045e1d0
+        jmp     IncJmp
         ret
     }
 }

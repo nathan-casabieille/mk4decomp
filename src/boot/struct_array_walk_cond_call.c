@@ -112,11 +112,11 @@ extern unsigned int g_fightAxisPosY;
  *   g_walkCallback &= g_eventQueueCurrent; for each struct: if struct[0xd8] != 0
  *   AND (arr[key+3] & g_eventQueueCurrent) != g_walkCallback: call NodeUnlink(esi).
  */
-extern void NodeUnlink_0041f710(void);
+extern void NodeUnlink(void);
 
 extern unsigned int g_arr_41fc50_disp_0c;
 
-__declspec(naked) void StructArrayWalkCondCall_0041fc50(void) {
+__declspec(naked) void StructArrayWalkCondCall(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueCurrent]
         mov     ecx, dword ptr [g_walkCallback]
@@ -141,7 +141,7 @@ loop41fc50:
         _emit   75h
         _emit   09h
         push    esi
-        call    NodeUnlink_0041f710
+        call    NodeUnlink
         add     esp, 4
         add     esi, 0xe8
         cmp     esi, 0x00541d68

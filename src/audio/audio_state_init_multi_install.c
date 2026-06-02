@@ -112,19 +112,19 @@ extern unsigned int g_byte_00543724;
 extern unsigned int g_byte_0054372c;
 extern unsigned int g_byte_00543730;
 extern unsigned int g_voicePoolTickFlag_005437f4;
-extern void AudioBindEntry_004a1e40(void);
+extern void AudioBindEntry(void);
 extern void AudioInitArgs3(void);
-extern void AudioState50b4BitDispatcher_004a32c0(void);
+extern void AudioState50b4BitDispatcher(void);
 extern void FiveTableWalkInit(void);
 extern void InstallSelfPackedF80(void);
 extern void PendingMatch_004a2a80(void);
 extern void RetZero_004a1c40(void);
-extern void ScaledByteIdxDualCopy_004a3260(void);
+extern void ScaledByteIdxDualCopy(void);
 extern void TripleCallByteCheck(void);
 extern void TripleCallSetCopy(void);
 extern void DebugMenu_DrawUnlockToggles(void);
 
-__declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
+__declspec(naked) void AudioStateInitMultiInstall(void)
 {
     __asm
     {
@@ -148,10 +148,10 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
     L_asimi_phase1:
         call    DebugMenu_DrawUnlockToggles
         push    0x4f3830
-        call    ScaledByteIdxDualCopy_004a3260
+        call    ScaledByteIdxDualCopy
         add     esp, 4
         push    0x4f3830
-        call    AudioState50b4BitDispatcher_004a32c0
+        call    AudioState50b4BitDispatcher
         add     esp, 4
         call    TripleCallByteCheck
         test    eax, eax
@@ -180,9 +180,9 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
         call    Push16Call
         call    DebugMenu_DrawUnlockToggles
         mov     dword ptr [g_eventQueueCurrent], 0x20
-        mov     dword ptr [edi + 8], offset AudioStateInitMultiInstall_004a4d20
+        mov     dword ptr [edi + 8], offset AudioStateInitMultiInstall
         mov     eax, dword ptr [g_baseSel]
-        mov     ecx, offset AudioStateInitMultiInstall_004a4d20
+        mov     ecx, offset AudioStateInitMultiInstall
         add     ecx, 0x2000000
         mov     dword ptr [eax*4 + 0x84], 2
         mov     eax, dword ptr [edi + 4]
@@ -229,12 +229,12 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
         mov     dword ptr [edx*4], 0
         jb      short L_asimi_loop
         push    0x4f6358
-        call    AudioBindEntry_004a1e40
+        call    AudioBindEntry
         mov     eax, dword ptr [g_baseSel]
         add     esp, 4
         mov     dword ptr [eax*4 + 0x30], 5
     L_asimi_install2:
-        mov     dword ptr [edi + 8], offset AudioStateInitMultiInstall_004a4d20
+        mov     dword ptr [edi + 8], offset AudioStateInitMultiInstall
         mov     dword ptr [edi + 0x84], ebx
         mov     dword ptr [g_pendingNodeType], ebx
         mov     dword ptr [g_framePauseFlag], ebx

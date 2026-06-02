@@ -115,14 +115,14 @@ extern void MStackPush2GuardedFieldClear(void);
 extern void MStackPushTyped_0044cf50(void);
 extern void MStackPushTyped_0044cf80(void);
 extern void MStackPushTyped_0044cfb0(void);
-extern void PushPopXformEntityCall_0044d1e0(void);
-extern void PushSetXfmCallStoreCopy_0044d060(void);
+extern void PushPopXformEntityCall(void);
+extern void PushSetXfmCallStoreCopy(void);
 
-__declspec(naked) void IntroSequencePipeline_0044cd50(void)
+__declspec(naked) void IntroSequencePipeline(void)
 {
     __asm {
         push     ebx
-        call     PushSetXfmCallStoreCopy_0044d060
+        call     PushSetXfmCallStoreCopy
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_cf48
@@ -174,7 +174,7 @@ __declspec(naked) void IntroSequencePipeline_0044cd50(void)
         jne      short L_cf48
         test     byte ptr [g_xformDirtyFlags], bl
         jne      short L_cf48
-        call     PushPopXformEntityCall_0044d1e0
+        call     PushPopXformEntityCall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_cf48
@@ -213,7 +213,7 @@ __declspec(naked) void IntroSequencePipeline_0044cd50(void)
         jne      short L_cf48
         test     byte ptr [g_xformDirtyFlags], bl
         jne      short L_cf48
-        call     PushPopXformEntityCall_0044d1e0
+        call     PushPopXformEntityCall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_cf48

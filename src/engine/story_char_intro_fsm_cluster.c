@@ -116,20 +116,20 @@ extern unsigned int g_audioStreamState;
 extern unsigned int g_installSelfCounter_005433e8;
 extern void ArgSarStoreJmp(void);
 extern void CallPauseScaledStoreCopyJmp(void);
-extern void DualSlotPropagateCall_004683e0(void);
+extern void DualSlotPropagateCall(void);
 extern void DualWalkRange(void);
-extern void EsiInstallChainCmpDualCall_00429300(void);
+extern void EsiInstallChainCmpDualCall(void);
 extern void GateDispatch6c(void);
 extern void InstallSelf3WayChainCmp(void);
 extern void LoadSetFpJmp_004093a0(void);
 extern void MStackPush1MagicMod2(void);
 extern void PendingMatch_0046b670(void);
-extern void PoseFsmTriHelpers_00431650(void);
-extern void PushCallPauseSetMaxThenCallPauseJmp_0048e380(void);
+extern void PoseFsmTriHelpers(void);
+extern void PushCallPauseSetMaxThenCallPauseJmp(void);
 extern void ScaledInitWithCounterAndType_004314f0(void);
 extern void ScaledLoadJmp_00428d20(void);
 
-__declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
+__declspec(naked) void StoryCharIntroFsmCluster(void)
 {
     __asm {
         mov      eax, dword ptr [g_baseSel]
@@ -152,9 +152,9 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         pop      esi
         ret
     L_7f20:
-        mov      dword ptr [esi + 8], OFFSET StoryCharIntroFsmCluster_00467ed0
+        mov      dword ptr [esi + 8], OFFSET StoryCharIntroFsmCluster
         mov      ecx, dword ptr [g_baseSel]
-        mov      edx, OFFSET StoryCharIntroFsmCluster_00467ed0
+        mov      edx, OFFSET StoryCharIntroFsmCluster
         mov      dword ptr [ecx*4 + 0x84], 2
         mov      eax, dword ptr [esi + 4]
         add      edx, 0x2000000
@@ -192,7 +192,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         mov      eax, 0x20
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_audioStreamState], eax
-        call     PushCallPauseSetMaxThenCallPauseJmp_0048e380
+        call     PushCallPauseSetMaxThenCallPauseJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8019
@@ -203,7 +203,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         push     0
         push     OFFSET L_8200
         call     StoreTwoCall
-        mov      dword ptr [esi + 8], OFFSET StoryCharIntroFsmCluster_00467ed0
+        mov      dword ptr [esi + 8], OFFSET StoryCharIntroFsmCluster
         mov      dword ptr [esi + 0x84], 1
         add      esp, 8
         mov      dword ptr [g_pendingNodeType], 0x1e
@@ -302,7 +302,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], edi
-        call     EsiInstallChainCmpDualCall_00429300
+        call     EsiInstallChainCmpDualCall
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
@@ -355,7 +355,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         mov      dword ptr [g_xformScratch2088], 0xffff0000
     L_8235:
         mov      dword ptr [g_eventQueueChild], 0x28
-        call     PoseFsmTriHelpers_00431650
+        call     PoseFsmTriHelpers
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_83d1
@@ -432,11 +432,11 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_83d1
-        call     DualSlotPropagateCall_004683e0
+        call     DualSlotPropagateCall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_83d1
-        call     DualSlotPropagateCall_004683e0
+        call     DualSlotPropagateCall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_83d1

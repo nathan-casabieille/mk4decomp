@@ -115,13 +115,13 @@ extern unsigned int g_fightAxisPosY;
  *   add g_walkCallback to arr_b[+0], g_eventQueueCurrent to arr_b[+4],
  *   g_xformEntityIdx to arr_b[+8].
  */
-extern void Mat3x3VecMul6Bit_004b3590(void);
+extern void Mat3x3VecMul6Bit(void);
 
 extern unsigned int g_arr_4bddf0_a;
 extern unsigned int g_arr_4bddf0_b;
 extern unsigned int g_arr_4bddf0_src;
 
-void TransformAccumulate_004bddf0(void) {
+void TransformAccumulate(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueTotal]
         mov     ecx, [eax*4 + g_arr_4bddf0_src]
@@ -136,7 +136,7 @@ void TransformAccumulate_004bddf0(void) {
         lea     ecx, [eax*4 + g_arr_4bddf0_b]
         push    edx
         push    ecx
-        call    Mat3x3VecMul6Bit_004b3590
+        call    Mat3x3VecMul6Bit
         mov     eax, dword ptr [g_scaledInit_00542044]
         mov     edx, dword ptr [g_walkCallback]
         add     esp, 8

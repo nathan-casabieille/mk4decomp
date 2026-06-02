@@ -118,12 +118,12 @@ extern unsigned int g_fightAxisPosY;
  * CallPauseTestByteJmpCalls. Entry A of the original 83-byte packed block;
  * entry B at +0x30 lives in func_00439fa0. The 4-byte nop gap is filled
  * by 0x90-fill. */
-void StoreCallPauseTestByte_DualCmpStoreClear_00439f70(void) {
+void StoreCallPauseTestByte_DualCmpStoreClear(void) {
     g_walkCallback = 0x1f4;
     AudioVolumeRescale();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 1) != 0) {
-        QuadGuardBitGateJmp_00439130();
+        QuadGuardBitGateJmp();
         return;
     }
     CallPauseTestByteJmpCalls();

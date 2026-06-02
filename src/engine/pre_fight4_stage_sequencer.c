@@ -109,21 +109,21 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void GDispatch4(void);
-extern void IntroInitCluster_0044d280(void);
+extern void IntroInitCluster(void);
 extern void MStackBracket5_FieldClear_StateAdvance(void);
 extern void MStackCall_0044d230(void);
 extern void MStackPush2GuardedFieldClear(void);
 extern void MStackPushTyped_0044cf50(void);
 extern void MStackPushTyped_0044cf80(void);
 extern void MStackPushTyped_0044cfb0(void);
-extern void PushPopXformEntityCall_0044d1e0(void);
-extern void PushSetXfmCallStoreCopy_0044d060(void);
+extern void PushPopXformEntityCall(void);
+extern void PushSetXfmCallStoreCopy(void);
 
-__declspec(naked) void PreFight4StageSequencer_0044a590(void)
+__declspec(naked) void PreFight4StageSequencer(void)
 {
     __asm {
         push     ebx
-        call     PushSetXfmCallStoreCopy_0044d060
+        call     PushSetXfmCallStoreCopy
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a7ee
@@ -175,7 +175,7 @@ __declspec(naked) void PreFight4StageSequencer_0044a590(void)
         jne      L_a7ee
         test     byte ptr [g_xformDirtyFlags], bl
         jne      L_a7ee
-        call     PushPopXformEntityCall_0044d1e0
+        call     PushPopXformEntityCall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a7ee
@@ -214,7 +214,7 @@ __declspec(naked) void PreFight4StageSequencer_0044a590(void)
         jne      short L_a7ee
         test     byte ptr [g_xformDirtyFlags], bl
         jne      short L_a7ee
-        call     PushPopXformEntityCall_0044d1e0
+        call     PushPopXformEntityCall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_a7ee
@@ -224,7 +224,7 @@ __declspec(naked) void PreFight4StageSequencer_0044a590(void)
         jne      short L_a7ee
         mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_xformEntityIdx], edx
-        call     IntroInitCluster_0044d280
+        call     IntroInitCluster
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_a7ee

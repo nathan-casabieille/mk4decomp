@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-__declspec(naked) void BucketBlockAllocSplit_004c7670(void)
+__declspec(naked) void BucketBlockAllocSplit(void)
 {
     __asm {
         mov      edx, dword ptr [esp + 0xc]

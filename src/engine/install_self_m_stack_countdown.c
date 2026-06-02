@@ -111,15 +111,15 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00437020 (183b game) - install-self with mstack-push g_eventQueueChild + bit-0 check + countdown.
  *   chain[+0x84]!=0 path: mstack-push g_eventQueueChild; call GuardedDualAndFlagToggle;
  *     pause-check; cl=g_xformDirtyFlags; reload mstack tail back to g_eventQueueChild; if bit-0 set:
- *     jmp CallPauseJmpStateInit_004370e0. Else mstack-push 0x004370c0; jmp GameDispatchValidateState.
+ *     jmp CallPauseJmpStateInit. Else mstack-push 0x004370c0; jmp GameDispatchValidateState.
  *   chain[+0x84]==0 path: install-self at +0x08=0x00437020, g_pendingNodeType=1, pause=1, ret.
  *   Block B (+0xa0): countdown g_eventQueueChild; if zero jmp self(0x00437020); else jmp StackPopDispatchTagged.
  */
 extern unsigned int g_matrixStack_arr;
-extern void CallPauseJmpStateInit_004370e0(void);
+extern void CallPauseJmpStateInit(void);
 extern void GuardedDualAndFlagToggle(void);
 
-__declspec(naked) void InstallSelfMStackCountdown_00437020(void) {
+__declspec(naked) void InstallSelfMStackCountdown(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         shl     eax, 2
@@ -147,7 +147,7 @@ __declspec(naked) void InstallSelfMStackCountdown_00437020(void) {
         mov     dword ptr [g_matrixStackTop], eax
         _emit   75h
         _emit   05h
-        jmp     CallPauseJmpStateInit_004370e0
+        jmp     CallPauseJmpStateInit
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_matrixStack_arr], 0x004370c0
@@ -164,7 +164,7 @@ __declspec(naked) void InstallSelfMStackCountdown_00437020(void) {
         mov     dword ptr [g_eventQueueChild], eax
         _emit   74h
         _emit   05h
-        jmp     InstallSelfMStackCountdown_00437020
+        jmp     InstallSelfMStackCountdown
         jmp     StackPopDispatchTagged
     }
 }

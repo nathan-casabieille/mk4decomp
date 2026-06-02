@@ -19,7 +19,7 @@ extern unsigned int g_phaseTimer;
 extern void SetJmp_00405420(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
-void CallPauseTestByte4ZeroCB_00451a60(void) {
+void CallPauseTestByte4ZeroCB(void) {
     SetJmp_00405420();
     if (g_framePauseFlag) return;
     if (!(g_xformDirtyFlags & 4)) return;

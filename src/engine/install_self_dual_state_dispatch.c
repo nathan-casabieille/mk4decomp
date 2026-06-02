@@ -114,7 +114,7 @@ extern void CjInstallSelfRouter(void);
 extern void EsiInstallClampAddCall(void);
 extern void StateDispatchTable(void);
 
-__declspec(naked) void InstallSelfDualStateDispatch_0042c9f0(void) {
+__declspec(naked) void InstallSelfDualStateDispatch(void) {
     __asm {
         push    0x004e3550
         call    ArgSarStoreJmp

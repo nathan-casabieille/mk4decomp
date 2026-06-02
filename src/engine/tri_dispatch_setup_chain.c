@@ -114,9 +114,9 @@ extern unsigned int g_clamp_00537f2c;
 extern unsigned int g_clamp_0053a6dc;
 extern unsigned int g_dst_0053a6e0;
 extern void CallSetPause(void);
-extern void StageEntityInitCluster_004216a0(void);
+extern void StageEntityInitCluster(void);
 
-__declspec(naked) void TriDispatchSetupChain_00421500(void)
+__declspec(naked) void TriDispatchSetupChain(void)
 {
     __asm
     {
@@ -211,7 +211,7 @@ __declspec(naked) void TriDispatchSetupChain_00421500(void)
         je      short L_tdsc_sub2_fall
         test    edx, edx
         je      short L_tdsc_sub2_fall
-        jmp     StageEntityInitCluster_004216a0
+        jmp     StageEntityInitCluster
     L_tdsc_sub2_fall:
         jmp     CallSetPause
         nop
@@ -235,7 +235,7 @@ __declspec(naked) void TriDispatchSetupChain_00421500(void)
         je      short L_tdsc_sub3_fall
         test    edx, edx
         je      short L_tdsc_sub3_fall
-        jmp     StageEntityInitCluster_004216a0
+        jmp     StageEntityInitCluster
     L_tdsc_sub3_fall:
         jmp     CallSetPause
     }

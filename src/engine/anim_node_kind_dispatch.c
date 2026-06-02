@@ -114,32 +114,32 @@ extern unsigned int g_dispatchSave1324_004f78cc;
 extern unsigned int g_dispatchSave1325_004f78d0;
 extern unsigned int g_dispatchSave1326_004f78d4;
 extern void DrawScene(void);
-extern void Loop16Init_004c4370(void);
+extern void Loop16Init(void);
 extern void Helper_TitleAudioReset(void);
-extern void SceneRecordLookupRandInit_004be440(void);
+extern void SceneRecordLookupRandInit(void);
 extern void DSound_GetContext(void);
-extern void ECM_OpenTrack_004be9c0(void);
-extern void TestPushPushCall_004bea50(void);
+extern void ECM_OpenTrack(void);
+extern void TestPushPushCall(void);
 extern void Input_AnyConfirmPressed(void);
 /* Renderer_GetMode declared in game/tick.h as int */
-extern void AnimNodeKindDispatch_004b40d0(void);
-extern void SmoothShiftBlit_004bea80(void);
-extern void JumpTable5Way_004b41c0(void);
+extern void AnimNodeKindDispatch(void);
+extern void SmoothShiftBlit(void);
+extern void JumpTable5Way(void);
 extern void PresentFrame(void);
 extern void PumpMessages(void);
-extern void CallZero_004bea30(void);
+extern void CallZero(void);
 
 /* @addr 0x004be250 (354b engine.scenegraph) - cdecl wrapper that calls
  *   DrawScene + Loop16Init + Audio_TimerTeardown + SetState1, then if
  *   g_gsmActiveFlag == 0 returns 0; else looks up an entry via
- *   SceneRecordLookupRandInit_004be440 keyed by [esp+0x24]. While that pointer is non-zero
+ *   SceneRecordLookupRandInit keyed by [esp+0x24]. While that pointer is non-zero
  *   plays an ECM track and pumps the message loop: probe inputs via
- *   Input_AnyConfirmPressed, advance through TestPushPushCall_004bea50
+ *   Input_AnyConfirmPressed, advance through TestPushPushCall
  *   transitions, and on key-1 input dispatch a 5-way JumpTable_004b41c0
  *   based action. On finish-condition (ebx != 0) restores state and
  *   returns either 0 or 0xa (bit-pattern via `neg/sbb/and 0xa`).
  */
-extern void Audio_TimerTeardown_004ac5f0(void);
+extern void Audio_TimerTeardown(void);
 
 __declspec(naked) void SceneFrameStepWithInputs(void) {
     __asm {
@@ -155,8 +155,8 @@ __declspec(naked) void SceneFrameStepWithInputs(void) {
         mov     dword ptr [esp + 0x10], ebp
         xor     ebx, ebx
         call    DrawScene
-        call    Loop16Init_004c4370
-        call    Audio_TimerTeardown_004ac5f0
+        call    Loop16Init
+        call    Audio_TimerTeardown
         call    Helper_TitleAudioReset
         cmp     dword ptr [g_gsmActiveFlag], ebp
         je      short L_sfs_haveScene
@@ -171,7 +171,7 @@ __declspec(naked) void SceneFrameStepWithInputs(void) {
         mov     esi, dword ptr [esp + 0x24]
     L_sfs_lookupTop:
         push    esi
-        call    SceneRecordLookupRandInit_004be440
+        call    SceneRecordLookupRandInit
         mov     edi, eax
         add     esp, 4
         cmp     edi, ebp
@@ -190,9 +190,9 @@ __declspec(naked) void SceneFrameStepWithInputs(void) {
         push    0x64
         push    eax
         push    edi
-        call    ECM_OpenTrack_004be9c0
+        call    ECM_OpenTrack
         add     esp, 0x10
-        call    TestPushPushCall_004bea50
+        call    TestPushPushCall
         mov     edi, eax
         cmp     edi, ebp
         je      L_sfs_innerDone
@@ -223,7 +223,7 @@ __declspec(naked) void SceneFrameStepWithInputs(void) {
         push    edx
         push    eax
         push    1
-        call    AnimNodeKindDispatch_004b40d0
+        call    AnimNodeKindDispatch
         add     esp, 0x14
         test    eax, eax
         je      short L_sfs_finishPresent
@@ -235,26 +235,26 @@ __declspec(naked) void SceneFrameStepWithInputs(void) {
         push    edx
         push    eax
         push    ecx
-        call    SmoothShiftBlit_004bea80
+        call    SmoothShiftBlit
         add     esp, 0x10
-        call    JumpTable5Way_004b41c0
+        call    JumpTable5Way
         call    PresentFrame
     L_sfs_finishPresent:
         call    PumpMessages
     L_sfs_skipCallChain:
-        call    TestPushPushCall_004bea50
+        call    TestPushPushCall
         mov     edi, eax
         cmp     edi, ebp
         jne     L_sfs_innerLoop
     L_sfs_innerDone:
-        call    CallZero_004bea30
+        call    CallZero
         cmp     ebx, ebp
         jne     short L_sfs_finalReturn
         mov     esi, dword ptr [esi + 0x4f78d4]
         cmp     esi, -1
         je      short L_sfs_finalReturn
         push    esi
-        call    SceneRecordLookupRandInit_004be440
+        call    SceneRecordLookupRandInit
         mov     edi, eax
         add     esp, 4
         cmp     edi, ebp

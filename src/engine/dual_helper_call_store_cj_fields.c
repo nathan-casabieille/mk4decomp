@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern void ScaledArrStore_00429980(void);
 extern void TripleFieldCopyJmpHi(void);
-extern void TripleFieldCopyHi_0048f7b0(void);
+extern void TripleFieldCopyHi(void);
 extern void DualHelperCallStoreCjFields(void);
 extern void EsiEdiAliasDualMul10(void);
 
@@ -118,7 +118,7 @@ extern void EsiEdiAliasDualMul10(void);
  *   B0 ([+0x84]==0): mov 0x4ccc, 0xffffb334 locals; call DualHelperCallStoreCjFields; if !pause
  *     call TripleFieldCopyJmpHi; if !pause install-self + chain[+0x84]=1
  *     + g_pendingNodeType=4 + g_pause=1; ret.
- *   B1 ([+0x84]==1): call TripleFieldCopyHi_0048f7b0; if !pause set g_walkCallback=0xe666
+ *   B1 ([+0x84]==1): call TripleFieldCopyHi; if !pause set g_walkCallback=0xe666
  *     call EsiEdiAliasDualMul10; if !pause install-self + chain[+0x84]=2
  *     + g_pendingNodeType=4 + g_pause=1; ret.
  *   B2 ([+0x84]==2+): set g_eventQueueChild=0x11; call ScaledArrStore_00429980;
@@ -151,7 +151,7 @@ __declspec(naked) void InstallSelfStateMachine_0047f3f0(void) {
         call    StackPopDispatchTagged
         pop     esi
         ret
-        call    TripleFieldCopyHi_0048f7b0
+        call    TripleFieldCopyHi
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

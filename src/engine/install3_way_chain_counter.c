@@ -116,10 +116,10 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void CopyJmp_00406ba0(void);
 extern void FiveCallGuardSetTail(void);
-extern void IterStepNegStore_00490b10(void);
+extern void IterStepNegStore(void);
 extern void MStackPushSet0008(void);
 
-__declspec(naked) void Install3WayChainCounter_004809e0(void) {
+__declspec(naked) void Install3WayChainCounter(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -160,7 +160,7 @@ __declspec(naked) void Install3WayChainCounter_004809e0(void) {
         mov     dword ptr [g_walkCallback], eax
         push    0x004ed850
         mov     dword ptr [ecx*4 + 0x74], eax
-        call    IterStepNegStore_00490b10
+        call    IterStepNegStore
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax

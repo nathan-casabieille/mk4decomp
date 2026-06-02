@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void CrtParseCommandLine_004cbcc0(void);
+extern void CrtParseCommandLine(void);
 extern void LoadArgPushCall(void);
 extern void CmpCallPushIATCall(void);
 extern unsigned char g_buf_00f9faf0;
@@ -122,15 +122,15 @@ extern unsigned int g_dispatchSave1424_00f9f814;
  *   GetModuleFileNameA(NULL, [0xf9faf0], MAX_PATH).
  *   edi = [0xfa0ee8]; [0xf9f830] = [0xf9faf0].
  *   if (*edi == 0): edi = [0xf9faf0] (use module path).
- *   Call CrtParseCommandLine_004cbcc0 (parse, count). Get char_size + arg_count.
+ *   Call CrtParseCommandLine (parse, count). Get char_size + arg_count.
  *   Call malloc/realloc-like LoadArgPushCall(total_bytes). esi = result.
  *   if (esi == 0): call CmpCallPushIATCall(8) (errno).
- *   Call CrtParseCommandLine_004cbcc0 again (this time storing args). [0xf9f818] = esi (argv array).
+ *   Call CrtParseCommandLine again (this time storing args). [0xf9f818] = esi (argv array).
  *   [0xf9f814] = argc - 1.
  */
 extern unsigned int g_GetModuleFileNameA_004d20a0;
 
-__declspec(naked) void SetupArgv_004cbc20(void) {
+__declspec(naked) void SetupArgv(void) {
     __asm {
         sub     esp, 8
         push    esi
@@ -152,7 +152,7 @@ __declspec(naked) void SetupArgv_004cbc20(void) {
         push    0
         push    0
         push    edi
-        call    CrtParseCommandLine_004cbcc0
+        call    CrtParseCommandLine
         mov     edx, [esp + 0x20]
         mov     eax, [esp + 0x1c]
         add     esp, 0x14
@@ -176,7 +176,7 @@ __declspec(naked) void SetupArgv_004cbc20(void) {
         push    edx
         push    esi
         push    edi
-        call    CrtParseCommandLine_004cbcc0
+        call    CrtParseCommandLine
         mov     eax, [esp + 0x1c]
         add     esp, 0x14
         dec     eax

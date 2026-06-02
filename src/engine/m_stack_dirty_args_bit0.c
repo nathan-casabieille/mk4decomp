@@ -126,7 +126,7 @@ extern void DualPushSetCallDualPop(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void MStackDirtyArgsBit0_0049fa50(void) {
+__declspec(naked) void MStackDirtyArgsBit0(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_scaledInit_00542044]

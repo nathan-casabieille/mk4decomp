@@ -122,13 +122,13 @@ extern void DualCmpSwapStore(void);
 extern void MStackBracket2_TreeWalkRecursive(void);
 extern void MStackBracket5_LinkedListUnlink(void);
 extern void MStackPush2ChainPrepend(void);
-extern void Phase1ContextSetup3Helpers_0040d990(void);
-extern void QuadBlockSoundInit_0049bb90(void);
+extern void Phase1ContextSetup3Helpers(void);
+extern void QuadBlockSoundInit(void);
 extern void ScaledStackCallPause(void);
 extern void TableLookupCall_00489ff0(void);
 extern void ThreeChanPackClamp(void);
 
-__declspec(naked) void RoundFinalizeCluster_0049b8b0(void)
+__declspec(naked) void RoundFinalizeCluster(void)
 {
     __asm {
         /* === h1 (0x49b8b0): scan chain + 49b7c0 install === */
@@ -347,11 +347,11 @@ __declspec(naked) void RoundFinalizeCluster_0049b8b0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_bb8b
-        call     Phase1ContextSetup3Helpers_0040d990
+        call     Phase1ContextSetup3Helpers
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_bb8b
-        jmp      QuadBlockSoundInit_0049bb90
+        jmp      QuadBlockSoundInit
     L_bb8b:
         ret
     }

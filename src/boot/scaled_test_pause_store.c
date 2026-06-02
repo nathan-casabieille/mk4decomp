@@ -12,7 +12,7 @@ extern unsigned int g_scaledInit_00542044;
  *   else call F; pause → ret; load g_scaledInit and g_xformEntityIdx;
  *   store xformEntityIdx into [scaledInit*4 + 0x28]; ret.
  */
-extern void MStackPush2Burst6Init_00405450(void);
+extern void MStackPush2Burst6Init(void);
 void ScaledTestPauseStore(void) {
     unsigned int v = ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->queue_idx;
     g_walkCallback = (void(*)(void))v;
@@ -20,7 +20,7 @@ void ScaledTestPauseStore(void) {
         g_xformDirtyFlags = g_xformDirtyFlags & 0xFFFFFFFBu;
         return;
     }
-    MStackPush2Burst6Init_00405450();
+    MStackPush2Burst6Init();
     if (g_framePauseFlag) return;
     ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->queue_idx = g_xformEntityIdx;
 }

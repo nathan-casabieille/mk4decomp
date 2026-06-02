@@ -130,16 +130,16 @@ extern unsigned int g_bootChainSlot2_00541ea8;
 extern unsigned int g_dispatchSave80_00541eac;
 extern unsigned int g_bootChainState4_00541eb0;
 extern unsigned int g_audioInitScaled_0054343c;
-extern void AndShlStore_00409280(void);
+extern void AndShlStore(void);
 extern void BootPhaseGateBracketedInit(void);
 extern void Helper_GeoLoadPre(void);
-extern void LinkedListBuilder_004ab380(void);
+extern void LinkedListBuilder(void);
 extern void MStackCall_004063e0(void);
-extern void ScaledChainAccumLoop_0049cd40(void);
+extern void ScaledChainAccumLoop(void);
 extern void Thunk_004bd8d0(void);
 extern void VertexSlotInitFlagWalk(void);
 
-__declspec(naked) void BootInitChainHeavy_00404f20(void)
+__declspec(naked) void BootInitChainHeavy(void)
 {
     __asm {
         push    esi
@@ -158,7 +158,7 @@ __declspec(naked) void BootInitChainHeavy_00404f20(void)
         mov     dword ptr [g_pendingNodeType], 0x21
         mov     dword ptr [g_eventQueueTotal], ecx
         mov     dword ptr [g_eventQueueEnd], 0xC8
-        call    LinkedListBuilder_004ab380
+        call    LinkedListBuilder
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         mov     edx, dword ptr [g_bootChainPair1_00541e84]
@@ -217,7 +217,7 @@ __declspec(naked) void BootInitChainHeavy_00404f20(void)
         mov     dword ptr [g_pendingNodeType], 0x13
         mov     dword ptr [g_eventQueueTotal], edx
         mov     dword ptr [g_eventQueueEnd], 0x1C2
-        call    LinkedListBuilder_004ab380
+        call    LinkedListBuilder
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         mov     eax, dword ptr [g_dispatchSave80_00541eac]
@@ -227,10 +227,10 @@ __declspec(naked) void BootInitChainHeavy_00404f20(void)
         mov     dword ptr [g_pendingNodeType], 0x13
         mov     dword ptr [g_eventQueueTotal], ecx
         mov     dword ptr [g_eventQueueEnd], 0xC8
-        call    LinkedListBuilder_004ab380
+        call    LinkedListBuilder
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
-        call    ScaledChainAccumLoop_0049cd40
+        call    ScaledChainAccumLoop
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         call    BootPhaseGateBracketedInit
@@ -252,7 +252,7 @@ __declspec(naked) void BootInitChainHeavy_00404f20(void)
         mov     dword ptr [g_particleEmitterNode], esi
         mov     dword ptr [g_dispatchSave523_004d5140], 0x7F000000
         mov     dword ptr [g_walkCallback], esi
-        call    AndShlStore_00409280
+        call    AndShlStore
     L_boot_init_exit:
         pop     esi
         ret

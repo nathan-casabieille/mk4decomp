@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void AudioMixerStep(void);
 
-void TripleMul10TailIndexed_00425970(void) {
+void TripleMul10TailIndexed(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueWorkType]
         mov     ecx, dword ptr [g_eventQueueCurrent]

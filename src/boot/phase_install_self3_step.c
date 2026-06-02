@@ -118,12 +118,12 @@ extern unsigned int g_phaseInstall3Base_00506c2c;
 extern unsigned int g_dispatchSave140_00508308;
 extern unsigned int g_dispatchSave139_00508324;
 extern unsigned int g_dispatchSave509_004a2180;
-void PhaseInstallSelf3Step_00402350(void);
+void PhaseInstallSelf3Step(void);
 
 extern unsigned int g_phaseIdx_0053a50c;
 extern void BootInitGuardedCallChain(void);
 
-__declspec(naked) void PhaseInstallSelf3Step_00402350(void)
+__declspec(naked) void PhaseInstallSelf3Step(void)
 {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -142,9 +142,9 @@ __declspec(naked) void PhaseInstallSelf3Step_00402350(void)
         ret
     L_pis3_phase1:
         mov     dword ptr [g_eventQueueCurrent], 4
-        mov     dword ptr [esi + 8], offset PhaseInstallSelf3Step_00402350
+        mov     dword ptr [esi + 8], offset PhaseInstallSelf3Step
         mov     ecx, dword ptr [g_baseSel]
-        mov     edx, offset PhaseInstallSelf3Step_00402350
+        mov     edx, offset PhaseInstallSelf3Step
         add     edx, 0x02000000
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
@@ -227,7 +227,7 @@ __declspec(naked) void PhaseInstallSelf3Step_00402350(void)
         test    eax, eax
         jne     L_pis3_exit
         mov     eax, 1
-        mov     dword ptr [esi + 8], offset PhaseInstallSelf3Step_00402350
+        mov     dword ptr [esi + 8], offset PhaseInstallSelf3Step
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], 0x1E0
         mov     dword ptr [g_framePauseFlag], eax

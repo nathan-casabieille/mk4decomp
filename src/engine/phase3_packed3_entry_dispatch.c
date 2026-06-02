@@ -118,23 +118,23 @@ extern unsigned int g_fightAxisPosY;
  *     phase 2: sub g_currentNodeFlags from the same +0x58 fields, installs
  *              Self, slot[+0x84]=1, g_pendingNodeType=3, arms 0x541e6c=1.
  *   (9-byte NOP align pad.)
- *   Entry 2 (offset 0x100, 56b): chains ScaledTestCallPauseJmpFar_00487150
+ *   Entry 2 (offset 0x100, 56b): chains ScaledTestCallPauseJmpFar
  *     then CopyJmp_0048ef90, both gated by 0x541e6c. If bit 0 of
  *     g_xformDirtyFlags set, tail-jmp TwoCallTail_00481380; else push 0x4eed08
  *     and call ArgSarStoreJmp.
  *   (8-byte NOP align pad.)
  *   Entry 3 (offset 0x140, 36b): if [scaled g_baseSel + 0x7c] > 3
- *     tail-jmp BattleEndCluster_00483650; else fall through to the next adjacent
- *     function ChainDispatcher4Call_00486290 via jmp.
+ *     tail-jmp BattleEndCluster; else fall through to the next adjacent
+ *     function ChainDispatcher4Call via jmp.
  */
 extern unsigned int g_dispatchSave646_004eed08;
 extern void ArgSarStoreJmp(void);
-extern void BattleEndCluster_00483650(void);
-extern void ChainDispatcher4Call_00486290(void);
-extern void ScaledTestCallPauseJmpFar_00487150(void);
+extern void BattleEndCluster(void);
+extern void ChainDispatcher4Call(void);
+extern void ScaledTestCallPauseJmpFar(void);
 extern void TwoCallTail_00481380(void);
 
-__declspec(naked) void Phase3Packed3EntryDispatch_00486130(void) {
+__declspec(naked) void Phase3Packed3EntryDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -159,7 +159,7 @@ __declspec(naked) void Phase3Packed3EntryDispatch_00486130(void) {
         add     ecx, dword ptr [edx*4 + 0x58]
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [edx*4 + 0x58], ecx
-        mov     dword ptr [eax + 8], offset Phase3Packed3EntryDispatch_00486130
+        mov     dword ptr [eax + 8], offset Phase3Packed3EntryDispatch
         mov     dword ptr [eax + 0x84], 2
         mov     dword ptr [g_pendingNodeType], 3
         mov     dword ptr [g_framePauseFlag], 1
@@ -180,7 +180,7 @@ __declspec(naked) void Phase3Packed3EntryDispatch_00486130(void) {
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [edx*4 + 0x58], ecx
         mov     ecx, 1
-        mov     dword ptr [eax + 8], offset Phase3Packed3EntryDispatch_00486130
+        mov     dword ptr [eax + 8], offset Phase3Packed3EntryDispatch
         mov     dword ptr [eax + 0x84], ecx
         mov     dword ptr [g_pendingNodeType], 3
         mov     dword ptr [g_framePauseFlag], ecx
@@ -197,7 +197,7 @@ __declspec(naked) void Phase3Packed3EntryDispatch_00486130(void) {
         nop
         /* entry 2 (offset 0x100) */
     L_p3p_entry2:
-        call    ScaledTestCallPauseJmpFar_00487150
+        call    ScaledTestCallPauseJmpFar
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_p3p_e2End
@@ -230,8 +230,8 @@ __declspec(naked) void Phase3Packed3EntryDispatch_00486130(void) {
         cmp     eax, 3
         mov     dword ptr [g_walkCallback], eax
         jle     short L_p3p_jumpNext
-        jmp     BattleEndCluster_00483650
+        jmp     BattleEndCluster
     L_p3p_jumpNext:
-        jmp     ChainDispatcher4Call_00486290
+        jmp     ChainDispatcher4Call
     }
 }

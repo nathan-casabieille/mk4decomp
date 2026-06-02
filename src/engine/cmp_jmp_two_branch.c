@@ -15,7 +15,7 @@ extern unsigned int g_baseSel;
  */
 extern void Wrapper_0048a320(void);
 extern void Wrapper_0048a310(void);
-void CmpJmpTwoBranch_004871d0(void) {
+void CmpJmpTwoBranch(void) {
     if ((int)g_eventQueueChild < 5) {
         Wrapper_0048a320();
         return;

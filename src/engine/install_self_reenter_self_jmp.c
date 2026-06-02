@@ -118,7 +118,7 @@ extern void DualScaledInitClear(void);
 extern void FiveCallGuardSetTail(void);
 extern void GuardedSeq_004297b0(void);
 
-__declspec(naked) void InstallSelfReenterSelfJmp_00483130(void) {
+__declspec(naked) void InstallSelfReenterSelfJmp(void) {
     __asm {
         call    DualScaledInitClear
         mov     eax, dword ptr [g_framePauseFlag]
@@ -157,7 +157,7 @@ __declspec(naked) void InstallSelfReenterSelfJmp_00483130(void) {
         test    ecx, ecx
         _emit   74h
         _emit   05h
-        jmp     InstallSelfReenterSelfJmp_00483130
+        jmp     InstallSelfReenterSelfJmp
         mov     ecx, 1
         mov     dword ptr [eax + 0x08], 0x00483180
         mov     dword ptr [eax + 0x84], ecx

@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   camera matrix at g_vtxMat..7af9a0 into local stack 0x10/0x14/
  *   0x18/0x1c (and high-bytes), loads alternate camera matrix from
  *   g_dispatchSave1554_00ab4d58/5c/60/64/68 into g_vtxMat..7af9a0, then calls
- *   Mat3x3VecMul6Bit_004b3590(arg, &local_vec) to project the vertex
+ *   Mat3x3VecMul6Bit(arg, &local_vec) to project the vertex
  *   buffer at [esp+0x40] through it.
  *
  *   On arg == 0: loads 4 dwords from [arg] (mat row 0..2) and the
@@ -143,9 +143,9 @@ extern unsigned int g_dispatchSave1556_00ab4d60;
 extern unsigned int g_dispatchSave1557_00ab4d64;
 extern unsigned int g_dispatchSave1558_00ab4d68;
 extern unsigned int g_dispatchSave1569_00ab4e24;
-extern void Mat3x3VecMul6Bit_004b3590(void);
+extern void Mat3x3VecMul6Bit(void);
 
-__declspec(naked) void AltCamMatrixProject_004b9840(void) {
+__declspec(naked) void AltCamMatrixProject(void) {
     __asm {
         mov     eax, dword ptr [esp + 8]
         sub     esp, 0x2c
@@ -175,7 +175,7 @@ __declspec(naked) void AltCamMatrixProject_004b9840(void) {
         push    eax
         push    ecx
         mov     word ptr [g_mat3x3_007af9a0], dx
-        call    Mat3x3VecMul6Bit_004b3590
+        call    Mat3x3VecMul6Bit
         add     esp, 8
         jmp     short L_acm_postCall
     L_acm_noAlt:
@@ -206,7 +206,7 @@ __declspec(naked) void AltCamMatrixProject_004b9840(void) {
         push    ecx
         push    edx
         mov     word ptr [g_mat3x3_007af9a0], ax
-        call    Mat3x3VecMul6Bit_004b3590
+        call    Mat3x3VecMul6Bit
         mov     eax, dword ptr [esp + 0x4c]
         add     esp, 8
         test    eax, eax

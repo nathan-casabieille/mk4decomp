@@ -120,7 +120,7 @@ extern unsigned int g_stateChangePair3_0053a278;
 extern unsigned char g_dispatchSave410_0050b130;
 
 /* @addr 0x00458ae0 (181b game) - sequenced init w/ multiple global stores. */
-void SequencedInit3CallB_00458ae0(void) {
+void SequencedInit3CallB(void) {
     unsigned int v;
     BootInitGuardedCallChain();
     if (g_framePauseFlag != 0) return;

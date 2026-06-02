@@ -116,7 +116,7 @@ extern unsigned int g_load_0052ab10;
  *   bit was set, replace walk with original (positive) wt[+0x64];
  *   store walk into cj[+0x64]; pop wt back.
  */
-void AudioSwapNegate_004ac080(void) {
+void AudioSwapNegate(void) {
     unsigned int v;
     unsigned int chain;
     g_matrixStackTop++;

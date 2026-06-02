@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_sehUnwindBase_00520050;
 extern void func_004d12de(void);
 
-__declspec(naked) void SehUnwindCluster_004c6ae0(void)
+__declspec(naked) void SehUnwindCluster(void)
 {
     __asm {
     /* Helper 1: __try frame setup */

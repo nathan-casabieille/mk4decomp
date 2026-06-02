@@ -122,7 +122,7 @@ extern void SlotEvent3EntryChain(void);
 extern unsigned int g_matrixStack_arr;
 extern void FiveCallGuardSetTail(void);
 
-__declspec(naked) void MStackJmpInstallSelf_0046ed40(void) {
+__declspec(naked) void MStackJmpInstallSelf(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         inc     eax

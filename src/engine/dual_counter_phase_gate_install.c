@@ -110,10 +110,10 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_audioBank2State_00537f98;
 extern unsigned int g_audioStreamState;
-extern void InstallSelfStackReset_00421f40(void);
+extern void InstallSelfStackReset(void);
 extern void ScaledInitOrSelfPtr_00421f00(void);
 
-__declspec(naked) void DualCounterPhaseGateInstall_00421d50(void)
+__declspec(naked) void DualCounterPhaseGateInstall(void)
 {
     __asm
     {
@@ -132,7 +132,7 @@ __declspec(naked) void DualCounterPhaseGateInstall_00421d50(void)
         cmp     ecx, edx
         mov     dword ptr [g_walkCallback], ecx
         je      short L_dcpgi_call40
-        call    InstallSelfStackReset_00421f40
+        call    InstallSelfStackReset
         pop     edi
         pop     esi
         ret
@@ -161,9 +161,9 @@ __declspec(naked) void DualCounterPhaseGateInstall_00421d50(void)
         mov     dword ptr [g_audioBank2State_00537f98], edx
         mov     dword ptr [g_eventQueueChild], 0xf0
     L_dcpgi_setup:
-        mov     dword ptr [eax + 8], offset DualCounterPhaseGateInstall_00421d50
+        mov     dword ptr [eax + 8], offset DualCounterPhaseGateInstall
         mov     ecx, dword ptr [g_baseSel]
-        mov     esi, offset DualCounterPhaseGateInstall_00421d50
+        mov     esi, offset DualCounterPhaseGateInstall
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     ecx, dword ptr [eax + 4]
         add     esi, 0x2000000
@@ -199,10 +199,10 @@ __declspec(naked) void DualCounterPhaseGateInstall_00421d50(void)
         mov     dword ptr [g_audioBank2State_00537f98], edx
         mov     dword ptr [g_eventQueueChild], 0x3c
     L_dcpgi_install2:
-        mov     dword ptr [eax + 8], offset DualCounterPhaseGateInstall_00421d50
+        mov     dword ptr [eax + 8], offset DualCounterPhaseGateInstall
         mov     ecx, dword ptr [g_baseSel]
         mov     esi, 1
-        mov     edi, offset DualCounterPhaseGateInstall_00421d50
+        mov     edi, offset DualCounterPhaseGateInstall
         mov     dword ptr [ecx*4 + 0x84], esi
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x1000000

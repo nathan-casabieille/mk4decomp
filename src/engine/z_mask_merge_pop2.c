@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  *   g_eventQueueCurrent and g_eventQueueWorkType.
  */
 
-void ZMaskMergePop2_0044cfe0(void) {
+void ZMaskMergePop2(void) {
     unsigned int top;
     unsigned int walk;
     unsigned int slot;

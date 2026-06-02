@@ -19,7 +19,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void * g_fsys_archive;
 extern void Helper_FClose(void *p);
-void TestCallZero_004b1de0(void) {
+void TestCallZero(void) {
     void *v = (void *)g_fsys_archive;
     if (v != 0) {
         Helper_FClose(v);

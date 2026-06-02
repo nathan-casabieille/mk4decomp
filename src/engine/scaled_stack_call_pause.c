@@ -131,5 +131,5 @@ void ScaledStackCallPause(int arg) {
     g_matrixStackTop--;
     g_cj_0054205c = popped;
     if ((g_xformDirtyFlags & 4) != 0) return;
-    Vec3AccMul10ChainBlend_0049c3d0();
+    Vec3AccMul10ChainBlend();
 }

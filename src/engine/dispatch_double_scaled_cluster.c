@@ -116,8 +116,8 @@ extern unsigned int g_fightAxisPosY;
 /* ------------------------------------------------------------------ */
 extern void InstallSelf3WayChainCmp(void);
 extern void ScaledInit_0048d490(void);
-extern void InstallSelfChain494d60_00494d60(void);
-extern void DispatchDoubleScaledCluster_00494e20(void);
+extern void InstallSelfChain494d60(void);
+extern void DispatchDoubleScaledCluster(void);
 
 extern void ScaledLoadIncJmp_00429840(void);
 extern void TableLookupCall_00489ff0(void);
@@ -141,7 +141,7 @@ __declspec(naked) void MoveDispatch4StateFsm(void)
         dec      eax
         mov      dword ptr [g_eventQueueChild], eax
         jne      short L_4aba
-        call     InstallSelfChain494d60_00494d60
+        call     InstallSelfChain494d60
         pop      esi
         ret
     L_4aa5:
@@ -175,13 +175,13 @@ __declspec(naked) void MoveDispatch4StateFsm(void)
         cmp      eax, 1
         mov      dword ptr [g_eventQueueChild], ecx
         jne      short L_4b37
-        call     DispatchDoubleScaledCluster_00494e20
+        call     DispatchDoubleScaledCluster
         pop      esi
         ret
     L_4b37:
         test     eax, eax
         je       short L_4b42
-        call     DispatchDoubleScaledCluster_00494e20
+        call     DispatchDoubleScaledCluster
         pop      esi
         ret
     L_4b42:

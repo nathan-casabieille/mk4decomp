@@ -113,7 +113,7 @@ extern unsigned int g_audioBitField_00541fc0;
 extern void func_0049f336(void);
 extern void func_0049f33b(void);
 
-__declspec(naked) void GameStateTick_0049f1f0(void)
+__declspec(naked) void GameStateTick(void)
 {
     __asm {
         mov      eax, dword ptr [g_audioBitField_00541fc0]

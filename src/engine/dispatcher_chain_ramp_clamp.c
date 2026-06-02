@@ -108,15 +108,15 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void DispatcherChainRampClamp_004260d0(void);
+extern void DispatcherChainRampClamp(void);
 extern void StackPopDispatchTagged(void);
-extern void DivBy_004ab300(void);
+extern void DivBy(void);
 extern unsigned int g_phaseThunkScratch_0053a384;
 
 /* @addr 0x00426000 (199b game) - install-self gate with three-way exit:
  *   esi = base*4; snapshot [esi+0x84]; clear.
  *   if (snapshot != 0) goto install-self-zero;
- *   save g_eventQueueCurrent in 0x53a384; call DispatcherChainRampClamp_004260d0; pause? ret;
+ *   save g_eventQueueCurrent in 0x53a384; call DispatcherChainRampClamp; pause? ret;
  *   if (208c & 4 != 0) goto install-self-zero;
  *   else: chain[g_xformEntityIdx + 0x10] = 0x426190 (handler);
  *         chain[+0x14] = 0x80; restore g_eventQueueCurrent;
@@ -140,7 +140,7 @@ __declspec(naked) void InstallSelfPackedF80(void) {
         _emit   27h
         mov     ecx, dword ptr [g_eventQueueCurrent]
         mov     dword ptr [g_phaseThunkScratch_0053a384], ecx
-        call    DispatcherChainRampClamp_004260d0
+        call    DispatcherChainRampClamp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -164,7 +164,7 @@ __declspec(naked) void InstallSelfPackedF80(void) {
         mov     edx, dword ptr [g_phaseThunkScratch_0053a384]
         mov     dword ptr [g_eventQueueCurrent], edx
         mov     dword ptr [g_walkCallback], eax
-        call    DivBy_004ab300
+        call    DivBy
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

@@ -121,9 +121,9 @@ extern unsigned int g_dispatchSave1461_00f9fc9a;
 extern void CrtGetLocaleInfo(void);
 extern void FreeImpl(void);
 extern void LoadArgPushCall(void);
-extern void StringStripSlotReplace_004d0140(void);
+extern void StringStripSlotReplace(void);
 
-__declspec(naked) void CrtTimeFmtPrefsCluster_004cfe40(void)
+__declspec(naked) void CrtTimeFmtPrefsCluster(void)
 {
     __asm {
         /* === h1 (0x4cfe40): time-format string builder === */
@@ -277,7 +277,7 @@ __declspec(naked) void CrtTimeFmtPrefsCluster_004cfe40(void)
         or       edi, eax
         mov      eax, dword ptr [g_dispatchSave1458_00f9fc70]
         push     eax
-        call     StringStripSlotReplace_004d0140
+        call     StringStripSlotReplace
         add      esp, 4
         cmp      edi, ebx
         je       short L_ffee

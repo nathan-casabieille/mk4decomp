@@ -121,12 +121,12 @@ extern unsigned int g_iat_004d2150;
 extern unsigned int g_iat_004d209c;
 extern void Crt_doserrno(void);
 extern void Crt_errno(void);
-extern void DosMapErr_004c8b20(void);
+extern void DosMapErr(void);
 extern void FmodHelper_004ccb7d(void);
 extern void Thunk_004ca701_helper(void);
 extern void Thunk_004ca77b_helper(void);
 
-__declspec(naked) void CloseAndThunksBundle_004c6760(void) {
+__declspec(naked) void CloseAndThunksBundle(void) {
     __asm {
         /* sub-1: _close */
         mov     eax, [esp + 4]
@@ -136,7 +136,7 @@ __declspec(naked) void CloseAndThunksBundle_004c6760(void) {
         jne     short L_cl_check
         call    dword ptr [g_iat_004d209c]
         push    eax
-        call    DosMapErr_004c8b20
+        call    DosMapErr
         add     esp, 4
         or      eax, -1
         ret

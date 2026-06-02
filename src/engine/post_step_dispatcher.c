@@ -108,16 +108,16 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void CallPauseJmpThenSetChild_00497b10(void);
+extern void CallPauseJmpThenSetChild(void);
 extern void CallSetPause(void);
 extern void FlagThunk4EntryDispatcher(void);
 extern void MStackCall_00406740(void);
-extern void Phase2InitDispatchInstallSelf_0040ba70(void);
+extern void Phase2InitDispatchInstallSelf(void);
 extern void StoreDoubleNegPauseSubStore(void);
 extern void TableLookupCall_00489ff0(void);
 extern void Wrapper_0048a340(void);
 
-__declspec(naked) void PostStepDispatcher_00497790(void)
+__declspec(naked) void PostStepDispatcher(void)
 {
     __asm {
     L_7790:
@@ -138,7 +138,7 @@ __declspec(naked) void PostStepDispatcher_00497790(void)
         and      ecx, 0x2000
         mov      dword ptr [g_xformScratch94], ecx
         je       L_77f4
-        call     CallPauseJmpThenSetChild_00497b10
+        call     CallPauseJmpThenSetChild
         pop      edi
         pop      esi
         ret      
@@ -171,7 +171,7 @@ __declspec(naked) void PostStepDispatcher_00497790(void)
         add      eax, 0x1b
         mov      dword ptr [g_currentNodeIdx], edx
         mov      dword ptr [g_xformEntityIdx], eax
-        call     Phase2InitDispatchInstallSelf_0040ba70
+        call     Phase2InitDispatchInstallSelf
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_793c
@@ -214,7 +214,7 @@ __declspec(naked) void PostStepDispatcher_00497790(void)
         mov      dword ptr [g_eventQueueEnd], 0x5a
     L_7920:
         mov      eax, 1
-        mov      dword ptr [edi + 8], OFFSET PostStepDispatcher_00497790
+        mov      dword ptr [edi + 8], OFFSET PostStepDispatcher
         mov      dword ptr [edi + 0x84], eax
         mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_framePauseFlag], eax
@@ -233,7 +233,7 @@ __declspec(naked) void PostStepDispatcher_00497790(void)
         je       L_79a5
         dec      eax
         je       L_796d
-        call     CallPauseJmpThenSetChild_00497b10
+        call     CallPauseJmpThenSetChild
         pop      esi
         ret      
     L_796d:

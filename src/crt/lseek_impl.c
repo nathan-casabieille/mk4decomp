@@ -118,9 +118,9 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_iat_004d209c;
 extern unsigned int g_iat_004d211c;
 extern unsigned int g_arr_00fa0de0;
-extern void CRTHandleLookup_004cd260(void);
+extern void CRTHandleLookup(void);
 extern void Crt_errno(void);
-extern void DosMapErr_004c8b20(void);
+extern void DosMapErr(void);
 
 __declspec(naked) void LseekImpl(void) {
     __asm {
@@ -128,7 +128,7 @@ __declspec(naked) void LseekImpl(void) {
         mov     esi, dword ptr [esp + 8]
         push    edi
         push    esi
-        call    CRTHandleLookup_004cd260
+        call    CRTHandleLookup
         add     esp, 4
         cmp     eax, -1
         jne     callSeek
@@ -157,7 +157,7 @@ checkErr:
         test    eax, eax
         je      success
         push    eax
-        call    DosMapErr_004c8b20
+        call    DosMapErr
         add     esp, 4
         or      eax, -1
         pop     edi

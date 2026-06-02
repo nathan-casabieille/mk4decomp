@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00467ca0 (136b) - guarded 3-call chain + chain OR + 0xa0000 set + tail. */
-void GuardedTripleCallSetTail_00467ca0(void) {
+void GuardedTripleCallSetTail(void) {
     unsigned int v;
     g_cj_0054205c = *(unsigned int *)(g_baseSel * 4 + 0x64);
     MStackPush2RunCountdown();

@@ -108,26 +108,26 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void ScaledCmp200eCallBool_004398f0(void);
-extern void AddDerefJmp_00433e70(void);
+extern void ScaledCmp200eCallBool(void);
+extern void AddDerefJmp(void);
 extern void InstallSelfChainSetB333v2(void);
-extern void InstallSelfChainSet13333Alt_004377d0(void);
-extern void StanceEntryCluster_00433f50(void);
+extern void InstallSelfChainSet13333Alt(void);
+extern void StanceEntryCluster(void);
 
 /* @addr 0x00433e90 (181b game) - 5-block dispatcher.
  *   A: call ScaledCmp200eCallBool; if nonzero: g_walkCallback=0x004e4d40; g_eventQueueCurrent = (eax & 0xff) >> 2;
- *     g_xformEntityIdx = same; jmp AddDerefJmp_00433e70; else ret.
+ *     g_xformEntityIdx = same; jmp AddDerefJmp; else ret.
  *   B (+0x30): scaledInit=baseSel[*4+0x3c]; g_walkCallback=[*4+0x30]; if zero jmp GuardedSeq_00433bb0;
- *     else g_table_00535ddc<=0x30000? jmp Wrapper_00438ee0 else jmp InstallSelfChainSet13333Alt_004377d0.
+ *     else g_table_00535ddc<=0x30000? jmp Wrapper_00438ee0 else jmp InstallSelfChainSet13333Alt.
  *   C (+0x80): threshold-dispatch g_table_00535ddc → GuardedSeq / CallPauseTestByteJmpCalls / InstallSelfChainSetB333v2.
- *   D (+0xb0): jmp StanceEntryCluster_00433f50.
+ *   D (+0xb0): jmp StanceEntryCluster.
  */
 extern void GuardedSeq_00433bb0(void);
 extern void Wrapper_00438ee0(void);
 
 __declspec(naked) void FiveBlockDispatch_00433e90(void) {
     __asm {
-        call    ScaledCmp200eCallBool_004398f0
+        call    ScaledCmp200eCallBool
         test    eax, eax
         _emit   75h
         _emit   22h
@@ -137,7 +137,7 @@ __declspec(naked) void FiveBlockDispatch_00433e90(void) {
         shr     ecx, 2
         mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [g_xformEntityIdx], ecx
-        jmp     AddDerefJmp_00433e70
+        jmp     AddDerefJmp
         ret
         _emit   90h
         _emit   90h
@@ -158,7 +158,7 @@ __declspec(naked) void FiveBlockDispatch_00433e90(void) {
         _emit   7eh
         _emit   05h
         jmp     Wrapper_00438ee0
-        jmp     InstallSelfChainSet13333Alt_004377d0
+        jmp     InstallSelfChainSet13333Alt
         _emit   90h
         _emit   90h
         _emit   90h
@@ -194,6 +194,6 @@ __declspec(naked) void FiveBlockDispatch_00433e90(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        jmp     StanceEntryCluster_00433f50
+        jmp     StanceEntryCluster
     }
 }

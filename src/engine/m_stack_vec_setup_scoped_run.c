@@ -126,7 +126,7 @@ extern unsigned int g_table_004d57b0;
 extern void AudioMixerStep(void);
 extern void MStackCall_00406340(void);
 
-void MStackVecSetupScopedRun_004749a0(void) {
+void MStackVecSetupScopedRun(void) {
     __asm {
         mov     eax, offset g_vecSetupArrBase_0051204c
         shr     eax, 2

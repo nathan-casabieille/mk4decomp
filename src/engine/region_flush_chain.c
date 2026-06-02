@@ -108,9 +108,9 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void ScaledNegThreeWords_004be210(void);
-extern void ChainStreamMatMulVecAdd_004bd9a0(void);
-extern void RegionFlushChain_004b9250(void);
+extern void ScaledNegThreeWords(void);
+extern void ChainStreamMatMulVecAdd(void);
+extern void RegionFlushChain(void);
 extern unsigned int g_dispatchSave1549_00ab48d8;
 
 
@@ -179,7 +179,7 @@ __declspec(naked) void MStackBracket7_DispatchAndChain(void)
         jne     L_msb7dc_pop7
         test    byte ptr [g_eventQueueIdx], 1
         je      L_msb7dc_skip_be210
-        call    ScaledNegThreeWords_004be210
+        call    ScaledNegThreeWords
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_msb7dc_pop7
@@ -198,7 +198,7 @@ __declspec(naked) void MStackBracket7_DispatchAndChain(void)
         mov     dword ptr [g_pendingNodeType], ecx
         mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_eventQueueTotal], eax
-        call    ChainStreamMatMulVecAdd_004bd9a0
+        call    ChainStreamMatMulVecAdd
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         je      L_msb7dc_chain_init
@@ -227,7 +227,7 @@ __declspec(naked) void MStackBracket7_DispatchAndChain(void)
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_xformEntityIdx], esi
         mov     dword ptr [g_pendingNodeType], edi
-        call    RegionFlushChain_004b9250
+        call    RegionFlushChain
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_msb7dc_pop7

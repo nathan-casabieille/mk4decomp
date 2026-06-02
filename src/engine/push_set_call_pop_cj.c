@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   g_baseSel[edx*4 + 0x38]; call ScaledZeroFour;
  *   if pause: ret; pop g_cj_0054205c; pop mstack; ret.
  */
-void PushSetCallPopCj_004907b0(void) {
+void PushSetCallPopCj(void) {
     unsigned int top;
     top = g_matrixStackTop + 1;
     g_matrixStackTop = top;

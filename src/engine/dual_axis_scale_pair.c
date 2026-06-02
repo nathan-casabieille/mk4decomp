@@ -124,7 +124,7 @@ extern void ThreeChanPackClamp(void);
  * reversing the SIB index/value roles and replacing the orig's 3-byte base+disp8
  * stores with 7-byte SIB no-base stores. Register layout not coaxable from C.
  */
-__declspec(naked) void DualAxisScalePair_0049a0f0(void) {
+__declspec(naked) void DualAxisScalePair(void) {
     __asm {
         mov     eax, dword ptr [g_cj_0054205c]
         mov     ecx, dword ptr [g_walkCallback]

@@ -110,16 +110,16 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_secondary_00535d04;
 extern unsigned int g_primary_0053a774;
-extern void State208cBit0Flag_0048f160(void);
+extern void State208cBit0Flag(void);
 
 /*
  * @addr 0x0042d1c0 (124b game) - cj-keyed pair pick + call + cmp:
  *   pick (walk, _70) = (0x53a774, 0x535d04) by default; if cj matches
- *   0x538158, swap walk. Call State208cBit0Flag_0048f160; if pause clear and
+ *   0x538158, swap walk. Call State208cBit0Flag; if pause clear and
  *   _74 >= g_currentNodeFlags then clear state-bit 0, else set bit 0.
  */
 
-__declspec(naked) void CjPairCallCmp_0042d1c0(void) {
+__declspec(naked) void CjPairCallCmp(void) {
     __asm {
         mov     edx, dword ptr [g_cj_0054205c]
         mov     eax, dword ptr [g_secondary_00535d04]
@@ -141,7 +141,7 @@ __declspec(naked) void CjPairCallCmp_0042d1c0(void) {
 sameA:
         cmp     ecx, eax
         jg      clearBit
-        call    State208cBit0Flag_0048f160
+        call    State208cBit0Flag
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     epi

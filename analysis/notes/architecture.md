@@ -82,7 +82,7 @@ Canonical primitive, `Mul10Tail` (verified):
 mov  eax, [esp+4]          ; a
 mov  ecx, 0x10             ; shift = 16
 imul dword ptr [esp+8]     ; edx:eax = a * b   (signed 64-bit product)
-jmp  Sar64_004c5660        ; (edx:eax) >> 16  ->  return (a*b) >> 16
+jmp  Sar64        ; (edx:eax) >> 16  ->  return (a*b) >> 16
 ```
 
 So `Mul10Tail(a, b) = (a * b) >> 16` - exactly the fixed-point multiply

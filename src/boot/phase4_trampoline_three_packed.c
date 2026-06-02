@@ -121,7 +121,7 @@ extern void PushSetXfmMaskCallPop(void);
 extern void QuadMul10TailFpuChain(void);
 extern void ScaledChainOr8(void);
 
-__declspec(naked) void Phase4TrampolineThreePacked_0040fa20(void)
+__declspec(naked) void Phase4TrampolineThreePacked(void)
 {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]

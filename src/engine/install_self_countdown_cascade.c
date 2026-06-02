@@ -111,17 +111,17 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00439fd0 (175b game) - install-self with countdown + 3-stage cascade.
  *   Block A install-self path. Then call PendingMatch_0045e640 + bit-1 test, set g_dispatchState,
  *     call PushPop84TripleCall, pause-check, set g_eventQueueChild=0x78, call ScaledChain3c74,
- *     pause-check, if g_walkCallback==0x1009 call TriStageChainGate_004344b0, pop+ret.
+ *     pause-check, if g_walkCallback==0x1009 call TriStageChainGate, pop+ret.
  *     Else install-self at +0x08=0x00439fd0, set chain[+0x84]=ebx=1, set 0054204c=1, pause=1; pop+ret.
  */
 extern unsigned int g_dispatchState;
-extern void InstallSelfChainSetB333_00437b60(void);
+extern void InstallSelfChainSetB333(void);
 extern void PendingMatch_0045e640(void);
 extern void PushPop84TripleCall(void);
 extern void ScaledChain3c74(void);
-extern void TriStageChainGate_004344b0(void);
+extern void TriStageChainGate(void);
 
-__declspec(naked) void InstallSelfCountdownCascade_00439fd0(void) {
+__declspec(naked) void InstallSelfCountdownCascade(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    ebx
@@ -138,7 +138,7 @@ __declspec(naked) void InstallSelfCountdownCascade_00439fd0(void) {
         mov     dword ptr [g_eventQueueChild], eax
         _emit   75h
         _emit   3ch
-        call    InstallSelfChainSetB333_00437b60
+        call    InstallSelfChainSetB333
         pop     esi
         pop     ebx
         ret
@@ -165,7 +165,7 @@ __declspec(naked) void InstallSelfCountdownCascade_00439fd0(void) {
         cmp     dword ptr [g_walkCallback], 0x00001009
         _emit   75h
         _emit   08h
-        call    TriStageChainGate_004344b0
+        call    TriStageChainGate
         pop     esi
         pop     ebx
         ret

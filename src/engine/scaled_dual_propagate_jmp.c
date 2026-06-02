@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  *   - propagate slot[+4][edx] to walk[ecx+1] entry
  *   - tail-jump ScaledClearJmp_00428d60.
  */
-void ScaledDualPropagateJmp_004287b0(int arg) {
+void ScaledDualPropagateJmp(int arg) {
     unsigned int p;
     unsigned int v1;
     unsigned int *slot_p;

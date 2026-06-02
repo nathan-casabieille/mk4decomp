@@ -109,9 +109,9 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00491660 (139b) - install-self pattern w/ chain cmp dispatch. */
-extern void StoreGuardedBitInstallJmp_004915f0(void);
-extern void InstallSelfChainCmpDispatch_00491660(void);
-void InstallSelfChainCmpDispatch_00491660(void) {
+extern void StoreGuardedBitInstallJmp(void);
+extern void InstallSelfChainCmpDispatch(void);
+void InstallSelfChainCmpDispatch(void) {
     unsigned char *base;
     unsigned int v;
     unsigned int cj;
@@ -127,7 +127,7 @@ void InstallSelfChainCmpDispatch_00491660(void) {
         cb = ((ScenegraphNode *)(cj * 4))->queue_idx + 1;
         g_walkCallback = (void (*)(void))cb;
         if ((int)cb < (int)(*(unsigned int *)(new_si * 4 + 4))) {
-            StoreGuardedBitInstallJmp_004915f0();
+            StoreGuardedBitInstallJmp();
             return;
         }
         SlotPhaseResetInstallChain();
@@ -137,7 +137,7 @@ void InstallSelfChainCmpDispatch_00491660(void) {
         CjInstallSelfRouter();
         return;
     }
-    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfChainCmpDispatch_00491660;
+    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfChainCmpDispatch;
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;

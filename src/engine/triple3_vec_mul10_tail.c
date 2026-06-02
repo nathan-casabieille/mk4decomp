@@ -122,7 +122,7 @@ extern unsigned int g_fightAxisPosY;
 extern void DivLongPushCall(void);
 extern void TripleMul10VecJmpFpu(void);
 
-__declspec(naked) void Triple3VecMul10Tail_00424a20(void) {
+__declspec(naked) void Triple3VecMul10Tail(void) {
     __asm {
         call    TripleMul10VecJmpFpu
         mov     eax, dword ptr [g_framePauseFlag]

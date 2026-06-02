@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004c9a30 (167b crt) - fgets-like string read with lock-iter implementation.
- *   if ([0xf9fac8] != 0): call Strncpy_004cdc20(dst, count, stream); return.
+ *   if ([0xf9fac8] != 0): call Strncpy(dst, count, stream); return.
  *   else: Lock(0x19); count = arg2; if (count != 0): copy chars with class-table check.
  *   Reads char [src], stores to [dst]; if char's class (table[char] & 4) is set, treat as line-end.
  *   Otherwise continues to copy until count exhausted or NUL.
@@ -119,10 +119,10 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_byte_00f9f8c1;
 extern unsigned int g_dispatchSave1435_00f9fac8;
 extern void Lock(void);
-extern void Strncpy_004cdc20(void);
+extern void Strncpy(void);
 extern void TableLookupIatCall(void);
 
-__declspec(naked) void FgetsImpl_004c9a30(void) {
+__declspec(naked) void FgetsImpl(void) {
     __asm {
         mov     eax, dword ptr [g_dispatchSave1435_00f9fac8]
         push    esi
@@ -137,7 +137,7 @@ __declspec(naked) void FgetsImpl_004c9a30(void) {
         push    eax
         push    ecx
         push    edi
-        call    Strncpy_004cdc20
+        call    Strncpy
         add     esp, 0x0c
         pop     edi
         pop     esi

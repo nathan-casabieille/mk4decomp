@@ -12,16 +12,16 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp T2.
  */
 extern void SetJmp_00405420(void);
-extern void ScaledLoadStore_00473ed0(void);
-extern void TripleChainSetupDualCall_00473da0(void);
+extern void ScaledLoadStore(void);
+extern void TripleChainSetupDualCall(void);
 extern unsigned int g_table_004ec9e8;
-void GuardedDirty4ScaledJmp_00473d50(void) {
+void GuardedDirty4ScaledJmp(void) {
     SetJmp_00405420();
     if (g_framePauseFlag != 0) {
         return;
     }
     if ((g_xformDirtyFlags & 4) == 0) {
-        ScaledLoadStore_00473ed0();
+        ScaledLoadStore();
         return;
     }
     MStackPush2RunCountdown();
@@ -33,5 +33,5 @@ void GuardedDirty4ScaledJmp_00473d50(void) {
         return;
     }
     g_walkCallback = (void (*)(void))((unsigned int)&g_table_004ec9e8 >> 2);
-    TripleChainSetupDualCall_00473da0();
+    TripleChainSetupDualCall();
 }

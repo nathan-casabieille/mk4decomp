@@ -122,7 +122,7 @@ extern s32 g_dlNalt2;
  *   [0x54389c] = 1; chain[g_baseSel + 0x34] = 6; g_walkCallback = 0x2c.
  *   call TableLookupCall; pause? ret; jmp ClearBit2x34.
  */
-void State6Latch_0048e240(void) {
+void State6Latch(void) {
     unsigned int v;
     unsigned int chain_34;
     v = g_dlNalt1;

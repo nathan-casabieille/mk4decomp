@@ -117,11 +117,11 @@ extern void ArgScaledChain(void);
 extern void FlagCascadeStateSet(void);
 extern void HitReactionDispatcher(void);
 extern void ScaledLookupGuardJmpIndirect(void);
-extern void SevenThunkDispatcher_00495770(void);
+extern void SevenThunkDispatcher(void);
 extern void StreamInitCountdownBody(void);
 extern void ThresholdSetMatchDispatch(void);
 
-__declspec(naked) void GameModeHandlerCluster_004955d0(void)
+__declspec(naked) void GameModeHandlerCluster(void)
 {
     __asm {
         /* Helper 1: Computed-jump dispatcher. */
@@ -262,7 +262,7 @@ __declspec(naked) void GameModeHandlerCluster_004955d0(void)
         add      esp, 4
         test     eax, eax
         jne      short L_576b
-        jmp      SevenThunkDispatcher_00495770
+        jmp      SevenThunkDispatcher
     L_576b:
         ret
     }

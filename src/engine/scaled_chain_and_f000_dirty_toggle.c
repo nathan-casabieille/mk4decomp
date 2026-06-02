@@ -11,7 +11,7 @@ extern unsigned int g_scaledInit_00542044;
  *   scaled chain 0x3c → 0x74; and 0xf000; cmp 0x4000;
  *   if eq: or al,1 → store dirty;  else and al,0xfe → store dirty.
  */
-void ScaledChainAndF000DirtyToggle_0048e740(void) {
+void ScaledChainAndF000DirtyToggle(void) {
     unsigned int v;
     v = ((ScenegraphNode *)(g_baseSel * 4))->child_a;
     g_scaledInit_00542044 = v;

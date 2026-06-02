@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_nodeSlotsHdr;
 extern unsigned int g_nodeUnlinkSlot_00541e4c;
 
-void NodeUnlink_0041f710(void) {
+void NodeUnlink(void) {
     __asm {
         mov     edx, dword ptr [esp + 4]
         mov     eax, dword ptr [g_nodeListTail]

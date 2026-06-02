@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_matrixStack_arr;
 
-void MStackPush3MaskBit0_004929e0(void) {
+void MStackPush3MaskBit0(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_walkCallback]

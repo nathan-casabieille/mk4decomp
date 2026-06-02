@@ -109,20 +109,20 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00426ae0 (114b game) - dual-entry stub + install-self.
- *   Block A: push 0x241; push 0x00426b00; call BootMstackInit_0041fb10; ret. Stack arg dispatch.
+ *   Block A: push 0x241; push 0x00426b00; call BootMstackInit; ret. Stack arg dispatch.
  *   Block B (+0x20): ecx = baseSel[*4+0x84]; clear it; if zero ret; call Wrapper_0048a270;
  *     if pause: install-self at +8, set baseSel[*4+0x84]=1, store 0x1e to g_pendingNodeType
  *     and 1 to g_pause; ret. Else jmp CallSetPause.
  */
-extern void BootMstackInit_0041fb10(void);
+extern void BootMstackInit(void);
 extern void CallSetPause(void);
 extern void Wrapper_0048a270(void);
 
-__declspec(naked) void InstallSelfDualEntry_00426ae0(void) {
+__declspec(naked) void InstallSelfDualEntry(void) {
     __asm {
         push    0x00000241
         push    0x00426b00
-        call    BootMstackInit_0041fb10
+        call    BootMstackInit
         add     esp, 8
         ret
         _emit   90h

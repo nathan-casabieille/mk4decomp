@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *   baseSel[+0x38], calls ScaledMove48to58; on pause clear, pops
  *   state-stack entries back into walk then cj.
  */
-void PushCjWalkDispatchPop_00490810(void) {
+void PushCjWalkDispatchPop(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_cj_0054205c;
     g_matrixStackTop++;

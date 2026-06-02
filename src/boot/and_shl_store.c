@@ -15,7 +15,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern unsigned int g_dest_0053a6e4;
-void AndShlStore_00409280(void) {
+void AndShlStore(void) {
     unsigned int v = ((unsigned int)g_walkCallback & 0xf) << 0x14;
     g_walkCallback  = (void(*)(void))v;
     g_dest_0053a6e4 = v;

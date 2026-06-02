@@ -23,8 +23,8 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_dualBitGate;
 extern unsigned int g_zero_00541fa8;
-extern int PushArgPushNeg1Call_004be790(void *p);
-void AndStorePushCallZero_0048a220(void) {
+extern int PushArgPushNeg1Call(void *p);
+void AndStorePushCallZero(void) {
     unsigned int v;
     void *p;
     v = g_dualBitGate & 0xFFFFFFFDu;
@@ -32,6 +32,6 @@ void AndStorePushCallZero_0048a220(void) {
     g_dualBitGate = v;
     p = (void *)g_zero_00541fa8;
     if (p == 0) return;
-    PushArgPushNeg1Call_004be790(p);
+    PushArgPushNeg1Call(p);
     g_zero_00541fa8 = 0;
 }

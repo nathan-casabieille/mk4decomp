@@ -113,13 +113,13 @@ extern unsigned int g_fightAxisPosY;
  *   call GuardedChainCmpDualBitXor; if pause: ret;
  *   call DirtyToggleByGate; if pause: ret;
  *   if (bit2 of g_xformDirtyFlags)!=0: skip;
- *   push 0x4f12b8; call GuardedScaledChainJmpIndirect_00460e40; pop;
+ *   push 0x4f12b8; call GuardedScaledChainJmpIndirect; pop;
  *   if pause: ret; jmp 0x491660;
  *   skip: ++g_matrixStackTop; [mstack*4]=0x491660; jmp GameDispatchValidateState.
  */
-extern void GuardedScaledChainJmpIndirect_00460e40(void);
+extern void GuardedScaledChainJmpIndirect(void);
 
-__declspec(naked) void StoreGuardedBitInstallJmp_004915f0(void) {
+__declspec(naked) void StoreGuardedBitInstallJmp(void) {
     __asm {
         mov     eax, dword ptr [g_cj_0054205c]
         mov     ecx, dword ptr [g_walkCallback]
@@ -138,7 +138,7 @@ __declspec(naked) void StoreGuardedBitInstallJmp_004915f0(void) {
         _emit   75h
         _emit   1bh
         push    0x004f12b8
-        call    GuardedScaledChainJmpIndirect_00460e40
+        call    GuardedScaledChainJmpIndirect
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax

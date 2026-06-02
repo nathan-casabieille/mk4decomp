@@ -110,17 +110,17 @@ extern unsigned int g_fightAxisPosY;
 
 extern void MStackCall_00406740(void);
 extern void CondPickDualStore(void);
-extern void FivePackedSubdispatchInstallSelf_0049c040(void);
+extern void FivePackedSubdispatchInstallSelf(void);
 
 /* @addr 0x0049bf90 (175b game) - 3-block: A: call MStackCall_00406740; if !pause jmp CallSetPause.
  *   B (+0x20): chain[*4+0x74]=0x30d; call CondPickDualStore; if !pause push 0x004f2660 call ArgSarStoreJmp; ret.
  *   C (+0x60): call CondPickDualStore; if !pause call CopyJmp_0048ef90; if !pause and bit-0 set
- *     jmp FivePackedSubdispatchInstallSelf_0049c040; else chain[*4+0x74]=0x30c; push 0x004f26a8; call ArgSarStoreJmp; ret.
+ *     jmp FivePackedSubdispatchInstallSelf; else chain[*4+0x74]=0x30c; push 0x004f26a8; call ArgSarStoreJmp; ret.
  */
 extern void ArgSarStoreJmp(void);
 extern void CallSetPause(void);
 
-__declspec(naked) void Triple3PathDispatch_0049bf90(void) {
+__declspec(naked) void Triple3PathDispatch(void) {
     __asm {
         call    MStackCall_00406740
         mov     eax, dword ptr [g_framePauseFlag]
@@ -180,7 +180,7 @@ __declspec(naked) void Triple3PathDispatch_0049bf90(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
-        jmp     FivePackedSubdispatchInstallSelf_0049c040
+        jmp     FivePackedSubdispatchInstallSelf
         mov     ecx, dword ptr [g_baseSel]
         mov     eax, 0x0000030c
         mov     dword ptr [g_walkCallback], eax

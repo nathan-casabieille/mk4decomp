@@ -14,22 +14,22 @@ extern unsigned int g_phaseTimer;
  *   call F; pause → ret; push lit; call F2; add esp,4; ret
  */
 extern unsigned int g_dispatchVar15_0053a238;
-extern void TripleBlockInstallSelf_00465ef0(void);
-extern void AndShlStore_00409280(void);
+extern void TripleBlockInstallSelf(void);
+extern void AndShlStore(void);
 extern int ArgSarStoreJmp(void *);
 extern unsigned int g_dispatchSave1278_004ea990;
 
-__declspec(naked) void DecCallPushCall_00466090(void) {
+__declspec(naked) void DecCallPushCall(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
         dec     eax
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_dispatchVar15_0053a238], eax
         je      short L_dcpc_body
-        jmp     TripleBlockInstallSelf_00465ef0
+        jmp     TripleBlockInstallSelf
 L_dcpc_body:
         mov     dword ptr [g_walkCallback], 6
-        call    AndShlStore_00409280
+        call    AndShlStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_dcpc_ret

@@ -118,7 +118,7 @@ extern unsigned int g_dispatchSave1264_004e87c0;
 extern unsigned int g_arr_459160_main;
 extern unsigned int g_matrixStack_arr;
 
-void MStackPush2ClampLookup_00459160(void) {
+void MStackPush2ClampLookup(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueWorkType]

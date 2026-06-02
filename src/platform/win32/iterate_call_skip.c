@@ -27,7 +27,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern int Helper_AudioStop(int);
-void IterateCallSkip_004c4210(void) {
+void IterateCallSkip(void) {
     int i = 0;
     unsigned char *p = (unsigned char *)0x00f8fade;
     do {

@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void ScaledMaskByte(void);
-extern void BitmapBlitRunLength_004592f0(void);
+extern void BitmapBlitRunLength(void);
 
 /* @addr 0x00458f40 (238b game) - nested 3x15 loop with character-range dispatch.
  *   mstack-push g_eventQueueWorkType, g_pendingNodeType. esi=3.
@@ -117,9 +117,9 @@ extern void BitmapBlitRunLength_004592f0(void);
  *   LOOP_HEAD: call ScaledMaskByte; if pause exit.
  *   compare g_walkCallback to {0x20, 0x7b/c/d, 0x5f}; dispatch one path.
  *   inner inc-dec; if !=0 LOOP_HEAD; else dec outer; if 0 -> FINAL_OK; else reset inner.
- *   FINAL_OK: call BitmapBlitRunLength_004592f0; if !pause: mstack-pop pair; ret.
+ *   FINAL_OK: call BitmapBlitRunLength; if !pause: mstack-pop pair; ret.
  */
-__declspec(naked) void NestedLoopDispatch_00458f40(void) {
+__declspec(naked) void NestedLoopDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueWorkType]
@@ -180,7 +180,7 @@ __declspec(naked) void NestedLoopDispatch_00458f40(void) {
         _emit   10h
         _emit   0ebh
         _emit   9ah
-        call    BitmapBlitRunLength_004592f0
+        call    BitmapBlitRunLength
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

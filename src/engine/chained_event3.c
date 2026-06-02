@@ -111,18 +111,18 @@ extern unsigned int g_fightAxisPosY;
 /*
  * @addr 0x00485a10 (104b game) - chained event helper: sets walk and
  *   base[+0x74] to 0x100b, calls CopyJmp; gates on pause; if
- *   g_currentNodeFlags > 0x3333 tail-jmp SfxBlockCluster_00485a80; else call
+ *   g_currentNodeFlags > 0x3333 tail-jmp SfxBlockCluster; else call
  *   ScaledMove48to58 and IterStepDualStore(0x4eeab4) and finally
  *   ArgSarStoreJmp(0x4eeab8).
  */
-void ChainedEvent3_00485a10(void) {
+void ChainedEvent3(void) {
     unsigned int v = 0x100b;
     g_walkCallback = (void (*)(void))v;
     ((ScenegraphNode *)(g_baseSel * 4))->fsm_state = v;
     CopyJmp_0048ef90();
     if (g_framePauseFlag != 0) return;
     if ((int)g_currentNodeFlags > 0x3333) {
-        SfxBlockCluster_00485a80();
+        SfxBlockCluster();
         return;
     }
     ScaledMove48to58();

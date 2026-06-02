@@ -115,7 +115,7 @@ extern void CallSetPause(void);
 extern void ChainNodeAdvanceCallback(void);
 extern void DirtyDoubleDeref(void);
 extern void FramePauseScaledStore(void);
-extern void GuardedSelfRefSet_0048d070(void);
+extern void GuardedSelfRefSet(void);
 extern void MStackPushCallCallPop_00405e20(void);
 extern void PushPopScaled1cDoubleCall(void);
 extern void ScaledStoreThree_00409260(void);
@@ -125,7 +125,7 @@ extern void StoreDoubleNegPauseSubStore(void);
 extern void StorePauseImulShr16(void);
 extern void Wrapper_0048a260(void);
 
-__declspec(naked) void Phase4TrampolineMainHelpers_00414b90(void)
+__declspec(naked) void Phase4TrampolineMainHelpers(void)
 {
     __asm {
         push    0xB1
@@ -209,7 +209,7 @@ __declspec(naked) void Phase4TrampolineMainHelpers_00414b90(void)
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
-        call    GuardedSelfRefSet_0048d070
+        call    GuardedSelfRefSet
         mov     dword ptr [g_framePauseFlag], 1
     L_p4tmh2_M_ret:
         pop     esi

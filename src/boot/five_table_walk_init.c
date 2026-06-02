@@ -112,13 +112,13 @@ extern unsigned int g_fightAxisPosY;
  *   For tag in [2,3,4,5,7]: push tag; call TableWalkBoundedCmp; add esp, 4.
  *   call BootInitGuardedCallChain; if (pause != 0) -> end clears.
  *   g_scaledInit = packed_ptr(0x00506c20); call LoadGeoAsset_Default; if (pause != 0) skip;
- *   ... (same again); call AudioStateClearAndChainStep_004a10b0; pause? skip;
+ *   ... (same again); call AudioStateClearAndChainStep; pause? skip;
  *   g_walkCallback = 0; call CopyGlobal; pause? skip;
  *   g_scaledInit = [0x52ab10]; g_walkCallback = 0xfff88000;
  *   chain[g_scaledInit*4 + 0x54/0x58/0x5c/0x60/0x64/0x68] = 0 (or 0xfff88000 for +0x5c).
  */
 extern unsigned int g_load_0052ab10;
-extern void AudioStateClearAndChainStep_004a10b0(void);
+extern void AudioStateClearAndChainStep(void);
 extern void BootInitGuardedCallChain(void);
 extern void CopyGlobal(void);
 extern void TableWalkBoundedCmp(void);
@@ -161,7 +161,7 @@ __declspec(naked) void FiveTableWalkInit(void) {
         cmp     dword ptr [g_framePauseFlag], esi
         _emit   75h
         _emit   4ah
-        call    AudioStateClearAndChainStep_004a10b0
+        call    AudioStateClearAndChainStep
         cmp     dword ptr [g_framePauseFlag], esi
         _emit   75h
         _emit   3dh

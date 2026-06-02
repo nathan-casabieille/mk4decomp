@@ -27,10 +27,10 @@ void ConstStoreCallJmp_00448fa0(void) {
 
 /* @addr 0x0046ff60 (30b): same shape, value=4 */
 extern void ByteWordTableTaggedDispatch(void);
-extern void Phase3PackedInstallSelf_0046ff80(void);
+extern void Phase3PackedInstallSelf(void);
 void ConstStoreCallJmp_0046ff60(void) {
     g_walkCallback = (void(*)(void))4;
     ByteWordTableTaggedDispatch();
     if (g_framePauseFlag) return;
-    Phase3PackedInstallSelf_0046ff80();
+    Phase3PackedInstallSelf();
 }

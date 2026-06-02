@@ -115,7 +115,7 @@ extern unsigned int g_audioStreamState;
 extern void AudioInitInstallerPair(void);
 extern void BootInitGuardedCallChain(void);
 extern void GuardedSetupCallTailJmp(void);
-extern void TwoCallsTwoBranchTail_004a3c50(void);
+extern void TwoCallsTwoBranchTail(void);
 
 __declspec(naked) void Match_OutcomeScreen(void)
 {
@@ -139,7 +139,7 @@ __declspec(naked) void Match_OutcomeScreen(void)
         mov      eax, dword ptr [g_audioStreamState]
         cmp      eax, edi
         jne      short L_3d63
-        call     TwoCallsTwoBranchTail_004a3c50
+        call     TwoCallsTwoBranchTail
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3f2d
         mov      dword ptr [esi + 8], OFFSET L_3ce0

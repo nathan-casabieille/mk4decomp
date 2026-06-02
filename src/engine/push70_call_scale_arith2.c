@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  *   edx = [eax*4+0x54]; shl ecx,9; edx += ecx;
  *   [eax*4+0x54] = edx; pop g_eventQueueCurrent; ret.
  */
-void Push70CallScaleArith2_00457b40(void) {
+void Push70CallScaleArith2(void) {
     unsigned int sc;
     unsigned int neg_data;
     g_matrixStackTop++;

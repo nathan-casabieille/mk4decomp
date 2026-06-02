@@ -117,7 +117,7 @@ extern void MStackBracket1_TreeWalkRecursive2(void);
 extern void MStackCall_00406740(void);
 extern void PushPopScaled1cDoubleCall(void);
 
-__declspec(naked) void Phase1ChainAdvanceCallScale_00418f80(void)
+__declspec(naked) void Phase1ChainAdvanceCallScale(void)
 {
     __asm {
         mov     eax, offset g_phase1ChainArr_00507118

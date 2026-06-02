@@ -111,18 +111,18 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave650_004a0370;
 extern unsigned int g_poseGridGenVar_004e2864;
 extern void Ten404c40_404bd0(void);
-extern void PushCallPauseStorePushDispatch_004a12e0(void);
+extern void PushCallPauseStorePushDispatch(void);
 extern void TripleStageRollback(void);
 extern void RoundWinTransition(void);
 extern void StoreTwoCall(void);
 extern void TaggedSceneDispatch(void);
-extern void InstallSelf3WaySubDec_004a1320(void);
+extern void InstallSelf3WaySubDec(void);
 extern void LinkedListIndirectDirtyToggle(void);
-extern void IncWrap0fJmp_004a1120(void);
+extern void IncWrap0fJmp(void);
 extern void Eleven404b90_404c00(void);
-extern void PoseGridGenerator_004a13d0(void);
+extern void PoseGridGenerator(void);
 
-__declspec(naked) void AudioPhaseDispatch_004a1150(void)
+__declspec(naked) void AudioPhaseDispatch(void)
 {
     __asm
     {
@@ -150,7 +150,7 @@ __declspec(naked) void AudioPhaseDispatch_004a1150(void)
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         jne     short L_apd_subPath
-        call    PushCallPauseStorePushDispatch_004a12e0
+        call    PushCallPauseStorePushDispatch
         pop     esi
         pop     ebx
         ret
@@ -170,7 +170,7 @@ __declspec(naked) void AudioPhaseDispatch_004a1150(void)
         push    ecx
         call    TaggedSceneDispatch
         add     esp, 4
-        call    InstallSelf3WaySubDec_004a1320
+        call    InstallSelf3WaySubDec
         pop     esi
         pop     ebx
         ret
@@ -183,7 +183,7 @@ __declspec(naked) void AudioPhaseDispatch_004a1150(void)
         mov     ebx, 1
         test    al, bl
         je      short L_apd_continue
-        call    IncWrap0fJmp_004a1120
+        call    IncWrap0fJmp
         pop     esi
         pop     ebx
         ret
@@ -200,9 +200,9 @@ __declspec(naked) void AudioPhaseDispatch_004a1150(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_apd_ret
-        mov     dword ptr [esi + 8], offset AudioPhaseDispatch_004a1150
+        mov     dword ptr [esi + 8], offset AudioPhaseDispatch
         mov     edx, dword ptr [g_baseSel]
-        mov     ecx, offset AudioPhaseDispatch_004a1150
+        mov     ecx, offset AudioPhaseDispatch
         mov     dword ptr [edx*4 + 0x84], ebx
         mov     eax, dword ptr [esi + 4]
         add     ecx, 0x1000000
@@ -214,7 +214,7 @@ __declspec(naked) void AudioPhaseDispatch_004a1150(void)
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
-        call    PoseGridGenerator_004a13d0
+        call    PoseGridGenerator
         mov     dword ptr [g_framePauseFlag], ebx
     L_apd_ret:
         pop     esi

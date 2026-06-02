@@ -110,11 +110,11 @@ extern unsigned int g_fightAxisPosY;
 
 extern void ChainNodeAdvanceCallback(void);
 extern void DirtyDoubleDeref(void);
-extern void DualBitGateInitCall_0048a1c0(void);
+extern void DualBitGateInitCall(void);
 extern void OrDualStore_0048a190(void);
 extern void ScaledTestPauseStore(void);
 
-__declspec(naked) void AnimEventUpdateCluster_00493ef0(void)
+__declspec(naked) void AnimEventUpdateCluster(void)
 {
     __asm {
         /* === Helper 1 (0x493ef0): event update + 0x494020 callback === */
@@ -169,7 +169,7 @@ __declspec(naked) void AnimEventUpdateCluster_00493ef0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_401a
-        call     DualBitGateInitCall_0048a1c0
+        call     DualBitGateInitCall
     L_3fef:
         mov      eax, dword ptr [g_matrixStackTop]
         mov      ecx, dword ptr [eax*4]

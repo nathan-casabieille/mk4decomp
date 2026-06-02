@@ -111,10 +111,10 @@ extern unsigned int g_fightAxisPosY;
 /*
  * @addr 0x004082d0 (122b boot) - guarded chain dispatch:
  *   walk = cj[+0x2c]; if zero exit; push current walk on state stack;
- *   call MStackBootPush4Init_00408350; on pause clear, clear walk and cj[+0x2c];
+ *   call MStackBootPush4Init; on pause clear, clear walk and cj[+0x2c];
  *   pop state-stack entry back into walk.
  */
-void GuardedChainDispatch2c_004082d0(void) {
+void GuardedChainDispatch2c(void) {
     unsigned int w;
     w = ((ScenegraphNode *)(g_cj_0054205c * 4))->group_head;
     g_walkCallback = (void (*)(void))w;
@@ -122,7 +122,7 @@ void GuardedChainDispatch2c_004082d0(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = (unsigned int)g_walkCallback;
     g_walkCallback = (void (*)(void))(unsigned int)g_walkCallback;
-    MStackBootPush4Init_00408350();
+    MStackBootPush4Init();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = 0;
     ((ScenegraphNode *)(g_cj_0054205c * 4))->group_head = 0;

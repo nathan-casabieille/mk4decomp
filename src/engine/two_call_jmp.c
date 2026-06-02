@@ -17,9 +17,9 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     +7
  */
 extern int SaveCallRestore(int);
-extern void SpawnLeftRightProps_00478140(void);
-void TwoCallJmp_00478120(void) {
+extern void SpawnLeftRightProps(void);
+void TwoCallJmp(void) {
     SaveCallRestore(0x2b);
     SaveCallRestore(0x2c);
-    SpawnLeftRightProps_00478140();
+    SpawnLeftRightProps();
 }

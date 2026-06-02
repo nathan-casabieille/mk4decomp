@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchArg;
 extern unsigned int g_audioVoiceCounter_00535e50;
 
-void Push48PreSetTwoStores_00427ad0(void) {
+void Push48PreSetTwoStores(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_dispatchArg]

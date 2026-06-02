@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void ScaledArrStore_004285c0(void);
 
-__declspec(naked) void EsiInstallChainCallIndirect_00428680(void) {
+__declspec(naked) void EsiInstallChainCallIndirect(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi

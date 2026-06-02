@@ -49,7 +49,7 @@ extern unsigned int g_scaledInit_00542044;
  * for OR. Disabling /O2 via `#pragma optimize("", off)` adds a full
  * debug-mode prologue which breaks everything else. Keep naked.
  */
-void DecOrZeroDirty4_00438650(void) {
+void DecOrZeroDirty4(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueChild]
         test    eax, eax

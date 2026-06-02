@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0048f470 (120b) - install-self pattern w/ jmp through
  *   [g_eventQueueEnd] (the chain's saved return continuation). */
-void InstallSelfCmpJmpIndirect_0048f470(void) {
+void InstallSelfCmpJmpIndirect(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int slot84 = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
@@ -126,7 +126,7 @@ void InstallSelfCmpJmpIndirect_0048f470(void) {
         g_eventQueueEnd = *(unsigned int *)(top * 4);
         *(unsigned int *)0x004d57ac = top - 1;
     }
-    *(unsigned int *)(base + 8) = (unsigned int)InstallSelfCmpJmpIndirect_0048f470;
+    *(unsigned int *)(base + 8) = (unsigned int)InstallSelfCmpJmpIndirect;
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;

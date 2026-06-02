@@ -23,7 +23,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [ecx + 0x40], eax
  *   ret
  */
-void Copy3Fields38_0040a870(void) {
+void Copy3Fields38(void) {
     unsigned char *src = (unsigned char *)(g_eventQueueEnd * 4);
     unsigned char *dst = (unsigned char *)(g_scaledInit_00542044 * 4);
     unsigned int v;

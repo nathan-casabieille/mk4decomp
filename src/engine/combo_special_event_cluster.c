@@ -113,9 +113,9 @@ extern void ScaledInit_0048d430(void);
 extern void DualGatedStateYield(void);
 extern void GuardedDualAndFlagToggle(void);
 extern void DualScaledInitCmp_0046df50(void);
-extern void ComboSpecialEventCluster_0046df90(void);
+extern void ComboSpecialEventCluster(void);
 
-__declspec(naked) void TriCounterReinitChain_0046dd90(void)
+__declspec(naked) void TriCounterReinitChain(void)
 {
     __asm
     {
@@ -209,7 +209,7 @@ __declspec(naked) void TriCounterReinitChain_0046dd90(void)
         jne     short L_tcrc_sub3_ret
         test    byte ptr [g_xformDirtyFlags], 1
         jne     short L_tcrc_sub3_doCall
-        jmp     ComboSpecialEventCluster_0046df90
+        jmp     ComboSpecialEventCluster
     L_tcrc_sub3_doCall:
         call    DualScaledInitCmp_0046df50
         mov     eax, dword ptr [g_framePauseFlag]

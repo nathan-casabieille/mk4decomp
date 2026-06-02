@@ -115,14 +115,14 @@ extern unsigned int g_fightAxisPosY;
  *   IAT[0x4d2168] (VirtualFree); on success, mark slot 0xffffffff, decrement
  *   counter [g_dispatchSave1432_00f9f8b8], update head ptr at [region+0xc]. Decrement
  *   target count [esp+0x14]; if region fully empty (all -1), call
- *   HeapRegionTeardown_004c7240(region).
+ *   HeapRegionTeardown(region).
  */
 extern unsigned int g_heapShrinkPtr_00520134;
 extern unsigned int g_dispatchSave1432_00f9f8b8;
 extern unsigned int g_iat_004d2168;
-extern void HeapRegionTeardown_004c7240(void);
+extern void HeapRegionTeardown(void);
 
-__declspec(naked) void HeapShrinkDecommit_004c72a0(void) {
+__declspec(naked) void HeapShrinkDecommit(void) {
     __asm {
         push    ebx
         push    ebp
@@ -188,7 +188,7 @@ __declspec(naked) void HeapShrinkDecommit_004c72a0(void) {
         cmp     eax, 0x400
         jne     short L_hs_outer_check
         push    edx
-        call    HeapRegionTeardown_004c7240
+        call    HeapRegionTeardown
         add     esp, 4
     L_hs_outer_check:
         cmp     edi, dword ptr [g_heapShrinkPtr_00520134]

@@ -112,21 +112,21 @@ extern unsigned int g_poseGridGenVar_004e2864;
 extern unsigned int g_audioInitPeriodic_00537e90;
 extern unsigned int g_state2_00537ea8;
 extern unsigned int g_audioInstall2State_00537f88;
-extern void AudioMStackPushHandlerPair_0049ff30(void);
-extern void BitSetByIndex_004a07a0(void);
-extern void Cmp3DirtyToggle_0049fa20(void);
+extern void AudioMStackPushHandlerPair(void);
+extern void BitSetByIndex(void);
+extern void Cmp3DirtyToggle(void);
 extern void DualPushSetCallDualPop(void);
-extern void MStackDualPushSaveRestore_004a09c0(void);
+extern void MStackDualPushSaveRestore(void);
 extern void RoundWinTransition(void);
 extern void SetWalkCurCallPauseDirty(void);
 extern void TripleStageRollback(void);
 
-__declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
+__declspec(naked) void AudioCmpCascadeDispatcher(void)
 {
     __asm
     {
         push    ebx
-        call    Cmp3DirtyToggle_0049fa20
+        call    Cmp3DirtyToggle
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_acsd_ret
@@ -182,7 +182,7 @@ __declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
         pop     ebx
         ret
     L_acsd_callsub:
-        call    MStackDualPushSaveRestore_004a09c0
+        call    MStackDualPushSaveRestore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_acsd_ret
@@ -200,7 +200,7 @@ __declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
         je      L_acsd_ret
     L_acsd_skipCmp:
         mov     dword ptr [g_walkCallback], ebx
-        call    BitSetByIndex_004a07a0
+        call    BitSetByIndex
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_acsd_ret
@@ -243,7 +243,7 @@ __declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
     L_acsd_cmp12:
         cmp     eax, 0x12
         jne     short L_acsd_ret
-        call    AudioMStackPushHandlerPair_0049ff30
+        call    AudioMStackPushHandlerPair
     L_acsd_ret:
         pop     ebx
         ret

@@ -122,7 +122,7 @@ extern unsigned int g_comptr_0058c7b8;
 extern int g_renderer2_present_rc;
 extern int g_renderer2_active;
 
-__declspec(naked) void PaletteRampInit_004ad5f0(void) {
+__declspec(naked) void PaletteRampInit(void) {
     __asm {
         mov     eax, dword ptr [g_renderer2_active]
         sub     esp, 0x28

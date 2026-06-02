@@ -112,8 +112,8 @@ extern unsigned int g_fightAxisPosY;
 extern void CallPauseConstStoreJmp_004350f0(void);
 extern void CallSetPause(void);
 extern void FiveCallGuardSetTail(void);
-extern void GameModeAdvanceCluster_00482000(void);
-extern void InitZeroChainLookupJmp_00494210(void);
+extern void GameModeAdvanceCluster(void);
+extern void InitZeroChainLookupJmp(void);
 extern void InstallSelfPair(void);
 extern void MStackPushSet0Jmp(void);
 extern void MStackPushSet6Jmp(void);
@@ -223,7 +223,7 @@ __declspec(naked) void InstallSelfChainExtendCall_0047de60(void) {
 }
 
 /* @addr 0x00481eb0 (128b) - twin of 0x0047de60 with helper
- *   ScaledInitWithCounterAndType + tail GameModeAdvanceCluster_00482000. */
+ *   ScaledInitWithCounterAndType + tail GameModeAdvanceCluster. */
 __declspec(naked) void InstallSelfChainExtendCall_00481eb0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -250,7 +250,7 @@ __declspec(naked) void InstallSelfChainExtendCall_00481eb0(void) {
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
-        call    GameModeAdvanceCluster_00482000
+        call    GameModeAdvanceCluster
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         ret
@@ -258,7 +258,7 @@ __declspec(naked) void InstallSelfChainExtendCall_00481eb0(void) {
 }
 
 /* @addr 0x004945f0 (128b) - twin of 0x0047de60 with bypass to
- *   CallSetPause + tail InitZeroChainLookupJmp_00494210. */
+ *   CallSetPause + tail InitZeroChainLookupJmp. */
 __declspec(naked) void InstallSelfChainExtendCall_004945f0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -285,7 +285,7 @@ __declspec(naked) void InstallSelfChainExtendCall_004945f0(void) {
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
-        call    InitZeroChainLookupJmp_00494210
+        call    InitZeroChainLookupJmp
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         ret

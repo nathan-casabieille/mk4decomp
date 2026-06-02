@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x0044a500 (133b) - twin of 0x0044a000 with constants 8/6/8 and
  *   tail-jmp GuardedSeq_00473ef0.
  */
-void GuardedTripleSetTailJmp8_0044a500(void) {
+void GuardedTripleSetTailJmp8(void) {
     unsigned int v;
     g_cj_0054205c = g_eventQueueEnd;
     MStackPush2RunCountdown();

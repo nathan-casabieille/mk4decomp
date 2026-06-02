@@ -112,7 +112,7 @@ extern void ScaledAndAl7f(void);
 extern void BootFrameSetup(void);
 extern void GuardedChainCmpDualBitXor(void);
 extern void ScaledXorStore_004903b0(void);
-extern void CallPauseDirtyPushCall_00488ba0(void);
+extern void CallPauseDirtyPushCall(void);
 extern void CopyJmp_0048ef90(void);
 extern void PendingMatch_00484da0(void);
 extern void Wrapper_00484d90(void);
@@ -124,16 +124,16 @@ extern void Wrapper_00484d90(void);
  *     tail-call ArgSarStoreJmp.
  *   B3 (0x50..0xa4, +11 NOPs): g_xformEntityIdx = 0x00500698>>2; 4-call chain
  *     (BootFrameSetup, GuardedChainCmpDualBitXor, ScaledXorStore, GateDispatch6c);
- *     if all !pause: tail-jmp CallPauseDirtyPushCall_00488ba0.
+ *     if all !pause: tail-jmp CallPauseDirtyPushCall.
  *   B4 (0xb0..0xe7, +8 NOPs): call GateDispatch6c; if !pause: call CopyJmp_0048ef90;
  *     if !pause and bit0 of state set: tail-jmp PendingMatch_00484da0; else: push 0x004ee920,
  *     tail-call ArgSarStoreJmp.
  *   B5 (0xf0..0x11b): call DirtyToggleByGate; if !pause and bit2 of state clear:
  *     tail-jmp Wrapper_00484d90; else g_eventQueueChild=0xd and tail-jmp
- *     DualBlockInstallSelfWithSibling_00484c90.
+ *     DualBlockInstallSelfWithSibling.
  */
 extern void ArgSarStoreJmp(void);
-extern void DualBlockInstallSelfWithSibling_00484c90(void);
+extern void DualBlockInstallSelfWithSibling(void);
 extern void GateDispatch6c(void);
 extern void MstackPopScaledChainPlusThunks(void);
 
@@ -203,7 +203,7 @@ __declspec(naked) void FiveBlockDispatchChain_00484b70(void) {
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     CallPauseDirtyPushCall_00488ba0
+        jmp     CallPauseDirtyPushCall
         ret
         nop
         nop
@@ -252,7 +252,7 @@ __declspec(naked) void FiveBlockDispatchChain_00484b70(void) {
         _emit   05h
         jmp     Wrapper_00484d90
         mov     dword ptr [g_eventQueueChild], 0x0d
-        jmp     DualBlockInstallSelfWithSibling_00484c90
+        jmp     DualBlockInstallSelfWithSibling
         ret
     }
 }

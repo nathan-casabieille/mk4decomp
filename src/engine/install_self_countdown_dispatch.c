@@ -117,9 +117,9 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_matrixStack_arr;
 extern void CmpJmpConstStoreJmp(void);
 extern void DualGatedStateYield(void);
-extern void Push84CallTestInstallJmp_00460940(void);
+extern void Push84CallTestInstallJmp(void);
 
-__declspec(naked) void InstallSelfCountdownDispatch_00438a10(void) {
+__declspec(naked) void InstallSelfCountdownDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         shl     eax, 2
@@ -144,7 +144,7 @@ __declspec(naked) void InstallSelfCountdownDispatch_00438a10(void) {
         mov     dword ptr [g_framePauseFlag], ecx
         ret
         _emit   90h
-        call    Push84CallTestInstallJmp_00460940
+        call    Push84CallTestInstallJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

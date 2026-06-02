@@ -12,7 +12,7 @@ extern unsigned int g_scaledInit_00542044;
  *   clear bit 0. Two distinct return paths.
  */
 
-void WalkCallbackSetClearDirty_0048e7d0(void) {
+void WalkCallbackSetClearDirty(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
         cmp     eax, 0x2001

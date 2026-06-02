@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   cmp 0 (negative→0 clamp) and cmp 0x10000 (positive→1 clamp).
  *   On clamp success branch into pop with original chain value.
  */
-void PushClampZeroOneCallPop_00478d00(void) {
+void PushClampZeroOneCallPop(void) {
     unsigned int top = g_matrixStackTop + 1;
     unsigned int idx;
     int val;

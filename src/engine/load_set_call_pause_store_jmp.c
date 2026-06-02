@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
 extern u8 g_memHeapStart[];
 extern unsigned int g_dispatchSave1654_007b41a8;
 extern unsigned int g_player1NodeIdx;
-extern void MStackSignedMod_0042fee0(void);
+extern void MStackSignedMod(void);
 
 __declspec(naked) void AppInit_Misc2(void) {
     __asm {
@@ -40,12 +40,12 @@ __declspec(naked) void AppInit_Misc2(void) {
  *   load g_walkCallback, g_player1NodeIdx;
  *   store both into g_eventQueueCurrent and g_scaledInit; jmp T.
  */
-void LoadSetCallPauseStoreJmp_0042fea0(void) {
+void LoadSetCallPauseStoreJmp(void) {
     g_eventQueueWorkType = 0x4ccc;
     g_scaledInit_00542044 = g_player2NodeIdx;
-    MStackSignedMod_0042fee0();
+    MStackSignedMod();
     if (g_framePauseFlag) return;
     g_eventQueueCurrent = (unsigned int)g_walkCallback;
     g_scaledInit_00542044 = g_player1NodeIdx;
-    MStackSignedMod_0042fee0();
+    MStackSignedMod();
 }

@@ -109,19 +109,19 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_stateChangePair3_0053a278;
-extern void CinematicStageCluster_004588b0(void);
+extern void CinematicStageCluster(void);
 extern void CallSetPause(void);
-extern void IncCmp28StoreOrJmp_00458880(void);
+extern void IncCmp28StoreOrJmp(void);
 
 /* @addr 0x00458810 (104b game) - 3-entry-point dispatcher.
  *   Block A (+0x00): g_acc_00542078=g_stateChangePair3_0053a278; g_walkCallback=eax-1; if (eax-1) < 0 g_walkCallback=0x27;
- *     g_cj_00542054 = 0xffffffff; jmp CinematicStageCluster_004588b0.
- *   Block B (+0x30): g_walkCallback=g_stateFlag; if zero jmp IncCmp28StoreOrJmp_00458880 else jmp CallSetPause.
+ *     g_cj_00542054 = 0xffffffff; jmp CinematicStageCluster.
+ *   Block B (+0x30): g_walkCallback=g_stateFlag; if zero jmp IncCmp28StoreOrJmp else jmp CallSetPause.
  *   Block C (+0x50): g_walkCallback=g_stateFlag; if nonzero jmp IncCmp28StoreOrJmp else jmp CallSetPause.
  */
 extern unsigned int g_stateFlag;
 
-__declspec(naked) void TripleEntryDispatch_00458810(void) {
+__declspec(naked) void TripleEntryDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_stateChangePair3_0053a278]
         mov     dword ptr [g_acc_00542078], eax
@@ -132,7 +132,7 @@ __declspec(naked) void TripleEntryDispatch_00458810(void) {
         _emit   0ah
         mov     dword ptr [g_walkCallback], 0x27
         mov     dword ptr [g_cj_00542054], 0xffffffff
-        jmp     CinematicStageCluster_004588b0
+        jmp     CinematicStageCluster
         _emit   90h
         _emit   90h
         _emit   90h
@@ -142,7 +142,7 @@ __declspec(naked) void TripleEntryDispatch_00458810(void) {
         _emit   74h
         _emit   05h
         jmp     CallSetPause
-        jmp     IncCmp28StoreOrJmp_00458880
+        jmp     IncCmp28StoreOrJmp
         _emit   90h
         _emit   90h
         _emit   90h
@@ -157,6 +157,6 @@ __declspec(naked) void TripleEntryDispatch_00458810(void) {
         _emit   75h
         _emit   05h
         jmp     CallSetPause
-        jmp     IncCmp28StoreOrJmp_00458880
+        jmp     IncCmp28StoreOrJmp
     }
 }

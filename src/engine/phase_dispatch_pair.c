@@ -116,7 +116,7 @@ extern void ScaledChainNegStore(void);
 extern void SlotEvent3EntryChain(void);
 extern void SlotPhaseResetInstallChain(void);
 
-__declspec(naked) void PhaseDispatchPair_004799c0(void)
+__declspec(naked) void PhaseDispatchPair(void)
 {
     __asm
     {
@@ -155,7 +155,7 @@ __declspec(naked) void PhaseDispatchPair_004799c0(void)
         pop     ebx
         ret
     L_pdp_install1:
-        mov     dword ptr [esi + 8], offset PhaseDispatchPair_004799c0
+        mov     dword ptr [esi + 8], offset PhaseDispatchPair
         mov     dword ptr [esi + 0x84], ebx
         mov     dword ptr [g_pendingNodeType], ebx
         mov     dword ptr [g_framePauseFlag], ebx

@@ -108,27 +108,27 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void PushScaledIdxBitToggle_0048c2f0(void);
+extern void PushScaledIdxBitToggle(void);
 
 /* @addr 0x0048c370 (144b game) - 4-step cascade with bl=4 bit-test on g_xformDirtyFlags.
  *   For step n in {0,1,2,3}: g_walkCallback=n; call PushScaledIdxBitToggle; pause/bit-check breaks.
  *   Final default: g_walkCallback=-1. ret.
  */
-void Cascade4StepBitTest_0048c370(void) {
+void Cascade4StepBitTest(void) {
     g_walkCallback = 0;
-    PushScaledIdxBitToggle_0048c2f0();
+    PushScaledIdxBitToggle();
     if (g_framePauseFlag != 0) return;
     if (((unsigned char)g_xformDirtyFlags & 4) != 0) return;
     g_walkCallback = 1;
-    PushScaledIdxBitToggle_0048c2f0();
+    PushScaledIdxBitToggle();
     if (g_framePauseFlag != 0) return;
     if (((unsigned char)g_xformDirtyFlags & 4) != 0) return;
     g_walkCallback = 2;
-    PushScaledIdxBitToggle_0048c2f0();
+    PushScaledIdxBitToggle();
     if (g_framePauseFlag != 0) return;
     if (((unsigned char)g_xformDirtyFlags & 4) != 0) return;
     g_walkCallback = 3;
-    PushScaledIdxBitToggle_0048c2f0();
+    PushScaledIdxBitToggle();
     if (g_framePauseFlag != 0) return;
     if (((unsigned char)g_xformDirtyFlags & 4) != 0) return;
     g_walkCallback = (unsigned int)-1;

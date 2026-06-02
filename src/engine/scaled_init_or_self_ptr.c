@@ -10,13 +10,13 @@ extern unsigned int g_phaseTimer;
 
 /* @addr 0x0044ef10 (64b): same shape as ScaledInitOrSelfPtr_00421f00,
  *                         store=own, jmp=0x44ef50 */
-extern void PoseChainAdvanceCluster_0044ef50(void);
+extern void PoseChainAdvanceCluster(void);
 void ScaledInitOrSelfPtr_0044ef10(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int ptr = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
     if (ptr) {
-        PoseChainAdvanceCluster_0044ef50();
+        PoseChainAdvanceCluster();
         return;
     }
     *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_0044ef10;

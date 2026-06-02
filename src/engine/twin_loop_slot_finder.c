@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_dispatchArg;
 
-void TwinLoopSlotFinder_00429a40(void) {
+void TwinLoopSlotFinder(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_dispatchArg]

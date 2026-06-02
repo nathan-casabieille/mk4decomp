@@ -109,15 +109,15 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_audioBank2State_00537f98;
-extern void DirtyFlagsManip_0048de00(void);
+extern void DirtyFlagsManip(void);
 extern void DualEntryBitFlagDispatch(void);
-extern void MStackChainBit2Cascade_0048e8f0(void);
+extern void MStackChainBit2Cascade(void);
 extern void PendingMatch_0048d7b0(void);
-extern void PushCjWalkDispatchPop_00490810(void);
+extern void PushCjWalkDispatchPop(void);
 extern void ScaledLitLoadCall_00480fe0(void);
 extern void SfxAttenuateAndApply(void);
 
-__declspec(naked) void MStackChainInstallDispatch_0048d500(void)
+__declspec(naked) void MStackChainInstallDispatch(void)
 {
     __asm {
         push     ebx
@@ -152,7 +152,7 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         and      esi, 0x20
         mov      dword ptr [g_xformScratch94], esi
         je       short L_d591
-        call     DirtyFlagsManip_0048de00
+        call     DirtyFlagsManip
         pop      esi
         pop      ebx
         ret
@@ -171,7 +171,7 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         jne      L_d6a7
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      edx, OFFSET DualEntryBitFlagDispatch + 0x40
-        mov      dword ptr [g_xformEntityIdx], OFFSET MStackChainBit2Cascade_0048e8f0
+        mov      dword ptr [g_xformEntityIdx], OFFSET MStackChainBit2Cascade
         mov      dword ptr [g_pendingNodeType], edx
         mov      eax, dword ptr [ecx*4 + 0x10]
         shr      eax, 0x18
@@ -241,7 +241,7 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         mov      eax, dword ptr [g_walkCallback]
         test     eax, eax
         je       short L_d71a
-        call     PushCjWalkDispatchPop_00490810
+        call     PushCjWalkDispatchPop
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d7ad

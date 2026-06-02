@@ -16,6 +16,6 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern int __cdecl Snd3DSourceCleanup(int, int);
-int PushArgPushNeg1Call_004be790(int x) {
+int PushArgPushNeg1Call(int x) {
     return Snd3DSourceCleanup(-1, x);
 }

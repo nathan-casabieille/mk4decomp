@@ -109,22 +109,22 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void Helper_DownloadSetup(void);
-extern void DispatchSetDirtyToggle_004ac150(void);
-extern void RecursiveMStackByteStream_00406d00(void);
+extern void DispatchSetDirtyToggle(void);
+extern void RecursiveMStackByteStream(void);
 
 /* @addr 0x0048ce60 (237b game) - mstack-push pair + 3 guarded calls.
  *   push g_scaledInit_00542044 and g_xformEntityIdx onto mstack (2x inc g_matrixStackTop).
  *   cj[+0x34] |= 0x0800 (or ch,8). Select dispatch arg: if cj == g_player1NodeIdx
  *     use g_dlNalt1 else use g_dlNalt2; store to g_walkCallback.
  *   call Helper_DownloadSetup; if pause? ret.
- *   load scaledInit[+0x14] -> g_xformEntityIdx; call DispatchSetDirtyToggle_004ac150; if pause? ret.
+ *   load scaledInit[+0x14] -> g_xformEntityIdx; call DispatchSetDirtyToggle; if pause? ret.
  *   if bit2 of g_xformDirtyFlags clear: load scaledInit[+0x18] -> g_xformEntityIdx.
- *   call RecursiveMStackByteStream_00406d00; if pause? ret. pop pair: g_xformEntityIdx, g_scaledInit_00542044; ret.
+ *   call RecursiveMStackByteStream; if pause? ret. pop pair: g_xformEntityIdx, g_scaledInit_00542044; ret.
  */
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 
-void MStackPushPairTriCall_0048ce60(void) {
+void MStackPushPairTriCall(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_scaledInit_00542044]
@@ -156,7 +156,7 @@ void MStackPushPairTriCall_0048ce60(void) {
         mov     eax, dword ptr [g_scaledInit_00542044]
         mov     ecx, dword ptr [eax*4 + 0x14]
         mov     dword ptr [g_xformEntityIdx], ecx
-        call    DispatchSetDirtyToggle_004ac150
+        call    DispatchSetDirtyToggle
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -167,7 +167,7 @@ void MStackPushPairTriCall_0048ce60(void) {
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     eax, dword ptr [edx*4 + 0x18]
         mov     dword ptr [g_xformEntityIdx], eax
-        call    RecursiveMStackByteStream_00406d00
+        call    RecursiveMStackByteStream
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

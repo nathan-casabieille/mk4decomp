@@ -12,7 +12,7 @@
  *   IOWrapper(fd,0,0), then RangePathIATDispatch_004c7060 on the FILE.
  */
 extern unsigned int g_arr_00fa0de0;
-extern void FFlushImpl_004c69a0(void);
+extern void FFlushImpl(void);
 extern void IOWrapper_004c8dd0(void);
 extern void RangePathIATDispatch_004c6ff0(void);
 extern void RangePathIATDispatch_004c7060(void);
@@ -27,7 +27,7 @@ __declspec(naked) void Helper_FOpenPostInit(void) {
         call    RangePathIATDispatch_004c6ff0
         add     esp, 4
         push    esi
-        call    FFlushImpl_004c69a0
+        call    FFlushImpl
         mov     ecx, dword ptr [esi + 0xc]
         add     esp, 4
         and     ecx, 0xffffffcf

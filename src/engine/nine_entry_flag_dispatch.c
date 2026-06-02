@@ -114,19 +114,19 @@ extern unsigned int g_fightAxisPosY;
  *   C (+0x30): g_walkCallback=0x2000; jmp OrDualStore.
  *   D (+0x40): g_walkCallback=0x1000, g_eventQueueCurrent=5, g_save_0053a7d8=5; jmp OrDualStore.
  *   E (+0x60): byte[g_byte_00543730]=1; g_walkCallback=0x800; jmp OrDualStore.
- *   F (+0x80): call FiveSetWalkJmp_00461360; if !pause: g_walkCallback=0x400; jmp OrDualStore.
+ *   F (+0x80): call FiveSetWalkJmp; if !pause: g_walkCallback=0x400; jmp OrDualStore.
  *   G (+0xa0): g_walkCallback=0x200; jmp OrDualStore.
  *   H (+0xb0): g_walkCallback=0x40; jmp OrDualStore.
- *   I (+0xc0): g_walkCallback=0x2000; call OrDualStore; if !pause jmp Set1JmpSet2Jmp_00461340; ret.
+ *   I (+0xc0): g_walkCallback=0x2000; call OrDualStore; if !pause jmp Set1JmpSet2Jmp; ret.
  */
 extern unsigned int g_save_0053a7d8;
 extern unsigned int g_byte_00543730;
-extern void FiveSetWalkJmp_00461360(void);
+extern void FiveSetWalkJmp(void);
 extern void OrDualStore_0048e4b0(void);
-extern void Set1JmpSet2Jmp_00461340(void);
+extern void Set1JmpSet2Jmp(void);
 extern void Wrapper_0048a300(void);
 
-__declspec(naked) void NineEntryFlagDispatch_00461260(void) {
+__declspec(naked) void NineEntryFlagDispatch(void) {
     __asm {
         call    Wrapper_0048a300
         mov     eax, dword ptr [g_framePauseFlag]
@@ -168,7 +168,7 @@ __declspec(naked) void NineEntryFlagDispatch_00461260(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        call    FiveSetWalkJmp_00461360
+        call    FiveSetWalkJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -190,7 +190,7 @@ __declspec(naked) void NineEntryFlagDispatch_00461260(void) {
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     Set1JmpSet2Jmp_00461340
+        jmp     Set1JmpSet2Jmp
         ret
     }
 }

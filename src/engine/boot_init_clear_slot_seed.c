@@ -146,7 +146,7 @@ extern void DownloadPlayerChar(void);
 extern void TableWalkBoundedCmp(void);
 extern void ZeroThreeFields_00404ed0(void);
 
-__declspec(naked) void BootInitClearSlotSeed_0042ee40(void) {
+__declspec(naked) void BootInitClearSlotSeed(void) {
     __asm {
         push    ebx
         push    esi

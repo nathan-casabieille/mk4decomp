@@ -108,9 +108,9 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void QuadCallPauseJmp_00457ff0(void);
-extern void SequencedInit3CallB_00458ae0(void);
-extern void HealthBarTickDriver_00458cc0(void);
+extern void QuadCallPauseJmp(void);
+extern void SequencedInit3CallB(void);
+extern void HealthBarTickDriver(void);
 extern unsigned int g_dispatchSave541_004e8698;
 extern unsigned int g_tickFlagF;
 extern unsigned int g_stateFlag;
@@ -125,11 +125,11 @@ extern void BootInitGuardedCallChain(void);
 extern void CallSetPause(void);
 extern void DualPushSetCallDualPop(void);
 extern void QuadCallPhase2(void);
-extern void SpawnTrioInitCluster_00458440(void);
+extern void SpawnTrioInitCluster(void);
 extern void TableWalkBoundedCmp(void);
 extern void TripleStageRollback(void);
 
-__declspec(naked) void RoundEndHandlerCluster_00457de0(void)
+__declspec(naked) void RoundEndHandlerCluster(void)
 {
     __asm {
         /* H1 (L_7de0): 3-state FSM */
@@ -178,11 +178,11 @@ __declspec(naked) void RoundEndHandlerCluster_00457de0(void)
         pop      ebx
         ret
     L_7e7d:
-        call     HealthBarTickDriver_00458cc0
+        call     HealthBarTickDriver
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7f8b
-        call     SpawnTrioInitCluster_00458440
+        call     SpawnTrioInitCluster
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7f8b
@@ -211,11 +211,11 @@ __declspec(naked) void RoundEndHandlerCluster_00457de0(void)
         mov      dword ptr [g_stateFlag], ecx
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_tickFlagF], eax
-        call     SequencedInit3CallB_00458ae0
+        call     SequencedInit3CallB
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_7f8b
-        call     QuadCallPauseJmp_00457ff0
+        call     QuadCallPauseJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_7f8b

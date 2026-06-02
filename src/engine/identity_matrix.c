@@ -23,7 +23,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [eax + 0x1c], ecx
  *   ret
  */
-void IdentityMatrix_00424b70(void) {
+void IdentityMatrix(void) {
     int *base = (int *)(g_scaledInit_00542044 * 4);
     base[0] = 0x10000;
     base[4] = 0x10000;

@@ -108,24 +108,24 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void AudioInstall2BodyDualSetup_004a0300(void);
-extern void AudioInstallSelf3StateWithSubcall_004a0870(void);
+extern void AudioInstall2BodyDualSetup(void);
+extern void AudioInstallSelf3StateWithSubcall(void);
 extern unsigned int g_audioInstall2State_00537f88;
 extern unsigned int g_audioInstall2Slot_00537eec;
 
 /*
- * AudioInstallSelfShiftedChainInit_004a0210 - 237b audio self-install setup.
+ * AudioInstallSelfShiftedChainInit - 237b audio self-install setup.
  *   chain = g_baseSel<<2; saved = chain->state; chain->state=0.
- *   If was nonzero: g_walkCallback = g_audioInstallGate_00541dd4; if !=0 tail-jmp AudioInstall2BodyDualSetup_004a0300.
- *     Else: g_eventQueueEnd = g_audioInstall2State_00537f88; push (0x250, 0x004a0680); StoreTwoCall; tail-jmp AudioInstall2BodyDualSetup_004a0300.
+ *   If was nonzero: g_walkCallback = g_audioInstallGate_00541dd4; if !=0 tail-jmp AudioInstall2BodyDualSetup.
+ *     Else: g_eventQueueEnd = g_audioInstall2State_00537f88; push (0x250, 0x004a0680); StoreTwoCall; tail-jmp AudioInstall2BodyDualSetup.
  *   If was zero: g_eventQueueEnd=7; edx=1<<(g_eventQueueWorkType-1); g_eventQueueWorkType--; ecx = g_audioInstall2Slot_00537eec & edx;
  *     g_eventQueueCurrent=edx; g_walkCallback=ecx; g_audioInstall2Slot_00537eec=ecx; install-self at entry; chain->state=1;
  *     mstack-push (entry+0x01000000) packed; g_currentNodeIdx++; clear g_baseSel*4+0x84;
- *     call AudioInstallSelf3StateWithSubcall_004a0870; g_framePauseFlag=1; ret.
+ *     call AudioInstallSelf3StateWithSubcall; g_framePauseFlag=1; ret.
  */
 extern unsigned int g_audioInstallGate_00541dd4;
 
-__declspec(naked) void AudioInstallSelfShiftedChainInit_004a0210(void)
+__declspec(naked) void AudioInstallSelfShiftedChainInit(void)
 {
     __asm
     {
@@ -139,7 +139,7 @@ __declspec(naked) void AudioInstallSelfShiftedChainInit_004a0210(void)
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         je      short L_pushCall
-        jmp     AudioInstall2BodyDualSetup_004a0300
+        jmp     AudioInstall2BodyDualSetup
     L_pushCall:
         mov     ecx, dword ptr [g_audioInstall2State_00537f88]
         push    0x250
@@ -147,7 +147,7 @@ __declspec(naked) void AudioInstallSelfShiftedChainInit_004a0210(void)
         mov     dword ptr [g_eventQueueEnd], ecx
         call    StoreTwoCall
         add     esp, 8
-        jmp     AudioInstall2BodyDualSetup_004a0300
+        jmp     AudioInstall2BodyDualSetup
     L_install:
         mov     ecx, dword ptr [g_eventQueueWorkType]
         mov     edx, 1
@@ -160,11 +160,11 @@ __declspec(naked) void AudioInstallSelfShiftedChainInit_004a0210(void)
         mov     dword ptr [g_eventQueueCurrent], edx
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_audioInstall2Slot_00537eec], ecx
-        mov     dword ptr [eax + 8], offset AudioInstallSelfShiftedChainInit_004a0210
+        mov     dword ptr [eax + 8], offset AudioInstallSelfShiftedChainInit
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
-        mov     edx, offset AudioInstallSelfShiftedChainInit_004a0210
+        mov     edx, offset AudioInstallSelfShiftedChainInit
         mov     dword ptr [g_currentNodeIdx], ecx
         add     edx, 0x01000000
         mov     dword ptr [ecx*4], edx
@@ -174,7 +174,7 @@ __declspec(naked) void AudioInstallSelfShiftedChainInit_004a0210(void)
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
-        call    AudioInstallSelf3StateWithSubcall_004a0870
+        call    AudioInstallSelf3StateWithSubcall
         mov     dword ptr [g_framePauseFlag], 1
         ret
     }

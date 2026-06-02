@@ -121,7 +121,7 @@ extern unsigned int g_dispatchSave1145_0044ea20;
 
 extern void FiveCallGuardSetTail(void);
 
-__declspec(naked) void InstallSelfFiveStoreCalls_00489170(void) {
+__declspec(naked) void InstallSelfFiveStoreCalls(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -155,7 +155,7 @@ __declspec(naked) void InstallSelfFiveStoreCalls_00489170(void) {
         call    StoreTwoCall
         add     esp, 8
         mov     eax, 1
-        mov     dword ptr [esi + 8], offset InstallSelfFiveStoreCalls_00489170
+        mov     dword ptr [esi + 8], offset InstallSelfFiveStoreCalls
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], 0xa0
         mov     dword ptr [g_framePauseFlag], eax

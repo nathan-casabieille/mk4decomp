@@ -108,11 +108,11 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void TwoPhasePackInstall_0047eff0(void);
+extern void TwoPhasePackInstall(void);
 extern void DirtyGuardLitOrJmp_0047ef40(void);
 
 /* @addr 0x0047ee70 (199b game) - dual-entry install-self with countdown.
- *   A: mstack-push 0x0047ee90; jmp TwoPhasePackInstall_0047eff0.
+ *   A: mstack-push 0x0047ee90; jmp TwoPhasePackInstall.
  *   B (+0x20): standard install-self.  chain[+0x84]!=0 path: load [g_fightGroupHead*4+0x4c];
  *     if nonzero: g_eventQueueChild = ax (after decrement?), jmp 0x80; else push 0x004ed6b8, call ArgSarStoreJmp, pop+ret.
  *     +0x6c countdown: dec g_eventQueueChild; if zero proceed; else self-call jmp.
@@ -123,13 +123,13 @@ extern unsigned int g_matrixStack_arr;
 extern void ArgSarStoreJmp(void);
 extern void CmpEqInitCallElseJmp(void);
 
-__declspec(naked) void InstallSelfCountdownLong_0047ee70(void) {
+__declspec(naked) void InstallSelfCountdownLong(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_matrixStack_arr], 0x0047ee90
-        jmp     TwoPhasePackInstall_0047eff0
+        jmp     TwoPhasePackInstall
         _emit   90h
         _emit   90h
         _emit   90h
@@ -160,7 +160,7 @@ __declspec(naked) void InstallSelfCountdownLong_0047ee70(void) {
         mov     dword ptr [g_eventQueueChild], eax
         _emit   74h
         _emit   07h
-        call    InstallSelfCountdownLong_0047ee70
+        call    InstallSelfCountdownLong
         pop     esi
         ret
         mov     dword ptr [g_walkCallback], 0x0c

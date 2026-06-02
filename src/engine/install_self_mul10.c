@@ -124,7 +124,7 @@ extern void Wrapper_0048a250(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void InstallSelfMul10_00481c70(void) {
+__declspec(naked) void InstallSelfMul10(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi

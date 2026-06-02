@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x0048ede0 (105b) - twin of 0x0048ed70 with 4/0x400 constants. */
 extern void PushPopState70Mask(void);
 
-void DualConstMaskFlagToggle4_0048ede0(void) {
+void DualConstMaskFlagToggle4(void) {
     __asm {
         mov     dword ptr [g_eventQueueCurrent], 4
         mov     dword ptr [g_eventQueueWorkType], 0x400

@@ -120,7 +120,7 @@ extern unsigned int g_dispatchSave1358_00f70f50;
 extern unsigned int g_dispatchSave1374_00f70f98;
 extern unsigned int g_viewportY;
 
-__declspec(naked) void ColdLoopTail_004c08d0(void) {
+__declspec(naked) void ColdLoopTail(void) {
     __asm {
         mov     edi, dword ptr [g_dispatchSave1708_00b2d00c]
         mov     ecx, dword ptr [g_dispatchSave1358_00f70f50]

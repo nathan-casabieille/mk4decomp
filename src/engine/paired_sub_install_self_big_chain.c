@@ -109,15 +109,15 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave648_004ed8d8;
-extern void AerialHitDispatcher_0047c290(void);
+extern void AerialHitDispatcher(void);
 extern void ArgSarStoreJmp(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void GuardedDirtyXformFromTable(void);
-extern void InstallSelfCmpJgJmp_00480ac0(void);
-extern void ScaledChainTwoStores_00480d20(void);
-extern void Vec2ChainComputeStores_00480b80(void);
+extern void InstallSelfCmpJgJmp(void);
+extern void ScaledChainTwoStores(void);
+extern void Vec2ChainComputeStores(void);
 
-__declspec(naked) void PairedSubInstallSelfBigChain_0047c0d0(void)
+__declspec(naked) void PairedSubInstallSelfBigChain(void)
 {
     __asm
     {
@@ -168,7 +168,7 @@ __declspec(naked) void PairedSubInstallSelfBigChain_0047c0d0(void)
         mov     eax, 0x51e
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x4c], eax
-        call    AerialHitDispatcher_0047c290
+        call    AerialHitDispatcher
         pop     esi
         ret
     L_psisbc_phase1:
@@ -177,7 +177,7 @@ __declspec(naked) void PairedSubInstallSelfBigChain_0047c0d0(void)
         mov     edx, dword ptr [g_xformScratch2088]
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_eventQueueCurrent], edx
-        call    Vec2ChainComputeStores_00480b80
+        call    Vec2ChainComputeStores
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_psisbc_ret
@@ -193,7 +193,7 @@ __declspec(naked) void PairedSubInstallSelfBigChain_0047c0d0(void)
         pop     esi
         ret
     L_psisbc_phase0:
-        call    ScaledChainTwoStores_00480d20
+        call    ScaledChainTwoStores
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_psisbc_ret
@@ -216,7 +216,7 @@ __declspec(naked) void PairedSubInstallSelfBigChain_0047c0d0(void)
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
-        call    InstallSelfCmpJgJmp_00480ac0
+        call    InstallSelfCmpJgJmp
         mov     dword ptr [g_framePauseFlag], 1
     L_psisbc_ret:
         pop     esi

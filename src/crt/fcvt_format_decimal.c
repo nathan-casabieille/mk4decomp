@@ -108,17 +108,17 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void* CrtDoubleToStringImpl_004cce40(void);
-extern void FpFormatRound_004ccda0(int, void *, void *);
-extern void FcvtFormatDecimal_004c87c0(int, int, void *, int);
+extern void* CrtDoubleToStringImpl(void);
+extern void FpFormatRound(int, void *, void *);
+extern void FcvtFormatDecimal(int, int, void *, int);
 
 /*
  * @addr 0x004c8750 (102b crt) - print-format helper:
- *   reserves a 40-byte temp, calls CrtDoubleToStringImpl_004cce40 to parse args,
- *   adjusts for '-' sign, calls FpFormatRound_004ccda0 to format, then
- *   FcvtFormatDecimal_004c87c0 to emit; returns the chosen length.
+ *   reserves a 40-byte temp, calls CrtDoubleToStringImpl to parse args,
+ *   adjusts for '-' sign, calls FpFormatRound to format, then
+ *   FcvtFormatDecimal to emit; returns the chosen length.
  */
-__declspec(naked) void FormatHelper_004c8750(void) {
+__declspec(naked) void FormatHelper(void) {
     __asm {
         sub     esp, 0x28
         lea     eax, [esp + 0x10]
@@ -135,7 +135,7 @@ __declspec(naked) void FormatHelper_004c8750(void) {
         mov     eax, dword ptr [eax]
         push    edx
         push    eax
-        call    CrtDoubleToStringImpl_004cce40
+        call    CrtDoubleToStringImpl
         mov     edi, dword ptr [esp + 0x4c]
         mov     edx, dword ptr [esp + 0x1c]
         mov     esi, dword ptr [esp + 0x18]
@@ -150,14 +150,14 @@ __declspec(naked) void FormatHelper_004c8750(void) {
         add     eax, esi
         push    edx
         push    eax
-        call    FpFormatRound_004ccda0
+        call    FpFormatRound
         add     esp, 0xc
         lea     ecx, [esp + 8]
         push    0
         push    ecx
         push    edi
         push    esi
-        call    FcvtFormatDecimal_004c87c0
+        call    FcvtFormatDecimal
         add     esp, 0x10
         mov     eax, esi
         pop     edi

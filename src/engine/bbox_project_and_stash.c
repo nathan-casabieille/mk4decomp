@@ -137,7 +137,7 @@ extern unsigned int g_dispatchSave1517_00ab4500;
 extern unsigned int g_dispatchSave1518_00ab4502;
 extern unsigned int g_dispatchSave1580_00ab51f8;
 
-__declspec(naked) void BboxProjectAndStash_004bc5a0(void)
+__declspec(naked) void BboxProjectAndStash(void)
 {
     __asm {
         mov      eax, dword ptr [g_xformEntityIdx]

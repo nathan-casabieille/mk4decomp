@@ -108,14 +108,14 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void DoubleToLongDouble_004cced0(void* a, void* b);
-extern void CrtFloatConvert_004ceb80(int a, int b, int c, ...);
+extern void DoubleToLongDouble(void* a, void* b);
+extern void CrtFloatConvert(int a, int b, int c, ...);
 
 /* @addr 0x004cce40 (139b crt) - tm-struct fill + string copy helper:
- *   Calls DoubleToLongDouble_004cced0(esp, esp+0x2c); reads 3 fields, calls CrtFloatConvert_004ceb80;
+ *   Calls DoubleToLongDouble(esp, esp+0x2c); reads 3 fields, calls CrtFloatConvert;
  *   fills output struct (offsets 0,4,8,c) with values; strcpy-style memcpy.
  */
-__declspec(naked) void* CrtDoubleToStringImpl_004cce40(void) {
+__declspec(naked) void* CrtDoubleToStringImpl(void) {
     __asm {
         sub     esp, 0x28
         lea     eax, [esp + 0x2c]
@@ -128,7 +128,7 @@ __declspec(naked) void* CrtDoubleToStringImpl_004cce40(void) {
         push    edi
         push    eax
         push    ecx
-        call    DoubleToLongDouble_004cced0
+        call    DoubleToLongDouble
         add     esp, 8
         lea     edx, [esp + 0x18]
         mov     ecx, dword ptr [esp + 0x0c]
@@ -142,7 +142,7 @@ __declspec(naked) void* CrtDoubleToStringImpl_004cce40(void) {
         mov     cx, word ptr [esp + 0x2c]
         mov     dword ptr [eax + 4], edx
         mov     word ptr [eax + 8], cx
-        call    CrtFloatConvert_004ceb80
+        call    CrtFloatConvert
         mov     edx, dword ptr [esp + 0x58]
         lea     edi, [esp + 0x34]
         movsx   ecx, word ptr [esp + 0x30]

@@ -108,9 +108,9 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void InstallSelfMultiCascade_004388f0(void);
+extern void InstallSelfMultiCascade(void);
 extern void GuardedPackedSlotInit(void);
-extern void InstallSelfWithBody_00438780(void);
+extern void InstallSelfWithBody(void);
 
 /* @addr 0x00438690 (226b game) - state-threshold gate + mstack-push with overlap rewrite. */
 extern unsigned int g_matrixStack_arr;
@@ -156,7 +156,7 @@ __declspec(naked) void StateGateMStackOverlap(void) {
         mov     dword ptr [g_scaledInit_00542044], edx
         _emit   75h
         _emit   07h
-        call    InstallSelfMultiCascade_004388f0
+        call    InstallSelfMultiCascade
         pop     esi
         ret
         inc     ecx
@@ -175,7 +175,7 @@ __declspec(naked) void StateGateMStackOverlap(void) {
         dec     eax
         mov     dword ptr [g_eventQueueChild], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        call    InstallSelfWithBody_00438780
+        call    InstallSelfWithBody
         pop     esi
         ret
     }

@@ -109,11 +109,11 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00429050 (216b game) - install-self with countdown. */
-extern void Install3WayChainStateAdvance_00429130(void);
+extern void Install3WayChainStateAdvance(void);
 extern void ScaledLoadJmp_24(void);
 extern void Thunk_004296e0(void);
 
-__declspec(naked) void InstallSelfDualCountdown_00429050(void) {
+__declspec(naked) void InstallSelfDualCountdown(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    ebx
@@ -170,7 +170,7 @@ __declspec(naked) void InstallSelfDualCountdown_00429050(void) {
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
-        call    Install3WayChainStateAdvance_00429130
+        call    Install3WayChainStateAdvance
         mov     dword ptr [g_framePauseFlag], ebx
         pop     esi
         pop     ebx

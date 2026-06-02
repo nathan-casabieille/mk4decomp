@@ -19,7 +19,7 @@ extern unsigned int g_scaledInit_00542044;
  * which is -0x51e in signed.
  */
 extern void TwoPhaseInstallScaledPackedPtr(void);
-void Const20cFae2Jmp_00486510(void) {
+void Const20cFae2Jmp(void) {
     g_walkCallback = (void(*)(void))0x20c;
     g_eventQueueCurrent = 0xfffffae2;
     TwoPhaseInstallScaledPackedPtr();

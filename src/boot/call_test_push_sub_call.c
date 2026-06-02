@@ -26,15 +26,15 @@ int Crt_rand(void) {
  *   call 0x4c6940(0x4d5000, 0x4d5018); add esp 8; ret.
  */
 extern void (*g_iat_0051ffd8)(void);
-extern int IterFnPtrs_004c6940(void *, void *);
+extern int IterFnPtrs(void *, void *);
 extern void *g_dispatchSave550_004d5000;
 extern void *g_dispatchSave549_004d5018;
 extern void *g_dispatchSave548_004d501c;
 extern void *g_dispatchSave547_004d5024;
 void _init_premain(void) {
     if (g_iat_0051ffd8) g_iat_0051ffd8();
-    IterFnPtrs_004c6940(&g_dispatchSave548_004d501c, &g_dispatchSave547_004d5024);
-    IterFnPtrs_004c6940(&g_dispatchSave550_004d5000, &g_dispatchSave549_004d5018);
+    IterFnPtrs(&g_dispatchSave548_004d501c, &g_dispatchSave547_004d5024);
+    IterFnPtrs(&g_dispatchSave550_004d5000, &g_dispatchSave549_004d5018);
 }
 
 /* @addr 0x004c6960 (53b)
@@ -42,13 +42,13 @@ void _init_premain(void) {
  *   if (arg.flags & 0x4000) return arg.field10 ? -1 : 0;
  *   else return 0.
  */
-extern int FFlushImpl_004c69a0(int);
-extern int FileTableClose_004cb700(int);
-void CallTestPushSubCall_004c6960(void) {
+extern int FFlushImpl(int);
+extern int FileTableClose(int);
+void CallTestPushSubCall(void) {
     __asm {
         mov     esi, dword ptr [esp + 8]
         push    esi
-        call    FFlushImpl_004c69a0
+        call    FFlushImpl
         add     esp, 4
         test    eax, eax
         _emit   74h
@@ -62,7 +62,7 @@ void CallTestPushSubCall_004c6960(void) {
         _emit   12h
         mov     eax, dword ptr [esi + 0x10]
         push    eax
-        call    FileTableClose_004cb700
+        call    FileTableClose
         add     esp, 4
         neg     eax
         sbb     eax, eax

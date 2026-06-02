@@ -20,7 +20,7 @@ extern unsigned int g_scaledInit_00542044;
  *   pop     edi
  *   ret
  */
-void Init0AndMax_00401370(void) {
+void Init0AndMax(void) {
     __asm {
         mov     ecx, 0x0c
         xor     eax, eax

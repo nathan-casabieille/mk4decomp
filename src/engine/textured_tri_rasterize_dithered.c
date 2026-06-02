@@ -159,7 +159,7 @@ extern unsigned int g_viewportX;
 extern unsigned int g_viewportY;
 extern unsigned int g_dispatchSave1404_00f85b58;
 
-__declspec(naked) void TexturedTriRasterizeDithered_004c2650(void)
+__declspec(naked) void TexturedTriRasterizeDithered(void)
 {
     __asm {
         push     ebp

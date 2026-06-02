@@ -16,7 +16,7 @@ extern unsigned int g_scaledInit_00542044;
  *   pop     ebp
  *   ret
  */
-__declspec(naked) void GetFpuSw_004cf710(void) {
+__declspec(naked) void GetFpuSw(void) {
     __asm {
         push    ebp
         mov     ebp, esp

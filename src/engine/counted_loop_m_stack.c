@@ -115,11 +115,11 @@ extern unsigned int g_fightAxisPosY;
  *   mstack-pop into g_eventQueueWorkType, g_eventQueueCurrent.
  */
 extern unsigned int g_load_0052ab10;
-extern void MStackBracket3Init4bd5e0Tail_0042e550(void);
+extern void MStackBracket3Init4bd5e0Tail(void);
 
 extern unsigned int g_matrixStack_arr;
 
-void CountedLoopMStack_0042e480(void) {
+void CountedLoopMStack(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueCurrent]
@@ -133,7 +133,7 @@ void CountedLoopMStack_0042e480(void) {
         mov     [eax*4 + g_matrixStack_arr], edx
         mov     dword ptr [g_eventQueueCurrent], 0xa
         mov     dword ptr [g_eventQueueWorkType], 0x005a0000
-        call    MStackBracket3Init4bd5e0Tail_0042e550
+        call    MStackBracket3Init4bd5e0Tail
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -146,7 +146,7 @@ void CountedLoopMStack_0042e480(void) {
         mov     dword ptr [g_eventQueueCurrent], eax
         _emit   74h
         _emit   0fh
-        call    MStackBracket3Init4bd5e0Tail_0042e550
+        call    MStackBracket3Init4bd5e0Tail
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   74h

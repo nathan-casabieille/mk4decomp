@@ -30,8 +30,8 @@ extern u32 g_pendingNodeType;     /* 0x0054204c */
 extern packed_ptr g_xformEntityIdx;      /* 0x00542048 */
 
 extern void PendingMatch_00447a90(void);
-extern void DualPushSet7dCallPop_00474290(void);
-extern void DoubleStackPushAndJmp7d_00474050(void);
+extern void DualPushSet7dCallPop(void);
+extern void DoubleStackPushAndJmp7d(void);
 
 #define DC249_BODY(WORKER_FN)                                                  \
     do {                                                                       \
@@ -62,7 +62,7 @@ extern void DoubleStackPushAndJmp7d_00474050(void);
     } while (0)
 
 /* @addr 0x00447890 */
-void DispatcherComplex249_00447890(void) { DC249_BODY(DualPushSet7dCallPop_00474290); }
+void DispatcherComplex249_00447890(void) { DC249_BODY(DualPushSet7dCallPop); }
 
 /* @addr 0x00447990 */
-void DispatcherComplex249_00447990(void) { DC249_BODY(DoubleStackPushAndJmp7d_00474050); }
+void DispatcherComplex249_00447990(void) { DC249_BODY(DoubleStackPushAndJmp7d); }

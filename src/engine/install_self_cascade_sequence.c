@@ -124,17 +124,17 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_dispatchState;
 extern void AudioVolumeRescale(void);
-extern void EsiInstallTwoCallCmpInstall_00438b10(void);
+extern void EsiInstallTwoCallCmpInstall(void);
 extern void GuardedSeq_00433bb0(void);
 extern void HitReactionDispatcher(void);
 extern void InstallSelfChainSetB333v2(void);
-extern void InstallSelfChainSetB333v3_00437fb0(void);
-extern void InstallSelfCountdownCascade_00439fd0(void);
-extern void InstallSelfThreeStateLeaPlus22_00437970(void);
+extern void InstallSelfChainSetB333v3(void);
+extern void InstallSelfCountdownCascade(void);
+extern void InstallSelfThreeStateLeaPlus22(void);
 extern void MStackPushPtr1Jmp_00438e70(void);
-extern void StoreCallPauseDirtyStoreJmp_004396c0(void);
+extern void StoreCallPauseDirtyStoreJmp(void);
 
-__declspec(naked) void InstallSelfCascadeSequence_00434350(void) {
+__declspec(naked) void InstallSelfCascadeSequence(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -155,7 +155,7 @@ __declspec(naked) void InstallSelfCascadeSequence_00434350(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        call    StoreCallPauseDirtyStoreJmp_004396c0
+        call    StoreCallPauseDirtyStoreJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -167,9 +167,9 @@ __declspec(naked) void InstallSelfCascadeSequence_00434350(void) {
         pop     esi
         ret
         mov     dword ptr [g_currentNodeFlags], 0x78000
-        mov     dword ptr [esi + 8], offset InstallSelfCascadeSequence_00434350
+        mov     dword ptr [esi + 8], offset InstallSelfCascadeSequence
         mov     ecx, dword ptr [g_baseSel]
-        mov     edx, offset InstallSelfCascadeSequence_00434350
+        mov     edx, offset InstallSelfCascadeSequence
         add     edx, 0x01000000
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
@@ -181,13 +181,13 @@ __declspec(naked) void InstallSelfCascadeSequence_00434350(void) {
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
-        call    EsiInstallTwoCallCmpInstall_00438b10
+        call    EsiInstallTwoCallCmpInstall
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
         _emit   90h
         mov     dword ptr [g_dispatchState], 0
-        call    InstallSelfCountdownCascade_00439fd0
+        call    InstallSelfCountdownCascade
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -206,7 +206,7 @@ __declspec(naked) void InstallSelfCascadeSequence_00434350(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   05h
-        jmp     InstallSelfThreeStateLeaPlus22_00437970
+        jmp     InstallSelfThreeStateLeaPlus22
         mov     dword ptr [g_walkCallback], 0x1f4
         call    AudioVolumeRescale
         mov     eax, dword ptr [g_framePauseFlag]
@@ -216,7 +216,7 @@ __declspec(naked) void InstallSelfCascadeSequence_00434350(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
-        jmp     InstallSelfChainSetB333v3_00437fb0
+        jmp     InstallSelfChainSetB333v3
         mov     dword ptr [g_eventQueueNotMask], 0x10028
         jmp     HitReactionDispatcher
         ret

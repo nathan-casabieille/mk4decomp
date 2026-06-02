@@ -121,7 +121,7 @@ extern unsigned int g_player1State;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_player2State;
 extern u32 g_dlMode;
-void AudioModeInitVariant_004a2690(void) {
+void AudioModeInitVariant(void) {
     g_xformDirtyFlags &= 0xfffffffeu;
     g_currentNodeIdx = (unsigned int)&g_active_0053a408 >> 2;
     g_xformEntityIdx = (unsigned int)&g_player1State >> 2;
@@ -129,7 +129,7 @@ void AudioModeInitVariant_004a2690(void) {
     g_currentNodeIdx = (unsigned int)&g_active_00537e88 >> 2;
     g_xformEntityIdx = (unsigned int)&g_player2State >> 2;
     DualScaledStoreConst();
-    ClearTwoCallSetStore_004a2270();
+    ClearTwoCallSetStore();
     g_dlMode = 1;
     SixCallSeqPushImm();
     g_eventQueueWorkType = 0;

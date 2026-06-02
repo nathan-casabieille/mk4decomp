@@ -32,10 +32,10 @@ extern unsigned int g_xformScratch94;
 extern void DualInstallCallSwap_00489cd0(void);
 extern void DualInstallCallSwap_00490c80(void);
 extern void FpuSqrtMul(void);
-extern void GeoTransformDispatchAndApply_00489840(void);
+extern void GeoTransformDispatchAndApply(void);
 extern void Mul10Tail(void);
 extern void FixedDiv16(void);
-extern void ScaledStateNegCallPauseLoad_00489e90(void);
+extern void ScaledStateNegCallPauseLoad(void);
 
 __declspec(naked) void Helper_PerPlayerTick(void)
 {
@@ -384,7 +384,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         cmp      eax, 0x60000
         mov      dword ptr [g_walkCallback], eax
         jle      L_97ba
-        call     ScaledStateNegCallPauseLoad_00489e90
+        call     ScaledStateNegCallPauseLoad
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_983c
@@ -419,7 +419,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         cmp      eax, 0x8000
         mov      dword ptr [g_walkCallback], eax
         jge      L_9837
-        call     GeoTransformDispatchAndApply_00489840
+        call     GeoTransformDispatchAndApply
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_983c

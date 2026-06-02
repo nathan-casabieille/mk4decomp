@@ -111,9 +111,9 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00427ee0 (164b) - double mstack push + call MStackPush2LLWalkCompare +
  *   set bit2 + cond xor + dec mstack twice. */
 extern void MStackPush2LLWalkCompare(void);
-extern void ScaledLoadGuardedJmp_004066d0(void);
+extern void ScaledLoadGuardedJmp(void);
 
-void DualPushCallBitDispatch_00427ee0(void) {
+void DualPushCallBitDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_walkCallback]
@@ -144,7 +144,7 @@ void DualPushCallBitDispatch_00427ee0(void) {
         mov     dword ptr [g_xformDirtyFlags], edx
         _emit   74h
         _emit   0eh
-        call    ScaledLoadGuardedJmp_004066d0
+        call    ScaledLoadGuardedJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

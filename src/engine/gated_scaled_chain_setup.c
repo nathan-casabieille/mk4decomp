@@ -121,7 +121,7 @@ extern void MStackPop8(void);
 extern void MStackPush8(void);
 extern void PushSetXfmMaskCallPop(void);
 
-__declspec(naked) void GatedScaledChainSetup_00427390(void) {
+__declspec(naked) void GatedScaledChainSetup(void) {
     __asm {
         mov     al, byte ptr [g_byte_004f360c]
         test    al, al

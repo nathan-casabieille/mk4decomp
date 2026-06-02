@@ -8,23 +8,23 @@ extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00490140 */
-void MStackPushSet0200_00490140(void) {
+void MStackPushSet0200(void) {
     unsigned int acc = g_eventQueueNotMask;
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = acc;
     g_eventQueueNotMask = 0x0200;
-    OrStoreDecStackPop_00490290();
+    OrStoreDecStackPop();
 }
 
 /* @addr 0x00490170 */
-void MStackPushSet0080_00490170(void) {
+void MStackPushSet0080(void) {
     unsigned int acc = g_eventQueueNotMask;
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = acc;
     g_eventQueueNotMask = 0x0080;
-    OrStoreDecStackPop_00490290();
+    OrStoreDecStackPop();
 }
 
 /* @addr 0x004901a0 */
@@ -34,27 +34,27 @@ void MStackPushSet0008(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = acc;
     g_eventQueueNotMask = 8;
-    OrStoreDecStackPop_00490290();
+    OrStoreDecStackPop();
 }
 
 /* @addr 0x004901d0 */
-void MStackPushSet0020_004901d0(void) {
+void MStackPushSet0020(void) {
     unsigned int acc = g_eventQueueNotMask;
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = acc;
     g_eventQueueNotMask = 0x20;
-    OrStoreDecStackPop_00490290();
+    OrStoreDecStackPop();
 }
 
 /* @addr 0x00490200 */
-void MStackPushSet0040_00490200(void) {
+void MStackPushSet0040(void) {
     unsigned int acc = g_eventQueueNotMask;
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = acc;
     g_eventQueueNotMask = 0x40;
-    OrStoreDecStackPop_00490290();
+    OrStoreDecStackPop();
 }
 
 /* @addr 0x00490230 */
@@ -64,7 +64,7 @@ void MStackPushSet0004(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = acc;
     g_eventQueueNotMask = 4;
-    OrStoreDecStackPop_00490290();
+    OrStoreDecStackPop();
 }
 
 /* @addr 0x00490260 */
@@ -74,5 +74,5 @@ void MStackPushSet0001(void) {
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = acc;
     g_eventQueueNotMask = 1;
-    OrStoreDecStackPop_00490290();
+    OrStoreDecStackPop();
 }

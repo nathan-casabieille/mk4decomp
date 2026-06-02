@@ -123,7 +123,7 @@ extern unsigned int g_dispatchState;
 extern void IdCascadeBitSet(void);
 extern void Scaled3StorePushCallJmp(void);
 
-void TieredCmpDispatch_00439cb0(void) {
+void TieredCmpDispatch(void) {
     __asm {
         call    IdCascadeBitSet
         mov     eax, dword ptr [g_framePauseFlag]

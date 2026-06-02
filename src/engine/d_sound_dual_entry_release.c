@@ -113,11 +113,11 @@ extern int g_renderer2_present_rc;
 extern int g_renderer2_active;
 extern int g_renderer2_initOk;
 extern void Renderer2_EndScene_D3D(void);
-extern void VtRelease_Modal_004ad590(void);
-extern void ReleaseVtableSlots_004af130(int);
+extern void VtRelease_Modal(void);
+extern void ReleaseVtableSlots(int);
 extern void ComRelease_004aedc0(void);
-extern void DSoundDualEntryRelease_004af210(void);
-extern void DualVtable8Call_004af650(void);
+extern void DSoundDualEntryRelease(void);
+extern void DualVtable8Call(void);
 extern void ComRelease_004af000(void);
 extern void ComReleasePair_004af440(void);
 extern void DSoundBufferInit146_004aea40(int);
@@ -137,7 +137,7 @@ __declspec(naked) void R2_Cleanup(void) {
     __asm {
         push    esi
         call    Renderer2_EndScene_D3D
-        call    VtRelease_Modal_004ad590
+        call    VtRelease_Modal
         mov     eax, dword ptr [g_comptr_0058c7ac]
         test    eax, eax
         _emit   74h
@@ -149,15 +149,15 @@ __declspec(naked) void R2_Cleanup(void) {
         xor     esi, esi
 loop4ad7c0:
         push    esi
-        call    ReleaseVtableSlots_004af130
+        call    ReleaseVtableSlots
         add     esp, 4
         inc     esi
         cmp     esi, 0x10
         _emit   7ch
         _emit   0f1h
         call    ComRelease_004aedc0
-        call    DSoundDualEntryRelease_004af210
-        call    DualVtable8Call_004af650
+        call    DSoundDualEntryRelease
+        call    DualVtable8Call
         call    ComRelease_004af000
         call    ComReleasePair_004af440
         push    0

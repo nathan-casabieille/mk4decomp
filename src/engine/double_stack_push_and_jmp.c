@@ -12,12 +12,12 @@ extern unsigned int g_phaseTimer;
  *   inc g_matrixStackTop twice, push g_scaledInit_00542044 and g_fightGroupHead
  *   onto stack[idx*4]; mov g_scaledInit_00542044 = 0x7c; jmp T.
  */
-extern void HalveChainTriplePop2_004740d0(void);
-void DoubleStackPushAndJmp_00474010(void) {
+extern void HalveChainTriplePop2(void);
+void DoubleStackPushAndJmp(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_scaledInit_00542044;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_fightGroupHead;
     g_scaledInit_00542044 = 0x7c;
-    HalveChainTriplePop2_004740d0();
+    HalveChainTriplePop2();
 }

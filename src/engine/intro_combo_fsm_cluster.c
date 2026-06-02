@@ -118,7 +118,7 @@ extern void PushSetXfmMaskCallPop(void);
 extern void SetJmp_00405420(void);
 extern void Thunk_0049cbc0(void);
 
-__declspec(naked) void IntroComboFsmCluster_00467800(void)
+__declspec(naked) void IntroComboFsmCluster(void)
 {
     __asm {
         call     PushSetXfmMaskCallPop

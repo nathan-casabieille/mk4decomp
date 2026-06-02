@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * BootSetJmpStoreThenChainTriple_0040b970 - 250b boot SetJmp + StoreTwo + chain triple-step.
+ * BootSetJmpStoreThenChainTriple - 250b boot SetJmp + StoreTwo + chain triple-step.
  *   Call SetJmp; if paused: ret. If !(g_xformDirtyFlags & 4): ret. Call MStackPush8;
  *     if paused: ret. Snapshot g_currentNodeIdx → g_eventQueueEnd; g_xformEntityIdx → g_eventQueueTotal;
  *     g_cj_00542058 = (0x005420e8 >> 2); g_eventQueueNotMask = 0xc1; push (0xc0, 0x0049db40);
@@ -120,10 +120,10 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave73_005420e8;
 extern void MStackPop8(void);
 extern void MStackPush8(void);
-extern void MStackPushCallPop_0040a830(void);
+extern void MStackPushCallPop(void);
 extern void SetJmp_00405420(void);
 
-__declspec(naked) void BootSetJmpStoreThenChainTriple_0040b970(void)
+__declspec(naked) void BootSetJmpStoreThenChainTriple(void)
 {
     __asm
     {
@@ -152,7 +152,7 @@ __declspec(naked) void BootSetJmpStoreThenChainTriple_0040b970(void)
         add     esp, 8
         test    al, 1
         jne     short L_b970_pop8
-        call    MStackPushCallPop_0040a830
+        call    MStackPushCallPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_b970_ret

@@ -114,7 +114,7 @@ extern unsigned int g_dualB_00538038;
 extern unsigned int g_dualB_0053803c;
 extern void ScaledChainDouble(void);
 
-void PushPlayerSwapCallClamp_004801a0(void) {
+void PushPlayerSwapCallClamp(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_baseSel]

@@ -122,7 +122,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_load_0052ab10;
 
-__declspec(naked) void InstallSelfCountedAccum_0042e1d0(void) {
+__declspec(naked) void InstallSelfCountedAccum(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi

@@ -22,7 +22,7 @@ extern int  PackedAdvanceCallTailJmp(int arg);
 extern void CopyJmp_0043a620(void);
 extern int  ArgSarStoreJmp(int arg);
 extern void Wrapper_0048a370(void);
-extern void DualMul10AndDispatchChain_0049c220(void);
+extern void DualMul10AndDispatchChain(void);
 extern int  ArgSar_Set0_Jmp(int arg);
 
 /* @addr 0x004338a0 */
@@ -62,7 +62,7 @@ void GuardedPushCall_00482990(void) {
 
 /* @addr 0x0049c200 */
 void GuardedPushCall_0049c200(void) {
-    DualMul10AndDispatchChain_0049c220();
+    DualMul10AndDispatchChain();
     if (g_framePauseFlag) return;
     ArgSar_Set0_Jmp(0x004f2758);
 }

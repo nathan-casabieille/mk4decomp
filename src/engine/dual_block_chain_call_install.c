@@ -130,7 +130,7 @@ extern void TwoCallTail_00481380(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void DualBlockChainCallInstall_00483de0(void) {
+__declspec(naked) void DualBlockChainCallInstall(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         mov     ecx, dword ptr [g_walkCallback]

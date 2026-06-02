@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchTableArr2_005420c8;
 extern unsigned int g_savedNode;
-extern void VoicePicker_00401000(void);
+extern void VoicePicker(void);
 extern void ChainNodeAdvanceCallback(void);
 /* extern void Input_PollJoystick(void); -- defined elsewhere with diff sig */
 extern void Audio_PlaySoundId(void);
@@ -119,20 +119,20 @@ extern unsigned int g_joySelP1_00543b6c;
 extern unsigned int g_dispatchSave1491_00ab4338;
 extern void GuardedSeq_00471670(void);
 extern void ChainListVecAdd(void);
-extern void Filbuf_004c8ed0(void);
+extern void Filbuf(void);
 extern void Thunk_0049cb70(void);
 extern void Thunk_0049cb80(void);
-extern void Transform9Words_004b3a90(void);
+extern void Transform9Words(void);
 extern void CrtGetLocaleInfo(void);
-extern void StringDigitConvert_004d03c0(void);
+extern void StringDigitConvert(void);
 extern unsigned short g_dispatchSave1460_00f9fc94;
 extern unsigned int g_crtHeapMaxPtr_00522154;
 extern unsigned int g_dispatchSave1470_00fa0ee4;
 extern unsigned int g_dispatchSave1430_00f9f850;
-extern void IndirectCall_004c6ec0(void);
+extern void IndirectCall(void);
 extern void Helper_MemMalloc_Post(void);
 extern void *g_iat_004d2150;
-extern void DosMapErr_004c8b20(void);
+extern void DosMapErr(void);
 extern void Thunk_004ca77b_helper(void);
 extern void Thunk_004ca701_helper(void);
 extern void FmodHelper_004ccb7d(void);
@@ -147,14 +147,14 @@ extern void PendingMatch_004013a0(void);
 extern void StoreTwoCall(void);
 extern void DispatcherComplex260_00407400(void);
 extern void CopyGlobal(void);
-extern void Test4StatesAny_004a1d20(void);
+extern void Test4StatesAny(void);
 extern void BootInitGuardedCallChain(void);
 extern void Push16Call(void);
 extern void InstallSelfPackedF80(void);
 extern void ScenegraphWalk(void);
 extern void CallSetPause(void);
 
-extern void Audio_TimerTeardown_004ac5f0(void);
+extern void Audio_TimerTeardown(void);
 extern u32 g_timerHandle;
 extern u32 g_timerActive;
 extern u32 g_timerStartSec;
@@ -183,7 +183,7 @@ __declspec(naked) void Audio_TimerSet(void) {
         push    ebx
         push    esi
         push    edi
-        call    Audio_TimerTeardown_004ac5f0
+        call    Audio_TimerTeardown
         mov     eax, [esp + 0x34]
         mov     ebx, [esp + 0x28]
         mov     esi, [esp + 0x2c]

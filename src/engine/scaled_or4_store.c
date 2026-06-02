@@ -15,7 +15,7 @@ extern unsigned int g_baseSel;
  *   mov     [ecx*4 + 0x34], eax
  *   ret
  */
-void ScaledOr4Store_00490110(void) {
+void ScaledOr4Store(void) {
     ScenegraphNode *n = (ScenegraphNode *)(g_fightGroupHead * 4);
     unsigned int v = n->state_mask | 4;
     g_walkCallback = (void (*)(void))v;

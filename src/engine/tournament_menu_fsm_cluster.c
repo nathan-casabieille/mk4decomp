@@ -109,17 +109,17 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void InstallSelfCountdown2Stage_0047c8f0(void);
-extern void TournamentMenuFsmCluster_004960e0(void);
-extern void IterStepNegStore_00490b10(void);
+extern void TournamentMenuFsmCluster(void);
+extern void IterStepNegStore(void);
 
 /* @addr 0x0047cb90 (180b game) - install-self with countdown jmp dispatch.
- *   chain[+0x84]==0 path: push 0x004ed338; call IterStepNegStore_00490b10; if !pause:
+ *   chain[+0x84]==0 path: push 0x004ed338; call IterStepNegStore; if !pause:
  *     install-self at +0x08=0x0047cb90 with scaledInit-chain push, g_eventQueueChild=0xc;
- *     call TournamentMenuFsmCluster_004960e0; pause=1; pop+ret.
+ *     call TournamentMenuFsmCluster; pause=1; pop+ret.
  *   chain[+0x84]!=0 path: g_eventQueueChild=8; jmp InstallSelfCountdown2Stage_0047c8f0.
  */
 
-__declspec(naked) void InstallSelfCountdownStr_0047cb90(void) {
+__declspec(naked) void InstallSelfCountdownStr(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -134,7 +134,7 @@ __declspec(naked) void InstallSelfCountdownStr_0047cb90(void) {
         pop     esi
         ret
         push    0x004ed338
-        call    IterStepNegStore_00490b10
+        call    IterStepNegStore
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
@@ -155,7 +155,7 @@ __declspec(naked) void InstallSelfCountdownStr_0047cb90(void) {
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
-        call    TournamentMenuFsmCluster_004960e0
+        call    TournamentMenuFsmCluster
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret

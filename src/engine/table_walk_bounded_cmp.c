@@ -26,15 +26,15 @@ int Crt_rand(void) {
  *   call 0x4c6940(0x4d5000, 0x4d5018); add esp 8; ret.
  */
 extern void (*g_iat_0051ffd8)(void);
-extern int IterFnPtrs_004c6940(void *, void *);
+extern int IterFnPtrs(void *, void *);
 extern void *g_dispatchSave550_004d5000;
 extern void *g_dispatchSave549_004d5018;
 extern void *g_dispatchSave548_004d501c;
 extern void *g_dispatchSave547_004d5024;
 void _init_premain(void) {
     if (g_iat_0051ffd8) g_iat_0051ffd8();
-    IterFnPtrs_004c6940(&g_dispatchSave548_004d501c, &g_dispatchSave547_004d5024);
-    IterFnPtrs_004c6940(&g_dispatchSave550_004d5000, &g_dispatchSave549_004d5018);
+    IterFnPtrs(&g_dispatchSave548_004d501c, &g_dispatchSave547_004d5024);
+    IterFnPtrs(&g_dispatchSave550_004d5000, &g_dispatchSave549_004d5018);
 }
 
 /* @addr 0x004bd890 (58b)
@@ -43,7 +43,7 @@ void _init_premain(void) {
  *   if word == arg call F.
  */
 extern unsigned int g_table_004ab4e78_ee[];
-extern void GeoLoadFixupLoop_004bd8e0(void);
+extern void GeoLoadFixupLoop(void);
 extern unsigned int g_dispatchSave1579_00ab5034;
 void TableWalkBoundedCmp(int arg) {
     unsigned int *p = g_table_004ab4e78_ee;
@@ -54,7 +54,7 @@ void TableWalkBoundedCmp(int arg) {
             unsigned int slot = *(unsigned int *)(v * 4);
             unsigned int w = (unsigned int)*(unsigned short *)(slot + 4);
             if ((int)w == arg) {
-                GeoLoadFixupLoop_004bd8e0();
+                GeoLoadFixupLoop();
             }
         }
         p++;

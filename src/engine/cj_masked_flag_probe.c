@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void PushPopState70Mask(void);
 
-void CjMaskedFlagProbe_0048ecf0(void) {
+void CjMaskedFlagProbe(void) {
     __asm {
         call    DirtyToggleByGate
         mov     eax, dword ptr [g_framePauseFlag]

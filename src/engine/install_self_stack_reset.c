@@ -122,7 +122,7 @@ extern unsigned int g_audioStreamState;
 extern unsigned int g_arr_421f40;
 extern void FiveCallGuardSetTail(void);
 
-__declspec(naked) void InstallSelfStackReset_00421f40(void) {
+__declspec(naked) void InstallSelfStackReset(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         lea     ecx, [eax*4]
@@ -154,7 +154,7 @@ __declspec(naked) void InstallSelfStackReset_00421f40(void) {
         mov     edx, [eax*4 + g_arr_421f40]
         mov     eax, 1
         mov     dword ptr [g_pendingNodeType], edx
-        mov     dword ptr [ecx + 8], offset InstallSelfStackReset_00421f40
+        mov     dword ptr [ecx + 8], offset InstallSelfStackReset
         mov     dword ptr [ecx + 0x84], eax
         mov     dword ptr [g_framePauseFlag], eax
         ret

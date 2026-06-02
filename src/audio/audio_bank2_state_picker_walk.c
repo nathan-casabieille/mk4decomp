@@ -109,8 +109,8 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * AudioBank2StatePickerWalk_004a9270 - 324b audio 2-bank state picker and roundrobin walk.
- *   g_walkCallback=0; CopyGlobal; IncOrZero9_00422080.
+ * AudioBank2StatePickerWalk - 324b audio 2-bank state picker and roundrobin walk.
+ *   g_walkCallback=0; CopyGlobal; IncOrZero9.
  *   eax = g_audioBankSel; edx = g_counter_0054359c; edi = g_counter_005433c8.
  *   If eax == 1: chain low table [edi*24 + 0x0054361a/19] += 1.
  *   Else: chain high table [edx*24 + 0x005435a2/a1] += 1.
@@ -135,9 +135,9 @@ extern unsigned int g_audioStateMachine1_004f3ae8;
 extern unsigned int g_counter_005433c8;
 extern void CopyGlobal(void);
 extern void Match_TeamOutcomeScreen(void);
-extern void IncOrZero9_00422080(void);
+extern void IncOrZero9(void);
 
-__declspec(naked) void AudioBank2StatePickerWalk_004a9270(void)
+__declspec(naked) void AudioBank2StatePickerWalk(void)
 {
     __asm
     {
@@ -146,7 +146,7 @@ __declspec(naked) void AudioBank2StatePickerWalk_004a9270(void)
         push    edi
         mov     dword ptr [g_walkCallback], 0
         call    CopyGlobal
-        call    IncOrZero9_00422080
+        call    IncOrZero9
         mov     eax, dword ptr [g_audioBankSel]
         mov     edx, dword ptr [g_counter_0054359c]
         mov     edi, dword ptr [g_counter_005433c8]

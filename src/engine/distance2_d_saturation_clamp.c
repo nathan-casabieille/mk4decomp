@@ -122,7 +122,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_load_0052ab04;
 extern unsigned int g_load_0052ab08;
 
-__declspec(naked) void Distance2DSaturationClamp_004300a0(void) {
+__declspec(naked) void Distance2DSaturationClamp(void) {
     __asm {
         mov     ecx, dword ptr [g_load_0052ab04]
         mov     edx, dword ptr [g_load_0052ab08]

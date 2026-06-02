@@ -13,14 +13,14 @@ extern unsigned int g_scaledInit_00542044;
  *   pendingNodeType = 0xa; framePauseFlag = 1; ret.
  */
 extern unsigned int g_baseSel;
-extern void GuardedSelfRefSet_0048d070(void);
-void GuardedSelfRefSet_0048d070(void) {
+extern void GuardedSelfRefSet(void);
+void GuardedSelfRefSet(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     ((ScenegraphNode *)base)->install_flag = 0;
     do {
         if (g_fightGroupHead == g_player1NodeIdx) break;
         if (g_fightGroupHead == g_player2NodeIdx) break;
-        *(unsigned int *)(base + 8) = (unsigned int)&GuardedSelfRefSet_0048d070;
+        *(unsigned int *)(base + 8) = (unsigned int)&GuardedSelfRefSet;
         ((ScenegraphNode *)base)->install_flag = 1;
         g_pendingNodeType = 0x0a;
         g_framePauseFlag = 1;

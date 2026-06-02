@@ -110,11 +110,11 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_eq_00542098;
 extern void DualGatedStateYield(void);
-extern void Set1dCallSet16Jmp_004809b0(void);
+extern void Set1dCallSet16Jmp(void);
 extern void ScaledChain3c7c(void);
 extern void PunchAnimCluster(void);
 extern void NotMaskStorePair(void);
-extern void Install3WayChainCounter_004809e0(void);
+extern void Install3WayChainCounter(void);
 extern void FiveCallGuardSetTail(void);
 
 /* @addr 0x00480840 (356b game) - countdown loop install-self w/ 3-way tails.
@@ -122,8 +122,8 @@ extern void FiveCallGuardSetTail(void);
  *   tail. Else runs a polling loop:
  *     DualGatedStateYield → on success decrement g_eventQueueChild
  *     and update g_eq_00542098 (sete on dec result), if <= 0 sets it
- *     to 0xc. If g_eq_00542098 != 0 calls Set1dCallSet16Jmp_004809b0.
- *     If g_xformScratch2088 == 1 tail-jmp Install3WayChainCounter_004809e0.
+ *     to 0xc. If g_eq_00542098 != 0 calls Set1dCallSet16Jmp.
+ *     If g_xformScratch2088 == 1 tail-jmp Install3WayChainCounter.
  *     Else calls ScaledChain3c7c. If g_walkCallback >= 3
  *     tail-jmp Install3WayChainCounter; else sets g_walkCallback=0xb333
  *     and calls EsiEdiAliasDualMul10, sets g_xformScratch2088=0x9999,
@@ -136,7 +136,7 @@ extern void FiveCallGuardSetTail(void);
  */
 extern void EsiEdiAliasDualMul10(void);
 
-__declspec(naked) void CountdownInstallSelfMultiTail_00480840(void) {
+__declspec(naked) void CountdownInstallSelfMultiTail(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    ebx
@@ -169,7 +169,7 @@ __declspec(naked) void CountdownInstallSelfMultiTail_00480840(void) {
         cmp     ecx, edi
         mov     esi, eax
         je      short L_cis_skipCall1
-        call    Set1dCallSet16Jmp_004809b0
+        call    Set1dCallSet16Jmp
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_cis_done
     L_cis_skipCall1:
@@ -211,7 +211,7 @@ __declspec(naked) void CountdownInstallSelfMultiTail_00480840(void) {
         mov     dword ptr [eax + 0x84], edi
         jne     L_cis_loopTop
     L_cis_install:
-        mov     dword ptr [eax + 8], offset CountdownInstallSelfMultiTail_00480840
+        mov     dword ptr [eax + 8], offset CountdownInstallSelfMultiTail
         mov     dword ptr [eax + 0x84], ebx
         mov     dword ptr [g_pendingNodeType], ebx
         mov     dword ptr [g_framePauseFlag], ebx
@@ -222,7 +222,7 @@ __declspec(naked) void CountdownInstallSelfMultiTail_00480840(void) {
         pop     ebx
         ret
     L_cis_call9e0:
-        call    Install3WayChainCounter_004809e0
+        call    Install3WayChainCounter
         pop     edi
         pop     esi
         pop     ebp

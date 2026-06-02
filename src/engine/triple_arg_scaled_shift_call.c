@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
  *   edx = g_scaledInit; eax = 0x19999;
  *   g_walkCallback = eax; [edx*4 + 0x5c] = eax; ret.
  */
-void TripleArgScaledShiftCall_00424170(void) {
+void TripleArgScaledShiftCall(void) {
     unsigned int cj = g_cj_00542058;
     unsigned int val2, val3;
     g_xformEntityIdx = *(unsigned int *)(cj * 4);

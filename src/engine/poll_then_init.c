@@ -122,7 +122,7 @@ extern void SaveCallRestoreOrXor(void);
 extern void SaveCallRestore(void);
 extern void StoreIncrMStackPush6(void);
 
-__declspec(naked) void PollThenInit_00477920(void) {
+__declspec(naked) void PollThenInit(void) {
     __asm {
         push    ebx
         push    0x22

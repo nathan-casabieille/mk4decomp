@@ -15,7 +15,7 @@ extern unsigned int g_table_00538168;   /* 0x00538168 (uninit .data) */
  *   mov     [g_matrixStackTop], eax
  *   ret
  */
-void MStackPackedInit_004049c0(void) {
+void MStackPackedInit(void) {
     g_matrixStackTop = (int)((unsigned int)&g_table_00538168 >> 2);
 }
 

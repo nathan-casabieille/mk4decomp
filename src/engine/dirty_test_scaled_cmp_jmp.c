@@ -19,7 +19,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void GuardedSeq_0047d980(void);
-void DirtyTestScaledCmpJmp_0046ea70(void) {
+void DirtyTestScaledCmpJmp(void) {
     unsigned int v;
     if (g_xformScratch2088 != 1) return;
     v = *(unsigned int *)(g_baseSel * 4 + 0x70);

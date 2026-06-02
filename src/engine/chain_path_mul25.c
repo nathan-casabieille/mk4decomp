@@ -109,16 +109,16 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void MStackCall_004062a0(void);
-extern void ChainPathMul25_0047fb70(void);
+extern void ChainPathMul25(void);
 
 /*
  * @addr 0x0047faf0 (119b game) - mstack-push set-walk call dirty-toggle
  *   tail: stash cj into walk; call MStackCall_004062a0; on pause clear,
  *   push 0x4a on mstack and into walk; call DirtyToggleByBaseSel; on
  *   pause clear pop walk; if state-bit 2 set replace walk with 0x35 and
- *   tail-jmp ChainPathMul25_0047fb70.
+ *   tail-jmp ChainPathMul25.
  */
-void MStackPushDirtyTail_0047faf0(void) {
+void MStackPushDirtyTail(void) {
     unsigned int popped;
     g_walkCallback = (void (*)(void))g_cj_0054205c;
     MStackCall_004062a0();
@@ -126,7 +126,7 @@ void MStackPushDirtyTail_0047faf0(void) {
     g_walkCallback = (void (*)(void))0x4a;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = 0x4a;
-    DirtyToggleByBaseSel_0048f2e0();
+    DirtyToggleByBaseSel();
     if (g_framePauseFlag != 0) return;
     popped = *(unsigned int *)(g_matrixStackTop * 4);
     g_matrixStackTop--;
@@ -134,5 +134,5 @@ void MStackPushDirtyTail_0047faf0(void) {
     if ((g_xformDirtyFlags & 4) != 0) {
         g_walkCallback = (void (*)(void))0x35;
     }
-    ChainPathMul25_0047fb70();
+    ChainPathMul25();
 }

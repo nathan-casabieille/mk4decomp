@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   ecx = chain[g_eventQueueIdx + 0x54]; eax -= ecx;  (eax = diff)
  *   g_eventQueueCurrent = ecx; chain[g_baseSel + 0x3c] = eax.
  *   Same for +0x5c -> +0x44. g_scaledInit = g_baseSel + 0xf.
- *   call Triple3VecMul10Tail; pause? -> ret. jmp ThrowPairPoseCluster_0048a3d0.
+ *   call Triple3VecMul10Tail; pause? -> ret. jmp ThrowPairPoseCluster.
  */
 void Chain2AxisDiffStoreTailJmp(void) {
     unsigned int a, b;
@@ -133,7 +133,7 @@ void Chain2AxisDiffStoreTailJmp(void) {
     g_walkCallback = a;
     ((ScenegraphNode *)(g_baseSel * 4))->child_c = a;
     g_scaledInit_00542044 = g_baseSel + 0x0f;
-    Triple3VecMul10Tail_00424a20();
+    Triple3VecMul10Tail();
     if (g_framePauseFlag) return;
-    ThrowPairPoseCluster_0048a3d0();
+    ThrowPairPoseCluster();
 }

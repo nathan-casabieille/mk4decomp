@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  *   if !=: ret;
  *   g_walkCallback = 2; g_active_00537e88 = 2; ret.
  */
-void GuardedCmpDualToggle_0049e360(void) {
+void GuardedCmpDualToggle(void) {
     unsigned int v;
     DualTestDirtyToggle_004282c0();
     if (g_framePauseFlag != 0) return;

@@ -21,9 +21,9 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern unsigned int g_bootInitSaveSlot;
-extern void BootChainPushAddSignFlag_004077b0(void);
-void CallPauseScaledStoreAdd_004078f0(void) {
-    BootChainPushAddSignFlag_004077b0();
+extern void BootChainPushAddSignFlag(void);
+void CallPauseScaledStoreAdd(void) {
+    BootChainPushAddSignFlag();
     if (g_framePauseFlag != 0) return;
     ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = (unsigned int)g_walkCallback;
     g_bootInitSaveSlot = g_fightGroupHead + 0x0a;

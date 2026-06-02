@@ -122,12 +122,12 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_bootInitSaveSlot;
 extern void CallPauseDirty4ScaledSet_00419780(void);
-extern void GuardedClampStoreJmp_00428bd0(void);
+extern void GuardedClampStoreJmp(void);
 extern void StateDispatchTable(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void InstallSelfAccumCheck_00428c20(void) {
+__declspec(naked) void InstallSelfAccumCheck(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -147,7 +147,7 @@ __declspec(naked) void InstallSelfAccumCheck_00428c20(void) {
         call    StackPopDispatchTagged
         pop     esi
         ret
-        call    GuardedClampStoreJmp_00428bd0
+        call    GuardedClampStoreJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

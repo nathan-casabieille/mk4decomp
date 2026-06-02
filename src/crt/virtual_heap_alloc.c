@@ -117,7 +117,7 @@ extern unsigned int g_iat_004d2144;
 extern unsigned int g_iat_004d214c;
 extern unsigned int g_iat_004d2168;
 
-__declspec(naked) void VirtualHeapAlloc_004c70d0(void)
+__declspec(naked) void VirtualHeapAlloc(void)
 {
     __asm {
         mov      eax, dword ptr [g_heapTeardownSentinel_00520140]

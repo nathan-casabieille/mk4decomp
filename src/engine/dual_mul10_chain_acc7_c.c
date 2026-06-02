@@ -130,7 +130,7 @@ extern unsigned int g_load_0052ab08;
  * ecx) then loads b into ecx via `mov ecx, [esi*4+0x5c]`. The index-equals-
  * destination SIB pattern cannot be coaxed from pure C.
  */
-__declspec(naked) void DualMul10ChainAcc7C_00430020(void) {
+__declspec(naked) void DualMul10ChainAcc7C(void) {
     __asm {
         mov     ecx, dword ptr [g_load_0052ab04]
         mov     edx, dword ptr [g_load_0052ab08]

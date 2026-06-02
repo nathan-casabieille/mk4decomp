@@ -20,7 +20,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [eax + 0x64], ecx
  *   ret
  */
-void InitThreeFields_00490e90(void) {
+void InitThreeFields(void) {
     AuxVec3Node *node = (AuxVec3Node *)(g_fightGroupHead * 4);
     g_walkCallback = (void (*)(void))0;
     node->aux_x = (s32)(unsigned int)g_walkCallback;

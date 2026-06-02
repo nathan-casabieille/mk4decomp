@@ -115,7 +115,7 @@ extern unsigned int g_load_0052ab10;
  *   at offsets 0x54, 0x58, 0x5c, 0x6c, 0x70, 0x74, 0x60, 0x64, 0x68,
  *   0x78, 0x7c, and 0x80.
  */
-void BulkSlotInit_004311e0(void) {
+void BulkSlotInit(void) {
     unsigned int idx;
     idx = g_load_0052ab10;
     g_scaledInit_00542044 = idx;

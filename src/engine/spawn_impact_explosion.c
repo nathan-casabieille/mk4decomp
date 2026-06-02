@@ -115,7 +115,7 @@ extern unsigned int g_dispatchSave988_004ec2c0;
 extern void StoreDoubleNegPauseSubStore(void);
 extern void ZeroAndDirty4(void);
 
-__declspec(naked) void SpawnImpactExplosion_00471be0(void)
+__declspec(naked) void SpawnImpactExplosion(void)
 {
     __asm {
         mov      eax, dword ptr [g_matrixStackTop]

@@ -18,7 +18,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [ecx*4 + 0x7c], eax
  *   ret
  */
-void ScaledDecOrZero_00483b50(void) {
+void ScaledDecOrZero(void) {
     unsigned int b = g_baseSel;
     int v = *(int *)(b * 4 + 0x7c) - 1;
     g_walkCallback = (void (*)(void))v;

@@ -111,18 +111,18 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x0042c3e0 (169b game) - 4-stage cascade with bit-test on g_xformDirtyFlags and 3-way state-cmp.
  *   A: call ScaledChain3c74; if !pause: if g_walkCallback==0x1003: clear bit-0; ret.
  *   B (+0x27): call DirtyToggleByGate; if !pause: if bit-2 clear: clear bit-0; ret.
- *   C (+0x4b): call DirtyToggleByBaseSel_0048f2e0; if !pause: if bit-2 set: clear bit-0; ret.
+ *   C (+0x4b): call DirtyToggleByBaseSel; if !pause: if bit-2 set: clear bit-0; ret.
  *   D (+0x6f): cmp g_fightGroupHead, g_player1NodeIdx; default g_walkCallback=g_clamp_0053a6dc;
  *     if not equal: g_walkCallback=g_clamp_00537f2c. If still zero: clear bit-0; ret.
- *     Else: jmp WeightedSumClampHelper_00439920.
+ *     Else: jmp WeightedSumClampHelper.
  */
 extern unsigned int g_clamp_00537f2c;
 extern unsigned int g_clamp_0053a6dc;
-extern void DirtyToggleByBaseSel_0048f2e0(void);
+extern void DirtyToggleByBaseSel(void);
 extern void ScaledChain3c74(void);
-extern void WeightedSumClampHelper_00439920(void);
+extern void WeightedSumClampHelper(void);
 
-__declspec(naked) void QuadStageStateDispatch_0042c3e0(void) {
+__declspec(naked) void QuadStageStateDispatch(void) {
     __asm {
         call    ScaledChain3c74
         mov     eax, dword ptr [g_framePauseFlag]
@@ -148,7 +148,7 @@ __declspec(naked) void QuadStageStateDispatch_0042c3e0(void) {
         and     al, 0xfe
         mov     dword ptr [g_xformDirtyFlags], eax
         ret
-        call    DirtyToggleByBaseSel_0048f2e0
+        call    DirtyToggleByBaseSel
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -176,6 +176,6 @@ __declspec(naked) void QuadStageStateDispatch_0042c3e0(void) {
         and     al, 0xfe
         mov     dword ptr [g_xformDirtyFlags], eax
         ret
-        jmp     WeightedSumClampHelper_00439920
+        jmp     WeightedSumClampHelper
     }
 }

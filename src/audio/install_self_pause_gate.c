@@ -113,8 +113,8 @@ extern unsigned int g_fightAxisPosY;
  *   slot, call MStackPush2ChainLLInsert; if framePause set, install self with
  *   tag 0x26 and set framePause=1; else tail-jmp StackPopDispatchTagged.
  */
-extern void InstallSelfPauseGate_004a1a50(void);
-void InstallSelfPauseGate_004a1a50(void) {
+extern void InstallSelfPauseGate(void);
+void InstallSelfPauseGate(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int v = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
@@ -126,7 +126,7 @@ void InstallSelfPauseGate_004a1a50(void) {
         return;
     }
     g_cj_0054205c = g_currentNodeIdx;
-    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfPauseGate_004a1a50;
+    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfPauseGate;
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 0x26;
     g_framePauseFlag = 1;

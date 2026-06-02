@@ -20,10 +20,10 @@ extern unsigned int g_scaledInit_00542044;
  *   pop     esi
  *   ret
  */
-extern int Snd3DSourceCleanupFiltered_004c3be0(int, int);
-void Loop16Init_004c4370(void) {
+extern int Snd3DSourceCleanupFiltered(int, int);
+void Loop16Init(void) {
     int i;
     for (i = 0; i < 16; i++) {
-        Snd3DSourceCleanupFiltered_004c3be0(-1, i);
+        Snd3DSourceCleanupFiltered(-1, i);
     }
 }

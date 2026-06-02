@@ -14,7 +14,7 @@ extern void StateDispatchTable(void);
 extern void BootFrameSetup(void);
 extern void GuardedChainCmpDualBitXor(void);
 extern void ScaledMove48to58(void);
-void GuardedTripleCallSwapJmp_0048fee0(void) {
+void GuardedTripleCallSwapJmp(void) {
     unsigned int saved;
     StateDispatchTable();
     if (g_framePauseFlag != 0) {

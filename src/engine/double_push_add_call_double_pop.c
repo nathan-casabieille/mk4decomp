@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00476930 (119b) - double mstack push around Mul10TailPairMidChain. */
-void DoublePushAddCallDoublePop_00476930(void) {
+void DoublePushAddCallDoublePop(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_cj_0054205c;
     g_matrixStackTop++;

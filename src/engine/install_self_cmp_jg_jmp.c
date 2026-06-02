@@ -118,8 +118,8 @@ extern unsigned int g_fightAxisPosY;
  *   install: ecx=1; [eax+8]=0x480ac0; [eax+0x84]=1;
  *            g_pendingNodeType=1; g_framePauseFlag=1; ret.
  */
-extern void InstallSelfCmpJgJmp_00480ac0(void);
-void InstallSelfCmpJgJmp_00480ac0(void) {
+extern void InstallSelfCmpJgJmp(void);
+void InstallSelfCmpJgJmp(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int v = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
@@ -131,7 +131,7 @@ void InstallSelfCmpJgJmp_00480ac0(void) {
             return;
         }
     }
-    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfCmpJgJmp_00480ac0;
+    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfCmpJgJmp;
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;

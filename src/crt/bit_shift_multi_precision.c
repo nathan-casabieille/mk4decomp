@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  *     else word[i] = 0.
  *   Result: u32 array shifted right by count, accounting for negative counts via sign trick.
  */
-__declspec(naked) void BitShiftMultiPrecision_004cca50(void) {
+__declspec(naked) void BitShiftMultiPrecision(void) {
     __asm {
         sub     esp, 8
         mov     ecx, [esp + 0x10]

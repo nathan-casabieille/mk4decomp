@@ -119,7 +119,7 @@ extern unsigned int g_chain_disp_40_439a40;
  *   else: walkCallback=0x64; call AudioVolumeRescale; pause? ret;
  *     if dirty1: jmp Thunk_00439c20; else jmp TwoConditionalJmp.
  */
-void MultiBranchStateFilter_00439a40(void) {
+void MultiBranchStateFilter(void) {
     unsigned int v;
     int delta;
     unsigned int x40;
@@ -129,20 +129,20 @@ void MultiBranchStateFilter_00439a40(void) {
     v = ((unsigned int *)&g_chain_disp_30_439a40)[g_baseSel];
     g_walkCallback = (void (*)(void))v;
     if (v != 0) {
-        TwoStageWalkGate_00439ae0();
+        TwoStageWalkGate();
         return;
     }
     x40 = ((unsigned int *)&g_chain_disp_40_439a40)[g_cj_0054205c];
     g_eventQueueWorkType = x40;
     g_xformScratch94 = x40 & 2;
     if ((x40 & 2) != 0) {
-        TwoConditionalJmp_00439b80();
+        TwoConditionalJmp();
         return;
     }
     delta = (int)g_gtFightTickCounter - (int)g_fightTickSavedSlot_005380d8;
     g_walkCallback = (void (*)(void))delta;
     if (delta < 0x1e0) {
-        TwoConditionalJmp_00439b80();
+        TwoConditionalJmp();
         return;
     }
     g_walkCallback = (void (*)(void))0x64;
@@ -152,5 +152,5 @@ void MultiBranchStateFilter_00439a40(void) {
         Thunk_00439c20();
         return;
     }
-    TwoConditionalJmp_00439b80();
+    TwoConditionalJmp();
 }

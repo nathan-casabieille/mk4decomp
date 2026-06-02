@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* ------------------------------------------------------------------ */
 /* Skeleton-anim updater V2 cluster (673b game, 2 packed helpers)      */
-/* Cousin of SkelAnimUpdaterCluster_0049d940 - uses [g_eventQueueChild] instead of         */
+/* Cousin of SkelAnimUpdaterCluster - uses [g_eventQueueChild] instead of         */
 /* [g_eventQueueTotal+8] for the segment-count.                          */
 /* ------------------------------------------------------------------ */
 extern unsigned int g_particleEmitterNode;
@@ -120,13 +120,13 @@ extern void MStackCall_00406340(void);
 extern void MStackCall_00406740(void);
 extern void MStackPop8(void);
 extern void MStackPush8(void);
-extern void PoseTreeBlendWalker_0049d680(void);
+extern void PoseTreeBlendWalker(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void SetJmp_00405420(void);
-extern void SixCrossStores_0049d8e0(void);
+extern void SixCrossStores(void);
 extern void Thunk_0049cbb0(void);
 
-__declspec(naked) void SkelAnimUpdaterClusterV2_0049dbf0(void)
+__declspec(naked) void SkelAnimUpdaterClusterV2(void)
 {
     __asm {
         /* === Helper 1 (0x49dbf0): per-bone update (alt counter) === */
@@ -148,7 +148,7 @@ __declspec(naked) void SkelAnimUpdaterClusterV2_0049dbf0(void)
         mov      ecx, dword ptr [g_fightGroupHead]
         mov      edx, dword ptr [g_eventQueueNotMask]
         mov      dword ptr [ecx*4 + 0x30], edx
-        call     SixCrossStores_0049d8e0
+        call     SixCrossStores
         mov      eax, dword ptr [g_particleEmitterNode]
         mov      ecx, dword ptr [g_fightGroupHead]
         mov      dword ptr [g_walkCallback], eax
@@ -230,7 +230,7 @@ __declspec(naked) void SkelAnimUpdaterClusterV2_0049dbf0(void)
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [g_xformEntityIdx], edx
-        call     PoseTreeBlendWalker_0049d680
+        call     PoseTreeBlendWalker
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       short L_ddda

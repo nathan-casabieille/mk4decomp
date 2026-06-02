@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern void DivLongPushCall(void);
 
-__declspec(naked) void ChainDiff3Mul10Install_004730c0(void)
+__declspec(naked) void ChainDiff3Mul10Install(void)
 {
     __asm
     {
@@ -187,7 +187,7 @@ __declspec(naked) void ChainDiff3Mul10Install_004730c0(void)
         mov     edx, dword ptr [g_acc_00542078]
         mov     eax, 1
         mov     dword ptr [g_pendingNodeType], edx
-        mov     dword ptr [edi + 8], offset ChainDiff3Mul10Install_004730c0
+        mov     dword ptr [edi + 8], offset ChainDiff3Mul10Install
         mov     dword ptr [edi + 0x84], eax
         add     esp, 8
         mov     dword ptr [g_framePauseFlag], eax

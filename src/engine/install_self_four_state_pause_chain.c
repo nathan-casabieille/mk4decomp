@@ -110,17 +110,17 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0049b000 (276b game) - 4-state install-self.
  *   state 0: install-self chain[+0x84]=1; scaledInit-chain push 0x0049b000+0x01000000;
- *     call EsiInstallCounterDispatch_0049b120; pause=1; ret.
+ *     call EsiInstallCounterDispatch; pause=1; ret.
  *   state 1/2 share common tail: call ScaledZeroFour; if pause? ret. Then
  *     install-self with appropriate packed_ptr offset (+0x02000000 / +0x03000000).
  *   state >=3: g_scaledInit = g_cj_0054205c; call MStackPush2ChainLLInsert; if pause? ret;
  *     else tail-call CallSetPause.
  */
 extern void CallSetPause(void);
-extern void EsiInstallCounterDispatch_0049b120(void);
+extern void EsiInstallCounterDispatch(void);
 extern void MStackPush2ChainLLInsert(void);
 
-__declspec(naked) void InstallSelfFourStatePauseChain_0049b000(void) {
+__declspec(naked) void InstallSelfFourStatePauseChain(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -192,7 +192,7 @@ __declspec(naked) void InstallSelfFourStatePauseChain_0049b000(void) {
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], edi
-        call    EsiInstallCounterDispatch_0049b120
+        call    EsiInstallCounterDispatch
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         pop     esi

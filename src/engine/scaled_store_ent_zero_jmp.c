@@ -15,7 +15,7 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     +0xf
  */
 extern void ScaledArrStore_00428e70(void);
-void ScaledStoreEntZeroJmp_00428e40(void) {
+void ScaledStoreEntZeroJmp(void) {
     unsigned int idx = g_fightGroupHead;
     unsigned int ent = g_xformEntityIdx;
     g_eventQueueCurrent = 0;

@@ -144,12 +144,12 @@ extern unsigned int g_dispatchSave1545_00ab48c9;
 extern unsigned int g_dispatchSave1546_00ab48ca;
 extern unsigned int g_dispatchSave1547_00ab48cc;
 extern unsigned int g_dispatchSave1548_00ab48d2;
-extern void GamepadSeqRecord_004bcc70(void);
+extern void GamepadSeqRecord(void);
 extern void Helper_DrawCursor(void);
 extern void ProjectTwoVertices(void);
-extern void SunbeamSpriteEmit_004bd270(void);
+extern void SunbeamSpriteEmit(void);
 
-__declspec(naked) void MovesPanelEmit_004bcf60(void)
+__declspec(naked) void MovesPanelEmit(void)
 {
     __asm {
         mov      eax, dword ptr [g_eventQueueTotal]
@@ -160,7 +160,7 @@ __declspec(naked) void MovesPanelEmit_004bcf60(void)
         cmp      ecx, 8
         mov      dword ptr [g_xformEntityIdx], ecx
         jge      L_cf83
-        call     SunbeamSpriteEmit_004bd270
+        call     SunbeamSpriteEmit
         pop      edi
         pop      esi
         pop      ebx
@@ -276,7 +276,7 @@ __declspec(naked) void MovesPanelEmit_004bcf60(void)
         mov      eax, dword ptr [g_eventQueueTotal]
         lea      ecx, [eax*4]
         push     ecx
-        call     GamepadSeqRecord_004bcc70
+        call     GamepadSeqRecord
         mov      eax, dword ptr [g_triStripRingB]
         add      esp, 8
         cmp      eax, edi
@@ -332,7 +332,7 @@ __declspec(naked) void MovesPanelEmit_004bcf60(void)
         mov      word ptr [g_dispatchSave1548_00ab48d2], cx
         lea      ecx, [eax*4]
         push     ecx
-        call     GamepadSeqRecord_004bcc70
+        call     GamepadSeqRecord
         mov      eax, dword ptr [g_triStripRingB]
         add      esp, 8
         cmp      eax, edi

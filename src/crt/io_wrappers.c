@@ -58,14 +58,14 @@
 extern unsigned int g_handleCount_004ffae0;   /* 0x004ffae0 */
 extern unsigned int g_validityTable_004fdae0; /* 0x004fdae0 (-> indexed by ecx*4) */
 
-extern void CritSecLazyEnter_004cd2b0(int);   /* _lock_fhandle */
-extern void DivMod32IAT_004cd320(int);   /* _unlock_fhandle */
+extern void CritSecLazyEnter(int);   /* _lock_fhandle */
+extern void DivMod32IAT(int);   /* _unlock_fhandle */
 extern void *Crt_errno(void); /* per-thread block + 8 = &_terrno */
 extern void *Crt_doserrno(void); /* per-thread block + 0xc = &_tdoserrno */
 
 extern int  LseekImpl(int handle, int a, int b);   /* per-helper op */
-extern int  CrtReadCrlfDecode_004c9040(int handle, int a, int b);
-extern int  FileWriteWithLfToCrlf_004c9b60(int handle, int a, int b);
+extern int  CrtReadCrlfDecode(int handle, int a, int b);
+extern int  FileWriteWithLfToCrlf(int handle, int a, int b);
 
 /* @addr 0x004c8dd0 */
 
@@ -88,7 +88,7 @@ __declspec(naked) void IOWrapper_004c8dd0(void) {
         _emit   74h
         _emit   2ch
         push    esi
-        call    CritSecLazyEnter_004cd2b0
+        call    CritSecLazyEnter
         mov     ecx, dword ptr [esp + 0x18]
         mov     edx, dword ptr [esp + 0x14]
         add     esp, 4
@@ -99,7 +99,7 @@ __declspec(naked) void IOWrapper_004c8dd0(void) {
         add     esp, 0x0c
         mov     edi, eax
         push    esi
-        call    DivMod32IAT_004cd320
+        call    DivMod32IAT
         add     esp, 4
         mov     eax, edi
         pop     edi
@@ -136,18 +136,18 @@ __declspec(naked) void IOWrapper_004c8fc0(void) {
         _emit   74h
         _emit   2ch
         push    esi
-        call    CritSecLazyEnter_004cd2b0
+        call    CritSecLazyEnter
         mov     ecx, dword ptr [esp + 0x18]
         mov     edx, dword ptr [esp + 0x14]
         add     esp, 4
         push    ecx
         push    edx
         push    esi
-        call    CrtReadCrlfDecode_004c9040
+        call    CrtReadCrlfDecode
         add     esp, 0x0c
         mov     edi, eax
         push    esi
-        call    DivMod32IAT_004cd320
+        call    DivMod32IAT
         add     esp, 4
         mov     eax, edi
         pop     edi
@@ -184,18 +184,18 @@ __declspec(naked) void IOWrapper_004c9ae0(void) {
         _emit   74h
         _emit   2ch
         push    esi
-        call    CritSecLazyEnter_004cd2b0
+        call    CritSecLazyEnter
         mov     ecx, dword ptr [esp + 0x18]
         mov     edx, dword ptr [esp + 0x14]
         add     esp, 4
         push    ecx
         push    edx
         push    esi
-        call    FileWriteWithLfToCrlf_004c9b60
+        call    FileWriteWithLfToCrlf
         add     esp, 0x0c
         mov     edi, eax
         push    esi
-        call    DivMod32IAT_004cd320
+        call    DivMod32IAT
         add     esp, 4
         mov     eax, edi
         pop     edi

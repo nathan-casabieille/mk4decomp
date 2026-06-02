@@ -17,7 +17,7 @@ extern unsigned int g_scaledInit_00542044;
  *   pop     ebp
  *   ret
  */
-__declspec(naked) void RoundDouble_004cdff0(void) {
+__declspec(naked) void RoundDouble(void) {
     __asm {
         push    ebp
         mov     ebp, esp

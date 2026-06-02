@@ -116,9 +116,9 @@ extern unsigned int g_installSelfCounter_005433e8;
  *   state and dword state match, increment a paired counter for
  *   modes 1 and 2; call helper; if a tag is 2 set debug byte; call
  *   another helper; on framePause=clear, snapshot cj into 0x542058,
- *   load baseSel[+0x38] into 0x542054 and tail-jmp DualSlotInitAndMatchFsm_0043d0a0.
+ *   load baseSel[+0x38] into 0x542054 and tail-jmp DualSlotInitAndMatchFsm.
  */
-void PairedTickGated_00467e60(void) {
+void PairedTickGated(void) {
     unsigned char a;
     unsigned int c;
     a = g_gtModeFlag;
@@ -127,9 +127,9 @@ void PairedTickGated_00467e60(void) {
     if (a == 2 && c == 2) g_installSelfCounter_005433e8++;
     Wrapper_0041fcf0();
     if (g_tickFlagF == 2) g_byte_00538148 = 1;
-    PushCallPauseSetMaxThenCallPauseJmp_0048e380();
+    PushCallPauseSetMaxThenCallPauseJmp();
     if (g_framePauseFlag != 0) return;
     g_cj_00542058 = g_cj_0054205c;
     g_eventQueueEnd = *(unsigned int *)(g_baseSel * 4 + 0x38);
-    DualSlotInitAndMatchFsm_0043d0a0();
+    DualSlotInitAndMatchFsm();
 }

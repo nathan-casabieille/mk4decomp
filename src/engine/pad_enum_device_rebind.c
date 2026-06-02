@@ -118,7 +118,7 @@ extern int g_renderer2_present_rc;
 extern int g_renderer2_active;
 extern void R2_Init11(void);
 
-__declspec(naked) void PadEnumDeviceRebind_004ad850(void)
+__declspec(naked) void PadEnumDeviceRebind(void)
 {
     __asm {
         mov      eax, dword ptr [g_renderer2_active]

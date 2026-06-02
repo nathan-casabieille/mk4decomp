@@ -25,7 +25,7 @@ extern void LoadGeoAsset_Default(void);
 extern void LoadGeoAsset_Default(void);
 extern int g_dispatchSave409_0050b10c;
 extern int g_dispatchSave414_00511310;
-void DualScaledLitInitJmp_00464800(void) {
+void DualScaledLitInitJmp(void) {
     g_scaledInit_00542044 = ((unsigned int)&g_dispatchSave409_0050b10c) >> 2;
     LoadGeoAsset_Default();
     if (g_framePauseFlag != 0) return;

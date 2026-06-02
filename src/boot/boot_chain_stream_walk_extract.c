@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * BootChainStreamWalkExtract_00407ae0 - 287b boot mstack-push1 + chain stream walker.
+ * BootChainStreamWalkExtract - 287b boot mstack-push1 + chain stream walker.
  *   Push g_eventQueueTotal to mstack. g_pendingNodeType--; esi = chain[g_currentNodeIdx*4] + g_currentNodeIdx+1;
  *   g_currentNodeIdx++. If esi <= ecx: pop+ret.
  *   Loop: eax = chain[ecx*4]; g_walkCallback=eax. If eax < 0: skip pos branch.
@@ -123,9 +123,9 @@ extern unsigned int g_fightAxisPosY;
  *   Pop1 mstack into g_eventQueueTotal; pop esi; ret.
  */
 extern unsigned int g_eq_00542098;
-extern void ExtractBitsToVec3_00407c00(void);
+extern void ExtractBitsToVec3(void);
 
-__declspec(naked) void BootChainStreamWalkExtract_00407ae0(void)
+__declspec(naked) void BootChainStreamWalkExtract(void)
 {
     __asm
     {
@@ -171,7 +171,7 @@ __declspec(naked) void BootChainStreamWalkExtract_00407ae0(void)
         mov     eax, dword ptr [g_xformEntityIdx]
         mov     ecx, dword ptr [eax*4]
         mov     dword ptr [g_walkCallback], ecx
-        call    ExtractBitsToVec3_00407c00
+        call    ExtractBitsToVec3
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_7ae_justRet

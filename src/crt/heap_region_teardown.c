@@ -122,7 +122,7 @@ struct HeapRegion {
     void *memory_ptr;
 };
 
-void HeapRegionTeardown_004c7240(struct HeapRegion *region) {
+void HeapRegionTeardown(struct HeapRegion *region) {
     ((void (__stdcall *)(void *, unsigned int, unsigned int))g_iat_004d2168)(region->memory_ptr, 0, 0x8000);
     if ((struct HeapRegion *)g_dispatchBaseQ_00522150 == region) {
         g_dispatchBaseQ_00522150 = (unsigned int *)region->next;

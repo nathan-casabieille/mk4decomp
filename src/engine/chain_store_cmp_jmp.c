@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
  *   g_walkCallback = eax; if le: ret;
  *   else: jmp ChainWalkInstall.
  */
-void ChainStoreCmpJmp_0049b850(void) {
+void ChainStoreCmpJmp(void) {
     unsigned int v;
     unsigned int delta;
     v = *(unsigned int *)(g_scaledInit_00542044 * 4);

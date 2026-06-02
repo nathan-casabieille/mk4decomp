@@ -123,7 +123,7 @@ extern unsigned int g_fightAxisPosY;
  * (7b SIB) for all accesses. Tested with #pragma optimize("a"), `register` kwd,
  * /G6 (Pentium Pro target), /Ox - all produce 67-71 diffs.
  */
-__declspec(naked) void Vec3AddViaHelper_00425170(void) {
+__declspec(naked) void Vec3AddViaHelper(void) {
     __asm {
         mov     ecx, dword ptr [g_xformEntityIdx]
         mov     edx, dword ptr [g_pendingNodeType]

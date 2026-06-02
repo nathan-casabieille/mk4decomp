@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * AudioInitInstallSelfPeriodic_004a0610 - 216b audio 2-body install/periodic.
+ * AudioInitInstallSelfPeriodic - 216b audio 2-body install/periodic.
  *   Entry 0x004a0610: g_walkCallback=g_dlMode. If eax==0 OR g_state2_0053a354 != 0:
  *     tail-call CallSetPause; pop+ret. Else: chain=g_baseSel;
  *     g_state2_0053a354=1, g_state2_00537ea8=0, g_audioPeriodicSlot_0053a2e8=0, g_audioInitPeriodic_00537e90=4,
@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *     else CallSetPause; pop+ret.
  *   Entry 0x004a0680 (body): chain = g_baseSel*4; saved=chain->state; chain->state=0.
  *     If was 0: countdown g_eventQueueEnd; if not yet 0: skip; else tail-jmp CallSetPause.
- *     Else: ecx=g_installSelfStride5_00538090; g_walkCallback=ecx; if 0: tail-jmp InstallSelfStride5_004a06f0.
+ *     Else: ecx=g_installSelfStride5_00538090; g_walkCallback=ecx; if 0: tail-jmp InstallSelfStride5.
  *     Else: install-self at body; chain->state=1; g_pendingNodeType=2; g_framePauseFlag=1; ret.
  */
 extern unsigned int g_state2_0053a354;
@@ -127,10 +127,10 @@ extern unsigned int g_state2_00537ea8;
 extern unsigned int g_installSelfStride5_00538090;
 extern unsigned int g_audioPeriodicSlot_0053a2e8;
 extern void CallSetPause(void);
-extern void InstallSelfStride5_004a06f0(void);
+extern void InstallSelfStride5(void);
 extern void RoundWinTransition(void);
 
-__declspec(naked) void AudioInitInstallSelfPeriodic_004a0610(void)
+__declspec(naked) void AudioInitInstallSelfPeriodic(void)
 {
     __asm
     {
@@ -187,7 +187,7 @@ __declspec(naked) void AudioInitInstallSelfPeriodic_004a0610(void)
         test    ecx, ecx
         mov     dword ptr [g_walkCallback], ecx
         jne     short L_install
-        jmp     InstallSelfStride5_004a06f0
+        jmp     InstallSelfStride5
     L_install:
         mov     ecx, 1
         mov     dword ptr [eax + 8], offset L_body

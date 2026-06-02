@@ -118,13 +118,13 @@ extern void MStackCall_00406600(void);
 extern void MStackCall_00406740(void);
 extern void MStackPop8(void);
 extern void MStackPush8(void);
-extern void MStackPushNegMul10Var_0040a730(void);
+extern void MStackPushNegMul10Var(void);
 extern void MStackPushZeroCallPop_004066f0(void);
 extern void StackPushAdd15CallPop(void);
 extern void StoreDoubleNegPauseSubStore(void);
 extern void ZeroThreeFields_0040a8b0(void);
 
-__declspec(naked) void Phase4InitWithChainCallback_0040e860(void)
+__declspec(naked) void Phase4InitWithChainCallback(void)
 {
     __asm {
         call    MStackPush8
@@ -252,7 +252,7 @@ __declspec(naked) void Phase4InitWithChainCallback_0040e860(void)
         inc     ecx
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_xformEntityIdx], ecx
-        call    MStackPushNegMul10Var_0040a730
+        call    MStackPushNegMul10Var
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4iwcc_B_exit

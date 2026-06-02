@@ -112,12 +112,12 @@ extern void ArgSarStoreJmp(void);
 extern void BootFrameSetup(void);
 extern void FiveCallGuardSetTail(void);
 extern void MStackPushCallPopDirtyJmp_0042cc90(void);
-extern void ScaledChainCmpDispatch_0048e4f0(void);
-extern void State208cBit0Flag_0048f160(void);
+extern void ScaledChainCmpDispatch(void);
+extern void State208cBit0Flag(void);
 extern void StateDispatchTable(void);
 extern void TwoCallTail_0042b690(void);
 
-__declspec(naked) void EightPackedSubInstallSelfWalk_0042b6f0(void)
+__declspec(naked) void EightPackedSubInstallSelfWalk(void)
 {
     __asm
     {
@@ -126,7 +126,7 @@ __declspec(naked) void EightPackedSubInstallSelfWalk_0042b6f0(void)
         test    eax, eax
         jne     short L_eps_sub1_ret
         push    0x4e2fa0
-        call    ScaledChainCmpDispatch_0048e4f0
+        call    ScaledChainCmpDispatch
         add     esp, 4
     L_eps_sub1_ret:
         ret
@@ -239,7 +239,7 @@ __declspec(naked) void EightPackedSubInstallSelfWalk_0042b6f0(void)
         nop
         nop
     L_eps_sub7:
-        call    State208cBit0Flag_0048f160
+        call    State208cBit0Flag
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub7_ret

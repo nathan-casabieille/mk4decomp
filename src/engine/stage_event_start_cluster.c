@@ -113,22 +113,22 @@ extern unsigned int g_secondary_00535d04;
 extern unsigned int g_primary_0053a774;
 extern void ArgSarStoreJmp(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
-extern void DualSetCallPair_0047dbc0(void);
+extern void DualSetCallPair(void);
 extern void FiveCallGuardSetTail(void);
 extern void GuardedSeq_004297b0(void);
-extern void InstallSelfCmpJmpIndirect_0048f470(void);
+extern void InstallSelfCmpJmpIndirect(void);
 extern void InstallSelfIndirectJmpNeg(void);
-extern void MStackSignedMod_0042fee0(void);
-extern void PushPlayerSwapCallClamp_004801a0(void);
+extern void MStackSignedMod(void);
+extern void PushPlayerSwapCallClamp(void);
 extern void SlotEvent3EntryChain(void);
-extern void ZeroSixStores6080_00490e40(void);
+extern void ZeroSixStores6080(void);
 extern void ZeroThreeSlots_00490780(void);
 
-__declspec(naked) void StageEventStartCluster_0047ff80(void)
+__declspec(naked) void StageEventStartCluster(void)
 {
     __asm {
         /* H1 */
-        call     DualSetCallPair_0047dbc0
+        call     DualSetCallPair
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_ffa9
@@ -152,7 +152,7 @@ __declspec(naked) void StageEventStartCluster_0047ff80(void)
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], OFFSET L_ffe0
-        jmp      InstallSelfCmpJmpIndirect_0048f470
+        jmp      InstallSelfCmpJmpIndirect
         nop
         nop
         nop
@@ -170,7 +170,7 @@ __declspec(naked) void StageEventStartCluster_0047ff80(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_0017
-        call     ZeroSixStores6080_00490e40
+        call     ZeroSixStores6080
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_0017
@@ -225,13 +225,13 @@ __declspec(naked) void StageEventStartCluster_0047ff80(void)
         mov      eax, dword ptr [g_fightGroupHead]
         push     esi
         mov      dword ptr [g_currentNodeIdx], eax
-        call     MStackSignedMod_0042fee0
+        call     MStackSignedMod
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_019a
         cmp      dword ptr [g_walkCallback], 0x5999
         jle      short L_00d0
-        call     PushPlayerSwapCallClamp_004801a0
+        call     PushPlayerSwapCallClamp
         pop      esi
         ret
     L_00d0:
@@ -255,7 +255,7 @@ __declspec(naked) void StageEventStartCluster_0047ff80(void)
         cmp      eax, ecx
         mov      dword ptr [g_eventQueueCurrent], ecx
         jle      short L_012b
-        call     PushPlayerSwapCallClamp_004801a0
+        call     PushPlayerSwapCallClamp
         pop      esi
         ret
     L_012b:
@@ -264,7 +264,7 @@ __declspec(naked) void StageEventStartCluster_0047ff80(void)
         cmp      eax, 0x5e667
         mov      dword ptr [g_walkCallback], eax
         jl       short L_014d
-        call     PushPlayerSwapCallClamp_004801a0
+        call     PushPlayerSwapCallClamp
         pop      esi
         ret
     L_014d:
@@ -274,7 +274,7 @@ __declspec(naked) void StageEventStartCluster_0047ff80(void)
         add      ecx, eax
         mov      dword ptr [g_eventQueueCurrent], ecx
         jne      short L_0171
-        call     PushPlayerSwapCallClamp_004801a0
+        call     PushPlayerSwapCallClamp
         pop      esi
         ret
     L_0171:

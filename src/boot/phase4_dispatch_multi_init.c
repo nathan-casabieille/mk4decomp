@@ -108,21 +108,21 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void Phase4DispatchMultiInit_0041b610(void);
+extern void Phase4DispatchMultiInit(void);
 
 /*
- * EntryBodyInstallSelfMidRef_0041b550 - 178b boot 2-body trampoline.
+ * EntryBodyInstallSelfMidRef - 178b boot 2-body trampoline.
  *   Entry 0x0041b550: call ScaledZeroFour; if not paused, push 0x004d7ca0 (config name) and tail
  *     ArgSarStoreJmp; ret. 4 NOP align to 16b.
  *   Body 0x0041b570: chain = g_baseSel<<2; saved = chain->state; chain->state=0;
  *     if saved != 0: push 0x004d7cc8 (different config name), tail ArgSarStoreJmp; ret.
  *     Otherwise install-self at offset of L_body into chain->callback[+8]; stash chain into g_currentNodeIdx;
  *     install (&L_body + 0x01000000) packed into mstack slot[g_currentNodeIdx]; inc cursor;
- *     clear g_baseSel*4 + 0x84; call Phase4DispatchMultiInit_0041b610; g_framePauseFlag = 1; ret.
+ *     clear g_baseSel*4 + 0x84; call Phase4DispatchMultiInit; g_framePauseFlag = 1; ret.
  */
 extern void ArgSarStoreJmp(void);
 
-void EntryBodyInstallSelfMidRef_0041b550(void) {
+void EntryBodyInstallSelfMidRef(void) {
     __asm {
         call    ScaledZeroFour
         mov     eax, dword ptr [g_framePauseFlag]
@@ -164,7 +164,7 @@ void EntryBodyInstallSelfMidRef_0041b550(void) {
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
-        call    Phase4DispatchMultiInit_0041b610
+        call    Phase4DispatchMultiInit
         mov     dword ptr [g_framePauseFlag], 1
         }
 }

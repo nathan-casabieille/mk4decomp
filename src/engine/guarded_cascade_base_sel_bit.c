@@ -119,13 +119,13 @@ extern unsigned int g_fightAxisPosY;
  *   Call SetupVecFsmCluster; if pause? ret. Else: state |= 4; if scaledInit was 0 ret;
  *   else: state ^= 4 (clear bit2); ret.
  */
-extern void DispatchSetDirtyToggle_004ac150(void);
+extern void DispatchSetDirtyToggle(void);
 extern void MStackBracket1_TreeWalkRecursive2(void);
 extern void Thunk_00405ac0(void);
 extern void PushPopScaled1cDoubleCall(void);
 extern void SetupVecFsmCluster(void);
 
-__declspec(naked) void GuardedCascadeBaseSelBit_00446680(void) {
+__declspec(naked) void GuardedCascadeBaseSelBit(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    ebx
@@ -151,7 +151,7 @@ __declspec(naked) void GuardedCascadeBaseSelBit_00446680(void) {
         mov     dword ptr [eax*4 + 0], ecx
         mov     edx, dword ptr [g_eventQueueIdx]
         mov     dword ptr [g_cj_0054205c], edx
-        call    DispatchSetDirtyToggle_004ac150
+        call    DispatchSetDirtyToggle
         mov     al, byte ptr [g_xformDirtyFlags]
         mov     ebx, 4
         _emit   84h

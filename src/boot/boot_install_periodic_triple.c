@@ -109,21 +109,21 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * BootInstallPeriodicTriple_00414920 - 223b boot 2-body periodic with triple call.
+ * BootInstallPeriodicTriple - 223b boot 2-body periodic with triple call.
  *   Entry 0x00414920: push (0xb0, &body); StoreTwoCall; chain[+0x34] = g_baseSel; ret.
  *   Body 0x00414950: chain = g_baseSel<<2; saved = chain->state; chain->state=0.
  *     If was nonzero: eax = chain[+0x34]; g_currentNodeIdx = eax; eax = eax->field_74; if 0x1001:
  *       just snapshot g_fightGroupHead to g_eventQueueEnd. Else: push 0x1392; TableHitOrSchedule;
  *       CallSetPause; pop+ret.
- *     Common: call BootSlotInstallChainTail_00414a00 three times with pause-checks between. If completed unpaused:
+ *     Common: call BootSlotInstallChainTail three times with pause-checks between. If completed unpaused:
  *       install-self at body; chain->state=1; g_pendingNodeType=1; g_framePauseFlag=1.
  *     Pop+ret.
  */
-extern void BootSlotInstallChainTail_00414a00(void);
+extern void BootSlotInstallChainTail(void);
 extern void CallSetPause(void);
 extern void TableHitOrSchedule(void);
 
-__declspec(naked) void BootInstallPeriodicTriple_00414920(void)
+__declspec(naked) void BootInstallPeriodicTriple(void)
 {
     __asm
     {
@@ -171,15 +171,15 @@ __declspec(naked) void BootInstallPeriodicTriple_00414920(void)
         mov     edx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_eventQueueEnd], edx
     L_callTrip:
-        call    BootSlotInstallChainTail_00414a00
+        call    BootSlotInstallChainTail
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_b2_ret
-        call    BootSlotInstallChainTail_00414a00
+        call    BootSlotInstallChainTail
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_b2_ret
-        call    BootSlotInstallChainTail_00414a00
+        call    BootSlotInstallChainTail
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_b2_ret

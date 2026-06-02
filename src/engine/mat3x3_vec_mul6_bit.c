@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004b3590 (151b engine.geo) - 3x3 fixed-point matrix * vec3 (6-bit):
- *   Same matrix as Mat3x3VecMul_004b3630 (at 0x7af990) but pre-shifts inputs
+ *   Same matrix as Mat3x3VecMul (at 0x7af990) but pre-shifts inputs
  *   by 6 before imul, then sar 6 after sum.
  */
 extern unsigned int g_mat3x3_007af990;
@@ -122,7 +122,7 @@ extern unsigned int g_mat3x3_007af99c;
 extern unsigned int g_mat3x3_007af99e;
 extern unsigned int g_mat3x3_007af9a0;
 
-__declspec(naked) void Mat3x3VecMul6Bit_004b3590(void) {
+__declspec(naked) void Mat3x3VecMul6Bit(void) {
     __asm {
         mov     edx, dword ptr [esp + 4]
         push    ebx

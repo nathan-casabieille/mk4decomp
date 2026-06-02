@@ -21,7 +21,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern int g_dispatchSave1163_004d5100;
 extern int g_dispatchSave1164_004d5104;
-void DualAddSar_004ab600(void) {
+void DualAddSar(void) {
     int a = g_dispatchSave1163_004d5100;
     int b = g_dispatchSave1164_004d5104;
     int sum = a + b;

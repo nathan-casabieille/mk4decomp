@@ -13,10 +13,10 @@ extern unsigned int g_scaledInit_00542044;
  *   load walk; and 0xffff; imul g_dispatchSave_00538150; shr 16; store walk.
  */
 extern unsigned int g_dispatchSave_00538150;
-extern void DualAddSar_004ab600(void);
+extern void DualAddSar(void);
 void StorePauseImulShr16(void) {
     g_dispatchSave_00538150 = (unsigned int)g_walkCallback;
-    DualAddSar_004ab600();
+    DualAddSar();
     if (g_framePauseFlag != 0) {
         return;
     }

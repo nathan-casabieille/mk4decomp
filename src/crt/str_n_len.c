@@ -7,7 +7,7 @@
 /* @addr 0x004cd920 (47b)
  *   strnlen(arg, n): scan up to n bytes for NUL; return offset or n.
  */
-__declspec(naked) void StrNLen_004cd920(void) {
+__declspec(naked) void StrNLen(void) {
     __asm {
         mov     edx, dword ptr [esp + 8]
         push    esi

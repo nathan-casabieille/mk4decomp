@@ -112,16 +112,16 @@ extern unsigned int g_eventMusicSlot2_0053a318;
 extern unsigned int g_dispatchVar3_00543564;
 extern unsigned int g_eventMusicSlot_00543594;
 extern void Helper_Sprintf(void);
-extern void PushPopPendingTwoCalls_0042f4f0(void);
-extern void ScaledStoreCallEpilogue_0042f4d0(void);
+extern void PushPopPendingTwoCalls(void);
+extern void ScaledStoreCallEpilogue(void);
 
-__declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
+__declspec(naked) void MultiPlayerWinStringFormat(void)
 {
     __asm {
         push     ebp
         push     esi
         push     edi
-        call     PushPopPendingTwoCalls_0042f4f0
+        call     PushPopPendingTwoCalls
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         /* jne 0x42f4e8 (external, raw bytes) */
@@ -362,7 +362,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         _emit    0x02
         _emit    0x00
         _emit    0x00
-        jmp      ScaledStoreCallEpilogue_0042f4d0
+        jmp      ScaledStoreCallEpilogue
     L_f272:
         cmp      eax, esi
         jne      L_f38f

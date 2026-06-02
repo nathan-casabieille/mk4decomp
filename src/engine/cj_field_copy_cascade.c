@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
 extern void BootStateTriple(void);
 extern void GuardedSeq_00473ef0(void);
 
-__declspec(naked) void CjFieldCopyCascade_0044c430(void) {
+__declspec(naked) void CjFieldCopyCascade(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         mov     ecx, dword ptr [eax*4 + 0x4c]

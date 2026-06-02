@@ -117,7 +117,7 @@ extern void ArgSarStoreJmp(void);
 extern void InstallSelfCountdown2Stage_0047c8f0(void);
 extern void TableLookupCall_00489ff0(void);
 
-__declspec(naked) void TripleEntryTblPushJmp_0047c880(void) {
+__declspec(naked) void TripleEntryTblPushJmp(void) {
     __asm {
         mov     dword ptr [g_walkCallback], 0x37
         call    TableLookupCall_00489ff0

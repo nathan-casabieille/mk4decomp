@@ -12,9 +12,9 @@ extern unsigned int g_baseSel;
  *   mov     [g_eventQueueCurrent], 0x28
  *   jmp     T
  */
-extern void GatedScaledSubSat_0048fb40(void);
-void DualConstJmpBig_0048fbd0(void) {
+extern void GatedScaledSubSat(void);
+void DualConstJmpBig(void) {
     g_walkCallback = (void(*)(void))0x00010000;
     g_eventQueueCurrent = 0x28;
-    GatedScaledSubSat_0048fb40();
+    GatedScaledSubSat();
 }

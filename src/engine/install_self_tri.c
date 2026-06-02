@@ -115,8 +115,8 @@ extern unsigned int g_fightAxisPosY;
  *   clear, if state bit 0 set tail-jmp FiveBlockDispatchChain_00484b70 else tail-jmp
  *   _00484b00; else install self with tag.
  */
-extern void InstallSelfTri_00484a90(void);
-void InstallSelfTri_00484a90(void) {
+extern void InstallSelfTri(void);
+void InstallSelfTri(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int v = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
@@ -124,19 +124,19 @@ void InstallSelfTri_00484a90(void) {
         unsigned int wt = g_audioBankSel;
         g_walkCallback = (void (*)(void))wt;
         if (wt != 0) {
-            CallPauseDirtyMStackPush484b40_00484b00();
+            CallPauseDirtyMStackPush484b40();
             return;
         }
-        GuardedDualConst1AndToggle_0048eb20();
+        GuardedDualConst1AndToggle();
         if (g_framePauseFlag != 0) return;
         if ((g_xformDirtyFlags & 1) != 0) {
             FiveBlockDispatchChain_00484b70();
             return;
         }
-        CallPauseDirtyMStackPush484b40_00484b00();
+        CallPauseDirtyMStackPush484b40();
         return;
     }
-    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfTri_00484a90;
+    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfTri;
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;

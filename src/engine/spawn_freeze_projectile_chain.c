@@ -110,10 +110,10 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave602_004e5808;
 extern void MStackPush1MagicMod2(void);
-extern void MStackPush3CallChainBit2_004431e0(void);
+extern void MStackPush3CallChainBit2(void);
 extern void StoreDoubleNegPauseSubStore(void);
 
-__declspec(naked) void SpawnFreezeProjectileChain_00442530(void)
+__declspec(naked) void SpawnFreezeProjectileChain(void)
 {
     __asm {
         mov      eax, dword ptr [g_baseSel]
@@ -136,7 +136,7 @@ __declspec(naked) void SpawnFreezeProjectileChain_00442530(void)
         mov      edi, 0x1999
         mov      ebx, 0x7ae
     L_2583:
-        call     MStackPush3CallChainBit2_004431e0
+        call     MStackPush3CallChainBit2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2734

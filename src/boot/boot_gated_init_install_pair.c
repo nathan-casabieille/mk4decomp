@@ -111,16 +111,16 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_byte_004f360c;
 extern unsigned int g_dispatchSave74_005420d8;
 extern void AudioMixerStep(void);
-extern void ChainGetterStateInstaller_00412140(void);
+extern void ChainGetterStateInstaller(void);
 extern void ChainListVecAdd(void);
 extern void GuardedSeq_00471670(void);
 extern void MStackPop8(void);
 extern void MStackPush8(void);
-extern void MStackPushCallPop_0040a830(void);
+extern void MStackPushCallPop(void);
 extern void ZeroAndDirty4(void);
 extern void ZeroThreeFields_0040a8b0(void);
 
-__declspec(naked) void BootGatedInitInstallPair_00412280(void)
+__declspec(naked) void BootGatedInitInstallPair(void)
 {
     __asm
     {
@@ -156,7 +156,7 @@ __declspec(naked) void BootGatedInitInstallPair_00412280(void)
         add     esp, 8
         test    al, 1
         jne     short L_bgip_tailPop
-        call    MStackPushCallPop_0040a830
+        call    MStackPushCallPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bgip_ret1
@@ -213,7 +213,7 @@ __declspec(naked) void BootGatedInitInstallPair_00412280(void)
         mov     dword ptr [ecx*4 + 0x48], eax
         mov     dword ptr [g_eventQueueNotMask], 0xb
     L_bgip_skipToChain:
-        call    ChainGetterStateInstaller_00412140
+        call    ChainGetterStateInstaller
         mov     eax, dword ptr [g_walkCallback]
         mov     edx, dword ptr [g_xformEntityIdx]
         sub     eax, 0x51e

@@ -115,7 +115,7 @@ extern unsigned int g_dispatchSave972_004eb738;
 extern unsigned int g_dispatchSave973_004eb740;
 extern void CallPauseDirtyMStackPushFn(void);
 extern void InstallSelfIndirectJmp(void);
-extern void ScaledMove74to70_0046eaa0(void);
+extern void ScaledMove74to70(void);
 extern void FiveBlockDispatchChain_0046ec20(void);
 extern void TripleCallPauseJmp(void);
 extern void ComboScriptDispatchCluster(void);
@@ -130,7 +130,7 @@ extern void IterStepScaledStore(void);
  *     phase 0: calls ScaledZeroFour; on no-error installs Self at
  *       [esi+8], slot[+0x84]=1, g_pendingNodeType=0xc, arms 0x541e6c=1.
  *   9b NOP align pad.
- *   Entry 2 (offset 0x90, 106b): ScaledMove74to70_0046eaa0; on no-error
+ *   Entry 2 (offset 0x90, 106b): ScaledMove74to70; on no-error
  *     sets [g_baseSel*4+0x74]=0x604; if [scaled+0x30] != 0 tail-jmp
  *     FiveBlockDispatchChain_0046ec20; else chain ScaledAndAlfe →
  *     TripleCallPauseJmp → push 0x4eb6f8 →
@@ -149,7 +149,7 @@ extern unsigned int g_table_004d57b0;
 extern void ArgSarStoreJmp(void);
 extern void ScaledAndAlfe(void);
 
-__declspec(naked) void FiveEntryAlarmInstallChain_0046ee00(void) {
+__declspec(naked) void FiveEntryAlarmInstallChain(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -175,7 +175,7 @@ __declspec(naked) void FiveEntryAlarmInstallChain_0046ee00(void) {
         test    eax, eax
         jne     short L_fea_e1End
         mov     eax, 1
-        mov     dword ptr [esi + 8], offset FiveEntryAlarmInstallChain_0046ee00
+        mov     dword ptr [esi + 8], offset FiveEntryAlarmInstallChain
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], 0xc
         mov     dword ptr [g_framePauseFlag], eax
@@ -193,7 +193,7 @@ __declspec(naked) void FiveEntryAlarmInstallChain_0046ee00(void) {
         nop
         /* entry 2 (offset 0x90) */
     L_fea_entry2:
-        call    ScaledMove74to70_0046eaa0
+        call    ScaledMove74to70
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_fea_e2End

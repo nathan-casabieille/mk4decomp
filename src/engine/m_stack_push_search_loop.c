@@ -115,7 +115,7 @@ extern unsigned int g_matrixStack_arr;
 extern unsigned int g_dispatchAcc_00541fb8;
 extern unsigned int g_phaseCounter;
 
-void MStackPushSearchLoop_00463ed0(void) {
+void MStackPushSearchLoop(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueCurrent]

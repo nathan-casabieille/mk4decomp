@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave1580_00ab51f8;
 extern unsigned int g_chain_arr_4348f0;
-extern void InstallSelf3StateDualBody_00434a30(void);
+extern void InstallSelf3StateDualBody(void);
 
 /* @addr 0x00434990 (148b) - install-self variant of 0x4348f0:
  *   Same shape as InstallSelfStatePush_004348f0, but writes 0x10041 instead
@@ -148,7 +148,7 @@ __declspec(naked) void InstallSelfStatePush_00434990(void) {
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     [eax*4 + 0x84], edx
-        call    InstallSelf3StateDualBody_00434a30
+        call    InstallSelf3StateDualBody
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         ret

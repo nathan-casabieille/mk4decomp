@@ -21,12 +21,12 @@ extern unsigned int g_acc_0053a438;
 extern unsigned int g_acc_0053a440;
 extern unsigned int g_acc_00542078;
 
-extern void MStackPush3TripleMul10WithAbs_0048b500(void);
+extern void MStackPush3TripleMul10WithAbs(void);
 
 /* @addr 0x0048b480 */
 void CallPauseAddDualStore_0048b480(void) {
     unsigned int v;
-    MStackPush3TripleMul10WithAbs_0048b500();
+    MStackPush3TripleMul10WithAbs();
     if (g_framePauseFlag) return;
     v = g_acc_0053a438 + (unsigned int)g_walkCallback;
     g_acc_00542078 = v;
@@ -36,7 +36,7 @@ void CallPauseAddDualStore_0048b480(void) {
 /* @addr 0x0048b4b0 */
 void CallPauseAddDualStore_0048b4b0(void) {
     unsigned int v;
-    MStackPush3TripleMul10WithAbs_0048b500();
+    MStackPush3TripleMul10WithAbs();
     if (g_framePauseFlag) return;
     v = g_acc_0053a440 + (unsigned int)g_walkCallback;
     g_acc_00542078 = v;

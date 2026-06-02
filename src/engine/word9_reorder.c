@@ -12,7 +12,7 @@ extern unsigned int g_scaledInit_00542044;
  *   dst offsets 0,2,4,6,8,10,12,14,16. Looks like a quat or
  *   matrix-row swizzle.
  */
-void Word9Reorder_004b3b30(unsigned short *src, unsigned short *dst) {
+void Word9Reorder(unsigned short *src, unsigned short *dst) {
     dst[0] = src[0];
     dst[1] = src[3];
     dst[2] = src[6];

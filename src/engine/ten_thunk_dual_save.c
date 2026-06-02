@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_counter_0053a51c;
 extern void DualSave(void);
 
-__declspec(naked) void TenThunkDualSave_004616e0(void) {
+__declspec(naked) void TenThunkDualSave(void) {
     __asm {
         mov     eax, dword ptr [g_counter_0053a51c]
         cmp     eax, 4

@@ -150,16 +150,16 @@ typedef struct FightGroupNode {
  * an auxiliary vec3 immediately after the position vec3. Three pieces
  * of evidence for this pairing:
  *
- *   1. `FiveFieldChainCopyTableWalk_00431260` copies 6 consecutive
+ *   1. `FiveFieldChainCopyTableWalk` copies 6 consecutive
  *      values from a source table into +0x54..+0x68 (position vec3
  *      followed by aux vec3).
- *   2. `TripleScaledChainStore60_00431450` copies 3 consecutive
+ *   2. `TripleScaledChainStore60` copies 3 consecutive
  *      values into +0x60/+0x64/+0x68.
- *   3. `InitThreeFields_00490e90` initialises the triplet (Y-only
+ *   3. `InitThreeFields` initialises the triplet (Y-only
  *      seed, X/Z zero).
  *
  * Audio context uses an axis-flip on `aux_y` (see
- * `AudioSwapNegate_004ac080`) which suggests this is a per-source
+ * `AudioSwapNegate`) which suggests this is a per-source
  * vector consumed by the 3D audio panning code (likely a velocity
  * for Doppler or a position offset relative to the listener).
  *

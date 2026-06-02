@@ -12,8 +12,8 @@ extern unsigned int g_scaledInit_00542044;
  *   g_eventQueueNotMask, g_xformEntityIdx, and g_walkCallback (1st);
  *   each step inc eax + restore to g_eventQueueEnd; jmp T.
  */
-extern void InstallSelfBranchIndirect_00470d10(void);
-void PackedLoadAdvanceJmp_00470cc0(int arg) {
+extern void InstallSelfBranchIndirect(void);
+void PackedLoadAdvanceJmp(int arg) {
     unsigned int packed = (unsigned int)(arg >> 2);
     unsigned int v1, v2;
     g_currentNodeFlags = 0;
@@ -27,5 +27,5 @@ void PackedLoadAdvanceJmp_00470cc0(int arg) {
     g_xformEntityIdx = v2;
     g_eventQueueEnd = packed;
     g_walkCallback = (void (*)(void))v1;
-    InstallSelfBranchIndirect_00470d10();
+    InstallSelfBranchIndirect();
 }

@@ -18,7 +18,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern unsigned int g_phaseThunkVar3_005380e4;
-void StateAdd5Capped_0049fa00(void) {
+void StateAdd5Capped(void) {
     unsigned int v = g_phaseThunkVar3_005380e4;
     g_walkCallback = (void (*)(void))v;
     if (v > 8) {

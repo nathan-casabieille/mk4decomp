@@ -110,11 +110,11 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0042fad0 (163b) - install-self pattern w/ DualMul10ChainAcc7C +
  *   cmp threshold 0x300000 dispatch + chain[+0x6c/+0x74] clear + tail-call. */
-extern void DualMul10ChainAcc7C_00430020(void);
-extern void DualMulScaleStore_0042ffa0(void);
-extern void PhaseInstall2DInterpDispatch_0042f8a0(void);
+extern void DualMul10ChainAcc7C(void);
+extern void DualMulScaleStore(void);
+extern void PhaseInstall2DInterpDispatch(void);
 
-__declspec(naked) void EsiInstallChainCallCmpThreshold_0042fad0(void) {
+__declspec(naked) void EsiInstallChainCallCmpThreshold(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -124,7 +124,7 @@ __declspec(naked) void EsiInstallChainCallCmpThreshold_0042fad0(void) {
         test    eax, eax
         _emit   74h
         _emit   55h
-        call    DualMul10ChainAcc7C_00430020
+        call    DualMul10ChainAcc7C
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -132,7 +132,7 @@ __declspec(naked) void EsiInstallChainCallCmpThreshold_0042fad0(void) {
         cmp     dword ptr [g_eventQueueNotMask], 0x300000
         _emit   7dh
         _emit   07h
-        call    PhaseInstall2DInterpDispatch_0042f8a0
+        call    PhaseInstall2DInterpDispatch
         pop     esi
         ret
         mov     ecx, dword ptr [g_cj_0054205c]
@@ -141,10 +141,10 @@ __declspec(naked) void EsiInstallChainCallCmpThreshold_0042fad0(void) {
         mov     eax, dword ptr [g_cj_0054205c]
         mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0x74], edx
-        call    PhaseInstall2DInterpDispatch_0042f8a0
+        call    PhaseInstall2DInterpDispatch
         pop     esi
         ret
-        call    DualMulScaleStore_0042ffa0
+        call    DualMulScaleStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

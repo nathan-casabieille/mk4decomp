@@ -113,8 +113,8 @@ extern void Wrapper_0048a3c0(void);
 extern void PhaseDispatchListAdvance(void);
 extern void CallPauseDirtyMStackPushFn(void);
 extern void InstallSelfMStackOverwrite(void);
-extern void MatchOverCluster_0046ef70(void);
-extern void MStackJmpInstallSelf_0046ed40(void);
+extern void MatchOverCluster(void);
+extern void MStackJmpInstallSelf(void);
 
 /* @addr 0x0046ec20 (275b game) - 5 adjacent blocks.
  *   B1 (0..0x4f, 64+15 NOPs): call ScaledAndAlfe; if !pause: cj[+0x74]=0x604;
@@ -124,11 +124,11 @@ extern void MStackJmpInstallSelf_0046ed40(void);
  *   B3 (0x80..0xbf): if bit0 of state set: tail-jmp CallPauseDirtyMStackPushFn.
  *     Else: g_eventQueueChild=8, g_eventQueueNotMask=8, mstack-push 0x0046ece0 (B4 addr);
  *     tail-jmp InstallSelfMStackOverwrite.
- *   B4 (0xc0..0xff): if bit0 of state set: tail-jmp MatchOverCluster_0046ef70.
+ *   B4 (0xc0..0xff): if bit0 of state set: tail-jmp MatchOverCluster.
  *     Else: g_eventQueueChild=9, g_eventQueueNotMask=8, mstack-push 0x0046ed20 (B5 addr);
  *     tail-jmp InstallSelfMStackOverwrite.
- *   B5 (0x100..0x112): if bit0 of state set: tail-jmp MatchOverCluster_0046ef70.
- *     Else: tail-jmp MStackJmpInstallSelf_0046ed40.
+ *   B5 (0x100..0x112): if bit0 of state set: tail-jmp MatchOverCluster.
+ *     Else: tail-jmp MStackJmpInstallSelf.
  */
 extern void ArgSarStoreJmp(void);
 extern void ScaledAndAlfe(void);
@@ -226,7 +226,7 @@ __declspec(naked) void FiveBlockDispatchChain_0046ec20(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
-        jmp     MatchOverCluster_0046ef70
+        jmp     MatchOverCluster
         mov     eax, dword ptr [g_matrixStackTop]
         mov     dword ptr [g_eventQueueChild], 9
         inc     eax
@@ -250,7 +250,7 @@ __declspec(naked) void FiveBlockDispatchChain_0046ec20(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
-        jmp     MatchOverCluster_0046ef70
-        jmp     MStackJmpInstallSelf_0046ed40
+        jmp     MatchOverCluster
+        jmp     MStackJmpInstallSelf
     }
 }

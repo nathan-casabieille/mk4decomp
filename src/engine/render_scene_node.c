@@ -35,25 +35,25 @@ extern unsigned int g_dispatchSave1575_00ab4e5c;
 extern unsigned int g_dispatchSave1576_00ab4e60;
 extern unsigned int g_dispatchSave1577_00ab4e6c;
 extern unsigned int g_dispatchSave1333_00f00004;
-extern void BboxProjectAndStash_004bc5a0(void);
-extern void BillboardChainRender_004bb030(void);
-extern void BillboardSheetDualEmit_004bbda0(void);
-extern void DirtyBitTripleWriteOrCall_004ba630(void);
-extern void DirtyTestScaledCopy_004ba6c0(void);
+extern void BboxProjectAndStash(void);
+extern void BillboardChainRender(void);
+extern void BillboardSheetDualEmit(void);
+extern void DirtyBitTripleWriteOrCall(void);
+extern void DirtyTestScaledCopy(void);
 extern void DrawMeshBlock(void);
-extern void LeaScaledCall_004bd510(void);
+extern void LeaScaledCall(void);
 extern void MStackPushCallCallPop_00405dd0(void);
-extern void MatrixTransform3x3Q12_004b3b80(void);
-extern void MovesPanelEmit_004bcf60(void);
-extern void TransformAccumulate_004bddf0(void);
-extern void TristripBatchEmit2_004bb930(void);
-extern void TristripBatchEmit3Cap_004bb680(void);
-extern void TristripBatchEmit_004bbb80(void);
-extern void VertexQuadBuilder_004bc470(void);
-extern void VibrationFrameUpdate_004b9640(void);
-extern void VtableDispatchSetDirty_004ba040(void);
-extern void WtSnapshotPushCall_004bda70(void);
-extern void ZBucketClampStore_004ba5d0(void);
+extern void MatrixTransform3x3Q12(void);
+extern void MovesPanelEmit(void);
+extern void TransformAccumulate(void);
+extern void TristripBatchEmit2(void);
+extern void TristripBatchEmit3Cap(void);
+extern void TristripBatchEmit(void);
+extern void VertexQuadBuilder(void);
+extern void VibrationFrameUpdate(void);
+extern void VtableDispatchSetDirty(void);
+extern void WtSnapshotPushCall(void);
+extern void ZBucketClampStore(void);
 
 __declspec(naked) void RenderSceneNode(void)
 {
@@ -72,7 +72,7 @@ __declspec(naked) void RenderSceneNode(void)
         test     edi, 0x2000
         mov      dword ptr [g_currentNodeFlags], edi
         je       L_a78d
-        call     ZBucketClampStore_004ba5d0
+        call     ZBucketClampStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_ae73
@@ -150,7 +150,7 @@ __declspec(naked) void RenderSceneNode(void)
         mov      ecx, dword ptr [esp + 0x10]
         mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_xformEntityIdx], ecx
-        call     WtSnapshotPushCall_004bda70
+        call     WtSnapshotPushCall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_ae73
@@ -160,7 +160,7 @@ __declspec(naked) void RenderSceneNode(void)
         sar      eax, 2
         mov      dword ptr [g_pendingNodeType], edx
         mov      dword ptr [g_currentNodeIdx], eax
-        call     TransformAccumulate_004bddf0
+        call     TransformAccumulate
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_ae73
@@ -203,7 +203,7 @@ __declspec(naked) void RenderSceneNode(void)
         and      ecx, 0x7ff
         mov      dword ptr [g_walkCallback], ecx
         je       L_a9c4
-        call     DirtyTestScaledCopy_004ba6c0
+        call     DirtyTestScaledCopy
         test     eax, eax
         mov      eax, dword ptr [g_currentNodeFlags]
         je       L_a9c4
@@ -217,7 +217,7 @@ __declspec(naked) void RenderSceneNode(void)
         test     ah, 0x40
         jne      L_a9aa
         push     1
-        call     LeaScaledCall_004bd510
+        call     LeaScaledCall
         add      esp, 4
         jmp      L_adb3
     L_a9aa:
@@ -245,7 +245,7 @@ __declspec(naked) void RenderSceneNode(void)
         test     ecx, esi
         je       L_aa06
         push     ebx
-        call     VtableDispatchSetDirty_004ba040
+        call     VtableDispatchSetDirty
         add      esp, 4
         jmp      L_aaa7
     L_aa06:
@@ -268,7 +268,7 @@ __declspec(naked) void RenderSceneNode(void)
         push     OFFSET g_dispatchSave1525_00ab4838
         push     edx
         mov      word ptr [g_mat3x3_007af9a0], cx
-        call     MatrixTransform3x3Q12_004b3b80
+        call     MatrixTransform3x3Q12
         add      esp, 8
         jmp      L_aa9b
     L_aa7d:
@@ -335,14 +335,14 @@ __declspec(naked) void RenderSceneNode(void)
         test     cl, 8
         mov      dword ptr [g_walkCallback], ecx
         je       L_ab72
-        call     DirtyBitTripleWriteOrCall_004ba630
+        call     DirtyBitTripleWriteOrCall
         mov      eax, dword ptr [g_pendingNodeType]
     L_ab72:
         mov      ecx, dword ptr [g_tickFlagZ]
         test     ecx, ecx
         je       L_ab9c
         push     ebx
-        call     VibrationFrameUpdate_004b9640
+        call     VibrationFrameUpdate
         jmp      L_ab94
     L_ab84:
         mov      ecx, dword ptr [g_tickX1]
@@ -375,14 +375,14 @@ __declspec(naked) void RenderSceneNode(void)
         jne      L_ac05
         test     dword ptr [g_fightGroupHead], 0x20000
         je       L_adaf
-        call     BillboardChainRender_004bb030
+        call     BillboardChainRender
         jmp      L_adaf
     L_ac05:
         mov      edi, dword ptr [eax*4 + 4]
         test     edi, edi
         mov      dword ptr [g_xformEntityIdx], edi
         jne      L_ac20
-        call     MovesPanelEmit_004bcf60
+        call     MovesPanelEmit
         jmp      L_adaf
     L_ac20:
         mov      ebp, dword ptr [eax*4 + 0x18]
@@ -403,7 +403,7 @@ __declspec(naked) void RenderSceneNode(void)
         lea      eax, [esi + 0x10]
         push     edx
         push     eax
-        call     BillboardSheetDualEmit_004bbda0
+        call     BillboardSheetDualEmit
         add      esp, 8
         mov      dword ptr [g_xformEntityIdx], edi
         mov      dword ptr [g_currentNodeIdx], ebx
@@ -411,7 +411,7 @@ __declspec(naked) void RenderSceneNode(void)
         mov      ecx, dword ptr [esp + 0x10]
         push     ecx
         push     esi
-        call     BillboardSheetDualEmit_004bbda0
+        call     BillboardSheetDualEmit
         add      esp, 8
         jmp      L_adaf
     L_ac7f:
@@ -439,7 +439,7 @@ __declspec(naked) void RenderSceneNode(void)
     L_acce:
         push     edx
         push     ebp
-        call     VertexQuadBuilder_004bc470
+        call     VertexQuadBuilder
         mov      eax, dword ptr [g_pendingNodeType]
         add      esp, 8
         test     eax, eax
@@ -467,7 +467,7 @@ __declspec(naked) void RenderSceneNode(void)
         push     edx
         push     eax
         push     esi
-        call     TristripBatchEmit2_004bb930
+        call     TristripBatchEmit2
         jmp      L_adac
     L_ad3c:
         test     edx, 0x80000
@@ -488,7 +488,7 @@ __declspec(naked) void RenderSceneNode(void)
         test     ebp, 0x40000
         je       L_adaf
         mov      dword ptr [g_xformEntityIdx], ebx
-        call     BboxProjectAndStash_004bc5a0
+        call     BboxProjectAndStash
         jmp      L_adaf
     L_ad87:
         test     cl, 2
@@ -499,7 +499,7 @@ __declspec(naked) void RenderSceneNode(void)
         push     edx
         push     eax
         push     esi
-        call     TristripBatchEmit_004bbb80
+        call     TristripBatchEmit
         jmp      L_adac
     L_ad9e:
         xor      edx, edx
@@ -507,7 +507,7 @@ __declspec(naked) void RenderSceneNode(void)
         push     edx
         push     eax
         push     esi
-        call     TristripBatchEmit3Cap_004bb680
+        call     TristripBatchEmit3Cap
     L_adac:
         add      esp, 0xc
     L_adaf:

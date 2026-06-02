@@ -110,14 +110,14 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00495770 (325b game) - 7-block thunk dispatcher with push-call entries. */
 extern void ArgScaledChain(void);
-extern void Event112Cluster_00496ad0(void);
+extern void Event112Cluster(void);
 extern void FlagCascadeStateSet(void);
-extern void ProneAnimFsmCluster_004958c0(void);
+extern void ProneAnimFsmCluster(void);
 extern void ScaledLookupGuardJmpIndirect(void);
 extern void StreamInitCountdownBody(void);
 extern void ThresholdSetMatchDispatch(void);
 
-__declspec(naked) void SevenThunkDispatcher_00495770(void) {
+__declspec(naked) void SevenThunkDispatcher(void) {
     __asm {
         push    0x004f1468
         call    ArgScaledChain
@@ -166,7 +166,7 @@ __declspec(naked) void SevenThunkDispatcher_00495770(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   75h
         _emit   05h
-        jmp     Event112Cluster_00496ad0
+        jmp     Event112Cluster
         push    0x004f19c0
         call    ArgScaledChain
         add     esp, 4
@@ -185,7 +185,7 @@ __declspec(naked) void SevenThunkDispatcher_00495770(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   75h
         _emit   05h
-        jmp     ProneAnimFsmCluster_004958c0
+        jmp     ProneAnimFsmCluster
         mov     ecx, dword ptr [g_baseSel]
         mov     eax, 0x111
         mov     dword ptr [g_walkCallback], eax

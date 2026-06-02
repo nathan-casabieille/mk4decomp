@@ -11,7 +11,7 @@ extern unsigned int g_scaledInit_00542044;
  *   push-arg calls (0x249, 0x24a) to SaveCallRestore.
  */
 extern void SaveCallRestore(int);
-void PushPopPendingTwoCalls_0042f4f0(void) {
+void PushPopPendingTwoCalls(void) {
     unsigned int top;
     top = g_matrixStackTop + 1;
     g_matrixStackTop = top;

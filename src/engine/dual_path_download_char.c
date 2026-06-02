@@ -121,7 +121,7 @@ extern unsigned int g_dataArr_00535cfc;
 extern unsigned int g_dataArr_0053a1d0;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
-int DualPathDownloadChar_00463810(void) {
+int DualPathDownloadChar(void) {
     if (g_active_0053a408 != 0) {
         g_walkCallback = (void (*)(void))g_dlNalt1;
         g_eventQueueEnd = (unsigned int)&g_dataArr_00535cfc >> 2;

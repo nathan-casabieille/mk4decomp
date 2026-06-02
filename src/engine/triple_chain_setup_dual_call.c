@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern void SetJmp_00405420(void);
 extern void AudioVolumeRescale(void);
-extern void TripleChainSetupDualCall_00473da0(void);
+extern void TripleChainSetupDualCall(void);
 
 /* @addr 0x00473c90 (192b game) - 3-stage gated call+tail-jmp dispatcher.
  *   call SetJmp; pause? -> ret.
@@ -141,13 +141,13 @@ void TriStageDispatchTailJmp(void) {
         if (g_framePauseFlag != 0) return;
         if ((g_xformDirtyFlags & 1) != 0) {
             g_walkCallback = (unsigned int)&g_dispatchSave709_004ec9c0 >> 2;
-            TripleChainSetupDualCall_00473da0();
+            TripleChainSetupDualCall();
             return;
         }
         g_walkCallback = (unsigned int)&g_dispatchSave708_004ec990 >> 2;
-        TripleChainSetupDualCall_00473da0();
+        TripleChainSetupDualCall();
         return;
     }
     g_walkCallback = (unsigned int)&g_dispatchSave707_004ec960 >> 2;
-    TripleChainSetupDualCall_00473da0();
+    TripleChainSetupDualCall();
 }

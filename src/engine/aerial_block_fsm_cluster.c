@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
 extern void MStackPushTwoEntryChainCall(void);
 extern void MStackPush2ChainLLInsert(void);
 extern void func_0047ef70(void);
-extern void AerialBlockFsmCluster_0047f730(void);
+extern void AerialBlockFsmCluster(void);
 extern void func_0047fa30(void);
 /* extern void AllocNode(void); -- defined elsewhere with diff sig */
 extern unsigned int g_dispatchSave744_004ed778;
@@ -127,7 +127,7 @@ extern void MStackPushDispatchBitGate(void);
 extern void ScaledIndexConditionalAdd(void);
 extern void TripleScaledChainStore(void);
 
-__declspec(naked) void ThrowGrabPoseCopyCluster_0047f4e0(void)
+__declspec(naked) void ThrowGrabPoseCopyCluster(void)
 {
     __asm {
         /* === Helper 1 (0x47f4e0): grab finalize event === */
@@ -167,7 +167,7 @@ __declspec(naked) void ThrowGrabPoseCopyCluster_0047f4e0(void)
         cmp      eax, 0x10000
         mov      dword ptr [g_walkCallback], eax
         jge      short L_f572
-        jmp      AerialBlockFsmCluster_0047f730
+        jmp      AerialBlockFsmCluster
     L_f572:
         mov      ecx, dword ptr [g_baseSel]
         mov      eax, 0x405
@@ -193,7 +193,7 @@ __declspec(naked) void ThrowGrabPoseCopyCluster_0047f4e0(void)
         test     al, 4
         mov      dword ptr [g_fightGroupHead], edx
         je       short L_f5e7
-        jmp      AerialBlockFsmCluster_0047f730
+        jmp      AerialBlockFsmCluster
     L_f5e7:
         call     MStackPushTwoEntryChainCall
         mov      eax, dword ptr [g_framePauseFlag]
@@ -268,7 +268,7 @@ __declspec(naked) void ThrowGrabPoseCopyCluster_0047f4e0(void)
         test     eax, eax
         jne      short L_f72f
     L_f72a:
-        jmp      AerialBlockFsmCluster_0047f730
+        jmp      AerialBlockFsmCluster
     L_f72f:
         ret
     }

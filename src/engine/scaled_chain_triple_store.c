@@ -22,7 +22,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [eax*4 + 0x18], ecx
  *   ret
  */
-void ScaledChainTripleStore_004465c0(void) {
+void ScaledChainTripleStore(void) {
     unsigned int base = g_baseSel;
     unsigned int s = *(unsigned int *)(base * 4 + 0x60);
     unsigned int e;

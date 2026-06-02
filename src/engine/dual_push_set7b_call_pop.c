@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00474310 (116b) - twin of 0x00474290 with const=0x7b. */
-void DualPushSet7bCallPop_00474310(void) {
+void DualPushSet7bCallPop(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_cj_0054205c;
     g_matrixStackTop++;

@@ -121,7 +121,7 @@ extern void DualScaledInitCmp_0046dbd0(void);
  *   g_xformDirtyFlags = edx; if zero: ret;
  *   ecx = edx; ecx ^= 4; g_xformDirtyFlags = ecx; ret.
  */
-void GuardedChainClearFlagToggle_0046db60(void) {
+void GuardedChainClearFlagToggle(void) {
     unsigned int v;
     if (((int (*)(void))DualGatedStateYield)() != 0) return;
     DualScaledInitCmp_0046dbd0();

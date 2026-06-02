@@ -110,8 +110,8 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00457240 (144b) - install-self pattern w/ clear chain[+0x6c]/
  *   [+0x74]/[+0x70] on existing slot + 1-call RoundEndDifferenceFsmCluster on install. */
-extern void EsiInstallClearTripleFields_00457240(void);
-void EsiInstallClearTripleFields_00457240(void) {
+extern void EsiInstallClearTripleFields(void);
+void EsiInstallClearTripleFields(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int prev = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
@@ -125,7 +125,7 @@ void EsiInstallClearTripleFields_00457240(void) {
     }
     RoundEndDifferenceFsmCluster();
     if (g_framePauseFlag != 0) return;
-    *(unsigned int *)(base + 8) = (unsigned int)&EsiInstallClearTripleFields_00457240;
+    *(unsigned int *)(base + 8) = (unsigned int)&EsiInstallClearTripleFields;
     ((ScenegraphNode *)base)->install_flag = 1;
     g_framePauseFlag = 1;
 }

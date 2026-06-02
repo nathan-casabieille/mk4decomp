@@ -21,7 +21,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void CallDualStoreXorBit(void);
-void CallPauseDirtyScaledSet7_00480ef0(void) {
+void CallPauseDirtyScaledSet7(void) {
     CallDualStoreXorBit();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 4) == 0) return;

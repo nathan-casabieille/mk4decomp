@@ -19,14 +19,14 @@ extern unsigned int g_dispatchSave1551_00ab4d18;
 extern unsigned int g_dispatchSave1552_00ab4d1c;
 extern unsigned int g_dispatchSave1553_00ab4d20;
 extern unsigned int g_dispatchSave1569_00ab4e24;
-extern void DispatchScaledLEA_004b8f50(void);
-extern void Word9Reorder_004b3b30(void);
+extern void DispatchScaledLEA(void);
+extern void Word9Reorder(void);
 
 extern unsigned int g_matrixStack_arr;
 
 void Helper_PreTick(void) {
     __asm {
-        call    DispatchScaledLEA_004b8f50
+        call    DispatchScaledLEA
         mov     ecx, dword ptr [g_load_0052ab10]
         mov     eax, 0x00ab4878
         sar     eax, 2
@@ -44,7 +44,7 @@ void Helper_PreTick(void) {
         _emit   00h
         push    0x00ab4d58
         push    0x00ab4878
-        call    Word9Reorder_004b3b30
+        call    Word9Reorder
         add     esp, 8
         mov     ecx, 0x0052aa90
         mov     eax, 0x00ab4878

@@ -22,16 +22,16 @@
 extern void *g_lit_004e44d8;
 extern void *g_lit_004ef218;
 
-extern void ScaledChain3c74Jmp_0048e780(void);
+extern void ScaledChain3c74Jmp(void);
 extern void Wrapper_00433940(void);
 extern int  PackedAdvanceCallTailJmp(void *p);
-extern void DualCondMatchSet_00488dc0(void);
-extern void InstallSelfChainPlusGuardedTail_00488ca0(void);
-extern int  Cascade5StageInit_00491520(void *p);
+extern void DualCondMatchSet(void);
+extern void InstallSelfChainPlusGuardedTail(void);
+extern int  Cascade5StageInit(void *p);
 
 /* @addr 0x00433910 */
 void CallPauseDirtyLit_00433910(void) {
-    ScaledChain3c74Jmp_0048e780();
+    ScaledChain3c74Jmp();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 1) {
         Wrapper_00433940();
@@ -42,11 +42,11 @@ void CallPauseDirtyLit_00433910(void) {
 
 /* @addr 0x00488c70 */
 void CallPauseDirtyLit_00488c70(void) {
-    DualCondMatchSet_00488dc0();
+    DualCondMatchSet();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 1) {
-        InstallSelfChainPlusGuardedTail_00488ca0();
+        InstallSelfChainPlusGuardedTail();
         return;
     }
-    Cascade5StageInit_00491520(&g_lit_004ef218);
+    Cascade5StageInit(&g_lit_004ef218);
 }

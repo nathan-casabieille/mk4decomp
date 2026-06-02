@@ -117,17 +117,17 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void CameraZoomFsmCluster(void);
 extern void GDispatch4(void);
-extern void GuardedCallStoreSlotsCmp_00440990(void);
-extern void ThreeCallChainCopy_004409e0(void);
+extern void GuardedCallStoreSlotsCmp(void);
+extern void ThreeCallChainCopy(void);
 
-void GuardedCascadeCjLink70Mul10_0043e850(void) {
+void GuardedCascadeCjLink70Mul10(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueCurrent]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
-        call    GuardedCallStoreSlotsCmp_00440990
+        call    GuardedCallStoreSlotsCmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -163,7 +163,7 @@ void GuardedCascadeCjLink70Mul10_0043e850(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        call    ThreeCallChainCopy_004409e0
+        call    ThreeCallChainCopy
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

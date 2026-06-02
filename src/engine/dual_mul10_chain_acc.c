@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  *   push eax, eax; call Mul10Tail; ecx = g_acc_00542078;
  *   pop esp*2; add eax,ecx; g_eventQueueNotMask=eax; ret.
  */
-void DualMul10ChainAcc_0042d010(void) {
+void DualMul10ChainAcc(void) {
     unsigned int cj = g_cj_0054205c;
     int a = (int)((ScenegraphNode *)(cj * 4))->position_x;
     int b;

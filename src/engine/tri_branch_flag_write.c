@@ -127,7 +127,7 @@ extern unsigned int g_audioMatchStartFlag_00543714;
 extern void ClampTwoToMax_004226a0(void);
 extern void ClampTwoToMax_004226e0(void);
 
-__declspec(naked) void TriBranchFlagWrite_00422720(void) {
+__declspec(naked) void TriBranchFlagWrite(void) {
     __asm {
         mov     eax, dword ptr [g_audioMatchStartFlag_00543714]
         push    esi

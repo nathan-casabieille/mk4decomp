@@ -25,7 +25,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern char g_table_004f3ac8[16];
 extern char g_table_004f3f28[16];
-void MarkSlot_004ab270(int arg) {
+void MarkSlot(int arg) {
     int i;
     for (i = 0; i < 16; i++) {
         if (arg == (int)(signed char)g_table_004f3ac8[i]) {

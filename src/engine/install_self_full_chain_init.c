@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_load_0052ab10;
 extern void PendingMatch_00432110(void);
 
-__declspec(naked) void InstallSelfFullChainInit_00462470(void) {
+__declspec(naked) void InstallSelfFullChainInit(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi

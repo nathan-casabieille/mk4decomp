@@ -16,7 +16,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned char g_byte_004d50b8;
 extern unsigned char g_byte_004d50b4;
-void InputPollFlagBits_004a1b00(void) {
+void InputPollFlagBits(void) {
     __asm {
         mov     al, byte ptr [g_byte_004d50b8]
         test    al, 2

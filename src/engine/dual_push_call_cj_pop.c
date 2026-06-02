@@ -114,12 +114,12 @@ extern unsigned int g_fightAxisPosY;
  *   load 0x53815c into cj, pop two state-stack entries back into cj
  *   and walk.
  */
-void DualPushCallCjPop_0048c400(void) {
+void DualPushCallCjPop(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_scaledInit_00542044;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_cj_0054205c;
-    ScaledIncLoopState3_0048c210();
+    ScaledIncLoopState3();
     if (g_framePauseFlag != 0) return;
     g_cj_0054205c = g_player2NodeIdx;
     g_cj_0054205c = *(unsigned int *)(g_matrixStackTop * 4);

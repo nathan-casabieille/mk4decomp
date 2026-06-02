@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchCopyField_00537e9c;
 extern void MStackCall_00406340(void);
 
-void DispatchCopyFields_0043ec80(void) {
+void DispatchCopyFields(void) {
     __asm {
         mov     eax, 0x004ec8f8
         shr     eax, 2

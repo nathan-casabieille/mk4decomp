@@ -114,7 +114,7 @@ extern unsigned int g_dispatchTableBase_00543140;
 extern void CallSetPause(void);
 extern void MStackPushComplexCallPop_00406430(void);
 
-__declspec(naked) void UpperBodyComboFsmCluster_00492aa0(void)
+__declspec(naked) void UpperBodyComboFsmCluster(void)
 {
     __asm {
         mov      eax, dword ptr [g_matrixStackTop]

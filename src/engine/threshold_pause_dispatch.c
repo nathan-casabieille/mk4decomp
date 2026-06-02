@@ -112,13 +112,13 @@ extern unsigned int g_fightAxisPosY;
  *   g_walkCallback = (g_stateCountdown); if <= 1: push lit; call IterStepDualStore; ret.
  *   else: call CopyJmp; if pause or g_walkCallback < 0xcccc: ret.
  *   call DualGuardedTableSearch; if nonzero ret.
- *   g_walkCallback = (g_table_00535ddc); if > 0x18000 ret; else jmp TimerWindowThreshDispatch_0046fd70.
+ *   g_walkCallback = (g_table_00535ddc); if > 0x18000 ret; else jmp TimerWindowThreshDispatch.
  */
 extern void CopyJmp_0048ee80(void);
-extern void DualGuardedTableSearch_004708c0(void);
-extern void TimerWindowThreshDispatch_0046fd70(void);
+extern void DualGuardedTableSearch(void);
+extern void TimerWindowThreshDispatch(void);
 
-__declspec(naked) void ThresholdPauseDispatch_0046fd10(void) {
+__declspec(naked) void ThresholdPauseDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_stateCountdown]
         cmp     eax, 1
@@ -149,7 +149,7 @@ __declspec(naked) void ThresholdPauseDispatch_0046fd10(void) {
         _emit   00h
         _emit   7ch
         _emit   1fh
-        call    DualGuardedTableSearch_004708c0
+        call    DualGuardedTableSearch
         test    eax, eax
         _emit   75h
         _emit   16h
@@ -158,7 +158,7 @@ __declspec(naked) void ThresholdPauseDispatch_0046fd10(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   7fh
         _emit   05h
-        jmp     TimerWindowThreshDispatch_0046fd70
+        jmp     TimerWindowThreshDispatch
         ret
     }
 }

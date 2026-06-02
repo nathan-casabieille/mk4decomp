@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_scaledArgChain_00541e68;
 extern void ScaledAddDeref(void);
 
-void ScaledArgChainCmpCopy_00494180(void) {
+void ScaledArgChainCmpCopy(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         mov     ecx, dword ptr [g_baseSel]

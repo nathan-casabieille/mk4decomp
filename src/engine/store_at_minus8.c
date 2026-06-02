@@ -11,6 +11,6 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [ecx-8], eax
  *   ret
  */
-void StoreAtMinus8_004b5b00(int *p, int v) {
+void StoreAtMinus8(int *p, int v) {
     p[-2] = v;
 }

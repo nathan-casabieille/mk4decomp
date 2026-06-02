@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void FixedDiv16(void);
 
-void MStackPush3DualCallHalve_00477300(void) {
+void MStackPush3DualCallHalve(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_acc_00542078]

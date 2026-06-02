@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *   else: set bit0 of g_xformDirtyFlags, ret.
  */
 
-void GuardedDualMaskFlagToggle_004261d0(void) {
+void GuardedDualMaskFlagToggle(void) {
     __asm {
         call    MStackPush2TableNot
         mov     eax, dword ptr [g_framePauseFlag]

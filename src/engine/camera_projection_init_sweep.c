@@ -114,7 +114,7 @@ extern unsigned int g_audioVoiceCounter_00535e50;
 extern unsigned int g_cameraProjSlot_00537eb4;
 extern unsigned int g_installCountdownArr3_00542408;
 extern void BootPhaseGateBracketedInit(void);
-extern void Chain2CallMul10Accum_00426a30(void);
+extern void Chain2CallMul10Accum(void);
 extern void FramePauseScaledStore(void);
 extern void MStackBracket4_ListInsertZeroFill(void);
 extern void MStackCall_00406340(void);
@@ -124,7 +124,7 @@ extern void FixedDiv16(void);
 extern void RegistryPushBindPop(void);
 extern void Thunk_00427460(void);
 
-__declspec(naked) void CameraProjectionInitSweep_00458160(void)
+__declspec(naked) void CameraProjectionInitSweep(void)
 {
     __asm {
         push     ebx
@@ -203,7 +203,7 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         jne      L_8430
         mov      eax, dword ptr [g_xformScratch2088]
         mov      dword ptr [g_eventQueueWorkType], eax
-        call     Chain2CallMul10Accum_00426a30
+        call     Chain2CallMul10Accum
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8430

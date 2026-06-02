@@ -15,7 +15,7 @@ struct BitTestS {
     unsigned int field_c;
 };
 
-void BitTestFreeClear_004c8ae0(struct BitTestS *p) {
+void BitTestFreeClear(struct BitTestS *p) {
     if ((p->field_c & 0x83) != 0 && (p->field_c & 8) != 0) {
         FreeImpl(p->field8);
         p->field_c &= 0xfffffbf7u;

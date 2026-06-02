@@ -108,13 +108,13 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void SaveStateSnapshot_004aba40(void);
+extern void SaveStateSnapshot(void);
 extern void MStackRestore27(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern unsigned int g_dispatchSave579_004f2980;
 
 /* @addr 0x0049f7b0 (333b game) - dual-block: linked-list walk with indirect callback + dirty-toggle thunk.
- *   Block A (0..0x82): call SaveStateSnapshot_004aba40. Init scaledInit = (0x004f2980>>2); read pair (ecx, edx).
+ *   Block A (0..0x82): call SaveStateSnapshot. Init scaledInit = (0x004f2980>>2); read pair (ecx, edx).
  *     If ecx<0 (sign): jmp to bit0-toggle path via 0x49f848.
  *     esi=g_walkCallback. Loop: if ecx==esi: call edx (indirect); set bit gate from pause.
  *     Else advance pair; if ecx<0: terminate. Loop until match.
@@ -132,7 +132,7 @@ extern unsigned int g_dispatchArg;
 __declspec(naked) void LinkedListIndirectDirtyToggle(void) {
     __asm {
         push    esi
-        call    SaveStateSnapshot_004aba40
+        call    SaveStateSnapshot
         mov     eax, offset g_dispatchSave579_004f2980
         shr     eax, 2
         mov     dword ptr [g_scaledInit_00542044], eax

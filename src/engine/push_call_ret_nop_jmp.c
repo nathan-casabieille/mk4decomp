@@ -15,7 +15,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern int ArgSarStoreJmp(void *);
 extern void *g_dispatchSave1249_004e5120;
-extern void CountdownStoreCallChain_0043d5a0(void);
-void PushCallRetNopJmp_0043d580(void) {
+extern void CountdownStoreCallChain(void);
+void PushCallRetNopJmp(void) {
     ArgSarStoreJmp(&g_dispatchSave1249_004e5120);
 }

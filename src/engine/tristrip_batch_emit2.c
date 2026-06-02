@@ -136,7 +136,7 @@ extern void MaxOfThree(void);
 extern void ProjectTwoVertices(void);
 extern void ProjectVertex(void);
 
-__declspec(naked) void TristripBatchEmit2_004bb930(void)
+__declspec(naked) void TristripBatchEmit2(void)
 {
     __asm {
         mov      eax, dword ptr [g_inLoopStep]

@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_dispatchSave300_00542978;
 extern void ArgScaledTestStore(void);
 extern void ScaledLoadOrSetJmp(void);
-void PushCallStoreClearJmp_00460420(void) {
+void PushCallStoreClearJmp(void) {
     ArgScaledTestStore((int)&g_dispatchSave300_00542978);
     if (g_framePauseFlag != 0) {
         return;

@@ -112,15 +112,15 @@ extern unsigned int g_fightAxisPosY;
  *   Push g_xformEntityIdx, g_scaledInit; g_walkCallback = 2; call ScaledAddDeref; pause? -> pop+ret.
  *   ecx = g_scaledInit; g_walkCallback = 1; eax = chain[ecx+8] >> 16; g_xformEntityIdx = eax;
  *   g_walkCallback = eax; ecx = chain[ecx]; ecx = (ecx >> 2) signed + eax;
- *   g_xformEntityIdx = ecx; mstack-pop into g_scaledInit; call BootChainTripleStoreThenDispatch_004076b0; pause? -> pop+ret.
+ *   g_xformEntityIdx = ecx; mstack-pop into g_scaledInit; call BootChainTripleStoreThenDispatch; pause? -> pop+ret.
  *   mstack-pop into g_xformEntityIdx.
  */
-extern void BootChainTripleStoreThenDispatch_004076b0(void);
+extern void BootChainTripleStoreThenDispatch(void);
 extern void ScaledAddDeref(void);
 
 extern unsigned int g_matrixStack_arr;
 
-void MStackChainDecodeCall_004936f0(void) {
+void MStackChainDecodeCall(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_xformEntityIdx]
@@ -153,7 +153,7 @@ void MStackChainDecodeCall_004936f0(void) {
         dec     eax
         mov     dword ptr [g_scaledInit_00542044], edx
         mov     dword ptr [g_matrixStackTop], eax
-        call    BootChainTripleStoreThenDispatch_004076b0
+        call    BootChainTripleStoreThenDispatch
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

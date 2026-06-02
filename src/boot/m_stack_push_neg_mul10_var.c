@@ -121,7 +121,7 @@ extern void MStackPush1MagicMod2(void);
 extern unsigned int g_chain_disp_64_40a690;
 extern unsigned int g_matrixStack_arr;
 
-void MStackPushNegMul10Var_0040a730(void) {
+void MStackPushNegMul10Var(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_scaledInit_00542044]

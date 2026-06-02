@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * BootChainMaskAndDispatch_00416cb0 - 250b boot 2-body chain dispatch.
+ * BootChainMaskAndDispatch - 250b boot 2-body chain dispatch.
  *   Entry 0x00416cb0: g_walkCallback=2; DirtyDoubleDeref; if paused or g_currentNodeIdx==0: ret.
  *     chain[+0x20] &= 0xfffffffb; g_walkCallback=-0x14; MStackInitCallToggle; if paused: ret.
  *     If !(g_xformDirtyFlags & 4): MStackBracket2_TreeWalkRecursive; if paused: ret.
@@ -124,7 +124,7 @@ extern void DirtyDoubleDeref(void);
 extern void MStackBracket2_TreeWalkRecursive(void);
 extern void MStackInitCallToggle(void);
 
-__declspec(naked) void BootChainMaskAndDispatch_00416cb0(void)
+__declspec(naked) void BootChainMaskAndDispatch(void)
 {
     __asm
     {

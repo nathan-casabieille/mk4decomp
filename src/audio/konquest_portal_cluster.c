@@ -121,17 +121,17 @@ extern unsigned int g_dispatchSave119_0051599c;
 extern unsigned int g_bootInitState_00535de4;
 extern unsigned int g_count;
 extern unsigned int g_voicePoolTickFlag_005437f4;
-extern void AudioBindEntry_004a1e40(void);
+extern void AudioBindEntry(void);
 extern void CharSelect_CpuBattlesToggle(void);
 extern void AudioInitArgs3(void);
-extern void AudioState50b4BitDispatcher_004a32c0(void);
+extern void AudioState50b4BitDispatcher(void);
 extern void FiveTableWalkInit(void);
 extern void InstallSelfPackedF80(void);
 extern void MStackPush2ChainLLInsert(void);
 extern void MStackPushComplexCallPop_00406430(void);
 extern void PendingMatch_004a2a80(void);
 extern void RetZero_004a1c40(void);
-extern void ScaledByteIdxDualCopy_004a3260(void);
+extern void ScaledByteIdxDualCopy(void);
 extern void SetJmp_004a1ac0(void);
 extern void TableWalkBoundedCmp(void);
 extern void TripleCallByteCheck(void);
@@ -208,10 +208,10 @@ __declspec(naked) void EnduranceMode_Handler(void)
     L_5360:
         call     CharSelect_CpuBattlesToggle
         push     OFFSET g_dispatchSave556_004f3930
-        call     ScaledByteIdxDualCopy_004a3260
+        call     ScaledByteIdxDualCopy
         add      esp, 4
         push     OFFSET g_dispatchSave556_004f3930
-        call     AudioState50b4BitDispatcher_004a32c0
+        call     AudioState50b4BitDispatcher
         add      esp, 4
         call     TripleCallByteCheck
         test     eax, eax
@@ -292,7 +292,7 @@ __declspec(naked) void EnduranceMode_Handler(void)
         mov      dword ptr [edx*4], ebp
         jb       short L_547e
         push     OFFSET g_dispatchSave724_004f6338
-        call     AudioBindEntry_004a1e40
+        call     AudioBindEntry
         mov      eax, dword ptr [g_baseSel]
         mov      ecx, OFFSET g_audioPreloadBase_0050b118
         shr      ecx, 2

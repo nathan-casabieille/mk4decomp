@@ -110,13 +110,13 @@ extern unsigned int g_fightAxisPosY;
 
 extern void EntryThunkBodyStateMachine(void);
 extern void EsiEdiAliasDualMul10(void);
-extern void EsiInstallSetCallChain_0047aef0(void);
-extern void InstallSelfPauseTwoCall_0047af70(void);
+extern void EsiInstallSetCallChain(void);
+extern void InstallSelfPauseTwoCall(void);
 extern void ScaledLitLoadCall_00480fe0(void);
-extern void TripleFieldCopyHi_0048f7b0(void);
+extern void TripleFieldCopyHi(void);
 extern void TripleFieldCopyJmpHi(void);
 
-__declspec(naked) void TriPhaseDecCounterListAdvance_0047ad20(void)
+__declspec(naked) void TriPhaseDecCounterListAdvance(void)
 {
     __asm
     {
@@ -147,12 +147,12 @@ __declspec(naked) void TriPhaseDecCounterListAdvance_0047ad20(void)
         dec     eax
         mov     dword ptr [g_eventQueueChild], eax
         jne     L_tpdcla_chain
-        call    EsiInstallSetCallChain_0047aef0
+        call    EsiInstallSetCallChain
         pop     esi
         pop     ebx
         ret
     L_tpdcla_phase1:
-        call    TripleFieldCopyHi_0048f7b0
+        call    TripleFieldCopyHi
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_tpdcla_abort
@@ -161,7 +161,7 @@ __declspec(naked) void TriPhaseDecCounterListAdvance_0047ad20(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_tpdcla_abort
-        mov     dword ptr [esi + 8], offset TriPhaseDecCounterListAdvance_0047ad20
+        mov     dword ptr [esi + 8], offset TriPhaseDecCounterListAdvance
         mov     dword ptr [esi + 0x84], 2
         mov     dword ptr [g_pendingNodeType], 5
         mov     dword ptr [g_framePauseFlag], 1
@@ -171,7 +171,7 @@ __declspec(naked) void TriPhaseDecCounterListAdvance_0047ad20(void)
     L_tpdcla_phase0:
         cmp     dword ptr [g_xformScratch2088], ebx
         jne     short L_tpdcla_phase0_dispatch
-        call    InstallSelfPauseTwoCall_0047af70
+        call    InstallSelfPauseTwoCall
         pop     esi
         pop     ebx
         ret
@@ -182,7 +182,7 @@ __declspec(naked) void TriPhaseDecCounterListAdvance_0047ad20(void)
         jne     L_tpdcla_abort
         test    byte ptr [g_xformDirtyFlags], bl
         je      short L_tpdcla_p0_skip
-        call    EsiInstallSetCallChain_0047aef0
+        call    EsiInstallSetCallChain
         pop     esi
         pop     ebx
         ret
@@ -217,7 +217,7 @@ __declspec(naked) void TriPhaseDecCounterListAdvance_0047ad20(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_tpdcla_abort
-        mov     dword ptr [esi + 8], offset TriPhaseDecCounterListAdvance_0047ad20
+        mov     dword ptr [esi + 8], offset TriPhaseDecCounterListAdvance
         mov     dword ptr [esi + 0x84], ebx
         mov     dword ptr [g_pendingNodeType], 5
         mov     dword ptr [g_framePauseFlag], ebx

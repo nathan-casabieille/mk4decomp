@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
  *   MStackPushComplexCallPop; if pause still clear, init slot[+0x54]
  *   = 0, slot[+0x58]=0xf0600000, slot[+0x5c]=0x10000.
  */
-void AudioBindEntry_004a1e40(unsigned int arg) {
+void AudioBindEntry(unsigned int arg) {
     if (g_audioBoundNode != 0) return;
     g_xformEntityIdx = arg >> 2;
     DispatcherComplex260_00407400();

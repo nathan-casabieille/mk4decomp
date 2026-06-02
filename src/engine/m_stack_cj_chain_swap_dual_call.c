@@ -119,7 +119,7 @@ extern void IterLoad_0048fd30(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void MStackCjChainSwapDualCall_0042cd30(void) {
+__declspec(naked) void MStackCjChainSwapDualCall(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_walkCallback]

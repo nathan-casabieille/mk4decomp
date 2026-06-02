@@ -53,7 +53,7 @@ extern unsigned int g_scaledInit_00542044;
  * So this is "get fpu status word + clear exceptions, return as int".
  * However, that's only 17 bytes, matching.
  */
-__declspec(naked) void GetFpuSwClex_004cf720(void) {
+__declspec(naked) void GetFpuSwClex(void) {
     __asm {
         push    ebp
         mov     ebp, esp

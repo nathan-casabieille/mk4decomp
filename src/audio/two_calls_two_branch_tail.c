@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *   if (g_audioBankSel == 1): g_eventQueueChild = 1; jmp AllocNode.
  *   else: ret.
  */
-void TwoCallsTwoBranchTail_004a3c50(void) {
+void TwoCallsTwoBranchTail(void) {
     unsigned int v;
     g_walkCallback = (void (*)(void))0x5b;
     GatedWordPushCall();

@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern void CallSetPause(void);
 extern void MStackCall_00406340(void);
-extern void BossRoomInitCluster_00410340(void);
+extern void BossRoomInitCluster(void);
 
 /* @addr 0x004101f0 (329b boot) - bundled boot installer pair.
  *   sub-1 (~20b @ 0x4101f0): pushes 0x88 and callback ptr (sub-2 @ 0x00410210),
@@ -123,7 +123,7 @@ extern void BossRoomInitCluster_00410340(void);
  */
 extern void GuardedSeq_00471670(void);
 
-__declspec(naked) void BootInstallerPair_004101f0(void) {
+__declspec(naked) void BootInstallerPair(void) {
     __asm {
         /* sub-1: trampoline */
         push    0x88
@@ -204,7 +204,7 @@ __declspec(naked) void BootInstallerPair_004101f0(void) {
         inc     eax
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_eventQueueIdx], eax
-        call    BossRoomInitCluster_00410340
+        call    BossRoomInitCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bip_done

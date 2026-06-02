@@ -50,7 +50,7 @@ typedef struct DrawEntry {
  * type Renderer2_FlushBatch_D3D passes to DrawPrimitive). 32 bytes -
  * already screen-space, so no device transform is applied.
  *
- * Verified against GlideTriBatchEmit_004adca0, which writes 3 of these
+ * Verified against GlideTriBatchEmit, which writes 3 of these
  * per triangle (stride 96 = batchCount*3*32): sx/sy from the projected
  * screen coords, sz/rhw pinned to 1.0 (0x3f800000), color packed from
  * the RGB555 palette (g_palette), specular left untouched, and

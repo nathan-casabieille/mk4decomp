@@ -14,8 +14,8 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void SaveCallRestoreOrXor(int);
 extern void StackPopDispatchTagged(void);
-extern void InstallSelfPauseGate_004a1a50(void);
-void PushCallTestByte4Jmp_004a1a10(void) {
+extern void InstallSelfPauseGate(void);
+void PushCallTestByte4Jmp(void) {
     SaveCallRestoreOrXor(0x25a);
     if ((g_xformDirtyFlags & 4) != 0) {
         StackPopDispatchTagged();
@@ -23,5 +23,5 @@ void PushCallTestByte4Jmp_004a1a10(void) {
     }
     g_walkCallback = (void (*)(void))0xfffb0000;
     *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x6c) = 0xfffb0000;
-    InstallSelfPauseGate_004a1a50();
+    InstallSelfPauseGate();
 }

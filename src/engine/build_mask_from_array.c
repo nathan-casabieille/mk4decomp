@@ -28,7 +28,7 @@ extern unsigned int g_scaledInit_00542044;
  *   pop     esi
  *   ret
  */
-int BuildMaskFromArray_004c38d0(void) {
+int BuildMaskFromArray(void) {
     int i = 0;
     int mask = 0;
     int p = 0x00f9eb80;

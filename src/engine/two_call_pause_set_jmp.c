@@ -25,7 +25,7 @@ extern unsigned int g_acc_00542078;
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void GuardedSeq_00473f50(void);
-void TwoCallPauseSetJmp_00445e80(void) {
+void TwoCallPauseSetJmp(void) {
     MStackPush2RunCountdown();
     if (g_framePauseFlag != 0) return;
     MStackBracket7_DispatchAndChain();

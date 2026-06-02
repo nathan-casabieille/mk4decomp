@@ -116,13 +116,13 @@ extern unsigned int g_crtLocaleNumeric_00522bb0;
 extern unsigned int g_byte_00522bb4;
 extern unsigned int g_iat_004d2058;
 extern unsigned int g_iat_004d212c;
-extern void FPUPrecisionCheck_004c8400(void);
-extern void IsCType_004cc650(void);
+extern void FPUPrecisionCheck(void);
+extern void IsCType(void);
 extern void SevenArgThenTwoArg_004ccd20(void);
 extern void SevenArgThenTwoArg_004ccd60(void);
-extern void TolowerLocale_004cc6f0(void);
+extern void TolowerLocale(void);
 
-__declspec(naked) void LocaleNumericHelpers_004c8450(void)
+__declspec(naked) void LocaleNumericHelpers(void)
 {
     __asm {
         /* Helper 1: __setusermatherr early-init guard. */
@@ -139,7 +139,7 @@ __declspec(naked) void LocaleNumericHelpers_004c8450(void)
         call     eax
         ret
     L_8474:
-        jmp      FPUPrecisionCheck_004c8400
+        jmp      FPUPrecisionCheck
         nop
         nop
         nop
@@ -152,7 +152,7 @@ __declspec(naked) void LocaleNumericHelpers_004c8450(void)
         mov      esi, dword ptr [esp + 8]
         movsx    eax, byte ptr [esi]
         push     eax
-        call     TolowerLocale_004cc6f0
+        call     TolowerLocale
         add      esp, 4
         cmp      eax, 0x65
         je       short L_84c3
@@ -164,7 +164,7 @@ __declspec(naked) void LocaleNumericHelpers_004c8450(void)
         movsx    ecx, byte ptr [esi]
         push     4
         push     ecx
-        call     IsCType_004cc650
+        call     IsCType
         add      esp, 8
         jmp      short L_84bf
     L_84b1:

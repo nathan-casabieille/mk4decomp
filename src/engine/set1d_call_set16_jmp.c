@@ -19,7 +19,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void TableLookupCall_00489ff0(void);
 extern void ScaledInit_0048d490(void);
-void Set1dCallSet16Jmp_004809b0(void) {
+void Set1dCallSet16Jmp(void) {
     g_walkCallback = (void (*)(void))0x1d;
     TableLookupCall_00489ff0();
     if (g_framePauseFlag != 0) return;

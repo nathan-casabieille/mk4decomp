@@ -17,13 +17,13 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_table_00535ddc;
 extern void PrefixThunkInstallSelf3State(void);
-extern void QuadStringStateGate_0043bd50(void);
-void Cmp200Jmp_0043bd30(void) {
+extern void QuadStringStateGate(void);
+void Cmp200Jmp(void) {
     unsigned int v = g_table_00535ddc;
     g_walkCallback = (void (*)(void))v;
     if ((int)v < 0x20000) {
         PrefixThunkInstallSelf3State();
     } else {
-        QuadStringStateGate_0043bd50();
+        QuadStringStateGate();
     }
 }

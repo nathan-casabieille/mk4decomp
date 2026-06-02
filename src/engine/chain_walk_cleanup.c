@@ -117,9 +117,9 @@ extern unsigned int g_fightAxisPosY;
  *   NON-COAXABLE: MSVC /O2 TCO loop-heuristic puts jmp path before
  *   ret path; orig has else-block before tailRecurse.
  */
-extern void CleanupCallTwice_004bd530(void);
+extern void CleanupCallTwice(void);
 
-__declspec(naked) void ChainWalkCleanup_004bd4a0(void) {
+__declspec(naked) void ChainWalkCleanup(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
         mov     edx, dword ptr [eax*4 + 0x48]
@@ -140,13 +140,13 @@ noCleanup:
         mov     dword ptr [g_walkCallback], ecx
         je      tailRecurse
         mov     dword ptr [g_walkCallback], 0x004bd4a0
-        call    CleanupCallTwice_004bd530
+        call    CleanupCallTwice
         mov     eax, dword ptr [g_framePauseFlag]
 done:
         ret
 tailRecurse:
         mov     eax, dword ptr [eax*4 + 0]
         mov     dword ptr [g_walkCallback], eax
-        jmp     ChainWalkCleanup_004bd4a0
+        jmp     ChainWalkCleanup
     }
 }

@@ -108,14 +108,14 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void Push80SetWalkNegDualCallPop_004393b0(void);
-extern void InstallSelfStateCascade_004382a0(void);
+extern void Push80SetWalkNegDualCallPop(void);
+extern void InstallSelfStateCascade(void);
 
 /*
  * @addr 0x00438220 (118b game) - 3-step scaled deref + scaled store
  *   + increment + tail-jmp/call: shifts arg, walks 3 consecutive scaled
  *   slots, stores last into base[+4]; increments walk; tail-call into
- *   Push80SetWalkNegDualCallPop_004393b0 then jmp InstallSelfStateCascade_004382a0.
+ *   Push80SetWalkNegDualCallPop then jmp InstallSelfStateCascade.
  *   NON-COAXABLE: orig generates `lea ecx, [ecx*4+4]; mov edx, [ecx]` (9b)
  *   two-step for the ptr; MSVC SP3 /O2 folds into single `mov edx, [ecx*4+4]`
  *   (7b) direct indexed-dereference, never emitting the intermediate lea.
@@ -143,11 +143,11 @@ __declspec(naked) void Scaled3StorePushCallJmp(void) {
         inc     eax
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx], eax
-        call    Push80SetWalkNegDualCallPop_004393b0
+        call    Push80SetWalkNegDualCallPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     done
-        jmp     InstallSelfStateCascade_004382a0
+        jmp     InstallSelfStateCascade
 done:
         ret
     }

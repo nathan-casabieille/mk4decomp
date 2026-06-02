@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern void RoundStartCluster_0047b900(void);
 extern void ScaledLoadIncJmp_00429840(void);
-extern void StateMachineSharedTail_0047baf0(void);
+extern void StateMachineSharedTail(void);
 extern void AerialPunchCluster(void);
 extern void CmpEqInitCallElseJmp(void);
 extern void EsiInstallClampAddCall(void);
@@ -126,18 +126,18 @@ extern void AudioInstallSelfStatePush(void);
 extern void BootInitGuardedCallChain(void);
 extern void CallSetPause(void);
 extern void CjInstallSelfRouter(void);
-extern void DualSectionInit_00492140(void);
+extern void DualSectionInit(void);
 extern void Eleven404b90_404c00(void);
-extern void GuardedSetupTailMStackJmp_00492210(void);
-extern void MStackPushChainDispatchInit5_004925d0(void);
+extern void GuardedSetupTailMStackJmp(void);
+extern void MStackPushChainDispatchInit5(void);
 extern void MStackPushComplexCallPop_00406430(void);
 extern void RemapWalkAndJmp_00491e70(void);
 extern void RemapWalkAndJmp_00491ec0(void);
 extern void ScaledLoadIncJmp_00428d00(void);
 extern void StateDispatchTable(void);
 extern void Ten404c40_404bd0(void);
-extern void UpperBodyComboFsmCluster_00492aa0(void);
-extern void ZeroTripleJmp_00491e50(void);
+extern void UpperBodyComboFsmCluster(void);
+extern void ZeroTripleJmp(void);
 
 __declspec(naked) void RoundStartCluster_0047b900(void)
 {
@@ -248,7 +248,7 @@ __declspec(naked) void RoundStartCluster_0047b900(void)
         jne      short L_baed
         test     byte ptr [g_xformDirtyFlags], 1
         je       short L_bab4
-        jmp      StateMachineSharedTail_0047baf0
+        jmp      StateMachineSharedTail
     L_bab4:
         call     ScaledLoadIncJmp_00429840
         mov      eax, dword ptr [g_framePauseFlag]
@@ -263,7 +263,7 @@ __declspec(naked) void RoundStartCluster_0047b900(void)
         jne      short L_bae8
         jmp      AerialPunchCluster
     L_bae8:
-        jmp      StateMachineSharedTail_0047baf0
+        jmp      StateMachineSharedTail
     L_baed:
         ret
     }
@@ -294,21 +294,21 @@ __declspec(naked) void RoundStartCluster_004919c0(void)
         jne      L_1c08
         mov      edx, dword ptr [g_xformEntityIdx]
         mov      dword ptr [g_eventQueueIdx], edx
-        call     GuardedSetupTailMStackJmp_00492210
+        call     GuardedSetupTailMStackJmp
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_1c08
         call     MStackLoopFieldInit
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_1c08
-        call     MStackPushChainDispatchInit5_004925d0
+        call     MStackPushChainDispatchInit5
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_1c08
         push     0x1a
-        push     OFFSET UpperBodyComboFsmCluster_00492aa0 + 0xc0
+        push     OFFSET UpperBodyComboFsmCluster + 0xc0
         call     StoreTwoCall
         add      esp, 8
         push     0x1a
-        push     OFFSET UpperBodyComboFsmCluster_00492aa0 + 0x230
+        push     OFFSET UpperBodyComboFsmCluster + 0x230
         call     StoreTwoCall
         add      esp, 8
         mov      dword ptr [g_eventQueueWorkType], 0x48
@@ -347,7 +347,7 @@ __declspec(naked) void RoundStartCluster_004919c0(void)
         mov      ebx, 1
         mov      dword ptr [g_walkCallback], ebx
         mov      dword ptr [g_dispatchWalkVar_0053a404], ebx
-        call     UpperBodyComboFsmCluster_00492aa0
+        call     UpperBodyComboFsmCluster
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_1c08
         mov      dword ptr [esi + 8], OFFSET RoundStartCluster_004919c0
@@ -371,10 +371,10 @@ __declspec(naked) void RoundStartCluster_004919c0(void)
         pop      ebx
         ret
     L_1ba8:
-        call     ZeroTripleJmp_00491e50
+        call     ZeroTripleJmp
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_1c08
-        call     DualSectionInit_00492140
+        call     DualSectionInit
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_1c08
         push     0x25f

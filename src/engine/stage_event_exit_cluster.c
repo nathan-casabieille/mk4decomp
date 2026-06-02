@@ -109,14 +109,14 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave551_004ffe04;
-extern void Set200dCallPauseJmp_0047c5e0(void);
-extern void StageEventExitCluster_0047cd50(void);
+extern void Set200dCallPauseJmp(void);
+extern void StageEventExitCluster(void);
 extern void InstallSelfCountdown2Stage_0047c8f0(void);
 extern void ScaledChainJmp_00429470(void);
 
 /* @addr 0x0047c990 (357b game) - install-self w/ MStack snapshot + packed_ptr.
- *   On phase != 0 tail-calls Set200dCallPauseJmp_0047c5e0. Then if
- *   g_audioBankSel != 0 tail-calls StageEventExitCluster_0047cd50.
+ *   On phase != 0 tail-calls Set200dCallPauseJmp. Then if
+ *   g_audioBankSel != 0 tail-calls StageEventExitCluster.
  *   Otherwise pushes g_eventQueueChild onto the mstack and sets
  *   g_walkCallback=0xb333, calls EsiEdiAliasDualMul10. On
  *   no-error sets g_xformScratch2088=0x11999, calls PunchAnimCluster. Pops
@@ -133,7 +133,7 @@ extern void EsiEdiAliasDualMul10(void);
 extern void NotMaskStorePair(void);
 extern void PunchAnimCluster(void);
 
-__declspec(naked) void InstallSelfMStackPackedFlow_0047c990(void) {
+__declspec(naked) void InstallSelfMStackPackedFlow(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -142,7 +142,7 @@ __declspec(naked) void InstallSelfMStackPackedFlow_0047c990(void) {
         mov     dword ptr [esi + 0x84], 0
         test    eax, eax
         je      short L_ism_check2
-        call    Set200dCallPauseJmp_0047c5e0
+        call    Set200dCallPauseJmp
         pop     esi
         ret
     L_ism_check2:
@@ -150,7 +150,7 @@ __declspec(naked) void InstallSelfMStackPackedFlow_0047c990(void) {
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         je      short L_ism_push
-        call    StageEventExitCluster_0047cd50
+        call    StageEventExitCluster
         pop     esi
         ret
     L_ism_push:
@@ -198,9 +198,9 @@ __declspec(naked) void InstallSelfMStackPackedFlow_0047c990(void) {
         shr     eax, 2
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [ecx*4 + 0x24], eax
-        mov     dword ptr [esi + 8], offset InstallSelfMStackPackedFlow_0047c990
+        mov     dword ptr [esi + 8], offset InstallSelfMStackPackedFlow
         mov     eax, dword ptr [g_baseSel]
-        mov     ecx, offset InstallSelfMStackPackedFlow_0047c990
+        mov     ecx, offset InstallSelfMStackPackedFlow
         mov     dword ptr [eax*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     ecx, 0x01000000

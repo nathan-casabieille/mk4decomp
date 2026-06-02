@@ -47,7 +47,7 @@ void ScaledAndAhfe_00490390(void) {
  *   mov     [g_xformDirtyFlags], eax
  *   ret
  */
-void DirtyFlagsManip_0048de00(void) {
+void DirtyFlagsManip(void) {
     u32 v = g_xformDirtyFlags;
     g_xformScratch2088 = 0;
     g_xformDirtyFlags = (v & 0xfffffffe) | 4;

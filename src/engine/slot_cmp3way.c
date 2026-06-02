@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *   _74=0; less-or-equal-but-not-equal -> clear bit 0, walk=1, _74=0;
  *   greater -> set bit 0, _74 = |diff|, walk=0.
  */
-void SlotCmp3way_0048efa0(void) {
+void SlotCmp3way(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]
         mov     ecx, dword ptr [eax*4 + 0x48]

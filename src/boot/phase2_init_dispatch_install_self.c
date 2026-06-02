@@ -114,11 +114,11 @@ extern void ChainListVecAdd(void);
 extern void GuardedSeq_00471670(void);
 extern void MStackPop8(void);
 extern void MStackPush8(void);
-extern void MStackPushCallPop_0040a830(void);
+extern void MStackPushCallPop(void);
 extern void MStackScopedSlotSetupPair(void);
 extern void SetJmp_00405420(void);
 
-__declspec(naked) void Phase2InitDispatchInstallSelf_0040ba70(void)
+__declspec(naked) void Phase2InitDispatchInstallSelf(void)
 {
     __asm {
         call    SetJmp_00405420
@@ -146,7 +146,7 @@ __declspec(naked) void Phase2InitDispatchInstallSelf_0040ba70(void)
         add     esp, 8
         test    al, 1
         jne     L_p2id_tailjmp
-        call    MStackPushCallPop_0040a830
+        call    MStackPushCallPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p2id_ret

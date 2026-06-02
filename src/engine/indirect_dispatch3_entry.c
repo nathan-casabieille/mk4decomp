@@ -122,11 +122,11 @@ extern unsigned int g_fightAxisPosY;
  *   (12b NOP align pad.)
  *   Entry 2 (offset 0x110, 34b): if g_state2_00541d88 != 0 tail-jmp
  *     CallSetPause; else zero g_dispatchArg and tail-jmp
- *     IndirectStateDispatcher_0049f6a0.
+ *     IndirectStateDispatcher.
  *   (14b NOP align pad.)
  *   Entry 3 (offset 0x140, 34b): mirror of entry 2 on g_state2_00537ea8.
  *     If non-zero tail-jmp CallSetPause; else set g_dispatchArg
- *     to 1 and tail-jmp IndirectStateDispatcher_0049f6a0.
+ *     to 1 and tail-jmp IndirectStateDispatcher.
  */
 extern unsigned int g_dispatchArg;
 extern unsigned int g_state2_00537ea8;
@@ -134,11 +134,11 @@ extern unsigned int g_state2_00541d88;
 extern unsigned int g_audioBitField_00541fc0;
 extern void CallSetPause(void);
 extern void GuardedScaledCall(void);
-extern void IndirectStateDispatcher_0049f6a0(void);
+extern void IndirectStateDispatcher(void);
 extern void LinkedListIndirectDirtyToggle(void);
 extern void RoundWinTransition(void);
 
-__declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
+__declspec(naked) void IndirectDispatch3Entry(void) {
     __asm {
         mov     eax, dword ptr [g_audioBitField_00541fc0]
         mov     ecx, dword ptr [g_dispatchArg]
@@ -229,7 +229,7 @@ __declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
         jmp     CallSetPause
     L_id3_e2zero:
         mov     dword ptr [g_dispatchArg], 0
-        jmp     IndirectStateDispatcher_0049f6a0
+        jmp     IndirectStateDispatcher
         /* 14b NOP align pad */
         nop
         nop
@@ -254,6 +254,6 @@ __declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
         jmp     CallSetPause
     L_id3_e3one:
         mov     dword ptr [g_dispatchArg], 1
-        jmp     IndirectStateDispatcher_0049f6a0
+        jmp     IndirectStateDispatcher
     }
 }

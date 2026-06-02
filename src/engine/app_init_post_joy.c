@@ -6,14 +6,14 @@
 
 /* @addr 0x004b5a10 (84b engine.geo) - fill 0x7b01a0..0x7b41a0 (16KB) with
  *   DoubleToInt64(cos(i*const3)*const2 - const4) per slot. Two FP consts
- *   loaded once before loop; one call to CrtPowCluster_004c6540 in prologue.
+ *   loaded once before loop; one call to CrtPowCluster in prologue.
  */
 extern unsigned int g_buf_007b01a0;
 extern unsigned int g_fp_004d29d0;
 extern unsigned int g_fp_004d29d8;
 extern unsigned int g_fp_004d29e0;
 extern unsigned int g_fp_004d29e8;
-extern void CrtPowCluster_004c6540(void);
+extern void CrtPowCluster(void);
 extern void DoubleToInt64(void);
 
 __declspec(naked) void AppInit_PostJoy(void) {
@@ -23,7 +23,7 @@ __declspec(naked) void AppInit_PostJoy(void) {
         fld     qword ptr [g_fp_004d29d8]
         push    esi
         mov     dword ptr [esp + 4], 0
-        call    CrtPowCluster_004c6540
+        call    CrtPowCluster
         mov     esi, offset g_buf_007b01a0
 loop4b5a10:
         fild    dword ptr [esp + 4]

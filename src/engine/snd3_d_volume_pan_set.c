@@ -109,22 +109,22 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void Helper_AudioRelease(void);
-extern void Snd3DVolumePanSet_004c3d00(void);
+extern void Snd3DVolumePanSet(void);
 extern unsigned int g_dispatchSave527_004d2a30[2];  /* double constant */
 extern unsigned char g_table_004f7dc0[];
 
 /* @addr 0x004be870 (216b engine.scenegraph) - effect-table walker.
  *   Reads param (ecx<47), computes table base = &g_table[idx*680], iterates
- *   170 4-byte entries: skip 0xffff; check filter via TableSearch_004be760;
+ *   170 4-byte entries: skip 0xffff; check filter via TableSearch;
  *   compute scaled idx (if ax>100 then ax*(2/5), else ax+0x7d0); random pick
  *   via Helper_AudioRelease; load short [esi+2] (factor), fild+fmul[g_dispatchSave527_004d2a30],
  *   DoubleToInt64 → byte clamp stored at [esp+8]; recompute scaled idx;
- *   apply effect via Snd3DVolumePanSet_004c3d00(idx, -1, byte, byte).
+ *   apply effect via Snd3DVolumePanSet(idx, -1, byte, byte).
  */
 extern void DoubleToInt64(void);
-extern void TableSearch_004be760(void);
+extern void TableSearch(void);
 
-__declspec(naked) void EffectTableWalker_004be870(void) {
+__declspec(naked) void EffectTableWalker(void) {
     __asm {
         push    ecx
         mov     ecx, [esp + 8]
@@ -143,7 +143,7 @@ __declspec(naked) void EffectTableWalker_004be870(void) {
         cmp     ax, 0xffff
         jz      L_et_done
         push    eax
-        call    TableSearch_004be760
+        call    TableSearch
         add     esp, 4
         test    eax, eax
         jne     L_et_next
@@ -191,7 +191,7 @@ __declspec(naked) void EffectTableWalker_004be870(void) {
         push    eax
         push    -1
         push    edx
-        call    Snd3DVolumePanSet_004c3d00
+        call    Snd3DVolumePanSet
         add     esp, 0x10
     L_et_next:
         inc     edi

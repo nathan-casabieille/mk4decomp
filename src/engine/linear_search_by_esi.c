@@ -125,7 +125,7 @@ extern unsigned int g_fightAxisPosY;
  * latency. Push placement is not controllable from C source.
  */
 
-__declspec(naked) void LinearSearchByEsi_00459290(void) {
+__declspec(naked) void LinearSearchByEsi(void) {
     __asm {
         mov     eax, 0x004e8720
         xor     edx, edx

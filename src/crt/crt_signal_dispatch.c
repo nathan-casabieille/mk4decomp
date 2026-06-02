@@ -16,7 +16,7 @@ extern unsigned int g_dispatchSave1448_00f9fc20;
 extern unsigned int g_iat_004d2110;
 extern unsigned int g_iat_004d2118;
 
-__declspec(naked) void CRTSignalDispatch_004c9750(void) {
+__declspec(naked) void CRTSignalDispatch(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         mov     dword ptr [g_dispatchSave1440_00f9fadc], 0

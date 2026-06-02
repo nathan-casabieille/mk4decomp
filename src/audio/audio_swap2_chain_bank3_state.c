@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * AudioSwap2ChainBank3State_004a8490 - 293b audio chain double-zero + 3-state setup.
+ * AudioSwap2ChainBank3State - 293b audio chain double-zero + 3-state setup.
  *   chain1 = base[+0x7c]: zero chain1[+0x54], +0x58, +0x5c. chain2 = base[+0x80]: zero same fields.
  *   Switch on base[+0x30] - 3: case 0 → g_walkCallback = g_counter_0054359c+0xd; edx=base[+0x7c].
  *                              case 1 → g_walkCallback = g_counter_005433c8+0x12; edx=base[+0x80].
@@ -122,7 +122,7 @@ extern unsigned int g_byte_0053a498;
 extern unsigned int g_counter_005433c8;
 extern unsigned int g_counter_0054359c;
 
-__declspec(naked) void AudioSwap2ChainBank3State_004a8490(void)
+__declspec(naked) void AudioSwap2ChainBank3State(void)
 {
     __asm
     {

@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_arr_chain_54_48ea90;
 extern unsigned int g_arr_chain_6c_48ea90;
 
-void DeltaAbsCompareBitToggle_0048ea90(void) {
+void DeltaAbsCompareBitToggle(void) {
     __asm {
         mov     ecx, dword ptr [g_player1NodeIdx]
         mov     eax, dword ptr [g_cj_0054205c]

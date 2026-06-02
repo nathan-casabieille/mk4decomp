@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void CondPlayerLookup_0048f270(void);
 
-void DualBlockPauseAbsDirty_00439560(void) {
+void DualBlockPauseAbsDirty(void) {
     __asm {
         call    CondPlayerLookup_0048f270
         mov     eax, dword ptr [g_framePauseFlag]

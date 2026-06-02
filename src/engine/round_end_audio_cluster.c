@@ -115,9 +115,9 @@ extern unsigned int g_particleEmitterNode;
 extern unsigned int g_bootHeavyState_00537f78;
 extern unsigned int g_particleInitState_00541de0;
 extern void SaveCallRestoreOrXor(void);
-extern void ScaledChainInit2Phase_0042e800(void);
+extern void ScaledChainInit2Phase(void);
 
-void RoundEndAudioCluster_0042e8d0(void) {
+void RoundEndAudioCluster(void) {
     __asm {
         /* H1 */
         mov      eax, dword ptr [g_matrixStackTop]
@@ -145,7 +145,7 @@ void RoundEndAudioCluster_0042e8d0(void) {
         test     byte ptr [g_xformDirtyFlags], 4
         jne      short L_e949
         push     0x23a
-        call     ScaledChainInit2Phase_0042e800
+        call     ScaledChainInit2Phase
         add      esp, 4
     L_e949:
         mov      edx, OFFSET g_dispatchSave130_0050d258
@@ -158,7 +158,7 @@ void RoundEndAudioCluster_0042e8d0(void) {
         test     byte ptr [g_xformDirtyFlags], 4
         jne      short L_e97b
         push     0x268
-        call     ScaledChainInit2Phase_0042e800
+        call     ScaledChainInit2Phase
         add      esp, 4
     L_e97b:
         mov      eax, dword ptr [g_matrixStackTop]

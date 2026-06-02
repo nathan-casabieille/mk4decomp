@@ -115,10 +115,10 @@ extern unsigned int g_fightAxisPosY;
  *   Both branches: call DoublePushCallDoublePop; if pause? ret. Then conditional
  *   mstack-push, optional GuardedSeq, mstack-pop, tail-jmp MStackFrameCdeclDouble.
  */
-extern void DoublePushCallDoublePop_004905e0(void);
+extern void DoublePushCallDoublePop(void);
 extern void GuardedSeq_00490c60(void);
 
-__declspec(naked) void BitDispatchDualCallMStackPush_004904c0(void) {
+__declspec(naked) void BitDispatchDualCallMStackPush(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
         mov     ecx, dword ptr [g_baseSel]
@@ -132,7 +132,7 @@ __declspec(naked) void BitDispatchDualCallMStackPush_004904c0(void) {
         mov     dword ptr [g_xformScratch94], eax
         _emit   75h
         _emit   77h
-        call    DoublePushCallDoublePop_004905e0
+        call    DoublePushCallDoublePop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -170,7 +170,7 @@ __declspec(naked) void BitDispatchDualCallMStackPush_004904c0(void) {
         mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [g_matrixStackTop], eax
         jmp     MStackFrameCdeclDouble
-        call    DoublePushCallDoublePop_004905e0
+        call    DoublePushCallDoublePop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

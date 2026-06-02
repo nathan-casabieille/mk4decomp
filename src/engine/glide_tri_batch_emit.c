@@ -171,7 +171,7 @@ extern unsigned int g_glideTriBatchB_0058c7f8;
 extern unsigned int g_glideTriBatchC_0058c7fc;
 extern unsigned int g_glideTriBatchD_0058c800;
 extern void DoubleToInt64(void);
-extern void GlidePolyClip_004ae560(void);
+extern void GlidePolyClip(void);
 extern void Renderer2_FlushBatch_D3D(void);
 
 /*
@@ -188,7 +188,7 @@ extern void Renderer2_FlushBatch_D3D(void);
  *   +0x18 tu   +0x1c tv  (both g_renderer2_lutTable[...] perspective lookups)
  * batchCount is bumped once at the tail; capacity guard is cmp eax,0xc00.
  */
-__declspec(naked) void GlideTriBatchEmit_004adca0(void)
+__declspec(naked) void GlideTriBatchEmit(void)
 {
     __asm {
         mov      eax, dword ptr [g_renderer2_active]
@@ -678,7 +678,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         fstp     dword ptr [g_glideDataArr_00543fd4]
         fild     dword ptr [esp + 0x2c]
         fstp     dword ptr [g_glideDataArr_00543fd8]
-        call     GlidePolyClip_004ae560
+        call     GlidePolyClip
         cmp      eax, 3
         jl       L_e55b
         cmp      eax, 7

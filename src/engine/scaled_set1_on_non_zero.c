@@ -48,7 +48,7 @@ void ScaledAndAhfe_00490390(void) {
  *   jmp     +0x031407
  */
 extern void LoadGeoAsset_Default(void);
-void ScaledSet1OnNonZero_0048c190(void) {
+void ScaledSet1OnNonZero(void) {
     unsigned int v = g_eventQueueEnd;
     if (v != 0) {
         *(unsigned int *)(v * 4) = 1;

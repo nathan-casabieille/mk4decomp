@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *   g_walkCallback = ecx; edx = [eax*4 + 0x44];
  *   g_eventQueueCurrent = edx; jmp MStackBracketed3StoreCall.
  */
-void DualGuardedChainJmp_00453170(void) {
+void DualGuardedChainJmp(void) {
     unsigned int idx;
     MStackPush2RunCountdown();
     if (g_framePauseFlag != 0) return;

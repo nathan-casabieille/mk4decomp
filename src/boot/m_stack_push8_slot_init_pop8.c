@@ -132,7 +132,7 @@ extern void MStackPushNegMul10(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void ScaledTripleCopy54(void);
 
-__declspec(naked) void MStackPush8SlotInitPop8_00415010(void) {
+__declspec(naked) void MStackPush8SlotInitPop8(void) {
     __asm {
         call    MStackPush8
         mov     eax, dword ptr [g_framePauseFlag]

@@ -26,7 +26,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_table_00535ddc;
 extern void PendingMatch_0045e640(void);
-void RangeCheckJmp_0045e590(void) {
+void RangeCheckJmp(void) {
     int v = (int)g_table_00535ddc;
     g_walkCallback = (void (*)(void))v;
     if (v < 0x1cccc) {

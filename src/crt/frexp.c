@@ -117,9 +117,9 @@ extern unsigned int g_fightAxisPosY;
  *     store *exp = biased_exp - 0x3fe, return mantissa as double.
  */
 extern unsigned int g_crtMemMoveVar_004d2f28;
-extern void PackDoubleFromInts_004cde40(void);
+extern void PackDoubleFromInts(void);
 
-__declspec(naked) void Frexp_004cdee0(void) {
+__declspec(naked) void Frexp(void) {
     __asm {
         fld     qword ptr [esp + 4]
         fcomp   qword ptr [g_crtMemMoveVar_004d2f28]
@@ -194,7 +194,7 @@ __declspec(naked) void Frexp_004cdee0(void) {
         push    0
         push    eax
         push    ecx
-        call    PackDoubleFromInts_004cde40
+        call    PackDoubleFromInts
         mov     ecx, [esp + 0x24]
         add     esp, 0xc
         fstp    qword ptr [esp + 0x10]
@@ -208,7 +208,7 @@ __declspec(naked) void Frexp_004cdee0(void) {
         push    0
         push    edx
         push    ecx
-        call    PackDoubleFromInts_004cde40
+        call    PackDoubleFromInts
         mov     ecx, [esp + 0x24]
         add     esp, 0xc
         shr     esi, 4

@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  *   call MStackBracket7_DispatchAndChain; if pause: ret;
  *   g_acc_00542078 = 5; g_walkCallback = 7; jmp GuardedSeq_00473f10.
  */
-void GuardedTripleSetTailJmp7_0044a000(void) {
+void GuardedTripleSetTailJmp7(void) {
     unsigned int v;
     g_cj_0054205c = g_eventQueueEnd;
     MStackPush2RunCountdown();

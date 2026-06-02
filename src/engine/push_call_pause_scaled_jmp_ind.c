@@ -13,10 +13,10 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp [g_scaledInit_00542044]; ret.
  */
 extern void *g_dispatchSave1316_004f1290;
-extern int ArgScaledLoadCmpP1_0048e550(void *);
-void PushCallPauseScaledJmpInd_0048e2f0(void) {
+extern int ArgScaledLoadCmpP1(void *);
+void PushCallPauseScaledJmpInd(void) {
     unsigned int base;
-    ArgScaledLoadCmpP1_0048e550(&g_dispatchSave1316_004f1290);
+    ArgScaledLoadCmpP1(&g_dispatchSave1316_004f1290);
     if (g_framePauseFlag) return;
     base = g_baseSel;
     g_walkCallback = (void (*)(void))*(unsigned int *)(base * 4 + 0x7c);

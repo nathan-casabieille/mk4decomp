@@ -23,7 +23,7 @@ extern void Mul10Tail(void);
  *   mov     [g_walkCallback], ecx
  *   ret
  */
-void RandSarMod0xFFFSub400_0041f1f0(void) {
+void RandSarMod0xFFFSub400(void) {
     int r;
     unsigned int idx;
     r = ((int (*)(int, int))Mul10Tail)(0x028be602, (int)g_eventQueueWorkType);

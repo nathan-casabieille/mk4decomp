@@ -130,7 +130,7 @@ extern unsigned int g_installCountdownVar_00543580;
 extern unsigned int g_dispatchVar31_00543584;
 extern unsigned int g_dispatchTab63_00543588;
 
-__declspec(naked) void SqDistThresholdRevertAdvance_00489d10(void) {
+__declspec(naked) void SqDistThresholdRevertAdvance(void) {
     __asm {
         mov     eax, dword ptr [g_pendingNodeType]
         push    esi

@@ -114,15 +114,15 @@ extern unsigned int g_fightAxisPosY;
  *   mstack-push g_eventQueueNotMask; if (g_eventQueueEnd != 0): call eax = g_eventQueueEnd.
  *   pause? -> end. eax = mstack-pop; g_eventQueueNotMask = eax; counter--.
  *   if (eax != 0): chain[g_baseSel+0x3c] -> g_scaledInit; ecx = chain[+0x74];
- *     g_walkCallback = ecx; if (ecx == eax): goto install-path; else: call BossDashCluster_004879e0; pop esi; ret.
- *   if (eax == 0): call BossDashCluster_004879e0; pop esi; ret.
+ *     g_walkCallback = ecx; if (ecx == eax): goto install-path; else: call BossDashCluster; pop esi; ret.
+ *   if (eax == 0): call BossDashCluster; pop esi; ret.
  *   install-path: install self with [esi+0x84]=1, g_pendingNodeType=1, pause=1.
  */
-extern void BossDashCluster_004879e0(void);
+extern void BossDashCluster(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void InstallSelfMStackIndirect_00487920(void) {
+__declspec(naked) void InstallSelfMStackIndirect(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -154,7 +154,7 @@ __declspec(naked) void InstallSelfMStackIndirect_00487920(void) {
         mov     dword ptr [g_matrixStackTop], ecx
         _emit   75h
         _emit   07h
-        call    BossDashCluster_004879e0
+        call    BossDashCluster
         pop     esi
         ret
         mov     edx, dword ptr [g_baseSel]
@@ -165,7 +165,7 @@ __declspec(naked) void InstallSelfMStackIndirect_00487920(void) {
         mov     dword ptr [g_walkCallback], ecx
         _emit   74h
         _emit   07h
-        call    BossDashCluster_004879e0
+        call    BossDashCluster
         pop     esi
         ret
         mov     eax, 1

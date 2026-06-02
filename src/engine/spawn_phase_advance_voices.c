@@ -113,9 +113,9 @@ extern unsigned int g_phaseThunkVar4_00535de0;
 extern unsigned int g_dispatchVar7_00541fbc;
 extern unsigned int g_imageBaseHi_005a0000;
 extern void MStackPush2ChainLLInsert(void);
-extern void MStackPushTableMatch_0042e720(void);
+extern void MStackPushTableMatch(void);
 
-__declspec(naked) void SpawnPhaseAdvanceVoices_0042e290(void)
+__declspec(naked) void SpawnPhaseAdvanceVoices(void)
 {
     __asm {
         mov      eax, dword ptr [g_matrixStackTop]
@@ -181,7 +181,7 @@ __declspec(naked) void SpawnPhaseAdvanceVoices_0042e290(void)
         mov      dword ptr [esi*4], edx
         mov      eax, dword ptr [g_xformEntityIdx]
         mov      dword ptr [g_currentNodeIdx], eax
-        call     MStackPushTableMatch_0042e720
+        call     MStackPushTableMatch
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_e46f

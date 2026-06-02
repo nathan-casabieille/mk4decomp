@@ -3,10 +3,10 @@
  * Walks the entity table from g_currentNodeIdx, follows the node chain
  * via field +0x18 (and +0x34 sibling slot), and for each node performs:
  * camera-relative transform (ChainStreamMatMulVecAdd, ScaledNegThreeWords,
- * Mat3x3VecMul6Bit), frustum culling (CameraSetupAndCullFan_004b99b0),
+ * Mat3x3VecMul6Bit), frustum culling (CameraSetupAndCullFan),
  * and RenderSceneNode (0x4ba720). Body is a backward-jmp loop that
  * iterates until the chain pointer at field +0x18 reaches zero, with
- * the scenegraph cleanup hook ChainWalkCleanup_004bd4a0 firing on exit.
+ * the scenegraph cleanup hook ChainWalkCleanup firing on exit.
  *
  * Referenced via DIR32 fnptr from TickAllEntities (0x4b9ea1) and from a
  * function-pointer slot in .data within the BigDataBlob region (likely
@@ -16,7 +16,7 @@
  * the literal bytes and only valid when synth places this function at
  * exactly 0x004ba1c0.
  */
-__declspec(naked) void RenderSceneGraphIterate_004ba1c0(void) {
+__declspec(naked) void RenderSceneGraphIterate(void) {
     __asm {
         _emit    0xa1
         _emit    0x44

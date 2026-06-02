@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern void ScaledChainDouble(void);
 
-__declspec(naked) void Vec2ChainComputeStores_00480b80(void)
+__declspec(naked) void Vec2ChainComputeStores(void)
 {
     __asm
     {

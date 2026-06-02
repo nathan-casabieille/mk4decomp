@@ -122,7 +122,7 @@ extern void Wrapper_0047d6d0(void);
 extern unsigned int g_arr_chain_68_47d650;
 extern unsigned int g_arr_chain_74_47d650;
 
-__declspec(naked) void ChainSetCallPauseDispatch_0047d650(void) {
+__declspec(naked) void ChainSetCallPauseDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         mov     [eax*4 + g_arr_chain_68_47d650], 0x400

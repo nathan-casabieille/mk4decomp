@@ -116,8 +116,8 @@ extern unsigned int g_fightAxisPosY;
  *   else: ecx=1; [eax+8]=0x483ae0; [eax+0x84]=1;
  *         g_pendingNodeType=1; g_framePauseFlag=1; ret.
  */
-extern void InstallSelfCallBitGate_00483ae0(void);
-void InstallSelfCallBitGate_00483ae0(void) {
+extern void InstallSelfCallBitGate(void);
+void InstallSelfCallBitGate(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int v = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
@@ -131,7 +131,7 @@ void InstallSelfCallBitGate_00483ae0(void) {
         CallPauseDirty1JmpDirty4StackPush_00483a80();
         return;
     }
-    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfCallBitGate_00483ae0;
+    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfCallBitGate;
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;

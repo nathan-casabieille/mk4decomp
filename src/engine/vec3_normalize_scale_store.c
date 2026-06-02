@@ -125,7 +125,7 @@ extern unsigned int g_fp_004d29b8;
 extern unsigned int g_fp_004d29c0;
 extern void DoubleToInt64(void);
 
-__declspec(naked) void Vec3NormalizeScaleStore_004b3130(void) {
+__declspec(naked) void Vec3NormalizeScaleStore(void) {
     __asm {
         push    ecx
         push    esi

@@ -115,11 +115,11 @@ extern unsigned int g_fightAxisPosY;
  *   Else (chain[+0x84]==0): install-self at +0x08=0x00428f70, scaledInit-chain push 0x00428f70|0x01000000;
  *     call Install3WayChainStateAdvance; pause=1. ret.
  */
-extern void Install3WayChainStateAdvance_00429130(void);
+extern void Install3WayChainStateAdvance(void);
 extern void ScaledLoadJmp_24(void);
 extern void Thunk_004296e0(void);
 
-__declspec(naked) void InstallSelfWithDispatch_00428f70(void) {
+__declspec(naked) void InstallSelfWithDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -173,7 +173,7 @@ __declspec(naked) void InstallSelfWithDispatch_00428f70(void) {
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
-        call    Install3WayChainStateAdvance_00429130
+        call    Install3WayChainStateAdvance
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret

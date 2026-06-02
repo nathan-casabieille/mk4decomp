@@ -111,10 +111,10 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_crtSehFpuDispatch_005228f8;
 extern unsigned int g_crtSehFpuDispatch2_005228fc;
 extern unsigned int g_iat_004d20f8;
-extern void ArraySearch_004cba90(void);
-extern void CrtInitPerThreadData_004c9df0(void);
+extern void ArraySearch(void);
+extern void CrtInitPerThreadData(void);
 
-__declspec(naked) void SehFpuExceptionDispatch_004cb880(void)
+__declspec(naked) void SehFpuExceptionDispatch(void)
 {
     __asm {
         push     ecx
@@ -122,13 +122,13 @@ __declspec(naked) void SehFpuExceptionDispatch_004cb880(void)
         push     ebp
         push     esi
         push     edi
-        call     CrtInitPerThreadData_004c9df0
+        call     CrtInitPerThreadData
         mov      ecx, dword ptr [esp + 0x18]
         mov      esi, eax
         mov      eax, dword ptr [esi + 0x50]
         push     eax
         push     ecx
-        call     ArraySearch_004cba90
+        call     ArraySearch
         xor      edi, edi
         add      esp, 8
         cmp      eax, edi

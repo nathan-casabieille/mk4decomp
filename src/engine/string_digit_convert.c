@@ -8,7 +8,7 @@
  *   string convert: each digit '0'..'9' becomes 0..9 in place;
  *   semicolon (';') triggers a memmove-left tail to remove that char and continue.
  */
-__declspec(naked) void StringDigitConvert_004d03c0(void) {
+__declspec(naked) void StringDigitConvert(void) {
     __asm {
         mov     ecx, dword ptr [esp + 4]
 loop_a:

@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x004393b0 (87b)
  *   Same as 0x00439350 but g_walkCallback = 0xfffff0a4.
  */
-void Push80SetWalkNegDualCallPop_004393b0(void) {
+void Push80SetWalkNegDualCallPop(void) {
     unsigned int top;
     top = g_matrixStackTop + 1;
     g_matrixStackTop = top;

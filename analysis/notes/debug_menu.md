@@ -66,7 +66,7 @@ MK cheat toggles):
 | 2 | `Fatalities II %s`     |
 | 3 | `Level Fatalities %s`  |
 
-### Kombat Rating stats - `RoundDisplayInitCluster_004a4f00`
+### Kombat Rating stats - `RoundDisplayInitCluster`
 
 (name unchanged - it is a 595-byte 4-helper cluster that also does
 round-display init, so the umbrella name still fits.) Renders the
@@ -88,7 +88,7 @@ persistent record using `%d` counters:
 | `0x004f42e0`..`0x004f432c` | match-option label format strings | "Player 1/2", "Difficulty", "Opponent", "Background", "Practice Info" (each `... %s`). |
 | `0x004f433c`..`0x004f4374` | unlock-toggle label format strings | "Level Fatalities", "Fatalities II", "Fatalities I", "Endings". |
 | `0x004f4380`..`0x004f43b4` | stat label format strings | "Kombat Rating:", "Fatalities %d", "Perfect Kills %d", "Body Count %d". |
-| `0x004d50b4`, `0x004d50b8` | toggle-state bytes | Among the state globals the table points at. NB: these are the same bytes `InputPollFlagBits_004a1b00`/`_004a1b50` read - see [input.md](input.md) TODO; the linkage between those predicates and these toggles is not yet pinned. |
+| `0x004d50b4`, `0x004d50b8` | toggle-state bytes | Among the state globals the table points at. NB: these are the same bytes `InputPollFlagBits`/`_004a1b50` read - see [input.md](input.md) TODO; the linkage between those predicates and these toggles is not yet pinned. |
 | `0x00543368/6c/70` | `g_dispatchSave25/26/27` | Fight action-accumulator flags (also written by `Input_TickPlayers`); referenced by the ON/OFF table. |
 
 ## Relation to the main mode-select menu
@@ -108,13 +108,13 @@ state-machine cluster that drives mode select.
 - **Per-toggle backing global**. Each row's ON/OFF reads a specific
   state global via the `0x4f2fc0` table; map row -> global -> the
   gameplay effect (e.g. which flag actually gates "Level Fatalities").
-- **`VoiceMixerTickDispatch_004a27c0`** is the structural "sister" of
+- **`VoiceMixerTickDispatch`** is the structural "sister" of
   these drawers (same loop shape) but did not surface any text format
   strings in the scan - confirm whether it is a real audio mixer tick
   or another (value-less) section drawer before renaming it.
-- **`RoundDisplayInitCluster_004a4f00`** mixes round-display init with
+- **`RoundDisplayInitCluster`** mixes round-display init with
   the Kombat Rating stat rows; if the cluster is ever split, the
   stat-drawing helper deserves its own `DebugMenu_DrawStats` name.
-- **Resolve `InputPollFlagBits_004a1b00/_004a1b50`** (input.md TODO):
+- **Resolve `InputPollFlagBits/_004a1b50`** (input.md TODO):
   they read `0x4d50b4/b8`, which this menu treats as toggle state -
   understanding the menu may finally pin those predicates' meaning.

@@ -115,13 +115,13 @@ extern unsigned int g_dispatchVar8_0053a35c;
 extern void AudioVolumeRescale(void);
 extern void CmpDivJmp(void);
 extern void GatedWordPushCall(void);
-extern void IK_ChainPoseUpdate_00444860(void);
+extern void IK_ChainPoseUpdate(void);
 extern void MStackCall_00406600(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void StoreLoadJmp(void);
 extern void Thunk_0049cbc0(void);
 
-__declspec(naked) void EndingScreenFsmCluster_00444390(void)
+__declspec(naked) void EndingScreenFsmCluster(void)
 {
     __asm {
         mov      dword ptr [g_walkCallback], 0x200
@@ -316,7 +316,7 @@ __declspec(naked) void EndingScreenFsmCluster_00444390(void)
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], ecx
-        call     IK_ChainPoseUpdate_00444860
+        call     IK_ChainPoseUpdate
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_475f

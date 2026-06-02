@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
 extern void MStackBracket4_ListInsertZeroFill(void);
 extern void MStackPush3LinkedListWalk(void);
 
-__declspec(naked) void SnapshotDirtyMark_004a1dc0(void) {
+__declspec(naked) void SnapshotDirtyMark(void) {
     __asm {
         push    esi
         mov     esi, dword ptr [g_currentNodeIdx]

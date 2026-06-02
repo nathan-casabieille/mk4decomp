@@ -109,14 +109,14 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00433d80 (205b game) - dual-entry chained install-self. */
-extern void AddDerefJmp_00433e70(void);
+extern void AddDerefJmp(void);
 extern void CallPauseScaledStoreCopyJmp(void);
 extern void CjInstallSelfRouter(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
-extern void PoseFsm4StateInstall_00437c10(void);
-extern void WeightedSumClampHelper_00439920(void);
+extern void PoseFsm4StateInstall(void);
+extern void WeightedSumClampHelper(void);
 
-__declspec(naked) void InstallSelfDualChain_00433d80(void) {
+__declspec(naked) void InstallSelfDualChain(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
         mov     ecx, 0x004e4c98
@@ -124,7 +124,7 @@ __declspec(naked) void InstallSelfDualChain_00433d80(void) {
         shr     ecx, 2
         mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [g_xformEntityIdx], ecx
-        jmp     AddDerefJmp_00433e70
+        jmp     AddDerefJmp
         _emit   90h
         _emit   90h
         _emit   90h
@@ -152,7 +152,7 @@ __declspec(naked) void InstallSelfDualChain_00433d80(void) {
         test    eax, eax
         _emit   75h
         _emit   6bh
-        call    WeightedSumClampHelper_00439920
+        call    WeightedSumClampHelper
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -160,7 +160,7 @@ __declspec(naked) void InstallSelfDualChain_00433d80(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   07h
-        call    PoseFsm4StateInstall_00437c10
+        call    PoseFsm4StateInstall
         pop     esi
         ret
         call    CjInstallSelfRouter

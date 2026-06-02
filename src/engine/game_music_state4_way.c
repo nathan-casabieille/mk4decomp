@@ -109,17 +109,17 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_bootClampMod6Base_004e2670;
-extern void GuardedSelfRefSet_0048d070(void);
-extern void MStackBitLoopTripleCall_0049cc30(void);
+extern void GuardedSelfRefSet(void);
+extern void MStackBitLoopTripleCall(void);
 extern void SetJmp_00405420(void);
-extern void SetupHelperCluster_00426fa0(void);
+extern void SetupHelperCluster(void);
 
 __declspec(naked) void GameMusicState4Way(void)
 {
     __asm {
         /* H1: trampoline */
         mov      dword ptr [g_walkCallback], 0x23c
-        jmp      MStackBitLoopTripleCall_0049cc30
+        jmp      MStackBitLoopTripleCall
         nop
         /* H2 (L_6da0): 4-state FSM */
     L_6da0:
@@ -167,7 +167,7 @@ __declspec(naked) void GameMusicState4Way(void)
         add      eax, 0xf
         mov      dword ptr [g_xformEntityIdx], eax
         mov      dword ptr [g_eventQueueIdx], eax
-        call     SetupHelperCluster_00426fa0
+        call     SetupHelperCluster
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_6f81
@@ -223,7 +223,7 @@ __declspec(naked) void GameMusicState4Way(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], 0
-        call     GuardedSelfRefSet_0048d070
+        call     GuardedSelfRefSet
         mov      dword ptr [g_framePauseFlag], 1
     L_6f81:
         pop      esi

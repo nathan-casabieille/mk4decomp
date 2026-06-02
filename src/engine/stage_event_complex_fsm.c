@@ -108,14 +108,14 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void StageEventComplexFsm_0047c680(void);
+extern void StageEventComplexFsm(void);
 extern void GuardedDispatch_00460ca0(void);
 extern void GuardedDispatch_00460cd0(void);
 extern void NotShrCmp1Store(void);
-extern void OneSetCmpJmpLoadCall_0047c620(void);
-extern void TripleEntryTblPushJmp_0047c880(void);
-extern void StageEventExitCluster_0047cd50(void);
-extern void DeltaAbsCompareBitToggle_0048ea90(void);
+extern void OneSetCmpJmpLoadCall(void);
+extern void TripleEntryTblPushJmp(void);
+extern void StageEventExitCluster(void);
+extern void DeltaAbsCompareBitToggle(void);
 extern void DirtyToggleByGate(void);
 extern void EsiEdiAliasDualMul10(void);
 extern void PunchAnimCluster(void);
@@ -124,7 +124,7 @@ extern unsigned int g_dispatchSave568_004ffe28;
 extern unsigned int g_primary_0052d74c;
 extern unsigned int g_secondary_00538068;
 
-__declspec(naked) void StageEventComplexFsm_0047c680(void)
+__declspec(naked) void StageEventComplexFsm(void)
 {
     __asm {
         mov      eax, dword ptr [g_baseSel]
@@ -166,7 +166,7 @@ __declspec(naked) void StageEventComplexFsm_0047c680(void)
         call     PunchAnimCluster
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_c855
-        call     DeltaAbsCompareBitToggle_0048ea90
+        call     DeltaAbsCompareBitToggle
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_c855
         mov      al, byte ptr [g_xformDirtyFlags]
@@ -204,7 +204,7 @@ __declspec(naked) void StageEventComplexFsm_0047c680(void)
         dec      eax
         mov      dword ptr [g_walkCallback], eax
         jne      short L_c7eb
-        call     TripleEntryTblPushJmp_0047c880
+        call     TripleEntryTblPushJmp
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_c855
         mov      eax, dword ptr [g_walkCallback]
@@ -224,7 +224,7 @@ __declspec(naked) void StageEventComplexFsm_0047c680(void)
         test     byte ptr [g_xformDirtyFlags], 4
         je       short L_c839
     L_c82f:
-        call     StageEventExitCluster_0047cd50
+        call     StageEventExitCluster
         pop      edi
         pop      esi
         pop      ebp
@@ -232,7 +232,7 @@ __declspec(naked) void StageEventComplexFsm_0047c680(void)
         ret
     L_c839:
         mov      eax, 1
-        mov      dword ptr [esi + 8], OFFSET StageEventComplexFsm_0047c680
+        mov      dword ptr [esi + 8], OFFSET StageEventComplexFsm
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_framePauseFlag], eax
@@ -257,7 +257,7 @@ __declspec(naked) void StageEventComplexFsm_0047c680(void)
         pop      ebx
         ret
     L_c86e:
-        call     OneSetCmpJmpLoadCall_0047c620
+        call     OneSetCmpJmpLoadCall
         pop      edi
         pop      esi
         pop      ebp

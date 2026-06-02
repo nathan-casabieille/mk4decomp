@@ -117,13 +117,13 @@ extern unsigned int g_fightAxisPosY;
  *     Else: install self, set chain[sel].slot84 = 1, g_pendingNodeType = 1,
  *     g_framePauseFlag = 1; ret.
  */
-extern void ChainPathMul25_0047fb70(void);
+extern void ChainPathMul25(void);
 extern void CmpEqInitCallElseJmp(void);
-extern void StageRoundFlowCluster_0047fcc0(void);
+extern void StageRoundFlowCluster(void);
 
 extern void FiveCallGuardSetTail(void);
 
-__declspec(naked) void InstallSelfDecrement_0047fc30(void) {
+__declspec(naked) void InstallSelfDecrement(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -139,7 +139,7 @@ __declspec(naked) void InstallSelfDecrement_0047fc30(void) {
         mov     dword ptr [g_scaledInit_00542044], edx
         _emit   78h
         _emit   2eh
-        call    ChainPathMul25_0047fb70
+        call    ChainPathMul25
         pop     esi
         ret
         mov     dword ptr [g_walkCallback], 5
@@ -154,10 +154,10 @@ __declspec(naked) void InstallSelfDecrement_0047fc30(void) {
         _emit   0c8h
         _emit   74h
         _emit   07h
-        call    StageRoundFlowCluster_0047fcc0
+        call    StageRoundFlowCluster
         pop     esi
         ret
-        mov     dword ptr [esi + 8], offset InstallSelfDecrement_0047fc30
+        mov     dword ptr [esi + 8], offset InstallSelfDecrement
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_framePauseFlag], eax

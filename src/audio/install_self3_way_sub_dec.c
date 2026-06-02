@@ -116,11 +116,11 @@ extern unsigned int g_fightAxisPosY;
  *   else: call CallSetPause; pop esi; ret.
  */
 extern void CallSetPause(void);
-extern void GuardedCallDirtyJmpInit_004a19c0(void);
+extern void GuardedCallDirtyJmpInit(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void InstallSelf3WaySubDec_004a1320(void) {
+__declspec(naked) void InstallSelf3WaySubDec(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         xor     edx, edx
@@ -151,7 +151,7 @@ __declspec(naked) void InstallSelf3WaySubDec_004a1320(void) {
         mov     [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     [eax*4 + 0x84], edx
-        call    GuardedCallDirtyJmpInit_004a19c0
+        call    GuardedCallDirtyJmpInit
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret

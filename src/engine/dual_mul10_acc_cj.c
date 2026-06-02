@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  *   call Mul10Tail; pop esp; add return to walkCallback;
  *   g_eventQueueCurrent = old (eax); g_walkCallback = sum; ret.
  */
-void DualMul10AccCj_00491230(void) {
+void DualMul10AccCj(void) {
     unsigned int v1;
     unsigned int v2;
     unsigned int r1;

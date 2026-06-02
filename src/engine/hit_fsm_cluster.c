@@ -113,18 +113,18 @@ extern unsigned int g_fightAxisPosY;
 /* ------------------------------------------------------------------ */
 extern void GuardedSeq_00433bb0(void);
 extern void Wrapper_00436490(void);
-extern void DualEntry5WayThreshold_004366d0(void);
-extern void InstallSelfMStackPushDispatch_00436910(void);
-extern void HitFsmCluster_00437300(void);
+extern void DualEntry5WayThreshold(void);
+extern void InstallSelfMStackPushDispatch(void);
+extern void HitFsmCluster(void);
 extern void CallPauseConstStoreJmp_00438170(void);
 extern void SetJmp_00438f70(void);
 extern void PrefixThunkInstallSelf3State(void);
-extern void InstallSelfDecBitCheck_004391d0(void);
-extern void MStackChainExtractCall_004397d0(void);
+extern void InstallSelfDecBitCheck(void);
+extern void MStackChainExtractCall(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void MstackPopScaledChainPlusThunks(void);
-extern void State208cBit0Flag_0048f160(void);
+extern void State208cBit0Flag(void);
 extern void ScaledChain3c74(void);
 extern unsigned int g_dispatchSave925_004e46e0;
 extern unsigned int g_dispatchSave926_004e4a14;
@@ -207,7 +207,7 @@ __declspec(naked) void MoveFsmCluster(void)
         mov      dword ptr [eax + 4], ecx
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edx
-        call     InstallSelfDecBitCheck_004391d0
+        call     InstallSelfDecBitCheck
         mov      dword ptr [g_framePauseFlag], esi
         pop      edi
         pop      esi
@@ -240,7 +240,7 @@ __declspec(naked) void MoveFsmCluster(void)
         jge      short L_6621
         jmp      SetJmp_00438f70
     L_6621:
-        call     MStackChainExtractCall_004397d0
+        call     MStackChainExtractCall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_664f
@@ -251,7 +251,7 @@ __declspec(naked) void MoveFsmCluster(void)
         mov      eax, OFFSET g_dispatchSave925_004e46e0
         sar      eax, 2
         mov      dword ptr [g_eventQueueEnd], eax
-        jmp      InstallSelfMStackPushDispatch_00436910
+        jmp      InstallSelfMStackPushDispatch
     L_664f:
         ret
         /* === Helper 4 (0x436650): special-result flag toggle === */
@@ -276,19 +276,19 @@ __declspec(naked) void MoveFsmCluster(void)
         call     Cmp2CallDirtyCall
         test     eax, eax
         jne      short L_66c0
-        call     State208cBit0Flag_0048f160
+        call     State208cBit0Flag
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_66c0
         test     byte ptr [g_xformDirtyFlags], 1
         je       short L_66a5
-        jmp      DualEntry5WayThreshold_004366d0
+        jmp      DualEntry5WayThreshold
     L_66a5:
         mov      eax, dword ptr [g_table_00535ddc]
         cmp      eax, 0x40000
         mov      dword ptr [g_walkCallback], eax
         jle      short L_66bb
-        jmp      HitFsmCluster_00437300
+        jmp      HitFsmCluster
     L_66bb:
         jmp      GuardedSeq_00433bb0
     L_66c0:

@@ -15,7 +15,7 @@ extern unsigned int g_baseSel;
  *   mov     [ecx*4 + 0x40], eax
  *   ret
  */
-void ScaledAndAh_004902d0(void) {
+void ScaledAndAh(void) {
     FightGroupNode *n = (FightGroupNode *)(g_fightGroupHead * 4);
     unsigned int v = n->bits & 0xFFFFFDFFu;
     g_eventQueueCurrent = v;

@@ -113,14 +113,14 @@ extern unsigned int g_fightAxisPosY;
  *   B (+0x10): install-self at +0x08=0x0047eda0, scaledInit-chain push 0x0047eda0|0x01000000;
  *     call SlotEvent3EntryChain; g_pause=1. ret. On chain[+0x84]!=0: jmp FiveCallGuardSetTail.
  *   C (+0x90): push 0x004ed690, chain[*4+0x68]=0x40c, chain[*4+0x74]=0x207; call ArgSarStoreJmp; ret.
- *   D (+0xd0): g_eventQueueChild=6; jmp InstallSelfCountdownLong_0047ee70.
+ *   D (+0xd0): g_eventQueueChild=6; jmp InstallSelfCountdownLong.
  */
 extern void ArgSarStoreJmp(void);
 extern void FiveCallGuardSetTail(void);
-extern void InstallSelfCountdownLong_0047ee70(void);
+extern void InstallSelfCountdownLong(void);
 extern void SlotEvent3EntryChain(void);
 
-__declspec(naked) void QuadInstallSelfChainStr_0047ed90(void) {
+__declspec(naked) void QuadInstallSelfChainStr(void) {
     __asm {
         push    0x004ed670
         call    ArgSarStoreJmp
@@ -178,6 +178,6 @@ __declspec(naked) void QuadInstallSelfChainStr_0047ed90(void) {
         _emit   90h
         _emit   90h
         mov     dword ptr [g_eventQueueChild], 6
-        jmp     InstallSelfCountdownLong_0047ee70
+        jmp     InstallSelfCountdownLong
     }
 }

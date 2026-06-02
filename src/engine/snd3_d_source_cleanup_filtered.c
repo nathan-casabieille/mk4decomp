@@ -117,7 +117,7 @@ extern unsigned int g_flags_00f8fade;
 extern unsigned int g_flags_00f8fadf;
 extern u16 g_audioChannelQueue[];
 
-__declspec(naked) void Snd3DSourceCleanupFiltered_004c3be0(void) {
+__declspec(naked) void Snd3DSourceCleanupFiltered(void) {
     __asm {
         mov     ax, word ptr [esp + 4]
         push    ebx

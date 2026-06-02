@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void MStackPushComplexCallPop_004064b0(void);
 
-void AudioBindEntryB_004a6230(void) {
+void AudioBindEntryB(void) {
     __asm {
         mov     eax, 0x00511e1c
         shr     eax, 2

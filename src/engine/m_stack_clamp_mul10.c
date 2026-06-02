@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_matrixStack_arr;
 
-void MStackClampMul10_0048de20(void) {
+void MStackClampMul10(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueWorkType]

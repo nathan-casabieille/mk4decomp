@@ -122,10 +122,10 @@ extern unsigned int g_arr_00fa0de0;
 extern unsigned int g_iat_004d20a0;
 extern unsigned int g_iat_004d2108;
 extern unsigned int g_iat_004d2148;
-extern void LazyLoadInvoke_004ce150(void);
-extern void Strncpy_004cdc20(void);
+extern void LazyLoadInvoke(void);
+extern void Strncpy(void);
 
-__declspec(naked) void RaiseAbortLocalized_004cc070(void)
+__declspec(naked) void RaiseAbortLocalized(void)
 {
     __asm {
         mov      ecx, dword ptr [esp + 4]
@@ -190,7 +190,7 @@ __declspec(naked) void RaiseAbortLocalized_004cc070(void)
         push     OFFSET g_const_004d2f04
         add      ebx, ecx
         push     ebx
-        call     Strncpy_004cdc20
+        call     Strncpy
         add      esp, 0xc
     L_c144:
         mov      ecx, 6
@@ -257,7 +257,7 @@ __declspec(naked) void RaiseAbortLocalized_004cc070(void)
         and      ecx, 3
         push     eax
         rep movsb
-        call     LazyLoadInvoke_004ce150
+        call     LazyLoadInvoke
         add      esp, 0xc
         pop      edi
         pop      esi

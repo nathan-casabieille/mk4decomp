@@ -8,7 +8,7 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_baseSel;
 extern unsigned int g_extra_0052ab3c;
 
-void ZeroLargeBlock_0041f270(void) {
+void ZeroLargeBlock(void) {
     g_extra_0052ab3c = 0;
     memset(g_nodeSlotsArea, 0, 0x0e80 * 4);
 }

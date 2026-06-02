@@ -34,8 +34,8 @@ extern unsigned int g_table_004ecb48;   /* 0x004ecb48 */
 
 /* Externs for call/jump targets. */
 extern void PendingMatch_0040cd50(void);   /* 0x0040cd50 */
-extern void LinkedListSearch_004750f0(void);   /* 0x004750f0 */
-extern void TestP1ReplaceCurrent_004751c0(void);   /* 0x004751c0 */
+extern void LinkedListSearch(void);   /* 0x004750f0 */
+extern void TestP1ReplaceCurrent(void);   /* 0x004751c0 */
 extern void MStackPush8(void);   /* 0x004ab790 */
 
 /* The wrappers. */
@@ -50,54 +50,54 @@ void GuardedScaled_0040cd20(void) {
 
 /* @addr 0x00474fd0 */
 void GuardedScaled_00474fd0(void) {
-    TestP1ReplaceCurrent_004751c0();
+    TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
         g_gs_00542048 = (unsigned int)&g_table_004ecaf0 >> 2;
-        LinkedListSearch_004750f0();
+        LinkedListSearch();
     }
 }
 
 /* @addr 0x00475000 */
 void GuardedScaled_00475000(void) {
-    TestP1ReplaceCurrent_004751c0();
+    TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
         g_gs_00542048 = (unsigned int)&g_table_004ecb10 >> 2;
-        LinkedListSearch_004750f0();
+        LinkedListSearch();
     }
 }
 
 /* @addr 0x00475030 */
 void GuardedScaled_00475030(void) {
-    TestP1ReplaceCurrent_004751c0();
+    TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
         g_gs_00542048 = (unsigned int)&g_table_004ecb20 >> 2;
-        LinkedListSearch_004750f0();
+        LinkedListSearch();
     }
 }
 
 /* @addr 0x00475060 */
 void GuardedScaled_00475060(void) {
-    TestP1ReplaceCurrent_004751c0();
+    TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
         g_gs_00542048 = (unsigned int)&g_table_004ecb28 >> 2;
-        LinkedListSearch_004750f0();
+        LinkedListSearch();
     }
 }
 
 /* @addr 0x00475090 */
 void GuardedScaled_00475090(void) {
-    TestP1ReplaceCurrent_004751c0();
+    TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
         g_gs_00542048 = (unsigned int)&g_table_004ecb40 >> 2;
-        LinkedListSearch_004750f0();
+        LinkedListSearch();
     }
 }
 
 /* @addr 0x004750c0 */
 void GuardedScaled_004750c0(void) {
-    TestP1ReplaceCurrent_004751c0();
+    TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
         g_gs_00542048 = (unsigned int)&g_table_004ecb48 >> 2;
-        LinkedListSearch_004750f0();
+        LinkedListSearch();
     }
 }

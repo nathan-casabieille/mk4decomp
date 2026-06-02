@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
 extern void ArgSarStoreJmp(void);
 extern void GateDispatch6c(void);
 
-void Quad4EntryPushArg_004835e0(void) {
+void Quad4EntryPushArg(void) {
     __asm {
         call    GateDispatch6c
         mov     eax, dword ptr [g_framePauseFlag]

@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_bootChainPair0_00541e80;
-extern void MStackPushChainStepIndex_004ab510(void);
+extern void MStackPushChainStepIndex(void);
 
 __declspec(naked) void BootPhaseGateBracketedInit(void)
 {
@@ -124,7 +124,7 @@ __declspec(naked) void BootPhaseGateBracketedInit(void)
         mov     dword ptr [eax*4], ecx
         mov     edx, dword ptr [g_bootChainPair0_00541e80]
         mov     dword ptr [g_currentNodeIdx], edx
-        call    MStackPushChainStepIndex_004ab510
+        call    MStackPushChainStepIndex
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_bpgbi_pop

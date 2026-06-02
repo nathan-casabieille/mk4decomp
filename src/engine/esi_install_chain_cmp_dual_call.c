@@ -116,7 +116,7 @@ extern void CallPauseScaledDecJmp(void);
 extern void CopyJmp_00406ba0(void);
 extern void ScaledInitOrSelfPtr_00429680(void);
 
-__declspec(naked) void EsiInstallChainCmpDualCall_00429300(void) {
+__declspec(naked) void EsiInstallChainCmpDualCall(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi

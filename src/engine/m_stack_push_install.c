@@ -116,7 +116,7 @@ extern unsigned int g_scaledIncLoopBase_00541d70;
 
 extern unsigned int g_matrixStack_arr;
 
-void MStackPushInstall_0048c260(void) {
+void MStackPushInstall(void) {
     __asm {
         mov     ecx, dword ptr [g_walkCallback]
         test    ecx, ecx

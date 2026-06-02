@@ -115,10 +115,10 @@ extern void CallSetPause(void);
 extern void CmpDivJmp(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void ScaledTripleCopy4(void);
-extern void TripleEntry3Block_00498df0(void);
-extern void Vec3AccMul10ChainBlend_0049c3d0(void);
+extern void TripleEntry3Block(void);
+extern void Vec3AccMul10ChainBlend(void);
 
-__declspec(naked) void MstackPushPackChainInit_00498c40(void)
+__declspec(naked) void MstackPushPackChainInit(void)
 {
     __asm
     {
@@ -153,10 +153,10 @@ __declspec(naked) void MstackPushPackChainInit_00498c40(void)
         mov     edx, offset g_dispatchSave538_004f27f0
         shr     edx, 2
         mov     dword ptr [g_eventQueueTotal], edx
-        call    Vec3AccMul10ChainBlend_0049c3d0
+        call    Vec3AccMul10ChainBlend
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_mppci_ret
-        call    TripleEntry3Block_00498df0
+        call    TripleEntry3Block
         mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [eax*4 + 0x64], esi

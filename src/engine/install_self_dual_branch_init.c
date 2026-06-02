@@ -108,18 +108,18 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void InstallSelfDualBranchInit_004201a0(void);
+extern void InstallSelfDualBranchInit(void);
 extern void TableWalkBoundedCmp(int);
-extern void IncOrZero9_00422080(void);
-extern void DispatchPair_00429ac0(void);
+extern void IncOrZero9(void);
+extern void DispatchPair(void);
 extern void SceneEvalFsm(void);
 extern unsigned int g_counter_0053a51c;
 extern unsigned int g_dispatchVar9_00541dc0;
 
 /* @addr 0x004200d0 (200b game) - install-self gate w/ pre-call sequence and packed_ptr store.
  *   esi = base*4; edi=0; snapshot [esi+0x84]; clear via edi.
- *   if (snap == 0): go to main path; else: call InstallSelfDualBranchInit_004201a0; pop edi; pop esi; ret.
- *   Main: push 8, call TableWalk; add esp, 4; call IncOrZero9_00422080; pause? -> epilogue;
+ *   if (snap == 0): go to main path; else: call InstallSelfDualBranchInit; pop edi; pop esi; ret.
+ *   Main: push 8, call TableWalk; add esp, 4; call IncOrZero9; pause? -> epilogue;
  *   g_walkCallback = [0x53a51c]; call DispatchPair; pause? -> epilogue;
  *   g_walkCallback = 0; g_dispatchVar9_00541dc0 = 0; install self with chain[+0x84]=1, packed ptr store,
  *   g_scaledInit++; chain[+0x84] = 0; call SceneEvalFsm; g_framePauseFlag = 1.
@@ -139,14 +139,14 @@ __declspec(naked) void InstallSelfTableWalk(void) {
         cmp     eax, edi
         _emit   74h
         _emit   08h
-        call    InstallSelfDualBranchInit_004201a0
+        call    InstallSelfDualBranchInit
         pop     edi
         pop     esi
         ret
         push    8
         call    TableWalkBoundedCmp
         add     esp, 4
-        call    IncOrZero9_00422080
+        call    IncOrZero9
         cmp     dword ptr [g_framePauseFlag], edi
         _emit   0fh
         _emit   85h
@@ -156,7 +156,7 @@ __declspec(naked) void InstallSelfTableWalk(void) {
         _emit   00h
         mov     ecx, dword ptr [g_counter_0053a51c]
         mov     dword ptr [g_walkCallback], ecx
-        call    DispatchPair_00429ac0
+        call    DispatchPair
         cmp     dword ptr [g_framePauseFlag], edi
         _emit   75h
         _emit   68h

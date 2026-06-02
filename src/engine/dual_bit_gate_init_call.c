@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *     g_zero_00541fa8 = g_eventArmReload;
  *   ret.
  */
-void DualBitGateInitCall_0048a1c0(void) {
+void DualBitGateInitCall(void) {
     if (g_zero_00541fa4 == 0 && (g_dualBitGate & 1) != 0) {
         g_eventQueueWorkType = 0x1f9;
         Push16Call();

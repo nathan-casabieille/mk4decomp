@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void RegistryPushBindPop(void);
 
-__declspec(naked) void DualSectionInit_00492140(void) {
+__declspec(naked) void DualSectionInit(void) {
     __asm {
         mov     eax, 0x0050f3d0
         push    esi

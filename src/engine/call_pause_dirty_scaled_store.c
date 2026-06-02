@@ -20,7 +20,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void BootPhaseGateBracketedInit(void);
-void CallPauseDirtyScaledStore_00446380(void) {
+void CallPauseDirtyScaledStore(void) {
     BootPhaseGateBracketedInit();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 4) != 0) return;

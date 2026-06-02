@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_audioStateMachine0_004f3ae4;
 extern unsigned int g_audioStateMachine1_004f3ae8;
 
-void DualListInit_004a8290(void) {
+void DualListInit(void) {
     __asm {
         mov     ecx, dword ptr [g_audioStateMachine0_004f3ae4]
         xor     eax, eax

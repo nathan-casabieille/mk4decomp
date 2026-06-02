@@ -121,11 +121,11 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void AtanDualDeltaThreshold(void);
 extern void ScaledChain3c74(void);
-extern void TripleBlockChainDiffMStackThunks_0049ca10(void);
+extern void TripleBlockChainDiffMStackThunks(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void InstallSelfBit2LoopIndirect_0049c710(void) {
+__declspec(naked) void InstallSelfBit2LoopIndirect(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    ebx
@@ -136,7 +136,7 @@ __declspec(naked) void InstallSelfBit2LoopIndirect_0049c710(void) {
         test    eax, eax
         _emit   75h
         _emit   12h
-        call    TripleBlockChainDiffMStackThunks_0049ca10
+        call    TripleBlockChainDiffMStackThunks
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -216,7 +216,7 @@ __declspec(naked) void InstallSelfBit2LoopIndirect_0049c710(void) {
         test    eax, eax
         _emit   75h
         _emit   19h
-        mov     dword ptr [esi + 8], offset InstallSelfBit2LoopIndirect_0049c710
+        mov     dword ptr [esi + 8], offset InstallSelfBit2LoopIndirect
         mov     dword ptr [esi + 0x84], ebx
         mov     dword ptr [g_pendingNodeType], ebx
         mov     dword ptr [g_framePauseFlag], ebx

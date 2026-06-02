@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0044dd00 (119b) - call + double scaled chain lookup. */
-void GuardedDualScaledChainCopy_0044dd00(void) {
+void GuardedDualScaledChainCopy(void) {
     unsigned int v;
     g_walkCallback = (void (*)(void))*(unsigned int *)(g_cj_0054205c * 4 + 0x30);
     SetJmp_0049cb90();

@@ -114,10 +114,10 @@ extern unsigned int g_fightAxisPosY;
  *     - g_pendingNodeType = g_baseSel + 0xc (slot pointer+0xc)
  *     - g_eventQueueTotal = [g_eventQueueEnd*4] (deref scope)
  *   If 0x542050 is non-zero AND [g_eventQueueIdx*4] is non-zero, runs a
- *   5-step chain through scaled-buffer indices: QuadInterpolatorV2_004255b0 (+0x15) →
+ *   5-step chain through scaled-buffer indices: QuadInterpolatorV2 (+0x15) →
  *   TripleSubVec3 (+0x15) → ThreeMul10Stores
  *   (with 0xcccc weight) → TripleSubVec3 (+0x1b) →
- *   ThreeClampLoop_00425a80 (with 0x4ccc cap) → TripleAddVec3
+ *   ThreeClampLoop (with 0x4ccc cap) → TripleAddVec3
  *   (with +0x1b advance). Failure path skips remaining calls.
  *
  *   Tail unconditionally installs Self with slot[+0x84]=1,
@@ -125,13 +125,13 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_installVecChainVar_00541f8c;
 extern unsigned int g_savedNode;
-extern void QuadInterpolatorV2_004255b0(void);
-extern void ThreeClampLoop_00425a80(void);
+extern void QuadInterpolatorV2(void);
+extern void ThreeClampLoop(void);
 extern void ThreeMul10Stores(void);
 extern void TripleAddVec3(void);
 extern void TripleSubVec3(void);
 
-__declspec(naked) void InstallSelf5CallVecChain_00464660(void) {
+__declspec(naked) void InstallSelf5CallVecChain(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -151,7 +151,7 @@ __declspec(naked) void InstallSelf5CallVecChain_00464660(void) {
         add     eax, 0x15
         mov     dword ptr [g_eventQueueTotal], eax
         mov     dword ptr [g_currentNodeIdx], ecx
-        call    QuadInterpolatorV2_004255b0
+        call    QuadInterpolatorV2
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_isvc_done
@@ -188,7 +188,7 @@ __declspec(naked) void InstallSelf5CallVecChain_00464660(void) {
         mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], 0x4ccc
         mov     dword ptr [g_xformEntityIdx], edx
-        call    ThreeClampLoop_00425a80
+        call    ThreeClampLoop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_isvc_done
@@ -205,7 +205,7 @@ __declspec(naked) void InstallSelf5CallVecChain_00464660(void) {
         jne     short L_isvc_done
     L_isvc_install:
         mov     eax, 1
-        mov     dword ptr [esi + 8], offset InstallSelf5CallVecChain_00464660
+        mov     dword ptr [esi + 8], offset InstallSelf5CallVecChain
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], 2
         mov     dword ptr [g_framePauseFlag], eax

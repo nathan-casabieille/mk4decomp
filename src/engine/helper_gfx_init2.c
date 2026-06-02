@@ -23,7 +23,7 @@ extern unsigned int g_dispatchSave1624_007af94c;
 extern unsigned int g_iat_004d202c;
 extern unsigned int g_iat_004d21b8;
 extern void LoadArgPushCall(void);
-extern void RendererTeardownSW_004b2a40(void);
+extern void RendererTeardownSW(void);
 
 __declspec(naked) void Helper_GfxInit2(void) {
     __asm {
@@ -61,7 +61,7 @@ __declspec(naked) void Helper_GfxInit2(void) {
         mov     dword ptr [g_dispatchSave1620_007af934], edi
         jne     short L_si_zero
     L_si_teardown:
-        call    RendererTeardownSW_004b2a40
+        call    RendererTeardownSW
         mov     dword ptr [g_renderer4_active], esi
         xor     eax, eax
         pop     edi

@@ -124,7 +124,7 @@ extern unsigned int g_audioBitField_00541fc0;
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void BitSetByIndex_004a07a0(void) {
+__declspec(naked) void BitSetByIndex(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_acc_00542078]

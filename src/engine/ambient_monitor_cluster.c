@@ -116,11 +116,11 @@ extern void DualTestDirtyToggle_004282c0(void);
 extern void PendingMatch_00461ca0(void);
 extern void Push16Call(void);
 extern void StoreTwoCall(void);
-extern void PhaseClampInstallSlot_0049e1c0(void);
-extern void GuardedCmpDualToggle_0049e360(void);
-extern void AmbientMonitorCluster_0049e3c0(void);
-extern void ThrowAnimTriggerCluster_0049efa0(void);
-extern void MStackDirtyArgsBit0_0049fa50(void);
+extern void PhaseClampInstallSlot(void);
+extern void GuardedCmpDualToggle(void);
+extern void AmbientMonitorCluster(void);
+extern void ThrowAnimTriggerCluster(void);
+extern void MStackDirtyArgsBit0(void);
 extern void TableWalkBoundedCmp(int);
 extern void TaggedSceneDispatch(void);
 extern void QuadCallPhase2(void);
@@ -152,7 +152,7 @@ __declspec(naked) void SceneEvalFsm(void)
         ja       L_e198
         jmp      dword ptr [eax*4 + L_jmptbl]
         push     0x251
-        push     OFFSET AmbientMonitorCluster_0049e3c0 + 0xd0
+        push     OFFSET AmbientMonitorCluster + 0xd0
         call     StoreTwoCall
         add      esp, 8
         mov      ecx, OFFSET g_dispatchSave637_004f29c0
@@ -178,10 +178,10 @@ __declspec(naked) void SceneEvalFsm(void)
         pop      ebx
         ret      
         push     0x251
-        push     OFFSET AmbientMonitorCluster_0049e3c0 + 0xd0
+        push     OFFSET AmbientMonitorCluster + 0xd0
         call     SetWalkCurCallPauseDirty
         add      esp, 8
-        call     MStackDirtyArgsBit0_0049fa50
+        call     MStackDirtyArgsBit0
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_e1aa
         test     byte ptr [g_xformDirtyFlags], 1
@@ -226,10 +226,10 @@ __declspec(naked) void SceneEvalFsm(void)
         mov      dword ptr [g_walkCallback], 1
         mov      dword ptr [g_active_0053a408], 1
     L_e010:
-        call     AmbientMonitorCluster_0049e3c0
+        call     AmbientMonitorCluster
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_e1aa
-        call     GuardedCmpDualToggle_0049e360
+        call     GuardedCmpDualToggle
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_e1aa
         cmp      dword ptr [g_stateCountdown], ebx
@@ -286,7 +286,7 @@ __declspec(naked) void SceneEvalFsm(void)
         mov      dword ptr [g_dispatchSave49_00535e44], ebx
         call     TaggedSceneDispatch
         add      esp, 4
-        call     ThrowAnimTriggerCluster_0049efa0
+        call     ThrowAnimTriggerCluster
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_e1aa
         mov      dword ptr [esi + 8], OFFSET SceneEvalFsm
@@ -303,7 +303,7 @@ __declspec(naked) void SceneEvalFsm(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], ebx
-        call     PhaseClampInstallSlot_0049e1c0
+        call     PhaseClampInstallSlot
         mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         pop      ebx

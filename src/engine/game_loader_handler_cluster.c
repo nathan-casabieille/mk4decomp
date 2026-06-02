@@ -115,19 +115,19 @@ extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void FlagThunk4EntryDispatcher(void);
 extern void GateDispatch6c(void);
 extern void GuardedPackedSlotInit(void);
-extern void InstallSelfMStackIndirect_00487920(void);
-extern void ScaledAndAlfb_00490370(void);
+extern void InstallSelfMStackIndirect(void);
+extern void ScaledAndAlfb(void);
 extern void ScaledAndAlfe(void);
 extern void ScaledLoadOrSetJmp(void);
 extern void StateDispatchTable(void);
 extern void TableLookupCall_0048a160(void);
-extern void TripleEntryBitsetMStack_00487890(void);
+extern void TripleEntryBitsetMStack(void);
 
-__declspec(naked) void GameLoaderHandlerCluster_004876f0(void)
+__declspec(naked) void GameLoaderHandlerCluster(void)
 {
     __asm {
-        /* Helper 1: simple guard over ScaledAndAlfb_00490370/ScaledAndAlfe. */
-        call     ScaledAndAlfb_00490370
+        /* Helper 1: simple guard over ScaledAndAlfb/ScaledAndAlfe. */
+        call     ScaledAndAlfb
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_7703
@@ -191,7 +191,7 @@ __declspec(naked) void GameLoaderHandlerCluster_004876f0(void)
         nop
         nop
         nop
-        /* Helper 4 (L_77b0): advance-to-state-2 + tail-jmp InstallSelfMStackIndirect_00487920. */
+        /* Helper 4 (L_77b0): advance-to-state-2 + tail-jmp InstallSelfMStackIndirect. */
         call     GateDispatch6c
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -212,7 +212,7 @@ __declspec(naked) void GameLoaderHandlerCluster_004876f0(void)
         jne      short L_7812
         mov      dword ptr [g_eventQueueNotMask], 0x201
         mov      dword ptr [g_eventQueueEnd], OFFSET L_7820
-        jmp      InstallSelfMStackIndirect_00487920
+        jmp      InstallSelfMStackIndirect
     L_7812:
         ret
         nop
@@ -243,7 +243,7 @@ __declspec(naked) void GameLoaderHandlerCluster_004876f0(void)
         mov      eax, dword ptr [g_bootInitSaveSlot]
         test     eax, eax
         je       short L_7859
-        jmp      TripleEntryBitsetMStack_00487890
+        jmp      TripleEntryBitsetMStack
     L_7859:
         mov      dword ptr [g_walkCallback], 0xf
         call     FlagThunk4EntryDispatcher
@@ -255,7 +255,7 @@ __declspec(naked) void GameLoaderHandlerCluster_004876f0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_788e
-        jmp      TripleEntryBitsetMStack_00487890
+        jmp      TripleEntryBitsetMStack
     L_788e:
         ret
     }

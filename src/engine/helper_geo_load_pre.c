@@ -12,9 +12,9 @@
  *   add     esp, 4
  *   ret
  */
-extern int __cdecl PackedListVisitor_004b5c90(int);
+extern int __cdecl PackedListVisitor(int);
 void Helper_GeoLoadPre(void) {
-    PackedListVisitor_004b5c90(4);
-    PackedListVisitor_004b5c90(2);
+    PackedListVisitor(4);
+    PackedListVisitor(2);
 }
 

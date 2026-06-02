@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *   g_eventQueueTotal = g_scaledInit; pop g_scaledInit; ret.
  */
 extern unsigned int g_phase4ThreePackedBase_004ec8f8;
-void PushSetXfmCallStoreCopy_0044d060(void) {
+void PushSetXfmCallStoreCopy(void) {
     unsigned int top;
     top = g_matrixStackTop + 1;
     g_matrixStackTop = top;

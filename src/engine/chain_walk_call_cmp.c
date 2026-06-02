@@ -121,7 +121,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void MStackBracket2_TreeWalkRecursive(void);
 
-void ChainWalkCallCmp_0049b6d0(void) {
+void ChainWalkCallCmp(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         mov     eax, dword ptr [eax*4 + 0x60]

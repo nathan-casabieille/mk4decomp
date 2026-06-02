@@ -123,7 +123,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_load_0052ab10;
 extern void Atan2QuadrantLookup(void);
 
-__declspec(naked) void DualChainSubCallSubLoad_00431c80(void) {
+__declspec(naked) void DualChainSubCallSubLoad(void) {
     __asm {
         mov     eax, dword ptr [g_load_0052ab10]
         mov     edx, dword ptr [g_scaledInit_00542044]

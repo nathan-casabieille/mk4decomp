@@ -119,7 +119,7 @@ extern void CjInstallSelfRouter(void);
 extern void ScaledMove48to58(void);
 extern void Wrapper_0048a280(void);
 
-__declspec(naked) void DualEntryInstallSelf_00488740(void) {
+__declspec(naked) void DualEntryInstallSelf(void) {
     __asm {
         call    Wrapper_0048a280
         mov     eax, dword ptr [g_framePauseFlag]

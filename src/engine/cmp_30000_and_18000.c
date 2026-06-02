@@ -25,9 +25,9 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_table_00535ddc;
 extern int Cmp2CallDirtyCall(void);
 extern void GuardedSeq_00433bb0(void);
-extern void Mul10ThresholdQuad_00435f50(void);
-extern void TripleThresholdDispatch_004362f0(void);
-void Cmp30000And18000_004362b0(void) {
+extern void Mul10ThresholdQuad(void);
+extern void TripleThresholdDispatch(void);
+void Cmp30000And18000(void) {
     unsigned int v;
     if (Cmp2CallDirtyCall() != 0) return;
     v = g_table_00535ddc;
@@ -37,8 +37,8 @@ void Cmp30000And18000_004362b0(void) {
         return;
     }
     if ((int)v < 0x18000) {
-        TripleThresholdDispatch_004362f0();
+        TripleThresholdDispatch();
         return;
     }
-    Mul10ThresholdQuad_00435f50();
+    Mul10ThresholdQuad();
 }

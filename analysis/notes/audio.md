@@ -348,7 +348,7 @@ The byte-identical rebuild constrains what kinds of changes can land.
 **Already converted to pure C** (44% of `src/audio/`):
 - `Audio_TimerTick`, `AuxAudio_SetVolume`, `GetExeDirectory`,
   `DebugStub_NoOp_*`, `Helper_AudioStartFresh`, `Helper_TitleAudioReset`,
-  `Audio_TimerTeardown_004ac5f0`, plus dozens of small dispatch helpers.
+  `Audio_TimerTeardown`, plus dozens of small dispatch helpers.
 
 **Still naked** (44%) - DO NOT attempt to convert:
 - `DSound_Init` - FP loop + three `_ftol`s + partial-init struct pattern

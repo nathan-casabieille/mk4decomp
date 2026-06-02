@@ -123,7 +123,7 @@ extern void MStackPushDispatchBitGate(void);
 extern void MStackPushTwoEntryChainCall(void);
 extern void SetupVecFsmCluster(void);
 
-__declspec(naked) void ChainFieldCopyTailJmp_00466e70(void) {
+__declspec(naked) void ChainFieldCopyTailJmp(void) {
     __asm {
         mov     dword ptr [g_walkCallback], 2
         call    DirtyDoubleDeref

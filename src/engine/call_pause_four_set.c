@@ -13,8 +13,8 @@ extern unsigned int g_scaledInit_00542044;
 extern void TableLookupCall_0048a160(void);
 extern void CmpP1DualInitStore_00482ab0(void);
 extern void CjTableThresholdDispatch(void);
-extern void CrouchFsmCluster_00482c30(void);
-void CallPauseFourSet_00482be0(void) {
+extern void CrouchFsmCluster(void);
+void CallPauseFourSet(void) {
     g_walkCallback = (void (*)(void))1;
     TableLookupCall_0048a160();
     if (g_framePauseFlag != 0) return;
@@ -23,5 +23,5 @@ void CallPauseFourSet_00482be0(void) {
     if (g_framePauseFlag != 0) return;
     CjTableThresholdDispatch();
     if (g_framePauseFlag != 0) return;
-    CrouchFsmCluster_00482c30();
+    CrouchFsmCluster();
 }

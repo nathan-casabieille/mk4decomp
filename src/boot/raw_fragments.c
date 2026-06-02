@@ -5,10 +5,10 @@
  */
 
 /* @addr 0x004c4588 (24b game) - Dead-thunk: 8 nops + jmp +0x0b + 11 nops. The jmp targets the next function
- * (CallTwoSumShl_004c45a0). Has no callers in orig - likely a leftover
+ * (CallTwoSumShl). Has no callers in orig - likely a leftover
  * patch slot or alias entry.
  */
-__declspec(naked) void DeadThunk_004c4588(void) {
+__declspec(naked) void DeadThunk(void) {
     __asm {
         _emit    0x90
         _emit    0x90
@@ -44,7 +44,7 @@ __declspec(naked) void DeadThunk_004c4588(void) {
  * code (format-print on exception) are dumped raw here so synth places
  * them at the fixed VA.
  */
-__declspec(naked) void WinMainExceptHandler_004c5457(void) {
+__declspec(naked) void WinMainExceptHandler(void) {
     __asm {
         _emit    0x8b
         _emit    0x45

@@ -121,7 +121,7 @@ extern int g_renderer2_present_rc;
 extern void DSCreateThunk_004d12d2(void);
 extern void DSEnumeratorThunk_004d12cc(void);
 
-__declspec(naked) void DSoundInstallerPair_004aede0(void) {
+__declspec(naked) void DSoundInstallerPair(void) {
     __asm {
         /* sub-function 1 (0x4aede0 .. 0x4aee1d, plus 90h padding) */
         push    offset g_comptr_0058c7ac

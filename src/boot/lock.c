@@ -122,7 +122,7 @@ extern void TableLookupIatCall(int);
  *   0x11; EnterCriticalSection(*base + slot_off + 0xc).
  */
 
-__declspec(naked) void CritSecLazyEnter_004cd2b0(void) {
+__declspec(naked) void CritSecLazyEnter(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         push    ebx

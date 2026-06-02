@@ -109,11 +109,11 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void SlotPhaseResetInstallChain(void);
-extern void ZeroScaledZeroCallPauseJmp_0045fa90(void);
+extern void ZeroScaledZeroCallPauseJmp(void);
 extern void DualGatedStateYield(void);
 extern void Wrapper_0043abf0(void);
 extern void Wrapper_0043ac00(void);
-extern void EnduranceRoundMsgCluster_0043ac10(void);
+extern void EnduranceRoundMsgCluster(void);
 extern void CallPauseScaledStoreCopyJmp(void);
 extern unsigned int g_dispatchSave83_00541e20;
 
@@ -125,7 +125,7 @@ extern unsigned int g_dispatchSave83_00541e20;
  *   state!=0 / >0x78: call DualGatedStateYield; if !=0 ret. Call LeaPlus22StoreSelf; if pause ret.
  *     Call DualCallPauseDirtyJmp; if pause ret.
  *     Cascade g_table_00535ddc: <0x10000 -> Wrapper_0043abf0 -> ret; <0x20000 -> Wrapper_0043ac00 -> ret;
- *       <0x30000 -> EnduranceRoundMsgCluster_0043ac10 -> ret; else push 0x004e4a38, call PackedAdvanceCallTailJmp, pop, ret.
+ *       <0x30000 -> EnduranceRoundMsgCluster -> ret; else push 0x004e4a38, call PackedAdvanceCallTailJmp, pop, ret.
  *   Branch 0x78 path: call CallPauseScaledStoreCopyJmp; if pause ret. Install-self at entry;
  *     state=1; g_pendingNodeType=5; pause=1; pop+ret.
  */
@@ -170,7 +170,7 @@ __declspec(naked) void StateMachine4ArmCascade(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        call    ZeroScaledZeroCallPauseJmp_0045fa90
+        call    ZeroScaledZeroCallPauseJmp
         pop     edi
         pop     esi
         ret
@@ -220,7 +220,7 @@ __declspec(naked) void StateMachine4ArmCascade(void) {
         cmp     eax, 0x30000
         _emit   7dh
         _emit   08h
-        call    EnduranceRoundMsgCluster_0043ac10
+        call    EnduranceRoundMsgCluster
         pop     edi
         pop     esi
         ret

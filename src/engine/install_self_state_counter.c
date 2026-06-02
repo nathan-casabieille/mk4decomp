@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *     baseSel[+0x34] mapped: 0x10 -> 2, 0x11 -> 7, else unchanged.
  *     g_walkCallback=mapped++. Fall through to common tail.
  *   state >= 2: skip to common tail.
- *   Common tail: call Wrapper_0041fcf0; tail-call DualBlockChainInitBody_0043cc10.
+ *   Common tail: call Wrapper_0041fcf0; tail-call DualBlockChainInitBody.
  *   state 0: dual-equal byte tests (g_gtModeFlag vs g_audioBankSel for 1 and 2)
  *     increment g_installSelfCounter_005433e8 on each match. g_walkCallback=0xac. 4-call chain
  *     ending with install-self at [esi+8]=0x00467d40, chain[+0x84]=1,
@@ -122,13 +122,13 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_installSelfCounter_005433e8;
 extern void CallPauseScaledStoreCopyJmp(void);
 extern void CopyJmp_00406ba0(void);
-extern void DualBlockChainInitBody_0043cc10(void);
+extern void DualBlockChainInitBody(void);
 extern void GateDispatch6c(void);
 extern void ScaledLitLoadCall_00480fe0(void);
 extern void ScaledMove48to58(void);
 extern void Wrapper_0041fcf0(void);
 
-__declspec(naked) void InstallSelfStateCounter_00467d40(void) {
+__declspec(naked) void InstallSelfStateCounter(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -168,7 +168,7 @@ __declspec(naked) void InstallSelfStateCounter_00467d40(void) {
         inc     eax
         mov     dword ptr [g_walkCallback], eax
         call    Wrapper_0041fcf0
-        call    DualBlockChainInitBody_0043cc10
+        call    DualBlockChainInitBody
         pop     esi
         ret
         mov     al, byte ptr [g_gtModeFlag]

@@ -113,14 +113,14 @@ extern unsigned int g_fightAxisPosY;
 /* Consumes a (op,arg)-stream from [g_currentNodeIdx] and dispatches    */
 /* event-IDs 0xdd, 0xaa plus collision/state-flag checks.              */
 /* ------------------------------------------------------------------ */
-extern void ConditionalAcc4or3_0045e0b0(void);
-extern void ConditionalAcc3or4_0045e0d0(void);
-extern void Event_InvokeHandler_0045e100(void);
-extern void IncJmp_0045e1d0(void);
-extern void EventGateCluster_0045e1e0(void);
+extern void ConditionalAcc4or3(void);
+extern void ConditionalAcc3or4(void);
+extern void Event_InvokeHandler(void);
+extern void IncJmp(void);
+extern void EventGateCluster(void);
 
 
-__declspec(naked) void EventPacketDecoder_0045de60(void)
+__declspec(naked) void EventPacketDecoder(void)
 {
     __asm {
         push     ebx
@@ -165,7 +165,7 @@ __declspec(naked) void EventPacketDecoder_0045de60(void)
         mov      dword ptr [g_eventQueueEnd], edi
         mov      dword ptr [g_acc_00542078], eax
         jne      short L_df10
-        call     ConditionalAcc4or3_0045e0b0
+        call     ConditionalAcc4or3
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e0a2
@@ -174,7 +174,7 @@ __declspec(naked) void EventPacketDecoder_0045de60(void)
     L_df10:
         cmp      eax, 0xaa
         jne      short L_df34
-        call     ConditionalAcc3or4_0045e0d0
+        call     ConditionalAcc3or4
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e0a2
@@ -215,7 +215,7 @@ __declspec(naked) void EventPacketDecoder_0045de60(void)
         mov      dword ptr [g_xformScratch94], ecx
         je       short L_dfcf
     L_dfc0:
-        call     IncJmp_0045e1d0
+        call     IncJmp
         pop      edi
         pop      esi
         pop      ebx
@@ -257,7 +257,7 @@ __declspec(naked) void EventPacketDecoder_0045de60(void)
         cmp      ecx, eax
         mov      dword ptr [g_acc_00542078], ecx
         je       short L_e061
-        call     EventGateCluster_0045e1e0
+        call     EventGateCluster
         pop      edi
         pop      esi
         pop      ebx
@@ -282,7 +282,7 @@ __declspec(naked) void EventPacketDecoder_0045de60(void)
         shr      ebx, 0x18
         mov      dword ptr [g_eventQueueCurrent], ebx
         je       short L_e0a2
-        call     Event_InvokeHandler_0045e100
+        call     Event_InvokeHandler
     L_e0a2:
         pop      edi
         pop      esi

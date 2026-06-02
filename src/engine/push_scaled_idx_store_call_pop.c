@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   g_xformEntityIdx = (g_eventQueueCurrent * 5) << 0x14 + 0x4c00000;
  *   call Thunk_004bd5c0; if no pause: pop g_eventQueueCurrent; ret.
  */
-void PushScaledIdxStoreCallPop_0048c1b0(void) {
+void PushScaledIdxStoreCallPop(void) {
     unsigned int top;
     unsigned int wt;
     top = g_matrixStackTop + 1;

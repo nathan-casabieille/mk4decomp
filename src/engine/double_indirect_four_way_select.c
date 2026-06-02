@@ -124,7 +124,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchArg;
 extern unsigned int g_audioBitField_00541fc0;
 
-void DoubleIndirectFourWaySelect_0049ec00(void) {
+void DoubleIndirectFourWaySelect(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_scaledInit_00542044]

@@ -12,7 +12,7 @@ extern unsigned int g_scaledInit_00542044;
  *   call F; pause → ret;
  *   if (dirty & 4): set bit 0 of dirty → ret; else clear bit 0 → ret.
  */
-void CmpEqWalkSetCallToggleDirty_00439c60(void) {
+void CmpEqWalkSetCallToggleDirty(void) {
     g_walkCallback = (void(*)(void))0x46;
     if (g_fightGroupHead != g_player1NodeIdx) {
         g_walkCallback = (void(*)(void))0x45;

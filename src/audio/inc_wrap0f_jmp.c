@@ -17,15 +17,15 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_walkCallback], 1
  *   jmp     T2
  */
-extern void AudioPhaseDispatch_004a1150(void);
-extern void AudioPhaseDispatch_004a1150(void);
-void IncWrap0fJmp_004a1120(void) {
+extern void AudioPhaseDispatch(void);
+extern void AudioPhaseDispatch(void);
+void IncWrap0fJmp(void) {
     unsigned int v = (unsigned int)g_walkCallback + 1;
     g_walkCallback = (void (*)(void))v;
     if (v <= 0x0f) {
-        AudioPhaseDispatch_004a1150();
+        AudioPhaseDispatch();
         return;
     }
     g_walkCallback = (void (*)(void))1;
-    AudioPhaseDispatch_004a1150();
+    AudioPhaseDispatch();
 }

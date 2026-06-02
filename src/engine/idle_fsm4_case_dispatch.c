@@ -112,11 +112,11 @@ extern void DualConstJmp_00453480(void);
 extern void DualConstJmp_004534a0(void);
 extern void DualConstJmp_004534c0(void);
 extern void GatedWordPushCall(void);
-extern void GuardedSetCallOrJmp_00453420(void);
+extern void GuardedSetCallOrJmp(void);
 extern void StorePauseImulShr16(void);
 extern void Thunk_0049cbc0(void);
 
-__declspec(naked) void IdleFsm4CaseDispatch_004531d0(void)
+__declspec(naked) void IdleFsm4CaseDispatch(void)
 {
     __asm {
         /* === Helper 1 (0x4531d0): tiny pre-roll === */
@@ -160,7 +160,7 @@ __declspec(naked) void IdleFsm4CaseDispatch_004531d0(void)
         jmp      L_33be
     L_324e:
         /* case 2: 0x420 / 0x4a0 then state 3 */
-        call     GuardedSetCallOrJmp_00453420
+        call     GuardedSetCallOrJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3401
@@ -177,7 +177,7 @@ __declspec(naked) void IdleFsm4CaseDispatch_004531d0(void)
         ret
     L_3294:
         /* case 3: 0x420 / 0x4c0 then state 4 */
-        call     GuardedSetCallOrJmp_00453420
+        call     GuardedSetCallOrJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3401
@@ -195,7 +195,7 @@ __declspec(naked) void IdleFsm4CaseDispatch_004531d0(void)
     L_32da:
         /* case 0: init loop then state 1 */
         mov      dword ptr [g_eventQueueEnd], 4
-        call     GuardedSetCallOrJmp_00453420
+        call     GuardedSetCallOrJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3401
@@ -220,7 +220,7 @@ __declspec(naked) void IdleFsm4CaseDispatch_004531d0(void)
         dec      eax
         mov      dword ptr [g_eventQueueEnd], eax
         js       short L_335b
-        call     GuardedSetCallOrJmp_00453420
+        call     GuardedSetCallOrJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       L_32f6
@@ -229,7 +229,7 @@ __declspec(naked) void IdleFsm4CaseDispatch_004531d0(void)
     L_335b:
         mov      dword ptr [g_eventQueueEnd], 4
     L_3365:
-        call     GuardedSetCallOrJmp_00453420
+        call     GuardedSetCallOrJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_3401
@@ -255,7 +255,7 @@ __declspec(naked) void IdleFsm4CaseDispatch_004531d0(void)
         mov      dword ptr [g_eventQueueEnd], eax
         js       short L_33fc
     L_33be:
-        call     GuardedSetCallOrJmp_00453420
+        call     GuardedSetCallOrJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_3401

@@ -111,9 +111,9 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_vertexInitFlag_00541e74;
 extern unsigned int g_vertexInitVar_00541e78;
 extern void MStackBracket5_LinkedListUnlink(void);
-extern void MStackPush2ChainInsert_00409870(void);
+extern void MStackPush2ChainInsert(void);
 
-__declspec(naked) void MStackBracket2InitChainSplitInsert_00425be0(void)
+__declspec(naked) void MStackBracket2InitChainSplitInsert(void)
 {
     __asm
     {
@@ -151,7 +151,7 @@ __declspec(naked) void MStackBracket2InitChainSplitInsert_00425be0(void)
         jne     L_mbsi_pop
         mov     ecx, dword ptr [g_vertexInitVar_00541e78]
         mov     dword ptr [g_xformEntityIdx], ecx
-        call    MStackPush2ChainInsert_00409870
+        call    MStackPush2ChainInsert
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mbsi_pop
@@ -180,7 +180,7 @@ __declspec(naked) void MStackBracket2InitChainSplitInsert_00425be0(void)
         mov     dword ptr [eax*4 + 4], 0
         mov     ecx, dword ptr [g_vertexInitFlag_00541e74]
         mov     dword ptr [g_xformEntityIdx], ecx
-        call    MStackPush2ChainInsert_00409870
+        call    MStackPush2ChainInsert
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_mbsi_pop

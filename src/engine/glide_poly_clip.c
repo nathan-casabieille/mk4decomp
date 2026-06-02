@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void Renderer2_FlushBatch_D3D(void);
-extern void GlidePolyClip_004ae560(void);
+extern void GlidePolyClip(void);
 extern unsigned int g_const_004d2964;
 extern unsigned int g_const_004d2968;
 extern unsigned int g_const_004d296c;
@@ -174,7 +174,7 @@ extern unsigned int g_renderer2_obj;
 extern int g_renderer2_present_rc;
 extern void DoubleToInt64(void);
 
-__declspec(naked) void GlideTriBatchEmit_004adca0(void)
+__declspec(naked) void GlideTriBatchEmit(void)
 {
     __asm {
         mov      eax, dword ptr [g_renderer2_active]
@@ -664,7 +664,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         fstp     dword ptr [g_glideDataArr_00543fd4]
         fild     dword ptr [esp + 0x2c]
         fstp     dword ptr [g_glideDataArr_00543fd8]
-        call     GlidePolyClip_004ae560
+        call     GlidePolyClip
         cmp      eax, 3
         jl       L_e55b
         cmp      eax, 7

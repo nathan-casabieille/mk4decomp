@@ -113,9 +113,9 @@ extern unsigned int g_particleEmitterNode;
 extern void MStackCall_004062f0(void);
 extern void MStackPushDispatchBitGate(void);
 extern void MStackPushTableWalk(void);
-extern void PushSetCallTailJmp_00493e40(void);
+extern void PushSetCallTailJmp(void);
 
-void StateMachineInit_00493000(void) {
+void StateMachineInit(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [g_eventQueueWorkType], eax
@@ -156,7 +156,7 @@ void StateMachineInit_00493000(void) {
         mov     edx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [g_xformScratch2088]
         mov     dword ptr [edx*4 + 0x5c], eax
-        call    PushSetCallTailJmp_00493e40
+        call    PushSetCallTailJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

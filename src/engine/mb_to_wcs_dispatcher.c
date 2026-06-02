@@ -122,7 +122,7 @@ extern unsigned int g_iat_004d2134;
 extern void FreeImpl(void);
 extern void LoadArgPushCall(void);
 
-__declspec(naked) void MbToWcsDispatcher_004d0f50(void) {
+__declspec(naked) void MbToWcsDispatcher(void) {
     __asm {
         mov     eax, dword ptr [g_dispatchSave1462_00f9fd9c]
         push    ebx

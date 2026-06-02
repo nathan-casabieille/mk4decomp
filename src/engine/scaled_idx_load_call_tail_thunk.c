@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  *   edx = [eax*4]; ++eax → g_xformEntityIdx, g_eventQueueTotal;
  *   jmp Thunk_0049cbd0.
  */
-void ScaledIdxLoadCallTailThunk_00472db0(int arg0) {
+void ScaledIdxLoadCallTailThunk(int arg0) {
     unsigned int v;
     unsigned int p;
     v = *(unsigned int *)(g_baseSel * 4 + 0x68);

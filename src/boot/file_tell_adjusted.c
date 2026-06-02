@@ -109,14 +109,14 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* ============================================================
- * FileTellAdjusted_004c58e0 - 420b boot.
+ * FileTellAdjusted - 420b boot.
  * ============================================================ */
 
 extern void Crt_errno(void);
 extern void IOWrapper_004c8dd0(void);
 extern unsigned int g_arr_00fa0de0;
 
-__declspec(naked) void FileTellAdjusted_004c58e0(void)
+__declspec(naked) void FileTellAdjusted(void)
 {
     __asm {
         sub      esp, 8

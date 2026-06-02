@@ -121,11 +121,11 @@ extern void CjTableThresholdDispatch(void);
 extern void GateDispatch6c(void);
 extern void GuardedPushCall_00482990(void);
 extern void ScaledMove48to58(void);
-extern void SixBlockCjCascade_004829b0(void);
+extern void SixBlockCjCascade(void);
 extern void TableLookupCall_0048a160(void);
 extern void Wrapper_0048a370(void);
 
-__declspec(naked) void StageGameProgressCluster_00482780(void)
+__declspec(naked) void StageGameProgressCluster(void)
 {
     __asm {
         /* H1 */
@@ -257,7 +257,7 @@ __declspec(naked) void StageGameProgressCluster_00482780(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2923
-        call     SixBlockCjCascade_004829b0
+        call     SixBlockCjCascade
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2923
@@ -295,7 +295,7 @@ __declspec(naked) void StageGameProgressCluster_00482780(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2983
-        call     SixBlockCjCascade_004829b0
+        call     SixBlockCjCascade
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2983

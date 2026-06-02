@@ -113,7 +113,7 @@ extern unsigned int g_byte_004f360c;
 extern void MStackCall_00406340(void);
 extern void PushSetXfmMaskCallPop(void);
 
-__declspec(naked) void GatedChainInit_0042f760(void) {
+__declspec(naked) void GatedChainInit(void) {
     __asm {
         mov     al, byte ptr [g_byte_004f360c]
         push    esi

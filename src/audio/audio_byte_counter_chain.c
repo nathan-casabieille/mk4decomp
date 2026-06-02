@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * AudioByteCounterChain_004a9820 - 204b audio counter+state machine.
+ * AudioByteCounterChain - 204b audio counter+state machine.
  *   chain = g_baseSel<<2; saved = chain->state; chain->state = 0.
  *   If was 0: dispatch on g_audioBankSel == 1/2 to increment indexed slots in g_table_00543848;
  *     call BootInitGuardedCallChain; if paused: ret.
@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  *     if hit 0xf: inc g_byte_0054383c; if also equal to (post-inc) al: zero it.
  *     Stash to g_byte_005435a0; push (&g_byte_005435b8, &g_byte_005435a0);
  *     g_byte_005435b8 = g_byte_0054383c; zero g_byte_005435a3 / g_byte_005435bb;
- *     call AudioMode2BankSetup_004a6080; call TwoStageAudioInit.
+ *     call AudioMode2BankSetup; call TwoStageAudioInit.
  */
 extern unsigned int g_byte_005435a0;
 extern unsigned int g_byte_005435b8;
@@ -129,12 +129,12 @@ extern unsigned int g_audioModeBankFlag_00543838;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 extern unsigned int g_table_00543848;
-extern void AudioMode2BankSetup_004a6080(void);
+extern void AudioMode2BankSetup(void);
 extern void BootInitGuardedCallChain(void);
 extern void FiveTableWalkInit(void);
-extern void TwoStageAudioInit_004a6180(void);
+extern void TwoStageAudioInit(void);
 
-__declspec(naked) void AudioByteCounterChain_004a9820(void)
+__declspec(naked) void AudioByteCounterChain(void)
 {
     __asm
     {
@@ -183,9 +183,9 @@ __declspec(naked) void AudioByteCounterChain_004a9820(void)
         mov     byte ptr [g_byte_005435b8], al
         mov     byte ptr [g_byte_005435a0 + 3], bl
         mov     byte ptr [g_byte_005435b8 + 3], bl
-        call    AudioMode2BankSetup_004a6080
+        call    AudioMode2BankSetup
         add     esp, 8
-        call    TwoStageAudioInit_004a6180
+        call    TwoStageAudioInit
     L_end:
         pop     ebx
         ret

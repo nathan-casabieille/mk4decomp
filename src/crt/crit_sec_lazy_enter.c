@@ -121,7 +121,7 @@ extern unsigned int g_arr_00fa0de0;
 extern void Lock(void);
 extern void TableLookupIatCall(void);
 
-__declspec(naked) void CritSecLazyEnter_004cd2b0(void) {
+__declspec(naked) void CritSecLazyEnter(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         push    ebx

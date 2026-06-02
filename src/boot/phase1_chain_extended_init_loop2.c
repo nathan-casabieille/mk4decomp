@@ -121,7 +121,7 @@ extern void SetJmp_00405420(void);
 extern void SetJmp_00408d20(void);
 extern void ThreeChanPackClamp(void);
 
-__declspec(naked) void Phase1ChainExtendedInitLoop2_0040c760(void)
+__declspec(naked) void Phase1ChainExtendedInitLoop2(void)
 {
     __asm {
         push    ebx

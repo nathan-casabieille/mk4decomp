@@ -24,7 +24,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_dispatchSave1469_00fa0ee0;
 extern unsigned int g_table_00fa0de0[];
-int TestHandleBit_004cc2b0(int handle) {
+int TestHandleBit(int handle) {
     int hi;
     int lo;
     unsigned char *base;

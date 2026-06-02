@@ -118,11 +118,11 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void EntryThunkBodyStateMachine(void);
 extern void FiveCallGuardSetTail(void);
-extern void ScaledDualPropagateJmp_004287b0(void);
+extern void ScaledDualPropagateJmp(void);
 extern void ScaledZero44(void);
 extern void TableLookupCall_00489f60(void);
 
-__declspec(naked) void GuardedThenCjCascade_0047d560(void) {
+__declspec(naked) void GuardedThenCjCascade(void) {
     __asm {
         mov     dword ptr [g_eventQueueNotMask], 0
         call    EntryThunkBodyStateMachine
@@ -133,7 +133,7 @@ __declspec(naked) void GuardedThenCjCascade_0047d560(void) {
         mov     dword ptr [g_walkCallback], 0x13
         call    TableLookupCall_00489f60
         push    0x004ed420
-        call    ScaledDualPropagateJmp_004287b0
+        call    ScaledDualPropagateJmp
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax

@@ -129,7 +129,7 @@ extern unsigned int g_audioInitState1_00541ed0;
 extern unsigned int g_installCountdownPair_00543894;
 extern unsigned int g_dispatchSave8_00543898;
 
-void StateInitShuffle_00422380(void) {
+void StateInitShuffle(void) {
     __asm {
         mov     ecx, dword ptr [g_dlNalt2]
         mov     edx, dword ptr [g_dlNalt3]

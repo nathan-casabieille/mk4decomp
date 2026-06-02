@@ -18,7 +18,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [eax + 0x74], edx
  *   ret
  */
-void ZeroThreeFields6c_004abfe0(void) {
+void ZeroThreeFields6c(void) {
     unsigned char *base = (unsigned char *)(g_fightGroupHead * 4);
     g_walkCallback = 0;
     *(unsigned int *)(base + 0x6c) = 0;

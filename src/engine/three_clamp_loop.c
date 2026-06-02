@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_arr_425a80_dst;
 extern unsigned int g_arr_425a80_src;
 
-__declspec(naked) void ThreeClampLoop_00425a80(void) {
+__declspec(naked) void ThreeClampLoop(void) {
     __asm {
         push    ebx
         push    esi

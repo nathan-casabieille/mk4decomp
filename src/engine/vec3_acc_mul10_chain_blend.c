@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void MStackPushDispatchBitGate(void);
-extern void Vec3AccMul10ChainBlend_0049c3d0(void);
+extern void Vec3AccMul10ChainBlend(void);
 
 /*
  * @addr 0x0049c360 (108b) - scaled push/call/post-jmp.
@@ -134,5 +134,5 @@ void ScaledStackCallPause(int arg) {
     g_matrixStackTop--;
     g_cj_0054205c = popped;
     if ((g_xformDirtyFlags & 4) != 0) return;
-    Vec3AccMul10ChainBlend_0049c3d0();
+    Vec3AccMul10ChainBlend();
 }

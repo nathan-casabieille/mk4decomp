@@ -116,7 +116,7 @@ extern void MStackPushTwoEntryChainCall(void);
 extern void PushDualDerefClearPop(void);
 extern void PushPopScaled18(void);
 
-void GuardedChainCopySetFlag_0048c480(void) {
+void GuardedChainCopySetFlag(void) {
     __asm {
         call    MStackPushDispatchBitGate
         mov     eax, dword ptr [g_framePauseFlag]

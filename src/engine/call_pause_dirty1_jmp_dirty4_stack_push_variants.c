@@ -18,7 +18,7 @@ extern void ScaledInitOrSelfPtr_00429680(void);
 extern void DirtyToggleByGate(void);
 extern void func_00428950_oo(void);
 extern void GameDispatchValidateState(void);
-extern void InstallSelfCallBitGate_00483ae0(void);
+extern void InstallSelfCallBitGate(void);
 
 __declspec(naked) void CallPauseDirty1JmpDirty4StackPush_00428850(void) {
     __asm {
@@ -54,13 +54,13 @@ __declspec(naked) void CallPauseDirty1JmpDirty4StackPush_00428850(void) {
 }
 
 /* @addr 0x00483a80 (84b): same shape, push 0x00483ae0 instead of 0x00428950 */
-extern void GuardedDoubleIncCmpJmp_00429860(void);
+extern void GuardedDoubleIncCmpJmp(void);
 extern void LiteralPushCallEntZero(void);
 extern void func_0048f330_oo(void);
 extern void func_0042b988_oo(void);
 __declspec(naked) void CallPauseDirty1JmpDirty4StackPush_00483a80(void) {
     __asm {
-        call    GuardedDoubleIncCmpJmp_00429860
+        call    GuardedDoubleIncCmpJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -80,7 +80,7 @@ __declspec(naked) void CallPauseDirty1JmpDirty4StackPush_00483a80(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], OFFSET InstallSelfCallBitGate_00483ae0
+        mov     dword ptr [eax*4 + 0], OFFSET InstallSelfCallBitGate
         jmp     func_0042b988_oo
         _emit   0e9h
         _emit   0dh

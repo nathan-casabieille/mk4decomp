@@ -108,29 +108,29 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void CallPauseMStackPushSet2Jmp_00437930(void);
+extern void CallPauseMStackPushSet2Jmp(void);
 extern void Cmp2CallDirtyCall(void);
-extern void TwoEntryStateScalar_00435ba0(void);
+extern void TwoEntryStateScalar(void);
 extern void InstallSelfStatePush_00435b00(void);
-extern void EntryThenDispatcherPair_00438cd0(void);
+extern void EntryThenDispatcherPair(void);
 
 /* @addr 0x004359f0 (257b game) - install-self + sibling threshold dispatcher.
  *   B1 (0..200, +7 NOPs): install-self.
  *     If chain[+0x84] nonzero: call MStackPush3CmpCall; if pause? ret.
- *     If bit0 of state set: tail-call PushCallPauseSet1Jmp_00438f20; else
- *     tail-call CallPauseMStackPushSet2Jmp_00437930.
+ *     If bit0 of state set: tail-call PushCallPauseSet1Jmp; else
+ *     tail-call CallPauseMStackPushSet2Jmp.
  *     If chain[+0x84] zero: call Cmp2CallDirtyCall; if eax != 0 ret.
  *     Else: set g_currentNodeFlags=0xcccc, g_eventQueueChild=0x1e; install-self at
  *     [esi+8]=0x004359f0; chain[+0x84]=1; scaledInit-chain push 0x004359f0+0x01000000;
  *     call StateGateMStackOverlap; pause=1; ret.
  *   B2 (208..256): call Cmp2CallDirtyCall; if eax != 0 ret.
  *     Compare g_table_00535ddc to 0x34f5c then 0x2cccc; pick one of three jumps:
- *     TwoEntryStateScalar_00435ba0 / InstallSelfStatePush_00435b00 / EntryThenDispatcherPair_00438cd0.
+ *     TwoEntryStateScalar / InstallSelfStatePush_00435b00 / EntryThenDispatcherPair.
  */
-extern void PushCallPauseSet1Jmp_00438f20(void);
+extern void PushCallPauseSet1Jmp(void);
 extern void StateGateMStackOverlap(void);
 
-__declspec(naked) void InstallSelfPlusThresholdJmpChain_004359f0(void) {
+__declspec(naked) void InstallSelfPlusThresholdJmpChain(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -152,10 +152,10 @@ __declspec(naked) void InstallSelfPlusThresholdJmpChain_004359f0(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   75h
         _emit   07h
-        call    PushCallPauseSet1Jmp_00438f20
+        call    PushCallPauseSet1Jmp
         pop     esi
         ret
-        call    CallPauseMStackPushSet2Jmp_00437930
+        call    CallPauseMStackPushSet2Jmp
         pop     esi
         ret
         call    Cmp2CallDirtyCall
@@ -198,12 +198,12 @@ __declspec(naked) void InstallSelfPlusThresholdJmpChain_004359f0(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   05h
-        jmp     TwoEntryStateScalar_00435ba0
+        jmp     TwoEntryStateScalar
         cmp     eax, 0x0002cccc
         _emit   7eh
         _emit   05h
         jmp     InstallSelfStatePush_00435b00
-        jmp     EntryThenDispatcherPair_00438cd0
+        jmp     EntryThenDispatcherPair
         ret
     }
 }

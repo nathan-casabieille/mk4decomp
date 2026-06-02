@@ -135,7 +135,7 @@ extern void ArgSarStoreJmp(void);
 extern void ScaledDecBranch_00466460(void);
 extern void TripleStageRollback(void);
 
-__declspec(naked) void FourEntryAlarmInstall_004662e0(void) {
+__declspec(naked) void FourEntryAlarmInstall(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         mov     ecx, dword ptr [eax*4 + 0x34]

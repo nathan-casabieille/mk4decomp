@@ -119,11 +119,11 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void ChainDecCondStoreCallJmp(void);
 extern void CmpDispatchPushCallPop(void);
-extern void InstallSelfChainSet80Call_004347f0(void);
+extern void InstallSelfChainSet80Call(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void InstallSelfAbsDiff_00434730(void) {
+__declspec(naked) void InstallSelfAbsDiff(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         xor     edx, edx
@@ -148,7 +148,7 @@ __declspec(naked) void InstallSelfAbsDiff_00434730(void) {
         cmp     ecx, 0x00020000
         _emit   7eh
         _emit   07h
-        call    InstallSelfChainSet80Call_004347f0
+        call    InstallSelfChainSet80Call
         pop     edi
         ret
         mov     dword ptr [g_eventQueueChild], 0x50

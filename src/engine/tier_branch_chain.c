@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *   state stack, recompute wt index from tier (wt + tier*2 + tier
  *   - 6 = wt + 3*tier - 6), load arr[new_wt], pop state back into wt.
  */
-void TierBranchChain_0048b6c0(void) {
+void TierBranchChain(void) {
     unsigned int tier;
     unsigned int wt;
     if ((int)g_eventQueueWorkType <= 2) {

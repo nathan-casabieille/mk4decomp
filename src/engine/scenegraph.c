@@ -23,7 +23,7 @@ void *AllocNode(void)
  *
  * @addr 0x004be050
  */
-extern void InitOrAllZeroLoopback_004bdb00(void);
+extern void InitOrAllZeroLoopback(void);
 
 
 void NodeApplyMatrix(void) {
@@ -323,28 +323,28 @@ void NodeApplyTransform_C_Direct(void)
 /* @addr 0x004bdc70 (48b game) - dispatch on 3-entry probe at (g_xformEntityIdx*4)+{0,4,8}.
  * If any of the 3 entries is non-zero, tail-jmp NodeApplyTransform_B (the immediately
  * following function at 0x004bdca0, encoded as e9 01 00 00 00); else tail-jmp
- * InitOrAllZeroLoopback_004bdb00. The trailing 0x90 byte at offset 47 is orig padding
+ * InitOrAllZeroLoopback. The trailing 0x90 byte at offset 47 is orig padding
  * that the synth's 0x90-fill restores. */
-void DispatchProbeOrTransformB_004bdc70(void) {
+void DispatchProbeOrTransformB(void) {
     unsigned int idx = g_xformEntityIdx;
     if (*(unsigned int *)(idx * 4 + 0) == 0 &&
         *(unsigned int *)(idx * 4 + 4) == 0 &&
         *(unsigned int *)(idx * 4 + 8) == 0) {
-        InitOrAllZeroLoopback_004bdb00();
+        InitOrAllZeroLoopback();
         return;
     }
     NodeApplyTransform_B();
 }
 
-/* @addr 0x004bddc0 (48b game) - sibling of DispatchProbeOrTransformB_004bdc70: same dispatch pattern,
+/* @addr 0x004bddc0 (48b game) - sibling of DispatchProbeOrTransformB: same dispatch pattern,
  * but second tail-jmp targets NodeApplyTransform_C instead of _B (rel32=0xa1).
  */
-void DispatchProbeOrTransformC_004bddc0(void) {
+void DispatchProbeOrTransformC(void) {
     unsigned int idx = g_xformEntityIdx;
     if (*(unsigned int *)(idx * 4 + 0) == 0 &&
         *(unsigned int *)(idx * 4 + 4) == 0 &&
         *(unsigned int *)(idx * 4 + 8) == 0) {
-        InitOrAllZeroLoopback_004bdb00();
+        InitOrAllZeroLoopback();
         return;
     }
     NodeApplyTransform_C();

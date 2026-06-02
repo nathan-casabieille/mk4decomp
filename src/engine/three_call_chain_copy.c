@@ -111,13 +111,13 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x004409e0 (184b game) - 3-call pause-gated, then chain[+0x3c/+0x40/+0x44] -> chain[+0x54/+0x58/+0x5c],
  *   set chain[+0x30] = 0x74, call MStackCall_00406340, tail-jmp MStackPushTwoEntryChainCall.
  */
-void ThreeCallChainCopy_004409e0(void) {
+void ThreeCallChainCopy(void) {
     unsigned int v;
     MStackPush2RunCountdown();
     if (g_framePauseFlag != 0) return;
     MStackBracket7_DispatchAndChain();
     if (g_framePauseFlag != 0) return;
-    DualLinkedBlockCopyBracketed_00476320();
+    DualLinkedBlockCopyBracketed();
     if (g_framePauseFlag != 0) return;
     v = ((ScenegraphNode *)(g_eventQueueIdx * 4))->child_a;
     g_walkCallback = v;

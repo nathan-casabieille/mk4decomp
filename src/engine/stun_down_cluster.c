@@ -110,15 +110,15 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave688_004e7a68;
 extern void Chain2AxisDiffStoreTailJmp(void);
-extern void DualPushSet7dCallPop_00474290(void);
+extern void DualPushSet7dCallPop(void);
 extern void DualScaledStore(void);
 extern void MStackPush3SideStore(void);
 extern void PendingMatch_00452770(void);
 extern void StoreLoadJmp(void);
-extern void StunDownChainCluster_00452310(void);
+extern void StunDownChainCluster(void);
 extern void Thunk_0049cbc0(void);
 
-__declspec(naked) void StunDownCluster_00451fc0(void)
+__declspec(naked) void StunDownCluster(void)
 {
     __asm {
         mov      eax, dword ptr [g_eventQueueEnd]
@@ -145,7 +145,7 @@ __declspec(naked) void StunDownCluster_00451fc0(void)
         mov      dword ptr [g_pendingNodeType], edx
         mov      dword ptr [g_eventQueueIdx], eax
     L_201d:
-        call     DualPushSet7dCallPop_00474290
+        call     DualPushSet7dCallPop
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2054
@@ -204,7 +204,7 @@ __declspec(naked) void StunDownCluster_00451fc0(void)
         pop      esi
         ret
     L_20f9:
-        push     OFFSET StunDownChainCluster_00452310 + 0x380
+        push     OFFSET StunDownChainCluster + 0x380
         call     StoreLoadJmp
         mov      dword ptr [g_eventQueueEnd], 0x22
         mov      dword ptr [g_xformScratch2088], 0xfffffeb9
@@ -248,7 +248,7 @@ __declspec(naked) void StunDownCluster_00451fc0(void)
         call     PendingMatch_00452770
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_22df
-        push     OFFSET StunDownChainCluster_00452310 + 0x80
+        push     OFFSET StunDownChainCluster + 0x80
         call     StoreLoadJmp
         mov      dword ptr [g_eventQueueEnd], 0x4b
         mov      dword ptr [g_xformScratch2088], 0x28f
@@ -268,13 +268,13 @@ __declspec(naked) void StunDownCluster_00451fc0(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edi
-        call     StunDownChainCluster_00452310
+        call     StunDownChainCluster
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
     L_226e:
-        push     OFFSET StunDownChainCluster_00452310 + 0x2d0
+        push     OFFSET StunDownChainCluster + 0x2d0
         call     StoreLoadJmp
         add      esp, 4
         call     DualScaledStore

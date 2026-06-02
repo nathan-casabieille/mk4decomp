@@ -15,7 +15,7 @@ extern void Lock(void);
 extern void TableLookupIatCall(void);
 extern void func_004c7430(void);
 
-__declspec(naked) void* SmallMalloc_004c5520(void) {
+__declspec(naked) void* SmallMalloc(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         push    esi

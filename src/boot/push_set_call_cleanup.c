@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  *   clear, clear bit 0 of g_xformDirtyFlags.
  */
 
-void PushSetCallCleanup_00408580(void) {
+void PushSetCallCleanup(void) {
     __asm {
         mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [eax*4 + 0x1c]

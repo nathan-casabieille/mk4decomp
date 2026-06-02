@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   (arg-0x3a4) with 5 buckets selected through a 19-byte LUT at
  *   0x4c97ec; outputs 0x411 / 0x804 / 0x412 / 0x404 / 0.
  */
-__declspec(naked) void TranslateMsgId_004c97a0(void) {
+__declspec(naked) void TranslateMsgId(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         add     eax, 0xfffffc5c

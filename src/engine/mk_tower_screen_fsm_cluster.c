@@ -112,14 +112,14 @@ extern unsigned int g_phaseCounter;
 extern unsigned int g_phaseThunkVar_00541fb4;
 extern unsigned int g_dispatchAcc_00541fb8;
 extern void CallSetPause(void);
-extern void MStackChainOrBitLoop_004635a0(void);
+extern void MStackChainOrBitLoop(void);
 extern void MStackPush2LLWalkCompare(void);
-extern void MStackPush2ScaledChainLoop_00463430(void);
+extern void MStackPush2ScaledChainLoop(void);
 extern void Thunk_00427460(void);
-extern void TripleEntryWordPushChain_004627c0(void);
+extern void TripleEntryWordPushChain(void);
 extern void func_00462ac0(void);
 
-__declspec(naked) void MkTowerScreenFsmCluster_00462560(void)
+__declspec(naked) void MkTowerScreenFsmCluster(void)
 {
     __asm {
         /* === Helper 1 (0x462560): row-process column-N w/ offset === */
@@ -255,7 +255,7 @@ __declspec(naked) void MkTowerScreenFsmCluster_00462560(void)
         je       short L_274b
         dec      eax
         jne      short L_274b
-        call     MStackChainOrBitLoop_004635a0
+        call     MStackChainOrBitLoop
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_277a
@@ -266,7 +266,7 @@ __declspec(naked) void MkTowerScreenFsmCluster_00462560(void)
         pop      esi
         ret
     L_274b:
-        call     MStackPush2ScaledChainLoop_00463430
+        call     MStackPush2ScaledChainLoop
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_277a
@@ -289,7 +289,7 @@ __declspec(naked) void MkTowerScreenFsmCluster_00462560(void)
         jne      short L_2793
         jmp      CallSetPause
     L_2793:
-        jmp      TripleEntryWordPushChain_004627c0
+        jmp      TripleEntryWordPushChain
         nop
         nop
         nop
@@ -305,6 +305,6 @@ __declspec(naked) void MkTowerScreenFsmCluster_00462560(void)
         jne      short L_27b3
         jmp      CallSetPause
     L_27b3:
-        jmp      TripleEntryWordPushChain_004627c0
+        jmp      TripleEntryWordPushChain
     }
 }

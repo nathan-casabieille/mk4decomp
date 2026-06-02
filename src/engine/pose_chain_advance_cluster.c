@@ -116,19 +116,19 @@ extern unsigned int g_fightAxisPosY;
 /*    (another intro fn entry).                                       */
 /*  h3 (0x44d500): event 004e6590 forwarder w/ status init.           */
 /*  h4 (0x44d540): event 004e65a0 forwarder w/ 0xfffffbc7 wait.       */
-/*  h5 (0x44d570): set state 9 → tail-jmp IntroFsmCluster_0044d580.   */
+/*  h5 (0x44d570): set state 9 → tail-jmp IntroFsmCluster.   */
 /* ------------------------------------------------------------------ */
 extern void MStackBracket5_FieldClear_StateAdvance(void);
 extern void DoubleCallChainInit(void);
 extern void PendingMatch_0043d830(void);
-extern void IntroFsmCluster_0044d580(void);
-extern void GuardedDualScaledChainCopy_0044dd00(void);
+extern void IntroFsmCluster(void);
+extern void GuardedDualScaledChainCopy(void);
 extern void PendingMatch_0044dd80(void);
 extern void GuardedScaled_00475060(void);
 extern void InstallSelfChainAccumPath(void);
 extern void GameInstall2BodyMul10ScaledInit(void);
 extern void GatedWordPushCall(void);
-extern void PoseChainAdvanceCluster_0044ef50(void);
+extern void PoseChainAdvanceCluster(void);
 extern unsigned int g_dispatchSave685_004e6580;
 extern unsigned int g_dispatchSave686_004e6590;
 extern unsigned int g_dispatchSave687_004e65a0;
@@ -139,7 +139,7 @@ extern void ArgSarStoreJmp(void);
 extern void FramePauseScaledStore(void);
 extern void StoreLoadJmp(void);
 
-__declspec(naked) void IntroInitCluster_0044d280(void)
+__declspec(naked) void IntroInitCluster(void)
 {
     __asm {
         /* === h1 (0x44d280): mstack-bracketed flag handler === */
@@ -237,7 +237,7 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         pop      esi
         ret
     L_d3de:
-        call     GuardedDualScaledChainCopy_0044dd00
+        call     GuardedDualScaledChainCopy
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d4f9
@@ -272,10 +272,10 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         pop      esi
         ret
     L_d48e:
-        push     OFFSET IntroFsmCluster_0044d580 + 0x40
+        push     OFFSET IntroFsmCluster + 0x40
         call     StoreLoadJmp
         add      esp, 4
-        push     OFFSET PoseChainAdvanceCluster_0044ef50 + 0x290
+        push     OFFSET PoseChainAdvanceCluster + 0x290
         call     StoreLoadJmp
         add      esp, 4
         call     DoubleCallChainInit
@@ -348,6 +348,6 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         nop
         /* === h5 (0x44d570): set state 9 → tail-jmp 44d580 === */
         mov      dword ptr [g_eventQueueEnd], 9
-        jmp      IntroFsmCluster_0044d580
+        jmp      IntroFsmCluster
     }
 }

@@ -19,7 +19,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_walkCallback], eax
  *   ret
  */
-void DivBy_004ab300(void) {
+void DivBy(void) {
     int divisor = (int)g_eventQueueCurrent;
     if (divisor == 0) {
         g_walkCallback = (void (*)(void))divisor;

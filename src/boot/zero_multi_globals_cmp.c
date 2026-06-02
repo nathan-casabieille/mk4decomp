@@ -22,7 +22,7 @@ extern unsigned int g_installSelfCounter2_00541d90;
 extern unsigned int g_player1State;
 extern unsigned int g_player2State;
 extern unsigned int g_dispatchSave49_00535e44;
-void ZeroMultiGlobalsCmp_00404680(void) {
+void ZeroMultiGlobalsCmp(void) {
     g_walkCallback = 0;
     g_stateCountdown = 0;
     g_dispatchSave402_00537f10 = 0;

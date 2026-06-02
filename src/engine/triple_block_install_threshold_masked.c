@@ -113,21 +113,21 @@ extern unsigned int g_fightAxisPosY;
  *     Else: g_currentNodeFlags=0x5cccc; g_eventQueueChild=0x3c; install-self at entry+0x01000000.
  *     state=1; call CallPauseConstStoreJmp; pause=1; pop edi; ret.
  *   Block B (+0xa0): call Cmp2CallDirtyCall; if !=0 ret. Cascade on g_table_00535ddc:
- *     <0x10000 jmp CallPauseTestByteJmpCalls; <0x20000 jmp EntryThenDispatcherPair_00438cd0;
- *     <0x40000 jmp ProneFsmCluster_004355f0; else jmp InstallSelfPacked0x2005.
+ *     <0x10000 jmp CallPauseTestByteJmpCalls; <0x20000 jmp EntryThenDispatcherPair;
+ *     <0x40000 jmp ProneFsmCluster; else jmp InstallSelfPacked0x2005.
  *   Block C (+0xe0): g_scaledInit=[baseSel*4+0x38]; g_eventQueueCurrent=[chain+0x40];
  *     and 0x200 -> g_xformScratch94. If nonzero jmp PrefixThunkInstallSelf3State.
  *     Else: g_walkCallback &= 0xff; push 0x004e4668; call JumpTableDispatch; pop; ret.
  */
 extern void CallPauseConstStoreJmp_00438170(void);
-extern void EntryThenDispatcherPair_00438cd0(void);
+extern void EntryThenDispatcherPair(void);
 extern void InstallSelfPacked0x2005(void);
-extern void JumpTableDispatch_0043a550(void);
+extern void JumpTableDispatch(void);
 extern void PrefixThunkInstallSelf3State(void);
-extern void ProneFsmCluster_004355f0(void);
+extern void ProneFsmCluster(void);
 extern void Wrapper_00438ee0(void);
 
-__declspec(naked) void TripleBlockInstallThresholdMasked_00435df0(void) {
+__declspec(naked) void TripleBlockInstallThresholdMasked(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         xor     edx, edx
@@ -140,10 +140,10 @@ __declspec(naked) void TripleBlockInstallThresholdMasked_00435df0(void) {
         jmp     Wrapper_00438ee0
         mov     dword ptr [g_currentNodeFlags], 0x5cccc
         mov     dword ptr [g_eventQueueChild], 0x3c
-        mov     dword ptr [eax + 8], offset TripleBlockInstallThresholdMasked_00435df0
+        mov     dword ptr [eax + 8], offset TripleBlockInstallThresholdMasked
         mov     ecx, dword ptr [g_baseSel]
         push    edi
-        mov     edi, offset TripleBlockInstallThresholdMasked_00435df0
+        mov     edi, offset TripleBlockInstallThresholdMasked
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x01000000
@@ -184,11 +184,11 @@ __declspec(naked) void TripleBlockInstallThresholdMasked_00435df0(void) {
         cmp     eax, 0x20000
         _emit   7dh
         _emit   05h
-        jmp     EntryThenDispatcherPair_00438cd0
+        jmp     EntryThenDispatcherPair
         cmp     eax, 0x40000
         _emit   7dh
         _emit   05h
-        jmp     ProneFsmCluster_004355f0
+        jmp     ProneFsmCluster
         jmp     InstallSelfPacked0x2005
         ret
         _emit   90h
@@ -208,7 +208,7 @@ __declspec(naked) void TripleBlockInstallThresholdMasked_00435df0(void) {
         push    0x004e4668
         and     edx, 0xff
         mov     dword ptr [g_walkCallback], edx
-        call    JumpTableDispatch_0043a550
+        call    JumpTableDispatch
         add     esp, 4
         ret
     }

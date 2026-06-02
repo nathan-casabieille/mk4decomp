@@ -114,32 +114,32 @@ extern unsigned int g_fightAxisPosY;
  *     pushes 0x4ed590 (alarm string) and calls ArgSarStoreJmp.
  *   13b NOP align pad.
  *   Entry 2 (offset 0x40, 67b): same shape but writes [scaled+0x68]=0x402,
- *     [scaled+0x74]=0x201 first, calls MStackPushSet0020_004901d0, then
+ *     [scaled+0x74]=0x201 first, calls MStackPushSet0020, then
  *     conditionally pushes 0x4ed5a8.
  *   13b NOP align pad.
  *   Entry 3 / body (offset 0x90, 211b): phase-state install. Phase 0 ->
  *     install Self body at [esi+8], slot[+0x84]=1, arms 0x541e6c. Phase 1 ->
  *     CmpEqInitCallElseJmp, on no-error: if bit 0 of 0x54208c set
- *     tail-call TriPhaseDualPathInstallChain_0047e420; else call TailJmpInstallSelfPair_0047e690.
+ *     tail-call TriPhaseDualPathInstallChain; else call TailJmpInstallSelfPair.
  *     If g_walkCallback < 0x26666 (threshold) tail-installs Self.
  *     Else chains ScaledAndAldf -> EsiEdiAliasDualMul10,
  *     writes 0x28f into [g_fightGroupHead*4+0x4c], calls
- *     InstallSelfThresholdDispatch_0047e310.
+ *     InstallSelfThresholdDispatch.
  */
 extern unsigned int g_dispatchSave717_004ed590;
 extern unsigned int g_dispatchSave718_004ed5a8;
 extern void ArgSarStoreJmp(unsigned int *);
 extern void CmpEqInitCallElseJmp(void);
 extern void EsiEdiAliasDualMul10(void);
-extern void InstallSelfThresholdDispatch_0047e310(void);
+extern void InstallSelfThresholdDispatch(void);
 extern void MStackPushSet0008(void);
-extern void MStackPushSet0020_004901d0(void);
+extern void MStackPushSet0020(void);
 extern void ScaledAndAldf(void);
-extern void TailJmpInstallSelfPair_0047e690(void);
-extern void TriPhaseDualPathInstallChain_0047e420(void);
+extern void TailJmpInstallSelfPair(void);
+extern void TriPhaseDualPathInstallChain(void);
 
 /* entry 1 (offset 0, 51b) */
-void Alarm3EntryPhaseChain_0047e1a0(void) {
+void Alarm3EntryPhaseChain(void) {
     g_walkCallback = 0x1012;
     ((ScenegraphNode *)(g_baseSel * 4))->fsm_state = 0x1012;
     MStackPushSet0008();
@@ -148,16 +148,16 @@ void Alarm3EntryPhaseChain_0047e1a0(void) {
 }
 
 /* entry 2 (offset 0x40, 67b) */
-void Alarm3PhaseChainEntry2_0047e1e0(void) {
+void Alarm3PhaseChainEntry2(void) {
     *(unsigned int *)(g_baseSel * 4 + 0x68) = 0x402;
     ((ScenegraphNode *)(g_baseSel * 4))->fsm_state = g_walkCallback = 0x201;
-    MStackPushSet0020_004901d0();
+    MStackPushSet0020();
     if (g_framePauseFlag == 0)
         ArgSarStoreJmp(&g_dispatchSave718_004ed5a8);
 }
 
 /* entry 3 / body (offset 0x90, 211b) */
-__declspec(naked) void Alarm3PhaseChainBody_0047e230(void) {
+__declspec(naked) void Alarm3PhaseChainBody(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    ebx
@@ -175,12 +175,12 @@ __declspec(naked) void Alarm3PhaseChainBody_0047e230(void) {
         jne     L_a3b_doneNoPop
         test    byte ptr [g_xformDirtyFlags], bl
         je      short L_a3b_e3InitChain
-        call    TriPhaseDualPathInstallChain_0047e420
+        call    TriPhaseDualPathInstallChain
         pop     esi
         pop     ebx
         ret
     L_a3b_e3InitChain:
-        call    TailJmpInstallSelfPair_0047e690
+        call    TailJmpInstallSelfPair
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a3b_doneNoPop
@@ -199,12 +199,12 @@ __declspec(naked) void Alarm3PhaseChainBody_0047e230(void) {
         mov     eax, 0x28f
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x4c], eax
-        call    InstallSelfThresholdDispatch_0047e310
+        call    InstallSelfThresholdDispatch
         pop     esi
         pop     ebx
         ret
     L_a3b_installPhase0:
-        mov     dword ptr [esi + 8], offset Alarm3PhaseChainBody_0047e230
+        mov     dword ptr [esi + 8], offset Alarm3PhaseChainBody
         mov     dword ptr [esi + 0x84], ebx
         mov     dword ptr [g_pendingNodeType], ebx
         mov     dword ptr [g_framePauseFlag], ebx

@@ -119,9 +119,9 @@ extern unsigned char g_byte_00543730;
  *   stash g_acc_00542078 into g_dlNalt1; if guard at 0x541dd4 set
  *   and certain bit-flags are clear, possibly remap eax==6 to 0xf
  *   (and bump 0x543728); possibly remap eax==7 to 0x11; then tail-
- *   jmp AudioInstallSelfShiftedChainInit_004a0210.
+ *   jmp AudioInstallSelfShiftedChainInit.
  */
-void AudioStateRemap_004a0190(void) {
+void AudioStateRemap(void) {
     unsigned int v = g_acc_00542078;
     g_dlNalt1 = v;
     if (g_audioInstallGate_00541dd4 != 0 &&
@@ -136,5 +136,5 @@ void AudioStateRemap_004a0190(void) {
             g_dlNalt1 = 0x11;
         }
     }
-    AudioInstallSelfShiftedChainInit_004a0210();
+    AudioInstallSelfShiftedChainInit();
 }

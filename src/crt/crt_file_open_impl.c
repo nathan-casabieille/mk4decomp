@@ -108,11 +108,11 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void CrtFileOpenImpl_004cd350(void);
+extern void CrtFileOpenImpl(void);
 extern unsigned int g_dispatchSave1441_00f9fae0;
 extern unsigned int g_dispatchSave1443_00f9fc00;
 
-__declspec(naked) void FopenMode_004c9270(void)
+__declspec(naked) void FopenMode(void)
 {
     __asm {
         mov      ecx, dword ptr [esp + 8]
@@ -232,7 +232,7 @@ __declspec(naked) void FopenMode_004c9270(void)
         push     ecx
         push     eax
         push     edx
-        call     CrtFileOpenImpl_004cd350
+        call     CrtFileOpenImpl
         mov      ecx, eax
         add      esp, 0x10
         test     ecx, ecx

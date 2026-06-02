@@ -117,7 +117,7 @@ extern unsigned int g_dispatchSave1166_004d510c;
 
 extern unsigned int g_arr_407c60;
 
-void ThreeChan11BitPack_00407c60(void) {
+void ThreeChan11BitPack(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
         and     eax, 0x7ff

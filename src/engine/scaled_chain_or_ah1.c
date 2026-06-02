@@ -17,7 +17,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [ecx*4 + 0x20], eax
  *   ret
  */
-void ScaledChainOrAh1_004462f0(void) {
+void ScaledChainOrAh1(void) {
     unsigned int scaled = *(unsigned int *)(g_baseSel * 4 + 0x5c);
     unsigned int v;
     g_scaledInit_00542044 = scaled;

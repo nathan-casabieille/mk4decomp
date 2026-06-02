@@ -21,7 +21,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_scaledInit_00542044], eax
  *   ret
  */
-void ArgScaledLoadCmpP1_0048e550(int arg) {
+void ArgScaledLoadCmpP1(int arg) {
     unsigned int idx = (unsigned int)(arg >> 2);
     g_eventQueueTotal = idx;
     g_scaledInit_00542044 = *(unsigned int *)(idx * 4);

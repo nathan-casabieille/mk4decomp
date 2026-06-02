@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* ------------------------------------------------------------------ */
 /* Stage-transition cluster (683b game, 5 packed helpers)              */
 /* ------------------------------------------------------------------ */
-extern void ThrowInitLinkCluster_004555f0(void);
+extern void ThrowInitLinkCluster(void);
 extern unsigned int g_dispatchSave693_004e7fb0;
 extern unsigned int g_dispatchSave694_004e7fc0;
 
@@ -298,7 +298,7 @@ __declspec(naked) void StageTransitionCluster_00455340(void)
         mov      dword ptr [g_eventQueueEnd], 0x28
         mov      dword ptr [g_fightGroupHead], ecx
     L_5598:
-        call     ThrowInitLinkCluster_004555f0
+        call     ThrowInitLinkCluster
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_55e9

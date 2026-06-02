@@ -114,9 +114,9 @@ extern unsigned int g_fightAxisPosY;
  *   Block B (+0x70): call ScaledChainSignDirtyToggle; if !pause: if bit (al=1 vs cl) clear, OR bit-0 of state.
  *     Else clear bit-0 and ret.
  */
-extern void ScaledChainSignDirtyToggle_00439680(void);
+extern void ScaledChainSignDirtyToggle(void);
 
-void DualMul10Tail_004395d0(void) {
+void DualMul10Tail(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         mov     eax, dword ptr [eax*4 + 0x38]
@@ -150,7 +150,7 @@ void DualMul10Tail_004395d0(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        call    ScaledChainSignDirtyToggle_00439680
+        call    ScaledChainSignDirtyToggle
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

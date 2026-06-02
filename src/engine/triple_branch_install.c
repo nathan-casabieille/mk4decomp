@@ -121,7 +121,7 @@ extern void ScaledArrStore_004285c0(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void TripleBranchInstall_004283b0(void) {
+__declspec(naked) void TripleBranchInstall(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi

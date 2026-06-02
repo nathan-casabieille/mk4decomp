@@ -111,12 +111,12 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x004397d0 (221b game) - mstack-push g_fightGroupHead+g_baseSel, walk chain via baseSel[*4+0x38]/+0x3c;
  *   extract byte from [chain*4+0x68]>>8 masked 0x0f, clamp to <= 4 (else zero);
  *   ecx = 0x004e4de0>>2 + masked byte; g_xformEntityIdx = [ecx*4+0]; g_cj_00542058 = same;
- *   call IncStoreCallIATDec_00439520; if !pause: mstack-pop g_baseSel, g_fightGroupHead. ret.
+ *   call IncStoreCallIATDec; if !pause: mstack-pop g_baseSel, g_fightGroupHead. ret.
  */
 extern unsigned int g_matrixStack_arr;
-extern void IncStoreCallIATDec_00439520(void);
+extern void IncStoreCallIATDec(void);
 
-void MStackChainExtractCall_004397d0(void) {
+void MStackChainExtractCall(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_fightGroupHead]
@@ -153,7 +153,7 @@ void MStackChainExtractCall_004397d0(void) {
         mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     dword ptr [g_cj_00542058], ecx
-        call    IncStoreCallIATDec_00439520
+        call    IncStoreCallIATDec
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

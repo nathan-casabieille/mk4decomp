@@ -111,8 +111,8 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x0048f5d0 (127b) - install-self pattern w/ push+call+call+cmp lt-or-call. */
 extern void ThreeChanPackClamp(void);
 extern void CopyThreeFields(void);
-extern void InstallSelfPushDualCallCmpLt_0048f5d0(void);
-void InstallSelfPushDualCallCmpLt_0048f5d0(void) {
+extern void InstallSelfPushDualCallCmpLt(void);
+void InstallSelfPushDualCallCmpLt(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int prev = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
@@ -127,7 +127,7 @@ void InstallSelfPushDualCallCmpLt_0048f5d0(void) {
             return;
         }
     }
-    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfPushDualCallCmpLt_0048f5d0;
+    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfPushDualCallCmpLt;
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;

@@ -115,10 +115,10 @@ extern unsigned int g_fightAxisPosY;
  *   else xor bit-2 and set bit-0. Multiple ret paths.
  */
 extern unsigned int g_tickFlagF;
-extern void CmpEax1OrSetDirty_00488e90(void);
+extern void CmpEax1OrSetDirty(void);
 extern void SwapOrPassSet(void);
 
-__declspec(naked) void DualCondMatchSet_00488dc0(void) {
+__declspec(naked) void DualCondMatchSet(void) {
     __asm {
         mov     eax, dword ptr [g_tickFlagF]
         cmp     eax, 2
@@ -152,7 +152,7 @@ __declspec(naked) void DualCondMatchSet_00488dc0(void) {
         cmp     eax, ecx
         _emit   74h
         _emit   05h
-        jmp     CmpEax1OrSetDirty_00488e90
+        jmp     CmpEax1OrSetDirty
         mov     dword ptr [g_walkCallback], 0x00001000
         call    SetJmp_0049cb90
         mov     eax, dword ptr [g_framePauseFlag]

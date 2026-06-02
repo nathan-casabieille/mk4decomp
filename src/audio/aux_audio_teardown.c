@@ -111,11 +111,11 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_iat_004d2230;
 extern unsigned int g_iat_004d2244;
 
-void AuxAudio_Teardown_004ac9b0(void) {
+void AuxAudio_Teardown(void) {
     int i;
     void (__stdcall *cb)(unsigned int, unsigned int);
     struct AuxChannel *p;
-    Audio_TimerTeardown_004ac5f0();
+    Audio_TimerTeardown();
     if (g_audioState08 != 0) {
         ((void (__stdcall *)(unsigned int, unsigned int, unsigned int, unsigned int))g_iat_004d2244)(g_audioPreState, 0x804, 0, 0);
     }

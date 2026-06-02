@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
 extern void Crt_doserrno(void);
 extern void Crt_errno(void);
 
-__declspec(naked) void DosMapErr_004c8b20(void) {
+__declspec(naked) void DosMapErr(void) {
     __asm {
         push    esi
         call    Crt_doserrno

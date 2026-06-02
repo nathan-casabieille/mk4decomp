@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void PendingMatch_00444ef0(void);
 extern unsigned int g_table_004e5e28;
-void DoublePushScaledInitJmp_00444db0(void) {
+void DoublePushScaledInitJmp(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_scaledInit_00542044;
     g_matrixStackTop++;

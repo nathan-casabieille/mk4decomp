@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_word_007af9f0;
 extern u32 g_vtxColorPrev;
 
-void Color15BitPacker_004b3030(void) {
+void Color15BitPacker(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         test    eax, eax

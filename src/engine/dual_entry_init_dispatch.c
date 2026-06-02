@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void ScaledInitWithCounterAndType_004314f0(void);
 
-__declspec(naked) void DualEntryInitDispatch_00431360(void) {
+__declspec(naked) void DualEntryInitDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_fightGroupHead]
         xor     ecx, ecx
@@ -146,7 +146,7 @@ __declspec(naked) void DualEntryInitDispatch_00431360(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        call    DualEntryInitDispatch_00431360
+        call    DualEntryInitDispatch
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

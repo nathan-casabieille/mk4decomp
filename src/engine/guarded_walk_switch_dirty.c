@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
  *   branch (codegen quirk: cmp flags preserved across load).
  */
 extern void ScaledChain3c74(void);
-void GuardedWalkSwitchDirty_0048ea40(void) {
+void GuardedWalkSwitchDirty(void) {
     unsigned int v;
     ScaledChain3c74();
     if (g_framePauseFlag != 0) return;

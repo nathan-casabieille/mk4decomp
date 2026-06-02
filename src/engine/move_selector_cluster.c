@@ -110,12 +110,12 @@ extern unsigned int g_fightAxisPosY;
 
 extern void ScaledLitLoadCall_00480fe0(void);
 extern void MoveSelectorCluster(void);
-extern void HopBackFsmCluster_0047a2e0(void);
+extern void HopBackFsmCluster(void);
 
 /* @addr 0x0047a090 (300b game) - 3-state install-self with field-set + sibling-tail.
  *   state==0: call ScaledAndAldf; if pause ret.
  *     If g_xformScratch2088==1: tail-call MoveSelectorCluster; ret.
- *     Else: install-self at entry+0x01000000; call HopBackFsmCluster_0047a2e0; pause=1; ret.
+ *     Else: install-self at entry+0x01000000; call HopBackFsmCluster; pause=1; ret.
  *   state==1: g_walkCallback=0x5e; call ScaledLitLoadCall; if pause ret.
  *     Install-self at entry+0x02000000; jmp common chain-push tail.
  *   state>=2: g_walkCallback=0x51e; call ScaledLitLoadCall; if pause ret.
@@ -124,7 +124,7 @@ extern void HopBackFsmCluster_0047a2e0(void);
 extern void InstallSelf3StateDualChain(void);
 extern void ScaledAndAldf(void);
 
-__declspec(naked) void InstallSelf3StateFieldSet_0047a090(void) {
+__declspec(naked) void InstallSelf3StateFieldSet(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -170,9 +170,9 @@ __declspec(naked) void InstallSelf3StateFieldSet_0047a090(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     dword ptr [esi + 8], offset InstallSelf3StateFieldSet_0047a090
+        mov     dword ptr [esi + 8], offset InstallSelf3StateFieldSet
         mov     edx, dword ptr [g_baseSel]
-        mov     ecx, offset InstallSelf3StateFieldSet_0047a090
+        mov     ecx, offset InstallSelf3StateFieldSet
         mov     dword ptr [edx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
         mov     dword ptr [g_scaledInit_00542044], eax
@@ -190,9 +190,9 @@ __declspec(naked) void InstallSelf3StateFieldSet_0047a090(void) {
         call    MoveSelectorCluster
         pop     esi
         ret
-        mov     dword ptr [esi + 8], offset InstallSelf3StateFieldSet_0047a090
+        mov     dword ptr [esi + 8], offset InstallSelf3StateFieldSet
         mov     eax, dword ptr [g_baseSel]
-        mov     ecx, offset InstallSelf3StateFieldSet_0047a090
+        mov     ecx, offset InstallSelf3StateFieldSet
         mov     dword ptr [eax*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         mov     dword ptr [g_scaledInit_00542044], eax
@@ -204,7 +204,7 @@ __declspec(naked) void InstallSelf3StateFieldSet_0047a090(void) {
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
-        call    HopBackFsmCluster_0047a2e0
+        call    HopBackFsmCluster
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret

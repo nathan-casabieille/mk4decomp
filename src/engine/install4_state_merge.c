@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0047f1a0 (309b game) - 4-state install-self with common merge tail.
- *   Load state at [base*4+0x84]; clear. state==0: cmp g_xformScratch2088 with 1, if eq tail-call ThrowGrabPoseCopyCluster_0047f4e0;
+ *   Load state at [base*4+0x84]; clear. state==0: cmp g_xformScratch2088 with 1, if eq tail-call ThrowGrabPoseCopyCluster;
  *     else install-self at entry+0x01000000, jmp merge.
  *   state==1: g_walkCallback=0x5e; call ScaledLitLoadCall; if pause ret. Install at entry+0x02000000; jmp merge.
  *   state==2: g_walkCallback=0x5f; call ScaledLitLoadCall; if pause ret. Install at entry+0x03000000; jmp merge.
@@ -118,11 +118,11 @@ extern unsigned int g_fightAxisPosY;
  *     [baseSel*4+0x84]=0; call InstallSelfStateMachine; pause=1; pop edi/esi; ret.
  */
 extern void InstallSelfStateMachine_0047f3f0(void);
-extern void InstallSelfThreeStateScaledLoad_0047f2e0(void);
+extern void InstallSelfThreeStateScaledLoad(void);
 extern void ScaledLitLoadCall_00480fe0(void);
-extern void ThrowGrabPoseCopyCluster_0047f4e0(void);
+extern void ThrowGrabPoseCopyCluster(void);
 
-__declspec(naked) void Install4StateMerge_0047f1a0(void) {
+__declspec(naked) void Install4StateMerge(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -144,7 +144,7 @@ __declspec(naked) void Install4StateMerge_0047f1a0(void) {
         dec     eax
         _emit   74h
         _emit   08h
-        call    InstallSelfThreeStateScaledLoad_0047f2e0
+        call    InstallSelfThreeStateScaledLoad
         pop     edi
         pop     esi
         ret
@@ -157,9 +157,9 @@ __declspec(naked) void Install4StateMerge_0047f1a0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     dword ptr [esi + 8], offset Install4StateMerge_0047f1a0
+        mov     dword ptr [esi + 8], offset Install4StateMerge
         mov     ecx, dword ptr [g_baseSel]
-        mov     edx, offset Install4StateMerge_0047f1a0
+        mov     edx, offset Install4StateMerge
         mov     dword ptr [ecx*4 + 0x84], 3
         mov     eax, dword ptr [esi + 4]
         mov     dword ptr [g_scaledInit_00542044], eax
@@ -178,9 +178,9 @@ __declspec(naked) void Install4StateMerge_0047f1a0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     dword ptr [esi + 8], offset Install4StateMerge_0047f1a0
+        mov     dword ptr [esi + 8], offset Install4StateMerge
         mov     ecx, dword ptr [g_baseSel]
-        mov     edx, offset Install4StateMerge_0047f1a0
+        mov     edx, offset Install4StateMerge
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
         mov     dword ptr [g_scaledInit_00542044], eax
@@ -190,13 +190,13 @@ __declspec(naked) void Install4StateMerge_0047f1a0(void) {
         cmp     dword ptr [g_xformScratch2088], 1
         _emit   75h
         _emit   08h
-        call    ThrowGrabPoseCopyCluster_0047f4e0
+        call    ThrowGrabPoseCopyCluster
         pop     edi
         pop     esi
         ret
-        mov     dword ptr [esi + 8], offset Install4StateMerge_0047f1a0
+        mov     dword ptr [esi + 8], offset Install4StateMerge
         mov     ecx, dword ptr [g_baseSel]
-        mov     edx, offset Install4StateMerge_0047f1a0
+        mov     edx, offset Install4StateMerge
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         mov     dword ptr [g_scaledInit_00542044], eax

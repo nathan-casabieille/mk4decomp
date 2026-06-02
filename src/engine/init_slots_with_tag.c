@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  *   [eax+0x40]=0; ecx=0x2b43; [eax+0x44]=0; [eax+0x3c]=0x1eb8;
  *   g_walkCallback=ecx; [eax+0x34]=ecx; ret.
  */
-void InitSlotsWithTag_00446520(void) {
+void InitSlotsWithTag(void) {
     unsigned int idx;
     idx = *(unsigned int *)(g_baseSel * 4 + 0x30);
     g_walkCallback = 0;

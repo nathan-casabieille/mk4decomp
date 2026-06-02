@@ -26,7 +26,7 @@ extern unsigned int g_scaledInit_00542044;
  * Body: a1 482054 00 8b15 442054 00 8d0c85 00000000 8d0495 00000000 8a10 83c004 8811 41 8b50fc 85d2 75f1 c3
  * 5+6+7+7+2+3+2+1+3+2+2+1 = 41 ✓
  */
-void CopyByteUntilNull_004265a0(void) {
+void CopyByteUntilNull(void) {
     __asm {
         mov     eax, dword ptr [g_xformEntityIdx]
         mov     edx, dword ptr [g_scaledInit_00542044]

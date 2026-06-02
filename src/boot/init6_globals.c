@@ -23,8 +23,8 @@ extern unsigned int g_dispatchSave305_0053a188;
 extern unsigned int g_dispatchSave401_00537f08;
 extern unsigned int g_dispatchSave304_0053a380;
 extern unsigned int g_dispatchSave400_00535d08;
-extern void BootInitChainHeavy_00404f20(void);
-void Init6Globals_004051b0(void) {
+extern void BootInitChainHeavy(void);
+void Init6Globals(void) {
     g_dispatchSave305_0053a188 = 0;
     g_gtFightTickCounter = 0;
     g_logicFrameCounter = 0;
@@ -32,5 +32,5 @@ void Init6Globals_004051b0(void) {
     g_dispatchSave304_0053a380 = 0;
     g_walkCallback = (void (*)(void))1;
     g_dispatchSave400_00535d08 = 1;
-    BootInitChainHeavy_00404f20();
+    BootInitChainHeavy();
 }

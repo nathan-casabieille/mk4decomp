@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern void StageEventState4Way(void);
 extern void ScaledClearJmp_00428d40(void);
 extern void InstallSelf3WayChainCmp(void);
-extern void SweepCluster_004984e0(void);
+extern void SweepCluster(void);
 extern void CondPickDualStore(void);
 extern void StoreTwoCall(void);
 extern unsigned int g_or_0052ab40;
@@ -148,7 +148,7 @@ __declspec(naked) void StageEventState4Way(void)
         and      eax, 0x400
         mov      dword ptr [g_xformScratch94], eax
         jne      short L_8370
-        call     SweepCluster_004984e0
+        call     SweepCluster
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_84da
         push     0x4d

@@ -13,7 +13,7 @@ extern void Mul10Tail(void);
  *   call IAT [g_iatPtr_00542058], pause-test, restore
  */
 extern void (*g_iatPtr_00542058)(void);
-void IncStoreCallIATDec_00439520(void) {
+void IncStoreCallIATDec(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_eventQueueChild;
     g_iatPtr_00542058();

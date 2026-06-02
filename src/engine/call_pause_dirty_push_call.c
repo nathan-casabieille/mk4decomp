@@ -20,12 +20,12 @@ extern unsigned int g_scaledInit_00542044;
  *   add     esp, 4
  *   ret
  */
-extern void DualCondMatchSet_00488dc0(void);
+extern void DualCondMatchSet(void);
 extern int ArgSarStoreJmp(void *);
 extern void *g_dispatchSave1313_004ef1d0;
 extern void Wrapper_00488bd0(void);
-void CallPauseDirtyPushCall_00488ba0(void) {
-    DualCondMatchSet_00488dc0();
+void CallPauseDirtyPushCall(void) {
+    DualCondMatchSet();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 1) == 0) {
         Wrapper_00488bd0();

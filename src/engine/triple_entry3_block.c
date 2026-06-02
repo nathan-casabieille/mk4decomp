@@ -110,12 +110,12 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00498df0 (180b game) - triple-entry 3-block dispatcher with Mul10Tail and pause-gated paths. */
 extern void PendingMatch_00498eb0(void);
-extern void Phase4FivePackedDispatch_0040fe40(void);
-extern void Phase4FourHelperChain_00413760(void);
+extern void Phase4FivePackedDispatch(void);
+extern void Phase4FourHelperChain(void);
 extern void ScaledIndirectJmp_0049c850(void);
 extern void Vec2SumMul10ChainCompute(void);
 
-__declspec(naked) void TripleEntry3Block_00498df0(void) {
+__declspec(naked) void TripleEntry3Block(void) {
     __asm {
         mov     ecx, dword ptr [g_currentNodeFlags]
         mov     eax, dword ptr [g_scaledInit_00542044]
@@ -147,7 +147,7 @@ __declspec(naked) void TripleEntry3Block_00498df0(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   0eh
-        call    Phase4FourHelperChain_00413760
+        call    Phase4FourHelperChain
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -165,7 +165,7 @@ __declspec(naked) void TripleEntry3Block_00498df0(void) {
         jmp     ScaledIndirectJmp_0049c850
         ret
         _emit   90h
-        call    Phase4FivePackedDispatch_0040fe40
+        call    Phase4FivePackedDispatch
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

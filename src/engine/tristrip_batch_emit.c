@@ -131,12 +131,12 @@ extern s16 g_vtxScreenY;
 extern void AdvanceTriStripRing(void);
 extern void Helper_DrawCursor(void);
 extern void MaxOfThree(void);
-extern void MinOfThree_004b3d70(void);
+extern void MinOfThree(void);
 extern void ProjectTwoVertices(void);
 extern void ProjectVertex(void);
-extern void Vec3ColorShiftClamp_004b3490(void);
+extern void Vec3ColorShiftClamp(void);
 
-__declspec(naked) void TristripBatchEmit_004bbb80(void)
+__declspec(naked) void TristripBatchEmit(void)
 {
     __asm {
         mov      eax, dword ptr [g_inLoopStep]
@@ -255,7 +255,7 @@ __declspec(naked) void TristripBatchEmit_004bbb80(void)
         test     eax, eax
         mov      word ptr [esi + 0x1a], cx
         jne      L_bd2f
-        call     MinOfThree_004b3d70
+        call     MinOfThree
         jmp      L_bd34
     L_bd2f:
         call     MaxOfThree
@@ -272,7 +272,7 @@ __declspec(naked) void TristripBatchEmit_004bbb80(void)
         push     esi
         or       al, 0x10
         mov      word ptr [esi + 0x1a], ax
-        call     Vec3ColorShiftClamp_004b3490
+        call     Vec3ColorShiftClamp
         add      esp, 8
         push     esi
         call     Helper_DrawCursor

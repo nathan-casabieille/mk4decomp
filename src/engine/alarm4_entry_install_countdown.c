@@ -140,7 +140,7 @@ extern void ScaledLoadIncJmp_00429840(void);
 extern void ScaledLookupGuardJmpIndirect(void);
 extern void StreamInitCountdownBody(void);
 
-__declspec(naked) void Alarm4EntryInstallCountdown_00496960(void) {
+__declspec(naked) void Alarm4EntryInstallCountdown(void) {
     __asm {
         call    PushPopWalkSet1006
         mov     eax, dword ptr [g_framePauseFlag]

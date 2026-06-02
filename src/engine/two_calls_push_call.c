@@ -25,7 +25,7 @@ extern void ScaledMove48to58(void);
 extern void Wrapper_0048a280(void);
 extern int ArgSarStoreJmp(void *p);
 extern void *g_dispatchSave1312_004ef080;
-void TwoCallsPushCall_004887d0(void) {
+void TwoCallsPushCall(void) {
     ScaledMove48to58();
     if (g_framePauseFlag != 0) return;
     Wrapper_0048a280();

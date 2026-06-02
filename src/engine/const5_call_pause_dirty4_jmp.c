@@ -18,11 +18,11 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  *   ret
  */
-extern void CallPauseScaledStoreXJmp_00453750(void);
+extern void CallPauseScaledStoreXJmp(void);
 extern void GuardedSeq_00453780(void);
-void Const5Call_PauseDirty4_Jmp_004534e0(void) {
+void Const5Call_PauseDirty4_Jmp(void) {
     g_walkCallback = (void(*)(void))5;
-    CallPauseScaledStoreXJmp_00453750();
+    CallPauseScaledStoreXJmp();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 4) return;
     GuardedSeq_00453780();

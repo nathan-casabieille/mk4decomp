@@ -118,7 +118,7 @@ extern unsigned int g_iat_004d2148;
 extern void CmpCallPushIATCall(void);
 extern void LoadArgPushCall(void);
 
-__declspec(naked) void CrtIoInitFdTable_004c8bc0(void)
+__declspec(naked) void CrtIoInitFdTable(void)
 {
     __asm {
         sub      esp, 0x48

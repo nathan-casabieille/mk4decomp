@@ -111,9 +111,9 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x0042cec0 (322b game) - sibling of Distance3DMul10Chain with chain-field setup + dot-product. */
 extern unsigned int g_eventQueueChildSrc_0053a3dc;
 extern unsigned int g_eventQueueScratch_0053a41c;
-extern void DualMul10ChainAcc_0042d010(void);
+extern void DualMul10ChainAcc(void);
 
-void ChainMul10DotProd_0042cec0(void) {
+void ChainMul10DotProd(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         mov     eax, dword ptr [eax*4 + 0x38]
@@ -122,7 +122,7 @@ void ChainMul10DotProd_0042cec0(void) {
         mov     dword ptr [g_eventQueueCurrent], ecx
         mov     edx, dword ptr [eax*4 + 0x5c]
         mov     dword ptr [g_eventQueueWorkType], edx
-        call    DualMul10ChainAcc_0042d010
+        call    DualMul10ChainAcc
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -157,7 +157,7 @@ void ChainMul10DotProd_0042cec0(void) {
         add     ecx, eax
         mov     dword ptr [g_eventQueueNotMask], eax
         mov     dword ptr [g_eventQueueWorkType], ecx
-        call    DualMul10ChainAcc_0042d010
+        call    DualMul10ChainAcc
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

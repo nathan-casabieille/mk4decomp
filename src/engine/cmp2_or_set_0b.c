@@ -18,7 +18,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern unsigned int g_tickFlagF;
-void Cmp2OrSet0b_0048e3e0(void) {
+void Cmp2OrSet0b(void) {
     unsigned int v = g_tickFlagF;
     g_walkCallback = (void (*)(void))v;
     if (v == 2) return;

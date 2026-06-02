@@ -18,7 +18,7 @@ extern unsigned int g_scaledInit_00542044;
  * .ret:
  *   ret
  */
-void ScaledZeroIfNonzero_0049d430(void) {
+void ScaledZeroIfNonzero(void) {
     unsigned int v = g_scaledInit_00542044;
     g_walkCallback = (void (*)(void))v;
     if (v != 0) {

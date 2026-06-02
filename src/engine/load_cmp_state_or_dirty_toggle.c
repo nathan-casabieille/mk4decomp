@@ -16,7 +16,7 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_player1NodeIdx;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
-void LoadCmpStateOrDirtyToggle_0048e330(void) {
+void LoadCmpStateOrDirtyToggle(void) {
     unsigned int v = g_dlNalt1;
     g_walkCallback = (void (*)(void))v;
     if (g_fightGroupHead != g_player1NodeIdx) {

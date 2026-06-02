@@ -111,16 +111,16 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00440d20 (152b game) - install-self with snapshot:
  *   chain[sel].slot84 -> eax; clear. If !=0: g_eventQueueEnd = chain[sel].slot64;
  *     tail to StackPopDispatch.
- *   Else: mstack-push g_eventQueueNotMask; call BackdashSetupCluster_00440dc0; pause? ret;
+ *   Else: mstack-push g_eventQueueNotMask; call BackdashSetupCluster; pause? ret;
  *     pop into g_eventQueueNotMask; install self; set state.
  */
-extern void BackdashSetupCluster_00440dc0(void);
+extern void BackdashSetupCluster(void);
 
 extern unsigned int g_chain_disp_64_440d20;
 extern unsigned int g_matrixStack_arr;
 extern void FiveCallGuardSetTail(void);
 
-__declspec(naked) void InstallSelfSnapshot64_00440d20(void) {
+__declspec(naked) void InstallSelfSnapshot64(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -141,7 +141,7 @@ __declspec(naked) void InstallSelfSnapshot64_00440d20(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], ecx
-        call    BackdashSetupCluster_00440dc0
+        call    BackdashSetupCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -152,7 +152,7 @@ __declspec(naked) void InstallSelfSnapshot64_00440d20(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     eax, 1
         mov     dword ptr [g_eventQueueNotMask], edx
-        mov     dword ptr [esi + 8], offset InstallSelfSnapshot64_00440d20
+        mov     dword ptr [esi + 8], offset InstallSelfSnapshot64
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_framePauseFlag], eax

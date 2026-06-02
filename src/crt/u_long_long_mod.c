@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *   (matches _aulldvrm pattern but returns remainder).
  *   11 trailing 0xcc int3 padding bytes.
  */
-__declspec(naked) void ULongLongMod_004cc440(void) {
+__declspec(naked) void ULongLongMod(void) {
     __asm {
         push    ebx
         mov     eax, dword ptr [esp + 0x14]

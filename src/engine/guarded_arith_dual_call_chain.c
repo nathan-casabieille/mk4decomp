@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
 extern void MStackMagicModMul10(void);
 extern void ModMagicMul10Index(void);
 
-void GuardedArithDualCallChain_00431e90(void) {
+void GuardedArithDualCallChain(void) {
     __asm {
         mov     ecx, dword ptr [g_xformScratch2088]
         mov     eax, 0xfffe6de1

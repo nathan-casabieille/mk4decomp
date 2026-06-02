@@ -19,7 +19,7 @@ extern unsigned int g_clamp_00537f2c;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_active_00537e88;
 extern void GuardedSeq_004200b0(void);
-int CmpDualStateMatch_00421c50(void) {
+int CmpDualStateMatch(void) {
     unsigned int v;
     v = g_clamp_0053a6dc;
     g_walkCallback = (void (*)(void))v;

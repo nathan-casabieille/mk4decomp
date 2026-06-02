@@ -27,7 +27,7 @@ extern unsigned int g_scaledInit_00542044;
  *   pop     esi
  *   ret
  */
-void IterFnPtrs_004c6940(void (**start)(void), void (**end)(void)) {
+void IterFnPtrs(void (**start)(void), void (**end)(void)) {
     while (start < end) {
         void (*f)(void) = *start;
         if (f != 0) f();
