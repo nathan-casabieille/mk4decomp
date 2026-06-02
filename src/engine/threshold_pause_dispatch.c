@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *   call DualGuardedTableSearch; if nonzero ret.
  *   g_walkCallback = (g_table_00535ddc); if > 0x18000 ret; else jmp TimerWindowThreshDispatch.
  */
-extern void CopyJmp_0048ee80(void);
+extern void CopyJmp_ScaledSubStore_g_currentNodeIdx(void);
 extern void DualGuardedTableSearch(void);
 extern void TimerWindowThreshDispatch(void);
 
@@ -132,7 +132,7 @@ __declspec(naked) void ThresholdPauseDispatch(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        call    CopyJmp_0048ee80
+        call    CopyJmp_ScaledSubStore_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

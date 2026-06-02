@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -119,7 +119,7 @@ extern void ArgSarStoreJmp(void);
 extern void CallPauseScaledStoreJmp_00428820(void);
 extern void CjTableThresholdDispatch(void);
 extern void GateDispatch6c(void);
-extern void GuardedPushCall_00482990(void);
+extern void GuardedPushCall_Wrapper_ScaledChainPushCall_then_ArgSarStoreJmp(void);
 extern void ScaledMove48to58(void);
 extern void SixBlockCjCascade(void);
 extern void TableLookupCall_0048a160(void);
@@ -263,7 +263,7 @@ __declspec(naked) void StageGameProgressCluster(void)
         jne      short L_2923
         test     byte ptr [g_xformDirtyFlags], 1
         je       short L_2908
-        jmp      GuardedPushCall_00482990
+        jmp      GuardedPushCall_Wrapper_ScaledChainPushCall_then_ArgSarStoreJmp
     L_2908:
         call     Wrapper_ScaledChainPushCall_004ef920
         mov      eax, dword ptr [g_framePauseFlag]
@@ -301,7 +301,7 @@ __declspec(naked) void StageGameProgressCluster(void)
         jne      short L_2983
         test     byte ptr [g_xformDirtyFlags], 1
         je       short L_2968
-        jmp      GuardedPushCall_00482990
+        jmp      GuardedPushCall_Wrapper_ScaledChainPushCall_then_ArgSarStoreJmp
     L_2968:
         call     Wrapper_ScaledChainPushCall_004ef920
         mov      eax, dword ptr [g_framePauseFlag]

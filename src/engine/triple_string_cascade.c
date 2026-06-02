@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -163,7 +163,7 @@ __declspec(naked) void TripleStringCascade(void) {
         test    eax, eax
         _emit   75h
         _emit   3fh
-        call    CopyJmp_0048ef90
+        call    CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

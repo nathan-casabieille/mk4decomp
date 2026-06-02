@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -111,12 +111,12 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00442dd0 (176b game) - dual sequence: A: esi=0x94, scaledInit=0; loop:
  *   set g_walkCallback=esi; call DispatcherComplex138; pause-check; if bit-2 (bl=4) test fails:
  *   call CameraBounceOverflow; pause-check; reset. Block B (+0x58): same shape with esi=0x7e and
- *   ScaledChainAccumThreshold; falls through to call ScaledInitOrSelfPtr_00442d90.
+ *   ScaledChainAccumThreshold; falls through to call ScaledInitOrSelfPtr_DualSeqLoopDispatch.
  */
 extern void CameraBounceOverflow(void);
 extern void DispatcherComplex138_004760f0(void);
 extern void ScaledChainAccumThreshold(void);
-extern void ScaledInitOrSelfPtr_00442d90(void);
+extern void ScaledInitOrSelfPtr_DualSeqLoopDispatch(void);
 
 __declspec(naked) void DualSeqLoopDispatch(void) {
     __asm {
@@ -177,7 +177,7 @@ __declspec(naked) void DualSeqLoopDispatch(void) {
         pop     esi
         pop     ebx
         ret
-        call    ScaledInitOrSelfPtr_00442d90
+        call    ScaledInitOrSelfPtr_DualSeqLoopDispatch
         pop     esi
         pop     ebx
         ret

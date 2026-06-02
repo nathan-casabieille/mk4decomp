@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *     InstallSelfIndirectJmp; pop esi; ret.
  *   If was zero: call DirtyTestScaledCmpJmp; if pause? ret.
  *     call ScaledZeroFour; if pause? ret.
- *     call CopyJmp_0048ee80; if pause? ret.
+ *     call CopyJmp_ScaledSubStore_g_currentNodeIdx; if pause? ret.
  *     if g_walkCallback <= 0xcccc: push 0x004eb268, tail-call ArgSarStoreJmp; ret.
  *     else: call ScaledMove48to58; if pause? ret.
  *     call MStackPushSet0200; if pause? ret.
@@ -122,7 +122,7 @@ extern unsigned int g_fightAxisPosY;
  *     else: install-self at [esi+8]=0x0046cb70; chain[+0x84]=1; g_pendingNodeType=0xc; pause=1; ret.
  */
 extern void ArgSarStoreJmp(void);
-extern void CopyJmp_0048ee80(void);
+extern void CopyJmp_ScaledSubStore_g_currentNodeIdx(void);
 extern void DirtyTestScaledCmpJmp(void);
 extern void GuardedDirtyXformFromTable(void);
 extern void InstallSelfIndirectJmp(void);
@@ -169,7 +169,7 @@ __declspec(naked) void InstallSelfChainedDispatch(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        call    CopyJmp_0048ee80
+        call    CopyJmp_ScaledSubStore_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

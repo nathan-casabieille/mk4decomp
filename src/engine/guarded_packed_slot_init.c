@@ -15,7 +15,7 @@ extern unsigned int g_scaledInit_00542044;
 void GuardedPackedSlotInit(int arg0) {
     unsigned int packed;
     unsigned int v;
-    CopyJmp_00406ba0();
+    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx();
     if (g_framePauseFlag != 0) return;
     packed = (unsigned int)(arg0 >> 2);
     g_eventQueueTotal = packed;

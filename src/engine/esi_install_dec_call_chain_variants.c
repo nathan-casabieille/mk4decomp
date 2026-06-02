@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -117,14 +117,14 @@ extern unsigned int g_fightAxisPosY;
  *   else: call CallPauseScaledDecJmp; if pause: ret;
  *   cl = byte [g_xformDirtyFlags]; eax = 1; test al,cl;
  *   if zero: install_self;
- *     call ScaledInitOrSelfPtr_00429680; pop esi; ret;
+ *     call ScaledInitOrSelfPtr_StackPopDispatchTagged; pop esi; ret;
  *   install_self: [esi+8]=0x4293d0; [esi+0x84]=1;
  *                g_pendingNodeType=1; g_framePauseFlag=1; pop esi; ret.
  */
 extern void CallPauseScaledDecJmp(void);
-extern void CopyJmp_00406ba0(void);
+extern void CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(void);
 extern void GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
-extern void ScaledInitOrSelfPtr_00429680(void);
+extern void ScaledInitOrSelfPtr_StackPopDispatchTagged(void);
 
 __declspec(naked) void EsiInstallDecCallChain_004293d0(void) {
     __asm {
@@ -155,7 +155,7 @@ __declspec(naked) void EsiInstallDecCallChain_004293d0(void) {
         _emit   0c8h
         _emit   74h
         _emit   07h
-        call    ScaledInitOrSelfPtr_00429680
+        call    ScaledInitOrSelfPtr_StackPopDispatchTagged
         pop     esi
         ret
         mov     dword ptr [esi + 8], 0x004293d0
@@ -186,7 +186,7 @@ __declspec(naked) void EsiInstallDecCallChain_004294a0(void) {
         call    StackPopDispatchTagged
         pop     esi
         ret
-        call    CopyJmp_00406ba0
+        call    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -202,7 +202,7 @@ __declspec(naked) void EsiInstallDecCallChain_004294a0(void) {
         _emit   0c8h
         _emit   74h
         _emit   07h
-        call    ScaledInitOrSelfPtr_00429680
+        call    ScaledInitOrSelfPtr_StackPopDispatchTagged
         pop     esi
         ret
         mov     dword ptr [esi + 8], 0x004294a0

@@ -13,10 +13,10 @@ extern unsigned int g_scaledInit_00542044;
  *   if eax >= ecx: eax = ecx - 1 → walk; store walk → [edx*4+0x28];
  *   jmp T.
  */
-extern void CopyJmp_00406ba0(void);
+extern void CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(void);
 void GuardedClampStoreJmp(void) {
     unsigned int scaled, walk;
-    CopyJmp_00406ba0();
+    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx();
     if (g_framePauseFlag) return;
     scaled = ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end;
     g_scaledInit_00542044 = scaled;

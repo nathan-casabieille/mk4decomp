@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -113,14 +113,14 @@ extern unsigned int g_fightAxisPosY;
  *   state >= 2: tail-call FiveCallGuardSetTail.
  *   state 1: load cj[+0x70] (must >= 0 else jmp state-0 install path); call TailJmpInstallSelfPair;
  *     if pause? final-ret. If g_walkCallback > 0x18ccc, jmp install path.
- *     Else: call CopyJmp_00406ba0; if pause? final-ret.
+ *     Else: call CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx; if pause? final-ret.
  *     g_xformEntityIdx = 0x0050014c >> 2; install-self at [esi+8]=0x0047e310;
  *     chain[+0x84]=2; scaledInit-chain push 0x0047e310+0x02000000;
  *     call ScaledArrStore_ScaledChainJmp_00429450; pause=1; ret.
  *   state 0 path (or threshold/sign fall-through): install-self at [esi+8]=0x0047e310;
  *     chain[+0x84]=1; g_pendingNodeType=1; pause=1; ret.
  */
-extern void CopyJmp_00406ba0(void);
+extern void CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(void);
 extern void FiveCallGuardSetTail(void);
 extern void ScaledArrStore_ScaledChainJmp_00429450(void);
 extern void TailJmpInstallSelfPair(void);
@@ -171,7 +171,7 @@ __declspec(naked) void InstallSelfThresholdDispatch(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        call    CopyJmp_00406ba0
+        call    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

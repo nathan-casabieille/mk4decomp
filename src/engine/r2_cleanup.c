@@ -16,9 +16,9 @@ extern int g_renderer2_active;
 extern int g_renderer2_initOk;
 extern void ComReleaseCapture_004aeee0(void);
 extern void ComReleasePair_004af440(void);
-extern void ComRelease_004aedc0(void);
-extern void ComRelease_004aef30(void);
-extern void ComRelease_004af000(void);
+extern void ComRelease_g_comptr_0058c7b8(void);
+extern void ComRelease_g_comptr_0058c7bc(void);
+extern void ComRelease_g_comptr_0058c7c0(void);
 extern void DSoundBufferInit146_004aea40(void);
 extern void R2_Init4(void);
 extern void DSoundDualEntryRelease(void);
@@ -49,15 +49,15 @@ loop4ad7c0:
         cmp     esi, 0x10
         _emit   7ch
         _emit   0f1h
-        call    ComRelease_004aedc0
+        call    ComRelease_g_comptr_0058c7b8
         call    DSoundDualEntryRelease
         call    DualVtable8Call
-        call    ComRelease_004af000
+        call    ComRelease_g_comptr_0058c7c0
         call    ComReleasePair_004af440
         push    0
         call    R2_Init4
         add     esp, 4
-        call    ComRelease_004aef30
+        call    ComRelease_g_comptr_0058c7bc
         call    ComReleaseCapture_004aeee0
         call    DSoundBufferInit146_004aea40
         mov     eax, dword ptr [g_renderer2_initOk]

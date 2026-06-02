@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
  *   else: call StackPopDispatchTagged; pop esi; ret.
  */
 extern void GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
-extern void ScaledInitOrSelfPtr_00429680(void);
+extern void ScaledInitOrSelfPtr_StackPopDispatchTagged(void);
 
 extern unsigned int g_matrixStack_arr;
 
@@ -165,7 +165,7 @@ __declspec(naked) void InstallSelf3WayChainCmp(void) {
         _emit   0c8h
         _emit   74h
         _emit   07h
-        call    ScaledInitOrSelfPtr_00429680
+        call    ScaledInitOrSelfPtr_StackPopDispatchTagged
         pop     esi
         ret
         mov     dword ptr [esi + 8], 0x00428d80

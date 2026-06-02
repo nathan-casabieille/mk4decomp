@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -113,11 +113,11 @@ extern unsigned int g_dispatchSave928;
 extern unsigned int g_dispatchSave145;
 extern unsigned int g_dispatchSave72;
 extern void ArgSarStoreJmp(void);
-extern void CopyJmp_0043a620(void);
+extern void CopyJmp_QuadFieldEarlyJmpThenInstall_g_currentNodeIdx(void);
 extern void EsiInstallClampAddCall(void);
 extern void EsiInstallDecCallChain_004294a0(void);
 extern void GuardedPackedSlotInit(void);
-extern void GuardedPushCall_0043b980(void);
+extern void GuardedPushCall_CopyJmp_then_ArgSarStoreJmp_0043b980(void);
 extern void InstallSelfDoubleMStack(void);
 extern void ScaledLitLoadCall_00480fe0(void);
 extern void ScaledLoadIncJmp_00428d00(void);
@@ -128,7 +128,7 @@ __declspec(naked) void VersusScreenEventPoseCluster(void)
 {
     __asm {
         /* === h1 (0x43b680): event 004e4c20 forwarder === */
-        call     CopyJmp_0043a620
+        call     CopyJmp_QuadFieldEarlyJmpThenInstall_g_currentNodeIdx
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b69b
@@ -299,7 +299,7 @@ __declspec(naked) void VersusScreenEventPoseCluster(void)
         jne      short L_b971
         test     byte ptr [g_xformDirtyFlags], 1
         je       short L_b93c
-        jmp      GuardedPushCall_0043b980
+        jmp      GuardedPushCall_CopyJmp_then_ArgSarStoreJmp_0043b980
     L_b93c:
         mov      dword ptr [g_walkCallback], 0x3d70
         call     SfxAttenuateAndApply
@@ -311,7 +311,7 @@ __declspec(naked) void VersusScreenEventPoseCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b971
-        jmp      GuardedPushCall_0043b980
+        jmp      GuardedPushCall_CopyJmp_then_ArgSarStoreJmp_0043b980
     L_b971:
         ret
     }

@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern void StackPopDispatchTagged(void);
 extern void BootFrameSetup(void);
-extern void CopyJmp_00406ba0(void);
+extern void CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(void);
 extern void MStackPushTripleFields(void);
 
 __declspec(naked) void SelfInstallPhaseDispatch_00428990(void)
@@ -171,7 +171,7 @@ __declspec(naked) void SelfInstallPhaseDispatch_00428990(void)
         mov     ecx, dword ptr [g_fightGroupHead]
         mov     edx, dword ptr [ecx*4 + 0x2c]
         mov     dword ptr [g_eventQueueNotMask], edx
-        call    CopyJmp_00406ba0
+        call    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_sipd3_ret

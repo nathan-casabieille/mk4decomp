@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0046e9a0 (206b game) - dual-path install-self with mstack overwrite.
- *   chain[+0x84]!=0 path: esi=g_eventQueueNotMask; call CopyJmp_0048ef90; pause-check; bit-0 test:
+ *   chain[+0x84]!=0 path: esi=g_eventQueueNotMask; call CopyJmp_SlotCmp3way_g_currentNodeIdx; pause-check; bit-0 test:
  *     if set call CallPauseDirtyMStackPushFn; pop+ret. Else g_walkCallback=esi; call ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d430;
  *     if !pause: call [g_cj_00542058]; pop+ret.
  *   chain[+0x84]==0 path: snapshot+swap mstack top: ecx=mstack[N], save to g_cj_00542058, overwrite mstack[N]=g_walkCallback.
@@ -132,7 +132,7 @@ __declspec(naked) void InstallSelfMStackOverwrite(void) {
         _emit   74h
         _emit   44h
         mov     esi, dword ptr [g_eventQueueNotMask]
-        call    CopyJmp_0048ef90
+        call    CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

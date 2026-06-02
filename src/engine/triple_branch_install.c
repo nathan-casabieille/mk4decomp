@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  *   if (208c & 4): install with [esi+0x84]=1 (via eax); else: install with [esi+0x84]=2 (const).
  *   Both paths: g_pendingNodeType = 1; g_framePauseFlag = 1.
  */
-extern void CopyJmp_00406ba0(void);
+extern void CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(void);
 extern void ScaledArrStore_CallDualStoreXorBit(void);
 
 extern unsigned int g_matrixStack_arr;
@@ -137,7 +137,7 @@ __declspec(naked) void TripleBranchInstall(void) {
         call    StackPopDispatchTagged
         pop     esi
         ret
-        call    CopyJmp_00406ba0
+        call    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

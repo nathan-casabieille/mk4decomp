@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -117,7 +117,7 @@ extern void TwinMStackPushScaledChain(void);
 extern void RoundEndFsm(void);
 extern void CallPauseClear3CallTriple(void);
 extern void ScaledInit_GuardedDirtyXformFromTable_g_scaledInit(void);
-extern void CopyJmp_00406ba0(void);
+extern void CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(void);
 extern void ScaledZero44(void);
 extern void MStackPushSet0001(void);
 extern void MStackPushSet0004(void);
@@ -136,7 +136,7 @@ extern void ScaledInitWithCounterAndType_004314f0(void);
  *       bumped scaled slot, calls RoundEndFsm, arms 0x541e6c=1.
  *   11b NOP align pad.
  *   Entry 2 (offset 0x120, 90b): 6-call chain (ScaledInit_GuardedDirtyXformFromTable_g_scaledInit,
- *     CopyJmp_00406ba0, ScaledZero44, ScaledZeroFour,
+ *     CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx, ScaledZero44, ScaledZeroFour,
  *     MStackPushSet0001, MStackPushSet0004), each
  *     gated by 0x541e6c. On full success, tail-jmps
  *     ScaledInitWithCounterAndType_004314f0.
@@ -229,7 +229,7 @@ __declspec(naked) void Phase3InstallSelfChain(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pis2_e2End
-        call    CopyJmp_00406ba0
+        call    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pis2_e2End

@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -115,8 +115,8 @@ extern void ScaledMove48to58(void);
 extern void DualGatedStateYield(void);
 extern void AudioVolumeRescale(void);
 extern void Cmp3JmpOrPushCall(void);
-extern void GuardedPushCall_004338c0(void);
-extern void GuardedPushCall_004338a0(void);
+extern void GuardedPushCall_Thunk_ScaledLoadInstallOrCall_then_PackedAdvanceCallTailJmp(void);
+extern void GuardedPushCall_ScaledLoadInstallOrCall_then_PackedAdvanceCallTailJmp(void);
 extern void ScaledLoadInstallOrCall_00433990(void);
 extern void PackedAdvanceCallTailJmp(void);
 extern void CallPauseInc(void);
@@ -202,14 +202,14 @@ __declspec(naked) void HitReactionStateCluster(void)
     L_36ae:
         cmp      eax, 0x20000
         jge      short L_36bd
-        call     GuardedPushCall_004338c0
+        call     GuardedPushCall_Thunk_ScaledLoadInstallOrCall_then_PackedAdvanceCallTailJmp
         pop      edi
         pop      esi
         ret
     L_36bd:
         cmp      eax, 0x30000
         jge      short L_36cc
-        call     GuardedPushCall_004338a0
+        call     GuardedPushCall_ScaledLoadInstallOrCall_then_PackedAdvanceCallTailJmp
         pop      edi
         pop      esi
         ret

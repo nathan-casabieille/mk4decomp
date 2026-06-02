@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -113,7 +113,7 @@ extern unsigned int g_cj_00535df0;
 extern void MStackCall_00406340(void);
 extern void MStackPush2ChainLLInsert(void);
 extern void PushSetXfmMaskCallPop(void);
-extern void ScaledInitOrSelfPtr_00474b10(void);
+extern void ScaledInitOrSelfPtr_NetEntityScanAndPunish(void);
 
 __declspec(naked) void NetEntityScanAndPunish(void)
 {
@@ -220,7 +220,7 @@ __declspec(naked) void NetEntityScanAndPunish(void)
         mov      eax, dword ptr [g_xformEntityIdx]
         jmp      L_4b73
     L_4d2c:
-        call     ScaledInitOrSelfPtr_00474b10
+        call     ScaledInitOrSelfPtr_NetEntityScanAndPunish
     L_4d31:
         pop      edi
         pop      esi

@@ -16,13 +16,13 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern void CopyJmp_00406ba0(void);
+extern void CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00428850(void);
 extern void DualGuardPushInstallJmp(void);
 
 /* @addr 0x00428820 */
 void CallPauseScaledStoreJmp_00428820(void) {
-    CopyJmp_00406ba0();
+    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx();
     if (g_framePauseFlag) return;
     ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = g_eventQueueCurrent;
     CallPauseDirty1JmpDirty4StackPush_00428850();
@@ -30,7 +30,7 @@ void CallPauseScaledStoreJmp_00428820(void) {
 
 /* @addr 0x004288b0 */
 void CallPauseScaledStoreJmp_004288b0(void) {
-    CopyJmp_00406ba0();
+    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx();
     if (g_framePauseFlag) return;
     ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = g_eventQueueCurrent;
     DualGuardPushInstallJmp();

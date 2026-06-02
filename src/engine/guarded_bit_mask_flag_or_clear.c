@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x0048c510 (83b)
  *   eax = g_audioBankSel → g_walkCallback;
  *   if eax: jmp clear_and_ret;
- *   call CopyJmp_0048ef90; if pause: ret;
+ *   call CopyJmp_SlotCmp3way_g_currentNodeIdx; if pause: ret;
  *   cl = byte [g_xformDirtyFlags]; eax = 1;
  *   if (al & cl): jmp clear_and_ret;
  *   ecx = g_cj_0054205c; edx = [ecx*4 + 0x40] & 1; g_xformScratch94 = edx;
@@ -126,7 +126,7 @@ void GuardedBitMaskFlagOrClear(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   34h
-        call    CopyJmp_0048ef90
+        call    CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

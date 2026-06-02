@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -121,7 +121,7 @@ extern unsigned int g_fightAxisPosY;
  *   install self: [esi+8] = 0x00428c20; [esi+0x84]=1; g_pendingNodeType=1; pause=1.
  */
 extern unsigned int g_bootInitSaveSlot;
-extern void CallPauseDirty4ScaledSet_00419780(void);
+extern void CallPauseDirty4ScaledSet_tag_0x83(void);
 extern void GuardedClampStoreJmp(void);
 extern void StateDispatchTable(void);
 

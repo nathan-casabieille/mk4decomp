@@ -18,7 +18,7 @@
 extern void PendingMatch_00401b70(void);   /* 0x00401b70 */
 extern void MStackPushTwoEntryChainCall(void);   /* 0x004058c0 */
 extern void MStackCall_00406740(void);   /* 0x00406740 */
-extern void CopyJmp_00406ba0(void);   /* 0x00406ba0 */
+extern void CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(void);   /* 0x00406ba0 */
 extern void ChainDirtyBitWalker(void);   /* 0x00408c10 */
 extern void DirtyDoubleDeref(void);   /* 0x00408cb0 */
 extern void BootStateInitLongChain(void);   /* 0x0041ab90 */
@@ -87,14 +87,14 @@ void GuardedSeq_ZeroTriple_then_PendingMatch(void) {
 
 /* @addr 0x00428350 */
 void GuardedSeq_CopyJmp_then_MStackPushDualJmp(void) {
-    CopyJmp_00406ba0();
+    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx();
     if (g_framePauseFlag) return;
     MStackPushDualJmp();
 }
 
 /* @addr 0x00428480 */
 void GuardedSeq_CopyJmp_then_GuardedLoopWithCallback(void) {
-    CopyJmp_00406ba0();
+    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx();
     if (g_framePauseFlag) return;
     GuardedLoopWithCallback();
 }

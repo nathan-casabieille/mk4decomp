@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00482680 (101b)
- *   3-call guard cascade (CjTableThresholdDispatch, GateDispatch6c, CopyJmp_0048ef90);
+ *   3-call guard cascade (CjTableThresholdDispatch, GateDispatch6c, CopyJmp_SlotCmp3way_g_currentNodeIdx);
  *   if (bit0 of g_xformDirtyFlags) != 0:
  *     eax = g_cj_0054205c; [eax*4 + 0x4c] = 0x28f;
  *     ecx = g_cj_0054205c; eax = 0x1999; g_walkCallback = eax;
@@ -122,7 +122,7 @@ void TripleGuardSetTailJmp(void) {
     if (g_framePauseFlag != 0) return;
     GateDispatch6c();
     if (g_framePauseFlag != 0) return;
-    CopyJmp_0048ef90();
+    CopyJmp_SlotCmp3way_g_currentNodeIdx();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 1) == 0) {
         *(unsigned int *)(g_cj_0054205c * 4 + 0x4c) = 0x28f;

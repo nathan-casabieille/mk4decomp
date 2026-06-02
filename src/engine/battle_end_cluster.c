@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave646;
 extern void ScaledTestCallPauseJmpFar(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void TwoCallTail_00481380(void);
 extern void ArgSarStoreJmp(void);
 extern void BattleEndCluster(void);
@@ -127,7 +127,7 @@ extern void ChainDispatcher4Call(void);
  *              Self, slot[+0x84]=1, g_pendingNodeType=3, arms 0x541e6c=1.
  *   (9-byte NOP align pad.)
  *   Entry 2 (offset 0x100, 56b): chains ScaledTestCallPauseJmpFar
- *     then CopyJmp_0048ef90, both gated by 0x541e6c. If bit 0 of
+ *     then CopyJmp_SlotCmp3way_g_currentNodeIdx, both gated by 0x541e6c. If bit 0 of
  *     g_xformDirtyFlags set, tail-jmp TwoCallTail_00481380; else push 0x4eed08
  *     and call ArgSarStoreJmp.
  *   (8-byte NOP align pad.)
@@ -203,7 +203,7 @@ __declspec(naked) void Phase3Packed3EntryDispatch(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_p3p_e2End
-        call    CopyJmp_0048ef90
+        call    CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_p3p_e2End

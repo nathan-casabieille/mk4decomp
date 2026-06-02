@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   g_walkCallback = 0x8000; if baseSel*4+0x7c <= 0: g_walkCallback = 0x4ccc.
  *   call CmpP1DualInitStore_00482ab0; if !pause: g_walkCallback=baseSel*4+0x60; if != 0x1003 jmp InstallSelfHelperGate.
  *   Else baseSel*4+0x74=0x1003; call MStackPushSet0008; pause-check; g_walkCallback=1; call TableLookupCall_00489ff0; pause-check;
- *   call MStackPushPairTriCall; pause-check; g_eventQueueNotMask=0; call CopyJmp_0048ef90; pause-check;
+ *   call MStackPushPairTriCall; pause-check; g_eventQueueNotMask=0; call CopyJmp_SlotCmp3way_g_currentNodeIdx; pause-check;
  *   if bit-0 set g_eventQueueNotMask=1; g_eventQueueChild=6; jmp MStackInstallCountdown.
  */
 extern void CmpP1DualInitStore_00482ab0(void);
@@ -168,7 +168,7 @@ __declspec(naked) void ChainDispatcher4Call(void) {
         _emit   75h
         _emit   3ah
         mov     dword ptr [g_eventQueueNotMask], 0
-        call    CopyJmp_0048ef90
+        call    CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

@@ -14,7 +14,7 @@ extern Mk4ComObj *g_comptr_0058c870;   /* 0x0058c870 */
 extern Mk4ComObj *g_comptr_0058c8f0;   /* 0x0058c8f0 */
 
 /* @addr 0x004aedc0 */
-void ComRelease_004aedc0(void) {
+void ComRelease_g_comptr_0058c7b8(void) {
     Mk4ComObj *p = g_comptr_0058c7b8;
     if (p) {
         p->vtbl->Release(p);
@@ -23,7 +23,7 @@ void ComRelease_004aedc0(void) {
 }
 
 /* @addr 0x004aef30 */
-void ComRelease_004aef30(void) {
+void ComRelease_g_comptr_0058c7bc(void) {
     Mk4ComObj *p = g_comptr_0058c7bc;
     if (p) {
         p->vtbl->Release(p);
@@ -32,7 +32,7 @@ void ComRelease_004aef30(void) {
 }
 
 /* @addr 0x004af000 */
-void ComRelease_004af000(void) {
+void ComRelease_g_comptr_0058c7c0(void) {
     Mk4ComObj *p = g_comptr_0058c7c0;
     if (p) {
         p->vtbl->Release(p);
@@ -41,7 +41,7 @@ void ComRelease_004af000(void) {
 }
 
 /* @addr 0x004afb10 */
-void ComRelease_004afb10(void) {
+void ComRelease_g_comptr_0058c870(void) {
     Mk4ComObj *p = g_comptr_0058c870;
     if (p) {
         p->vtbl->Release(p);
@@ -50,7 +50,7 @@ void ComRelease_004afb10(void) {
 }
 
 /* @addr 0x004b0340 */
-void ComRelease_004b0340(void) {
+void ComRelease_g_comptr_0058c8f0(void) {
     Mk4ComObj *p = g_comptr_0058c8f0;
     if (p) {
         p->vtbl->Release(p);

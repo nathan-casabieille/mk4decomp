@@ -15,7 +15,7 @@ extern void SlotInitAndChainLink(void);
 extern void BootGatedInitInstallPair(void);
 
 /* @addr 0x00419780 (83b): val1=0x83, imm=0x11999 */
-void CallPauseDirty4ScaledSet_00419780(void) {
+void CallPauseDirty4ScaledSet_tag_0x83(void) {
     SlotInitAndChainLink();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 4) return;
@@ -27,7 +27,7 @@ void CallPauseDirty4ScaledSet_00419780(void) {
 }
 
 /* @addr 0x00419840 (83b): val1=0x86, imm=0x11999 */
-void CallPauseDirty4ScaledSet_00419840(void) {
+void CallPauseDirty4ScaledSet_tag_0x86(void) {
     SlotInitAndChainLink();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 4) return;
@@ -39,7 +39,7 @@ void CallPauseDirty4ScaledSet_00419840(void) {
 }
 
 /* @addr 0x00419980 (83b): val1=0x87, imm=0x11999 */
-void CallPauseDirty4ScaledSet_00419980(void) {
+void CallPauseDirty4ScaledSet_tag_0x87(void) {
     SlotInitAndChainLink();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 4) return;
@@ -51,7 +51,7 @@ void CallPauseDirty4ScaledSet_00419980(void) {
 }
 
 /* @addr 0x00419a40 (83b): val1=0x82, imm=0x11999 */
-void CallPauseDirty4ScaledSet_00419a40(void) {
+void CallPauseDirty4ScaledSet_tag_0x82(void) {
     SlotInitAndChainLink();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 4) return;
@@ -63,7 +63,7 @@ void CallPauseDirty4ScaledSet_00419a40(void) {
 }
 
 /* @addr 0x00419b00 (83b): val1=0x88, imm=0x13333 */
-void CallPauseDirty4ScaledSet_00419b00(void) {
+void CallPauseDirty4ScaledSet_tag_0x88(void) {
     SlotInitAndChainLink();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 4) return;

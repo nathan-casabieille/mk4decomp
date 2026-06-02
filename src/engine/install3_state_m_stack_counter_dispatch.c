@@ -50,7 +50,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -325,7 +325,7 @@ extern void MStackPush8(void);
 extern void StateDispatchYield(void);
 extern void ModMagicMul10Index(void);
 extern void MStackMagicModMul10(void);
-extern void CopyJmp_0048ee80(void);
+extern void CopyJmp_ScaledSubStore_g_currentNodeIdx(void);
 extern void DualEntryInitDispatch(void);
 extern void ScaledInitWithCounterAndType_004314f0(void);
 extern void TableLookupCall_00489ff0(void);
@@ -2425,13 +2425,13 @@ extern int g_renderer2_initOk;
 extern void Renderer2_EndScene_D3D(void);
 extern void VtRelease_Modal(void);
 extern void ReleaseVtableSlots(int);
-extern void ComRelease_004aedc0(void);
+extern void ComRelease_g_comptr_0058c7b8(void);
 extern void DSoundDualEntryRelease(void);
 extern void DualVtable8Call(void);
-extern void ComRelease_004af000(void);
+extern void ComRelease_g_comptr_0058c7c0(void);
 extern void ComReleasePair_004af440(void);
 extern void DSoundBufferInit146_004aea40(int);
-extern void ComRelease_004aef30(void);
+extern void ComRelease_g_comptr_0058c7bc(void);
 extern void ComReleaseCapture_004aeee0(void);
 extern void DSoundBufferInit146_004aea40_alt(void);
 extern void R2_Init4(void);
@@ -2463,15 +2463,15 @@ loop4ad7c0:
         cmp     esi, 0x10
         _emit   7ch
         _emit   0f1h
-        call    ComRelease_004aedc0
+        call    ComRelease_g_comptr_0058c7b8
         call    DSoundDualEntryRelease
         call    DualVtable8Call
-        call    ComRelease_004af000
+        call    ComRelease_g_comptr_0058c7c0
         call    ComReleasePair_004af440
         push    0
         call    R2_Init4
         add     esp, 4
-        call    ComRelease_004aef30
+        call    ComRelease_g_comptr_0058c7bc
         call    ComReleaseCapture_004aeee0
         call    DSoundBufferInit146_004aea40
         mov     eax, dword ptr [g_renderer2_initOk]
@@ -4008,7 +4008,7 @@ extern unsigned int g_phaseTimer;
 extern unsigned char g_str_004ed428;
 extern void MStackFrameCdeclDouble(void);
 extern void TripleFieldCopyJmpHi(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void Wrapper_ArgSarStoreJmp_004ed440(void);
 extern void ArgSarStoreJmp(unsigned char*);
 
@@ -4037,7 +4037,7 @@ __declspec(naked) void ChainSetCallPauseDispatch(void) {
         mov     eax, 0xa
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_phaseTimer], eax
-        call    CopyJmp_0048ef90
+        call    CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -4892,7 +4892,7 @@ void CountedLoopMStack(void) {
         }
 }
 
-extern void CopyJmp_00406ba0(void);
+extern void CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(void);
 extern void ScaledArrStore_CallDualStoreXorBit(void);
 
 /* @addr 0x004283b0 (200b game) - 3-way install-self with two pending-state variants.
@@ -4919,7 +4919,7 @@ __declspec(naked) void TripleBranchInstall(void) {
         call    StackPopDispatchTagged
         pop     esi
         ret
-        call    CopyJmp_00406ba0
+        call    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -5961,7 +5961,7 @@ __declspec(naked) void BitSetByIndex(void) {
     }
 }
 
-extern void CallPauseDirty4ScaledSet_00419780(void);
+extern void CallPauseDirty4ScaledSet_tag_0x83(void);
 extern void GuardedClampStoreJmp(void);
 extern void StateDispatchTable(void);
 extern void MStackPushZeroCallPop_00407d00(void);
@@ -7478,7 +7478,7 @@ __declspec(naked) void DualGuardedTableSearch(void) {
 
 extern void GuardedChainCmpDualBitXor(void);
 extern void GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
-extern void ScaledInitOrSelfPtr_00429680(void);
+extern void ScaledInitOrSelfPtr_StackPopDispatchTagged(void);
 
 /* @addr 0x00428d80 (182b game) - 3-way install-self with chain compare and bit-test branch.
  *   esi = base*4; flag = [esi+0x84]; clear.
@@ -7532,7 +7532,7 @@ __declspec(naked) void InstallSelf3WayChainCmp(void) {
         _emit   0c8h
         _emit   74h
         _emit   07h
-        call    ScaledInitOrSelfPtr_00429680
+        call    ScaledInitOrSelfPtr_StackPopDispatchTagged
         pop     esi
         ret
         mov     dword ptr [esi + 8], 0x00428d80
@@ -7587,7 +7587,7 @@ __declspec(naked) void InstallSelfPair3Branch(void) {
         _emit   0c3h
         _emit   74h
         _emit   08h
-        call    ScaledInitOrSelfPtr_00429680
+        call    ScaledInitOrSelfPtr_StackPopDispatchTagged
         pop     esi
         pop     ebx
         ret
@@ -11427,7 +11427,7 @@ __declspec(naked) void ThresholdPauseDispatch(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        call    CopyJmp_0048ee80
+        call    CopyJmp_ScaledSubStore_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -14219,13 +14219,13 @@ void MStackPushTableWalk(void) {
         }
 }
 
-extern void CopyJmp_00406ba0(void);
+extern void CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(void);
 extern void GuardedPackedSlotInit(void);
 extern void ScaledChainJmp_00429470(void);
 
 /* @addr 0x0047a840 (174b game) - dual-entry install-self.
  *   Block A: standard install-self (no-op if chain[+0x84]==0); else call CjInstallSelfRouter, pop+ret.
- *     Then call CopyJmp_00406ba0; if !pause: push 0x00542b88, call GuardedPackedSlotInit;
+ *     Then call CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx; if !pause: push 0x00542b88, call GuardedPackedSlotInit;
  *     if !pause: install-self at +0x08=0x0047a840 with scaledInit-chain push 0x0047a840+0x01000000,
  *     baseSel[*4+0x84]=1 then clear; call ScaledChainJmp_00429470; g_pause=1; pop+ret.
  */
@@ -14242,7 +14242,7 @@ __declspec(naked) void InstallSelfFullPath(void) {
         call    CjInstallSelfRouter
         pop     esi
         ret
-        call    CopyJmp_00406ba0
+        call    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -14275,7 +14275,7 @@ __declspec(naked) void InstallSelfFullPath(void) {
     }
 }
 
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void Alarm4EntryInstallChain(void);
 
 /* @addr 0x004867b0 (174b game) - 3-block string-cascade. */
@@ -14329,7 +14329,7 @@ __declspec(naked) void TripleStringCascade(void) {
         test    eax, eax
         _emit   75h
         _emit   3fh
-        call    CopyJmp_0048ef90
+        call    CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -14549,12 +14549,12 @@ __declspec(naked) void InstallSelfCountdownCascade(void) {
 extern void DispatcherComplex138_004760f0(void);
 extern void CameraBounceOverflow(void);
 extern void ScaledChainAccumThreshold(void);
-extern void ScaledInitOrSelfPtr_00442d90(void);
+extern void ScaledInitOrSelfPtr_DualSeqLoopDispatch(void);
 
 /* @addr 0x00442dd0 (176b game) - dual sequence: A: esi=0x94, scaledInit=0; loop:
  *   set g_walkCallback=esi; call DispatcherComplex138; pause-check; if bit-2 (bl=4) test fails:
  *   call CameraBounceOverflow; pause-check; reset. Block B (+0x58): same shape with esi=0x7e and
- *   ScaledChainAccumThreshold; falls through to call ScaledInitOrSelfPtr_00442d90.
+ *   ScaledChainAccumThreshold; falls through to call ScaledInitOrSelfPtr_DualSeqLoopDispatch.
  */
 __declspec(naked) void DualSeqLoopDispatch(void) {
     __asm {
@@ -14615,7 +14615,7 @@ __declspec(naked) void DualSeqLoopDispatch(void) {
         pop     esi
         pop     ebx
         ret
-        call    ScaledInitOrSelfPtr_00442d90
+        call    ScaledInitOrSelfPtr_DualSeqLoopDispatch
         pop     esi
         pop     ebx
         ret
@@ -14628,7 +14628,7 @@ extern void FivePackedSubdispatchInstallSelf(void);
 
 /* @addr 0x0049bf90 (175b game) - 3-block: A: call MStackCall_00406740; if !pause jmp CallSetPause.
  *   B (+0x20): chain[*4+0x74]=0x30d; call CondPickDualStore; if !pause push 0x004f2660 call ArgSarStoreJmp; ret.
- *   C (+0x60): call CondPickDualStore; if !pause call CopyJmp_0048ef90; if !pause and bit-0 set
+ *   C (+0x60): call CondPickDualStore; if !pause call CopyJmp_SlotCmp3way_g_currentNodeIdx; if !pause and bit-0 set
  *     jmp FivePackedSubdispatchInstallSelf; else chain[*4+0x74]=0x30c; push 0x004f26a8; call ArgSarStoreJmp; ret.
  */
 __declspec(naked) void Triple3PathDispatch(void) {
@@ -14683,7 +14683,7 @@ __declspec(naked) void Triple3PathDispatch(void) {
         test    eax, eax
         _emit   75h
         _emit   40h
-        call    CopyJmp_0048ef90
+        call    CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -16874,7 +16874,7 @@ extern void CallPauseDirtyMStackPushFn(void);
 extern void ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d430(void);
 
 /* @addr 0x0046e9a0 (206b game) - dual-path install-self with mstack overwrite.
- *   chain[+0x84]!=0 path: esi=g_eventQueueNotMask; call CopyJmp_0048ef90; pause-check; bit-0 test:
+ *   chain[+0x84]!=0 path: esi=g_eventQueueNotMask; call CopyJmp_SlotCmp3way_g_currentNodeIdx; pause-check; bit-0 test:
  *     if set call CallPauseDirtyMStackPushFn; pop+ret. Else g_walkCallback=esi; call ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d430;
  *     if !pause: call [g_cj_00542058]; pop+ret.
  *   chain[+0x84]==0 path: snapshot+swap mstack top: ecx=mstack[N], save to g_cj_00542058, overwrite mstack[N]=g_walkCallback.
@@ -16892,7 +16892,7 @@ __declspec(naked) void InstallSelfMStackOverwrite(void) {
         _emit   74h
         _emit   44h
         mov     esi, dword ptr [g_eventQueueNotMask]
-        call    CopyJmp_0048ef90
+        call    CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -17663,7 +17663,7 @@ __declspec(naked) void DualEntryInstallSelfChain(void) {
 
 /* @addr 0x004809e0 (210b game) - 3-way install-self with chain[+0x84] value dispatch (0, 1, 2+).
  *   Value 0: fresh init via MStackPushSet0008, chain[+0x74]=0x100f, push str, call IterStepNegStore,
- *     call CopyJmp_00406ba0, install-self at +0x08=0x004809e0, chain[+0x84]=1, g_pendingNodeType=4, pause=1.
+ *     call CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx, install-self at +0x08=0x004809e0, chain[+0x84]=1, g_pendingNodeType=4, pause=1.
  *   Value 1 (after dec → 0): "advance" via ScaledZeroFour, if !pause install w/ chain[+0x84]=2, g_pendingNodeType=8.
  *   Value 2+: call FiveCallGuardSetTail, pop+ret.
  */
@@ -17714,7 +17714,7 @@ __declspec(naked) void Install3WayChainCounter(void) {
         test    eax, eax
         _emit   75h
         _emit   2fh
-        call    CopyJmp_00406ba0
+        call    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -18041,7 +18041,7 @@ extern void MStackPushPairTriCall(void);
  *   g_walkCallback = 0x8000; if baseSel*4+0x7c <= 0: g_walkCallback = 0x4ccc.
  *   call CmpP1DualInitStore_00482ab0; if !pause: g_walkCallback=baseSel*4+0x60; if != 0x1003 jmp InstallSelfHelperGate.
  *   Else baseSel*4+0x74=0x1003; call MStackPushSet0008; pause-check; g_walkCallback=1; call TableLookupCall_00489ff0; pause-check;
- *   call MStackPushPairTriCall; pause-check; g_eventQueueNotMask=0; call CopyJmp_0048ef90; pause-check;
+ *   call MStackPushPairTriCall; pause-check; g_eventQueueNotMask=0; call CopyJmp_SlotCmp3way_g_currentNodeIdx; pause-check;
  *   if bit-0 set g_eventQueueNotMask=1; g_eventQueueChild=6; jmp MStackInstallCountdown.
  */
 __declspec(naked) void ChainDispatcher4Call(void) {
@@ -18090,7 +18090,7 @@ __declspec(naked) void ChainDispatcher4Call(void) {
         _emit   75h
         _emit   3ah
         mov     dword ptr [g_eventQueueNotMask], 0
-        call    CopyJmp_0048ef90
+        call    CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -19865,7 +19865,7 @@ extern void BitSavePushCallMergePop(void);
 
 /* @addr 0x0045db70 (228b game) - mstack-push g_scaledInit, g_xformEntityIdx, g_baseSel;
  *   select baseSel from 0x00538038/0x0053803c based on g_pendingNodeType==g_player1NodeIdx;
- *   call BitSavePushCallMergePop; pause-check; call CopyJmp_0048ef90; pause-check; bit-0 check;
+ *   call BitSavePushCallMergePop; pause-check; call CopyJmp_SlotCmp3way_g_currentNodeIdx; pause-check; bit-0 check;
  *   call ScaledZeroFour; pause-check; mstack-pop reverse order. ret.
  */
 void MStackPush3CallChain(void) {
@@ -19900,7 +19900,7 @@ void MStackPush3CallChain(void) {
         test    eax, eax
         _emit   75h
         _emit   63h
-        call    CopyJmp_0048ef90
+        call    CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -20094,7 +20094,7 @@ __declspec(naked) void InstallSelfCountdownChain(void) {
         test    eax, eax
         _emit   75h
         _emit   78h
-        call    CopyJmp_00406ba0
+        call    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -23944,7 +23944,7 @@ __declspec(naked) void TripleBlockInstallSelf(void) {
 }
 
 extern void ScaledChain3c7c(void);
-extern void CopyJmp_0048ee80(void);
+extern void CopyJmp_ScaledSubStore_g_currentNodeIdx(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void DualEntryPushCall(void);
 
@@ -23952,7 +23952,7 @@ extern void DualEntryPushCall(void);
  *   B1 (0..213, +7 NOPs): snapshot+clear chain[+0x84]. If was zero: tail-call
  *     FiveCallGuardSetTail; ret.
  *     Else: call ScaledChain3c7c; if pause? ret. If g_walkCallback<=1? ret.
- *     Call CopyJmp_0048ee80; if pause? ret. If g_walkCallback>0x8000? ret.
+ *     Call CopyJmp_ScaledSubStore_g_currentNodeIdx; if pause? ret. If g_walkCallback>0x8000? ret.
  *     Call GuardedDualConst2AndToggle; if pause? ret. If bit0 of state
  *     clear? ret. Else: install-self at [esi+8]=0x0046c5d0; chain[+0x84]=1;
  *     scaledInit-chain push 0x0046c5d0+0x01000000; call DualEntryPushCall;
@@ -23993,7 +23993,7 @@ __declspec(naked) void InstallSelfPlusTrampoline(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        call    CopyJmp_0048ee80
+        call    CopyJmp_ScaledSubStore_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -24223,7 +24223,7 @@ extern void MStackPushSet0200(void);
  *     InstallSelfIndirectJmp; pop esi; ret.
  *   If was zero: call DirtyTestScaledCmpJmp; if pause? ret.
  *     call TripleFieldCopyJmpHi; if pause? ret.
- *     call CopyJmp_0048ee80; if pause? ret.
+ *     call CopyJmp_ScaledSubStore_g_currentNodeIdx; if pause? ret.
  *     if g_walkCallback <= 0xcccc: push 0x004eb268, tail-call ArgSarStoreJmp; ret.
  *     else: call ScaledMove48to58; if pause? ret.
  *     call MStackPushSet0200; if pause? ret.
@@ -24269,7 +24269,7 @@ __declspec(naked) void InstallSelfChainedDispatch(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        call    CopyJmp_0048ee80
+        call    CopyJmp_ScaledSubStore_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -25323,7 +25323,7 @@ __declspec(naked) void InstallSelfTableDispatch(void) {
 }
 
 extern void TailJmpInstallSelfPair(void);
-extern void CopyJmp_00406ba0(void);
+extern void CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(void);
 extern void ScaledArrStore_ScaledChainJmp_00429450(void);
 
 /* @addr 0x0047e310 (268b game) - 3-state install-self with threshold dispatch.
@@ -25331,7 +25331,7 @@ extern void ScaledArrStore_ScaledChainJmp_00429450(void);
  *   state >= 2: tail-call FiveCallGuardSetTail.
  *   state 1: load cj[+0x70] (must >= 0 else jmp state-0 install path); call TailJmpInstallSelfPair;
  *     if pause? final-ret. If g_walkCallback > 0x18ccc, jmp install path.
- *     Else: call CopyJmp_00406ba0; if pause? final-ret.
+ *     Else: call CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx; if pause? final-ret.
  *     g_xformEntityIdx = 0x0050014c >> 2; install-self at [esi+8]=0x0047e310;
  *     chain[+0x84]=2; scaledInit-chain push 0x0047e310+0x02000000;
  *     call ScaledArrStore_ScaledChainJmp_00429450; pause=1; ret.
@@ -25384,7 +25384,7 @@ __declspec(naked) void InstallSelfThresholdDispatch(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        call    CopyJmp_00406ba0
+        call    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -26984,7 +26984,7 @@ extern void ScaledLitLoadCall_00480fe0(void);
 extern void CallPauseScaledStoreCopyJmp(void);
 
 /* @addr 0x00467d40 (280b game) - 3-state install-self with state-dependent dispatch.
- *   state 1: call CopyJmp_00406ba0; if !pause:
+ *   state 1: call CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx; if !pause:
  *     baseSel[+0x34] mapped: 0x10 -> 2, 0x11 -> 7, else unchanged.
  *     g_walkCallback=mapped++. Fall through to common tail.
  *   state >= 2: skip to common tail.
@@ -27007,7 +27007,7 @@ __declspec(naked) void InstallSelfStateCounter(void) {
         dec     eax
         _emit   75h
         _emit   54h
-        call    CopyJmp_00406ba0
+        call    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -27466,7 +27466,7 @@ extern void BootFrameSetup(void);
 extern void GuardedChainCmpDualBitXor(void);
 extern void ScaledXorStore_004903b0(void);
 extern void CallPauseDirtyPushCall(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void PendingMatch_00484da0(void);
 extern void Wrapper_ArgSarStoreJmp_004ee958(void);
 
@@ -27478,7 +27478,7 @@ extern void Wrapper_ArgSarStoreJmp_004ee958(void);
  *   B3 (0x50..0xa4, +11 NOPs): g_xformEntityIdx = 0x00500698>>2; 4-call chain
  *     (BootFrameSetup, GuardedChainCmpDualBitXor, ScaledXorStore, GateDispatch6c);
  *     if all !pause: tail-jmp CallPauseDirtyPushCall.
- *   B4 (0xb0..0xe7, +8 NOPs): call GateDispatch6c; if !pause: call CopyJmp_0048ef90;
+ *   B4 (0xb0..0xe7, +8 NOPs): call GateDispatch6c; if !pause: call CopyJmp_SlotCmp3way_g_currentNodeIdx;
  *     if !pause and bit0 of state set: tail-jmp PendingMatch_00484da0; else: push 0x004ee920,
  *     tail-call ArgSarStoreJmp.
  *   B5 (0xf0..0x11b): call DirtyToggleByGate; if !pause and bit2 of state clear:
@@ -27569,7 +27569,7 @@ __declspec(naked) void FiveBlockDispatchChain_00484b70(void) {
         test    eax, eax
         _emit   75h
         _emit   29h
-        call    CopyJmp_0048ef90
+        call    CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -28735,7 +28735,7 @@ __declspec(naked) void TripleChainSetupDualCall(void) {
 
 extern void TableLookupCall_0048a160(void);
 extern void GateDispatch6c(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void QuadBlockDispatch(void);
 extern void CallPauseDirtyLit_00488c70(void);
 extern void ScaledChainCmp61(void);
@@ -28766,7 +28766,7 @@ __declspec(naked) void TripleBlockInstallSelfMidBody(void) {
         test    eax, eax
         _emit   75h
         _emit   37h
-        call    CopyJmp_0048ef90
+        call    CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -31542,7 +31542,7 @@ __declspec(naked) void DualBlockChainCallInstall(void) {
         test    eax, eax
         _emit   75h
         _emit   4dh
-        call    CopyJmp_0048ef90
+        call    CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -35040,7 +35040,7 @@ __declspec(naked) void QuadBlockInstallChainThunks(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        call    CopyJmp_0048ef90
+        call    CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -35196,7 +35196,7 @@ __declspec(naked) void InstallSelfMultiCascadeChainCopy(void) {
         mov     eax, dword ptr [eax*4 + 0x3c]
         mov     dword ptr [g_xformEntityIdx], eax
         mov     dword ptr [ecx*4 + 0x3c], eax
-        call    CopyJmp_0048ef90
+        call    CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -48651,7 +48651,7 @@ __declspec(naked) void Phase3PackedInstallSelf(void) {
 
 extern unsigned int g_dispatchSave646;
 extern void ScaledTestCallPauseJmpFar(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void TwoCallTail_00481380(void);
 extern void ArgSarStoreJmp(void);
 extern void BattleEndCluster(void);
@@ -48668,7 +48668,7 @@ extern void ChainDispatcher4Call(void);
  *              Self, slot[+0x84]=1, g_pendingNodeType=3, arms 0x541e6c=1.
  *   (9-byte NOP align pad.)
  *   Entry 2 (offset 0x100, 56b): chains ScaledTestCallPauseJmpFar
- *     then CopyJmp_0048ef90, both gated by 0x541e6c. If bit 0 of
+ *     then CopyJmp_SlotCmp3way_g_currentNodeIdx, both gated by 0x541e6c. If bit 0 of
  *     g_xformDirtyFlags set, tail-jmp TwoCallTail_00481380; else push 0x4eed08
  *     and call ArgSarStoreJmp.
  *   (8-byte NOP align pad.)
@@ -48743,7 +48743,7 @@ __declspec(naked) void Phase3Packed3EntryDispatch(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_p3p_e2End
-        call    CopyJmp_0048ef90
+        call    CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_p3p_e2End
@@ -48904,7 +48904,7 @@ __declspec(naked) void InstallSelfWithBody(void) {
 
 extern unsigned int g_installCountdownArr;
 extern unsigned int g_dispatchSave162;
-extern void CopyJmp_0048ee80(void);
+extern void CopyJmp_ScaledSubStore_g_currentNodeIdx(void);
 extern void Phase1ChainSetupCallScale6(void);
 extern void ScaledZeroFour(void);
 extern void MStackFrameCdeclDouble(void);
@@ -48915,7 +48915,7 @@ extern void ScaledArrStore_SetJmp_ScaledArrStore(void);
 
 /* @addr 0x0047e690 (354b game) - 2-entry tail-jmp + install-self phase.
  *   Entry 1 (offset 0, 16b): set g_walkCallback = 3 and g_phaseTimer = 3,
- *     then tail-jmp CopyJmp_0048ee80.
+ *     then tail-jmp CopyJmp_ScaledSubStore_g_currentNodeIdx.
  *   12b NOP align pad.
  *   Entry 2 / body (offset 0x20, 322b): phase from [scaled g_baseSel
  *     + 0x84]. Phase 0 first: sets [scaled+0x68]=0x401, [scaled+0x74]=0x205,
@@ -48935,7 +48935,7 @@ __declspec(naked) void TailJmpInstallSelfPair(void) {
         mov     eax, 3
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_phaseTimer], eax
-        jmp     CopyJmp_0048ee80
+        jmp     CopyJmp_ScaledSubStore_g_currentNodeIdx
         /* 12b NOP align pad */
         nop
         nop
@@ -53796,7 +53796,7 @@ extern void TwinMStackPushScaledChain(void);
 extern void RoundEndFsm(void);
 extern void CallPauseClear3CallTriple(void);
 extern void ScaledInit_GuardedDirtyXformFromTable_g_scaledInit(void);
-extern void CopyJmp_00406ba0(void);
+extern void CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(void);
 extern void ScaledZero44(void);
 extern void MStackPushSet0001(void);
 extern void MStackPushSet0004(void);
@@ -53815,7 +53815,7 @@ extern void ScaledInitWithCounterAndType_004314f0(void);
  *       bumped scaled slot, calls RoundEndFsm, arms 0x541e6c=1.
  *   11b NOP align pad.
  *   Entry 2 (offset 0x120, 90b): 6-call chain (ScaledInit_GuardedDirtyXformFromTable_g_scaledInit,
- *     CopyJmp_00406ba0, ScaledZero44, ScaledZeroFour,
+ *     CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx, ScaledZero44, ScaledZeroFour,
  *     MStackPushSet0001, MStackPushSet0004), each
  *     gated by 0x541e6c. On full success, tail-jmps
  *     ScaledInitWithCounterAndType_004314f0.
@@ -53904,7 +53904,7 @@ __declspec(naked) void Phase3InstallSelfChain(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pis2_e2End
-        call    CopyJmp_00406ba0
+        call    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pis2_e2End
@@ -57570,7 +57570,7 @@ __declspec(naked) void TwinMStackPushScaledChain(void)
 
 extern void StackPopDispatchTagged(void);
 extern void BootFrameSetup(void);
-extern void CopyJmp_00406ba0(void);
+extern void CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(void);
 extern void MStackPushTripleFields(void);
 
 __declspec(naked) void SelfInstallPhaseDispatch_00428990(void)
@@ -57631,7 +57631,7 @@ __declspec(naked) void SelfInstallPhaseDispatch_00428990(void)
         mov     ecx, dword ptr [g_fightGroupHead]
         mov     edx, dword ptr [ecx*4 + 0x2c]
         mov     dword ptr [g_eventQueueNotMask], edx
-        call    CopyJmp_00406ba0
+        call    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_sipd3_ret
@@ -58184,7 +58184,7 @@ extern void CallPauseTriCmpJmp(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseMStackPushSet0Jmp(void);
 extern void DualConstMaskFlagToggle8(void);
-extern void CopyJmp_00406ba0(void);
+extern void CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(void);
 extern void ZeroScaledZeroCallPauseJmp(void);
 extern void GuardedSeq_MStackNegAwareMul10Pair_then_ChainTableWalkStore(void);
 
@@ -58287,7 +58287,7 @@ __declspec(naked) void PerSlotPhaseRouter_004605d0(void)
         jne     short L_pspr_ret
         test    byte ptr [g_xformDirtyFlags], bl
         jne     short L_pspr_install
-        call    CopyJmp_00406ba0
+        call    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pspr_ret
@@ -59620,7 +59620,7 @@ extern void CallPauseTriCmpJmp(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseMStackPushSet0Jmp(void);
 extern void DualConstMaskFlagToggle4(void);
-extern void CopyJmp_00406ba0(void);
+extern void CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(void);
 extern void ZeroScaledZeroCallPauseJmp(void);
 extern void GuardedSeq_MStackNegAwareMul10Pair_then_ChainTableWalkStore(void);
 
@@ -59723,7 +59723,7 @@ __declspec(naked) void PerSlotPhaseRouter_00460770(void)
         jne     short L_pspr2_ret
         test    byte ptr [g_xformDirtyFlags], bl
         jne     short L_pspr2_install
-        call    CopyJmp_00406ba0
+        call    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pspr2_ret
@@ -60231,7 +60231,7 @@ void MStackBracketedScaledStores(void) {
 }
 
 extern void FiveCallGuardSetTail(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void ScaledLoadJmp_00428d20(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void CallDualStoreXorBit(void);
@@ -60256,7 +60256,7 @@ __declspec(naked) void TwoPhaseInstallScaledPackedPtr(void)
         pop     ebx
         ret
     L_tpisp_phase1:
-        call    CopyJmp_0048ef90
+        call    CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_tpisp_ret
@@ -60745,9 +60745,9 @@ __declspec(naked) void TriEntryGateMain(void)
     }
 }
 
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void ScaledLoadIncJmp_00429840(void);
-extern void CopyJmp_00406ba0(void);
+extern void CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(void);
 extern void SetJmp_ScaledArrStore(void);
 
 __declspec(naked) void PhaseDispatchListAdvance(void)
@@ -60764,7 +60764,7 @@ __declspec(naked) void PhaseDispatchListAdvance(void)
         je      L_pdla_phase0
         dec     eax
         je      short L_pdla_phase1
-        call    CopyJmp_0048ef90
+        call    CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pdla_abort
@@ -60796,7 +60796,7 @@ __declspec(naked) void PhaseDispatchListAdvance(void)
         pop     ebx
         ret
     L_pdla_phase1:
-        call    CopyJmp_0048ef90
+        call    CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pdla_abort
@@ -60826,7 +60826,7 @@ __declspec(naked) void PhaseDispatchListAdvance(void)
         pop     ebx
         ret
     L_pdla_phase0:
-        call    CopyJmp_00406ba0
+        call    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pdla_abort
@@ -60864,7 +60864,7 @@ __declspec(naked) void PhaseDispatchListAdvance(void)
 extern unsigned int g_audioBank2State;
 extern void InstallSelfStackReset(void);
 extern void StackPopDispatchTagged(void);
-extern void ScaledInitOrSelfPtr_00421f00(void);
+extern void ScaledInitOrSelfPtr_InstallSelfStackReset(void);
 
 __declspec(naked) void DualCounterPhaseGateInstall(void)
 {
@@ -60928,7 +60928,7 @@ __declspec(naked) void DualCounterPhaseGateInstall(void)
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
-        call    ScaledInitOrSelfPtr_00421f00
+        call    ScaledInitOrSelfPtr_InstallSelfStackReset
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         pop     esi
@@ -60967,7 +60967,7 @@ __declspec(naked) void DualCounterPhaseGateInstall(void)
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
-        call    ScaledInitOrSelfPtr_00421f00
+        call    ScaledInitOrSelfPtr_InstallSelfStackReset
         mov     dword ptr [g_framePauseFlag], esi
         pop     edi
         pop     esi
@@ -62349,7 +62349,7 @@ extern void SlotEvent3EntryChain(void);
 extern void DualCmpSwapStore(void);
 extern void ScaledStackCallPause(void);
 extern void CallSetPause(void);
-extern void GuardedPushCall_0049c200(void);
+extern void GuardedPushCall_DualMul10AndDispatchChain_then_ArgSar_Set0_Jmp(void);
 extern void DualMul10AndDispatchChain(void);
 extern void ArgSar_Set1_Jmp(void);
 
@@ -62448,7 +62448,7 @@ __declspec(naked) void FivePackedSubdispatchInstallSelf(void)
         je      short L_fpsi_sub4_jmpAlt
         jmp     CallSetPause
     L_fpsi_sub4_jmpAlt:
-        jmp     GuardedPushCall_0049c200
+        jmp     GuardedPushCall_DualMul10AndDispatchChain_then_ArgSar_Set0_Jmp
     L_fpsi_sub4_ret:
         ret
         nop
@@ -62500,7 +62500,7 @@ __declspec(naked) void FivePackedSubdispatchInstallSelf(void)
         je      short L_fpsi_sub6_alt
         jmp     CallSetPause
     L_fpsi_sub6_alt:
-        jmp     GuardedPushCall_0049c200
+        jmp     GuardedPushCall_DualMul10AndDispatchChain_then_ArgSar_Set0_Jmp
     L_fpsi_sub6_ret:
         ret
     }
@@ -96285,14 +96285,14 @@ __declspec(naked) void AudioStreamFsm5Way(void)
  *     [entity*4+0x5c] and [+0x54] with stack-popped values, set
  *     [+0x58] := -0x7ae (death timer), continue scan.
  *
- *   At end of list (eax==0) call ScaledInitOrSelfPtr_00474b10 (post-pass).
+ *   At end of list (eax==0) call ScaledInitOrSelfPtr_NetEntityScanAndPunish (post-pass).
  *
  * Frame: push ebx/esi/edi. Returns: void.
  * ============================================================ */
 
 extern void MStackCall_00406340(void);
 extern void PushSetXfmMaskCallPop(void);
-extern void ScaledInitOrSelfPtr_00474b10(void);
+extern void ScaledInitOrSelfPtr_NetEntityScanAndPunish(void);
 extern unsigned int g_dispatchSave601;
 
 __declspec(naked) void NetEntityScanAndPunish(void)
@@ -96400,7 +96400,7 @@ __declspec(naked) void NetEntityScanAndPunish(void)
         mov      eax, dword ptr [g_xformEntityIdx]
         jmp      L_4b73
     L_4d2c:
-        call     ScaledInitOrSelfPtr_00474b10
+        call     ScaledInitOrSelfPtr_NetEntityScanAndPunish
     L_4d31:
         pop      edi
         pop      esi
@@ -99029,7 +99029,7 @@ __declspec(naked) void GameMusicState4Way(void)
  *   7. 0x4828b0 (~26b): CjTableThresholdDispatch + push &g_dispatchSave586.
  *   8. 0x4828d0 (~89b): CjTableThresholdDispatch → GateDispatch6c →
  *      SixBlockCjCascade; if bit 0 of g_xformDirtyFlags set, tail-jmp
- *      GuardedPushCall_00482990; else Wrapper_ScaledChainPushCall_004ef920 + push
+ *      GuardedPushCall_Wrapper_ScaledChainPushCall_then_ArgSarStoreJmp; else Wrapper_ScaledChainPushCall_004ef920 + push
  *      &g_dispatchSave585 + ArgSarStoreJmp.
  *   9. 0x482930 (~89b): mirror of helper 8 with g_dispatchSave584
  *      instead of 004ee118.
@@ -99039,7 +99039,7 @@ __declspec(naked) void GameMusicState4Way(void)
  * ============================================================ */
 
 extern void CallPauseScaledStoreJmp_00428820(void);
-extern void GuardedPushCall_00482990(void);
+extern void GuardedPushCall_Wrapper_ScaledChainPushCall_then_ArgSarStoreJmp(void);
 extern void SixBlockCjCascade(void);
 extern void LiteralPushCallEntZero(void);
 extern void CjTableThresholdDispatch(void);
@@ -99191,7 +99191,7 @@ __declspec(naked) void StageGameProgressCluster(void)
         jne      short L_2923
         test     byte ptr [g_xformDirtyFlags], 1
         je       short L_2908
-        jmp      GuardedPushCall_00482990
+        jmp      GuardedPushCall_Wrapper_ScaledChainPushCall_then_ArgSarStoreJmp
     L_2908:
         call     Wrapper_ScaledChainPushCall_004ef920
         mov      eax, dword ptr [g_framePauseFlag]
@@ -99229,7 +99229,7 @@ __declspec(naked) void StageGameProgressCluster(void)
         jne      short L_2983
         test     byte ptr [g_xformDirtyFlags], 1
         je       short L_2968
-        jmp      GuardedPushCall_00482990
+        jmp      GuardedPushCall_Wrapper_ScaledChainPushCall_then_ArgSarStoreJmp
     L_2968:
         call     Wrapper_ScaledChainPushCall_004ef920
         mov      eax, dword ptr [g_framePauseFlag]
@@ -102707,13 +102707,13 @@ __declspec(naked) void StageEventStartCluster(void)
  * byte aligned. Each helper pushes a different sound id
  * (g_dispatchSave647..004eebb0) to ArgSarStoreJmp or ScaledDualPropagateJmp.
  * The 10th helper also checks [scene_state*4+0x34] == 0xf and
- * runs CopyJmp_0043a620 if so.
+ * runs CopyJmp_QuadFieldEarlyJmpThenInstall_g_currentNodeIdx if so.
  *
  * Frame: no prologue. Returns: void.
  * ============================================================ */
 
 extern void ScaledDualPropagateJmp(void);
-extern void CopyJmp_0043a620(void);
+extern void CopyJmp_QuadFieldEarlyJmpThenInstall_g_currentNodeIdx(void);
 extern void GuardedSeq_ScaledZeroFour_then_GuardedSeq(void);
 extern void FiveStageSetupChain(void);
 extern void SetJmp_DualLoadDualStoreJmp(void);
@@ -102963,7 +102963,7 @@ __declspec(naked) void SfxBlockCluster(void)
         cmp      eax, 0xf
         mov      dword ptr [g_walkCallback], eax
         jne      short L_5c80
-        call     CopyJmp_0043a620
+        call     CopyJmp_QuadFieldEarlyJmpThenInstall_g_currentNodeIdx
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5c9b
@@ -104362,7 +104362,7 @@ extern void CallPauseDecScaled(void);
 extern void ScaledLoadJmp_00428d20(void);
 extern void DualFieldAddSubStore(void);
 extern void Wrapper_ScaledChainPushCall_004ef898(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void InstallSelfIndirectJmp(void);
 extern void ScaledInit_GuardedDirtyXformFromTable_g_scaledInit(void);
 
@@ -104448,7 +104448,7 @@ __declspec(naked) void ThrowFsmCluster_004700e0(void)
         mov      dword ptr [esi + 0x84], 0
         test     eax, eax
         je       short L_0265
-        call     CopyJmp_0048ef90
+        call     CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_02de
@@ -115343,7 +115343,7 @@ extern void CallDualStoreXorBit(void);
 extern void GuardedSeq_MStackPushSet0004_then_MoveSelectorCluster(void);
 extern void MoveSelectorCluster(void);
 extern void TwoPhaseInstallScaledPackedPtr(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualHelperCallStoreCjFields(void);
 extern void EsiEdiAliasDualMul10(void);
 extern void DualMul10AccCj(void);
@@ -115362,7 +115362,7 @@ __declspec(naked) void RunCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d73b
-        call     CopyJmp_0048ef90
+        call     CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d73b
@@ -116294,8 +116294,8 @@ __declspec(naked) void EnduranceMode_Handler(void)
 /* Helper 1: hit-launch dispatcher → 433640 callback.                  */
 /* Helper 2: hit-reaction FSM w/ 4-bucket hit-amount picker.           */
 /* ------------------------------------------------------------------ */
-extern void GuardedPushCall_004338a0(void);
-extern void GuardedPushCall_004338c0(void);
+extern void GuardedPushCall_ScaledLoadInstallOrCall_then_PackedAdvanceCallTailJmp(void);
+extern void GuardedPushCall_Thunk_ScaledLoadInstallOrCall_then_PackedAdvanceCallTailJmp(void);
 extern void Cmp3JmpOrPushCall(void);
 extern void ScaledLoadInstallOrCall_00433990(void);
 extern void GameDispatchValidateState(void);
@@ -116385,14 +116385,14 @@ __declspec(naked) void HitReactionStateCluster(void)
     L_36ae:
         cmp      eax, 0x20000
         jge      short L_36bd
-        call     GuardedPushCall_004338c0
+        call     GuardedPushCall_Thunk_ScaledLoadInstallOrCall_then_PackedAdvanceCallTailJmp
         pop      edi
         pop      esi
         ret
     L_36bd:
         cmp      eax, 0x30000
         jge      short L_36cc
-        call     GuardedPushCall_004338a0
+        call     GuardedPushCall_ScaledLoadInstallOrCall_then_PackedAdvanceCallTailJmp
         pop      edi
         pop      esi
         ret
@@ -118997,7 +118997,7 @@ extern void ScaledDecOrZero(void);
 extern void QuadBlockInstallChainThunks(void);
 extern void Phase3Packed3EntryDispatch(void);
 extern void ScaledCmpJlJmp(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void ScaledAndAlf7(void);
 extern void ScaledMove48to58(void);
 extern void GateDispatch6c(void);
@@ -119101,7 +119101,7 @@ __declspec(naked) void OutroEventForwarderCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5fa7
-        call     CopyJmp_0048ef90
+        call     CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5fa7
@@ -122050,8 +122050,8 @@ __declspec(naked) void BlitBlend16bpp(void)
 /*  h4 (0x43b920): pre-pose chain (48eec0+48dee0+480fe0)→tail 43b980. */
 /* ------------------------------------------------------------------ */
 extern void EsiInstallDecCallChain_004294a0(void);
-extern void CopyJmp_0043a620(void);
-extern void GuardedPushCall_0043b980(void);
+extern void CopyJmp_QuadFieldEarlyJmpThenInstall_g_currentNodeIdx(void);
+extern void GuardedPushCall_CopyJmp_then_ArgSarStoreJmp_0043b980(void);
 extern void InstallSelfDoubleMStack(void);
 extern void Push16Call(void);
 extern void EsiInstallClampAddCall(void);
@@ -122064,7 +122064,7 @@ __declspec(naked) void VersusScreenEventPoseCluster(void)
 {
     __asm {
         /* === h1 (0x43b680): event 004e4c20 forwarder === */
-        call     CopyJmp_0043a620
+        call     CopyJmp_QuadFieldEarlyJmpThenInstall_g_currentNodeIdx
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b69b
@@ -122235,7 +122235,7 @@ __declspec(naked) void VersusScreenEventPoseCluster(void)
         jne      short L_b971
         test     byte ptr [g_xformDirtyFlags], 1
         je       short L_b93c
-        jmp      GuardedPushCall_0043b980
+        jmp      GuardedPushCall_CopyJmp_then_ArgSarStoreJmp_0043b980
     L_b93c:
         mov      dword ptr [g_walkCallback], 0x3d70
         call     SfxAttenuateAndApply
@@ -122247,7 +122247,7 @@ __declspec(naked) void VersusScreenEventPoseCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b971
-        jmp      GuardedPushCall_0043b980
+        jmp      GuardedPushCall_CopyJmp_then_ArgSarStoreJmp_0043b980
     L_b971:
         ret
     }
@@ -124061,8 +124061,8 @@ extern int  TimerWindowThreshDispatch(void);
 extern void DualPickDecJmp(void);
 extern void DualGuardedTableSearch(void);
 extern void PushPopWalkSet1006(void);
-extern void CopyJmp_0048ee80(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_ScaledSubStore_g_currentNodeIdx(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DirtyToggleByGate(void);
 extern void CondPlayerLookup_0048f950(void);
 
@@ -124080,7 +124080,7 @@ __declspec(naked) void ComboScriptDispatchCluster(void)
         mov      dword ptr [esi + 0x84], 0
         test     eax, eax
         je       short L_05bf
-        call     CopyJmp_0048ef90
+        call     CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_06ad
@@ -124184,7 +124184,7 @@ __declspec(naked) void ComboScriptDispatchCluster(void)
         jg       short L_06e4
         jmp      DualPickDecJmp
     L_06e4:
-        call     CopyJmp_0048ee80
+        call     CopyJmp_ScaledSubStore_g_currentNodeIdx
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_0743
@@ -124239,7 +124239,7 @@ __declspec(naked) void ComboScriptDispatchCluster(void)
         jg       short L_0784
         jmp      DualPickDecJmp
     L_0784:
-        call     CopyJmp_0048ee80
+        call     CopyJmp_ScaledSubStore_g_currentNodeIdx
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_0833
@@ -126536,7 +126536,7 @@ __declspec(naked) void ThrowAnimSetupCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_438b
-        call     CopyJmp_0048ef90
+        call     CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_438b
@@ -126594,7 +126594,7 @@ __declspec(naked) void ThrowAnimSetupCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_4468
-        call     CopyJmp_0048ef90
+        call     CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_4468
@@ -129857,7 +129857,7 @@ __declspec(naked) void AerialHitDispatcher(void)
         mov      dword ptr [esi + 0x84], 0
         test     eax, eax
         je       short L_c2d6
-        call     CopyJmp_0048ef90
+        call     CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_c2ef
@@ -133248,7 +133248,7 @@ extern void ComboScriptDispatchCluster(void);
 extern void Wrapper_ArgSarStoreJmp_004ed660(void);
 extern void QuadInstallSelfChainStr(void);
 extern void ScaledLitLoadCall_00480fe0(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualConstJmpBig(void);
 extern void DualHelperCallStoreCjFields(void);
 extern void EsiEdiAliasDualMul10(void);
@@ -133287,7 +133287,7 @@ __declspec(naked) void PainStateCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_eb40
-        call     CopyJmp_0048ef90
+        call     CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_eb40
@@ -134490,7 +134490,7 @@ extern void SlotEvent3EntryChain(void);
 extern void ComboScriptDispatchCluster(void);
 extern void PushPopWalkSet1006(void);
 extern void ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d450(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void InstallSelfIndirectJmp(void);
 extern void ScaledAndAlfe(void);
 extern unsigned int g_dispatchSave968;
@@ -134673,7 +134673,7 @@ __declspec(naked) void HitStateCluster(void)
         dec      eax
         mov      ebx, 1
         je       L_ca67
-        call     CopyJmp_0048ef90
+        call     CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_cb69
@@ -134751,7 +134751,7 @@ __declspec(naked) void HitStateCluster(void)
         pop      ebx
         ret      
     L_cb32:
-        call     CopyJmp_0048ef90
+        call     CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_cb69
@@ -137482,7 +137482,7 @@ extern void CjInstallSelfRouter(void);
 extern void SnapshotDispatchAccum(void);
 extern void BossSpinCluster(void);
 extern void ByteWordTableTaggedDispatch(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void ScaledChain3c74(void);
 extern void MStackPushSet0080(void);
 extern void ScaledAndAl7f(void);
@@ -137504,7 +137504,7 @@ __declspec(naked) void BossDashCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7a17
-        call     CopyJmp_0048ef90
+        call     CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7a17
@@ -144649,7 +144649,7 @@ __declspec(naked) void JuggleSetupCluster(void)
 extern void CallDualStoreXorBit(void);
 extern void ScaledLoadIncJmp_00428d00(void);
 extern void CallPauseTestByteJmpCalls(void);
-extern void CopyJmp_0043a620(void);
+extern void CopyJmp_QuadFieldEarlyJmpThenInstall_g_currentNodeIdx(void);
 extern void StateMachine4ArmCascade(void);
 extern void GameStateProgressCluster(void);
 extern void VersusScreenEventPoseCluster(void);
@@ -144858,7 +144858,7 @@ __declspec(naked) void CrouchCounterCluster(void)
         jne      L_b5df
         test     byte ptr [g_xformDirtyFlags], bl
         je       L_b545
-        call     CopyJmp_0043a620
+        call     CopyJmp_QuadFieldEarlyJmpThenInstall_g_currentNodeIdx
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_b5df
@@ -150119,7 +150119,7 @@ extern void MStackBracketedScaledStores(void);
 extern void MStackPush2ChainLLInsert(void);
 extern void MStackPush3SideStore(void);
 extern void Mul10Tail(void);
-extern void ScaledInitOrSelfPtr_0044ef10(void);
+extern void ScaledInitOrSelfPtr_PoseChainAdvanceCluster(void);
 extern void StoreLoadJmp(void);
 extern void Thunk_ScaledNeg1SetPause(void);
 extern void Vec3PackedTripleCallBracket(void);
@@ -150264,7 +150264,7 @@ __declspec(naked) void PoseChainAdvanceCluster(void)
         jne      L_f1d7
         jmp      L_f18b
     L_f1d2:
-        call     ScaledInitOrSelfPtr_0044ef10
+        call     ScaledInitOrSelfPtr_PoseChainAdvanceCluster
     L_f1d7:
         pop      edi
         pop      esi
@@ -156189,7 +156189,7 @@ __declspec(naked) void PendingMatch_0048c570(void)
 extern void ArgSarStoreJmp(void);
 extern void CallPauseDirtyMStackPushFn(void);
 extern void ComboScriptDispatchCluster(void);
-extern void CopyJmp_0048ee80(void);
+extern void CopyJmp_ScaledSubStore_g_currentNodeIdx(void);
 extern void DirtyTestScaledCmpJmp(void);
 extern void FiveCallGuardSetTail(void);
 extern void FiveThunkMStackDispatcher(void);
@@ -156681,7 +156681,7 @@ __declspec(naked) void PendingMatch_0046e2e0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e998
-        call     CopyJmp_0048ee80
+        call     CopyJmp_ScaledSubStore_g_currentNodeIdx
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e998
@@ -156748,7 +156748,7 @@ extern void CallPauseScaledStoreCopyJmp(void);
 extern void Cascade4StepBitTest(void);
 extern void CharSelectSetupCluster(void);
 extern void CmpDivJmp(void);
-extern void CopyJmp_00406ba0(void);
+extern void CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(void);
 extern void DispatcherComplex131_00431530(void);
 extern void DualCmpSwapStore(void);
 extern void DualScaledStore(void);
@@ -156849,7 +156849,7 @@ __declspec(naked) void PendingMatch_0043c400(void)
         nop      
         nop      
         nop      
-        call     CopyJmp_00406ba0
+        call     CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c591
@@ -162973,7 +162973,7 @@ __declspec(naked) void PendingMatch_0044dd80(void)
 // === EXTERNS ===
 extern void ArgSarStoreJmp(void);
 extern void Chain2AxisDiffStoreTailJmp(void);
-extern void CopyJmp_00445ec0(void);
+extern void CopyJmp_GuardedSixFieldCopy_g_cj_0054205c_00445ec0(void);
 extern void CopyLoadInstallJmp_00445ed0(void);
 extern void CopyScaledTriple_00446120(void);
 extern void DoubleCallChainInit(void);
@@ -163403,7 +163403,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3a88
-        call     CopyJmp_00445ec0
+        call     CopyJmp_GuardedSixFieldCopy_g_cj_0054205c_00445ec0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3a88
@@ -166812,7 +166812,7 @@ __declspec(naked) void PendingMatch_004492f0(void)
 extern void ArgSarAddDerefJmp(void);
 extern void AudioCmpCascadeDispatcher(void);
 extern void CallSetPause(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DispatchGuardedDirtyTest(void);
 extern void DispatchSetWalk2(void);
 extern void DispatchSetWalk3(void);
@@ -167596,7 +167596,7 @@ __declspec(naked) void PendingMatch_0045c8e0(void)
         jne      L_d171
         mov      eax, dword ptr [g_player1NodeIdx]
         mov      dword ptr [g_fightGroupHead], eax
-        call     CopyJmp_0048ef90
+        call     CopyJmp_SlotCmp3way_g_currentNodeIdx
         test     byte ptr [g_xformDirtyFlags], 1
         jne      L_d171
         mov      ecx, dword ptr [g_player1NodeIdx]
@@ -167647,7 +167647,7 @@ __declspec(naked) void PendingMatch_0045c8e0(void)
         jne      L_d231
         mov      eax, dword ptr [g_player1NodeIdx]
         mov      dword ptr [g_fightGroupHead], eax
-        call     CopyJmp_0048ef90
+        call     CopyJmp_SlotCmp3way_g_currentNodeIdx
         test     byte ptr [g_xformDirtyFlags], 1
         jne      L_d231
         mov      ecx, dword ptr [g_player1NodeIdx]
@@ -167698,7 +167698,7 @@ __declspec(naked) void PendingMatch_0045c8e0(void)
         jne      L_d2f1
         mov      eax, dword ptr [g_player2NodeIdx]
         mov      dword ptr [g_fightGroupHead], eax
-        call     CopyJmp_0048ef90
+        call     CopyJmp_SlotCmp3way_g_currentNodeIdx
         test     byte ptr [g_xformDirtyFlags], 1
         jne      L_d2f1
         mov      ecx, dword ptr [g_player2NodeIdx]
@@ -167749,7 +167749,7 @@ __declspec(naked) void PendingMatch_0045c8e0(void)
         jne      L_d3b1
         mov      eax, dword ptr [g_player2NodeIdx]
         mov      dword ptr [g_fightGroupHead], eax
-        call     CopyJmp_0048ef90
+        call     CopyJmp_SlotCmp3way_g_currentNodeIdx
         test     byte ptr [g_xformDirtyFlags], 1
         jne      L_d3b1
         mov      ecx, dword ptr [g_player2NodeIdx]
@@ -168075,7 +168075,7 @@ extern void BootStateTriple(void);
 extern void CallSetPause(void);
 extern void ChainWalkPushPop(void);
 extern void CondPickDualStore(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void CopyThreeFields(void);
 extern void DualCmpSwapStore(void);
 extern void EntryThunkBodyStateMachine(void);
@@ -168272,7 +168272,7 @@ __declspec(naked) void PendingMatch_00498eb0(void)
         je       L_9114
         dec      eax
         je       L_90b3
-        call     CopyJmp_0048ef90
+        call     CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_9144
@@ -238257,7 +238257,7 @@ __declspec(naked) void PendingMatch_00429ef0(void)
 // === EXTERNS ===
 extern void CallPauseDirtyScaledStore(void);
 extern void Const4ec8f8DirtyScaledStore(void);
-extern void CopyJmp_00446180(void);
+extern void CopyJmp_GuardedSixFieldCopy_g_cj_0054205c_00446180(void);
 extern void CopyLoadInstallJmp_00446210(void);
 extern void CopyScaledTriple_00446350(void);
 extern void MStackPushSwapEqJmp_00474e80(void);
@@ -238831,7 +238831,7 @@ __declspec(naked) void PendingMatch_00444ef0(void)
         ret      
         nop      
         push     ebx
-        call     CopyJmp_00446180
+        call     CopyJmp_GuardedSixFieldCopy_g_cj_0054205c_00446180
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5970

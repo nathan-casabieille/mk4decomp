@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -114,7 +114,7 @@ extern void FivePackedSubdispatchInstallSelf(void);
 
 /* @addr 0x0049bf90 (175b game) - 3-block: A: call MStackCall_00406740; if !pause jmp CallSetPause.
  *   B (+0x20): chain[*4+0x74]=0x30d; call CondPickDualStore; if !pause push 0x004f2660 call ArgSarStoreJmp; ret.
- *   C (+0x60): call CondPickDualStore; if !pause call CopyJmp_0048ef90; if !pause and bit-0 set
+ *   C (+0x60): call CondPickDualStore; if !pause call CopyJmp_SlotCmp3way_g_currentNodeIdx; if !pause and bit-0 set
  *     jmp FivePackedSubdispatchInstallSelf; else chain[*4+0x74]=0x30c; push 0x004f26a8; call ArgSarStoreJmp; ret.
  */
 extern void ArgSarStoreJmp(void);
@@ -172,7 +172,7 @@ __declspec(naked) void Triple3PathDispatch(void) {
         test    eax, eax
         _emit   75h
         _emit   40h
-        call    CopyJmp_0048ef90
+        call    CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

@@ -528,7 +528,7 @@ functions:
     status: matched
     file: src/engine/mstack_calls.c
   - addr: 0x00406ba0
-    name: CopyJmp_00406ba0
+    name: CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx
     size: 15
     group: boot
     status: matched
@@ -1440,7 +1440,7 @@ functions:
     status: matched
     file: src/boot/phase1_slot_link_and_init.c
   - addr: 0x004196c0
-    name: CallPauseDirty4ScaledSet_004196c0
+    name: CallPauseDirty4ScaledSet_tag_0x81
     size: 83
     group: boot
     status: matched
@@ -1452,7 +1452,7 @@ functions:
     status: matched
     file: src/boot/dual_call_pause_addr_set_recurse.c
   - addr: 0x00419780
-    name: CallPauseDirty4ScaledSet_00419780
+    name: CallPauseDirty4ScaledSet_tag_0x83
     size: 83
     group: boot
     status: matched
@@ -1464,7 +1464,7 @@ functions:
     status: matched
     file: src/boot/dual_call_pause_addr_set_recurse.c
   - addr: 0x00419840
-    name: CallPauseDirty4ScaledSet_00419840
+    name: CallPauseDirty4ScaledSet_tag_0x86
     size: 83
     group: boot
     status: matched
@@ -1482,7 +1482,7 @@ functions:
     status: matched
     file: src/boot/triple_chain_tail_jmp.c
   - addr: 0x00419980
-    name: CallPauseDirty4ScaledSet_00419980
+    name: CallPauseDirty4ScaledSet_tag_0x87
     size: 83
     group: boot
     status: matched
@@ -1494,7 +1494,7 @@ functions:
     status: matched
     file: src/boot/dual_call_pause_addr_set_recurse.c
   - addr: 0x00419a40
-    name: CallPauseDirty4ScaledSet_00419a40
+    name: CallPauseDirty4ScaledSet_tag_0x82
     size: 83
     group: boot
     status: matched
@@ -1506,7 +1506,7 @@ functions:
     status: matched
     file: src/boot/dual_call_pause_addr_set_recurse.c
   - addr: 0x00419b00
-    name: CallPauseDirty4ScaledSet_00419b00
+    name: CallPauseDirty4ScaledSet_tag_0x88
     size: 83
     group: boot
     status: matched
@@ -1878,7 +1878,7 @@ functions:
     status: matched
     file: src/engine/dual_counter_phase_gate_install.c
   - addr: 0x00421f00
-    name: ScaledInitOrSelfPtr_00421f00
+    name: ScaledInitOrSelfPtr_InstallSelfStackReset
     size: 64
     group: game
     status: matched
@@ -2628,7 +2628,7 @@ functions:
     status: matched
     file: src/engine/dual_guard_push_install_jmp.c
   - addr: 0x00428950
-    name: ScaledInitOrSelfPtr_00428950
+    name: ScaledInitOrSelfPtr_CallPauseDirty1JmpDirty4StackPush
     size: 64
     group: game
     status: matched
@@ -2814,7 +2814,7 @@ functions:
     status: matched
     file: src/engine/esi_install_bit_call_chain_variants.c
   - addr: 0x00429680
-    name: ScaledInitOrSelfPtr_00429680
+    name: ScaledInitOrSelfPtr_StackPopDispatchTagged
     size: 64
     group: game
     status: matched
@@ -3606,13 +3606,13 @@ functions:
     status: matched
     file: src/engine/hit_reaction_state_cluster.c
   - addr: 0x004338a0
-    name: GuardedPushCall_004338a0
+    name: GuardedPushCall_ScaledLoadInstallOrCall_then_PackedAdvanceCallTailJmp
     size: 28
     group: game
     status: matched
     file: src/engine/guarded_push.c
   - addr: 0x004338c0
-    name: GuardedPushCall_004338c0
+    name: GuardedPushCall_Thunk_ScaledLoadInstallOrCall_then_PackedAdvanceCallTailJmp
     size: 28
     group: game
     status: matched
@@ -4752,7 +4752,7 @@ functions:
     status: matched
     file: src/engine/jump_table_dispatch.c
   - addr: 0x0043a620
-    name: CopyJmp_0043a620
+    name: CopyJmp_QuadFieldEarlyJmpThenInstall_g_currentNodeIdx
     size: 15
     group: game
     status: matched
@@ -4836,7 +4836,7 @@ functions:
     status: matched
     file: src/engine/versus_screen_event_pose_cluster.c
   - addr: 0x0043b980
-    name: GuardedPushCall_0043b980
+    name: GuardedPushCall_CopyJmp_then_ArgSarStoreJmp_0043b980
     size: 28
     group: game
     status: matched
@@ -5220,7 +5220,7 @@ functions:
     status: matched
     file: src/engine/vec3_setup_quadruple_mul10_sub.c
   - addr: 0x00442d90
-    name: ScaledInitOrSelfPtr_00442d90
+    name: ScaledInitOrSelfPtr_DualSeqLoopDispatch
     size: 64
     group: game
     status: matched
@@ -5298,7 +5298,7 @@ functions:
     status: matched
     file: src/engine/two_call_pause_set_jmp.c
   - addr: 0x00445ec0
-    name: CopyJmp_00445ec0
+    name: CopyJmp_GuardedSixFieldCopy_g_cj_0054205c_00445ec0
     size: 15
     group: game
     status: matched
@@ -5358,7 +5358,7 @@ functions:
     status: matched
     file: src/engine/triple_set_call_pause_dirty_jmp.c
   - addr: 0x00446180
-    name: CopyJmp_00446180
+    name: CopyJmp_GuardedSixFieldCopy_g_cj_0054205c_00446180
     size: 15
     group: game
     status: matched
@@ -5820,7 +5820,7 @@ functions:
     status: matched
     file: src/engine/throw_fsm_cluster_variants.c
   - addr: 0x0044ef10
-    name: ScaledInitOrSelfPtr_0044ef10
+    name: ScaledInitOrSelfPtr_PoseChainAdvanceCluster
     size: 64
     group: game
     status: matched
@@ -7644,7 +7644,7 @@ functions:
     status: matched
     file: src/engine/call_pause_cmp_state_jmp.c
   - addr: 0x0046a560
-    name: GuardedPushCall_0046a560
+    name: GuardedPushCall_CopyJmp_then_ArgSarStoreJmp_0046a560
     size: 28
     group: game
     status: matched
@@ -8400,7 +8400,7 @@ functions:
     status: matched
     file: src/engine/m_stack_vec_setup_scoped_run.c
   - addr: 0x00474b10
-    name: ScaledInitOrSelfPtr_00474b10
+    name: ScaledInitOrSelfPtr_NetEntityScanAndPunish
     size: 64
     group: game
     status: matched
@@ -9648,7 +9648,7 @@ functions:
     status: matched
     file: src/engine/stage_game_progress_cluster.c
   - addr: 0x00482990
-    name: GuardedPushCall_00482990
+    name: GuardedPushCall_Wrapper_ScaledChainPushCall_then_ArgSarStoreJmp
     size: 28
     group: game
     status: matched
@@ -10296,7 +10296,7 @@ functions:
     status: matched
     file: src/engine/install_self_reentry.c
   - addr: 0x00489130
-    name: ScaledInitOrSelfPtr_00489130
+    name: ScaledInitOrSelfPtr_func_0041f780_z
     size: 64
     group: game
     status: matched
@@ -11136,7 +11136,7 @@ functions:
     status: matched
     file: src/engine/cmp_p2_p1_scaled_jmp.c
   - addr: 0x0048ee80
-    name: CopyJmp_0048ee80
+    name: CopyJmp_ScaledSubStore_g_currentNodeIdx
     size: 15
     group: game
     status: matched
@@ -11154,7 +11154,7 @@ functions:
     status: matched
     file: src/engine/m_stack_push3_cmp_call.c
   - addr: 0x0048ef90
-    name: CopyJmp_0048ef90
+    name: CopyJmp_SlotCmp3way_g_currentNodeIdx
     size: 15
     group: game
     status: matched
@@ -12552,7 +12552,7 @@ functions:
     status: matched
     file: src/engine/five_packed_subdispatch_install_self.c
   - addr: 0x0049c200
-    name: GuardedPushCall_0049c200
+    name: GuardedPushCall_DualMul10AndDispatchChain_then_ArgSar_Set0_Jmp
     size: 28
     group: game
     status: matched
@@ -14280,7 +14280,7 @@ functions:
     status: matched
     file: src/audio/empty_stubs.c
   - addr: 0x004aedc0
-    name: ComRelease_004aedc0
+    name: ComRelease_g_comptr_0058c7b8
     size: 26
     group: engine.install
     status: matched
@@ -14304,7 +14304,7 @@ functions:
     status: matched
     file: src/engine/r2_init2.c
   - addr: 0x004aef30
-    name: ComRelease_004aef30
+    name: ComRelease_g_comptr_0058c7bc
     size: 26
     group: engine.install
     status: matched
@@ -14316,7 +14316,7 @@ functions:
     status: matched
     file: src/engine/r2_init6.c
   - addr: 0x004af000
-    name: ComRelease_004af000
+    name: ComRelease_g_comptr_0058c7c0
     size: 26
     group: engine.install
     status: matched
@@ -14418,7 +14418,7 @@ functions:
     status: matched
     file: src/audio/empty_stubs.c
   - addr: 0x004afb10
-    name: ComRelease_004afb10
+    name: ComRelease_g_comptr_0058c870
     size: 26
     group: engine.install
     status: matched
@@ -14514,7 +14514,7 @@ functions:
     status: matched
     file: src/audio/empty_stubs.c
   - addr: 0x004b0340
-    name: ComRelease_004b0340
+    name: ComRelease_g_comptr_0058c8f0
     size: 26
     group: engine.ecm
     status: matched

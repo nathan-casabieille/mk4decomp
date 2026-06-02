@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -110,11 +110,11 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004809e0 (210b game) - 3-way install-self with chain[+0x84] value dispatch (0, 1, 2+).
  *   Value 0: fresh init via MStackPushSet0008, chain[+0x74]=0x100f, push str, call IterStepNegStore,
- *     call CopyJmp_00406ba0, install-self at +0x08=0x004809e0, chain[+0x84]=1, g_pendingNodeType=4, pause=1.
+ *     call CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx, install-self at +0x08=0x004809e0, chain[+0x84]=1, g_pendingNodeType=4, pause=1.
  *   Value 1 (after dec → 0): "advance" via ScaledZeroFour, if !pause install w/ chain[+0x84]=2, g_pendingNodeType=8.
  *   Value 2+: call FiveCallGuardSetTail, pop+ret.
  */
-extern void CopyJmp_00406ba0(void);
+extern void CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(void);
 extern void FiveCallGuardSetTail(void);
 extern void IterStepNegStore(void);
 extern void MStackPushSet0008(void);
@@ -166,7 +166,7 @@ __declspec(naked) void Install3WayChainCounter(void) {
         test    eax, eax
         _emit   75h
         _emit   2fh
-        call    CopyJmp_00406ba0
+        call    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -111,19 +111,19 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00429530 (109b)
  *   eax = g_baseSel; push esi; esi = &[eax*4];
  *   eax = [eax*4+0x84]; [esi+0x84] = 0;
- *   if eax!=0: skip; call CopyJmp_00406ba0; if pause: ret;
+ *   if eax!=0: skip; call CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx; if pause: ret;
  *   skip: call GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp; if pause: ret;
  *   cl = byte [g_xformDirtyFlags]; eax=1; test al,cl;
  *   if zero: install;
- *     call ScaledInitOrSelfPtr_00429680; pop esi; ret;
+ *     call ScaledInitOrSelfPtr_StackPopDispatchTagged; pop esi; ret;
  *   install: [esi+8]=0x429530; [esi+0x84]=1;
  *            g_pendingNodeType=1; g_framePauseFlag=1; pop esi; ret.
  */
-extern void CopyJmp_00406ba0(void);
+extern void CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(void);
 extern void GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
 extern void GuardedDoubleIncCmpJmp(void);
 extern void CallPauseScaledDecJmp(void);
-extern void ScaledInitOrSelfPtr_00429680(void);
+extern void ScaledInitOrSelfPtr_StackPopDispatchTagged(void);
 
 __declspec(naked) void EsiInstallBitCallChain_00429530(void) {
     __asm {
@@ -135,7 +135,7 @@ __declspec(naked) void EsiInstallBitCallChain_00429530(void) {
         test    eax, eax
         _emit   75h
         _emit   0eh
-        call    CopyJmp_00406ba0
+        call    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -151,7 +151,7 @@ __declspec(naked) void EsiInstallBitCallChain_00429530(void) {
         _emit   0c8h
         _emit   74h
         _emit   07h
-        call    ScaledInitOrSelfPtr_00429680
+        call    ScaledInitOrSelfPtr_StackPopDispatchTagged
         pop     esi
         ret
         mov     dword ptr [esi + 8], 0x00429530
@@ -174,7 +174,7 @@ __declspec(naked) void EsiInstallBitCallChain_004295a0(void) {
         test    eax, eax
         _emit   75h
         _emit   0eh
-        call    CopyJmp_00406ba0
+        call    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -190,7 +190,7 @@ __declspec(naked) void EsiInstallBitCallChain_004295a0(void) {
         _emit   0c8h
         _emit   74h
         _emit   07h
-        call    ScaledInitOrSelfPtr_00429680
+        call    ScaledInitOrSelfPtr_StackPopDispatchTagged
         pop     esi
         ret
         mov     dword ptr [esi + 8], 0x004295a0
@@ -213,7 +213,7 @@ __declspec(naked) void EsiInstallBitCallChain_00429610(void) {
         test    eax, eax
         _emit   75h
         _emit   0eh
-        call    CopyJmp_00406ba0
+        call    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -229,7 +229,7 @@ __declspec(naked) void EsiInstallBitCallChain_00429610(void) {
         _emit   0c8h
         _emit   74h
         _emit   07h
-        call    ScaledInitOrSelfPtr_00429680
+        call    ScaledInitOrSelfPtr_StackPopDispatchTagged
         pop     esi
         ret
         mov     dword ptr [esi + 8], 0x00429610

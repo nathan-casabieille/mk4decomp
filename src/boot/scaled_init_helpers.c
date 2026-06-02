@@ -83,7 +83,7 @@ void SetDirty4XorScaledLoad(void) {
  *   set walk = 0x14ccc + store at [ecx*4 + 0x48]; eventQueueEnd+0x15 → g_scaledInit;
  *   jmp T.
  */
-void CallPauseDirty4ScaledSet_004196c0(void) {
+void CallPauseDirty4ScaledSet_tag_0x81(void) {
     SlotInitAndChainLink();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 4) return;

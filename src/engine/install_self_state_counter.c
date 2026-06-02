@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00467d40 (280b game) - 3-state install-self with state-dependent dispatch.
- *   state 1: call CopyJmp_00406ba0; if !pause:
+ *   state 1: call CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx; if !pause:
  *     baseSel[+0x34] mapped: 0x10 -> 2, 0x11 -> 7, else unchanged.
  *     g_walkCallback=mapped++. Fall through to common tail.
  *   state >= 2: skip to common tail.
@@ -121,7 +121,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_installSelfCounter;
 extern void CallPauseScaledStoreCopyJmp(void);
-extern void CopyJmp_00406ba0(void);
+extern void CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(void);
 extern void DualBlockChainInitBody(void);
 extern void GateDispatch6c(void);
 extern void ScaledLitLoadCall_00480fe0(void);
@@ -141,7 +141,7 @@ __declspec(naked) void InstallSelfStateCounter(void) {
         dec     eax
         _emit   75h
         _emit   54h
-        call    CopyJmp_00406ba0
+        call    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

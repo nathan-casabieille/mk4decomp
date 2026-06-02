@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   if (g_walkCallback == 0x4004): jmp gate2;
  *   call ScaledChain3c7c; if pause: ret;
  *   if (g_walkCallback <= 1): ret;
- *   gate2: call CopyJmp_0048ee80; if pause: ret;
+ *   gate2: call CopyJmp_ScaledSubStore_g_currentNodeIdx; if pause: ret;
  *   if (g_walkCallback > 0x8000): ret;
  *   call GuardedDualConst2AndToggle; if pause: ret;
  *   if (bit0 of g_xformDirtyFlags == 0): ret;
@@ -127,7 +127,7 @@ void QuadCmpBitGateJmp(void) {
         if (g_framePauseFlag != 0) return;
         if ((int)g_walkCallback <= 1) return;
     }
-    CopyJmp_0048ee80();
+    CopyJmp_ScaledSubStore_g_currentNodeIdx();
     if (g_framePauseFlag != 0) return;
     if ((int)g_walkCallback > 0x8000) return;
     GuardedDualConst2AndToggle();

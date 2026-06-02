@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  *   self with tag 0x4894b0... actually 0x004890b0.
  */
 extern void GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
-extern void ScaledInitOrSelfPtr_00489130(void);
+extern void ScaledInitOrSelfPtr_func_0041f780_z(void);
 
 __declspec(naked) void InstallSelfReentry(void) {
     __asm {
@@ -150,7 +150,7 @@ stage2:
         _emit   84h
         _emit   0c8h
         je      install
-        call    ScaledInitOrSelfPtr_00489130
+        call    ScaledInitOrSelfPtr_func_0041f780_z
         pop     esi
         ret
 install:

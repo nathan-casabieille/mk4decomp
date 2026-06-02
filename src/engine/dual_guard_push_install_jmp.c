@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -110,20 +110,20 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004288e0 (106b)
  *   call GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp; if pause: ret;
- *   if (bit0 of g_xformDirtyFlags)!=0: jmp ScaledInitOrSelfPtr_00429680;
+ *   if (bit0 of g_xformDirtyFlags)!=0: jmp ScaledInitOrSelfPtr_StackPopDispatchTagged;
  *   push 0x4e2908; call GuardedScaledChainJmpIndirect; pop;
  *   if pause: ret; call DirtyToggleByGate; if pause: ret;
- *   if (bit2 of g_xformDirtyFlags)==0: jmp ScaledInitOrSelfPtr_00428950;
+ *   if (bit2 of g_xformDirtyFlags)==0: jmp ScaledInitOrSelfPtr_CallPauseDirty1JmpDirty4StackPush;
  *   inc mstack; [esp*4] = 0x428950; jmp GameDispatchValidateState.
  */
-extern void ScaledInitOrSelfPtr_00429680(void);
+extern void ScaledInitOrSelfPtr_StackPopDispatchTagged(void);
 extern void GuardedScaledChainJmpIndirect(void);
 void DualGuardPushInstallJmp(void) {
     unsigned int top;
     GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 1) != 0) {
-        ScaledInitOrSelfPtr_00429680();
+        ScaledInitOrSelfPtr_StackPopDispatchTagged();
         return;
     }
     ((void (*)(int))GuardedScaledChainJmpIndirect)(0x004e2908);
@@ -137,5 +137,5 @@ void DualGuardPushInstallJmp(void) {
         GameDispatchValidateState();
         return;
     }
-    ScaledInitOrSelfPtr_00428950();
+    ScaledInitOrSelfPtr_CallPauseDirty1JmpDirty4StackPush();
 }

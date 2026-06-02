@@ -657,7 +657,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/engine/pending_match_variants.c`
 - traits: switch-via-jumptable, x87 FPU, cond jmps: 50
-- top callees: `Push16Call`×5, `BootInitGuardedCallChain`×3, `StoreTwoCall`×3, `CallSetPause`×3, `SpawnPhaseAdvanceVoices`×2, `TaggedSceneDispatch`×2, `CopyJmp_00406ba0`×2, `SaveCallRestoreOrXor`×2
+- top callees: `Push16Call`×5, `BootInitGuardedCallChain`×3, `StoreTwoCall`×3, `CallSetPause`×3, `SpawnPhaseAdvanceVoices`×2, `TaggedSceneDispatch`×2, `CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx`×2, `SaveCallRestoreOrXor`×2
 - top globals: `0x54206c`×21, `g_currentNodeIdx`×18, `0x542060`×8, `g_dlNalt1`×5, `0x537f8c`×4, `0x537f94`×4, `g_fightGroupHead`×4, `g_eventQueueEnd`×3
 
 ## PendingMatch_00429ef0 @ 0x429ef0 (3861b)

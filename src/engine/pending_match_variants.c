@@ -43,7 +43,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -226,7 +226,7 @@ extern unsigned int g_dispatchState;
 extern unsigned int g_stateFlag;
 extern void PushPopState70Mask(void);
 extern void Thunk_LinkedListBitMaskSearch(void);
-extern void CopyJmp_0048ee80(void);
+extern void CopyJmp_ScaledSubStore_g_currentNodeIdx(void);
 extern void ScaledChain3c74(void);
 extern void ScaledChain3c7c(void);
 extern void MStackCall_00406340(void);
@@ -234,9 +234,9 @@ extern void PendingMatch_0046cd30(void);
 extern void Phase3InstallPackedSelf(void);
 extern void ZeroSlotsGatedDispatch(void);
 extern void GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
-extern void ScaledInitOrSelfPtr_00428950(void);
+extern void ScaledInitOrSelfPtr_CallPauseDirty1JmpDirty4StackPush(void);
 extern void MStackPush2ChainSwap(void);
-extern void CopyJmp_00406ba0(void);
+extern void CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(void);
 extern void DivLongPushCall(void);
 extern void ScaledDecPop_00404c40(void);
 extern void ScaledDecPop_00404bd0(void);
@@ -560,9 +560,9 @@ extern void Cmp9DirtyToggle(void);
 extern void ComboMoveSelectFsmCluster(void);
 extern void CondPlayerLookup_004ac120(void);
 extern void CopyGlobal(void);
-extern void CopyJmp_00406ba0(void);
-extern void CopyJmp_00445ec0(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(void);
+extern void CopyJmp_GuardedSixFieldCopy_g_cj_0054205c_00445ec0(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void CopyLoadInstallJmp_00445ed0(void);
 extern void CopyScaledTriple_00446120(void);
 extern void CopyThreeFields(void);
@@ -1180,7 +1180,7 @@ void BootInitGuardedCallChain(void) {
  *   B3 (0x50..0xa4, +11 NOPs): g_xformEntityIdx = 0x00500698>>2; 4-call chain
  *     (BootFrameSetup, GuardedChainCmpDualBitXor, ScaledXorStore, GateDispatch6c);
  *     if all !pause: tail-jmp CallPauseDirtyPushCall.
- *   B4 (0xb0..0xe7, +8 NOPs): call GateDispatch6c; if !pause: call CopyJmp_0048ef90;
+ *   B4 (0xb0..0xe7, +8 NOPs): call GateDispatch6c; if !pause: call CopyJmp_SlotCmp3way_g_currentNodeIdx;
  *     if !pause and bit0 of state set: tail-jmp PendingMatch_00484da0; else: push 0x004ee920,
  *     tail-call ArgSarStoreJmp.
  *   B5 (0xf0..0x11b): call DirtyToggleByGate; if !pause and bit2 of state clear:
@@ -1271,7 +1271,7 @@ __declspec(naked) void FiveBlockDispatchChain_00484b70(void) {
         test    eax, eax
         _emit   75h
         _emit   29h
-        call    CopyJmp_0048ef90
+        call    CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -1947,7 +1947,7 @@ __declspec(naked) void StreamFlagPackedSelectChain(void) {
  *       bumped scaled slot, calls RoundEndFsm, arms 0x541e6c=1.
  *   11b NOP align pad.
  *   Entry 2 (offset 0x120, 90b): 6-call chain (ScaledInit_GuardedDirtyXformFromTable_g_scaledInit,
- *     CopyJmp_00406ba0, ScaledZero44, ScaledZeroFour,
+ *     CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx, ScaledZero44, ScaledZeroFour,
  *     MStackPushSet0001, MStackPushSet0004), each
  *     gated by 0x541e6c. On full success, tail-jmps
  *     ScaledInitWithCounterAndType_004314f0.
@@ -2036,7 +2036,7 @@ __declspec(naked) void Phase3InstallSelfChain(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pis2_e2End
-        call    CopyJmp_00406ba0
+        call    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pis2_e2End
@@ -4514,7 +4514,7 @@ __declspec(naked) void AerialHitDispatcher(void)
         mov      dword ptr [esi + 0x84], 0
         test     eax, eax
         je       short L_c2d6
-        call     CopyJmp_0048ef90
+        call     CopyJmp_SlotCmp3way_g_currentNodeIdx
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_c2ef
@@ -8837,7 +8837,7 @@ __declspec(naked) void PendingMatch_0046e2e0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e998
-        call     CopyJmp_0048ee80
+        call     CopyJmp_ScaledSubStore_g_currentNodeIdx
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e998
@@ -11326,7 +11326,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3a88
-        call     CopyJmp_00445ec0
+        call     CopyJmp_GuardedSixFieldCopy_g_cj_0054205c_00445ec0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3a88

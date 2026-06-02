@@ -9,7 +9,7 @@ extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00474b10 (64b): ScaledInitOrSelfPtr, store=own, jmp=0x474b50 */
 extern void NetEntityScanAndPunish(void);
-void ScaledInitOrSelfPtr_00474b10(void) {
+void ScaledInitOrSelfPtr_NetEntityScanAndPunish(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int ptr = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
@@ -17,7 +17,7 @@ void ScaledInitOrSelfPtr_00474b10(void) {
         NetEntityScanAndPunish();
         return;
     }
-    *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_00474b10;
+    *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_NetEntityScanAndPunish;
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;
@@ -25,7 +25,7 @@ void ScaledInitOrSelfPtr_00474b10(void) {
 
 /* @addr 0x00489130 (64b): ScaledInitOrSelfPtr, store=own, jmp=0x41f780 */
 extern void func_0041f780_z(void);
-void ScaledInitOrSelfPtr_00489130(void) {
+void ScaledInitOrSelfPtr_func_0041f780_z(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int ptr = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
@@ -33,7 +33,7 @@ void ScaledInitOrSelfPtr_00489130(void) {
         func_0041f780_z();
         return;
     }
-    *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_00489130;
+    *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_func_0041f780_z;
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;
@@ -41,7 +41,7 @@ void ScaledInitOrSelfPtr_00489130(void) {
 
 /* @addr 0x00421f00 (64b): ScaledInitOrSelfPtr, store=own, jmp=0x421f40 */
 extern void InstallSelfStackReset(void);
-void ScaledInitOrSelfPtr_00421f00(void) {
+void ScaledInitOrSelfPtr_InstallSelfStackReset(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int ptr = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
@@ -49,7 +49,7 @@ void ScaledInitOrSelfPtr_00421f00(void) {
         InstallSelfStackReset();
         return;
     }
-    *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_00421f00;
+    *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_InstallSelfStackReset;
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;
@@ -57,7 +57,7 @@ void ScaledInitOrSelfPtr_00421f00(void) {
 
 /* @addr 0x00428950 (64b): ScaledInitOrSelfPtr, store=own, jmp=0x428850 */
 extern void CallPauseDirty1JmpDirty4StackPush_00428850(void);
-void ScaledInitOrSelfPtr_00428950(void) {
+void ScaledInitOrSelfPtr_CallPauseDirty1JmpDirty4StackPush(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int ptr = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
@@ -65,7 +65,7 @@ void ScaledInitOrSelfPtr_00428950(void) {
         CallPauseDirty1JmpDirty4StackPush_00428850();
         return;
     }
-    *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_00428950;
+    *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_CallPauseDirty1JmpDirty4StackPush;
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;
@@ -73,7 +73,7 @@ void ScaledInitOrSelfPtr_00428950(void) {
 
 /* @addr 0x00429680 (64b): ScaledInitOrSelfPtr, store=own, jmp=0x41f780 */
 extern void StackPopDispatchTagged(void);
-void ScaledInitOrSelfPtr_00429680(void) {
+void ScaledInitOrSelfPtr_StackPopDispatchTagged(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int ptr = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
@@ -81,7 +81,7 @@ void ScaledInitOrSelfPtr_00429680(void) {
         StackPopDispatchTagged();
         return;
     }
-    *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_00429680;
+    *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_StackPopDispatchTagged;
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;
@@ -89,7 +89,7 @@ void ScaledInitOrSelfPtr_00429680(void) {
 
 /* @addr 0x00442d90 (64b): ScaledInitOrSelfPtr, store=own, jmp=0x442dd0 */
 extern void DualSeqLoopDispatch(void);
-void ScaledInitOrSelfPtr_00442d90(void) {
+void ScaledInitOrSelfPtr_DualSeqLoopDispatch(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int ptr = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
@@ -97,7 +97,7 @@ void ScaledInitOrSelfPtr_00442d90(void) {
         DualSeqLoopDispatch();
         return;
     }
-    *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_00442d90;
+    *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_DualSeqLoopDispatch;
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;

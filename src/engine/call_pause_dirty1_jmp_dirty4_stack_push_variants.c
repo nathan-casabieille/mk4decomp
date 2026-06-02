@@ -14,7 +14,7 @@ extern unsigned int g_phaseTimer;
  *   inc g_matrixStackTop; push 0x00428950 onto stack[idx*4]; jmp T2.
  */
 extern void GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
-extern void ScaledInitOrSelfPtr_00429680(void);
+extern void ScaledInitOrSelfPtr_StackPopDispatchTagged(void);
 extern void DirtyToggleByGate(void);
 extern void func_00428950_oo(void);
 extern void GameDispatchValidateState(void);
@@ -30,7 +30,7 @@ __declspec(naked) void CallPauseDirty1JmpDirty4StackPush_00428850(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
-        jmp     ScaledInitOrSelfPtr_00429680
+        jmp     ScaledInitOrSelfPtr_StackPopDispatchTagged
         call    DirtyToggleByGate
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

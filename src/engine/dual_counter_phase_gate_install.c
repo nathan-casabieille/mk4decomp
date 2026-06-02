@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_audioBank2State;
 extern unsigned int g_audioStreamState;
 extern void InstallSelfStackReset(void);
-extern void ScaledInitOrSelfPtr_00421f00(void);
+extern void ScaledInitOrSelfPtr_InstallSelfStackReset(void);
 
 __declspec(naked) void DualCounterPhaseGateInstall(void)
 {
@@ -175,7 +175,7 @@ __declspec(naked) void DualCounterPhaseGateInstall(void)
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
-        call    ScaledInitOrSelfPtr_00421f00
+        call    ScaledInitOrSelfPtr_InstallSelfStackReset
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         pop     esi
@@ -214,7 +214,7 @@ __declspec(naked) void DualCounterPhaseGateInstall(void)
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
-        call    ScaledInitOrSelfPtr_00421f00
+        call    ScaledInitOrSelfPtr_InstallSelfStackReset
         mov     dword ptr [g_framePauseFlag], esi
         pop     edi
         pop     esi

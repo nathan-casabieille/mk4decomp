@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -115,13 +115,13 @@ extern int g_renderer2_initOk;
 extern void Renderer2_EndScene_D3D(void);
 extern void VtRelease_Modal(void);
 extern void ReleaseVtableSlots(int);
-extern void ComRelease_004aedc0(void);
+extern void ComRelease_g_comptr_0058c7b8(void);
 extern void DSoundDualEntryRelease(void);
 extern void DualVtable8Call(void);
-extern void ComRelease_004af000(void);
+extern void ComRelease_g_comptr_0058c7c0(void);
 extern void ComReleasePair_004af440(void);
 extern void DSoundBufferInit146_004aea40(int);
-extern void ComRelease_004aef30(void);
+extern void ComRelease_g_comptr_0058c7bc(void);
 extern void ComReleaseCapture_004aeee0(void);
 extern void DSoundBufferInit146_004aea40_alt(void);
 extern void R2_Init4(void);
@@ -155,15 +155,15 @@ loop4ad7c0:
         cmp     esi, 0x10
         _emit   7ch
         _emit   0f1h
-        call    ComRelease_004aedc0
+        call    ComRelease_g_comptr_0058c7b8
         call    DSoundDualEntryRelease
         call    DualVtable8Call
-        call    ComRelease_004af000
+        call    ComRelease_g_comptr_0058c7c0
         call    ComReleasePair_004af440
         push    0
         call    R2_Init4
         add     esp, 4
-        call    ComRelease_004aef30
+        call    ComRelease_g_comptr_0058c7bc
         call    ComReleaseCapture_004aeee0
         call    DSoundBufferInit146_004aea40
         mov     eax, dword ptr [g_renderer2_initOk]

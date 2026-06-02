@@ -42,7 +42,7 @@ extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_0048ef90(void);
+extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
 extern void Thunk_LoadGeoAsset_Default(void);
@@ -109,12 +109,12 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00429300 (144b) - install-self pattern w/ chain[+0x28] vs
- *   g_eventQueueChild cmp gate; on bypass: CopyJmp_00406ba0 +
+ *   g_eventQueueChild cmp gate; on bypass: CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx +
  *   CallPauseScaledDecJmp + bit-test of g_xformDirtyFlags.
  */
 extern void CallPauseScaledDecJmp(void);
-extern void CopyJmp_00406ba0(void);
-extern void ScaledInitOrSelfPtr_00429680(void);
+extern void CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(void);
+extern void ScaledInitOrSelfPtr_StackPopDispatchTagged(void);
 
 __declspec(naked) void EsiInstallChainCmpDualCall(void) {
     __asm {
@@ -136,7 +136,7 @@ __declspec(naked) void EsiInstallChainCmpDualCall(void) {
         call    StackPopDispatchTagged
         pop     esi
         ret
-        call    CopyJmp_00406ba0
+        call    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -152,7 +152,7 @@ __declspec(naked) void EsiInstallChainCmpDualCall(void) {
         _emit   0c8h
         _emit   74h
         _emit   07h
-        call    ScaledInitOrSelfPtr_00429680
+        call    ScaledInitOrSelfPtr_StackPopDispatchTagged
         pop     esi
         ret
         mov     dword ptr [esi + 8], 0x00429300
