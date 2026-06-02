@@ -117,8 +117,8 @@ extern void NodeWalkPoseUpdate(void);
 extern void MStackPushVec3Mul10(void);
 extern void TripleVecAccCallStore(void);
 extern void DoublePushAddCallDoublePop(void);
-extern unsigned int g_dispatchSave731_004eca50;
-extern unsigned int g_dispatchSave136_0050b268;
+extern unsigned int g_dispatchSave731;
+extern unsigned int g_dispatchSave136;
 
 extern void AudioMixerStep(void);
 extern void MStackCall_00406340(void);
@@ -153,7 +153,7 @@ __declspec(naked) void PreFightInstallCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_45d4
-        mov      ecx, OFFSET g_dispatchSave136_0050b268
+        mov      ecx, OFFSET g_dispatchSave136
         shr      ecx, 2
         mov      dword ptr [g_xformEntityIdx], ecx
         call     DispatcherComplex260_00407030
@@ -174,7 +174,7 @@ __declspec(naked) void PreFightInstallCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_45d4
-        mov      ecx, OFFSET g_dispatchSave731_004eca50
+        mov      ecx, OFFSET g_dispatchSave731
         shr      ecx, 2
         mov      dword ptr [g_walkCallback], ecx
         call     PushSetXfmMaskCallPop

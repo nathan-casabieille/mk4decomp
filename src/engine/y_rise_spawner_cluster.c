@@ -110,9 +110,9 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchTableArr4_00514d78;
-extern unsigned int g_dispatchTableArr3_00514de8;
-extern unsigned int g_dispatchClr0_0052ab48;
+extern unsigned int g_dispatchTableArr4;
+extern unsigned int g_dispatchTableArr3;
+extern unsigned int g_dispatchClr0;
 extern unsigned int g_player2State;
 extern void BootMstackInit(void);
 extern void DispatcherComplex181_00426310(void);
@@ -133,7 +133,7 @@ void YRiseSpawnerCluster(void) {
         add      esp, 4
         push     0x26
         call     SaveCallRestore
-        mov      eax, OFFSET g_dispatchTableArr4_00514d78
+        mov      eax, OFFSET g_dispatchTableArr4
         add      esp, 4
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
@@ -203,7 +203,7 @@ void YRiseSpawnerCluster(void) {
     L_7d70:
         push     0x233
         call     SaveCallRestore
-        mov      edx, OFFSET g_dispatchTableArr3_00514de8
+        mov      edx, OFFSET g_dispatchTableArr3
         add      esp, 4
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
@@ -227,7 +227,7 @@ void YRiseSpawnerCluster(void) {
         push     0x25b
         push     OFFSET func_00477ee0
         mov      dword ptr [g_walkCallback], 0
-        mov      dword ptr [g_dispatchClr0_0052ab48], 0
+        mov      dword ptr [g_dispatchClr0], 0
         call     BootMstackInit
         add      esp, 8
     L_7e12:

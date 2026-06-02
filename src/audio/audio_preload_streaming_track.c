@@ -121,10 +121,10 @@ extern void AudioInstallSelfStatePush(void);
 extern void LoadGeoAsset_Default(void);
 extern void TableWalkBoundedCmp(int);
 extern void QuadCallPhase2(void);
-extern unsigned int g_audioPreloadVar2_004f3a58;
+extern unsigned int g_audioPreloadVar2;
 extern unsigned int g_audioPreloadVar;
-extern unsigned int g_dispatchSave519_004f3a98;
-extern unsigned int g_dispatchSave633_004f3aa8;
+extern unsigned int g_dispatchSave519;
+extern unsigned int g_dispatchSave633;
 extern unsigned int g_audioPreloadBase;
 extern unsigned int g_count;
 extern unsigned int g_byte_005435a0;
@@ -174,14 +174,14 @@ __declspec(naked) void AudioPreloadStreamingTrack(void)
         mov      edx, dword ptr [g_audioPreloadState]
         cmp      eax, 1
         lea      eax, [edx*4]
-        mov      ecx, dword ptr [eax + g_audioPreloadVar2_004f3a58]
+        mov      ecx, dword ptr [eax + g_audioPreloadVar2]
         lea      ecx, [ecx + ecx*2]
         jne      short L_6f2e
-        mov      eax, dword ptr [eax + g_dispatchSave519_004f3a98]
+        mov      eax, dword ptr [eax + g_dispatchSave519]
         lea      ecx, [ecx*8 + g_byte_005435a0]
         jmp      short L_6f7f
     L_6f2e:
-        mov      eax, dword ptr [eax + g_dispatchSave519_004f3a98]
+        mov      eax, dword ptr [eax + g_dispatchSave519]
         lea      ecx, [ecx*8 + g_byte_005435b8]
         jmp      short L_6f7f
     L_6f3d:
@@ -200,7 +200,7 @@ __declspec(naked) void AudioPreloadStreamingTrack(void)
         lea      ecx, [ecx + ecx*2]
         lea      ecx, [ecx*8 + g_byte_005435b8]
     L_6f79:
-        mov      eax, dword ptr [eax + g_dispatchSave633_004f3aa8]
+        mov      eax, dword ptr [eax + g_dispatchSave633]
     L_6f7f:
         lea      edx, [eax + eax*2]
         push     0x18

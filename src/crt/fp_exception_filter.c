@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_crtFpuTbyte;
-extern unsigned int g_dispatchSave112_00522484;
+extern unsigned int g_dispatchSave112;
 extern unsigned int g_crtFpuExceptionBase;
 
 __declspec(naked) void FpExceptionFilter(void)
@@ -220,7 +220,7 @@ __declspec(naked) void FpExceptionFilter(void)
         ret
     L_a1af:
         mov      byte ptr [ebp - 0x90], 1
-        fadd     qword ptr [g_dispatchSave112_00522484]
+        fadd     qword ptr [g_dispatchSave112]
         ret
         fxch     st(1)
         fstp     tbyte ptr [ebp - 0x9e]

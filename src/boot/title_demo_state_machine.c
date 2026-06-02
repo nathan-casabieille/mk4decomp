@@ -112,7 +112,7 @@ extern void ZeroMultiGlobalsCmp(void);
 extern void TitleDemoStateMachine(void);
 extern void Screen_GreatestWarrior(void);
 extern unsigned int g_pendingMatchSlot;
-extern unsigned int g_pendingMatchSlot2_00541dc0;
+extern unsigned int g_pendingMatchSlot2;
 
 extern unsigned int g_tickFlagF;
 extern unsigned int g_pendingMatchAcc;
@@ -120,7 +120,7 @@ extern unsigned int g_phaseIdx;
 extern unsigned int g_zerotriple_00541de8;
 extern unsigned int g_zerotriple_00541dec;
 extern unsigned int g_titleDemoState;
-extern unsigned int g_titleDemoState2_00541df4;
+extern unsigned int g_titleDemoState2;
 extern void AudioVolumeRescale(void);
 extern void BootInitVec3PhaseInstall(void);
 extern void BootStateInitWithRecurseInstall(void);
@@ -193,7 +193,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         cmp      eax, 3
         mov      dword ptr [g_pendingMatchSlot], eax
         jbe      L_1c37
-        mov      dword ptr [g_pendingMatchSlot2_00541dc0], ebx
+        mov      dword ptr [g_pendingMatchSlot2], ebx
     L_1c37:
         push     -1
         push     -1
@@ -203,7 +203,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      dword ptr [g_zerotriple_00541de8], ebp
         mov      dword ptr [g_zerotriple_00541dec], ebp
         mov      dword ptr [g_titleDemoState], ebp
-        mov      dword ptr [g_titleDemoState2_00541df4], ebp
+        mov      dword ptr [g_titleDemoState2], ebp
         call     QuadCallPhase2
         mov      dword ptr [esi + 8], edi
         mov      edx, dword ptr [g_baseSel]
@@ -246,7 +246,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         cmp      dword ptr [g_framePauseFlag], ebp
         jne      L_1cb3
         mov      dword ptr [g_walkCallback], ebp
-        mov      dword ptr [g_pendingMatchSlot2_00541dc0], ebp
+        mov      dword ptr [g_pendingMatchSlot2], ebp
         mov      dword ptr [g_pendingMatchSlot], ebp
         mov      dword ptr [g_active_0053a408], ebp
         mov      dword ptr [g_active_00537e88], ebp

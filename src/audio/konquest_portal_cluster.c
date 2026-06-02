@@ -108,16 +108,16 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave556_004f3930;
-extern unsigned int g_dispatchSave815_004f393c;
-extern unsigned int g_dispatchSave816_004f394c;
-extern unsigned int g_dispatchSave817_004f39dc;
-extern unsigned int g_dispatchSave818_004f3a48;
-extern unsigned int g_dispatchSave724_004f6338;
+extern unsigned int g_dispatchSave556;
+extern unsigned int g_dispatchSave815;
+extern unsigned int g_dispatchSave816;
+extern unsigned int g_dispatchSave817;
+extern unsigned int g_dispatchSave818;
+extern unsigned int g_dispatchSave724;
 extern unsigned int g_audioPreloadBase;
-extern unsigned int g_dispatchSave128_0050f130;
-extern unsigned int g_dispatchSave127_0050f14c;
-extern unsigned int g_dispatchSave119_0051599c;
+extern unsigned int g_dispatchSave128;
+extern unsigned int g_dispatchSave127;
+extern unsigned int g_dispatchSave119;
 extern unsigned int g_bootInitState;
 extern unsigned int g_count;
 extern unsigned int g_voicePoolTickFlag_005437f4;
@@ -182,12 +182,12 @@ __declspec(naked) void EnduranceMode_Handler(void)
         je       short L_52ff
         cmp      eax, 8
         jne      short L_530d
-        mov      ecx, OFFSET g_dispatchSave128_0050f130
+        mov      ecx, OFFSET g_dispatchSave128
         shr      ecx, 2
         mov      dword ptr [g_xformEntityIdx], ecx
         jmp      short L_530d
     L_52ff:
-        mov      edx, OFFSET g_dispatchSave127_0050f14c
+        mov      edx, OFFSET g_dispatchSave127
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
     L_530d:
@@ -207,10 +207,10 @@ __declspec(naked) void EnduranceMode_Handler(void)
         mov      dword ptr [edx*4 + 0x58], 0xfff60000
     L_5360:
         call     CharSelect_CpuBattlesToggle
-        push     OFFSET g_dispatchSave556_004f3930
+        push     OFFSET g_dispatchSave556
         call     ScaledByteIdxDualCopy
         add      esp, 4
-        push     OFFSET g_dispatchSave556_004f3930
+        push     OFFSET g_dispatchSave556
         call     AudioState50b4BitDispatcher
         add      esp, 4
         call     TripleCallByteCheck
@@ -220,7 +220,7 @@ __declspec(naked) void EnduranceMode_Handler(void)
         mov      eax, dword ptr [g_baseSel]
         mov      eax, dword ptr [eax*4 + 0x30]
         lea      ecx, [eax + eax*8]
-        mov      eax, dword ptr [ecx*4 + g_dispatchSave815_004f393c]
+        mov      eax, dword ptr [ecx*4 + g_dispatchSave815]
         cmp      eax, ebp
         mov      dword ptr [g_currentNodeIdx], eax
         je       short L_53c3
@@ -270,9 +270,9 @@ __declspec(naked) void EnduranceMode_Handler(void)
         call     FiveTableWalkInit
         cmp      dword ptr [g_framePauseFlag], ebp
         jne      L_552f
-        mov      esi, OFFSET g_dispatchSave816_004f394c
+        mov      esi, OFFSET g_dispatchSave816
     L_547e:
-        cmp      esi, OFFSET g_dispatchSave817_004f39dc
+        cmp      esi, OFFSET g_dispatchSave817
         jge      short L_54a1
         mov      ecx, dword ptr [esi]
         mov      eax, dword ptr [esi + 4]
@@ -280,7 +280,7 @@ __declspec(naked) void EnduranceMode_Handler(void)
         push     eax
         push     ecx
         push     ebp
-        push     OFFSET g_dispatchSave119_0051599c
+        push     OFFSET g_dispatchSave119
         call     AudioInitArgs3
         add      esp, 0x10
     L_54a1:
@@ -288,10 +288,10 @@ __declspec(naked) void EnduranceMode_Handler(void)
         mov      eax, dword ptr [g_baseSel]
         add      esi, 0x24
         add      edx, eax
-        cmp      esi, OFFSET g_dispatchSave818_004f3a48
+        cmp      esi, OFFSET g_dispatchSave818
         mov      dword ptr [edx*4], ebp
         jb       short L_547e
-        push     OFFSET g_dispatchSave724_004f6338
+        push     OFFSET g_dispatchSave724
         call     AudioBindEntry
         mov      eax, dword ptr [g_baseSel]
         mov      ecx, OFFSET g_audioPreloadBase

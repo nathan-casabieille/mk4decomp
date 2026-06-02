@@ -114,12 +114,12 @@ extern unsigned int g_fightAxisPosY;
  *   edx = g_stateCountdown - 1; eax = [eax+0x0c]; eax += edx.
  *   ecx = g_phaseCounter + g_phaseThunkVar; esi = [ecx*4]; edx = eax;
  *   shift = ((esi-2)&3)<<3; sar edx,cl; ecx = esi*8; sar eax,cl;
- *   mask to 8 bits; store edx to g_dispatchVar34_00535d5c and g_installState;
+ *   mask to 8 bits; store edx to g_dispatchVar34 and g_installState;
  *   store eax to g_eventQueueCurrent / g_walkCallback.
  *   mstack-pop pair.
  */
 extern unsigned int g_installState;
-extern unsigned int g_dispatchVar34_00535d5c;
+extern unsigned int g_dispatchVar34;
 extern unsigned int g_phaseThunkVar;
 extern unsigned int g_dispatchAcc;
 extern unsigned int g_phaseCounter;
@@ -165,7 +165,7 @@ __declspec(naked) void BitShiftExtract(void) {
         pop     esi
         sar     eax, cl
         and     edx, 0xff
-        mov     dword ptr [g_dispatchVar34_00535d5c], edx
+        mov     dword ptr [g_dispatchVar34], edx
         mov     dword ptr [g_installState], edx
         and     eax, 0xff
         mov     dword ptr [g_eventQueueCurrent], eax

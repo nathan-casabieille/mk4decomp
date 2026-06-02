@@ -115,7 +115,7 @@ extern unsigned int g_const_004d2f04;
 extern unsigned int g_const_004d2f08;
 extern unsigned int g_crtFdCloseSlot;
 extern unsigned int g_crtAbortBase;
-extern unsigned int g_crtFpuSlot1_0052290c;
+extern unsigned int g_crtFpuSlot1;
 extern unsigned int g_crtCType;
 extern unsigned int g_crtCleanupFlag;
 extern unsigned int g_arr_00fa0de0;
@@ -238,7 +238,7 @@ __declspec(naked) void RaiseAbortLocalized(void)
         lea      edx, [esp + 0x1c]
         and      ecx, 3
         rep movsb
-        mov      edi, dword ptr [ebp*8 + g_crtFpuSlot1_0052290c]
+        mov      edi, dword ptr [ebp*8 + g_crtFpuSlot1]
         or       ecx, 0xffffffff
         repne scasb
         not      ecx
@@ -277,7 +277,7 @@ __declspec(naked) void RaiseAbortLocalized(void)
         call     dword ptr [g_iat_GetStdHandle]
         mov      esi, eax
     L_c218:
-        mov      edx, dword ptr [ebp*8 + g_crtFpuSlot1_0052290c]
+        mov      edx, dword ptr [ebp*8 + g_crtFpuSlot1]
         lea      ecx, [esp + 0x10]
         push     0
         push     ecx

@@ -108,11 +108,11 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave971_004eb6f8;
-extern unsigned int g_dispatchSave560_004eb710;
-extern unsigned int g_dispatchSave559_004eb720;
-extern unsigned int g_dispatchSave972_004eb738;
-extern unsigned int g_dispatchSave973_004eb740;
+extern unsigned int g_dispatchSave971;
+extern unsigned int g_dispatchSave560;
+extern unsigned int g_dispatchSave559;
+extern unsigned int g_dispatchSave972;
+extern unsigned int g_dispatchSave973;
 extern void CallPauseDirtyMStackPushFn(void);
 extern void InstallSelfIndirectJmp(void);
 extern void ScaledMove74to70(void);
@@ -136,12 +136,12 @@ extern void IterStepScaledStore(void);
  *     TripleCallPauseJmp → push 0x4eb6f8 →
  *     ArgSarStoreJmp.
  *   6b NOP align pad.
- *   Entry 3 (offset 0x100, 18b): sets g_eventQueueEnd = &g_dispatchSave560_004eb710>>2
+ *   Entry 3 (offset 0x100, 18b): sets g_eventQueueEnd = &g_dispatchSave560>>2
  *     and tail-jmp PhaseDispatchListAdvance.
  *   14b NOP align pad.
  *   Entry 4 (offset 0x120, 32b): if bit 0 of g_xformDirtyFlags set tail-jmp
  *     CallPauseDirtyMStackPushFn; else set g_eventQueueEnd =
- *     &g_dispatchSave559_004eb720>>2 and tail-jmp ComboScriptDispatchCluster.
+ *     &g_dispatchSave559>>2 and tail-jmp ComboScriptDispatchCluster.
  *   Entry 5 (offset 0x140, 36b): push 0x4eb738, call IterStepScaledStore;
  *     on no-error push 0x4eb740, call ArgSarStoreJmp.
  */
@@ -216,7 +216,7 @@ __declspec(naked) void FiveEntryAlarmInstallChain(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_fea_e2End
-        push    offset g_dispatchSave971_004eb6f8
+        push    offset g_dispatchSave971
         call    ArgSarStoreJmp
         add     esp, 4
     L_fea_e2End:
@@ -229,7 +229,7 @@ __declspec(naked) void FiveEntryAlarmInstallChain(void) {
         nop
         /* entry 3 (offset 0x100) */
     L_fea_entry3:
-        mov     eax, offset g_dispatchSave560_004eb710
+        mov     eax, offset g_dispatchSave560
         sar     eax, 2
         mov     dword ptr [g_eventQueueEnd], eax
         jmp     PhaseDispatchListAdvance
@@ -253,19 +253,19 @@ __declspec(naked) void FiveEntryAlarmInstallChain(void) {
         je      short L_fea_e4second
         jmp     CallPauseDirtyMStackPushFn
     L_fea_e4second:
-        mov     eax, offset g_dispatchSave559_004eb720
+        mov     eax, offset g_dispatchSave559
         sar     eax, 2
         mov     dword ptr [g_eventQueueEnd], eax
         jmp     ComboScriptDispatchCluster
         /* entry 5 (offset 0x140) */
     L_fea_entry5:
-        push    offset g_dispatchSave972_004eb738
+        push    offset g_dispatchSave972
         call    IterStepScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         jne     short L_fea_e5End
-        push    offset g_dispatchSave973_004eb740
+        push    offset g_dispatchSave973
         call    ArgSarStoreJmp
         add     esp, 4
     L_fea_e5End:

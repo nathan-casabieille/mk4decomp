@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave908_004d6718;
-extern unsigned int g_dispatchSave538_004f27f0;
+extern unsigned int g_dispatchSave908;
+extern unsigned int g_dispatchSave538;
 extern unsigned int g_savedNode;
 extern void CallSetPause(void);
 extern void CmpDivJmp(void);
@@ -125,7 +125,7 @@ __declspec(naked) void MstackPushPackChainInit(void)
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_fightGroupHead]
         inc     eax
-        mov     edx, offset g_dispatchSave908_004d6718
+        mov     edx, offset g_dispatchSave908
         mov     dword ptr [g_matrixStackTop], eax
         push    esi
         shr     edx, 2
@@ -150,7 +150,7 @@ __declspec(naked) void MstackPushPackChainInit(void)
         pop     esi
         ret
     L_mppci_branchA:
-        mov     edx, offset g_dispatchSave538_004f27f0
+        mov     edx, offset g_dispatchSave538
         shr     edx, 2
         mov     dword ptr [g_eventQueueTotal], edx
         call    Vec3AccMul10ChainBlend

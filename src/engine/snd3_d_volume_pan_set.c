@@ -110,14 +110,14 @@ extern unsigned int g_fightAxisPosY;
 
 extern void Helper_AudioRelease(void);
 extern void Snd3DVolumePanSet(void);
-extern unsigned int g_dispatchSave527_004d2a30[2];  /* double constant */
+extern unsigned int g_dispatchSave527[2];  /* double constant */
 extern unsigned char g_table_004f7dc0[];
 
 /* @addr 0x004be870 (216b engine.scenegraph) - effect-table walker.
  *   Reads param (ecx<47), computes table base = &g_table[idx*680], iterates
  *   170 4-byte entries: skip 0xffff; check filter via TableSearch;
  *   compute scaled idx (if ax>100 then ax*(2/5), else ax+0x7d0); random pick
- *   via Helper_AudioRelease; load short [esi+2] (factor), fild+fmul[g_dispatchSave527_004d2a30],
+ *   via Helper_AudioRelease; load short [esi+2] (factor), fild+fmul[g_dispatchSave527],
  *   DoubleToInt64 → byte clamp stored at [esp+8]; recompute scaled idx;
  *   apply effect via Snd3DVolumePanSet(idx, -1, byte, byte).
  */
@@ -168,7 +168,7 @@ __declspec(naked) void EffectTableWalker(void) {
         mov     [esp + 0x14], edx
         add     esp, 4
         fild    dword ptr [esp + 0x10]
-        fmul    qword ptr [g_dispatchSave527_004d2a30]
+        fmul    qword ptr [g_dispatchSave527]
         call    DoubleToInt64
         mov     byte ptr [esp + 8], al
         mov     ax, word ptr [esi]

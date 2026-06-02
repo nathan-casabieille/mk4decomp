@@ -27,14 +27,14 @@ int Crt_rand(void) {
  */
 extern void (*g_iat_0051ffd8)(void);
 extern int IterFnPtrs(void *, void *);
-extern void *g_dispatchSave550_004d5000;
-extern void *g_dispatchSave549_004d5018;
-extern void *g_dispatchSave548_004d501c;
-extern void *g_dispatchSave547_004d5024;
+extern void *g_dispatchSave550;
+extern void *g_dispatchSave549;
+extern void *g_dispatchSave548;
+extern void *g_dispatchSave547;
 void _init_premain(void) {
     if (g_iat_0051ffd8) g_iat_0051ffd8();
-    IterFnPtrs(&g_dispatchSave548_004d501c, &g_dispatchSave547_004d5024);
-    IterFnPtrs(&g_dispatchSave550_004d5000, &g_dispatchSave549_004d5018);
+    IterFnPtrs(&g_dispatchSave548, &g_dispatchSave547);
+    IterFnPtrs(&g_dispatchSave550, &g_dispatchSave549);
 }
 
 /* @addr 0x004c6ee0 (55b)
@@ -45,14 +45,14 @@ void _init_premain(void) {
  */
 extern void * (__stdcall *g_iat_HeapCreate)(int, int, int);
 extern void (__stdcall *g_iat_HeapDestroy)(void *);
-extern void * g_dispatchSave1470_00fa0ee4;
+extern void * g_dispatchSave1470;
 extern int VirtualHeapAlloc(void);
 int CallIATIfThenCall(void) {
     void *p = g_iat_HeapCreate(0, 0x1000, 0);
-    g_dispatchSave1470_00fa0ee4 = p;
+    g_dispatchSave1470 = p;
     if (p == 0) return 0;
     if (VirtualHeapAlloc() == 0) {
-        g_iat_HeapDestroy(g_dispatchSave1470_00fa0ee4);
+        g_iat_HeapDestroy(g_dispatchSave1470);
         return 0;
     }
     return 1;

@@ -131,9 +131,9 @@ extern unsigned int g_fightAxisPosY;
  *   Entry 5 (offset 0x150, 34b): Phase1ContextSetupHelper + BootCallChainDoubleMul10;
  *     on no-error tail-jmps Triple3PathDispatch.
  */
-extern unsigned int g_dispatchSave640_004f25d8;
-extern unsigned int g_dispatchSave639_004f2640;
-extern unsigned int g_dispatchSave638_004f2650;
+extern unsigned int g_dispatchSave640;
+extern unsigned int g_dispatchSave639;
+extern unsigned int g_dispatchSave638;
 extern void ArgSarStoreJmp(void);
 extern void ArgSar_Set0_Jmp(void);
 extern void BootCallChainDoubleMul10(void);
@@ -179,7 +179,7 @@ __declspec(naked) void Alarm5EntryScopedChain(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a5e_e2End
-        push    offset g_dispatchSave640_004f25d8
+        push    offset g_dispatchSave640
         call    ArgSarStoreJmp
         add     esp, 4
     L_a5e_e2End:
@@ -204,7 +204,7 @@ __declspec(naked) void Alarm5EntryScopedChain(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_a5e_e3End
-        push    offset g_dispatchSave639_004f2640
+        push    offset g_dispatchSave639
         call    ScaledStackCallPause
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
@@ -239,7 +239,7 @@ __declspec(naked) void Alarm5EntryScopedChain(void) {
         mov     eax, 0x30
         mov     dword ptr [g_fightGroupHead], edx
         mov     dword ptr [g_walkCallback], eax
-        push    offset g_dispatchSave638_004f2650
+        push    offset g_dispatchSave638
         mov     dword ptr [ecx*4 + 0x5c], eax
         call    ArgSar_Set0_Jmp
         add     esp, 4

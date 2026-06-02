@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
  *     pause? ret.
  *   mstack-pop into g_scaledInit.
  */
-extern unsigned int g_dispatchSave47_00537f9c;
+extern unsigned int g_dispatchSave47;
 extern void GatedWordPushCall(void);
 extern void GuardedScaledCall(void);
 extern void PushSearchToggleBit0(void);
@@ -138,7 +138,7 @@ void TagDispatchPairedPacked(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_dispatchSave47_00537f9c]
+        mov     eax, dword ptr [g_dispatchSave47]
         mov     dword ptr [g_walkCallback], eax
         call    PushSearchToggleBit0
         mov     eax, dword ptr [g_framePauseFlag]

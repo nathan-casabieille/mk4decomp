@@ -114,7 +114,7 @@ extern unsigned int g_const_004a0dc0;
 extern unsigned int g_const_004a10d0;
 extern unsigned int g_word_004e2860;
 extern unsigned int g_audioInitPeriodic;
-extern unsigned int g_audioInstall2State_00537f88;
+extern unsigned int g_audioInstall2State;
 extern unsigned int g_state2_00541d88;
 extern void AudioMStackPushHandlerPair(void);
 extern void BitSetByIndex(void);
@@ -147,7 +147,7 @@ __declspec(naked) void GameNetSyncState(void)
         cmp      eax, esi
         mov      dword ptr [g_walkCallback], eax
         jne      L_fd46
-        mov      eax, dword ptr [g_audioInstall2State_00537f88]
+        mov      eax, dword ptr [g_audioInstall2State]
         mov      dword ptr [g_eventQueueNotMask], esi
         cmp      eax, 0xf
         mov      dword ptr [g_acc_00542078], eax

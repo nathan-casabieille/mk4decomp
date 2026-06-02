@@ -108,10 +108,10 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave741_004ed518;
-extern unsigned int g_dispatchSave742_004ed550;
-extern unsigned int g_dispatchSave743_004ed560;
-extern unsigned int g_dispatchSave69_00542ba0;
+extern unsigned int g_dispatchSave741;
+extern unsigned int g_dispatchSave742;
+extern unsigned int g_dispatchSave743;
+extern unsigned int g_dispatchSave69;
 extern void Alarm3EntryPhaseChain(void);
 extern void ArgSarStoreJmp(void);
 extern void Cascade3ChainInit(void);
@@ -132,7 +132,7 @@ __declspec(naked) void AggressorModeCluster(void)
 {
     __asm {
         /* === Helper 1 (0x47df30): tiny event 004ed518 forwarder === */
-        push     OFFSET g_dispatchSave741_004ed518
+        push     OFFSET g_dispatchSave741
         call     ArgSarStoreJmp
         add      esp, 4
         ret
@@ -182,7 +182,7 @@ __declspec(naked) void AggressorModeCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e0fd
-        push     OFFSET g_dispatchSave743_004ed560
+        push     OFFSET g_dispatchSave743
         call     ArgSarStoreJmp
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -191,7 +191,7 @@ __declspec(naked) void AggressorModeCluster(void)
     L_e004:
         mov      ecx, dword ptr [g_baseSel]
         mov      eax, 0x203
-        push     OFFSET g_dispatchSave742_004ed550
+        push     OFFSET g_dispatchSave742
         mov      dword ptr [ecx*4 + 0x68], 0x403
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [g_walkCallback], eax
@@ -206,7 +206,7 @@ __declspec(naked) void AggressorModeCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e0fd
-        push     OFFSET g_dispatchSave69_00542ba0
+        push     OFFSET g_dispatchSave69
         call     GuardedPackedSlotInit
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4

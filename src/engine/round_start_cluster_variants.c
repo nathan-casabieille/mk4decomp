@@ -116,11 +116,11 @@ extern void CmpEqInitCallElseJmp(void);
 extern void EsiInstallClampAddCall(void);
 extern void MStackPushSet0008(void);
 extern void ScaledZeroFour(void);
-extern unsigned int g_dispatchSave598_004ed1d8;
+extern unsigned int g_dispatchSave598;
 
-extern unsigned int g_dispatchSave125_0050f22c;
+extern unsigned int g_dispatchSave125;
 extern unsigned int g_dispatchWalkVar;
-extern unsigned int g_dispatchTab70_00543100;
+extern unsigned int g_dispatchTab70;
 extern void ArgSarStoreJmp(void);
 extern void AudioInstallSelfStatePush(void);
 extern void BootInitGuardedCallChain(void);
@@ -220,7 +220,7 @@ __declspec(naked) void RoundStartCluster_0047b900(void)
         mov      ecx, dword ptr [g_baseSel]
         mov      eax, 0x211
         mov      dword ptr [g_walkCallback], eax
-        push     OFFSET g_dispatchSave598_004ed1d8
+        push     OFFSET g_dispatchSave598
         mov      dword ptr [ecx*4 + 0x74], eax
         call     ArgSarStoreJmp
         add      esp, 4
@@ -443,7 +443,7 @@ __declspec(naked) void RoundStartCluster_004919c0(void)
         mov      dword ptr [g_eventQueueEnd], ecx
         jne      L_1ca8
         mov      ecx, dword ptr [g_eventQueueIdx]
-        mov      eax, OFFSET g_dispatchSave125_0050f22c
+        mov      eax, OFFSET g_dispatchSave125
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
         mov      dword ptr [ecx*4 + 0x24], eax
@@ -463,7 +463,7 @@ __declspec(naked) void RoundStartCluster_004919c0(void)
         mov      dword ptr [eax*4 + 0x24], edx
         jmp      L_1e11
     L_1ccc:
-        mov      eax, OFFSET g_dispatchTab70_00543100
+        mov      eax, OFFSET g_dispatchTab70
         shr      eax, 2
         mov      dword ptr [g_eventQueueEnd], eax
         mov      ecx, dword ptr [eax*4]

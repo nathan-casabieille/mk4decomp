@@ -120,7 +120,7 @@ extern void StackPushCallPopChain(void);
 extern void TagTeamHandlerCluster(void);
 extern void InstallSelfChainStateInit(void);
 extern void ComboMenuFsmCluster(void);
-extern unsigned int g_pendingMatchAudio2_0053a7a8;
+extern unsigned int g_pendingMatchAudio2;
 
 extern unsigned int g_load_0052ab10;
 extern void MStackAngleRatioSubchain(void);
@@ -140,7 +140,7 @@ __declspec(naked) void ThrowEventCluster(void)
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], edx
-        mov      eax, dword ptr [g_pendingMatchAudio2_0053a7a8]
+        mov      eax, dword ptr [g_pendingMatchAudio2]
         mov      dword ptr [g_fightGroupHead], eax
         mov      dword ptr [g_walkCallback], 1
         call     ChainDirtyBitWalker

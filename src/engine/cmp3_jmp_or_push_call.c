@@ -17,7 +17,7 @@
 extern unsigned int g_stateCountdown;
 extern void CallPauseDirtyLit_00433910(void);
 extern int PackedAdvanceCallTailJmp(void *);
-extern void *g_dispatchSave1226_004e44c0;
+extern void *g_dispatchSave1226;
 void Cmp3JmpOrPushCall(void) {
     int v = (int)g_stateCountdown;
     g_walkCallback = (void (*)(void))v;
@@ -25,5 +25,5 @@ void Cmp3JmpOrPushCall(void) {
         CallPauseDirtyLit_00433910();
         return;
     }
-    PackedAdvanceCallTailJmp(&g_dispatchSave1226_004e44c0);
+    PackedAdvanceCallTailJmp(&g_dispatchSave1226);
 }

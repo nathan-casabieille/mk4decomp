@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave601_004ecac8;
+extern unsigned int g_dispatchSave601;
 extern unsigned int g_cj_00535df0;
 extern void MStackCall_00406340(void);
 extern void MStackPush2ChainLLInsert(void);
@@ -173,7 +173,7 @@ __declspec(naked) void NetEntityScanAndPunish(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_4d31
-        mov      eax, OFFSET g_dispatchSave601_004ecac8
+        mov      eax, OFFSET g_dispatchSave601
         shr      eax, 2
         mov      dword ptr [g_walkCallback], eax
         call     PushSetXfmMaskCallPop

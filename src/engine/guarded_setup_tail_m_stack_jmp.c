@@ -117,10 +117,10 @@ extern unsigned int g_fightAxisPosY;
  *   g_walkCallback = eax; [ecx*4 + 0x30] = eax;
  *   jmp MStackPushComplexCallPop_00406430.
  */
-extern unsigned int g_dispatchSave413_0050f408;
+extern unsigned int g_dispatchSave413;
 void GuardedSetupTailMStackJmp(void) {
     unsigned int v;
-    g_xformEntityIdx = (unsigned int)&g_dispatchSave413_0050f408 >> 2;
+    g_xformEntityIdx = (unsigned int)&g_dispatchSave413 >> 2;
     DispatcherComplex260_00407400();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 4) != 0) return;

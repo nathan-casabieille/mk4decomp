@@ -13,8 +13,8 @@
  */
 extern unsigned int g_installCountdownBase;
 extern unsigned int g_comptr_0058c7ac;
-extern unsigned int g_renderer2_state9_0058c7c8;
-extern unsigned int g_renderer2_var2_0058c7cc;
+extern unsigned int g_renderer2_state9;
+extern unsigned int g_renderer2_var2;
 extern int g_renderer2_present_rc;
 
 __declspec(naked) void R2_Init9(void) {
@@ -33,25 +33,25 @@ __declspec(naked) void R2_Init9(void) {
         mov     ecx, dword ptr [eax]
         push    0
         lea     edx, [esp + 0xc]
-        push    offset g_renderer2_state9_0058c7c8
+        push    offset g_renderer2_state9
         push    edx
         push    eax
         call    dword ptr [ecx + 0x18]
         mov     dword ptr [g_renderer2_present_rc], eax
 step2:
-        mov     eax, dword ptr [g_renderer2_state9_0058c7c8]
+        mov     eax, dword ptr [g_renderer2_state9]
         test    eax, eax
         je      failPath
         mov     ecx, dword ptr [eax]
-        push    offset g_renderer2_var2_0058c7cc
+        push    offset g_renderer2_var2
         push    0x004d28f0
         push    eax
         call    dword ptr [ecx]
         mov     dword ptr [g_renderer2_present_rc], eax
-        mov     eax, dword ptr [g_renderer2_state9_0058c7c8]
+        mov     eax, dword ptr [g_renderer2_state9]
         test    eax, eax
         je      failPath
-        mov     eax, dword ptr [g_renderer2_var2_0058c7cc]
+        mov     eax, dword ptr [g_renderer2_var2]
         test    eax, eax
         je      failPath
         mov     eax, 1

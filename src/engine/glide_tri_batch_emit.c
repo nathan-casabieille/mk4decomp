@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_const_004d2964;
 extern unsigned int g_const_004d2968;
 extern unsigned int g_const_004d296c;
-extern unsigned int g_renderer2_d3dInitByte_004f4790;
+extern unsigned int g_renderer2_d3dInitByte;
 extern unsigned int g_glideTriSave;
 extern unsigned int g_glideDataArr_00543f8c;
 extern unsigned int g_glideDataArr_00543f90;
@@ -152,15 +152,15 @@ extern unsigned int g_glideVertArr_00544748;
 extern unsigned int g_glideVertArr_00544750;
 extern unsigned int g_glideVertArr_00544754;
 extern unsigned int g_glideVertArr_00544758;
-extern unsigned int g_glideVertArr6_0054475c;
-extern unsigned int g_glideVertArr5_00544760;
-extern unsigned int g_glideVertArr4_00544764;
-extern unsigned int g_glideVertArr3_00544768;
-extern unsigned int g_glideVertArr2_00544770;
+extern unsigned int g_glideVertArr6;
+extern unsigned int g_glideVertArr5;
+extern unsigned int g_glideVertArr4;
+extern unsigned int g_glideVertArr3;
+extern unsigned int g_glideVertArr2;
 extern unsigned int g_glideVertArr_00544774;
 extern u8 g_renderer2_buf1[];
 extern unsigned int g_renderer2_obj;
-extern unsigned int g_renderer2_d3dByte_0058c7d0;
+extern unsigned int g_renderer2_d3dByte;
 extern int g_renderer2_present_rc;
 extern int g_renderer2_active;
 extern int g_renderer2_surface;
@@ -213,16 +213,16 @@ __declspec(naked) void GlideTriBatchEmit(void)
         add      eax, 7
         cmp      eax, 0xc00
         jge      L_dd03
-        cmp      bl, byte ptr [g_renderer2_d3dByte_0058c7d0]
+        cmp      bl, byte ptr [g_renderer2_d3dByte]
         jne      L_dd03
         mov      cl, byte ptr [esp + 0x14]
-        mov      al, byte ptr [g_renderer2_d3dInitByte_004f4790]
+        mov      al, byte ptr [g_renderer2_d3dInitByte]
         cmp      cl, al
         je       L_de14
     L_dd03:
         call     Renderer2_FlushBatch_D3D
         mov      dl, byte ptr [esp + 0x14]
-        mov      al, byte ptr [g_renderer2_d3dInitByte_004f4790]
+        mov      al, byte ptr [g_renderer2_d3dInitByte]
         cmp      dl, al
         mov      eax, dword ptr [g_renderer2_obj]
         je       L_dd4c
@@ -240,9 +240,9 @@ __declspec(naked) void GlideTriBatchEmit(void)
         mov      eax, dword ptr [g_renderer2_obj]
     L_dd42:
         mov      cl, byte ptr [esp + 0x14]
-        mov      byte ptr [g_renderer2_d3dInitByte_004f4790], cl
+        mov      byte ptr [g_renderer2_d3dInitByte], cl
     L_dd4c:
-        mov      cl, byte ptr [g_renderer2_d3dByte_0058c7d0]
+        mov      cl, byte ptr [g_renderer2_d3dByte]
         cmp      bl, cl
         je       L_de14
         test     bl, bl
@@ -323,7 +323,7 @@ __declspec(naked) void GlideTriBatchEmit(void)
     L_de09:
         mov      dword ptr [g_renderer2_present_rc], eax
     L_de0e:
-        mov      byte ptr [g_renderer2_d3dByte_0058c7d0], bl
+        mov      byte ptr [g_renderer2_d3dByte], bl
     L_de14:
         fld      dword ptr [esp + 0x1c]
         fcomp    dword ptr [g_const_004d2964]
@@ -533,9 +533,9 @@ __declspec(naked) void GlideTriBatchEmit(void)
         mov      dword ptr [eax + g_glideVertArr_00544754], edx
         mov      edx, dword ptr [esp + 0x48]
         mov      dword ptr [eax + g_glideVertArr_00544758], ecx
-        mov      dword ptr [eax + g_glideVertArr6_0054475c], edx
-        mov      dword ptr [eax + g_glideVertArr4_00544764], edi
-        mov      dword ptr [eax + g_glideVertArr5_00544760], edi
+        mov      dword ptr [eax + g_glideVertArr6], edx
+        mov      dword ptr [eax + g_glideVertArr4], edi
+        mov      dword ptr [eax + g_glideVertArr5], edi
         movsx    ecx, word ptr [esp + 0x54]
         mov      edx, ecx
         xor      ebx, ebx
@@ -557,11 +557,11 @@ __declspec(naked) void GlideTriBatchEmit(void)
         shl      ebx, 8
         and      ecx, 0xff
         or       ebx, edx
-        mov      dword ptr [eax + g_glideVertArr3_00544768], ebx
+        mov      dword ptr [eax + g_glideVertArr3], ebx
         mov      edx, dword ptr [ecx*4 + g_renderer2_lutTable]
         mov      ecx, dword ptr [esp + 0x50]
         and      ecx, 0xff
-        mov      dword ptr [eax + g_glideVertArr2_00544770], edx
+        mov      dword ptr [eax + g_glideVertArr2], edx
         mov      edx, dword ptr [ecx*4 + g_renderer2_lutTable]
         mov      dword ptr [eax + g_glideVertArr_00544774], edx
         mov      eax, dword ptr [g_renderer2_batchCount]

@@ -15,8 +15,8 @@ extern unsigned int g_scaledInit_00542044;
  *   add     esp, 8
  *   ret
  */
-extern unsigned int g_dispatchSave1430_00f9f850;
+extern unsigned int g_dispatchSave1430;
 extern int __cdecl TryAllocWithHandler(int, int);
 int LoadArgPushCall(int x) {
-    return TryAllocWithHandler(x, g_dispatchSave1430_00f9f850);
+    return TryAllocWithHandler(x, g_dispatchSave1430);
 }

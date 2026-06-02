@@ -108,11 +108,11 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_mul10SumState_0054388c;
-extern unsigned int g_mul10SumState2_00543890;
+extern unsigned int g_mul10SumState;
+extern unsigned int g_mul10SumState2;
 extern unsigned int g_dispatchTab;
-extern unsigned int g_mul10TableBase_004ec050;
-extern unsigned int g_dispatchVar37_00542a58;
+extern unsigned int g_mul10TableBase;
+extern unsigned int g_dispatchVar37;
 extern void ScaledIndexConditionalAdd(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void Mul10SumStoreNegCommit(void);
@@ -125,10 +125,10 @@ extern void ScaledClearJmp_00428d60(void);
  *   TableLookupCall_00489ff0; on no-error sets 0x54206c=0xa, calls
  *   ScaledIndexConditionalAdd. Then dispatches on
  *   g_baseSel:
- *     - matches g_gtPlayerProbe2: if g_mul10SumState_0054388c is set, picks
- *       &g_mul10TableBase_004ec050>>2 (state 1) or &g_dispatchTab>>2 (other)
- *       into g_eventQueueTotal, clears g_mul10SumState_0054388c, jumps to next.
- *     - matches g_gtPlayerProbe1: mirror with g_mul10SumState2_00543890.
+ *     - matches g_gtPlayerProbe2: if g_mul10SumState is set, picks
+ *       &g_mul10TableBase>>2 (state 1) or &g_dispatchTab>>2 (other)
+ *       into g_eventQueueTotal, clears g_mul10SumState, jumps to next.
+ *     - matches g_gtPlayerProbe1: mirror with g_mul10SumState2.
  *     - default: both g_eventQueueTotal and 0x54204c set to the two
  *       packed_ptrs, zeroes g_eventQueueChild, calls
  *       GuardedDualConst2AndToggle. If bit 0 of 0x54208c set,
@@ -160,36 +160,36 @@ __declspec(naked) void StreamFlagPackedSelectChain(void) {
         mov     eax, dword ptr [g_gtPlayerProbe2]
         cmp     ecx, eax
         jne     short L_sfp_check2
-        mov     eax, dword ptr [g_mul10SumState_0054388c]
+        mov     eax, dword ptr [g_mul10SumState]
         test    eax, eax
         je      short L_sfp_check2
         cmp     eax, 1
-        mov     eax, offset g_mul10TableBase_004ec050
+        mov     eax, offset g_mul10TableBase
         je      short L_sfp_useEax1
         mov     eax, offset g_dispatchTab
     L_sfp_useEax1:
         shr     eax, 2
         mov     dword ptr [g_eventQueueTotal], eax
-        mov     dword ptr [g_mul10SumState_0054388c], 0
+        mov     dword ptr [g_mul10SumState], 0
         jmp     L_sfp_callBlock
     L_sfp_check2:
         cmp     ecx, dword ptr [g_gtPlayerProbe1]
         jne     short L_sfp_defaultPath
-        mov     eax, dword ptr [g_mul10SumState2_00543890]
+        mov     eax, dword ptr [g_mul10SumState2]
         test    eax, eax
         je      short L_sfp_defaultPath
         cmp     eax, 1
-        mov     eax, offset g_mul10TableBase_004ec050
+        mov     eax, offset g_mul10TableBase
         je      short L_sfp_useEax2
         mov     eax, offset g_dispatchTab
     L_sfp_useEax2:
         shr     eax, 2
         mov     dword ptr [g_eventQueueTotal], eax
-        mov     dword ptr [g_mul10SumState2_00543890], 0
+        mov     dword ptr [g_mul10SumState2], 0
         jmp     short L_sfp_callBlock
     L_sfp_defaultPath:
         mov     eax, offset g_dispatchTab
-        mov     ecx, offset g_mul10TableBase_004ec050
+        mov     ecx, offset g_mul10TableBase
         shr     eax, 2
         shr     ecx, 2
         mov     dword ptr [g_pendingNodeType], eax
@@ -217,7 +217,7 @@ __declspec(naked) void StreamFlagPackedSelectChain(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_sfp_done
-        push    offset g_dispatchVar37_00542a58
+        push    offset g_dispatchVar37
         call    GuardedPackedSlotInit
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4

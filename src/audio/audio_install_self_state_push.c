@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *   Else: call PushPopScaledInit343c; call GuardedSetupCallTailJmp(0x4d2250, 0x64000000);
  *   install self at chain[sel]+8, set state.
  */
-extern unsigned int g_dispatchSave883_004d2250;
+extern unsigned int g_dispatchSave883;
 extern unsigned int g_audioInitScaled;
 extern void GuardedSetupCallTailJmp(void);
 extern void PushPopScaledInit343c(void);
@@ -144,7 +144,7 @@ __declspec(naked) void AudioInstallSelfStatePush(void) {
         ret
         call    PushPopScaledInit343c
         push    0x00640000
-        push    offset g_dispatchSave883_004d2250
+        push    offset g_dispatchSave883
         call    GuardedSetupCallTailJmp
         mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     eax, offset AudioInstallSelfStatePush

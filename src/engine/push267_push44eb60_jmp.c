@@ -9,9 +9,9 @@ extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00489220 (23b): push 0x267; push DATA; call F; add esp,8; jmp -0xc7 */
 extern int StoreTwoCall(int, void *);
-extern void *g_dispatchSave1146_0044eb60;
+extern void *g_dispatchSave1146;
 extern void InstallSelfFiveStoreCalls(void);
 void Push267_Push44eb60_Jmp(void) {
-    StoreTwoCall((int)&g_dispatchSave1146_0044eb60, 0x267);
+    StoreTwoCall((int)&g_dispatchSave1146, 0x267);
     InstallSelfFiveStoreCalls();
 }

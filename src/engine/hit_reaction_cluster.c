@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave923_004e27cc;
+extern unsigned int g_dispatchSave923;
 extern unsigned int g_dispatchArg;
 extern unsigned int g_hitPhase;
 extern s32 g_dlNalt1;
@@ -346,7 +346,7 @@ __declspec(naked) void HitReactionCluster(void)
         pop      esi
         pop      ebx
         ret      
-        mov      ax, word ptr [g_dispatchSave923_004e27cc]
+        mov      ax, word ptr [g_dispatchSave923]
         push     eax
         call     TaggedSceneDispatch
         mov      ecx, dword ptr [g_fightGroupHead]

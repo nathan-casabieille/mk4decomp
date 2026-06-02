@@ -114,9 +114,9 @@ extern unsigned int g_quadEntryGate;
 extern unsigned int g_phaseTimer;
 extern unsigned int g_dst_00537ea4;
 extern unsigned int g_dispatchSave_00537ef4;
-extern unsigned int g_dispatchVar11_00537f04;
+extern unsigned int g_dispatchVar11;
 extern unsigned int g_hitPhase;
-extern unsigned int g_audioBank2State_00537f98;
+extern unsigned int g_audioBank2State;
 extern unsigned int g_fightTickSavedSlot;
 extern unsigned int g_roundResetSlot;
 extern unsigned int g_phaseInstallSlot;
@@ -124,17 +124,17 @@ extern unsigned int g_audioStreamState;
 extern unsigned int g_phaseThunkArr;
 extern u32 g_dlSomeFlag1;
 extern unsigned int g_dst_0053a6e0;
-extern unsigned int g_phaseThunkSlot4_0053a6f8;
+extern unsigned int g_phaseThunkSlot4;
 extern unsigned int g_phaseThunkState;
-extern unsigned int g_dispatchSave39_0053a788;
-extern unsigned int g_dispatchClr1_0053e34c;
-extern unsigned int g_installCountdownSlot2_00541d84;
-extern unsigned int g_smState4Way_00541dc8;
+extern unsigned int g_dispatchSave39;
+extern unsigned int g_dispatchClr1;
+extern unsigned int g_installCountdownSlot2;
+extern unsigned int g_smState4Way;
 extern unsigned int g_titleDemoState;
-extern unsigned int g_titleDemoState2_00541df4;
+extern unsigned int g_titleDemoState2;
 extern u32 g_dlState;
 extern u32 g_dlAux;
-extern unsigned int g_dispatchSave37_00541ee8;
+extern unsigned int g_dispatchSave37;
 extern unsigned int g_clusterArr541f60_n6;
 extern unsigned int g_clusterArr541f60_n5;
 extern unsigned int g_clusterArr541f60_n4;
@@ -214,29 +214,29 @@ __declspec(naked) void RoundReset(void)
         mov      dword ptr [g_dst_00537ea4], ebx
     L_2459:
         mov      dword ptr [g_titleDemoState], ebx
-        mov      dword ptr [g_titleDemoState2_00541df4], ebx
+        mov      dword ptr [g_titleDemoState2], ebx
         mov      byte ptr [g_tripleEntryFlag], bl
-        mov      dword ptr [g_phaseThunkSlot4_0053a6f8], ebx
-        mov      dword ptr [g_dispatchSave39_0053a788], ebx
-        mov      dword ptr [g_dispatchClr1_0053e34c], ebx
-        mov      dword ptr [g_smState4Way_00541dc8], ebx
+        mov      dword ptr [g_phaseThunkSlot4], ebx
+        mov      dword ptr [g_dispatchSave39], ebx
+        mov      dword ptr [g_dispatchClr1], ebx
+        mov      dword ptr [g_smState4Way], ebx
         mov      dword ptr [g_phaseTimer], ebx
         mov      dword ptr [g_phaseInstallSlot], ebx
         mov      dword ptr [g_dispatchSave_00537ef4], ebx
         mov      dword ptr [g_audioBankSel], ebx
         mov      dword ptr [g_quadEntryGate], ebx
-        mov      dword ptr [g_audioBank2State_00537f98], ebx
+        mov      dword ptr [g_audioBank2State], ebx
         mov      dword ptr [g_phaseThunkState], ebx
-        mov      dword ptr [g_installCountdownSlot2_00541d84], ebx
+        mov      dword ptr [g_installCountdownSlot2], ebx
         mov      dword ptr [g_audioStreamState], ebx
-        mov      dword ptr [g_dispatchVar11_00537f04], ebx
+        mov      dword ptr [g_dispatchVar11], ebx
         mov      dword ptr [g_dlSomeFlag1], ebx
         mov      dword ptr [g_dlSomeFlag2], ebx
         mov      dword ptr [g_dlState], ebx
         mov      dword ptr [g_dlAux], ebx
         mov      dword ptr [g_fightTickSavedSlot], ebx
         mov      dword ptr [g_clusterArr541f60_n6], ebx
-        mov      dword ptr [g_dispatchSave37_00541ee8], ebx
+        mov      dword ptr [g_dispatchSave37], ebx
         mov      dword ptr [g_clusterArr541f60_n4], ebx
         mov      dword ptr [g_clusterArr541f60_n5], ebx
         mov      dword ptr [g_clusterArr541f60_n2], ebx

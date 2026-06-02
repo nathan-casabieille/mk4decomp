@@ -11,13 +11,13 @@ extern unsigned int g_scaledInit_00542044;
  *   call F2; pause → ret; walk = 0x1000;
  *   store walk → [baseSel*4 + 0xc]; ret.
  */
-extern unsigned int g_pendingMatchSlot2_00541dc0;
+extern unsigned int g_pendingMatchSlot2;
 extern unsigned int g_baseSel;
 extern void BootInitGuardedCallChain(void);
 extern void ZeroMultiGlobalsCmp(void);
 void ClearTwoCallSetStore(void) {
     g_walkCallback = 0;
-    g_pendingMatchSlot2_00541dc0 = 0;
+    g_pendingMatchSlot2 = 0;
     BootInitGuardedCallChain();
     if (g_framePauseFlag) return;
     ZeroMultiGlobalsCmp();

@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave621_004d5364;
-extern unsigned int g_phase1ChainArr_00507118;
+extern unsigned int g_dispatchSave621;
+extern unsigned int g_phase1ChainArr;
 extern void AudioVolumeRescale(void);
 extern void ChainWalkPushPop(void);
 extern void DirtyDoubleDeref(void);
@@ -120,7 +120,7 @@ extern void PushPopScaled1cDoubleCall(void);
 __declspec(naked) void Phase1ChainAdvanceCallScale(void)
 {
     __asm {
-        mov     eax, offset g_phase1ChainArr_00507118
+        mov     eax, offset g_phase1ChainArr
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
         call    MStackBracket1_TreeWalkRecursive2
@@ -181,7 +181,7 @@ __declspec(naked) void Phase1ChainAdvanceCallScale(void)
         test    eax, eax
         jne     L_p1c2_helper_pop_ret
         mov     ecx, dword ptr [g_fightGroupHead]
-        mov     eax, dword ptr [g_dispatchSave621_004d5364]
+        mov     eax, dword ptr [g_dispatchSave621]
         add     eax, dword ptr [ecx*4 + 0x70]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x70], eax

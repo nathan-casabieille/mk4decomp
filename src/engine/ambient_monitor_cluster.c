@@ -125,14 +125,14 @@ extern void TableWalkBoundedCmp(int);
 extern void TaggedSceneDispatch(void);
 extern void QuadCallPhase2(void);
 extern void RoundCleanupCluster_00427690(void);
-extern unsigned int g_dispatchSave669_004e2868;
-extern unsigned int g_dispatchSave637_004f29c0;
+extern unsigned int g_dispatchSave669;
+extern unsigned int g_dispatchSave637;
 extern unsigned int g_tickFlagF;
-extern unsigned int g_dispatchSave49_00535e44;
-extern unsigned int g_audioInstall2Slot_00537eec;
+extern unsigned int g_dispatchSave49;
+extern unsigned int g_audioInstall2Slot;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
-extern unsigned int g_phaseThunkSlot5_0053a468;
+extern unsigned int g_phaseThunkSlot5;
 extern unsigned int g_phaseCounter;
 extern unsigned int g_audioTriEntryFlag;
 extern unsigned int g_audioMatchStartFlag;
@@ -155,7 +155,7 @@ __declspec(naked) void SceneEvalFsm(void)
         push     OFFSET AmbientMonitorCluster + 0xd0
         call     StoreTwoCall
         add      esp, 8
-        mov      ecx, OFFSET g_dispatchSave637_004f29c0
+        mov      ecx, OFFSET g_dispatchSave637
         shr      ecx, 2
         push     0x262
         push     OFFSET RoundCleanupCluster_00427690 + 0xf0
@@ -277,13 +277,13 @@ __declspec(naked) void SceneEvalFsm(void)
         pop      ebx
         ret      
     L_e0fc:
-        mov      ax, word ptr [g_dispatchSave669_004e2868]
+        mov      ax, word ptr [g_dispatchSave669]
         mov      dword ptr [g_tickFlagF], 3
         push     eax
-        mov      dword ptr [g_audioInstall2Slot_00537eec], ebx
-        mov      dword ptr [g_phaseThunkSlot5_0053a468], ebx
+        mov      dword ptr [g_audioInstall2Slot], ebx
+        mov      dword ptr [g_phaseThunkSlot5], ebx
         mov      dword ptr [g_walkCallback], ebx
-        mov      dword ptr [g_dispatchSave49_00535e44], ebx
+        mov      dword ptr [g_dispatchSave49], ebx
         call     TaggedSceneDispatch
         add      esp, 4
         call     ThrowAnimTriggerCluster

@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave546_004d5d38;
-extern unsigned int g_dispatchSave545_004d6748;
+extern unsigned int g_dispatchSave546;
+extern unsigned int g_dispatchSave545;
 extern void AudioMixerStep(void);
 extern void CallSetPause(void);
 extern void ChainListVecAdd(void);
@@ -312,7 +312,7 @@ __declspec(naked) void Phase4FivePackedHelpers(void)
         mov     dword ptr [g_walkCallback], eax
         je      L_p4fph_D_install_self
         mov     ecx, dword ptr [g_xformEntityIdx]
-        mov     eax, offset g_dispatchSave545_004d6748
+        mov     eax, offset g_dispatchSave545
         shr     eax, 2
         mov     dword ptr [ecx*4 + 0x48], 0x4CCC
         mov     edx, dword ptr [g_xformEntityIdx]
@@ -335,7 +335,7 @@ __declspec(naked) void Phase4FivePackedHelpers(void)
         jne     L_p4fph_D_exit
         test    byte ptr [g_xformDirtyFlags], 4
         jne     L_p4fph_D_install_self
-        mov     edx, offset g_dispatchSave546_004d5d38
+        mov     edx, offset g_dispatchSave546
         shr     edx, 2
         mov     dword ptr [g_xformEntityIdx], edx
         call    PoseTreeBlendWalker

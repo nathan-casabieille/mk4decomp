@@ -118,7 +118,7 @@ extern void DualScaledStore(void);
 extern void PendingMatch_00452770(void);
 extern void DualPushSet7dCallPop(void);
 extern void Thunk_ScaledNeg1SetPause(void);
-extern unsigned int g_dispatchSave688_004e7a68;
+extern unsigned int g_dispatchSave688;
 
 __declspec(naked) void StunDownCluster(void)
 {
@@ -136,7 +136,7 @@ __declspec(naked) void StunDownCluster(void)
         test     eax, eax
         jne      L_2054
         mov      eax, dword ptr [g_eventQueueEnd]
-        mov      edx, OFFSET g_dispatchSave688_004e7a68
+        mov      edx, OFFSET g_dispatchSave688
         shr      edx, 2
         mov      ecx, dword ptr [eax*4]
         inc      eax

@@ -108,13 +108,13 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave766_004eec10;
-extern unsigned int g_dispatchSave767_004eec28;
-extern unsigned int g_dispatchSave768_004eec40;
-extern unsigned int g_dispatchSave769_004eec68;
-extern unsigned int g_dispatchSave770_004eec90;
-extern unsigned int g_dispatchSave771_004eecc0;
-extern unsigned int g_dispatchSave772_004eece8;
+extern unsigned int g_dispatchSave766;
+extern unsigned int g_dispatchSave767;
+extern unsigned int g_dispatchSave768;
+extern unsigned int g_dispatchSave769;
+extern unsigned int g_dispatchSave770;
+extern unsigned int g_dispatchSave771;
+extern unsigned int g_dispatchSave772;
 extern void ArgSarStoreJmp(void);
 extern void CmpP1DualInitStore_00482ab0(void);
 extern void FiveCallGuardSetTail(void);
@@ -166,7 +166,7 @@ __declspec(naked) void OutroEventForwarderCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5efc
-        push     OFFSET g_dispatchSave766_004eec10
+        push     OFFSET g_dispatchSave766
         call     ArgSarStoreJmp
         add      esp, 4
     L_5efc:
@@ -193,7 +193,7 @@ __declspec(naked) void OutroEventForwarderCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5f54
-        push     OFFSET g_dispatchSave767_004eec28
+        push     OFFSET g_dispatchSave767
         call     ArgSarStoreJmp
         add      esp, 4
     L_5f54:
@@ -209,7 +209,7 @@ __declspec(naked) void OutroEventForwarderCluster(void)
         nop
         nop
         nop
-        push     OFFSET g_dispatchSave768_004eec40
+        push     OFFSET g_dispatchSave768
         call     ArgSarStoreJmp
         add      esp, 4
         ret
@@ -227,7 +227,7 @@ __declspec(naked) void OutroEventForwarderCluster(void)
         je       short L_5f9a
         jmp      QuadBlockDispatch
     L_5f9a:
-        push     OFFSET g_dispatchSave769_004eec68
+        push     OFFSET g_dispatchSave769
         call     ArgSarStoreJmp
         add      esp, 4
     L_5fa7:
@@ -247,7 +247,7 @@ __declspec(naked) void OutroEventForwarderCluster(void)
         mov      ecx, dword ptr [g_baseSel]
         mov      eax, 0x100a
         mov      dword ptr [g_walkCallback], eax
-        push     OFFSET g_dispatchSave770_004eec90
+        push     OFFSET g_dispatchSave770
         mov      dword ptr [ecx*4 + 0x74], eax
         call     ArgSarStoreJmp
         add      esp, 4
@@ -270,7 +270,7 @@ __declspec(naked) void OutroEventForwarderCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_600b
-        push     OFFSET g_dispatchSave771_004eecc0
+        push     OFFSET g_dispatchSave771
         call     ArgSarStoreJmp
         add      esp, 4
     L_600b:
@@ -292,7 +292,7 @@ __declspec(naked) void OutroEventForwarderCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_6051
-        push     OFFSET g_dispatchSave772_004eece8
+        push     OFFSET g_dispatchSave772
         call     ArgSarStoreJmp
         add      esp, 4
     L_6051:

@@ -115,19 +115,19 @@ extern unsigned int g_fightAxisPosY;
  *   pick of multiplier (0x5433f0 if baseSel==0x538038, else 0x543444);
  *   call StorePauseImulShr16.
  */
-extern unsigned int g_dispatchSave1319_004f3814;
-extern unsigned int g_dispatchSave1320_004f3818;
-extern unsigned int g_dispatchSave1321_004f381c;
-extern unsigned int g_dispatchSave1322_004f3820;
-extern unsigned int g_audioRestoreSlot3_0053a1f0;
+extern unsigned int g_dispatchSave1319;
+extern unsigned int g_dispatchSave1320;
+extern unsigned int g_dispatchSave1321;
+extern unsigned int g_dispatchSave1322;
+extern unsigned int g_audioRestoreSlot3;
 extern unsigned int g_phaseCounter;
-extern unsigned int g_audioInstallSlot2_005433f0;
-extern unsigned int g_phaseThunkSave2_00543444;
+extern unsigned int g_audioInstallSlot2;
+extern unsigned int g_phaseThunkSave2;
 extern unsigned int g_audioPathFlag;
 extern void AudioVolumeRescale(void);
 
 /*
- * NON-COAXABLE: orig keeps d (g_dispatchSave1320_004f3818) in ecx (volatile) across the entire
+ * NON-COAXABLE: orig keeps d (g_dispatchSave1320) in ecx (volatile) across the entire
  * dispatch branch, and reuses esi as scratch for two different short-lived values
  * (ref in dispatch branch, then f intermediate after noScale). MSVC /O2 instead
  * promotes d to edi (extra callee-saved push), giving two-register prologue
@@ -137,12 +137,12 @@ extern void AudioVolumeRescale(void);
 __declspec(naked) void WeightedSumClampHelper(void) {
     __asm {
         mov     eax, dword ptr [g_stateCountdown]
-        mov     edx, dword ptr [g_dispatchSave1319_004f3814]
-        imul    eax, dword ptr [g_dispatchSave1321_004f381c]
+        mov     edx, dword ptr [g_dispatchSave1319]
+        imul    eax, dword ptr [g_dispatchSave1321]
         mov     ecx, dword ptr [g_audioPathFlag]
         add     eax, edx
         test    ecx, ecx
-        mov     ecx, dword ptr [g_dispatchSave1320_004f3818]
+        mov     ecx, dword ptr [g_dispatchSave1320]
         push    esi
         je      noScale
         mov     edx, dword ptr [g_baseSel]
@@ -150,16 +150,16 @@ __declspec(naked) void WeightedSumClampHelper(void) {
         cmp     edx, esi
         mov     edx, ecx
         jne     useB
-        imul    edx, dword ptr [g_audioInstallSlot2_005433f0]
+        imul    edx, dword ptr [g_audioInstallSlot2]
         jmp     after
 useB:
-        imul    edx, dword ptr [g_phaseThunkSave2_00543444]
+        imul    edx, dword ptr [g_phaseThunkSave2]
 after:
         add     eax, edx
 noScale:
         mov     esi, dword ptr [g_phaseCounter]
-        mov     edx, dword ptr [g_audioRestoreSlot3_0053a1f0]
-        imul    edx, dword ptr [g_dispatchSave1322_004f3820]
+        mov     edx, dword ptr [g_audioRestoreSlot3]
+        imul    edx, dword ptr [g_dispatchSave1322]
         imul    esi, ecx
         add     esi, eax
         lea     eax, [esi + edx]

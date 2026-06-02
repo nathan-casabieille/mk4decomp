@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave1469_00fa0ee0;
+extern unsigned int g_dispatchSave1469;
 extern int CloseFd(void);
 extern void DivMod32IAT(int);
 extern void Crt_errno(void);
@@ -116,7 +116,7 @@ extern void Crt_doserrno(void);
 
 /*
  * @addr 0x004c89e0 (104b crt) - _close(fd): validates fd against
- *   g_dispatchSave1469_00fa0ee0; if in-range and entry flag bit 0 set, enter
+ *   g_dispatchSave1469; if in-range and entry flag bit 0 set, enter
  *   critsec, call CloseFd, exit critsec; else set errno=9 and
  *   _doserrno=0; return -1.
  */
@@ -125,7 +125,7 @@ extern void CritSecLazyEnter(void);
 
 __declspec(naked) void CloseImpl(void) {
     __asm {
-        mov     eax, dword ptr [g_dispatchSave1469_00fa0ee0]
+        mov     eax, dword ptr [g_dispatchSave1469]
         push    esi
         mov     esi, dword ptr [esp + 8]
         push    edi

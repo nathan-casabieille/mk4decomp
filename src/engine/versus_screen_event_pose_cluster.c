@@ -108,10 +108,10 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave927_004e4c20;
-extern unsigned int g_dispatchSave928_004e4c38;
-extern unsigned int g_dispatchSave145_00501a24;
-extern unsigned int g_dispatchSave72_005422fc;
+extern unsigned int g_dispatchSave927;
+extern unsigned int g_dispatchSave928;
+extern unsigned int g_dispatchSave145;
+extern unsigned int g_dispatchSave72;
 extern void ArgSarStoreJmp(void);
 extern void CopyJmp_0043a620(void);
 extern void EsiInstallClampAddCall(void);
@@ -132,7 +132,7 @@ __declspec(naked) void VersusScreenEventPoseCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b69b
-        push     OFFSET g_dispatchSave927_004e4c20
+        push     OFFSET g_dispatchSave927
         call     ArgSarStoreJmp
         add      esp, 4
     L_b69b:
@@ -211,7 +211,7 @@ __declspec(naked) void VersusScreenEventPoseCluster(void)
         call     FiveCallScaledChainTailJmp
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_b83a
-        push     OFFSET g_dispatchSave72_005422fc
+        push     OFFSET g_dispatchSave72
         call     GuardedPackedSlotInit
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -250,7 +250,7 @@ __declspec(naked) void VersusScreenEventPoseCluster(void)
         mov      dword ptr [esi + 0x84], 0
         test     eax, eax
         je       short L_b876
-        push     OFFSET g_dispatchSave928_004e4c38
+        push     OFFSET g_dispatchSave928
         call     ArgSarStoreJmp
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -263,7 +263,7 @@ __declspec(naked) void VersusScreenEventPoseCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_b919
-        mov      ecx, OFFSET g_dispatchSave145_00501a24
+        mov      ecx, OFFSET g_dispatchSave145
         mov      dword ptr [g_currentNodeFlags], 0x3333
         shr      ecx, 2
         mov      dword ptr [g_eventQueueNotMask], 0

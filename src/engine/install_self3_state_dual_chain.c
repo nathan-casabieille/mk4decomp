@@ -110,12 +110,12 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0047a1c0 (285b game) - 3-state install-self dispatch.
  *   Load g_baseSel[*4]; state=[idx*4+0x84]; clear it.
- *   state==0: ScaledAndAldf init; if pause unset, push g_dispatchSave558_004ed0dc + IterStepDualStore;
+ *   state==0: ScaledAndAldf init; if pause unset, push g_dispatchSave558 + IterStepDualStore;
  *     if still 0, set g_eventQueueChild=0x1d, install-self+0x01000000, call InstallSelf3WayChainCmp.
  *   state==1: install-self+0x02000000; call ScaledLoadJmp; set pause=1.
  *   state>=2: tail-call FiveCallGuardSetTail.
  */
-extern unsigned int g_dispatchSave558_004ed0dc;
+extern unsigned int g_dispatchSave558;
 extern void FiveCallGuardSetTail(void);
 extern void InstallSelf3WayChainCmp(void);
 extern void ScaledAndAldf(void);
@@ -161,7 +161,7 @@ __declspec(naked) void InstallSelf3StateDualChain(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     tail
-        push    offset g_dispatchSave558_004ed0dc
+        push    offset g_dispatchSave558
         call    IterStepDualStore
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4

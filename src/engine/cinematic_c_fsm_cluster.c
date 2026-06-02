@@ -119,9 +119,9 @@ extern void CinematicCFsmCluster(void);
 extern void InstallSelfIndirectJmp(void);
 extern void InstallSelfIndirectJmpNeg(void);
 extern void InstallSelfOrCmpJmp(void);
-extern unsigned int g_dispatchSave645_004eefd8;
-extern unsigned int g_dispatchSave644_004ef010;
-extern unsigned int g_dispatchTableArr6_00500710;
+extern unsigned int g_dispatchSave645;
+extern unsigned int g_dispatchSave644;
+extern unsigned int g_dispatchTableArr6;
 
 extern void ArgSarStoreJmp(void);
 extern void TableLookupCall_00489ff0(void);
@@ -264,7 +264,7 @@ __declspec(naked) void BossRoarCluster(void)
         nop
         /* === Helper 4 (0x488410): event 004eefd8 forwarder === */
     L_8410:
-        mov      eax, OFFSET g_dispatchTableArr6_00500710
+        mov      eax, OFFSET g_dispatchTableArr6
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
         call     ScaledArrStore_004298c0
@@ -275,7 +275,7 @@ __declspec(naked) void BossRoarCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_8446
-        push     OFFSET g_dispatchSave645_004eefd8
+        push     OFFSET g_dispatchSave645
         call     ArgSarStoreJmp
         add      esp, 4
     L_8446:
@@ -290,7 +290,7 @@ __declspec(naked) void BossRoarCluster(void)
         nop
         nop
         /* === Helper 5: event 004ef010 forwarder === */
-        push     OFFSET g_dispatchSave644_004ef010
+        push     OFFSET g_dispatchSave644
         call     ArgSarStoreJmp
         add      esp, 4
         ret

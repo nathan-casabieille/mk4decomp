@@ -127,9 +127,9 @@ extern unsigned int g_phaseIdx;
 extern unsigned int g_zerotriple_00541de8;
 extern unsigned int g_zerotriple_00541dec;
 extern unsigned int g_titleDemoState;
-extern unsigned int g_titleDemoState2_00541df4;
-extern unsigned int g_dispatchSave6_00541f94;
-extern unsigned int g_mul10TransformVar_00541f9c;
+extern unsigned int g_titleDemoState2;
+extern unsigned int g_dispatchSave6;
+extern unsigned int g_mul10TransformVar;
 extern unsigned int g_iat_timeGetTime;
 extern unsigned int g_iat_mciSendCommandA;
 extern unsigned int g_table_004d57b0;
@@ -209,45 +209,45 @@ extern void TripleChainTailJmp(void);
 extern void TripleMul10TailIndexed(void);
 extern void TripleSubVec3(void);
 
-extern unsigned int g_dispatchSave1130_00408000;
-extern unsigned int g_pendingMatchVar2_004d531c;
+extern unsigned int g_dispatchSave1130;
+extern unsigned int g_pendingMatchVar2;
 extern unsigned int g_pendingMatchVar;
-extern unsigned int g_dispatchSave564_004d5354;
-extern unsigned int g_dispatchSave563_004d5358;
-extern unsigned int g_dispatchSave896_004d535c;
-extern unsigned int g_dispatchSave619_004d5ad8;
-extern unsigned int g_dispatchSave522_004d61d8;
-extern unsigned int g_phaseChainArr2_004d62e8;
-extern unsigned int g_dispatchSave918_004d7ce8;
-extern unsigned int g_dispatchSave919_004d7d00;
-extern unsigned int g_dispatchSave606_004ded68;
-extern unsigned int g_dispatchSave505_004e3ac8;
-extern unsigned int g_dispatchSave788_004f2020;
-extern unsigned int g_dispatchSave789_004f2068;
-extern unsigned int g_dispatchSave510_004f2880;
+extern unsigned int g_dispatchSave564;
+extern unsigned int g_dispatchSave563;
+extern unsigned int g_dispatchSave896;
+extern unsigned int g_dispatchSave619;
+extern unsigned int g_dispatchSave522;
+extern unsigned int g_phaseChainArr2;
+extern unsigned int g_dispatchSave918;
+extern unsigned int g_dispatchSave919;
+extern unsigned int g_dispatchSave606;
+extern unsigned int g_dispatchSave505;
+extern unsigned int g_dispatchSave788;
+extern unsigned int g_dispatchSave789;
+extern unsigned int g_dispatchSave510;
 extern unsigned int g_crtHeapMaxPtr;
-extern unsigned int g_dispatchSave12_00523ae0;
-extern unsigned int g_dispatchSave19_00523ae4;
-extern unsigned int g_dispatchSave54_00523b18;
-extern unsigned int g_dispatchSave11_00523b1c;
-extern unsigned int g_dispatchSave5_00523b20;
+extern unsigned int g_dispatchSave12;
+extern unsigned int g_dispatchSave19;
+extern unsigned int g_dispatchSave54;
+extern unsigned int g_dispatchSave11;
+extern unsigned int g_dispatchSave5;
 extern unsigned int g_phaseThunkSave;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_or;
 extern unsigned int g_bootInitState;
-extern unsigned int g_dispatchSave100_00537efc;
+extern unsigned int g_dispatchSave100;
 extern unsigned int g_alarmTriState;
 extern unsigned int g_pendingMatchSlot;
-extern unsigned int g_pendingMatchSlot2_00541dc0;
+extern unsigned int g_pendingMatchSlot2;
 extern unsigned int g_savedNode;
 extern unsigned int g_phaseCounter;
-extern unsigned int g_dispatchTableArr2_005420c8;
+extern unsigned int g_dispatchTableArr2;
 extern unsigned int g_walkTreeArrBase;
 extern unsigned int g_audioBankPick;
 extern unsigned int g_counter_005433c8;
 extern unsigned int g_counter_0054359c;
 extern unsigned int g_byte_005435a0;
-extern unsigned int g_dispatchTab62_00543618;
+extern unsigned int g_dispatchTab62;
 extern unsigned int g_voicePoolTickFlag_005437f4;
 extern unsigned int g_byte_00543834;
 extern unsigned int g_pendingMatchCmp;
@@ -258,14 +258,14 @@ extern u32 g_timerHandle;
 extern u32 g_timerLastNow;
 extern u32 g_timerFlag;
 extern u32 g_audioState0C;
-extern unsigned int g_joySelP0_00543b68;
-extern unsigned int g_joySelP1_00543b6c;
-extern unsigned int g_dispatchSave1704_00806000;
-extern unsigned int g_dispatchSave1491_00ab4338;
-extern unsigned int g_dispatchSave1423_00f9f7fc;
-extern unsigned int g_dispatchSave1430_00f9f850;
-extern unsigned int g_dispatchSave1460_00f9fc94;
-extern unsigned int g_dispatchSave1470_00fa0ee4;
+extern unsigned int g_joySelP0;
+extern unsigned int g_joySelP1;
+extern unsigned int g_dispatchSave1704;
+extern unsigned int g_dispatchSave1491;
+extern unsigned int g_dispatchSave1423;
+extern unsigned int g_dispatchSave1430;
+extern unsigned int g_dispatchSave1460;
+extern unsigned int g_dispatchSave1470;
 extern void Alarm5EntryScopedChain(void);
 extern void ArgSarStoreJmp(void);
 extern void ArgSar_Set0_Jmp(void);
@@ -454,7 +454,7 @@ done:
 __declspec(naked) void SoundSetupLoop(void) {
     __asm {
         push    ebx
-        push    offset g_dispatchSave1130_00408000
+        push    offset g_dispatchSave1130
         call    ThreeChanPackClamp
         mov     eax, dword ptr [g_cj_0054205c]
         add     esp, 4
@@ -838,8 +838,8 @@ __declspec(naked) void Audio_TimerSet(void) {
 /* @addr 0x0040e190 (369b boot) - 3-entry packed mstack-scoped init + alarms.
  *   Entry 1 (offset 0, 180b): MStackPush8, then on no-error
  *     mstack-pushes g_eventQueueNotMask, caches g_fightGroupHead into 0x542054,
- *     sets g_walkCallback = &g_phaseChainArr2_004d62e8>>2 (stored also in 0x5381 3c),
- *     g_eventQueueIdx = &g_dispatchSave522_004d61d8>>2, g_eventQueueNotMask = 0xc1.
+ *     sets g_walkCallback = &g_phaseChainArr2>>2 (stored also in 0x5381 3c),
+ *     g_eventQueueIdx = &g_dispatchSave522>>2, g_eventQueueNotMask = 0xc1.
  *     Pushes 0x49db40, 0xc0 onto StoreTwoCall. If bit 0 of
  *     0x54208c clear, calls StackPushAdd15CallPop +
  *     ZeroThreeFields_0040a8b0. Pops the snapshot back and tail-jmps
@@ -867,12 +867,12 @@ __declspec(naked) void MStackInitTriAlarm(void) {
         push    0x49db40
         mov     dword ptr [eax*4 + g_table_004d57b0], ecx
         mov     edx, dword ptr [g_fightGroupHead]
-        mov     eax, offset g_phaseChainArr2_004d62e8
+        mov     eax, offset g_phaseChainArr2
         mov     dword ptr [g_eventQueueEnd], edx
         shr     eax, 2
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_alarmTriState], eax
-        mov     eax, offset g_dispatchSave522_004d61d8
+        mov     eax, offset g_dispatchSave522
         mov     dword ptr [g_eventQueueNotMask], 0xc1
         shr     eax, 2
         mov     dword ptr [g_eventQueueIdx], eax
@@ -1054,7 +1054,7 @@ __declspec(naked) void Vec2SumMul10ChainCompute(void)
         mov     eax, dword ptr [eax*4 + 0x18]
         mov     dword ptr [g_xformEntityIdx], eax
         mov     ecx, dword ptr [eax*4 + 0x28]
-        mov     eax, offset g_dispatchSave510_004f2880
+        mov     eax, offset g_dispatchSave510
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     dword ptr [g_walkCallback], eax
@@ -1266,7 +1266,7 @@ __declspec(naked) void MStackBracket3_FieldSequentialCopy(void)
         jne     L_mb3fsc_abort
         test    byte ptr [g_xformDirtyFlags], bl
         je      L_mb3fsc_pop3
-        mov     eax, offset g_dispatchSave619_004d5ad8
+        mov     eax, offset g_dispatchSave619
         shr     eax, 2
         mov     dword ptr [g_walkCallback], eax
         call    PushSetXfmMaskCallPop
@@ -1331,7 +1331,7 @@ __declspec(naked) void MStackBracket3_FieldSequentialCopy(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mb3fsc_abort
-        mov     ecx, dword ptr [g_pendingMatchVar2_004d531c]
+        mov     ecx, dword ptr [g_pendingMatchVar2]
         mov     edx, dword ptr [g_walkCallback]
         sub     edx, ecx
         mov     dword ptr [g_walkCallback], edx
@@ -1397,7 +1397,7 @@ __declspec(naked) void MStackBracket3_FieldSequentialCopy(void)
 __declspec(naked) void Phase4FourPackedDispatch(void)
 {
     __asm {
-        push    offset g_dispatchSave918_004d7ce8
+        push    offset g_dispatchSave918
         call    ArgSarStoreJmp
         add     esp, 4
         ret
@@ -1501,7 +1501,7 @@ __declspec(naked) void Phase4FourPackedDispatch(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fpd2_M_ret
-        push    offset g_dispatchSave919_004d7d00
+        push    offset g_dispatchSave919
         call    ScaledStackCallPause
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
@@ -1518,7 +1518,7 @@ __declspec(naked) void Phase4FourPackedDispatch(void)
         mov     eax, dword ptr [eax*4 + 0x18]
         mov     dword ptr [g_xformEntityIdx], eax
         mov     ecx, dword ptr [eax*4 + 0x28]
-        mov     eax, offset g_dispatchSave510_004f2880
+        mov     eax, offset g_dispatchSave510
         sar     eax, 2
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     dword ptr [g_walkCallback], eax
@@ -1630,7 +1630,7 @@ __declspec(naked) void StageEntityInitCluster(void)
 {
     __asm {
         /* H1 */
-        push     OFFSET g_dispatchSave1704_00806000
+        push     OFFSET g_dispatchSave1704
         call     ThreeChanPackClamp
         mov      eax, dword ptr [g_fightGroupHead]
         add      esp, 4
@@ -1712,7 +1712,7 @@ __declspec(naked) void StageEntityInitCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_182b
-        push     OFFSET g_dispatchSave606_004ded68
+        push     OFFSET g_dispatchSave606
         call     IterLoad_0048fd30
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -1836,7 +1836,7 @@ __declspec(naked) void PunchAnimCluster(void)
         mov      ecx, dword ptr [g_baseSel]
         mov      eax, 0x315
         mov      dword ptr [g_walkCallback], eax
-        push     OFFSET g_dispatchSave788_004f2020
+        push     OFFSET g_dispatchSave788
         mov      dword ptr [ecx*4 + 0x74], eax
         call     ArgSarStoreJmp
         add      esp, 4
@@ -1856,7 +1856,7 @@ __declspec(naked) void PunchAnimCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_6f69
-        mov      eax, OFFSET g_dispatchSave505_004e3ac8
+        mov      eax, OFFSET g_dispatchSave505
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
         call     DispatcherComplex260_00407030
@@ -1903,7 +1903,7 @@ __declspec(naked) void PunchAnimCluster(void)
         add      esp, 8
         mov      dword ptr [esi + 0x74], eax
         mov      ecx, dword ptr [g_currentNodeIdx]
-        push     OFFSET g_dispatchSave789_004f2068
+        push     OFFSET g_dispatchSave789
         mov      dword ptr [g_fightGroupHead], ecx
         call     ArgSar_Set0_Jmp
         add      esp, 4
@@ -2187,7 +2187,7 @@ __declspec(naked) void Match_TeamOutcomeScreen(void)
         mov      eax, dword ptr [g_counter_005433c8]
         add      esp, 4
         lea      edx, [eax + eax*2]
-        lea      eax, [edx*8 + g_dispatchTab62_00543618]
+        lea      eax, [edx*8 + g_dispatchTab62]
         push     eax
         mov      eax, dword ptr [g_counter_0054359c]
         lea      ecx, [eax + eax*2]
@@ -3314,7 +3314,7 @@ __declspec(naked) void PendingMatch_00411890(void)
         call     Atan2QuadrantLookup
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1a48
-        mov      eax, dword ptr [g_pendingMatchVar2_004d531c]
+        mov      eax, dword ptr [g_pendingMatchVar2]
         mov      ecx, dword ptr [g_walkCallback]
         add      ecx, eax
         mov      dword ptr [g_walkCallback], ecx
@@ -3498,7 +3498,7 @@ __declspec(naked) void PendingMatch_00411890(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1d74
-        mov      ecx, dword ptr [g_pendingMatchVar2_004d531c]
+        mov      ecx, dword ptr [g_pendingMatchVar2]
         mov      edx, dword ptr [g_walkCallback]
         sub      edx, ecx
         mov      dword ptr [g_walkCallback], edx
@@ -3968,7 +3968,7 @@ __declspec(naked) void PendingMatch_00417840(void)
         mov      dword ptr [eax + 0x84], 0
         test     ecx, ecx
         je       L_796e
-        mov      ecx, dword ptr [g_dispatchSave100_00537efc]
+        mov      ecx, dword ptr [g_dispatchSave100]
         test     ecx, ecx
         mov      dword ptr [g_walkCallback], ecx
         je       L_796e
@@ -4392,7 +4392,7 @@ __declspec(naked) void PendingMatch_00411210(void)
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 4], eax
         mov      eax, dword ptr [g_fightGroupHead]
-        mov      edx, dword ptr [g_dispatchSave6_00541f94]
+        mov      edx, dword ptr [g_dispatchSave6]
         add      eax, 0x18
         mov      dword ptr [g_currentNodeIdx], edx
         mov      dword ptr [g_xformEntityIdx], eax
@@ -4426,7 +4426,7 @@ __declspec(naked) void PendingMatch_00411210(void)
         call     Atan2QuadrantLookup
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1521
-        mov      eax, dword ptr [g_pendingMatchVar2_004d531c]
+        mov      eax, dword ptr [g_pendingMatchVar2]
         mov      ecx, dword ptr [g_walkCallback]
         add      ecx, eax
         mov      dword ptr [g_walkCallback], ecx
@@ -5025,7 +5025,7 @@ __declspec(naked) void PendingMatch_004108a0(void)
         jne      L_091f
         mov      dword ptr [g_eventQueueWorkType], ecx
     L_092e:
-        mov      eax, dword ptr [g_dispatchSave6_00541f94]
+        mov      eax, dword ptr [g_dispatchSave6]
         mov      dword ptr [g_pendingNodeType], eax
         call     MStackPush2DualModMul10Pop2
         mov      eax, dword ptr [g_framePauseFlag]
@@ -5535,7 +5535,7 @@ __declspec(naked) void PendingMatch_0040a8d0(void)
         call     ScaledTripleCopy54
         cmp      dword ptr [g_framePauseFlag], ebp
         jne      L_acd2
-        mov      eax, dword ptr [g_mul10TransformVar_00541f9c]
+        mov      eax, dword ptr [g_mul10TransformVar]
         mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [eax*4], ebp
         mov      ecx, dword ptr [g_pendingNodeType]
@@ -5567,7 +5567,7 @@ __declspec(naked) void PendingMatch_0040a8d0(void)
         mov      edx, dword ptr [g_xformEntityIdx]
         mov      dword ptr [g_walkCallback], ebp
         mov      dword ptr [edx*4 + 8], ebp
-        mov      eax, dword ptr [g_dispatchSave6_00541f94]
+        mov      eax, dword ptr [g_dispatchSave6]
         mov      dword ptr [g_currentNodeIdx], eax
         call     Mul10HeavyTransform
         cmp      dword ptr [g_framePauseFlag], ebp
@@ -5925,7 +5925,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         cmp      eax, 3
         mov      dword ptr [g_pendingMatchSlot], eax
         jbe      L_1c37
-        mov      dword ptr [g_pendingMatchSlot2_00541dc0], ebx
+        mov      dword ptr [g_pendingMatchSlot2], ebx
     L_1c37:
         push     -1
         push     -1
@@ -5935,7 +5935,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      dword ptr [g_zerotriple_00541de8], ebp
         mov      dword ptr [g_zerotriple_00541dec], ebp
         mov      dword ptr [g_titleDemoState], ebp
-        mov      dword ptr [g_titleDemoState2_00541df4], ebp
+        mov      dword ptr [g_titleDemoState2], ebp
         call     QuadCallPhase2
         mov      dword ptr [esi + 8], edi
         mov      edx, dword ptr [g_baseSel]
@@ -5978,7 +5978,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         cmp      dword ptr [g_framePauseFlag], ebp
         jne      L_1cb3
         mov      dword ptr [g_walkCallback], ebp
-        mov      dword ptr [g_pendingMatchSlot2_00541dc0], ebp
+        mov      dword ptr [g_pendingMatchSlot2], ebp
         mov      dword ptr [g_pendingMatchSlot], ebp
         mov      dword ptr [g_active_0053a408], ebp
         mov      dword ptr [g_active_00537e88], ebp
@@ -7045,7 +7045,7 @@ __declspec(naked) void PendingMatch_00419c90(void)
         mov      eax, dword ptr [g_fightGroupHead]
         mov      ecx, dword ptr [eax*4 + 0x70]
         lea      esi, [eax*4]
-        mov      eax, dword ptr [g_dispatchSave563_004d5358]
+        mov      eax, dword ptr [g_dispatchSave563]
         add      eax, ecx
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [esi + 0x70], eax
@@ -7093,7 +7093,7 @@ __declspec(naked) void PendingMatch_00419c90(void)
         pop      ebp
         ret      
     L_9e23:
-        mov      eax, dword ptr [g_dispatchSave563_004d5358]
+        mov      eax, dword ptr [g_dispatchSave563]
         mov      edx, dword ptr [ecx*4 + 0x70]
         add      eax, edx
         mov      dword ptr [g_walkCallback], eax
@@ -7299,7 +7299,7 @@ __declspec(naked) void PendingMatch_00419c90(void)
         mov      eax, dword ptr [edx*4 + 0x50]
         mov      dword ptr [g_acc_00542078], eax
         push     eax
-        mov      eax, dword ptr [g_dispatchSave564_004d5354]
+        mov      eax, dword ptr [g_dispatchSave564]
         push     eax
         call     Mul10Tail
         mov      ecx, dword ptr [g_eventQueueEnd]
@@ -7341,12 +7341,12 @@ __declspec(naked) void PendingMatch_00419c90(void)
         mov      dword ptr [g_walkCallback], eax
         mov      edx, dword ptr [ecx*4 + 0x58]
         sub      eax, edx
-        mov      edx, dword ptr [g_dispatchSave564_004d5354]
+        mov      edx, dword ptr [g_dispatchSave564]
         push     eax
         push     edx
         mov      dword ptr [g_walkCallback], eax
         call     Mul10Tail
-        mov      ecx, dword ptr [g_dispatchSave896_004d535c]
+        mov      ecx, dword ptr [g_dispatchSave896]
         add      esp, 8
         sub      eax, ecx
         mov      ecx, dword ptr [g_fightGroupHead]

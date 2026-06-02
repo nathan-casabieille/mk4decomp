@@ -112,19 +112,19 @@ extern void BootInitGuardedCallChain(void);
 extern void CopyGlobal(void);
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_stateChangeBase;
-extern unsigned int g_dispatchInit4b_005380b4;
-extern unsigned int g_phaseThunkVar7_005380b8;
-extern unsigned int g_stateChangePair2_005380a4;
+extern unsigned int g_dispatchInit4b;
+extern unsigned int g_phaseThunkVar7;
+extern unsigned int g_stateChangePair2;
 extern unsigned int g_stateChangePair;
-extern unsigned int g_stateChangePair3_0053a278;
-extern unsigned char g_dispatchSave410_0050b130;
+extern unsigned int g_stateChangePair3;
+extern unsigned char g_dispatchSave410;
 
 /* @addr 0x00458ae0 (181b game) - sequenced init w/ multiple global stores. */
 void SequencedInit3CallB(void) {
     unsigned int v;
     BootInitGuardedCallChain();
     if (g_framePauseFlag != 0) return;
-    g_scaledInit_00542044 = (unsigned int)&g_dispatchSave410_0050b130 >> 2;
+    g_scaledInit_00542044 = (unsigned int)&g_dispatchSave410 >> 2;
     LoadGeoAsset_Default();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = 0;
@@ -142,9 +142,9 @@ void SequencedInit3CallB(void) {
     *(unsigned int *)(v + 0x5c) = 0xfff10000;
     g_walkCallback = 0;
     g_stateChangeBase = 0x27;
-    g_dispatchInit4b_005380b4 = 0x27;
-    g_phaseThunkVar7_005380b8 = 0x27;
-    g_stateChangePair2_005380a4 = 0;
+    g_dispatchInit4b = 0x27;
+    g_phaseThunkVar7 = 0x27;
+    g_stateChangePair2 = 0;
     g_stateChangePair = 0;
-    g_stateChangePair3_0053a278 = 0;
+    g_stateChangePair3 = 0;
 }

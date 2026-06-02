@@ -108,9 +108,9 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave991_004ec710;
-extern unsigned int g_dispatchVar33_00543384;
-extern unsigned int g_phaseThunkSlot2_00543570;
+extern unsigned int g_dispatchSave991;
+extern unsigned int g_dispatchVar33;
+extern unsigned int g_phaseThunkSlot2;
 extern void GatedWordPushCall(void);
 extern void StorePauseImulShr16(void);
 extern void Thunk_ScaledNeg1SetPause(void);
@@ -120,18 +120,18 @@ __declspec(naked) void GuardedSetInitInstallChain(void)
     __asm
     {
         mov     eax, dword ptr [g_gtFightTickCounter]
-        mov     ecx, dword ptr [g_dispatchVar33_00543384]
+        mov     ecx, dword ptr [g_dispatchVar33]
         cmp     ecx, eax
         jne     short L_gsiic_diff
-        mov     eax, dword ptr [g_phaseThunkSlot2_00543570]
+        mov     eax, dword ptr [g_phaseThunkSlot2]
         inc     eax
         test    eax, eax
-        mov     dword ptr [g_phaseThunkSlot2_00543570], eax
+        mov     dword ptr [g_phaseThunkSlot2], eax
         jg      L_gsiic_ret
         jmp     short L_gsiic_chain
     L_gsiic_diff:
-        mov     dword ptr [g_dispatchVar33_00543384], eax
-        mov     dword ptr [g_phaseThunkSlot2_00543570], 0
+        mov     dword ptr [g_dispatchVar33], eax
+        mov     dword ptr [g_phaseThunkSlot2], 0
     L_gsiic_chain:
         mov     dword ptr [g_walkCallback], 4
         call    StorePauseImulShr16
@@ -233,7 +233,7 @@ __declspec(naked) void GuardedSetInitInstallChain(void)
         mov     ecx, dword ptr [g_eventQueueEnd]
         jmp     short L_gsiic_sub3_load
     L_gsiic_sub3_phase0:
-        mov     ecx, offset g_dispatchSave991_004ec710
+        mov     ecx, offset g_dispatchSave991
         shr     ecx, 2
         mov     dword ptr [g_eventQueueEnd], ecx
     L_gsiic_sub3_load:

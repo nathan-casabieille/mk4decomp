@@ -12,9 +12,9 @@ extern unsigned int g_scaledInit_00542044;
  *   then mask + or bits, set [0x007b41a8] = 0x007b41a0 (self-link list head).
  */
 extern u8 g_memHeapStart[];
-extern unsigned int g_dispatchSave1654_007b41a8;
-extern unsigned int g_dispatchSave1583_00ab5204;
-extern unsigned int g_dispatchSave1582_00ab5200;
+extern unsigned int g_dispatchSave1654;
+extern unsigned int g_dispatchSave1583;
+extern unsigned int g_dispatchSave1582;
 extern void SetHi6(void);
 extern void StoreAtMinus8(void);
 
@@ -26,7 +26,7 @@ __declspec(naked) void AppInit_Misc2(void) {
         mov     edi, OFFSET g_memHeapStart
         rep stosd
         mov     eax, dword ptr [g_memHeapStart]
-        mov     dword ptr [g_dispatchSave1654_007b41a8], OFFSET g_memHeapStart
+        mov     dword ptr [g_dispatchSave1654], OFFSET g_memHeapStart
         and     eax, 0xff2ffff4
         pop     edi
         or      eax, 0x002ffff4
@@ -38,15 +38,15 @@ __declspec(naked) void AppInit_Misc2(void) {
 
 /* @addr 0x004bd530 (56b)
  *   if (arg && *arg) {
- *     call free([*arg], 4); call free([*arg], &g_dispatchSave1583_00ab5204);
- *     g_dispatchSave1582_00ab5200 = 1; *arg = 0;
+ *     call free([*arg], 4); call free([*arg], &g_dispatchSave1583);
+ *     g_dispatchSave1582 = 1; *arg = 0;
  *   }
  */
 void CleanupCallTwice(int *arg) {
     if (*arg != 0) {
         SetHi6(*arg, 4);
-        StoreAtMinus8(*arg, (int)&g_dispatchSave1583_00ab5204);
-        g_dispatchSave1582_00ab5200 = 1;
+        StoreAtMinus8(*arg, (int)&g_dispatchSave1583);
+        g_dispatchSave1582 = 1;
         *arg = 0;
     }
 }

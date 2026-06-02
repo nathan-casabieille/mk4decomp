@@ -7,14 +7,14 @@
 extern unsigned int g_load_0052ab04;
 extern unsigned int g_load_0052ab08;
 extern unsigned int g_load_0052ab10;
-extern unsigned int g_phaseThunkSlot7_0052ab50;
-extern unsigned int g_audioBridgeSlot2_0052d720;
-extern unsigned int g_dispatchVar35_0052d738;
+extern unsigned int g_phaseThunkSlot7;
+extern unsigned int g_audioBridgeSlot2;
+extern unsigned int g_dispatchVar35;
 extern unsigned int g_primary_0052d74c;
 extern unsigned int g_walkBoundsLimit;
 extern unsigned int g_walkBoundsSlot;
 extern unsigned int g_table_00535ddc;
-extern unsigned int g_phaseThunkSlot6_00535de8;
+extern unsigned int g_phaseThunkSlot6;
 extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
@@ -24,7 +24,7 @@ extern unsigned int g_dispatchSave_00537ef4;
 extern unsigned int g_secondary_00538068;
 extern unsigned int g_phaseInstallSlot;
 extern unsigned int g_phaseThunkState;
-extern unsigned int g_dispatchVar14_0053a7b4;
+extern unsigned int g_dispatchVar14;
 extern unsigned int g_scenegraphWalkEnd;
 extern unsigned int g_bootInitSaveSlot;
 extern unsigned int g_acc_00542078;
@@ -155,15 +155,15 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      ecx, esi
         mov      dword ptr [g_eventQueueNotMask], edx
         add      esi, edi
-        mov      dword ptr [g_dispatchVar35_0052d738], edx
+        mov      dword ptr [g_dispatchVar35], edx
         mov      edx, dword ptr [g_walkBoundsSlot]
         sub      ecx, edi
         mov      dword ptr [g_eventQueueChild], esi
-        mov      dword ptr [g_phaseThunkSlot6_00535de8], eax
-        mov      dword ptr [g_phaseThunkSlot7_0052ab50], esi
+        mov      dword ptr [g_phaseThunkSlot6], eax
+        mov      dword ptr [g_phaseThunkSlot7], esi
         mov      esi, dword ptr [g_walkBoundsLimit]
         sub      eax, edx
-        mov      dword ptr [g_audioBridgeSlot2_0052d720], ecx
+        mov      dword ptr [g_audioBridgeSlot2], ecx
         sub      ecx, esi
         push     eax
         push     eax
@@ -202,16 +202,16 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         call     Mul10Tail
         mov      edx, dword ptr [g_eventQueueNotMask]
         mov      esi, dword ptr [g_eventQueueWorkType]
-        mov      ecx, dword ptr [g_audioBridgeSlot2_0052d720]
+        mov      ecx, dword ptr [g_audioBridgeSlot2]
         add      edx, eax
         add      esp, 8
         mov      dword ptr [g_eventQueueChild], eax
-        mov      eax, dword ptr [g_phaseThunkSlot6_00535de8]
+        mov      eax, dword ptr [g_phaseThunkSlot6]
         cmp      esi, edx
         mov      dword ptr [g_eventQueueNotMask], edx
         jle      L_9531
-        mov      eax, dword ptr [g_dispatchVar35_0052d738]
-        mov      ecx, dword ptr [g_phaseThunkSlot7_0052ab50]
+        mov      eax, dword ptr [g_dispatchVar35]
+        mov      ecx, dword ptr [g_phaseThunkSlot7]
     L_9531:
         mov      esi, dword ptr [g_load_0052ab08]
         mov      edx, dword ptr [g_load_0052ab04]
@@ -222,7 +222,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      dword ptr [g_eventQueueWorkType], edx
         mov      dword ptr [g_acc_00542078], esi
         mov      dword ptr [g_eventQueueCurrent], ecx
-        mov      dword ptr [g_dispatchVar14_0053a7b4], eax
+        mov      dword ptr [g_dispatchVar14], eax
         mov      dword ptr [g_scenegraphWalkEnd], ecx
     L_9569:
         mov      ecx, dword ptr [g_fightAxisPosY]

@@ -114,7 +114,7 @@ extern void SetupHelperCluster(void);
 extern void GuardedSelfRefSet(void);
 extern void MStackBitLoopTripleCall(void);
 extern void MStackBracket7_DispatchAndChain(void);
-extern unsigned int g_bootClampMod6Base_004e2670;
+extern unsigned int g_bootClampMod6Base;
 
 extern void SetJmp_ZeroAndDirty4(void);
 
@@ -151,7 +151,7 @@ __declspec(naked) void GameMusicState4Way(void)
         mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_eventQueueEnd], eax
         jne      short L_6e34
-        mov      edx, OFFSET g_bootClampMod6Base_004e2670
+        mov      edx, OFFSET g_bootClampMod6Base
         shr      edx, 2
     L_6e16:
         mov      eax, edx

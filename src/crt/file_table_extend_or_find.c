@@ -125,7 +125,7 @@ extern unsigned int g_iat_LeaveCriticalSection;
 extern unsigned int g_iat_EnterCriticalSection;
 extern unsigned int g_iat_InitializeCriticalSection;
 extern unsigned int g_arr_00fa0de0;
-extern unsigned int g_dispatchSave1469_00fa0ee0;
+extern unsigned int g_dispatchSave1469;
 extern void CritSecLazyEnter(void);
 extern void LoadArgPushCall(void);
 extern void Lock(void);
@@ -218,12 +218,12 @@ __declspec(naked) void FileTableExtendOrFind(void) {
         add     esp, 4
         cmp     eax, edx
         je      short L_fte_doneFound
-        mov     ebx, dword ptr [g_dispatchSave1469_00fa0ee0]
+        mov     ebx, dword ptr [g_dispatchSave1469]
         lea     ecx, [eax + 0x480]
         add     ebx, 0x20
         cmp     eax, ecx
         mov     dword ptr [edi*4 + g_arr_00fa0de0], eax
-        mov     dword ptr [g_dispatchSave1469_00fa0ee0], ebx
+        mov     dword ptr [g_dispatchSave1469], ebx
         jae     short L_fte_postSeed
         mov     cl, 0xa
     L_fte_seedLoop:

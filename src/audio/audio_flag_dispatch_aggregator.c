@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_byte_004d50d4;
 extern unsigned int g_byte_004d50d8;
-extern unsigned int g_audioFlagAggBase2_00543398;
+extern unsigned int g_audioFlagAggBase2;
 extern void ShiftDownThreeAndAppend(void);
 
 void AudioFlagDispatchAggregator(void) {
@@ -125,42 +125,42 @@ void AudioFlagDispatchAggregator(void) {
         test    byte ptr [g_byte_004d50d4], 0x10
         je      short L_skip0
         push    0x000b0000
-        push    offset g_audioFlagAggBase2_00543398
+        push    offset g_audioFlagAggBase2
         call    ShiftDownThreeAndAppend
         add     esp, 8
     L_skip0:
         test    byte ptr [g_byte_004d50d4], 0x40
         je      short L_skip1
         push    0x000c0000
-        push    offset g_audioFlagAggBase2_00543398
+        push    offset g_audioFlagAggBase2
         call    ShiftDownThreeAndAppend
         add     esp, 8
     L_skip1:
         test    byte ptr [g_byte_004d50d8], 0x01
         je      short L_skip2
         push    0x000d0000
-        push    offset g_audioFlagAggBase2_00543398
+        push    offset g_audioFlagAggBase2
         call    ShiftDownThreeAndAppend
         add     esp, 8
     L_skip2:
         test    byte ptr [g_byte_004d50d8], 0x02
         je      short L_skip3
         push    0x000e0000
-        push    offset g_audioFlagAggBase2_00543398
+        push    offset g_audioFlagAggBase2
         call    ShiftDownThreeAndAppend
         add     esp, 8
     L_skip3:
         test    byte ptr [g_byte_004d50d8], 0x04
         je      short L_skip4
         push    0x000f0000
-        push    offset g_audioFlagAggBase2_00543398
+        push    offset g_audioFlagAggBase2
         call    ShiftDownThreeAndAppend
         add     esp, 8
     L_skip4:
         test    byte ptr [g_byte_004d50d4], 0x20
         je      short L_skip5
         push    0x00100000
-        push    offset g_audioFlagAggBase2_00543398
+        push    offset g_audioFlagAggBase2
         call    ShiftDownThreeAndAppend
         add     esp, 8
     L_skip5:
@@ -186,7 +186,7 @@ void AudioFlagDispatchAggregator(void) {
         je      short L_done
         shl     eax, 0x10
         push    eax
-        push    offset g_audioFlagAggBase2_00543398
+        push    offset g_audioFlagAggBase2
         call    ShiftDownThreeAndAppend
         add     esp, 8
     L_done:

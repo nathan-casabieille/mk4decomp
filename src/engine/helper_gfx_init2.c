@@ -7,19 +7,19 @@
 /* @addr 0x004b2950 (232b engine.app) - SW renderer one-shot init.
  *   If g_renderer4_active != 0: already initialized -> return 1.
  *   If arg0 == 0: return 0.
- *   Save arg0 into g_dispatchSave1623_007af944, clear g_renderer4_surface.
- *   RegisterWindowMessage via IAT[0x4d21b8] -> g_dispatchSave1621_007af938; if 0 -> teardown.
- *   Allocate 0x42c bytes (LoadArgPushCall) -> g_dispatchSave1620_007af934; if 0 -> teardown.
+ *   Save arg0 into g_dispatchSave1623, clear g_renderer4_surface.
+ *   RegisterWindowMessage via IAT[0x4d21b8] -> g_dispatchSave1621; if 0 -> teardown.
+ *   Allocate 0x42c bytes (LoadArgPushCall) -> g_dispatchSave1620; if 0 -> teardown.
  *   Zero struct (rep stosd 0x10b). Fill fields and call IAT[0x4d202c] (CreateWindow).
  *   Set g_renderer4_active = 1; return 1.
  */
-extern unsigned int g_dispatchSave1620_007af934;
-extern unsigned int g_dispatchSave1621_007af938;
-extern unsigned int g_dispatchSave1622_007af93c;
+extern unsigned int g_dispatchSave1620;
+extern unsigned int g_dispatchSave1621;
+extern unsigned int g_dispatchSave1622;
 extern int g_renderer4_active;
-extern unsigned int g_dispatchSave1623_007af944;
+extern unsigned int g_dispatchSave1623;
 extern int g_renderer4_surface;
-extern unsigned int g_dispatchSave1624_007af94c;
+extern unsigned int g_dispatchSave1624;
 extern unsigned int g_iat_CreateDIBSection;
 extern unsigned int g_iat_GetDC;
 extern void LoadArgPushCall(void);
@@ -48,17 +48,17 @@ __declspec(naked) void Helper_GfxInit2(void) {
     L_si_doInit:
         push    eax
         mov     dword ptr [g_renderer4_surface], esi
-        mov     dword ptr [g_dispatchSave1623_007af944], eax
+        mov     dword ptr [g_dispatchSave1623], eax
         call    dword ptr [g_iat_GetDC]
         cmp     eax, esi
-        mov     dword ptr [g_dispatchSave1621_007af938], eax
+        mov     dword ptr [g_dispatchSave1621], eax
         jz      short L_si_teardown
         push    0x42c
         call    LoadArgPushCall
         mov     edi, eax
         add     esp, 4
         cmp     edi, esi
-        mov     dword ptr [g_dispatchSave1620_007af934], edi
+        mov     dword ptr [g_dispatchSave1620], edi
         jne     short L_si_zero
     L_si_teardown:
         call    RendererTeardownSW
@@ -71,30 +71,30 @@ __declspec(naked) void Helper_GfxInit2(void) {
         mov     ecx, 0x10b
         xor     eax, eax
         rep     stosd
-        mov     eax, dword ptr [g_dispatchSave1620_007af934]
+        mov     eax, dword ptr [g_dispatchSave1620]
         mov     edi, 1
         push    esi
         push    esi
         mov     dword ptr [eax], 0x28
-        mov     ecx, dword ptr [g_dispatchSave1620_007af934]
+        mov     ecx, dword ptr [g_dispatchSave1620]
         push    0x007af94c
         push    esi
         mov     word ptr [ecx + 0xc], di
-        mov     edx, dword ptr [g_dispatchSave1620_007af934]
+        mov     edx, dword ptr [g_dispatchSave1620]
         mov     word ptr [edx + 0xe], 0x10
-        mov     eax, dword ptr [g_dispatchSave1620_007af934]
+        mov     eax, dword ptr [g_dispatchSave1620]
         mov     [eax + 0x10], esi
-        mov     ecx, dword ptr [g_dispatchSave1620_007af934]
+        mov     ecx, dword ptr [g_dispatchSave1620]
         mov     dword ptr [ecx + 4], 0x140
-        mov     edx, dword ptr [g_dispatchSave1620_007af934]
+        mov     edx, dword ptr [g_dispatchSave1620]
         mov     dword ptr [edx + 8], 0xffffff10
-        mov     eax, dword ptr [g_dispatchSave1620_007af934]
-        mov     ecx, dword ptr [g_dispatchSave1621_007af938]
+        mov     eax, dword ptr [g_dispatchSave1620]
+        mov     ecx, dword ptr [g_dispatchSave1621]
         push    eax
         push    ecx
-        mov     dword ptr [g_dispatchSave1624_007af94c], esi
+        mov     dword ptr [g_dispatchSave1624], esi
         call    dword ptr [g_iat_CreateDIBSection]
-        mov     dword ptr [g_dispatchSave1622_007af93c], eax
+        mov     dword ptr [g_dispatchSave1622], eax
         mov     dword ptr [g_renderer4_active], edi
         mov     eax, edi
         pop     edi

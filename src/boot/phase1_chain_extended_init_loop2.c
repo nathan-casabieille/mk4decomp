@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave618_004d5fa0;
+extern unsigned int g_dispatchSave618;
 extern void AudioMixerStep(void);
 extern void CmpDivJmp(void);
 extern void CopyThreeFields(void);
@@ -146,7 +146,7 @@ __declspec(naked) void Phase1ChainExtendedInitLoop2(void)
         test    eax, eax
         jne     L_p1cei2_ret
         mov     ecx, dword ptr [g_fightGroupHead]
-        mov     edx, offset g_dispatchSave618_004d5fa0
+        mov     edx, offset g_dispatchSave618
         shr     edx, 2
         mov     dword ptr [g_eventQueueIdx], ecx
         mov     dword ptr [g_walkCallback], edx

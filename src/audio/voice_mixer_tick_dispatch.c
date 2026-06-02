@@ -108,14 +108,14 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave804_004f308c;
-extern unsigned int g_dispatchSave578_004f3094;
-extern unsigned int g_dispatchSave806_004f313c;
-extern unsigned int g_dispatchSave808_004f31a4;
-extern unsigned int g_dispatchSave809_004f31ac;
-extern unsigned int g_dispatchSave723_004f62f8;
-extern unsigned int g_dispatchSave120_00515964;
-extern unsigned int g_dispatchSave1332_00f00000;
+extern unsigned int g_dispatchSave804;
+extern unsigned int g_dispatchSave578;
+extern unsigned int g_dispatchSave806;
+extern unsigned int g_dispatchSave808;
+extern unsigned int g_dispatchSave809;
+extern unsigned int g_dispatchSave723;
+extern unsigned int g_dispatchSave120;
+extern unsigned int g_dispatchSave1332;
 extern void AudioBindEntry(void);
 extern void AudioInitArgs3(void);
 extern void GuardedSetupCallTailJmp(void);
@@ -127,29 +127,29 @@ __declspec(naked) void VoiceMixerTickDispatch(void)
         push     ebp
         push     esi
         push     edi
-        mov      esi, OFFSET g_dispatchSave578_004f3094
+        mov      esi, OFFSET g_dispatchSave578
     L_27c9:
-        cmp      esi, OFFSET g_dispatchSave806_004f313c
+        cmp      esi, OFFSET g_dispatchSave806
         jae      L_27ed
         mov      eax, dword ptr [esi]
         push     0x10000
         sub      eax, 0x50000
         push     eax
         push     0
-        push     OFFSET g_dispatchSave120_00515964
+        push     OFFSET g_dispatchSave120
         call     AudioInitArgs3
         add      esp, 0x10
     L_27ed:
         add      esi, 0x1c
-        cmp      esi, OFFSET g_dispatchSave809_004f31ac
+        cmp      esi, OFFSET g_dispatchSave809
         jb       L_27c9
-        push     OFFSET g_dispatchSave723_004f62f8
+        push     OFFSET g_dispatchSave723
         call     AudioBindEntry
         add      esp, 4
         xor      edi, edi
-        mov      esi, OFFSET g_dispatchSave804_004f308c
+        mov      esi, OFFSET g_dispatchSave804
         mov      ebp, 0xff100000
-        mov      ebx, OFFSET g_dispatchSave1332_00f00000
+        mov      ebx, OFFSET g_dispatchSave1332
     L_2816:
         mov      eax, dword ptr [esi + 8]
         mov      ecx, dword ptr [esi]
@@ -187,7 +187,7 @@ __declspec(naked) void VoiceMixerTickDispatch(void)
         mov      dword ptr [g_eventQueueCurrent], ecx
         add      ecx, edx
         inc      edi
-        cmp      esi, OFFSET g_dispatchSave808_004f31a4
+        cmp      esi, OFFSET g_dispatchSave808
         mov      dword ptr [ecx*4], eax
         jb       L_2816
         pop      edi

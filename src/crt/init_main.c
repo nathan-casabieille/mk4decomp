@@ -6,12 +6,12 @@
 
 /* @addr 0x004cbb30 (238b crt) - CRT environment-string parser (envp builder).
  *   Reads NUL-separated env string at [g_initRet]; counts non-'=' tokens.
- *   Allocates (count+1)*4 byte ptr array, stores at [g_dispatchSave1426_00f9f820].
+ *   Allocates (count+1)*4 byte ptr array, stores at [g_dispatchSave1426].
  *   Iterates env: for each token (until '='), allocates buffer, copies chars
  *   via rep movsd/movsb, stores ptr in next slot.
  *   Frees the env source string; writes NULL terminator at end of array.
  */
-extern unsigned int g_dispatchSave1426_00f9f820;
+extern unsigned int g_dispatchSave1426;
 extern u32 g_initRet;
 extern void CmpCallPushIATCall(void);
 extern void FreeImpl(void);
@@ -52,7 +52,7 @@ __declspec(naked) void _init_main(void) {
         add     esp, 4
         test    esi, esi
         mov     [esp + 0x10], esi
-        mov     dword ptr [g_dispatchSave1426_00f9f820], esi
+        mov     dword ptr [g_dispatchSave1426], esi
         jne     short L_ep_haveBuf
         push    9
         call    CmpCallPushIATCall

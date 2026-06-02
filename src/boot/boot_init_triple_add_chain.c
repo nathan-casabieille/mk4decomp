@@ -107,7 +107,7 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
-extern unsigned int g_dispatchSave607_004d78d8;
+extern unsigned int g_dispatchSave607;
 extern unsigned int g_savedNode;
 
 /*
@@ -127,7 +127,7 @@ void BootInitTripleAddChain(void)
     if (g_framePauseFlag != 0) return;
     g_xformEntityIdx = g_currentNodeIdx;
     g_currentNodeIdx = g_savedNode;
-    g_pendingNodeType = (unsigned int)&g_dispatchSave607_004d78d8 >> 2;
+    g_pendingNodeType = (unsigned int)&g_dispatchSave607 >> 2;
     QuadInterpolator();
     if (g_framePauseFlag != 0) return;
     g_eventQueueCurrent = 0xcccc;

@@ -20,9 +20,9 @@ extern unsigned int g_iat_GetThreadPriority;
 extern unsigned int g_iat_SetPriorityClass;
 extern unsigned int g_iat_SetThreadPriority;
 extern HANDLE g_ecmThread;
-extern unsigned int g_dispatchSave1606_007ab07c;
-extern unsigned int g_dispatchSave1607_007ab080;
-extern unsigned int g_dispatchSave1608_007ab084;
+extern unsigned int g_dispatchSave1606;
+extern unsigned int g_dispatchSave1607;
+extern unsigned int g_dispatchSave1608;
 
 __declspec(naked) int Helper_ECM_PostCleanup(int flag) {
     __asm {
@@ -38,19 +38,19 @@ __declspec(naked) int Helper_ECM_PostCleanup(int flag) {
         test    al, al
         _emit   74h
         _emit   4eh
-        mov     eax, dword ptr [g_dispatchSave1608_007ab084]
+        mov     eax, dword ptr [g_dispatchSave1608]
         test    eax, eax
         _emit   75h
         _emit   45h
         call    esi
         push    eax
         call    dword ptr [g_iat_GetPriorityClass]
-        mov     dword ptr [g_dispatchSave1606_007ab07c], eax
+        mov     dword ptr [g_dispatchSave1606], eax
         call    edi
         push    eax
         call    dword ptr [g_iat_GetThreadPriority]
         push    0x80
-        mov     dword ptr [g_dispatchSave1607_007ab080], eax
+        mov     dword ptr [g_dispatchSave1607], eax
         call    esi
         push    eax
         call    ebx
@@ -65,26 +65,26 @@ __declspec(naked) int Helper_ECM_PostCleanup(int flag) {
         push    0xfffffffe
         push    eax
         call    ebp
-        mov     dword ptr [g_dispatchSave1608_007ab084], 1
+        mov     dword ptr [g_dispatchSave1608], 1
         mov     al, byte ptr [esp + 0x14]
         test    al, al
         _emit   75h
         _emit   2ah
-        mov     eax, dword ptr [g_dispatchSave1608_007ab084]
+        mov     eax, dword ptr [g_dispatchSave1608]
         test    eax, eax
         _emit   74h
         _emit   21h
-        mov     eax, dword ptr [g_dispatchSave1606_007ab07c]
+        mov     eax, dword ptr [g_dispatchSave1606]
         push    eax
         call    esi
         push    eax
         call    ebx
-        mov     ecx, dword ptr [g_dispatchSave1607_007ab080]
+        mov     ecx, dword ptr [g_dispatchSave1607]
         push    ecx
         call    edi
         push    eax
         call    ebp
-        mov     dword ptr [g_dispatchSave1608_007ab084], 0
+        mov     dword ptr [g_dispatchSave1608], 0
         pop     edi
         pop     esi
         pop     ebp

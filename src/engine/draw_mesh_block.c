@@ -8,7 +8,7 @@
 extern unsigned int g_screenH;
 extern unsigned int g_menuRestoreSlot;
 extern u32 g_inLoopStep;
-extern unsigned int g_dispatchSave1626_007af958[];
+extern unsigned int g_dispatchSave1626[];
 extern s16 g_vtxIn2_x;
 extern unsigned int g_triStripX0;
 extern s16 g_vtxIn1_y;
@@ -30,11 +30,11 @@ extern s16 g_vtxScreenY;
 extern u16 g_vtxColorCopy;
 extern u16 g_vtxColorSaved;
 extern u16 g_vtxColor;
-extern unsigned int g_dispatchSave1501_00ab4398;
-extern unsigned int g_dispatchSave1559_00ab4d9c;
-extern unsigned int g_dispatchSave1570_00ab4e28;
-extern unsigned int g_dispatchSave1574_00ab4e3c;
-extern unsigned int g_dispatchSave1576_00ab4e60;
+extern unsigned int g_dispatchSave1501;
+extern unsigned int g_dispatchSave1559;
+extern unsigned int g_dispatchSave1570;
+extern unsigned int g_dispatchSave1574;
+extern unsigned int g_dispatchSave1576;
 extern void AdvanceTriStripRing(void);
 extern void AltCamMatrixProject(void);
 extern void Helper_DrawCursor(void);
@@ -109,18 +109,18 @@ __declspec(naked) void DrawMeshBlock(void)
         mov      eax, dword ptr [edi + 4]
         test     eax, eax
         je       L_b280
-        mov      eax, dword ptr [g_dispatchSave1570_00ab4e28]
+        mov      eax, dword ptr [g_dispatchSave1570]
         test     eax, eax
         je       L_b2b4
-        mov      eax, dword ptr [g_dispatchSave1574_00ab4e3c]
+        mov      eax, dword ptr [g_dispatchSave1574]
         test     eax, eax
         jge      L_b2b4
         push     1
-        push     OFFSET g_dispatchSave1501_00ab4398
+        push     OFFSET g_dispatchSave1501
         call     AltCamMatrixProject
         add      esp, 8
     L_b2b4:
-        mov      eax, dword ptr [g_dispatchSave1576_00ab4e60]
+        mov      eax, dword ptr [g_dispatchSave1576]
         cmp      eax, 0x10
         jl       L_b2ce
         cdq
@@ -163,7 +163,7 @@ __declspec(naked) void DrawMeshBlock(void)
         mov      dword ptr [esp + 0x14], eax
         mov      dword ptr [esp + 0x18], ebx
         jl       L_b280
-        mov      word ptr [g_dispatchSave1626_007af958], cx
+        mov      word ptr [g_dispatchSave1626], cx
         mov      word ptr [g_vtxIn1_y], cx
         mov      word ptr [g_vtxIn2_y], cx
         mov      cx, word ptr [edi]
@@ -363,7 +363,7 @@ __declspec(naked) void DrawMeshBlock(void)
         call     MaxOfThree
     L_b5e1:
         mov      word ptr [esi + 0x12], ax
-        mov      ecx, dword ptr [g_dispatchSave1559_00ab4d9c]
+        mov      ecx, dword ptr [g_dispatchSave1559]
         shl      ecx, 5
         mov      dx, word ptr [esi + 0x1a]
         add      ecx, eax
@@ -376,7 +376,7 @@ __declspec(naked) void DrawMeshBlock(void)
         or       edx, ecx
         or       edx, 0x10
         mov      word ptr [esi + 0x1a], dx
-        mov      eax, dword ptr [g_dispatchSave1570_00ab4e28]
+        mov      eax, dword ptr [g_dispatchSave1570]
         test     eax, eax
         je       L_b64d
         mov      ax, word ptr [g_screenH]

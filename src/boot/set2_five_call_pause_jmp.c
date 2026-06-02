@@ -8,11 +8,11 @@ extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x0041fd10 (91b)
- *   call F0; set g_audioRestoreSlot3_0053a1f0=2; call F1; pause → ret;
+ *   call F0; set g_audioRestoreSlot3=2; call F1; pause → ret;
  *   call F2; pause → ret; call F3; pause → ret; call F4; pause → ret;
  *   call F5; pause → ret; jmp T.
  */
-extern unsigned int g_audioRestoreSlot3_0053a1f0;
+extern unsigned int g_audioRestoreSlot3;
 extern void Wrapper_OrListLoop_004d8e80(void);
 extern void ZeroLargeBlock(void);
 extern void GuardedSeq_004335d0(void);
@@ -22,7 +22,7 @@ extern void Helper_TickFrameTail(void);
 extern void OnceCall(void);
 void Set2FiveCallPauseJmp(void) {
     Wrapper_OrListLoop_004d8e80();
-    g_audioRestoreSlot3_0053a1f0 = 2;
+    g_audioRestoreSlot3 = 2;
     ZeroLargeBlock();
     if (g_framePauseFlag) return;
     GuardedSeq_004335d0();

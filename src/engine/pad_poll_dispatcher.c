@@ -112,27 +112,27 @@ extern void Input_PollPlayerKeyboard(int player);
 /* extern void Input_GetAsyncKey(int key); -- defined elsewhere with diff sig */
 extern u32 g_appInitFlag1;
 extern unsigned int g_phaseThunkInst;
-extern unsigned int g_renderer2_var5_004f4e98;
-extern unsigned int g_dispatchSave537_004f4dc8;
-extern unsigned int g_dispatchSave536_004f4dcc;
-extern unsigned int g_dispatchSave630_004f4dd0;
-extern unsigned int g_dispatchSave629_004f4dd4;
-extern unsigned int g_dispatchSave535_004f4dd8;
-extern unsigned int g_dispatchSave534_004f4ddc;
-extern unsigned int g_dispatchSave628_004f4de0;
-extern unsigned int g_dispatchSave627_004f4de4;
-extern unsigned int g_renderer2_var7_004f4de8;
-extern unsigned int g_renderer2_var6_004f4dec;
-extern unsigned int g_dispatchSave518_004f4df0;
-extern unsigned int g_dispatchSave517_004f4df4;
-extern unsigned int g_dispatchSave533_004f4df8;
-extern unsigned int g_dispatchSave532_004f4dfc;
-extern unsigned int g_dispatchSave626_004f4e00;
-extern unsigned int g_dispatchSave625_004f4e04;
-extern unsigned int g_dispatchSave27_00543368;
-extern unsigned int g_dispatchSave26_0054336c;
-extern unsigned int g_dispatchSave25_00543370;
-extern unsigned int g_dispatchVar39_0054357c;
+extern unsigned int g_renderer2_var5;
+extern unsigned int g_dispatchSave537;
+extern unsigned int g_dispatchSave536;
+extern unsigned int g_dispatchSave630;
+extern unsigned int g_dispatchSave629;
+extern unsigned int g_dispatchSave535;
+extern unsigned int g_dispatchSave534;
+extern unsigned int g_dispatchSave628;
+extern unsigned int g_dispatchSave627;
+extern unsigned int g_renderer2_var7;
+extern unsigned int g_renderer2_var6;
+extern unsigned int g_dispatchSave518;
+extern unsigned int g_dispatchSave517;
+extern unsigned int g_dispatchSave533;
+extern unsigned int g_dispatchSave532;
+extern unsigned int g_dispatchSave626;
+extern unsigned int g_dispatchSave625;
+extern unsigned int g_dispatchSave27;
+extern unsigned int g_dispatchSave26;
+extern unsigned int g_dispatchSave25;
+extern unsigned int g_dispatchVar39;
 
 extern u32 g_demoModeFlag;
 extern void Input_GetAsyncKey(void);
@@ -163,7 +163,7 @@ __declspec(naked) void Input_TickPlayers(void)
         add     esp, 4
         push    1
         call    Input_PollPlayerJoystick
-        mov     eax, dword ptr [g_renderer2_var5_004f4e98]
+        mov     eax, dword ptr [g_renderer2_var5]
         add     esp, 4
         cmp     eax, esi
         je      L_idep_pause_gate2
@@ -190,7 +190,7 @@ __declspec(naked) void Input_TickPlayers(void)
         add     esp, 4
         test    eax, eax
         jne     L_idep_clear_loop
-        mov     dword ptr [g_renderer2_var5_004f4e98], esi
+        mov     dword ptr [g_renderer2_var5], esi
     L_idep_clear_loop:
         mov     dword ptr [g_fightTableC2], esi
         mov     dword ptr [g_fightTableC0], esi
@@ -199,52 +199,52 @@ __declspec(naked) void Input_TickPlayers(void)
     L_idep_pause_gate2:
         cmp     dword ptr [g_appInitFlag1], esi
         je      L_idep_after_clear_masks
-        mov     eax, dword ptr [g_renderer2_var6_004f4dec]
-        mov     ecx, dword ptr [g_renderer2_var7_004f4de8]
+        mov     eax, dword ptr [g_renderer2_var6]
+        mov     ecx, dword ptr [g_renderer2_var7]
         not     ecx
         mov     edx, dword ptr [eax]
         and     edx, ecx
         mov     dword ptr [eax], edx
-        mov     eax, dword ptr [g_dispatchSave517_004f4df4]
-        mov     edx, dword ptr [g_dispatchSave518_004f4df0]
+        mov     eax, dword ptr [g_dispatchSave517]
+        mov     edx, dword ptr [g_dispatchSave518]
         mov     ecx, dword ptr [eax]
         not     edx
         and     ecx, edx
         mov     dword ptr [eax], ecx
     L_idep_after_clear_masks:
-        mov     ecx, dword ptr [g_dispatchSave536_004f4dcc]
-        mov     eax, dword ptr [g_dispatchSave537_004f4dc8]
+        mov     ecx, dword ptr [g_dispatchSave536]
+        mov     eax, dword ptr [g_dispatchSave537]
         test    dword ptr [ecx], eax
         je      L_idep_skip1
-        mov     eax, dword ptr [g_dispatchSave534_004f4ddc]
-        mov     edx, dword ptr [g_dispatchSave535_004f4dd8]
+        mov     eax, dword ptr [g_dispatchSave534]
+        mov     edx, dword ptr [g_dispatchSave535]
         not     edx
         and     dword ptr [eax], edx
     L_idep_skip1:
-        mov     ecx, dword ptr [g_dispatchSave629_004f4dd4]
-        mov     eax, dword ptr [g_dispatchSave630_004f4dd0]
+        mov     ecx, dword ptr [g_dispatchSave629]
+        mov     eax, dword ptr [g_dispatchSave630]
         test    dword ptr [ecx], eax
         je      L_idep_skip2
-        mov     eax, dword ptr [g_dispatchSave627_004f4de4]
-        mov     edx, dword ptr [g_dispatchSave628_004f4de0]
+        mov     eax, dword ptr [g_dispatchSave627]
+        mov     edx, dword ptr [g_dispatchSave628]
         not     edx
         and     dword ptr [eax], edx
     L_idep_skip2:
-        mov     ecx, dword ptr [g_renderer2_var6_004f4dec]
-        mov     eax, dword ptr [g_renderer2_var7_004f4de8]
+        mov     ecx, dword ptr [g_renderer2_var6]
+        mov     eax, dword ptr [g_renderer2_var7]
         test    dword ptr [ecx], eax
         je      L_idep_skip3
-        mov     eax, dword ptr [g_dispatchSave532_004f4dfc]
-        mov     edx, dword ptr [g_dispatchSave533_004f4df8]
+        mov     eax, dword ptr [g_dispatchSave532]
+        mov     edx, dword ptr [g_dispatchSave533]
         not     edx
         and     dword ptr [eax], edx
     L_idep_skip3:
-        mov     ecx, dword ptr [g_dispatchSave517_004f4df4]
-        mov     eax, dword ptr [g_dispatchSave518_004f4df0]
+        mov     ecx, dword ptr [g_dispatchSave517]
+        mov     eax, dword ptr [g_dispatchSave518]
         test    dword ptr [ecx], eax
         je      L_idep_skip4
-        mov     eax, dword ptr [g_dispatchSave625_004f4e04]
-        mov     edx, dword ptr [g_dispatchSave626_004f4e00]
+        mov     eax, dword ptr [g_dispatchSave625]
+        mov     edx, dword ptr [g_dispatchSave626]
         not     edx
         and     dword ptr [eax], edx
     L_idep_skip4:
@@ -257,13 +257,13 @@ __declspec(naked) void Input_TickPlayers(void)
         not     ecx
         not     edx
         mov     dword ptr [g_phaseThunkInst], esi
-        mov     dword ptr [g_dispatchSave27_00543368], esi
+        mov     dword ptr [g_dispatchSave27], esi
         mov     dword ptr [g_fightTableC2], eax
         mov     dword ptr [g_fightTableC0], ecx
         mov     dword ptr [g_fightTableC1], edx
-        mov     dword ptr [g_dispatchVar39_0054357c], eax
-        mov     dword ptr [g_dispatchSave26_0054336c], ecx
-        mov     dword ptr [g_dispatchSave25_00543370], edx
+        mov     dword ptr [g_dispatchVar39], eax
+        mov     dword ptr [g_dispatchSave26], ecx
+        mov     dword ptr [g_dispatchSave25], edx
         pop     esi
         ret
     }

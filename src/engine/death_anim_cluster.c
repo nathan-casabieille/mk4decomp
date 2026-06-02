@@ -108,17 +108,17 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave729_004ffe4c;
-extern unsigned int g_dispatchTableArr8_00501970;
+extern unsigned int g_dispatchSave729;
+extern unsigned int g_dispatchTableArr8;
 extern u32 g_dlSomeFlag2;
 extern s32 g_dlNalt1;
 extern unsigned int g_bootHeavyState;
 extern s32 g_dlNalt2;
-extern unsigned int g_eventMusicSlot2_0053a318;
+extern unsigned int g_eventMusicSlot2;
 extern u32 g_dlSomeFlag1;
 extern unsigned int g_zerotriple_00541de8;
 extern unsigned int g_zerotriple_00541dec;
-extern unsigned int g_dispatchVar3_00543564;
+extern unsigned int g_dispatchVar3;
 extern unsigned int g_eventMusicSlot;
 extern void CallSetPause(void);
 extern void Cmp7CondStateUpdate(void);
@@ -149,7 +149,7 @@ __declspec(naked) void DeathAnimCluster(void)
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], edx
-        mov      eax, dword ptr [g_eventMusicSlot2_0053a318]
+        mov      eax, dword ptr [g_eventMusicSlot2]
         cmp      eax, 1
         mov      dword ptr [g_zerotriple_00541de8], esi
         mov      dword ptr [g_zerotriple_00541dec], esi
@@ -196,7 +196,7 @@ __declspec(naked) void DeathAnimCluster(void)
         mov      dword ptr [eax + 0x5c], 0xfffd0000
         mov      dword ptr [eax + 0x60], 0x4b333
         mov      ecx, dword ptr [g_audioBankSel]
-        mov      eax, OFFSET g_dispatchSave729_004ffe4c
+        mov      eax, OFFSET g_dispatchSave729
         mov      edx, 0xf
         shr      eax, 2
         cmp      ecx, 2
@@ -204,7 +204,7 @@ __declspec(naked) void DeathAnimCluster(void)
         jne      short L_ec66
         cmp      dword ptr [g_dlNalt1], edx
         jne      short L_ec66
-        mov      eax, OFFSET g_dispatchTableArr8_00501970
+        mov      eax, OFFSET g_dispatchTableArr8
         shr      eax, 2
         mov      dword ptr [g_walkCallback], eax
     L_ec66:
@@ -212,7 +212,7 @@ __declspec(naked) void DeathAnimCluster(void)
         jne      short L_ec80
         cmp      dword ptr [g_dlNalt2], edx
         jne      short L_ec80
-        mov      eax, OFFSET g_dispatchTableArr8_00501970
+        mov      eax, OFFSET g_dispatchTableArr8
         shr      eax, 2
         mov      dword ptr [g_walkCallback], eax
     L_ec80:
@@ -271,7 +271,7 @@ __declspec(naked) void DeathAnimCluster(void)
         jne      short L_ed70
         cmp      dword ptr [g_active_00537e88], 1
         jne      short L_ed70
-        mov      eax, dword ptr [g_dispatchVar3_00543564]
+        mov      eax, dword ptr [g_dispatchVar3]
         test     eax, eax
         jge      short L_ed70
         jmp      CallSetPause

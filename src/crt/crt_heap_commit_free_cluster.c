@@ -111,13 +111,13 @@ extern unsigned int g_fightAxisPosY;
 extern void* HeapRegionLookup(void *ptr, void **out1, void **out2);
 extern void CrtHeapCommitFreeCluster(void *, void *, int);
 extern void *g_iat_HeapFree;
-extern unsigned int g_dispatchSave1470_00fa0ee4;
+extern unsigned int g_dispatchSave1470;
 
 /*
  * @addr 0x004c55f0 (104b boot) - free()-style helper with heap lock:
  *   if non-null ptr, _lock(9), walk-find via HeapRegionLookup; if found
  *   call CrtHeapCommitFreeCluster to release and _unlock(9); else _unlock(9)
- *   and fall through to HeapFree(g_dispatchSave1470_00fa0ee4, 0, ptr).
+ *   and fall through to HeapFree(g_dispatchSave1470, 0, ptr).
  */
 void FreeImpl(void *ptr) {
     void *out1;
@@ -132,5 +132,5 @@ void FreeImpl(void *ptr) {
         return;
     }
     TableLookupIatCall(9);
-    ((void (__stdcall *)(unsigned int, unsigned int, void *))g_iat_HeapFree)(g_dispatchSave1470_00fa0ee4, 0, ptr);
+    ((void (__stdcall *)(unsigned int, unsigned int, void *))g_iat_HeapFree)(g_dispatchSave1470, 0, ptr);
 }

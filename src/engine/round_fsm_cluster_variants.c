@@ -118,11 +118,11 @@ extern void MStackPushSet0008(void);
 extern void IterStepDualStore(void);
 extern void CmpEqInitCallElseJmp(void);
 extern void ScaledIndexConditionalAdd(void);
-extern unsigned int g_dispatchSave735_004ed138;
-extern unsigned int g_dispatchSave736_004ed15c;
+extern unsigned int g_dispatchSave735;
+extern unsigned int g_dispatchSave736;
 extern unsigned int g_bootInitSaveSlot;
 
-extern unsigned int g_dispatchSave924_004e39c0;
+extern unsigned int g_dispatchSave924;
 extern unsigned int g_load_0052ab10;
 extern void ArgSarStoreJmp(void);
 extern void Atan2QuadrantLookup(void);
@@ -182,7 +182,7 @@ __declspec(naked) void CinematicFsmCluster(void)
         mov      ecx, dword ptr [g_baseSel]
         mov      eax, 0x215
         mov      dword ptr [g_walkCallback], eax
-        push     OFFSET g_dispatchSave735_004ed138
+        push     OFFSET g_dispatchSave735
         mov      dword ptr [ecx*4 + 0x74], eax
         call     ArgSarStoreJmp
         add      esp, 4
@@ -241,7 +241,7 @@ __declspec(naked) void CinematicFsmCluster(void)
         pop      esi
         ret
     L_ac89:
-        push     OFFSET g_dispatchSave736_004ed15c
+        push     OFFSET g_dispatchSave736
         call     IterStepDualStore
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -426,7 +426,7 @@ __declspec(naked) void RoundFsmCluster_004308a0(void)
         mov      dword ptr [ecx*4 + 0x74], eax
         jmp      L_0b7c
     L_0ad7:
-        push     OFFSET g_dispatchSave924_004e39c0
+        push     OFFSET g_dispatchSave924
         call     TripleScaledChainStore54
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4

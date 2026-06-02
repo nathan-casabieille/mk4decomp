@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave732_004ecb58;
-extern unsigned int g_dispatchSave122_00514950;
+extern unsigned int g_dispatchSave732;
+extern unsigned int g_dispatchSave122;
 extern void DirtyDoubleDeref(void);
 extern void MStackBracket1_TreeWalkRecursive2(void);
 extern void MStackBracket4_ListInsertZeroFill(void);
@@ -129,7 +129,7 @@ __declspec(naked) void MeshReplicateDriver(void)
         push     0x473a80
         call     StoreLoadJmp
         mov      eax, dword ptr [g_fightGroupHead]
-        mov      ecx, OFFSET g_dispatchSave732_004ecb58
+        mov      ecx, OFFSET g_dispatchSave732
         add      esp, 4
         mov      bl, 4
         mov      eax, dword ptr [eax*4 + 0x1c]
@@ -151,7 +151,7 @@ __declspec(naked) void MeshReplicateDriver(void)
         test     eax, eax
         jne      L_3440
         mov      ecx, dword ptr [g_currentNodeIdx]
-        mov      edx, OFFSET g_dispatchSave122_00514950
+        mov      edx, OFFSET g_dispatchSave122
         shr      edx, 2
         mov      dword ptr [g_eventQueueTotal], ecx
         mov      dword ptr [g_xformEntityIdx], edx

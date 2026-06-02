@@ -4,17 +4,17 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_renderer2_d3dInitByte_004f4790;
-extern unsigned int g_dispatchSave555_004f4794;
-extern unsigned int g_dispatchSave828_004f4798;
-extern unsigned int g_dispatchSave829_004f479c;
+extern unsigned int g_renderer2_d3dInitByte;
+extern unsigned int g_dispatchSave555;
+extern unsigned int g_dispatchSave828;
+extern unsigned int g_dispatchSave829;
 extern u8 g_renderer2_buf2[];
-extern unsigned int g_renderer2_baseB_0058c760;
+extern unsigned int g_renderer2_baseB;
 extern unsigned int g_comptr_0058c7b0;
 extern unsigned int g_comptr_0058c7b4;
 extern unsigned int g_renderer2_obj;
-extern unsigned int g_renderer2_state7_0058c7c4;
-extern unsigned int g_renderer2_d3dByte_0058c7d0;
+extern unsigned int g_renderer2_state7;
+extern unsigned int g_renderer2_d3dByte;
 extern int g_renderer2_present_rc;
 extern int g_renderer2_active;
 extern int g_renderer2_surface;
@@ -76,12 +76,12 @@ __declspec(naked) void Renderer2_BeginFrame_D3D(void)
         call     dword ptr [edx + 0x6c]
     L_da9d:
         add      esi, 4
-        cmp      esi, OFFSET g_renderer2_baseB_0058c760
+        cmp      esi, OFFSET g_renderer2_baseB
         jl       L_da82
         mov      eax, dword ptr [esp + 0x18]
         test     eax, eax
         je       L_daed
-        mov      eax, dword ptr [g_renderer2_state7_0058c7c4]
+        mov      eax, dword ptr [g_renderer2_state7]
         mov      dword ptr [esp + 4], 0
         test     eax, eax
         mov      dword ptr [esp + 8], 0
@@ -108,8 +108,8 @@ __declspec(naked) void Renderer2_BeginFrame_D3D(void)
     L_db06:
         test     eax, eax
         mov      dword ptr [g_renderer2_surface], 1
-        mov      byte ptr [g_renderer2_d3dInitByte_004f4790], 0xff
-        mov      byte ptr [g_renderer2_d3dByte_0058c7d0], 0
+        mov      byte ptr [g_renderer2_d3dInitByte], 0xff
+        mov      byte ptr [g_renderer2_d3dByte], 0
         je       L_dc15
         mov      edx, dword ptr [eax]
         push     1
@@ -120,7 +120,7 @@ __declspec(naked) void Renderer2_BeginFrame_D3D(void)
         mov      eax, dword ptr [g_renderer2_obj]
         test     eax, eax
         je       L_dc15
-        mov      esi, dword ptr [g_dispatchSave829_004f479c]
+        mov      esi, dword ptr [g_dispatchSave829]
         mov      ecx, dword ptr [eax]
         xor      edx, edx
         test     esi, esi
@@ -143,7 +143,7 @@ __declspec(naked) void Renderer2_BeginFrame_D3D(void)
         mov      eax, dword ptr [g_renderer2_obj]
         test     eax, eax
         je       L_dc15
-        mov      esi, dword ptr [g_dispatchSave555_004f4794]
+        mov      esi, dword ptr [g_dispatchSave555]
         mov      edx, dword ptr [eax]
         xor      ecx, ecx
         test     esi, esi
@@ -157,7 +157,7 @@ __declspec(naked) void Renderer2_BeginFrame_D3D(void)
         mov      eax, dword ptr [g_renderer2_obj]
         test     eax, eax
         je       L_dc15
-        mov      esi, dword ptr [g_dispatchSave555_004f4794]
+        mov      esi, dword ptr [g_dispatchSave555]
         mov      edx, dword ptr [eax]
         xor      ecx, ecx
         test     esi, esi
@@ -171,7 +171,7 @@ __declspec(naked) void Renderer2_BeginFrame_D3D(void)
         mov      eax, dword ptr [g_renderer2_obj]
         test     eax, eax
         je       L_dc15
-        mov      ecx, dword ptr [g_dispatchSave828_004f4798]
+        mov      ecx, dword ptr [g_dispatchSave828]
         mov      edx, dword ptr [eax]
         push     ecx
         push     0x1a

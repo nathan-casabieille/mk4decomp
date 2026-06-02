@@ -107,7 +107,7 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
-extern unsigned int g_dispatchSave906_004d5e88;
+extern unsigned int g_dispatchSave906;
 extern void ThreeChanPackClamp(void);
 extern void CopyThreeFields(void);
 
@@ -122,7 +122,7 @@ void BootMStackBracketedScaledStores(void) {
     ((void (*)(int))ThreeChanPackClamp)(0x408040);
     ((void (*)(unsigned int))CopyThreeFields)(g_fightGroupHead);
     g_eventQueueEnd = g_fightGroupHead;
-    g_walkCallback = (unsigned int)&g_dispatchSave906_004d5e88 >> 2;
+    g_walkCallback = (unsigned int)&g_dispatchSave906 >> 2;
     PushSetXfmMaskCallPop();
     if (g_framePauseFlag != 0) return;
     if (!(g_xformDirtyFlags & 4)) {

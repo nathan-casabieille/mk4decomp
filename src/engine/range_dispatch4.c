@@ -12,7 +12,7 @@ extern unsigned int g_scaledInit_00542044;
  *   if eax > 0x20000 → jmp T1, > 0x18000 → T2, > 0x10000 → T3,
  *   else → T4.
  */
-extern unsigned int g_dispatchSave1237_004e4a04;
+extern unsigned int g_dispatchSave1237;
 extern unsigned int g_table_00535ddc;
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80Call(void);
@@ -21,7 +21,7 @@ extern void InstallSelfChainExtendCall_00434f10(void);
 extern void CallPauseTestByteJmpCalls(void);
 void RangeDispatch4(void) {
     int v;
-    QuadBlockArgInstallChain((void *)&g_dispatchSave1237_004e4a04);
+    QuadBlockArgInstallChain((void *)&g_dispatchSave1237);
     if (g_framePauseFlag != 0) {
         return;
     }

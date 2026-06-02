@@ -110,12 +110,12 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00434690 (154b game) - install-self + countdown loop with global flag.
  *   Block A: standard install-self at 0x00434690; mstack-push 0x004346f0 jmp GameDispatchValidateState.
- *     Also sets g_dispatchSave1580_00ab51f8 = 1 at entry.
- *   Block B (+0x60): cmp g_table_00535ddc, g_currentNodeFlags; set g_dispatchSave1580_00ab51f8=1 either way;
+ *     Also sets g_dispatchSave1580 = 1 at entry.
+ *   Block B (+0x60): cmp g_table_00535ddc, g_currentNodeFlags; set g_dispatchSave1580=1 either way;
  *     if le: countdown g_eventQueueChild, self-jmp on nonzero; else jmp ChainDecCondStoreCallJmp.
  */
 extern unsigned int g_matrixStack_arr;
-extern unsigned int g_dispatchSave1580_00ab51f8;
+extern unsigned int g_dispatchSave1580;
 extern void ChainDecCondStoreCallJmp(void);
 
 __declspec(naked) void InstallSelfFlagCountdown(void) {
@@ -123,7 +123,7 @@ __declspec(naked) void InstallSelfFlagCountdown(void) {
         mov     eax, dword ptr [g_baseSel]
         mov     edx, 1
         shl     eax, 2
-        mov     dword ptr [g_dispatchSave1580_00ab51f8], edx
+        mov     dword ptr [g_dispatchSave1580], edx
         mov     ecx, dword ptr [eax + 0x84]
         mov     dword ptr [eax + 0x84], 0
         test    ecx, ecx
@@ -146,7 +146,7 @@ __declspec(naked) void InstallSelfFlagCountdown(void) {
         mov     eax, dword ptr [g_table_00535ddc]
         mov     ecx, dword ptr [g_currentNodeFlags]
         cmp     eax, ecx
-        mov     dword ptr [g_dispatchSave1580_00ab51f8], 1
+        mov     dword ptr [g_dispatchSave1580], 1
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   05h

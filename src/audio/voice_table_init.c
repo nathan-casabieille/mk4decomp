@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  *     voice[+0x6c] = voice[+0x70] = 0;
  *     base += 0x1c.
  */
-extern unsigned int g_dispatchSave805_004f3090;
+extern unsigned int g_dispatchSave805;
 
 extern unsigned int g_arr_voice_4a28d0;
 extern unsigned int g_arr_voice_disp_54;
@@ -130,7 +130,7 @@ __declspec(naked) void VoiceTableInit(void) {
         push    esi
         mov     esi, dword ptr [esp + 8]
         push    edi
-        mov     eax, offset g_dispatchSave805_004f3090
+        mov     eax, offset g_dispatchSave805
         xor     edx, edx
 loop4a28d0:
         movsx   ecx, byte ptr [eax - 8]

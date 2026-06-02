@@ -114,11 +114,11 @@ extern unsigned int g_fightAxisPosY;
  *   For consolidation, both bundled into one 270-byte symbol entry.
  */
 extern unsigned int g_crtFpuTbyteVar;
-extern unsigned int g_crtFpuTbyteVar2_00522e68;
+extern unsigned int g_crtFpuTbyteVar2;
 extern unsigned int g_crtFpuStateBuf;
 extern unsigned int g_crtFpuStack;
-extern unsigned int g_dispatchSave1447_00f9fc1c;
-extern unsigned int g_dispatchSave1455_00f9fc64;
+extern unsigned int g_dispatchSave1447;
+extern unsigned int g_dispatchSave1455;
 extern void Calloc(void);
 extern void CrtInitLocaleInfo(void);
 extern void CrtLocaleInfoFreeAll(void);
@@ -149,7 +149,7 @@ __declspec(naked) void FpuFlagBundle(void) {
     L_fp2:
         test    cl, 0x10
         jz      short L_fp3
-        fld     tbyte ptr [g_crtFpuTbyteVar2_00522e68]
+        fld     tbyte ptr [g_crtFpuTbyteVar2]
         fstp    qword ptr [ebp - 8]
         fwait
     L_fp3:
@@ -178,7 +178,7 @@ __declspec(naked) void FpuFlagBundle(void) {
         _emit   90h
         _emit   90h
         /* sub-2: slot management (0x4cf7d0..0x4cf87d) */
-        mov     eax, dword ptr [g_dispatchSave1447_00f9fc1c]
+        mov     eax, dword ptr [g_dispatchSave1447]
         push    esi
         test    eax, eax
         jz      short L_sm_clearPath
@@ -208,30 +208,30 @@ __declspec(naked) void FpuFlagBundle(void) {
         pop     esi
         ret
     L_sm_storePath:
-        mov     eax, dword ptr [g_dispatchSave1455_00f9fc64]
+        mov     eax, dword ptr [g_dispatchSave1455]
         mov     dword ptr [g_crtFpuStack], esi
         push    eax
         call    CrtLocaleInfoFreeAll
-        mov     ecx, dword ptr [g_dispatchSave1455_00f9fc64]
+        mov     ecx, dword ptr [g_dispatchSave1455]
         add     esp, 4
         push    ecx
         call    FreeImpl
         add     esp, 4
-        mov     dword ptr [g_dispatchSave1455_00f9fc64], esi
+        mov     dword ptr [g_dispatchSave1455], esi
         xor     eax, eax
         pop     esi
         ret
     L_sm_clearPath:
-        mov     edx, dword ptr [g_dispatchSave1455_00f9fc64]
+        mov     edx, dword ptr [g_dispatchSave1455]
         mov     dword ptr [g_crtFpuStack], offset g_crtFpuStateBuf
         push    edx
         call    CrtLocaleInfoFreeAll
-        mov     eax, dword ptr [g_dispatchSave1455_00f9fc64]
+        mov     eax, dword ptr [g_dispatchSave1455]
         add     esp, 4
         push    eax
         call    FreeImpl
         add     esp, 4
-        mov     dword ptr [g_dispatchSave1455_00f9fc64], 0
+        mov     dword ptr [g_dispatchSave1455], 0
         xor     eax, eax
         pop     esi
         ret

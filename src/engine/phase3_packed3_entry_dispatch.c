@@ -127,7 +127,7 @@ extern unsigned int g_fightAxisPosY;
  *     tail-jmp BattleEndCluster; else fall through to the next adjacent
  *     function ChainDispatcher4Call via jmp.
  */
-extern unsigned int g_dispatchSave646_004eed08;
+extern unsigned int g_dispatchSave646;
 extern void ArgSarStoreJmp(void);
 extern void BattleEndCluster(void);
 extern void ChainDispatcher4Call(void);
@@ -209,7 +209,7 @@ __declspec(naked) void Phase3Packed3EntryDispatch(void) {
         je      short L_p3p_pushPath
         jmp     TwoCallTail_00481380
     L_p3p_pushPath:
-        push    offset g_dispatchSave646_004eed08
+        push    offset g_dispatchSave646
         call    ArgSarStoreJmp
         add     esp, 4
     L_p3p_e2End:

@@ -17,11 +17,11 @@ extern unsigned int g_scaledInit_00542044;
  *   add     esp, 4
  *   ret
  */
-extern void *g_dispatchSave1314_004ef1f8;
+extern void *g_dispatchSave1314;
 extern int Cascade5StageInit(void *);
-extern int g_dispatchSave406_00500d4c;
+extern int g_dispatchSave406;
 void LiteralPushCallEntZero(void) {
-    g_xformEntityIdx = ((unsigned int)&g_dispatchSave406_00500d4c) >> 2;
+    g_xformEntityIdx = ((unsigned int)&g_dispatchSave406) >> 2;
     g_walkCallback = (void (*)(void))0;
-    Cascade5StageInit(&g_dispatchSave1314_004ef1f8);
+    Cascade5StageInit(&g_dispatchSave1314);
 }

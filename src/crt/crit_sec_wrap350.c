@@ -116,8 +116,8 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_iat_InterlockedIncrement;
 extern unsigned int g_iat_InterlockedDecrement;
-extern unsigned int g_dispatchSave1463_00f9fdac;
-extern unsigned int g_dispatchSave1464_00f9fdb0;
+extern unsigned int g_dispatchSave1463;
+extern unsigned int g_dispatchSave1464;
 extern void Lock(void);
 extern void TableLookupIatCall(void);
 extern void Wctomb(void);
@@ -127,13 +127,13 @@ __declspec(naked) void CritSecWrap350(void) {
         push    ebx
         push    esi
         push    edi
-        push    offset g_dispatchSave1464_00f9fdb0
+        push    offset g_dispatchSave1464
         call    dword ptr [g_iat_InterlockedIncrement]
-        mov     eax, dword ptr [g_dispatchSave1463_00f9fdac]
+        mov     eax, dword ptr [g_dispatchSave1463]
         mov     edi, dword ptr [g_iat_InterlockedDecrement]
         test    eax, eax
         je      noLock
-        push    offset g_dispatchSave1464_00f9fdb0
+        push    offset g_dispatchSave1464
         call    edi
         push    0x13
         call    Lock
@@ -161,7 +161,7 @@ skip:
         pop     ebx
         ret
 direct:
-        push    offset g_dispatchSave1464_00f9fdb0
+        push    offset g_dispatchSave1464
         call    edi
         pop     edi
         mov     eax, ebx

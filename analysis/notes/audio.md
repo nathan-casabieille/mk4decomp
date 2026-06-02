@@ -210,7 +210,7 @@ The most directly named mixer step is at `0x004ab700`
 which folds per-frame deltas into a 16-bit accumulator pair:
 
 ```
-sum    = g_dispatchSave1163_004d5100 + g_dispatchSave1164_004d5104
+sum    = g_dispatchSave1163 + g_dispatchSave1164
 sign   = sum >> 31  (arithmetic)
 adj    = sign + sum
 low16  = sum & 0xffff

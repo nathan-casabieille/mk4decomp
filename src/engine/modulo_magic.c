@@ -9,15 +9,15 @@ extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x0042afc0 (64b)
  *   modulo using 32x32->64 magic-number division: ecx %= 0x6487e (range modulus).
- *   Bound-clamps and adds offsets via g_pendingMatchVar3_004d5320..00d4d532c.
+ *   Bound-clamps and adds offsets via g_pendingMatchVar3..00d4d532c.
  */
-extern unsigned int g_pendingMatchVar3_004d5320;
+extern unsigned int g_pendingMatchVar3;
 extern unsigned int g_pendingMatchVar;
-extern unsigned int g_pendingMatchVar5_004d532c;
+extern unsigned int g_pendingMatchVar5;
 __declspec(naked) void ModuloMagic(void) {
     __asm {
         mov     ecx, dword ptr [esp + 4]
-        mov     eax, dword ptr [g_pendingMatchVar3_004d5320]
+        mov     eax, dword ptr [g_pendingMatchVar3]
         cmp     ecx, eax
         _emit   7eh
         _emit   0ch
@@ -27,7 +27,7 @@ sub_loop:
         cmp     ecx, eax
         _emit   7fh
         _emit   0fah
-        mov     edx, dword ptr [g_pendingMatchVar5_004d532c]
+        mov     edx, dword ptr [g_pendingMatchVar5]
         cmp     ecx, edx
         _emit   7fh
         _emit   1ah

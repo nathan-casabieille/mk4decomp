@@ -108,10 +108,10 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_phase4SlotArr4_0050b3d4;
-extern unsigned int g_phase4SlotArr3_0050b3f0;
+extern unsigned int g_phase4SlotArr4;
+extern unsigned int g_phase4SlotArr3;
 extern unsigned int g_segPoseArr;
-extern unsigned int g_phase4SlotArr2_0050b428;
+extern unsigned int g_phase4SlotArr2;
 extern void SetJmp_ZeroAndDirty4(void);
 extern void Vec3SetupQuadrupleMul10Sub(void);
 
@@ -181,7 +181,7 @@ __declspec(naked) void FourSegmentPoseWalk(void)
         jne      short L_29be
         mov      dword ptr [g_eventQueueIdx], 1
     L_29be:
-        mov      esi, OFFSET g_phase4SlotArr4_0050b3d4
+        mov      esi, OFFSET g_phase4SlotArr4
         shr      esi, 2
         mov      dword ptr [g_xformEntityIdx], esi
         call     DispatcherComplex260_00407030
@@ -217,7 +217,7 @@ __declspec(naked) void FourSegmentPoseWalk(void)
         jne      short L_2a4e
         mov      dword ptr [g_eventQueueIdx], 1
     L_2a4e:
-        mov      esi, OFFSET g_phase4SlotArr3_0050b3f0
+        mov      esi, OFFSET g_phase4SlotArr3
         shr      esi, 2
         mov      dword ptr [g_xformEntityIdx], esi
         call     DispatcherComplex260_00407030
@@ -289,7 +289,7 @@ __declspec(naked) void FourSegmentPoseWalk(void)
         jne      short L_2b66
         mov      dword ptr [g_eventQueueIdx], 1
     L_2b66:
-        mov      esi, OFFSET g_phase4SlotArr2_0050b428
+        mov      esi, OFFSET g_phase4SlotArr2
         shr      esi, 2
         mov      dword ptr [g_xformEntityIdx], esi
         call     DispatcherComplex260_00407030

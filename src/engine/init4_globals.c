@@ -17,14 +17,14 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [0x004d5304], eax
  *   ret
  */
-extern unsigned int g_dispatchSave1171_004d5308;
-extern unsigned int g_dispatchSave1172_004d530c;
-extern unsigned int g_dispatchSave1169_004d5300;
-extern unsigned int g_dispatchSave1170_004d5304;
+extern unsigned int g_dispatchSave1171;
+extern unsigned int g_dispatchSave1172;
+extern unsigned int g_dispatchSave1169;
+extern unsigned int g_dispatchSave1170;
 void Init4Globals(void) {
-    g_dispatchSave1171_004d5308 = 0x00020000;
-    g_dispatchSave1172_004d530c = 0x00020000;
-    g_dispatchSave1169_004d5300 = 0x00010000;
+    g_dispatchSave1171 = 0x00020000;
+    g_dispatchSave1172 = 0x00020000;
+    g_dispatchSave1169 = 0x00010000;
     g_walkCallback   = (void(*)(void))0x00010000;
-    g_dispatchSave1170_004d5304 = 0x00010000;
+    g_dispatchSave1170 = 0x00010000;
 }

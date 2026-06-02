@@ -7,13 +7,13 @@ extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x004bf0b0 (16b)
- *   mov     eax, [g_dispatchSave1401_00f85b38]
+ *   mov     eax, [g_dispatchSave1401]
  *   add     eax, 0x00200000
  *   mov     [0x00f4d028], eax
  *   ret
  */
-extern unsigned int g_dispatchSave1401_00f85b38;
-extern unsigned int g_dispatchSave1340_00f4d028;
+extern unsigned int g_dispatchSave1401;
+extern unsigned int g_dispatchSave1340;
 void AddStore(void) {
-    g_dispatchSave1340_00f4d028 = g_dispatchSave1401_00f85b38 + 0x00200000;
+    g_dispatchSave1340 = g_dispatchSave1401 + 0x00200000;
 }

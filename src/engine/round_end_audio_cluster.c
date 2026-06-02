@@ -108,9 +108,9 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchTableArr11_0050d23c;
-extern unsigned int g_dispatchSave130_0050d258;
-extern unsigned int g_dispatchSave21_0052ab4c;
+extern unsigned int g_dispatchTableArr11;
+extern unsigned int g_dispatchSave130;
+extern unsigned int g_dispatchSave21;
 extern unsigned int g_particleEmitterNode;
 extern unsigned int g_bootHeavyState;
 extern unsigned int g_particleInitState;
@@ -133,7 +133,7 @@ void RoundEndAudioCluster(void) {
         mov      dword ptr [eax*4], edx
         call     SaveCallRestoreOrXor
         mov      eax, dword ptr [g_currentNodeIdx]
-        mov      ecx, OFFSET g_dispatchTableArr11_0050d23c
+        mov      ecx, OFFSET g_dispatchTableArr11
         shr      ecx, 2
         add      esp, 4
         mov      dword ptr [g_eventQueueEnd], eax
@@ -148,7 +148,7 @@ void RoundEndAudioCluster(void) {
         call     ScaledChainInit2Phase
         add      esp, 4
     L_e949:
-        mov      edx, OFFSET g_dispatchSave130_0050d258
+        mov      edx, OFFSET g_dispatchSave130
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
         call     DispatcherComplex260_00407030
@@ -248,7 +248,7 @@ void RoundEndAudioCluster(void) {
         dec      ecx
         cmp      ecx, 0x19
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_dispatchSave21_0052ab4c], eax
+        mov      dword ptr [g_dispatchSave21], eax
         mov      dword ptr [g_eventQueueEnd], ecx
         jge      short L_eac8
         mov      dword ptr [g_eventQueueEnd], 0x19

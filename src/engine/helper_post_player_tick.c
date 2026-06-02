@@ -12,19 +12,19 @@
  */
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_clamp_0053a328;
-extern unsigned int g_dispatchSave39_0053a788;
+extern unsigned int g_dispatchSave39;
 extern unsigned int g_clamp_0053e348;
-extern unsigned int g_dispatchClr1_0053e34c;
+extern unsigned int g_dispatchClr1;
 extern void CountdownClampWalk(void);
 void Helper_PostPlayerTick(void) {
     g_eventQueueCurrent = 4;
     g_scaledInit_00542044 = (unsigned int)&g_clamp_0053a328 >> 2;
-    g_xformEntityIdx = (unsigned int)&g_dispatchSave39_0053a788 >> 2;
+    g_xformEntityIdx = (unsigned int)&g_dispatchSave39 >> 2;
     CountdownClampWalk();
     if (g_framePauseFlag != 0) return;
     g_eventQueueCurrent = 0x40;
     g_scaledInit_00542044 = (unsigned int)&g_clamp_0053e348 >> 2;
-    g_xformEntityIdx = (unsigned int)&g_dispatchClr1_0053e34c >> 2;
+    g_xformEntityIdx = (unsigned int)&g_dispatchClr1 >> 2;
     CountdownClampWalk();
 }
 

@@ -108,13 +108,13 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave814_004f3808;
+extern unsigned int g_dispatchSave814;
 extern unsigned int g_tickFlagF;
 extern unsigned int g_phaseIdx;
-extern unsigned int g_audioSavedGlobal0_00543734;
-extern unsigned int g_audioSavedGlobal1_00543738;
-extern unsigned int g_audioSavedGlobal2_0054373c;
-extern unsigned int g_audioSavedGlobal3_00543740;
+extern unsigned int g_audioSavedGlobal0;
+extern unsigned int g_audioSavedGlobal1;
+extern unsigned int g_audioSavedGlobal2;
+extern unsigned int g_audioSavedGlobal3;
 extern void AudioInstallSelfStatePush(void);
 extern void BootInitGuardedCallChain(void);
 extern void FiveTableWalkInit(void);
@@ -233,7 +233,7 @@ __declspec(naked) void InstallSelfStateMachine6(void)
         jne      L_4b66
         mov      edx, dword ptr [g_baseSel]
         mov      eax, dword ptr [edx*4 + 0x30]
-        mov      ecx, dword ptr [eax*4 + g_dispatchSave814_004f3808]
+        mov      ecx, dword ptr [eax*4 + g_dispatchSave814]
         shr      ecx, 2
         mov      dword ptr [g_xformEntityIdx], ecx
         call     DispatcherComplex260_00407400
@@ -308,11 +308,11 @@ __declspec(naked) void InstallSelfStateMachine6(void)
         nop      
         nop      
         nop      
-        mov      ecx, dword ptr [g_audioSavedGlobal0_00543734]
+        mov      ecx, dword ptr [g_audioSavedGlobal0]
         xor      eax, eax
         test     ecx, ecx
         sete     al
-        mov      dword ptr [g_audioSavedGlobal0_00543734], eax
+        mov      dword ptr [g_audioSavedGlobal0], eax
         ret      
         nop      
         nop      
@@ -327,11 +327,11 @@ __declspec(naked) void InstallSelfStateMachine6(void)
         nop      
         nop      
         nop      
-        mov      ecx, dword ptr [g_audioSavedGlobal1_00543738]
+        mov      ecx, dword ptr [g_audioSavedGlobal1]
         xor      eax, eax
         test     ecx, ecx
         sete     al
-        mov      dword ptr [g_audioSavedGlobal1_00543738], eax
+        mov      dword ptr [g_audioSavedGlobal1], eax
         ret      
         nop      
         nop      
@@ -346,11 +346,11 @@ __declspec(naked) void InstallSelfStateMachine6(void)
         nop      
         nop      
         nop      
-        mov      ecx, dword ptr [g_audioSavedGlobal2_0054373c]
+        mov      ecx, dword ptr [g_audioSavedGlobal2]
         xor      eax, eax
         test     ecx, ecx
         sete     al
-        mov      dword ptr [g_audioSavedGlobal2_0054373c], eax
+        mov      dword ptr [g_audioSavedGlobal2], eax
         ret      
         nop      
         nop      
@@ -365,11 +365,11 @@ __declspec(naked) void InstallSelfStateMachine6(void)
         nop      
         nop      
         nop      
-        mov      ecx, dword ptr [g_audioSavedGlobal3_00543740]
+        mov      ecx, dword ptr [g_audioSavedGlobal3]
         xor      eax, eax
         test     ecx, ecx
         sete     al
-        mov      dword ptr [g_audioSavedGlobal3_00543740], eax
+        mov      dword ptr [g_audioSavedGlobal3], eax
         ret      
     }
 }

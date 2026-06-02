@@ -109,15 +109,15 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004ce0b0 (147b crt) - stream cleanup loop:
- *   _lock(2); for (i=3; i < g_dispatchSave1466_00fa0dc0; ++i):
+ *   _lock(2); for (i=3; i < g_dispatchSave1466; ++i):
  *     fp = stream_table[i]; if (fp && (fp[+0xc] & 0x83)):
  *       if (fflush(fp) != -1) ++ebp.
  *     If (i >= 0x14): call IAT(stream+0x20); free(stream); slot = 0.
  *   _unlock(2); return ebp.
  */
 extern unsigned int g_iat_DeleteCriticalSection;
-extern unsigned int g_dispatchSave1465_00f9fdb4;
-extern unsigned int g_dispatchSave1466_00fa0dc0;
+extern unsigned int g_dispatchSave1465;
+extern unsigned int g_dispatchSave1466;
 extern void FreeImpl(void);
 extern void Helper_FClose(void);
 extern void Lock(void);
@@ -130,7 +130,7 @@ __declspec(naked) int StreamCleanupLoop(void) {
         push    2
         xor     ebp, ebp
         call    Lock
-        mov     eax, dword ptr [g_dispatchSave1466_00fa0dc0]
+        mov     eax, dword ptr [g_dispatchSave1466]
         mov     esi, 3
         add     esp, 4
         cmp     eax, esi
@@ -141,7 +141,7 @@ __declspec(naked) int StreamCleanupLoop(void) {
         push    ebx
         mov     bl, 0x83
 loopCe0b0:
-        mov     eax, dword ptr [g_dispatchSave1465_00f9fdb4]
+        mov     eax, dword ptr [g_dispatchSave1465]
         mov     eax, [eax + esi*4]
         test    eax, eax
         _emit   74h
@@ -160,20 +160,20 @@ loopAfter:
         cmp     esi, 0x14
         _emit   7ch
         _emit   2dh
-        mov     ecx, dword ptr [g_dispatchSave1465_00f9fdb4]
+        mov     ecx, dword ptr [g_dispatchSave1465]
         mov     edx, [ecx + esi*4]
         add     edx, 0x20
         push    edx
         call    edi
-        mov     eax, dword ptr [g_dispatchSave1465_00f9fdb4]
+        mov     eax, dword ptr [g_dispatchSave1465]
         mov     ecx, [eax + esi*4]
         push    ecx
         call    FreeImpl
-        mov     edx, dword ptr [g_dispatchSave1465_00f9fdb4]
+        mov     edx, dword ptr [g_dispatchSave1465]
         add     esp, 4
         mov     dword ptr [edx + esi*4], 0
 loopNext:
-        mov     eax, dword ptr [g_dispatchSave1466_00fa0dc0]
+        mov     eax, dword ptr [g_dispatchSave1466]
         inc     esi
         cmp     esi, eax
         _emit   7ch

@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave695_004e8190;
-extern unsigned int g_dispatchSave58_0050b604;
+extern unsigned int g_dispatchSave695;
+extern unsigned int g_dispatchSave58;
 extern void DispatcherComplex138_00476060(void);
 extern void DualScaledStore(void);
 extern void GatedWordPushCall(void);
@@ -126,7 +126,7 @@ __declspec(naked) void CharSelectSetupCluster(void)
 {
     __asm {
         /* === h1 (0x4565a0): main init chain → tail 408600 === */
-        mov      eax, OFFSET g_dispatchSave58_0050b604
+        mov      eax, OFFSET g_dispatchSave58
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
         call     DispatcherComplex260_00407030
@@ -163,7 +163,7 @@ __declspec(naked) void CharSelectSetupCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_6688
-        mov      eax, OFFSET g_dispatchSave695_004e8190
+        mov      eax, OFFSET g_dispatchSave695
         shr      eax, 2
         mov      dword ptr [g_walkCallback], eax
         call     ScaledStoreThree_00409260

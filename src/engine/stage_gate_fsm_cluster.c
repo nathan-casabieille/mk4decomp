@@ -121,7 +121,7 @@ extern void ScaledLoadJmp_00429390(void);
 extern void GuardedSeq_004297b0(void);
 extern void StageGateFsmCluster(void);
 extern void EsiEdiAliasDualMul10(void);
-extern unsigned int g_dispatchSave737_004ed160;
+extern unsigned int g_dispatchSave737;
 
 extern void ArgSarStoreJmp(void);
 extern void FiveCallGuardSetTail(void);
@@ -160,7 +160,7 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         mov      ecx, dword ptr [g_baseSel]
         mov      eax, 0x20d
         mov      dword ptr [g_walkCallback], eax
-        push     OFFSET g_dispatchSave737_004ed160
+        push     OFFSET g_dispatchSave737
         mov      dword ptr [ecx*4 + 0x74], eax
         call     ArgSarStoreJmp
         add      esp, 4

@@ -108,9 +108,9 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave600_004ed1b0;
-extern unsigned int g_dispatchSave599_004ed1b8;
-extern unsigned int g_audioBank2State_00537f98;
+extern unsigned int g_dispatchSave600;
+extern unsigned int g_dispatchSave599;
+extern unsigned int g_audioBank2State;
 extern void ArgSarStoreJmp(void);
 extern void CmpEqInitCallElseJmp(void);
 extern void EsiInstallDecCallChain_004294a0(void);
@@ -124,7 +124,7 @@ __declspec(naked) void RoundEndCelebrationCluster(void)
 {
     __asm {
         /* H1 */
-        push     OFFSET g_dispatchSave600_004ed1b0
+        push     OFFSET g_dispatchSave600
         call     ArgSarStoreJmp
         add      esp, 4
         ret
@@ -134,7 +134,7 @@ __declspec(naked) void RoundEndCelebrationCluster(void)
         mov      ecx, dword ptr [g_baseSel]
         mov      eax, 0x213
         mov      dword ptr [g_walkCallback], eax
-        push     OFFSET g_dispatchSave599_004ed1b8
+        push     OFFSET g_dispatchSave599
         mov      dword ptr [ecx*4 + 0x74], eax
         call     ArgSarStoreJmp
         add      esp, 4
@@ -172,7 +172,7 @@ __declspec(naked) void RoundEndCelebrationCluster(void)
         test     eax, eax
         jne      L_b8f3
         mov      eax, dword ptr [g_matrixStackTop]
-        mov      ecx, dword ptr [g_audioBank2State_00537f98]
+        mov      ecx, dword ptr [g_audioBank2State]
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], ecx
@@ -189,7 +189,7 @@ __declspec(naked) void RoundEndCelebrationCluster(void)
         mov      eax, dword ptr [g_xformScratch2088]
         cmp      eax, edi
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_audioBank2State_00537f98], ecx
+        mov      dword ptr [g_audioBank2State], ecx
         jne      short L_b7cd
         call     RoundStartCluster_0047b900
         pop      edi

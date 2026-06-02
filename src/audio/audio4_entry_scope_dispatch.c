@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004a7e00 (333b audio) - 4-entry audio scope dispatcher.
- *   Entry 1 (offset 0): if g_counter_005433c8 < g_audioStateMachine1_004f3ae8 - 1, just bumps
+ *   Entry 1 (offset 0): if g_counter_005433c8 < g_audioStateMachine1 - 1, just bumps
  *     the counter; otherwise OR-sets bit 0 of g_xformDirtyFlags.
  *   (10b NOP padding to 0x4a7e30.)
  *   Entry 2 (offset 0x30): calls DecOrDirty_004a7d90, snapshots g_xformDirtyFlags
@@ -122,12 +122,12 @@ extern unsigned int g_fightAxisPosY;
  *   (9b NOP padding to 0x4a7eb0.)
  *   Entry 5 (offset 0xb0, big): calls SetJmp_Push16Call_004a1ac0 and DrainQueueCallEach,
  *     walks 24-byte-stride records at 0x004f3c20..0x004f3d40 calling
- *     MStackPush2ChainLLInsert for each; then iterates g_audioStateMachine0_004f3ae4 records at +0x34
- *     stride 0x24, then g_audioStateMachine1_004f3ae8 records at +0x48 stride 0x24, and
+ *     MStackPush2ChainLLInsert for each; then iterates g_audioStateMachine0 records at +0x34
+ *     stride 0x24, then g_audioStateMachine1 records at +0x48 stride 0x24, and
  *     finally calls CallSetMultiGlobalsJmp.
  */
-extern unsigned int g_audioStateMachine0_004f3ae4;
-extern unsigned int g_audioStateMachine1_004f3ae8;
+extern unsigned int g_audioStateMachine0;
+extern unsigned int g_audioStateMachine1;
 extern unsigned int g_bootInitSaveSlot;
 extern unsigned int g_counter_005433c8;
 extern void CallSetMultiGlobalsJmp(void);
@@ -141,7 +141,7 @@ extern void SetJmp_Push16Call_004a1ac0(void);
 __declspec(naked) void Audio4EntryScopeDispatch(void) {
     __asm {
         /* entry 1 (offset 0) */
-        mov     eax, dword ptr [g_audioStateMachine1_004f3ae8]
+        mov     eax, dword ptr [g_audioStateMachine1]
         mov     ecx, dword ptr [g_counter_005433c8]
         dec     eax
         cmp     ecx, eax
@@ -232,7 +232,7 @@ __declspec(naked) void Audio4EntryScopeDispatch(void) {
         add     esi, 0x24
         cmp     esi, 0x004f3d40
         jb      short L_a4s_loop1
-        mov     eax, dword ptr [g_audioStateMachine0_004f3ae4]
+        mov     eax, dword ptr [g_audioStateMachine0]
         xor     esi, esi
         test    eax, eax
         jle     short L_a4s_skip2
@@ -242,12 +242,12 @@ __declspec(naked) void Audio4EntryScopeDispatch(void) {
         mov     edx, dword ptr [ecx*4 + 0x34]
         mov     dword ptr [g_currentNodeIdx], edx
         call    MStackPush2ChainLLInsert
-        mov     eax, dword ptr [g_audioStateMachine0_004f3ae4]
+        mov     eax, dword ptr [g_audioStateMachine0]
         inc     esi
         cmp     esi, eax
         jl      short L_a4s_loop2
     L_a4s_skip2:
-        mov     eax, dword ptr [g_audioStateMachine1_004f3ae8]
+        mov     eax, dword ptr [g_audioStateMachine1]
         xor     esi, esi
         test    eax, eax
         jle     short L_a4s_skip3
@@ -257,7 +257,7 @@ __declspec(naked) void Audio4EntryScopeDispatch(void) {
         mov     edx, dword ptr [ecx*4 + 0x48]
         mov     dword ptr [g_currentNodeIdx], edx
         call    MStackPush2ChainLLInsert
-        mov     eax, dword ptr [g_audioStateMachine1_004f3ae8]
+        mov     eax, dword ptr [g_audioStateMachine1]
         inc     esi
         cmp     esi, eax
         jl      short L_a4s_loop3

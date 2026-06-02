@@ -110,8 +110,8 @@ extern unsigned int g_fightAxisPosY;
 
 extern s32 g_installValidated;
 extern u8 g_configBuffer[];
-extern unsigned char g_dispatchSave632_004f4710;
-extern unsigned char g_dispatchSave631_004f4740;
+extern unsigned char g_dispatchSave632;
+extern unsigned char g_dispatchSave631;
 /* g_iat_RegCreateKeyExA/2010/2004 declared as unsigned int below */
 extern void Config_SnapshotGlobals(void);
 extern s32 ComputeConfigHash(void);
@@ -156,7 +156,7 @@ void Config_SaveToRegistry(void) {
         push    0
         push    0
         push    0
-        push    offset g_dispatchSave632_004f4710
+        push    offset g_dispatchSave632
         push    0x80000002
         call    dword ptr [g_iat_RegCreateKeyExA]
         _emit   8bh
@@ -170,7 +170,7 @@ void Config_SaveToRegistry(void) {
         push    offset g_configBuffer
         push    3
         push    0
-        push    offset g_dispatchSave631_004f4740
+        push    offset g_dispatchSave631
         push    eax
         call    dword ptr [g_iat_RegSetValueExA]
         _emit   8bh

@@ -108,25 +108,25 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_audioStateMachineVar7_004f2fc0;
-extern unsigned int g_dispatchSave807_004f31a0;
-extern unsigned int g_audioStateMachineVar6_004f31cc;
-extern unsigned int g_audioStateMachineVar5_004f31d0;
-extern unsigned int g_dispatchSave557_004f31d8;
-extern unsigned int g_audioStateMachineVar4_004f3220;
+extern unsigned int g_audioStateMachineVar7;
+extern unsigned int g_dispatchSave807;
+extern unsigned int g_audioStateMachineVar6;
+extern unsigned int g_audioStateMachineVar5;
+extern unsigned int g_dispatchSave557;
+extern unsigned int g_audioStateMachineVar4;
 extern unsigned int g_byte_004f3238;
-extern unsigned int g_dispatchSave810_004f3240;
-extern unsigned int g_dispatchSave811_004f3264;
-extern unsigned int g_dispatchSave812_004f33cc;
-extern unsigned int g_dispatchSave822_004f42e0;
-extern unsigned int g_dispatchSave823_004f42f4;
-extern unsigned int g_dispatchSave824_004f4304;
-extern unsigned int g_dispatchSave825_004f4310;
-extern unsigned int g_dispatchSave826_004f4320;
-extern unsigned int g_dispatchSave827_004f432c;
+extern unsigned int g_dispatchSave810;
+extern unsigned int g_dispatchSave811;
+extern unsigned int g_dispatchSave812;
+extern unsigned int g_dispatchSave822;
+extern unsigned int g_dispatchSave823;
+extern unsigned int g_dispatchSave824;
+extern unsigned int g_dispatchSave825;
+extern unsigned int g_dispatchSave826;
+extern unsigned int g_dispatchSave827;
 extern unsigned int g_voiceBankTickBase_00543450;
-extern unsigned int g_audioSavedGlobal4_005437f8;
-extern unsigned int g_audioSavedGlobal5_005437fc;
+extern unsigned int g_audioSavedGlobal4;
+extern unsigned int g_audioSavedGlobal5;
 extern void GuardedSetupCallTailJmp(void);
 extern void Helper_Sprintf(void);
 extern void MStackPush2ChainLLInsert(void);
@@ -149,7 +149,7 @@ __declspec(naked) void DebugMenu_DrawMatchOptions(void)
         push     esi
         push     edi
         xor      edi, edi
-        mov      esi, OFFSET g_dispatchSave811_004f3264
+        mov      esi, OFFSET g_dispatchSave811
     L_3129:
         movsx    eax, byte ptr [esi - 4]
         mov      ecx, dword ptr [g_baseSel]
@@ -162,40 +162,40 @@ __declspec(naked) void DebugMenu_DrawMatchOptions(void)
         ja       L_31e2
         jmp      dword ptr [eax*4 + L_120_jmptbl]
     L_315a:
-        mov      eax, dword ptr [g_audioStateMachineVar6_004f31cc]
-        mov      ecx, dword ptr [eax*4 + g_dispatchSave557_004f31d8]
+        mov      eax, dword ptr [g_audioStateMachineVar6]
+        mov      ecx, dword ptr [eax*4 + g_dispatchSave557]
         push     ecx
-        push     OFFSET g_dispatchSave827_004f432c
+        push     OFFSET g_dispatchSave827
         jmp      L_31d5
     L_316e:
-        mov      edx, dword ptr [g_audioStateMachineVar5_004f31d0]
-        mov      eax, dword ptr [edx*4 + g_dispatchSave557_004f31d8]
+        mov      edx, dword ptr [g_audioStateMachineVar5]
+        mov      eax, dword ptr [edx*4 + g_dispatchSave557]
         push     eax
-        push     OFFSET g_dispatchSave826_004f4320
+        push     OFFSET g_dispatchSave826
         jmp      L_31d5
     L_3183:
-        mov      ecx, dword ptr [g_audioSavedGlobal5_005437fc]
-        mov      edx, dword ptr [ecx*4 + g_audioStateMachineVar4_004f3220]
+        mov      ecx, dword ptr [g_audioSavedGlobal5]
+        mov      edx, dword ptr [ecx*4 + g_audioStateMachineVar4]
         push     edx
-        push     OFFSET g_dispatchSave825_004f4310
+        push     OFFSET g_dispatchSave825
         jmp      L_31d5
     L_3198:
         mov      eax, dword ptr [g_gtConfig4f]
-        mov      ecx, dword ptr [eax*4 + g_dispatchSave810_004f3240]
+        mov      ecx, dword ptr [eax*4 + g_dispatchSave810]
         push     ecx
-        push     OFFSET g_dispatchSave824_004f4304
+        push     OFFSET g_dispatchSave824
         jmp      L_31d5
     L_31ac:
-        mov      edx, dword ptr [g_audioSavedGlobal4_005437f8]
-        mov      eax, dword ptr [edx*4 + g_dispatchSave807_004f31a0]
+        mov      edx, dword ptr [g_audioSavedGlobal4]
+        mov      eax, dword ptr [edx*4 + g_dispatchSave807]
         push     eax
-        push     OFFSET g_dispatchSave823_004f42f4
+        push     OFFSET g_dispatchSave823
         jmp      L_31d5
     L_31c1:
         movsx    ecx, byte ptr [g_byte_004f3238]
-        mov      edx, dword ptr [ecx*4 + g_audioStateMachineVar7_004f2fc0]
+        mov      edx, dword ptr [ecx*4 + g_audioStateMachineVar7]
         push     edx
-        push     OFFSET g_dispatchSave822_004f42e0
+        push     OFFSET g_dispatchSave822
     L_31d5:
         push     OFFSET g_voiceBankTickBase_00543450
         call     Helper_Sprintf
@@ -221,7 +221,7 @@ __declspec(naked) void DebugMenu_DrawMatchOptions(void)
         mov      dword ptr [g_eventQueueCurrent], ecx
         add      ecx, edx
         inc      edi
-        cmp      esi, OFFSET g_dispatchSave812_004f33cc
+        cmp      esi, OFFSET g_dispatchSave812
         mov      dword ptr [ecx*4], eax
         jb       L_3129
         pop      edi

@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
  *   jne     +7
  *   or      [g_xformDirtyFlags], ecx
  *   ret
- *   mov     eax, [g_audioBank2State_00537f98]
+ *   mov     eax, [g_audioBank2State]
  *   mov     [g_walkCallback], eax
  *   test    eax, eax
  *   mov     eax, [g_xformDirtyFlags]
@@ -26,7 +26,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_xformDirtyFlags], eax
  *   ret
  */
-extern unsigned int g_audioBank2State_00537f98;
+extern unsigned int g_audioBank2State;
 
 void CmpEax1OrSetDirty(void) {
     __asm {
@@ -37,7 +37,7 @@ void CmpEax1OrSetDirty(void) {
         _emit   07h
         or      dword ptr [g_xformDirtyFlags], ecx
         ret
-        mov     eax, dword ptr [g_audioBank2State_00537f98]
+        mov     eax, dword ptr [g_audioBank2State]
         mov     dword ptr [g_walkCallback], eax
         test    eax, eax
         mov     eax, dword ptr [g_xformDirtyFlags]

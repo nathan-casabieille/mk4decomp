@@ -108,9 +108,9 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave819_004f3ee0;
-extern unsigned int g_dispatchSave121_005157a4;
-extern unsigned int g_audioFlagAggBase2_00543398;
+extern unsigned int g_dispatchSave819;
+extern unsigned int g_dispatchSave121;
+extern unsigned int g_audioFlagAggBase2;
 extern unsigned int g_audioFlagAggBase;
 extern void AudioFlagDispatchAggregatorAH(void);
 extern void AudioFlagDispatchAggregator(void);
@@ -148,7 +148,7 @@ __declspec(naked) void SpawnListGlyphRender(void)
         mov      dword ptr [g_walkCallback], ebx
         call     MStackPush3HelperCondToggle
         mov      eax, dword ptr [g_currentNodeIdx]
-        mov      ecx, OFFSET g_dispatchSave121_005157a4
+        mov      ecx, OFFSET g_dispatchSave121
         shr      ecx, 2
         mov      dword ptr [g_eventQueueCurrent], 0xffffe667
         mov      dword ptr [g_xformEntityIdx], ecx
@@ -227,7 +227,7 @@ __declspec(naked) void SpawnListGlyphRender(void)
     L_a77f:
         cmp      ecx, edx
         jne      short L_a78b
-        mov      dword ptr [eax + g_audioFlagAggBase2_00543398], esi
+        mov      dword ptr [eax + g_audioFlagAggBase2], esi
         jmp      short L_a791
     L_a78b:
         mov      dword ptr [eax + g_audioFlagAggBase], esi
@@ -267,7 +267,7 @@ __declspec(naked) void SpawnListGlyphRender(void)
         mov      eax, dword ptr [g_gtPlayerProbe2]
         cmp      edx, eax
         jne      short L_a827
-        mov      eax, dword ptr [esi + g_audioFlagAggBase2_00543398]
+        mov      eax, dword ptr [esi + g_audioFlagAggBase2]
         push     eax
         jmp      short L_a82e
     L_a827:
@@ -279,7 +279,7 @@ __declspec(naked) void SpawnListGlyphRender(void)
         mov      ecx, dword ptr [g_currentNodeIdx]
         add      esi, 4
         add      esp, 4
-        mov      eax, dword ptr [edx*4 + g_dispatchSave819_004f3ee0]
+        mov      eax, dword ptr [edx*4 + g_dispatchSave819]
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
         mov      dword ptr [ecx*4 + 0xc], eax

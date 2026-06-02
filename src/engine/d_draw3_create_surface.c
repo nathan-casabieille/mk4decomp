@@ -9,9 +9,9 @@
  *   0058c860 (DSound), 0058c87c (window). Sets 320x240 (0x140 x 0xf0) instead of 640x480.
  *   Calls DialogProbeDispatch (sister helper).
  */
-extern unsigned int g_dispatchSave500_004f47a8;
-extern unsigned int g_dd3SurfaceCreate_0058c858;
-extern unsigned int g_dd3SurfaceSlot_0058c85c;
+extern unsigned int g_dispatchSave500;
+extern unsigned int g_dd3SurfaceCreate;
+extern unsigned int g_dd3SurfaceSlot;
 extern unsigned int g_dsmi_b70_main;
 extern unsigned int g_dsmi_b70_ret;
 extern unsigned int g_960_iface;
@@ -22,7 +22,7 @@ extern void DialogProbeDispatch(void);
 
 __declspec(naked) void DDraw3_CreateSurface(void) {
     __asm {
-        mov     ecx, dword ptr [g_dispatchSave500_004f47a8]
+        mov     ecx, dword ptr [g_dispatchSave500]
         mov     eax, [esp + 4]
         sub     esp, 0x6c
         cmp     ecx, eax
@@ -34,9 +34,9 @@ __declspec(naked) void DDraw3_CreateSurface(void) {
         jz      L_dms2_okRet
     L_dms2_doSwitch:
         test    eax, eax
-        mov     dword ptr [g_dispatchSave500_004f47a8], eax
+        mov     dword ptr [g_dispatchSave500], eax
         jz      L_dms2_release
-        push    offset g_dd3SurfaceCreate_0058c858
+        push    offset g_dd3SurfaceCreate
         call    dword ptr [g_iat_GetCursorPos]
         push    0
         call    dword ptr [g_iat_ShowCursor]
@@ -106,8 +106,8 @@ __declspec(naked) void DDraw3_CreateSurface(void) {
         call    dword ptr [ecx + 0x50]
         mov     dword ptr [g_dsmi_b70_ret], eax
     L_dms2_restoreCursor:
-        mov     eax, dword ptr [g_dd3SurfaceSlot_0058c85c]
-        mov     ecx, dword ptr [g_dd3SurfaceCreate_0058c858]
+        mov     eax, dword ptr [g_dd3SurfaceSlot]
+        mov     ecx, dword ptr [g_dd3SurfaceCreate]
         push    eax
         push    ecx
         call    dword ptr [g_iat_SetCursorPos]

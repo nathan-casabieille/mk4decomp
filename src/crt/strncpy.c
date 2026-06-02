@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void Strncpy(void);
-extern unsigned int g_dispatchSave1435_00f9fac8;
+extern unsigned int g_dispatchSave1435;
 extern unsigned char g_byte_00f9f8c1;
 
 /* @addr 0x004c9a30 (167b crt) - fgets-like string read with lock-iter implementation.
@@ -125,7 +125,7 @@ extern void TableLookupIatCall(void);
 
 __declspec(naked) void FgetsImpl(void) {
     __asm {
-        mov     eax, dword ptr [g_dispatchSave1435_00f9fac8]
+        mov     eax, dword ptr [g_dispatchSave1435]
         push    esi
         push    edi
         mov     edi, [esp + 0x0c]

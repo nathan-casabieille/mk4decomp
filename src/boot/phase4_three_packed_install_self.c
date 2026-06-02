@@ -109,14 +109,14 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_pendingMatchVar;
-extern unsigned int g_dispatchSave917_004d7b88;
-extern unsigned int g_phase4ThreePackedBase_004ec8f8;
-extern unsigned int g_dispatchSave778_004f00d0;
+extern unsigned int g_dispatchSave917;
+extern unsigned int g_phase4ThreePackedBase;
+extern unsigned int g_dispatchSave778;
 extern unsigned int g_load_0052ab04;
 extern unsigned int g_load_0052ab08;
 extern unsigned int g_counter_0053a51c;
-extern unsigned int g_installOwner2_0053a7a0;
-extern unsigned int g_dispatchSave71_00542ce8;
+extern unsigned int g_installOwner2;
+extern unsigned int g_dispatchSave71;
 extern void AudioMixerStep(void);
 extern void CallSetPause(void);
 extern void EsiInstallSetCbChainExtend_0048a810(void);
@@ -139,7 +139,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf(void)
         mov     dword ptr [esi + 0x84], edi
         cmp     eax, edi
         jne     L_p4tpis_A_call_0049cbc0
-        mov     ecx, offset g_phase4ThreePackedBase_004ec8f8
+        mov     ecx, offset g_phase4ThreePackedBase
         shr     ecx, 2
         mov     dword ptr [g_xformEntityIdx], ecx
         call    DispatcherComplex260_00407030
@@ -158,7 +158,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf(void)
         mov     dword ptr [g_installOwnerNode], eax
         mov     dword ptr [eax*4 + 0x64], 0x0004B65F
         mov     eax, dword ptr [g_currentNodeIdx]
-        mov     dword ptr [g_installOwner2_0053a7a0], eax
+        mov     dword ptr [g_installOwner2], eax
         mov     dword ptr [g_walkCallback], edi
         mov     dword ptr [eax*4 + 0x54], edi
         mov     eax, dword ptr [g_currentNodeIdx]
@@ -170,7 +170,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf(void)
         mov     dword ptr [ecx*4 + 0x58], eax
         call    StoreLoadJmp
         mov     ecx, dword ptr [g_counter_0053a51c]
-        mov     eax, offset g_dispatchSave917_004d7b88
+        mov     eax, offset g_dispatchSave917
         shr     eax, 2
         add     eax, ecx
         mov     dword ptr [g_walkCallback], ecx
@@ -182,7 +182,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf(void)
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_p4tpis_A_ret
         mov     ecx, dword ptr [g_walkCallback]
-        mov     eax, offset g_dispatchSave71_00542ce8
+        mov     eax, offset g_dispatchSave71
         shr     eax, 2
         add     eax, ecx
         mov     dword ptr [g_eventQueueIdx], eax
@@ -191,11 +191,11 @@ __declspec(naked) void Phase4ThreePackedInstallSelf(void)
         mov     eax, dword ptr [g_counter_0053a51c]
         cmp     eax, 3
         jne     L_p4tpis_A_after_3
-        mov     ecx, offset g_dispatchSave778_004f00d0
+        mov     ecx, offset g_dispatchSave778
         shr     ecx, 2
         mov     dword ptr [g_eventQueueIdx], ecx
     L_p4tpis_A_after_3:
-        mov     edx, dword ptr [g_installOwner2_0053a7a0]
+        mov     edx, dword ptr [g_installOwner2]
         mov     dword ptr [g_eventQueueNotMask], edi
         mov     dword ptr [g_eventQueueEnd], edx
         mov     dword ptr [g_walkCallback], 0xC4

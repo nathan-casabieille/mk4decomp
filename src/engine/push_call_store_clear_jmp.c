@@ -7,15 +7,15 @@
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00460420 (68b)
- *   push OFFSET g_dispatchSave300_00542978; call helper; if pause → ret;
+ *   push OFFSET g_dispatchSave300; call helper; if pause → ret;
  *   else store g_xformEntityIdx into g_fightGroupHead[+0x24],
  *   clear walk and g_fightGroupHead[+0x28], jmp T.
  */
-extern unsigned int g_dispatchSave300_00542978;
+extern unsigned int g_dispatchSave300;
 extern void ArgScaledTestStore(void);
 extern void ScaledLoadOrSetJmp(void);
 void PushCallStoreClearJmp(void) {
-    ArgScaledTestStore((int)&g_dispatchSave300_00542978);
+    ArgScaledTestStore((int)&g_dispatchSave300);
     if (g_framePauseFlag != 0) {
         return;
     }

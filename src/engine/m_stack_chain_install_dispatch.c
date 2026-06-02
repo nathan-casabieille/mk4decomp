@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_audioBank2State_00537f98;
+extern unsigned int g_audioBank2State;
 extern void DirtyFlagsManip(void);
 extern void DualEntryBitFlagDispatch(void);
 extern void MStackChainBit2Cascade(void);
@@ -132,7 +132,7 @@ __declspec(naked) void MStackChainInstallDispatch(void)
         je       L_d7ad
         mov      eax, dword ptr [g_currentNodeIdx]
         xor      ecx, ecx
-        mov      dword ptr [g_audioBank2State_00537f98], ebx
+        mov      dword ptr [g_audioBank2State], ebx
         mov      dword ptr [g_xformScratch2088], ecx
         mov      eax, dword ptr [eax*4 + 0x10]
         shr      eax, 0x18

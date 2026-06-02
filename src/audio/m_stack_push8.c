@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned char g_dispatchSave1130_00408000;
+extern unsigned char g_dispatchSave1130;
 extern void ThreeChanPackClamp(int);
 extern void CopyThreeFields(int);
 extern void MStackPush8(void);
@@ -128,7 +128,7 @@ extern void MStackPop8(void);
 __declspec(naked) void SoundSetupLoop(void) {
     __asm {
         push    ebx
-        push    offset g_dispatchSave1130_00408000
+        push    offset g_dispatchSave1130
         call    ThreeChanPackClamp
         mov     eax, dword ptr [g_cj_0054205c]
         add     esp, 4

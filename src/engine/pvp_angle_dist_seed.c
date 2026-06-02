@@ -109,8 +109,8 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern s32 g_dlNalt1;
-extern unsigned int g_dispatchSave99_00538040;
-extern unsigned int g_dispatchSave98_00538044;
+extern unsigned int g_dispatchSave99;
+extern unsigned int g_dispatchSave98;
 extern s32 g_dlNalt2;
 extern s32 g_dlNalt3;
 extern s32 g_dlNalt4;
@@ -261,7 +261,7 @@ __declspec(naked) void PvpAngleDistSeed(void)
         mov      eax, dword ptr [g_player4NodeIdx]
         mov      dword ptr [edx*4 + 0x38], eax
         mov      ecx, dword ptr [g_baseSel]
-        mov      edx, dword ptr [g_dispatchSave98_00538044]
+        mov      edx, dword ptr [g_dispatchSave98]
         mov      eax, OFFSET g_fightAxisPosX
         mov      dword ptr [ecx*4 + 0x3c], edx
         mov      ecx, dword ptr [g_baseSel]
@@ -290,7 +290,7 @@ __declspec(naked) void PvpAngleDistSeed(void)
         mov      eax, dword ptr [g_player3NodeIdx]
         mov      dword ptr [edx*4 + 0x38], eax
         mov      ecx, dword ptr [g_baseSel]
-        mov      edx, dword ptr [g_dispatchSave99_00538040]
+        mov      edx, dword ptr [g_dispatchSave99]
         mov      eax, OFFSET g_fightAxisNegX
         mov      dword ptr [ecx*4 + 0x3c], edx
         mov      ecx, dword ptr [g_baseSel]

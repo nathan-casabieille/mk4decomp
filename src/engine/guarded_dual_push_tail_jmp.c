@@ -107,17 +107,17 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
-extern unsigned int g_dispatchSave22_00535dac;
+extern unsigned int g_dispatchSave22;
 
 /*
  * @addr 0x004231f0 (125b game) - guarded dual-push call dual-pop +
- *   tail jmp: if g_dispatchSave22_00535dac is null bail; else push _74 and walk,
+ *   tail jmp: if g_dispatchSave22 is null bail; else push _74 and walk,
  *   call DownloadPlayerChar_Variant; on pause clear, pop them, and
  *   tail-jmp TripleStateSwapCall.
  */
 void GuardedDualPushTailJmp(void) {
     unsigned int v;
-    v = g_dispatchSave22_00535dac;
+    v = g_dispatchSave22;
     g_eventQueueNotMask = v;
     if (v != 0) {
         g_matrixStackTop++;

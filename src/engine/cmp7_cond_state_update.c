@@ -111,12 +111,12 @@ extern unsigned int g_fightAxisPosY;
 /*
  * @addr 0x0042ed90 (125b game) - cmp7-check then conditional state update:
  *   call Cmp7DirtyToggle; on pause clear, if state-bit 0 set and
- *   0x537f8c is null and slot[walk]==1 and g_eventMusicSlot2_0053a318==g_eventQueueCurrent,
- *   update slot[walk]=2 and 0x537f8c=g_eventMusicSlot2_0053a318; then tail-call
+ *   0x537f8c is null and slot[walk]==1 and g_eventMusicSlot2==g_eventQueueCurrent,
+ *   update slot[walk]=2 and 0x537f8c=g_eventMusicSlot2; then tail-call
  *   CallSetPause.
  */
 extern unsigned int g_dispatchSave_00537f8c;
-extern unsigned int g_eventMusicSlot2_0053a318;
+extern unsigned int g_eventMusicSlot2;
 extern void CallSetPause(void);
 extern void Cmp7DirtyToggle(void);
 
@@ -139,7 +139,7 @@ __declspec(naked) void Cmp7CondStateUpdate(void) {
         mov     dword ptr [g_walkCallback], ecx
         cmp     dword ptr [eax*4 + 0], ecx
         jne     tailCall
-        mov     edx, dword ptr [g_eventMusicSlot2_0053a318]
+        mov     edx, dword ptr [g_eventMusicSlot2]
         mov     esi, dword ptr [g_eventQueueCurrent]
         cmp     edx, esi
         mov     dword ptr [g_walkCallback], edx

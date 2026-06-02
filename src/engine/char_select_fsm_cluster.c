@@ -124,9 +124,9 @@ extern void MStackPushDispatchBitGate(void);
 extern void RoundCleanupCluster_00455920(void);
 extern void CharSelectFsmCluster(void);
 extern void ChainGatedNegAccum(void);
-extern unsigned int g_dispatchSave951_004e7f28;
-extern unsigned int g_dispatchSave954_004e8158;
-extern unsigned int g_dispatchSave129_0050d434;
+extern unsigned int g_dispatchSave951;
+extern unsigned int g_dispatchSave954;
+extern unsigned int g_dispatchSave129;
 
 extern unsigned int g_pendingMatchVar;
 extern unsigned int g_particleEmitterNode;
@@ -149,7 +149,7 @@ __declspec(naked) void ThrowInitLinkCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5721
-        mov      eax, OFFSET g_dispatchSave954_004e8158
+        mov      eax, OFFSET g_dispatchSave954
         mov      ecx, dword ptr [g_fightGroupHead]
         shr      eax, 2
         mov      dword ptr [g_walkCallback], eax
@@ -226,7 +226,7 @@ __declspec(naked) void ThrowInitLinkCluster(void)
         mov      dword ptr [esi + 0x84], 0
         test     eax, eax
         je       L_58d0
-        mov      ecx, OFFSET g_dispatchSave129_0050d434
+        mov      ecx, OFFSET g_dispatchSave129
         shr      ecx, 2
         mov      dword ptr [g_xformEntityIdx], ecx
         call     MStackPushDispatchBitGate
@@ -262,7 +262,7 @@ __declspec(naked) void ThrowInitLinkCluster(void)
         jne      L_58ff
         mov      ecx, dword ptr [g_fightGroupHead]
         mov      edx, dword ptr [g_acc_00542078]
-        push     OFFSET g_dispatchSave951_004e7f28
+        push     OFFSET g_dispatchSave951
         mov      dword ptr [ecx*4 + 0x54], edx
         mov      eax, dword ptr [g_fightGroupHead]
         mov      ecx, dword ptr [g_eventQueueNotMask]

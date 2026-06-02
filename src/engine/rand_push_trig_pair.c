@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_pendingMatchVar3_004d5320;
+extern unsigned int g_pendingMatchVar3;
 extern void RandSarMod0xFFFSub400(void);
 extern void RandSarMod0xFFF(void);
 extern void WorldCellSetupCluster(void);
@@ -116,7 +116,7 @@ extern void WorldCellSetupCluster(void);
 void RandPushTrigPair(void) {
     __asm {
         mov     ecx, dword ptr [g_eventQueueIdx]
-        mov     eax, dword ptr [g_pendingMatchVar3_004d5320]
+        mov     eax, dword ptr [g_pendingMatchVar3]
         sub     eax, dword ptr [ecx*4 + 0x64]
         add     eax, 0xa666
         push    eax
@@ -134,7 +134,7 @@ void RandPushTrigPair(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4], edx
         mov     ecx, dword ptr [g_eventQueueIdx]
-        mov     eax, dword ptr [g_pendingMatchVar3_004d5320]
+        mov     eax, dword ptr [g_pendingMatchVar3]
         sub     eax, dword ptr [ecx*4 + 0x64]
         add     eax, 0xa666
         push    eax
@@ -187,7 +187,7 @@ void RandPushTrigPair(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x54], eax
         mov     edx, dword ptr [g_eventQueueIdx]
-        mov     eax, dword ptr [g_pendingMatchVar3_004d5320]
+        mov     eax, dword ptr [g_pendingMatchVar3]
         mov     ecx, dword ptr [edx*4 + 0x64]
         sub     eax, ecx
         mov     ecx, dword ptr [g_eventQueueCurrent]

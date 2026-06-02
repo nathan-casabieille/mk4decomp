@@ -15,17 +15,17 @@ extern unsigned int g_scaledInit_00542044;
  *   store-1-tail: store 1 → [0x4f2fc8] (mov imm32 form); xor eax,eax; ret.
  */
 extern u32 g_gsmActiveFlag;
-extern unsigned int g_dispatchSave1318_004f2fc8;
+extern unsigned int g_dispatchSave1318;
 extern int Input_GetAsyncKey(int);
 int TestQueueGateState(void) {
     if (Input_GetAsyncKey(0x0d) == 0) {
-        g_dispatchSave1318_004f2fc8 = 0;
+        g_dispatchSave1318 = 0;
         return 0;
     }
-    if (g_gsmActiveFlag != 0 || g_dispatchSave1318_004f2fc8 != 0) {
-        g_dispatchSave1318_004f2fc8 = 1;
+    if (g_gsmActiveFlag != 0 || g_dispatchSave1318 != 0) {
+        g_dispatchSave1318 = 1;
         return 0;
     }
-    g_dispatchSave1318_004f2fc8 = 1;
+    g_dispatchSave1318 = 1;
     return 1;
 }

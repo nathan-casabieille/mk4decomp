@@ -6,24 +6,24 @@
 
 extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_dispatchSave1233_004e4890;
-extern unsigned int g_dispatchSave1234_004e48d0;
-extern unsigned int g_dispatchSave1235_004e4910;
+extern unsigned int g_dispatchSave1233;
+extern unsigned int g_dispatchSave1234;
+extern unsigned int g_dispatchSave1235;
 extern void CmpDualPatchScaledRangeJmp(unsigned int *);
 extern void CmpDualPatchScaledRangeJmp(unsigned int *);
 extern void CmpDualPatchScaledRangeJmp(unsigned int *);
 
 /* @addr 0x00438ea0 (14b) entry A */
 void TripleStubPushCall(void) {
-    CmpDualPatchScaledRangeJmp(&g_dispatchSave1233_004e4890);
+    CmpDualPatchScaledRangeJmp(&g_dispatchSave1233);
 }
 
 /* @addr 0x00438eb0 (14b) entry B */
 void func_00438eb0(void) {
-    CmpDualPatchScaledRangeJmp(&g_dispatchSave1234_004e48d0);
+    CmpDualPatchScaledRangeJmp(&g_dispatchSave1234);
 }
 
 /* @addr 0x00438ec0 (14b) entry C */
 void func_00438ec0(void) {
-    CmpDualPatchScaledRangeJmp(&g_dispatchSave1235_004e4910);
+    CmpDualPatchScaledRangeJmp(&g_dispatchSave1235);
 }

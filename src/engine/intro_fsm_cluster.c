@@ -109,9 +109,9 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_const_0044d820;
-extern unsigned int g_dispatchSave543_004e65b8;
-extern unsigned int g_dispatchSave542_004e65c8;
-extern unsigned int g_dispatchTableArr5_00501088;
+extern unsigned int g_dispatchSave543;
+extern unsigned int g_dispatchSave542;
+extern unsigned int g_dispatchTableArr5;
 extern void ArgSarStoreJmp(void);
 extern void DoubleScaledCrossStore(void);
 extern void GatedWordPushCall(void);
@@ -126,7 +126,7 @@ __declspec(naked) void IntroFsmCluster(void)
     __asm {
     L_d580:
         /* H1 */
-        push     OFFSET g_dispatchSave543_004e65b8
+        push     OFFSET g_dispatchSave543
         call     ArgSarStoreJmp
         add      esp, 4
         ret
@@ -179,14 +179,14 @@ __declspec(naked) void IntroFsmCluster(void)
         test     eax, eax
         jne      L_d738
         mov      ecx, dword ptr [g_eventQueueEnd]
-        push     OFFSET g_dispatchSave542_004e65c8
+        push     OFFSET g_dispatchSave542
         mov      dword ptr [g_fightGroupHead], ecx
         call     ArgSarStoreJmp
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         ret
     L_d61c:
-        mov      edx, OFFSET g_dispatchTableArr5_00501088
+        mov      edx, OFFSET g_dispatchTableArr5
         shr      edx, 2
         mov      dword ptr [g_eventQueueEnd], edx
         mov      dword ptr [eax + 8], OFFSET L_d5c0

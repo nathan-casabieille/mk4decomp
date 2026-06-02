@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0046b360 (374b game) - 3-entry packed: state-remap + install +
  *   state-remap-call.
- *   Entry 1 (offset 0, 80b): sets g_xformEntityIdx = &g_dispatchTableArr7_005019d0>>2,
+ *   Entry 1 (offset 0, 80b): sets g_xformEntityIdx = &g_dispatchTableArr7>>2,
  *     reads [g_baseSel*4 + 0x34] as state code; if 0x10 → 2, if
  *     0x11 → 7. If != 0xf, pushes 0x542a70 → ArgScaledTestStore.
  *   Entry 2 (offset 0x50, 219b): phase-state install. Phase != 0 tail-jmps
@@ -125,10 +125,10 @@ extern unsigned int g_fightAxisPosY;
  *     != 0xf, tail-call Install3StateRouterTail; else pushes
  *     0x4eaee0 → ArgSarStoreJmp.
  */
-extern unsigned int g_dispatchSave967_004eaee0;
-extern unsigned int g_dispatchTableArr7_005019d0;
-extern unsigned int g_dispatchSave64_00542a70;
-extern unsigned int g_dispatchSave65_00542a78;
+extern unsigned int g_dispatchSave967;
+extern unsigned int g_dispatchTableArr7;
+extern unsigned int g_dispatchSave64;
+extern unsigned int g_dispatchSave65;
 extern void ArgSarStoreJmp(void);
 extern void ArgScaledTestStore(void);
 extern void Install3StateRouterTail(void);
@@ -138,7 +138,7 @@ extern void ScaledClearJmp_00428d60(void);
 __declspec(naked) void StateRemapPackedInstall(void) {
     __asm {
         mov     ecx, dword ptr [g_baseSel]
-        mov     eax, offset g_dispatchTableArr7_005019d0
+        mov     eax, offset g_dispatchTableArr7
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
         mov     eax, dword ptr [ecx*4 + 0x34]
@@ -155,7 +155,7 @@ __declspec(naked) void StateRemapPackedInstall(void) {
     L_srp_check15:
         cmp     eax, 0xf
         je      short L_srp_e1End
-        push    offset g_dispatchSave64_00542a70
+        push    offset g_dispatchSave64
         call    ArgScaledTestStore
         add     esp, 4
     L_srp_e1End:
@@ -180,7 +180,7 @@ __declspec(naked) void StateRemapPackedInstall(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_srp_e2End
-        push    offset g_dispatchSave65_00542a78
+        push    offset g_dispatchSave65
         call    ArgScaledTestStore
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
@@ -231,7 +231,7 @@ __declspec(naked) void StateRemapPackedInstall(void) {
         jne     short L_srp_e3pushAlarm
         jmp     Install3StateRouterTail
     L_srp_e3pushAlarm:
-        push    offset g_dispatchSave967_004eaee0
+        push    offset g_dispatchSave967
         call    ArgSarStoreJmp
         add     esp, 4
     L_srp_e3End:

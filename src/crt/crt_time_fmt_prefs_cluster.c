@@ -108,16 +108,16 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave871_004f5924;
+extern unsigned int g_dispatchSave871;
 extern unsigned int g_byte_00522bb4;
-extern unsigned int g_dispatchSave111_00522bb8;
-extern unsigned int g_dispatchSave110_005236b0;
+extern unsigned int g_dispatchSave111;
+extern unsigned int g_dispatchSave110;
 extern unsigned int g_crtTimeFmtPrefs;
-extern unsigned int g_dispatchSave1446_00f9fc18;
-extern unsigned int g_dispatchSave1456_00f9fc68;
-extern unsigned int g_dispatchSave1457_00f9fc6c;
-extern unsigned int g_dispatchSave1458_00f9fc70;
-extern unsigned int g_dispatchSave1461_00f9fc9a;
+extern unsigned int g_dispatchSave1446;
+extern unsigned int g_dispatchSave1456;
+extern unsigned int g_dispatchSave1457;
+extern unsigned int g_dispatchSave1458;
+extern unsigned int g_dispatchSave1461;
 extern void CrtGetLocaleInfo(void);
 extern void FreeImpl(void);
 extern void LoadArgPushCall(void);
@@ -245,57 +245,57 @@ __declspec(naked) void CrtTimeFmtPrefsCluster(void)
         nop
         nop
         /* === h2 (0x4cff60): prefs save/reload === */
-        mov      eax, dword ptr [g_dispatchSave1446_00f9fc18]
+        mov      eax, dword ptr [g_dispatchSave1446]
         push     ebx
         push     esi
         xor      ebx, ebx
         xor      esi, esi
         cmp      eax, ebx
-        mov      si, word ptr [g_dispatchSave1461_00f9fc9a]
+        mov      si, word ptr [g_dispatchSave1461]
         push     edi
         je       L_0059
-        push     OFFSET g_dispatchSave1456_00f9fc68
+        push     OFFSET g_dispatchSave1456
         push     0xe
         push     esi
         push     1
         call     CrtGetLocaleInfo
         add      esp, 0x10
         mov      edi, eax
-        push     OFFSET g_dispatchSave1457_00f9fc6c
+        push     OFFSET g_dispatchSave1457
         push     0xf
         push     esi
         push     1
         call     CrtGetLocaleInfo
         add      esp, 0x10
         or       edi, eax
-        push     OFFSET g_dispatchSave1458_00f9fc70
+        push     OFFSET g_dispatchSave1458
         push     0x10
         push     esi
         push     1
         call     CrtGetLocaleInfo
         add      esp, 0x10
         or       edi, eax
-        mov      eax, dword ptr [g_dispatchSave1458_00f9fc70]
+        mov      eax, dword ptr [g_dispatchSave1458]
         push     eax
         call     StringStripSlotReplace
         add      esp, 4
         cmp      edi, ebx
         je       short L_ffee
-        mov      ecx, dword ptr [g_dispatchSave1456_00f9fc68]
+        mov      ecx, dword ptr [g_dispatchSave1456]
         push     ecx
         call     FreeImpl
-        mov      edx, dword ptr [g_dispatchSave1457_00f9fc6c]
+        mov      edx, dword ptr [g_dispatchSave1457]
         add      esp, 4
         push     edx
         call     FreeImpl
-        mov      eax, dword ptr [g_dispatchSave1458_00f9fc70]
+        mov      eax, dword ptr [g_dispatchSave1458]
         add      esp, 4
         push     eax
         call     FreeImpl
         add      esp, 4
-        mov      dword ptr [g_dispatchSave1456_00f9fc68], ebx
-        mov      dword ptr [g_dispatchSave1457_00f9fc6c], ebx
-        mov      dword ptr [g_dispatchSave1458_00f9fc70], ebx
+        mov      dword ptr [g_dispatchSave1456], ebx
+        mov      dword ptr [g_dispatchSave1457], ebx
+        mov      dword ptr [g_dispatchSave1458], ebx
         or       eax, 0xffffffff
         pop      edi
         pop      esi
@@ -304,7 +304,7 @@ __declspec(naked) void CrtTimeFmtPrefsCluster(void)
     L_ffee:
         mov      ecx, dword ptr [g_crtTimeFmtPrefs]
         mov      eax, dword ptr [ecx]
-        cmp      eax, OFFSET g_dispatchSave110_005236b0
+        cmp      eax, OFFSET g_dispatchSave110
         je       short L_002a
         push     eax
         call     FreeImpl
@@ -321,31 +321,31 @@ __declspec(naked) void CrtTimeFmtPrefsCluster(void)
         add      esp, 4
     L_002a:
         mov      ecx, dword ptr [g_crtTimeFmtPrefs]
-        mov      eax, dword ptr [g_dispatchSave1456_00f9fc68]
+        mov      eax, dword ptr [g_dispatchSave1456]
         mov      dword ptr [ecx], eax
         mov      edx, dword ptr [g_crtTimeFmtPrefs]
-        mov      eax, dword ptr [g_dispatchSave1457_00f9fc6c]
+        mov      eax, dword ptr [g_dispatchSave1457]
         mov      dword ptr [edx + 4], eax
         mov      ecx, dword ptr [g_crtTimeFmtPrefs]
-        mov      edx, dword ptr [g_dispatchSave1458_00f9fc70]
+        mov      edx, dword ptr [g_dispatchSave1458]
         mov      dword ptr [ecx + 8], edx
         jmp      L_0117
     L_0059:
-        mov      eax, dword ptr [g_dispatchSave1456_00f9fc68]
+        mov      eax, dword ptr [g_dispatchSave1456]
         push     eax
         call     FreeImpl
-        mov      ecx, dword ptr [g_dispatchSave1457_00f9fc6c]
+        mov      ecx, dword ptr [g_dispatchSave1457]
         add      esp, 4
         push     ecx
         call     FreeImpl
-        mov      edx, dword ptr [g_dispatchSave1458_00f9fc70]
+        mov      edx, dword ptr [g_dispatchSave1458]
         add      esp, 4
         push     edx
         call     FreeImpl
         add      esp, 4
-        mov      dword ptr [g_dispatchSave1456_00f9fc68], ebx
-        mov      dword ptr [g_dispatchSave1457_00f9fc6c], ebx
-        mov      dword ptr [g_dispatchSave1458_00f9fc70], ebx
+        mov      dword ptr [g_dispatchSave1456], ebx
+        mov      dword ptr [g_dispatchSave1457], ebx
+        mov      dword ptr [g_dispatchSave1458], ebx
         push     2
         call     LoadArgPushCall
         mov      ecx, dword ptr [g_crtTimeFmtPrefs]
@@ -361,7 +361,7 @@ __declspec(naked) void CrtTimeFmtPrefsCluster(void)
         pop      ebx
         ret
     L_00bc:
-        mov      cx, word ptr [g_dispatchSave871_004f5924]
+        mov      cx, word ptr [g_dispatchSave871]
         push     2
         mov      word ptr [eax], cx
         call     LoadArgPushCall
@@ -403,7 +403,7 @@ __declspec(naked) void CrtTimeFmtPrefsCluster(void)
         mov      ecx, dword ptr [eax]
         xor      eax, eax
         mov      dl, byte ptr [ecx]
-        mov      dword ptr [g_dispatchSave111_00522bb8], 1
+        mov      dword ptr [g_dispatchSave111], 1
         mov      byte ptr [g_byte_00522bb4], dl
         ret
     }

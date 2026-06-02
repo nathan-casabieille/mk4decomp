@@ -40,7 +40,7 @@ extern void DrainQueueCallEach(void);
 extern unsigned int g_tickFlagF;
 extern unsigned int g_phaseIdx;
 extern unsigned int g_audioPathFlag;
-extern unsigned int g_audioPathFlag2_00543710;
+extern unsigned int g_audioPathFlag2;
 extern unsigned int g_counter_0054359c;
 extern unsigned int g_counter_005433c8;
 extern unsigned char g_byte_00543834;
@@ -50,7 +50,7 @@ void CallSetMultiGlobalsJmp(void) {
     g_tickFlagF = 2;
     g_phaseIdx = 0x0e;
     g_audioPathFlag = 1;
-    g_audioPathFlag2_00543710 = 1;
+    g_audioPathFlag2 = 1;
     g_counter_0054359c = 0;
     g_counter_005433c8 = 0;
     g_byte_00543834 = 1;

@@ -13,13 +13,13 @@ extern unsigned int g_scaledInit_00542044;
  * The 12-byte nop gap is filled by 0x90-fill. */
 extern int IterStepDualStore(void *);
 extern int ArgSarStoreJmp(void *);
-extern void *g_dispatchSave1310_004ee340;
-extern void *g_dispatchSave1311_004ee348;
+extern void *g_dispatchSave1310;
+extern void *g_dispatchSave1311;
 extern void Chain3CallGuarded(void);
 void DualPushCallPause(void) {
-    IterStepDualStore(&g_dispatchSave1310_004ee340);
+    IterStepDualStore(&g_dispatchSave1310);
     if (g_framePauseFlag != 0) return;
-    ArgSarStoreJmp(&g_dispatchSave1311_004ee348);
+    ArgSarStoreJmp(&g_dispatchSave1311);
 }
 
 /* @addr 0x00482ee0 (5b): tail-jmp into Chain3CallGuarded sub-entry. */

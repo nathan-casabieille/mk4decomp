@@ -5,24 +5,24 @@
 #include "game/tick.h"
 
 /* @addr 0x004b8d70 (311b game.menu) - menu state poll with init guard.
- *   On first invocation (bit 0 of g_dispatchSave1488_00ab431c clear), sets bit 0 and
- *   initializes g_dispatchSave1481_00ab42d0 = TableSearchAsc(0x4f4fd0, 0).
- *   Then dispatches on g_dispatchSave1500_00ab4388 (state): 0 → set state=2; 2 →
+ *   On first invocation (bit 0 of g_dispatchSave1488 clear), sets bit 0 and
+ *   initializes g_dispatchSave1481 = TableSearchAsc(0x4f4fd0, 0).
+ *   Then dispatches on g_dispatchSave1500 (state): 0 → set state=2; 2 →
  *   read input via Menu_PollNavInput, OR with 0x8000 mask, walk the
  *   table at 0x4f4fd0 via Asc/Desc moves if bit 0/1 of input set, and if
  *   bit 5 set transition to state 0x45. Then reads movsx eax,
- *   [g_dispatchSave1481_00ab42d0*8 + 0x4f4fd4] (entry-type tag), subtracts 0x11 and
+ *   [g_dispatchSave1481*8 + 0x4f4fd4] (entry-type tag), subtracts 0x11 and
  *   dispatches: type 0x11 (eax==0) → call Thunk_ExitGame; type 0x12 →
  *   fallthrough; type 0x13 → AppInit_Misc8, and on
  *   g_demoModeFlag non-zero transition to state 0x45. Tail-calls
- *   DrawMenu(0x4f4fd0, g_dispatchSave1481_00ab42d0) and returns the current state.
+ *   DrawMenu(0x4f4fd0, g_dispatchSave1481) and returns the current state.
  */
-extern unsigned int g_gsmVar4_004f4fd0;
-extern unsigned int g_dispatchSave866_004f4fd4;
+extern unsigned int g_gsmVar4;
+extern unsigned int g_dispatchSave866;
 extern u32 g_demoModeFlag;
-extern unsigned int g_dispatchSave1481_00ab42d0;
-extern unsigned int g_dispatchSave1488_00ab431c;
-extern unsigned int g_dispatchSave1500_00ab4388;
+extern unsigned int g_dispatchSave1481;
+extern unsigned int g_dispatchSave1488;
+extern unsigned int g_dispatchSave1500;
 extern void AppInit_Misc8(void);
 extern void DrawMenu(void);
 extern void Menu_PollNavInput(void);
@@ -32,28 +32,28 @@ extern void Thunk_ExitGame(void);
 
 __declspec(naked) void Menu_InsertCDDialog(void) {
     __asm {
-        mov     al, byte ptr [g_dispatchSave1488_00ab431c]
+        mov     al, byte ptr [g_dispatchSave1488]
         push    ebx
         test    al, 1
         push    esi
         jne     short L_mps_haveInit
         mov     bl, al
-        push    offset g_gsmVar4_004f4fd0
+        push    offset g_gsmVar4
         or      bl, 1
         push    0
-        mov     byte ptr [g_dispatchSave1488_00ab431c], bl
+        mov     byte ptr [g_dispatchSave1488], bl
         call    Menu_FindNextSelectable
         add     esp, 8
-        mov     dword ptr [g_dispatchSave1481_00ab42d0], eax
+        mov     dword ptr [g_dispatchSave1481], eax
     L_mps_haveInit:
-        mov     eax, dword ptr [g_dispatchSave1500_00ab4388]
+        mov     eax, dword ptr [g_dispatchSave1500]
         sub     eax, 0
         je      L_mps_state0
         sub     eax, 2
         je      short L_mps_state2
         sub     eax, 0x43
         jne     L_mps_drawTail
-        mov     dword ptr [g_dispatchSave1500_00ab4388], 0
+        mov     dword ptr [g_dispatchSave1500], 0
         jmp     L_mps_drawTail
     L_mps_state2:
         push    1
@@ -65,32 +65,32 @@ __declspec(naked) void Menu_InsertCDDialog(void) {
         jne     short L_mps_skipAsc
         test    bl, 1
         je      short L_mps_skipAsc
-        mov     eax, dword ptr [g_dispatchSave1481_00ab42d0]
-        push    offset g_gsmVar4_004f4fd0
+        mov     eax, dword ptr [g_dispatchSave1481]
+        push    offset g_gsmVar4
         push    eax
         call    Menu_FindPrevSelectable
         add     esp, 8
-        mov     dword ptr [g_dispatchSave1481_00ab42d0], eax
+        mov     dword ptr [g_dispatchSave1481], eax
     L_mps_skipAsc:
         test    esi, esi
         jne     short L_mps_skipDesc
         test    bl, 2
         je      short L_mps_skipDescCall
-        mov     ecx, dword ptr [g_dispatchSave1481_00ab42d0]
-        push    offset g_gsmVar4_004f4fd0
+        mov     ecx, dword ptr [g_dispatchSave1481]
+        push    offset g_gsmVar4
         push    ecx
         call    Menu_FindNextSelectable
         add     esp, 8
-        mov     dword ptr [g_dispatchSave1481_00ab42d0], eax
+        mov     dword ptr [g_dispatchSave1481], eax
     L_mps_skipDescCall:
         test    esi, esi
         jne     short L_mps_skipDesc
         test    bl, 0x20
         je      short L_mps_skipDesc
-        mov     dword ptr [g_dispatchSave1500_00ab4388], 0x45
+        mov     dword ptr [g_dispatchSave1500], 0x45
     L_mps_skipDesc:
-        mov     edx, dword ptr [g_dispatchSave1481_00ab42d0]
-        movsx   eax, word ptr [edx*8 + g_dispatchSave866_004f4fd4]
+        mov     edx, dword ptr [g_dispatchSave1481]
+        movsx   eax, word ptr [edx*8 + g_dispatchSave866]
         sub     eax, 0x11
         je      short L_mps_type11
         dec     eax
@@ -118,16 +118,16 @@ __declspec(naked) void Menu_InsertCDDialog(void) {
         test    eax, eax
     L_mps_type11_check:
         je      short L_mps_drawTail
-        mov     dword ptr [g_dispatchSave1500_00ab4388], 0x45
+        mov     dword ptr [g_dispatchSave1500], 0x45
         jmp     short L_mps_drawTail
     L_mps_state0:
-        mov     dword ptr [g_dispatchSave1500_00ab4388], 2
+        mov     dword ptr [g_dispatchSave1500], 2
     L_mps_drawTail:
-        mov     eax, dword ptr [g_dispatchSave1481_00ab42d0]
+        mov     eax, dword ptr [g_dispatchSave1481]
         push    eax
-        push    offset g_gsmVar4_004f4fd0
+        push    offset g_gsmVar4
         call    DrawMenu
-        mov     eax, dword ptr [g_dispatchSave1500_00ab4388]
+        mov     eax, dword ptr [g_dispatchSave1500]
         add     esp, 8
         pop     esi
         pop     ebx

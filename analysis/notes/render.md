@@ -688,8 +688,8 @@ Each rasterizer has a similar structure (~300 lines asm):
 
 1. **Viewport clip**: bail if `g_viewportX == 0` or computed
    coords fall outside `g_viewportW x g_viewportH`. Read from
-   `g_dispatchSave1378_00f70fa8` (x), `g_dispatchSave1381_00f70fb8`
-   (y), `g_dispatchSave1380_00f70fb0` (width).
+   `g_dispatchSave1378` (x), `g_dispatchSave1381`
+   (y), `g_dispatchSave1380` (width).
 2. **Source/dest setup**: source texture pointer (from `+0x14` of
    entry), dest framebuffer offset.
 3. **Inner loop**: per-pixel read from source, optional palette

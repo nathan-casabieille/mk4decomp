@@ -129,11 +129,11 @@ extern void InstallSelfChainAccumPath(void);
 extern void GameInstall2BodyMul10ScaledInit(void);
 extern void GatedWordPushCall(void);
 extern void PoseChainAdvanceCluster(void);
-extern unsigned int g_dispatchSave685_004e6580;
-extern unsigned int g_dispatchSave686_004e6590;
-extern unsigned int g_dispatchSave687_004e65a0;
-extern unsigned int g_dispatchSave61_00501070;
-extern unsigned int g_dispatchSave57_005117c4;
+extern unsigned int g_dispatchSave685;
+extern unsigned int g_dispatchSave686;
+extern unsigned int g_dispatchSave687;
+extern unsigned int g_dispatchSave61;
+extern unsigned int g_dispatchSave57;
 
 extern void ArgSarStoreJmp(void);
 extern void FramePauseScaledStore(void);
@@ -166,7 +166,7 @@ __declspec(naked) void IntroInitCluster(void)
         je       short L_d327
         jmp      short L_d2fe
     L_d2d7:
-        mov      edx, OFFSET g_dispatchSave57_005117c4
+        mov      edx, OFFSET g_dispatchSave57
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
         call     FramePauseScaledStore
@@ -230,7 +230,7 @@ __declspec(naked) void IntroInitCluster(void)
         je       L_d48e
         dec      eax
         je       short L_d3de
-        push     OFFSET g_dispatchSave685_004e6580
+        push     OFFSET g_dispatchSave685
         call     ArgSarStoreJmp
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -250,7 +250,7 @@ __declspec(naked) void IntroInitCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d4f9
-        mov      ecx, OFFSET g_dispatchSave61_00501070
+        mov      ecx, OFFSET g_dispatchSave61
         shr      ecx, 2
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      dword ptr [esi + 8], OFFSET L_d3a0
@@ -310,7 +310,7 @@ __declspec(naked) void IntroInitCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d535
-        push     OFFSET g_dispatchSave686_004e6590
+        push     OFFSET g_dispatchSave686
         call     ArgSarStoreJmp
         add      esp, 4
     L_d535:
@@ -331,7 +331,7 @@ __declspec(naked) void IntroInitCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d565
-        push     OFFSET g_dispatchSave687_004e65a0
+        push     OFFSET g_dispatchSave687
         call     ArgSarStoreJmp
         add      esp, 4
     L_d565:

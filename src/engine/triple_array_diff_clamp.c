@@ -115,9 +115,9 @@ extern unsigned int g_fightAxisPosY;
  *   advance indices, write diff to scaledInit[k]*4, k++.
  *   end: store esi (=-1) to [0x0053a1ac]; rewind 3 indices.
  */
-extern unsigned int g_dispatchSave895_004d5328;
+extern unsigned int g_dispatchSave895;
 extern unsigned int g_pendingMatchVar;
-extern unsigned int g_pendingMatchVar3_004d5320;
+extern unsigned int g_pendingMatchVar3;
 extern unsigned int g_eq;
 
 __declspec(naked) void TripleArrayDiffClamp(void) {
@@ -143,7 +143,7 @@ loop_004251fd:
         _emit   7dh
         _emit   02h
         neg     ecx
-        mov     ebx, dword ptr [g_pendingMatchVar3_004d5320]
+        mov     ebx, dword ptr [g_pendingMatchVar3]
         xor     edx, edx
         cmp     ecx, ebx
         mov     ecx, dword ptr [g_pendingMatchVar]
@@ -153,7 +153,7 @@ loop_004251fd:
         mov     dword ptr [g_walkCallback], ecx
         _emit   7ch
         _emit   0ch
-        mov     ecx, dword ptr [g_dispatchSave895_004d5328]
+        mov     ecx, dword ptr [g_dispatchSave895]
         mov     dword ptr [g_walkCallback], ecx
         test    edx, edx
         _emit   75h

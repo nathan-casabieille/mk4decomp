@@ -108,14 +108,14 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_audioStateMachine0_004f3ae4;
-extern unsigned int g_audioStateMachine1_004f3ae8;
+extern unsigned int g_audioStateMachine0;
+extern unsigned int g_audioStateMachine1;
 extern unsigned int g_audioCrewState;
 extern unsigned int g_byte_005435a2;
 extern unsigned int g_byte_0054361a;
-extern unsigned int g_dispatchSave1701_00600000;
+extern unsigned int g_dispatchSave1701;
 extern unsigned int g_glideFnTable;
-extern unsigned int g_dispatchSave1710_00c00000;
+extern unsigned int g_dispatchSave1710;
 extern void AudioChainInit(void);
 extern void AudioInitLoopTriple(void);
 extern void ScaledChainStore24(void);
@@ -123,14 +123,14 @@ extern void ScaledChainStore24(void);
 __declspec(naked) void SpawnLeftRightAudioCrew(void)
 {
     __asm {
-        mov      eax, dword ptr [g_audioStateMachine0_004f3ae4]
+        mov      eax, dword ptr [g_audioStateMachine0]
         push     ebx
         push     ebp
         push     esi
         lea      ecx, [eax + eax*2]
         push     edi
         shl      ecx, 0x15
-        sub      ecx, OFFSET g_dispatchSave1701_00600000
+        sub      ecx, OFFSET g_dispatchSave1701
         xor      edi, edi
         test     eax, eax
         mov      dword ptr [g_audioCrewState], ecx
@@ -173,18 +173,18 @@ __declspec(naked) void SpawnLeftRightAudioCrew(void)
         mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [edx*4 + 0x5c], 0x30000
     L_816c:
-        mov      eax, dword ptr [g_audioStateMachine0_004f3ae4]
+        mov      eax, dword ptr [g_audioStateMachine0]
         inc      edi
         add      esi, 0x18
-        add      ebp, OFFSET g_dispatchSave1710_00c00000
+        add      ebp, OFFSET g_dispatchSave1710
         cmp      edi, eax
         jl       L_80b1
     L_8183:
-        mov      eax, dword ptr [g_audioStateMachine1_004f3ae8]
+        mov      eax, dword ptr [g_audioStateMachine1]
         xor      edi, edi
         lea      ecx, [eax + eax*2]
         shl      ecx, 0x15
-        sub      ecx, OFFSET g_dispatchSave1701_00600000
+        sub      ecx, OFFSET g_dispatchSave1701
         test     eax, eax
         mov      dword ptr [g_audioCrewState], ecx
         jle      short L_8282
@@ -226,10 +226,10 @@ __declspec(naked) void SpawnLeftRightAudioCrew(void)
         mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [edx*4 + 0x5c], 0x30000
     L_826b:
-        mov      eax, dword ptr [g_audioStateMachine1_004f3ae8]
+        mov      eax, dword ptr [g_audioStateMachine1]
         inc      edi
         add      esi, 0x18
-        add      ebp, OFFSET g_dispatchSave1710_00c00000
+        add      ebp, OFFSET g_dispatchSave1710
         cmp      edi, eax
         jl       L_81b0
     L_8282:

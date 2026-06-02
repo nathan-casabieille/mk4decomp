@@ -22,7 +22,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void DualCondMatchSet(void);
 extern int ArgSarStoreJmp(void *);
-extern void *g_dispatchSave1313_004ef1d0;
+extern void *g_dispatchSave1313;
 extern void Wrapper_Cascade5StageInit_004ef1e8(void);
 void CallPauseDirtyPushCall(void) {
     DualCondMatchSet();
@@ -31,5 +31,5 @@ void CallPauseDirtyPushCall(void) {
         Wrapper_Cascade5StageInit_004ef1e8();
         return;
     }
-    ArgSarStoreJmp(&g_dispatchSave1313_004ef1d0);
+    ArgSarStoreJmp(&g_dispatchSave1313);
 }

@@ -108,11 +108,11 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave891_004d5040;
-extern unsigned int g_dispatchSave892_004d504c;
-extern unsigned int g_dispatchVar40_004d505c;
-extern unsigned int g_dispatchSave893_004d5060;
-extern unsigned int g_dispatchSave565_004d506c;
+extern unsigned int g_dispatchSave891;
+extern unsigned int g_dispatchSave892;
+extern unsigned int g_dispatchVar40;
+extern unsigned int g_dispatchSave893;
+extern unsigned int g_dispatchSave565;
 extern unsigned int g_fileLoaderArr;
 extern unsigned int g_fileLoaderState;
 extern void FSYS_fclose(void);
@@ -140,13 +140,13 @@ __declspec(naked) void Anim_LoadPackFile(void)
         mov     esi, dword ptr [esp + 0x110]
         push    edi
         push    esi
-        push    offset g_dispatchSave565_004d506c
-        push    offset g_dispatchSave893_004d5060
+        push    offset g_dispatchSave565
+        push    offset g_dispatchSave893
         push    eax
         call    Helper_Sprintf
         add     esp, 0x10
         lea     ecx, [esp + 0x10]
-        push    offset g_dispatchVar40_004d505c
+        push    offset g_dispatchVar40
         push    ecx
         call    FSYS_fopen
         mov     ebx, eax
@@ -180,7 +180,7 @@ __declspec(naked) void Anim_LoadPackFile(void)
         mov     dword ptr [g_fileLoaderState], eax
         test    eax, eax
         jne     L_fl_have_buf
-        push    offset g_dispatchSave892_004d504c
+        push    offset g_dispatchSave892
         call    ShowErrorMessage
         mov     eax, dword ptr [g_fileLoaderState]
         add     esp, 4
@@ -194,14 +194,14 @@ __declspec(naked) void Anim_LoadPackFile(void)
         ret
     L_fl_have_buf:
         push    esi
-        push    offset g_dispatchSave565_004d506c
+        push    offset g_dispatchSave565
         lea     edx, [esp + 0x98]
-        push    offset g_dispatchSave891_004d5040
+        push    offset g_dispatchSave891
         push    edx
         call    Helper_Sprintf
         add     esp, 0x10
         lea     eax, [esp + 0x90]
-        push    offset g_dispatchVar40_004d505c
+        push    offset g_dispatchVar40
         push    eax
         call    FSYS_fopen
         mov     esi, eax

@@ -12,11 +12,11 @@ extern unsigned int g_scaledInit_00542044;
  *   load g_baseSel; copy [eax*4+0x7c]→g_walkCallback, [eax*4+0x80]→g_currentNodeFlags;
  *   jmp [g_scaledInit_00542044]; ret.
  */
-extern void *g_dispatchSave1316_004f1290;
+extern void *g_dispatchSave1316;
 extern int ArgScaledLoadCmpP1(void *);
 void PushCallPauseScaledJmpInd(void) {
     unsigned int base;
-    ArgScaledLoadCmpP1(&g_dispatchSave1316_004f1290);
+    ArgScaledLoadCmpP1(&g_dispatchSave1316);
     if (g_framePauseFlag) return;
     base = g_baseSel;
     g_walkCallback = (void (*)(void))*(unsigned int *)(base * 4 + 0x7c);

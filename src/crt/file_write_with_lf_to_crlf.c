@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave651_004d20b0;
+extern unsigned int g_dispatchSave651;
 extern unsigned int g_iat_GetLastError;
 extern void Helper_ChkStk(void);
 extern void LseekImpl(void);
@@ -227,7 +227,7 @@ __declspec(naked) void TextModeReadStream(void) {
         call    CRTHandleLookup
         add     esp, 4
         push    eax
-        call    dword ptr [g_dispatchSave651_004d20b0]
+        call    dword ptr [g_dispatchSave651]
         mov     ebp, eax
         neg     ebp
         sbb     ebp, ebp

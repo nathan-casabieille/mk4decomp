@@ -109,8 +109,8 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_arr_00fa0de0;
-extern unsigned int g_dispatchSave1468_00fa0de4;
-extern unsigned int g_dispatchSave1469_00fa0ee0;
+extern unsigned int g_dispatchSave1468;
+extern unsigned int g_dispatchSave1469;
 extern unsigned int g_iat_GetFileType;
 extern unsigned int g_iat_SetHandleCount;
 extern unsigned int g_iat_GetStartupInfoA;
@@ -140,7 +140,7 @@ __declspec(naked) void CrtIoInitFdTable(void)
         lea      eax, [esi + 0x480]
         mov      dword ptr [g_arr_00fa0de0], esi
         cmp      esi, eax
-        mov      dword ptr [g_dispatchSave1469_00fa0ee0], 0x20
+        mov      dword ptr [g_dispatchSave1469], 0x20
         mov      bl, 0xa
         jae      short L_8c25
     L_8c02:
@@ -171,10 +171,10 @@ __declspec(naked) void CrtIoInitFdTable(void)
         mov      dword ptr [esp + 0x10], 0x800
     L_8c63:
         mov      eax, dword ptr [esp + 0x10]
-        mov      ecx, dword ptr [g_dispatchSave1469_00fa0ee0]
+        mov      ecx, dword ptr [g_dispatchSave1469]
         cmp      ecx, eax
         jge      short L_8ce1
-        mov      esi, OFFSET g_dispatchSave1468_00fa0de4
+        mov      esi, OFFSET g_dispatchSave1468
     L_8c76:
         push     0x480
         call     LoadArgPushCall
@@ -182,10 +182,10 @@ __declspec(naked) void CrtIoInitFdTable(void)
         add      esp, 4
         cmp      eax, ecx
         je       short L_8cd5
-        mov      edx, dword ptr [g_dispatchSave1469_00fa0ee0]
+        mov      edx, dword ptr [g_dispatchSave1469]
         mov      dword ptr [esi], eax
         add      edx, 0x20
-        mov      dword ptr [g_dispatchSave1469_00fa0ee0], edx
+        mov      dword ptr [g_dispatchSave1469], edx
         lea      edx, [eax + 0x480]
         cmp      eax, edx
         jae      short L_8cc3
@@ -200,14 +200,14 @@ __declspec(naked) void CrtIoInitFdTable(void)
         cmp      eax, edx
         jb       short L_8ca4
     L_8cc3:
-        mov      eax, dword ptr [g_dispatchSave1469_00fa0ee0]
+        mov      eax, dword ptr [g_dispatchSave1469]
         mov      edx, dword ptr [esp + 0x10]
         add      esi, 4
         cmp      eax, edx
         jl       short L_8c76
         jmp      short L_8ce3
     L_8cd5:
-        mov      edx, dword ptr [g_dispatchSave1469_00fa0ee0]
+        mov      edx, dword ptr [g_dispatchSave1469]
         mov      dword ptr [esp + 0x10], edx
         jmp      short L_8ce3
     L_8ce1:
@@ -306,7 +306,7 @@ __declspec(naked) void CrtIoInitFdTable(void)
         inc      ebp
         cmp      ebp, 3
         jl       L_8d40
-        mov      edx, dword ptr [g_dispatchSave1469_00fa0ee0]
+        mov      edx, dword ptr [g_dispatchSave1469]
         push     edx
         call     dword ptr [g_iat_SetHandleCount]
         pop      edi

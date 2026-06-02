@@ -108,14 +108,14 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave746_004ed988;
-extern unsigned int g_dispatchSave774_004ef228;
-extern unsigned int g_dispatchSave775_004ef258;
-extern unsigned int g_dispatchSave776_004ef278;
-extern unsigned int g_dispatchSave777_004ef2b8;
+extern unsigned int g_dispatchSave746;
+extern unsigned int g_dispatchSave774;
+extern unsigned int g_dispatchSave775;
+extern unsigned int g_dispatchSave776;
+extern unsigned int g_dispatchSave777;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_dispatchSave_00537ef4;
-extern unsigned int g_dispatchSave70_00542be8;
+extern unsigned int g_dispatchSave70;
 extern void ArgSarStoreJmp(void);
 extern void BlockedCounterCluster(void);
 extern void BossArrivalSequence(void);
@@ -133,7 +133,7 @@ __declspec(naked) void AggressorRunInitCluster(void)
 {
     __asm {
         /* === h1 (0x4813b0): event 004ed988 forwarder === */
-        push     OFFSET g_dispatchSave746_004ed988
+        push     OFFSET g_dispatchSave746
         call     ArgSarStoreJmp
         add      esp, 4
         ret
@@ -145,7 +145,7 @@ __declspec(naked) void AggressorRunInitCluster(void)
         test     eax, eax
         jne      L_1475
         mov      eax, 0x258
-        push     OFFSET g_dispatchSave70_00542be8
+        push     OFFSET g_dispatchSave70
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_dispatchSave_00537ef4], eax
         call     IterLoad_00491050
@@ -236,7 +236,7 @@ __declspec(naked) void AggressorRunInitCluster(void)
         mov      dword ptr [g_eventQueueIdx], eax
         call     StoreLoadJmp
         add      esp, 4
-        push     OFFSET g_dispatchSave774_004ef228
+        push     OFFSET g_dispatchSave774
         call     ArgSarStoreJmp
         add      esp, 4
     L_1561:
@@ -260,7 +260,7 @@ __declspec(naked) void AggressorRunInitCluster(void)
         push     OFFSET TripleEntryCountdownInstall + 0xb0
         call     StoreTwoCall
         add      esp, 8
-        push     OFFSET g_dispatchSave775_004ef258
+        push     OFFSET g_dispatchSave775
         call     ArgSarStoreJmp
         add      esp, 4
         ret
@@ -279,7 +279,7 @@ __declspec(naked) void AggressorRunInitCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_15ef
-        push     OFFSET g_dispatchSave776_004ef278
+        push     OFFSET g_dispatchSave776
         call     ArgSarStoreJmp
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -305,7 +305,7 @@ __declspec(naked) void AggressorRunInitCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_16c4
-        push     OFFSET g_dispatchSave777_004ef2b8
+        push     OFFSET g_dispatchSave777
         call     ArgSarStoreJmp
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4

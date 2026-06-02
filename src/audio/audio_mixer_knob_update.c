@@ -109,11 +109,11 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_byte_004d50b4;
-extern unsigned int g_audioStateMachine0_004f3ae4;
-extern unsigned int g_audioStateMachine1_004f3ae8;
+extern unsigned int g_audioStateMachine0;
+extern unsigned int g_audioStateMachine1;
 extern unsigned int g_audioMixerKnob;
 extern unsigned int g_counter_005433c8;
-extern unsigned int g_audioMixerKnob2_00543440;
+extern unsigned int g_audioMixerKnob2;
 extern unsigned int g_counter_0054359c;
 extern unsigned int g_byte_005435a0;
 extern void ScaledChainStore24(void);
@@ -122,7 +122,7 @@ extern void SetJmp_Push16Call_004a1ad0(void);
 __declspec(naked) void AudioMixerKnobUpdate(void)
 {
     __asm {
-        mov      eax, dword ptr [g_audioMixerKnob2_00543440]
+        mov      eax, dword ptr [g_audioMixerKnob2]
         test     eax, eax
         jne      short L_8aea
         test     byte ptr [g_byte_004d50b4], 4
@@ -135,7 +135,7 @@ __declspec(naked) void AudioMixerKnobUpdate(void)
     L_8ac6:
         test     byte ptr [g_byte_004d50b4], 8
         je       short L_8aea
-        mov      eax, dword ptr [g_audioStateMachine0_004f3ae4]
+        mov      eax, dword ptr [g_audioStateMachine0]
         mov      ecx, dword ptr [g_counter_0054359c]
         dec      eax
         cmp      ecx, eax
@@ -143,7 +143,7 @@ __declspec(naked) void AudioMixerKnobUpdate(void)
         call     SetJmp_Push16Call_004a1ad0
         inc      dword ptr [g_counter_0054359c]
     L_8aea:
-        cmp      dword ptr [g_audioMixerKnob2_00543440], 1
+        cmp      dword ptr [g_audioMixerKnob2], 1
         jne      L_8b98
         mov      al, byte ptr [g_byte_004d50b4]
         mov      ecx, dword ptr [g_counter_0054359c]
@@ -196,7 +196,7 @@ __declspec(naked) void AudioMixerKnobUpdate(void)
         mov      eax, dword ptr [g_byte_004d50b4]
         test     ah, 8
         je       short L_8be4
-        mov      eax, dword ptr [g_audioStateMachine1_004f3ae8]
+        mov      eax, dword ptr [g_audioStateMachine1]
         mov      ecx, dword ptr [g_counter_005433c8]
         dec      eax
         cmp      ecx, eax

@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave921_004df6f0;
+extern unsigned int g_dispatchSave921;
 extern void BootInitGuardedCallChain(void);
 extern void BootMultiAssetLoadStateInit(void);
 extern void CallSetPause(void);
@@ -171,7 +171,7 @@ __declspec(naked) void EnduranceFsmCluster(void)
         call     BootMultiAssetLoadStateInit
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3a73
-        mov      eax, OFFSET g_dispatchSave921_004df6f0
+        mov      eax, OFFSET g_dispatchSave921
         shr      eax, 2
         mov      dword ptr [g_eventQueueIdx], eax
         jmp      short L_39c9

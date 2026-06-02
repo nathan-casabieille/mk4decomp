@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave779_004f1300;
+extern unsigned int g_dispatchSave779;
 extern void ClampMulShiftStore(void);
 extern void FramePauseScaledStore(void);
 extern void MStackBracket4_ListInsertZeroFill(void);
@@ -123,7 +123,7 @@ __declspec(naked) void ThrowPoseCallbackSetup(void)
         mov      eax, dword ptr [g_walkCallback]
         push     ebx
         lea      ecx, [eax*4]
-        mov      eax, OFFSET g_dispatchSave779_004f1300
+        mov      eax, OFFSET g_dispatchSave779
         shr      eax, 2
         add      eax, ecx
         mov      dword ptr [g_walkCallback], ecx

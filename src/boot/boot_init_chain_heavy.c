@@ -108,27 +108,27 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave523_004d5140;
+extern unsigned int g_dispatchSave523;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_particleEmitterNode;
-extern unsigned int g_bootChainSlot3_00537e8c;
+extern unsigned int g_bootChainSlot3;
 extern unsigned int g_bootHeavyState;
-extern unsigned int g_phaseThunkSlot8_0053a520;
+extern unsigned int g_phaseThunkSlot8;
 extern unsigned int g_particleInitState;
-extern unsigned int g_dispatchSave82_00541e7c;
-extern unsigned int g_bootChainPair0_00541e80;
-extern unsigned int g_bootChainPair1_00541e84;
-extern unsigned int g_bootChainScaled1_00541e88;
-extern unsigned int g_bootChainScaled2_00541e8c;
+extern unsigned int g_dispatchSave82;
+extern unsigned int g_bootChainPair0;
+extern unsigned int g_bootChainPair1;
+extern unsigned int g_bootChainScaled1;
+extern unsigned int g_bootChainScaled2;
 extern unsigned int g_lit_00541e90;
 extern unsigned int g_lit_00541e94;
-extern unsigned int g_bootChainState3_00541e98;
-extern unsigned int g_bootChainScaled4_00541e9c;
-extern unsigned int g_bootChainScaled3_00541ea0;
-extern unsigned int g_dispatchSave81_00541ea4;
-extern unsigned int g_bootChainSlot2_00541ea8;
-extern unsigned int g_dispatchSave80_00541eac;
-extern unsigned int g_bootChainState4_00541eb0;
+extern unsigned int g_bootChainState3;
+extern unsigned int g_bootChainScaled4;
+extern unsigned int g_bootChainScaled3;
+extern unsigned int g_dispatchSave81;
+extern unsigned int g_bootChainSlot2;
+extern unsigned int g_dispatchSave80;
+extern unsigned int g_bootChainState4;
 extern unsigned int g_audioInitScaled;
 extern void AndShlStore(void);
 extern void BootPhaseGateBracketedInit(void);
@@ -151,8 +151,8 @@ __declspec(naked) void BootInitChainHeavy(void)
         call    Thunk_Helper_GeoLoadPre
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
-        mov     eax, dword ptr [g_dispatchSave82_00541e7c]
-        mov     ecx, dword ptr [g_bootChainPair0_00541e80]
+        mov     eax, dword ptr [g_dispatchSave82]
+        mov     ecx, dword ptr [g_bootChainPair0]
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_xformEntityIdx], esi
         mov     dword ptr [g_pendingNodeType], 0x21
@@ -161,25 +161,25 @@ __declspec(naked) void BootInitChainHeavy(void)
         call    LinkedListBuilder
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
-        mov     edx, dword ptr [g_bootChainPair1_00541e84]
+        mov     edx, dword ptr [g_bootChainPair1]
         mov     dword ptr [g_eventQueueEnd], esi
         mov     dword ptr [g_eventQueueTotal], edx
         call    VertexSlotInitFlagWalk
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
-        mov     eax, dword ptr [g_bootChainScaled1_00541e88]
+        mov     eax, dword ptr [g_bootChainScaled1]
         mov     dword ptr [g_eventQueueEnd], esi
         mov     dword ptr [g_eventQueueTotal], eax
         call    VertexSlotInitFlagWalk
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
-        mov     ecx, dword ptr [g_bootChainScaled2_00541e8c]
+        mov     ecx, dword ptr [g_bootChainScaled2]
         mov     dword ptr [g_eventQueueEnd], esi
         mov     dword ptr [g_eventQueueTotal], ecx
         call    VertexSlotInitFlagWalk
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
-        mov     edx, dword ptr [g_bootChainState3_00541e98]
+        mov     edx, dword ptr [g_bootChainState3]
         mov     dword ptr [g_eventQueueEnd], esi
         mov     dword ptr [g_eventQueueTotal], edx
         call    VertexSlotInitFlagWalk
@@ -197,21 +197,21 @@ __declspec(naked) void BootInitChainHeavy(void)
         call    VertexSlotInitFlagWalk
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
-        mov     edx, dword ptr [g_bootChainScaled4_00541e9c]
+        mov     edx, dword ptr [g_bootChainScaled4]
         mov     dword ptr [g_eventQueueEnd], esi
         mov     dword ptr [g_eventQueueTotal], edx
         call    VertexSlotInitFlagWalk
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
-        mov     eax, dword ptr [g_bootChainScaled3_00541ea0]
+        mov     eax, dword ptr [g_bootChainScaled3]
         mov     dword ptr [g_xformEntityIdx], 3
         mov     dword ptr [g_eventQueueTotal], eax
         mov     dword ptr [g_eventQueueEnd], esi
         call    VertexSlotInitFlagWalk
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
-        mov     ecx, dword ptr [g_dispatchSave81_00541ea4]
-        mov     edx, dword ptr [g_bootChainSlot2_00541ea8]
+        mov     ecx, dword ptr [g_dispatchSave81]
+        mov     edx, dword ptr [g_bootChainSlot2]
         mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_xformEntityIdx], 4
         mov     dword ptr [g_pendingNodeType], 0x13
@@ -220,8 +220,8 @@ __declspec(naked) void BootInitChainHeavy(void)
         call    LinkedListBuilder
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
-        mov     eax, dword ptr [g_dispatchSave80_00541eac]
-        mov     ecx, dword ptr [g_bootChainState4_00541eb0]
+        mov     eax, dword ptr [g_dispatchSave80]
+        mov     ecx, dword ptr [g_bootChainState4]
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_xformEntityIdx], esi
         mov     dword ptr [g_pendingNodeType], 0x13
@@ -245,12 +245,12 @@ __declspec(naked) void BootInitChainHeavy(void)
         call    MStackCall_004063e0
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
-        mov     dword ptr [g_phaseThunkSlot8_0053a520], esi
-        mov     dword ptr [g_bootChainSlot3_00537e8c], esi
+        mov     dword ptr [g_phaseThunkSlot8], esi
+        mov     dword ptr [g_bootChainSlot3], esi
         mov     dword ptr [g_bootHeavyState], esi
         mov     dword ptr [g_particleInitState], esi
         mov     dword ptr [g_particleEmitterNode], esi
-        mov     dword ptr [g_dispatchSave523_004d5140], 0x7F000000
+        mov     dword ptr [g_dispatchSave523], 0x7F000000
         mov     dword ptr [g_walkCallback], esi
         call    AndShlStore
     L_boot_init_exit:

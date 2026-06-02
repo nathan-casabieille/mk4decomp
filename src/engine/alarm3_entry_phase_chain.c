@@ -126,8 +126,8 @@ extern unsigned int g_fightAxisPosY;
  *     writes 0x28f into [g_fightGroupHead*4+0x4c], calls
  *     InstallSelfThresholdDispatch.
  */
-extern unsigned int g_dispatchSave717_004ed590;
-extern unsigned int g_dispatchSave718_004ed5a8;
+extern unsigned int g_dispatchSave717;
+extern unsigned int g_dispatchSave718;
 extern void ArgSarStoreJmp(unsigned int *);
 extern void CmpEqInitCallElseJmp(void);
 extern void EsiEdiAliasDualMul10(void);
@@ -144,7 +144,7 @@ void Alarm3EntryPhaseChain(void) {
     ((ScenegraphNode *)(g_baseSel * 4))->fsm_state = 0x1012;
     MStackPushSet0008();
     if (g_framePauseFlag == 0)
-        ArgSarStoreJmp(&g_dispatchSave717_004ed590);
+        ArgSarStoreJmp(&g_dispatchSave717);
 }
 
 /* entry 2 (offset 0x40, 67b) */
@@ -153,7 +153,7 @@ void Alarm3PhaseChainEntry2(void) {
     ((ScenegraphNode *)(g_baseSel * 4))->fsm_state = g_walkCallback = 0x201;
     MStackPushSet0020();
     if (g_framePauseFlag == 0)
-        ArgSarStoreJmp(&g_dispatchSave718_004ed5a8);
+        ArgSarStoreJmp(&g_dispatchSave718);
 }
 
 /* entry 3 / body (offset 0x90, 211b) */

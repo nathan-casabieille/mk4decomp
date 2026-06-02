@@ -109,8 +109,8 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_counter_0053a51c;
-extern unsigned int g_dispatchSave881_004a2090;
-extern unsigned int g_dispatchSave509_004a2180;
+extern unsigned int g_dispatchSave881;
+extern unsigned int g_dispatchSave509;
 extern int GuardedScaledLookupCallJmp(void);
 extern void AndShlStore(void);
 extern void StackPopDispatchTagged(void);
@@ -142,7 +142,7 @@ extern void MatchInitMonsterChain(void);
  */
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
-extern unsigned int g_smState4Way_00541dc8;
+extern unsigned int g_smState4Way;
 
 __declspec(naked) void Phase3InstallSelf(void) {
     __asm {
@@ -172,7 +172,7 @@ __declspec(naked) void Phase3InstallSelf(void) {
         ret
     L_p3i_phase2:
         mov     dword ptr [g_walkCallback], edi
-        mov     dword ptr [g_smState4Way_00541dc8], edi
+        mov     dword ptr [g_smState4Way], edi
         mov     dword ptr [esi + 8], offset Phase3InstallSelf
         mov     dword ptr [esi + 0x84], 3
         mov     dword ptr [g_pendingNodeType], 4
@@ -203,11 +203,11 @@ __declspec(naked) void Phase3InstallSelf(void) {
         cmp     dword ptr [g_framePauseFlag], edi
         jne     short L_p3i_done
         push    edi
-        push    offset g_dispatchSave881_004a2090
+        push    offset g_dispatchSave881
         call    StoreTwoCall
         add     esp, 8
         push    edi
-        push    offset g_dispatchSave509_004a2180
+        push    offset g_dispatchSave509
         call    StoreTwoCall
         mov     dword ptr [esi + 8], offset Phase3InstallSelf
         mov     ecx, dword ptr [g_baseSel]

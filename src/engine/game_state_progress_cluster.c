@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave604_004e4b48;
+extern unsigned int g_dispatchSave604;
 extern void ArgSarStoreJmp(void);
 extern void CmpDispatchPushCallPop(void);
 extern void CrouchCounterCluster(void);
@@ -127,7 +127,7 @@ __declspec(naked) void GameStateProgressCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b01a
-        push     OFFSET g_dispatchSave604_004e4b48
+        push     OFFSET g_dispatchSave604
         call     ArgSarStoreJmp
         add      esp, 4
     L_b01a:

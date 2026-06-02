@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *   branch: ecx = g_hitPhase; eax = ecx-1; cmp eax,1;
  *           g_eventQueueCurrent = eax; if gt: clamp eax=1; jmp Push16Call.
  */
-extern unsigned int g_dispatchSave605_004dfd18;
+extern unsigned int g_dispatchSave605;
 extern unsigned int g_counter_0053a51c;
 extern unsigned int g_tickFlagF;
 extern unsigned int g_hitPhase;
@@ -127,7 +127,7 @@ int GuardedScaledLookupCallJmp(void) {
     unsigned int st;
     int e;
     idx = g_counter_0053a51c;
-    scaled = ((unsigned int)&g_dispatchSave605_004dfd18 >> 2) + idx;
+    scaled = ((unsigned int)&g_dispatchSave605 >> 2) + idx;
     g_walkCallback = (void (*)(void))idx;
     g_scaledInit_00542044 = scaled;
     g_eventQueueWorkType = *(unsigned int *)(scaled * 4);

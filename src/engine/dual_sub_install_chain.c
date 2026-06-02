@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave60_00501094;
-extern unsigned int g_installOwner2_0053a7a0;
+extern unsigned int g_dispatchSave60;
+extern unsigned int g_installOwner2;
 extern void ArgSarStoreJmp(void);
 extern void DoubleCallChainInit(void);
 extern void EsiInstallSetCbChainExtend_0048a970(void);
@@ -132,7 +132,7 @@ __declspec(naked) void DualSubInstallChain(void)
         je      short L_dsic_install1
         jmp     Thunk_ScaledNeg1SetPause
     L_dsic_install1:
-        mov     ecx, dword ptr [g_installOwner2_0053a7a0]
+        mov     ecx, dword ptr [g_installOwner2]
         mov     dword ptr [g_eventQueueNotMask], edx
         mov     dword ptr [g_eventQueueEnd], ecx
         mov     dword ptr [eax + 8], offset DualSubInstallChain
@@ -200,7 +200,7 @@ __declspec(naked) void DualSubInstallChain(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_dsic_sub2_ret
-        mov     edx, offset g_dispatchSave60_00501094
+        mov     edx, offset g_dispatchSave60
         mov     ecx, offset L_dsic_sub2
         shr     edx, 2
         mov     dword ptr [g_eventQueueEnd], edx

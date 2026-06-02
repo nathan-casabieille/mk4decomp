@@ -107,20 +107,20 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
-extern unsigned char g_dispatchSave1328_004ffd40;
-extern unsigned int g_dispatchSave1590_00ab5348;
-extern unsigned int g_dispatchSave1591_00ab574c;
+extern unsigned char g_dispatchSave1328;
+extern unsigned int g_dispatchSave1590;
+extern unsigned int g_dispatchSave1591;
 extern unsigned int g_setjmp;
-extern unsigned int g_dispatchSave1592_00ab5754;
-extern unsigned int g_dispatchSave1593_00ab5758;
+extern unsigned int g_dispatchSave1592;
+extern unsigned int g_dispatchSave1593;
 extern u32 g_titleAudioState;
 
 void ECM_OpenTrack(const char *name, unsigned int a, unsigned int b, void *c) {
     g_setjmp = 0;
-    strcpy((char *)&g_dispatchSave1590_00ab5348, name);
-    g_dispatchSave1591_00ab574c = a;
-    g_dispatchSave1328_004ffd40 = (unsigned char)b;
-    g_dispatchSave1593_00ab5758 = (unsigned int)c;
-    g_dispatchSave1592_00ab5754 = ECM_Open(name, (void *)a, b, (unsigned int)c);
-    g_titleAudioState = g_dispatchSave1592_00ab5754;
+    strcpy((char *)&g_dispatchSave1590, name);
+    g_dispatchSave1591 = a;
+    g_dispatchSave1328 = (unsigned char)b;
+    g_dispatchSave1593 = (unsigned int)c;
+    g_dispatchSave1592 = ECM_Open(name, (void *)a, b, (unsigned int)c);
+    g_titleAudioState = g_dispatchSave1592;
 }

@@ -123,7 +123,7 @@ extern unsigned int g_fightAxisPosY;
  *   chain[g_xformEntityIdx*4 + 0x14] = 0x80; chain[+0x10] = g_walkCallback = 0x004ba0e0;
  *   tail-jmp TestEqJmpInitFightGroup.
  */
-extern unsigned int g_dispatchSave126_0050f1bc;
+extern unsigned int g_dispatchSave126;
 extern void FramePauseScaledStore(void);
 extern void MStackBracket4_ListInsertZeroFill(void);
 extern void MStackPush2ChainPrepend(void);
@@ -134,7 +134,7 @@ __declspec(naked) void AudioChainStateInitSequence(void)
 {
     __asm
     {
-        mov     eax, offset g_dispatchSave126_0050f1bc
+        mov     eax, offset g_dispatchSave126
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
         call    FramePauseScaledStore

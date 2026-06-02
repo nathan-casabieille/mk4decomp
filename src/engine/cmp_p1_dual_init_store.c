@@ -26,8 +26,8 @@
 
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_scaledInit_00542048;
-extern unsigned int g_phaseThunkArr3_0053a1a0;
-extern unsigned int g_phaseThunkArr2_0053a518;
+extern unsigned int g_phaseThunkArr3;
+extern unsigned int g_phaseThunkArr2;
 extern unsigned int g_roundResetSlot;
 extern unsigned int g_phaseThunkArr;
 

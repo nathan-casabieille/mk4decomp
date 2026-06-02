@@ -108,27 +108,27 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave820_004f42d8;
-extern unsigned int g_dispatchSave821_004f42dc;
+extern unsigned int g_dispatchSave820;
+extern unsigned int g_dispatchSave821;
 extern unsigned int g_menuPageVar;
-extern unsigned int g_dispatchSave872_004f6164;
-extern unsigned int g_dispatchSave873_004f6190;
-extern unsigned int g_dispatchSave874_004f61a0;
-extern unsigned int g_dispatchSave875_004f61b0;
-extern unsigned int g_dispatchSave876_004f61bc;
-extern unsigned int g_dispatchSave877_004f61c8;
-extern unsigned int g_dispatchSave878_004f61d0;
-extern unsigned int g_dispatchSave879_004f61d8;
-extern unsigned int g_dispatchSave721_004f61e0;
+extern unsigned int g_dispatchSave872;
+extern unsigned int g_dispatchSave873;
+extern unsigned int g_dispatchSave874;
+extern unsigned int g_dispatchSave875;
+extern unsigned int g_dispatchSave876;
+extern unsigned int g_dispatchSave877;
+extern unsigned int g_dispatchSave878;
+extern unsigned int g_dispatchSave879;
+extern unsigned int g_dispatchSave721;
 extern unsigned int g_menuPageDispatch;
 extern unsigned int g_menuRestoreD;
 extern unsigned int g_menuRestoreA;
 extern unsigned int g_menuRestoreB;
 extern unsigned int g_menuRestoreC;
 extern unsigned int g_byte_00543ab4;
-extern unsigned int g_dispatchSave1479_00ab41c8;
-extern unsigned int g_dispatchSave1490_00ab4328;
-extern unsigned int g_dispatchSave1492_00ab4358;
+extern unsigned int g_dispatchSave1479;
+extern unsigned int g_dispatchSave1490;
+extern unsigned int g_dispatchSave1492;
 extern void DrawMenu(void);
 extern void Helper_Sprintf(void);
 extern void Menu_FillColonField(void);
@@ -137,13 +137,13 @@ __declspec(naked) void Menu_FillOptionValues(void)
 {
     __asm {
         mov      eax, dword ptr [g_menuPageVar]
-        mov      dword ptr [esp + 8], OFFSET g_dispatchSave721_004f61e0
+        mov      dword ptr [esp + 8], OFFSET g_dispatchSave721
         test     eax, eax
-        mov      dword ptr [esp + 0xc], OFFSET g_dispatchSave879_004f61d8
-        mov      dword ptr [esp + 0x10], OFFSET g_dispatchSave878_004f61d0
-        mov      dword ptr [esp + 0x14], OFFSET g_dispatchSave877_004f61c8
-        mov      dword ptr [esp + 0x18], OFFSET g_dispatchSave876_004f61bc
-        mov      dword ptr [esp + 0x1c], OFFSET g_dispatchSave875_004f61b0
+        mov      dword ptr [esp + 0xc], OFFSET g_dispatchSave879
+        mov      dword ptr [esp + 0x10], OFFSET g_dispatchSave878
+        mov      dword ptr [esp + 0x14], OFFSET g_dispatchSave877
+        mov      dword ptr [esp + 0x18], OFFSET g_dispatchSave876
+        mov      dword ptr [esp + 0x1c], OFFSET g_dispatchSave875
         je       L_8152
         mov      esi, OFFSET g_menuPageVar
     L_80c2:
@@ -163,17 +163,17 @@ __declspec(naked) void Menu_FillOptionValues(void)
         mov      eax, dword ptr [g_byte_00543ab4]
     L_80ea:
         test     eax, eax
-        mov      eax, OFFSET g_dispatchSave820_004f42d8
+        mov      eax, OFFSET g_dispatchSave820
         jne      short L_810e
-        mov      eax, OFFSET g_dispatchSave821_004f42dc
+        mov      eax, OFFSET g_dispatchSave821
         push     eax
         jmp      short L_813b
     L_80fb:
         mov      eax, dword ptr [g_menuPageDispatch]
         test     eax, eax
-        mov      eax, OFFSET g_dispatchSave874_004f61a0
+        mov      eax, OFFSET g_dispatchSave874
         jne      short L_810e
-        mov      eax, OFFSET g_dispatchSave873_004f6190
+        mov      eax, OFFSET g_dispatchSave873
     L_810e:
         push     eax
         jmp      short L_813b
@@ -181,11 +181,11 @@ __declspec(naked) void Menu_FillOptionValues(void)
         mov      eax, dword ptr [g_menuRestoreA]
         push     eax
     L_8117:
-        push     OFFSET g_dispatchSave872_004f6164
-        push     OFFSET g_dispatchSave1479_00ab41c8
+        push     OFFSET g_dispatchSave872
+        push     OFFSET g_dispatchSave1479
         call     Helper_Sprintf
         add      esp, 0xc
-        push     OFFSET g_dispatchSave1479_00ab41c8
+        push     OFFSET g_dispatchSave1479
         jmp      short L_813b
     L_8130:
         mov      ecx, dword ptr [g_menuRestoreD]
@@ -201,11 +201,11 @@ __declspec(naked) void Menu_FillOptionValues(void)
         test     eax, eax
         jne      L_80c2
     L_8152:
-        mov      eax, dword ptr [g_dispatchSave1490_00ab4328]
+        mov      eax, dword ptr [g_dispatchSave1490]
         push     eax
         push     OFFSET g_menuPageVar
         call     DrawMenu
-        mov      eax, dword ptr [g_dispatchSave1492_00ab4358]
+        mov      eax, dword ptr [g_dispatchSave1492]
         add      esp, 8
         pop      esi
         pop      ebx

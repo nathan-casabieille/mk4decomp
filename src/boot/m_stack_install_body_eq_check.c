@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave589_004d5134;
-extern unsigned int g_bootChainPair1_00541e84;
+extern unsigned int g_dispatchSave589;
+extern unsigned int g_bootChainPair1;
 extern void MStackPush2ChainLLInsert(void);
 
 void MStackInstallBodyEqCheck(void) {
@@ -119,9 +119,9 @@ void MStackInstallBodyEqCheck(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4], ecx
-        mov     edx, dword ptr [g_bootChainPair1_00541e84]
+        mov     edx, dword ptr [g_bootChainPair1]
         mov     eax, dword ptr [g_walkCallback]
-        mov     ecx, dword ptr [g_dispatchSave589_004d5134]
+        mov     ecx, dword ptr [g_dispatchSave589]
         mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [g_walkCallback], ecx

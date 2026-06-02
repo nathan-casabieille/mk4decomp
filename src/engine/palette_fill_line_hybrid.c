@@ -126,105 +126,105 @@ extern void DSoundQueryProperty(void);
 extern void FreeImpl(void);
 extern void Helper_AuxAudio_PostInit(void);
 
-extern unsigned int g_dispatchSave529_004d29f8;
-extern unsigned int g_dispatchSave528_004d29fc;
-extern unsigned int g_dispatchSave515_004d2b90;
-extern unsigned int g_dispatchSave566_004d2b94;
+extern unsigned int g_dispatchSave529;
+extern unsigned int g_dispatchSave528;
+extern unsigned int g_dispatchSave515;
+extern unsigned int g_dispatchSave566;
 extern unsigned int g_crtMemMoveLo;
 extern unsigned int g_crtMemMoveHi;
 extern unsigned int g_crtMemMoveVar;
-extern unsigned int g_dispatchVar40_004d505c;
-extern unsigned int g_renderer2_initVar_004f478c;
-extern unsigned int g_renderer2_initVar2_004f47a0;
-extern unsigned int g_dispatchSave500_004f47a8;
-extern unsigned int g_renderer2_initVar3_004f47b0;
-extern unsigned int g_dispatchSave526_004f5398;
-extern unsigned int g_dispatchSave525_004f5798;
-extern unsigned int g_dispatchSave524_004f613c;
+extern unsigned int g_dispatchVar40;
+extern unsigned int g_renderer2_initVar;
+extern unsigned int g_renderer2_initVar2;
+extern unsigned int g_dispatchSave500;
+extern unsigned int g_renderer2_initVar3;
+extern unsigned int g_dispatchSave526;
+extern unsigned int g_dispatchSave525;
+extern unsigned int g_dispatchSave524;
 extern unsigned int g_texturedTriVar;
 extern unsigned int g_crtFilbufBase;
 extern unsigned int g_crtDispatchEnd;
 extern unsigned int g_crtCType;
 extern unsigned int g_crtLocaleNumeric;
 extern unsigned int g_crtFpuTbyteVar;
-extern unsigned int g_crtFpuTbyteVar2_00522e68;
+extern unsigned int g_crtFpuTbyteVar2;
 extern unsigned int g_crtFpuStateBuf;
 extern unsigned int g_crtFpuStack;
 extern unsigned int g_dispatchPair;
 extern unsigned int g_crtTimeFmtPrefs;
 extern u8 g_renderer2_buf3[];
 extern unsigned int g_installCountdownBase;
-extern unsigned int g_dispatchInit1007_0054429c;
-extern unsigned int g_dispatchSave15_005442a0;
-extern unsigned int g_dispatchSave14_005442a4;
+extern unsigned int g_dispatchInit1007;
+extern unsigned int g_dispatchSave15;
+extern unsigned int g_dispatchSave14;
 extern unsigned int g_glideTileSize;
 extern unsigned int g_glideMipInit;
 extern u8 g_renderer2_buf2[];
-extern unsigned int g_renderer2_baseB_0058c760;
-extern unsigned int g_renderer2_var3_0058c764;
+extern unsigned int g_renderer2_baseB;
+extern unsigned int g_renderer2_var3;
 extern u8 g_renderer2_buf1[];
 extern unsigned int g_comptr_0058c7ac;
 extern unsigned int g_renderer2_obj;
 extern unsigned int g_990_iface;
 extern int g_renderer2_present_rc;
-extern unsigned int g_dispatchTab60_0058c7dc;
-extern unsigned int g_dd3SurfaceCreate_0058c858;
-extern unsigned int g_dd3SurfaceSlot_0058c85c;
+extern unsigned int g_dispatchTab60;
+extern unsigned int g_dd3SurfaceCreate;
+extern unsigned int g_dd3SurfaceSlot;
 extern unsigned int g_dsmi_b70_main;
 extern unsigned int g_dsmi_b70_ret;
 extern unsigned int g_960_iface;
-extern unsigned int g_renderer4_ifaceBase_0058c8d8;
-extern unsigned int g_renderer4_dispatchSlot_0058c8dc;
+extern unsigned int g_renderer4_ifaceBase;
+extern unsigned int g_renderer4_dispatchSlot;
 extern unsigned int g_dsmi_3a0_main;
 extern unsigned int g_dsmi_3a0_ret;
 extern unsigned int g_190_iface;
-extern unsigned int g_dispatchSave1609_007af4e8;
-extern unsigned int g_dispatchSave1610_007af4ea;
-extern unsigned int g_dispatchSave1611_007af4f0;
-extern unsigned int g_dispatchSave1612_007af4f2;
-extern unsigned int g_dispatchSave1613_007af4f4;
-extern unsigned int g_dispatchSave1614_007af4f5;
-extern unsigned int g_dispatchSave1615_007af4f8;
-extern unsigned int g_dispatchSave1616_007af4f9;
-extern unsigned int g_dispatchSave1617_007af4fa;
-extern unsigned int g_dispatchSave1618_007af4fc;
-extern unsigned int g_dispatchSave1619_007af502;
+extern unsigned int g_dispatchSave1609;
+extern unsigned int g_dispatchSave1610;
+extern unsigned int g_dispatchSave1611;
+extern unsigned int g_dispatchSave1612;
+extern unsigned int g_dispatchSave1613;
+extern unsigned int g_dispatchSave1614;
+extern unsigned int g_dispatchSave1615;
+extern unsigned int g_dispatchSave1616;
+extern unsigned int g_dispatchSave1617;
+extern unsigned int g_dispatchSave1618;
+extern unsigned int g_dispatchSave1619;
 extern unsigned int g_byte_007af508;
-extern unsigned int g_dispatchSave1620_007af934;
-extern unsigned int g_dispatchSave1621_007af938;
-extern unsigned int g_dispatchSave1622_007af93c;
+extern unsigned int g_dispatchSave1620;
+extern unsigned int g_dispatchSave1621;
+extern unsigned int g_dispatchSave1622;
 extern int g_renderer4_active;
-extern unsigned int g_dispatchSave1623_007af944;
+extern unsigned int g_dispatchSave1623;
 extern int g_renderer4_surface;
-extern unsigned int g_dispatchSave1624_007af94c;
-extern unsigned int g_dispatchSave1572_00ab4e34;
+extern unsigned int g_dispatchSave1624;
+extern unsigned int g_dispatchSave1572;
 extern u16 g_texStripeBuf[];
-extern unsigned int g_dispatchSave1348_00f6ce50;
-extern unsigned int g_dispatchSave1400_00f85b34;
+extern unsigned int g_dispatchSave1348;
+extern unsigned int g_dispatchSave1400;
 extern unsigned int g_table_00f85b60;
-extern unsigned int g_dispatchSave1406_00f8fac4;
+extern unsigned int g_dispatchSave1406;
 extern u8 g_audioChannelTable[];
 extern unsigned int g_flags_00f8fade;
 extern unsigned int g_flags_00f8fadf;
-extern unsigned int g_dispatchSave1409_00f9eb68;
+extern unsigned int g_dispatchSave1409;
 extern u16 g_audioChannelQueue[];
-extern unsigned int g_dispatchSave1413_00f9ebc0;
-extern unsigned int g_dispatchSave1414_00f9ebc8;
+extern unsigned int g_dispatchSave1413;
+extern unsigned int g_dispatchSave1414;
 extern void * g_dsoundPrimary;
-extern unsigned int g_dispatchSave1418_00f9eff4;
-extern unsigned int g_dispatchSave1419_00f9eff8;
-extern unsigned int g_dispatchSave1420_00f9effc;
-extern unsigned int g_dispatchSave1421_00f9f000;
-extern unsigned int g_dispatchSave1426_00f9f820;
+extern unsigned int g_dispatchSave1418;
+extern unsigned int g_dispatchSave1419;
+extern unsigned int g_dispatchSave1420;
+extern unsigned int g_dispatchSave1421;
+extern unsigned int g_dispatchSave1426;
 extern u32 g_initRet;
-extern unsigned int g_dispatchSave1444_00f9fc10;
-extern unsigned int g_dispatchSave1445_00f9fc14;
-extern unsigned int g_dispatchSave1447_00f9fc1c;
-extern unsigned int g_dispatchSave1448_00f9fc20;
-extern unsigned int g_dispatchSave1451_00f9fc30;
-extern unsigned int g_dispatchSave1455_00f9fc64;
-extern unsigned int g_dispatchSave1459_00f9fc74;
-extern unsigned int g_dispatchSave1462_00f9fd9c;
+extern unsigned int g_dispatchSave1444;
+extern unsigned int g_dispatchSave1445;
+extern unsigned int g_dispatchSave1447;
+extern unsigned int g_dispatchSave1448;
+extern unsigned int g_dispatchSave1451;
+extern unsigned int g_dispatchSave1455;
+extern unsigned int g_dispatchSave1459;
+extern unsigned int g_dispatchSave1462;
 extern unsigned int g_arr_00fa0de0;
 extern unsigned int g_iid;
 extern void Calloc(void);
@@ -323,7 +323,7 @@ extern unsigned int g_iat_GetLocaleInfoW;
 extern unsigned int g_iat_GetLocaleInfoA;
 
 /* @addr 0x004cdae0 (312b crt) - WideCharToMultiByte dispatcher (mbslen/wcsstr style).
- *   Caches state in g_dispatchSave1451_00f9fc30 (1/2). Probes via IAT[0x4d20b8] with ".A"/".A0"
+ *   Caches state in g_dispatchSave1451 (1/2). Probes via IAT[0x4d20b8] with ".A"/".A0"
  *   buffers (0x4d2f20/0x4d2f24). State 2 fast path: direct IAT[0x4d20bc] call.
  *   State 1 conversion path: allocate via Calloc, WideCharToMultiByte via
  *   IAT[0x4d20e4], MultiByteToWideChar(?) via IAT[0x4d20b8], free temp via FreeImpl.
@@ -331,7 +331,7 @@ extern unsigned int g_iat_GetLocaleInfoA;
 __declspec(naked) void WcToMbDispatcher(void) {
     __asm {
         push    ecx
-        mov     eax, dword ptr [g_dispatchSave1451_00f9fc30]
+        mov     eax, dword ptr [g_dispatchSave1451]
         push    ebx
         push    ebp
         push    esi
@@ -349,14 +349,14 @@ __declspec(naked) void WcToMbDispatcher(void) {
         test    eax, eax
         jz      L_wm_tryAlt
         mov     eax, 1
-        mov     dword ptr [g_dispatchSave1451_00f9fc30], eax
+        mov     dword ptr [g_dispatchSave1451], eax
     L_wm_haveState:
         cmp     eax, 2
         jne     short L_wm_state1
         mov     eax, [esp + 0x2c]
         cmp     eax, edi
         jne     short L_wm_haveCP1
-        mov     eax, dword ptr [g_dispatchSave1444_00f9fc10]
+        mov     eax, dword ptr [g_dispatchSave1444]
     L_wm_haveCP1:
         mov     edx, [esp + 0x24]
         mov     ecx, [esp + 0x20]
@@ -381,7 +381,7 @@ __declspec(naked) void WcToMbDispatcher(void) {
         mov     [esp + 0x2c], edi
         cmp     ebx, edi
         jne     short L_wm_haveCP2
-        mov     ebx, dword ptr [g_dispatchSave1448_00f9fc20]
+        mov     ebx, dword ptr [g_dispatchSave1448]
     L_wm_haveCP2:
         mov     eax, [esp + 0x30]
         mov     ebp, [esp + 0x20]
@@ -459,7 +459,7 @@ __declspec(naked) void WcToMbDispatcher(void) {
         test    eax, eax
         jz      short L_wm_returnZero
         mov     eax, 2
-        mov     dword ptr [g_dispatchSave1451_00f9fc30], eax
+        mov     dword ptr [g_dispatchSave1451], eax
         jmp     L_wm_haveState
     L_wm_returnZero:
         pop     edi

@@ -110,9 +110,9 @@ extern unsigned int g_fightAxisPosY;
 
 extern u32 g_gsmActiveFlag;
 extern u32 g_titleStateE;
-extern unsigned int g_dispatchSave1324_004f78cc;
-extern unsigned int g_dispatchSave1325_004f78d0;
-extern unsigned int g_dispatchSave1326_004f78d4;
+extern unsigned int g_dispatchSave1324;
+extern unsigned int g_dispatchSave1325;
+extern unsigned int g_dispatchSave1326;
 extern void DrawScene(void);
 extern void Loop16Init(void);
 extern void Helper_TitleAudioReset(void);

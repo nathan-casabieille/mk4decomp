@@ -108,11 +108,11 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave137_0050b13c;
+extern unsigned int g_dispatchSave137;
 extern unsigned int g_load_0052ab10;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
-extern unsigned int g_dispatchSave62_00543088;
+extern unsigned int g_dispatchSave62;
 extern void BootInitGuardedCallChain(void);
 extern void TableWalkBoundedCmp(void);
 extern void ZeroThreeFields_00404ed0(void);
@@ -129,7 +129,7 @@ __declspec(naked) void DualTableMappedDispatch(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_dtmd_ret
-        mov     eax, offset g_dispatchSave137_0050b13c
+        mov     eax, offset g_dispatchSave137
         shr     eax, 2
         mov     dword ptr [g_currentNodeIdx], eax
         call    LoadGeoAsset_Default
@@ -137,7 +137,7 @@ __declspec(naked) void DualTableMappedDispatch(void)
         test    eax, eax
         jne     L_dtmd_ret
         mov     eax, dword ptr [g_dlNalt1]
-        mov     esi, offset g_dispatchSave62_00543088
+        mov     esi, offset g_dispatchSave62
         shr     esi, 2
         cmp     eax, 0xf
         mov     ecx, esi

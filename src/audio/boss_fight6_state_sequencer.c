@@ -108,9 +108,9 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave884_004d2320;
-extern unsigned int g_dispatchSave885_004d2330;
-extern unsigned int g_dispatchSave886_004d2340;
+extern unsigned int g_dispatchSave884;
+extern unsigned int g_dispatchSave885;
+extern unsigned int g_dispatchSave886;
 extern unsigned int g_audioStreamState;
 extern void AudioInitInstallerPair(void);
 extern void BootInitGuardedCallChain(void);
@@ -197,7 +197,7 @@ __declspec(naked) void Match_OutcomeScreen(void)
     L_3e46:
         /* case 0: initial spawn - pick mesh by flag, install slots */
         push     0xffec0000
-        push     OFFSET g_dispatchSave884_004d2320
+        push     OFFSET g_dispatchSave884
         call     GuardedSetupCallTailJmp
         mov      eax, dword ptr [g_baseSel]
         mov      ecx, dword ptr [g_currentNodeIdx]
@@ -206,9 +206,9 @@ __declspec(naked) void Match_OutcomeScreen(void)
         mov      dword ptr [eax*4 + 0x30], ecx
         mov      eax, dword ptr [g_audioBankSel]
         cmp      eax, edi
-        mov      eax, OFFSET g_dispatchSave885_004d2330
+        mov      eax, OFFSET g_dispatchSave885
         je       short L_3e82
-        mov      eax, OFFSET g_dispatchSave886_004d2340
+        mov      eax, OFFSET g_dispatchSave886
     L_3e82:
         push     0x140000
         push     eax

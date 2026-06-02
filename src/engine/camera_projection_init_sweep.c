@@ -108,11 +108,11 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave955_004e86d8;
+extern unsigned int g_dispatchSave955;
 extern unsigned int g_dispatchArg;
 extern unsigned int g_audioVoiceCounter;
 extern unsigned int g_cameraProjSlot;
-extern unsigned int g_installCountdownArr3_00542408;
+extern unsigned int g_installCountdownArr3;
 extern void BootPhaseGateBracketedInit(void);
 extern void Chain2CallMul10Accum(void);
 extern void FramePauseScaledStore(void);
@@ -136,7 +136,7 @@ __declspec(naked) void CameraProjectionInitSweep(void)
         test     eax, eax
         jne      L_8430
         mov      eax, dword ptr [g_walkCallback]
-        mov      edi, OFFSET g_installCountdownArr3_00542408
+        mov      edi, OFFSET g_installCountdownArr3
         shr      edi, 2
         mov      dword ptr [g_currentNodeFlags], eax
         mov      dword ptr [g_pendingNodeType], edi
@@ -149,7 +149,7 @@ __declspec(naked) void CameraProjectionInitSweep(void)
         test     al, bl
         jne      L_8430
         mov      eax, dword ptr [g_currentNodeIdx]
-        mov      ecx, OFFSET g_dispatchSave955_004e86d8
+        mov      ecx, OFFSET g_dispatchSave955
         shr      ecx, 2
         mov      dword ptr [g_eventQueueTotal], eax
         mov      dword ptr [g_cameraProjSlot], eax

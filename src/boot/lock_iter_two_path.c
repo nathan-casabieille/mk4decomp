@@ -123,8 +123,8 @@ extern unsigned int g_fightAxisPosY;
  *   if (edi != 1): eax = ebp.
  *   pop all regs.
  */
-extern unsigned int g_dispatchSave1465_00f9fdb4;
-extern unsigned int g_dispatchSave1466_00fa0dc0;
+extern unsigned int g_dispatchSave1465;
+extern unsigned int g_dispatchSave1466;
 extern void CallTestPushSubCall(void);
 extern void Lock(void);
 extern void TableLookupIatCall(void);
@@ -143,14 +143,14 @@ __declspec(naked) void LockIterTwoPath(void) {
         mov     [esp + 0x14], esi
         xor     ebp, ebp
         call    Lock
-        mov     eax, dword ptr [g_dispatchSave1466_00fa0dc0]
+        mov     eax, dword ptr [g_dispatchSave1466]
         mov     edi, [esp + 0x1c]
         add     esp, 4
         cmp     eax, esi
         _emit   7eh
         _emit   7ch
         mov     bl, 0x83
-        mov     eax, dword ptr [g_dispatchSave1465_00f9fdb4]
+        mov     eax, dword ptr [g_dispatchSave1465]
         mov     eax, [eax + esi*4]
         test    eax, eax
         _emit   74h
@@ -161,7 +161,7 @@ __declspec(naked) void LockIterTwoPath(void) {
         push    eax
         push    esi
         call    TwoPathIATDispatch_004c7030
-        mov     ecx, dword ptr [g_dispatchSave1465_00f9fdb4]
+        mov     ecx, dword ptr [g_dispatchSave1465]
         add     esp, 8
         mov     eax, [ecx + esi*4]
         mov     ecx, [eax + 0x0c]
@@ -194,13 +194,13 @@ __declspec(naked) void LockIterTwoPath(void) {
         _emit   75h
         _emit   02h
         or      ebp, eax
-        mov     edx, dword ptr [g_dispatchSave1465_00f9fdb4]
+        mov     edx, dword ptr [g_dispatchSave1465]
         mov     eax, [edx + esi*4]
         push    eax
         push    esi
         call    TwoPathIATDispatch_004c70a0
         add     esp, 8
-        mov     eax, dword ptr [g_dispatchSave1466_00fa0dc0]
+        mov     eax, dword ptr [g_dispatchSave1466]
         inc     esi
         cmp     esi, eax
         _emit   7ch

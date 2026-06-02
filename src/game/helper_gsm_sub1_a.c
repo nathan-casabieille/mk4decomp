@@ -6,10 +6,10 @@
 
 /* Menu_Direct3DUnavailableDialog - sister of 0x4b8630 for 0x004f5050 menu. */
 extern unsigned int g_byte_00ab42ec;
-extern unsigned int g_gsmVar2_004f5050;
-extern unsigned int g_dispatchSave868_004f5054;
-extern unsigned int g_dispatchSave1486_00ab4304;
-extern unsigned int g_dispatchSave1496_00ab436c;
+extern unsigned int g_gsmVar2;
+extern unsigned int g_dispatchSave868;
+extern unsigned int g_dispatchSave1486;
+extern unsigned int g_dispatchSave1496;
 extern void DrawMenu(void);
 extern void Menu_PollNavInput(void);
 extern void Menu_FindNextSelectable(void);
@@ -25,25 +25,25 @@ __declspec(naked) void Menu_Direct3DUnavailableDialog(void)
         push    esi
         jne     short L_b83_skipSet
         mov     bl, al
-        push    offset g_gsmVar2_004f5050
+        push    offset g_gsmVar2
         or      bl, 1
         push    0
         mov     byte ptr [g_byte_00ab42ec], bl
         call    Menu_FindNextSelectable
         add     esp, 8
-        mov     dword ptr [g_dispatchSave1486_00ab4304], eax
+        mov     dword ptr [g_dispatchSave1486], eax
         jmp     short L_b83_afterFirst
     L_b83_skipSet:
-        mov     eax, dword ptr [g_dispatchSave1486_00ab4304]
+        mov     eax, dword ptr [g_dispatchSave1486]
     L_b83_afterFirst:
-        mov     ecx, dword ptr [g_dispatchSave1496_00ab436c]
+        mov     ecx, dword ptr [g_dispatchSave1496]
         sub     ecx, 0
         je      L_b83_case0
         sub     ecx, 2
         je      short L_b83_case2
         sub     ecx, 0x43
         jne     L_b83_drawMenu
-        mov     dword ptr [g_dispatchSave1496_00ab436c], 0
+        mov     dword ptr [g_dispatchSave1496], 0
         jmp     L_b83_drawMenu
     L_b83_case2:
         push    1
@@ -55,46 +55,46 @@ __declspec(naked) void Menu_Direct3DUnavailableDialog(void)
         jne     short L_b83_skipDesc
         test    bl, 1
         je      short L_b83_skipDesc
-        mov     eax, dword ptr [g_dispatchSave1486_00ab4304]
-        push    offset g_gsmVar2_004f5050
+        mov     eax, dword ptr [g_dispatchSave1486]
+        push    offset g_gsmVar2
         push    eax
         call    Menu_FindPrevSelectable
         add     esp, 8
-        mov     dword ptr [g_dispatchSave1486_00ab4304], eax
+        mov     dword ptr [g_dispatchSave1486], eax
         jmp     short L_b83_checkBit2
     L_b83_skipDesc:
-        mov     eax, dword ptr [g_dispatchSave1486_00ab4304]
+        mov     eax, dword ptr [g_dispatchSave1486]
     L_b83_checkBit2:
         test    esi, esi
         jne     short L_b83_drawMenu
         test    bl, 2
         je      short L_b83_checkBit4
-        push    offset g_gsmVar2_004f5050
+        push    offset g_gsmVar2
         push    eax
         call    Menu_FindNextSelectable
         add     esp, 8
-        mov     dword ptr [g_dispatchSave1486_00ab4304], eax
+        mov     dword ptr [g_dispatchSave1486], eax
     L_b83_checkBit4:
         test    esi, esi
         jne     short L_b83_drawMenu
         test    bl, 0x10
         je      short L_b83_checkBit5
-        movsx   ecx, word ptr [eax*8 + g_dispatchSave868_004f5054]
-        mov     dword ptr [g_dispatchSave1496_00ab436c], ecx
+        movsx   ecx, word ptr [eax*8 + g_dispatchSave868]
+        mov     dword ptr [g_dispatchSave1496], ecx
     L_b83_checkBit5:
         test    esi, esi
         jne     short L_b83_drawMenu
         test    bl, 0x20
         je      short L_b83_drawMenu
-        mov     dword ptr [g_dispatchSave1496_00ab436c], 0x45
+        mov     dword ptr [g_dispatchSave1496], 0x45
         jmp     short L_b83_drawMenu
     L_b83_case0:
-        mov     dword ptr [g_dispatchSave1496_00ab436c], 2
+        mov     dword ptr [g_dispatchSave1496], 2
     L_b83_drawMenu:
         push    eax
-        push    offset g_gsmVar2_004f5050
+        push    offset g_gsmVar2
         call    DrawMenu
-        mov     eax, dword ptr [g_dispatchSave1496_00ab436c]
+        mov     eax, dword ptr [g_dispatchSave1496]
         add     esp, 8
         pop     esi
         pop     ebx

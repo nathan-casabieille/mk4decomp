@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave733_004ece38;
+extern unsigned int g_dispatchSave733;
 extern unsigned int g_particleEmitterNode;
 extern void AudioMixerStep(void);
 extern void MStackCall_00406340(void);
@@ -129,7 +129,7 @@ void MStackBracketedScaledStores(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueCurrent]
         inc     eax
-        mov     edx, offset g_dispatchSave733_004ece38
+        mov     edx, offset g_dispatchSave733
         mov     dword ptr [g_matrixStackTop], eax
         shr     edx, 2
         mov     dword ptr [eax*4], ecx

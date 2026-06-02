@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_loaded;
-extern unsigned int g_dispatchClr0_0052ab48;
+extern unsigned int g_dispatchClr0;
 extern unsigned int g_player1State;
 extern unsigned int g_player2State;
 extern void CallSetPause(void);
@@ -193,7 +193,7 @@ __declspec(naked) void AiWalkCounterDualCluster(void)
         sub      eax, edi
         je       L_80c4
         dec      eax
-        mov      eax, dword ptr [g_dispatchClr0_0052ab48]
+        mov      eax, dword ptr [g_dispatchClr0]
         mov      dword ptr [g_walkCallback], eax
         je       L_8005
         cmp      eax, edi

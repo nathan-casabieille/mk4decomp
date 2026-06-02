@@ -5,20 +5,20 @@
 
 extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_dispatchSave1433_00f9f8c0;
-extern unsigned int g_dispatchSave1435_00f9fac8;
-extern unsigned int g_dispatchSave1467_00fa0dc4;
-extern unsigned int g_dispatchSave1436_00f9facc;
-extern unsigned int g_dispatchSave1437_00f9fad0;
-extern unsigned int g_dispatchSave1438_00f9fad4;
-extern unsigned int g_dispatchSave1439_00f9fad8;
+extern unsigned int g_dispatchSave1433;
+extern unsigned int g_dispatchSave1435;
+extern unsigned int g_dispatchSave1467;
+extern unsigned int g_dispatchSave1436;
+extern unsigned int g_dispatchSave1437;
+extern unsigned int g_dispatchSave1438;
+extern unsigned int g_dispatchSave1439;
 
 void InitGlobalsAndZero(void) {
-    memset(&g_dispatchSave1433_00f9f8c0, 0, 0x40 * 4 + 1);
-    g_dispatchSave1435_00f9fac8 = 0;
-    g_dispatchSave1467_00fa0dc4 = 0;
-    g_dispatchSave1436_00f9facc = 0;
-    g_dispatchSave1437_00f9fad0 = 0;
-    g_dispatchSave1438_00f9fad4 = 0;
-    g_dispatchSave1439_00f9fad8 = 0;
+    memset(&g_dispatchSave1433, 0, 0x40 * 4 + 1);
+    g_dispatchSave1435 = 0;
+    g_dispatchSave1467 = 0;
+    g_dispatchSave1436 = 0;
+    g_dispatchSave1437 = 0;
+    g_dispatchSave1438 = 0;
+    g_dispatchSave1439 = 0;
 }

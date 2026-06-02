@@ -117,8 +117,8 @@ extern void func_0047ef70(void);
 extern void AerialBlockFsmCluster(void);
 extern void func_0047fa30(void);
 /* extern void AllocNode(void); -- defined elsewhere with diff sig */
-extern unsigned int g_dispatchSave744_004ed778;
-extern unsigned int g_dispatchSave135_0050b8dc;
+extern unsigned int g_dispatchSave744;
+extern unsigned int g_dispatchSave135;
 
 extern unsigned int g_load_0052ab10;
 extern void EntryThunkBodyStateMachine(void);
@@ -136,7 +136,7 @@ __declspec(naked) void ThrowGrabPoseCopyCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f529
-        push     OFFSET g_dispatchSave744_004ed778
+        push     OFFSET g_dispatchSave744
         call     TripleScaledChainStore
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -172,7 +172,7 @@ __declspec(naked) void ThrowGrabPoseCopyCluster(void)
         mov      ecx, dword ptr [g_baseSel]
         mov      eax, 0x405
         mov      dword ptr [g_walkCallback], eax
-        mov      edx, OFFSET g_dispatchSave135_0050b8dc
+        mov      edx, OFFSET g_dispatchSave135
         mov      dword ptr [ecx*4 + 0x74], eax
         mov      eax, dword ptr [g_matrixStackTop]
         mov      ecx, dword ptr [g_fightGroupHead]

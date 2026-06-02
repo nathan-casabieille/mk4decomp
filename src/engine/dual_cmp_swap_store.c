@@ -113,18 +113,18 @@ extern unsigned int g_fightAxisPosY;
  *   g_xformEntityIdx = edi; if (edx != ebx) g_xformEntityIdx = esi;
  *   g_currentNodeFlags = chain[g_xformEntityIdx + 0x68];
  *   g_xformScratch2088 = chain[g_xformEntityIdx + 0x6c];
- *   ecx = [0x53815c]; g_eventQueueTotal = g_dispatchVar30_00542010;
- *   g_xformEntityIdx = ecx; g_pendingNodeType = esi; g_eventQueueEnd = g_dispatchVar29_00542014;
+ *   ecx = [0x53815c]; g_eventQueueTotal = g_dispatchVar30;
+ *   g_xformEntityIdx = ecx; g_pendingNodeType = esi; g_eventQueueEnd = g_dispatchVar29;
  *   if (ecx == edx): swap with ebx-side; g_pendingNodeType = edi;
- *      g_xformEntityIdx = ebx; g_eventQueueTotal = g_dispatchVar28_00542018; g_eventQueueEnd = g_dispatchVar27_0054201c;
+ *      g_xformEntityIdx = ebx; g_eventQueueTotal = g_dispatchVar28; g_eventQueueEnd = g_dispatchVar27;
  *   eax = g_baseSel*4; chain[eax + 0x38] = ecx;
  *   chain[eax + 0x3c] = g_pendingNodeType (=ecx-or-edi);
  *   chain[eax + 0x40] = g_eventQueueTotal; chain[eax + 0x44] = g_eventQueueEnd.
  */
-extern unsigned int g_dispatchVar30_00542010;
-extern unsigned int g_dispatchVar29_00542014;
-extern unsigned int g_dispatchVar28_00542018;
-extern unsigned int g_dispatchVar27_0054201c;
+extern unsigned int g_dispatchVar30;
+extern unsigned int g_dispatchVar29;
+extern unsigned int g_dispatchVar28;
+extern unsigned int g_dispatchVar27;
 
 extern unsigned int g_matrixStack_arr;
 
@@ -149,17 +149,17 @@ __declspec(naked) void DualCmpSwapStore(void) {
         mov     eax, [eax*4 + 0x6c]
         mov     ecx, dword ptr [g_player2NodeIdx]
         mov     dword ptr [g_xformScratch2088], eax
-        mov     eax, dword ptr [g_dispatchVar30_00542010]
+        mov     eax, dword ptr [g_dispatchVar30]
         cmp     ecx, edx
         mov     dword ptr [g_eventQueueTotal], eax
-        mov     eax, dword ptr [g_dispatchVar29_00542014]
+        mov     eax, dword ptr [g_dispatchVar29]
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     dword ptr [g_pendingNodeType], esi
         mov     dword ptr [g_eventQueueEnd], eax
         _emit   75h
         _emit   24h
-        mov     edx, dword ptr [g_dispatchVar28_00542018]
-        mov     eax, dword ptr [g_dispatchVar27_0054201c]
+        mov     edx, dword ptr [g_dispatchVar28]
+        mov     eax, dword ptr [g_dispatchVar27]
         mov     ecx, ebx
         mov     dword ptr [g_pendingNodeType], edi
         mov     dword ptr [g_xformEntityIdx], ecx

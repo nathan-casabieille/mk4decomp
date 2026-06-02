@@ -108,14 +108,14 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_phaseThunkVar2_0052aabc;
+extern unsigned int g_phaseThunkVar2;
 extern unsigned int g_tickFlagF;
-extern unsigned int g_eventMusicSlot2_0053a318;
+extern unsigned int g_eventMusicSlot2;
 extern unsigned int g_eventMusicVar;
-extern unsigned int g_dispatchVar3_00543564;
+extern unsigned int g_dispatchVar3;
 extern unsigned int g_eventMusicSlot;
-extern unsigned int g_dispatchTab61_00550000;
-extern unsigned int g_dispatchSave1705_008c0000;
+extern unsigned int g_dispatchTab61;
+extern unsigned int g_dispatchSave1705;
 extern void CallSetPause(void);
 extern void Cmp7DirtyToggle(void);
 extern void DispatcherComplex181_00426310(void);
@@ -133,7 +133,7 @@ __declspec(naked) void Event23bMusicCluster(void)
         push     0x23b
         call     SaveCallRestore
         mov      eax, dword ptr [g_active_0053a408]
-        mov      edx, dword ptr [g_eventMusicSlot2_0053a318]
+        mov      edx, dword ptr [g_eventMusicSlot2]
         mov      ecx, dword ptr [g_active_00537e88]
         add      esp, 4
         cmp      eax, 1
@@ -152,13 +152,13 @@ __declspec(naked) void Event23bMusicCluster(void)
         jne      short L_f599
         cmp      edx, ecx
         jne      short L_f612
-        mov      eax, dword ptr [g_dispatchVar3_00543564]
+        mov      eax, dword ptr [g_dispatchVar3]
         test     eax, eax
         jl       L_f691
     L_f599:
         cmp      edx, 1
         jne      short L_f612
-        mov      eax, dword ptr [g_phaseThunkVar2_0052aabc]
+        mov      eax, dword ptr [g_phaseThunkVar2]
         mov      dword ptr [g_walkCallback], eax
         call     StoreIncrMStackPush6
         mov      eax, dword ptr [g_framePauseFlag]
@@ -166,8 +166,8 @@ __declspec(naked) void Event23bMusicCluster(void)
         jne      L_f691
         mov      dword ptr [g_eventQueueCurrent], 4
         mov      dword ptr [g_eventQueueWorkType], 0x23b
-        mov      dword ptr [g_acc_00542078], OFFSET g_dispatchTab61_00550000
-        mov      dword ptr [g_eventQueueNotMask], OFFSET g_dispatchSave1705_008c0000
+        mov      dword ptr [g_acc_00542078], OFFSET g_dispatchTab61
+        mov      dword ptr [g_eventQueueNotMask], OFFSET g_dispatchSave1705
         mov      dword ptr [g_currentNodeFlags], 1
         call     DispatcherComplex181_00426310
         mov      eax, dword ptr [g_framePauseFlag]
@@ -179,7 +179,7 @@ __declspec(naked) void Event23bMusicCluster(void)
         jne      short L_f691
         jmp      short L_f67a
     L_f612:
-        mov      edx, dword ptr [g_phaseThunkVar2_0052aabc]
+        mov      edx, dword ptr [g_phaseThunkVar2]
         mov      dword ptr [g_walkCallback], edx
         call     StoreIncrMStackPush6
         mov      eax, dword ptr [g_framePauseFlag]
@@ -188,7 +188,7 @@ __declspec(naked) void Event23bMusicCluster(void)
         mov      dword ptr [g_eventQueueCurrent], 4
         mov      dword ptr [g_eventQueueWorkType], 0x23b
         mov      dword ptr [g_acc_00542078], 0xff920000
-        mov      dword ptr [g_eventQueueNotMask], OFFSET g_dispatchSave1705_008c0000
+        mov      dword ptr [g_eventQueueNotMask], OFFSET g_dispatchSave1705
         mov      dword ptr [g_currentNodeFlags], 1
         call     DispatcherComplex181_00426310
         mov      eax, dword ptr [g_framePauseFlag]
@@ -250,7 +250,7 @@ __declspec(naked) void Event23bMusicCluster(void)
         cmp      eax, 7
         mov      dword ptr [g_walkCallback], eax
         jne      short L_f72b
-        mov      eax, dword ptr [g_phaseThunkVar2_0052aabc]
+        mov      eax, dword ptr [g_phaseThunkVar2]
         test     eax, eax
         mov      dword ptr [g_walkCallback], eax
         je       short L_f72b

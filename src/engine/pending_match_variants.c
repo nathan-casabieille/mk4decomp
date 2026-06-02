@@ -149,13 +149,13 @@ extern void PushSetCallPop(void);
  *   pop g_eventQueueEnd; pop mstack; ret.
  *   The 0x426da0 imm is the in-body label of GameMusicState4Way.
  */
-extern unsigned int g_bootClampMod6Base_004e2670;
+extern unsigned int g_bootClampMod6Base;
 void PushSetEventQueueCallStore(void) {
     unsigned int top;
     top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_eventQueueEnd;
-    g_eventQueueEnd = (unsigned int)&g_bootClampMod6Base_004e2670 >> 2;
+    g_eventQueueEnd = (unsigned int)&g_bootClampMod6Base >> 2;
     StoreTwoCall(0x00426da0, 0x23c);
     top = g_matrixStackTop;
     g_eventQueueEnd = *(unsigned int *)(top * 4);
@@ -163,23 +163,23 @@ void PushSetEventQueueCallStore(void) {
 }
 
 /* @addr 0x004b8ec0 (92b)
- *   eax = arg0; g_dispatchSave1559_00ab4d9c = eax;
+ *   eax = arg0; g_dispatchSave1559 = eax;
  *   ecx = eax + 0x200; edx = eax + 0x400;
- *   g_dispatchSave1560_00ab4da0 = ecx; g_dispatchSave1561_00ab4da4 = edx;
+ *   g_dispatchSave1560 = ecx; g_dispatchSave1561 = edx;
  *   ecx = eax + 0x580; edx = eax + 0x680;
- *   g_dispatchSave1562_00ab4da8 = ecx; g_dispatchSave1563_00ab4dac = edx;
+ *   g_dispatchSave1562 = ecx; g_dispatchSave1563 = edx;
  *   ecx = eax + 0x720; edx = eax + 0x780;
- *   eax += 0x7c0; g_dispatchSave1564_00ab4db0=ecx; g_dispatchSave1565_00ab4db4=edx;
- *   g_dispatchSave1566_00ab4db8=eax; ret.
+ *   eax += 0x7c0; g_dispatchSave1564=ecx; g_dispatchSave1565=edx;
+ *   g_dispatchSave1566=eax; ret.
  */
-extern unsigned int g_dispatchSave1559_00ab4d9c;
-extern unsigned int g_dispatchSave1560_00ab4da0;
-extern unsigned int g_dispatchSave1561_00ab4da4;
-extern unsigned int g_dispatchSave1562_00ab4da8;
-extern unsigned int g_dispatchSave1563_00ab4dac;
-extern unsigned int g_dispatchSave1564_00ab4db0;
-extern unsigned int g_dispatchSave1565_00ab4db4;
-extern unsigned int g_dispatchSave1566_00ab4db8;
+extern unsigned int g_dispatchSave1559;
+extern unsigned int g_dispatchSave1560;
+extern unsigned int g_dispatchSave1561;
+extern unsigned int g_dispatchSave1562;
+extern unsigned int g_dispatchSave1563;
+extern unsigned int g_dispatchSave1564;
+extern unsigned int g_dispatchSave1565;
+extern unsigned int g_dispatchSave1566;
 extern void MStackBracket5_LinkedListUnlink(void);
 extern void CountdownClampWalk(void);
 extern void DownloadPlayerChar(void);
@@ -311,14 +311,14 @@ extern s32 g_dlNalt2;
 extern unsigned int g_dataArr_00535cfc;
 extern unsigned int g_dataArr_0053a1d0;
 void Helper_TickInit(unsigned int base) {
-    g_dispatchSave1559_00ab4d9c = base;
-    g_dispatchSave1560_00ab4da0 = base + 0x200;
-    g_dispatchSave1561_00ab4da4 = base + 0x400;
-    g_dispatchSave1562_00ab4da8 = base + 0x580;
-    g_dispatchSave1563_00ab4dac = base + 0x680;
-    g_dispatchSave1564_00ab4db0 = base + 0x720;
-    g_dispatchSave1565_00ab4db4 = base + 0x780;
-    g_dispatchSave1566_00ab4db8 = base + 0x7c0;
+    g_dispatchSave1559 = base;
+    g_dispatchSave1560 = base + 0x200;
+    g_dispatchSave1561 = base + 0x400;
+    g_dispatchSave1562 = base + 0x580;
+    g_dispatchSave1563 = base + 0x680;
+    g_dispatchSave1564 = base + 0x720;
+    g_dispatchSave1565 = base + 0x780;
+    g_dispatchSave1566 = base + 0x7c0;
 }
 
 extern void PendingMatch_0045e640(void);
@@ -370,12 +370,12 @@ extern void PendingMatch_00498eb0(void);
 extern unsigned int g_matrixStack_arr;
 extern unsigned int g_loaded;
 extern unsigned int g_or;
-extern unsigned int g_dispatchVar18_0052d750;
-extern unsigned int g_dispatchVar17_0052d754;
-extern unsigned int g_dispatchVar16_0052d758;
+extern unsigned int g_dispatchVar18;
+extern unsigned int g_dispatchVar17;
+extern unsigned int g_dispatchVar16;
 extern unsigned int g_dispatchArg;
-extern unsigned int g_dispatchVar11_00537f04;
-extern unsigned int g_dispatchSave88_0053a514;
+extern unsigned int g_dispatchVar11;
+extern unsigned int g_dispatchSave88;
 extern void ArgSar_Set0_Jmp(void);
 extern void CallPauseDirtyMStackPushFn(void);
 extern void ChainListVecAdd(void);
@@ -427,106 +427,106 @@ extern void TripleCallPauseJmp(void);
 extern void ZeroAndDirty4(void);
 
 extern unsigned int g_const_0044d820;
-extern unsigned int g_dispatchSave656_004d5300;
-extern unsigned int g_dispatchSave657_004d5304;
-extern unsigned int g_dispatchSave658_004d5308;
-extern unsigned int g_dispatchSave659_004d530c;
-extern unsigned int g_pendingMatchVar2_004d531c;
-extern unsigned int g_dispatchSave669_004e2868;
-extern unsigned int g_dispatchSave929_004e51f8;
-extern unsigned int g_dispatchSave932_004e6208;
-extern unsigned int g_dispatchSave933_004e6218;
-extern unsigned int g_dispatchSave934_004e6230;
-extern unsigned int g_dispatchSave684_004e6408;
-extern unsigned int g_dispatchSave685_004e6580;
-extern unsigned int g_dispatchSave686_004e6590;
-extern unsigned int g_dispatchSave687_004e65a0;
-extern unsigned int g_dispatchSave543_004e65b8;
-extern unsigned int g_dispatchSave542_004e65c8;
-extern unsigned int g_dispatchSave942_004e6f50;
-extern unsigned int g_dispatchSave943_004e6f60;
-extern unsigned int g_dispatchSave944_004e6f68;
-extern unsigned int g_dispatchSave945_004e6f80;
-extern unsigned int g_dispatchSave947_004e7e48;
-extern unsigned int g_dispatchSave948_004e7e58;
-extern unsigned int g_dispatchSave949_004e7e80;
-extern unsigned int g_dispatchSave950_004e7e90;
-extern unsigned int g_dispatchSave689_004e7f40;
-extern unsigned int g_dispatchSave690_004e7f50;
-extern unsigned int g_dispatchSave691_004e7f60;
-extern unsigned int g_dispatchSave692_004e7f70;
-extern unsigned int g_dispatchSave695_004e8190;
-extern unsigned int g_dispatchSave1282_004eb1c8;
-extern unsigned int g_dispatchSave704_004eb938;
-extern unsigned int g_dispatchSave705_004eb958;
-extern unsigned int g_dispatchSave1296_004eb998;
-extern unsigned int g_dispatchSave1297_004eb9b0;
-extern unsigned int g_dispatchSave1298_004eba10;
-extern unsigned int g_dispatchSave1299_004ebbf8;
-extern unsigned int g_dispatchSave1300_004ebc38;
+extern unsigned int g_dispatchSave656;
+extern unsigned int g_dispatchSave657;
+extern unsigned int g_dispatchSave658;
+extern unsigned int g_dispatchSave659;
+extern unsigned int g_pendingMatchVar2;
+extern unsigned int g_dispatchSave669;
+extern unsigned int g_dispatchSave929;
+extern unsigned int g_dispatchSave932;
+extern unsigned int g_dispatchSave933;
+extern unsigned int g_dispatchSave934;
+extern unsigned int g_dispatchSave684;
+extern unsigned int g_dispatchSave685;
+extern unsigned int g_dispatchSave686;
+extern unsigned int g_dispatchSave687;
+extern unsigned int g_dispatchSave543;
+extern unsigned int g_dispatchSave542;
+extern unsigned int g_dispatchSave942;
+extern unsigned int g_dispatchSave943;
+extern unsigned int g_dispatchSave944;
+extern unsigned int g_dispatchSave945;
+extern unsigned int g_dispatchSave947;
+extern unsigned int g_dispatchSave948;
+extern unsigned int g_dispatchSave949;
+extern unsigned int g_dispatchSave950;
+extern unsigned int g_dispatchSave689;
+extern unsigned int g_dispatchSave690;
+extern unsigned int g_dispatchSave691;
+extern unsigned int g_dispatchSave692;
+extern unsigned int g_dispatchSave695;
+extern unsigned int g_dispatchSave1282;
+extern unsigned int g_dispatchSave704;
+extern unsigned int g_dispatchSave705;
+extern unsigned int g_dispatchSave1296;
+extern unsigned int g_dispatchSave1297;
+extern unsigned int g_dispatchSave1298;
+extern unsigned int g_dispatchSave1299;
+extern unsigned int g_dispatchSave1300;
 extern unsigned int g_dispatchTab;
-extern unsigned int g_mul10TableBase_004ec050;
-extern unsigned int g_dispatchSave1301_004ec060;
-extern unsigned int g_dispatchSave1302_004ec078;
-extern unsigned int g_dispatchSave706_004ec950;
-extern unsigned int g_dispatchSave710_004ecc38;
-extern unsigned int g_dispatchSave734_004ecf80;
-extern unsigned int g_dispatchSave738_004ed2c8;
-extern unsigned int g_dispatchSave714_004ed2f0;
-extern unsigned int g_dispatchSave715_004ed2f8;
-extern unsigned int g_dispatchSave716_004ed308;
-extern unsigned int g_dispatchSave597_004ed3d0;
-extern unsigned int g_dispatchSave637_004f29c0;
-extern unsigned int g_dispatchSave151_005007c4;
-extern unsigned int g_dispatchSave150_0050104c;
-extern unsigned int g_dispatchSave61_00501070;
-extern unsigned int g_dispatchTableArr5_00501088;
-extern unsigned int g_dispatchSave149_005010c4;
-extern unsigned int g_dispatchSave148_005010d0;
-extern unsigned int g_dispatchSave147_0050122c;
-extern unsigned int g_dispatchSave59_00501250;
-extern unsigned int g_dispatchSave58_0050b604;
-extern unsigned int g_dispatchSave57_005117c4;
+extern unsigned int g_mul10TableBase;
+extern unsigned int g_dispatchSave1301;
+extern unsigned int g_dispatchSave1302;
+extern unsigned int g_dispatchSave706;
+extern unsigned int g_dispatchSave710;
+extern unsigned int g_dispatchSave734;
+extern unsigned int g_dispatchSave738;
+extern unsigned int g_dispatchSave714;
+extern unsigned int g_dispatchSave715;
+extern unsigned int g_dispatchSave716;
+extern unsigned int g_dispatchSave597;
+extern unsigned int g_dispatchSave637;
+extern unsigned int g_dispatchSave151;
+extern unsigned int g_dispatchSave150;
+extern unsigned int g_dispatchSave61;
+extern unsigned int g_dispatchTableArr5;
+extern unsigned int g_dispatchSave149;
+extern unsigned int g_dispatchSave148;
+extern unsigned int g_dispatchSave147;
+extern unsigned int g_dispatchSave59;
+extern unsigned int g_dispatchSave58;
+extern unsigned int g_dispatchSave57;
 extern unsigned int g_quadEntryGate;
-extern unsigned int g_dispatchSave104_00535d58;
+extern unsigned int g_dispatchSave104;
 extern unsigned int g_walkBoundsLimit;
 extern unsigned int g_walkBoundsSlot;
-extern unsigned int g_walkCallbackSrc2_00535db0;
-extern unsigned int g_dispatchSave49_00535e44;
-extern unsigned int g_dispatchSave103_00535e4c;
+extern unsigned int g_walkCallbackSrc2;
+extern unsigned int g_dispatchSave49;
+extern unsigned int g_dispatchSave103;
 extern unsigned int g_particleEmitterNode;
 extern unsigned int g_phaseTimer;
-extern unsigned int g_audioInstall2Slot_00537eec;
-extern unsigned int g_dispatchSave101_00537ef0;
+extern unsigned int g_audioInstall2Slot;
+extern unsigned int g_dispatchSave101;
 extern unsigned int g_clamp_00537f2c;
 extern unsigned int g_byte_00538148;
 extern s32 g_dlNalt3;
 extern s32 g_dlNalt4;
 extern unsigned int g_walkCallbackSrc;
-extern unsigned int g_dispatchSave92_0053a324;
+extern unsigned int g_dispatchSave92;
 extern unsigned int g_clamp_0053a328;
 extern unsigned int g_audioStreamState;
-extern unsigned int g_dispatchVar6_0053a464;
-extern unsigned int g_phaseThunkSlot5_0053a468;
+extern unsigned int g_dispatchVar6;
+extern unsigned int g_phaseThunkSlot5;
 extern unsigned int g_clamp_0053a6dc;
 extern unsigned int g_phaseThunkState;
-extern unsigned int g_installOwner2_0053a7a0;
-extern unsigned int g_pendingMatchAudio2_0053a7a8;
-extern unsigned int g_dispatchVar14_0053a7b4;
+extern unsigned int g_installOwner2;
+extern unsigned int g_pendingMatchAudio2;
+extern unsigned int g_dispatchVar14;
 extern unsigned int g_clamp_0053e348;
 extern unsigned int g_scenegraphWalkEnd;
 extern unsigned int g_savedNode;
 extern unsigned int g_phaseCounter;
 extern unsigned int g_dispatchArr;
-extern unsigned int g_dispatchVar37_00542a58;
-extern unsigned int g_dispatchSave68_00542b68;
+extern unsigned int g_dispatchVar37;
+extern unsigned int g_dispatchSave68;
 extern unsigned int g_installSelfCounter;
 extern unsigned int g_audioTriEntryFlag;
 extern unsigned int g_audioMatchStartFlag;
 extern u8 g_dlEnabledFlag;
 extern unsigned int g_audioStateRemapByte;
-extern unsigned int g_mul10SumState_0054388c;
-extern unsigned int g_mul10SumState2_00543890;
+extern unsigned int g_mul10SumState;
+extern unsigned int g_mul10SumState2;
 extern void AiAngleDistComputation(void);
 extern void AmbientMonitorCluster(void);
 extern void AndStorePushCallZero(void);
@@ -1817,10 +1817,10 @@ __declspec(naked) void StateMachineDualModuloInstall(void) {
  *   TableLookupCall_00489ff0; on no-error sets 0x54206c=0xa, calls
  *   ScaledIndexConditionalAdd. Then dispatches on
  *   g_baseSel:
- *     - matches g_gtPlayerProbe2: if g_mul10SumState_0054388c is set, picks
- *       &g_mul10TableBase_004ec050>>2 (state 1) or &g_dispatchTab>>2 (other)
- *       into g_eventQueueTotal, clears g_mul10SumState_0054388c, jumps to next.
- *     - matches g_gtPlayerProbe1: mirror with g_mul10SumState2_00543890.
+ *     - matches g_gtPlayerProbe2: if g_mul10SumState is set, picks
+ *       &g_mul10TableBase>>2 (state 1) or &g_dispatchTab>>2 (other)
+ *       into g_eventQueueTotal, clears g_mul10SumState, jumps to next.
+ *     - matches g_gtPlayerProbe1: mirror with g_mul10SumState2.
  *     - default: both g_eventQueueTotal and 0x54204c set to the two
  *       packed_ptrs, zeroes g_eventQueueChild, calls
  *       GuardedDualConst2AndToggle. If bit 0 of 0x54208c set,
@@ -1848,36 +1848,36 @@ __declspec(naked) void StreamFlagPackedSelectChain(void) {
         mov     eax, dword ptr [g_gtPlayerProbe2]
         cmp     ecx, eax
         jne     short L_sfp_check2
-        mov     eax, dword ptr [g_mul10SumState_0054388c]
+        mov     eax, dword ptr [g_mul10SumState]
         test    eax, eax
         je      short L_sfp_check2
         cmp     eax, 1
-        mov     eax, offset g_mul10TableBase_004ec050
+        mov     eax, offset g_mul10TableBase
         je      short L_sfp_useEax1
         mov     eax, offset g_dispatchTab
     L_sfp_useEax1:
         shr     eax, 2
         mov     dword ptr [g_eventQueueTotal], eax
-        mov     dword ptr [g_mul10SumState_0054388c], 0
+        mov     dword ptr [g_mul10SumState], 0
         jmp     L_sfp_callBlock
     L_sfp_check2:
         cmp     ecx, dword ptr [g_gtPlayerProbe1]
         jne     short L_sfp_defaultPath
-        mov     eax, dword ptr [g_mul10SumState2_00543890]
+        mov     eax, dword ptr [g_mul10SumState2]
         test    eax, eax
         je      short L_sfp_defaultPath
         cmp     eax, 1
-        mov     eax, offset g_mul10TableBase_004ec050
+        mov     eax, offset g_mul10TableBase
         je      short L_sfp_useEax2
         mov     eax, offset g_dispatchTab
     L_sfp_useEax2:
         shr     eax, 2
         mov     dword ptr [g_eventQueueTotal], eax
-        mov     dword ptr [g_mul10SumState2_00543890], 0
+        mov     dword ptr [g_mul10SumState2], 0
         jmp     short L_sfp_callBlock
     L_sfp_defaultPath:
         mov     eax, offset g_dispatchTab
-        mov     ecx, offset g_mul10TableBase_004ec050
+        mov     ecx, offset g_mul10TableBase
         shr     eax, 2
         shr     ecx, 2
         mov     dword ptr [g_pendingNodeType], eax
@@ -1905,7 +1905,7 @@ __declspec(naked) void StreamFlagPackedSelectChain(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_sfp_done
-        push    offset g_dispatchVar37_00542a58
+        push    offset g_dispatchVar37
         call    GuardedPackedSlotInit
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
@@ -2206,7 +2206,7 @@ __declspec(naked) void SizeGateInstallSelfThenSubMul10(void)
         mov     dword ptr [edx*4 + 0x1c], ecx
         mov     eax, dword ptr [g_currentNodeIdx]
         shl     eax, 2
-        mov     ecx, offset g_dispatchSave710_004ecc38
+        mov     ecx, offset g_dispatchSave710
         shr     ecx, 2
         mov     dword ptr [eax + 0x3c], esi
         mov     dword ptr [eax + 0x40], esi
@@ -2216,7 +2216,7 @@ __declspec(naked) void SizeGateInstallSelfThenSubMul10(void)
         cmp     dword ptr [g_framePauseFlag], esi
         jne     short L_sgis_ret
         mov     edx, dword ptr [g_xformEntityIdx]
-        mov     eax, offset g_dispatchSave706_004ec950
+        mov     eax, offset g_dispatchSave706
         shr     eax, 2
         mov     dword ptr [edx*4 + 0x10], esi
         mov     ecx, dword ptr [g_xformEntityIdx]
@@ -2397,7 +2397,7 @@ __declspec(naked) void StageEventExitCluster(void)
 {
     __asm {
         /* H1: stage-exit sound */
-        push     OFFSET g_dispatchSave597_004ed3d0
+        push     OFFSET g_dispatchSave597
         call     ArgSarStoreJmp
         add      esp, 4
         ret
@@ -2527,7 +2527,7 @@ __declspec(naked) void IntroFsmCluster(void)
     __asm {
     L_d580:
         /* H1 */
-        push     OFFSET g_dispatchSave543_004e65b8
+        push     OFFSET g_dispatchSave543
         call     ArgSarStoreJmp
         add      esp, 4
         ret
@@ -2580,14 +2580,14 @@ __declspec(naked) void IntroFsmCluster(void)
         test     eax, eax
         jne      L_d738
         mov      ecx, dword ptr [g_eventQueueEnd]
-        push     OFFSET g_dispatchSave542_004e65c8
+        push     OFFSET g_dispatchSave542
         mov      dword ptr [g_fightGroupHead], ecx
         call     ArgSarStoreJmp
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         ret
     L_d61c:
-        mov      edx, OFFSET g_dispatchTableArr5_00501088
+        mov      edx, OFFSET g_dispatchTableArr5
         shr      edx, 2
         mov      dword ptr [g_eventQueueEnd], edx
         mov      dword ptr [eax + 8], OFFSET L_d5c0
@@ -2679,7 +2679,7 @@ __declspec(naked) void VersusScreenFsmCluster(void)
     __asm {
         /* === Helper 1 (0x44f670): tiny event 004e6f50 forwarder === */
     L_f670:
-        push     OFFSET g_dispatchSave942_004e6f50
+        push     OFFSET g_dispatchSave942
         call     ArgSarStoreJmp
         add      esp, 4
         ret
@@ -2694,7 +2694,7 @@ __declspec(naked) void VersusScreenFsmCluster(void)
         mov      dword ptr [esi + 0x84], 0
         test     eax, eax
         je       short L_f6b6
-        push     OFFSET g_dispatchSave944_004e6f68
+        push     OFFSET g_dispatchSave944
         call     ArgSarStoreJmp
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -2709,13 +2709,13 @@ __declspec(naked) void VersusScreenFsmCluster(void)
         pop      esi
         ret
     L_f6ca:
-        push     OFFSET g_dispatchSave943_004e6f60
+        push     OFFSET g_dispatchSave943
         call     ScaledIdxLoadCallTailThunk
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         test     eax, eax
         jne      short L_f74e
-        mov      ecx, OFFSET g_dispatchSave151_005007c4
+        mov      ecx, OFFSET g_dispatchSave151
         shr      ecx, 2
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      dword ptr [esi + 8], OFFSET L_f680
@@ -2832,7 +2832,7 @@ __declspec(naked) void VersusScreenFsmCluster(void)
         mov      ecx, dword ptr [g_eventQueueIdx]
         add      esp, 4
         mov      dword ptr [g_fightGroupHead], ecx
-        push     OFFSET g_dispatchSave945_004e6f80
+        push     OFFSET g_dispatchSave945
         call     ArgSarStoreJmp
         add      esp, 4
     L_f8c6:
@@ -2858,7 +2858,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
     __asm {
         /* === Helper 1 (0x455920): event 004e7f40 forwarder === */
     L_5920:
-        push     OFFSET g_dispatchSave689_004e7f40
+        push     OFFSET g_dispatchSave689
         call     ArgSarStoreJmp
         add      esp, 4
         ret
@@ -2876,7 +2876,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         _emit    0xff
         _emit    0xff
     L_5942:
-        push     OFFSET g_dispatchSave690_004e7f50
+        push     OFFSET g_dispatchSave690
         call     ArgSarStoreJmp
         add      esp, 4
         ret
@@ -2929,7 +2929,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         ret
     L_5a1d:
         /* case 3: install + state 4 */
-        mov      eax, OFFSET g_dispatchSave59_00501250
+        mov      eax, OFFSET g_dispatchSave59
         mov      edx, OFFSET L_5950
         shr      eax, 2
         mov      dword ptr [g_eventQueueEnd], eax
@@ -2974,7 +2974,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         jne      short L_5b22
         mov      edx, dword ptr [g_eventQueueEnd]
         mov      eax, dword ptr [g_acc_00542078]
-        push     OFFSET g_dispatchSave691_004e7f60
+        push     OFFSET g_dispatchSave691
         mov      dword ptr [edx*4 + 0x54], eax
         mov      ecx, dword ptr [g_eventQueueEnd]
         mov      edx, dword ptr [g_eventQueueNotMask]
@@ -3039,7 +3039,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5bb4
-        push     OFFSET g_dispatchSave692_004e7f70
+        push     OFFSET g_dispatchSave692
         call     ArgSarStoreJmp
         add      esp, 4
     L_5bb4:
@@ -3106,16 +3106,16 @@ void ScenePostInitSequencer(void) {
         mov      eax, dword ptr [g_eventQueueIdx]
         mov      ecx, dword ptr [eax*4 + 0x1c]
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_dispatchSave658_004d5308], ecx
+        mov      dword ptr [g_dispatchSave658], ecx
         mov      ecx, dword ptr [eax*4 + 0x20]
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_dispatchSave659_004d530c], ecx
+        mov      dword ptr [g_dispatchSave659], ecx
         mov      ecx, dword ptr [eax*4 + 0x24]
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_dispatchSave656_004d5300], ecx
+        mov      dword ptr [g_dispatchSave656], ecx
         mov      eax, dword ptr [eax*4 + 0x28]
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_dispatchSave657_004d5304], eax
+        mov      dword ptr [g_dispatchSave657], eax
         call     PendingMatch_00429ef0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -3149,7 +3149,7 @@ void ScenePostInitSequencer(void) {
         test     eax, eax
         jne      L_9e22
         mov      eax, dword ptr [g_fightGroupHead]
-        mov      dword ptr [g_pendingMatchAudio2_0053a7a8], eax
+        mov      dword ptr [g_pendingMatchAudio2], eax
         mov      dword ptr [eax*4 + 0x30], 0xb
         mov      eax, dword ptr [g_particleEmitterNode]
         mov      ecx, dword ptr [g_fightGroupHead]
@@ -3866,7 +3866,7 @@ __declspec(naked) void IntroInitCluster(void)
         je       short L_d327
         jmp      short L_d2fe
     L_d2d7:
-        mov      edx, OFFSET g_dispatchSave57_005117c4
+        mov      edx, OFFSET g_dispatchSave57
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
         call     FramePauseScaledStore
@@ -3930,7 +3930,7 @@ __declspec(naked) void IntroInitCluster(void)
         je       L_d48e
         dec      eax
         je       short L_d3de
-        push     OFFSET g_dispatchSave685_004e6580
+        push     OFFSET g_dispatchSave685
         call     ArgSarStoreJmp
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -3950,7 +3950,7 @@ __declspec(naked) void IntroInitCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d4f9
-        mov      ecx, OFFSET g_dispatchSave61_00501070
+        mov      ecx, OFFSET g_dispatchSave61
         shr      ecx, 2
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      dword ptr [esi + 8], OFFSET L_d3a0
@@ -4010,7 +4010,7 @@ __declspec(naked) void IntroInitCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d535
-        push     OFFSET g_dispatchSave686_004e6590
+        push     OFFSET g_dispatchSave686
         call     ArgSarStoreJmp
         add      esp, 4
     L_d535:
@@ -4031,7 +4031,7 @@ __declspec(naked) void IntroInitCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d565
-        push     OFFSET g_dispatchSave687_004e65a0
+        push     OFFSET g_dispatchSave687
         call     ArgSarStoreJmp
         add      esp, 4
     L_d565:
@@ -4065,7 +4065,7 @@ __declspec(naked) void CharSelectSetupCluster(void)
 {
     __asm {
         /* === h1 (0x4565a0): main init chain → tail 408600 === */
-        mov      eax, OFFSET g_dispatchSave58_0050b604
+        mov      eax, OFFSET g_dispatchSave58
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
         call     DispatcherComplex260_00407030
@@ -4102,7 +4102,7 @@ __declspec(naked) void CharSelectSetupCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_6688
-        mov      eax, OFFSET g_dispatchSave695_004e8190
+        mov      eax, OFFSET g_dispatchSave695
         shr      eax, 2
         mov      dword ptr [g_walkCallback], eax
         call     ScaledStoreThree_00409260
@@ -4273,7 +4273,7 @@ __declspec(naked) void EnduranceStateInitWalk(void)
 {
     __asm {
         /* === h1 (0x4785a0): 16-iter list copy + timer install === */
-        mov      eax, OFFSET g_dispatchSave734_004ecf80
+        mov      eax, OFFSET g_dispatchSave734
         mov      dword ptr [g_xformLoopCounter], 0xf
         shr      eax, 2
         mov      dword ptr [g_pendingNodeType], eax
@@ -4300,11 +4300,11 @@ __declspec(naked) void EnduranceStateInitWalk(void)
         cmp      ecx, eax
         jne      short L_8665
         mov      edx, dword ptr [g_audioMatchStartFlag]
-        mov      dword ptr [g_dispatchSave104_00535d58], eax
+        mov      dword ptr [g_dispatchSave104], eax
         cmp      edx, eax
-        mov      dword ptr [g_dispatchSave92_0053a324], eax
-        mov      dword ptr [g_dispatchSave103_00535e4c], eax
-        mov      dword ptr [g_dispatchSave101_00537ef0], eax
+        mov      dword ptr [g_dispatchSave92], eax
+        mov      dword ptr [g_dispatchSave103], eax
+        mov      dword ptr [g_dispatchSave101], eax
         mov      ecx, 0x10000
         jne      short L_8638
         mov      dword ptr [g_clamp_0053a6dc], ecx
@@ -4316,7 +4316,7 @@ __declspec(naked) void EnduranceStateInitWalk(void)
         mov      dword ptr [g_clamp_0053e348], ecx
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_walkCallbackSrc], eax
-        mov      dword ptr [g_walkCallbackSrc2_00535db0], eax
+        mov      dword ptr [g_walkCallbackSrc2], eax
         call     SetWalkCurCallPauseDirty
         add      esp, 8
     L_8665:
@@ -4358,7 +4358,7 @@ __declspec(naked) void EnduranceStateInitWalk(void)
         ret
     L_86af:
         mov      eax, 3
-        mov      edi, OFFSET g_dispatchSave68_00542b68
+        mov      edi, OFFSET g_dispatchSave68
         mov      dword ptr [g_xformLoopCounter], eax
         shr      edi, 2
     L_86c1:
@@ -4590,7 +4590,7 @@ __declspec(naked) void AerialHitDispatcher(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_c3b9
-        push     OFFSET g_dispatchSave738_004ed2c8
+        push     OFFSET g_dispatchSave738
         call     ArgSarStoreJmp
         add      esp, 4
     L_c3b9:
@@ -4616,7 +4616,7 @@ __declspec(naked) void SceneEvalFsm(void)
         push     OFFSET AmbientMonitorCluster + 0xd0
         call     StoreTwoCall
         add      esp, 8
-        mov      ecx, OFFSET g_dispatchSave637_004f29c0
+        mov      ecx, OFFSET g_dispatchSave637
         shr      ecx, 2
         push     0x262
         push     OFFSET RoundCleanupCluster_00427690 + 0xf0
@@ -4738,13 +4738,13 @@ __declspec(naked) void SceneEvalFsm(void)
         pop      ebx
         ret      
     L_e0fc:
-        mov      ax, word ptr [g_dispatchSave669_004e2868]
+        mov      ax, word ptr [g_dispatchSave669]
         mov      dword ptr [g_tickFlagF], 3
         push     eax
-        mov      dword ptr [g_audioInstall2Slot_00537eec], ebx
-        mov      dword ptr [g_phaseThunkSlot5_0053a468], ebx
+        mov      dword ptr [g_audioInstall2Slot], ebx
+        mov      dword ptr [g_phaseThunkSlot5], ebx
         mov      dword ptr [g_walkCallback], ebx
-        mov      dword ptr [g_dispatchSave49_00535e44], ebx
+        mov      dword ptr [g_dispatchSave49], ebx
         call     TaggedSceneDispatch
         add      esp, 4
         call     ThrowAnimTriggerCluster
@@ -4892,7 +4892,7 @@ __declspec(naked) void BossPunchCluster(void)
         jne      L_6fc5
         test     byte ptr [g_xformDirtyFlags], 4
         je       L_6ea9
-        mov      eax, OFFSET g_dispatchSave148_005010d0
+        mov      eax, OFFSET g_dispatchSave148
         mov      edx, OFFSET L_6d60
         shr      eax, 2
         mov      dword ptr [g_eventQueueEnd], eax
@@ -4922,7 +4922,7 @@ __declspec(naked) void BossPunchCluster(void)
         ret
     L_6e83:
         mov      ecx, dword ptr [g_eventQueueIdx]
-        push     OFFSET g_dispatchSave932_004e6208
+        push     OFFSET g_dispatchSave932
         mov      dword ptr [g_fightGroupHead], ecx
         call     ArgSarStoreJmp
         mov      eax, dword ptr [g_framePauseFlag]
@@ -4930,7 +4930,7 @@ __declspec(naked) void BossPunchCluster(void)
         test     eax, eax
         jne      L_6fc5
     L_6ea9:
-        mov      edx, OFFSET g_dispatchSave149_005010c4
+        mov      edx, OFFSET g_dispatchSave149
         mov      ecx, OFFSET L_6d60
         shr      edx, 2
         mov      dword ptr [g_eventQueueEnd], edx
@@ -4985,7 +4985,7 @@ __declspec(naked) void BossPunchCluster(void)
         ret      
     L_6fac:
         mov      ecx, dword ptr [g_eventQueueIdx]
-        push     OFFSET g_dispatchSave933_004e6218
+        push     OFFSET g_dispatchSave933
         mov      dword ptr [g_fightGroupHead], ecx
         call     ArgSarStoreJmp
         add      esp, 4
@@ -5022,7 +5022,7 @@ __declspec(naked) void BossPunchCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_6ffb
-        push     OFFSET g_dispatchSave934_004e6230
+        push     OFFSET g_dispatchSave934
         call     ArgSarStoreJmp
         add      esp, 4
     L_6ffb:
@@ -5180,7 +5180,7 @@ __declspec(naked) void BackdashSetupCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1196
-        push     OFFSET g_dispatchSave929_004e51f8
+        push     OFFSET g_dispatchSave929
         call     ArgSarStoreJmp
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -5191,7 +5191,7 @@ __declspec(naked) void BackdashSetupCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1196
-        mov      edx, OFFSET g_dispatchSave150_0050104c
+        mov      edx, OFFSET g_dispatchSave150
         mov      ecx, OFFSET L_1020
         shr      edx, 2
         mov      dword ptr [g_eventQueueEnd], edx
@@ -5360,7 +5360,7 @@ __declspec(naked) void ScaledRunCountdownCluster(void)
         mov      dword ptr [g_eventQueueIdx], eax
         call     StoreLoadJmp
         add      esp, 4
-        push     OFFSET g_dispatchSave684_004e6408
+        push     OFFSET g_dispatchSave684
         call     ArgSarStoreJmp
         add      esp, 4
     L_a274:
@@ -5567,7 +5567,7 @@ __declspec(naked) void JuggleSetupCluster(void)
         je       L_3ad0
         dec      eax
         je       L_3a4e
-        push     OFFSET g_dispatchSave947_004e7e48
+        push     OFFSET g_dispatchSave947
         call     ArgSarStoreJmp
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -5578,7 +5578,7 @@ __declspec(naked) void JuggleSetupCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3b3b
-        mov      ecx, OFFSET g_dispatchSave147_0050122c
+        mov      ecx, OFFSET g_dispatchSave147
         shr      ecx, 2
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      dword ptr [esi + 8], OFFSET L_3a10
@@ -5636,7 +5636,7 @@ __declspec(naked) void JuggleSetupCluster(void)
         mov      ecx, dword ptr [g_fightGroupHead]
         mov      eax, 0xb
         mov      dword ptr [g_walkCallback], eax
-        push     OFFSET g_dispatchSave948_004e7e58
+        push     OFFSET g_dispatchSave948
         mov      dword ptr [ecx*4 + 0x28], eax
         call     ArgSarStoreJmp
         add      esp, 4
@@ -5668,7 +5668,7 @@ __declspec(naked) void JuggleSetupCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3bf6
-        push     OFFSET g_dispatchSave949_004e7e80
+        push     OFFSET g_dispatchSave949
         call     ArgSarStoreJmp
         add      esp, 4
     L_3bf6:
@@ -5685,7 +5685,7 @@ __declspec(naked) void JuggleSetupCluster(void)
         mov      ecx, dword ptr [g_fightGroupHead]
         mov      eax, 0x126
         mov      dword ptr [g_walkCallback], eax
-        push     OFFSET g_dispatchSave950_004e7e90
+        push     OFFSET g_dispatchSave950
         mov      dword ptr [ecx*4 + 0x28], eax
         call     ArgSarStoreJmp
         add      esp, 4
@@ -5865,7 +5865,7 @@ __declspec(naked) void StoryCharIntroFsmCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8019
-        push     OFFSET g_dispatchSave704_004eb938
+        push     OFFSET g_dispatchSave704
         call     ArgSarStoreJmp
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -6160,7 +6160,7 @@ __declspec(naked) void StoryCharIntroFsmCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_83d1
-        push     OFFSET g_dispatchSave705_004eb958
+        push     OFFSET g_dispatchSave705
         call     ArgSarStoreJmp
         add      esp, 4
     L_83d1:
@@ -6580,12 +6580,12 @@ __declspec(naked) void PendingMatch_0043bdd0(void)
         mov      byte ptr [g_byte_00538148], 1
     L_be60:
         mov      eax, dword ptr [g_gtPlayerProbe1]
-        mov      dword ptr [g_dispatchVar6_0053a464], eax
+        mov      dword ptr [g_dispatchVar6], eax
         mov      eax, dword ptr [g_audioBankSel]
         cmp      eax, 1
         je       L_be80
         mov      ecx, dword ptr [g_gtPlayerProbe2]
-        mov      dword ptr [g_dispatchVar6_0053a464], ecx
+        mov      dword ptr [g_dispatchVar6], ecx
     L_be80:
         push     0x4e4e78
         call     ScaledChainCmpDispatch
@@ -6732,7 +6732,7 @@ __declspec(naked) void PendingMatch_0043bdd0(void)
         mov      ecx, dword ptr [g_eventQueueChild]
         mov      dword ptr [eax*4 + 0x54], ecx
         mov      eax, dword ptr [g_walkCallback]
-        mov      dword ptr [g_dispatchVar14_0053a7b4], eax
+        mov      dword ptr [g_dispatchVar14], eax
         mov      dword ptr [g_walkBoundsSlot], eax
         mov      eax, 0xffff0000
         mov      dword ptr [g_walkCallback], eax
@@ -7130,7 +7130,7 @@ __declspec(naked) void PendingMatch_0044f8d0(void)
         mov      dword ptr [edx*4 + 0x34], eax
         mov      ecx, dword ptr [g_eventQueueIdx]
         mov      eax, dword ptr [ecx*4 + 0x64]
-        mov      ecx, dword ptr [g_pendingMatchVar2_004d531c]
+        mov      ecx, dword ptr [g_pendingMatchVar2]
         add      eax, ecx
         push     eax
         mov      dword ptr [g_walkCallback], eax
@@ -7747,7 +7747,7 @@ __declspec(naked) void PendingMatch_004694b0(void)
         mov      ecx, dword ptr [g_dlNalt4]
         mov      dword ptr [g_currentNodeIdx], edx
         mov      edx, dword ptr [g_player1NodeIdx]
-        mov      dword ptr [g_walkCallbackSrc2_00535db0], edi
+        mov      dword ptr [g_walkCallbackSrc2], edi
         mov      dword ptr [g_gtPlayerProbe1], eax
         mov      dword ptr [g_player4NodeIdx], edi
         mov      dword ptr [g_eventQueueCurrent], ecx
@@ -8909,13 +8909,13 @@ __declspec(naked) void PendingMatch_004506c0(void)
         mov      edx, dword ptr [eax*4 + 0x48]
         sub      ecx, edx
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_dispatchVar17_0052d754], ecx
+        mov      dword ptr [g_dispatchVar17], ecx
         mov      ecx, dword ptr [eax*4 + 0x54]
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_dispatchVar18_0052d750], ecx
+        mov      dword ptr [g_dispatchVar18], ecx
         mov      eax, dword ptr [eax*4 + 0x5c]
         mov      dword ptr [g_currentNodeIdx], 0
-        mov      dword ptr [g_dispatchVar16_0052d758], eax
+        mov      dword ptr [g_dispatchVar16], eax
         mov      dword ptr [g_walkCallback], esi
         call     DispatcherComplex138_00476060
         mov      eax, dword ptr [g_framePauseFlag]
@@ -8926,13 +8926,13 @@ __declspec(naked) void PendingMatch_004506c0(void)
         test     byte ptr [g_xformDirtyFlags], bl
         jne      L_0780
         mov      ecx, dword ptr [g_currentNodeIdx]
-        mov      edx, dword ptr [g_dispatchVar18_0052d750]
+        mov      edx, dword ptr [g_dispatchVar18]
         mov      dword ptr [ecx*4 + 0x54], edx
         mov      eax, dword ptr [g_currentNodeIdx]
-        mov      ecx, dword ptr [g_dispatchVar17_0052d754]
+        mov      ecx, dword ptr [g_dispatchVar17]
         mov      dword ptr [eax*4 + 0x58], ecx
         mov      eax, dword ptr [g_currentNodeIdx]
-        mov      edx, dword ptr [g_dispatchVar16_0052d758]
+        mov      edx, dword ptr [g_dispatchVar16]
         mov      dword ptr [eax*4 + 0x5c], edx
         mov      dword ptr [g_walkCallback], esi
         call     DispatcherComplex138_00476060
@@ -9031,15 +9031,15 @@ __declspec(naked) void PendingMatch_004506c0(void)
         mov      dword ptr [ecx*4 + 0x34], eax
         mov      ecx, dword ptr [g_eventQueueEnd]
         mov      edx, dword ptr [g_currentNodeIdx]
-        mov      eax, dword ptr [g_dispatchVar18_0052d750]
+        mov      eax, dword ptr [g_dispatchVar18]
         inc      ecx
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      dword ptr [edx*4 + 0x54], eax
         mov      ecx, dword ptr [g_currentNodeIdx]
-        mov      edx, dword ptr [g_dispatchVar17_0052d754]
+        mov      edx, dword ptr [g_dispatchVar17]
         mov      dword ptr [ecx*4 + 0x58], edx
         mov      eax, dword ptr [g_currentNodeIdx]
-        mov      ecx, dword ptr [g_dispatchVar16_0052d758]
+        mov      ecx, dword ptr [g_dispatchVar16]
         mov      dword ptr [eax*4 + 0x5c], ecx
         mov      dword ptr [g_walkCallback], 0x51e
         call     AudioMixerStep
@@ -10215,7 +10215,7 @@ __declspec(naked) void PendingMatch_00466fc0(void)
         jne      L_770b
         mov      edx, dword ptr [g_eventArmReload]
         mov      eax, 1
-        mov      dword ptr [g_dispatchSave88_0053a514], edx
+        mov      dword ptr [g_dispatchSave88], edx
         mov      dword ptr [esi + 8], 0x467600
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_pendingNodeType], 0xd3
@@ -10361,7 +10361,7 @@ __declspec(naked) void PendingMatch_0044baa0(void)
         pop      esi
         ret      
     L_bb6a:
-        mov      ecx, dword ptr [g_installOwner2_0053a7a0]
+        mov      ecx, dword ptr [g_installOwner2]
         mov      dword ptr [g_eventQueueEnd], 0x23
         mov      dword ptr [g_fightGroupHead], ecx
         jmp      L_bb88
@@ -10435,7 +10435,7 @@ __declspec(naked) void PendingMatch_0044baa0(void)
         mov      dword ptr [g_eventQueueNotMask], edx
         shr      ecx, 2
         mov      dword ptr [g_eventQueueIdx], ecx
-        mov      ecx, dword ptr [g_installOwner2_0053a7a0]
+        mov      ecx, dword ptr [g_installOwner2]
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      dword ptr [g_xformScratch2088], 0x7ae
         mov      dword ptr [eax + 8], 0x44bc50
@@ -11034,7 +11034,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         call     MStackPush3SideStore
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3583
-        mov      eax, dword ptr [g_installOwner2_0053a7a0]
+        mov      eax, dword ptr [g_installOwner2]
         mov      edx, 0x4e5a48
         shr      edx, 2
         mov      dword ptr [g_eventQueueIdx], edx
@@ -11092,7 +11092,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         mov      ecx, 0x4e5ab0
         shr      ecx, 2
         mov      dword ptr [g_eventQueueIdx], ecx
-        mov      ecx, dword ptr [g_installOwner2_0053a7a0]
+        mov      ecx, dword ptr [g_installOwner2]
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      dword ptr [g_currentNodeFlags], 0x40000
         mov      dword ptr [eax + 8], 0x443590
@@ -11141,7 +11141,7 @@ __declspec(naked) void PendingMatch_00443320(void)
     L_3697:
         push     0x443800
         call     StoreLoadJmp
-        mov      edx, dword ptr [g_installOwner2_0053a7a0]
+        mov      edx, dword ptr [g_installOwner2]
         mov      ecx, 0x4e5b80
         shr      ecx, 2
         mov      dword ptr [g_eventQueueIdx], ecx
@@ -11184,7 +11184,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         mov      edx, dword ptr [g_eventQueueIdx]
         mov      ecx, 0x4e5b18
         mov      dword ptr [eax*4 + 0x68], edx
-        mov      edx, dword ptr [g_installOwner2_0053a7a0]
+        mov      edx, dword ptr [g_installOwner2]
         shr      ecx, 2
         mov      dword ptr [g_eventQueueIdx], ecx
         mov      dword ptr [g_eventQueueEnd], edx
@@ -11220,7 +11220,7 @@ __declspec(naked) void PendingMatch_00443320(void)
         mov      dword ptr [eax + 0x84], 0
         test     ecx, ecx
         jne      L_382a
-        mov      edx, dword ptr [g_installOwner2_0053a7a0]
+        mov      edx, dword ptr [g_installOwner2]
         mov      dword ptr [g_eventQueueEnd], edx
         jmp      L_3830
     L_382a:
@@ -11916,7 +11916,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         nop      
         mov      eax, 1
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_dispatchVar11_00537f04], eax
+        mov      dword ptr [g_dispatchVar11], eax
         jmp      PendingMatch_00459510
         nop      
         nop      

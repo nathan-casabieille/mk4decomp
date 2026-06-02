@@ -20,22 +20,22 @@ extern unsigned int g_scaledInit_00542044;
  *   add     esp, 8
  *   ret
  */
-extern unsigned int g_dispatchSave1592_00ab5754;
-extern unsigned int g_dispatchSave1594_00ab575c;
-extern unsigned int g_dispatchSave1595_00ab5760;
+extern unsigned int g_dispatchSave1592;
+extern unsigned int g_dispatchSave1594;
+extern unsigned int g_dispatchSave1595;
 extern int EcmStreamTickAdvance(unsigned int *, unsigned int *);
 void TestPushPushCall(void) {
     __asm {
-        mov     ecx, dword ptr [g_dispatchSave1592_00ab5754]
+        mov     ecx, dword ptr [g_dispatchSave1592]
         xor     eax, eax
         cmp     ecx, eax
         _emit   75h
         _emit   01h
         ret
-        push    OFFSET g_dispatchSave1595_00ab5760
-        push    OFFSET g_dispatchSave1594_00ab575c
-        mov     dword ptr [g_dispatchSave1594_00ab575c], eax
-        mov     dword ptr [g_dispatchSave1595_00ab5760], eax
+        push    OFFSET g_dispatchSave1595
+        push    OFFSET g_dispatchSave1594
+        mov     dword ptr [g_dispatchSave1594], eax
+        mov     dword ptr [g_dispatchSave1595], eax
         call    EcmStreamTickAdvance
         add     esp, 8
         }

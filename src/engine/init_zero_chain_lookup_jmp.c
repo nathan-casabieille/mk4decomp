@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
  *   edx = [eax*4]; ++eax; g_currentNodeFlags = edx;
  *   g_eventQueueEnd = eax; jmp 0x494290.
  */
-extern unsigned int g_dispatchSave422_005431c0;
+extern unsigned int g_dispatchSave422;
 void InitZeroChainLookupJmp(void) {
     unsigned int idx;
     unsigned int eax_val;
@@ -131,7 +131,7 @@ void InitZeroChainLookupJmp(void) {
     *(unsigned int *)(idx + 0x60) = 0;
     *(unsigned int *)(idx + 0x64) = (unsigned int)g_walkCallback;
     *(unsigned int *)(idx + 0x68) = (unsigned int)g_walkCallback;
-    eax_val = (unsigned int)&g_dispatchSave422_005431c0 >> 2;
+    eax_val = (unsigned int)&g_dispatchSave422 >> 2;
     g_scaledInit_00542044 = eax_val;
     adj = ((FightGroupNode *)(g_cj_0054205c * 4))->tag - 0x60;
     eax_val += adj;

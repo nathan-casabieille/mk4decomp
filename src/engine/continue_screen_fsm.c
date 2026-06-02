@@ -108,10 +108,10 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave920_004dee18;
-extern unsigned int g_dispatchSave922_004df9a0;
+extern unsigned int g_dispatchSave920;
+extern unsigned int g_dispatchSave922;
 extern unsigned int g_assetLoadStateInit;
-extern unsigned int g_dispatchSave141_005080f4;
+extern unsigned int g_dispatchSave141;
 extern void BootInitGuardedCallChain(void);
 extern void CopyGlobal(void);
 extern void InstallSelfPackedF80(void);
@@ -152,7 +152,7 @@ __declspec(naked) void ContinueScreenFsm(void)
         call     CopyGlobal
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3e8f
-        mov      edx, OFFSET g_dispatchSave920_004dee18
+        mov      edx, OFFSET g_dispatchSave920
         mov      dword ptr [g_walkCallback], 0xa
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
@@ -164,7 +164,7 @@ __declspec(naked) void ContinueScreenFsm(void)
         jne      short L_3e8f
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, 0x10000
-        mov      edx, OFFSET g_dispatchSave922_004df9a0
+        mov      edx, OFFSET g_dispatchSave922
         mov      dword ptr [g_walkCallback], eax
         shr      edx, 2
         mov      dword ptr [ecx*4 + 0x5c], eax
@@ -207,7 +207,7 @@ __declspec(naked) void ContinueScreenFsm(void)
         call     LoadGeoAsset_Default
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_3e8f
-        mov      edx, OFFSET g_dispatchSave141_005080f4
+        mov      edx, OFFSET g_dispatchSave141
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
         call     DispatcherComplex260_00407400

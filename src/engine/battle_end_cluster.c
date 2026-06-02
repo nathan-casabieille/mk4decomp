@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave646_004eed08;
+extern unsigned int g_dispatchSave646;
 extern void ScaledTestCallPauseJmpFar(void);
 extern void CopyJmp_0048ef90(void);
 extern void TwoCallTail_00481380(void);
@@ -211,7 +211,7 @@ __declspec(naked) void Phase3Packed3EntryDispatch(void) {
         je      short L_p3p_pushPath
         jmp     TwoCallTail_00481380
     L_p3p_pushPath:
-        push    offset g_dispatchSave646_004eed08
+        push    offset g_dispatchSave646
         call    ArgSarStoreJmp
         add     esp, 4
     L_p3p_e2End:

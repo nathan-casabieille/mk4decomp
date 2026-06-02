@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  *   sub-3 (10b @ 0x4c67bb): another similar mov+jmp pair.
  *   sub-4 (~30b @ 0x4c67c5): floating-point modulus via fprem (or compat helper).
  */
-extern unsigned int g_dispatchSave1423_00f9f7fc;
+extern unsigned int g_dispatchSave1423;
 extern unsigned int g_iat_GetFileAttributesA;
 extern unsigned int g_iat_GetLastError;
 extern void Crt_doserrno(void);
@@ -168,7 +168,7 @@ __declspec(naked) void CloseAndThunksBundle(void) {
         /* sub-4: fmod via fprem */
         fxch    st(1)
     L_fmod_loop:
-        cmp     dword ptr [g_dispatchSave1423_00f9f7fc], 1
+        cmp     dword ptr [g_dispatchSave1423], 1
         jz      short L_fmod_use_helper
         fprem
         jmp     short L_fmod_check

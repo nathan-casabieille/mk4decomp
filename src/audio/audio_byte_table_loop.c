@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
  *     tab[+8] = chain[+0x54]; ecx = movsx tab[+0]; g_eventQueueCurrent = ecx;
  *     chain[(baseSel + index)*4] = g_currentNodeIdx. inc edi; if <6: loop.
  */
-extern unsigned int g_audioStateMachine2_004f3aec;
+extern unsigned int g_audioStateMachine2;
 extern unsigned int g_audioByteTable;
 extern void GuardedSetupCallTailJmp(void);
 extern void Helper_Sprintf(void);
@@ -152,7 +152,7 @@ __declspec(naked) void CharSelect_TeamSize(void)
         push    0x004d2618
         jmp     short L_printf
     L_case3:
-        mov     edx, dword ptr [g_audioStateMachine2_004f3aec]
+        mov     edx, dword ptr [g_audioStateMachine2]
         mov     eax, dword ptr [edx*4 + 0x004f3a30]
         push    eax
         push    0x004d2608

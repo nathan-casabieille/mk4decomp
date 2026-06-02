@@ -109,8 +109,8 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_pendingMatchVar;
-extern unsigned int g_dispatchSave609_004d7878;
-extern unsigned int g_dispatchSave608_004d78b8;
+extern unsigned int g_dispatchSave609;
+extern unsigned int g_dispatchSave608;
 extern unsigned int g_savedNode;
 extern void AudioMixerStep(void);
 extern void CallSetPause(void);
@@ -148,7 +148,7 @@ __declspec(naked) void Phase4TrampolineMainHelper(void)
         nop
         nop
     L_p4tmh_M:
-        mov     eax, offset g_dispatchSave609_004d7878
+        mov     eax, offset g_dispatchSave609
         push    esi
         shr     eax, 2
         push    edi
@@ -361,7 +361,7 @@ __declspec(naked) void Phase4TrampolineMainHelper(void)
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4], ecx
         mov     edx, dword ptr [g_currentNodeIdx]
-        mov     ecx, offset g_dispatchSave608_004d78b8
+        mov     ecx, offset g_dispatchSave608
         mov     eax, dword ptr [edx*4 + 0x2C]
         shr     ecx, 2
         mov     dword ptr [g_currentNodeIdx], eax

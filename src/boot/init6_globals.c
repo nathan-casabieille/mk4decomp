@@ -19,18 +19,18 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [0x00535d08], eax
  *   jmp     T
  */
-extern unsigned int g_dispatchSave305_0053a188;
-extern unsigned int g_dispatchSave401_00537f08;
-extern unsigned int g_dispatchSave304_0053a380;
-extern unsigned int g_dispatchSave400_00535d08;
+extern unsigned int g_dispatchSave305;
+extern unsigned int g_dispatchSave401;
+extern unsigned int g_dispatchSave304;
+extern unsigned int g_dispatchSave400;
 extern void BootInitChainHeavy(void);
 void Init6Globals(void) {
-    g_dispatchSave305_0053a188 = 0;
+    g_dispatchSave305 = 0;
     g_gtFightTickCounter = 0;
     g_logicFrameCounter = 0;
-    g_dispatchSave401_00537f08 = 0;
-    g_dispatchSave304_0053a380 = 0;
+    g_dispatchSave401 = 0;
+    g_dispatchSave304 = 0;
     g_walkCallback = (void (*)(void))1;
-    g_dispatchSave400_00535d08 = 1;
+    g_dispatchSave400 = 1;
     BootInitChainHeavy();
 }

@@ -120,8 +120,8 @@ extern unsigned int g_fightAxisPosY;
  *   g_walkCallback=0x1f; chain[+0x30]=0x1f; call PushSetCallPop; if paused: ret. Tail-call RegistryPushBindPop.
  */
 extern unsigned int g_assetLoadStateInit;
-extern unsigned int g_dispatchSave143_005080bc;
-extern unsigned int g_dispatchSave142_005080d8;
+extern unsigned int g_dispatchSave143;
+extern unsigned int g_dispatchSave142;
 extern void RegistryPushBindPop(void);
 extern void TableWalkBoundedCmp(void);
 
@@ -147,7 +147,7 @@ __declspec(naked) void BootMultiAssetLoadStateInit(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_ml_ret
-        mov     edx, offset g_dispatchSave142_005080d8
+        mov     edx, offset g_dispatchSave142
         shr     edx, 2
         mov     dword ptr [g_xformEntityIdx], edx
         call    DispatcherComplex260_00407400
@@ -168,7 +168,7 @@ __declspec(naked) void BootMultiAssetLoadStateInit(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_ml_ret
-        mov     edx, offset g_dispatchSave143_005080bc
+        mov     edx, offset g_dispatchSave143
         shr     edx, 2
         mov     dword ptr [g_xformEntityIdx], edx
         call    DispatcherComplex260_00407400

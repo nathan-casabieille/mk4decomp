@@ -9,7 +9,7 @@ extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00413360 (19b): push 0x8d; push DATA_PTR; call F; add esp,8; ret */
 extern int __cdecl StoreTwoCall(void *, int);
-extern void *g_dispatchSave1132_00413490;
+extern void *g_dispatchSave1132;
 void Push8d_Push413490(void) {
-    StoreTwoCall(&g_dispatchSave1132_00413490, 0x8d);
+    StoreTwoCall(&g_dispatchSave1132, 0x8d);
 }

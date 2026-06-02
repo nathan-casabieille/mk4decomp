@@ -108,10 +108,10 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave20_00541fec;
-extern unsigned int g_packedDispatchSlot3_00541ff0;
-extern unsigned int g_packedDispatchSlot2_00541ff4;
-extern unsigned int g_packedDispatchSlot1_00541ff8;
+extern unsigned int g_dispatchSave20;
+extern unsigned int g_packedDispatchSlot3;
+extern unsigned int g_packedDispatchSlot2;
+extern unsigned int g_packedDispatchSlot1;
 
 __declspec(naked) void FourVecFillMStackBracket(void)
 {
@@ -129,7 +129,7 @@ __declspec(naked) void FourVecFillMStackBracket(void)
         mov     dword ptr [g_matrixStackTop], eax
         mov     ecx, 7
         mov     dword ptr [eax*4], edx
-        mov     eax, dword ptr [g_dispatchSave20_00541fec]
+        mov     eax, dword ptr [g_dispatchSave20]
         xor     edx, edx
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_walkCallback], edx
@@ -151,7 +151,7 @@ __declspec(naked) void FourVecFillMStackBracket(void)
         mov     dword ptr [g_currentNodeIdx], esi
         mov     dword ptr [g_xformLoopCounter], eax
         jns     short L_fvf_loop1
-        mov     eax, dword ptr [g_packedDispatchSlot3_00541ff0]
+        mov     eax, dword ptr [g_packedDispatchSlot3]
         mov     dword ptr [g_walkCallback], 0xc
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_xformLoopCounter], ecx
@@ -167,7 +167,7 @@ __declspec(naked) void FourVecFillMStackBracket(void)
         mov     dword ptr [g_xformLoopCounter], eax
         jns     short L_fvf_loop2
         mov     dword ptr [g_walkCallback], edx
-        mov     edx, dword ptr [g_packedDispatchSlot2_00541ff4]
+        mov     edx, dword ptr [g_packedDispatchSlot2]
         mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_xformLoopCounter], ecx
     L_fvf_loop3:
@@ -181,7 +181,7 @@ __declspec(naked) void FourVecFillMStackBracket(void)
         mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_xformLoopCounter], eax
         jns     short L_fvf_loop3
-        mov     eax, dword ptr [g_packedDispatchSlot1_00541ff8]
+        mov     eax, dword ptr [g_packedDispatchSlot1]
         mov     dword ptr [g_xformLoopCounter], ecx
         mov     dword ptr [g_currentNodeIdx], eax
     L_fvf_loop4:

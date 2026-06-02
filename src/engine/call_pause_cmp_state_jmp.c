@@ -25,7 +25,7 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_table_00535ddc;
 extern void ScaledZeroFour(void);
 extern void ArgSarStoreJmp(void *p);
-extern void *g_dispatchSave1280_004eabb0;
+extern void *g_dispatchSave1280;
 extern void GuardedPushCall_0046a560(void);
 void CallPauseCmpStateJmp(void) {
     unsigned int v;
@@ -37,5 +37,5 @@ void CallPauseCmpStateJmp(void) {
         GuardedPushCall_0046a560();
         return;
     }
-    ArgSarStoreJmp(&g_dispatchSave1280_004eabb0);
+    ArgSarStoreJmp(&g_dispatchSave1280);
 }

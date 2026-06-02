@@ -108,13 +108,13 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_bootChainState3_00541e98;
+extern unsigned int g_bootChainState3;
 extern void MStackPush2ChainPrepend(void);
 
 /*
  * @addr 0x00406530 (118b boot) - push-set-call-pop: push wt onto
  *   state stack, OR walk[+0x34] |= 0xc2, set walk[+0x5c]=0x10000,
- *   load g_bootChainState3_00541e98 into wt and call MStackPush2ChainPrepend; on pause clear
+ *   load g_bootChainState3 into wt and call MStackPush2ChainPrepend; on pause clear
  *   pop wt back from state stack.
  */
 
@@ -133,7 +133,7 @@ void PushSetCallPop(void) {
         mov     eax, 0x00010000
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x5c], eax
-        mov     eax, dword ptr [g_bootChainState3_00541e98]
+        mov     eax, dword ptr [g_bootChainState3]
         mov     dword ptr [g_xformEntityIdx], eax
         call    MStackPush2ChainPrepend
         mov     eax, dword ptr [g_framePauseFlag]

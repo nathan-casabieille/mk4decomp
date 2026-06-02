@@ -11,16 +11,16 @@ extern unsigned int g_scaledInit_00542044;
  *   [0x541dbc] = eax. Then 3 chained calls with pause-test → ret;
  *   final call → jmp T.
  */
-extern unsigned int g_phase1ModelChain_0053e35c;
-extern unsigned int g_dispatchSave415_00541dbc;
+extern unsigned int g_phase1ModelChain;
+extern unsigned int g_dispatchSave415;
 extern void DualEntryInitCmp(void);
 extern void Thunk_ZeroLargeBlock(void);
 extern void Init6Globals(void);
 extern void PendingMatch_0045c8e0(void);
 void SentinelInitTripleCall(void) {
-    g_phase1ModelChain_0053e35c = 0xfedcba98;
+    g_phase1ModelChain = 0xfedcba98;
     g_walkCallback = (void(*)(void))0x8a9dcbef;
-    g_dispatchSave415_00541dbc = 0x8a9dcbef;
+    g_dispatchSave415 = 0x8a9dcbef;
     DualEntryInitCmp();
     if (g_framePauseFlag) return;
     Thunk_ZeroLargeBlock();

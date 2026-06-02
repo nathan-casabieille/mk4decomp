@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_pendingMatchVar;
-extern unsigned int g_dispatchSave730_004ec898;
+extern unsigned int g_dispatchSave730;
 extern unsigned int g_particleEmitterNode;
 extern void AudioMixerStep(void);
 extern void MStackCall_00406340(void);
@@ -133,7 +133,7 @@ __declspec(naked) void MStackBracket3PackedSlotInit(void)
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueCurrent]
         inc     eax
-        mov     edx, offset g_dispatchSave730_004ec898
+        mov     edx, offset g_dispatchSave730
         mov     dword ptr [g_matrixStackTop], eax
         shr     edx, 2
         mov     dword ptr [eax*4], ecx

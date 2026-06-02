@@ -110,12 +110,12 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_iat_DeleteObject;
 extern unsigned int g_iat_ReleaseDC;
 extern unsigned int g_iat_InvalidateRect;
-extern unsigned int g_dispatchSave1620_007af934;
-extern unsigned int g_dispatchSave1621_007af938;
-extern unsigned int g_dispatchSave1622_007af93c;
+extern unsigned int g_dispatchSave1620;
+extern unsigned int g_dispatchSave1621;
+extern unsigned int g_dispatchSave1622;
 extern int g_renderer4_active;
-extern unsigned int g_dispatchSave1623_007af944;
-extern unsigned int g_dispatchSave1625_007af950;
+extern unsigned int g_dispatchSave1623;
+extern unsigned int g_dispatchSave1625;
 
 /*
  * @addr 0x004b2a40 (115b engine.app) - SW renderer teardown:
@@ -126,21 +126,21 @@ extern unsigned int g_dispatchSave1625_007af950;
 void RendererTeardownSW(void) {
     unsigned int zero = 0;
     Renderer4_EndScene_SW_Win();
-    if (g_dispatchSave1620_007af934 != zero) {
-        FreeImpl((void *)g_dispatchSave1620_007af934);
-        g_dispatchSave1620_007af934 = zero;
+    if (g_dispatchSave1620 != zero) {
+        FreeImpl((void *)g_dispatchSave1620);
+        g_dispatchSave1620 = zero;
     }
-    if (g_dispatchSave1621_007af938 != zero) {
-        ((void (__stdcall *)(unsigned int, unsigned int))g_iat_ReleaseDC)(g_dispatchSave1623_007af944, g_dispatchSave1621_007af938);
-        g_dispatchSave1621_007af938 = zero;
+    if (g_dispatchSave1621 != zero) {
+        ((void (__stdcall *)(unsigned int, unsigned int))g_iat_ReleaseDC)(g_dispatchSave1623, g_dispatchSave1621);
+        g_dispatchSave1621 = zero;
     }
-    if (g_dispatchSave1622_007af93c != zero) {
-        ((void (__stdcall *)(unsigned int))g_iat_DeleteObject)(g_dispatchSave1622_007af93c);
-        g_dispatchSave1622_007af93c = zero;
+    if (g_dispatchSave1622 != zero) {
+        ((void (__stdcall *)(unsigned int))g_iat_DeleteObject)(g_dispatchSave1622);
+        g_dispatchSave1622 = zero;
     }
     g_renderer4_active = zero;
-    if (g_dispatchSave1625_007af950 != zero) {
+    if (g_dispatchSave1625 != zero) {
         ((void (__stdcall *)(unsigned int, unsigned int, unsigned int))g_iat_InvalidateRect)(zero, zero, 1);
     }
-    g_dispatchSave1625_007af950 = zero;
+    g_dispatchSave1625 = zero;
 }

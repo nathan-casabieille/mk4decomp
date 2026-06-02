@@ -108,10 +108,10 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_pendingMatchVar3_004d5320;
-extern unsigned int g_dispatchSave620_004d59e8;
-extern unsigned int g_phase1ModelArr_00512538;
-extern unsigned int g_phase1ModelChain_0053e35c;
+extern unsigned int g_pendingMatchVar3;
+extern unsigned int g_dispatchSave620;
+extern unsigned int g_phase1ModelArr;
+extern unsigned int g_phase1ModelChain;
 extern void FramePauseScaledStore(void);
 extern void MStackCall_00406250(void);
 extern void MStackPush2ChainLLInsert(void);
@@ -124,7 +124,7 @@ extern void Thunk_MStackPush2ChainPrepend(void);
 __declspec(naked) void Phase1InitModelAdjustChain(void)
 {
     __asm {
-        mov     eax, offset g_dispatchSave620_004d59e8
+        mov     eax, offset g_dispatchSave620
         shr     eax, 2
         mov     dword ptr [g_walkCallback], eax
         call    PushSetXfmMaskCallPop
@@ -134,7 +134,7 @@ __declspec(naked) void Phase1InitModelAdjustChain(void)
         test    byte ptr [g_xformDirtyFlags], 4
         jne     L_p1im_ret
         mov     ecx, dword ptr [g_currentNodeIdx]
-        mov     edx, offset g_phase1ModelArr_00512538
+        mov     edx, offset g_phase1ModelArr
         shr     edx, 2
         mov     dword ptr [g_fightGroupHead], ecx
         mov     dword ptr [g_xformEntityIdx], edx
@@ -171,7 +171,7 @@ __declspec(naked) void Phase1InitModelAdjustChain(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1im_ret
-        mov     eax, dword ptr [g_pendingMatchVar3_004d5320]
+        mov     eax, dword ptr [g_pendingMatchVar3]
         mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x44], eax
@@ -181,7 +181,7 @@ __declspec(naked) void Phase1InitModelAdjustChain(void)
         mov     dword ptr [edx*4 + 0x48], 0xB333
         mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [eax*4 + 0x30], 0x72
-        mov     eax, dword ptr [g_phase1ModelChain_0053e35c]
+        mov     eax, dword ptr [g_phase1ModelChain]
         mov     ecx, dword ptr [g_fightGroupHead]
         shr     eax, 0x10
         and     eax, 1

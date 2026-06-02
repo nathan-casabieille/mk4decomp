@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_phaseThunkState2_00538094;
+extern unsigned int g_phaseThunkState2;
 extern void CallPauseCallTestStackPushJmp(void);
 extern void CallPauseMStackPushSet0Jmp(void);
 extern void CallPauseTriCmpJmp(void);
@@ -203,7 +203,7 @@ __declspec(naked) void SlotPhaseDispatcherBigSwitch(void)
         call    DualGatedStateYield
         test    eax, eax
         jne     short L_spdbs_ret
-        mov     eax, dword ptr [g_phaseThunkState2_00538094]
+        mov     eax, dword ptr [g_phaseThunkState2]
         cmp     eax, edi
         mov     dword ptr [g_eventQueueCurrent], eax
         je      short L_spdbs_install

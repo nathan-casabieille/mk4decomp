@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave790_004f20c0;
-extern unsigned int g_dispatchSave791_004f20f0;
+extern unsigned int g_dispatchSave790;
+extern unsigned int g_dispatchSave791;
 extern unsigned int g_savedNode;
 extern void AiComboDispatcherCluster(void);
 extern void ArgSarStoreJmp(void);
@@ -144,7 +144,7 @@ __declspec(naked) void SweepKickDispatcher(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_712b
-        push     OFFSET g_dispatchSave790_004f20c0
+        push     OFFSET g_dispatchSave790
         call     ArgSarStoreJmp
         add      esp, 4
     L_712b:
@@ -279,7 +279,7 @@ __declspec(naked) void SweepKickDispatcher(void)
         mov      eax, 0x30
         mov      dword ptr [g_fightGroupHead], ecx
         mov      dword ptr [g_walkCallback], eax
-        push     OFFSET g_dispatchSave791_004f20f0
+        push     OFFSET g_dispatchSave791
         mov      dword ptr [edx*4 + 0x5c], eax
         call     ArgSar_Set0_Jmp
         add      esp, 4

@@ -128,8 +128,8 @@ extern void PushFourCallPopBitJmp(void);
  *     extracted and tail-call eax; ret.
  *   B4 (192..211): call ScaledMove48to58; if !pause jmp PushFourCallPopBitJmp; ret.
  */
-extern unsigned int g_dispatchSave693_004e7fb0;
-extern unsigned int g_dispatchSave694_004e7fc0;
+extern unsigned int g_dispatchSave693;
+extern unsigned int g_dispatchSave694;
 extern void ArgSarStoreJmp(void);
 extern void GatedWordPushCall(void);
 extern void PendingMatch_00452770(void);
@@ -238,7 +238,7 @@ __declspec(naked) void StageTransitionCluster_00455340(void)
         test     eax, eax
         jne      short L_538a
         mov      eax, dword ptr [g_eventQueueIdx]
-        push     OFFSET g_dispatchSave693_004e7fb0
+        push     OFFSET g_dispatchSave693
         mov      dword ptr [g_fightGroupHead], eax
         call     ArgSarStoreJmp
         add      esp, 4
@@ -251,7 +251,7 @@ __declspec(naked) void StageTransitionCluster_00455340(void)
         nop
         /* === Helper 2: set slot-bit 4 + event === */
         mov      ecx, dword ptr [g_eventQueueIdx]
-        push     OFFSET g_dispatchSave694_004e7fc0
+        push     OFFSET g_dispatchSave694
         mov      eax, dword ptr [ecx*4 + 0x34]
         or       al, 4
         mov      dword ptr [g_walkCallback], eax

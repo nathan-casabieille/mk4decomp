@@ -125,20 +125,20 @@ extern unsigned int g_fightAxisPosY;
  *   TableWalkBoundedCmp, sets byte 0x54371c=1, sets 0x54206c
  *   from g_dlNalt1, calls DownloadPlayerChar; on no-error sets
  *   0x542070=1 and 0x54206c from g_dlNalt2, calls DownloadPlayerChar
- *   again; on no-error sets 0x542044 = &g_installCountdownArr2_0050b214>>2 (packed_ptr),
+ *   again; on no-error sets 0x542044 = &g_installCountdownArr2>>2 (packed_ptr),
  *   clears 0x54371c, calls LoadGeoAsset_Default; on no-error reloads
- *   &g_installCountdownArr2_0050b214>>2 and calls LoadGeoAsset_Default a second time.
+ *   &g_installCountdownArr2>>2 and calls LoadGeoAsset_Default a second time.
  */
-extern unsigned int g_installCountdownArr2_0050b214;
-extern unsigned int g_phaseThunkVar2_0052aabc;
+extern unsigned int g_installCountdownArr2;
+extern unsigned int g_phaseThunkVar2;
 extern unsigned int g_load_0052ab10;
-extern unsigned int g_phaseThunkVar4_00535de0;
+extern unsigned int g_phaseThunkVar4;
 extern unsigned int g_particleEmitterNode;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
-extern unsigned int g_dispatchSave96_0053a170;
+extern unsigned int g_dispatchSave96;
 extern unsigned int g_eventMusicVar;
-extern unsigned int g_dispatchVar7_00541fbc;
+extern unsigned int g_dispatchVar7;
 extern u8 g_dlEnabledFlag;
 extern void BootInitGuardedCallChain(void);
 extern void CopyGlobal(void);
@@ -170,12 +170,12 @@ __declspec(naked) void BootInitClearSlotSeed(void) {
         mov     dword ptr [eax + 0x58], ebx
         mov     dword ptr [eax + 0x5c], 0x10000
         mov     dword ptr [eax + 0x34], ebx
-        mov     eax, dword ptr [g_dispatchVar7_00541fbc]
-        mov     dword ptr [g_phaseThunkVar4_00535de0], ebx
+        mov     eax, dword ptr [g_dispatchVar7]
+        mov     dword ptr [g_phaseThunkVar4], ebx
         mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, 0xa
         mov     dword ptr [g_eventMusicVar], ebx
-        mov     dword ptr [g_dispatchSave96_0053a170], 2
+        mov     dword ptr [g_dispatchSave96], 2
         mov     dword ptr [g_walkCallback], ebx
         mov     dword ptr [g_xformLoopCounter], eax
     L_bic_zeroLoop:
@@ -189,7 +189,7 @@ __declspec(naked) void BootInitClearSlotSeed(void) {
         mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_xformLoopCounter], ecx
         jns     short L_bic_zeroLoop
-        mov     dword ptr [g_phaseThunkVar2_0052aabc], eax
+        mov     dword ptr [g_phaseThunkVar2], eax
         mov     dword ptr [g_walkCallback], ebx
         call    CopyGlobal
         cmp     dword ptr [g_framePauseFlag], ebx
@@ -212,7 +212,7 @@ __declspec(naked) void BootInitClearSlotSeed(void) {
         call    DownloadPlayerChar
         cmp     dword ptr [g_framePauseFlag], ebx
         jne     short L_bic_done
-        mov     edx, offset g_installCountdownArr2_0050b214
+        mov     edx, offset g_installCountdownArr2
         mov     byte ptr [g_dlEnabledFlag], bl
         shr     edx, 2
         mov     dword ptr [g_walkCallback], esi
@@ -221,7 +221,7 @@ __declspec(naked) void BootInitClearSlotSeed(void) {
         call    LoadGeoAsset_Default
         cmp     dword ptr [g_framePauseFlag], ebx
         jne     short L_bic_done
-        mov     eax, offset g_installCountdownArr2_0050b214
+        mov     eax, offset g_installCountdownArr2
         shr     eax, 2
         mov     dword ptr [g_currentNodeIdx], eax
         call    LoadGeoAsset_Default

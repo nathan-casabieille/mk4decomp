@@ -18,11 +18,11 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_eventQueueEnd], 1
  *   jmp     T
  */
-extern unsigned int g_stateChangePair3_0053a278;
+extern unsigned int g_stateChangePair3;
 extern unsigned int g_acc_00542078;
 extern void CinematicStageCluster(void);
 void IncCmp28StoreOrJmp(void) {
-    int v = (int)g_stateChangePair3_0053a278;
+    int v = (int)g_stateChangePair3;
     g_acc_00542078 = (unsigned int)v;
     v++;
     g_walkCallback = (void (*)(void))v;

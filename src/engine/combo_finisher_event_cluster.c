@@ -108,10 +108,10 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave780_004f1610;
-extern unsigned int g_dispatchSave781_004f1628;
-extern unsigned int g_dispatchSave782_004f163c;
-extern unsigned int g_dispatchTab69_005431b8;
+extern unsigned int g_dispatchSave780;
+extern unsigned int g_dispatchSave781;
+extern unsigned int g_dispatchSave782;
+extern unsigned int g_dispatchTab69;
 extern void ArgSarStoreJmp(void);
 extern void DualGatedStateYield(void);
 extern void EsiEdiAliasDualMul10(void);
@@ -134,7 +134,7 @@ __declspec(naked) void ComboFinisherEventCluster(void)
 {
     __asm {
         /* === h1 (0x495dc0): event 004f1610 forwarder === */
-        push     OFFSET g_dispatchSave780_004f1610
+        push     OFFSET g_dispatchSave780
         call     ScaledLookupGuardJmpIndirect
         add      esp, 4
         ret
@@ -142,7 +142,7 @@ __declspec(naked) void ComboFinisherEventCluster(void)
         nop
         /* === h2 (0x495dd0): event 004f1628 forwarder === */
         mov      eax, dword ptr [g_baseSel]
-        push     OFFSET g_dispatchSave781_004f1628
+        push     OFFSET g_dispatchSave781
         mov      dword ptr [eax*4 + 0x74], 0x404
         mov      ecx, dword ptr [g_baseSel]
         mov      eax, 0x314
@@ -229,7 +229,7 @@ __declspec(naked) void ComboFinisherEventCluster(void)
         call     TableLookupCall_00489ff0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_60d0
-        push     OFFSET g_dispatchTab69_005431b8
+        push     OFFSET g_dispatchTab69
         call     GuardedPackedSlotInit
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -264,7 +264,7 @@ __declspec(naked) void ComboFinisherEventCluster(void)
         cmp      dword ptr [g_xformScratch2088], ebx
         jne      short L_6067
     L_5fe8:
-        push     OFFSET g_dispatchSave782_004f163c
+        push     OFFSET g_dispatchSave782
         call     IterStepNegStore
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4

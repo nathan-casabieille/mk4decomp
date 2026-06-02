@@ -117,8 +117,8 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_arr_005d83a4_indexed_24;
 extern unsigned int g_arr_005d83a4_indexed_28;
 extern unsigned int g_str_0043d8c0;
-extern unsigned int g_dispatchSave254_00501160;
-extern unsigned int g_phaseThunkVar8_0053a2d4;
+extern unsigned int g_dispatchSave254;
+extern unsigned int g_phaseThunkVar8;
 extern unsigned int g_throwEventTime;
 extern void DualEntryStub(void);
 extern void StateMachineDualModuloInstall(void);
@@ -126,16 +126,16 @@ extern void WorldCellSetupCluster(void);
 
 __declspec(naked) void CountdownStoreCallChain(void) {
     __asm {
-        mov     eax, dword ptr [g_phaseThunkVar8_0053a2d4]
+        mov     eax, dword ptr [g_phaseThunkVar8]
         dec     eax
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_phaseThunkVar8_0053a2d4], eax
+        mov     dword ptr [g_phaseThunkVar8], eax
         je      short L_csc_body
         jmp     DualEntryStub
 L_csc_body:
         mov     edx, dword ptr [g_cj_0054205c]
-        mov     ecx, offset g_dispatchSave254_00501160
+        mov     ecx, offset g_dispatchSave254
         shr     ecx, 2
         mov     dword ptr [edx*4 + g_arr_005d83a4_indexed_24], ecx
         mov     ecx, dword ptr [g_cj_0054205c]

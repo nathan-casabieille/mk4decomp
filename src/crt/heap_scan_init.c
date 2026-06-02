@@ -109,8 +109,8 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004c9440 (217b crt) - heap-region scan with per-slot init.
- *   Lock(2). For esi=0..[g_dispatchSave1466_00fa0dc0]-1:
- *     slot = (*g_dispatchSave1465_00f9fdb4)[esi]
+ *   Lock(2). For esi=0..[g_dispatchSave1466]-1:
+ *     slot = (*g_dispatchSave1465)[esi]
  *     If slot == 0: allocate 0x38 bytes via LoadArgPushCall,
  *       store into slot; init critsec at slot+0x20 via IAT[0x4d215c],
  *       acquire via IAT[0x4d2140], reload slot ptr into edi, fall to finalize.
@@ -123,8 +123,8 @@ extern unsigned int g_fightAxisPosY;
  *   Finalize: if edi != 0, init fields at edi (+0,+4,+8,+0xc,+0x1c = 0; +0x10 = -1).
  *   Unlock(2) via TableLookupIatCall; return edi.
  */
-extern unsigned int g_dispatchSave1465_00f9fdb4;
-extern unsigned int g_dispatchSave1466_00fa0dc0;
+extern unsigned int g_dispatchSave1465;
+extern unsigned int g_dispatchSave1466;
 extern unsigned int g_iat_EnterCriticalSection;
 extern unsigned int g_iat_InitializeCriticalSection;
 extern void LoadArgPushCall(void);
@@ -143,14 +143,14 @@ __declspec(naked) void HeapScanInit(void) {
         xor     ebp, ebp
         xor     edi, edi
         call    Lock
-        mov     eax, dword ptr [g_dispatchSave1466_00fa0dc0]
+        mov     eax, dword ptr [g_dispatchSave1466]
         add     esp, 4
         xor     esi, esi
         cmp     eax, ebp
         jle     L_hsi_finalize
         mov     bl, 0x83
     L_hsi_loop:
-        mov     eax, dword ptr [g_dispatchSave1465_00f9fdb4]
+        mov     eax, dword ptr [g_dispatchSave1465]
         mov     eax, [eax + esi*4]
         cmp     eax, ebp
         jz      short L_hsi_alloc
@@ -159,7 +159,7 @@ __declspec(naked) void HeapScanInit(void) {
         push    eax
         push    esi
         call    TwoPathIATDispatch_004c7030
-        mov     ecx, dword ptr [g_dispatchSave1465_00f9fdb4]
+        mov     ecx, dword ptr [g_dispatchSave1465]
         add     esp, 8
         mov     eax, [ecx + esi*4]
         test    byte ptr [eax + 0xc], bl
@@ -169,7 +169,7 @@ __declspec(naked) void HeapScanInit(void) {
         call    TwoPathIATDispatch_004c70a0
         add     esp, 8
     L_hsi_next:
-        mov     eax, dword ptr [g_dispatchSave1466_00fa0dc0]
+        mov     eax, dword ptr [g_dispatchSave1466]
         inc     esi
         cmp     esi, eax
         jl      short L_hsi_loop
@@ -181,22 +181,22 @@ __declspec(naked) void HeapScanInit(void) {
         push    0x38
         shl     esi, 2
         call    LoadArgPushCall
-        mov     ecx, dword ptr [g_dispatchSave1465_00f9fdb4]
+        mov     ecx, dword ptr [g_dispatchSave1465]
         add     esp, 4
         mov     [ecx + esi], eax
-        mov     edx, dword ptr [g_dispatchSave1465_00f9fdb4]
+        mov     edx, dword ptr [g_dispatchSave1465]
         mov     eax, [edx + esi]
         cmp     eax, ebp
         jz      short L_hsi_finalize
         add     eax, 0x20
         push    eax
         call    dword ptr [g_iat_InitializeCriticalSection]
-        mov     eax, dword ptr [g_dispatchSave1465_00f9fdb4]
+        mov     eax, dword ptr [g_dispatchSave1465]
         mov     ecx, [eax + esi]
         add     ecx, 0x20
         push    ecx
         call    dword ptr [g_iat_EnterCriticalSection]
-        mov     edx, dword ptr [g_dispatchSave1465_00f9fdb4]
+        mov     edx, dword ptr [g_dispatchSave1465]
         mov     edi, [edx + esi]
     L_hsi_finalize:
         cmp     edi, ebp

@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x004b9640 (301b engine.render) - vibration/feedback frame update.
  *   Reads g_fightGroupHead & 0x180000; if both bits 0, skip. Else loads
  *   [esp+0x14] as `i`; if [i*4+0x1c]==-20, set i=2. Validate i in [1,0x18].
- *   Lookup pattern entry at [i*4 + g_dispatchSave554_004f6508]; bail if 0x10000.
+ *   Lookup pattern entry at [i*4 + g_dispatchSave554]; bail if 0x10000.
  *   If i==2: load FP, fadd to g_fpuConst, fcomp 0x004d2a00; if FP overflow,
  *     re-init constants to 0x3fec_cccccccd / 0x3f90_624d_d2f1_a9fc.
  *   Else: check fcomp 0x004d2a10; if outside range, re-init to 0x3ff1_9999_9999_999a
@@ -119,13 +119,13 @@ extern unsigned int g_fightAxisPosY;
  *   Convert via DoubleToInt64, write to g_walkCallback, shift right by 4,
  *   call Transform9Words(esi, &local); OR bit 0x30 of high byte of g_xformDirtyFlags.
  */
-extern unsigned int g_dispatchSave887_004d2a00;
-extern unsigned int g_dispatchSave888_004d2a10;
-extern unsigned int g_dispatchSave554_004f6508;
+extern unsigned int g_dispatchSave887;
+extern unsigned int g_dispatchSave888;
+extern unsigned int g_dispatchSave554;
 extern unsigned int g_fpuConst;
-extern unsigned int g_dispatchSave553_004f6574;
-extern unsigned int g_dispatchSave502_004f6578;
-extern unsigned int g_dispatchSave552_004f657c;
+extern unsigned int g_dispatchSave553;
+extern unsigned int g_dispatchSave502;
+extern unsigned int g_dispatchSave552;
 extern void DoubleToInt64(void);
 extern void Transform9Words(void);
 
@@ -146,7 +146,7 @@ __declspec(naked) void VibrationFrameUpdate(void) {
         jle     L_vfu_done
         cmp     ecx, 0x18
         jg      L_vfu_done
-        mov     eax, dword ptr [ecx*4 + g_dispatchSave554_004f6508]
+        mov     eax, dword ptr [ecx*4 + g_dispatchSave554]
         cmp     eax, 0x10000
         mov     dword ptr [g_walkCallback], eax
         jz      L_vfu_done
@@ -154,27 +154,27 @@ __declspec(naked) void VibrationFrameUpdate(void) {
         cmp     ecx, 2
         lea     esi, [edx*4]
         jne     L_vfu_pathB_sar
-        fld     qword ptr [g_dispatchSave502_004f6578]
+        fld     qword ptr [g_dispatchSave502]
         fadd    qword ptr [g_fpuConst]
         fst     qword ptr [g_fpuConst]
-        fcomp   qword ptr [g_dispatchSave887_004d2a00]
+        fcomp   qword ptr [g_dispatchSave887]
         fnstsw  ax
         test    ah, 1
         jz      short L_vfu_skipReinitA
         mov     dword ptr [g_fpuConst], 0xcccccccd
-        mov     dword ptr [g_dispatchSave553_004f6574], 0x3feccccc
-        mov     dword ptr [g_dispatchSave502_004f6578], 0xd2f1a9fc
-        mov     dword ptr [g_dispatchSave552_004f657c], 0x3f90624d
+        mov     dword ptr [g_dispatchSave553], 0x3feccccc
+        mov     dword ptr [g_dispatchSave502], 0xd2f1a9fc
+        mov     dword ptr [g_dispatchSave552], 0x3f90624d
     L_vfu_skipReinitA:
         fld     qword ptr [g_fpuConst]
-        fcomp   qword ptr [g_dispatchSave888_004d2a10]
+        fcomp   qword ptr [g_dispatchSave888]
         fnstsw  ax
         test    ah, 0x41
         jne     short L_vfu_doConv
         mov     dword ptr [g_fpuConst], 0x9999999a
-        mov     dword ptr [g_dispatchSave553_004f6574], 0x3ff19999
-        mov     dword ptr [g_dispatchSave502_004f6578], 0xbc6a7efa
-        mov     dword ptr [g_dispatchSave552_004f657c], 0xbf789374
+        mov     dword ptr [g_dispatchSave553], 0x3ff19999
+        mov     dword ptr [g_dispatchSave502], 0xbc6a7efa
+        mov     dword ptr [g_dispatchSave552], 0xbf789374
     L_vfu_doConv:
         fild    dword ptr [g_walkCallback]
         fmul    qword ptr [g_fpuConst]

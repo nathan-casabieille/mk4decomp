@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned short* g_crtCType;
 extern void WcToMbDispatcher(void);
 
-extern unsigned int g_dispatchSave1580_00ab51f8;
+extern unsigned int g_dispatchSave1580;
 extern unsigned int g_chain_arr_4348f0;
 extern void InstallSelf3StateDualBody(void);
 
@@ -126,7 +126,7 @@ extern void FiveCallGuardSetTail(void);
 __declspec(naked) void InstallSelfStatePush_00434990(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
-        mov     dword ptr [g_dispatchSave1580_00ab51f8], 1
+        mov     dword ptr [g_dispatchSave1580], 1
         shl     eax, 2
         xor     edx, edx
         mov     ecx, dword ptr [eax + 0x84]

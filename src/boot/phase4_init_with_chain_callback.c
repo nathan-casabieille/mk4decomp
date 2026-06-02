@@ -109,8 +109,8 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_const_0049db40;
-extern unsigned int g_dispatchSave617_004d62a8;
-extern unsigned int g_phaseChainArr2_004d62e8;
+extern unsigned int g_dispatchSave617;
+extern unsigned int g_phaseChainArr2;
 extern unsigned int g_alarmTriState;
 extern void CallSetPause(void);
 extern void LinkedListFieldAdd_0049d450(void);
@@ -139,12 +139,12 @@ __declspec(naked) void Phase4InitWithChainCallback(void)
         push    offset g_const_0049db40
         mov     dword ptr [eax*4], ecx
         mov     edx, dword ptr [g_fightGroupHead]
-        mov     eax, offset g_phaseChainArr2_004d62e8
+        mov     eax, offset g_phaseChainArr2
         mov     dword ptr [g_eventQueueEnd], edx
         shr     eax, 2
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_alarmTriState], eax
-        mov     eax, offset g_dispatchSave617_004d62a8
+        mov     eax, offset g_dispatchSave617
         mov     dword ptr [g_eventQueueNotMask], 0xC1
         shr     eax, 2
         mov     dword ptr [g_eventQueueIdx], eax

@@ -5,8 +5,8 @@
 #include "game/tick.h"
 
 /* @addr 0x004b5010 (134b engine.geo) - mode switch:
- *   If g_dispatchVar41_004f4b50 == arg1: return.
- *   If g_dispatchVar41_004f4b50 == -1 and arg1 == 0: return.
+ *   If g_dispatchVar41 == arg1: return.
+ *   If g_dispatchVar41 == -1 and arg1 == 0: return.
  *   Store arg1; if arg1 == 0: tail-call clean-up (set window mode); ret 1.
  *   Else: call setup; if user mode == 1: re-call setup; return 1; else return 0.
  */
@@ -15,14 +15,14 @@ extern unsigned int g_iat_SetCursorPos;
 extern unsigned int g_iat_GetCursorPos;
 extern unsigned int g_iat_indirect_007b0050;
 extern unsigned int g_iat_indirect_007b0054;
-extern unsigned int g_dispatchVar41_004f4b50;
-extern unsigned int g_dispatchSave1630_007aff48;
-extern unsigned int g_dispatchSave1631_007aff4c;
+extern unsigned int g_dispatchVar41;
+extern unsigned int g_dispatchSave1630;
+extern unsigned int g_dispatchSave1631;
 extern void DSoundSetAxisPan123_004b50a0(void);
 
 int Helper_GlidePostInit(void) {
     __asm {
-        mov     ecx, dword ptr [g_dispatchVar41_004f4b50]
+        mov     ecx, dword ptr [g_dispatchVar41]
         mov     eax, dword ptr [esp + 4]
         cmp     ecx, eax
         _emit   74h
@@ -34,10 +34,10 @@ int Helper_GlidePostInit(void) {
         _emit   74h
         _emit   69h
         test    eax, eax
-        mov     dword ptr [g_dispatchVar41_004f4b50], eax
+        mov     dword ptr [g_dispatchVar41], eax
         _emit   74h
         _emit   3fh
-        push    offset g_dispatchSave1630_007aff48
+        push    offset g_dispatchSave1630
         call    dword ptr [g_iat_GetCursorPos]
         push    0
         call    dword ptr [g_iat_ShowCursor]
@@ -59,8 +59,8 @@ int Helper_GlidePostInit(void) {
         mov     eax, 1
         ret
         call    dword ptr [g_iat_indirect_007b0050]
-        mov     eax, dword ptr [g_dispatchSave1631_007aff4c]
-        mov     ecx, dword ptr [g_dispatchSave1630_007aff48]
+        mov     eax, dword ptr [g_dispatchSave1631]
+        mov     ecx, dword ptr [g_dispatchSave1630]
         push    eax
         push    ecx
         call    dword ptr [g_iat_SetCursorPos]

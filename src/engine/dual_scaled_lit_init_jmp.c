@@ -23,12 +23,12 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void LoadGeoAsset_Default(void);
 extern void LoadGeoAsset_Default(void);
-extern int g_dispatchSave409_0050b10c;
-extern int g_dispatchSave414_00511310;
+extern int g_dispatchSave409;
+extern int g_dispatchSave414;
 void DualScaledLitInitJmp(void) {
-    g_scaledInit_00542044 = ((unsigned int)&g_dispatchSave409_0050b10c) >> 2;
+    g_scaledInit_00542044 = ((unsigned int)&g_dispatchSave409) >> 2;
     LoadGeoAsset_Default();
     if (g_framePauseFlag != 0) return;
-    g_scaledInit_00542044 = ((unsigned int)&g_dispatchSave414_00511310) >> 2;
+    g_scaledInit_00542044 = ((unsigned int)&g_dispatchSave414) >> 2;
     LoadGeoAsset_Default();
 }

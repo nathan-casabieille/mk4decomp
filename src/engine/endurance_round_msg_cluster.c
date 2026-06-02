@@ -115,7 +115,7 @@ extern void Wrapper_PackedAdvanceCallTailJmp_004e4a58(void);
 extern void Wrapper_PackedAdvanceCallTailJmp_004e4a70(void);
 extern void EnduranceRoundMsgCluster(void);
 extern void CallPauseScaledStoreCopyJmp(void);
-extern unsigned int g_dispatchSave83_00541e20;
+extern unsigned int g_dispatchSave83;
 
 /* @addr 0x0043aab0 (313b game) - state-machine: 4-arm cascade dispatcher + install-self.
  *   state==0: g_xformEntityIdx=(0x0053a408>>2); g_pendingNodeType=(0x00537e88>>2).
@@ -174,7 +174,7 @@ __declspec(naked) void StateMachine4ArmCascade(void) {
         pop     edi
         pop     esi
         ret
-        mov     eax, dword ptr [g_dispatchSave83_00541e20]
+        mov     eax, dword ptr [g_dispatchSave83]
         cmp     eax, 0x78
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh

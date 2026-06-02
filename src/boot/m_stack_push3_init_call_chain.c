@@ -107,7 +107,7 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
-extern unsigned int g_dispatchSave905_004d5dd8;
+extern unsigned int g_dispatchSave905;
 
 /*
  * MStackPush3InitCallChain - 239b boot 3-arg mstack-push + xfm chain.
@@ -127,7 +127,7 @@ void MStackPush3InitCallChain(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_fightGroupHead;
     g_eventQueueEnd = g_fightGroupHead;
-    g_walkCallback = (unsigned int)&g_dispatchSave905_004d5dd8 >> 2;
+    g_walkCallback = (unsigned int)&g_dispatchSave905 >> 2;
     PushSetXfmMaskCallPop();
     if (g_framePauseFlag != 0) return;
     if (!(g_xformDirtyFlags & 4)) {

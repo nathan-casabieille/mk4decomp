@@ -123,12 +123,12 @@ extern void Thunk_LoadShlDerefCallSkip(void);
 
 extern unsigned int g_eventQueueIdx;
 
-extern unsigned char g_dispatchSave1198_004ded70;
-extern unsigned char g_dispatchSave1199_004ded80;
+extern unsigned char g_dispatchSave1198;
+extern unsigned char g_dispatchSave1199;
 extern unsigned int g_arr_4237d0;
 extern void Cmp2DirtyToggle(void);
 
-extern unsigned char g_dispatchSave1277_004ea070;
+extern unsigned char g_dispatchSave1277;
 extern unsigned int g_arr_461640;
 extern unsigned char g_str_00461980;
 
@@ -150,7 +150,7 @@ extern void PoseCopyIdleCluster(void);
 extern void Bit2GatedChainInit(void);
 extern void GDispatch4(void);
 
-extern unsigned char g_dispatchSave622_004ebee0;
+extern unsigned char g_dispatchSave622;
 extern unsigned int g_arr_491350;
 extern unsigned int g_gtPlayerProbe2;
 extern unsigned int g_gtPlayerProbe1;

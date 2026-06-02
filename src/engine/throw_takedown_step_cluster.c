@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave713_004ed0b8;
+extern unsigned int g_dispatchSave713;
 extern void ArgSarStoreJmp(void);
 extern void CmpEqInitCallElseJmp(void);
 extern void FiveCallGuardSetTail(void);
@@ -192,7 +192,7 @@ __declspec(naked) void ThrowTakedownStepCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_9f52
-        push     OFFSET g_dispatchSave713_004ed0b8
+        push     OFFSET g_dispatchSave713
         call     ArgSarStoreJmp
         add      esp, 4
     L_9f52:

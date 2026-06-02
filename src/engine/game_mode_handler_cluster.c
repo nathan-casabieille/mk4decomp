@@ -108,11 +108,11 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave513_004f1408;
-extern unsigned int g_dispatchSave581_004f1420;
-extern unsigned int g_dispatchSave580_004f1430;
-extern unsigned int g_dispatchSave512_004f1440;
-extern unsigned int g_dispatchSave511_004f1458;
+extern unsigned int g_dispatchSave513;
+extern unsigned int g_dispatchSave581;
+extern unsigned int g_dispatchSave580;
+extern unsigned int g_dispatchSave512;
+extern unsigned int g_dispatchSave511;
 extern void ArgScaledChain(void);
 extern void FlagCascadeStateSet(void);
 extern void HitReactionDispatcher(void);
@@ -140,11 +140,11 @@ __declspec(naked) void GameModeHandlerCluster(void)
         nop
         nop
         nop
-        /* Helper 2: install handler 0x111 with g_dispatchSave513_004f1408. */
+        /* Helper 2: install handler 0x111 with g_dispatchSave513. */
         mov      ecx, dword ptr [g_baseSel]
         mov      eax, 0x111
         mov      dword ptr [g_walkCallback], eax
-        push     OFFSET g_dispatchSave513_004f1408
+        push     OFFSET g_dispatchSave513
         mov      dword ptr [ecx*4 + 0x74], eax
         call     ScaledLookupGuardJmpIndirect
         add      esp, 4
@@ -161,13 +161,13 @@ __declspec(naked) void GameModeHandlerCluster(void)
         nop
         nop
         /* Helper 3: StreamInitCountdownBody + conditional ArgScaledChain. */
-        push     OFFSET g_dispatchSave581_004f1420
+        push     OFFSET g_dispatchSave581
         call     StreamInitCountdownBody
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         test     eax, eax
         jne      short L_5663
-        push     OFFSET g_dispatchSave580_004f1430
+        push     OFFSET g_dispatchSave580
         call     ArgScaledChain
         add      esp, 4
     L_5663:
@@ -235,11 +235,11 @@ __declspec(naked) void GameModeHandlerCluster(void)
         nop
         nop
         nop
-        /* Helper 5: sister of helper 2, with g_dispatchSave512_004f1440. */
+        /* Helper 5: sister of helper 2, with g_dispatchSave512. */
         mov      ecx, dword ptr [g_baseSel]
         mov      eax, 0x111
         mov      dword ptr [g_walkCallback], eax
-        push     OFFSET g_dispatchSave512_004f1440
+        push     OFFSET g_dispatchSave512
         mov      dword ptr [ecx*4 + 0x74], eax
         call     ScaledLookupGuardJmpIndirect
         add      esp, 4
@@ -255,8 +255,8 @@ __declspec(naked) void GameModeHandlerCluster(void)
         nop
         nop
         nop
-        /* Helper 6: sister of helper 3, with g_dispatchSave511_004f1458; tail-jumps. */
-        push     OFFSET g_dispatchSave511_004f1458
+        /* Helper 6: sister of helper 3, with g_dispatchSave511; tail-jumps. */
+        push     OFFSET g_dispatchSave511
         call     StreamInitCountdownBody
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4

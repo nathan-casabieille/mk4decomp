@@ -108,9 +108,9 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave531_004f6238;
+extern unsigned int g_dispatchSave531;
 extern u32 g_inLoopStep;
-extern unsigned int g_dispatchSave1626_007af958[];
+extern unsigned int g_dispatchSave1626[];
 extern s16 g_vtxIn2_x;
 extern unsigned int g_triStripX0;
 extern s16 g_vtxIn1_y;
@@ -132,11 +132,11 @@ extern s16 g_vtxScreenP2X;
 extern s16 g_vtxScreenP2Y;
 extern s16 g_vtxScreenX;
 extern s16 g_vtxScreenY;
-extern unsigned int g_dispatchSave1501_00ab4398;
-extern unsigned int g_dispatchSave1502_00ab439c;
-extern unsigned int g_dispatchSave1503_00ab43a0;
-extern unsigned int g_dispatchSave1559_00ab4d9c;
-extern unsigned int g_dispatchSave1576_00ab4e60;
+extern unsigned int g_dispatchSave1501;
+extern unsigned int g_dispatchSave1502;
+extern unsigned int g_dispatchSave1503;
+extern unsigned int g_dispatchSave1559;
+extern unsigned int g_dispatchSave1576;
 extern void CopyArgs16ToGlobals(void);
 extern void Helper_DrawCursor(void);
 extern void MaxOfThree(void);
@@ -154,7 +154,7 @@ __declspec(naked) void BillboardSheetDualEmit(void)
         push     esi
         push     edi
         jne      L_c45f
-        mov      eax, dword ptr [g_dispatchSave1576_00ab4e60]
+        mov      eax, dword ptr [g_dispatchSave1576]
         cmp      eax, 0x10
         jl       L_bdca
         cdq
@@ -174,22 +174,22 @@ __declspec(naked) void BillboardSheetDualEmit(void)
         mov      cl, byte ptr [g_fightGroupHead]
         test     cl, 0x60
         je       L_be12
-        mov      edx, dword ptr [g_dispatchSave1501_00ab4398]
-        mov      ecx, dword ptr [g_dispatchSave1502_00ab439c]
+        mov      edx, dword ptr [g_dispatchSave1501]
+        mov      ecx, dword ptr [g_dispatchSave1502]
         sar      edx, 0x10
         mov      dword ptr [g_vtxTransX], edx
-        mov      edx, dword ptr [g_dispatchSave1503_00ab43a0]
+        mov      edx, dword ptr [g_dispatchSave1503]
         sar      ecx, 0x10
         sar      edx, 7
         mov      dword ptr [g_vtxTransY], ecx
         mov      dword ptr [g_vtxTransZ], edx
         jmp      L_be3f
     L_be12:
-        mov      ecx, dword ptr [g_dispatchSave1501_00ab4398]
-        mov      edx, dword ptr [g_dispatchSave1502_00ab439c]
+        mov      ecx, dword ptr [g_dispatchSave1501]
+        mov      edx, dword ptr [g_dispatchSave1502]
         sar      ecx, 7
         mov      dword ptr [g_vtxTransX], ecx
-        mov      ecx, dword ptr [g_dispatchSave1503_00ab43a0]
+        mov      ecx, dword ptr [g_dispatchSave1503]
         sar      edx, 7
         sar      ecx, 7
         mov      dword ptr [g_vtxTransY], edx
@@ -207,7 +207,7 @@ __declspec(naked) void BillboardSheetDualEmit(void)
         and      eax, 3
         lea      edi, [edx + ecx + 8]
         xor      edx, edx
-        mov      cl, byte ptr [eax + g_dispatchSave531_004f6238]
+        mov      cl, byte ptr [eax + g_dispatchSave531]
         mov      dl, byte ptr [esi + 2]
         and      cl, 3
         movsx    ax, cl
@@ -239,7 +239,7 @@ __declspec(naked) void BillboardSheetDualEmit(void)
         mov      byte ptr [esp + 0x55], cl
         mov      cx, di
         add      dl, al
-        mov      word ptr [g_dispatchSave1626_007af958], di
+        mov      word ptr [g_dispatchSave1626], di
         mov      word ptr [g_vtxIn1_y], bp
         mov      word ptr [g_vtxIn2_y], 0
         add      cx, word ptr [esi + 4]
@@ -267,7 +267,7 @@ __declspec(naked) void BillboardSheetDualEmit(void)
         test     ax, ax
         jne      L_bf84
         call     MaxOfThree
-        mov      ecx, dword ptr [g_dispatchSave1559_00ab4d9c]
+        mov      ecx, dword ptr [g_dispatchSave1559]
         movsx    eax, ax
         cdq
         sub      eax, edx
@@ -461,7 +461,7 @@ __declspec(naked) void BillboardSheetDualEmit(void)
         mov      ecx, ebx
     L_c261:
         mov      ebx, dword ptr [esp + 0x1c]
-        mov      word ptr [g_dispatchSave1626_007af958], di
+        mov      word ptr [g_dispatchSave1626], di
         add      edx, ebx
         mov      word ptr [g_vtxIn1_y], bp
         mov      dword ptr [g_vtxTransX], edx

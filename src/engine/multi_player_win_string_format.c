@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_eventMusicSlot2_0053a318;
-extern unsigned int g_dispatchVar3_00543564;
+extern unsigned int g_eventMusicSlot2;
+extern unsigned int g_dispatchVar3;
 extern unsigned int g_eventMusicSlot;
 extern void Helper_Sprintf(void);
 extern void PushPopPendingTwoCalls(void);
@@ -131,7 +131,7 @@ __declspec(naked) void MultiPlayerWinStringFormat(void)
         _emit    0x05
         _emit    0x00
         _emit    0x00
-        mov      eax, dword ptr [g_eventMusicSlot2_0053a318]
+        mov      eax, dword ptr [g_eventMusicSlot2]
         mov      esi, 1
         mov      dword ptr [g_walkCallback], eax
         cmp      eax, esi
@@ -143,9 +143,9 @@ __declspec(naked) void MultiPlayerWinStringFormat(void)
         jne      L_f11c
         cmp      dword ptr [g_active_00537e88], esi
         jne      L_f11c
-        mov      eax, dword ptr [g_dispatchVar3_00543564]
+        mov      eax, dword ptr [g_dispatchVar3]
         dec      eax
-        mov      dword ptr [g_dispatchVar3_00543564], eax
+        mov      dword ptr [g_dispatchVar3], eax
         /* js 0x42f4e8 (external, raw bytes) */
         _emit    0x0f
         _emit    0x88
@@ -158,7 +158,7 @@ __declspec(naked) void MultiPlayerWinStringFormat(void)
         push     0x4d56d0
         push     0x543450
         call     Helper_Sprintf
-        mov      eax, dword ptr [g_dispatchVar3_00543564]
+        mov      eax, dword ptr [g_dispatchVar3]
         add      esp, 0xc
         cmp      eax, esi
         mov      edi, 0x4d56e8

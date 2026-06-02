@@ -18,21 +18,21 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [0x00ab4db8], eax
  *   ret
  */
-extern unsigned int g_dispatchSave1559_00ab4d9c;
-extern unsigned int g_dispatchSave1560_00ab4da0;
-extern unsigned int g_dispatchSave1561_00ab4da4;
-extern unsigned int g_dispatchSave1562_00ab4da8;
-extern unsigned int g_dispatchSave1563_00ab4dac;
-extern unsigned int g_dispatchSave1564_00ab4db0;
-extern unsigned int g_dispatchSave1565_00ab4db4;
-extern unsigned int g_dispatchSave1566_00ab4db8;
+extern unsigned int g_dispatchSave1559;
+extern unsigned int g_dispatchSave1560;
+extern unsigned int g_dispatchSave1561;
+extern unsigned int g_dispatchSave1562;
+extern unsigned int g_dispatchSave1563;
+extern unsigned int g_dispatchSave1564;
+extern unsigned int g_dispatchSave1565;
+extern unsigned int g_dispatchSave1566;
 void ZeroEightFields(void) {
-    g_dispatchSave1559_00ab4d9c = 0;
-    g_dispatchSave1560_00ab4da0 = 0;
-    g_dispatchSave1561_00ab4da4 = 0;
-    g_dispatchSave1562_00ab4da8 = 0;
-    g_dispatchSave1563_00ab4dac = 0;
-    g_dispatchSave1564_00ab4db0 = 0;
-    g_dispatchSave1565_00ab4db4 = 0;
-    g_dispatchSave1566_00ab4db8 = 0;
+    g_dispatchSave1559 = 0;
+    g_dispatchSave1560 = 0;
+    g_dispatchSave1561 = 0;
+    g_dispatchSave1562 = 0;
+    g_dispatchSave1563 = 0;
+    g_dispatchSave1564 = 0;
+    g_dispatchSave1565 = 0;
+    g_dispatchSave1566 = 0;
 }

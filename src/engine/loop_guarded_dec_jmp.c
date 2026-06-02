@@ -11,12 +11,12 @@ extern unsigned int g_baseSel;
  * as counter, calls Cascade3ChainInit, then if !pause tail-calls
  * ArgSarStoreJmp(0x4e37d0). Entry A of the original 79-byte packed
  * block; entry B (loop body) lives in func_0042c7c0. */
-extern unsigned int g_dispatchSave1219_004e37d0;
+extern unsigned int g_dispatchSave1219;
 extern void Cascade3ChainInit(void);
 extern void TripleEntryStateCascade(void);
 void LoopGuardedDecJmp(void) {
     ((ScenegraphNode *)(g_baseSel * 4))->position_z = (unsigned int)g_walkCallback;
     Cascade3ChainInit();
     if (g_framePauseFlag != 0) return;
-    ArgSarStoreJmp(&g_dispatchSave1219_004e37d0);
+    ArgSarStoreJmp(&g_dispatchSave1219);
 }

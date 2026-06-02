@@ -107,12 +107,12 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
-extern unsigned int g_phaseThunkState2_00538094;
-extern unsigned int g_dispatchSave22_00535dac;
+extern unsigned int g_phaseThunkState2;
+extern unsigned int g_dispatchSave22;
 
 /* @addr 0x00420090 (18b game) - zero 3 scene-callback globals. */
 void ResetSceneCallbacks(void) {
     g_walkCallback = 0;
-    g_dispatchSave22_00535dac = 0;
-    g_phaseThunkState2_00538094 = 0;
+    g_dispatchSave22 = 0;
+    g_phaseThunkState2 = 0;
 }

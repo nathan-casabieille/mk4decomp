@@ -108,10 +108,10 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave799_004f24a8;
-extern unsigned int g_dispatchSave800_004f2540;
-extern unsigned int g_dispatchSave801_004f2550;
-extern unsigned int g_dispatchSave802_004f2560;
+extern unsigned int g_dispatchSave799;
+extern unsigned int g_dispatchSave800;
+extern unsigned int g_dispatchSave801;
+extern unsigned int g_dispatchSave802;
 extern unsigned int g_eq;
 extern void ArgSarStoreJmp(void);
 extern void ArgSar_Set0_Jmp(void);
@@ -232,7 +232,7 @@ __declspec(naked) void RoundFinalizeCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_ba32
-        push     OFFSET g_dispatchSave799_004f24a8
+        push     OFFSET g_dispatchSave799
         call     ArgSarStoreJmp
         add      esp, 4
     L_ba32:
@@ -255,7 +255,7 @@ __declspec(naked) void RoundFinalizeCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_baaa
-        push     OFFSET g_dispatchSave800_004f2540
+        push     OFFSET g_dispatchSave800
         call     ScaledStackCallPause
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -290,7 +290,7 @@ __declspec(naked) void RoundFinalizeCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_bb51
-        push     OFFSET g_dispatchSave801_004f2550
+        push     OFFSET g_dispatchSave801
         call     ScaledStackCallPause
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -321,7 +321,7 @@ __declspec(naked) void RoundFinalizeCluster(void)
         add      esp, 8
         mov      dword ptr [esi + 0x74], ecx
         mov      edx, dword ptr [g_currentNodeIdx]
-        push     OFFSET g_dispatchSave802_004f2560
+        push     OFFSET g_dispatchSave802
         mov      dword ptr [g_fightGroupHead], edx
         call     ArgSar_Set0_Jmp
         add      esp, 4

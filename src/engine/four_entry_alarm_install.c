@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
  *     g_eventQueueEnd = 0x5c-arg, g_eventQueueWorkType = 0x267,
  *     g_pendingNodeType = 0x44ea20. Calls AllocNode; on no-error pushes
  *     0x4ea9c0 + ArgSarStoreJmp.
- *   Entry 2 (offset 0x60, 40b): packs &g_dispatchTableArr9_00501838>>2 into
+ *   Entry 2 (offset 0x60, 40b): packs &g_dispatchTableArr9>>2 into
  *     [g_fightGroupHead*4 + 0x24], pushes 0x4ea9d8 → ArgSarStoreJmp.
  *   8b NOP pad.
  *   Entry 3 / body (offset 0x90, 144b): phase-state install.
@@ -126,11 +126,11 @@ extern unsigned int g_fightAxisPosY;
  *       arms 0x541e6c=1.
  *   Entry 4 (offset 0x120, 96b): mirror of entry 1 with alarm 0x4ea9f8.
  */
-extern unsigned int g_dispatchSave963_004ea9c0;
-extern unsigned int g_dispatchSave964_004ea9d8;
-extern unsigned int g_dispatchSave965_004ea9e8;
-extern unsigned int g_dispatchSave966_004ea9f8;
-extern unsigned int g_dispatchTableArr9_00501838;
+extern unsigned int g_dispatchSave963;
+extern unsigned int g_dispatchSave964;
+extern unsigned int g_dispatchSave965;
+extern unsigned int g_dispatchSave966;
+extern unsigned int g_dispatchTableArr9;
 extern void ArgSarStoreJmp(void);
 extern void ScaledDecBranch_00466460(void);
 extern void TripleStageRollback(void);
@@ -151,17 +151,17 @@ __declspec(naked) void FourEntryAlarmInstall(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_fea2_e1End
-        push    offset g_dispatchSave963_004ea9c0
+        push    offset g_dispatchSave963
         call    ArgSarStoreJmp
         add     esp, 4
     L_fea2_e1End:
         ret
     L_fea2_entry2:
         mov     ecx, dword ptr [g_fightGroupHead]
-        mov     eax, offset g_dispatchTableArr9_00501838
+        mov     eax, offset g_dispatchTableArr9
         sar     eax, 2
         mov     dword ptr [g_walkCallback], eax
-        push    offset g_dispatchSave964_004ea9d8
+        push    offset g_dispatchSave964
         mov     dword ptr [ecx*4 + 0x24], eax
         call    ArgSarStoreJmp
         add     esp, 4
@@ -195,7 +195,7 @@ __declspec(naked) void FourEntryAlarmInstall(void) {
         jne     short L_fea2_install
         call    TripleStageRollback
         add     esp, 4
-        push    offset g_dispatchSave965_004ea9e8
+        push    offset g_dispatchSave965
         call    ArgSarStoreJmp
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
@@ -225,7 +225,7 @@ __declspec(naked) void FourEntryAlarmInstall(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_fea2_e4End
-        push    offset g_dispatchSave966_004ea9f8
+        push    offset g_dispatchSave966
         call    ArgSarStoreJmp
         add     esp, 4
     L_fea2_e4End:

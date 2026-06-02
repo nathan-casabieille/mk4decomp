@@ -108,9 +108,9 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchTableArr4_00514d78;
-extern unsigned int g_dispatchTableArr3_00514de8;
-extern unsigned int g_dispatchClr0_0052ab48;
+extern unsigned int g_dispatchTableArr4;
+extern unsigned int g_dispatchTableArr3;
+extern unsigned int g_dispatchClr0;
 extern unsigned int g_player1State;
 extern void BootMstackInit(void);
 extern void DispatcherComplex181_00426310(void);
@@ -130,7 +130,7 @@ void DualSeqBranchInit(void) {
         add     esp, 4
         push    0x25
         call    SaveCallRestore
-        mov     eax, offset g_dispatchTableArr4_00514d78
+        mov     eax, offset g_dispatchTableArr4
         add     esp, 4
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
@@ -172,7 +172,7 @@ void DualSeqBranchInit(void) {
     L_dsbi_secondPath:
         push    0x232
         call    SaveCallRestore
-        mov     edx, offset g_dispatchTableArr3_00514de8
+        mov     edx, offset g_dispatchTableArr3
         add     esp, 4
         shr     edx, 2
         mov     dword ptr [g_xformEntityIdx], edx
@@ -196,7 +196,7 @@ void DualSeqBranchInit(void) {
         push    0x25b
         push    0x477ee0
         mov     dword ptr [g_walkCallback], 0
-        mov     dword ptr [g_dispatchClr0_0052ab48], 0
+        mov     dword ptr [g_dispatchClr0], 0
         call    BootMstackInit
         add     esp, 8
     L_dsbi_ret:

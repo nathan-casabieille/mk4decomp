@@ -11,21 +11,21 @@
  *   mov     eax, [g_eventQueueWorkType]
  *   push    0x93
  *   push    0x00450790
- *   mov     [g_dispatchVar18_0052d750], eax
- *   mov     [g_dispatchVar17_0052d754], ecx
- *   mov     [g_dispatchVar16_0052d758], edx
+ *   mov     [g_dispatchVar18], eax
+ *   mov     [g_dispatchVar17], ecx
+ *   mov     [g_dispatchVar16], edx
  *   call    F
  *   add     esp, 8
  *   ret
  */
 extern int StoreTwoCall(void *p, int n);
-extern void *g_dispatchSave1147_00450790;
-extern unsigned int g_dispatchVar18_0052d750;
-extern unsigned int g_dispatchVar17_0052d754;
-extern unsigned int g_dispatchVar16_0052d758;
+extern void *g_dispatchSave1147;
+extern unsigned int g_dispatchVar18;
+extern unsigned int g_dispatchVar17;
+extern unsigned int g_dispatchVar16;
 void StoreThreeStatesPushCall(void) {
-    g_dispatchVar18_0052d750 = (unsigned int)g_walkCallback;
-    g_dispatchVar17_0052d754 = g_eventQueueCurrent;
-    g_dispatchVar16_0052d758 = g_eventQueueWorkType;
-    StoreTwoCall(&g_dispatchSave1147_00450790, 0x93);
+    g_dispatchVar18 = (unsigned int)g_walkCallback;
+    g_dispatchVar17 = g_eventQueueCurrent;
+    g_dispatchVar16 = g_eventQueueWorkType;
+    StoreTwoCall(&g_dispatchSave1147, 0x93);
 }

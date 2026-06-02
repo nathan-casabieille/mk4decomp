@@ -108,9 +108,9 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave531_004f6238;
+extern unsigned int g_dispatchSave531;
 extern u32 g_inLoopStep;
-extern unsigned int g_dispatchSave1626_007af958[];
+extern unsigned int g_dispatchSave1626[];
 extern s16 g_vtxIn2_x;
 extern unsigned int g_triStripX0;
 extern s16 g_vtxIn1_y;
@@ -129,10 +129,10 @@ extern s32 g_vtxValid;
 extern unsigned int g_triStripRingA;
 extern s16 g_vtxScreenP2X;
 extern s16 g_vtxScreenX;
-extern unsigned int g_dispatchSave1501_00ab4398;
-extern unsigned int g_dispatchSave1502_00ab439c;
-extern unsigned int g_dispatchSave1503_00ab43a0;
-extern unsigned int g_dispatchSave1576_00ab4e60;
+extern unsigned int g_dispatchSave1501;
+extern unsigned int g_dispatchSave1502;
+extern unsigned int g_dispatchSave1503;
+extern unsigned int g_dispatchSave1576;
 extern void Helper_DrawCursor(void);
 extern void ProjectTwoVertices(void);
 
@@ -146,14 +146,14 @@ __declspec(naked) void BillboardChainRender(void)
         cmp      eax, ebx
         jne      L_b24a
         mov      eax, dword ptr [g_currentNodeIdx]
-        mov      ecx, dword ptr [g_dispatchSave1501_00ab4398]
-        mov      edx, dword ptr [g_dispatchSave1502_00ab439c]
+        mov      ecx, dword ptr [g_dispatchSave1501]
+        mov      edx, dword ptr [g_dispatchSave1502]
         push     edi
         mov      edi, dword ptr [eax*4 + 0x2c]
-        mov      eax, dword ptr [g_dispatchSave1503_00ab43a0]
+        mov      eax, dword ptr [g_dispatchSave1503]
         sar      eax, 7
         mov      dword ptr [g_vtxTransZ], eax
-        mov      eax, dword ptr [g_dispatchSave1576_00ab4e60]
+        mov      eax, dword ptr [g_dispatchSave1576]
         sar      ecx, 0x10
         sar      edx, 0x10
         cmp      eax, 0x10
@@ -203,7 +203,7 @@ __declspec(naked) void BillboardChainRender(void)
         xor      word ptr [esp + 0x26], ax
         mov      cl, byte ptr [esi + 1]
         and      ecx, 3
-        mov      dl, byte ptr [ecx + g_dispatchSave531_004f6238]
+        mov      dl, byte ptr [ecx + g_dispatchSave531]
         mov      ecx, dword ptr [esp + 0x26]
         and      dl, 3
         and      ecx, 0xfe7f
@@ -223,7 +223,7 @@ __declspec(naked) void BillboardChainRender(void)
         mov      dx, word ptr [esi + 4]
         add      dx, cx
         add      di, ax
-        mov      word ptr [g_dispatchSave1626_007af958], cx
+        mov      word ptr [g_dispatchSave1626], cx
         mov      word ptr [g_vtxIn1_y], ax
         mov      word ptr [g_vtxIn2_y], bx
         mov      word ptr [g_vtxIn2_x], dx

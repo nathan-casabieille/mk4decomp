@@ -110,8 +110,8 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_const_00481a10;
 extern unsigned int g_const_00481a80;
-extern unsigned int g_dispatchSave540_004ef290;
-extern unsigned int g_dispatchSave539_004ef2c0;
+extern unsigned int g_dispatchSave540;
+extern unsigned int g_dispatchSave539;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_bossArrivalState;
 extern void ArgSarStoreJmp(void);
@@ -160,7 +160,7 @@ __declspec(naked) void BlockedCounterCluster(void)
         push     OFFSET g_const_00481a80
         call     StoreTwoCall
         add      esp, 8
-        push     OFFSET g_dispatchSave539_004ef2c0
+        push     OFFSET g_dispatchSave539
         call     ArgSarStoreJmp
         add      esp, 4
     L_1749:
@@ -183,7 +183,7 @@ __declspec(naked) void BlockedCounterCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1813
-        push     OFFSET g_dispatchSave540_004ef290
+        push     OFFSET g_dispatchSave540
         call     ArgSarStoreJmp
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4

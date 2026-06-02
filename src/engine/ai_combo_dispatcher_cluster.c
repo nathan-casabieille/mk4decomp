@@ -108,12 +108,12 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave910_004d6788;
-extern unsigned int g_dispatchSave792_004f2100;
-extern unsigned int g_dispatchSave793_004f2158;
-extern unsigned int g_dispatchSave794_004f2168;
-extern unsigned int g_dispatchSave538_004f27f0;
-extern unsigned int g_dispatchSave1703_00800000;
+extern unsigned int g_dispatchSave910;
+extern unsigned int g_dispatchSave792;
+extern unsigned int g_dispatchSave793;
+extern unsigned int g_dispatchSave794;
+extern unsigned int g_dispatchSave538;
+extern unsigned int g_dispatchSave1703;
 extern void ArgSarStoreJmp(void);
 extern void ArgSar_Set0_Jmp(void);
 extern void CallSetPause(void);
@@ -148,7 +148,7 @@ __declspec(naked) void AiComboDispatcherCluster(void)
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], edx
-        mov      eax, OFFSET g_dispatchSave910_004d6788
+        mov      eax, OFFSET g_dispatchSave910
         shr      eax, 2
         mov      dword ptr [g_walkCallback], eax
         call     PushSetXfmMaskCallPop
@@ -176,7 +176,7 @@ __declspec(naked) void AiComboDispatcherCluster(void)
         jmp      CallSetPause
     L_753d:
         inc      eax
-        mov      edx, OFFSET g_dispatchSave538_004f27f0
+        mov      edx, OFFSET g_dispatchSave538
         mov      dword ptr [g_matrixStackTop], eax
         shr      edx, 2
         mov      dword ptr [eax*4], ecx
@@ -206,7 +206,7 @@ __declspec(naked) void AiComboDispatcherCluster(void)
         mov      ecx, dword ptr [g_baseSel]
         mov      eax, 0x310
         mov      dword ptr [g_walkCallback], eax
-        push     OFFSET g_dispatchSave792_004f2100
+        push     OFFSET g_dispatchSave792
         mov      dword ptr [ecx*4 + 0x74], eax
         call     ArgSarStoreJmp
         add      esp, 4
@@ -231,7 +231,7 @@ __declspec(naked) void AiComboDispatcherCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_770d
-        push     OFFSET g_dispatchSave793_004f2158
+        push     OFFSET g_dispatchSave793
         call     ScaledStackCallPause
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -243,7 +243,7 @@ __declspec(naked) void AiComboDispatcherCluster(void)
         pop      esi
         ret
     L_761d:
-        push     OFFSET g_dispatchSave1703_00800000
+        push     OFFSET g_dispatchSave1703
         call     ThreeChanPackClamp
         mov      eax, dword ptr [g_fightGroupHead]
         add      esp, 4
@@ -289,7 +289,7 @@ __declspec(naked) void AiComboDispatcherCluster(void)
         mov      dword ptr [edx*4 + 0x5c], 0x30
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [g_walkCallback], 1
-        push     OFFSET g_dispatchSave794_004f2168
+        push     OFFSET g_dispatchSave794
         mov      dword ptr [eax*4 + 0x74], 1
         call     ArgSar_Set0_Jmp
         add      esp, 4

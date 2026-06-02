@@ -129,11 +129,11 @@ extern s16 g_vtxScreenP2X;
 extern s16 g_vtxScreenP2Y;
 extern s16 g_vtxScreenX;
 extern s16 g_vtxScreenY;
-extern unsigned int g_dispatchSave1501_00ab4398;
-extern unsigned int g_dispatchSave1559_00ab4d9c;
-extern unsigned int g_dispatchSave1570_00ab4e28;
-extern unsigned int g_dispatchSave1574_00ab4e3c;
-extern unsigned int g_dispatchSave1576_00ab4e60;
+extern unsigned int g_dispatchSave1501;
+extern unsigned int g_dispatchSave1559;
+extern unsigned int g_dispatchSave1570;
+extern unsigned int g_dispatchSave1574;
+extern unsigned int g_dispatchSave1576;
 extern void AdvanceTriStripRing(void);
 extern void AltCamMatrixProject(void);
 extern void Helper_DrawCursor(void);
@@ -157,14 +157,14 @@ __declspec(naked) void TristripBatchEmit3Cap(void)
         mov      eax, dword ptr [edi + 4]
         test     eax, eax
         je       L_b920
-        mov      eax, dword ptr [g_dispatchSave1570_00ab4e28]
+        mov      eax, dword ptr [g_dispatchSave1570]
         test     eax, eax
         je       L_b6c4
-        mov      eax, dword ptr [g_dispatchSave1574_00ab4e3c]
+        mov      eax, dword ptr [g_dispatchSave1574]
         test     eax, eax
         jge      L_b6c4
         push     1
-        push     OFFSET g_dispatchSave1501_00ab4398
+        push     OFFSET g_dispatchSave1501
         call     AltCamMatrixProject
         add      esp, 8
     L_b6c4:
@@ -174,7 +174,7 @@ __declspec(naked) void TristripBatchEmit3Cap(void)
         mov      eax, dword ptr [g_pendingNodeType]
         lea      edi, [edi + edx + 4]
         lea      esi, [eax + 4]
-        mov      eax, dword ptr [g_dispatchSave1576_00ab4e60]
+        mov      eax, dword ptr [g_dispatchSave1576]
         cmp      eax, 0x10
         jl       L_b6f0
         cdq
@@ -297,7 +297,7 @@ __declspec(naked) void TristripBatchEmit3Cap(void)
         call     MaxOfThree
     L_b87d:
         mov      word ptr [esi + 0x12], ax
-        mov      ecx, dword ptr [g_dispatchSave1559_00ab4d9c]
+        mov      ecx, dword ptr [g_dispatchSave1559]
         shl      ecx, 5
         mov      dx, word ptr [esi + 0x1a]
         add      ecx, eax
@@ -311,7 +311,7 @@ __declspec(naked) void TristripBatchEmit3Cap(void)
         mov      word ptr [esi + 0x1a], dx
         mov      dx, word ptr [esp + 0x14]
         mov      word ptr [esi + 0x14], dx
-        mov      eax, dword ptr [g_dispatchSave1570_00ab4e28]
+        mov      eax, dword ptr [g_dispatchSave1570]
         test     eax, eax
         je       L_b8ef
         mov      ax, word ptr [g_screenH]

@@ -112,14 +112,14 @@ extern unsigned int g_fightAxisPosY;
  * CharSelect_CpuBattlesToggle - 300b 7-iter audio byte-table loop with extra picks.
  *   Loops edi 0..6: chain index from g_byteTab_004f3940[esi=edi*9*4]; g_currentNodeIdx=chain[ecx*4].
  *   Call MStackPush2ChainLLInsert; load chain pointer (esi-table+0xc) and value (esi-table+0x4).
- *   Special pick when edi==2: ecx = (g_audioStateMachineVar2_004f3928 != 0) ? 0x004d2420 : 0x004d2438.
+ *   Special pick when edi==2: ecx = (g_audioStateMachineVar2 != 0) ? 0x004d2420 : 0x004d2438.
  *   For edi in {5,6}: override g_walkCallback with 0x03e80000 based on chain[+0x30] == 1 or 2.
  *   Push (eax, ecx); GuardedSetupCallTailJmp; restore. chain[+0x5c] = esi-table[+0x10];
  *   chain[+0x54] → esi-table[+0x8]; movsx ecx = byte tab; chain[+(baseSel+ecx)*4] = chain.
  *   inc edi; if < 7: loop.
  */
 extern unsigned int g_byteTab_004f3940;
-extern unsigned int g_audioStateMachineVar2_004f3928;
+extern unsigned int g_audioStateMachineVar2;
 extern void GuardedSetupCallTailJmp(void);
 extern void MStackPush2ChainLLInsert(void);
 
@@ -149,7 +149,7 @@ __declspec(naked) void CharSelect_CpuBattlesToggle(void)
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_currentNodeIdx], ecx
         jne     short L_a51_skipPick
-        mov     ecx, dword ptr [g_audioStateMachineVar2_004f3928]
+        mov     ecx, dword ptr [g_audioStateMachineVar2]
         test    ecx, ecx
         mov     ecx, 0x004d2420
         jne     short L_a51_storeChan

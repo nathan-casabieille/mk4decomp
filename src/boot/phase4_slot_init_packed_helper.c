@@ -108,10 +108,10 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_phase4SlotArr_00511fa4;
+extern unsigned int g_phase4SlotArr;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_particleEmitterNode;
-extern unsigned int g_phase1ModelChain_0053e35c;
+extern unsigned int g_phase1ModelChain;
 extern void AudioMixerStep(void);
 extern void BootSetJmpStoreThenChainTriple(void);
 extern void ChainWalkPushPop(void);
@@ -134,7 +134,7 @@ __declspec(naked) void Phase4SlotInitPackedHelper(void)
         test    eax, eax
         jne     L_p4sip_A_ret
         mov     eax, dword ptr [g_currentNodeIdx]
-        mov     ecx, offset g_phase4SlotArr_00511fa4
+        mov     ecx, offset g_phase4SlotArr
         shr     ecx, 2
         mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_xformEntityIdx], ecx
@@ -294,7 +294,7 @@ __declspec(naked) void Phase4SlotInitPackedHelper(void)
         test    eax, eax
         jne     L_p4sip_B_ret
     L_p4sip_B_skip_paint:
-        mov     eax, dword ptr [g_phase1ModelChain_0053e35c]
+        mov     eax, dword ptr [g_phase1ModelChain]
         and     eax, 1
         mov     dword ptr [g_eventQueueCurrent], eax
         add     eax, 0x13

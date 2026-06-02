@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern void CrtInitPerThreadData(void);
 extern void ArraySearch(void);
 extern unsigned int g_crtSehFpuDispatch;
-extern unsigned int g_crtSehFpuDispatch2_005228fc;
+extern unsigned int g_crtSehFpuDispatch2;
 extern unsigned int g_iat_UnhandledExceptionFilter;
 
 __declspec(naked) void SehFpuExceptionDispatch(void)
@@ -166,7 +166,7 @@ __declspec(naked) void SehFpuExceptionDispatch(void)
         cmp      ecx, 8
         jne      L_ba63
         mov      ecx, dword ptr [g_crtSehFpuDispatch]
-        mov      ebx, dword ptr [g_crtSehFpuDispatch2_005228fc]
+        mov      ebx, dword ptr [g_crtSehFpuDispatch2]
         add      ebx, ecx
         cmp      ecx, ebx
         jge      short L_b92a
@@ -177,7 +177,7 @@ __declspec(naked) void SehFpuExceptionDispatch(void)
         inc      ecx
         mov      dword ptr [ebx + edx + 8], edi
         mov      ebx, dword ptr [g_crtSehFpuDispatch]
-        mov      ebp, dword ptr [g_crtSehFpuDispatch2_005228fc]
+        mov      ebp, dword ptr [g_crtSehFpuDispatch2]
         add      edx, 0xc
         add      ebp, ebx
         cmp      ecx, ebp

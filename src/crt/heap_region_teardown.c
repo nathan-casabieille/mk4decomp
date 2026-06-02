@@ -113,7 +113,7 @@ extern unsigned int g_virtualHeapBase;
 extern unsigned int g_iat_HeapFree;
 extern unsigned int g_iat_VirtualFree;
 extern unsigned int g_heapTeardownSentinel;
-extern unsigned int g_dispatchSave1470_00fa0ee4;
+extern unsigned int g_dispatchSave1470;
 
 struct HeapRegion {
     struct HeapRegion *prev;
@@ -130,7 +130,7 @@ void HeapRegionTeardown(struct HeapRegion *region) {
     if (region != (struct HeapRegion *)&g_virtualHeapBase) {
         region->next->prev = region->prev;
         region->prev->next = region->next;
-        ((void (__stdcall *)(unsigned int, unsigned int, void *))g_iat_HeapFree)(g_dispatchSave1470_00fa0ee4, 0, region);
+        ((void (__stdcall *)(unsigned int, unsigned int, void *))g_iat_HeapFree)(g_dispatchSave1470, 0, region);
         return;
     }
     g_heapTeardownSentinel = 0xffffffff;

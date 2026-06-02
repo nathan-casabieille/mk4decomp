@@ -114,14 +114,14 @@ extern s32 g_dlNalt3;
 extern s32 g_dlNalt4;
 extern unsigned int g_counter_0053a51c;
 extern unsigned int g_rangeBase;
-extern unsigned char g_dispatchSave623_004dfd48;
+extern unsigned char g_dispatchSave623;
 extern void TablePushAccumTailJmp(void);
-extern unsigned int g_dispatchSave658_004d5308;
-extern unsigned int g_dispatchSave659_004d530c;
-extern unsigned int g_dispatchSave656_004d5300;
-extern unsigned int g_dispatchSave657_004d5304;
+extern unsigned int g_dispatchSave658;
+extern unsigned int g_dispatchSave659;
+extern unsigned int g_dispatchSave656;
+extern unsigned int g_dispatchSave657;
 extern unsigned int g_particleEmitterNode;
-extern unsigned int g_pendingMatchAudio2_0053a7a8;
+extern unsigned int g_pendingMatchAudio2;
 extern void MStackPush8(void);
 extern void TwinLoopSlotFinder(void);
 extern void *AllocNode(void);
@@ -172,16 +172,16 @@ void ScenePostInitSequencer(void) {
         mov      eax, dword ptr [g_cj_00542058]
         mov      ecx, dword ptr [eax*4 + 0x1c]
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_dispatchSave658_004d5308], ecx
+        mov      dword ptr [g_dispatchSave658], ecx
         mov      ecx, dword ptr [eax*4 + 0x20]
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_dispatchSave659_004d530c], ecx
+        mov      dword ptr [g_dispatchSave659], ecx
         mov      ecx, dword ptr [eax*4 + 0x24]
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_dispatchSave656_004d5300], ecx
+        mov      dword ptr [g_dispatchSave656], ecx
         mov      eax, dword ptr [eax*4 + 0x28]
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_dispatchSave657_004d5304], eax
+        mov      dword ptr [g_dispatchSave657], eax
         call     PendingMatch_00429ef0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -215,7 +215,7 @@ void ScenePostInitSequencer(void) {
         test     eax, eax
         jne      L_9e22
         mov      eax, dword ptr [g_cj_0054205c]
-        mov      dword ptr [g_pendingMatchAudio2_0053a7a8], eax
+        mov      dword ptr [g_pendingMatchAudio2], eax
         mov      dword ptr [eax*4 + 0x30], 0xb
         mov      eax, dword ptr [g_particleEmitterNode]
         mov      ecx, dword ptr [g_cj_0054205c]

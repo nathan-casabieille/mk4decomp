@@ -30,13 +30,13 @@ void StackPushAdd15CallPop(void) {
  *   clear g_scaledInit; call F3; pause-test → ret;
  *   testb 4,[dirty]; if cleared then jmp T; ret.
  */
-extern void *g_dispatchSave1131_00408040;
+extern void *g_dispatchSave1131;
 extern void ThreeChanPackClamp(void *);
 extern void CopyThreeFields(int);
 extern void func_00405420_ii(void);
 extern void BootMStackBracketedScaledStores(void);
 void PushCallScaledClearJmp(void) {
-    ThreeChanPackClamp(&g_dispatchSave1131_00408040);
+    ThreeChanPackClamp(&g_dispatchSave1131);
     CopyThreeFields(g_fightGroupHead);
     g_scaledInit_00542044 = 0;
     func_00405420_ii();

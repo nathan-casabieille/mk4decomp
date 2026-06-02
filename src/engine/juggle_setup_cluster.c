@@ -119,9 +119,9 @@ extern void DualScaledStore(void);
 extern void JuggleSetupCluster(void);
 extern void func_00453a01(void);
 extern void Thunk_ScaledNeg1SetPause(void);
-extern unsigned int g_dispatchSave952_004e7fd0;
-extern unsigned int g_dispatchSave953_004e8020;
-extern unsigned int g_installOwner2_0053a7a0;
+extern unsigned int g_dispatchSave952;
+extern unsigned int g_dispatchSave953;
+extern unsigned int g_installOwner2;
 
 
 __declspec(naked) void PoseCopyIdleCluster(void)
@@ -215,8 +215,8 @@ __declspec(naked) void PoseCopyIdleCluster(void)
         pop      esi
         ret
     L_38dc:
-        mov      edx, dword ptr [g_installOwner2_0053a7a0]
-        mov      ecx, OFFSET g_dispatchSave953_004e8020
+        mov      edx, dword ptr [g_installOwner2]
+        mov      ecx, OFFSET g_dispatchSave953
         shr      ecx, 2
         mov      dword ptr [g_eventQueueIdx], ecx
         mov      dword ptr [g_eventQueueEnd], edx
@@ -242,8 +242,8 @@ __declspec(naked) void PoseCopyIdleCluster(void)
         call     MStackPush3SideStore
         cmp      dword ptr [g_framePauseFlag], edi
         jne      func_00453a01
-        mov      ecx, dword ptr [g_installOwner2_0053a7a0]
-        mov      eax, OFFSET g_dispatchSave952_004e7fd0
+        mov      ecx, dword ptr [g_installOwner2]
+        mov      eax, OFFSET g_dispatchSave952
         shr      eax, 2
         mov      dword ptr [g_eventQueueIdx], eax
         mov      dword ptr [g_eventQueueEnd], ecx

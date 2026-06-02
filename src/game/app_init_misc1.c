@@ -8,14 +8,14 @@
  *   opens font file, fread'd page-by-page into a backbuffer, then issues two
  *   matched draw passes via PaletteFillLineHybrid with float positions for each glyph.
  */
-extern unsigned int g_dispatchSave529_004d29f8;
-extern unsigned int g_dispatchSave528_004d29fc;
-extern unsigned int g_dispatchVar40_004d505c;
-extern unsigned int g_dispatchSave526_004f5398;
-extern unsigned int g_dispatchSave525_004f5798;
-extern unsigned int g_dispatchSave524_004f613c;
+extern unsigned int g_dispatchSave529;
+extern unsigned int g_dispatchSave528;
+extern unsigned int g_dispatchVar40;
+extern unsigned int g_dispatchSave526;
+extern unsigned int g_dispatchSave525;
+extern unsigned int g_dispatchSave524;
 extern u16 g_texStripeBuf[];
-extern unsigned int g_dispatchSave1348_00f6ce50;
+extern unsigned int g_dispatchSave1348;
 extern unsigned int g_iat_MapVirtualKeyA;
 extern void FSYS_fclose(void);
 extern void FSYS_fopen(void);
@@ -32,7 +32,7 @@ __declspec(naked) void AppInit_Misc1(void) {
         push    esi
         push    edi
         xor     edi, edi
-        mov     esi, offset g_dispatchSave526_004f5398
+        mov     esi, offset g_dispatchSave526
     L_hfp_namelp:
         mov     eax, [esi]
         test    eax, eax
@@ -47,10 +47,10 @@ __declspec(naked) void AppInit_Misc1(void) {
     L_hfp_nameadv:
         add     esi, 4
         inc     edi
-        cmp     esi, offset g_dispatchSave525_004f5798
+        cmp     esi, offset g_dispatchSave525
         jl      short L_hfp_namelp
-        push    offset g_dispatchVar40_004d505c
-        push    offset g_dispatchSave524_004f613c
+        push    offset g_dispatchVar40
+        push    offset g_dispatchSave524
         call    FSYS_fopen
         add     esp, 8
         mov     edi, eax
@@ -59,7 +59,7 @@ __declspec(naked) void AppInit_Misc1(void) {
         push    edi
         call    FSYS_fseek
         add     esp, 0xc
-        mov     esi, offset g_dispatchSave1348_00f6ce50
+        mov     esi, offset g_dispatchSave1348
     L_hfp_readlp:
         push    edi
         push    1
@@ -84,8 +84,8 @@ __declspec(naked) void AppInit_Misc1(void) {
         mov     esi, 1
     L_hfp_glyph:
         fild    dword ptr [esp + 0xc]
-        fmul    dword ptr [g_dispatchSave529_004d29f8]
-        fmul    dword ptr [g_dispatchSave528_004d29fc]
+        fmul    dword ptr [g_dispatchSave529]
+        fmul    dword ptr [g_dispatchSave528]
         fstp    dword ptr [esp + 0x10]
         mov     edi, [esp + 0x10]
         push    edi

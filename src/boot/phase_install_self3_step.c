@@ -114,10 +114,10 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void RegistryPushBindPop(void);
 extern void InstallSelfPackedF80(void);
-extern unsigned int g_phaseInstall3Base_00506c2c;
-extern unsigned int g_dispatchSave140_00508308;
-extern unsigned int g_dispatchSave139_00508324;
-extern unsigned int g_dispatchSave509_004a2180;
+extern unsigned int g_phaseInstall3Base;
+extern unsigned int g_dispatchSave140;
+extern unsigned int g_dispatchSave139;
+extern unsigned int g_dispatchSave509;
 void PhaseInstallSelf3Step(void);
 
 extern unsigned int g_phaseIdx;
@@ -167,10 +167,10 @@ __declspec(naked) void PhaseInstallSelf3Step(void)
         test    eax, eax
         jne     L_pis3_exit
         push    0
-        push    offset g_dispatchSave509_004a2180
+        push    offset g_dispatchSave509
         mov     dword ptr [g_phaseIdx], 3
         call    StoreTwoCall
-        mov     ecx, offset g_phaseInstall3Base_00506c2c
+        mov     ecx, offset g_phaseInstall3Base
         add     esp, 8
         shr     ecx, 2
         mov     dword ptr [g_currentNodeIdx], ecx
@@ -178,14 +178,14 @@ __declspec(naked) void PhaseInstallSelf3Step(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis3_exit
-        mov     edx, offset g_phaseInstall3Base_00506c2c
+        mov     edx, offset g_phaseInstall3Base
         shr     edx, 2
         mov     dword ptr [g_currentNodeIdx], edx
         call    LoadGeoAsset_Default
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis3_exit
-        mov     eax, offset g_dispatchSave140_00508308
+        mov     eax, offset g_dispatchSave140
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
         call    DispatcherComplex260_00407400
@@ -206,7 +206,7 @@ __declspec(naked) void PhaseInstallSelf3Step(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis3_exit
-        mov     eax, offset g_dispatchSave139_00508324
+        mov     eax, offset g_dispatchSave139
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
         call    DispatcherComplex260_00407400

@@ -109,8 +109,8 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_stateChangePair;
-extern unsigned int g_stateChangePair3_0053a278;
-extern unsigned int g_stateChangePair2_005380a4;
+extern unsigned int g_stateChangePair3;
+extern unsigned int g_stateChangePair2;
 extern unsigned int g_stateFlag;
 extern void SpawnTrioInitCluster(void);
 extern void MStackPush2ClampLookup(void);
@@ -129,11 +129,11 @@ __declspec(naked) void GuardedStateChangePair(void)
         je      short L_gscp_check27
         jmp     CallSetPause
     L_gscp_check27:
-        mov     edx, dword ptr [g_stateChangePair3_0053a278]
+        mov     edx, dword ptr [g_stateChangePair3]
         cmp     edx, 0x27
         mov     dword ptr [g_walkCallback], edx
         je      L_gscp_dec
-        mov     ecx, dword ptr [g_stateChangePair2_005380a4]
+        mov     ecx, dword ptr [g_stateChangePair2]
         mov     eax, offset g_stateChangeBase
         shr     eax, 2
         cmp     ecx, 2
@@ -170,7 +170,7 @@ __declspec(naked) void GuardedStateChangePair(void)
         add     esp, 8
         jmp     CallSetPause
     L_gscp_setSlot:
-        mov     dword ptr [g_stateChangePair2_005380a4], eax
+        mov     dword ptr [g_stateChangePair2], eax
         call    SpawnTrioInitCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -181,7 +181,7 @@ __declspec(naked) void GuardedStateChangePair(void)
         add     esp, 8
         jmp     CallSetPause
     L_gscp_dec:
-        mov     edx, dword ptr [g_stateChangePair2_005380a4]
+        mov     edx, dword ptr [g_stateChangePair2]
         lea     ecx, [edx - 1]
         test    ecx, ecx
         mov     dword ptr [g_eventQueueCurrent], ecx
@@ -189,7 +189,7 @@ __declspec(naked) void GuardedStateChangePair(void)
         jmp     CallSetPause
     L_gscp_decOk:
         mov     eax, offset g_stateChangeBase
-        mov     dword ptr [g_stateChangePair2_005380a4], ecx
+        mov     dword ptr [g_stateChangePair2], ecx
         shr     eax, 2
         add     eax, ecx
         mov     dword ptr [g_walkCallback], 0x27

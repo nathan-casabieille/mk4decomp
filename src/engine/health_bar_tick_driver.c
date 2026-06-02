@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern void QuadCallPauseJmp(void);
 extern void SequencedInit3CallB(void);
 extern void HealthBarTickDriver(void);
-extern unsigned int g_dispatchSave541_004e8698;
+extern unsigned int g_dispatchSave541;
 extern unsigned int g_tickFlagF;
 extern unsigned int g_stateFlag;
 extern s32 g_dlNalt1;
@@ -228,7 +228,7 @@ __declspec(naked) void RoundEndHandlerCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_7f8b
-        mov      edx, OFFSET g_dispatchSave541_004e8698
+        mov      edx, OFFSET g_dispatchSave541
         push     0x262
         shr      edx, 2
         push     OFFSET func_00427780

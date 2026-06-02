@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave1464_00f9fdb0;
-extern unsigned int g_dispatchSave1463_00f9fdac;
+extern unsigned int g_dispatchSave1464;
+extern unsigned int g_dispatchSave1463;
 /* g_iat_InterlockedIncrement/d0 declared as unsigned int below */
 extern int  Wctomb(int, int);
 
@@ -129,13 +129,13 @@ __declspec(naked) void CritSecWrap350(void) {
         push    ebx
         push    esi
         push    edi
-        push    offset g_dispatchSave1464_00f9fdb0
+        push    offset g_dispatchSave1464
         call    dword ptr [g_iat_InterlockedIncrement]
-        mov     eax, dword ptr [g_dispatchSave1463_00f9fdac]
+        mov     eax, dword ptr [g_dispatchSave1463]
         mov     edi, dword ptr [g_iat_InterlockedDecrement]
         test    eax, eax
         je      noLock
-        push    offset g_dispatchSave1464_00f9fdb0
+        push    offset g_dispatchSave1464
         call    edi
         push    0x13
         call    Lock
@@ -163,7 +163,7 @@ skip:
         pop     ebx
         ret
 direct:
-        push    offset g_dispatchSave1464_00f9fdb0
+        push    offset g_dispatchSave1464
         call    edi
         pop     edi
         mov     eax, ebx

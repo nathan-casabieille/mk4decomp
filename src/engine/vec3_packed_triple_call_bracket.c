@@ -109,12 +109,12 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_load_0052ab10;
-extern unsigned int g_vec3TripleSlot_00538098;
-extern unsigned int g_dispatchSave97_005380a0;
+extern unsigned int g_vec3TripleSlot;
+extern unsigned int g_dispatchSave97;
 extern unsigned int g_packedTripleSlot;
-extern unsigned int g_dispatchSave90_0053a424;
-extern unsigned int g_dispatchSave89_0053a428;
-extern unsigned int g_packedTripleSlot2_00541f88;
+extern unsigned int g_dispatchSave90;
+extern unsigned int g_dispatchSave89;
+extern unsigned int g_packedTripleSlot2;
 extern void QuadInterpolator(void);
 
 __declspec(naked) void Vec3PackedTripleCallBracket(void)
@@ -161,16 +161,16 @@ __declspec(naked) void Vec3PackedTripleCallBracket(void)
         mov     ecx, dword ptr [eax*4 + 0x58]
         sub     ecx, esi
         mov     dword ptr [g_eventQueueWorkType], ecx
-        mov     dword ptr [g_dispatchSave90_0053a424], ecx
+        mov     dword ptr [g_dispatchSave90], ecx
         mov     edx, dword ptr [edx*4 + 8]
-        mov     ecx, offset g_vec3TripleSlot_00538098
+        mov     ecx, offset g_vec3TripleSlot
         mov     dword ptr [g_walkCallback], edx
         mov     eax, dword ptr [eax*4 + 0x5c]
         sub     eax, edx
         mov     edx, offset g_packedTripleSlot
         mov     dword ptr [g_eventQueueWorkType], eax
-        mov     dword ptr [g_dispatchSave89_0053a428], eax
-        mov     eax, dword ptr [g_packedTripleSlot2_00541f88]
+        mov     dword ptr [g_dispatchSave89], eax
+        mov     eax, dword ptr [g_packedTripleSlot2]
         shr     edx, 2
         shr     ecx, 2
         mov     dword ptr [g_pendingNodeType], edx
@@ -180,7 +180,7 @@ __declspec(naked) void Vec3PackedTripleCallBracket(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_v3ptcb_ret
-        mov     edx, dword ptr [g_dispatchSave97_005380a0]
+        mov     edx, dword ptr [g_dispatchSave97]
         mov     eax, dword ptr [g_matrixStackTop]
         mov     dword ptr [g_walkCallback], edx
         mov     ecx, dword ptr [eax*4]

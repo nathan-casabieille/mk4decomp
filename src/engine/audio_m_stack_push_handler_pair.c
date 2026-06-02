@@ -112,7 +112,7 @@ extern unsigned int g_word_004e2860;
 extern unsigned int g_poseGridGenVar;
 extern unsigned int g_dispatchArg;
 extern unsigned int g_audioInitPeriodic;
-extern unsigned int g_audioInstall2State_00537f88;
+extern unsigned int g_audioInstall2State;
 extern unsigned int g_state2_0053a1bc;
 extern unsigned int g_audioBitField;
 extern u32 g_dlMode;
@@ -208,7 +208,7 @@ __declspec(naked) void AudioMStackPushHandlerPair(void)
         mov     dword ptr [esi + 0x84], 0
         test    eax, eax
         jne     short L_amspp_sub2_check
-        mov     ecx, dword ptr [g_audioInstall2State_00537f88]
+        mov     ecx, dword ptr [g_audioInstall2State]
         push    0x239
         mov     dword ptr [g_eventQueueEnd], ecx
         call    DualPushSetCallDualPop

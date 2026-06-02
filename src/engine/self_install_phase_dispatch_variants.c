@@ -116,7 +116,7 @@ extern void SelfInstallPhaseDispatch_00428990(void);
  *   chain[+0x84]!=0 path: set [g_fightGroupHead*4+0x24]=g_cj_00542054, [g_fightGroupHead*4+0x28]=0, g_walkCallback=0,
  *   g_cj_00542054=baseSel[*4+0x64], g_cj_00542058=baseSel[*4+0x68]; jmp StackPopDispatchTagged.
  */
-extern unsigned int g_dispatchSave961_004ea058;
+extern unsigned int g_dispatchSave961;
 extern void CallPauseMStackPushSet9Jmp(void);
 extern void CjInstallSelfRouter(void);
 extern void CjMaskedFlagProbe(void);
@@ -130,7 +130,7 @@ extern void MultiThunkDispatcher_00460470(void);
 extern void ScaledAndAlfe(void);
 extern void TableLookupCall_00489ff0(void);
 
-extern unsigned int g_dispatchSave787_004f1a20;
+extern unsigned int g_dispatchSave787;
 extern void ArgScaledTestStore(void);
 extern void ScaledChainJmp_00429470(void);
 extern void ScaledClearJmp_00428d60(void);
@@ -290,7 +290,7 @@ __declspec(naked) void InstallSelfCmdStreamInterp(void) {
         _emit   74h
         _emit   44h
         mov     ecx, dword ptr [g_cj_0054205c]
-        mov     eax, offset g_dispatchSave787_004f1a20
+        mov     eax, offset g_dispatchSave787
         shr     eax, 2
         mov     ecx, dword ptr [ecx*4 + 0x30]
         sub     ecx, 0x60
@@ -450,7 +450,7 @@ __declspec(naked) void SelfInstallPhaseDispatch_0045fd30(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_sipd2_retCommon
-        mov     ecx, offset g_dispatchSave961_004ea058
+        mov     ecx, offset g_dispatchSave961
         shr     ecx, 2
         mov     dword ptr [g_currentNodeIdx], ecx
         call    GuardedDirtyXformFromTable

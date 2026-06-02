@@ -108,13 +108,13 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave591_004edfd0;
-extern unsigned int g_dispatchSave590_004ee030;
-extern unsigned int g_dispatchSave588_004ee098;
-extern unsigned int g_dispatchSave587_004ee0c8;
-extern unsigned int g_dispatchSave586_004ee0f8;
-extern unsigned int g_dispatchSave585_004ee118;
-extern unsigned int g_dispatchSave584_004ee138;
+extern unsigned int g_dispatchSave591;
+extern unsigned int g_dispatchSave590;
+extern unsigned int g_dispatchSave588;
+extern unsigned int g_dispatchSave587;
+extern unsigned int g_dispatchSave586;
+extern unsigned int g_dispatchSave585;
+extern unsigned int g_dispatchSave584;
 extern void ArgSarStoreJmp(void);
 extern void CallPauseScaledStoreJmp_00428820(void);
 extern void CjTableThresholdDispatch(void);
@@ -137,7 +137,7 @@ __declspec(naked) void StageGameProgressCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_27ab
-        push     OFFSET g_dispatchSave591_004edfd0
+        push     OFFSET g_dispatchSave591
         call     ArgSarStoreJmp
         add      esp, 4
     L_27ab:
@@ -151,7 +151,7 @@ __declspec(naked) void StageGameProgressCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_27cb
-        push     OFFSET g_dispatchSave590_004ee030
+        push     OFFSET g_dispatchSave590
         call     ArgSarStoreJmp
         add      esp, 4
     L_27cb:
@@ -165,7 +165,7 @@ __declspec(naked) void StageGameProgressCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_27eb
-        push     OFFSET g_dispatchSave588_004ee098
+        push     OFFSET g_dispatchSave588
         call     ArgSarStoreJmp
         add      esp, 4
     L_27eb:
@@ -225,7 +225,7 @@ __declspec(naked) void StageGameProgressCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_28ab
-        push     OFFSET g_dispatchSave587_004ee0c8
+        push     OFFSET g_dispatchSave587
         call     ArgSarStoreJmp
         add      esp, 4
     L_28ab:
@@ -239,7 +239,7 @@ __declspec(naked) void StageGameProgressCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_28cb
-        push     OFFSET g_dispatchSave586_004ee0f8
+        push     OFFSET g_dispatchSave586
         call     ArgSarStoreJmp
         add      esp, 4
     L_28cb:
@@ -269,7 +269,7 @@ __declspec(naked) void StageGameProgressCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2923
-        push     OFFSET g_dispatchSave585_004ee118
+        push     OFFSET g_dispatchSave585
         call     ArgSarStoreJmp
         add      esp, 4
     L_2923:
@@ -307,7 +307,7 @@ __declspec(naked) void StageGameProgressCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2983
-        push     OFFSET g_dispatchSave584_004ee138
+        push     OFFSET g_dispatchSave584
         call     ArgSarStoreJmp
         add      esp, 4
     L_2983:

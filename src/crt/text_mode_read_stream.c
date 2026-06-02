@@ -122,7 +122,7 @@ extern unsigned int g_fightAxisPosY;
  *   similar) to fall back to the OS handle. Returns ebp (success/-1).
  */
 extern unsigned int g_iat_GetLastError;
-extern unsigned int g_dispatchSave651_004d20b0;
+extern unsigned int g_dispatchSave651;
 extern void CRTHandleLookup(void);
 extern void Crt_doserrno(void);
 extern void Crt_errno(void);
@@ -226,7 +226,7 @@ __declspec(naked) void TextModeReadStream(void) {
         call    CRTHandleLookup
         add     esp, 4
         push    eax
-        call    dword ptr [g_dispatchSave651_004d20b0]
+        call    dword ptr [g_dispatchSave651]
         mov     ebp, eax
         neg     ebp
         sbb     ebp, ebp

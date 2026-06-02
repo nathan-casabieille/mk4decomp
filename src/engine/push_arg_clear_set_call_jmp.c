@@ -116,14 +116,14 @@ extern unsigned int g_fightAxisPosY;
  *   call IterLoad_00491050; pop esp; if pause: ret;
  *   jmp ScaledInitOrSelfPtrSetType_0046a5e0.
  */
-extern unsigned char g_dispatchSave420_00542a64;
+extern unsigned char g_dispatchSave420;
 void PushArgClearSetCallJmp(void) {
     g_walkCallback = 0;
     *(unsigned int *)(g_baseSel * 4 + 0x80) = 0;
     *(unsigned int *)(g_baseSel * 4 + 0x7c) = (unsigned int)g_walkCallback;
     g_walkCallback = (void (*)(void))0x1009;
     ((ScenegraphNode *)(g_baseSel * 4))->fsm_state = (unsigned int)g_walkCallback;
-    ((void (*)(void *))IterLoad_00491050)(&g_dispatchSave420_00542a64);
+    ((void (*)(void *))IterLoad_00491050)(&g_dispatchSave420);
     if (g_framePauseFlag != 0) return;
     ScaledInitOrSelfPtrSetType_0046a5e0();
 }

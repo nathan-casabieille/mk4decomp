@@ -110,16 +110,16 @@ extern unsigned int g_fightAxisPosY;
 
 extern void AudioInstall2BodyDualSetup(void);
 extern void AudioInstallSelf3StateWithSubcall(void);
-extern unsigned int g_audioInstall2State_00537f88;
-extern unsigned int g_audioInstall2Slot_00537eec;
+extern unsigned int g_audioInstall2State;
+extern unsigned int g_audioInstall2Slot;
 
 /*
  * AudioInstallSelfShiftedChainInit - 237b audio self-install setup.
  *   chain = g_baseSel<<2; saved = chain->state; chain->state=0.
  *   If was nonzero: g_walkCallback = g_audioInstallGate; if !=0 tail-jmp AudioInstall2BodyDualSetup.
- *     Else: g_eventQueueEnd = g_audioInstall2State_00537f88; push (0x250, 0x004a0680); StoreTwoCall; tail-jmp AudioInstall2BodyDualSetup.
- *   If was zero: g_eventQueueEnd=7; edx=1<<(g_eventQueueWorkType-1); g_eventQueueWorkType--; ecx = g_audioInstall2Slot_00537eec & edx;
- *     g_eventQueueCurrent=edx; g_walkCallback=ecx; g_audioInstall2Slot_00537eec=ecx; install-self at entry; chain->state=1;
+ *     Else: g_eventQueueEnd = g_audioInstall2State; push (0x250, 0x004a0680); StoreTwoCall; tail-jmp AudioInstall2BodyDualSetup.
+ *   If was zero: g_eventQueueEnd=7; edx=1<<(g_eventQueueWorkType-1); g_eventQueueWorkType--; ecx = g_audioInstall2Slot & edx;
+ *     g_eventQueueCurrent=edx; g_walkCallback=ecx; g_audioInstall2Slot=ecx; install-self at entry; chain->state=1;
  *     mstack-push (entry+0x01000000) packed; g_currentNodeIdx++; clear g_baseSel*4+0x84;
  *     call AudioInstallSelf3StateWithSubcall; g_framePauseFlag=1; ret.
  */
@@ -141,7 +141,7 @@ __declspec(naked) void AudioInstallSelfShiftedChainInit(void)
         je      short L_pushCall
         jmp     AudioInstall2BodyDualSetup
     L_pushCall:
-        mov     ecx, dword ptr [g_audioInstall2State_00537f88]
+        mov     ecx, dword ptr [g_audioInstall2State]
         push    0x250
         push    0x004a0680
         mov     dword ptr [g_eventQueueEnd], ecx
@@ -155,11 +155,11 @@ __declspec(naked) void AudioInstallSelfShiftedChainInit(void)
         mov     dword ptr [g_eventQueueEnd], 7
         shl     edx, cl
         mov     dword ptr [g_eventQueueWorkType], ecx
-        mov     ecx, dword ptr [g_audioInstall2Slot_00537eec]
+        mov     ecx, dword ptr [g_audioInstall2Slot]
         and     ecx, edx
         mov     dword ptr [g_eventQueueCurrent], edx
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_audioInstall2Slot_00537eec], ecx
+        mov     dword ptr [g_audioInstall2Slot], ecx
         mov     dword ptr [eax + 8], offset AudioInstallSelfShiftedChainInit
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 1

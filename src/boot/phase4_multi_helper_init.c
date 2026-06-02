@@ -109,11 +109,11 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_byte_004d5714;
-extern unsigned int g_dispatchSave613_004d74d8;
-extern unsigned int g_dispatchSave612_004d75a0;
-extern unsigned int g_dispatchSave611_004d7610;
-extern unsigned int g_dispatchSave95_0053a29c;
-extern unsigned int g_phase4HelperSlot_0053a400;
+extern unsigned int g_dispatchSave613;
+extern unsigned int g_dispatchSave612;
+extern unsigned int g_dispatchSave611;
+extern unsigned int g_dispatchSave95;
+extern unsigned int g_phase4HelperSlot;
 extern void BootSetupWithMStackBody(void);
 extern void CallSetPause(void);
 extern void ClampMulShiftStore(void);
@@ -135,7 +135,7 @@ __declspec(naked) void Phase4MultiHelperInit(void)
         test    eax, eax
         jne     L_p4mh_A_ret
         mov     eax, dword ptr [g_fightGroupHead]
-        mov     ecx, offset g_dispatchSave612_004d75a0
+        mov     ecx, offset g_dispatchSave612
         shr     ecx, 2
         mov     dword ptr [g_eventQueueEnd], eax
         mov     dword ptr [g_walkCallback], ecx
@@ -234,11 +234,11 @@ __declspec(naked) void Phase4MultiHelperInit(void)
         pop     esi
         ret
     L_p4mh_C_phase1:
-        mov     eax, dword ptr [g_phase4HelperSlot_0053a400]
+        mov     eax, dword ptr [g_phase4HelperSlot]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         je      L_p4mh_C_set_install
-        mov     ecx, offset g_dispatchSave611_004d7610
+        mov     ecx, offset g_dispatchSave611
         shr     ecx, 2
         mov     dword ptr [g_walkCallback], ecx
         call    PushSetXfmMaskCallPop
@@ -283,14 +283,14 @@ __declspec(naked) void Phase4MultiHelperInit(void)
         pop     esi
         ret
     L_p4mh_C_loop_done:
-        mov     eax, offset g_dispatchSave613_004d74d8
+        mov     eax, offset g_dispatchSave613
         shr     eax, 2
         mov     dword ptr [g_eventQueueEnd], eax
     L_p4mh_C_have_target:
         mov     ecx, dword ptr [eax*4]
         inc     eax
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_dispatchSave95_0053a29c], ecx
+        mov     dword ptr [g_dispatchSave95], ecx
         mov     dword ptr [g_eventQueueEnd], eax
         mov     edx, dword ptr [eax*4]
         inc     eax

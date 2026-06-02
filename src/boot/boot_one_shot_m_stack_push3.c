@@ -107,7 +107,7 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
-extern unsigned int g_dispatchVar42_004d5ed0;
+extern unsigned int g_dispatchVar42;
 extern void ThreeChanPackClamp(void);
 extern void CopyThreeFields(void);
 
@@ -117,7 +117,7 @@ extern void CopyThreeFields(void);
  *   SetJmp_ZeroAndDirty4. On no-error AND bit 2 of g_xformDirtyFlags set:
  *   mstack-pushes g_xformEntityIdx/00542054/0054205c (3 entries). Caches
  *   g_fightGroupHead into g_eventQueueEnd, sets g_walkCallback =
- *   &g_dispatchVar42_004d5ed0>>2, calls PushSetXfmMaskCallPop.
+ *   &g_dispatchVar42>>2, calls PushSetXfmMaskCallPop.
  *   On no-error AND bit 2 NOT set: calls ScaledChainOr8,
  *   writes 0x18000 into [g_xformEntityIdx*4 + 0x48], calls
  *   ScaledTripleCopy54. On no-error sets g_currentNodeIdx =
@@ -138,7 +138,7 @@ void BootOneShotMStackPush3(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_fightGroupHead;
     g_eventQueueEnd = g_fightGroupHead;
-    g_walkCallback = (unsigned int)&g_dispatchVar42_004d5ed0 >> 2;
+    g_walkCallback = (unsigned int)&g_dispatchVar42 >> 2;
     PushSetXfmMaskCallPop();
     if (g_framePauseFlag != 0) return;
     if (!(g_xformDirtyFlags & 4)) {

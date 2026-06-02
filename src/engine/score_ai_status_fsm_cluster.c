@@ -117,7 +117,7 @@ extern void ScoreAiStatusFsmCluster(void);
 extern void InstallSelf3StateFieldSet(void);
 extern void InstallSelf3StateDualChain(void);
 extern void MStackPushSet0020(void);
-extern unsigned int g_dispatchSave713_004ed0b8;
+extern unsigned int g_dispatchSave713;
 
 extern void ArgSarStoreJmp(void);
 extern void CmpEqInitCallElseJmp(void);
@@ -196,7 +196,7 @@ __declspec(naked) void ThrowTakedownStepCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_9f52
-        push     OFFSET g_dispatchSave713_004ed0b8
+        push     OFFSET g_dispatchSave713
         call     ArgSarStoreJmp
         add      esp, 4
     L_9f52:

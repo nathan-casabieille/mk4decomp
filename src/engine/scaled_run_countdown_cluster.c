@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave684_004e6408;
+extern unsigned int g_dispatchSave684;
 extern void ArgSarStoreJmp(void);
 extern void DirtyDoubleDeref(void);
 extern void DualScaledLoadStoreJmp(void);
@@ -228,7 +228,7 @@ __declspec(naked) void ScaledRunCountdownCluster(void)
         mov      dword ptr [g_eventQueueIdx], eax
         call     StoreLoadJmp
         add      esp, 4
-        push     OFFSET g_dispatchSave684_004e6408
+        push     OFFSET g_dispatchSave684
         call     ArgSarStoreJmp
         add      esp, 4
     L_a274:

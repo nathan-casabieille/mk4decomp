@@ -108,12 +108,12 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave803_004f2dc0;
+extern unsigned int g_dispatchSave803;
 extern unsigned int g_dispatchArg;
 extern unsigned int g_audioVoiceCounter;
 extern unsigned int g_audioBitField;
 extern unsigned int g_audioSequencerSlot;
-extern unsigned int g_dispatchTab65_00543320;
+extern unsigned int g_dispatchTab65;
 extern void AudioInitChainTag(void);
 extern void Eleven404b90_404c00(void);
 extern void GuardedScaledCall(void);
@@ -202,7 +202,7 @@ __declspec(naked) void AudioVoiceSequencerCluster(void)
         mov      dword ptr [g_walkCallback], ebx
         mov      dword ptr [g_eventQueueIdx], ecx
         mov      edx, dword ptr [eax*4 + 0x14]
-        mov      eax, OFFSET g_dispatchTab65_00543320
+        mov      eax, OFFSET g_dispatchTab65
         mov      dword ptr [edx*4], ebx
         mov      edx, dword ptr [g_eventQueueCurrent]
         shr      eax, 2
@@ -226,7 +226,7 @@ __declspec(naked) void AudioVoiceSequencerCluster(void)
     L_0eed:
         mov      ecx, dword ptr [g_xformEntityIdx]
         mov      edx, dword ptr [g_baseSel]
-        mov      eax, OFFSET g_dispatchSave803_004f2dc0
+        mov      eax, OFFSET g_dispatchSave803
         shr      eax, 2
         mov      dword ptr [g_eventQueueTotal], eax
         mov      eax, dword ptr [ecx*4 + 8]

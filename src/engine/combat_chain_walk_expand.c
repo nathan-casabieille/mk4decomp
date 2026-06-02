@@ -108,13 +108,13 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave138_0050a49c;
-extern unsigned int g_dispatchSave132_0050cab0;
-extern unsigned int g_dispatchSave131_0050cb3c;
-extern unsigned int g_dispatchSave123_005108dc;
+extern unsigned int g_dispatchSave138;
+extern unsigned int g_dispatchSave132;
+extern unsigned int g_dispatchSave131;
+extern unsigned int g_dispatchSave123;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_dispatchArg;
-extern unsigned int g_dispatchSave32_00542a08;
+extern unsigned int g_dispatchSave32;
 extern void DirtyDoubleDeref(void);
 extern void InstallSelfDispatch(void);
 extern void MStackBracket4_ListInsertZeroFill(void);
@@ -126,7 +126,7 @@ __declspec(naked) void CombatChainWalkExpand(void)
 {
     __asm {
         mov      eax, dword ptr [g_pendingNodeType]
-        mov      edx, OFFSET g_dispatchSave131_0050cb3c
+        mov      edx, OFFSET g_dispatchSave131
         push     ebx
         push     ebp
         mov      ecx, dword ptr [eax*4 + 0xc]
@@ -187,7 +187,7 @@ __declspec(naked) void CombatChainWalkExpand(void)
         mov      dword ptr [g_eventQueueWorkType], ecx
         mov      dword ptr [g_eventQueueTotal], eax
         je       L_3c4f
-        mov      ebx, OFFSET g_dispatchSave132_0050cab0
+        mov      ebx, OFFSET g_dispatchSave132
         mov      ebp, 1
         shr      ebx, 2
         mov      edi, 0x4baf40
@@ -221,7 +221,7 @@ __declspec(naked) void CombatChainWalkExpand(void)
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [ecx*4 + 0x3c], eax
-        mov      eax, OFFSET g_dispatchSave123_005108dc
+        mov      eax, OFFSET g_dispatchSave123
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
         mov      edx, dword ptr [eax*4]
@@ -234,7 +234,7 @@ __declspec(naked) void CombatChainWalkExpand(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3c6e
-        mov      edx, OFFSET g_dispatchSave138_0050a49c
+        mov      edx, OFFSET g_dispatchSave138
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
         call     MStackPush4LLWalkPop4
@@ -271,7 +271,7 @@ __declspec(naked) void CombatChainWalkExpand(void)
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [g_eventQueueWorkType]
         mov      dword ptr [g_fightGroupHead], ecx
-        mov      ecx, OFFSET g_dispatchSave32_00542a08
+        mov      ecx, OFFSET g_dispatchSave32
         shr      ecx, 2
         mov      dword ptr [g_walkCallback], ebp
         mov      dword ptr [g_eventQueueCurrent], 0xff

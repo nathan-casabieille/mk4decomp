@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
  *     *arg1 = blob; *arg2 = field; *arg3 = [0x004f4788]; g_renderer2_paused = (esi?2:1).
  *     Return 1. Else return 0.
  */
-extern unsigned int g_dispatchSave501_004f4788;
+extern unsigned int g_dispatchSave501;
 extern unsigned int g_comptr_0058c7b0;
 extern unsigned int g_comptr_0058c7b4;
 extern int g_renderer2_present_rc;
@@ -187,7 +187,7 @@ __declspec(naked) void DSoundCaptureSetupGate(void) {
         mov     edx, [esp + 0x84]
         mov     [edx], eax
         mov     [ebp], ecx
-        mov     eax, dword ptr [g_dispatchSave501_004f4788]
+        mov     eax, dword ptr [g_dispatchSave501]
         xor     ecx, ecx
         test    esi, esi
         setne   cl

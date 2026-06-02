@@ -116,14 +116,14 @@ extern unsigned int g_fightAxisPosY;
  *   Insert: g_walkCallback=3; call StorePauseImulShr16; if pause ret.
  *     eax = g_walkCallback*3 + (0x004e8948>>2); scaledInit=eax; copy 3 entries to [g_xformEntityIdx*4 +0/4/8]; pop esi; ret.
  */
-extern unsigned int g_dispatchSave956_004e8860;
-extern unsigned int g_dispatchSave957_004e8948;
+extern unsigned int g_dispatchSave956;
+extern unsigned int g_dispatchSave957;
 extern unsigned int g_stateChangeBase;
 extern void StorePauseImulShr16(void);
 
 __declspec(naked) void TableWalkMatchInsert(void) {
     __asm {
-        mov     eax, offset g_dispatchSave956_004e8860
+        mov     eax, offset g_dispatchSave956
         mov     edx, offset g_stateChangeBase
         shr     eax, 2
         shr     edx, 2
@@ -176,7 +176,7 @@ __declspec(naked) void TableWalkMatchInsert(void) {
         _emit   00h
         mov     eax, dword ptr [g_walkCallback]
         lea     ecx, [eax + eax*2]
-        mov     eax, offset g_dispatchSave957_004e8948
+        mov     eax, offset g_dispatchSave957
         shr     eax, 2
         add     eax, ecx
         mov     dword ptr [g_walkCallback], ecx

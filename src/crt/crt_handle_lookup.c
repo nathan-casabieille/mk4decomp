@@ -11,7 +11,7 @@ extern unsigned int g_scaledInit_00542044;
  *   sets errno/EBADF on out-of-range / closed handle. The byte
  *   table at +4 records FOPEN bit (0x01).
  */
-extern unsigned int g_dispatchSave1469_00fa0ee0;
+extern unsigned int g_dispatchSave1469;
 extern unsigned int g_arr_00fa0de0;
 extern void Crt_doserrno(void);
 extern void Crt_errno(void);
@@ -19,7 +19,7 @@ extern void Crt_errno(void);
 void CRTHandleLookup(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
-        mov     ecx, dword ptr [g_dispatchSave1469_00fa0ee0]
+        mov     ecx, dword ptr [g_dispatchSave1469]
         cmp     eax, ecx
         _emit   73h
         _emit   21h

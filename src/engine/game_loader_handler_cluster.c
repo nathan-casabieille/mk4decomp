@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_bootInitSaveSlot;
-extern unsigned int g_dispatchVar36_00542bd4;
+extern unsigned int g_dispatchVar36;
 extern void CjInstallSelfRouter(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void FlagThunk4EntryDispatcher(void);
@@ -203,7 +203,7 @@ __declspec(naked) void GameLoaderHandlerCluster(void)
         mov      ecx, dword ptr [g_baseSel]
         mov      eax, 1
         mov      dword ptr [g_walkCallback], eax
-        push     OFFSET g_dispatchVar36_00542bd4
+        push     OFFSET g_dispatchVar36
         mov      dword ptr [ecx*4 + 0x5c], eax
         call     GuardedPackedSlotInit
         mov      eax, dword ptr [g_framePauseFlag]

@@ -112,9 +112,9 @@ extern unsigned int g_or;
 extern unsigned int g_audioStreamState;
 extern s32 g_dlChar13;
 extern s32 g_dlChar24;
-extern unsigned int g_dispatchTab68_00543200;
-extern unsigned int g_dispatchTab67_00543250;
-extern unsigned int g_dispatchTab66_005432a0;
+extern unsigned int g_dispatchTab68;
+extern unsigned int g_dispatchTab67;
+extern unsigned int g_dispatchTab66;
 extern void DirtyDoubleDeref(void);
 extern void MStackBracket1_TreeWalkRecursive2(void);
 extern void MStackChainDecodeCall(void);
@@ -157,7 +157,7 @@ void StrikeAnim4Picker(void) {
         cmp      ecx, 1
         jne      short L_3162
     L_3158:
-        mov      eax, OFFSET g_dispatchTab68_00543200
+        mov      eax, OFFSET g_dispatchTab68
         shr      eax, 2
         jmp      short L_3167
     L_3162:
@@ -165,12 +165,12 @@ void StrikeAnim4Picker(void) {
     L_3167:
         cmp      ecx, 2
         jne      short L_3174
-        mov      eax, OFFSET g_dispatchTab67_00543250
+        mov      eax, OFFSET g_dispatchTab67
         shr      eax, 2
     L_3174:
         cmp      ecx, 3
         jne      short L_3181
-        mov      eax, OFFSET g_dispatchTab66_005432a0
+        mov      eax, OFFSET g_dispatchTab66
         shr      eax, 2
     L_3181:
         add      eax, dword ptr [g_walkCallback]

@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   call StoreTwoCall(0x461980, 0x30); ++idx (in 3-stride scaled form).
  *   Returns g_walkCallback = 8 = (count*3); g_walkStateIndex = 8.
  */
-extern unsigned int g_dispatchSave1277_004ea070;
+extern unsigned int g_dispatchSave1277;
 extern unsigned int g_str_00461980;
 
 extern unsigned int g_arr_461640;
@@ -121,7 +121,7 @@ extern unsigned int g_arr_461640;
 __declspec(naked) void TableWalk3StrideCall(void) {
     __asm {
         push    esi
-        mov     esi, offset g_dispatchSave1277_004ea070
+        mov     esi, offset g_dispatchSave1277
         shr     esi, 2
         mov     eax, esi
         mov     dword ptr [g_eventQueueChild], 0

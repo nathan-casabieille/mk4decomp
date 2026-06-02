@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave648_004ed8d8;
+extern unsigned int g_dispatchSave648;
 extern void AerialHitDispatcher(void);
 extern void ArgSarStoreJmp(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
@@ -157,7 +157,7 @@ __declspec(naked) void PairedSubInstallSelfBigChain(void)
         cmp     ecx, eax
         mov     dword ptr [g_eventQueueCurrent], eax
         jg      L_psisbc_install2
-        mov     ecx, offset g_dispatchSave648_004ed8d8
+        mov     ecx, offset g_dispatchSave648
         shr     ecx, 2
         mov     dword ptr [g_currentNodeIdx], ecx
         call    GuardedDirtyXformFromTable

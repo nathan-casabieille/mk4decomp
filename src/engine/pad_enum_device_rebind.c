@@ -108,12 +108,12 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_renderer2_initVar_004f478c;
+extern unsigned int g_renderer2_initVar;
 extern u8 g_renderer2_buf3[];
 extern u8 g_renderer2_buf2[];
 extern u8 g_renderer2_buf1[];
-extern unsigned int g_renderer2_state9_0058c7c8;
-extern unsigned int g_renderer2_var2_0058c7cc;
+extern unsigned int g_renderer2_state9;
+extern unsigned int g_renderer2_var2;
 extern int g_renderer2_present_rc;
 extern int g_renderer2_active;
 extern void R2_Init11(void);
@@ -155,7 +155,7 @@ __declspec(naked) void PadEnumDeviceRebind(void)
         mov      edx, dword ptr [eax]
         call     dword ptr [edx + 0x6c]
     L_d8c1:
-        mov      edx, dword ptr [g_renderer2_state9_0058c7c8]
+        mov      edx, dword ptr [g_renderer2_state9]
         test     edx, edx
         je       L_d8e9
         mov      eax, dword ptr [edx]
@@ -163,12 +163,12 @@ __declspec(naked) void PadEnumDeviceRebind(void)
         call     dword ptr [eax + 0x60]
         cmp      eax, 0x887601c2
         jne      L_d8e3
-        mov      eax, dword ptr [g_renderer2_state9_0058c7c8]
+        mov      eax, dword ptr [g_renderer2_state9]
         push     eax
         mov      ecx, dword ptr [eax]
         call     dword ptr [ecx + 0x6c]
     L_d8e3:
-        mov      edx, dword ptr [g_renderer2_state9_0058c7c8]
+        mov      edx, dword ptr [g_renderer2_state9]
     L_d8e9:
         mov      ecx, 0x1b
         xor      eax, eax
@@ -185,7 +185,7 @@ __declspec(naked) void PadEnumDeviceRebind(void)
         push     0
         push     edx
         call     dword ptr [eax + 0x64]
-        mov      edx, dword ptr [g_renderer2_state9_0058c7c8]
+        mov      edx, dword ptr [g_renderer2_state9]
         mov      dword ptr [g_renderer2_present_rc], eax
     L_d91e:
         mov      ebx, dword ptr [esp + 0x34]
@@ -193,7 +193,7 @@ __declspec(naked) void PadEnumDeviceRebind(void)
         je       L_d999
         mov      dword ptr [esp + 0x80], 0x100
     L_d931:
-        mov      eax, dword ptr [g_renderer2_initVar_004f478c]
+        mov      eax, dword ptr [g_renderer2_initVar]
         test     eax, eax
         je       L_d964
         mov      edx, ebx
@@ -225,7 +225,7 @@ __declspec(naked) void PadEnumDeviceRebind(void)
         dec      eax
         mov      dword ptr [esp + 0x80], eax
         jne      L_d931
-        mov      edx, dword ptr [g_renderer2_state9_0058c7c8]
+        mov      edx, dword ptr [g_renderer2_state9]
         mov      esi, dword ptr [esp + 0x84]
     L_d999:
         test     edx, edx
@@ -236,7 +236,7 @@ __declspec(naked) void PadEnumDeviceRebind(void)
         call     dword ptr [eax + 0x80]
         mov      dword ptr [g_renderer2_present_rc], eax
     L_d9ad:
-        mov      ecx, dword ptr [g_renderer2_var2_0058c7cc]
+        mov      ecx, dword ptr [g_renderer2_var2]
         test     ecx, ecx
         je       L_d9cd
         mov      eax, dword ptr [esi + g_renderer2_buf3]

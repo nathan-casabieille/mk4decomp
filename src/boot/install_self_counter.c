@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  *   if (eax == 0xa): install self: [esi+8]=0x404920, [esi+0x84]=1, g_pendingNodeType=1, pause=1.
  *   else: call ScenegraphWalk; call BootInitGuardedCallChain; call AudioInitInstallerPair; ret.
  */
-extern unsigned int g_installSelfCounter2_00541d90;
+extern unsigned int g_installSelfCounter2;
 extern void AudioInitInstallerPair(void);
 extern void BootInitGuardedCallChain(void);
 extern void SceneFrameStepWithInputs(void);
@@ -139,15 +139,15 @@ __declspec(naked) void InstallSelfCounter(void) {
         call    StackPopDispatchTagged
         pop     esi
         ret
-        mov     edx, dword ptr [g_installSelfCounter2_00541d90]
+        mov     edx, dword ptr [g_installSelfCounter2]
         lea     eax, [edx + 1]
         cmp     eax, 0x10
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_installSelfCounter2_00541d90], eax
+        mov     dword ptr [g_installSelfCounter2], eax
         _emit   7ch
         _emit   0ch
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_installSelfCounter2_00541d90], ecx
+        mov     dword ptr [g_installSelfCounter2], ecx
         call    SixCallSeqPushImm
         mov     eax, dword ptr [g_walkCallback]
         push    1

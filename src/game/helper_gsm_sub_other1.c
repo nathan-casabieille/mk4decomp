@@ -4,11 +4,11 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_gsmSubOther1Base_004f4f60;
-extern unsigned int g_dispatchSave572_004f4f64;
-extern unsigned int g_dispatchSave1482_00ab42d8;
-extern unsigned int g_dispatchSave1485_00ab42f8;
-extern unsigned int g_dispatchSave1499_00ab4384;
+extern unsigned int g_gsmSubOther1Base;
+extern unsigned int g_dispatchSave572;
+extern unsigned int g_dispatchSave1482;
+extern unsigned int g_dispatchSave1485;
+extern unsigned int g_dispatchSave1499;
 extern void DrawMenu(void);
 extern void Helper_GSM_PlayMusic(void);
 extern void Menu_PollNavInput(void);
@@ -18,29 +18,29 @@ extern void Menu_FindPrevSelectable(void);
 __declspec(naked) void Menu_ColorDepthErrorDialog(void)
 {
     __asm {
-        mov      al, byte ptr [g_dispatchSave1482_00ab42d8]
+        mov      al, byte ptr [g_dispatchSave1482]
         push     ebx
         push     esi
         push     edi
         test     al, 1
         jne      short L_8bfb
         mov      bl, al
-        push     OFFSET g_gsmSubOther1Base_004f4f60
+        push     OFFSET g_gsmSubOther1Base
         or       bl, 1
         push     0
-        mov      byte ptr [g_dispatchSave1482_00ab42d8], bl
+        mov      byte ptr [g_dispatchSave1482], bl
         call     Menu_FindNextSelectable
         add      esp, 8
-        mov      dword ptr [g_dispatchSave1485_00ab42f8], eax
+        mov      dword ptr [g_dispatchSave1485], eax
     L_8bfb:
-        mov      eax, dword ptr [g_dispatchSave1499_00ab4384]
+        mov      eax, dword ptr [g_dispatchSave1499]
         sub      eax, 0
         je       L_8d31
         sub      eax, 2
         je       short L_8c26
         sub      eax, 0x43
         jne      L_8d3b
-        mov      dword ptr [g_dispatchSave1499_00ab4384], 0
+        mov      dword ptr [g_dispatchSave1499], 0
         jmp      L_8d3b
     L_8c26:
         push     1
@@ -52,30 +52,30 @@ __declspec(naked) void Menu_ColorDepthErrorDialog(void)
         jne      short L_8c59
         test     bl, 1
         je       short L_8c59
-        mov      eax, dword ptr [g_dispatchSave1485_00ab42f8]
-        push     OFFSET g_gsmSubOther1Base_004f4f60
+        mov      eax, dword ptr [g_dispatchSave1485]
+        push     OFFSET g_gsmSubOther1Base
         push     eax
         call     Menu_FindPrevSelectable
         add      esp, 8
-        mov      dword ptr [g_dispatchSave1485_00ab42f8], eax
+        mov      dword ptr [g_dispatchSave1485], eax
     L_8c59:
         test     esi, esi
         jne      short L_8c7b
         test     bl, 2
         je       short L_8c7b
-        mov      ecx, dword ptr [g_dispatchSave1485_00ab42f8]
-        push     OFFSET g_gsmSubOther1Base_004f4f60
+        mov      ecx, dword ptr [g_dispatchSave1485]
+        push     OFFSET g_gsmSubOther1Base
         push     ecx
         call     Menu_FindNextSelectable
         add      esp, 8
-        mov      dword ptr [g_dispatchSave1485_00ab42f8], eax
+        mov      dword ptr [g_dispatchSave1485], eax
     L_8c7b:
         test     esi, esi
         mov      edi, 0x45
         jne      short L_8c8f
         test     bl, 0x20
         je       short L_8c8f
-        mov      dword ptr [g_dispatchSave1499_00ab4384], edi
+        mov      dword ptr [g_dispatchSave1499], edi
     L_8c8f:
         call     Renderer_GetMode
         cmp      eax, 4
@@ -84,10 +84,10 @@ __declspec(naked) void Menu_ColorDepthErrorDialog(void)
         test     eax, eax
         je       short L_8ca8
     L_8ca2:
-        mov      dword ptr [g_dispatchSave1499_00ab4384], edi
+        mov      dword ptr [g_dispatchSave1499], edi
     L_8ca8:
-        mov      edx, dword ptr [g_dispatchSave1485_00ab42f8]
-        movsx    eax, word ptr [edx*8 + g_dispatchSave572_004f4f64]
+        mov      edx, dword ptr [g_dispatchSave1485]
+        movsx    eax, word ptr [edx*8 + g_dispatchSave572]
         add      eax, -0xd
         cmp      eax, 3
         ja       short L_8d3b
@@ -100,7 +100,7 @@ __declspec(naked) void Menu_ColorDepthErrorDialog(void)
         push     1
         call     Helper_GSM_PlayMusic
         add      esp, 4
-        mov      dword ptr [g_dispatchSave1499_00ab4384], edi
+        mov      dword ptr [g_dispatchSave1499], edi
         jmp      short L_8d3b
     L_8ce0:
         test     esi, esi
@@ -110,7 +110,7 @@ __declspec(naked) void Menu_ColorDepthErrorDialog(void)
         push     2
         call     Helper_GSM_PlayMusic
         add      esp, 4
-        mov      dword ptr [g_dispatchSave1499_00ab4384], edi
+        mov      dword ptr [g_dispatchSave1499], edi
         jmp      short L_8d3b
     L_8cfb:
         test     esi, esi
@@ -120,7 +120,7 @@ __declspec(naked) void Menu_ColorDepthErrorDialog(void)
         push     3
         call     Helper_GSM_PlayMusic
         add      esp, 4
-        mov      dword ptr [g_dispatchSave1499_00ab4384], edi
+        mov      dword ptr [g_dispatchSave1499], edi
         jmp      short L_8d3b
     L_8d16:
         test     esi, esi
@@ -130,16 +130,16 @@ __declspec(naked) void Menu_ColorDepthErrorDialog(void)
         push     5
         call     Helper_GSM_PlayMusic
         add      esp, 4
-        mov      dword ptr [g_dispatchSave1499_00ab4384], edi
+        mov      dword ptr [g_dispatchSave1499], edi
         jmp      short L_8d3b
     L_8d31:
-        mov      dword ptr [g_dispatchSave1499_00ab4384], 2
+        mov      dword ptr [g_dispatchSave1499], 2
     L_8d3b:
-        mov      eax, dword ptr [g_dispatchSave1485_00ab42f8]
+        mov      eax, dword ptr [g_dispatchSave1485]
         push     eax
-        push     OFFSET g_gsmSubOther1Base_004f4f60
+        push     OFFSET g_gsmSubOther1Base
         call     DrawMenu
-        mov      eax, dword ptr [g_dispatchSave1499_00ab4384]
+        mov      eax, dword ptr [g_dispatchSave1499]
         add      esp, 8
         pop      edi
         pop      esi

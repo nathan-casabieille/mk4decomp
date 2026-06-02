@@ -113,12 +113,12 @@ extern unsigned int g_fightAxisPosY;
  *     if digit '0'..'9': subtract '0'; if ';': skip (shift rest down).
  *   sub-2 (~239b at 0x4d0180): slot replace - allocate 0x30 bytes via Calloc,
  *     copy from g_crtTimeFmtPrefs into new slot, free old, swap pointers.
- *     Path differs based on flag g_dispatchSave1445_00f9fc14.
+ *     Path differs based on flag g_dispatchSave1445.
  */
 extern unsigned int g_dispatchPair;
 extern unsigned int g_crtTimeFmtPrefs;
-extern unsigned int g_dispatchSave1445_00f9fc14;
-extern unsigned int g_dispatchSave1459_00f9fc74;
+extern unsigned int g_dispatchSave1445;
+extern unsigned int g_dispatchSave1459;
 extern void Calloc(void);
 extern void CrtFreeLocaleInfo(void);
 extern void FreeImpl(void);
@@ -172,7 +172,7 @@ __declspec(naked) void StringStripSlotReplace(void) {
         _emit   90h
         _emit   90h
         /* sub-2 (slot replace) */
-        mov     eax, dword ptr [g_dispatchSave1445_00f9fc14]
+        mov     eax, dword ptr [g_dispatchSave1445]
         push    esi
         test    eax, eax
         jz      L_srr_directPath
@@ -211,16 +211,16 @@ __declspec(naked) void StringStripSlotReplace(void) {
         mov     ecx, dword ptr [g_crtTimeFmtPrefs]
         mov     edx, [ecx + 8]
         mov     [esi + 8], edx
-        mov     eax, dword ptr [g_dispatchSave1459_00f9fc74]
+        mov     eax, dword ptr [g_dispatchSave1459]
         push    eax
         mov     dword ptr [g_crtTimeFmtPrefs], esi
         call    CrtFreeLocaleInfo
-        mov     ecx, dword ptr [g_dispatchSave1459_00f9fc74]
+        mov     ecx, dword ptr [g_dispatchSave1459]
         add     esp, 4
         push    ecx
         call    FreeImpl
         add     esp, 4
-        mov     dword ptr [g_dispatchSave1459_00f9fc74], esi
+        mov     dword ptr [g_dispatchSave1459], esi
         xor     eax, eax
         pop     esi
         ret
@@ -231,17 +231,17 @@ __declspec(naked) void StringStripSlotReplace(void) {
         mov     ecx, [eax + 4]
         mov     dword ptr [g_dispatchPair + 4], ecx
         mov     edx, [eax + 8]
-        mov     eax, dword ptr [g_dispatchSave1459_00f9fc74]
+        mov     eax, dword ptr [g_dispatchSave1459]
         mov     dword ptr [g_dispatchPair + 8], edx
         push    eax
         mov     dword ptr [g_crtTimeFmtPrefs], offset g_dispatchPair
         call    CrtFreeLocaleInfo
-        mov     ecx, dword ptr [g_dispatchSave1459_00f9fc74]
+        mov     ecx, dword ptr [g_dispatchSave1459]
         add     esp, 4
         push    ecx
         call    FreeImpl
         add     esp, 4
-        mov     dword ptr [g_dispatchSave1459_00f9fc74], 0
+        mov     dword ptr [g_dispatchSave1459], 0
         xor     eax, eax
         pop     esi
         ret

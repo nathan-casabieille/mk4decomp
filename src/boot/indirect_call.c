@@ -22,9 +22,9 @@ extern unsigned int g_scaledInit_00542044;
  *   xor     eax, eax
  *   ret
  */
-extern int (*g_dispatchSave1431_00f9f854)(int);
+extern int (*g_dispatchSave1431)(int);
 int IndirectCall(int arg) {
-    if (g_dispatchSave1431_00f9f854 != 0 && g_dispatchSave1431_00f9f854(arg) != 0) {
+    if (g_dispatchSave1431 != 0 && g_dispatchSave1431(arg) != 0) {
         return 1;
     }
     return 0;

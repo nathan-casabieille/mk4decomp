@@ -127,10 +127,10 @@ extern unsigned int g_fightAxisPosY;
  *   Entry 4 (offset 0x140, 37b): sets [scaled+0x74]=0x112, pushes
  *     0x4f17f8 → ScaledLookupGuardJmpIndirect.
  */
-extern unsigned int g_dispatchSave783_004f17c0;
-extern unsigned int g_dispatchSave784_004f17c8;
-extern unsigned int g_dispatchSave785_004f17d8;
-extern unsigned int g_dispatchSave786_004f17f8;
+extern unsigned int g_dispatchSave783;
+extern unsigned int g_dispatchSave784;
+extern unsigned int g_dispatchSave785;
+extern unsigned int g_dispatchSave786;
 extern unsigned int g_table_004d57b0;
 extern void ArgSarStoreJmp(void);
 extern void InstallSelfMStackPush_004968a0(void);
@@ -146,7 +146,7 @@ __declspec(naked) void Alarm4EntryInstallCountdown(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_aei_e1End
-        push    offset g_dispatchSave783_004f17c0
+        push    offset g_dispatchSave783
         call    ArgSarStoreJmp
         add     esp, 4
     L_aei_e1End:
@@ -157,7 +157,7 @@ __declspec(naked) void Alarm4EntryInstallCountdown(void) {
         nop
     L_aei_entry2:
         mov     eax, dword ptr [g_baseSel]
-        push    offset g_dispatchSave784_004f17c8
+        push    offset g_dispatchSave784
         mov     dword ptr [eax*4 + 0x68], 0x30b
         mov     ecx, dword ptr [g_baseSel]
         mov     eax, 0x112
@@ -168,7 +168,7 @@ __declspec(naked) void Alarm4EntryInstallCountdown(void) {
         add     esp, 4
         test    eax, eax
         jne     short L_aei_e2End
-        push    offset g_dispatchSave785_004f17d8
+        push    offset g_dispatchSave785
         call    ArgSarStoreJmp
         add     esp, 4
     L_aei_e2End:
@@ -244,7 +244,7 @@ __declspec(naked) void Alarm4EntryInstallCountdown(void) {
         mov     ecx, dword ptr [g_baseSel]
         mov     eax, 0x112
         mov     dword ptr [g_walkCallback], eax
-        push    offset g_dispatchSave786_004f17f8
+        push    offset g_dispatchSave786
         mov     dword ptr [ecx*4 + 0x74], eax
         call    ScaledLookupGuardJmpIndirect
         add     esp, 4

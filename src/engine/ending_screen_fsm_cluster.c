@@ -108,10 +108,10 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave683_004e5cc0;
-extern unsigned int g_dispatchVar43_004e6070;
-extern unsigned int g_dispatchVar2_0053a24c;
-extern unsigned int g_dispatchVar8_0053a35c;
+extern unsigned int g_dispatchSave683;
+extern unsigned int g_dispatchVar43;
+extern unsigned int g_dispatchVar2;
+extern unsigned int g_dispatchVar8;
 extern void AudioVolumeRescale(void);
 extern void CmpDivJmp(void);
 extern void GatedWordPushCall(void);
@@ -184,7 +184,7 @@ __declspec(naked) void EndingScreenFsmCluster(void)
         mov      eax, dword ptr [g_xformEntityIdx]
         mov      dword ptr [eax*4 + 0x10], 0
         mov      ecx, dword ptr [g_xformEntityIdx]
-        mov      eax, OFFSET g_dispatchVar43_004e6070
+        mov      eax, OFFSET g_dispatchVar43
         shr      eax, 2
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x14], eax
@@ -261,12 +261,12 @@ __declspec(naked) void EndingScreenFsmCluster(void)
         mov      dword ptr [edx*4 + 0x68], eax
         mov      eax, 0x451e
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_dispatchVar2_0053a24c], eax
+        mov      dword ptr [g_dispatchVar2], eax
         call     StoreLoadJmp
-        mov      ecx, OFFSET g_dispatchSave683_004e5cc0
+        mov      ecx, OFFSET g_dispatchSave683
         add      esp, 4
         shr      ecx, 2
-        mov      dword ptr [g_dispatchVar8_0053a35c], 0
+        mov      dword ptr [g_dispatchVar8], 0
         mov      dword ptr [g_walkCallback], ecx
         call     PushSetXfmMaskCallPop
         mov      eax, dword ptr [g_framePauseFlag]
@@ -276,7 +276,7 @@ __declspec(naked) void EndingScreenFsmCluster(void)
         jne      L_46e6
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      edx, dword ptr [g_eventQueueIdx]
-        mov      dword ptr [g_dispatchVar8_0053a35c], ecx
+        mov      dword ptr [g_dispatchVar8], ecx
         mov      eax, dword ptr [edx*4 + 0x34]
         and      eax, 1
         mov      dword ptr [g_walkCallback], eax
@@ -372,10 +372,10 @@ __declspec(naked) void EndingScreenFsmCluster(void)
         mov      dword ptr [g_eventQueueEnd], 0xa
     L_47c6:
         mov      ecx, dword ptr [g_xformScratch2088]
-        mov      edx, dword ptr [g_dispatchVar2_0053a24c]
+        mov      edx, dword ptr [g_dispatchVar2]
         add      ecx, edx
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_dispatchVar2_0053a24c], ecx
+        mov      dword ptr [g_dispatchVar2], ecx
         mov      ecx, 1
         mov      dword ptr [eax + 8], OFFSET L_4770
         mov      dword ptr [eax + 0x84], 2
@@ -388,11 +388,11 @@ __declspec(naked) void EndingScreenFsmCluster(void)
     L_4817:
         mov      dword ptr [g_eventQueueEnd], 0xa
     L_4821:
-        mov      ecx, dword ptr [g_dispatchVar2_0053a24c]
+        mov      ecx, dword ptr [g_dispatchVar2]
         mov      edx, dword ptr [g_xformScratch2088]
         sub      ecx, edx
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_dispatchVar2_0053a24c], ecx
+        mov      dword ptr [g_dispatchVar2], ecx
         mov      ecx, 1
         mov      dword ptr [eax + 8], OFFSET L_4770
         mov      dword ptr [eax + 0x84], ecx

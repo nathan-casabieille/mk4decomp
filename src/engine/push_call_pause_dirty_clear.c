@@ -17,9 +17,9 @@
  */
 extern u32 g_framePauseFlag;
 extern int ArgSarStoreJmp(void *);
-extern void *g_dispatchSave1218_004e3540;
+extern void *g_dispatchSave1218;
 void PushCallPauseDirtyClear(void) {
-    ArgSarStoreJmp(&g_dispatchSave1218_004e3540);
+    ArgSarStoreJmp(&g_dispatchSave1218);
     if (g_framePauseFlag != 0) return;
     g_xformDirtyFlags = g_xformDirtyFlags & 0xFFFFFFFEu;
 }

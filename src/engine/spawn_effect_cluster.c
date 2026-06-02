@@ -109,8 +109,8 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_pendingMatchVar;
-extern unsigned int g_dispatchSave930_004e5798;
-extern unsigned int g_dispatchSave931_004e57d0;
+extern unsigned int g_dispatchSave930;
+extern unsigned int g_dispatchSave931;
 extern void AudioMixerStep(void);
 extern void ChainInitMul10BulkStore(void);
 extern void CopyThreeFields(void);
@@ -236,7 +236,7 @@ __declspec(naked) void SpawnEffectCluster(void)
         jne      L_23af
         mov      dword ptr [g_eventQueueEnd], 3
     L_2243:
-        mov      eax, OFFSET g_dispatchSave930_004e5798
+        mov      eax, OFFSET g_dispatchSave930
         shr      eax, 2
     L_224b:
         mov      dword ptr [g_eventQueueIdx], eax
@@ -261,7 +261,7 @@ __declspec(naked) void SpawnEffectCluster(void)
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], edx
-        mov      eax, OFFSET g_dispatchSave931_004e57d0
+        mov      eax, OFFSET g_dispatchSave931
         shr      eax, 2
         mov      dword ptr [g_walkCallback], eax
         call     PushSetXfmMaskCallPop

@@ -22,14 +22,14 @@
 extern Mk4ComObj *g_iface_0058c7ac;
 extern int g_renderer2_present_rc;
 extern void *g_iface_0058c7bc;
-extern void *g_dispatchSave1158_004d2870;
+extern void *g_dispatchSave1158;
 extern void *g_comptr_0058c7bc;
 
 int R2_Init2(void) {
     Mk4ComObj *p = g_iface_0058c7ac;
     if (p != 0) {
         g_renderer2_present_rc = (int)p->vtbl->QueryInterface(p,
-            &g_dispatchSave1158_004d2870, &g_comptr_0058c7bc);
+            &g_dispatchSave1158, &g_comptr_0058c7bc);
     }
     return g_iface_0058c7bc != 0;
 }

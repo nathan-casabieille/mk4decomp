@@ -119,11 +119,11 @@ extern void RoundCleanupCluster_00427690(void);
  *   g_acc_00542078=0, g_eventQueueNotMask=0xff960000, g_currentNodeFlags=2);
  *   call DispatcherComplex181; pause? ret; call RoundCleanupCluster_00427690.
  */
-extern unsigned int g_dispatchSave689_004e7f40;
-extern unsigned int g_dispatchSave690_004e7f50;
-extern unsigned int g_dispatchSave691_004e7f60;
-extern unsigned int g_dispatchSave692_004e7f70;
-extern unsigned int g_dispatchSave59_00501250;
+extern unsigned int g_dispatchSave689;
+extern unsigned int g_dispatchSave690;
+extern unsigned int g_dispatchSave691;
+extern unsigned int g_dispatchSave692;
+extern unsigned int g_dispatchSave59;
 extern unsigned int g_gameCountdown;
 extern void ArgSarStoreJmp(void);
 extern void ChainGatedNegAccum(void);
@@ -138,8 +138,8 @@ extern void SetJmp_InstallSelfChainEsi(void);
 extern void StoreLoadJmp(void);
 extern void func_004569f0(void);
 
-extern unsigned int g_dispatchSave583_004eef18;
-extern unsigned int g_dispatchSave582_004eef20;
+extern unsigned int g_dispatchSave583;
+extern unsigned int g_dispatchSave582;
 extern void DualEntryBitFlagDispatch(void);
 extern void GameLoaderHandlerCluster(void);
 extern void IterStepDualStore(void);
@@ -246,7 +246,7 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
         nop
         nop
         /* H3: load + sound */
-        push     OFFSET g_dispatchSave583_004eef18
+        push     OFFSET g_dispatchSave583
         call     IterStepDualStore
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -256,7 +256,7 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_75c1
-        push     OFFSET g_dispatchSave582_004eef20
+        push     OFFSET g_dispatchSave582
         call     ArgSarStoreJmp
         add      esp, 4
     L_75c1:
@@ -359,7 +359,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
     __asm {
         /* === Helper 1 (0x455920): event 004e7f40 forwarder === */
     L_5920:
-        push     OFFSET g_dispatchSave689_004e7f40
+        push     OFFSET g_dispatchSave689
         call     ArgSarStoreJmp
         add      esp, 4
         ret
@@ -377,7 +377,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         _emit    0xff
         _emit    0xff
     L_5942:
-        push     OFFSET g_dispatchSave690_004e7f50
+        push     OFFSET g_dispatchSave690
         call     ArgSarStoreJmp
         add      esp, 4
         ret
@@ -430,7 +430,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         ret
     L_5a1d:
         /* case 3: install + state 4 */
-        mov      eax, OFFSET g_dispatchSave59_00501250
+        mov      eax, OFFSET g_dispatchSave59
         mov      edx, OFFSET L_5950
         shr      eax, 2
         mov      dword ptr [g_eventQueueEnd], eax
@@ -475,7 +475,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         jne      short L_5b22
         mov      edx, dword ptr [g_eventQueueEnd]
         mov      eax, dword ptr [g_acc_00542078]
-        push     OFFSET g_dispatchSave691_004e7f60
+        push     OFFSET g_dispatchSave691
         mov      dword ptr [edx*4 + 0x54], eax
         mov      ecx, dword ptr [g_eventQueueEnd]
         mov      edx, dword ptr [g_eventQueueNotMask]
@@ -540,7 +540,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5bb4
-        push     OFFSET g_dispatchSave692_004e7f70
+        push     OFFSET g_dispatchSave692
         call     ArgSarStoreJmp
         add      esp, 4
     L_5bb4:

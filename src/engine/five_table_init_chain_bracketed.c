@@ -108,11 +108,11 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave87_0053a52c;
-extern unsigned int g_dispatchSave86_0053a530;
-extern unsigned int g_dispatchSave85_0053a654;
-extern unsigned int g_dispatchSave66_00542ab8;
-extern unsigned int g_dispatchSave67_00542b00;
+extern unsigned int g_dispatchSave87;
+extern unsigned int g_dispatchSave86;
+extern unsigned int g_dispatchSave85;
+extern unsigned int g_dispatchSave66;
+extern unsigned int g_dispatchSave67;
 extern void ScaledDerefStore(void);
 
 void FiveTableInitChainBracketed(void) {
@@ -130,7 +130,7 @@ void FiveTableInitChainBracketed(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_pendingNodeType]
         inc     eax
-        mov     edx, offset g_dispatchSave87_0053a52c
+        mov     edx, offset g_dispatchSave87
         mov     dword ptr [g_matrixStackTop], eax
         sar     edx, 2
         mov     dword ptr [eax*4], ecx
@@ -140,7 +140,7 @@ void FiveTableInitChainBracketed(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_ftic_abort
-        mov     eax, offset g_dispatchSave86_0053a530
+        mov     eax, offset g_dispatchSave86
         mov     dword ptr [g_eventQueueWorkType], 0x23
         sar     eax, 2
         mov     dword ptr [g_pendingNodeType], eax
@@ -148,7 +148,7 @@ void FiveTableInitChainBracketed(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_ftic_abort
-        mov     eax, offset g_dispatchSave66_00542ab8
+        mov     eax, offset g_dispatchSave66
         mov     dword ptr [g_eventQueueWorkType], 0
         sar     eax, 2
         mov     dword ptr [g_currentNodeIdx], eax
@@ -171,7 +171,7 @@ void FiveTableInitChainBracketed(void) {
         mov     dword ptr [g_currentNodeIdx], eax
         jne     short L_ftic_loop2
     L_ftic_block3:
-        mov     eax, offset g_dispatchSave67_00542b00
+        mov     eax, offset g_dispatchSave67
         mov     dword ptr [g_eventQueueWorkType], 1
         sar     eax, 2
         mov     dword ptr [g_currentNodeIdx], eax
@@ -194,7 +194,7 @@ void FiveTableInitChainBracketed(void) {
         mov     dword ptr [g_currentNodeIdx], eax
         jne     short L_ftic_loop3
     L_ftic_block4:
-        mov     ecx, offset g_dispatchSave85_0053a654
+        mov     ecx, offset g_dispatchSave85
         mov     dword ptr [g_eventQueueWorkType], 4
         sar     ecx, 2
         mov     dword ptr [g_pendingNodeType], ecx

@@ -116,9 +116,9 @@ extern void BootMod6487eClampAndChainMul10(void);
 extern void Mul10HeavyTransform(void);
 extern void MStackPush8(void);
 extern void MStackPop8(void);
-extern unsigned int g_dispatchSave6_00541f94;
+extern unsigned int g_dispatchSave6;
 extern unsigned int g_savedNode;
-extern unsigned int g_mul10TransformVar_00541f9c;
+extern unsigned int g_mul10TransformVar;
 
 extern void QuadInterpolator(void);
 extern void StoreDoubleNegPauseSubStore(void);
@@ -137,7 +137,7 @@ __declspec(naked) void PoseTreeBlendWalker(void)
         mov      eax, dword ptr [g_currentNodeIdx]
         mov      edx, dword ptr [g_savedNode]
         mov      dword ptr [g_eventQueueIdx], ecx
-        mov      ecx, dword ptr [g_mul10TransformVar_00541f9c]
+        mov      ecx, dword ptr [g_mul10TransformVar]
         mov      dword ptr [g_eventQueueEnd], eax
         test     eax, eax
         mov      dword ptr [g_pendingNodeType], edx
@@ -244,7 +244,7 @@ __declspec(naked) void PoseTreeBlendWalker(void)
         jne      short L_d8d0
         mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [ebx + 8], ecx
-        mov      edx, dword ptr [g_dispatchSave6_00541f94]
+        mov      edx, dword ptr [g_dispatchSave6]
         mov      eax, dword ptr [g_eventQueueTotal]
         mov      dword ptr [g_currentNodeIdx], edx
         mov      dword ptr [g_xformEntityIdx], eax

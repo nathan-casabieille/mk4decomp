@@ -108,14 +108,14 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_dispatchSave1450_00f9fc2c;
+extern unsigned int g_dispatchSave1450;
 extern unsigned int g_iat_GetStringTypeW;
 extern unsigned int g_crtMemMoveHi;
 extern unsigned int g_crtMemMoveLo;
 extern unsigned int g_iat_GetStringTypeA;
 extern unsigned int g_iat_WideCharToMultiByte;
-extern unsigned int g_dispatchSave1448_00f9fc20;
-extern unsigned int g_dispatchSave1444_00f9fc10;
+extern unsigned int g_dispatchSave1448;
+extern unsigned int g_dispatchSave1444;
 extern void Calloc(void);
 extern void LoadArgPushCall(void);
 extern void FreeImpl(void);
@@ -123,7 +123,7 @@ extern void CrtMemMove(void);
 
 /* @addr 0x004cd950 (388b crt) - MultiByteToWideChar wrapper w/ probing.
  *   On first call, probes IAT [0x4d20b8] (MultiByteToWideChar-like) with
- *   "test 1" sample 0x4d2f24; if it works → g_dispatchSave1450_00f9fc2c = 1 (NT path).
+ *   "test 1" sample 0x4d2f24; if it works → g_dispatchSave1450 = 1 (NT path).
  *   Else probes IAT [0x4d20bc] (CompareStringA-like) with 0x4d2f20;
  *   if that works → 2 (9x path). Else returns 0.
  *
@@ -139,7 +139,7 @@ extern void CrtMemMove(void);
 __declspec(naked) void MBToWCharCachedDispatch(void) {
     __asm {
         push    ecx
-        mov     eax, dword ptr [g_dispatchSave1450_00f9fc2c]
+        mov     eax, dword ptr [g_dispatchSave1450]
         push    ebx
         xor     ebx, ebx
         push    ebp
@@ -170,7 +170,7 @@ __declspec(naked) void MBToWCharCachedDispatch(void) {
         je      L_mbw_zeroRet
         mov     eax, 2
     L_mbw_setCache:
-        mov     dword ptr [g_dispatchSave1450_00f9fc2c], eax
+        mov     dword ptr [g_dispatchSave1450], eax
     L_mbw_haveState:
         cmp     eax, 1
         jne     short L_mbw_state2
@@ -196,7 +196,7 @@ __declspec(naked) void MBToWCharCachedDispatch(void) {
         mov     dword ptr [esp + 0x10], ebx
         cmp     eax, ebx
         jne     short L_mbw_haveArg28
-        mov     eax, dword ptr [g_dispatchSave1448_00f9fc20]
+        mov     eax, dword ptr [g_dispatchSave1448]
         mov     dword ptr [esp + 0x28], eax
     L_mbw_haveArg28:
         mov     edi, dword ptr [esp + 0x20]
@@ -261,7 +261,7 @@ __declspec(naked) void MBToWCharCachedDispatch(void) {
         mov     eax, dword ptr [esp + 0x2c]
         test    eax, eax
         jne     short L_mbw_haveCp
-        mov     eax, dword ptr [g_dispatchSave1444_00f9fc10]
+        mov     eax, dword ptr [g_dispatchSave1444]
     L_mbw_haveCp:
         mov     ecx, dword ptr [esp + 0x18]
         push    ebx

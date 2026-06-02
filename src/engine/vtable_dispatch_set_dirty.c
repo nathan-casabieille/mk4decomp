@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *   call ScaledNegThreeWords; pause? ret. Set bits 0x30 of g_xformDirtyFlags.
  */
 extern unsigned int g_table_004f7868;
-extern unsigned int g_dispatchSave1525_00ab4838;
+extern unsigned int g_dispatchSave1525;
 extern void ScaledNegThreeWords(void);
 
 extern unsigned int g_arr_4ba040;
@@ -134,7 +134,7 @@ void VtableDispatchSetDirty(void) {
         mov     ecx, offset g_table_004f7868
         sar     ecx, 2
         add     eax, ecx
-        mov     ecx, offset g_dispatchSave1525_00ab4838
+        mov     ecx, offset g_dispatchSave1525
         mov     dword ptr [g_scaledInit_00542044], eax
         add     edx, 0x0f
         mov     eax, [eax*4 + g_arr_4ba040]
