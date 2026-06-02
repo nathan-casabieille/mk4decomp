@@ -113,7 +113,7 @@ extern void CallSetPause(void);
 extern void ChainListVecAdd(void);
 extern void ClampMulShiftStore(void);
 extern void CopyThreeFields(void);
-extern void MStackCall_00406600(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406600(void);
 extern void MStackPushNegMul10(void);
 extern void MStackPushZeroCallPop_004066f0(void);
 extern void PushSetXfmMaskCallPop(void);
@@ -178,7 +178,7 @@ __declspec(naked) void Phase4StateInit4Helpers(void)
         mov     dword ptr [eax + 0x10], ecx
         mov     edx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_currentNodeIdx], edx
-        call    MStackCall_00406600
+        call    MStackCall_MStackPush2ChainPrepend_00406600
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p44_ret
@@ -227,7 +227,7 @@ __declspec(naked) void Phase4StateInit4Helpers(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p44_helperB_ret
-        call    MStackCall_00406600
+        call    MStackCall_MStackPush2ChainPrepend_00406600
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p44_helperB_ret

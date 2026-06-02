@@ -134,7 +134,7 @@ extern void AndShlStore(void);
 extern void BootPhaseGateBracketedInit(void);
 extern void Helper_GeoLoadPre(void);
 extern void LinkedListBuilder(void);
-extern void MStackCall_004063e0(void);
+extern void MStackCall_MStackPush2ChainPrepend_004063e0(void);
 extern void ScaledChainAccumLoop(void);
 extern void Thunk_Helper_GeoLoadPre(void);
 extern void VertexSlotInitFlagWalk(void);
@@ -242,7 +242,7 @@ __declspec(naked) void BootInitChainHeavy(void)
         mov     dword ptr [edx*4 + 0x30], eax
         mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_load_0052ab10], eax
-        call    MStackCall_004063e0
+        call    MStackCall_MStackPush2ChainPrepend_004063e0
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         mov     dword ptr [g_phaseThunkSlot8], esi

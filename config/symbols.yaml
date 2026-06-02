@@ -408,37 +408,37 @@ functions:
     status: matched
     file: src/boot/boot_phase_gate_bracketed_init.c
   - addr: 0x00406250
-    name: MStackCall_00406250
+    name: MStackCall_MStackPush2ChainInsert_00406250
     size: 75
     group: boot
     status: matched
     file: src/engine/mstack_calls.c
   - addr: 0x004062a0
-    name: MStackCall_004062a0
+    name: MStackCall_MStackPush2ChainInsert_004062a0
     size: 75
     group: boot
     status: matched
     file: src/engine/mstack_calls.c
   - addr: 0x004062f0
-    name: MStackCall_004062f0
+    name: MStackCall_MStackPush2ChainPrepend_004062f0
     size: 75
     group: boot
     status: matched
     file: src/engine/mstack_calls.c
   - addr: 0x00406340
-    name: MStackCall_00406340
+    name: MStackCall_MStackPush2ChainPrepend_00406340
     size: 75
     group: boot
     status: matched
     file: src/engine/mstack_calls.c
   - addr: 0x00406390
-    name: MStackCall_00406390
+    name: MStackCall_MStackPush2ChainPrepend_00406390
     size: 75
     group: boot
     status: matched
     file: src/engine/mstack_calls.c
   - addr: 0x004063e0
-    name: MStackCall_004063e0
+    name: MStackCall_MStackPush2ChainPrepend_004063e0
     size: 75
     group: boot
     status: matched
@@ -462,13 +462,13 @@ functions:
     status: matched
     file: src/boot/push_set_call_pop.c
   - addr: 0x004065b0
-    name: MStackCall_004065b0
+    name: MStackCall_MStackPush2ChainInsert_004065b0
     size: 75
     group: boot
     status: matched
     file: src/engine/mstack_calls.c
   - addr: 0x00406600
-    name: MStackCall_00406600
+    name: MStackCall_MStackPush2ChainPrepend_00406600
     size: 75
     group: boot
     status: matched
@@ -492,7 +492,7 @@ functions:
     status: matched
     file: src/engine/mstack_push_zero_call_pop.c
   - addr: 0x00406740
-    name: MStackCall_00406740
+    name: MStackCall_MStackPush2ChainLLInsert
     size: 75
     group: boot
     status: matched
@@ -522,7 +522,7 @@ functions:
     status: matched
     file: src/boot/scaled_load_or_set_jmp.c
   - addr: 0x00406b50
-    name: MStackCall_00406b50
+    name: MStackCall_MStackPush2ChainInsert_00406b50
     size: 75
     group: boot
     status: matched
@@ -5772,7 +5772,7 @@ functions:
     status: matched
     file: src/engine/push_pop_xform_entity_call.c
   - addr: 0x0044d230
-    name: MStackCall_0044d230
+    name: MStackCall_PushPopScaled1cDoubleCall
     size: 75
     group: game
     status: matched

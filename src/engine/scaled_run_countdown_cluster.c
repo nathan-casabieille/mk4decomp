@@ -119,7 +119,7 @@ extern void GuardedSeq_DirtyDoubleDeref_then_ScaledOr4Jmp(void);
 extern void GuardedSeq_DirtyDoubleDeref_then_ChainSlotSetupInstallSelf(void);
 extern void GuardedTripleSetTailJmp8(void);
 extern void IntroInitCluster(void);
-extern void MStackCall_00406340(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 extern void PendingMatch_0044a7f0(void);
 extern void PushPopScaled1cDoubleCall(void);
 extern void StoreLoadJmp(void);
@@ -216,7 +216,7 @@ __declspec(naked) void ScaledRunCountdownCluster(void)
         dec      eax
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      dword ptr [g_matrixStackTop], eax
-        call     MStackCall_00406340
+        call     MStackCall_MStackPush2ChainPrepend_00406340
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a274

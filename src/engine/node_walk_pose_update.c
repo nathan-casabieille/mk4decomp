@@ -121,7 +121,7 @@ extern unsigned int g_dispatchSave731;
 extern unsigned int g_dispatchSave136;
 
 extern void AudioMixerStep(void);
-extern void MStackCall_00406340(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void StoreDoubleNegPauseSubStore(void);
 extern void func_004745e0(void);
@@ -257,7 +257,7 @@ __declspec(naked) void PreFightInstallCluster(void)
         test     eax, eax
         jne      short L_45d4
     L_45bc:
-        call     MStackCall_00406340
+        call     MStackCall_MStackPush2ChainPrepend_00406340
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_45d4

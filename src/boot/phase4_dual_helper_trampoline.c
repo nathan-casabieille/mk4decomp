@@ -111,8 +111,8 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave544;
 extern unsigned int g_audioPreloadBase2;
 extern void CallSetPause(void);
-extern void MStackCall_004062f0(void);
-extern void MStackCall_00406740(void);
+extern void MStackCall_MStackPush2ChainPrepend_004062f0(void);
+extern void MStackCall_MStackPush2ChainLLInsert(void);
 extern void MStackPushDispatchBitGate(void);
 extern void ScaledChainOr8(void);
 extern void SetJmp_ZeroAndDirty4(void);
@@ -277,7 +277,7 @@ __declspec(naked) void Phase4DualHelperTrampoline(void)
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_eventQueueIdx], eax
         jns     L_p4dht_B_install
-        call    MStackCall_00406740
+        call    MStackCall_MStackPush2ChainLLInsert
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         je      L_p4dht_B_call_0041f830
@@ -337,7 +337,7 @@ __declspec(naked) void Phase4DualHelperTrampoline(void)
         mov     dword ptr [edx*4 + 0x48], eax
         mov     eax, dword ptr [g_xformEntityIdx]
         mov     dword ptr [g_eventQueueEnd], eax
-        call    MStackCall_004062f0
+        call    MStackCall_MStackPush2ChainPrepend_004062f0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dht_B_exit

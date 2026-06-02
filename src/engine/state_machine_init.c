@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00493000 (216b game) - state-machine init with cascading calls. */
 extern unsigned int g_particleEmitterNode;
-extern void MStackCall_004062f0(void);
+extern void MStackCall_MStackPush2ChainPrepend_004062f0(void);
 extern void MStackPushDispatchBitGate(void);
 extern void MStackPushTableWalk(void);
 extern void PushSetCallTailJmp(void);
@@ -165,7 +165,7 @@ void StateMachineInit(void) {
         mov     ecx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x3c], eax
-        call    MStackCall_004062f0
+        call    MStackCall_MStackPush2ChainPrepend_004062f0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

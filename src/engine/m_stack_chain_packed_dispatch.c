@@ -112,7 +112,7 @@ extern unsigned int g_dispatchSave133;
 extern unsigned int g_dispatchSave124;
 extern void InstallSelfDispatch(void);
 extern void MStackBracket4_ListInsertZeroFill(void);
-extern void MStackCall_00406390(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406390(void);
 
 void MStackChainPackedDispatch(void) {
     __asm {
@@ -181,7 +181,7 @@ void MStackChainPackedDispatch(void) {
         mov     dword ptr [ecx*4 + 0x30], eax
         mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [edx*4 + 0x58], 0x6666
-        call    MStackCall_00406390
+        call    MStackCall_MStackPush2ChainPrepend_00406390
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_mscpd_ret

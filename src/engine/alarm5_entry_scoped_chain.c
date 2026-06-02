@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0049be10 (370b game) - 5-entry packed alarm + scoped chain.
- *   Entry 1 (offset 0, 20b): MStackCall_00406740; on no-error tail-jmps
+ *   Entry 1 (offset 0, 20b): MStackCall_MStackPush2ChainLLInsert; on no-error tail-jmps
  *     CallSetPause.
  *   12b NOP pad.
  *   Entry 2 (offset 0x20, 51b): writes 0x305 into [scaled+0x74], calls
@@ -140,7 +140,7 @@ extern void BootCallChainDoubleMul10(void);
 extern void CallSetPause(void);
 extern void CondPickDualStore(void);
 extern void DualCmpSwapStore(void);
-extern void MStackCall_00406740(void);
+extern void MStackCall_MStackPush2ChainLLInsert(void);
 extern void Phase1ChainSetupCallScale6(void);
 extern void Phase1ContextSetupHelper(void);
 extern void ScaledIndirectJmp_0049c850(void);
@@ -150,7 +150,7 @@ extern void Vec2SumMul10ChainCompute(void);
 
 __declspec(naked) void Alarm5EntryScopedChain(void) {
     __asm {
-        call    MStackCall_00406740
+        call    MStackCall_MStackPush2ChainLLInsert
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a5e_e1End

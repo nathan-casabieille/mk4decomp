@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
 /*  h3 (0x4558f0): set wait=0x16 → tail-jmp RoundCleanupCluster_ArgSarStoreJmp.*/
 /* ------------------------------------------------------------------ */
 extern void MStackPushTwoEntryChainCall(void);
-extern void MStackCall_00406600(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406600(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void MStackPushDispatchBitGate(void);
 extern void RoundCleanupCluster_ArgSarStoreJmp(void);
@@ -133,7 +133,7 @@ extern unsigned int g_particleEmitterNode;
 extern void ArgSarStoreJmp(void);
 extern void AudioMixerStep(void);
 extern void DualScaledStore(void);
-extern void MStackCall_00406340(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 extern void StoreLoadJmp(void);
 extern void Thunk_ScaledNeg1SetPause(void);
 
@@ -169,7 +169,7 @@ __declspec(naked) void ThrowInitLinkCluster(void)
         test     al, 4
         mov      dword ptr [g_fightGroupHead], edx
         jne      L_5721
-        call     MStackCall_00406600
+        call     MStackCall_MStackPush2ChainPrepend_00406600
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5721
@@ -245,7 +245,7 @@ __declspec(naked) void ThrowInitLinkCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_58ff
-        call     MStackCall_00406340
+        call     MStackCall_MStackPush2ChainPrepend_00406340
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_58ff

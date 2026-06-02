@@ -118,7 +118,7 @@ extern unsigned int g_dispatchSave32;
 extern void DirtyDoubleDeref(void);
 extern void InstallSelfDispatch(void);
 extern void MStackBracket4_ListInsertZeroFill(void);
-extern void MStackCall_00406340(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 extern void MStackPush3LinkedListWalk(void);
 extern void MStackPush4LLWalkPop4(void);
 
@@ -171,7 +171,7 @@ __declspec(naked) void CombatChainWalkExpand(void)
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [g_walkCallback], 0
         mov      dword ptr [edx*4 + 0x40], 0
-        call     MStackCall_00406340
+        call     MStackCall_MStackPush2ChainPrepend_00406340
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3c6e
@@ -264,7 +264,7 @@ __declspec(naked) void CombatChainWalkExpand(void)
         mov      edx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [g_fightGroupHead]
         mov      dword ptr [edx*4 + 0x40], eax
-        call     MStackCall_00406340
+        call     MStackCall_MStackPush2ChainPrepend_00406340
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3c6e

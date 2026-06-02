@@ -17,7 +17,7 @@
 /* Externs for guarded-sequel targets. */
 extern void PendingMatch_LeaPlus22StoreSelf(void);   /* 0x00401b70 */
 extern void MStackPushTwoEntryChainCall(void);   /* 0x004058c0 */
-extern void MStackCall_00406740(void);   /* 0x00406740 */
+extern void MStackCall_MStackPush2ChainLLInsert(void);   /* 0x00406740 */
 extern void CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(void);   /* 0x00406ba0 */
 extern void ChainDirtyBitWalker(void);   /* 0x00408c10 */
 extern void DirtyDoubleDeref(void);   /* 0x00408cb0 */
@@ -199,7 +199,7 @@ void GuardedSeq_GuardedTripleCallSetTail_then_GuardedSeq(void) {
 
 /* @addr 0x00471670 */
 void GuardedSeq_MStackCall_then_CallSetPause_00471670(void) {
-    MStackCall_00406740();
+    MStackCall_MStackPush2ChainLLInsert();
     if (g_framePauseFlag) return;
     CallSetPause();
 }
@@ -318,21 +318,21 @@ void GuardedSeq_DualCallPauseDirtyJmp_then_ScaledXorStore(void) {
 
 /* @addr 0x00497450 */
 void GuardedSeq_MStackCall_then_CallSetPause_00497450(void) {
-    MStackCall_00406740();
+    MStackCall_MStackPush2ChainLLInsert();
     if (g_framePauseFlag) return;
     CallSetPause();
 }
 
 /* @addr 0x0049a650 */
 void GuardedSeq_MStackCall_then_CallSetPause_0049a650(void) {
-    MStackCall_00406740();
+    MStackCall_MStackPush2ChainLLInsert();
     if (g_framePauseFlag) return;
     CallSetPause();
 }
 
 /* @addr 0x0049c340 */
 void GuardedSeq_MStackCall_then_CallSetPause_0049c340(void) {
-    MStackCall_00406740();
+    MStackCall_MStackPush2ChainLLInsert();
     if (g_framePauseFlag) return;
     CallSetPause();
 }

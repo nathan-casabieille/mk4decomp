@@ -120,7 +120,7 @@ extern unsigned int g_dispatchSave71;
 extern void AudioMixerStep(void);
 extern void CallSetPause(void);
 extern void EsiInstallSetCbChainExtend_0048a810(void);
-extern void MStackCall_00406600(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406600(void);
 extern void MStackPushZeroCallPop_004066f0(void);
 extern void StoreDoubleNegPauseSubStore(void);
 extern void StoreLoadJmp(void);
@@ -296,7 +296,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tpis_C_ret
-        call    MStackCall_00406600
+        call    MStackCall_MStackPush2ChainPrepend_00406600
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tpis_C_ret

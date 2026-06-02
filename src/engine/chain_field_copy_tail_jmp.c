@@ -111,14 +111,14 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00466e70 (325b game) - quad-call chain + chain-field copy (g_eventQueueEnd -> g_cj_0054205c) + tail-jmp.
  *   g_walkCallback=2; call DirtyDoubleDeref. If pause ret.
  *   g_xformEntityIdx = [scaledInit*4 + 0x24]. Call MStackPushDispatchBitGate. If pause ret.
- *   If bit2(0054208c) ret. Call MStackPushTwoEntryChainCall. If pause ret. Call MStackCall_004062f0. If pause ret.
+ *   If bit2(0054208c) ret. Call MStackPushTwoEntryChainCall. If pause ret. Call MStackCall_MStackPush2ChainPrepend_004062f0. If pause ret.
  *   Copy chain entries from [g_eventQueueEnd*4]+offset to [g_cj_0054205c*4]+offset:
  *     +0x54 (raw), +0x58 (subtract 0x9999), +0x5c, +0x60, +0x64, +0x68 (raw).
  *   chain[+0x34] ^= 1; copy chain[+0x3c]. Load chain[+0x18] into g_scaledInit.
  *   Zero chain[scaledInit*4 + 0x30/+0x34/+0x38]. Tail-jmp SetupVecFsmCluster. ret.
  */
 extern void DirtyDoubleDeref(void);
-extern void MStackCall_004062f0(void);
+extern void MStackCall_MStackPush2ChainPrepend_004062f0(void);
 extern void MStackPushDispatchBitGate(void);
 extern void MStackPushTwoEntryChainCall(void);
 extern void SetupVecFsmCluster(void);
@@ -163,7 +163,7 @@ __declspec(naked) void ChainFieldCopyTailJmp(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        call    MStackCall_004062f0
+        call    MStackCall_MStackPush2ChainPrepend_004062f0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

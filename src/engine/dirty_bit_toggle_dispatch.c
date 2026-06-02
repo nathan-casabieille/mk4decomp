@@ -121,7 +121,7 @@ extern unsigned int g_dispatchSave32;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 extern unsigned int g_active_0053a408;
-extern void MStackCall_00406340(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 
 extern unsigned int g_arr_463390;
 extern unsigned int g_chain_disp_30_463390;
@@ -153,7 +153,7 @@ void DirtyBitToggleDispatch(void) {
         mov     eax, 0x26d
         mov     dword ptr [g_walkCallback], eax
         mov     [ecx*4 + g_chain_disp_30_463390], eax
-        call    MStackCall_00406340
+        call    MStackCall_MStackPush2ChainPrepend_00406340
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

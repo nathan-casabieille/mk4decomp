@@ -142,7 +142,7 @@ void BootMStackBracketedScaledStores(void) {
         g_currentNodeIdx = g_fightGroupHead;
         PushSetDualDeref();
         if (g_framePauseFlag != 0) return;
-        MStackCall_00406600();
+        MStackCall_MStackPush2ChainPrepend_00406600();
         if (g_framePauseFlag != 0) return;
     }
     g_fightGroupHead = *(unsigned int *)(g_matrixStackTop * 4);

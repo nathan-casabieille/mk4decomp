@@ -165,9 +165,9 @@ extern void InstallSelfSearchAccum(void);
 extern void LoopUnrolledTripleMul10(void);
 extern void MStackBracket1_TreeWalkRecursive2(void);
 extern void MStackBracket2_TreeWalkRecursive(void);
-extern void MStackCall_00406250(void);
-extern void MStackCall_004062a0(void);
-extern void MStackCall_00406600(void);
+extern void MStackCall_MStackPush2ChainInsert_00406250(void);
+extern void MStackCall_MStackPush2ChainInsert_004062a0(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406600(void);
 extern void MStackInitCallToggle(void);
 extern void MStackPush2ChainLLInsert(void);
 extern void MStackPush2DualModMul10Pop2(void);
@@ -320,9 +320,9 @@ extern void InstallSelfChainExtendCall_GameModeAdvanceCluster(void);
 extern void InstallSelfPackedF80(void);
 extern void IterLoad_g_scaledInit_00542044_then_MStackPush4IndirectCall(void);
 extern void MStackBracket3_ChainSwapAdvance(void);
-extern void MStackCall_004062f0(void);
-extern void MStackCall_00406340(void);
-extern void MStackCall_00406740(void);
+extern void MStackCall_MStackPush2ChainPrepend_004062f0(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
+extern void MStackCall_MStackPush2ChainLLInsert(void);
 extern void MStackInstallBodyEqCheck(void);
 extern void MStackNegAwareMul10Pair(void);
 extern void MStackPop7(void);
@@ -1358,7 +1358,7 @@ __declspec(naked) void MStackBracket3_FieldSequentialCopy(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mb3fsc_abort
-        call    MStackCall_004062f0
+        call    MStackCall_MStackPush2ChainPrepend_004062f0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mb3fsc_abort
@@ -1466,7 +1466,7 @@ __declspec(naked) void Phase4FourPackedDispatch(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fpd2_M_ret
-        call    MStackCall_00406740
+        call    MStackCall_MStackPush2ChainLLInsert
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fpd2_M_ret
@@ -1863,7 +1863,7 @@ __declspec(naked) void PunchAnimCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_6f69
-        call     MStackCall_00406340
+        call     MStackCall_MStackPush2ChainPrepend_00406340
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_6f69
@@ -2614,7 +2614,7 @@ __declspec(naked) void PendingMatch_MStackPush2RunCountdown_0040cd50(void)
         mov      dword ptr [g_xformDirtyFlags], ecx
         jne      L_d064
     L_d0ca:
-        call     MStackCall_004062f0
+        call     MStackCall_MStackPush2ChainPrepend_004062f0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d104
@@ -3349,7 +3349,7 @@ __declspec(naked) void PendingMatch_ChainWalkPushPop_00411890(void)
         mov      dword ptr [edx*4 + 0x10], esi
         jmp      L_1a1d
     L_1a0a:
-        call     MStackCall_00406740
+        call     MStackCall_MStackPush2ChainLLInsert
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1a48
         mov      dword ptr [g_currentNodeIdx], esi
@@ -3524,7 +3524,7 @@ __declspec(naked) void PendingMatch_ChainWalkPushPop_00411890(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1d74
-        call     MStackCall_004062f0
+        call     MStackCall_MStackPush2ChainPrepend_004062f0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1d74
@@ -3843,7 +3843,7 @@ __declspec(naked) void PendingMatch_ChainWalkPushPop_0040dbb0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e137
-        call     MStackCall_00406600
+        call     MStackCall_MStackPush2ChainPrepend_00406600
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e137
@@ -4635,7 +4635,7 @@ __declspec(naked) void PendingMatch_StoreTwoCall_00411210(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1884
-        call     MStackCall_004062f0
+        call     MStackCall_MStackPush2ChainPrepend_004062f0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1884
@@ -4880,7 +4880,7 @@ __declspec(naked) void PendingMatch_Push16Call_00402540(void)
         mov      eax, 0x31
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x30], eax
-        call     MStackCall_00406340
+        call     MStackCall_MStackPush2ChainPrepend_00406340
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_2b0f
         test     byte ptr [g_xformDirtyFlags], bl
@@ -5238,7 +5238,7 @@ __declspec(naked) void PendingMatch_StoreTwoCall_004108a0(void)
         pop      ebx
         ret      
     L_0d02:
-        call     MStackCall_00406250
+        call     MStackCall_MStackPush2ChainInsert_00406250
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_0d7c
@@ -5608,7 +5608,7 @@ __declspec(naked) void PendingMatch_MStackPush8_0040a8d0(void)
         mov      dword ptr [ecx*4 + 0x74], eax
         mov      eax, dword ptr [g_fightGroupHead]
         mov      dword ptr [g_currentNodeIdx], eax
-        call     MStackCall_004062a0
+        call     MStackCall_MStackPush2ChainInsert_004062a0
         cmp      dword ptr [g_framePauseFlag], ebp
         jne      L_acd2
         mov      ecx, dword ptr [g_fightGroupHead]
@@ -6731,7 +6731,7 @@ __declspec(naked) void PendingMatch_StoreTwoCall_004163c0(void)
     L_68b1:
         mov      ebx, dword ptr [esp + 0xc]
     L_68b5:
-        call     MStackCall_004062f0
+        call     MStackCall_MStackPush2ChainPrepend_004062f0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_68eb
@@ -7085,7 +7085,7 @@ __declspec(naked) void PendingMatch_Mul10Tail_00419c90(void)
         add      esp, 8
         cmp      eax, 0xfffff5c3
         jl       L_9fc0
-        call     MStackCall_00406740
+        call     MStackCall_MStackPush2ChainLLInsert
         cmp      dword ptr [g_framePauseFlag], edi
         je       L_a000
         pop      edi
@@ -7352,7 +7352,7 @@ __declspec(naked) void PendingMatch_Mul10Tail_00419c90(void)
         mov      ecx, dword ptr [g_fightGroupHead]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x70], eax
-        call     MStackCall_004062f0
+        call     MStackCall_MStackPush2ChainPrepend_004062f0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_a361
         mov      dword ptr [g_eventQueueChild], edi

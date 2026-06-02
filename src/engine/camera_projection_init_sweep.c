@@ -117,7 +117,7 @@ extern void BootPhaseGateBracketedInit(void);
 extern void Chain2CallMul10Accum(void);
 extern void FramePauseScaledStore(void);
 extern void MStackBracket4_ListInsertZeroFill(void);
-extern void MStackCall_00406340(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 extern void MStackPush2ChainLLInsert(void);
 extern void MStackPush2ChainPrepend(void);
 extern void FixedDiv16(void);
@@ -250,7 +250,7 @@ __declspec(naked) void CameraProjectionInitSweep(void)
         mov      eax, 0x18000
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x58], eax
-        call     MStackCall_00406340
+        call     MStackCall_MStackPush2ChainPrepend_00406340
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_8430

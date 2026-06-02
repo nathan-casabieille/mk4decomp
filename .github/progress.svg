@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="720" height="218" viewBox="0 0 720 218" role="img" aria-label="MK4 decomp progress 76.2%">
-  <title>MK4 decomp progress: 76.2% functional understanding (composite)</title>
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="218" viewBox="0 0 720 218" role="img" aria-label="MK4 decomp progress 76.3%">
+  <title>MK4 decomp progress: 76.3% functional understanding (composite)</title>
   <defs>
     <linearGradient id="fillGrad" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%"   stop-color="#ffd24a"/>
@@ -26,11 +26,11 @@
         fill="#1a1a1a" stroke="#3a2a14" stroke-width="1"/>
 
   <!-- Composite filled portion -->
-  <rect x="12" y="14" width="530.63" height="36" rx="6" ry="6"
+  <rect x="12" y="14" width="530.79" height="36" rx="6" ry="6"
         fill="url(#fillGrad)"/>
 
   <!-- Top highlight on composite -->
-  <rect x="12" y="14" width="530.63" height="8" rx="6" ry="6"
+  <rect x="12" y="14" width="530.79" height="8" rx="6" ry="6"
         fill="#ffffff" opacity="0.18"/>
 
   <!-- Composite label + percent (single line) -->
@@ -38,7 +38,7 @@
         font-family="Impact, 'Arial Black', sans-serif" font-size="18" font-weight="900"
         text-anchor="middle" fill="#fff8e1"
         stroke="#1a0a0a" stroke-width="1.2" paint-order="stroke fill"
-        letter-spacing="1.5">FUNCTIONAL UNDERSTANDING - 76.2%</text>
+        letter-spacing="1.5">FUNCTIONAL UNDERSTANDING - 76.3%</text>
 
   <text x="14" y="80" font-family="'DejaVu Sans', Verdana, sans-serif"
         font-size="13" fill="#fde68a">Byte-perfect rebuild</text>
@@ -60,10 +60,10 @@
         font-size="13" fill="#fde68a">Function naming</text>
   <rect x="200" y="125" width="500" height="16" rx="3" ry="3"
         fill="#1a1a1a" stroke="#3a2a14" stroke-width="1"/>
-  <rect x="200" y="125" width="431.02" height="16" rx="3" ry="3"
+  <rect x="200" y="125" width="431.37" height="16" rx="3" ry="3"
         fill="url(#rowGrad)"/>
   <text x="694" y="137" font-family="'DejaVu Sans Mono', monospace"
-        font-size="12" fill="#fff8e1" text-anchor="end" font-weight="bold">86.2%</text>
+        font-size="12" fill="#fff8e1" text-anchor="end" font-weight="bold">86.3%</text>
   <text x="14" y="164" font-family="'DejaVu Sans', Verdana, sans-serif"
         font-size="13" fill="#fde68a">Global naming</text>
   <rect x="200" y="153" width="500" height="16" rx="3" ry="3"

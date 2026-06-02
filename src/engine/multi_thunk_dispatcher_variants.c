@@ -131,7 +131,7 @@ extern void DualCmpSwapStore(void);
 extern void DualScaledStoreZero(void);
 extern void GuardedDispatch_CallPauseMStackPushSet3Jmp(void);
 extern void GuardedDispatch_CallPauseMStackPushSet4Jmp(void);
-extern void MStackCall_00406740(void);
+extern void MStackCall_MStackPush2ChainLLInsert(void);
 extern void NotShrCmp1Store(void);
 extern void PerSlotPhaseRouter_DualGatedStateYield_004605d0(void);
 extern void PerSlotPhaseRouter_DualGatedStateYield_00460770(void);
@@ -139,7 +139,7 @@ extern void ScaledStackCallPause(void);
 
 __declspec(naked) void MultiThunkDispatcher_MStackCall(void) {
     __asm {
-        call    MStackCall_00406740
+        call    MStackCall_MStackPush2ChainLLInsert
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

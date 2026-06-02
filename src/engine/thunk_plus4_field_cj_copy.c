@@ -113,13 +113,13 @@ extern unsigned int g_fightAxisPosY;
  *   B2 (0x10..0x11c): call TripleMStackPushChainStores; if pause? ret.
  *     If bit2 of g_xformDirtyFlags set: tail-jmp StoreFightFieldCallTailJmp.
  *     Else: copy cj[+0x58/+0x3c/+0x64] to scaledInit fields with intermediate via
- *     g_eventQueueIdx (for +0x38). cj[+0x30]=0x7e. Call MStackCall_00406340; if pause? ret.
+ *     g_eventQueueIdx (for +0x38). cj[+0x30]=0x7e. Call MStackCall_MStackPush2ChainPrepend_00406340; if pause? ret.
  *     baseSel[+0x30]=2, baseSel[+0x34]=g_scaledInit, baseSel[+0x38]=g_eventQueueIdx,
  *     baseSel[+0x3c]=g_cj_0054205c. Tail-jmp FourPackedSubInitCmpDispatch; ret.
  */
 extern void ArgSarStoreJmp(void);
 extern void FourPackedSubInitCmpDispatch(void);
-extern void MStackCall_00406340(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 extern void StoreFightFieldCallTailJmp(void);
 extern void TripleMStackPushChainStores(void);
 
@@ -165,7 +165,7 @@ __declspec(naked) void ThunkPlus4FieldCjCopy(void) {
         mov     eax, 0x7e
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x30], eax
-        call    MStackCall_00406340
+        call    MStackCall_MStackPush2ChainPrepend_00406340
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
 /* Pose-copy + idle-decision cluster (560b game, falls through into  */
 /* sibling 0x4539d0)                                                  */
 /* ------------------------------------------------------------------ */
-extern void MStackCall_004062f0(void);
+extern void MStackCall_MStackPush2ChainPrepend_004062f0(void);
 extern void Chain2AxisDiffStoreTailJmp(void);
 extern void MStackPush3SideStore(void);
 extern void DualScaledStore(void);
@@ -128,7 +128,7 @@ __declspec(naked) void PoseCopyIdleCluster(void)
 {
     __asm {
         /* === Helper 1: pose-copy from slot ECX to slot EAX === */
-        call     MStackCall_004062f0
+        call     MStackCall_MStackPush2ChainPrepend_004062f0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_38a4

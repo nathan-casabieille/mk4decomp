@@ -114,12 +114,12 @@ extern unsigned int g_fightAxisPosY;
  *   sub-2 (~309b @ 0x00410210): boot countdown state machine.
  *     If [esi+0x84] non-zero (already installed): decrement g_eventQueueEnd
  *     countdown, jns to chain-walk, else call GuardedSeq_MStackCall_then_CallSetPause_00471670.
- *     Else: setup pipeline with DispatcherComplex260_FramePauseScaledStore, MStackCall_00406340,
+ *     Else: setup pipeline with DispatcherComplex260_FramePauseScaledStore, MStackCall_MStackPush2ChainPrepend_00406340,
  *     install self at [esi+8] = 0x00410210, set state flags.
  */
 extern void BossRoomInitCluster(void);
 extern void GuardedSeq_MStackCall_then_CallSetPause_00471670(void);
-extern void MStackCall_00406340(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 extern void CallSetPause(void);
 
 __declspec(naked) void BootInstallerPair(void) {
@@ -182,7 +182,7 @@ __declspec(naked) void BootInstallerPair(void) {
         mov     eax, 0x00100000
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x5c], eax
-        call    MStackCall_00406340
+        call    MStackCall_MStackPush2ChainPrepend_00406340
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_bip_done

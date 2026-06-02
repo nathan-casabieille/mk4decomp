@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0048c480 (134b) - 5-call chain + chain[+0x58]→chain[+0x48] copy
  *   + chain[+0x64] = 0x4b6db + final flag clear. */
-extern void MStackCall_00406340(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 extern void MStackPushDispatchBitGate(void);
 extern void MStackPushTwoEntryChainCall(void);
 extern void PushDualDerefClearPop(void);
@@ -148,7 +148,7 @@ void GuardedChainCopySetFlag(void) {
         test    eax, eax
         _emit   75h
         _emit   1ah
-        call    MStackCall_00406340
+        call    MStackCall_MStackPush2ChainPrepend_00406340
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

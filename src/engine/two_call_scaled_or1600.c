@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *   g_xformDirtyFlags |= 4; if g_scaledInit == 0: ret; else: clear bit 2.
  */
 extern void CopyThreeFields(void);
-extern void MStackCall_00406340(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void ThreeChanPackClamp(void);
 
@@ -142,7 +142,7 @@ void TwoCallScaledOr1600(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        call    MStackCall_00406340
+        call    MStackCall_MStackPush2ChainPrepend_00406340
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

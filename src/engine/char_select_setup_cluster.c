@@ -114,7 +114,7 @@ extern void DispatcherComplex138_00476060(void);
 extern void DualScaledStore(void);
 extern void GatedWordPushCall(void);
 extern void MStackBracket4_ListInsertZeroFill(void);
-extern void MStackCall_00406600(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406600(void);
 extern void PendingMatch_MStackPush2RunCountdown_004568b0(void);
 extern void ScaledStoreThree_00409260(void);
 extern void ScaledTestPauseStore(void);
@@ -135,7 +135,7 @@ __declspec(naked) void CharSelectSetupCluster(void)
         jne      L_6688
         test     byte ptr [g_xformDirtyFlags], 4
         jne      L_6688
-        call     MStackCall_00406600
+        call     MStackCall_MStackPush2ChainPrepend_00406600
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_6688

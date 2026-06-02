@@ -112,7 +112,7 @@ extern unsigned int g_dispatchSave618;
 extern void AudioMixerStep(void);
 extern void CmpDivJmp(void);
 extern void CopyThreeFields(void);
-extern void MStackCall_00406600(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406600(void);
 extern void MStackPop8(void);
 extern void MStackPush8(void);
 extern void MStackPushNegMul10(void);
@@ -277,7 +277,7 @@ __declspec(naked) void Phase1ChainExtendedInitLoop2(void)
     L_p1cei2_after_loop:
         mov     edx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_currentNodeIdx], edx
-        call    MStackCall_00406600
+        call    MStackCall_MStackPush2ChainPrepend_00406600
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1cei2_ret

@@ -130,7 +130,7 @@ extern unsigned int g_load_0052ab10;
 extern unsigned int g_particleEmitterNode;
 extern unsigned int g_table_004d57b0;
 extern void ChainWalkPushPop(void);
-extern void MStackCall_004062f0(void);
+extern void MStackCall_MStackPush2ChainPrepend_004062f0(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void ScaledTripleCopy54(void);
 extern void SetJmp_BootStateTriple(void);
@@ -172,7 +172,7 @@ __declspec(naked) void BootSetupWithMStackBody(void) {
         mov     edx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [g_eventQueueNotMask]
         mov     dword ptr [edx*4 + 0x58], eax
-        jmp     MStackCall_004062f0
+        jmp     MStackCall_MStackPush2ChainPrepend_004062f0
     L_bsm_e1End:
         ret
         nop

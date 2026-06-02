@@ -115,7 +115,7 @@ extern unsigned int g_dispatchSave914;
 extern unsigned int g_packedDispatchVar;
 extern void AudioMixerStep(void);
 extern void CallSetPause(void);
-extern void MStackCall_00406600(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406600(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void ScaledTripleCopy54(void);
 extern void ZeroAndDirty4(void);
@@ -173,7 +173,7 @@ __declspec(naked) void BootPackedDispatchPair_PushSetXfmMaskCallPop_00413380(voi
         mov     dword ptr [edx*4 + 0x10], eax
         mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_currentNodeIdx], eax
-        jmp     MStackCall_00406600
+        jmp     MStackCall_MStackPush2ChainPrepend_00406600
     L_bpdp_ret:
         ret
         nop
@@ -294,7 +294,7 @@ __declspec(naked) void BootPackedDispatchPair_PushSetXfmMaskCallPop_00413580(voi
         mov     dword ptr [edx*4 + 0x10], eax
         mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_currentNodeIdx], eax
-        jmp     MStackCall_00406600
+        jmp     MStackCall_MStackPush2ChainPrepend_00406600
     L_bpdp2_ret:
         ret
         nop

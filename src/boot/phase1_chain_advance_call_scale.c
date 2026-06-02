@@ -114,7 +114,7 @@ extern void AudioVolumeRescale(void);
 extern void ChainWalkPushPop(void);
 extern void DirtyDoubleDeref(void);
 extern void MStackBracket1_TreeWalkRecursive2(void);
-extern void MStackCall_00406740(void);
+extern void MStackCall_MStackPush2ChainLLInsert(void);
 extern void PushPopScaled1cDoubleCall(void);
 
 __declspec(naked) void Phase1ChainAdvanceCallScale(void)
@@ -238,7 +238,7 @@ __declspec(naked) void Phase1ChainAdvanceCallScale(void)
         mov     dword ptr [esi + 0x80], eax
         jmp     L_p1c2_helper_pop1
     L_p1c2_helper_else:
-        call    MStackCall_00406740
+        call    MStackCall_MStackPush2ChainLLInsert
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1c2_helper_pop_ret

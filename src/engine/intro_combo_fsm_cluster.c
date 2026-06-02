@@ -112,7 +112,7 @@ extern void AudioVolumeRescale(void);
 extern void DualScaledLoadStoreJmp(void);
 extern void GuardedSeq_ScaledLoadTwoCallDualConst_then_GuardedSeq_00467c10(void);
 extern void GuardedSeq_GuardedTripleCallSetTail_then_GuardedSeq(void);
-extern void MStackCall_00406340(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 extern void PreFightInstallCluster(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void SetJmp_ZeroAndDirty4(void);
@@ -131,7 +131,7 @@ __declspec(naked) void IntroComboFsmCluster(void)
         mov      eax, 0x91
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x30], eax
-        call     MStackCall_00406340
+        call     MStackCall_MStackPush2ChainPrepend_00406340
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_78a1

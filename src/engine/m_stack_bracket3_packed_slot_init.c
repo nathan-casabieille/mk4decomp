@@ -112,7 +112,7 @@ extern unsigned int g_pendingMatchVar;
 extern unsigned int g_dispatchSave730;
 extern unsigned int g_particleEmitterNode;
 extern void AudioMixerStep(void);
-extern void MStackCall_00406340(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 extern void PushSetXfmMaskCallPop(void);
 
 __declspec(naked) void MStackBracket3PackedSlotInit(void)
@@ -167,7 +167,7 @@ __declspec(naked) void MStackBracket3PackedSlotInit(void)
         mov     eax, 0x7f
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x30], eax
-        call    MStackCall_00406340
+        call    MStackCall_MStackPush2ChainPrepend_00406340
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mb3p_ret

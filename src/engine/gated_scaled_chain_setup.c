@@ -113,10 +113,10 @@ extern unsigned int g_fightAxisPosY;
  *   call PushSetXfmMaskCallPop; pause-check.
  *   If bit-2 not set: setup chain[+0x30]=0x25c, [+0x54]=g_acc_00542078, [+0x5c]=g_eventQueueNotMask,
  *     [+0x58]=0xfffffd71. Set g_walkCallback=0x18000; scaledInit = [chain*4+0x18]; chain[+0x3c]=0x18000.
- *   call MStackCall_004062f0; if !pause jmp MStackPop8; ret.
+ *   call MStackCall_MStackPush2ChainPrepend_004062f0; if !pause jmp MStackPop8; ret.
  */
 extern unsigned int g_byte_004f360c;
-extern void MStackCall_004062f0(void);
+extern void MStackCall_MStackPush2ChainPrepend_004062f0(void);
 extern void MStackPop8(void);
 extern void MStackPush8(void);
 extern void PushSetXfmMaskCallPop(void);
@@ -173,7 +173,7 @@ __declspec(naked) void GatedScaledChainSetup(void) {
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     dword ptr [eax*4 + 0x3c], ecx
-        call    MStackCall_004062f0
+        call    MStackCall_MStackPush2ChainPrepend_004062f0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

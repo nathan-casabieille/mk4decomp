@@ -118,8 +118,8 @@ extern void BootSetupWithMStackBody(void);
 extern void CallSetPause(void);
 extern void ClampMulShiftStore(void);
 extern void Helper_MenuStub_8EB0(void);
-extern void MStackCall_004062f0(void);
-extern void MStackCall_00406600(void);
+extern void MStackCall_MStackPush2ChainPrepend_004062f0(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406600(void);
 extern void MStackPop8(void);
 extern void MStackPush8(void);
 extern void PushSetXfmMaskCallPop(void);
@@ -171,7 +171,7 @@ __declspec(naked) void Phase4MultiHelperInit(void)
         mov     ecx, dword ptr [eax*4 + 0x58]
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_walkCallback], ecx
-        call    MStackCall_00406600
+        call    MStackCall_MStackPush2ChainPrepend_00406600
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4mh_A_ret
@@ -257,7 +257,7 @@ __declspec(naked) void Phase4MultiHelperInit(void)
         mov     ecx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x80], eax
-        call    MStackCall_004062f0
+        call    MStackCall_MStackPush2ChainPrepend_004062f0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4mh_C_exit

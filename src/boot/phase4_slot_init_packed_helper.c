@@ -115,8 +115,8 @@ extern unsigned int g_phase1ModelChain;
 extern void AudioMixerStep(void);
 extern void BootSetJmpStoreThenChainTriple(void);
 extern void ChainWalkPushPop(void);
-extern void MStackCall_004062f0(void);
-extern void MStackCall_00406740(void);
+extern void MStackCall_MStackPush2ChainPrepend_004062f0(void);
+extern void MStackCall_MStackPush2ChainLLInsert(void);
 extern void MStackPop8(void);
 extern void MStackPush8(void);
 extern void MStackPushDispatchBitGate(void);
@@ -239,7 +239,7 @@ __declspec(naked) void Phase4SlotInitPackedHelper(void)
         mov     eax, 0x00416280
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x10], eax
-        call    MStackCall_004062f0
+        call    MStackCall_MStackPush2ChainPrepend_004062f0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sip_A_ret
@@ -303,7 +303,7 @@ __declspec(naked) void Phase4SlotInitPackedHelper(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sip_B_ret
-        call    MStackCall_00406740
+        call    MStackCall_MStackPush2ChainLLInsert
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sip_B_ret

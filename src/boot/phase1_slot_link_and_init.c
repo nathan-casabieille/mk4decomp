@@ -112,7 +112,7 @@ extern unsigned int g_particleEmitterNode;
 extern void BootChainBidirRecurseWalk(void);
 extern void BootPhaseGateBracketedInit(void);
 extern void GuardedChainPushSetCallPop(void);
-extern void MStackCall_00406340(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 extern void MStackInitCallToggle(void);
 extern void ScaledLoadGuardedJmp(void);
 extern void ScaledTestPauseStore(void);
@@ -219,7 +219,7 @@ __declspec(naked) void Phase1SlotLinkAndInit(void)
         mov     dword ptr [eax*4 + 0x18], edx
         mov     ecx, dword ptr [g_eventQueueEnd]
         mov     dword ptr [g_currentNodeIdx], ecx
-        jmp     MStackCall_00406340
+        jmp     MStackCall_MStackPush2ChainPrepend_00406340
     L_p1sli_ret:
         ret
     }

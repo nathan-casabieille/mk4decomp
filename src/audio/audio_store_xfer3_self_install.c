@@ -108,13 +108,13 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void MStackCall_00406340(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 extern void Title_PressStartScreen(void);
 extern unsigned int g_particleEmitterNode;
 
 /* @addr 0x004a47c0 (183b audio) - chain init + two cdecl push-twice calls.
  *   chain[g_scaledInit + 0x54/0x58/0x5c] = 0; g_walkCallback = 0;
- *   chain[+0x30] = 9; g_walkCallback = 9; call MStackCall_00406340; pause? ret.
+ *   chain[+0x30] = 9; g_walkCallback = 9; call MStackCall_MStackPush2ChainPrepend_00406340; pause? ret.
  *   g_fightGroupHead = g_scaledInit; g_scaledInit = [0x535e6c];
  *   g_walkCallback = 0xe666; chain[g_scaledInit + 0x3c] = 0xe666.
  *   push 0x4f3030, g_scaledInit; call Title_PressStartScreen; add esp, 8.
@@ -137,7 +137,7 @@ void ChainInitDoublePushCall(void) {
         mov     eax, 9
         mov     dword ptr [g_walkCallback], eax
         mov     [edx*4 + 0x30], eax
-        call    MStackCall_00406340
+        call    MStackCall_MStackPush2ChainPrepend_00406340
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

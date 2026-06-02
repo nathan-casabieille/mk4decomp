@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0042f760 (221b game) - gated chain init. */
 extern unsigned int g_byte_004f360c;
-extern void MStackCall_00406340(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 extern void PushSetXfmMaskCallPop(void);
 
 __declspec(naked) void GatedChainInit(void) {
@@ -143,7 +143,7 @@ __declspec(naked) void GatedChainInit(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        call    MStackCall_00406340
+        call    MStackCall_MStackPush2ChainPrepend_00406340
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -167,7 +167,7 @@ __declspec(naked) void GatedChainInit(void) {
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   75h
         _emit   4dh
-        call    MStackCall_00406340
+        call    MStackCall_MStackPush2ChainPrepend_00406340
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

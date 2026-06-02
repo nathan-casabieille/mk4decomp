@@ -176,7 +176,7 @@ extern void Thunk_LinkedListBitMaskSearch(void);
 extern void CopyJmp_ScaledSubStore_g_currentNodeIdx(void);
 extern void ScaledChain3c74(void);
 extern void ScaledChain3c7c(void);
-extern void MStackCall_00406340(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 extern void PendingMatch_0046cd30(void);
 extern void Phase3InstallPackedSelf(void);
 extern void ZeroSlotsGatedDispatch(void);

@@ -130,7 +130,7 @@ extern void PendingMatch_BootStateTriple(void);
 extern void MStackPushDispatchBitGate(void);
 extern void MStackPush4LLWalkPop4(void);
 extern void InstallSelfDispatch(void);
-extern void MStackCall_00406390(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406390(void);
 extern void MStackPop8(void);
 
 /* @addr 0x00429b70 (691b game) */
@@ -251,7 +251,7 @@ void ScenePostInitSequencer(void) {
     L_9dc3:
         mov      ecx, dword ptr [g_cj_0054205c]
         mov      dword ptr [g_scaledInit_00542044], ecx
-        call     MStackCall_00406390
+        call     MStackCall_MStackPush2ChainPrepend_00406390
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_9e22

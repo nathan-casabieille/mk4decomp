@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
  *   else:   ecx = 0x50cd50>>2; g_xformEntityIdx = ecx;
  *   skip: call DispatcherComplex260_MStackBracket1_TreeWalkRecursive2; if pause: ret;
  *   if (bit2 of g_xformDirtyFlags)!=0: ret;
- *   call MStackCall_00406340; if pause: ret;
+ *   call MStackCall_MStackPush2ChainPrepend_00406340; if pause: ret;
  *   edx = g_scaledInit; eax = 0x1b333;
  *   g_walkCallback = eax; [edx*4 + 0x58] = eax; ret.
  */
@@ -133,7 +133,7 @@ void DualPathCallSetup(void) {
     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 4) != 0) return;
-    MStackCall_00406340();
+    MStackCall_MStackPush2ChainPrepend_00406340();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))0x1b333;
     ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_y = 0x1b333;

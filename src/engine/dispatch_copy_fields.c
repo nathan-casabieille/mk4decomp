@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *   scaledInit to g_dispatchCopyField; merge low bit of [+0x34]; ret.
  */
 extern unsigned int g_dispatchCopyField;
-extern void MStackCall_00406340(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 
 void DispatchCopyFields(void) {
     __asm {
@@ -143,7 +143,7 @@ void DispatchCopyFields(void) {
         mov     eax, 0x78
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x30], eax
-        call    MStackCall_00406340
+        call    MStackCall_MStackPush2ChainPrepend_00406340
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

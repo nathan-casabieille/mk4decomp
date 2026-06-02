@@ -120,12 +120,12 @@ extern unsigned int g_fightAxisPosY;
  *   ScaledTripleCopy54 then MStackPushNegMul10.
  *   Then for the resolved leaf slot writes 0xb333 at +0x48, OR's bit 3
  *   into +0x0, 0xff at +0x14, and 0x00413e60 (callback addr) at +0x10.
- *   Calls MStackCall_004065b0, tail-jmp MStackPop8.
+ *   Calls MStackCall_MStackPush2ChainInsert_004065b0, tail-jmp MStackPop8.
  */
 extern unsigned int g_dispatchSave514;
 extern void AudioMixerStep(void);
 extern void CopyThreeFields(void);
-extern void MStackCall_004065b0(void);
+extern void MStackCall_MStackPush2ChainInsert_004065b0(void);
 extern void MStackPop8(void);
 extern void MStackPush8(void);
 extern void MStackPushNegMul10(void);
@@ -205,7 +205,7 @@ __declspec(naked) void MStackPush8CallbackInit(void) {
         mov     dword ptr [eax + 0x10], ecx
         mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_currentNodeIdx], eax
-        call    MStackCall_004065b0
+        call    MStackCall_MStackPush2ChainInsert_004065b0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_mp8c_ret

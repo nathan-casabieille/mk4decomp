@@ -116,7 +116,7 @@ extern void ChainInitMul10BulkStore(void);
 extern void CopyThreeFields(void);
 extern void DispatcherComplex138_004760f0(void);
 extern void FourSegmentPoseWalk(void);
-extern void MStackCall_00406600(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406600(void);
 extern void PendingMatch_ArgSarStoreJmp_004411d0(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void ScaledOr4Jmp(void);
@@ -282,7 +282,7 @@ __declspec(naked) void SpawnEffectCluster(void)
         pop      esi
         ret      
     L_22de:
-        call     MStackCall_00406600
+        call     MStackCall_MStackPush2ChainPrepend_00406600
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_23af

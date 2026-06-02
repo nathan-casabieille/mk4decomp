@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern void GDispatch4(void);
 extern void MStackBracket5_FieldClear_StateAdvance(void);
-extern void MStackCall_0044d230(void);
+extern void MStackCall_PushPopScaled1cDoubleCall(void);
 extern void MStackPush2GuardedFieldClear(void);
 extern void MStackPushTyped_0044cf50(void);
 extern void MStackPushTyped_0044cf80(void);
@@ -158,7 +158,7 @@ __declspec(naked) void IntroSequencePipeline(void)
         mov      edx, dword ptr [g_eventQueueTotal]
         mov      eax, dword ptr [edx*4 + 0x18]
         mov      dword ptr [g_xformEntityIdx], eax
-        call     MStackCall_0044d230
+        call     MStackCall_PushPopScaled1cDoubleCall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_cf48
@@ -178,7 +178,7 @@ __declspec(naked) void IntroSequencePipeline(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_cf48
-        call     MStackCall_0044d230
+        call     MStackCall_PushPopScaled1cDoubleCall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_cf48
@@ -198,7 +198,7 @@ __declspec(naked) void IntroSequencePipeline(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_cf48
-        call     MStackCall_0044d230
+        call     MStackCall_PushPopScaled1cDoubleCall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_cf48
@@ -217,7 +217,7 @@ __declspec(naked) void IntroSequencePipeline(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_cf48
-        call     MStackCall_0044d230
+        call     MStackCall_PushPopScaled1cDoubleCall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_cf48

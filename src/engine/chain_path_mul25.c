@@ -108,12 +108,12 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void MStackCall_004062a0(void);
+extern void MStackCall_MStackPush2ChainInsert_004062a0(void);
 extern void ChainPathMul25(void);
 
 /*
  * @addr 0x0047faf0 (119b game) - mstack-push set-walk call dirty-toggle
- *   tail: stash cj into walk; call MStackCall_004062a0; on pause clear,
+ *   tail: stash cj into walk; call MStackCall_MStackPush2ChainInsert_004062a0; on pause clear,
  *   push 0x4a on mstack and into walk; call DirtyToggleByBaseSel; on
  *   pause clear pop walk; if state-bit 2 set replace walk with 0x35 and
  *   tail-jmp ChainPathMul25.
@@ -121,7 +121,7 @@ extern void ChainPathMul25(void);
 void MStackPushDirtyTail(void) {
     unsigned int popped;
     g_walkCallback = (void (*)(void))g_cj_0054205c;
-    MStackCall_004062a0();
+    MStackCall_MStackPush2ChainInsert_004062a0();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))0x4a;
     g_matrixStackTop++;

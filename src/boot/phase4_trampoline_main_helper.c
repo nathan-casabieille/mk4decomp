@@ -118,7 +118,7 @@ extern void ChainListVecAdd(void);
 extern void ClampMulShiftStore(void);
 extern void CmpDivJmp(void);
 extern void LoopUnrolledTripleMul10(void);
-extern void MStackCall_004065b0(void);
+extern void MStackCall_MStackPush2ChainInsert_004065b0(void);
 extern void MStackPush1MagicMod2(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void ScaledTripleCopy10(void);
@@ -279,7 +279,7 @@ __declspec(naked) void Phase4TrampolineMainHelper(void)
     L_p4tmh_M_call_4065b0:
         mov     ecx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_currentNodeIdx], ecx
-        call    MStackCall_004065b0
+        call    MStackCall_MStackPush2ChainInsert_004065b0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh_M_ret

@@ -143,7 +143,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave916;
 extern void ChainNodeAdvanceCallback(void);
-extern void MStackCall_00406600(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406600(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void ZeroAndDirty4(void);
 extern void ClampMulShiftStore(void);
@@ -226,7 +226,7 @@ __declspec(naked) void Phase4StateInitWithHelpers(void)
     L_p4s_alt_tail:
         mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_currentNodeIdx], eax
-        call    MStackCall_00406600
+        call    MStackCall_MStackPush2ChainPrepend_00406600
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4s_pop1

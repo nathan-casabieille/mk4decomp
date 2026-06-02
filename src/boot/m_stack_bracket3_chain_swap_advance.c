@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_phaseChainArr;
-extern void MStackCall_00406340(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 extern void MStackPushDispatchBitGate(void);
 extern void MStackPushTwoEntryChainCall(void);
 extern void PushDualDerefClearPop(void);
@@ -193,7 +193,7 @@ void MStackBracket3_ChainSwapAdvance(void) {
         mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [edx*4 + 0x28], 0
-        call    MStackCall_00406340
+        call    MStackCall_MStackPush2ChainPrepend_00406340
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_msb3csa_abort

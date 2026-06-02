@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00450f10 (324b game) - 3-block: chain-init + ScaledInit dual thunks. */
 extern void ChainGatedNegAccum(void);
-extern void MStackCall_00406600(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406600(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void RosterSetupFsmCluster(void);
 extern void ScaledInit_TripleBlockChainScaledInits_g_walkCallback_00450ed0(void);
@@ -134,7 +134,7 @@ __declspec(naked) void TripleBlockChainScaledInits(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        call    MStackCall_00406600
+        call    MStackCall_MStackPush2ChainPrepend_00406600
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

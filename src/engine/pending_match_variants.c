@@ -229,7 +229,7 @@ extern void Thunk_LinkedListBitMaskSearch(void);
 extern void CopyJmp_ScaledSubStore_g_currentNodeIdx(void);
 extern void ScaledChain3c74(void);
 extern void ScaledChain3c7c(void);
-extern void MStackCall_00406340(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 extern void PendingMatch_0046cd30(void);
 extern void Phase3InstallPackedSelf(void);
 extern void ZeroSlotsGatedDispatch(void);
@@ -401,7 +401,7 @@ extern void InstallSelfIndexWalk(void);
 extern void InstallSelfMidPush(void);
 extern void IterStepScaledStore(void);
 extern void MStackBracketedStoreTwoCall(void);
-extern void MStackCall_004062f0(void);
+extern void MStackCall_MStackPush2ChainPrepend_004062f0(void);
 extern void MStackPushSet0008(void);
 extern void MoveListCursorCluster(void);
 extern void PauseTestCmp2CallStore(void);
@@ -637,10 +637,10 @@ extern void LoadSetFpJmp_g_bootChainScaled1(void);
 extern void MStackBracket5_FieldClear_StateAdvance(void);
 extern void MStackBracket6_DualGate(void);
 extern void MStackBracket7_DispatchAndChain(void);
-extern void MStackCall_00406340(void);
-extern void MStackCall_00406390(void);
-extern void MStackCall_00406600(void);
-extern void MStackCall_00406740(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406390(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406600(void);
+extern void MStackCall_MStackPush2ChainLLInsert(void);
 extern void MStackDirtyArgsBit0(void);
 extern void MStackPop8(void);
 extern void MStackPush1MagicMod2(void);
@@ -3185,7 +3185,7 @@ void ScenePostInitSequencer(void) {
     L_9dc3:
         mov      ecx, dword ptr [g_fightGroupHead]
         mov      dword ptr [g_currentNodeIdx], ecx
-        call     MStackCall_00406390
+        call     MStackCall_MStackPush2ChainPrepend_00406390
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_9e22
@@ -4074,7 +4074,7 @@ __declspec(naked) void CharSelectSetupCluster(void)
         jne      L_6688
         test     byte ptr [g_xformDirtyFlags], 4
         jne      L_6688
-        call     MStackCall_00406600
+        call     MStackCall_MStackPush2ChainPrepend_00406600
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_6688
@@ -5348,7 +5348,7 @@ __declspec(naked) void ScaledRunCountdownCluster(void)
         dec      eax
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      dword ptr [g_matrixStackTop], eax
-        call     MStackCall_00406340
+        call     MStackCall_MStackPush2ChainPrepend_00406340
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a274
@@ -6793,7 +6793,7 @@ __declspec(naked) void PendingMatch_CallPauseScaledStoreCopyJmp(void)
         je       L_c25c
         dec      eax
         je       L_c1de
-        call     MStackCall_00406740
+        call     MStackCall_MStackPush2ChainLLInsert
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       L_c291
@@ -7032,7 +7032,7 @@ __declspec(naked) void PendingMatch_MStackPush2BitLoop(void)
         call     GuardedSeq_DualPushCmp12Dispatch_then_ByteWordTableTaggedDispatch
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_fe34
-        call     MStackCall_00406740
+        call     MStackCall_MStackPush2ChainLLInsert
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_fe34
         mov      dword ptr [g_walkCallback], 0x43
@@ -7113,7 +7113,7 @@ __declspec(naked) void PendingMatch_MStackPush2BitLoop(void)
         pop      ebx
         ret      
     L_fc1d:
-        call     MStackCall_00406600
+        call     MStackCall_MStackPush2ChainPrepend_00406600
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_fe34
         mov      eax, dword ptr [g_eventQueueIdx]
@@ -8175,7 +8175,7 @@ __declspec(naked) void PendingMatch_CondPlayerLookup(void)
         test     eax, eax
         jne      L_ca97
     L_c8fa:
-        call     MStackCall_00406740
+        call     MStackCall_MStackPush2ChainLLInsert
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_ca97
@@ -9001,7 +9001,7 @@ __declspec(naked) void PendingMatch_DispatcherComplex138(void)
         pop      esi
         ret      
     L_0842:
-        call     MStackCall_00406600
+        call     MStackCall_MStackPush2ChainPrepend_00406600
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_0989
@@ -9164,7 +9164,7 @@ __declspec(naked) void PendingMatch_DispatcherComplex138(void)
         push     0x450d40
         call     StoreLoadJmp
         add      esp, 4
-        call     MStackCall_004062f0
+        call     MStackCall_MStackPush2ChainPrepend_004062f0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_0d23
         mov      dword ptr [g_walkCallback], 0x10
@@ -10802,7 +10802,7 @@ __declspec(naked) void PendingMatch_MStackPush2RunCountdown_0044baa0(void)
         dec      eax
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      dword ptr [g_matrixStackTop], eax
-        call     MStackCall_00406340
+        call     MStackCall_MStackPush2ChainPrepend_00406340
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c2d1

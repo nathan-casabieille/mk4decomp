@@ -25,9 +25,9 @@
 #include "game/tick.h"   /* g_framePauseFlag */
 
 /* Externs for call targets. */
-extern void MStackCall_004062a0(void);   /* 0x545ecf1e */
+extern void MStackCall_MStackPush2ChainInsert_004062a0(void);   /* 0x545ecf1e */
 extern void MStackPush2ChainInsert(void);   /* 0x545ecf6e */
-extern void MStackCall_00406340(void);   /* 0x545ecfbe */
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);   /* 0x545ecfbe */
 extern void MStackPush2ChainPrepend(void);   /* 0x545ed00e */
 extern void MStackPush2ChainPrepend(void);   /* 0x545ed05e */
 extern void MStackPush2ChainPrepend(void);   /* 0x545ed0ae */
@@ -39,12 +39,12 @@ extern void PushPopScaled1cDoubleCall(void);   /* 0x54633efe */
 
 /* The wrappers. */
 /* @addr 0x00406250 */
-void MStackCall_00406250(void) {
+void MStackCall_MStackPush2ChainInsert_00406250(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_currentNodeIdx;
     g_currentNodeIdx = g_fightGroupHead;
-    MStackCall_004062a0();
+    MStackCall_MStackPush2ChainInsert_004062a0();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     g_currentNodeIdx = *(unsigned int *)(top * 4);
@@ -52,7 +52,7 @@ void MStackCall_00406250(void) {
 }
 
 /* @addr 0x004062a0 */
-void MStackCall_004062a0(void) {
+void MStackCall_MStackPush2ChainInsert_004062a0(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_currentNodeIdx;
@@ -65,12 +65,12 @@ void MStackCall_004062a0(void) {
 }
 
 /* @addr 0x004062f0 */
-void MStackCall_004062f0(void) {
+void MStackCall_MStackPush2ChainPrepend_004062f0(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_currentNodeIdx;
     g_currentNodeIdx = g_fightGroupHead;
-    MStackCall_00406340();
+    MStackCall_MStackPush2ChainPrepend_00406340();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     g_currentNodeIdx = *(unsigned int *)(top * 4);
@@ -78,7 +78,7 @@ void MStackCall_004062f0(void) {
 }
 
 /* @addr 0x00406340 */
-void MStackCall_00406340(void) {
+void MStackCall_MStackPush2ChainPrepend_00406340(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_currentNodeIdx;
@@ -91,7 +91,7 @@ void MStackCall_00406340(void) {
 }
 
 /* @addr 0x00406390 */
-void MStackCall_00406390(void) {
+void MStackCall_MStackPush2ChainPrepend_00406390(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_currentNodeIdx;
@@ -104,7 +104,7 @@ void MStackCall_00406390(void) {
 }
 
 /* @addr 0x004063e0 */
-void MStackCall_004063e0(void) {
+void MStackCall_MStackPush2ChainPrepend_004063e0(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_currentNodeIdx;
@@ -117,7 +117,7 @@ void MStackCall_004063e0(void) {
 }
 
 /* @addr 0x004065b0 */
-void MStackCall_004065b0(void) {
+void MStackCall_MStackPush2ChainInsert_004065b0(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_currentNodeIdx;
@@ -130,7 +130,7 @@ void MStackCall_004065b0(void) {
 }
 
 /* @addr 0x00406600 */
-void MStackCall_00406600(void) {
+void MStackCall_MStackPush2ChainPrepend_00406600(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_currentNodeIdx;
@@ -143,7 +143,7 @@ void MStackCall_00406600(void) {
 }
 
 /* @addr 0x00406740 */
-void MStackCall_00406740(void) {
+void MStackCall_MStackPush2ChainLLInsert(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_currentNodeIdx;
@@ -156,7 +156,7 @@ void MStackCall_00406740(void) {
 }
 
 /* @addr 0x00406b50 */
-void MStackCall_00406b50(void) {
+void MStackCall_MStackPush2ChainInsert_00406b50(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_currentNodeIdx;
@@ -169,7 +169,7 @@ void MStackCall_00406b50(void) {
 }
 
 /* @addr 0x0044d230 */
-void MStackCall_0044d230(void) {
+void MStackCall_PushPopScaled1cDoubleCall(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_currentNodeIdx;

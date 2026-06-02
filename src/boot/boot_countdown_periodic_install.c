@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   chain = g_baseSel<<2; saved = chain->state; chain->state=0.
  *   If was nonzero: decrement g_eventQueueNotMask; if still > 0 → fall through to LinkSiblingsAndInstallSelf path.
  *     Else: g_currentNodeIdx = g_cj_00542058; call MStackPush2ChainLLInsert; if paused: pop+ret.
- *       g_xformDirtyFlags |= 4; if g_fightGroupHead != 0: g_xformDirtyFlags ^= 4; call MStackCall_00406740;
+ *       g_xformDirtyFlags |= 4; if g_fightGroupHead != 0: g_xformDirtyFlags ^= 4; call MStackCall_MStackPush2ChainLLInsert;
  *       if paused: pop+ret. Tail CallSetPause; pop+ret.
  *   Else (state == 0): push 0x13c9; TableHitOrSchedule; g_currentNodeIdx = g_cj_00542058;
  *     call SetDirty4XorScaledLoad; if paused: pop+ret. g_currentNodeIdx = g_fightGroupHead;
@@ -123,7 +123,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void CallSetPause(void);
 extern void LinkSiblingsAndInstallSelf(void);
-extern void MStackCall_00406740(void);
+extern void MStackCall_MStackPush2ChainLLInsert(void);
 extern void MStackPush2ChainLLInsert(void);
 extern void SetDirty4XorScaledLoad(void);
 extern void TableHitOrSchedule(void);
@@ -162,7 +162,7 @@ __declspec(naked) void BootCountdownPeriodicInstall(void)
         test    eax, eax
         mov     dword ptr [g_xformDirtyFlags], edx
         je      short L_callPause
-        call    MStackCall_00406740
+        call    MStackCall_MStackPush2ChainLLInsert
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pop_ret_short

@@ -113,7 +113,7 @@ extern unsigned int g_bootHeavyState;
 extern unsigned int g_particleInitState;
 extern void BootPhaseGateBracketedInit(void);
 extern void InstallSelf5CallVecChain(void);
-extern void MStackCall_004063e0(void);
+extern void MStackCall_MStackPush2ChainPrepend_004063e0(void);
 
 __declspec(naked) void StageParticleEmitterInit(void)
 {
@@ -146,7 +146,7 @@ __declspec(naked) void StageParticleEmitterInit(void)
         or       al, 8
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
-        call     MStackCall_004063e0
+        call     MStackCall_MStackPush2ChainPrepend_004063e0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_4551
@@ -176,7 +176,7 @@ __declspec(naked) void StageParticleEmitterInit(void)
         or       al, 8
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
-        call     MStackCall_004063e0
+        call     MStackCall_MStackPush2ChainPrepend_004063e0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_4551
@@ -206,7 +206,7 @@ __declspec(naked) void StageParticleEmitterInit(void)
         or       al, 8
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
-        call     MStackCall_004063e0
+        call     MStackCall_MStackPush2ChainPrepend_004063e0
     L_4551:
         pop      esi
         ret

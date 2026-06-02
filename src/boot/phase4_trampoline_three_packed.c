@@ -113,8 +113,8 @@ extern unsigned int g_dispatchSave615;
 extern unsigned int g_load_0052ab10;
 extern void CallSetPause(void);
 extern void ClampMulShiftStore(void);
-extern void MStackCall_004062a0(void);
-extern void MStackCall_00406600(void);
+extern void MStackCall_MStackPush2ChainInsert_004062a0(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406600(void);
 extern void MStackPushZeroCallPop_004066f0(void);
 extern void PushSetDualDeref(void);
 extern void PushSetXfmMaskCallPop(void);
@@ -172,7 +172,7 @@ __declspec(naked) void Phase4TrampolineThreePacked(void)
         jns     L_p4ttp_B_install
         mov     edx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_currentNodeIdx], edx
-        call    MStackCall_00406600
+        call    MStackCall_MStackPush2ChainPrepend_00406600
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         je      L_p4ttp_B_tailjmp_0041f830
@@ -187,7 +187,7 @@ __declspec(naked) void Phase4TrampolineThreePacked(void)
         jne     L_p4ttp_B_exit
         mov     ecx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_currentNodeIdx], ecx
-        call    MStackCall_004062a0
+        call    MStackCall_MStackPush2ChainInsert_004062a0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4ttp_B_exit
@@ -258,7 +258,7 @@ __declspec(naked) void Phase4TrampolineThreePacked(void)
         mov     dword ptr [ecx*4 + 0x10], eax
         mov     edx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_currentNodeIdx], edx
-        call    MStackCall_00406600
+        call    MStackCall_MStackPush2ChainPrepend_00406600
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4ttp_B_exit
@@ -304,7 +304,7 @@ __declspec(naked) void Phase4TrampolineThreePacked(void)
     L_p4ttp_B_install:
         mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_currentNodeIdx], eax
-        call    MStackCall_00406600
+        call    MStackCall_MStackPush2ChainPrepend_00406600
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4ttp_B_exit

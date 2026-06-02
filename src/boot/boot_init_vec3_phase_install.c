@@ -114,7 +114,7 @@ extern unsigned int g_phaseIdx;
 extern void BootMultiAssetLoadStateInit(void);
 extern void FiveTableWalkInit(void);
 extern void InstallSelfPackedF80(void);
-extern void MStackCall_00406340(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 extern void TableWalkBoundedCmp(void);
 
 __declspec(naked) void BootInitVec3PhaseInstall(void)
@@ -190,7 +190,7 @@ __declspec(naked) void BootInitVec3PhaseInstall(void)
         mov     eax, 9
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x30], eax
-        call    MStackCall_00406340
+        call    MStackCall_MStackPush2ChainPrepend_00406340
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_bivpi_pop
         mov     eax, dword ptr [g_particleEmitterNode]

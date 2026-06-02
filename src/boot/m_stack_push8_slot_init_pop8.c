@@ -120,12 +120,12 @@ extern unsigned int g_fightAxisPosY;
  *   indirection chain through new slot's +0x6c/+0x74/+0x18, then
  *   OR's bit 3 into [scaled+0]. Writes 0xe666 into [scaled+0x48],
  *   sets &g_dispatchSave567 at +0x10, 0xff at +0x14, then calls
- *   MStackCall_004065b0. Tail-jmp MStackPop8 on success;
+ *   MStackCall_MStackPush2ChainInsert_004065b0. Tail-jmp MStackPop8 on success;
  *   bit-2-set branch also tail-jmps to MStackPop8 directly.
  */
 extern unsigned int g_dispatchSave567;
 extern unsigned int g_dispatchSave561;
-extern void MStackCall_004065b0(void);
+extern void MStackCall_MStackPush2ChainInsert_004065b0(void);
 extern void MStackPop8(void);
 extern void MStackPush8(void);
 extern void MStackPushNegMul10(void);
@@ -194,7 +194,7 @@ __declspec(naked) void MStackPush8SlotInitPop8(void) {
         mov     dword ptr [edx*4 + 0x10], eax
         mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_currentNodeIdx], eax
-        call    MStackCall_004065b0
+        call    MStackCall_MStackPush2ChainInsert_004065b0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_mp8_ret

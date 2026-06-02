@@ -35,7 +35,7 @@
 
 extern void func_00405A40(void);
 extern void BootChainBidirRecurseWalk(void);
-extern void MStackCall_00406740(void);
+extern void MStackCall_MStackPush2ChainLLInsert(void);
 extern void MStackBracket2_TreeWalkRecursive(void);
 
 /* @addr 0x00405b30 */
@@ -59,7 +59,7 @@ void MStackPushCallCallPop_func_00405dd0(void) {
     *(unsigned int *)(top * 4) = g_fightGroupHead;
     func_00405A40();
     if (g_framePauseFlag != 0) return;
-    MStackCall_00406740();
+    MStackCall_MStackPush2ChainLLInsert();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     g_fightGroupHead = *(unsigned int *)(top * 4);

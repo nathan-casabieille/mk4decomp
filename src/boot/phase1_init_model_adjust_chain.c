@@ -113,7 +113,7 @@ extern unsigned int g_dispatchSave620;
 extern unsigned int g_phase1ModelArr;
 extern unsigned int g_phase1ModelChain;
 extern void FramePauseScaledStore(void);
-extern void MStackCall_00406250(void);
+extern void MStackCall_MStackPush2ChainInsert_00406250(void);
 extern void MStackPush2ChainLLInsert(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void ScaledChainOr8(void);
@@ -230,7 +230,7 @@ __declspec(naked) void Phase1InitModelAdjustChain(void)
         mov     dword ptr [g_eventQueueWorkType], eax
         add     esp, 8
         mov     dword ptr [ecx*4 + 0x74], eax
-        jmp     MStackCall_00406250
+        jmp     MStackCall_MStackPush2ChainInsert_00406250
     L_p1im_ret:
         ret
     }

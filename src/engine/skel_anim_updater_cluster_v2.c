@@ -116,8 +116,8 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_particleEmitterNode;
 extern void CmpDivJmp(void);
 extern void LinkedListFieldAdd_StoreDoubleNegPauseSubStore(void);
-extern void MStackCall_00406340(void);
-extern void MStackCall_00406740(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
+extern void MStackCall_MStackPush2ChainLLInsert(void);
 extern void MStackPop8(void);
 extern void MStackPush8(void);
 extern void PoseTreeBlendWalker(void);
@@ -166,7 +166,7 @@ __declspec(naked) void SkelAnimUpdaterClusterV2(void)
         jne      L_ddcc
         mov      edx, dword ptr [g_fightGroupHead]
         mov      dword ptr [g_currentNodeIdx], edx
-        call     MStackCall_00406340
+        call     MStackCall_MStackPush2ChainPrepend_00406340
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_ddcb
@@ -237,7 +237,7 @@ __declspec(naked) void SkelAnimUpdaterClusterV2(void)
     L_ddcb:
         ret
     L_ddcc:
-        call     MStackCall_00406740
+        call     MStackCall_MStackPush2ChainLLInsert
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_ddcb

@@ -112,7 +112,7 @@ extern void ArgSar_Set0_Jmp(void);
 extern void PushChainAddCallPop(void);
 extern void Vec2SumMul10ChainCompute(void);
 extern void ScaledIndirectJmp_0049c850(void);
-extern void MStackCall_00406740(void);
+extern void MStackCall_MStackPush2ChainLLInsert(void);
 extern void CallSetPause(void);
 extern void MStackChainSwapTraversal(void);
 extern void SlideAttackEventCluster(void);

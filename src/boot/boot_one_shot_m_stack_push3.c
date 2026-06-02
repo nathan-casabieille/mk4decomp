@@ -122,7 +122,7 @@ extern void CopyThreeFields(void);
  *   writes 0x18000 into [g_xformEntityIdx*4 + 0x48], calls
  *   ScaledTripleCopy54. On no-error sets g_currentNodeIdx =
  *   g_fightGroupHead, g_walkCallback=0xff, calls
- *   PushSetDualDeref → MStackCall_00406600. Pops the 3
+ *   PushSetDualDeref → MStackCall_MStackPush2ChainPrepend_00406600. Pops the 3
  *   mstack entries back into 0054205c/00542054/00542048 in reverse.
  */
 void BootOneShotMStackPush3(void) {
@@ -151,7 +151,7 @@ void BootOneShotMStackPush3(void) {
         g_currentNodeIdx = g_fightGroupHead;
         PushSetDualDeref();
         if (g_framePauseFlag != 0) return;
-        MStackCall_00406600();
+        MStackCall_MStackPush2ChainPrepend_00406600();
         if (g_framePauseFlag != 0) return;
     }
     g_fightGroupHead = *(unsigned int *)(g_matrixStackTop * 4);

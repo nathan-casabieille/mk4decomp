@@ -118,13 +118,13 @@ extern unsigned int g_fightAxisPosY;
  *   AudioMixerStep. On no-error reads g_walkCallback, adds
  *   0xa3d, writes into [snapshot+0x70], sets g_eventQueueWorkType=0xc4, advances
  *   g_currentNodeIdx by 0x1b, calls TripleVecAccCallStore.
- *   On no-error subtracts 0x1b back from 0x542044, calls MStackCall_00406340,
+ *   On no-error subtracts 0x1b back from 0x542044, calls MStackCall_MStackPush2ChainPrepend_00406340,
  *   sets g_walkCallback=1 on success.
  */
 extern unsigned int g_vecSetupArrBase;
 extern unsigned int g_table_004d57b0;
 extern void AudioMixerStep(void);
-extern void MStackCall_00406340(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 
 void MStackVecSetupScopedRun(void) {
     __asm {
@@ -190,7 +190,7 @@ void MStackVecSetupScopedRun(void) {
         test    eax, eax
         jne     short L_mvss_done
         sub     dword ptr [g_currentNodeIdx], 0x1b
-        call    MStackCall_00406340
+        call    MStackCall_MStackPush2ChainPrepend_00406340
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_mvss_done

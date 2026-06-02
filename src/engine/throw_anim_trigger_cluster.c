@@ -117,7 +117,7 @@ extern unsigned int g_state2_00541d88;
 extern void CallSetPause(void);
 extern void GameStateTick(void);
 extern void MStackBracket4_ListInsertZeroFill(void);
-extern void MStackCall_00406340(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 extern void MStackPush3LinkedListWalk(void);
 extern void MStackPush4LLWalkPop4(void);
 extern void RoundWinTransition(void);
@@ -178,7 +178,7 @@ __declspec(naked) void ThrowAnimTriggerCluster(void)
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x30], eax
-        call     MStackCall_00406340
+        call     MStackCall_MStackPush2ChainPrepend_00406340
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f183

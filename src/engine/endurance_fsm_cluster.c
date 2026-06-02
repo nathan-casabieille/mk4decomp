@@ -113,7 +113,7 @@ extern void BootInitGuardedCallChain(void);
 extern void BootMultiAssetLoadStateInit(void);
 extern void CallSetPause(void);
 extern void InstallSelfPackedF80(void);
-extern void MStackCall_00406740(void);
+extern void MStackCall_MStackPush2ChainLLInsert(void);
 extern void TableWalkBoundedCmp(void);
 
 __declspec(naked) void EnduranceFsmCluster(void)
@@ -265,7 +265,7 @@ __declspec(naked) void EnduranceFsmCluster(void)
         cmp      eax, 0xff060000
         mov      dword ptr [g_walkCallback], eax
         jg       L_3b5d
-        call     MStackCall_00406740
+        call     MStackCall_MStackPush2ChainLLInsert
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3b79

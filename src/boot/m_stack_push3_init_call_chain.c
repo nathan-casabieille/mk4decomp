@@ -116,7 +116,7 @@ extern unsigned int g_dispatchSave905;
  *   Call PushSetXfmMaskCallPop; if paused: pop 3 + ret.
  *   If g_xformDirtyFlags & 4: pop 3 + ret. Else call ScaledChainOr8;
  *   chain[g_xformEntityIdx+0x48] = g_walkCallback = 0x00018000;
- *   call ScaledTripleCopy54; if paused: pop+ret. Call MStackCall_004062f0;
+ *   call ScaledTripleCopy54; if paused: pop+ret. Call MStackCall_MStackPush2ChainPrepend_004062f0;
  *   if paused: pop+ret. Pop 3 from mstack into g_fightGroupHead, g_eventQueueEnd, g_xformEntityIdx; ret.
  */
 void MStackPush3InitCallChain(void) {
@@ -136,7 +136,7 @@ void MStackPush3InitCallChain(void) {
         *(unsigned int *)(g_xformEntityIdx * 4 + 0x48) = 0x18000;
         ScaledTripleCopy54();
         if (g_framePauseFlag != 0) return;
-        MStackCall_004062f0();
+        MStackCall_MStackPush2ChainPrepend_004062f0();
         if (g_framePauseFlag != 0) return;
     }
     g_fightGroupHead = *(unsigned int *)(g_matrixStackTop * 4);

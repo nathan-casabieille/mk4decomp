@@ -112,13 +112,13 @@ extern unsigned int g_fightAxisPosY;
  *   g_xformEntityIdx = 0x0050d434>>2; call MStackPushDispatchBitGate; if pause? final-ret.
  *   if bit2 of g_xformDirtyFlags set: tail-jmp ScaledInitWithCounterAndType_004314f0.
  *   g_cj_0054205c = g_scaledInit_00542044. call MStackPushTwoEntryChainCall; if pause? final-ret.
- *   call MStackCall_00406340; if pause? final-ret.
+ *   call MStackCall_MStackPush2ChainPrepend_00406340; if pause? final-ret.
  *   Clear cj[+0x5c] and g_eventQueueNotMask. cj[+0x64] = g_eventQueueIdx[+0x64].
  *   cj[+0x34] = (cj[+0x34] & 0xfe) | (g_eventQueueIdx[+0x34] & 1) | 0x81000.
  *   cj[+0x3c] = g_particleEmitterNode. cj[+0x54] = g_eventQueueEnd[+0x54].
  */
 extern unsigned int g_particleEmitterNode;
-extern void MStackCall_00406340(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 extern void MStackPushDispatchBitGate(void);
 extern void MStackPushTwoEntryChainCall(void);
 extern void ScaledInitWithCounterAndType_004314f0(void);
@@ -152,7 +152,7 @@ __declspec(naked) void GuardedCascadeCjCopyFieldsBitOr(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        call    MStackCall_00406340
+        call    MStackCall_MStackPush2ChainPrepend_00406340
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

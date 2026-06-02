@@ -110,10 +110,10 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00441e50 (162b game) - 2-stage setup + 3-field copy:
  *   PushSetXfmMaskCallPop; pause? ret; if dirty bit 2: ret.
- *   chain[scaledInit].slot30 = 0x91 (walkCallback=it); MStackCall_00406340; pause? ret.
+ *   chain[scaledInit].slot30 = 0x91 (walkCallback=it); MStackCall_MStackPush2ChainPrepend_00406340; pause? ret.
  *   Then triple copy: chain[scaledInit].slot54/58/5c = chain[g_xformEntityIdx].slot3c/40/44.
  */
-extern void MStackCall_00406340(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 extern void PushSetXfmMaskCallPop(void);
 
 extern unsigned int g_chain_arr_4348f0;
@@ -140,7 +140,7 @@ void TwoStageSetupTripleCopy(void) {
         mov     eax, 0x91
         mov     dword ptr [g_walkCallback], eax
         mov     [ecx*4 + g_chain_arr_4348f0 + 0x30], eax
-        call    MStackCall_00406340
+        call    MStackCall_MStackPush2ChainPrepend_00406340
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

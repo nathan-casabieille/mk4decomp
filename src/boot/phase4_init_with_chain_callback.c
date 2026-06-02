@@ -114,8 +114,8 @@ extern unsigned int g_phaseChainArr2;
 extern unsigned int g_alarmTriState;
 extern void CallSetPause(void);
 extern void LinkedListFieldAdd_0049d450(void);
-extern void MStackCall_00406600(void);
-extern void MStackCall_00406740(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406600(void);
+extern void MStackCall_MStackPush2ChainLLInsert(void);
 extern void MStackPop8(void);
 extern void MStackPush8(void);
 extern void MStackPushNegMul10Var(void);
@@ -190,7 +190,7 @@ __declspec(naked) void Phase4InitWithChainCallback(void)
         mov     dword ptr [esi + 0x84], 0
         test    eax, eax
         je      L_p4iwcc_B_phase0
-        call    MStackCall_00406740
+        call    MStackCall_MStackPush2ChainLLInsert
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4iwcc_B_exit
@@ -210,7 +210,7 @@ __declspec(naked) void Phase4InitWithChainCallback(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4iwcc_B_exit
-        call    MStackCall_00406600
+        call    MStackCall_MStackPush2ChainPrepend_00406600
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4iwcc_B_exit

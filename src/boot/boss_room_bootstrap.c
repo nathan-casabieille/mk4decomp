@@ -126,7 +126,7 @@ extern unsigned int g_dispatchSave902;
 extern unsigned int g_dispatchSave903;
 extern unsigned int g_dispatchSave915;
 extern unsigned int g_dispatchSave880;
-extern void MStackCall_004062f0(void);
+extern void MStackCall_MStackPush2ChainPrepend_004062f0(void);
 extern void TableLookupCall_g_table_004efa00(void);
 
 __declspec(naked) void BossRoomInitCluster(void)
@@ -214,7 +214,7 @@ __declspec(naked) void BossRoomInitCluster(void)
         mov      eax, 0x14ccc
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x48], eax
-        call     MStackCall_004062f0
+        call     MStackCall_MStackPush2ChainPrepend_004062f0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      func_004107b4
     L_04ae:

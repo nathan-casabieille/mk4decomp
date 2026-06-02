@@ -69,8 +69,8 @@ extern void InstallSelfIndirectJmp(void);
 extern void InstallSelfWithDispatch(void);
 extern void LoadStoreDoubleCallSet(void);
 extern void LoopGuardedDecJmp(void);
-extern void MStackCall_00406340(void);
-extern void MStackCall_00406740(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
+extern void MStackCall_MStackPush2ChainLLInsert(void);
 extern void MStackChainSwapTraversal(void);
 extern void MStackPop4Rewrite(void);
 extern void MatchEndFadeFsmCluster(void);
@@ -306,7 +306,7 @@ void func_PushChainAddCallPop_then_Vec2SumMul10ChainCompute_then_ScaledIndirectJ
 /* h3 @ 0x00498770 (32b): MStackCall + tail-jmp CallSetPause.
  * Standard TCO wrapper. */
 void func_MStackCall_then_CallSetPause_00498770(void) {
-    MStackCall_00406740();
+    MStackCall_MStackPush2ChainLLInsert();
     if (g_framePauseFlag) return;
     CallSetPause();
 }
@@ -444,7 +444,7 @@ __declspec(naked) void func_TableLookupCall_g_table_00498980(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8ae4
-        call     MStackCall_00406340
+        call     MStackCall_MStackPush2ChainPrepend_00406340
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8ae4
@@ -539,7 +539,7 @@ __declspec(naked) void func_TableLookupCall_g_table_00498b20(void)
         pop      esi
         ret
     L_8b61:
-        call     MStackCall_00406740
+        call     MStackCall_MStackPush2ChainLLInsert
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_8ba8
@@ -562,7 +562,7 @@ __declspec(naked) void func_TableLookupCall_g_table_00498b20(void)
 /* h6 @ 0x00498bb0 (32b): MStackCall + pause-test -> tail-jmp
  * CallSetPause. Standard TCO wrapper. */
 void func_MStackCall_then_CallSetPause_00498bb0(void) {
-    MStackCall_00406740();
+    MStackCall_MStackPush2ChainLLInsert();
     if (g_framePauseFlag) return;
     CallSetPause();
 }
@@ -1538,7 +1538,7 @@ __declspec(naked) void func_Set2CallIncJmp(void) {
         mov      eax, 0x7e
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x30], eax
-        call     MStackCall_00406340
+        call     MStackCall_MStackPush2ChainPrepend_00406340
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8cd2

@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern void GDispatch4(void);
 extern void IntroInitCluster(void);
 extern void MStackBracket5_FieldClear_StateAdvance(void);
-extern void MStackCall_0044d230(void);
+extern void MStackCall_PushPopScaled1cDoubleCall(void);
 extern void MStackPush2GuardedFieldClear(void);
 extern void MStackPushTyped_0044cf50(void);
 extern void MStackPushTyped_0044cf80(void);
@@ -159,7 +159,7 @@ __declspec(naked) void PreFight4StageSequencer(void)
         mov      edx, dword ptr [g_eventQueueTotal]
         mov      eax, dword ptr [edx*4 + 0x18]
         mov      dword ptr [g_xformEntityIdx], eax
-        call     MStackCall_0044d230
+        call     MStackCall_PushPopScaled1cDoubleCall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a7ee
@@ -179,7 +179,7 @@ __declspec(naked) void PreFight4StageSequencer(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a7ee
-        call     MStackCall_0044d230
+        call     MStackCall_PushPopScaled1cDoubleCall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a7ee
@@ -199,7 +199,7 @@ __declspec(naked) void PreFight4StageSequencer(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_a7ee
-        call     MStackCall_0044d230
+        call     MStackCall_PushPopScaled1cDoubleCall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_a7ee
@@ -218,7 +218,7 @@ __declspec(naked) void PreFight4StageSequencer(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_a7ee
-        call     MStackCall_0044d230
+        call     MStackCall_PushPopScaled1cDoubleCall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_a7ee
@@ -236,7 +236,7 @@ __declspec(naked) void PreFight4StageSequencer(void)
         mov      eax, 0x3243f
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x3c], eax
-        call     MStackCall_0044d230
+        call     MStackCall_PushPopScaled1cDoubleCall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_a7ee

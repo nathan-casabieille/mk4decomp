@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern void SaveCallRestore(void);
 extern void SaveCallRestoreOrXor(void);
 extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
-extern void MStackCall_004062a0(void);
+extern void MStackCall_MStackPush2ChainInsert_004062a0(void);
 extern void ThrowFlowSetupCluster(void);
 extern unsigned int g_state2_0053a1bc;
 
@@ -160,7 +160,7 @@ void DualGuardStateMachine_0049ea30(void) {
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   75h
         _emit   5ah
-        call    MStackCall_004062a0
+        call    MStackCall_MStackPush2ChainInsert_004062a0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

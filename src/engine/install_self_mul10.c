@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00481c70 (194b game) - install-self with Mul10 of two globals.
  *   esi = base*4; flag = [esi+0x84]; clear.
- *   if (flag != 0): call MStackCall_00406740; pause? -> end; call CallSetPause; ret.
+ *   if (flag != 0): call MStackCall_MStackPush2ChainLLInsert; pause? -> end; call CallSetPause; ret.
  *   else: call Wrapper_ScaledChainPushCall_004ef980; pause? -> end;
  *     eax = g_currentNodeFlags * 10; ecx = g_xformScratch2088 * 10;
  *     g_currentNodeFlags = eax; g_xformScratch2088 = ecx;
@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
  *     install self; g_pendingNodeType = 0x2d; pause = 1.
  */
 extern void CallSetPause(void);
-extern void MStackCall_00406740(void);
+extern void MStackCall_MStackPush2ChainLLInsert(void);
 extern void Wrapper_ScaledChainPushCall_004ef980(void);
 
 extern unsigned int g_matrixStack_arr;
@@ -134,7 +134,7 @@ __declspec(naked) void InstallSelfMul10(void) {
         test    eax, eax
         _emit   74h
         _emit   19h
-        call    MStackCall_00406740
+        call    MStackCall_MStackPush2ChainLLInsert
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

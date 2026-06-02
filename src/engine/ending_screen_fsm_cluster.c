@@ -116,7 +116,7 @@ extern void AudioVolumeRescale(void);
 extern void CmpDivJmp(void);
 extern void GatedWordPushCall(void);
 extern void IK_ChainPoseUpdate(void);
-extern void MStackCall_00406600(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406600(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void StoreLoadJmp(void);
 extern void Thunk_ScaledNeg1SetPause(void);
@@ -302,7 +302,7 @@ __declspec(naked) void EndingScreenFsmCluster(void)
         dec      eax
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [g_matrixStackTop], eax
-        call     MStackCall_00406600
+        call     MStackCall_MStackPush2ChainPrepend_00406600
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_475f

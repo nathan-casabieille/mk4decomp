@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004409e0 (184b game) - 3-call pause-gated, then chain[+0x3c/+0x40/+0x44] -> chain[+0x54/+0x58/+0x5c],
- *   set chain[+0x30] = 0x74, call MStackCall_00406340, tail-jmp MStackPushTwoEntryChainCall.
+ *   set chain[+0x30] = 0x74, call MStackCall_MStackPush2ChainPrepend_00406340, tail-jmp MStackPushTwoEntryChainCall.
  */
 void ThreeCallChainCopy(void) {
     unsigned int v;
@@ -129,7 +129,7 @@ void ThreeCallChainCopy(void) {
     ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_z = v;
     g_walkCallback = 0x74;
     *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x30) = 0x74;
-    MStackCall_00406340();
+    MStackCall_MStackPush2ChainPrepend_00406340();
     if (g_framePauseFlag != 0) return;
     MStackPushTwoEntryChainCall();
 }

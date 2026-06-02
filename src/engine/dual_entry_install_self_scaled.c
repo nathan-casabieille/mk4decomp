@@ -121,7 +121,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_installScaledArrBase;
 extern void CallSetPause(void);
-extern void MStackCall_00406740(void);
+extern void MStackCall_MStackPush2ChainLLInsert(void);
 
 __declspec(naked) void DualEntryInstallSelfScaled(void) {
     __asm {
@@ -159,7 +159,7 @@ __declspec(naked) void DualEntryInstallSelfScaled(void) {
         test    eax, eax
         _emit   74h
         _emit   19h
-        call    MStackCall_00406740
+        call    MStackCall_MStackPush2ChainLLInsert
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
