@@ -157255,7 +157255,7 @@ __declspec(naked) void PendingMatch_00448750(void)
  * ArgSarStoreJmp unless paused. The 10-byte nop padding between each entry
  * is filled by the synth's 0x90-fill pass. */
 
-void func_00448810(void) {
+void func_GatedPushAndArgSar_004e62c8(void) {
     *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0x3b;
     g_walkCallback = 0x1c;
     GatedWordPushCall();
@@ -157263,7 +157263,7 @@ void func_00448810(void) {
     ((void (*)(int))ArgSarStoreJmp)(0x4e62c8);
 }
 
-void func_00448850(void) {
+void func_GatedPushAndArgSar_004e62d8(void) {
     *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0x83;
     g_walkCallback = 0x29;
     GatedWordPushCall();
@@ -157271,7 +157271,7 @@ void func_00448850(void) {
     ((void (*)(int))ArgSarStoreJmp)(0x4e62d8);
 }
 
-void func_00448890(void) {
+void func_GatedPushAndArgSar_004e62e8(void) {
     *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0x94;
     g_walkCallback = 0x1b;
     GatedWordPushCall();
@@ -157279,7 +157279,7 @@ void func_00448890(void) {
     ((void (*)(int))ArgSarStoreJmp)(0x4e62e8);
 }
 
-void func_004488d0(void) {
+void func_GatedPushAndArgSar_004e62f8(void) {
     *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0xa6;
     g_walkCallback = 0x2a;
     GatedWordPushCall();
@@ -157287,7 +157287,7 @@ void func_004488d0(void) {
     ((void (*)(int))ArgSarStoreJmp)(0x4e62f8);
 }
 
-void func_00448910(void) {
+void func_GatedPushAndArgSar_004e6308(void) {
     *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0xb9;
     g_walkCallback = 0x1b;
     GatedWordPushCall();
@@ -157295,7 +157295,7 @@ void func_00448910(void) {
     ((void (*)(int))ArgSarStoreJmp)(0x4e6308);
 }
 
-void func_00448950(void) {
+void func_GatedPushAndArgSar_004e6318(void) {
     *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0xce;
     g_walkCallback = 0x2b;
     GatedWordPushCall();

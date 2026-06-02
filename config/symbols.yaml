@@ -5562,37 +5562,37 @@ functions:
     status: matched
     file: src/engine/pending_match_variants.c
   - addr: 0x00448810
-    name: func_00448810
+    name: func_GatedPushAndArgSar_004e62c8
     size: 54
     group: game
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x00448850
-    name: func_00448850
+    name: func_GatedPushAndArgSar_004e62d8
     size: 54
     group: game
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x00448890
-    name: func_00448890
+    name: func_GatedPushAndArgSar_004e62e8
     size: 54
     group: game
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x004488d0
-    name: func_004488d0
+    name: func_GatedPushAndArgSar_004e62f8
     size: 54
     group: game
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x00448910
-    name: func_00448910
+    name: func_GatedPushAndArgSar_004e6308
     size: 54
     group: game
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x00448950
-    name: func_00448950
+    name: func_GatedPushAndArgSar_004e6318
     size: 54
     group: game
     status: matched
