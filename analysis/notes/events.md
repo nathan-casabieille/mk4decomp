@@ -129,7 +129,7 @@ Structural observations:
 | 0x08 | `0x0045ed40` | (unnamed) |
 | 0x09 | `0x0045ec70` | (unnamed) |
 | 0x0a | `0x0045ec50` | (unnamed) |
-| 0x0b | `0x0045ec00` | `SetJmp_0045ec00` |
+| 0x0b | `0x0045ec00` | `SetJmp_SixSubdispatchSpan_0045ec00` |
 | 0x0c | `0x0045f250` | (unnamed) |
 | 0x0d | `0x0045ebe0` | (unnamed) |
 | 0x0e | `0x0045ef10` | (unnamed) |

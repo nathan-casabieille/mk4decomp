@@ -16,11 +16,11 @@ extern unsigned int g_phaseTimer;
  *   mov [g_walkCallback], 0
  *   ret
  */
-extern void SetJmp_00405420(void);
+extern void SetJmp_ZeroAndDirty4(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 void CallPauseTestByte4ZeroCB(void) {
-    SetJmp_00405420();
+    SetJmp_ZeroAndDirty4();
     if (g_framePauseFlag) return;
     if (!(g_xformDirtyFlags & 4)) return;
     MStackPush2RunCountdown();

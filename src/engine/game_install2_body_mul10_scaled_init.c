@@ -16,8 +16,8 @@ extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall(int, int);
-extern void SetJmp_0049cb90(void);
-extern void Thunk_0049cbd0(void);
+extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
+extern void Thunk_ChainNodeInit(void);
 extern void ScaledZeroFour(void);
 extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
@@ -37,7 +37,7 @@ extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
-extern void Wrapper_00436490(void);
+extern void Wrapper_PackedAdvanceCallTailJmp_004e46d0(void);
 extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
@@ -45,7 +45,7 @@ extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
-extern void Thunk_004bd5c0(void);
+extern void Thunk_LoadGeoAsset_Default(void);
 extern void AllocSlotPushTripleGlobals(void);
 extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
@@ -75,14 +75,14 @@ extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
 extern void ChainDirtyBitWalker(void);
-extern void Wrapper_0048a350(void);
-extern void Wrapper_0048a3a0(void);
+extern void Wrapper_ScaledChainPushCall_004ef858(void);
+extern void Wrapper_ScaledChainPushCall_004ef8b0(void);
 extern void Helper_DownloadSetup(void);
 extern void MStackPush3CmpCall(void);
-extern void Wrapper_0048ec20(void);
+extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
-extern void SetJmp_00438f50(void);
-extern void SetJmp_00438f60(void);
+extern void SetJmp_StateDispatchYield_00438f50(void);
+extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_0042b6c0(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /*
  * GameInstall2BodyMul10ScaledInit - 347b 2-entry game state init.
- *   Entry 0x00475590: g_walkCallback = g_eventQueueEnd[+0x30]; call SetJmp_0049cb90; if paused: ret.
+ *   Entry 0x00475590: g_walkCallback = g_eventQueueEnd[+0x30]; call SetJmp_Thunk_LinkedListBitMaskSearch; if paused: ret.
  *     edx = g_currentNodeIdx, eax = g_currentNodeFlags; chain[edx*4 + 0x1c] = eax; push 0x004ec890;
  *     call IterLoad_0048e680; pop; ret.
  *   Body 0x004755d0 (16b-padded): chain = g_baseSel<<2; saved=chain->state; chain->state=0.
@@ -121,12 +121,12 @@ extern unsigned int g_fightAxisPosY;
  *     If state == 1: decrement g_eventQueueChild; if !=0 jump to chain-step.
  *     Otherwise install-self at body; chain->state=2; g_pendingNodeType = 0x28; pause=1; ret.
  *     Chain-step: g_currentNodeFlags += g_xformScratch2088; g_eventQueueCurrent = 0; g_walkCallback = g_currentNodeFlags;
- *       call Wrapper_0048ff30; if paused: ret. Install-self; chain->state=1; g_pendingNodeType=1;
+ *       call Wrapper_IterLoad_0048fd30_004f12ac; if paused: ret. Install-self; chain->state=1; g_pendingNodeType=1;
  *       pause=1; ret.
  */
 extern void IterLoad_0048e680(void);
 extern void MStackPushMul10TailSqrt(void);
-extern void Wrapper_0048ff30(void);
+extern void Wrapper_IterLoad_0048fd30_004f12ac(void);
 
 __declspec(naked) void GameInstall2BodyMul10ScaledInit(void)
 {
@@ -135,7 +135,7 @@ __declspec(naked) void GameInstall2BodyMul10ScaledInit(void)
         mov     eax, dword ptr [g_eventQueueEnd]
         mov     ecx, dword ptr [eax*4 + 0x30]
         mov     dword ptr [g_walkCallback], ecx
-        call    SetJmp_0049cb90
+        call    SetJmp_Thunk_LinkedListBitMaskSearch
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_e1_ret
@@ -199,7 +199,7 @@ __declspec(naked) void GameInstall2BodyMul10ScaledInit(void)
         mov     dword ptr [g_eventQueueCurrent], 0
         mov     dword ptr [g_currentNodeFlags], eax
         mov     dword ptr [g_walkCallback], eax
-        call    Wrapper_0048ff30
+        call    Wrapper_IterLoad_0048fd30_004f12ac
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_b2_ret

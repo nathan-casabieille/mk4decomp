@@ -20,13 +20,13 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void MStackPush3CmpCall(void);
-extern void SetJmp_00438f60(void);
+extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void StateDispatchYield(void);
 void CallPauseDirtyConstJmp(void) {
     MStackPush3CmpCall();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 1) {
-        SetJmp_00438f60();
+        SetJmp_StateDispatchYield_00438f60();
         return;
     }
     g_walkCallback = (void(*)(void))0x0c;

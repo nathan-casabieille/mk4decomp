@@ -12,8 +12,8 @@ extern unsigned int g_scaledInit_00542044;
  *   load eax again, edx = [eax*4+0]; xformEntityIdx = edx;
  *   inc eax → g_eventQueueTotal; jmp T.
  */
-extern void SetJmp_0049cb90(void);
-extern void Thunk_0049cbd0(void);
+extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
+extern void Thunk_ChainNodeInit(void);
 void PackedAdvanceCallContinue(int arg0) {
     unsigned int packed;
     packed = (unsigned int)(arg0 >> 2);
@@ -21,11 +21,11 @@ void PackedAdvanceCallContinue(int arg0) {
     g_walkCallback = (void (*)(void))*(unsigned int *)(packed * 4);
     packed++;
     g_eventQueueTotal = packed;
-    SetJmp_0049cb90();
+    SetJmp_Thunk_LinkedListBitMaskSearch();
     if (g_framePauseFlag != 0) return;
     packed = g_eventQueueTotal;
     g_xformEntityIdx = *(unsigned int *)(packed * 4);
     packed++;
     g_eventQueueTotal = packed;
-    Thunk_0049cbd0();
+    Thunk_ChainNodeInit();
 }

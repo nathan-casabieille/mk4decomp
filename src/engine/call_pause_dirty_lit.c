@@ -23,7 +23,7 @@ extern void *g_lit_004e44d8;
 extern void *g_lit_004ef218;
 
 extern void ScaledChain3c74Jmp(void);
-extern void Wrapper_00433940(void);
+extern void Wrapper_PackedAdvanceCallTailJmp_004e44f0(void);
 extern int  PackedAdvanceCallTailJmp(void *p);
 extern void DualCondMatchSet(void);
 extern void InstallSelfChainPlusGuardedTail(void);
@@ -34,7 +34,7 @@ void CallPauseDirtyLit_00433910(void) {
     ScaledChain3c74Jmp();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 1) {
-        Wrapper_00433940();
+        Wrapper_PackedAdvanceCallTailJmp_004e44f0();
         return;
     }
     PackedAdvanceCallTailJmp(&g_lit_004e44d8);

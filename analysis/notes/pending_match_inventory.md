@@ -28,7 +28,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/engine/pending_match_variants.c`
 - traits: cond jmps: 1
-- top callees: `DoubleScaledCrossStore`, `ArgSarStoreJmp`, `SetJmp_004753a0`
+- top callees: `DoubleScaledCrossStore`, `ArgSarStoreJmp`, `SetJmp_InstallSelfChainEsi`
 - top globals: `0x542060`×2, `g_framePauseFlag`×2
 
 ## Match_TeamOutcomeScreen @ 0x4a93c0 (1116b)
@@ -84,7 +84,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/audio/pending_match_variants.c`
 - traits: SEH (fs:[0]), x87 FPU, cond jmps: 4
-- top callees: `PushPopScaledInit343c`×3, `SetJmp_004a1ac0`×2, `CopyGlobal`×2, `CallSetPause`×2, `Push16Call`×2, `QuadCallPhase2`, `TableLookupCall_0048a130`, `TestZeroJmp`
+- top callees: `PushPopScaledInit343c`×3, `SetJmp_Push16Call_004a1ac0`×2, `CopyGlobal`×2, `CallSetPause`×2, `Push16Call`×2, `QuadCallPhase2`, `TableLookupCall_0048a130`, `TestZeroJmp`
 - top globals: `g_xformDirtyFlags`×20, `g_currentNodeIdx`×7, `0x53a1f0`×4, `0x4f3608`×4, `0x4f361c`×4, `0x542060`×3, `0x53a51c`, `g_logicStepFlag`
 
 ## Match_ChampionScreen @ 0x4a70f0 (1295b)
@@ -119,14 +119,14 @@ Total: 99 functions, sorted by size.
 
 - file: `src/boot/pending_match_variants.c`
 - traits: SEH (fs:[0]), x87 FPU, cond jmps: 12
-- top callees: `Mul10Tail`×7, `ArgSarStoreJmp`×2, `EntryBodyInstallSelfMidRef`×2, `DirtyDoubleDeref`, `ScaledStoreIdx24`, `BootChainBidirRecurseWalk`, `Thunk_00405ac0`, `StoreTwoCall`
+- top callees: `Mul10Tail`×7, `ArgSarStoreJmp`×2, `EntryBodyInstallSelfMidRef`×2, `DirtyDoubleDeref`, `ScaledStoreIdx24`, `BootChainBidirRecurseWalk`, `Thunk_MStackPush2ChainPrepend`, `StoreTwoCall`
 - top globals: `0x54206c`×18, `g_framePauseFlag`×15, `g_currentNodeIdx`×5, `0x542060`×4, `g_eventQueueChild`×3, `g_eventQueueNotMask`×2, `g_eventQueueIdx`, `0x52ab04`
 
 ## PendingMatch_004a8ca0 @ 0x4a8ca0 (1410b)
 
 - file: `src/audio/pending_match_variants.c`
 - traits: x87 FPU, cond jmps: 11
-- top callees: `Push16Call`×5, `MStackPush2ChainLLInsert`×3, `DispatcherComplex260_00407030`×2, `MStackPushComplexCallPop_00406430`×2, `AudioMicroEntries`×2, `SetJmp_004a1ac0`×2, `AudioInitArgs3`, `AudioBindEntry`
+- top callees: `Push16Call`×5, `MStackPush2ChainLLInsert`×3, `DispatcherComplex260_00407030`×2, `MStackPushComplexCallPop_00406430`×2, `AudioMicroEntries`×2, `SetJmp_Push16Call_004a1ac0`×2, `AudioInitArgs3`, `AudioBindEntry`
 - top globals: `g_eventQueueIdx`×6, `g_currentNodeIdx`×5, `0x542060`×4, `0x543440`×3, `g_eventQueueWorkType`×2, `g_eventQueueCurrent`×2, `0x4f3ae4`×2, `0x4f3ae8`×2
 
 ## PendingMatch_00432110 @ 0x432110 (1412b)
@@ -140,7 +140,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/engine/pending_match_variants.c`
 - traits: SEH (fs:[0]), cond jmps: 11
-- top callees: `MStackPush2RunCountdown`×4, `MStackBracket7_DispatchAndChain`×4, `ChainDirtyBitWalker`×4, `Thunk_0049cbc0`×3, `EsiInstallSetCbChainExtend_0048a970`×2, `extern_0x2bc8d4d4`, `DualScaledLoadStoreJmp`, `GuardedSeq_00473f30`
+- top callees: `MStackPush2RunCountdown`×4, `MStackBracket7_DispatchAndChain`×4, `ChainDirtyBitWalker`×4, `Thunk_ScaledNeg1SetPause`×3, `EsiInstallSetCbChainExtend_0048a970`×2, `extern_0x2bc8d4d4`, `DualScaledLoadStoreJmp`, `GuardedSeq_00473f30`
 - top globals: `g_framePauseFlag`×18, `0x542060`×6, `g_currentNodeIdx`×3, `0x54206c`×2, `g_eventQueuePending`×2, `g_fightGroupHead`×2, `g_eventQueueNotMask`×2, `g_pendingNodeType`
 
 ## PendingMatch_0047cf60 @ 0x47cf60 (1447b)
@@ -154,7 +154,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/engine/pending_match_variants.c`
 - traits: switch-via-jumptable, x87 FPU, cond jmps: 22
-- top callees: `ArgSarStoreJmp`×3, `StoreLoadJmp`×3, `SetJmp_00405420`×3, `DualScaledStore`×2, `SetJmp_004561d0`×2, `SetJmp_004561e0`×2, `SetJmp_004561c0`×2, `TwoCallPauseSetJmp2`×2
+- top callees: `ArgSarStoreJmp`×3, `StoreLoadJmp`×3, `SetJmp_ZeroAndDirty4`×3, `DualScaledStore`×2, `SetJmp_CharSelectFsmCluster_004561d0`×2, `SetJmp_CharSelectFsmCluster_004561e0`×2, `SetJmp_CharSelectFsmCluster_004561c0`×2, `TwoCallPauseSetJmp2`×2
 - top globals: `g_framePauseFlag`×31, `g_pendingNodeType`×7, `g_eventQueueEnd`×5, `g_matrixStackTop`×4, `g_fightGroupHead`×3, `g_eventQueueIdx`×2, `g_eventQueueCurrent`×2, `0x542078`×2
 
 ## PendingMatch_0045e640 @ 0x45e640 (1454b)
@@ -245,14 +245,14 @@ Total: 99 functions, sorted by size.
 
 - file: `src/engine/pending_match_variants.c`
 - traits: switch-via-jumptable, SEH (fs:[0]), cond jmps: 7
-- top callees: `ArgSarStoreJmp`×5, `Thunk_0049cbc0`×2, `StoreLoadJmp`×2, `GatedWordPushCall`×2, `EntryThunkBodyStateMachine`×2, `PushSetXfmMaskCallPop`×2, `MStackCall_00406600`×2, `EndingScreenFsmCluster`×2
+- top callees: `ArgSarStoreJmp`×5, `Thunk_ScaledNeg1SetPause`×2, `StoreLoadJmp`×2, `GatedWordPushCall`×2, `EntryThunkBodyStateMachine`×2, `PushSetXfmMaskCallPop`×2, `MStackCall_00406600`×2, `EndingScreenFsmCluster`×2
 - top globals: `g_framePauseFlag`×19, `g_eventQueueIdx`×7, `0x542060`×6, `g_currentNodeIdx`×4, `g_eventQueueEnd`×3, `g_pendingNodeType`×3, `0x54206c`×2
 
 ## PendingMatch_0043d830 @ 0x43d830 (1635b)
 
 - file: `src/engine/pending_match_variants.c`
 - traits: SEH (fs:[0]), x87 FPU, cond jmps: 10
-- top callees: `ArgSarStoreJmp`×4, `Thunk_0049cc00`×3, `MStackPush2LLWalkCompare`×2, `ScaledOr4Jmp`, `Thunk_0049cbc0`, `Mul10Tail`, `DoubleScaledCrossStore`, `SetJmp_004753a0`
+- top callees: `ArgSarStoreJmp`×4, `Thunk_StructArrayWalkCondCall`×3, `MStackPush2LLWalkCompare`×2, `ScaledOr4Jmp`, `Thunk_ScaledNeg1SetPause`, `Mul10Tail`, `DoubleScaledCrossStore`, `SetJmp_InstallSelfChainEsi`
 - top globals: `g_framePauseFlag`×11, `0x542060`×10, `0x54206c`×6, `g_currentNodeIdx`×2, `g_eventQueueEnd`×2, `g_eventQueueIdx`×2, `g_pendingNodeType`×2, `g_eventQueueCurrent`×2
 
 ## PendingMatch_004a2a80 @ 0x4a2a80 (1643b)
@@ -280,7 +280,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/engine/pending_match_variants.c`
 - traits: switch-via-jumptable, SEH (fs:[0]), x87 FPU, cond jmps: 9
-- top callees: `ArgSarStoreJmp`×3, `StoreLoadJmp`×3, `DualScaledStore`×2, `PendingMatch_00452770`×2, `GuardedSeq_00472840`×2, `Thunk_0049cbc0`×2, `extern_0x48e8947e`, `MStackBracket1_TreeWalkRecursive2`
+- top callees: `ArgSarStoreJmp`×3, `StoreLoadJmp`×3, `DualScaledStore`×2, `PendingMatch_00452770`×2, `GuardedSeq_00472840`×2, `Thunk_ScaledNeg1SetPause`×2, `extern_0x48e8947e`, `MStackBracket1_TreeWalkRecursive2`
 - top globals: `g_currentNodeIdx`×20, `g_framePauseFlag`×14, `0x542060`×8, `g_matrixStackTop`×4, `0x54206c`×4, `g_eventQueuePending`, `g_pendingNodeType`, `g_xformDirtyFlags`
 
 ## PendingMatch_00469b40 @ 0x469b40 (1684b)
@@ -301,7 +301,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/engine/pending_match_variants.c`
 - traits: cond jmps: 5
-- top callees: `ArgSarStoreJmp`×7, `SlotEvent3EntryChain`×4, `ScaledAndAlfe`×4, `IterStepScaledStore`×4, `TripleCallPauseJmp`×2, `GuardedDirtyXformFromTable`×2, `Thunk_0049cbd0`, `extern_-0x17b8cd33`
+- top callees: `ArgSarStoreJmp`×7, `SlotEvent3EntryChain`×4, `ScaledAndAlfe`×4, `IterStepScaledStore`×4, `TripleCallPauseJmp`×2, `GuardedDirtyXformFromTable`×2, `Thunk_ChainNodeInit`, `extern_-0x17b8cd33`
 - top globals: `g_framePauseFlag`×22, `0x542060`×9, `g_matrixStackTop`×9, `g_eventQueueEnd`×8, `0x54206c`×5, `g_eventQueuePending`, `g_currentNodeIdx`
 
 ## WndProc @ 0x4c49b0 (1728b)
@@ -329,7 +329,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/engine/pending_match_variants.c`
 - traits: switch-via-jumptable, SEH (fs:[0]), cond jmps: 14
-- top callees: `StoreLoadJmp`×6, `GatedWordPushCall`×3, `DispatcherComplex138_00476060`×2, `Thunk_0049cbc0`×2, `extern_0x2099aace`, `StorePauseImulShr16`, `extern_-0x5bf9f4ef`, `PushSetXfmMaskCallPop`
+- top callees: `StoreLoadJmp`×6, `GatedWordPushCall`×3, `DispatcherComplex138_00476060`×2, `Thunk_ScaledNeg1SetPause`×2, `extern_0x2099aace`, `StorePauseImulShr16`, `extern_-0x5bf9f4ef`, `PushSetXfmMaskCallPop`
 - top globals: `g_framePauseFlag`×8, `g_currentNodeIdx`×8, `0x54206c`×7, `g_eventQueueEnd`×6, `0x542060`×4, `g_eventQueueIdx`×2, `0x52d758`, `g_eventQueuePending`
 
 ## PendingMatch_004c7920 @ 0x4c7920 (1824b)
@@ -399,21 +399,21 @@ Total: 99 functions, sorted by size.
 
 - file: `src/engine/pending_match_variants.c`
 - traits: SEH (fs:[0]), cond jmps: 23
-- top callees: `ChainDirtyBitWalker`×6, `MStackBracketedStoreTwoCall`×4, `Thunk_0049cbc0`×4, `GatedWordPushCall`×3, `AllocNode`×2, `SetJmp_00405420`×2, `ScaledAddrInit_004677e0`×2, `ScaledAddrInit_004677c0`×2
+- top callees: `ChainDirtyBitWalker`×6, `MStackBracketedStoreTwoCall`×4, `Thunk_ScaledNeg1SetPause`×4, `GatedWordPushCall`×3, `AllocNode`×2, `SetJmp_ZeroAndDirty4`×2, `ScaledAddrInit_004677e0`×2, `ScaledAddrInit_004677c0`×2
 - top globals: `g_framePauseFlag`×31, `0x542060`×11, `0x54206c`×7, `g_pendingNodeType`×5, `g_eventQueuePending`×5, `g_fightGroupHead`×3, `g_eventQueueNotMask`×3, `g_eventQueueEnd`×2
 
 ## PendingMatch_004a56c0 @ 0x4a56c0 (2011b)
 
 - file: `src/audio/pending_match_variants.c`
 - traits: x87 FPU, rep stosd, cond jmps: 6
-- top callees: `MStackPush2ChainLLInsert`×11, `ScaledOr4DirtyClear`×3, `GuardedSetupCallTailJmp`×3, `SetJmp_004a1ac0`×3, `SetJmp_004a1ad0`×2, `Push16Call`×2, `extern_0x248ee0b5`, `DispatcherComplex260_00407400`
+- top callees: `MStackPush2ChainLLInsert`×11, `ScaledOr4DirtyClear`×3, `GuardedSetupCallTailJmp`×3, `SetJmp_Push16Call_004a1ac0`×3, `SetJmp_Push16Call_004a1ad0`×2, `Push16Call`×2, `extern_0x248ee0b5`, `DispatcherComplex260_00407400`
 - top globals: `g_currentNodeIdx`×17, `0x542060`×11, `0x5433b8`×4, `g_framePauseFlag`×4, `0x5433cc`×3, `g_eventQueuePending`×2, `0x4d50b4`×2, `0x541d8c`
 
 ## PendingMatch_00409c90 @ 0x409c90 (2013b)
 
 - file: `src/boot/pending_match_variants.c`
 - traits: x87 FPU, cond jmps: 16
-- top callees: `Mul10Tail`×4, `Phase1InitModelAdjustChain`×2, `SetJmp_00408d20`×2, `ScaledStoreThree_00409260`×2, `MStackPushNegMul10`×2, `StoreTailJmpSigned`, `CmpP1ScaledInitB`, `MStackPush2RunCountdown`
+- top callees: `Mul10Tail`×4, `Phase1InitModelAdjustChain`×2, `SetJmp_BootStateTriple`×2, `ScaledStoreThree_00409260`×2, `MStackPushNegMul10`×2, `StoreTailJmpSigned`, `CmpP1ScaledInitB`, `MStackPush2RunCountdown`
 - top globals: `0x54206c`×35, `g_framePauseFlag`×15, `g_currentNodeIdx`×9, `g_eventQueueCurrent`×6, `g_eventQueuePending`×4, `g_eventQueueNotMask`×4, `g_eventQueueWorkType`×3, `g_fightGroupHead`×2
 
 ## PendingMatch_00401b70 @ 0x401b70 (2016b)
@@ -427,7 +427,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/engine/pending_match_variants.c`
 - traits: cond jmps: 6
-- top callees: `DualScaledStore`×6, `Thunk_0049cbc0`×5, `StoreLoadJmp`×5, `Mul10Tail`×3, `InitStateDualCall48ac70`×2, `GatedWordPushCall`, `extern_0x48b97314`, `GuardedSeq_00472840`
+- top callees: `DualScaledStore`×6, `Thunk_ScaledNeg1SetPause`×5, `StoreLoadJmp`×5, `Mul10Tail`×3, `InitStateDualCall48ac70`×2, `GatedWordPushCall`, `extern_0x48b97314`, `GuardedSeq_00472840`
 - top globals: `g_framePauseFlag`×22, `0x542060`×12, `g_xformScratch2088`×5, `g_eventQueueEnd`×4, `0x54206c`×3, `g_currentNodeFlags`×3, `g_eventQueueIdx`×2, `g_pendingNodeType`×2
 
 ## PendingMatch_0046b670 @ 0x46b670 (2084b)
@@ -448,7 +448,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/audio/pending_match_variants.c`
 - traits: switch-via-jumptable, x87 FPU, cond jmps: 23
-- top callees: `SetJmp_004a1ad0`×12, `ScaledOr4DirtyClear`×5, `Push16Call`×5, `BootInitGuardedCallChain`×5, `DispatcherComplex260_00407400`×4, `SixCallSeqPushImm`×4, `SceneFrameStepWithInputs`×4, `MStackPushComplexCallPop_00406430`×3
+- top callees: `SetJmp_Push16Call_004a1ad0`×12, `ScaledOr4DirtyClear`×5, `Push16Call`×5, `BootInitGuardedCallChain`×5, `DispatcherComplex260_00407400`×4, `SixCallSeqPushImm`×4, `SceneFrameStepWithInputs`×4, `MStackPushComplexCallPop_00406430`×3
 - top globals: `g_currentNodeIdx`×12, `0x542060`×6, `0x4d50b4`×6, `0x543448`×6, `0x54344c`×5, `g_framePauseFlag`×2, `0x543404`×2, `g_eventQueuePending`
 
 ## PendingMatch_0049a670 @ 0x49a670 (2176b)
@@ -476,7 +476,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/boot/pending_match_variants.c`
 - traits: cond jmps: 35
-- top callees: `StoreDoubleNegPauseSubStore`×4, `ZeroAndDirty4`×3, `Mul10Tail`×3, `ThreeMul10Stores`×2, `DirtyDoubleDeref`×2, `MStackBracket1_TreeWalkRecursive2`×2, `Thunk_00405ac0`×2, `StoreTwoCall`
+- top callees: `StoreDoubleNegPauseSubStore`×4, `ZeroAndDirty4`×3, `Mul10Tail`×3, `ThreeMul10Stores`×2, `DirtyDoubleDeref`×2, `MStackBracket1_TreeWalkRecursive2`×2, `Thunk_MStackPush2ChainPrepend`×2, `StoreTwoCall`
 - top globals: `g_framePauseFlag`×35, `g_matrixStackTop`×19, `g_currentNodeIdx`×10, `0x54206c`×8, `g_eventQueuePending`×6, `g_pendingNodeType`×4, `g_fightGroupHead`×3, `g_eventQueueIdx`×2
 
 ## Screen_GreatestWarrior @ 0x403d60 (2334b)
@@ -497,28 +497,28 @@ Total: 99 functions, sorted by size.
 
 - file: `src/boot/pending_match_variants.c`
 - traits: switch-via-jumptable, x87 FPU, cond jmps: 25
-- top callees: `TableLookupCall_00489ff0`×8, `StoreTwoCall`×3, `Thunk_0049cbd0`×2, `TableWalkBoundedCmp`×2, `DownloadPlayerChar`×2, `Cascade4StepBitTest`×2, `ScaledSet1OnNonZero`×2, `MStackPush2ChainLLInsert`
+- top callees: `TableLookupCall_00489ff0`×8, `StoreTwoCall`×3, `Thunk_ChainNodeInit`×2, `TableWalkBoundedCmp`×2, `DownloadPlayerChar`×2, `Cascade4StepBitTest`×2, `ScaledSet1OnNonZero`×2, `MStackPush2ChainLLInsert`
 - top globals: `g_currentNodeIdx`×12, `g_framePauseFlag`×11, `0x54206c`×8, `g_eventQueueEnd`×8, `0x542060`×7, `g_eventQueueIdx`×4, `g_fightGroupHead`×4, `g_pendingNodeType`×2
 
 ## PendingMatch_0044baa0 @ 0x44baa0 (2434b)
 
 - file: `src/engine/pending_match_variants.c`
 - traits: SEH (fs:[0]), cond jmps: 12
-- top callees: `ArgSarStoreJmp`×9, `StoreLoadJmp`×6, `GuardedSeq_00472840`×5, `Set2CallIncJmp`×3, `EntryThunkBodyStateMachine`×3, `Thunk_0049cbc0`×2, `SetJmp_00405420`×2, `CjFieldCopyCascade`×2
+- top callees: `ArgSarStoreJmp`×9, `StoreLoadJmp`×6, `GuardedSeq_00472840`×5, `Set2CallIncJmp`×3, `EntryThunkBodyStateMachine`×3, `Thunk_ScaledNeg1SetPause`×2, `SetJmp_ZeroAndDirty4`×2, `CjFieldCopyCascade`×2
 - top globals: `g_framePauseFlag`×36, `0x542060`×14, `0x54206c`×5, `g_matrixStackTop`×4, `g_eventQueueEnd`×3, `g_currentNodeIdx`×3, `g_eventQueueIdx`×3, `g_fightGroupHead`×3
 
 ## PendingMatch_004568b0 @ 0x4568b0 (2440b)
 
 - file: `src/engine/pending_match_variants.c`
 - traits: switch-via-jumptable, SEH (fs:[0]), x87 FPU, cond jmps: 14
-- top callees: `GatedWordPushCall`×5, `Thunk_0049cbc0`×3, `EsiInstallSetCbChainExtend_0048a970`×3, `ChainDirtyBitWalker`×2, `Mul10Tail`×2, `StoreLoadJmp`×2, `DualScaledStore`×2, `EsiInstallClearTripleFields`×2
+- top callees: `GatedWordPushCall`×5, `Thunk_ScaledNeg1SetPause`×3, `EsiInstallSetCbChainExtend_0048a970`×3, `ChainDirtyBitWalker`×2, `Mul10Tail`×2, `StoreLoadJmp`×2, `DualScaledStore`×2, `EsiInstallClearTripleFields`×2
 - top globals: `g_framePauseFlag`×15, `g_currentNodeIdx`×11, `0x542060`×10, `g_fightGroupHead`×4, `g_pendingNodeType`×3, `g_eventQueueCurrent`×3, `g_eventQueueWorkType`×3, `0x54206c`×2
 
 ## PendingMatch_0044dd80 @ 0x44dd80 (2508b)
 
 - file: `src/engine/pending_match_variants.c`
 - traits: SEH (fs:[0]), x87 FPU, cond jmps: 20
-- top callees: `StoreLoadJmp`×11, `Thunk_0049cbc0`×6, `MStackPush2RunCountdown`×3, `MStackBracket7_DispatchAndChain`×3, `ChainDirtyBitWalker`×3, `GatedWordPushCall`×3, `Mul10Tail`×2, `DispatcherComplex260_00407030`×2
+- top callees: `StoreLoadJmp`×11, `Thunk_ScaledNeg1SetPause`×6, `MStackPush2RunCountdown`×3, `MStackBracket7_DispatchAndChain`×3, `ChainDirtyBitWalker`×3, `GatedWordPushCall`×3, `Mul10Tail`×2, `DispatcherComplex260_00407030`×2
 - top globals: `g_framePauseFlag`×24, `0x54206c`×14, `0x542060`×12, `g_eventQueueIdx`×5, `g_eventQueueCurrent`×4, `g_eventQueueEnd`×4, `g_matrixStackTop`×4, `g_currentNodeIdx`×3
 
 ## PendingMatch_00452770 @ 0x452770 (2548b)
@@ -532,7 +532,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/engine/pending_match_variants.c`
 - traits: SEH (fs:[0]), x87 FPU, cond jmps: 10
-- top callees: `ArgSarStoreJmp`×6, `StoreLoadJmp`×5, `GatedWordPushCall`×3, `Thunk_0049cbc0`×2, `EsiInstallSetCbChainExtend_0048a970`×2, `InitStateDualCall48ac70`×2, `InstallSelfChainAccumPath`×2, `InstallSelfAccumOverflow`×2
+- top callees: `ArgSarStoreJmp`×6, `StoreLoadJmp`×5, `GatedWordPushCall`×3, `Thunk_ScaledNeg1SetPause`×2, `EsiInstallSetCbChainExtend_0048a970`×2, `InitStateDualCall48ac70`×2, `InstallSelfChainAccumPath`×2, `InstallSelfAccumOverflow`×2
 - top globals: `0x542060`×19, `g_framePauseFlag`×18, `g_currentNodeIdx`×12, `g_matrixStackTop`×10, `g_eventQueuePending`, `0x53a7a0`, `g_eventQueueEnd`, `0x54206c`
 
 ## PendingMatch_0042b930 @ 0x42b930 (2656b)
@@ -560,14 +560,14 @@ Total: 99 functions, sorted by size.
 
 - file: `src/audio/pending_match_variants.c`
 - traits: SEH (fs:[0]), x87 FPU, IAT calls: 1, cond jmps: 20
-- top callees: `GuardedSetupCallTailJmp`×7, `Push16Call`×6, `MStackPush2ChainLLInsert`×5, `FiveTableWalkInit`×3, `TeamMode_JoinScreen`×3, `SetJmp_004a1ac0`×3, `DispatcherComplex260_00407030`×3, `PendingMatch_004a2a80`×2
+- top callees: `GuardedSetupCallTailJmp`×7, `Push16Call`×6, `MStackPush2ChainLLInsert`×5, `FiveTableWalkInit`×3, `TeamMode_JoinScreen`×3, `SetJmp_Push16Call_004a1ac0`×3, `DispatcherComplex260_00407030`×3, `PendingMatch_004a2a80`×2
 - top globals: `g_currentNodeIdx`×21, `0x542060`×11, `0x54206c`×3, `0x5433d0`×3, `g_framePauseFlag`×2, `0x543708`×2, `0x5433fc`×2, `g_eventQueueIdx`
 
 ## PendingMatch_004a62b0 @ 0x4a62b0 (3004b)
 
 - file: `src/audio/pending_match_variants.c`
 - traits: switch-via-jumptable, x87 FPU, cond jmps: 16
-- top callees: `GuardedSetupCallTailJmp`×6, `Match_ChampionScreen`×4, `TableWalkBoundedCmp`×4, `VoiceTrioBindAndKick`×4, `Push16Call`×3, `MStackPush2ChainLLInsert`×2, `SetJmp_004a1ac0`×2, `LoadGeoAsset_Default`×2
+- top callees: `GuardedSetupCallTailJmp`×6, `Match_ChampionScreen`×4, `TableWalkBoundedCmp`×4, `VoiceTrioBindAndKick`×4, `Push16Call`×3, `MStackPush2ChainLLInsert`×2, `SetJmp_Push16Call_004a1ac0`×2, `LoadGeoAsset_Default`×2
 - top globals: `g_currentNodeIdx`×25, `g_eventQueueWorkType`×6, `g_eventQueueChild`×4, `g_framePauseFlag`×4, `0x542060`×3, `0x543830`×3, `g_eventQueueNotMask`×3, `g_eventQueueCurrent`×3
 
 ## PendingMatch_004411d0 @ 0x4411d0 (3093b)
@@ -595,21 +595,21 @@ Total: 99 functions, sorted by size.
 
 - file: `src/engine/pending_match_variants.c`
 - traits: switch-via-jumptable, SEH (fs:[0]), x87 FPU, cond jmps: 19
-- top callees: `ChainDirtyBitWalker`×3, `MStackBracket7_DispatchAndChain`×3, `EsiInstallSetCbChainExtend_0048a970`×3, `StoreLoadJmp`×3, `ArgSarStoreJmp`×3, `Thunk_0049cbc0`×2, `GuardedScaled_004750c0`×2, `InstallSelfChainAccumPath`×2
+- top callees: `ChainDirtyBitWalker`×3, `MStackBracket7_DispatchAndChain`×3, `EsiInstallSetCbChainExtend_0048a970`×3, `StoreLoadJmp`×3, `ArgSarStoreJmp`×3, `Thunk_ScaledNeg1SetPause`×2, `GuardedScaled_004750c0`×2, `InstallSelfChainAccumPath`×2
 - top globals: `g_currentNodeIdx`×19, `0x542060`×13, `g_eventQueuePending`×11, `g_framePauseFlag`×10, `g_matrixStackTop`×10, `0x54206c`×8, `g_eventQueueEnd`×6, `g_pendingNodeType`×5
 
 ## PendingMatch_00454510 @ 0x454510 (3284b)
 
 - file: `src/engine/pending_match_variants.c`
 - traits: switch-via-jumptable, x87 FPU, cond jmps: 28
-- top callees: `StoreLoadJmp`×11, `Thunk_0049cbc0`×6, `DualScaledStore`×6, `MStackBracket3PackedSlotInit`×5, `PendingMatch_00452770`×3, `GuardedSeq_00473f50`×2, `MStackPush2RunCountdown`×2, `MStackBracket7_DispatchAndChain`×2
+- top callees: `StoreLoadJmp`×11, `Thunk_ScaledNeg1SetPause`×6, `DualScaledStore`×6, `MStackBracket3PackedSlotInit`×5, `PendingMatch_00452770`×3, `GuardedSeq_00473f50`×2, `MStackPush2RunCountdown`×2, `MStackBracket7_DispatchAndChain`×2
 - top globals: `g_framePauseFlag`×37, `g_matrixStackTop`×11, `0x542060`×11, `g_currentNodeIdx`×9, `g_eventQueueIdx`×8, `0x54206c`×8, `g_eventQueueNotMask`×5, `0x52aad8`×4
 
 ## PendingMatch_004492f0 @ 0x4492f0 (3340b)
 
 - file: `src/engine/pending_match_variants.c`
 - traits: SEH (fs:[0]), x87 FPU, cond jmps: 29
-- top callees: `ArgSarStoreJmp`×8, `GatedWordPushCall`×7, `StoreLoadJmp`×6, `EntryThunkBodyStateMachine`×4, `Thunk_0049cbc0`×2, `EsiInstallSetCbChainExtend_0048a970`×2, `GuardedSeq_00472840`×2, `ChainDirtyBitWalker`×2
+- top callees: `ArgSarStoreJmp`×8, `GatedWordPushCall`×7, `StoreLoadJmp`×6, `EntryThunkBodyStateMachine`×4, `Thunk_ScaledNeg1SetPause`×2, `EsiInstallSetCbChainExtend_0048a970`×2, `GuardedSeq_00472840`×2, `ChainDirtyBitWalker`×2
 - top globals: `g_framePauseFlag`×36, `0x542060`×18, `g_matrixStackTop`×16, `g_eventQueueIdx`×8, `g_currentNodeIdx`×7, `0x54206c`×7, `g_fightGroupHead`×5, `g_eventQueueCurrent`×3
 
 ## PendingMatch_004ca970 @ 0x4ca970 (3472b)
@@ -671,21 +671,21 @@ Total: 99 functions, sorted by size.
 
 - file: `src/engine/pending_match_variants.c`
 - traits: switch-via-jumptable, SEH (fs:[0]), x87 FPU, cond jmps: 43
-- top callees: `ArgSarStoreJmp`×12, `GatedWordPushCall`×9, `StoreLoadJmp`×6, `TwoCallPauseSetJmp`×6, `Thunk_0049cbc0`×5, `Mul10Tail`×2, `Chain2AxisDiffStoreTailJmp`×2, `MStackPush3SideStore`×2
+- top callees: `ArgSarStoreJmp`×12, `GatedWordPushCall`×9, `StoreLoadJmp`×6, `TwoCallPauseSetJmp`×6, `Thunk_ScaledNeg1SetPause`×5, `Mul10Tail`×2, `Chain2AxisDiffStoreTailJmp`×2, `MStackPush3SideStore`×2
 - top globals: `g_framePauseFlag`×61, `0x542060`×17, `g_currentNodeIdx`×13, `g_eventQueueEnd`×9, `g_matrixStackTop`×7, `0x54206c`×7, `g_eventQueueIdx`×4, `g_pendingNodeType`×3
 
 ## Screen_ArcadeEnding @ 0x420300 (4216b)
 
 - file: `src/engine/pending_match_variants.c`
 - traits: switch-via-jumptable, SEH (fs:[0]), x87 FPU, cond jmps: 56
-- top callees: `TableWalkBoundedCmp`×10, `StoreTwoCall`×5, `SwapOrPassSet`×4, `Push70CallScaleArith`×4, `DirtyKeyedStateCopy`×3, `Thunk_0049cbd0`×3, `BootInitGuardedCallChain`×3, `SetTagsCallCmpToggleDirty`×3
+- top callees: `TableWalkBoundedCmp`×10, `StoreTwoCall`×5, `SwapOrPassSet`×4, `Push70CallScaleArith`×4, `DirtyKeyedStateCopy`×3, `Thunk_ChainNodeInit`×3, `BootInitGuardedCallChain`×3, `SetTagsCallCmpToggleDirty`×3
 - top globals: `g_currentNodeIdx`×39, `0x54206c`×13, `0x542060`×8, `0x52ab40`×4, `0x542094`×4, `0x53a700`×4, `g_eventQueueEnd`×3, `g_eventQueueCurrent`×2
 
 ## PendingMatch_0044a7f0 @ 0x44a7f0 (4633b)
 
 - file: `src/engine/pending_match_variants.c`
 - traits: SEH (fs:[0]), x87 FPU, cond jmps: 44
-- top callees: `ArgSarStoreJmp`×11, `StoreLoadJmp`×7, `GatedWordPushCall`×7, `MStackCall_0044d230`×5, `Thunk_0049cbc0`×4, `MStackPush2GuardedFieldClear`×3, `InstallSelf3WayChainCmp`×3, `PushPopXformEntityCall`×2
+- top callees: `ArgSarStoreJmp`×11, `StoreLoadJmp`×7, `GatedWordPushCall`×7, `MStackCall_0044d230`×5, `Thunk_ScaledNeg1SetPause`×4, `MStackPush2GuardedFieldClear`×3, `InstallSelf3WayChainCmp`×3, `PushPopXformEntityCall`×2
 - top globals: `g_framePauseFlag`×62, `g_currentNodeIdx`×18, `0x542060`×17, `0x54206c`×14, `g_eventQueueEnd`×8, `g_fightGroupHead`×8, `g_matrixStackTop`×8, `g_pendingNodeType`×5
 
 ## PendingMatch_0041dc00 @ 0x41dc00 (5547b)

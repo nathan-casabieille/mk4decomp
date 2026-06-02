@@ -11,7 +11,7 @@ extern unsigned int g_scaledInit_00542044;
 extern void TestCallIat(void);
 extern void Helper_GfxCleanup(void);
 extern void Helper_AppStub_2AE0(void);
-extern void Thunk_004b5ac0(void);
+extern void Thunk_AppInit_Misc2(void);
 extern void Config_SaveToRegistry(void);
 extern void Helper_MenuStub_62B0(void);
 extern void Helper_AppStub_21C0(void);
@@ -24,7 +24,7 @@ void AppShutdown(void) {
     TestCallIat();
     Helper_GfxCleanup();
     Helper_AppStub_2AE0();
-    Thunk_004b5ac0();
+    Thunk_AppInit_Misc2();
     Config_SaveToRegistry();
     Helper_MenuStub_62B0();
     Helper_AppStub_21C0();

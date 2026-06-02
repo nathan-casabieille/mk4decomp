@@ -13,8 +13,8 @@ extern unsigned int g_scaledInit_00542044;
  *   The `if==X then walk=N` arms keep eax intact for next cmp.
  */
 extern unsigned int g_baseSel;
-extern void Wrapper_00438c40(void);
-extern void Wrapper_00438ee0(void);
+extern void Wrapper_CmpDualPatchScaledRangeJmp_004e4850(void);
+extern void Wrapper_CmpDualPatchScaledRangeJmp_004e4990(void);
 void DispatchSwitchWalkCmp(void) {
     unsigned int v = ((ScenegraphNode *)(g_baseSel * 4))->state_mask;
     g_walkCallback = (void (*)(void))v;
@@ -27,12 +27,12 @@ void DispatchSwitchWalkCmp(void) {
         g_walkCallback = (void (*)(void))v;
     }
     if (v == 5) {
-        Wrapper_00438c40();
+        Wrapper_CmpDualPatchScaledRangeJmp_004e4850();
         return;
     }
     if (v == 6) {
-        Wrapper_00438c40();
+        Wrapper_CmpDualPatchScaledRangeJmp_004e4850();
         return;
     }
-    Wrapper_00438ee0();
+    Wrapper_CmpDualPatchScaledRangeJmp_004e4990();
 }

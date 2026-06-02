@@ -16,8 +16,8 @@ extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall(int, int);
-extern void SetJmp_0049cb90(void);
-extern void Thunk_0049cbd0(void);
+extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
+extern void Thunk_ChainNodeInit(void);
 extern void ScaledZeroFour(void);
 extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
@@ -37,7 +37,7 @@ extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
-extern void Wrapper_00436490(void);
+extern void Wrapper_PackedAdvanceCallTailJmp_004e46d0(void);
 extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
@@ -45,7 +45,7 @@ extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
-extern void Thunk_004bd5c0(void);
+extern void Thunk_LoadGeoAsset_Default(void);
 extern void AllocSlotPushTripleGlobals(void);
 extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
@@ -75,14 +75,14 @@ extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
 extern void ChainDirtyBitWalker(void);
-extern void Wrapper_0048a350(void);
-extern void Wrapper_0048a3a0(void);
+extern void Wrapper_ScaledChainPushCall_004ef858(void);
+extern void Wrapper_ScaledChainPushCall_004ef8b0(void);
 extern void Helper_DownloadSetup(void);
 extern void MStackPush3CmpCall(void);
-extern void Wrapper_0048ec20(void);
+extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
-extern void SetJmp_00438f50(void);
-extern void SetJmp_00438f60(void);
+extern void SetJmp_StateDispatchYield_00438f50(void);
+extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_0042b6c0(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
@@ -113,10 +113,10 @@ extern unsigned int g_fightAxisPosY;
  *   eax = g_baseSel[*4+0x34]; cmp eax,0x10; g_walkCallback=eax;
  *   if ne: skip; eax=2; g_walkCallback=2;
  *   cmp eax,0x11; if ne: skip2; eax=7; g_walkCallback=7;
- *   test eax,eax; if jge: skip3; jmp Thunk_0043a540;
- *   cmp eax,0x10; if jl: skip4; jmp Thunk_0043a540;
+ *   test eax,eax; if jge: skip3; jmp Thunk_InstallSelfChainSetB333v2;
+ *   cmp eax,0x10; if jl: skip4; jmp Thunk_InstallSelfChainSetB333v2;
  *   add ecx,eax; g_scaledInit=ecx; ecx=[ecx*4]; test+store g_eventQueueNotMask;
- *   if zero: jmp Thunk_0043a540;
+ *   if zero: jmp Thunk_InstallSelfChainSetB333v2;
  *   else: jmp HitReactionDispatcher.
  */
 void CmpDualPatchScaledRangeJmp(int arg) {
@@ -135,11 +135,11 @@ void CmpDualPatchScaledRangeJmp(int arg) {
         g_walkCallback = (void (*)(void))walk;
     }
     if ((int)walk < 0) {
-        Thunk_0043a540();
+        Thunk_InstallSelfChainSetB333v2();
         return;
     }
     if ((int)walk >= 0x10) {
-        Thunk_0043a540();
+        Thunk_InstallSelfChainSetB333v2();
         return;
     }
     idx += walk;
@@ -147,7 +147,7 @@ void CmpDualPatchScaledRangeJmp(int arg) {
     chain = *(unsigned int *)(idx * 4);
     g_eventQueueNotMask = chain;
     if (chain == 0) {
-        Thunk_0043a540();
+        Thunk_InstallSelfChainSetB333v2();
         return;
     }
     HitReactionDispatcher();

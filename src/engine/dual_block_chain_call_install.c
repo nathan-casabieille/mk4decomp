@@ -16,8 +16,8 @@ extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall(int, int);
-extern void SetJmp_0049cb90(void);
-extern void Thunk_0049cbd0(void);
+extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
+extern void Thunk_ChainNodeInit(void);
 extern void ScaledZeroFour(void);
 extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
@@ -37,7 +37,7 @@ extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
-extern void Wrapper_00436490(void);
+extern void Wrapper_PackedAdvanceCallTailJmp_004e46d0(void);
 extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
@@ -45,7 +45,7 @@ extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
-extern void Thunk_004bd5c0(void);
+extern void Thunk_LoadGeoAsset_Default(void);
 extern void AllocSlotPushTripleGlobals(void);
 extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
@@ -75,14 +75,14 @@ extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
 extern void ChainDirtyBitWalker(void);
-extern void Wrapper_0048a350(void);
-extern void Wrapper_0048a3a0(void);
+extern void Wrapper_ScaledChainPushCall_004ef858(void);
+extern void Wrapper_ScaledChainPushCall_004ef8b0(void);
 extern void Helper_DownloadSetup(void);
 extern void MStackPush3CmpCall(void);
-extern void Wrapper_0048ec20(void);
+extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
-extern void SetJmp_00438f50(void);
-extern void SetJmp_00438f60(void);
+extern void SetJmp_StateDispatchYield_00438f50(void);
+extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_0042b6c0(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
@@ -116,8 +116,8 @@ extern unsigned int g_fightAxisPosY;
  *     Push 0x004ee7d8; call IterStepDualStore; pop; if pause ret.
  *     Push 0x004ee7e0; call ArgSarStoreJmp; pop; ret.
  *   Block B (+0x70): load state; clear. state!=0: call DirtyToggleByGate; if pause ret.
- *     If bit2 of 0054208c: mstack-push SetJmp_00483f20; jmp GameDispatchValidateState.
- *     Else: jmp SetJmp_00483f20.
+ *     If bit2 of 0054208c: mstack-push SetJmp_InstallSelfTwoTailJmp; jmp GameDispatchValidateState.
+ *     Else: jmp SetJmp_InstallSelfTwoTailJmp.
  *   state==0 (je from cmp): g_eventQueueChild=0x14; install-self at body+0x01000000.
  *     state=1; call EsiInstallDecCallChain; pause=1; ret.
  */
@@ -125,7 +125,7 @@ extern void ArgSarStoreJmp(void);
 extern void EsiInstallDecCallChain_004294a0(void);
 extern void GateDispatch6c(void);
 extern void ScaledMove48to58(void);
-extern void SetJmp_00483f20(void);
+extern void SetJmp_InstallSelfTwoTailJmp(void);
 extern void TwoCallTail_00481380(void);
 
 extern unsigned int g_matrixStack_arr;
@@ -190,9 +190,9 @@ __declspec(naked) void DualBlockChainCallInstall(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_matrixStack_arr], offset SetJmp_00483f20
+        mov     [eax*4 + g_matrixStack_arr], offset SetJmp_InstallSelfTwoTailJmp
         jmp     GameDispatchValidateState
-        jmp     SetJmp_00483f20
+        jmp     SetJmp_InstallSelfTwoTailJmp
         mov     dword ptr [g_eventQueueChild], 0x14
         mov     dword ptr [eax + 8], offset body_e50
         mov     ecx, dword ptr [g_baseSel]

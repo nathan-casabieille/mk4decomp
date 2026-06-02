@@ -87,7 +87,7 @@ extern void StoreLoadJmp(void);
 extern void StoreTwoCall(void);
 extern void StreamChainStringInstall(void);
 extern void TableLookupCall_00489ff0(void);
-extern void Thunk_0049cbc0(void);
+extern void Thunk_ScaledNeg1SetPause(void);
 extern void TripleEntryStateCascade(void);
 extern void TripleMStackPushChainStores(void);
 extern void MStackPushDualJmp(void);
@@ -274,7 +274,7 @@ void func_0042ce70(void) {
 void func_0042ce90(void) {
     GuardedTripleCallSwapJmp();
     if (g_framePauseFlag != 0) return;
-    SetJmp_0042d080();
+    SetJmp_Distance3DMul10Chain_0042d080();
     if (g_framePauseFlag != 0) return;
     CjInstallSelfRouter();
 }
@@ -727,7 +727,7 @@ void func_00482240(void) {
     if (g_framePauseFlag) return;
     g_walkCallback = 0x1b333;
     g_eventQueueCurrent = 0;
-    Wrapper_0048ff30();
+    Wrapper_IterLoad_0048fd30_004f12ac();
     if (g_framePauseFlag) return;
     ScaledMove48to58();
     if (g_framePauseFlag) return;
@@ -814,7 +814,7 @@ void func_004823b0(void) {
     ((void (*)(void *))ArgSarStoreJmp)(&g_dispatchSave754_004edcf0);
 }
 
-/* h11 @ 0x004823e0 (64b): event 004edd20 + tail-jmp Wrapper_00488c60. */
+/* h11 @ 0x004823e0 (64b): event 004edd20 + tail-jmp Wrapper_Cascade5StageInit_004ef208. */
 void func_004823e0(void) {
     CjTableThresholdDispatch();
     if (g_framePauseFlag) return;
@@ -822,11 +822,11 @@ void func_004823e0(void) {
     if (g_framePauseFlag) return;
     ((void (*)(void *))ArgSarStoreJmp)(&g_dispatchSave755_004edd20);
     if (g_framePauseFlag) return;
-    Wrapper_00488c60();
+    Wrapper_Cascade5StageInit_004ef208();
 }
 
 /* h12 @ 0x00482420 (80b): 0x8000 + CmpP1DualInitStore + chain +
- * event 004edd58 + tail-jmp Wrapper_00488c60. */
+ * event 004edd58 + tail-jmp Wrapper_Cascade5StageInit_004ef208. */
 void func_00482420(void) {
     g_walkCallback = 0x8000;
     CmpP1DualInitStore_00482ab0();
@@ -837,7 +837,7 @@ void func_00482420(void) {
     if (g_framePauseFlag) return;
     ((void (*)(void *))ArgSarStoreJmp)(&g_dispatchSave756_004edd58);
     if (g_framePauseFlag) return;
-    Wrapper_00488c60();
+    Wrapper_Cascade5StageInit_004ef208();
 }
 
 /* h12b @ 0x00482470 (16b): bare event 004edd90 forwarder. */
@@ -1523,7 +1523,7 @@ __declspec(naked) void func_00448990(void) {
         jne      L_8cd2
         test     byte ptr [g_xformDirtyFlags], 4
         je       L_8bd8
-        jmp      Thunk_0049cbc0
+        jmp      Thunk_ScaledNeg1SetPause
     L_8bd8:
         mov      edx, dword ptr [g_fightGroupHead]
         mov      ecx, dword ptr [g_currentNodeIdx]
@@ -1675,7 +1675,7 @@ __declspec(naked) void func_00448990(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8f95
-        call     Thunk_0049cbc0
+        call     Thunk_ScaledNeg1SetPause
         pop      esi
         ret      
     L_8e60:

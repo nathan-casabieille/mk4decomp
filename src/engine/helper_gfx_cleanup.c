@@ -6,7 +6,7 @@
 /* @addr 0x004b4410 (51b): push 4; 7 calls; clear [g_currentRendererMode] */
 extern int Helper_GSM_PlayMusic(int mode);
 extern s32 TryInitRenderer(void);
-extern void Thunk_004bf320(void);
+extern void Thunk_FlushDrawQueue(void);
 extern void R2_Cleanup(void);
 extern void DDraw3_Cleanup(void);
 extern void DDraw5_Cleanup(void);
@@ -15,7 +15,7 @@ extern int g_currentRendererMode;
 void Helper_GfxCleanup(void) {
     Helper_GSM_PlayMusic(4);
     TryInitRenderer();
-    Thunk_004bf320();
+    Thunk_FlushDrawQueue();
     R2_Cleanup();
     DDraw3_Cleanup();
     DDraw5_Cleanup();

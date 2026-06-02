@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  *   call F5; pause → ret; jmp T.
  */
 extern unsigned int g_audioRestoreSlot3_0053a1f0;
-extern void Wrapper_0041fd00(void);
+extern void Wrapper_OrListLoop_004d8e80(void);
 extern void ZeroLargeBlock(void);
 extern void GuardedSeq_004335d0(void);
 extern void SentinelInitTripleCall(void);
@@ -21,7 +21,7 @@ extern void GlobalsResetInit(void);
 extern void Helper_TickFrameTail(void);
 extern void OnceCall(void);
 void Set2FiveCallPauseJmp(void) {
-    Wrapper_0041fd00();
+    Wrapper_OrListLoop_004d8e80();
     g_audioRestoreSlot3_0053a1f0 = 2;
     ZeroLargeBlock();
     if (g_framePauseFlag) return;

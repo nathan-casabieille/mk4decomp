@@ -14,7 +14,7 @@ extern unsigned int g_phaseTimer;
  *   call F3; pause → jne ret; jmp T
  */
 extern void MStackPush3CmpCall(void);
-extern void SetJmp_00438f60(void);
+extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void ScaledZeroFour(void);
 extern void GuardedDispatch_0042c570(void);
@@ -22,7 +22,7 @@ void CallPauseTestByteJmpCalls(void) {
     MStackPush3CmpCall();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 1) {
-        SetJmp_00438f60();
+        SetJmp_StateDispatchYield_00438f60();
         return;
     }
     FiveCallScaledChainTailJmp();

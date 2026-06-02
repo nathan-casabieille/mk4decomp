@@ -62,7 +62,7 @@ extern void GuardedSeq_00488be0(void);   /* 0x00488be0 */
 extern void LiteralPushCallEntZero(void);   /* 0x00488c00 */
 extern void CjTableThresholdDispatch(void);   /* 0x00488f00 */
 extern void ByteWordTableTaggedDispatch(void);   /* 0x0048a050 */
-extern void Wrapper_0048a3a0(void);   /* 0x0048a3a0 */
+extern void Wrapper_ScaledChainPushCall_004ef8b0(void);   /* 0x0048a3a0 */
 extern void MStackPushSet0004(void);   /* 0x00490230 */
 extern void ScaledXorStore_004903b0(void);   /* 0x004903b0 */
 extern void ScaledZeroFour(void);   /* 0x00490740 */
@@ -292,7 +292,7 @@ void GuardedSeq_00485ca0(void) {
 void GuardedSeq_004871b0(void) {
     CmpJmpTwoBranch();
     if (g_framePauseFlag) return;
-    Wrapper_0048a3a0();
+    Wrapper_ScaledChainPushCall_004ef8b0();
 }
 
 /* @addr 0x00488890 */

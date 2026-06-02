@@ -26,7 +26,7 @@ extern unsigned int g_scaledInit_00542048;
 extern void *g_lit_004ef4d0;
 extern void *g_lit_004ef7d8;
 extern void ScaledChainCallPauseSetJmp(void);
-extern void Wrapper_00481060(void);
+extern void Wrapper_IterLoad_0048fd30_004ed980(void);
 
 /* @addr 0x00480fe0 */
 void ScaledLitLoadCall_00480fe0(void) {
@@ -35,7 +35,7 @@ void ScaledLitLoadCall_00480fe0(void) {
     g_scaledInit_00542048 = *(unsigned int*)(idx * 4);
     ScaledChainCallPauseSetJmp();
     if (g_framePauseFlag) return;
-    Wrapper_00481060();
+    Wrapper_IterLoad_0048fd30_004ed980();
 }
 
 /* @addr 0x00481020 */
@@ -45,5 +45,5 @@ void ScaledLitLoadCall_00481020(void) {
     g_scaledInit_00542048 = *(unsigned int*)(idx * 4);
     ScaledChainCallPauseSetJmp();
     if (g_framePauseFlag) return;
-    Wrapper_00481060();
+    Wrapper_IterLoad_0048fd30_004ed980();
 }

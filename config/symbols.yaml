@@ -294,7 +294,7 @@ functions:
     status: matched
     file: src/boot/finalize.c
   - addr: 0x00405420
-    name: SetJmp_00405420
+    name: SetJmp_ZeroAndDirty4
     size: 15
     group: boot
     status: matched
@@ -354,7 +354,7 @@ functions:
     status: matched
     file: src/boot/chain_walk_push_pop.c
   - addr: 0x00405ac0
-    name: Thunk_00405ac0
+    name: Thunk_MStackPush2ChainPrepend
     size: 5
     group: boot
     status: matched
@@ -618,7 +618,7 @@ functions:
     status: matched
     file: src/boot/boot_chain_push_add_sign_flag.c
   - addr: 0x004078e0
-    name: SetJmp_004078e0
+    name: SetJmp_CallPauseScaledStoreAdd
     size: 15
     group: boot
     status: matched
@@ -756,7 +756,7 @@ functions:
     status: matched
     file: src/boot/dirty_double_deref.c
   - addr: 0x00408d20
-    name: SetJmp_00408d20
+    name: SetJmp_BootStateTriple
     size: 15
     group: boot
     status: matched
@@ -1746,13 +1746,13 @@ functions:
     status: matched
     file: src/boot/or_list_loop.c
   - addr: 0x0041fcf0
-    name: Wrapper_0041fcf0
+    name: Wrapper_OrListLoop_004de3f8
     size: 14
     group: boot
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x0041fd00
-    name: Wrapper_0041fd00
+    name: Wrapper_OrListLoop_004d8e80
     size: 14
     group: boot
     status: matched
@@ -2412,7 +2412,7 @@ functions:
     status: matched
     file: src/engine/gated_scaled_chain_setup.c
   - addr: 0x00427460
-    name: Thunk_00427460
+    name: Thunk_BootMod6487eClampAndChainMul10
     size: 5
     group: game
     status: matched
@@ -2658,7 +2658,7 @@ functions:
     status: matched
     file: src/engine/install_self_accum_check.c
   - addr: 0x00428cf0
-    name: SetJmp_00428cf0
+    name: SetJmp_EsiInstallDecCallChain_004294a0
     size: 15
     group: game
     status: matched
@@ -2742,7 +2742,7 @@ functions:
     status: matched
     file: src/engine/scaled_load_jmp.c
   - addr: 0x00429230
-    name: SetJmp_00429230
+    name: SetJmp_EsiInstallBitCallChain_004295a0
     size: 15
     group: game
     status: matched
@@ -2826,7 +2826,7 @@ functions:
     status: matched
     file: src/engine/small_helpers.c
   - addr: 0x004296e0
-    name: Thunk_004296e0
+    name: Thunk_StackPopDispatchTagged_004296e0
     size: 5
     group: game
     status: matched
@@ -2916,7 +2916,7 @@ functions:
     status: matched
     file: src/engine/scaled_array_store.c
   - addr: 0x00429950
-    name: SetJmp_00429950
+    name: SetJmp_ScaledArrStore_00429960
     size: 15
     group: game
     status: matched
@@ -3174,13 +3174,13 @@ functions:
     status: matched
     file: src/engine/dual_mul10_chain_acc.c
   - addr: 0x0042d070
-    name: SetJmp_0042d070
+    name: SetJmp_Distance3DMul10Chain_0042d070
     size: 15
     group: game
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x0042d080
-    name: SetJmp_0042d080
+    name: SetJmp_Distance3DMul10Chain_0042d080
     size: 15
     group: game
     status: matched
@@ -3630,13 +3630,13 @@ functions:
     status: matched
     file: src/engine/call_pause_dirty_lit.c
   - addr: 0x00433940
-    name: Wrapper_00433940
+    name: Wrapper_PackedAdvanceCallTailJmp_004e44f0
     size: 14
     group: game
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x00433950
-    name: Thunk_00433950
+    name: Thunk_ScaledLoadInstallOrCall_00433960
     size: 5
     group: game
     status: matched
@@ -3732,7 +3732,7 @@ functions:
     status: matched
     file: src/engine/install_self_cascade_sequence.c
   - addr: 0x004344a0
-    name: Thunk_004344a0
+    name: Thunk_InstallSelfChainSetB333
     size: 5
     group: game
     status: matched
@@ -3804,7 +3804,7 @@ functions:
     status: matched
     file: src/engine/dispatch_wc_switch.c
   - addr: 0x00434c00
-    name: Thunk_00434c00
+    name: Thunk_PrefixThunkInstallSelf3State
     size: 5
     group: game
     status: matched
@@ -3828,7 +3828,7 @@ functions:
     status: matched
     file: src/engine/install_self_state_countdown.c
   - addr: 0x00434eb0
-    name: Thunk_00434eb0
+    name: Thunk_InstallSelfThreeStateDispatch
     size: 5
     group: game
     status: matched
@@ -3888,7 +3888,7 @@ functions:
     status: matched
     file: src/engine/install_self_dual_path.c
   - addr: 0x00435330
-    name: Thunk_00435330
+    name: Thunk_InstallSelfPacked0x2005
     size: 5
     group: game
     status: matched
@@ -3942,7 +3942,7 @@ functions:
     status: matched
     file: src/engine/install_self_state_push_variants.c
   - addr: 0x00435de0
-    name: Thunk_00435de0
+    name: Thunk_Wrapper_00438ee0_00435de0
     size: 5
     group: game
     status: matched
@@ -4020,7 +4020,7 @@ functions:
     status: matched
     file: src/engine/install_self_chain_set84_80_call_w.c
   - addr: 0x00436490
-    name: Wrapper_00436490
+    name: Wrapper_PackedAdvanceCallTailJmp_004e46d0
     size: 14
     group: game
     status: matched
@@ -4038,13 +4038,13 @@ functions:
     status: matched
     file: src/engine/dual_entry5_way_threshold.c
   - addr: 0x00436760
-    name: Wrapper_00436760
+    name: Wrapper_PackedAdvanceCallTailJmp_004e4708
     size: 14
     group: game
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x00436770
-    name: Wrapper_00436770
+    name: Wrapper_PackedAdvanceCallTailJmp_004e4718
     size: 14
     group: game
     status: matched
@@ -4056,13 +4056,13 @@ functions:
     status: matched
     file: src/engine/multi_thunk_dispatcher9.c
   - addr: 0x004368d0
-    name: Thunk_004368d0
+    name: Thunk_Wrapper_00438ee0_004368d0
     size: 5
     group: game
     status: matched
     file: src/engine/thunks.c
   - addr: 0x004368e0
-    name: Thunk_004368e0
+    name: Thunk_ScaledAddrInit_004368f0
     size: 5
     group: game
     status: matched
@@ -4140,7 +4140,7 @@ functions:
     status: matched
     file: src/engine/install_self_chain4_call.c
   - addr: 0x004377c0
-    name: Wrapper_004377c0
+    name: Wrapper_CmpDualPatchScaledRangeJmp_004e4810
     size: 14
     group: game
     status: matched
@@ -4374,7 +4374,7 @@ functions:
     status: matched
     file: src/engine/dispatch_switch_walk_cmp.c
   - addr: 0x00438c40
-    name: Wrapper_00438c40
+    name: Wrapper_CmpDualPatchScaledRangeJmp_004e4850
     size: 14
     group: game
     status: matched
@@ -4422,13 +4422,13 @@ functions:
     status: matched
     file: src/engine/triple_stub_push_call.c
   - addr: 0x00438ed0
-    name: Wrapper_00438ed0
+    name: Wrapper_CmpDualPatchScaledRangeJmp_004e4950
     size: 14
     group: game
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x00438ee0
-    name: Wrapper_00438ee0
+    name: Wrapper_CmpDualPatchScaledRangeJmp_004e4990
     size: 14
     group: game
     status: matched
@@ -4446,19 +4446,19 @@ functions:
     status: matched
     file: src/engine/push_call_pause_set1_jmp.c
   - addr: 0x00438f50
-    name: SetJmp_00438f50
+    name: SetJmp_StateDispatchYield_00438f50
     size: 15
     group: game
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x00438f60
-    name: SetJmp_00438f60
+    name: SetJmp_StateDispatchYield_00438f60
     size: 15
     group: game
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x00438f70
-    name: SetJmp_00438f70
+    name: SetJmp_StateDispatchYield_00438f70
     size: 15
     group: game
     status: matched
@@ -4518,7 +4518,7 @@ functions:
     status: matched
     file: src/engine/packed_advance_call_tail_jmp.c
   - addr: 0x00439310
-    name: Wrapper_00439310
+    name: Wrapper_ScaledIndexCondCopy_005422f0
     size: 14
     group: game
     status: matched
@@ -4620,7 +4620,7 @@ functions:
     status: matched
     file: src/engine/weighted_sum_clamp_helper.c
   - addr: 0x004399b0
-    name: Thunk_004399b0
+    name: Thunk_GuardedSeq_00433bb0
     size: 5
     group: game
     status: matched
@@ -4662,13 +4662,13 @@ functions:
     status: matched
     file: src/engine/dual_entry_bit_gated.c
   - addr: 0x00439c20
-    name: Thunk_00439c20
+    name: Thunk_SetJmp_00439c30
     size: 5
     group: game
     status: matched
     file: src/engine/thunks.c
   - addr: 0x00439c30
-    name: SetJmp_00439c30
+    name: SetJmp_HitReactionDispatcher
     size: 15
     group: game
     status: matched
@@ -4698,7 +4698,7 @@ functions:
     status: matched
     file: src/engine/install_self_three_state_branch.c
   - addr: 0x00439e30
-    name: Thunk_00439e30
+    name: Thunk_InstallSelfChainSet2011
     size: 5
     group: game
     status: matched
@@ -4740,7 +4740,7 @@ functions:
     status: matched
     file: src/engine/round_ready_fsm_cluster.c
   - addr: 0x0043a540
-    name: Thunk_0043a540
+    name: Thunk_InstallSelfChainSetB333v2
     size: 5
     group: game
     status: matched
@@ -4794,13 +4794,13 @@ functions:
     status: matched
     file: src/engine/state_machine4_arm_cascade.c
   - addr: 0x0043abf0
-    name: Wrapper_0043abf0
+    name: Wrapper_PackedAdvanceCallTailJmp_004e4a58
     size: 14
     group: game
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x0043ac00
-    name: Wrapper_0043ac00
+    name: Wrapper_PackedAdvanceCallTailJmp_004e4a70
     size: 14
     group: game
     status: matched
@@ -5094,13 +5094,13 @@ functions:
     status: matched
     file: src/engine/scaled_add_store.c
   - addr: 0x00440710
-    name: SetJmp_00440710
+    name: SetJmp_AudioBridgeMStackChainCopy_00440710
     size: 15
     group: game
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x00440720
-    name: SetJmp_00440720
+    name: SetJmp_AudioBridgeMStackChainCopy_00440720
     size: 15
     group: game
     status: matched
@@ -5970,91 +5970,91 @@ functions:
     status: matched
     file: src/engine/call_pause_test_byte4_zero_cb.c
   - addr: 0x00451aa0
-    name: SetJmp_00451aa0
+    name: SetJmp_SetJmp_00451ad0_00451aa0
     size: 15
     group: game
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x00451ab0
-    name: SetJmp_00451ab0
+    name: SetJmp_SetJmp_00451ad0_00451ab0
     size: 15
     group: game
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x00451ac0
-    name: SetJmp_00451ac0
+    name: SetJmp_SetJmp_00451ad0_00451ac0
     size: 15
     group: game
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x00451ad0
-    name: SetJmp_00451ad0
+    name: SetJmp_GuardedSeq_00473f10_00451ad0
     size: 15
     group: game
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x00451ae0
-    name: SetJmp_00451ae0
+    name: SetJmp_SetJmp_00451b10_00451ae0
     size: 15
     group: game
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x00451af0
-    name: SetJmp_00451af0
+    name: SetJmp_SetJmp_00451b10_00451af0
     size: 15
     group: game
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x00451b00
-    name: SetJmp_00451b00
+    name: SetJmp_SetJmp_00451b10_00451b00
     size: 15
     group: game
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x00451b10
-    name: SetJmp_00451b10
+    name: SetJmp_GuardedSeq_00473f10_00451b10
     size: 15
     group: game
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x00451b20
-    name: SetJmp_00451b20
+    name: SetJmp_SetJmp_00451b50_00451b20
     size: 15
     group: game
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x00451b30
-    name: SetJmp_00451b30
+    name: SetJmp_SetJmp_00451b50_00451b30
     size: 15
     group: game
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x00451b40
-    name: SetJmp_00451b40
+    name: SetJmp_SetJmp_00451b50_00451b40
     size: 15
     group: game
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x00451b50
-    name: SetJmp_00451b50
+    name: SetJmp_GuardedSeq_00473f10_00451b50
     size: 15
     group: game
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x00451b60
-    name: SetJmp_00451b60
+    name: SetJmp_JuggleFsmCluster_00451b60
     size: 15
     group: game
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x00451b70
-    name: SetJmp_00451b70
+    name: SetJmp_JuggleFsmCluster_00451b70
     size: 15
     group: game
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x00451b80
-    name: SetJmp_00451b80
+    name: SetJmp_JuggleFsmCluster_00451b80
     size: 15
     group: game
     status: matched
@@ -6240,19 +6240,19 @@ functions:
     status: matched
     file: src/engine/two_call_pause_set_jmp2.c
   - addr: 0x004561c0
-    name: SetJmp_004561c0
+    name: SetJmp_CharSelectFsmCluster_004561c0
     size: 15
     group: game
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x004561d0
-    name: SetJmp_004561d0
+    name: SetJmp_CharSelectFsmCluster_004561d0
     size: 15
     group: game
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x004561e0
-    name: SetJmp_004561e0
+    name: SetJmp_CharSelectFsmCluster_004561e0
     size: 15
     group: game
     status: matched
@@ -6648,7 +6648,7 @@ functions:
     status: matched
     file: src/engine/triple_install_jmp.c
   - addr: 0x0045dae0
-    name: Thunk_0045dae0
+    name: Thunk_Thunk_0049cbd0
     size: 5
     group: game
     status: matched
@@ -6708,7 +6708,7 @@ functions:
     status: matched
     file: src/engine/conditional_acc3or4.c
   - addr: 0x0045e0f0
-    name: Thunk_0045e0f0
+    name: Thunk_Thunk_0049cbc0_0045e0f0
     size: 5
     group: game
     status: matched
@@ -6750,13 +6750,13 @@ functions:
     status: matched
     file: src/engine/pending_match_variants.c
   - addr: 0x0045ebf0
-    name: SetJmp_0045ebf0
+    name: SetJmp_SixSubdispatchSpan_0045ebf0
     size: 15
     group: game
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x0045ec00
-    name: SetJmp_0045ec00
+    name: SetJmp_SixSubdispatchSpan_0045ec00
     size: 15
     group: game
     status: matched
@@ -6894,7 +6894,7 @@ functions:
     status: matched
     file: src/engine/install_self_push_arg.c
   - addr: 0x00460250
-    name: Thunk_00460250
+    name: Thunk_GuardedDoubleCallSetJmp
     size: 5
     group: game
     status: matched
@@ -6960,13 +6960,13 @@ functions:
     status: matched
     file: src/engine/push84_call_test_install_jmp.c
   - addr: 0x004609c0
-    name: SetJmp_004609c0
+    name: SetJmp_AlarmCountdownInstall_004609c0
     size: 15
     group: game
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x004609d0
-    name: SetJmp_004609d0
+    name: SetJmp_AlarmCountdownInstall_004609d0
     size: 15
     group: game
     status: matched
@@ -7398,7 +7398,7 @@ functions:
     status: matched
     file: src/engine/install_self5_call_vec_chain.c
   - addr: 0x004647f0
-    name: Thunk_004647f0
+    name: Thunk_StackPopDispatchTagged_004647f0
     size: 5
     group: game
     status: matched
@@ -8100,7 +8100,7 @@ functions:
     status: matched
     file: src/engine/mstack_pop_scaled_chain_plus_thunks.c
   - addr: 0x00471340
-    name: Wrapper_00471340
+    name: Wrapper_ArgSarStoreJmp_004eba28
     size: 14
     group: game
     status: matched
@@ -8502,7 +8502,7 @@ functions:
     status: matched
     file: src/engine/install_self_chain_accum_path.c
   - addr: 0x004753a0
-    name: SetJmp_004753a0
+    name: SetJmp_InstallSelfChainEsi
     size: 15
     group: game
     status: matched
@@ -9096,7 +9096,7 @@ functions:
     status: matched
     file: src/engine/chain_set_call_pause_dispatch.c
   - addr: 0x0047d6d0
-    name: Wrapper_0047d6d0
+    name: Wrapper_ArgSarStoreJmp_004ed440
     size: 14
     group: game
     status: matched
@@ -9222,7 +9222,7 @@ functions:
     status: matched
     file: src/engine/pain_state_cluster.c
   - addr: 0x0047ed80
-    name: Wrapper_0047ed80
+    name: Wrapper_ArgSarStoreJmp_004ed660
     size: 14
     group: game
     status: matched
@@ -9438,7 +9438,7 @@ functions:
     status: matched
     file: src/engine/scaled_lit_load_call.c
   - addr: 0x00481060
-    name: Wrapper_00481060
+    name: Wrapper_IterLoad_0048fd30_004ed980
     size: 14
     group: game
     status: matched
@@ -9786,7 +9786,7 @@ functions:
     status: matched
     file: src/engine/install_self_call_bit_gate.c
   - addr: 0x00483b40
-    name: SetJmp_00483b40
+    name: SetJmp_MStackPush4IndirectCall
     size: 15
     group: game
     status: matched
@@ -9816,7 +9816,7 @@ functions:
     status: matched
     file: src/engine/dual_block_chain_call_install.c
   - addr: 0x00483f20
-    name: SetJmp_00483f20
+    name: SetJmp_InstallSelfTwoTailJmp
     size: 15
     group: game
     status: matched
@@ -9840,7 +9840,7 @@ functions:
     status: matched
     file: src/engine/throw_anim_setup_cluster.c
   - addr: 0x00484470
-    name: Wrapper_00484470
+    name: Wrapper_ArgSarStoreJmp_004ee850
     size: 14
     group: game
     status: matched
@@ -9900,7 +9900,7 @@ functions:
     status: matched
     file: src/engine/dual_block_install_self_with_sibling.c
   - addr: 0x00484d90
-    name: Wrapper_00484d90
+    name: Wrapper_ArgSarStoreJmp_004ee958
     size: 14
     group: game
     status: matched
@@ -9936,7 +9936,7 @@ functions:
     status: matched
     file: src/engine/five_stage_setup_chain.c
   - addr: 0x00485d60
-    name: SetJmp_00485d60
+    name: SetJmp_DualLoadDualStoreJmp
     size: 15
     group: game
     status: matched
@@ -10062,7 +10062,7 @@ functions:
     status: matched
     file: src/engine/const0x2005_store.c
   - addr: 0x00487140
-    name: Wrapper_00487140
+    name: Wrapper_ArgSarStoreJmp_004eeeb0
     size: 14
     group: game
     status: matched
@@ -10122,7 +10122,7 @@ functions:
     status: matched
     file: src/engine/triple_entry_bitset_m_stack.c
   - addr: 0x00487910
-    name: SetJmp_00487910
+    name: SetJmp_InstallSelfMStackIndirect
     size: 15
     group: game
     status: matched
@@ -10200,7 +10200,7 @@ functions:
     status: matched
     file: src/engine/call_pause_dirty_push_call.c
   - addr: 0x00488bd0
-    name: Wrapper_00488bd0
+    name: Wrapper_Cascade5StageInit_004ef1e8
     size: 14
     group: game
     status: matched
@@ -10224,7 +10224,7 @@ functions:
     status: matched
     file: src/engine/call_pause_lit_init_jmp.c
   - addr: 0x00488c60
-    name: Wrapper_00488c60
+    name: Wrapper_Cascade5StageInit_004ef208
     size: 14
     group: game
     status: matched
@@ -10272,7 +10272,7 @@ functions:
     status: matched
     file: src/engine/cj_table_threshold_dispatch.c
   - addr: 0x00489020
-    name: SetJmp_00489020
+    name: SetJmp_ScaledLitLoadCall_00481020
     size: 15
     group: game
     status: matched
@@ -10434,25 +10434,25 @@ functions:
     status: matched
     file: src/engine/and_store_push_call_zero.c
   - addr: 0x0048a250
-    name: Wrapper_0048a250
+    name: Wrapper_ScaledChainPushCall_004ef980
     size: 14
     group: game
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x0048a260
-    name: Wrapper_0048a260
+    name: Wrapper_ScaledChainPushCall_004ef828
     size: 14
     group: game
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x0048a270
-    name: Wrapper_0048a270
+    name: Wrapper_ScaledChainPushCall_004ef948
     size: 14
     group: game
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x0048a280
-    name: Wrapper_0048a280
+    name: Wrapper_ScaledChainPushCall_004ef810
     size: 14
     group: game
     status: matched
@@ -10464,79 +10464,79 @@ functions:
     status: matched
     file: src/engine/dual_branch_word_lookup.c
   - addr: 0x0048a300
-    name: Wrapper_0048a300
+    name: Wrapper_ScaledChainPushCall_004ef898
     size: 14
     group: game
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x0048a310
-    name: Wrapper_0048a310
+    name: Wrapper_ScaledChainPushCall_004ef910
     size: 14
     group: game
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x0048a320
-    name: Wrapper_0048a320
+    name: Wrapper_ScaledChainPushCall_004ef900
     size: 14
     group: game
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x0048a330
-    name: Wrapper_0048a330
+    name: Wrapper_ScaledChainPushCall_004ef878
     size: 14
     group: game
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x0048a340
-    name: Wrapper_0048a340
+    name: Wrapper_ScaledChainPushCall_004ef8c8
     size: 14
     group: game
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x0048a350
-    name: Wrapper_0048a350
+    name: Wrapper_ScaledChainPushCall_004ef858
     size: 14
     group: game
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x0048a360
-    name: Wrapper_0048a360
+    name: Wrapper_ScaledChainPushCall_004ef868
     size: 14
     group: game
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x0048a370
-    name: Wrapper_0048a370
+    name: Wrapper_ScaledChainPushCall_004ef920
     size: 14
     group: game
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x0048a380
-    name: Wrapper_0048a380
+    name: Wrapper_ScaledChainPushCall_004ef8e0
     size: 14
     group: game
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x0048a390
-    name: Wrapper_0048a390
+    name: Wrapper_ScaledChainPushCall_004ef8f0
     size: 14
     group: game
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x0048a3a0
-    name: Wrapper_0048a3a0
+    name: Wrapper_ScaledChainPushCall_004ef8b0
     size: 14
     group: game
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x0048a3b0
-    name: Wrapper_0048a3b0
+    name: Wrapper_ScaledChainPushCall_004ef888
     size: 14
     group: game
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x0048a3c0
-    name: Wrapper_0048a3c0
+    name: Wrapper_ScaledChainPushCall_004ef838
     size: 14
     group: game
     status: matched
@@ -10596,7 +10596,7 @@ functions:
     status: matched
     file: src/engine/init_state_dual_call48ac70.c
   - addr: 0x0048acc0
-    name: SetJmp_0048acc0
+    name: SetJmp_Phase3InstallTableCheck
     size: 15
     group: game
     status: matched
@@ -11100,7 +11100,7 @@ functions:
     status: matched
     file: src/engine/guarded_dual_const2_and_toggle.c
   - addr: 0x0048ec20
-    name: Wrapper_0048ec20
+    name: Wrapper_IterLoad_0048fd30_004f12a0
     size: 14
     group: game
     status: matched
@@ -11340,7 +11340,7 @@ functions:
     status: matched
     file: src/engine/gated_scaled_sub_sat.c
   - addr: 0x0048fbc0
-    name: Wrapper_0048fbc0
+    name: Wrapper_IterLoad_0048fd30_004f12a8
     size: 14
     group: game
     status: matched
@@ -11388,7 +11388,7 @@ functions:
     status: matched
     file: src/engine/guarded_triple_call_swap_jmp.c
   - addr: 0x0048ff30
-    name: Wrapper_0048ff30
+    name: Wrapper_IterLoad_0048fd30_004f12ac
     size: 14
     group: game
     status: matched
@@ -12642,43 +12642,43 @@ functions:
     status: matched
     file: src/engine/scenegraph.c
   - addr: 0x0049cb70
-    name: Thunk_0049cb70
+    name: Thunk_NodeChainMaskMatch
     size: 5
     group: game
     status: matched
     file: src/engine/thunks.c
   - addr: 0x0049cb80
-    name: Thunk_0049cb80
+    name: Thunk_LoadShlDerefCallSkip
     size: 5
     group: game
     status: matched
     file: src/engine/thunks.c
   - addr: 0x0049cb90
-    name: SetJmp_0049cb90
+    name: SetJmp_Thunk_LinkedListBitMaskSearch
     size: 15
     group: game
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x0049cba0
-    name: Thunk_0049cba0
+    name: Thunk_LinkedListBitMaskSearch
     size: 5
     group: game
     status: matched
     file: src/engine/thunks.c
   - addr: 0x0049cbb0
-    name: Thunk_0049cbb0
+    name: Thunk_Thunk_0049cbc0_0049cbb0
     size: 5
     group: game
     status: matched
     file: src/engine/thunks.c
   - addr: 0x0049cbc0
-    name: Thunk_0049cbc0
+    name: Thunk_ScaledNeg1SetPause
     size: 5
     group: game
     status: matched
     file: src/engine/thunks.c
   - addr: 0x0049cbd0
-    name: Thunk_0049cbd0
+    name: Thunk_ChainNodeInit
     size: 5
     group: game
     status: matched
@@ -12690,13 +12690,13 @@ functions:
     status: matched
     file: src/engine/thunks.c
   - addr: 0x0049cbf0
-    name: Thunk_0049cbf0
+    name: Thunk_ZeroLargeBlock
     size: 5
     group: game
     status: matched
     file: src/engine/thunks.c
   - addr: 0x0049cc00
-    name: Thunk_0049cc00
+    name: Thunk_StructArrayWalkCondCall
     size: 5
     group: game
     status: matched
@@ -12858,7 +12858,7 @@ functions:
     status: matched
     file: src/engine/dual_guard_state_machine_variants.c
   - addr: 0x0049eb10
-    name: Wrapper_0049eb10
+    name: Wrapper_SaveCallRestore_00000266
     size: 14
     group: game
     status: matched
@@ -13182,13 +13182,13 @@ functions:
     status: matched
     file: src/audio/install_self_pause_gate.c
   - addr: 0x004a1ac0
-    name: SetJmp_004a1ac0
+    name: SetJmp_Push16Call_004a1ac0
     size: 15
     group: audio
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x004a1ad0
-    name: SetJmp_004a1ad0
+    name: SetJmp_Push16Call_004a1ad0
     size: 15
     group: audio
     status: matched
@@ -15156,7 +15156,7 @@ functions:
     status: matched
     file: src/engine/app_init_misc2.c
   - addr: 0x004b5ac0
-    name: Thunk_004b5ac0
+    name: Thunk_AppInit_Misc2
     size: 5
     group: engine.geo
     status: matched
@@ -15600,7 +15600,7 @@ functions:
     status: matched
     file: src/engine/geo.c
   - addr: 0x004bd5c0
-    name: Thunk_004bd5c0
+    name: Thunk_LoadGeoAsset_Default
     size: 5
     group: engine.geo
     status: matched
@@ -15648,7 +15648,7 @@ functions:
     status: matched
     file: src/engine/table_walk_bounded_cmp.c
   - addr: 0x004bd8d0
-    name: Thunk_004bd8d0
+    name: Thunk_Helper_GeoLoadPre
     size: 5
     group: engine.geo
     status: matched
@@ -15930,7 +15930,7 @@ functions:
     status: matched
     file: src/engine/sort_lut.c
   - addr: 0x004bf320
-    name: Thunk_004bf320
+    name: Thunk_FlushDrawQueue
     size: 5
     group: engine.scenegraph
     status: matched
@@ -16224,7 +16224,7 @@ functions:
     status: matched
     file: src/platform/exit.c
   - addr: 0x004c48b0
-    name: Thunk_004c48b0
+    name: Thunk_ExitGame
     size: 5
     group: platform.win32
     status: matched

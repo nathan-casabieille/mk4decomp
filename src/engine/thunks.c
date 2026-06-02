@@ -27,13 +27,13 @@ extern void ScaledAddrInit_004368f0(void);     /* 0x004368f0 */
 extern void InstallSelfPacked0x2005(void);     /* 0x00437a90 */
 extern void InstallSelfChainSetB333(void);     /* 0x00437b60 */
 extern void InstallSelfChainSetB333v2(void);     /* 0x00437f00 */
-extern void Wrapper_00438ee0(void);     /* 0x00438ee0 */
+extern void Wrapper_CmpDualPatchScaledRangeJmp_004e4990(void);     /* 0x00438ee0 */
 extern void PrefixThunkInstallSelf3State(void);     /* 0x00438f80 */
-extern void SetJmp_00439c30(void);     /* 0x00439c30 */
+extern void SetJmp_HitReactionDispatcher(void);     /* 0x00439c30 */
 extern void InstallSelfChainSet2011(void);     /* 0x00439ec0 */
 extern void GuardedDoubleCallSetJmp(void);     /* 0x00460260 */
-extern void Thunk_0049cbc0(void);     /* 0x0049cbc0 */
-extern void Thunk_0049cbd0(void);     /* 0x0049cbd0 */
+extern void Thunk_ScaledNeg1SetPause(void);     /* 0x0049cbc0 */
+extern void Thunk_ChainNodeInit(void);     /* 0x0049cbd0 */
 extern void AppInit_Misc2(void);     /* 0x004b5a80 */
 extern void Helper_GeoLoadPre(void);     /* 0x004bd570 */
 extern void LoadGeoAsset_Default(void);     /* 0x004bd5b0 */
@@ -42,100 +42,100 @@ extern void ExitGame(void);     /* 0x004c4870 */
 
 /* The thunks. */
 /* @addr 0x00405ac0 */
-void Thunk_00405ac0(void) { MStackPush2ChainPrepend(); }
+void Thunk_MStackPush2ChainPrepend(void) { MStackPush2ChainPrepend(); }
 
 /* @addr 0x00427460 */
-void Thunk_00427460(void) { BootMod6487eClampAndChainMul10(); }
+void Thunk_BootMod6487eClampAndChainMul10(void) { BootMod6487eClampAndChainMul10(); }
 
 /* @addr 0x004296e0 */
-void Thunk_004296e0(void) { StackPopDispatchTagged(); }
+void Thunk_StackPopDispatchTagged_004296e0(void) { StackPopDispatchTagged(); }
 
 /* @addr 0x00433950 */
-void Thunk_00433950(void) { ScaledLoadInstallOrCall_00433960(); }
+void Thunk_ScaledLoadInstallOrCall_00433960(void) { ScaledLoadInstallOrCall_00433960(); }
 
 /* @addr 0x004344a0 */
-void Thunk_004344a0(void) { InstallSelfChainSetB333(); }
+void Thunk_InstallSelfChainSetB333(void) { InstallSelfChainSetB333(); }
 
 /* @addr 0x00434c00 */
-void Thunk_00434c00(void) { PrefixThunkInstallSelf3State(); }
+void Thunk_PrefixThunkInstallSelf3State(void) { PrefixThunkInstallSelf3State(); }
 
 /* @addr 0x00434eb0 */
-void Thunk_00434eb0(void) { InstallSelfThreeStateDispatch(); }
+void Thunk_InstallSelfThreeStateDispatch(void) { InstallSelfThreeStateDispatch(); }
 
 /* @addr 0x00435330 */
-void Thunk_00435330(void) { InstallSelfPacked0x2005(); }
+void Thunk_InstallSelfPacked0x2005(void) { InstallSelfPacked0x2005(); }
 
 /* @addr 0x00435de0 */
-void Thunk_00435de0(void) { Wrapper_00438ee0(); }
+void Thunk_Wrapper_00438ee0_00435de0(void) { Wrapper_CmpDualPatchScaledRangeJmp_004e4990(); }
 
 /* @addr 0x004368d0 */
-void Thunk_004368d0(void) { Wrapper_00438ee0(); }
+void Thunk_Wrapper_00438ee0_004368d0(void) { Wrapper_CmpDualPatchScaledRangeJmp_004e4990(); }
 
 /* @addr 0x004368e0 */
-void Thunk_004368e0(void) { ScaledAddrInit_004368f0(); }
+void Thunk_ScaledAddrInit_004368f0(void) { ScaledAddrInit_004368f0(); }
 
 /* @addr 0x004399b0 */
-void Thunk_004399b0(void) { GuardedSeq_00433bb0(); }
+void Thunk_GuardedSeq_00433bb0(void) { GuardedSeq_00433bb0(); }
 
 /* @addr 0x00439c20 */
-void Thunk_00439c20(void) { SetJmp_00439c30(); }
+void Thunk_SetJmp_00439c30(void) { SetJmp_HitReactionDispatcher(); }
 
 /* @addr 0x00439e30 */
-void Thunk_00439e30(void) { InstallSelfChainSet2011(); }
+void Thunk_InstallSelfChainSet2011(void) { InstallSelfChainSet2011(); }
 
 /* @addr 0x0043a540 */
-void Thunk_0043a540(void) { InstallSelfChainSetB333v2(); }
+void Thunk_InstallSelfChainSetB333v2(void) { InstallSelfChainSetB333v2(); }
 
 /* @addr 0x0045dae0 */
-void Thunk_0045dae0(void) { Thunk_0049cbd0(); }
+void Thunk_Thunk_0049cbd0(void) { Thunk_ChainNodeInit(); }
 
 /* @addr 0x0045e0f0 */
-void Thunk_0045e0f0(void) { Thunk_0049cbc0(); }
+void Thunk_Thunk_0049cbc0_0045e0f0(void) { Thunk_ScaledNeg1SetPause(); }
 
 /* @addr 0x00460250 */
-void Thunk_00460250(void) { GuardedDoubleCallSetJmp(); }
+void Thunk_GuardedDoubleCallSetJmp(void) { GuardedDoubleCallSetJmp(); }
 
 /* @addr 0x004647f0 */
-void Thunk_004647f0(void) { StackPopDispatchTagged(); }
+void Thunk_StackPopDispatchTagged_004647f0(void) { StackPopDispatchTagged(); }
 
 /* @addr 0x0049cb70 */
-void Thunk_0049cb70(void) { NodeChainMaskMatch(); }
+void Thunk_NodeChainMaskMatch(void) { NodeChainMaskMatch(); }
 
 /* @addr 0x0049cb80 */
-void Thunk_0049cb80(void) { LoadShlDerefCallSkip(); }
+void Thunk_LoadShlDerefCallSkip(void) { LoadShlDerefCallSkip(); }
 
 /* @addr 0x0049cba0 */
-void Thunk_0049cba0(void) { LinkedListBitMaskSearch(); }
+void Thunk_LinkedListBitMaskSearch(void) { LinkedListBitMaskSearch(); }
 
 /* @addr 0x0049cbb0 */
-void Thunk_0049cbb0(void) { Thunk_0049cbc0(); }
+void Thunk_Thunk_0049cbc0_0049cbb0(void) { Thunk_ScaledNeg1SetPause(); }
 
 /* @addr 0x0049cbc0 */
-void Thunk_0049cbc0(void) { ScaledNeg1SetPause(); }
+void Thunk_ScaledNeg1SetPause(void) { ScaledNeg1SetPause(); }
 
 /* @addr 0x0049cbd0 */
-void Thunk_0049cbd0(void) { ChainNodeInit(); }
+void Thunk_ChainNodeInit(void) { ChainNodeInit(); }
 
 /* @addr 0x0049cbe0 */
 void Helper_TickFrame_PostFight(void) { BootScheduledNodeTimerWalk(); }
 
 /* @addr 0x0049cbf0 */
-void Thunk_0049cbf0(void) { ZeroLargeBlock(); }
+void Thunk_ZeroLargeBlock(void) { ZeroLargeBlock(); }
 
 /* @addr 0x0049cc00 */
-void Thunk_0049cc00(void) { StructArrayWalkCondCall(); }
+void Thunk_StructArrayWalkCondCall(void) { StructArrayWalkCondCall(); }
 
 /* @addr 0x004b5ac0 */
-void Thunk_004b5ac0(void) { AppInit_Misc2(); }
+void Thunk_AppInit_Misc2(void) { AppInit_Misc2(); }
 
 /* @addr 0x004bd5c0 */
-void Thunk_004bd5c0(void) { LoadGeoAsset_Default(); }
+void Thunk_LoadGeoAsset_Default(void) { LoadGeoAsset_Default(); }
 
 /* @addr 0x004bd8d0 */
-void Thunk_004bd8d0(void) { Helper_GeoLoadPre(); }
+void Thunk_Helper_GeoLoadPre(void) { Helper_GeoLoadPre(); }
 
 /* @addr 0x004bf320 */
-void Thunk_004bf320(void) { FlushDrawQueue(); }
+void Thunk_FlushDrawQueue(void) { FlushDrawQueue(); }
 
 /* @addr 0x004c48b0 */
-void Thunk_004c48b0(void) { ExitGame(); }
+void Thunk_ExitGame(void) { ExitGame(); }

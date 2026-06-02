@@ -16,8 +16,8 @@ extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall(int, int);
-extern void SetJmp_0049cb90(void);
-extern void Thunk_0049cbd0(void);
+extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
+extern void Thunk_ChainNodeInit(void);
 extern void ScaledZeroFour(void);
 extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
@@ -37,7 +37,7 @@ extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
-extern void Wrapper_00436490(void);
+extern void Wrapper_PackedAdvanceCallTailJmp_004e46d0(void);
 extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
@@ -45,7 +45,7 @@ extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
-extern void Thunk_004bd5c0(void);
+extern void Thunk_LoadGeoAsset_Default(void);
 extern void AllocSlotPushTripleGlobals(void);
 extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
@@ -75,14 +75,14 @@ extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
 extern void ChainDirtyBitWalker(void);
-extern void Wrapper_0048a350(void);
-extern void Wrapper_0048a3a0(void);
+extern void Wrapper_ScaledChainPushCall_004ef858(void);
+extern void Wrapper_ScaledChainPushCall_004ef8b0(void);
 extern void Helper_DownloadSetup(void);
 extern void MStackPush3CmpCall(void);
-extern void Wrapper_0048ec20(void);
+extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
-extern void SetJmp_00438f50(void);
-extern void SetJmp_00438f60(void);
+extern void SetJmp_StateDispatchYield_00438f50(void);
+extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_0042b6c0(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0045dd90 (202b game) - chain-pick + arg-based scaledInit setup.
- *   if (g_fightGroupHead == 0) jmp Thunk_0045e0f0.
+ *   if (g_fightGroupHead == 0) jmp Thunk_Thunk_0049cbc0_0045e0f0.
  *   ecx = g_cj_00542058; clear g_xformScratch2088; load 0x54-field into g_walkCallback/70/74;
  *   3 nested tests; if min/max swap; check eax<>g_eventQueueChild.
  *   If lo: g_xformScratch2088 = 1.
@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_phaseThunkState;
 extern void EventPacketDecoder(void);
-extern void Thunk_0045e0f0(void);
+extern void Thunk_Thunk_0049cbc0_0045e0f0(void);
 
 __declspec(naked) void ChainPickArgScaledInit(void) {
     __asm {
@@ -126,7 +126,7 @@ __declspec(naked) void ChainPickArgScaledInit(void) {
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     Thunk_0045e0f0
+        jmp     Thunk_Thunk_0049cbc0_0045e0f0
         mov     ecx, dword ptr [g_cj_00542058]
         mov     dword ptr [g_xformScratch2088], 0
         mov     edx, dword ptr [ecx*4 + 0x54]

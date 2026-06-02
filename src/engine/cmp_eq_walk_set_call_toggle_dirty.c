@@ -17,7 +17,7 @@ void CmpEqWalkSetCallToggleDirty(void) {
     if (g_fightGroupHead != g_player1NodeIdx) {
         g_walkCallback = (void(*)(void))0x45;
     }
-    SetJmp_0049cb90();
+    SetJmp_Thunk_LinkedListBitMaskSearch();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 4) {
         g_xformDirtyFlags = g_xformDirtyFlags | 1;

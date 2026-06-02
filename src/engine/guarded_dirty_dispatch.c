@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
  *   else: walk = 9; jmp T3.
  */
 extern void MStackPush3CmpCall(void);
-extern void SetJmp_00438f60(void);
+extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void ScaledChain3c74Jmp(void);
 extern void CallPauseDirtyConstJmp(void);
 extern void StateDispatchYield(void);
@@ -22,7 +22,7 @@ void GuardedDirtyDispatch(void) {
     MStackPush3CmpCall();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 1) {
-        SetJmp_00438f60();
+        SetJmp_StateDispatchYield_00438f60();
         return;
     }
     ScaledChain3c74Jmp();

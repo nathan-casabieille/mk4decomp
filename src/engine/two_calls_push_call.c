@@ -22,13 +22,13 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void ScaledMove48to58(void);
-extern void Wrapper_0048a280(void);
+extern void Wrapper_ScaledChainPushCall_004ef810(void);
 extern int ArgSarStoreJmp(void *p);
 extern void *g_dispatchSave1312_004ef080;
 void TwoCallsPushCall(void) {
     ScaledMove48to58();
     if (g_framePauseFlag != 0) return;
-    Wrapper_0048a280();
+    Wrapper_ScaledChainPushCall_004ef810();
     if (g_framePauseFlag != 0) return;
     ArgSarStoreJmp(&g_dispatchSave1312_004ef080);
 }

@@ -26,19 +26,19 @@ extern unsigned int g_acc_00542078;
  *   ret
  */
 extern unsigned int g_tickFlagF;
-extern void Thunk_004399b0(void);
+extern void Thunk_GuardedSeq_00433bb0(void);
 extern void WeightedSumClampHelper(void);
-extern void Thunk_004399b0(void);
+extern void Thunk_GuardedSeq_00433bb0(void);
 int Cmp2CallDirtyCall(void) {
     unsigned int v = g_tickFlagF;
     g_walkCallback = (void (*)(void))v;
     if (v == 2) {
-        Thunk_004399b0();
+        Thunk_GuardedSeq_00433bb0();
         return 1;
     }
     WeightedSumClampHelper();
     if ((g_xformDirtyFlags & 1) == 0) {
-        Thunk_004399b0();
+        Thunk_GuardedSeq_00433bb0();
         return 1;
     }
     return 0;

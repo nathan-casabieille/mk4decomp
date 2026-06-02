@@ -16,8 +16,8 @@ extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall(int, int);
-extern void SetJmp_0049cb90(void);
-extern void Thunk_0049cbd0(void);
+extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
+extern void Thunk_ChainNodeInit(void);
 extern void ScaledZeroFour(void);
 extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
@@ -37,7 +37,7 @@ extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
-extern void Wrapper_00436490(void);
+extern void Wrapper_PackedAdvanceCallTailJmp_004e46d0(void);
 extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
@@ -45,7 +45,7 @@ extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
-extern void Thunk_004bd5c0(void);
+extern void Thunk_LoadGeoAsset_Default(void);
 extern void AllocSlotPushTripleGlobals(void);
 extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
@@ -75,14 +75,14 @@ extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
 extern void ChainDirtyBitWalker(void);
-extern void Wrapper_0048a350(void);
-extern void Wrapper_0048a3a0(void);
+extern void Wrapper_ScaledChainPushCall_004ef858(void);
+extern void Wrapper_ScaledChainPushCall_004ef8b0(void);
 extern void Helper_DownloadSetup(void);
 extern void MStackPush3CmpCall(void);
-extern void Wrapper_0048ec20(void);
+extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
-extern void SetJmp_00438f50(void);
-extern void SetJmp_00438f60(void);
+extern void SetJmp_StateDispatchYield_00438f50(void);
+extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_0042b6c0(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void PendingMatch_004a3400(void);
-extern void Thunk_004c48b0(void);
+extern void Thunk_ExitGame(void);
 
 /*
  * GameMode_EnterScene - 149b audio deinit variant of AudioModeInit.
@@ -119,7 +119,7 @@ extern void Thunk_004c48b0(void);
  *     SixCallSeqPushImm; g_eventQueueWorkType=0; call Push16Call; if !paused
  *     tail-jmp PendingMatch_004a3400; ret.
  *   Pad-aligned bare-ret entry (0x004a27a0).
- *   Pad-aligned tail-jmp Thunk_004c48b0 (0x004a27b0).
+ *   Pad-aligned tail-jmp Thunk_ExitGame (0x004a27b0).
  */
 extern unsigned int g_byte_004d50b4;
 extern unsigned int g_audioStateMachineVar6_004f31cc;
@@ -172,8 +172,8 @@ extern void ScaledArrStore_004285c0(void);
 extern void ScaledClearTripleCallJmp(void);
 extern void ScaledOr4DirtyClear(void);
 extern void ScaledSet1OnNonZero(void);
-extern void SetJmp_004a1ac0(void);
-extern void SetJmp_004a1ad0(void);
+extern void SetJmp_Push16Call_004a1ac0(void);
+extern void SetJmp_Push16Call_004a1ad0(void);
 extern void SixCallSeqPushImm(void);
 extern void TablePushAccumTailJmp(void);
 extern void TestCmpZeroFour(void);
@@ -310,7 +310,7 @@ __declspec(naked) void GameMode_EnterScene(void)
         _emit   90h
         _emit   90h
         _emit   90h
-        jmp     Thunk_004c48b0
+        jmp     Thunk_ExitGame
     }
 }
 
@@ -1618,7 +1618,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         mov      eax, dword ptr [g_baseSel]
         cmp      dword ptr [eax*4 + 0x30], ebp
         jle      L_5b5a
-        call     SetJmp_004a1ad0
+        call     SetJmp_Push16Call_004a1ad0
         mov      eax, dword ptr [g_baseSel]
         mov      ecx, dword ptr [eax*4 + 0x30]
         dec      ecx
@@ -1653,7 +1653,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         dec      edx
         cmp      ecx, edx
         jge      L_5be3
-        call     SetJmp_004a1ad0
+        call     SetJmp_Push16Call_004a1ad0
         mov      eax, dword ptr [g_baseSel]
         mov      ecx, dword ptr [eax*4 + 0x30]
         inc      ecx
@@ -1690,7 +1690,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         jle      L_5c15
         mov      byte ptr [eax*8 + g_dispatchVar13_005435a4], 0
     L_5c15:
-        call     SetJmp_004a1ac0
+        call     SetJmp_Push16Call_004a1ac0
     L_5c1a:
         mov      eax, dword ptr [g_byte_004d50b4]
         test     al, 4
@@ -1705,7 +1705,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         jns      L_5c45
         mov      byte ptr [eax*8 + g_byte_005435a0], 0xe
     L_5c45:
-        call     SetJmp_004a1ac0
+        call     SetJmp_Push16Call_004a1ac0
         mov      eax, dword ptr [g_byte_004d50b4]
     L_5c4f:
         test     al, 8
@@ -1722,7 +1722,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         jle      L_5c7a
         mov      byte ptr [eax*8 + g_byte_005435a0], 0
     L_5c7a:
-        call     SetJmp_004a1ac0
+        call     SetJmp_Push16Call_004a1ac0
     L_5c7f:
         call     IsNonzeroBoolFlagged
         test     eax, eax
@@ -1761,7 +1761,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         test     cl, cl
         sete     dl
         mov      byte ptr [eax*8 + g_byteIndexArr], dl
-        call     SetJmp_004a1ac0
+        call     SetJmp_Push16Call_004a1ac0
     L_5d0c:
         call     RetZero_004a1c40
         test     eax, eax

@@ -16,8 +16,8 @@ extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall(int, int);
-extern void SetJmp_0049cb90(void);
-extern void Thunk_0049cbd0(void);
+extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
+extern void Thunk_ChainNodeInit(void);
 extern void ScaledZeroFour(void);
 extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
@@ -37,7 +37,7 @@ extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
-extern void Wrapper_00436490(void);
+extern void Wrapper_PackedAdvanceCallTailJmp_004e46d0(void);
 extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
@@ -45,7 +45,7 @@ extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
-extern void Thunk_004bd5c0(void);
+extern void Thunk_LoadGeoAsset_Default(void);
 extern void AllocSlotPushTripleGlobals(void);
 extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
@@ -75,14 +75,14 @@ extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
 extern void ChainDirtyBitWalker(void);
-extern void Wrapper_0048a350(void);
-extern void Wrapper_0048a3a0(void);
+extern void Wrapper_ScaledChainPushCall_004ef858(void);
+extern void Wrapper_ScaledChainPushCall_004ef8b0(void);
 extern void Helper_DownloadSetup(void);
 extern void MStackPush3CmpCall(void);
-extern void Wrapper_0048ec20(void);
+extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
-extern void SetJmp_00438f50(void);
-extern void SetJmp_00438f60(void);
+extern void SetJmp_StateDispatchYield_00438f50(void);
+extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_0042b6c0(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
@@ -111,15 +111,15 @@ extern unsigned int g_fightAxisPosY;
 /*
  * AudioState50b4BitDispatcher - 309b 4-bit dispatcher on g_byte_004d50b4 (cl/ch).
  *   edi = 0x1c20 (channel id?). For bits 0x01, 0x02 (movsx byte from table at esi[chain*9*4 + N]):
- *     if !=-1: store back at chain[+0x30]; SetJmp_004a1ad0. Then g_eventQueueChild = edi.
+ *     if !=-1: store back at chain[+0x30]; SetJmp_Push16Call_004a1ad0. Then g_eventQueueChild = edi.
  *   For bits 0x04, 0x08 (dword load from esi[chain*9*4 + 4/+8] → g_currentNodeIdx): if !=0: clear
  *     g_xformDirtyFlags bit 0; call eax (indirect); if paused: pop+ret; test bit 1, if not set:
  *     call 0x004a1ac0 (sister). Then g_eventQueueChild = edi.
  *   Pop+ret.
  */
 extern unsigned int g_byte_004d50b4;
-extern void SetJmp_004a1ac0(void);
-extern void SetJmp_004a1ad0(void);
+extern void SetJmp_Push16Call_004a1ac0(void);
+extern void SetJmp_Push16Call_004a1ad0(void);
 
 __declspec(naked) void AudioState50b4BitDispatcher(void)
 {
@@ -143,7 +143,7 @@ __declspec(naked) void AudioState50b4BitDispatcher(void)
         mov     dword ptr [g_walkCallback], eax
         je      short L_a32_b1_innerSkip
         mov     dword ptr [edx*4 + 0x30], eax
-        call    SetJmp_004a1ad0
+        call    SetJmp_Push16Call_004a1ad0
         mov     ecx, dword ptr [g_byte_004d50b4]
     L_a32_b1_innerSkip:
         mov     dword ptr [g_eventQueueChild], edi
@@ -161,7 +161,7 @@ __declspec(naked) void AudioState50b4BitDispatcher(void)
         mov     dword ptr [g_walkCallback], eax
         je      short L_a32_b2_innerSkip
         mov     dword ptr [edx*4 + 0x30], eax
-        call    SetJmp_004a1ad0
+        call    SetJmp_Push16Call_004a1ad0
         mov     ecx, dword ptr [g_byte_004d50b4]
     L_a32_b2_innerSkip:
         mov     dword ptr [g_eventQueueChild], edi
@@ -185,7 +185,7 @@ __declspec(naked) void AudioState50b4BitDispatcher(void)
         jne     short L_a32_popRet
         test    byte ptr [g_xformDirtyFlags], 1
         jne     short L_a32_b4_skipSetJmp
-        call    SetJmp_004a1ac0
+        call    SetJmp_Push16Call_004a1ac0
     L_a32_b4_skipSetJmp:
         mov     ecx, dword ptr [g_byte_004d50b4]
     L_a32_b4_innerSkip:
@@ -210,7 +210,7 @@ __declspec(naked) void AudioState50b4BitDispatcher(void)
         jne     short L_a32_popRet
         test    byte ptr [g_xformDirtyFlags], 1
         jne     short L_a32_b8_skipSetJmp
-        call    SetJmp_004a1ac0
+        call    SetJmp_Push16Call_004a1ac0
     L_a32_b8_skipSetJmp:
     L_a32_b8_innerSkip:
         mov     dword ptr [g_eventQueueChild], edi

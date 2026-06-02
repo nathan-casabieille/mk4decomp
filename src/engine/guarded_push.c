@@ -16,12 +16,12 @@
 
 /* Externs. */
 extern void CopyJmp_00406ba0(void);
-extern void Thunk_00433950(void);
+extern void Thunk_ScaledLoadInstallOrCall_00433960(void);
 extern void ScaledLoadInstallOrCall_00433960(void);
 extern int  PackedAdvanceCallTailJmp(int arg);
 extern void CopyJmp_0043a620(void);
 extern int  ArgSarStoreJmp(int arg);
-extern void Wrapper_0048a370(void);
+extern void Wrapper_ScaledChainPushCall_004ef920(void);
 extern void DualMul10AndDispatchChain(void);
 extern int  ArgSar_Set0_Jmp(int arg);
 
@@ -34,7 +34,7 @@ void GuardedPushCall_004338a0(void) {
 
 /* @addr 0x004338c0 */
 void GuardedPushCall_004338c0(void) {
-    Thunk_00433950();
+    Thunk_ScaledLoadInstallOrCall_00433960();
     if (g_framePauseFlag) return;
     PackedAdvanceCallTailJmp(0x004e44a8);
 }
@@ -55,7 +55,7 @@ void GuardedPushCall_0046a560(void) {
 
 /* @addr 0x00482990 */
 void GuardedPushCall_00482990(void) {
-    Wrapper_0048a370();
+    Wrapper_ScaledChainPushCall_004ef920();
     if (g_framePauseFlag) return;
     ArgSarStoreJmp(0x004ee158);
 }

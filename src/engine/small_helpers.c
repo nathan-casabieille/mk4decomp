@@ -16,10 +16,10 @@ extern unsigned int g_baseSel;
  *   mov     [g_xformDirtyFlags], eax
  *   jmp     +0xf
  */
-extern void Thunk_004296e0(void);
+extern void Thunk_StackPopDispatchTagged_004296e0(void);
 void DirtyOrJmp(void) {
     g_xformDirtyFlags = g_xformDirtyFlags | 1;
-    Thunk_004296e0();
+    Thunk_StackPopDispatchTagged_004296e0();
 }
 
 /* @addr 0x00421c20 (18b)

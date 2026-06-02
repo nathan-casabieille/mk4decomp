@@ -19,131 +19,131 @@ extern void Cascade5StageInit(unsigned int arg);   /* 0x00491520 */
 
 /* The wrappers. */
 /* @addr 0x0041fcf0 */
-void Wrapper_0041fcf0(void) { OrListLoop(0x004de3f8u); }
+void Wrapper_OrListLoop_004de3f8(void) { OrListLoop(0x004de3f8u); }
 
 /* @addr 0x0041fd00 */
-void Wrapper_0041fd00(void) { OrListLoop(0x004d8e80u); }
+void Wrapper_OrListLoop_004d8e80(void) { OrListLoop(0x004d8e80u); }
 
 /* @addr 0x00433940 */
-void Wrapper_00433940(void) { PackedAdvanceCallTailJmp(0x004e44f0u); }
+void Wrapper_PackedAdvanceCallTailJmp_004e44f0(void) { PackedAdvanceCallTailJmp(0x004e44f0u); }
 
 /* @addr 0x00436490 */
-void Wrapper_00436490(void) { PackedAdvanceCallTailJmp(0x004e46d0u); }
+void Wrapper_PackedAdvanceCallTailJmp_004e46d0(void) { PackedAdvanceCallTailJmp(0x004e46d0u); }
 
 /* @addr 0x00436760 */
-void Wrapper_00436760(void) { PackedAdvanceCallTailJmp(0x004e4708u); }
+void Wrapper_PackedAdvanceCallTailJmp_004e4708(void) { PackedAdvanceCallTailJmp(0x004e4708u); }
 
 /* @addr 0x00436770 */
-void Wrapper_00436770(void) { PackedAdvanceCallTailJmp(0x004e4718u); }
+void Wrapper_PackedAdvanceCallTailJmp_004e4718(void) { PackedAdvanceCallTailJmp(0x004e4718u); }
 
 /* @addr 0x004377c0 */
-void Wrapper_004377c0(void) { CmpDualPatchScaledRangeJmp(0x004e4810u); }
+void Wrapper_CmpDualPatchScaledRangeJmp_004e4810(void) { CmpDualPatchScaledRangeJmp(0x004e4810u); }
 
 /* @addr 0x00438c40 */
-void Wrapper_00438c40(void) { CmpDualPatchScaledRangeJmp(0x004e4850u); }
+void Wrapper_CmpDualPatchScaledRangeJmp_004e4850(void) { CmpDualPatchScaledRangeJmp(0x004e4850u); }
 
 /* @addr 0x00438ed0 */
-void Wrapper_00438ed0(void) { CmpDualPatchScaledRangeJmp(0x004e4950u); }
+void Wrapper_CmpDualPatchScaledRangeJmp_004e4950(void) { CmpDualPatchScaledRangeJmp(0x004e4950u); }
 
 /* @addr 0x00438ee0 */
-void Wrapper_00438ee0(void) { CmpDualPatchScaledRangeJmp(0x004e4990u); }
+void Wrapper_CmpDualPatchScaledRangeJmp_004e4990(void) { CmpDualPatchScaledRangeJmp(0x004e4990u); }
 
 /* @addr 0x00439310 */
-void Wrapper_00439310(void) { ScaledIndexCondCopy(0x005422f0u); }
+void Wrapper_ScaledIndexCondCopy_005422f0(void) { ScaledIndexCondCopy(0x005422f0u); }
 
 /* @addr 0x0043abf0 */
-void Wrapper_0043abf0(void) { PackedAdvanceCallTailJmp(0x004e4a58u); }
+void Wrapper_PackedAdvanceCallTailJmp_004e4a58(void) { PackedAdvanceCallTailJmp(0x004e4a58u); }
 
 /* @addr 0x0043ac00 */
-void Wrapper_0043ac00(void) { PackedAdvanceCallTailJmp(0x004e4a70u); }
+void Wrapper_PackedAdvanceCallTailJmp_004e4a70(void) { PackedAdvanceCallTailJmp(0x004e4a70u); }
 
 /* @addr 0x00471340 */
-void Wrapper_00471340(void) { ArgSarStoreJmp(0x004eba28u); }
+void Wrapper_ArgSarStoreJmp_004eba28(void) { ArgSarStoreJmp(0x004eba28u); }
 
 /* @addr 0x0047d6d0 */
-void Wrapper_0047d6d0(void) { ArgSarStoreJmp(0x004ed440u); }
+void Wrapper_ArgSarStoreJmp_004ed440(void) { ArgSarStoreJmp(0x004ed440u); }
 
 /* @addr 0x0047ed80 */
-void Wrapper_0047ed80(void) { ArgSarStoreJmp(0x004ed660u); }
+void Wrapper_ArgSarStoreJmp_004ed660(void) { ArgSarStoreJmp(0x004ed660u); }
 
 /* @addr 0x00481060 */
-void Wrapper_00481060(void) { IterLoad_0048fd30(0x004ed980u); }
+void Wrapper_IterLoad_0048fd30_004ed980(void) { IterLoad_0048fd30(0x004ed980u); }
 
 /* @addr 0x00484470 */
-void Wrapper_00484470(void) { ArgSarStoreJmp(0x004ee850u); }
+void Wrapper_ArgSarStoreJmp_004ee850(void) { ArgSarStoreJmp(0x004ee850u); }
 
 /* @addr 0x00484d90 */
-void Wrapper_00484d90(void) { ArgSarStoreJmp(0x004ee958u); }
+void Wrapper_ArgSarStoreJmp_004ee958(void) { ArgSarStoreJmp(0x004ee958u); }
 
 /* @addr 0x00487140 */
-void Wrapper_00487140(void) { ArgSarStoreJmp(0x004eeeb0u); }
+void Wrapper_ArgSarStoreJmp_004eeeb0(void) { ArgSarStoreJmp(0x004eeeb0u); }
 
 /* @addr 0x00488bd0 */
-void Wrapper_00488bd0(void) { Cascade5StageInit(0x004ef1e8u); }
+void Wrapper_Cascade5StageInit_004ef1e8(void) { Cascade5StageInit(0x004ef1e8u); }
 
 /* @addr 0x00488c60 */
-void Wrapper_00488c60(void) { Cascade5StageInit(0x004ef208u); }
+void Wrapper_Cascade5StageInit_004ef208(void) { Cascade5StageInit(0x004ef208u); }
 
 /* @addr 0x0048a250 */
-void Wrapper_0048a250(void) { ScaledChainPushCall(0x004ef980u); }
+void Wrapper_ScaledChainPushCall_004ef980(void) { ScaledChainPushCall(0x004ef980u); }
 
 /* @addr 0x0048a260 */
-void Wrapper_0048a260(void) { ScaledChainPushCall(0x004ef828u); }
+void Wrapper_ScaledChainPushCall_004ef828(void) { ScaledChainPushCall(0x004ef828u); }
 
 /* @addr 0x0048a270 */
-void Wrapper_0048a270(void) { ScaledChainPushCall(0x004ef948u); }
+void Wrapper_ScaledChainPushCall_004ef948(void) { ScaledChainPushCall(0x004ef948u); }
 
 /* @addr 0x0048a280 */
-void Wrapper_0048a280(void) { ScaledChainPushCall(0x004ef810u); }
+void Wrapper_ScaledChainPushCall_004ef810(void) { ScaledChainPushCall(0x004ef810u); }
 
 /* @addr 0x0048a300 */
-void Wrapper_0048a300(void) { ScaledChainPushCall(0x004ef898u); }
+void Wrapper_ScaledChainPushCall_004ef898(void) { ScaledChainPushCall(0x004ef898u); }
 
 /* @addr 0x0048a310 */
-void Wrapper_0048a310(void) { ScaledChainPushCall(0x004ef910u); }
+void Wrapper_ScaledChainPushCall_004ef910(void) { ScaledChainPushCall(0x004ef910u); }
 
 /* @addr 0x0048a320 */
-void Wrapper_0048a320(void) { ScaledChainPushCall(0x004ef900u); }
+void Wrapper_ScaledChainPushCall_004ef900(void) { ScaledChainPushCall(0x004ef900u); }
 
 /* @addr 0x0048a330 */
-void Wrapper_0048a330(void) { ScaledChainPushCall(0x004ef878u); }
+void Wrapper_ScaledChainPushCall_004ef878(void) { ScaledChainPushCall(0x004ef878u); }
 
 /* @addr 0x0048a340 */
-void Wrapper_0048a340(void) { ScaledChainPushCall(0x004ef8c8u); }
+void Wrapper_ScaledChainPushCall_004ef8c8(void) { ScaledChainPushCall(0x004ef8c8u); }
 
 /* @addr 0x0048a350 */
-void Wrapper_0048a350(void) { ScaledChainPushCall(0x004ef858u); }
+void Wrapper_ScaledChainPushCall_004ef858(void) { ScaledChainPushCall(0x004ef858u); }
 
 /* @addr 0x0048a360 */
-void Wrapper_0048a360(void) { ScaledChainPushCall(0x004ef868u); }
+void Wrapper_ScaledChainPushCall_004ef868(void) { ScaledChainPushCall(0x004ef868u); }
 
 /* @addr 0x0048a370 */
-void Wrapper_0048a370(void) { ScaledChainPushCall(0x004ef920u); }
+void Wrapper_ScaledChainPushCall_004ef920(void) { ScaledChainPushCall(0x004ef920u); }
 
 /* @addr 0x0048a380 */
-void Wrapper_0048a380(void) { ScaledChainPushCall(0x004ef8e0u); }
+void Wrapper_ScaledChainPushCall_004ef8e0(void) { ScaledChainPushCall(0x004ef8e0u); }
 
 /* @addr 0x0048a390 */
-void Wrapper_0048a390(void) { ScaledChainPushCall(0x004ef8f0u); }
+void Wrapper_ScaledChainPushCall_004ef8f0(void) { ScaledChainPushCall(0x004ef8f0u); }
 
 /* @addr 0x0048a3a0 */
-void Wrapper_0048a3a0(void) { ScaledChainPushCall(0x004ef8b0u); }
+void Wrapper_ScaledChainPushCall_004ef8b0(void) { ScaledChainPushCall(0x004ef8b0u); }
 
 /* @addr 0x0048a3b0 */
-void Wrapper_0048a3b0(void) { ScaledChainPushCall(0x004ef888u); }
+void Wrapper_ScaledChainPushCall_004ef888(void) { ScaledChainPushCall(0x004ef888u); }
 
 /* @addr 0x0048a3c0 */
-void Wrapper_0048a3c0(void) { ScaledChainPushCall(0x004ef838u); }
+void Wrapper_ScaledChainPushCall_004ef838(void) { ScaledChainPushCall(0x004ef838u); }
 
 /* @addr 0x0048ec20 */
-void Wrapper_0048ec20(void) { IterLoad_0048fd30(0x004f12a0u); }
+void Wrapper_IterLoad_0048fd30_004f12a0(void) { IterLoad_0048fd30(0x004f12a0u); }
 
 /* @addr 0x0048fbc0 */
-void Wrapper_0048fbc0(void) { IterLoad_0048fd30(0x004f12a8u); }
+void Wrapper_IterLoad_0048fd30_004f12a8(void) { IterLoad_0048fd30(0x004f12a8u); }
 
 /* @addr 0x0048ff30 */
-void Wrapper_0048ff30(void) { IterLoad_0048fd30(0x004f12acu); }
+void Wrapper_IterLoad_0048fd30_004f12ac(void) { IterLoad_0048fd30(0x004f12acu); }
 
 /* @addr 0x0049eb10 */
-void Wrapper_0049eb10(void) { SaveCallRestore(0x00000266u); }
+void Wrapper_SaveCallRestore_00000266(void) { SaveCallRestore(0x00000266u); }
 

@@ -16,8 +16,8 @@ extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall(int, int);
-extern void SetJmp_0049cb90(void);
-extern void Thunk_0049cbd0(void);
+extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
+extern void Thunk_ChainNodeInit(void);
 extern void ScaledZeroFour(void);
 extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
@@ -37,7 +37,7 @@ extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
-extern void Wrapper_00436490(void);
+extern void Wrapper_PackedAdvanceCallTailJmp_004e46d0(void);
 extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
@@ -45,7 +45,7 @@ extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
-extern void Thunk_004bd5c0(void);
+extern void Thunk_LoadGeoAsset_Default(void);
 extern void AllocSlotPushTripleGlobals(void);
 extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
@@ -75,14 +75,14 @@ extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
 extern void ChainDirtyBitWalker(void);
-extern void Wrapper_0048a350(void);
-extern void Wrapper_0048a3a0(void);
+extern void Wrapper_ScaledChainPushCall_004ef858(void);
+extern void Wrapper_ScaledChainPushCall_004ef8b0(void);
 extern void Helper_DownloadSetup(void);
 extern void MStackPush3CmpCall(void);
-extern void Wrapper_0048ec20(void);
+extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
-extern void SetJmp_00438f50(void);
-extern void SetJmp_00438f60(void);
+extern void SetJmp_StateDispatchYield_00438f50(void);
+extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_0042b6c0(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
@@ -109,18 +109,18 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void CallPauseTestByte4ZeroCB(void);
-extern void SetJmp_00451aa0(void);
-extern void SetJmp_00451ab0(void);
-extern void SetJmp_00451ac0(void);
-extern void SetJmp_00451ae0(void);
-extern void SetJmp_00451af0(void);
-extern void SetJmp_00451b00(void);
-extern void SetJmp_00451b20(void);
-extern void SetJmp_00451b30(void);
-extern void SetJmp_00451b40(void);
-extern void SetJmp_00451b60(void);
-extern void SetJmp_00451b70(void);
-extern void SetJmp_00451b80(void);
+extern void SetJmp_SetJmp_00451ad0_00451aa0(void);
+extern void SetJmp_SetJmp_00451ad0_00451ab0(void);
+extern void SetJmp_SetJmp_00451ad0_00451ac0(void);
+extern void SetJmp_SetJmp_00451b10_00451ae0(void);
+extern void SetJmp_SetJmp_00451b10_00451af0(void);
+extern void SetJmp_SetJmp_00451b10_00451b00(void);
+extern void SetJmp_SetJmp_00451b50_00451b20(void);
+extern void SetJmp_SetJmp_00451b50_00451b30(void);
+extern void SetJmp_SetJmp_00451b50_00451b40(void);
+extern void SetJmp_JuggleFsmCluster_00451b60(void);
+extern void SetJmp_JuggleFsmCluster_00451b70(void);
+extern void SetJmp_JuggleFsmCluster_00451b80(void);
 
 __declspec(naked) void State6CycleFsm(void)
 {
@@ -142,11 +142,11 @@ __declspec(naked) void State6CycleFsm(void)
         jne      L_1a45
         test     byte ptr [g_xformDirtyFlags], 4
         je       short L_184d
-        call     SetJmp_00451ab0
+        call     SetJmp_SetJmp_00451ad0_00451ab0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1a45
-        call     SetJmp_00451af0
+        call     SetJmp_SetJmp_00451b10_00451af0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1a45
@@ -166,11 +166,11 @@ __declspec(naked) void State6CycleFsm(void)
         jne      L_1a45
         test     byte ptr [g_xformDirtyFlags], 4
         je       short L_18ae
-        call     SetJmp_00451ac0
+        call     SetJmp_SetJmp_00451ad0_00451ac0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1a45
-        call     SetJmp_00451b00
+        call     SetJmp_SetJmp_00451b10_00451b00
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1a45
@@ -190,11 +190,11 @@ __declspec(naked) void State6CycleFsm(void)
         jne      L_1a45
         test     byte ptr [g_xformDirtyFlags], 4
         je       short L_190f
-        call     SetJmp_00451b20
+        call     SetJmp_SetJmp_00451b50_00451b20
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1a45
-        call     SetJmp_00451b60
+        call     SetJmp_JuggleFsmCluster_00451b60
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1a45
@@ -214,11 +214,11 @@ __declspec(naked) void State6CycleFsm(void)
         jne      L_1a45
         test     byte ptr [g_xformDirtyFlags], 4
         je       short L_1970
-        call     SetJmp_00451b30
+        call     SetJmp_SetJmp_00451b50_00451b30
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1a45
-        call     SetJmp_00451b70
+        call     SetJmp_JuggleFsmCluster_00451b70
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1a45
@@ -238,11 +238,11 @@ __declspec(naked) void State6CycleFsm(void)
         jne      short L_1a45
         test     byte ptr [g_xformDirtyFlags], 4
         je       short L_19cd
-        call     SetJmp_00451b40
+        call     SetJmp_SetJmp_00451b50_00451b40
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1a45
-        call     SetJmp_00451b80
+        call     SetJmp_JuggleFsmCluster_00451b80
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1a45
@@ -262,11 +262,11 @@ __declspec(naked) void State6CycleFsm(void)
         jne      short L_1a45
         test     byte ptr [g_xformDirtyFlags], 4
         je       short L_1a22
-        call     SetJmp_00451aa0
+        call     SetJmp_SetJmp_00451ad0_00451aa0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1a45
-        call     SetJmp_00451ae0
+        call     SetJmp_SetJmp_00451b10_00451ae0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1a45

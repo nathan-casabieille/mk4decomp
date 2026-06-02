@@ -16,8 +16,8 @@ extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall(int, int);
-extern void SetJmp_0049cb90(void);
-extern void Thunk_0049cbd0(void);
+extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
+extern void Thunk_ChainNodeInit(void);
 extern void ScaledZeroFour(void);
 extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
@@ -37,7 +37,7 @@ extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
-extern void Wrapper_00436490(void);
+extern void Wrapper_PackedAdvanceCallTailJmp_004e46d0(void);
 extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
@@ -45,7 +45,7 @@ extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
-extern void Thunk_004bd5c0(void);
+extern void Thunk_LoadGeoAsset_Default(void);
 extern void AllocSlotPushTripleGlobals(void);
 extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
@@ -75,14 +75,14 @@ extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
 extern void ChainDirtyBitWalker(void);
-extern void Wrapper_0048a350(void);
-extern void Wrapper_0048a3a0(void);
+extern void Wrapper_ScaledChainPushCall_004ef858(void);
+extern void Wrapper_ScaledChainPushCall_004ef8b0(void);
 extern void Helper_DownloadSetup(void);
 extern void MStackPush3CmpCall(void);
-extern void Wrapper_0048ec20(void);
+extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
-extern void SetJmp_00438f50(void);
-extern void SetJmp_00438f60(void);
+extern void SetJmp_StateDispatchYield_00438f50(void);
+extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_0042b6c0(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY;
  *     first, then this function's own entry 1 (call -0x8b → 0x4a7e00); same
  *     +0x30==3 conditional restore tail.
  *   (9b NOP padding to 0x4a7eb0.)
- *   Entry 5 (offset 0xb0, big): calls SetJmp_004a1ac0 and DrainQueueCallEach,
+ *   Entry 5 (offset 0xb0, big): calls SetJmp_Push16Call_004a1ac0 and DrainQueueCallEach,
  *     walks 24-byte-stride records at 0x004f3c20..0x004f3d40 calling
  *     MStackPush2ChainLLInsert for each; then iterates g_audioStateMachine0_004f3ae4 records at +0x34
  *     stride 0x24, then g_audioStateMachine1_004f3ae8 records at +0x48 stride 0x24, and
@@ -136,7 +136,7 @@ extern void DecOrDirty_004a7de0(void);
 extern void DrainQueueCallEach(void);
 extern void IncBoundedDirty(void);
 extern void MStackPush2ChainLLInsert(void);
-extern void SetJmp_004a1ac0(void);
+extern void SetJmp_Push16Call_004a1ac0(void);
 
 __declspec(naked) void Audio4EntryScopeDispatch(void) {
     __asm {
@@ -219,7 +219,7 @@ __declspec(naked) void Audio4EntryScopeDispatch(void) {
         /* entry 5 (offset 0xb0) */
     L_a4s_entry5:
         push    esi
-        call    SetJmp_004a1ac0
+        call    SetJmp_Push16Call_004a1ac0
         call    DrainQueueCallEach
         mov     esi, 0x004f3c20
     L_a4s_loop1:

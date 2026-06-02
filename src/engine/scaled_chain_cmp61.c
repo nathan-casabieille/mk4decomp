@@ -11,7 +11,7 @@ extern unsigned int g_scaledInit_00542044;
  *   3-level scaled chain (0x3c, 0x30, 0); cmp 0x61 → jmp T1; cmp 0x69 → jmp T2.
  */
 extern void StageGameProgressCluster(void);
-extern void Wrapper_0048a360(void);
+extern void Wrapper_ScaledChainPushCall_004ef868(void);
 void ScaledChainCmp61(void) {
     unsigned int v;
     v = ((ScenegraphNode *)(g_baseSel * 4))->child_a;
@@ -27,5 +27,5 @@ void ScaledChainCmp61(void) {
     if (v == 0x69) {
         return;
     }
-    Wrapper_0048a360();
+    Wrapper_ScaledChainPushCall_004ef868();
 }

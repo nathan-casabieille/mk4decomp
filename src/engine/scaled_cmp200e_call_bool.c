@@ -20,11 +20,11 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     eax, 1
  *   ret
  */
-extern void Thunk_004399b0(void);
+extern void Thunk_GuardedSeq_00433bb0(void);
 int ScaledCmp200eCallBool(void) {
     unsigned int v = ((ScenegraphNode *)(g_baseSel * 4))->fsm_state;
     g_eventQueueNotMask = v;
     if (v != 0x200e) return 0;
-    Thunk_004399b0();
+    Thunk_GuardedSeq_00433bb0();
     return 1;
 }

@@ -18,7 +18,7 @@
 
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_scaledInit_00542048;
-extern void Thunk_0049cbb0(void);
+extern void Thunk_Thunk_0049cbc0_0049cbb0(void);
 extern void MStackPush4IndirectCall(void);
 extern void DualScaledStoreZero(void);
 
@@ -29,7 +29,7 @@ void IterLoad_0048e680(int arg) {
     g_scaledInit_00542048 = *(unsigned int *)(p * 4);
     p++;
     g_eventQueueTotal = p;
-    Thunk_0049cbb0();
+    Thunk_Thunk_0049cbc0_0049cbb0();
 }
 
 /* @addr 0x0048fd30 */

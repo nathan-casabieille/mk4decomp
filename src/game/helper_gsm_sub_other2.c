@@ -12,7 +12,7 @@
  *   table at 0x4f4fd0 via Asc/Desc moves if bit 0/1 of input set, and if
  *   bit 5 set transition to state 0x45. Then reads movsx eax,
  *   [g_dispatchSave1481_00ab42d0*8 + 0x4f4fd4] (entry-type tag), subtracts 0x11 and
- *   dispatches: type 0x11 (eax==0) → call Thunk_004c48b0; type 0x12 →
+ *   dispatches: type 0x11 (eax==0) → call Thunk_ExitGame; type 0x12 →
  *   fallthrough; type 0x13 → AppInit_Misc8, and on
  *   g_demoModeFlag non-zero transition to state 0x45. Tail-calls
  *   DrawMenu(0x4f4fd0, g_dispatchSave1481_00ab42d0) and returns the current state.
@@ -28,7 +28,7 @@ extern void DrawMenu(void);
 extern void Menu_PollNavInput(void);
 extern void Menu_FindNextSelectable(void);
 extern void Menu_FindPrevSelectable(void);
-extern void Thunk_004c48b0(void);
+extern void Thunk_ExitGame(void);
 
 __declspec(naked) void Menu_InsertCDDialog(void) {
     __asm {
@@ -101,7 +101,7 @@ __declspec(naked) void Menu_InsertCDDialog(void) {
         jne     short L_mps_drawTail
         test    bl, 0x10
         je      short L_mps_drawTail
-        call    Thunk_004c48b0
+        call    Thunk_ExitGame
         jmp     short L_mps_drawTail
     L_mps_type12:
         test    esi, esi

@@ -25,7 +25,7 @@ extern unsigned int g_acc_00542078;
  *   ret
  */
 extern unsigned int g_table_00535ddc;
-extern void Wrapper_0048ec20(void);
+extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void DualCallPauseJmpDual(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void GuardedDirtyDispatch(void);
@@ -36,7 +36,7 @@ void CmpccccCallPauseDirtyJmp(void) {
         DualCallPauseJmpDual();
         return;
     }
-    Wrapper_0048ec20();
+    Wrapper_IterLoad_0048fd30_004f12a0();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 1) != 0) {
         GuardedDirtyDispatch();

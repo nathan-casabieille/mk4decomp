@@ -23,12 +23,12 @@ extern unsigned int g_scaledInit_00542044;
 extern void DualCondMatchSet(void);
 extern int ArgSarStoreJmp(void *);
 extern void *g_dispatchSave1313_004ef1d0;
-extern void Wrapper_00488bd0(void);
+extern void Wrapper_Cascade5StageInit_004ef1e8(void);
 void CallPauseDirtyPushCall(void) {
     DualCondMatchSet();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 1) == 0) {
-        Wrapper_00488bd0();
+        Wrapper_Cascade5StageInit_004ef1e8();
         return;
     }
     ArgSarStoreJmp(&g_dispatchSave1313_004ef1d0);

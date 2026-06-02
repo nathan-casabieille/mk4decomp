@@ -13,12 +13,12 @@ extern unsigned int g_baseSel;
  *   jmp     T1
  *   jmp     T2
  */
-extern void Wrapper_0048a320(void);
-extern void Wrapper_0048a310(void);
+extern void Wrapper_ScaledChainPushCall_004ef900(void);
+extern void Wrapper_ScaledChainPushCall_004ef910(void);
 void CmpJmpTwoBranch(void) {
     if ((int)g_eventQueueChild < 5) {
-        Wrapper_0048a320();
+        Wrapper_ScaledChainPushCall_004ef900();
         return;
     }
-    Wrapper_0048a310();
+    Wrapper_ScaledChainPushCall_004ef910();
 }

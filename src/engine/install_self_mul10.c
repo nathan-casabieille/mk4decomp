@@ -16,8 +16,8 @@ extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall(int, int);
-extern void SetJmp_0049cb90(void);
-extern void Thunk_0049cbd0(void);
+extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
+extern void Thunk_ChainNodeInit(void);
 extern void ScaledZeroFour(void);
 extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
@@ -37,7 +37,7 @@ extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
-extern void Wrapper_00436490(void);
+extern void Wrapper_PackedAdvanceCallTailJmp_004e46d0(void);
 extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
@@ -45,7 +45,7 @@ extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
-extern void Thunk_004bd5c0(void);
+extern void Thunk_LoadGeoAsset_Default(void);
 extern void AllocSlotPushTripleGlobals(void);
 extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
@@ -75,14 +75,14 @@ extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
 extern void ChainDirtyBitWalker(void);
-extern void Wrapper_0048a350(void);
-extern void Wrapper_0048a3a0(void);
+extern void Wrapper_ScaledChainPushCall_004ef858(void);
+extern void Wrapper_ScaledChainPushCall_004ef8b0(void);
 extern void Helper_DownloadSetup(void);
 extern void MStackPush3CmpCall(void);
-extern void Wrapper_0048ec20(void);
+extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
-extern void SetJmp_00438f50(void);
-extern void SetJmp_00438f60(void);
+extern void SetJmp_StateDispatchYield_00438f50(void);
+extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_0042b6c0(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00481c70 (194b game) - install-self with Mul10 of two globals.
  *   esi = base*4; flag = [esi+0x84]; clear.
  *   if (flag != 0): call MStackCall_00406740; pause? -> end; call CallSetPause; ret.
- *   else: call Wrapper_0048a250; pause? -> end;
+ *   else: call Wrapper_ScaledChainPushCall_004ef980; pause? -> end;
  *     eax = g_currentNodeFlags * 10; ecx = g_xformScratch2088 * 10;
  *     g_currentNodeFlags = eax; g_xformScratch2088 = ecx;
  *     chain[g_fightGroupHead + 0x6c] = eax; chain[+0x74] = ecx;
@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void CallSetPause(void);
 extern void MStackCall_00406740(void);
-extern void Wrapper_0048a250(void);
+extern void Wrapper_ScaledChainPushCall_004ef980(void);
 
 extern unsigned int g_matrixStack_arr;
 
@@ -146,7 +146,7 @@ __declspec(naked) void InstallSelfMul10(void) {
         call    CallSetPause
         pop     esi
         ret
-        call    Wrapper_0048a250
+        call    Wrapper_ScaledChainPushCall_004ef980
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

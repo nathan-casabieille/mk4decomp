@@ -12,9 +12,9 @@ extern unsigned int g_baseSel;
  *   mov     [g_eventQueueCurrent], -1
  *   jmp     T
  */
-extern void Thunk_0049cc00(void);
+extern void Thunk_StructArrayWalkCondCall(void);
 void DualConstJmpNeg1(void) {
     g_walkCallback = (void(*)(void))0x71;
     g_eventQueueCurrent = 0xffffffff;
-    Thunk_0049cc00();
+    Thunk_StructArrayWalkCondCall();
 }

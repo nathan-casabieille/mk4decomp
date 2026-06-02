@@ -16,7 +16,7 @@ extern unsigned int g_phaseTimer;
  *   ret
  */
 extern void Cmp2CallDirtyCall(void);
-extern void Wrapper_00439310(void);
+extern void Wrapper_ScaledIndexCondCopy_005422f0(void);
 extern unsigned int g_table_00535ddc;
 extern void TriEntryGateMain(void);
 extern void GuardedSeq_00433bb0(void);
@@ -24,7 +24,7 @@ extern void PrefixThunkInstallSelf3State(void);
 void DualCallTestPauseRange(void) {
     int state_y;
     if (((int (*)(void))Cmp2CallDirtyCall)() != 0) return;
-    Wrapper_00439310();
+    Wrapper_ScaledIndexCondCopy_005422f0();
     if (g_framePauseFlag != 0) return;
     if ((int)g_walkCallback < 0) {
         TriEntryGateMain();

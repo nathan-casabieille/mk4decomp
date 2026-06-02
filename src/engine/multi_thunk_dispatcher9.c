@@ -16,8 +16,8 @@ extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall(int, int);
-extern void SetJmp_0049cb90(void);
-extern void Thunk_0049cbd0(void);
+extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
+extern void Thunk_ChainNodeInit(void);
 extern void ScaledZeroFour(void);
 extern void WalkCbSubMul10(void);
 extern void Mul10Tail(unsigned int a, unsigned int b);
@@ -37,7 +37,7 @@ extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
-extern void Wrapper_00436490(void);
+extern void Wrapper_PackedAdvanceCallTailJmp_004e46d0(void);
 extern void MoveFsmCluster(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void InstallSelfFullPath(void);
@@ -45,7 +45,7 @@ extern void InstallSelfCountdownChain(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
 extern void TripleVecAccCallStore(void);
-extern void Thunk_004bd5c0(void);
+extern void Thunk_LoadGeoAsset_Default(void);
 extern void AllocSlotPushTripleGlobals(void);
 extern void MStackPop4Rewrite(void);
 extern void Push70CallScaleArith(void);
@@ -75,14 +75,14 @@ extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
 extern void ChainDirtyBitWalker(void);
-extern void Wrapper_0048a350(void);
-extern void Wrapper_0048a3a0(void);
+extern void Wrapper_ScaledChainPushCall_004ef858(void);
+extern void Wrapper_ScaledChainPushCall_004ef8b0(void);
 extern void Helper_DownloadSetup(void);
 extern void MStackPush3CmpCall(void);
-extern void Wrapper_0048ec20(void);
+extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
-extern void SetJmp_00438f50(void);
-extern void SetJmp_00438f60(void);
+extern void SetJmp_StateDispatchYield_00438f50(void);
+extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_0042b6c0(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
@@ -110,15 +110,15 @@ extern unsigned int g_fightAxisPosY;
 
 extern void CallPauseMStackPushSet2Jmp(void);
 extern void ScaledChainSignDirtyToggle(void);
-extern void Wrapper_00436760(void);
-extern void Wrapper_00436770(void);
+extern void Wrapper_PackedAdvanceCallTailJmp_004e4708(void);
+extern void Wrapper_PackedAdvanceCallTailJmp_004e4718(void);
 extern void MultiThunkDispatcher9(void);
 
 /* @addr 0x004366d0 (137b game) - 5-way state threshold dispatcher with two entry points.
  *   Block A (+0x00): threshold checks on g_table_00535ddc; jmp GuardedSeq/MStackPush;
  *     fallback: push string, call PackedAdvanceCallTailJmp.
  *   Block B (+0x30): call Cmp2CallDirtyCall+ScaledChainSignDirtyToggle; if !pause & bit-clear: jmp GuardedSeq;
- *     else cascade 3 state-threshold gates jumping to Wrapper_00436760/70/80 or GuardedSeq.
+ *     else cascade 3 state-threshold gates jumping to Wrapper_PackedAdvanceCallTailJmp_004e4708/70/80 or GuardedSeq.
  */
 extern void GuardedSeq_00433bb0(void);
 extern void PackedAdvanceCallTailJmp(void);
@@ -161,11 +161,11 @@ __declspec(naked) void DualEntry5WayThreshold(void) {
         cmp     eax, 0x00030000
         _emit   7dh
         _emit   05h
-        jmp     Wrapper_00436770
+        jmp     Wrapper_PackedAdvanceCallTailJmp_004e4718
         cmp     eax, 0x00040000
         _emit   7dh
         _emit   05h
-        jmp     Wrapper_00436760
+        jmp     Wrapper_PackedAdvanceCallTailJmp_004e4708
         jmp     GuardedSeq_00433bb0
         ret
     }

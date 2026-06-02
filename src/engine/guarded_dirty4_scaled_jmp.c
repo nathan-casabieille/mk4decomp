@@ -11,12 +11,12 @@ extern unsigned int g_scaledInit_00542044;
  *   pause → ret; call F3; pause → ret; walk = 0x4ec9e8 >> 2;
  *   jmp T2.
  */
-extern void SetJmp_00405420(void);
+extern void SetJmp_ZeroAndDirty4(void);
 extern void ScaledLoadStore(void);
 extern void TripleChainSetupDualCall(void);
 extern unsigned int g_table_004ec9e8;
 void GuardedDirty4ScaledJmp(void) {
-    SetJmp_00405420();
+    SetJmp_ZeroAndDirty4();
     if (g_framePauseFlag != 0) {
         return;
     }

@@ -12,12 +12,12 @@ extern unsigned int g_scaledInit_00542044;
  *   testb 1,[dirty]; jne ret; load arg1; eventQueueWorkType = arg2;
  *   pendingNodeType = arg1; call F2.
  */
-extern void Thunk_0049cb70(void);
+extern void Thunk_NodeChainMaskMatch(void);
 /* AllocNode declared in engine/scenegraph.h */
 void SetWalkCurCallPauseDirty(int arg1, int arg2) {
     g_walkCallback = (unsigned int)arg2;
     g_eventQueueCurrent = 0xffff;
-    Thunk_0049cb70();
+    Thunk_NodeChainMaskMatch();
     if (g_framePauseFlag != 0) {
         return;
     }

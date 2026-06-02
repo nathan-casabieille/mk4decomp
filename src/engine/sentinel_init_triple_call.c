@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_phase1ModelChain_0053e35c;
 extern unsigned int g_dispatchSave415_00541dbc;
 extern void DualEntryInitCmp(void);
-extern void Thunk_0049cbf0(void);
+extern void Thunk_ZeroLargeBlock(void);
 extern void Init6Globals(void);
 extern void PendingMatch_0045c8e0(void);
 void SentinelInitTripleCall(void) {
@@ -23,7 +23,7 @@ void SentinelInitTripleCall(void) {
     g_dispatchSave415_00541dbc = 0x8a9dcbef;
     DualEntryInitCmp();
     if (g_framePauseFlag) return;
-    Thunk_0049cbf0();
+    Thunk_ZeroLargeBlock();
     if (g_framePauseFlag) return;
     Init6Globals();
     if (g_framePauseFlag) return;

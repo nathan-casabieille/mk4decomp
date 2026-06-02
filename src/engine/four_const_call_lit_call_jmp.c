@@ -29,7 +29,7 @@ extern unsigned int g_phaseTimer;
 
 extern void *g_lit_004ed7e0;
 extern void *g_lit_004ed7f0;
-extern void Wrapper_0048ff30(void);
+extern void Wrapper_IterLoad_0048fd30_004f12ac(void);
 extern int  TripleScaledChainStore(void *p);
 extern void StageEventStartCluster(void);
 
@@ -39,7 +39,7 @@ void FourConstCallLitCallJmp_0047fec0(void) {
     g_phaseTimer = 5;
     g_walkCallback = (void(*)(void))0x8000;
     g_eventQueueCurrent = 0;
-    Wrapper_0048ff30();
+    Wrapper_IterLoad_0048fd30_004f12ac();
     if (g_framePauseFlag) return;
     TripleScaledChainStore(&g_lit_004ed7e0);
     if (g_framePauseFlag) return;
@@ -52,7 +52,7 @@ void FourConstCallLitCallJmp_0047ff20(void) {
     g_phaseTimer = 5;
     g_walkCallback = (void(*)(void))0x8000;
     g_eventQueueCurrent = 0;
-    Wrapper_0048ff30();
+    Wrapper_IterLoad_0048fd30_004f12ac();
     if (g_framePauseFlag) return;
     TripleScaledChainStore(&g_lit_004ed7f0);
     if (g_framePauseFlag) return;

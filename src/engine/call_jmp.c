@@ -9,14 +9,14 @@
  * tail-jumps into B.
  */
 
-extern void Wrapper_0041fcf0(void);
+extern void Wrapper_OrListLoop_004de3f8(void);
 extern void PendingMatch_0043bdd0(void);
 extern void TestCallPush4Zero(void);
 extern void Helper_GeoLoadPost(void);
 
 /* @addr 0x00467d30 */
 void CallJmp(void) {
-    Wrapper_0041fcf0();
+    Wrapper_OrListLoop_004de3f8();
     PendingMatch_0043bdd0();
 }
 
