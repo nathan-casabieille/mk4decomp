@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00483de0 (308b game) - dual-block: entry-call chain + install-self body.
  *   Block A (0..0x4d): chain[baseSel*4+0x74] = g_walkCallback.
  *     Call GateDispatch6c; if pause ret. Call CopyJmp; if pause ret.
- *     If bit0(0054208c): tail-jmp TwoCallTail_00481380.
+ *     If bit0(0054208c): tail-jmp TwoCallTail_GateDispatch6c_then_CjTableThresholdDispatch_then_AggressorRunInitCluster.
  *     Else: call ScaledMove48to58; if pause ret.
  *     Push 0x004ee7d8; call IterStepDualStore; pop; if pause ret.
  *     Push 0x004ee7e0; call ArgSarStoreJmp; pop; ret.
@@ -126,7 +126,7 @@ extern void EsiInstallDecCallChain_004294a0(void);
 extern void GateDispatch6c(void);
 extern void ScaledMove48to58(void);
 extern void SetJmp_InstallSelfTwoTailJmp(void);
-extern void TwoCallTail_00481380(void);
+extern void TwoCallTail_GateDispatch6c_then_CjTableThresholdDispatch_then_AggressorRunInitCluster(void);
 
 extern unsigned int g_matrixStack_arr;
 
@@ -148,7 +148,7 @@ __declspec(naked) void DualBlockChainCallInstall(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
-        jmp     TwoCallTail_00481380
+        jmp     TwoCallTail_GateDispatch6c_then_CjTableThresholdDispatch_then_AggressorRunInitCluster
         call    ScaledMove48to58
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

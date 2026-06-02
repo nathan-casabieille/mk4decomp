@@ -20508,7 +20508,7 @@ extern void SetJmp_Distance3DMul10Chain_0042d080(void);
 
 /* @addr 0x0042ce60 (14b): cdecl wrapper - push 0x004e36a0 + call
  * ArgSarStoreJmp + cleanup + ret. Entry A of the original 82-byte triple-
- * helper block; entries B and C live in func_GuardedTripleCallSwapJmp_then_CjInstallSelfRouter / func_0042ce90.
+ * helper block; entries B and C live in func_GuardedTripleCallSwapJmp_then_CjInstallSelfRouter / func_GuardedTripleCallSwapJmp_then_SetJmp_Distance3DMul10Chain_then_CjInstallSelfRouter.
  * The 2/12-byte nop gaps are filled by 0x90-fill. */
 void PauseGuardChainTriple(void) {
     ((void (*)(int))ArgSarStoreJmp)(0x004e36a0);
@@ -20524,7 +20524,7 @@ void func_GuardedTripleCallSwapJmp_then_CjInstallSelfRouter(void) {
 
 /* @addr 0x0042ce90 (34b): double call/pause chain - GuardedTriple,
  * then SetJmp, then tail-jmp CjInstallSelfRouter. Orphan sub-entry. */
-void func_0042ce90(void) {
+void func_GuardedTripleCallSwapJmp_then_SetJmp_Distance3DMul10Chain_then_CjInstallSelfRouter(void) {
     GuardedTripleCallSwapJmp();
     if (g_framePauseFlag != 0) return;
     SetJmp_Distance3DMul10Chain_0042d080();
@@ -31514,7 +31514,7 @@ __declspec(naked) void MultiThunkDispatcher_00460470(void) {
     }
 }
 
-extern void TwoCallTail_00481380(void);
+extern void TwoCallTail_GateDispatch6c_then_CjTableThresholdDispatch_then_AggressorRunInitCluster(void);
 extern void ScaledMove48to58(void);
 extern void SetJmp_InstallSelfTwoTailJmp(void);
 extern void GameDispatchValidateState(void);
@@ -31522,7 +31522,7 @@ extern void GameDispatchValidateState(void);
 /* @addr 0x00483de0 (308b game) - dual-block: entry-call chain + install-self body.
  *   Block A (0..0x4d): chain[baseSel*4+0x74] = g_walkCallback.
  *     Call GateDispatch6c; if pause ret. Call CopyJmp; if pause ret.
- *     If bit0(0054208c): tail-jmp TwoCallTail_00481380.
+ *     If bit0(0054208c): tail-jmp TwoCallTail_GateDispatch6c_then_CjTableThresholdDispatch_then_AggressorRunInitCluster.
  *     Else: call ScaledMove48to58; if pause ret.
  *     Push 0x004ee7d8; call IterStepDualStore; pop; if pause ret.
  *     Push 0x004ee7e0; call ArgSarStoreJmp; pop; ret.
@@ -31550,7 +31550,7 @@ __declspec(naked) void DualBlockChainCallInstall(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
-        jmp     TwoCallTail_00481380
+        jmp     TwoCallTail_GateDispatch6c_then_CjTableThresholdDispatch_then_AggressorRunInitCluster
         call    ScaledMove48to58
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -48652,7 +48652,7 @@ __declspec(naked) void Phase3PackedInstallSelf(void) {
 extern unsigned int g_dispatchSave646;
 extern void ScaledTestCallPauseJmpFar(void);
 extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
-extern void TwoCallTail_00481380(void);
+extern void TwoCallTail_GateDispatch6c_then_CjTableThresholdDispatch_then_AggressorRunInitCluster(void);
 extern void ArgSarStoreJmp(void);
 extern void BattleEndCluster(void);
 extern void ChainDispatcher4Call(void);
@@ -48669,7 +48669,7 @@ extern void ChainDispatcher4Call(void);
  *   (9-byte NOP align pad.)
  *   Entry 2 (offset 0x100, 56b): chains ScaledTestCallPauseJmpFar
  *     then CopyJmp_SlotCmp3way_g_currentNodeIdx, both gated by 0x541e6c. If bit 0 of
- *     g_xformDirtyFlags set, tail-jmp TwoCallTail_00481380; else push 0x4eed08
+ *     g_xformDirtyFlags set, tail-jmp TwoCallTail_GateDispatch6c_then_CjTableThresholdDispatch_then_AggressorRunInitCluster; else push 0x4eed08
  *     and call ArgSarStoreJmp.
  *   (8-byte NOP align pad.)
  *   Entry 3 (offset 0x140, 36b): if [scaled g_baseSel + 0x7c] > 3
@@ -48749,7 +48749,7 @@ __declspec(naked) void Phase3Packed3EntryDispatch(void) {
         jne     short L_p3p_e2End
         test    byte ptr [g_xformDirtyFlags], 1
         je      short L_p3p_pushPath
-        jmp     TwoCallTail_00481380
+        jmp     TwoCallTail_GateDispatch6c_then_CjTableThresholdDispatch_then_AggressorRunInitCluster
     L_p3p_pushPath:
         push    offset g_dispatchSave646
         call    ArgSarStoreJmp
@@ -65450,7 +65450,7 @@ __declspec(naked) void AudioCmpCascadeDispatcher(void)
 extern void FiveCallScaledChainTailJmp(void);
 extern void ScaledChainCmpDispatch(void);
 extern void MStackPushCallPopDirtyJmp_0042cc90(void);
-extern void TwoCallTail_0042b690(void);
+extern void TwoCallTail_ScaledStore501Set8Jmp_then_Cascade3ChainInit_then_StoreLitRetSet2(void);
 extern void ArgSarStoreJmp(void);
 extern void StateDispatchTable(void);
 extern void BootFrameSetup(void);
@@ -65480,7 +65480,7 @@ __declspec(naked) void EightPackedSubInstallSelfWalk(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub2_ret
-        call    TwoCallTail_0042b690
+        call    TwoCallTail_ScaledStore501Set8Jmp_then_Cascade3ChainInit_then_StoreLitRetSet2
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub2_ret
@@ -65525,7 +65525,7 @@ __declspec(naked) void EightPackedSubInstallSelfWalk(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub4_ret
-        call    TwoCallTail_0042b690
+        call    TwoCallTail_ScaledStore501Set8Jmp_then_Cascade3ChainInit_then_StoreLitRetSet2
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub4_ret
@@ -65566,7 +65566,7 @@ __declspec(naked) void EightPackedSubInstallSelfWalk(void)
         nop
         nop
     L_eps_sub6:
-        call    TwoCallTail_0042b690
+        call    TwoCallTail_ScaledStore501Set8Jmp_then_Cascade3ChainInit_then_StoreLitRetSet2
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub6_ret
@@ -130167,12 +130167,12 @@ void func_00482290(void) {
 }
 
 /* h6 @ 0x004822c0 (16b): bare event 004edc60 forwarder. */
-void func_004822c0(void) {
+void func_call_ArgSarStoreJmp_with_g_dispatchSave751(void) {
     ((void (*)(void *))ArgSarStoreJmp)(&g_dispatchSave751);
 }
 
 /* h7 @ 0x004822d0 (16b): bare event 004edc80 forwarder. */
-void func_004822d0(void) {
+void func_call_ArgSarStoreJmp_with_g_dispatchSave752(void) {
     ((void (*)(void *))ArgSarStoreJmp)(&g_dispatchSave752);
 }
 
@@ -130264,7 +130264,7 @@ void func_00482420(void) {
 }
 
 /* h12b @ 0x00482470 (16b): bare event 004edd90 forwarder. */
-void func_00482470(void) {
+void func_call_ArgSarStoreJmp_with_g_dispatchSave757(void) {
     ((void (*)(void *))ArgSarStoreJmp)(&g_dispatchSave757);
 }
 
@@ -150419,7 +150419,7 @@ extern unsigned int g_dispatchSave940;
 extern unsigned int g_dispatchSave941;
 
 /* @addr 0x0044f3d0 (28b) */
-void func_0044f3d0(void) {
+void func_DualSubInstallChain_g_dispatchSave935(void) {
     unsigned int v = (unsigned int)&g_dispatchSave935;
     g_xformScratch2088 = 0x2666;
     v >>= 2;
@@ -150428,7 +150428,7 @@ void func_0044f3d0(void) {
 }
 
 /* @addr 0x0044f3f0 (28b) */
-void func_0044f3f0(void) {
+void func_DualSubInstallChain_g_dispatchSave936(void) {
     unsigned int v = (unsigned int)&g_dispatchSave936;
     g_xformScratch2088 = 0x4ccc;
     v >>= 2;
@@ -150437,7 +150437,7 @@ void func_0044f3f0(void) {
 }
 
 /* @addr 0x0044f410 (28b) */
-void func_0044f410(void) {
+void func_DualSubInstallChain_g_dispatchSave937(void) {
     unsigned int v = (unsigned int)&g_dispatchSave937;
     g_xformScratch2088 = 0x4ccc;
     v >>= 2;
@@ -150446,7 +150446,7 @@ void func_0044f410(void) {
 }
 
 /* @addr 0x0044f430 (28b) */
-void func_0044f430(void) {
+void func_DualSubInstallChain_g_dispatchSave938(void) {
     unsigned int v = (unsigned int)&g_dispatchSave938;
     g_xformScratch2088 = 0x4ccc;
     v >>= 2;
@@ -150455,7 +150455,7 @@ void func_0044f430(void) {
 }
 
 /* @addr 0x0044f450 (28b) */
-void func_0044f450(void) {
+void func_DualSubInstallChain_g_dispatchSave939(void) {
     unsigned int v = (unsigned int)&g_dispatchSave939;
     g_xformScratch2088 = 0x4ccc;
     v >>= 2;
@@ -150464,7 +150464,7 @@ void func_0044f450(void) {
 }
 
 /* @addr 0x0044f470 (28b) */
-void func_0044f470(void) {
+void func_DualSubInstallChain_g_dispatchSave940(void) {
     unsigned int v = (unsigned int)&g_dispatchSave940;
     g_xformScratch2088 = 0x4ccc;
     v >>= 2;
@@ -150473,7 +150473,7 @@ void func_0044f470(void) {
 }
 
 /* @addr 0x0044f490 (28b) */
-void func_0044f490(void) {
+void func_DualSubInstallChain_g_dispatchSave941(void) {
     unsigned int v = (unsigned int)&g_dispatchSave941;
     g_xformScratch2088 = 0x1999;
     v >>= 2;
@@ -163646,7 +163646,7 @@ extern void State208cBit0Flag(void);
 extern void StateDispatchTable(void);
 extern void StoreLitRetSet2(void);
 extern void TripleFieldCopyJmpHi(void);
-extern void TwoCallTail_0042b690(void);
+extern void TwoCallTail_ScaledStore501Set8Jmp_then_Cascade3ChainInit_then_StoreLitRetSet2(void);
 extern void PendingMatch_0042b930(void);
 
 __declspec(naked) void PendingMatch_0042b930(void)
@@ -163747,7 +163747,7 @@ __declspec(naked) void PendingMatch_0042b930(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_bb09
-        call     TwoCallTail_0042b690
+        call     TwoCallTail_ScaledStore501Set8Jmp_then_Cascade3ChainInit_then_StoreLitRetSet2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_bb09
@@ -163787,7 +163787,7 @@ __declspec(naked) void PendingMatch_0042b930(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_bb89
-        call     TwoCallTail_0042b690
+        call     TwoCallTail_ScaledStore501Set8Jmp_then_Cascade3ChainInit_then_StoreLitRetSet2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_bb89
@@ -163835,7 +163835,7 @@ __declspec(naked) void PendingMatch_0042b930(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_bc19
-        call     TwoCallTail_0042b690
+        call     TwoCallTail_ScaledStore501Set8Jmp_then_Cascade3ChainInit_then_StoreLitRetSet2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_bc19
@@ -163872,7 +163872,7 @@ __declspec(naked) void PendingMatch_0042b930(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_bc9e
-        call     TwoCallTail_0042b690
+        call     TwoCallTail_ScaledStore501Set8Jmp_then_Cascade3ChainInit_then_StoreLitRetSet2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_bc9e
@@ -163929,7 +163929,7 @@ __declspec(naked) void PendingMatch_0042b930(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_bd19
-        call     TwoCallTail_0042b690
+        call     TwoCallTail_ScaledStore501Set8Jmp_then_Cascade3ChainInit_then_StoreLitRetSet2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_bd19
@@ -163944,7 +163944,7 @@ __declspec(naked) void PendingMatch_0042b930(void)
         nop      
         nop      
         nop      
-        call     TwoCallTail_0042b690
+        call     TwoCallTail_ScaledStore501Set8Jmp_then_Cascade3ChainInit_then_StoreLitRetSet2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_bd3b
@@ -163996,7 +163996,7 @@ __declspec(naked) void PendingMatch_0042b930(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_bdd9
-        call     TwoCallTail_0042b690
+        call     TwoCallTail_ScaledStore501Set8Jmp_then_Cascade3ChainInit_then_StoreLitRetSet2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_bdd9
@@ -164011,7 +164011,7 @@ __declspec(naked) void PendingMatch_0042b930(void)
         nop      
         nop      
         nop      
-        call     TwoCallTail_0042b690
+        call     TwoCallTail_ScaledStore501Set8Jmp_then_Cascade3ChainInit_then_StoreLitRetSet2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_bdfb
@@ -164092,7 +164092,7 @@ __declspec(naked) void PendingMatch_0042b930(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_bf09
-        call     TwoCallTail_0042b690
+        call     TwoCallTail_ScaledStore501Set8Jmp_then_Cascade3ChainInit_then_StoreLitRetSet2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_bf09

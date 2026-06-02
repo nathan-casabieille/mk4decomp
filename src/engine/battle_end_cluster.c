@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave646;
 extern void ScaledTestCallPauseJmpFar(void);
 extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
-extern void TwoCallTail_00481380(void);
+extern void TwoCallTail_GateDispatch6c_then_CjTableThresholdDispatch_then_AggressorRunInitCluster(void);
 extern void ArgSarStoreJmp(void);
 extern void BattleEndCluster(void);
 extern void ChainDispatcher4Call(void);
@@ -128,7 +128,7 @@ extern void ChainDispatcher4Call(void);
  *   (9-byte NOP align pad.)
  *   Entry 2 (offset 0x100, 56b): chains ScaledTestCallPauseJmpFar
  *     then CopyJmp_SlotCmp3way_g_currentNodeIdx, both gated by 0x541e6c. If bit 0 of
- *     g_xformDirtyFlags set, tail-jmp TwoCallTail_00481380; else push 0x4eed08
+ *     g_xformDirtyFlags set, tail-jmp TwoCallTail_GateDispatch6c_then_CjTableThresholdDispatch_then_AggressorRunInitCluster; else push 0x4eed08
  *     and call ArgSarStoreJmp.
  *   (8-byte NOP align pad.)
  *   Entry 3 (offset 0x140, 36b): if [scaled g_baseSel + 0x7c] > 3
@@ -209,7 +209,7 @@ __declspec(naked) void Phase3Packed3EntryDispatch(void) {
         jne     short L_p3p_e2End
         test    byte ptr [g_xformDirtyFlags], 1
         je      short L_p3p_pushPath
-        jmp     TwoCallTail_00481380
+        jmp     TwoCallTail_GateDispatch6c_then_CjTableThresholdDispatch_then_AggressorRunInitCluster
     L_p3p_pushPath:
         push    offset g_dispatchSave646
         call    ArgSarStoreJmp

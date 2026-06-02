@@ -3006,7 +3006,7 @@ functions:
     status: matched
     file: src/engine/round_end_fsm.c
   - addr: 0x0042b690
-    name: TwoCallTail_0042b690
+    name: TwoCallTail_ScaledStore501Set8Jmp_then_Cascade3ChainInit_then_StoreLitRetSet2
     size: 34
     group: game
     status: matched
@@ -3156,7 +3156,7 @@ functions:
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x0042ce90
-    name: func_0042ce90
+    name: func_GuardedTripleCallSwapJmp_then_SetJmp_Distance3DMul10Chain_then_CjInstallSelfRouter
     size: 34
     group: game
     status: matched
@@ -5832,43 +5832,43 @@ functions:
     status: matched
     file: src/engine/pose_chain_advance_cluster.c
   - addr: 0x0044f3d0
-    name: func_0044f3d0
+    name: func_DualSubInstallChain_g_dispatchSave935
     size: 28
     group: game
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x0044f3f0
-    name: func_0044f3f0
+    name: func_DualSubInstallChain_g_dispatchSave936
     size: 28
     group: game
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x0044f410
-    name: func_0044f410
+    name: func_DualSubInstallChain_g_dispatchSave937
     size: 28
     group: game
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x0044f430
-    name: func_0044f430
+    name: func_DualSubInstallChain_g_dispatchSave938
     size: 28
     group: game
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x0044f450
-    name: func_0044f450
+    name: func_DualSubInstallChain_g_dispatchSave939
     size: 28
     group: game
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x0044f470
-    name: func_0044f470
+    name: func_DualSubInstallChain_g_dispatchSave940
     size: 28
     group: game
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x0044f490
-    name: func_0044f490
+    name: func_DualSubInstallChain_g_dispatchSave941
     size: 28
     group: game
     status: matched
@@ -9456,7 +9456,7 @@ functions:
     status: matched
     file: src/engine/call_pause_const_store_jmp_variants.c
   - addr: 0x00481380
-    name: TwoCallTail_00481380
+    name: TwoCallTail_GateDispatch6c_then_CjTableThresholdDispatch_then_AggressorRunInitCluster
     size: 34
     group: game
     status: matched
@@ -9546,13 +9546,13 @@ functions:
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x004822c0
-    name: func_004822c0
+    name: func_call_ArgSarStoreJmp_with_g_dispatchSave751
     size: 16
     group: game
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x004822d0
-    name: func_004822d0
+    name: func_call_ArgSarStoreJmp_with_g_dispatchSave752
     size: 16
     group: game
     status: matched
@@ -9588,7 +9588,7 @@ functions:
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x00482470
-    name: func_00482470
+    name: func_call_ArgSarStoreJmp_with_g_dispatchSave757
     size: 16
     group: game
     status: matched

@@ -115,7 +115,7 @@ extern void MStackPushCallPopDirtyJmp_0042cc90(void);
 extern void ScaledChainCmpDispatch(void);
 extern void State208cBit0Flag(void);
 extern void StateDispatchTable(void);
-extern void TwoCallTail_0042b690(void);
+extern void TwoCallTail_ScaledStore501Set8Jmp_then_Cascade3ChainInit_then_StoreLitRetSet2(void);
 
 __declspec(naked) void EightPackedSubInstallSelfWalk(void)
 {
@@ -139,7 +139,7 @@ __declspec(naked) void EightPackedSubInstallSelfWalk(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub2_ret
-        call    TwoCallTail_0042b690
+        call    TwoCallTail_ScaledStore501Set8Jmp_then_Cascade3ChainInit_then_StoreLitRetSet2
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub2_ret
@@ -184,7 +184,7 @@ __declspec(naked) void EightPackedSubInstallSelfWalk(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub4_ret
-        call    TwoCallTail_0042b690
+        call    TwoCallTail_ScaledStore501Set8Jmp_then_Cascade3ChainInit_then_StoreLitRetSet2
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub4_ret
@@ -225,7 +225,7 @@ __declspec(naked) void EightPackedSubInstallSelfWalk(void)
         nop
         nop
     L_eps_sub6:
-        call    TwoCallTail_0042b690
+        call    TwoCallTail_ScaledStore501Set8Jmp_then_Cascade3ChainInit_then_StoreLitRetSet2
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub6_ret

@@ -112,7 +112,7 @@ extern void ArgSarStoreJmp(void);
 
 /* @addr 0x0042ce60 (14b): cdecl wrapper - push 0x004e36a0 + call
  * ArgSarStoreJmp + cleanup + ret. Entry A of the original 82-byte triple-
- * helper block; entries B and C live in func_GuardedTripleCallSwapJmp_then_CjInstallSelfRouter / func_0042ce90.
+ * helper block; entries B and C live in func_GuardedTripleCallSwapJmp_then_CjInstallSelfRouter / func_GuardedTripleCallSwapJmp_then_SetJmp_Distance3DMul10Chain_then_CjInstallSelfRouter.
  * The 2/12-byte nop gaps are filled by 0x90-fill. */
 void PauseGuardChainTriple(void) {
     ((void (*)(int))ArgSarStoreJmp)(0x004e36a0);

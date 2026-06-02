@@ -539,7 +539,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/engine/pending_match_variants.c`
 - traits: SEH (fs:[0]), x87 FPU, cond jmps: 11
-- top callees: `ArgSarStoreJmp`×22, `TwoCallTail_0042b690`×9, `MStackPushCallPopDirtyJmp_0042cc90`×7, `ScaledZeroFour`×3, `FiveCallGuardSetTail`×3, `CallPauseScaledStoreCopyJmp`×3, `ScaledLitLoadCall_00481020`×3, `EsiEdiAliasDualMul10`×2
+- top callees: `ArgSarStoreJmp`×22, `TwoCallTail_ScaledStore501Set8Jmp_then_Cascade3ChainInit_then_StoreLitRetSet2`×9, `MStackPushCallPopDirtyJmp_0042cc90`×7, `ScaledZeroFour`×3, `FiveCallGuardSetTail`×3, `CallPauseScaledStoreCopyJmp`×3, `ScaledLitLoadCall_00481020`×3, `EsiEdiAliasDualMul10`×2
 - top globals: `g_framePauseFlag`×51, `0x54206c`×12, `0x542060`×11, `g_currentNodeIdx`×9, `g_eventQueueChild`×2, `g_player1NodeIdx`×2, `g_fightGroupHead`×2, `g_eventQueueIdx`×2
 
 ## PendingMatch_004155c0 @ 0x4155c0 (2686b)

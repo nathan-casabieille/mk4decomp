@@ -24,7 +24,7 @@ extern void CjTableThresholdDispatch(void);
 extern void AggressorRunInitCluster(void);
 
 /* @addr 0x0042b690 */
-void TwoCallTail_0042b690(void) {
+void TwoCallTail_ScaledStore501Set8Jmp_then_Cascade3ChainInit_then_StoreLitRetSet2(void) {
     ScaledStore501Set8Jmp();
     if (g_framePauseFlag) return;
     Cascade3ChainInit();
@@ -33,7 +33,7 @@ void TwoCallTail_0042b690(void) {
 }
 
 /* @addr 0x00481380 */
-void TwoCallTail_00481380(void) {
+void TwoCallTail_GateDispatch6c_then_CjTableThresholdDispatch_then_AggressorRunInitCluster(void) {
     GateDispatch6c();
     if (g_framePauseFlag) return;
     CjTableThresholdDispatch();

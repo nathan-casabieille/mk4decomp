@@ -271,7 +271,7 @@ void func_GuardedTripleCallSwapJmp_then_CjInstallSelfRouter(void) {
 
 /* @addr 0x0042ce90 (34b): double call/pause chain - GuardedTriple,
  * then SetJmp, then tail-jmp CjInstallSelfRouter. Orphan sub-entry. */
-void func_0042ce90(void) {
+void func_GuardedTripleCallSwapJmp_then_SetJmp_Distance3DMul10Chain_then_CjInstallSelfRouter(void) {
     GuardedTripleCallSwapJmp();
     if (g_framePauseFlag != 0) return;
     SetJmp_Distance3DMul10Chain_0042d080();
@@ -744,12 +744,12 @@ void func_00482290(void) {
 }
 
 /* h6 @ 0x004822c0 (16b): bare event 004edc60 forwarder. */
-void func_004822c0(void) {
+void func_call_ArgSarStoreJmp_with_g_dispatchSave751(void) {
     ((void (*)(void *))ArgSarStoreJmp)(&g_dispatchSave751);
 }
 
 /* h7 @ 0x004822d0 (16b): bare event 004edc80 forwarder. */
-void func_004822d0(void) {
+void func_call_ArgSarStoreJmp_with_g_dispatchSave752(void) {
     ((void (*)(void *))ArgSarStoreJmp)(&g_dispatchSave752);
 }
 
@@ -841,7 +841,7 @@ void func_00482420(void) {
 }
 
 /* h12b @ 0x00482470 (16b): bare event 004edd90 forwarder. */
-void func_00482470(void) {
+void func_call_ArgSarStoreJmp_with_g_dispatchSave757(void) {
     ((void (*)(void *))ArgSarStoreJmp)(&g_dispatchSave757);
 }
 
@@ -881,7 +881,7 @@ void func_InstallSelfState88(void) {
 }
 
 /* @addr 0x0044f3d0 (28b) */
-void func_0044f3d0(void) {
+void func_DualSubInstallChain_g_dispatchSave935(void) {
     unsigned int v = (unsigned int)&g_dispatchSave935;
     g_xformScratch2088 = 0x2666;
     v >>= 2;
@@ -890,7 +890,7 @@ void func_0044f3d0(void) {
 }
 
 /* @addr 0x0044f3f0 (28b) */
-void func_0044f3f0(void) {
+void func_DualSubInstallChain_g_dispatchSave936(void) {
     unsigned int v = (unsigned int)&g_dispatchSave936;
     g_xformScratch2088 = 0x4ccc;
     v >>= 2;
@@ -899,7 +899,7 @@ void func_0044f3f0(void) {
 }
 
 /* @addr 0x0044f410 (28b) */
-void func_0044f410(void) {
+void func_DualSubInstallChain_g_dispatchSave937(void) {
     unsigned int v = (unsigned int)&g_dispatchSave937;
     g_xformScratch2088 = 0x4ccc;
     v >>= 2;
@@ -908,7 +908,7 @@ void func_0044f410(void) {
 }
 
 /* @addr 0x0044f430 (28b) */
-void func_0044f430(void) {
+void func_DualSubInstallChain_g_dispatchSave938(void) {
     unsigned int v = (unsigned int)&g_dispatchSave938;
     g_xformScratch2088 = 0x4ccc;
     v >>= 2;
@@ -917,7 +917,7 @@ void func_0044f430(void) {
 }
 
 /* @addr 0x0044f450 (28b) */
-void func_0044f450(void) {
+void func_DualSubInstallChain_g_dispatchSave939(void) {
     unsigned int v = (unsigned int)&g_dispatchSave939;
     g_xformScratch2088 = 0x4ccc;
     v >>= 2;
@@ -926,7 +926,7 @@ void func_0044f450(void) {
 }
 
 /* @addr 0x0044f470 (28b) */
-void func_0044f470(void) {
+void func_DualSubInstallChain_g_dispatchSave940(void) {
     unsigned int v = (unsigned int)&g_dispatchSave940;
     g_xformScratch2088 = 0x4ccc;
     v >>= 2;
@@ -935,7 +935,7 @@ void func_0044f470(void) {
 }
 
 /* @addr 0x0044f490 (28b) */
-void func_0044f490(void) {
+void func_DualSubInstallChain_g_dispatchSave941(void) {
     unsigned int v = (unsigned int)&g_dispatchSave941;
     g_xformScratch2088 = 0x1999;
     v >>= 2;
