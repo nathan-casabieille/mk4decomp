@@ -15,7 +15,7 @@ matching, the C source is the canonical representation of the game.
 </p>
 
 <p align="center">
-  <img src=".github/progress.svg?v=2" alt="MK4 decomp progress (multi-axis)">
+  <img src=".github/progress.svg?v=3" alt="MK4 decomp progress (multi-axis)">
 </p>
 
 The decomp moves along several independent axes. A single "pure C %"

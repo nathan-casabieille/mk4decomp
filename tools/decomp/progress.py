@@ -234,11 +234,11 @@ def render_svg(rows, composite_pct, out_path):
     `note` is shown in parentheses next to the percent (e.g. "ceiling reached").
     """
     width = 720
-    composite_h = 56
+    composite_h = 36
     row_h = 28
     pad_top = 14
     pad_bottom = 14
-    height = pad_top + composite_h + 10 + row_h * len(rows) + pad_bottom
+    height = pad_top + composite_h + 14 + row_h * len(rows) + pad_bottom
 
     composite_pct = max(0.0, min(100.0, composite_pct))
     composite_fill_w = (width - 24) * composite_pct / 100.0
@@ -249,7 +249,7 @@ def render_svg(rows, composite_pct, out_path):
     bar_rects = []
     for i, (label, pct, note) in enumerate(rows):
         pct_clamped = max(0.0, min(100.0, pct))
-        y = pad_top + composite_h + 10 + i * row_h
+        y = pad_top + composite_h + 14 + i * row_h
         fill = bars_w * pct_clamped / 100.0
         note_txt = f' ({note})' if note else ''
         bar_rects.append(f'''
@@ -286,27 +286,23 @@ def render_svg(rows, composite_pct, out_path):
         fill="#0a0a0a" stroke="url(#borderGrad)" stroke-width="2"/>
 
   <!-- Composite track -->
-  <rect x="12" y="{pad_top}" width="{width - 24}" height="{composite_h - 8}" rx="6" ry="6"
+  <rect x="12" y="{pad_top}" width="{width - 24}" height="{composite_h}" rx="6" ry="6"
         fill="#1a1a1a" stroke="#3a2a14" stroke-width="1"/>
 
   <!-- Composite filled portion -->
-  <rect x="12" y="{pad_top}" width="{composite_fill_w:.2f}" height="{composite_h - 8}" rx="6" ry="6"
+  <rect x="12" y="{pad_top}" width="{composite_fill_w:.2f}" height="{composite_h}" rx="6" ry="6"
         fill="url(#fillGrad)"/>
 
   <!-- Top highlight on composite -->
-  <rect x="12" y="{pad_top}" width="{composite_fill_w:.2f}" height="10" rx="6" ry="6"
+  <rect x="12" y="{pad_top}" width="{composite_fill_w:.2f}" height="8" rx="6" ry="6"
         fill="#ffffff" opacity="0.18"/>
 
-  <!-- Composite label + percent -->
-  <text x="{width / 2}" y="{pad_top + (composite_h - 8) / 2 + 3}"
+  <!-- Composite label + percent (single line) -->
+  <text x="{width / 2}" y="{pad_top + composite_h / 2 + 6}"
         font-family="Impact, 'Arial Black', sans-serif" font-size="18" font-weight="900"
         text-anchor="middle" fill="#fff8e1"
         stroke="#1a0a0a" stroke-width="1.2" paint-order="stroke fill"
-        letter-spacing="1.5">FUNCTIONAL UNDERSTANDING</text>
-  <text x="{width / 2}" y="{pad_top + (composite_h - 8) / 2 + 22}"
-        font-family="Impact, 'Arial Black', sans-serif" font-size="16" font-weight="900"
-        text-anchor="middle" fill="#fff8e1"
-        stroke="#1a0a0a" stroke-width="1" paint-order="stroke fill">{composite_pct:.1f}%</text>
+        letter-spacing="1.5">FUNCTIONAL UNDERSTANDING - {composite_pct:.1f}%</text>
 {''.join(bar_rects)}
 </svg>
 '''
