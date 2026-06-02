@@ -3,7 +3,7 @@
  */
 #include "engine/scenegraph.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 typedef unsigned int (__stdcall *DivLongFn)(int, int, __int64);

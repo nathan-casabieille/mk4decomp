@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 
 /* @addr 0x0042c790 (46b): loop-head wrapper - stores walk into baseSel[+0x5c]
  * as counter, calls Cascade3ChainInit, then if !pause tail-calls
@@ -15,7 +15,7 @@ extern unsigned int g_dispatchSave1219_004e37d0;
 extern void Cascade3ChainInit_0048fa50(void);
 extern void TripleEntryStateCascade_0042c7e0(void);
 void LoopGuardedDecJmp_0042c790(void) {
-    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->position_z = (unsigned int)g_walkCallback;
+    ((ScenegraphNode *)(g_baseSel * 4))->position_z = (unsigned int)g_walkCallback;
     Cascade3ChainInit_0048fa50();
     if (g_framePauseFlag != 0) return;
     ArgSarStoreJmp_004594f0(&g_dispatchSave1219_004e37d0);

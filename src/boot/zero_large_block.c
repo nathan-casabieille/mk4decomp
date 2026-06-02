@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_extra_0052ab3c;
 
 void ZeroLargeBlock_0041f270(void) {

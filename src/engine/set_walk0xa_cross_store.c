@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00445fb0 (70b)
@@ -20,6 +20,6 @@ void SetWalk0xaCrossStore_00445fb0(void) {
     DirtyDoubleDeref_00408cb0();
     if (g_framePauseFlag != 0) return;
     g_xformEntityIdx = g_scaledInit_00542044;
-    g_scaledInit_00542044 = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x5c);
+    g_scaledInit_00542044 = *(unsigned int *)(g_baseSel * 4 + 0x5c);
     PushPopScaled1cDoubleCall_00408510();
 }

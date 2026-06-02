@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x004a1940 (85b)
@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void func_0041f780_nn(void);
 void ScaledInitOrSelfPtrSetType14_004a1940(void) {
-    unsigned int *base = (unsigned int *)(g_baseSel_00542060 * 4);
+    unsigned int *base = (unsigned int *)(g_baseSel * 4);
     unsigned int prev = base[0x84 / 4];
     base[0x84 / 4] = 0;
     if (prev != 0) {

@@ -5,16 +5,16 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 
 /* @addr 0x00433bf0 (19b)
- *   mov     eax, [g_baseSel_00542060]
+ *   mov     eax, [g_baseSel]
  *   mov     eax, [eax*4 + 0x6c]
  *   mov     [g_scaledInit_00542044], eax
  *   jmp     eax
  */
 void ScaledIndirectJmp_00433bf0(void) {
-    unsigned int v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x6c);
+    unsigned int v = *(unsigned int *)(g_baseSel * 4 + 0x6c);
     g_scaledInit_00542044 = v;
     ((void(*)(void))v)();
 }

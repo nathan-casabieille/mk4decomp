@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00494140 (61b)
@@ -16,7 +16,7 @@ void ArgScaledTestStore_00494140(int arg) {
     unsigned int *src = (unsigned int *)(packed * 4);
     unsigned int cb;
     g_eventQueueTotal = packed;
-    cb = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x30);
+    cb = *(unsigned int *)(g_baseSel * 4 + 0x30);
     g_walkCallback = (void (*)(void))cb;
     g_xformEntityIdx = src[0];
     if (cb != 0) {

@@ -5,15 +5,15 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern unsigned int g_gameCountdown_0053a718;
+extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_audioBankSel_00537f94;
+extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -57,12 +57,12 @@ extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_cj_00542058;
-extern unsigned int g_rangeSqLimit_0053a180;
+extern unsigned int g_rangeSqLimit;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
-extern unsigned int g_dualBitGate_0053a7b0;
-extern unsigned int g_eventArmReload_0053a770;
-extern unsigned int g_rangeBase_0053a46c;
+extern unsigned int g_dualBitGate;
+extern unsigned int g_eventArmReload;
+extern unsigned int g_rangeBase;
 
 extern void ScaledArrStore_004298c0(void);
 extern void DualFieldAddSubStore_00470340(void);
@@ -97,16 +97,16 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_installOwnerNode_00535cf8;
+extern unsigned int g_stateCountdown;
+extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
-extern unsigned int g_audioBoundNode_005437f0;
-extern unsigned int g_lastGatedValue_00543598;
-extern unsigned int g_lastGatedTick_0054358c;
-extern unsigned int g_fightAxisNegX_00535e70;
-extern unsigned int g_fightAxisNegY_00535e74;
-extern unsigned int g_fightAxisPosX_00535e78;
-extern unsigned int g_fightAxisPosY_00535e7c;
+extern unsigned int g_audioBoundNode;
+extern unsigned int g_lastGatedValue;
+extern unsigned int g_lastGatedTick;
+extern unsigned int g_fightAxisNegX;
+extern unsigned int g_fightAxisNegY;
+extern unsigned int g_fightAxisPosX;
+extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00434350 (325b game) - install-self + cascade-call sequence + tail jmp.
  *   state!=0: tail-call MStackPushPtr1Jmp; pop+ret.
@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Call StoreCallPauseDirtyStoreJmp; if pause ret.
  *   If !bit0(0054208c): tail-call GuardedSeq; pop+ret.
  *   g_currentNodeFlags=0x78000; install-self at entry+0x01000000; state=1; call EsiInstallTwoCallCmpInstall; pause=1; ret.
- *   Tail (+0xc0, 1-NOP pad): set g_dispatchState_0053a478=0; call InstallSelfCountdownCascade; if pause ret.
+ *   Tail (+0xc0, 1-NOP pad): set g_dispatchState=0; call InstallSelfCountdownCascade; if pause ret.
  *     If [0053a478]!=0 ret; call Cmp2CallDirtyCall; if !=0 ret.
  *     If [baseSel*4+0x34]!=0: jmp InstallSelfThreeStateLeaPlus22.
  *     Else: g_walkCallback=0x1f4; call AudioVolumeRescale; if pause ret.
@@ -122,7 +122,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *       Else: g_eventQueueNotMask=0x10028; jmp HitReactionDispatcher_0045f650.
  *   Tail (+0x140 after 6-NOP pad): jmp InstallSelfChainSetB333v2_00437f00.
  */
-extern unsigned int g_dispatchState_0053a478;
+extern unsigned int g_dispatchState;
 extern void AudioVolumeRescale_004ab690(void);
 extern void EsiInstallTwoCallCmpInstall_00438b10(void);
 extern void GuardedSeq_00433bb0(void);
@@ -136,7 +136,7 @@ extern void StoreCallPauseDirtyStoreJmp_004396c0(void);
 
 __declspec(naked) void InstallSelfCascadeSequence_00434350(void) {
     __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [g_baseSel]
         push    esi
         lea     esi, [eax*4 + 0]
         mov     eax, dword ptr [eax*4 + 0x84]
@@ -168,7 +168,7 @@ __declspec(naked) void InstallSelfCascadeSequence_00434350(void) {
         ret
         mov     dword ptr [g_currentNodeFlags], 0x78000
         mov     dword ptr [esi + 8], offset InstallSelfCascadeSequence_00434350
-        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_baseSel]
         mov     edx, offset InstallSelfCascadeSequence_00434350
         add     edx, 0x01000000
         mov     dword ptr [ecx*4 + 0x84], 1
@@ -179,20 +179,20 @@ __declspec(naked) void InstallSelfCascadeSequence_00434350(void) {
         inc     eax
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     dword ptr [esi + 4], eax
-        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
         call    EsiInstallTwoCallCmpInstall_00438b10
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
         _emit   90h
-        mov     dword ptr [g_dispatchState_0053a478], 0
+        mov     dword ptr [g_dispatchState], 0
         call    InstallSelfCountdownCascade_00439fd0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   61h
-        mov     eax, dword ptr [g_dispatchState_0053a478]
+        mov     eax, dword ptr [g_dispatchState]
         test    eax, eax
         _emit   75h
         _emit   58h
@@ -200,7 +200,7 @@ __declspec(naked) void InstallSelfCascadeSequence_00434350(void) {
         test    eax, eax
         _emit   75h
         _emit   4fh
-        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [g_baseSel]
         mov     eax, dword ptr [eax*4 + 0x34]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax

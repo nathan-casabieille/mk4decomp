@@ -53,7 +53,7 @@ typedef struct DrawEntry {
  * Verified against GlideTriBatchEmit_004adca0, which writes 3 of these
  * per triangle (stride 96 = batchCount*3*32): sx/sy from the projected
  * screen coords, sz/rhw pinned to 1.0 (0x3f800000), color packed from
- * the RGB555 palette (g_palette_00544158), specular left untouched, and
+ * the RGB555 palette (g_palette), specular left untouched, and
  * tu/tv looked up in the perspective table g_renderer2_lutTable. */
 typedef struct D3DTLVertex {
     f32 sx, sy;          /* +0x00/+0x04 screen-space X / Y             */

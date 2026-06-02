@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x0041f840 (38b)
@@ -18,7 +18,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 void ScaledNeg1SetPause_0041f840(void) {
-    ScenegraphNode *node = (ScenegraphNode *)(g_baseSel_00542060 * 4);
+    ScenegraphNode *node = (ScenegraphNode *)(g_baseSel * 4);
     if (node->ptr_field != 0) {
         node->ptr_field = 0xffffffff;
         g_framePauseFlag = 1;

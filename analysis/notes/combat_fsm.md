@@ -423,7 +423,7 @@ is a 16.16 scalar, not a move_state (see
 
 **Position axes (confirmed):** `+0x54`/`+0x58`/`+0x5c` are a 16.16
 position vector. `HitContactDispatcherCluster` range-checks
-`dx*dx + dz*dz <= g_rangeSqLimit_0053a180` using only X(+0x54) and
+`dx*dx + dz*dz <= g_rangeSqLimit` using only X(+0x54) and
 Z(+0x5c) - the horizontal floor plane - while gravity adds to
 Y(+0x58). Full field map in [node_struct.md](node_struct.md).
 
@@ -498,7 +498,7 @@ larger **per-player fight-state blocks**, 0x320 bytes apart:
 | `g_player2State`  | `0x0053a700` | P2 fight-state block (was `g_state4_0053a700`) |
 
 `HealthBarTickDriver_00458cc0` reads one of these (selected by
-`g_stateFlag_00537e98` = current side) as the value that drives the
+`g_stateFlag` = current side) as the value that drives the
 health-bar segment loop; `globals_reset_init` clears both at match
 reset; the AI walk counter and `GameMode_EnterScene` (mode entry) also
 use them as the per-player node base (`base >> 2` packed). The first

@@ -4,12 +4,12 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_phaseTimer_00537e94;
+extern unsigned int g_phaseTimer;
 
 /* @addr 0x00446640 (61b)
- *   mov     eax, [g_baseSel_00542060]
+ *   mov     eax, [g_baseSel]
  *   xor     ecx, ecx
  *   mov     eax, [eax*4 + 0x30]
  *   mov     [g_walkCallback], ecx
@@ -25,7 +25,7 @@ extern unsigned int g_phaseTimer_00537e94;
 void ScaledLoad1cZeroAndFE_00446640(void) {
     unsigned int s;
     unsigned int v;
-    s = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x30);
+    s = *(unsigned int *)(g_baseSel * 4 + 0x30);
     g_walkCallback = 0;
     g_scaledInit_00542044 = s;
     ((ScenegraphNode *)(s * 4))->alloc_flags = 0;

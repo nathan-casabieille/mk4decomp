@@ -7,11 +7,11 @@
  */
 #include "engine/scenegraph.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern u32 g_framePauseFlag;
 
 /* @addr 0x004202c0 (57b)
- *   mov     eax, [g_baseSel_00542060]
+ *   mov     eax, [g_baseSel]
  *   mov     ecx, [eax*4 + 0x84]
  *   mov     [eax*4 + 0x84], 0
  *   test    ecx, ecx
@@ -30,7 +30,7 @@ extern void Init6Struct_00404e20(void);
 extern void StateInitShuffle_00422380(void);
 extern void Screen_ArcadeEnding(void);
 void ScaledClearTripleCallJmp_004202c0(void) {
-    unsigned int base = g_baseSel_00542060;
+    unsigned int base = g_baseSel;
     unsigned int v = ((ScenegraphNode *)(base * 4))->install_flag;
     ((ScenegraphNode *)(base * 4))->install_flag = 0;
     if (v == 0) {

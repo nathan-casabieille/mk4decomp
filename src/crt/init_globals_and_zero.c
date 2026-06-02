@@ -3,7 +3,7 @@
  */
 #include "engine/scenegraph.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_dispatchSave1433_00f9f8c0;
 extern unsigned int g_dispatchSave1435_00f9fac8;

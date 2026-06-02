@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x0048a220 (46b)
@@ -21,15 +21,15 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [0x00541fa8], 0
  *   ret
  */
-extern unsigned int g_dualBitGate_0053a7b0;
+extern unsigned int g_dualBitGate;
 extern unsigned int g_zero_00541fa8;
 extern int PushArgPushNeg1Call_004be790(void *p);
 void AndStorePushCallZero_0048a220(void) {
     unsigned int v;
     void *p;
-    v = g_dualBitGate_0053a7b0 & 0xFFFFFFFDu;
+    v = g_dualBitGate & 0xFFFFFFFDu;
     g_eventQueueCurrent = v;
-    g_dualBitGate_0053a7b0 = v;
+    g_dualBitGate = v;
     p = (void *)g_zero_00541fa8;
     if (p == 0) return;
     PushArgPushNeg1Call_004be790(p);

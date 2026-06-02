@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00490330 (28b): scaled and ah, 0xdf */
@@ -49,6 +49,6 @@ void ScaledAndAhfe_00490390(void) {
 extern void ComboFinisherEventCluster_00495dc0(void);
 void Const111ScaledStoreJmp_00495da0(void) {
     g_walkCallback = (void(*)(void))0x111;
-    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->fsm_state = 0x111;
+    ((ScenegraphNode *)(g_baseSel * 4))->fsm_state = 0x111;
     ComboFinisherEventCluster_00495dc0();
 }

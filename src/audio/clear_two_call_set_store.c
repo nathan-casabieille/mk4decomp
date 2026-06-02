@@ -12,7 +12,7 @@ extern unsigned int g_scaledInit_00542044;
  *   store walk → [baseSel*4 + 0xc]; ret.
  */
 extern unsigned int g_pendingMatchSlot2_00541dc0;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern void BootInitGuardedCallChain_004265d0(void);
 extern void ZeroMultiGlobalsCmp_00404680(void);
 void ClearTwoCallSetStore_004a2270(void) {
@@ -23,5 +23,5 @@ void ClearTwoCallSetStore_004a2270(void) {
     ZeroMultiGlobalsCmp_00404680();
     if (g_framePauseFlag) return;
     g_walkCallback = (void(*)(void))0x1000;
-    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->alloc_work_type = 0x1000;
+    ((ScenegraphNode *)(g_baseSel * 4))->alloc_work_type = 0x1000;
 }

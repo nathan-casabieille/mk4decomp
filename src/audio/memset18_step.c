@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x004a56a0 (25b)
@@ -20,10 +20,10 @@ extern unsigned int g_scaledInit_00542044;
  * .ret:
  *   ret
  */
-extern unsigned int g_count_005433b8;
+extern unsigned int g_count;
 extern unsigned char g_target_005435a2;
 void Memset18Step_004a56a0(void) {
-    int n = (int)g_count_005433b8;
+    int n = (int)g_count;
     unsigned char *p;
     if (n <= 0) return;
     p = &g_target_005435a2;

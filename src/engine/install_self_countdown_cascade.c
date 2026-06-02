@@ -5,15 +5,15 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern unsigned int g_gameCountdown_0053a718;
+extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_audioBankSel_00537f94;
+extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -57,12 +57,12 @@ extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_cj_00542058;
-extern unsigned int g_rangeSqLimit_0053a180;
+extern unsigned int g_rangeSqLimit;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
-extern unsigned int g_dualBitGate_0053a7b0;
-extern unsigned int g_eventArmReload_0053a770;
-extern unsigned int g_rangeBase_0053a46c;
+extern unsigned int g_dualBitGate;
+extern unsigned int g_eventArmReload;
+extern unsigned int g_rangeBase;
 
 extern void ScaledArrStore_004298c0(void);
 extern void DualFieldAddSubStore_00470340(void);
@@ -97,24 +97,24 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_installOwnerNode_00535cf8;
+extern unsigned int g_stateCountdown;
+extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
-extern unsigned int g_audioBoundNode_005437f0;
-extern unsigned int g_lastGatedValue_00543598;
-extern unsigned int g_lastGatedTick_0054358c;
-extern unsigned int g_fightAxisNegX_00535e70;
-extern unsigned int g_fightAxisNegY_00535e74;
-extern unsigned int g_fightAxisPosX_00535e78;
-extern unsigned int g_fightAxisPosY_00535e7c;
+extern unsigned int g_audioBoundNode;
+extern unsigned int g_lastGatedValue;
+extern unsigned int g_lastGatedTick;
+extern unsigned int g_fightAxisNegX;
+extern unsigned int g_fightAxisNegY;
+extern unsigned int g_fightAxisPosX;
+extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00439fd0 (175b game) - install-self with countdown + 3-stage cascade.
- *   Block A install-self path. Then call PendingMatch_0045e640 + bit-1 test, set g_dispatchState_0053a478,
+ *   Block A install-self path. Then call PendingMatch_0045e640 + bit-1 test, set g_dispatchState,
  *     call PushPop84TripleCall, pause-check, set g_eventQueueChild=0x78, call ScaledChain3c74,
  *     pause-check, if g_walkCallback==0x1009 call TriStageChainGate_004344b0, pop+ret.
  *     Else install-self at +0x08=0x00439fd0, set chain[+0x84]=ebx=1, set 0054204c=1, pause=1; pop+ret.
  */
-extern unsigned int g_dispatchState_0053a478;
+extern unsigned int g_dispatchState;
 extern void InstallSelfChainSetB333_00437b60(void);
 extern void PendingMatch_0045e640(void);
 extern void PushPop84TripleCall_00438b90(void);
@@ -123,7 +123,7 @@ extern void TriStageChainGate_004344b0(void);
 
 __declspec(naked) void InstallSelfCountdownCascade_00439fd0(void) {
     __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [g_baseSel]
         push    ebx
         push    esi
         mov     ebx, 1
@@ -150,7 +150,7 @@ __declspec(naked) void InstallSelfCountdownCascade_00439fd0(void) {
         test    byte ptr [g_xformDirtyFlags], bl
         _emit   74h
         _emit   59h
-        mov     dword ptr [g_dispatchState_0053a478], ebx
+        mov     dword ptr [g_dispatchState], ebx
         call    PushPop84TripleCall_00438b90
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

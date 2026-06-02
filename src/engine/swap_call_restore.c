@@ -4,12 +4,12 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00490030 (54b)
  *   mov     eax, [g_fightGroupHead]
- *   mov     ecx, [g_baseSel_00542060]
+ *   mov     ecx, [g_baseSel]
  *   mov     [g_scaledInit_00542044], eax
  *   mov     edx, [ecx*4 + 0x38]
  *   mov     [g_fightGroupHead], edx
@@ -24,7 +24,7 @@ extern unsigned int g_scaledInit_00542044;
 extern void DualMaskCmpJmp_00490090(void);
 void SwapCallRestore_00490030(void) {
     g_scaledInit_00542044 = g_fightGroupHead;
-    g_fightGroupHead = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x38);
+    g_fightGroupHead = *(unsigned int *)(g_baseSel * 4 + 0x38);
     DualMaskCmpJmp_00490090();
     if (g_framePauseFlag != 0) return;
     g_fightGroupHead = g_scaledInit_00542044;

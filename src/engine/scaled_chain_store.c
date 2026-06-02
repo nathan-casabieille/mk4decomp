@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x004462c0 (38b)
@@ -17,7 +17,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 void ScaledChainStore_004462c0(void) {
-    unsigned int base = g_baseSel_00542060;
+    unsigned int base = g_baseSel;
     unsigned int v = *(unsigned int *)(base * 4 + 0x5c);
     unsigned int v2;
     g_scaledInit_00542044 = v;

@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 
 /* @addr 0x004338e0 (34b)
- *   mov     eax, [g_stateCountdown_0053a3c0]
+ *   mov     eax, [g_stateCountdown]
  *   cmp     eax, 3
  *   mov     [g_walkCallback], eax
  *   jle     +5
@@ -14,12 +14,12 @@
  *   add     esp, 4
  *   ret
  */
-extern unsigned int g_stateCountdown_0053a3c0;
+extern unsigned int g_stateCountdown;
 extern void CallPauseDirtyLit_00433910(void);
 extern int PackedAdvanceCallTailJmp_004392c0(void *);
 extern void *g_dispatchSave1226_004e44c0;
 void Cmp3JmpOrPushCall_004338e0(void) {
-    int v = (int)g_stateCountdown_0053a3c0;
+    int v = (int)g_stateCountdown;
     g_walkCallback = (void (*)(void))v;
     if (v > 3) {
         CallPauseDirtyLit_00433910();

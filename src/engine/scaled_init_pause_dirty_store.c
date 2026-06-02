@@ -11,7 +11,7 @@
  *   jne     .ret
  *   test    byte ptr [g_xformDirtyFlags], 4
  *   jne     .ret
- *   mov     ecx, [g_baseSel_00542060]
+ *   mov     ecx, [g_baseSel]
  *   mov     edx, [g_scaledInit_00542044]
  *   mov     [ecx*4 + 0x5c], edx
  * .ret:
@@ -20,7 +20,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_phase4ThreePackedBase_004ec8f8;
 
@@ -38,7 +38,7 @@ void ScaledInitPauseDirtyStore_00445f00(void) {
     if ((g_xformDirtyFlags & 4) != 0) {
         return;
     }
-    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x5c) = g_scaledInit_00542044;
+    *(unsigned int *)(g_baseSel * 4 + 0x5c) = g_scaledInit_00542044;
 }
 
 /* @addr 0x00446240 */
@@ -47,5 +47,5 @@ void ScaledInitPauseDirtyStore_00446240(void) {
     FramePauseScaledStore_00406c10();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 4) return;
-    *(unsigned int*)(g_baseSel_00542060 * 4 + 0x5c) = g_scaledInit_00542044;
+    *(unsigned int*)(g_baseSel * 4 + 0x5c) = g_scaledInit_00542044;
 }

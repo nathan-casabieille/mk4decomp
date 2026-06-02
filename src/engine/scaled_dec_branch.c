@@ -2,7 +2,7 @@
  * 2 "scaled-load + dec + branch on zero" helpers (38 bytes each).
  *
  * Pattern:
- *   mov     ecx, [g_baseSel_00542060]
+ *   mov     ecx, [g_baseSel]
  *   mov     eax, [ecx*4 + 0x30]
  *   dec     eax
  *   mov     [g_walkCallback], eax
@@ -19,7 +19,7 @@
  */
 #include "engine/scenegraph.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 
 extern void ThunkPlus4FieldCjCopy_00466490(void);
 extern void FourEntryAlarmInstall_004662e0(void);
@@ -28,7 +28,7 @@ extern void FourPackedSubInitCmpDispatch_004665b0(void);
 
 /* @addr 0x00466460 */
 void ScaledDecBranch_00466460(void) {
-    unsigned int idx = g_baseSel_00542060;
+    unsigned int idx = g_baseSel;
     unsigned int v = *(unsigned int*)(idx*4 + 0x30) - 1;
     g_walkCallback = v;
     if (v == 0) {
@@ -41,7 +41,7 @@ void ScaledDecBranch_00466460(void) {
 
 /* @addr 0x00466770 */
 void ScaledDecBranch_00466770(void) {
-    unsigned int idx = g_baseSel_00542060;
+    unsigned int idx = g_baseSel;
     unsigned int v = *(unsigned int*)(idx*4 + 0x30) - 1;
     g_walkCallback = v;
     if (v == 0) {

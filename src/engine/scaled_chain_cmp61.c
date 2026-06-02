@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00482740 (62b)
@@ -14,7 +14,7 @@ extern void StageGameProgressCluster_00482780(void);
 extern void Wrapper_0048a360(void);
 void ScaledChainCmp61_00482740(void) {
     unsigned int v;
-    v = ((ScenegraphNode *)(g_baseSel_00542060 * 4))->child_a;
+    v = ((ScenegraphNode *)(g_baseSel * 4))->child_a;
     g_scaledInit_00542044 = v;
     v = *(unsigned int *)(v * 4 + 0x30);
     g_scaledInit_00542044 = v;

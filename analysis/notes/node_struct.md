@@ -22,13 +22,13 @@ prioritises future RE.
 
 A node is referenced by a **packed index** = `node_address / 4`
 (see [scenegraph.md](scenegraph.md)). Globals like
-`g_baseSel_00542060` (the current actor/player node),
+`g_baseSel` (the current actor/player node),
 `g_currentNodeIdx` (the transient walk/work cursor) and
 `g_xformEntityIdx` hold these packed indices. Field access therefore
 looks like:
 
 ```asm
-mov  eax, [g_baseSel_00542060]   ; eax = packed idx
+mov  eax, [g_baseSel]   ; eax = packed idx
 mov  edx, [eax*4 + 0x84]          ; edx = node->state   (idx*4 = node addr)
 ```
 

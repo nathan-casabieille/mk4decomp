@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x004949b0 (55b)
@@ -18,7 +18,7 @@ void ArgScaledChain_004949b0(int arg) {
     g_eventQueueEnd = base;
     basePlus3 = base + 3;
     g_eventQueueTotal = basePlus3;
-    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x6c) = *(unsigned int *)(basePlus3 * 4);
+    *(unsigned int *)(g_baseSel * 4 + 0x6c) = *(unsigned int *)(basePlus3 * 4);
     g_eventQueueTotal = 0;
     MoveDispatch4StateFsm_00494a60();
 }

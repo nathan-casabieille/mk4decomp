@@ -2,7 +2,7 @@
  * 2 "scaled-load + install + conditional literal-call" helpers (35 bytes).
  *
  * Pattern:
- *   mov     eax, [g_baseSel_00542060]
+ *   mov     eax, [g_baseSel]
  *   mov     eax, [eax*4 + 0x30]
  *   test    eax, eax
  *   mov     [g_walkCallback], eax
@@ -18,14 +18,14 @@
  */
 #include "engine/scenegraph.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern void *g_lit_004e4500;
 extern void *g_lit_004e4528;
 extern int PackedAdvanceCallTailJmp_004392c0(void *p);
 
 /* @addr 0x00433960 */
 void ScaledLoadInstallOrCall_00433960(void) {
-    unsigned int cb = *(unsigned int*)(g_baseSel_00542060 * 4 + 0x30);
+    unsigned int cb = *(unsigned int*)(g_baseSel * 4 + 0x30);
     g_walkCallback = cb;
     if (cb) {
         PackedAdvanceCallTailJmp_004392c0(&g_lit_004e4500);
@@ -34,7 +34,7 @@ void ScaledLoadInstallOrCall_00433960(void) {
 
 /* @addr 0x00433990 */
 void ScaledLoadInstallOrCall_00433990(void) {
-    unsigned int cb = *(unsigned int*)(g_baseSel_00542060 * 4 + 0x30);
+    unsigned int cb = *(unsigned int*)(g_baseSel * 4 + 0x30);
     g_walkCallback = cb;
     if (cb) {
         PackedAdvanceCallTailJmp_004392c0(&g_lit_004e4528);

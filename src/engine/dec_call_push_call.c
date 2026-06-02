@@ -4,9 +4,9 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_phaseTimer_00537e94;
+extern unsigned int g_phaseTimer;
 
 /* @addr 0x00466090 (61b)
  *   dec g_walkCallback; store both walk and g_dispatchVar15_0053a238

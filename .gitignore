@@ -13,6 +13,7 @@
 # MSVC 5.0 binaries / ISO - Microsoft IP, never versioned
 /tools/msvc50/
 /Microsoft Visual CPP 5.0 Professional (ISO)/
+/MSVC_other_versions/
 
 # Common junk
 .DS_Store

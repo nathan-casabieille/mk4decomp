@@ -8,7 +8,7 @@
 #include "engine/scenegraph.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 
 /* @addr 0x004296c0 (17b)
  *   mov     eax, [g_xformDirtyFlags]
@@ -38,14 +38,14 @@ void ZeroTriple_00421c20(void) {
 }
 
 /* @addr 0x0044ccd0 (18b)
- *   mov     eax, [g_baseSel_00542060]
+ *   mov     eax, [g_baseSel]
  *   add     eax, 0x0f
  *   mov     [g_scaledInit_00542044], eax
  *   jmp     +0xe
  */
 extern void GuardedChainDualAdd_0044ccf0(void);
 void Add0fJmp_0044ccd0(void) {
-    g_scaledInit_00542044 = g_baseSel_00542060 + 0x0f;
+    g_scaledInit_00542044 = g_baseSel + 0x0f;
     GuardedChainDualAdd_0044ccf0();
 }
 

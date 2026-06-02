@@ -5,15 +5,15 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern unsigned int g_gameCountdown_0053a718;
+extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_audioBankSel_00537f94;
+extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -57,12 +57,12 @@ extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_cj_00542058;
-extern unsigned int g_rangeSqLimit_0053a180;
+extern unsigned int g_rangeSqLimit;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
-extern unsigned int g_dualBitGate_0053a7b0;
-extern unsigned int g_eventArmReload_0053a770;
-extern unsigned int g_rangeBase_0053a46c;
+extern unsigned int g_dualBitGate;
+extern unsigned int g_eventArmReload;
+extern unsigned int g_rangeBase;
 
 extern void ScaledArrStore_004298c0(void);
 extern void DualFieldAddSubStore_00470340(void);
@@ -97,16 +97,16 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_installOwnerNode_00535cf8;
+extern unsigned int g_stateCountdown;
+extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
-extern unsigned int g_audioBoundNode_005437f0;
-extern unsigned int g_lastGatedValue_00543598;
-extern unsigned int g_lastGatedTick_0054358c;
-extern unsigned int g_fightAxisNegX_00535e70;
-extern unsigned int g_fightAxisNegY_00535e74;
-extern unsigned int g_fightAxisPosX_00535e78;
-extern unsigned int g_fightAxisPosY_00535e7c;
+extern unsigned int g_audioBoundNode;
+extern unsigned int g_lastGatedValue;
+extern unsigned int g_lastGatedTick;
+extern unsigned int g_fightAxisNegX;
+extern unsigned int g_fightAxisNegY;
+extern unsigned int g_fightAxisPosX;
+extern unsigned int g_fightAxisPosY;
 
 extern void IndirectOpcodeDispatch3Entry_0049f3a0(void);
 extern unsigned int g_state2_00541d88;
@@ -116,13 +116,13 @@ extern unsigned int g_state2_00537ea8;
  *   Multi-cmp on eax: ==ebx → branch_A; ==2/3/4 → +0xe then call LinkedListIndirectDirtyToggle_0049f7b0; ==5 → use esi.
  *     <5 → CallSetPause; ==0xa/0xf → -5; ==0x12 → -4; >0x12 → CallSetPause.
  *   After call LinkedListIndirectDirtyToggle_0049f7b0: if pause CallSetPause; if !bit0(0054208c) loop to start.
- *   Else: chain[scaledInit*4]=g_walkCallback; copy g_dispatchArg_00535e48 to g_eventQueueCurrent;
+ *   Else: chain[scaledInit*4]=g_walkCallback; copy g_dispatchArg to g_eventQueueCurrent;
  *     call RoundWinTransition_0049e7e0; if pause CallSetPause; load chain[g_xformEntityIdx*4+8];
  *     call GuardedScaledCall; if !pause CallSetPause; pop esi/ebx; ret.
- *   Tail thunk_1 (+0xe0): if g_state2_00541d88!=0 jmp CallSetPause else g_dispatchArg_00535e48=0; jmp IndirectOpcodeDispatch3Entry_0049f3a0.
- *   Tail thunk_2 (+0x110): if g_state2_00537ea8!=0 jmp CallSetPause else g_dispatchArg_00535e48=1; jmp IndirectOpcodeDispatch3Entry_0049f3a0.
+ *   Tail thunk_1 (+0xe0): if g_state2_00541d88!=0 jmp CallSetPause else g_dispatchArg=0; jmp IndirectOpcodeDispatch3Entry_0049f3a0.
+ *   Tail thunk_2 (+0x110): if g_state2_00537ea8!=0 jmp CallSetPause else g_dispatchArg=1; jmp IndirectOpcodeDispatch3Entry_0049f3a0.
  */
-extern unsigned int g_dispatchArg_00535e48;
+extern unsigned int g_dispatchArg;
 extern void CallSetPause_0041f830(void);
 extern void GuardedScaledCall_0048a020(void);
 extern void LinkedListIndirectDirtyToggle_0049f7b0(void);
@@ -215,7 +215,7 @@ __declspec(naked) void StateCascadeDualThunkContin_0049f260(void) {
         mov     eax, dword ptr [g_scaledInit_00542044]
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0], ecx
-        mov     edx, dword ptr [g_dispatchArg_00535e48]
+        mov     edx, dword ptr [g_dispatchArg]
         mov     dword ptr [g_eventQueueCurrent], edx
         call    RoundWinTransition_0049e7e0
         mov     eax, dword ptr [g_framePauseFlag]
@@ -242,7 +242,7 @@ __declspec(naked) void StateCascadeDualThunkContin_0049f260(void) {
         _emit   74h
         _emit   05h
         jmp     CallSetPause_0041f830
-        mov     dword ptr [g_dispatchArg_00535e48], 0
+        mov     dword ptr [g_dispatchArg], 0
         jmp     IndirectOpcodeDispatch3Entry_0049f3a0
         _emit   90h
         _emit   90h
@@ -264,7 +264,7 @@ __declspec(naked) void StateCascadeDualThunkContin_0049f260(void) {
         _emit   74h
         _emit   05h
         jmp     CallSetPause_0041f830
-        mov     dword ptr [g_dispatchArg_00535e48], 1
+        mov     dword ptr [g_dispatchArg], 1
         _emit   0e9h
         _emit   0eh
         _emit   00h

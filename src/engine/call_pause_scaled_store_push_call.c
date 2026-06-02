@@ -4,9 +4,9 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_phaseTimer_00537e94;
+extern unsigned int g_phaseTimer;
 
 /* @addr 0x0045fca0 (65b)
  *   call F; pause → ret
@@ -21,7 +21,7 @@ void CallPauseScaledStorePushCall_0045fca0(void) {
     SlotPhaseResetInstallChain_0048e0e0();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))0x2001;
-    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->fsm_state = 0x2001;
+    ((ScenegraphNode *)(g_baseSel * 4))->fsm_state = 0x2001;
     IterStepScaledStore24_00428730(&g_dispatchSave419_00542958);
     if (g_framePauseFlag != 0) return;
     SelfInstallPhaseDispatch_0045fd30();

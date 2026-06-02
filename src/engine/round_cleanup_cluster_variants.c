@@ -5,15 +5,15 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern unsigned int g_gameCountdown_0053a718;
+extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_audioBankSel_00537f94;
+extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -57,12 +57,12 @@ extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_cj_00542058;
-extern unsigned int g_rangeSqLimit_0053a180;
+extern unsigned int g_rangeSqLimit;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
-extern unsigned int g_dualBitGate_0053a7b0;
-extern unsigned int g_eventArmReload_0053a770;
-extern unsigned int g_rangeBase_0053a46c;
+extern unsigned int g_dualBitGate;
+extern unsigned int g_eventArmReload;
+extern unsigned int g_rangeBase;
 
 extern void ScaledArrStore_004298c0(void);
 extern void DualFieldAddSubStore_00470340(void);
@@ -97,16 +97,16 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_installOwnerNode_00535cf8;
+extern unsigned int g_stateCountdown;
+extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
-extern unsigned int g_audioBoundNode_005437f0;
-extern unsigned int g_lastGatedValue_00543598;
-extern unsigned int g_lastGatedTick_0054358c;
-extern unsigned int g_fightAxisNegX_00535e70;
-extern unsigned int g_fightAxisNegY_00535e74;
-extern unsigned int g_fightAxisPosX_00535e78;
-extern unsigned int g_fightAxisPosY_00535e7c;
+extern unsigned int g_audioBoundNode;
+extern unsigned int g_lastGatedValue;
+extern unsigned int g_lastGatedTick;
+extern unsigned int g_fightAxisNegX;
+extern unsigned int g_fightAxisNegY;
+extern unsigned int g_fightAxisPosX;
+extern unsigned int g_fightAxisPosY;
 
 extern void StoreIncrMStackPush6_004275c0(void);
 extern void DispatcherComplex181_004263d0(void);
@@ -114,7 +114,7 @@ extern void RoundCleanupCluster_00427690(void);
 
 /* @addr 0x00477920 (165b game) - poll-then-init pattern:
  *   poll: SaveCallRestore(0x22); SaveCallRestoreOrXor(0x22); while (state & 4): retry.
- *   walkCallback = max(g_gameCountdown_0053a718, 0); call StoreIncrMStackPush6_004275c0; pause? ret.
+ *   walkCallback = max(g_gameCountdown, 0); call StoreIncrMStackPush6_004275c0; pause? ret.
  *   set fixed state (walkCallback=2, g_eventQueueWorkType=0x22, g_eventQueueCurrent=2,
  *   g_acc_00542078=0, g_eventQueueNotMask=0xff960000, g_currentNodeFlags=2);
  *   call DispatcherComplex181; pause? ret; call RoundCleanupCluster_00427690.
@@ -124,7 +124,7 @@ extern unsigned int g_dispatchSave690_004e7f50;
 extern unsigned int g_dispatchSave691_004e7f60;
 extern unsigned int g_dispatchSave692_004e7f70;
 extern unsigned int g_dispatchSave59_00501250;
-extern unsigned int g_gameCountdown_0053a718;
+extern unsigned int g_gameCountdown;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ChainGatedNegAccum_0048b740(void);
 extern void DualScaledStore_00452740(void);
@@ -176,7 +176,7 @@ loopPoll:
         _emit   0c3h
         _emit   74h
         _emit   0e3h
-        mov     eax, dword ptr [g_gameCountdown_0053a718]
+        mov     eax, dword ptr [g_gameCountdown]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         _emit   7dh
@@ -209,7 +209,7 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
 {
     __asm {
         /* H1: installer */
-        mov      eax, dword ptr [g_baseSel_00542060]
+        mov      eax, dword ptr [g_baseSel]
         mov      ecx, 1
         shl      eax, 2
         mov      dword ptr [eax + 0x84], 0
@@ -277,7 +277,7 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
         nop
         /* H4 (L_75d0): big state dispatcher */
     L_75d0:
-        mov      eax, dword ptr [g_baseSel_00542060]
+        mov      eax, dword ptr [g_baseSel]
         push     ebx
         push     esi
         lea      esi, [eax*4]
@@ -316,7 +316,7 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
         pop      ebx
         ret
     L_765f:
-        mov      ecx, dword ptr [g_baseSel_00542060]
+        mov      ecx, dword ptr [g_baseSel]
         mov      eax, dword ptr [ecx*4 + 0x60]
         cmp      eax, 0x10a
         mov      dword ptr [g_walkCallback], eax
@@ -383,7 +383,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         ret
         /* === Helper 3 (0x455950): main FSM w/ jump table === */
     L_5950:
-        mov      eax, dword ptr [g_baseSel_00542060]
+        mov      eax, dword ptr [g_baseSel]
         push     esi
         push     edi
         xor      edi, edi
@@ -410,7 +410,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         mov      ecx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [g_fightGroupHead], ecx
         mov      dword ptr [esi + 8], OFFSET L_5950
-        mov      edx, dword ptr [g_baseSel_00542060]
+        mov      edx, dword ptr [g_baseSel]
         mov      ecx, OFFSET L_5950
         add      ecx, 0x3000000
         mov      dword ptr [edx*4 + 0x84], 3
@@ -421,7 +421,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_baseSel_00542060]
+        mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], edi
         call     InstallSelfPackedTailJmp_004751f0
         mov      dword ptr [g_framePauseFlag], 1
@@ -435,7 +435,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         shr      eax, 2
         mov      dword ptr [g_eventQueueEnd], eax
         mov      dword ptr [esi + 8], OFFSET L_5950
-        mov      ecx, dword ptr [g_baseSel_00542060]
+        mov      ecx, dword ptr [g_baseSel]
         add      edx, 0x4000000
         mov      dword ptr [ecx*4 + 0x84], 4
         mov      eax, dword ptr [esi + 4]
@@ -445,7 +445,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_baseSel_00542060]
+        mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edi
         call     SetJmp_004753a0
         mov      dword ptr [g_framePauseFlag], 1
@@ -524,7 +524,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], ecx
-        mov      edx, dword ptr [g_baseSel_00542060]
+        mov      edx, dword ptr [g_baseSel]
         mov      ecx, dword ptr [edx*4 + 0x64]
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      eax, dword ptr [ecx*4 + 0x34]

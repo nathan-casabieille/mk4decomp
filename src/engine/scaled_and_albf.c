@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 
 /* @addr 0x00490350 (28b): same shape, and al, 0xbf */
 void ScaledAndAlbf_00490350(void) {

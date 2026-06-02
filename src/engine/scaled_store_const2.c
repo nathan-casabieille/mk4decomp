@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00446320 (36b)
@@ -17,7 +17,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 void ScaledStoreConst2_00446320(void) {
-    unsigned int v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x5c);
+    unsigned int v = *(unsigned int *)(g_baseSel * 4 + 0x5c);
     g_walkCallback = (void (*)(void))2;
     g_scaledInit_00542044 = v;
     ((ScenegraphNode *)(v * 4))->alloc_flags = 2;

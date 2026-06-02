@@ -5,15 +5,15 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern unsigned int g_gameCountdown_0053a718;
+extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_audioBankSel_00537f94;
+extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -57,12 +57,12 @@ extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_cj_00542058;
-extern unsigned int g_rangeSqLimit_0053a180;
+extern unsigned int g_rangeSqLimit;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
-extern unsigned int g_dualBitGate_0053a7b0;
-extern unsigned int g_eventArmReload_0053a770;
-extern unsigned int g_rangeBase_0053a46c;
+extern unsigned int g_dualBitGate;
+extern unsigned int g_eventArmReload;
+extern unsigned int g_rangeBase;
 
 extern void ScaledArrStore_004298c0(void);
 extern void DualFieldAddSubStore_00470340(void);
@@ -97,16 +97,16 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_installOwnerNode_00535cf8;
+extern unsigned int g_stateCountdown;
+extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
-extern unsigned int g_audioBoundNode_005437f0;
-extern unsigned int g_lastGatedValue_00543598;
-extern unsigned int g_lastGatedTick_0054358c;
-extern unsigned int g_fightAxisNegX_00535e70;
-extern unsigned int g_fightAxisNegY_00535e74;
-extern unsigned int g_fightAxisPosX_00535e78;
-extern unsigned int g_fightAxisPosY_00535e7c;
+extern unsigned int g_audioBoundNode;
+extern unsigned int g_lastGatedValue;
+extern unsigned int g_lastGatedTick;
+extern unsigned int g_fightAxisNegX;
+extern unsigned int g_fightAxisNegY;
+extern unsigned int g_fightAxisPosX;
+extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave958_004e9068;
 extern unsigned int g_tickFlagF;
@@ -130,7 +130,7 @@ __declspec(naked) void RoundEndFsmCluster_0045d680(void)
     __asm {
         /* === Helper 1 (0x45d680): round-end FSM === */
     L_d680:
-        mov      eax, dword ptr [g_baseSel_00542060]
+        mov      eax, dword ptr [g_baseSel]
         push     ebx
         push     esi
         push     edi
@@ -154,7 +154,7 @@ __declspec(naked) void RoundEndFsmCluster_0045d680(void)
         ret
     L_d6d4:
         call     SixCallSeqPushImm_004a1d80
-        mov      ecx, dword ptr [g_baseSel_00542060]
+        mov      ecx, dword ptr [g_baseSel]
         mov      eax, 0x1000
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0xc], eax
@@ -172,7 +172,7 @@ __declspec(naked) void RoundEndFsmCluster_0045d680(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_d82c
         mov      dword ptr [esi + 8], OFFSET L_d680
-        mov      edx, dword ptr [g_baseSel_00542060]
+        mov      edx, dword ptr [g_baseSel]
         mov      ecx, OFFSET L_d680
         mov      dword ptr [edx*4 + 0x84], ebx
         mov      eax, dword ptr [esi + 4]
@@ -183,7 +183,7 @@ __declspec(naked) void RoundEndFsmCluster_0045d680(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_baseSel_00542060]
+        mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], edi
         call     AudioInstallSelfStatePush_004aa8a0
         mov      dword ptr [g_framePauseFlag], 1
@@ -208,7 +208,7 @@ __declspec(naked) void RoundEndFsmCluster_0045d680(void)
         jne      short L_d82c
         mov      dword ptr [g_eventQueueCurrent], 0xa
         mov      dword ptr [esi + 8], OFFSET L_d680
-        mov      ecx, dword ptr [g_baseSel_00542060]
+        mov      ecx, dword ptr [g_baseSel]
         mov      ebx, 1
         mov      edx, OFFSET L_d680
         mov      dword ptr [ecx*4 + 0x84], ebx
@@ -220,7 +220,7 @@ __declspec(naked) void RoundEndFsmCluster_0045d680(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_baseSel_00542060]
+        mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edi
         call     InstallSelfPackedF80_00426000
         mov      dword ptr [g_framePauseFlag], ebx

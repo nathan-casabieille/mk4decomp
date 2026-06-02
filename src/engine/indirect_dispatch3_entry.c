@@ -5,15 +5,15 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern unsigned int g_gameCountdown_0053a718;
+extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_audioBankSel_00537f94;
+extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -57,12 +57,12 @@ extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_cj_00542058;
-extern unsigned int g_rangeSqLimit_0053a180;
+extern unsigned int g_rangeSqLimit;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
-extern unsigned int g_dualBitGate_0053a7b0;
-extern unsigned int g_eventArmReload_0053a770;
-extern unsigned int g_rangeBase_0053a46c;
+extern unsigned int g_dualBitGate;
+extern unsigned int g_eventArmReload;
+extern unsigned int g_rangeBase;
 
 extern void ScaledArrStore_004298c0(void);
 extern void DualFieldAddSubStore_00470340(void);
@@ -97,38 +97,38 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_installOwnerNode_00535cf8;
+extern unsigned int g_stateCountdown;
+extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
-extern unsigned int g_audioBoundNode_005437f0;
-extern unsigned int g_lastGatedValue_00543598;
-extern unsigned int g_lastGatedTick_0054358c;
-extern unsigned int g_fightAxisNegX_00535e70;
-extern unsigned int g_fightAxisNegY_00535e74;
-extern unsigned int g_fightAxisPosX_00535e78;
-extern unsigned int g_fightAxisPosY_00535e7c;
+extern unsigned int g_audioBoundNode;
+extern unsigned int g_lastGatedValue;
+extern unsigned int g_lastGatedTick;
+extern unsigned int g_fightAxisNegX;
+extern unsigned int g_fightAxisNegY;
+extern unsigned int g_fightAxisPosX;
+extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0049f530 (354b game) - 3-entry indirect dispatcher with state walk.
  *   Entry 1 (offset 0, 260b): cache [g_audioBitField_00541fc0] into g_xformEntityIdx,
- *     index it by [g_dispatchArg_00535e48] base, deref once, save in 0x542048
+ *     index it by [g_dispatchArg] base, deref once, save in 0x542048
  *     and [edx*4+4] in g_currentNodeIdx then `call eax` (indirect). On
  *     no-error AND bit 0 of g_xformDirtyFlags set: walks an outer state
  *     loop comparing eax to {1,6,11,16} (each takes the install path);
  *     other values get dec'd, call LinkedListIndirectDirtyToggle_0049f7b0,
  *     and on bit 0 still set may re-enter the loop. Else writes ecx into
- *     [eax*4], copies g_dispatchArg_00535e48 into g_eventQueueCurrent, calls
+ *     [eax*4], copies g_dispatchArg into g_eventQueueCurrent, calls
  *     RoundWinTransition_0049e7e0 then GuardedScaledCall_0048a020 with [scaled+8] prep.
  *     Both successful tails fall through to CallSetPause_0041f830.
  *   (12b NOP align pad.)
  *   Entry 2 (offset 0x110, 34b): if g_state2_00541d88 != 0 tail-jmp
- *     CallSetPause_0041f830; else zero g_dispatchArg_00535e48 and tail-jmp
+ *     CallSetPause_0041f830; else zero g_dispatchArg and tail-jmp
  *     IndirectStateDispatcher_0049f6a0.
  *   (14b NOP align pad.)
  *   Entry 3 (offset 0x140, 34b): mirror of entry 2 on g_state2_00537ea8.
- *     If non-zero tail-jmp CallSetPause_0041f830; else set g_dispatchArg_00535e48
+ *     If non-zero tail-jmp CallSetPause_0041f830; else set g_dispatchArg
  *     to 1 and tail-jmp IndirectStateDispatcher_0049f6a0.
  */
-extern unsigned int g_dispatchArg_00535e48;
+extern unsigned int g_dispatchArg;
 extern unsigned int g_state2_00537ea8;
 extern unsigned int g_state2_00541d88;
 extern unsigned int g_audioBitField_00541fc0;
@@ -141,7 +141,7 @@ extern void RoundWinTransition_0049e7e0(void);
 __declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
     __asm {
         mov     eax, dword ptr [g_audioBitField_00541fc0]
-        mov     ecx, dword ptr [g_dispatchArg_00535e48]
+        mov     ecx, dword ptr [g_dispatchArg]
         mov     dword ptr [g_xformEntityIdx], eax
         add     eax, ecx
         push    ebx
@@ -189,7 +189,7 @@ __declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
         mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4], ecx
-        mov     edx, dword ptr [g_dispatchArg_00535e48]
+        mov     edx, dword ptr [g_dispatchArg]
         mov     dword ptr [g_eventQueueCurrent], edx
         call    RoundWinTransition_0049e7e0
         mov     eax, dword ptr [g_framePauseFlag]
@@ -228,7 +228,7 @@ __declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
         je      short L_id3_e2zero
         jmp     CallSetPause_0041f830
     L_id3_e2zero:
-        mov     dword ptr [g_dispatchArg_00535e48], 0
+        mov     dword ptr [g_dispatchArg], 0
         jmp     IndirectStateDispatcher_0049f6a0
         /* 14b NOP align pad */
         nop
@@ -253,7 +253,7 @@ __declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
         je      short L_id3_e3one
         jmp     CallSetPause_0041f830
     L_id3_e3one:
-        mov     dword ptr [g_dispatchArg_00535e48], 1
+        mov     dword ptr [g_dispatchArg], 1
         jmp     IndirectStateDispatcher_0049f6a0
     }
 }

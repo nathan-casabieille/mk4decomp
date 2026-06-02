@@ -5,7 +5,7 @@
  * them); they share the body but live at distinct addresses.
  *
  * Pattern:
- *   mov     edx, [g_baseSel_00542060]
+ *   mov     edx, [g_baseSel]
  *   mov     ecx, [edx*4 + 4]
  *   dec     ecx
  *   mov     [g_scaledInit_00542044], ecx
@@ -15,13 +15,13 @@
  */
 #include "engine/scenegraph.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00404bd0 */
 unsigned int ScaledDecPop_00404bd0(void) {
     unsigned int idx, n, v;
-    idx = g_baseSel_00542060;
+    idx = g_baseSel;
     n = *(unsigned int *)(idx * 4 + 4) - 1;
     g_scaledInit_00542044 = n;
     v = *(unsigned int *)(n * 4);
@@ -32,7 +32,7 @@ unsigned int ScaledDecPop_00404bd0(void) {
 /* @addr 0x00404c40 */
 unsigned int ScaledDecPop_00404c40(void) {
     unsigned int idx, n, v;
-    idx = g_baseSel_00542060;
+    idx = g_baseSel;
     n = *(unsigned int *)(idx * 4 + 4) - 1;
     g_scaledInit_00542044 = n;
     v = *(unsigned int *)(n * 4);

@@ -5,15 +5,15 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern unsigned int g_gameCountdown_0053a718;
+extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_audioBankSel_00537f94;
+extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -57,12 +57,12 @@ extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_cj_00542058;
-extern unsigned int g_rangeSqLimit_0053a180;
+extern unsigned int g_rangeSqLimit;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
-extern unsigned int g_dualBitGate_0053a7b0;
-extern unsigned int g_eventArmReload_0053a770;
-extern unsigned int g_rangeBase_0053a46c;
+extern unsigned int g_dualBitGate;
+extern unsigned int g_eventArmReload;
+extern unsigned int g_rangeBase;
 
 extern void ScaledArrStore_004298c0(void);
 extern void DualFieldAddSubStore_00470340(void);
@@ -97,23 +97,23 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_installOwnerNode_00535cf8;
+extern unsigned int g_stateCountdown;
+extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
-extern unsigned int g_audioBoundNode_005437f0;
-extern unsigned int g_lastGatedValue_00543598;
-extern unsigned int g_lastGatedTick_0054358c;
-extern unsigned int g_fightAxisNegX_00535e70;
-extern unsigned int g_fightAxisNegY_00535e74;
-extern unsigned int g_fightAxisPosX_00535e78;
-extern unsigned int g_fightAxisPosY_00535e7c;
+extern unsigned int g_audioBoundNode;
+extern unsigned int g_lastGatedValue;
+extern unsigned int g_lastGatedTick;
+extern unsigned int g_fightAxisNegX;
+extern unsigned int g_fightAxisNegY;
+extern unsigned int g_fightAxisPosX;
+extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004a7e00 (333b audio) - 4-entry audio scope dispatcher.
  *   Entry 1 (offset 0): if g_counter_005433c8 < g_audioStateMachine1_004f3ae8 - 1, just bumps
  *     the counter; otherwise OR-sets bit 0 of g_xformDirtyFlags.
  *   (10b NOP padding to 0x4a7e30.)
  *   Entry 2 (offset 0x30): calls DecOrDirty_004a7d90, snapshots g_xformDirtyFlags
- *     into g_bootInitSaveSlot_00541dc4, clears bit 0, calls DecOrDirty_004a7de0; if the
+ *     into g_bootInitSaveSlot, clears bit 0, calls DecOrDirty_004a7de0; if the
  *     slot[+0x30] == 3 restores from snapshot.
  *   (9b NOP padding to 0x4a7e70.)
  *   Entry 3 (offset 0x70): mirror of entry 2 but calls IncBoundedDirty_004a7db0
@@ -128,7 +128,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 extern unsigned int g_audioStateMachine0_004f3ae4;
 extern unsigned int g_audioStateMachine1_004f3ae8;
-extern unsigned int g_bootInitSaveSlot_00541dc4;
+extern unsigned int g_bootInitSaveSlot;
 extern unsigned int g_counter_005433c8;
 extern void CallSetMultiGlobalsJmp_004a9230(void);
 extern void DecOrDirty_004a7d90(void);
@@ -170,14 +170,14 @@ __declspec(naked) void Audio4EntryScopeDispatch_004a7e00(void) {
     L_a4s_entry2:
         call    DecOrDirty_004a7d90
         mov     eax, dword ptr [g_xformDirtyFlags]
-        mov     dword ptr [g_bootInitSaveSlot_00541dc4], eax
+        mov     dword ptr [g_bootInitSaveSlot], eax
         and     al, 0xfe
         mov     dword ptr [g_xformDirtyFlags], eax
         call    DecOrDirty_004a7de0
-        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [g_baseSel]
         cmp     dword ptr [eax*4 + 0x30], 3
         jne     short L_a4s_e2End
-        mov     ecx, dword ptr [g_bootInitSaveSlot_00541dc4]
+        mov     ecx, dword ptr [g_bootInitSaveSlot]
         mov     dword ptr [g_xformDirtyFlags], ecx
     L_a4s_e2End:
         ret
@@ -195,14 +195,14 @@ __declspec(naked) void Audio4EntryScopeDispatch_004a7e00(void) {
     L_a4s_entry3:
         call    IncBoundedDirty_004a7db0
         mov     eax, dword ptr [g_xformDirtyFlags]
-        mov     dword ptr [g_bootInitSaveSlot_00541dc4], eax
+        mov     dword ptr [g_bootInitSaveSlot], eax
         and     al, 0xfe
         mov     dword ptr [g_xformDirtyFlags], eax
         call    Audio4EntryScopeDispatch_004a7e00
-        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [g_baseSel]
         cmp     dword ptr [eax*4 + 0x30], 3
         jne     short L_a4s_e3End
-        mov     ecx, dword ptr [g_bootInitSaveSlot_00541dc4]
+        mov     ecx, dword ptr [g_bootInitSaveSlot]
         mov     dword ptr [g_xformDirtyFlags], ecx
     L_a4s_e3End:
         ret
@@ -224,7 +224,7 @@ __declspec(naked) void Audio4EntryScopeDispatch_004a7e00(void) {
         mov     esi, 0x004f3c20
     L_a4s_loop1:
         movsx   eax, byte ptr [esi]
-        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_baseSel]
         add     ecx, eax
         mov     edx, dword ptr [ecx*4]
         mov     dword ptr [g_currentNodeIdx], edx
@@ -237,7 +237,7 @@ __declspec(naked) void Audio4EntryScopeDispatch_004a7e00(void) {
         test    eax, eax
         jle     short L_a4s_skip2
     L_a4s_loop2:
-        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [g_baseSel]
         lea     ecx, [esi + eax]
         mov     edx, dword ptr [ecx*4 + 0x34]
         mov     dword ptr [g_currentNodeIdx], edx
@@ -252,7 +252,7 @@ __declspec(naked) void Audio4EntryScopeDispatch_004a7e00(void) {
         test    eax, eax
         jle     short L_a4s_skip3
     L_a4s_loop3:
-        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [g_baseSel]
         lea     ecx, [esi + eax]
         mov     edx, dword ptr [ecx*4 + 0x48]
         mov     dword ptr [g_currentNodeIdx], edx

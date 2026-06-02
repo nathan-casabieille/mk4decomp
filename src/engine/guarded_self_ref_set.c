@@ -12,10 +12,10 @@ extern unsigned int g_scaledInit_00542044;
  *   Else: ecx = 1; [eax+8] = OFFSET self (0x48d070); [eax+0x84] = 1;
  *   pendingNodeType = 0xa; framePauseFlag = 1; ret.
  */
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern void GuardedSelfRefSet_0048d070(void);
 void GuardedSelfRefSet_0048d070(void) {
-    unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
+    unsigned char *base = (unsigned char *)(g_baseSel * 4);
     ((ScenegraphNode *)base)->install_flag = 0;
     do {
         if (g_fightGroupHead == g_player1NodeIdx) break;

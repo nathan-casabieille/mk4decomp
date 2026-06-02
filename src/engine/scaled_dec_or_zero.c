@@ -4,11 +4,11 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00483b50 (36b)
- *   mov     ecx, [g_baseSel_00542060]
+ *   mov     ecx, [g_baseSel]
  *   mov     eax, [ecx*4 + 0x7c]
  *   dec     eax
  *   mov     [g_walkCallback], eax
@@ -19,7 +19,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 void ScaledDecOrZero_00483b50(void) {
-    unsigned int b = g_baseSel_00542060;
+    unsigned int b = g_baseSel;
     int v = *(int *)(b * 4 + 0x7c) - 1;
     g_walkCallback = (void (*)(void))v;
     if (v < 0) {

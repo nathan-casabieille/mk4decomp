@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x0049d8e0 (89b)
@@ -12,7 +12,7 @@ extern unsigned int g_scaledInit_00542044;
  *   six cross-stores: [edx + N] from [eax + M] for (M,N) pairs at +0x38..+0x4c → +0x54..+0x74.
  */
 void SixCrossStores_0049d8e0(void) {
-    unsigned char *src = (unsigned char *)(g_baseSel_00542060 * 4);
+    unsigned char *src = (unsigned char *)(g_baseSel * 4);
     unsigned char *dst = (unsigned char *)(g_fightGroupHead * 4);
     unsigned int v;
     v = *(unsigned int *)(src + 0x38); g_walkCallback = (void(*)(void))v; *(unsigned int *)(dst + 0x54) = v;

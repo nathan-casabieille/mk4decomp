@@ -4,11 +4,11 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x0048e780 (35b)
- *   mov     eax, [g_baseSel_00542060]
+ *   mov     eax, [g_baseSel]
  *   mov     eax, [eax*4 + 0x3c]
  *   mov     [g_scaledInit_00542044], eax
  *   mov     ecx, [eax*4 + 0x74]
@@ -17,7 +17,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void WalkCallbackSetClearDirty_0048e7d0(void);
 void ScaledChain3c74Jmp_0048e780(void) {
-    unsigned int v = ((ScenegraphNode *)(g_baseSel_00542060 * 4))->child_a;
+    unsigned int v = ((ScenegraphNode *)(g_baseSel * 4))->child_a;
     g_scaledInit_00542044 = v;
     g_walkCallback = (void (*)(void))((ScenegraphNode *)(v * 4))->fsm_state;
     WalkCallbackSetClearDirty_0048e7d0();

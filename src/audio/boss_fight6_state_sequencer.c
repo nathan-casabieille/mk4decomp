@@ -5,15 +5,15 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern unsigned int g_gameCountdown_0053a718;
+extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_audioBankSel_00537f94;
+extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -57,12 +57,12 @@ extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_cj_00542058;
-extern unsigned int g_rangeSqLimit_0053a180;
+extern unsigned int g_rangeSqLimit;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
-extern unsigned int g_dualBitGate_0053a7b0;
-extern unsigned int g_eventArmReload_0053a770;
-extern unsigned int g_rangeBase_0053a46c;
+extern unsigned int g_dualBitGate;
+extern unsigned int g_eventArmReload;
+extern unsigned int g_rangeBase;
 
 extern void ScaledArrStore_004298c0(void);
 extern void DualFieldAddSubStore_00470340(void);
@@ -97,21 +97,21 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_installOwnerNode_00535cf8;
+extern unsigned int g_stateCountdown;
+extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
-extern unsigned int g_audioBoundNode_005437f0;
-extern unsigned int g_lastGatedValue_00543598;
-extern unsigned int g_lastGatedTick_0054358c;
-extern unsigned int g_fightAxisNegX_00535e70;
-extern unsigned int g_fightAxisNegY_00535e74;
-extern unsigned int g_fightAxisPosX_00535e78;
-extern unsigned int g_fightAxisPosY_00535e7c;
+extern unsigned int g_audioBoundNode;
+extern unsigned int g_lastGatedValue;
+extern unsigned int g_lastGatedTick;
+extern unsigned int g_fightAxisNegX;
+extern unsigned int g_fightAxisNegY;
+extern unsigned int g_fightAxisPosX;
+extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave884_004d2320;
 extern unsigned int g_dispatchSave885_004d2330;
 extern unsigned int g_dispatchSave886_004d2340;
-extern unsigned int g_audioStreamState_0053a430;
+extern unsigned int g_audioStreamState;
 extern void AudioInitInstallerPair_004a2140(void);
 extern void BootInitGuardedCallChain_004265d0(void);
 extern void GuardedSetupCallTailJmp_004a1fa0(void);
@@ -121,7 +121,7 @@ __declspec(naked) void Match_OutcomeScreen(void)
 {
     __asm {
     L_3ce0:
-        mov      eax, dword ptr [g_baseSel_00542060]
+        mov      eax, dword ptr [g_baseSel]
         push     esi
         push     edi
         xor      edi, edi
@@ -133,10 +133,10 @@ __declspec(naked) void Match_OutcomeScreen(void)
         jmp      dword ptr [eax*4 + L_jmptbl_3f30]
     L_3d0d:
         /* case 1: kick off if state == 0 then check 0053a430 flag */
-        mov      ecx, dword ptr [g_baseSel_00542060]
+        mov      ecx, dword ptr [g_baseSel]
         mov      edx, dword ptr [ecx*4 + 0x30]
         mov      dword ptr [edx*4 + 0x74], edi
-        mov      eax, dword ptr [g_audioStreamState_0053a430]
+        mov      eax, dword ptr [g_audioStreamState]
         cmp      eax, edi
         jne      short L_3d63
         call     TwoCallsTwoBranchTail_004a3c50
@@ -151,10 +151,10 @@ __declspec(naked) void Match_OutcomeScreen(void)
         ret
     L_3d63:
         /* case 2: arm slot-0x34 velocity */
-        mov      eax, dword ptr [g_baseSel_00542060]
+        mov      eax, dword ptr [g_baseSel]
         mov      ecx, dword ptr [eax*4 + 0x34]
         mov      dword ptr [ecx*4 + 0x58], 0x140000
-        mov      edx, dword ptr [g_baseSel_00542060]
+        mov      edx, dword ptr [g_baseSel]
         mov      eax, dword ptr [edx*4 + 0x34]
         mov      dword ptr [eax*4 + 0x74], 0xffffc000
         mov      dword ptr [esi + 8], OFFSET L_3ce0
@@ -166,7 +166,7 @@ __declspec(naked) void Match_OutcomeScreen(void)
         ret
     L_3dba:
         /* case 3: reset slot-0x34 velocity to 0 */
-        mov      ecx, dword ptr [g_baseSel_00542060]
+        mov      ecx, dword ptr [g_baseSel]
         mov      edx, dword ptr [ecx*4 + 0x34]
         mov      dword ptr [edx*4 + 0x74], edi
         mov      dword ptr [esi + 8], OFFSET L_3ce0
@@ -199,12 +199,12 @@ __declspec(naked) void Match_OutcomeScreen(void)
         push     0xffec0000
         push     OFFSET g_dispatchSave884_004d2320
         call     GuardedSetupCallTailJmp_004a1fa0
-        mov      eax, dword ptr [g_baseSel_00542060]
+        mov      eax, dword ptr [g_baseSel]
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      edi, 1
         add      esp, 8
         mov      dword ptr [eax*4 + 0x30], ecx
-        mov      eax, dword ptr [g_audioBankSel_00537f94]
+        mov      eax, dword ptr [g_audioBankSel]
         cmp      eax, edi
         mov      eax, OFFSET g_dispatchSave885_004d2330
         je       short L_3e82
@@ -214,21 +214,21 @@ __declspec(naked) void Match_OutcomeScreen(void)
         push     eax
         mov      dword ptr [g_currentNodeIdx], eax
         call     GuardedSetupCallTailJmp_004a1fa0
-        mov      edx, dword ptr [g_baseSel_00542060]
+        mov      edx, dword ptr [g_baseSel]
         mov      eax, dword ptr [g_currentNodeIdx]
         add      esp, 8
         mov      dword ptr [edx*4 + 0x34], eax
-        mov      ecx, dword ptr [g_baseSel_00542060]
+        mov      ecx, dword ptr [g_baseSel]
         mov      eax, 0xa0000
         mov      edx, dword ptr [ecx*4 + 0x30]
         mov      dword ptr [edx*4 + 0x5c], eax
-        mov      ecx, dword ptr [g_baseSel_00542060]
+        mov      ecx, dword ptr [g_baseSel]
         mov      edx, dword ptr [ecx*4 + 0x34]
         mov      dword ptr [edx*4 + 0x5c], eax
-        mov      eax, dword ptr [g_baseSel_00542060]
+        mov      eax, dword ptr [g_baseSel]
         mov      ecx, dword ptr [eax*4 + 0x34]
         mov      dword ptr [ecx*4 + 0x58], 0xf0600000
-        mov      edx, dword ptr [g_baseSel_00542060]
+        mov      edx, dword ptr [g_baseSel]
         mov      eax, dword ptr [edx*4 + 0x30]
         mov      dword ptr [eax*4 + 0x74], 0xffffc000
         mov      dword ptr [esi + 8], OFFSET L_3ce0

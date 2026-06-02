@@ -5,15 +5,15 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern unsigned int g_gameCountdown_0053a718;
+extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_audioBankSel_00537f94;
+extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -57,12 +57,12 @@ extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_cj_00542058;
-extern unsigned int g_rangeSqLimit_0053a180;
+extern unsigned int g_rangeSqLimit;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
-extern unsigned int g_dualBitGate_0053a7b0;
-extern unsigned int g_eventArmReload_0053a770;
-extern unsigned int g_rangeBase_0053a46c;
+extern unsigned int g_dualBitGate;
+extern unsigned int g_eventArmReload;
+extern unsigned int g_rangeBase;
 
 extern void ScaledArrStore_004298c0(void);
 extern void DualFieldAddSubStore_00470340(void);
@@ -97,19 +97,19 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_installOwnerNode_00535cf8;
+extern unsigned int g_stateCountdown;
+extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
-extern unsigned int g_audioBoundNode_005437f0;
-extern unsigned int g_lastGatedValue_00543598;
-extern unsigned int g_lastGatedTick_0054358c;
-extern unsigned int g_fightAxisNegX_00535e70;
-extern unsigned int g_fightAxisNegY_00535e74;
-extern unsigned int g_fightAxisPosX_00535e78;
-extern unsigned int g_fightAxisPosY_00535e7c;
+extern unsigned int g_audioBoundNode;
+extern unsigned int g_lastGatedValue;
+extern unsigned int g_lastGatedTick;
+extern unsigned int g_fightAxisNegX;
+extern unsigned int g_fightAxisNegY;
+extern unsigned int g_fightAxisPosX;
+extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dualB_00538038;
 extern unsigned int g_dualB_0053803c;
-extern unsigned int g_bootInitSaveSlot_00541dc4;
+extern unsigned int g_bootInitSaveSlot;
 
 /* @addr 0x00470840 (96b)
  *   eax = g_player1NodeIdx; edx = g_cj_0054205c;
@@ -117,10 +117,10 @@ extern unsigned int g_bootInitSaveSlot_00541dc4;
  *   g_scaledInit = eax; if eq: skip;
  *   ecx = g_dualB_0053803c; g_xformEntityIdx = ecx;
  *   skip: eax = [ecx*4+0x5c]; dec eax;
- *   g_walkCallback = eax; g_bootInitSaveSlot_00541dc4 = eax;
+ *   g_walkCallback = eax; g_bootInitSaveSlot = eax;
  *   if jns: skip2; eax=1; g_walkCallback=1;
  *   skip2: [ecx*4+0x5c] = eax;
- *   eax = g_bootInitSaveSlot_00541dc4; if zero: jmp 0x4708a0; else ret.
+ *   eax = g_bootInitSaveSlot; if zero: jmp 0x4708a0; else ret.
  */
 void DualPickDecJmp_00470840(void) {
     unsigned int state;
@@ -138,12 +138,12 @@ void DualPickDecJmp_00470840(void) {
     }
     v = (int)*(int *)(idx * 4 + 0x5c) - 1;
     g_walkCallback = (void (*)(void))v;
-    g_bootInitSaveSlot_00541dc4 = (unsigned int)v;
+    g_bootInitSaveSlot = (unsigned int)v;
     if (v < 0) {
         v = 1;
         g_walkCallback = (void (*)(void))1;
     }
     *(int *)(idx * 4 + 0x5c) = v;
-    if (g_bootInitSaveSlot_00541dc4 != 0) return;
+    if (g_bootInitSaveSlot != 0) return;
     ScaledStoreCSet58Jmp_004708a0();
 }

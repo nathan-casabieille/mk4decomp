@@ -4,9 +4,9 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_phaseTimer_00537e94;
+extern unsigned int g_phaseTimer;
 
 /* @addr 0x0048e4f0 (84b)
  *   arg sar 2 → g_scaledInit; load baseSel*4+0x34 → walk; cmp 0x10;
@@ -18,7 +18,7 @@ void ScaledChainCmpDispatch_0048e4f0(int arg) {
     unsigned int walk;
     unsigned int target;
     g_scaledInit_00542044 = idx;
-    walk = ((ScenegraphNode *)(g_baseSel_00542060 * 4))->state_mask;
+    walk = ((ScenegraphNode *)(g_baseSel * 4))->state_mask;
     g_walkCallback = (void (*)(void))walk;
     if (walk == 0x10) {
         walk = 2;

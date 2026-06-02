@@ -23,7 +23,7 @@
 
 extern packed_ptr g_xformEntityIdx;     /* 0x00542048 */
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 
 extern unsigned int g_dualA_00542044;     /* alias of g_scaledInit_00542044 */
 extern unsigned int g_dualB_00542020;
@@ -53,10 +53,10 @@ void DualInstallCallSwap_00489cd0(void) {
 /* @addr 0x00490c80 */
 void DualInstallCallSwap_00490c80(void) {
     g_fightGroupHead = g_player1NodeIdx;
-    g_baseSel_00542060 = g_gtPlayerProbe2;
+    g_baseSel = g_gtPlayerProbe2;
     CjChainResetThreshold_00490cc0();
     if (g_framePauseFlag) return;
     g_fightGroupHead = g_player2NodeIdx;
-    g_baseSel_00542060 = g_gtPlayerProbe1;
+    g_baseSel = g_gtPlayerProbe1;
     CjChainResetThreshold_00490cc0();
 }

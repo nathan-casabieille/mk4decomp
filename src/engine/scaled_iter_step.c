@@ -4,7 +4,7 @@
  * Both stubs emit identical bytes.
  *
  * Pattern:
- *   mov     ecx, [g_baseSel_00542060]
+ *   mov     ecx, [g_baseSel]
  *   mov     eax, [ecx*4 + 0x48]              ; load packed_ptr
  *   mov     [g_eventQueueTotal], eax
  *   mov     edx, [eax*4 + 0]                 ; deref via SIB+0
@@ -16,12 +16,12 @@
  */
 #include "engine/scenegraph.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 
 /* @addr 0x0045c020 */
 void ScaledIterStep_0045c020(void) {
     unsigned int idx, p, v;
-    idx = g_baseSel_00542060;
+    idx = g_baseSel;
     p = *(unsigned int *)(idx * 4 + 0x48);
     g_eventQueueTotal = p;
     v = *(unsigned int *)(p * 4);
@@ -34,7 +34,7 @@ void ScaledIterStep_0045c020(void) {
 /* @addr 0x0045c050 */
 void ScaledIterStep_0045c050(void) {
     unsigned int idx, p, v;
-    idx = g_baseSel_00542060;
+    idx = g_baseSel;
     p = *(unsigned int *)(idx * 4 + 0x48);
     g_eventQueueTotal = p;
     v = *(unsigned int *)(p * 4);

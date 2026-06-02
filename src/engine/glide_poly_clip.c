@@ -5,15 +5,15 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern unsigned int g_gameCountdown_0053a718;
+extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_audioBankSel_00537f94;
+extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -57,12 +57,12 @@ extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_cj_00542058;
-extern unsigned int g_rangeSqLimit_0053a180;
+extern unsigned int g_rangeSqLimit;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
-extern unsigned int g_dualBitGate_0053a7b0;
-extern unsigned int g_eventArmReload_0053a770;
-extern unsigned int g_rangeBase_0053a46c;
+extern unsigned int g_dualBitGate;
+extern unsigned int g_eventArmReload;
+extern unsigned int g_rangeBase;
 
 extern void ScaledArrStore_004298c0(void);
 extern void DualFieldAddSubStore_00470340(void);
@@ -97,16 +97,16 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_installOwnerNode_00535cf8;
+extern unsigned int g_stateCountdown;
+extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
-extern unsigned int g_audioBoundNode_005437f0;
-extern unsigned int g_lastGatedValue_00543598;
-extern unsigned int g_lastGatedTick_0054358c;
-extern unsigned int g_fightAxisNegX_00535e70;
-extern unsigned int g_fightAxisNegY_00535e74;
-extern unsigned int g_fightAxisPosX_00535e78;
-extern unsigned int g_fightAxisPosY_00535e7c;
+extern unsigned int g_audioBoundNode;
+extern unsigned int g_lastGatedValue;
+extern unsigned int g_lastGatedTick;
+extern unsigned int g_fightAxisNegX;
+extern unsigned int g_fightAxisNegY;
+extern unsigned int g_fightAxisPosX;
+extern unsigned int g_fightAxisPosY;
 
 extern void Renderer2_FlushBatch_D3D(void);
 extern void GlidePolyClip_004ae560(void);
@@ -144,7 +144,7 @@ extern unsigned int g_glideDataArr_00543fcc;
 extern unsigned int g_glideDataArr_00543fd0;
 extern unsigned int g_glideDataArr_00543fd4;
 extern unsigned int g_glideDataArr_00543fd8;
-extern unsigned int g_palette_00544158;
+extern unsigned int g_palette;
 extern f32 g_renderer2_lutTable[];
 extern unsigned int g_glideTriVar_00544708;
 extern u8 g_renderer2_vertexBatch[];
@@ -459,17 +459,17 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         and      edx, 0xf8
         and      ecx, 0x1f
         sar      ebp, 2
-        mov      bl, byte ptr [edx + g_palette_00544158]
+        mov      bl, byte ptr [edx + g_palette]
         and      ebp, 0xf8
         shl      esi, 8
         or       ebx, esi
         xor      edx, edx
-        mov      dl, byte ptr [ebp + g_palette_00544158]
+        mov      dl, byte ptr [ebp + g_palette]
         mov      dword ptr [eax + g_glideVertArr_00544724], edi
         shl      ebx, 8
         or       ebx, edx
         xor      edx, edx
-        mov      dl, byte ptr [ecx*8 + g_palette_00544158]
+        mov      dl, byte ptr [ecx*8 + g_palette]
         mov      ecx, dword ptr [esp + 0x24]
         shl      ebx, 8
         and      ecx, 0xff
@@ -494,16 +494,16 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         and      edx, 0xf8
         and      ecx, 0x1f
         sar      ebp, 2
-        mov      bl, byte ptr [edx + g_palette_00544158]
+        mov      bl, byte ptr [edx + g_palette]
         and      ebp, 0xf8
         or       ebx, esi
         xor      edx, edx
-        mov      dl, byte ptr [ebp + g_palette_00544158]
+        mov      dl, byte ptr [ebp + g_palette]
         mov      dword ptr [eax + g_glideVertArr_00544744], edi
         shl      ebx, 8
         or       ebx, edx
         xor      edx, edx
-        mov      dl, byte ptr [ecx*8 + g_palette_00544158]
+        mov      dl, byte ptr [ecx*8 + g_palette]
         mov      ecx, dword ptr [esp + 0x38]
         shl      ebx, 8
         and      ecx, 0xff
@@ -527,7 +527,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         xor      ebx, ebx
         sar      edx, 7
         and      edx, 0xf8
-        mov      bl, byte ptr [edx + g_palette_00544158]
+        mov      bl, byte ptr [edx + g_palette]
         xor      edx, edx
         or       ebx, esi
         mov      esi, ecx
@@ -535,10 +535,10 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         and      esi, 0xf8
         and      ecx, 0x1f
         shl      ebx, 8
-        mov      dl, byte ptr [esi + g_palette_00544158]
+        mov      dl, byte ptr [esi + g_palette]
         or       ebx, edx
         xor      edx, edx
-        mov      dl, byte ptr [ecx*8 + g_palette_00544158]
+        mov      dl, byte ptr [ecx*8 + g_palette]
         mov      ecx, dword ptr [esp + 0x4c]
         shl      ebx, 8
         and      ecx, 0xff
@@ -600,7 +600,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         and      ecx, 0xf8
         xor      edx, edx
         fstp     dword ptr [g_glideDataArr_00543fcc]
-        mov      dl, byte ptr [ecx + g_palette_00544158]
+        mov      dl, byte ptr [ecx + g_palette]
         mov      ecx, eax
         sar      ecx, 2
         mov      dword ptr [esp + 0x2c], edx
@@ -608,9 +608,9 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         fild     dword ptr [esp + 0x2c]
         xor      edx, edx
         and      eax, 0x1f
-        mov      dl, byte ptr [ecx + g_palette_00544158]
+        mov      dl, byte ptr [ecx + g_palette]
         xor      ecx, ecx
-        mov      cl, byte ptr [eax*8 + g_palette_00544158]
+        mov      cl, byte ptr [eax*8 + g_palette]
         mov      dword ptr [esp + 0x2c], edx
         movsx    eax, word ptr [esp + 0x40]
         fstp     dword ptr [g_glideDataArr_00543f98]
@@ -622,7 +622,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         fild     dword ptr [esp + 0x2c]
         and      edx, 0xf8
         xor      ecx, ecx
-        mov      cl, byte ptr [edx + g_palette_00544158]
+        mov      cl, byte ptr [edx + g_palette]
         mov      edx, eax
         fstp     dword ptr [g_glideDataArr_00543fa0]
         sar      edx, 2
@@ -631,10 +631,10 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         fild     dword ptr [esp + 0x2c]
         xor      ecx, ecx
         and      eax, 0x1f
-        mov      cl, byte ptr [edx + g_palette_00544158]
+        mov      cl, byte ptr [edx + g_palette]
         xor      edx, edx
         fstp     dword ptr [g_glideDataArr_00543fb4]
-        mov      dl, byte ptr [eax*8 + g_palette_00544158]
+        mov      dl, byte ptr [eax*8 + g_palette]
         mov      dword ptr [esp + 0x2c], ecx
         fild     dword ptr [esp + 0x2c]
         mov      dword ptr [esp + 0x2c], edx
@@ -646,7 +646,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         xor      edx, edx
         sar      ecx, 7
         and      ecx, 0xf8
-        mov      dl, byte ptr [ecx + g_palette_00544158]
+        mov      dl, byte ptr [ecx + g_palette]
         mov      ecx, eax
         sar      ecx, 2
         mov      dword ptr [esp + 0x2c], edx
@@ -654,10 +654,10 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         fild     dword ptr [esp + 0x2c]
         xor      edx, edx
         and      eax, 0x1f
-        mov      dl, byte ptr [ecx + g_palette_00544158]
+        mov      dl, byte ptr [ecx + g_palette]
         xor      ecx, ecx
         fstp     dword ptr [g_glideDataArr_00543fd0]
-        mov      cl, byte ptr [eax*8 + g_palette_00544158]
+        mov      cl, byte ptr [eax*8 + g_palette]
         mov      dword ptr [esp + 0x2c], edx
         fild     dword ptr [esp + 0x2c]
         mov      dword ptr [esp + 0x2c], ecx

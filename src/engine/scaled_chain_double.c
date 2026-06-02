@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x004911f0 (57b)
@@ -12,7 +12,7 @@ extern unsigned int g_scaledInit_00542044;
  *   reload baseSel*4 + 0x44 → g_scaledInit; deref *4 → g_eventQueueChild
  */
 void ScaledChainDouble_004911f0(void) {
-    unsigned int base = g_baseSel_00542060;
+    unsigned int base = g_baseSel;
     unsigned int s1 = ((ScenegraphNode *)(base * 4))->child_b;
     unsigned int s2;
     g_scaledInit_00542044 = s1;

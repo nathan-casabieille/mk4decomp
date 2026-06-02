@@ -19,7 +19,7 @@
  *   mov     [g_matrixStackTop], eax
  *   mov     [eax*4 + 0], edx
  *   ; Install scaled child of base[0x38]
- *   mov     eax, [g_baseSel_00542060]
+ *   mov     eax, [g_baseSel]
  *   mov     ecx, [eax*4 + 0x38]
  *   mov     [g_fightGroupHead], ecx
  *   call    Func                          ; same target as first call
@@ -54,7 +54,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 extern void GuardedSeq_004297b0(void);
@@ -69,7 +69,7 @@ extern void CallPauseScaledDecJmp_00429750(void);
         *(unsigned int *)(g_matrixStackTop * 4) = g_eventQueueIdx;            \
         g_matrixStackTop++;                                                   \
         *(unsigned int *)(g_matrixStackTop * 4) = g_fightGroupHead;           \
-        g_fightGroupHead = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x38);  \
+        g_fightGroupHead = *(unsigned int *)(g_baseSel * 4 + 0x38);  \
         CALL_FN();                                                            \
         if (g_framePauseFlag != 0) return;                                    \
         g_eventQueueCurrent = ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx; \

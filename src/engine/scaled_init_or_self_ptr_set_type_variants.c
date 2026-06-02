@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* === ScaledInitOrSelfPtrSetType cluster (68b each) === */
@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
 extern void ThresholdInitInstallSelfChain_00436120(void);
 extern void ScaledInitOrSelfPtrSetType_00434d60(void);
 void ScaledInitOrSelfPtrSetType_00434d60(void) {
-    unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
+    unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int v = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
     if (v != 0) {
@@ -30,7 +30,7 @@ void ScaledInitOrSelfPtrSetType_00434d60(void) {
 extern void QuadEntryGateChain_0046a630(void);
 extern void ScaledInitOrSelfPtrSetType_0046a5e0(void);
 void ScaledInitOrSelfPtrSetType_0046a5e0(void) {
-    unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
+    unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int v = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
     if (v != 0) {
@@ -47,7 +47,7 @@ void ScaledInitOrSelfPtrSetType_0046a5e0(void) {
 extern void TripleSubInstallSelfPair_0047a670(void);
 extern void ScaledInitOrSelfPtrSetType_0047a620(void);
 void ScaledInitOrSelfPtrSetType_0047a620(void) {
-    unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
+    unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int v = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
     if (v != 0) {

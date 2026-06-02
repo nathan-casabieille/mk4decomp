@@ -5,15 +5,15 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern unsigned int g_gameCountdown_0053a718;
+extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_audioBankSel_00537f94;
+extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -57,12 +57,12 @@ extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_cj_00542058;
-extern unsigned int g_rangeSqLimit_0053a180;
+extern unsigned int g_rangeSqLimit;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
-extern unsigned int g_dualBitGate_0053a7b0;
-extern unsigned int g_eventArmReload_0053a770;
-extern unsigned int g_rangeBase_0053a46c;
+extern unsigned int g_dualBitGate;
+extern unsigned int g_eventArmReload;
+extern unsigned int g_rangeBase;
 
 extern void ScaledArrStore_004298c0(void);
 extern void DualFieldAddSubStore_00470340(void);
@@ -97,16 +97,16 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_installOwnerNode_00535cf8;
+extern unsigned int g_stateCountdown;
+extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
-extern unsigned int g_audioBoundNode_005437f0;
-extern unsigned int g_lastGatedValue_00543598;
-extern unsigned int g_lastGatedTick_0054358c;
-extern unsigned int g_fightAxisNegX_00535e70;
-extern unsigned int g_fightAxisNegY_00535e74;
-extern unsigned int g_fightAxisPosX_00535e78;
-extern unsigned int g_fightAxisPosY_00535e7c;
+extern unsigned int g_audioBoundNode;
+extern unsigned int g_lastGatedValue;
+extern unsigned int g_lastGatedTick;
+extern unsigned int g_fightAxisNegX;
+extern unsigned int g_fightAxisNegY;
+extern unsigned int g_fightAxisPosX;
+extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave556_004f3930;
 extern unsigned int g_dispatchSave815_004f393c;
@@ -119,7 +119,7 @@ extern unsigned int g_dispatchSave128_0050f130;
 extern unsigned int g_dispatchSave127_0050f14c;
 extern unsigned int g_dispatchSave119_0051599c;
 extern unsigned int g_bootInitState_00535de4;
-extern unsigned int g_count_005433b8;
+extern unsigned int g_count;
 extern unsigned int g_voicePoolTickFlag_005437f4;
 extern void AudioBindEntry_004a1e40(void);
 extern void CharSelect_CpuBattlesToggle(void);
@@ -150,7 +150,7 @@ __declspec(naked) void EnduranceMode_Handler(void)
 {
     __asm {
     L_5290:
-        mov      eax, dword ptr [g_baseSel_00542060]
+        mov      eax, dword ptr [g_baseSel]
         push     ebx
         push     ebp
         push     esi
@@ -177,7 +177,7 @@ __declspec(naked) void EnduranceMode_Handler(void)
         mov      dword ptr [g_currentNodeIdx], eax
         call     MStackPush2ChainLLInsert_00406790
     L_52e0:
-        mov      eax, dword ptr [g_count_005433b8]
+        mov      eax, dword ptr [g_count]
         cmp      eax, 4
         je       short L_52ff
         cmp      eax, 8
@@ -217,7 +217,7 @@ __declspec(naked) void EnduranceMode_Handler(void)
         test     eax, eax
         mov      ebx, 1
         je       short L_53cb
-        mov      eax, dword ptr [g_baseSel_00542060]
+        mov      eax, dword ptr [g_baseSel]
         mov      eax, dword ptr [eax*4 + 0x30]
         lea      ecx, [eax + eax*8]
         mov      eax, dword ptr [ecx*4 + g_dispatchSave815_004f393c]
@@ -241,7 +241,7 @@ __declspec(naked) void EnduranceMode_Handler(void)
         call     CharSelect_CpuBattlesToggle
         mov      dword ptr [g_eventQueueCurrent], 0x20
         mov      dword ptr [edi + 8], OFFSET L_5290
-        mov      edx, dword ptr [g_baseSel_00542060]
+        mov      edx, dword ptr [g_baseSel]
         mov      ecx, OFFSET L_5290
         add      ecx, 0x2000000
         mov      dword ptr [edx*4 + 0x84], 2
@@ -252,7 +252,7 @@ __declspec(naked) void EnduranceMode_Handler(void)
         inc      eax
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [edi + 4], eax
-        mov      edx, dword ptr [g_baseSel_00542060]
+        mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], ebp
         call     InstallSelfPackedF80_00426000
         mov      dword ptr [g_framePauseFlag], ebx
@@ -285,7 +285,7 @@ __declspec(naked) void EnduranceMode_Handler(void)
         add      esp, 0x10
     L_54a1:
         movsx    edx, byte ptr [esi - 0xc]
-        mov      eax, dword ptr [g_baseSel_00542060]
+        mov      eax, dword ptr [g_baseSel]
         add      esi, 0x24
         add      edx, eax
         cmp      esi, OFFSET g_dispatchSave818_004f3a48
@@ -293,12 +293,12 @@ __declspec(naked) void EnduranceMode_Handler(void)
         jb       short L_547e
         push     OFFSET g_dispatchSave724_004f6338
         call     AudioBindEntry_004a1e40
-        mov      eax, dword ptr [g_baseSel_00542060]
+        mov      eax, dword ptr [g_baseSel]
         mov      ecx, OFFSET g_audioPreloadBase_0050b118
         shr      ecx, 2
         add      esp, 4
         mov      dword ptr [eax*4 + 0x30], ebx
-        mov      dword ptr [g_count_005433b8], 4
+        mov      dword ptr [g_count], 4
         mov      dword ptr [g_currentNodeIdx], ecx
         call     LoadGeoAsset_Default
         cmp      dword ptr [g_framePauseFlag], ebp

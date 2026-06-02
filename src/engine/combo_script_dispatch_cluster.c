@@ -5,15 +5,15 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern unsigned int g_gameCountdown_0053a718;
+extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_audioBankSel_00537f94;
+extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -57,12 +57,12 @@ extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_cj_00542058;
-extern unsigned int g_rangeSqLimit_0053a180;
+extern unsigned int g_rangeSqLimit;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
-extern unsigned int g_dualBitGate_0053a7b0;
-extern unsigned int g_eventArmReload_0053a770;
-extern unsigned int g_rangeBase_0053a46c;
+extern unsigned int g_dualBitGate;
+extern unsigned int g_eventArmReload;
+extern unsigned int g_rangeBase;
 
 extern void ScaledArrStore_004298c0(void);
 extern void DualFieldAddSubStore_00470340(void);
@@ -97,16 +97,16 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_installOwnerNode_00535cf8;
+extern unsigned int g_stateCountdown;
+extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
-extern unsigned int g_audioBoundNode_005437f0;
-extern unsigned int g_lastGatedValue_00543598;
-extern unsigned int g_lastGatedTick_0054358c;
-extern unsigned int g_fightAxisNegX_00535e70;
-extern unsigned int g_fightAxisNegY_00535e74;
-extern unsigned int g_fightAxisPosX_00535e78;
-extern unsigned int g_fightAxisPosY_00535e7c;
+extern unsigned int g_audioBoundNode;
+extern unsigned int g_lastGatedValue;
+extern unsigned int g_lastGatedTick;
+extern unsigned int g_fightAxisNegX;
+extern unsigned int g_fightAxisNegY;
+extern unsigned int g_fightAxisPosX;
+extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave971_004eb6f8;
 extern unsigned int g_dispatchSave560_004eb710;
@@ -123,7 +123,7 @@ extern void PhaseDispatchListAdvance_004709e0(void);
 extern void IterStepScaledStore_0048e600(void);
 
 /* @addr 0x0046ee00 (356b game) - 5-entry packed install-self + alarm chain.
- *   Entry 1 (offset 0, 135b): phase from [scaled g_baseSel_00542060+0x84].
+ *   Entry 1 (offset 0, 135b): phase from [scaled g_baseSel+0x84].
  *     phase != 0: writes 0x28f into [g_fightGroupHead*4+0x4c], pushes
  *       0x0046e2a0 (callback addr) onto mstack via g_matrixStackTop, then
  *       tail-call InstallSelfIndirectJmp_0048f3f0.
@@ -131,7 +131,7 @@ extern void IterStepScaledStore_0048e600(void);
  *       [esi+8], slot[+0x84]=1, g_pendingNodeType=0xc, arms 0x541e6c=1.
  *   9b NOP align pad.
  *   Entry 2 (offset 0x90, 106b): ScaledMove74to70_0046eaa0; on no-error
- *     sets [g_baseSel_00542060*4+0x74]=0x604; if [scaled+0x30] != 0 tail-jmp
+ *     sets [g_baseSel*4+0x74]=0x604; if [scaled+0x30] != 0 tail-jmp
  *     FiveBlockDispatchChain_0046ec20; else chain ScaledAndAlfe_00490390 →
  *     TripleCallPauseJmp_00470500 → push 0x4eb6f8 →
  *     ArgSarStoreJmp_004594f0.
@@ -151,7 +151,7 @@ extern void ScaledAndAlfe_00490390(void);
 
 __declspec(naked) void FiveEntryAlarmInstallChain_0046ee00(void) {
     __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [g_baseSel]
         push    esi
         lea     esi, [eax*4]
         mov     eax, dword ptr [eax*4 + 0x84]
@@ -197,11 +197,11 @@ __declspec(naked) void FiveEntryAlarmInstallChain_0046ee00(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_fea_e2End
-        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_baseSel]
         mov     eax, 0x604
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
-        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     edx, dword ptr [g_baseSel]
         mov     eax, dword ptr [edx*4 + 0x30]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax

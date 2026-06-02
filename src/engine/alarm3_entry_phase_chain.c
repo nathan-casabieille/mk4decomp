@@ -5,15 +5,15 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern unsigned int g_gameCountdown_0053a718;
+extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_audioBankSel_00537f94;
+extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -57,12 +57,12 @@ extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_cj_00542058;
-extern unsigned int g_rangeSqLimit_0053a180;
+extern unsigned int g_rangeSqLimit;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
-extern unsigned int g_dualBitGate_0053a7b0;
-extern unsigned int g_eventArmReload_0053a770;
-extern unsigned int g_rangeBase_0053a46c;
+extern unsigned int g_dualBitGate;
+extern unsigned int g_eventArmReload;
+extern unsigned int g_rangeBase;
 
 extern void ScaledArrStore_004298c0(void);
 extern void DualFieldAddSubStore_00470340(void);
@@ -97,19 +97,19 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_installOwnerNode_00535cf8;
+extern unsigned int g_stateCountdown;
+extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
-extern unsigned int g_audioBoundNode_005437f0;
-extern unsigned int g_lastGatedValue_00543598;
-extern unsigned int g_lastGatedTick_0054358c;
-extern unsigned int g_fightAxisNegX_00535e70;
-extern unsigned int g_fightAxisNegY_00535e74;
-extern unsigned int g_fightAxisPosX_00535e78;
-extern unsigned int g_fightAxisPosY_00535e7c;
+extern unsigned int g_audioBoundNode;
+extern unsigned int g_lastGatedValue;
+extern unsigned int g_lastGatedTick;
+extern unsigned int g_fightAxisNegX;
+extern unsigned int g_fightAxisNegY;
+extern unsigned int g_fightAxisPosX;
+extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0047e1a0 (355b game) - 3-entry packed phase chain w/ alarms.
- *   Entry 1 (offset 0, 51b): writes 0x1012 into [g_baseSel_00542060*4+0x74]
+ *   Entry 1 (offset 0, 51b): writes 0x1012 into [g_baseSel*4+0x74]
  *     (mirrored 0x54206c), calls MStackPushSet0008_004901a0, on no-error
  *     pushes 0x4ed590 (alarm string) and calls ArgSarStoreJmp_004594f0.
  *   13b NOP align pad.
@@ -141,7 +141,7 @@ extern void TriPhaseDualPathInstallChain_0047e420(void);
 /* entry 1 (offset 0, 51b) */
 void Alarm3EntryPhaseChain_0047e1a0(void) {
     g_walkCallback = 0x1012;
-    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->fsm_state = 0x1012;
+    ((ScenegraphNode *)(g_baseSel * 4))->fsm_state = 0x1012;
     MStackPushSet0008_004901a0();
     if (g_framePauseFlag == 0)
         ArgSarStoreJmp_004594f0(&g_dispatchSave717_004ed590);
@@ -149,8 +149,8 @@ void Alarm3EntryPhaseChain_0047e1a0(void) {
 
 /* entry 2 (offset 0x40, 67b) */
 void Alarm3PhaseChainEntry2_0047e1e0(void) {
-    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x68) = 0x402;
-    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->fsm_state = g_walkCallback = 0x201;
+    *(unsigned int *)(g_baseSel * 4 + 0x68) = 0x402;
+    ((ScenegraphNode *)(g_baseSel * 4))->fsm_state = g_walkCallback = 0x201;
     MStackPushSet0020_004901d0();
     if (g_framePauseFlag == 0)
         ArgSarStoreJmp_004594f0(&g_dispatchSave718_004ed5a8);
@@ -159,7 +159,7 @@ void Alarm3PhaseChainEntry2_0047e1e0(void) {
 /* entry 3 / body (offset 0x90, 211b) */
 __declspec(naked) void Alarm3PhaseChainBody_0047e230(void) {
     __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [g_baseSel]
         push    ebx
         push    esi
         mov     ebx, 1

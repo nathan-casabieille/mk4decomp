@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_eq_00542098;
 extern s16 g_vtxMat[];
 extern unsigned int g_mat3x3_007af994;
@@ -452,7 +452,7 @@ __declspec(naked) void RenderSceneNode(void)
         mov      edx, dword ptr [g_fightGroupHead]
     L_acfd:
         add      eax, 4
-        mov      dword ptr [g_baseSel_00542060], 0x1fff
+        mov      dword ptr [g_baseSel], 0x1fff
         mov      dword ptr [g_pendingNodeType], eax
         mov      eax, edx
         and      eax, 1

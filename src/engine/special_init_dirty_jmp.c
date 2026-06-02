@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00446000 (61b)
@@ -23,6 +23,6 @@ void SpecialInitDirtyJmp_00446000(void) {
     if ((g_xformDirtyFlags & 4) != 0) {
         return;
     }
-    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x5c) = g_scaledInit_00542044;
+    *(unsigned int *)(g_baseSel * 4 + 0x5c) = g_scaledInit_00542044;
     ScaledTestPauseStore_00408860();
 }

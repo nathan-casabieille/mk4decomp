@@ -15,18 +15,18 @@ extern unsigned int g_walkBoundsLimit_00535d60;
 extern unsigned int g_walkBoundsSlot_00535d68;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_phaseThunkSlot6_00535de8;
-extern unsigned int g_fightAxisNegX_00535e70;
-extern unsigned int g_fightAxisNegY_00535e74;
-extern unsigned int g_fightAxisPosX_00535e78;
-extern unsigned int g_fightAxisPosY_00535e7c;
-extern unsigned int g_phaseTimer_00537e94;
+extern unsigned int g_fightAxisNegX;
+extern unsigned int g_fightAxisNegY;
+extern unsigned int g_fightAxisPosX;
+extern unsigned int g_fightAxisPosY;
+extern unsigned int g_phaseTimer;
 extern unsigned int g_dispatchSave_00537ef4;
 extern unsigned int g_secondary_00538068;
 extern unsigned int g_phaseInstallSlot_0053a42c;
 extern unsigned int g_phaseThunkState_0053a730;
 extern unsigned int g_dispatchVar14_0053a7b4;
 extern unsigned int g_scenegraphWalkEnd_00541d68;
-extern unsigned int g_bootInitSaveSlot_00541dc4;
+extern unsigned int g_bootInitSaveSlot;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_xformScratch94;
 extern void DualInstallCallSwap_00489cd0(void);
@@ -111,10 +111,10 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         jne      L_983c
         mov      eax, dword ptr [g_walkCallback]
         mov      edx, dword ptr [g_eventQueueChild]
-        mov      dword ptr [g_fightAxisPosX_00535e78], eax
+        mov      dword ptr [g_fightAxisPosX], eax
         mov      dword ptr [g_walkCallback], edx
         neg      eax
-        mov      dword ptr [g_fightAxisNegX_00535e70], eax
+        mov      dword ptr [g_fightAxisNegX], eax
         mov      eax, dword ptr [g_currentNodeFlags]
         mov      dword ptr [g_eventQueueCurrent], eax
         call     FixedDiv16_004ab2a0
@@ -126,9 +126,9 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      esi, ecx
         neg      ecx
         mov      eax, ecx
-        mov      dword ptr [g_fightAxisPosY_00535e7c], esi
+        mov      dword ptr [g_fightAxisPosY], esi
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_fightAxisNegY_00535e74], eax
+        mov      dword ptr [g_fightAxisNegY], eax
         mov      edx, dword ptr [edx*4 + 0x40]
         mov      eax, dword ptr [g_xformEntityIdx]
         mov      dword ptr [g_walkCallback], edx
@@ -148,7 +148,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      dword ptr [g_phaseInstallSlot_0053a42c], eax
         jne      L_9569
         mov      edx, dword ptr [g_load_0052ab04]
-        mov      edi, dword ptr [g_fightAxisPosX_00535e78]
+        mov      edi, dword ptr [g_fightAxisPosX]
         lea      eax, [esi + edx]
         mov      esi, dword ptr [g_load_0052ab08]
         add      edx, ecx
@@ -225,7 +225,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      dword ptr [g_dispatchVar14_0053a7b4], eax
         mov      dword ptr [g_scenegraphWalkEnd_00541d68], ecx
     L_9569:
-        mov      ecx, dword ptr [g_fightAxisPosY_00535e7c]
+        mov      ecx, dword ptr [g_fightAxisPosY]
         mov      eax, dword ptr [g_load_0052ab10]
         test     ecx, ecx
         mov      dword ptr [g_pendingNodeType], eax
@@ -237,7 +237,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      eax, dword ptr [eax*4 + 0x5c]
         jmp      L_9613
     L_959e:
-        mov      ecx, dword ptr [g_fightAxisPosX_00535e78]
+        mov      ecx, dword ptr [g_fightAxisPosX]
         mov      dword ptr [g_eventQueueCurrent], ecx
         call     FixedDiv16_004ab2a0
         mov      eax, dword ptr [g_framePauseFlag]
@@ -270,7 +270,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
     L_9624:
         mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_phaseThunkState_0053a730], ecx
-        mov      ecx, dword ptr [g_fightAxisPosX_00535e78]
+        mov      ecx, dword ptr [g_fightAxisPosX]
         xor      edi, edi
         mov      dword ptr [g_eventQueueNotMask], edi
         mov      dword ptr [g_walkCallback], ecx
@@ -278,7 +278,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         test     eax, eax
         mov      dword ptr [g_eventQueueCurrent], eax
         jne      L_9670
-        mov      ecx, dword ptr [g_fightAxisPosY_00535e7c]
+        mov      ecx, dword ptr [g_fightAxisPosY]
         mov      dword ptr [g_walkCallback], ecx
         mov      eax, dword ptr [edx*4 + 0x74]
         test     eax, eax
@@ -314,7 +314,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         jge      L_96b8
         mov      edi, 0xffff0000
     L_96b8:
-        mov      ecx, dword ptr [g_fightAxisNegX_00535e70]
+        mov      ecx, dword ptr [g_fightAxisNegX]
         mov      edx, dword ptr [g_xformEntityIdx]
         mov      dword ptr [g_primary_0052d74c], edi
         xor      edi, edi
@@ -324,7 +324,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         test     eax, eax
         mov      dword ptr [g_eventQueueCurrent], eax
         jne      L_9704
-        mov      ecx, dword ptr [g_fightAxisNegY_00535e74]
+        mov      ecx, dword ptr [g_fightAxisNegY]
         mov      dword ptr [g_walkCallback], ecx
         mov      eax, dword ptr [edx*4 + 0x74]
         test     eax, eax
@@ -368,7 +368,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      ecx, eax
         mov      dword ptr [g_walkCallback], eax
         test     eax, eax
-        mov      dword ptr [g_bootInitSaveSlot_00541dc4], ecx
+        mov      dword ptr [g_bootInitSaveSlot], ecx
         jge      L_977c
         xor      eax, eax
         mov      dword ptr [g_walkCallback], eax
@@ -402,18 +402,18 @@ __declspec(naked) void Helper_PerPlayerTick(void)
     L_97ea:
         cmp      eax, 0xb333
         jg       L_9837
-        mov      eax, dword ptr [g_phaseTimer_00537e94]
+        mov      eax, dword ptr [g_phaseTimer]
         dec      eax
         mov      ecx, eax
         mov      dword ptr [g_eventQueueWorkType], eax
         test     eax, eax
-        mov      dword ptr [g_bootInitSaveSlot_00541dc4], ecx
+        mov      dword ptr [g_bootInitSaveSlot], ecx
         jge      L_980f
         xor      eax, eax
         mov      dword ptr [g_eventQueueWorkType], eax
     L_980f:
         test     ecx, ecx
-        mov      dword ptr [g_phaseTimer_00537e94], eax
+        mov      dword ptr [g_phaseTimer], eax
         jge      L_9837
         mov      eax, dword ptr [g_table_00535ddc]
         cmp      eax, 0x8000

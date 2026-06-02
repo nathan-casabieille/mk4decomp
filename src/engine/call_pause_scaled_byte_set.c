@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x0043c350 (62b)
@@ -18,7 +18,7 @@ void CallPauseScaledByteSet_0043c350(void) {
     if (g_framePauseFlag != 0) {
         return;
     }
-    g_eventQueueEnd = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x38);
+    g_eventQueueEnd = *(unsigned int *)(g_baseSel * 4 + 0x38);
     g_eventQueueChild = 0xffff0000;
     if ((g_xformDirtyFlags & 1) != 0) {
         g_eventQueueChild = 0x10000;

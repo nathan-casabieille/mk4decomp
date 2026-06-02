@@ -5,15 +5,15 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern unsigned int g_gameCountdown_0053a718;
+extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_audioBankSel_00537f94;
+extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -57,12 +57,12 @@ extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_cj_00542058;
-extern unsigned int g_rangeSqLimit_0053a180;
+extern unsigned int g_rangeSqLimit;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
-extern unsigned int g_dualBitGate_0053a7b0;
-extern unsigned int g_eventArmReload_0053a770;
-extern unsigned int g_rangeBase_0053a46c;
+extern unsigned int g_dualBitGate;
+extern unsigned int g_eventArmReload;
+extern unsigned int g_rangeBase;
 
 extern void ScaledArrStore_004298c0(void);
 extern void DualFieldAddSubStore_00470340(void);
@@ -97,21 +97,21 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_installOwnerNode_00535cf8;
+extern unsigned int g_stateCountdown;
+extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
-extern unsigned int g_audioBoundNode_005437f0;
-extern unsigned int g_lastGatedValue_00543598;
-extern unsigned int g_lastGatedTick_0054358c;
-extern unsigned int g_fightAxisNegX_00535e70;
-extern unsigned int g_fightAxisNegY_00535e74;
-extern unsigned int g_fightAxisPosX_00535e78;
-extern unsigned int g_fightAxisPosY_00535e7c;
+extern unsigned int g_audioBoundNode;
+extern unsigned int g_lastGatedValue;
+extern unsigned int g_lastGatedTick;
+extern unsigned int g_fightAxisNegX;
+extern unsigned int g_fightAxisNegY;
+extern unsigned int g_fightAxisPosX;
+extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_pendingMatchVar_004d5324;
+extern unsigned int g_pendingMatchVar;
 extern unsigned int g_dispatchSave609_004d7878;
 extern unsigned int g_dispatchSave608_004d78b8;
-extern unsigned int g_savedNode_00541f98;
+extern unsigned int g_savedNode;
 extern void AudioMixerStep_004ab700(void);
 extern void CallSetPause_0041f830(void);
 extern void ChainListVecAdd_0049d200(void);
@@ -168,7 +168,7 @@ __declspec(naked) void Phase4TrampolineMainHelper_00415180(void)
         test    eax, eax
         jne     L_p4tmh_M_ret
         mov     edx, dword ptr [g_currentNodeIdx]
-        mov     esi, dword ptr [g_baseSel_00542060]
+        mov     esi, dword ptr [g_baseSel]
         mov     eax, dword ptr [g_xformEntityIdx]
         lea     ecx, [edx*4]
         mov     edx, dword ptr [g_fightGroupHead]
@@ -206,8 +206,8 @@ __declspec(naked) void Phase4TrampolineMainHelper_00415180(void)
         test    byte ptr [g_xformDirtyFlags], 4
         jne     L_p4tmh_M_call_4065b0
         mov     ecx, dword ptr [g_walkCallback]
-        mov     edx, dword ptr [g_savedNode_00541f98]
-        mov     eax, dword ptr [g_pendingMatchVar_004d5324]
+        mov     edx, dword ptr [g_savedNode]
+        mov     eax, dword ptr [g_pendingMatchVar]
         dec     ecx
         mov     dword ptr [g_xformLoopCounter], ecx
         mov     dword ptr [g_xformEntityIdx], edx

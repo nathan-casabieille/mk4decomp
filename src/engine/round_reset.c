@@ -5,15 +5,15 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern unsigned int g_gameCountdown_0053a718;
+extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_audioBankSel_00537f94;
+extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -57,12 +57,12 @@ extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_cj_00542058;
-extern unsigned int g_rangeSqLimit_0053a180;
+extern unsigned int g_rangeSqLimit;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
-extern unsigned int g_dualBitGate_0053a7b0;
-extern unsigned int g_eventArmReload_0053a770;
-extern unsigned int g_rangeBase_0053a46c;
+extern unsigned int g_dualBitGate;
+extern unsigned int g_eventArmReload;
+extern unsigned int g_rangeBase;
 
 extern void ScaledArrStore_004298c0(void);
 extern void DualFieldAddSubStore_00470340(void);
@@ -97,21 +97,21 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_installOwnerNode_00535cf8;
+extern unsigned int g_stateCountdown;
+extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
-extern unsigned int g_audioBoundNode_005437f0;
-extern unsigned int g_lastGatedValue_00543598;
-extern unsigned int g_lastGatedTick_0054358c;
-extern unsigned int g_fightAxisNegX_00535e70;
-extern unsigned int g_fightAxisNegY_00535e74;
-extern unsigned int g_fightAxisPosX_00535e78;
-extern unsigned int g_fightAxisPosY_00535e7c;
+extern unsigned int g_audioBoundNode;
+extern unsigned int g_lastGatedValue;
+extern unsigned int g_lastGatedTick;
+extern unsigned int g_fightAxisNegX;
+extern unsigned int g_fightAxisNegY;
+extern unsigned int g_fightAxisPosX;
+extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_tickFlagF;
 extern u32 g_dlSomeFlag2;
 extern unsigned int g_quadEntryGate_0052d724;
-extern unsigned int g_phaseTimer_00537e94;
+extern unsigned int g_phaseTimer;
 extern unsigned int g_dst_00537ea4;
 extern unsigned int g_dispatchSave_00537ef4;
 extern unsigned int g_dispatchVar11_00537f04;
@@ -120,7 +120,7 @@ extern unsigned int g_audioBank2State_00537f98;
 extern unsigned int g_fightTickSavedSlot_005380d8;
 extern unsigned int g_roundResetSlot_0053a3e4;
 extern unsigned int g_phaseInstallSlot_0053a42c;
-extern unsigned int g_audioStreamState_0053a430;
+extern unsigned int g_audioStreamState;
 extern unsigned int g_phaseThunkArr_0053a474;
 extern u32 g_dlSomeFlag1;
 extern unsigned int g_dst_0053a6e0;
@@ -220,15 +220,15 @@ __declspec(naked) void RoundReset_004223e0(void)
         mov      dword ptr [g_dispatchSave39_0053a788], ebx
         mov      dword ptr [g_dispatchClr1_0053e34c], ebx
         mov      dword ptr [g_smState4Way_00541dc8], ebx
-        mov      dword ptr [g_phaseTimer_00537e94], ebx
+        mov      dword ptr [g_phaseTimer], ebx
         mov      dword ptr [g_phaseInstallSlot_0053a42c], ebx
         mov      dword ptr [g_dispatchSave_00537ef4], ebx
-        mov      dword ptr [g_audioBankSel_00537f94], ebx
+        mov      dword ptr [g_audioBankSel], ebx
         mov      dword ptr [g_quadEntryGate_0052d724], ebx
         mov      dword ptr [g_audioBank2State_00537f98], ebx
         mov      dword ptr [g_phaseThunkState_0053a730], ebx
         mov      dword ptr [g_installCountdownSlot2_00541d84], ebx
-        mov      dword ptr [g_audioStreamState_0053a430], ebx
+        mov      dword ptr [g_audioStreamState], ebx
         mov      dword ptr [g_dispatchVar11_00537f04], ebx
         mov      dword ptr [g_dlSomeFlag1], ebx
         mov      dword ptr [g_dlSomeFlag2], ebx

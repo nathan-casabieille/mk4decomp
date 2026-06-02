@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x0042c3b0 (48b)
@@ -16,10 +16,10 @@ extern unsigned int g_scaledInit_00542044;
  *   nop * 8
  *   mov     eax, 2
  *   mov     [g_walkCallback], eax
- *   mov     [g_phaseTimer_00537e94], eax
+ *   mov     [g_phaseTimer], eax
  *   ret
  */
-extern unsigned int g_phaseTimer_00537e94;
+extern unsigned int g_phaseTimer;
 extern void func_0042c3d0(void);
 
 /* @addr 0x0042c3b0 (24b): store OFFSET func_0042c3d0 (entry B at +0x20)

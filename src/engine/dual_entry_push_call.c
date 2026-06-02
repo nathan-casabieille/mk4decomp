@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_acc_00542078;
 
@@ -14,7 +14,7 @@ extern unsigned int g_acc_00542078;
  *   add     esp, 4
  *   ret
  *   nop * 2
- *   mov     ecx, [g_baseSel_00542060]
+ *   mov     ecx, [g_baseSel]
  *   mov     eax, 0x2010
  *   mov     [g_walkCallback], eax
  *   mov     [ecx*4 + 0x74], eax
@@ -42,7 +42,7 @@ void DualEntryPushCall_0046b630(void) {
 void func_0046b640(void) {
     int v = 0x2010;
     g_walkCallback = (void (*)(void))v;
-    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->fsm_state = v;
+    ((ScenegraphNode *)(g_baseSel * 4))->fsm_state = v;
     ScaledAndAlfe_00490390();
     if (g_framePauseFlag != 0) return;
     PendingMatch_0046b670();

@@ -5,15 +5,15 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern unsigned int g_gameCountdown_0053a718;
+extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_audioBankSel_00537f94;
+extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -57,12 +57,12 @@ extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_cj_00542058;
-extern unsigned int g_rangeSqLimit_0053a180;
+extern unsigned int g_rangeSqLimit;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
-extern unsigned int g_dualBitGate_0053a7b0;
-extern unsigned int g_eventArmReload_0053a770;
-extern unsigned int g_rangeBase_0053a46c;
+extern unsigned int g_dualBitGate;
+extern unsigned int g_eventArmReload;
+extern unsigned int g_rangeBase;
 
 extern void ScaledArrStore_004298c0(void);
 extern void DualFieldAddSubStore_00470340(void);
@@ -97,22 +97,22 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_installOwnerNode_00535cf8;
+extern unsigned int g_stateCountdown;
+extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
-extern unsigned int g_audioBoundNode_005437f0;
-extern unsigned int g_lastGatedValue_00543598;
-extern unsigned int g_lastGatedTick_0054358c;
-extern unsigned int g_fightAxisNegX_00535e70;
-extern unsigned int g_fightAxisNegY_00535e74;
-extern unsigned int g_fightAxisPosX_00535e78;
-extern unsigned int g_fightAxisPosY_00535e7c;
+extern unsigned int g_audioBoundNode;
+extern unsigned int g_lastGatedValue;
+extern unsigned int g_lastGatedTick;
+extern unsigned int g_fightAxisNegX;
+extern unsigned int g_fightAxisNegY;
+extern unsigned int g_fightAxisPosX;
+extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004236a0 (125b) - if any of {g_dlNalt1, g_dlNalt2,
  *   g_dlNalt3, g_dlNalt4} == 0xf: clear g_counter_0053a51c & g_walkCallback,
  *   call F1. Then v3 = (data_4dfd48 >> 2) + g_counter_0053a51c;
  *   g_scaledInit_00542044 = v3; arg = arr[v3];
- *   push arg twice; g_rangeBase_0053a46c = arg; call Mul10Tail; g_rangeSqLimit_0053a180 = res; jmp F3.
+ *   push arg twice; g_rangeBase = arg; call Mul10Tail; g_rangeSqLimit = res; jmp F3.
  */
 extern unsigned int g_dispatchSave623_004dfd48;
 extern unsigned int g_matrixStack_arr;
@@ -120,7 +120,7 @@ extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 extern s32 g_dlNalt3;
 extern s32 g_dlNalt4;
-extern unsigned int g_rangeBase_0053a46c;
+extern unsigned int g_rangeBase;
 extern unsigned int g_counter_0053a51c;
 extern void ScenePostInitSequencer_00429b70(void);
 extern void TablePushAccumTailJmp_00429e30(void);
@@ -155,11 +155,11 @@ __declspec(naked) void FourGlobalsEqualFInitTail_004236a0(void) {
         push    eax
         push    eax
         mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [g_rangeBase_0053a46c], eax
+        mov     dword ptr [g_rangeBase], eax
         call    Mul10Tail_00404af0
         add     esp, 8
         mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [g_rangeSqLimit_0053a180], eax
+        mov     dword ptr [g_rangeSqLimit], eax
         jmp     ScenePostInitSequencer_00429b70
     }
 }

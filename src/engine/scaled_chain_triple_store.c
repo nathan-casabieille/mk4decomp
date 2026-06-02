@@ -7,11 +7,11 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x004465c0 (56b)
- *   mov     eax, [g_baseSel_00542060]
+ *   mov     eax, [g_baseSel]
  *   mov     ecx, [eax*4 + 0x60]
  *   mov     [g_scaledInit_00542044], ecx
  *   mov     eax, [eax*4 + 0x4c]
@@ -23,7 +23,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 void ScaledChainTripleStore_004465c0(void) {
-    unsigned int base = g_baseSel_00542060;
+    unsigned int base = g_baseSel;
     unsigned int s = *(unsigned int *)(base * 4 + 0x60);
     unsigned int e;
     g_scaledInit_00542044 = s;

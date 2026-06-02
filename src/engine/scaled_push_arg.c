@@ -4,7 +4,7 @@
  * Both stubs emit identical bytes.
  *
  * Pattern (decoded):
- *   mov     eax, [g_baseSel_00542060]
+ *   mov     eax, [g_baseSel]
  *   mov     edx, [esp+4]                    ; arg
  *   mov     ecx, [eax*4 + 4]                ; load top
  *   lea     eax, [eax*4 + 4]                ; address of slot
@@ -18,12 +18,12 @@
  */
 #include "engine/scenegraph.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00404b90 */
 void ScaledPushArg_00404b90(unsigned int arg) {
-    unsigned int *slot = (unsigned int *)(g_baseSel_00542060 * 4 + 4);
+    unsigned int *slot = (unsigned int *)(g_baseSel * 4 + 4);
     g_scaledInit_00542044 = *slot;
     *(unsigned int *)(g_scaledInit_00542044 * 4) = arg;
     g_scaledInit_00542044++;
@@ -32,7 +32,7 @@ void ScaledPushArg_00404b90(unsigned int arg) {
 
 /* @addr 0x00404c00 */
 void ScaledPushArg_00404c00(unsigned int arg) {
-    unsigned int *slot = (unsigned int *)(g_baseSel_00542060 * 4 + 4);
+    unsigned int *slot = (unsigned int *)(g_baseSel * 4 + 4);
     g_scaledInit_00542044 = *slot;
     *(unsigned int *)(g_scaledInit_00542044 * 4) = arg;
     g_scaledInit_00542044++;

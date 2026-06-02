@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x0042afc0 (64b)
@@ -12,7 +12,7 @@ extern unsigned int g_scaledInit_00542044;
  *   Bound-clamps and adds offsets via g_pendingMatchVar3_004d5320..00d4d532c.
  */
 extern unsigned int g_pendingMatchVar3_004d5320;
-extern unsigned int g_pendingMatchVar_004d5324;
+extern unsigned int g_pendingMatchVar;
 extern unsigned int g_pendingMatchVar5_004d532c;
 __declspec(naked) void ModuloMagic_0042afc0(void) {
     __asm {
@@ -21,7 +21,7 @@ __declspec(naked) void ModuloMagic_0042afc0(void) {
         cmp     ecx, eax
         _emit   7eh
         _emit   0ch
-        mov     edx, dword ptr [g_pendingMatchVar_004d5324]
+        mov     edx, dword ptr [g_pendingMatchVar]
 sub_loop:
         sub     ecx, edx
         cmp     ecx, eax

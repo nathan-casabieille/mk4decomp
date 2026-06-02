@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00490330 (28b): scaled and ah, 0xdf */
@@ -49,7 +49,7 @@ void ScaledAndAhfe_00490390(void) {
  */
 extern void StrikeAnim4Picker_00493100(void);
 void ScaledLoadCmp0fJmp_004930e0(void) {
-    unsigned int v = ((ScenegraphNode *)(g_baseSel_00542060 * 4))->state_mask;
+    unsigned int v = ((ScenegraphNode *)(g_baseSel * 4))->state_mask;
     g_walkCallback = (void (*)(void))v;
     if (v != 0x0f) {
         StrikeAnim4Picker_00493100();

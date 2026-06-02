@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 
 /* @addr 0x0041f780 (77b)
  *   eax = [g_baseSel*4+4] - 1 → g_scaledInit; edx = [eax*4+0]
@@ -16,13 +16,13 @@ extern unsigned int g_baseSel_00542060;
  *   from a stack-of-callbacks, invokes the next.
  */
 void StackPopDispatchTagged_0041f780(void) {
-    unsigned int base = g_baseSel_00542060;
+    unsigned int base = g_baseSel;
     unsigned int top = *(unsigned int *)(base * 4 + 4) - 1;
     unsigned int walk;
     g_scaledInit_00542044 = top;
     g_walkCallback = (void (*)(void))*(unsigned int *)(top * 4);
     *(unsigned int *)(base * 4 + 4) = top;
-    ((ScenegraphNode *)(g_baseSel_00542060 * 4))->install_flag = (unsigned int)((int)g_walkCallback >> 24);
+    ((ScenegraphNode *)(g_baseSel * 4))->install_flag = (unsigned int)((int)g_walkCallback >> 24);
     walk = (unsigned int)g_walkCallback & 0xffffff;
     g_walkCallback = (void (*)(void))walk;
     ((void (*)(void))walk)();

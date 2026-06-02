@@ -4,9 +4,9 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_phaseTimer_00537e94;
+extern unsigned int g_phaseTimer;
 
 /* @addr 0x0048e380 (62b): push lit + call PackedAdvanceCallContinue;
  * if !pause set workType=0x3c, call Push16Call_00489f50; if !pause set walk
@@ -27,5 +27,5 @@ void PushCallPauseSetMaxThenCallPauseJmp_0048e380(void) {
     if (g_framePauseFlag != 0) return;
     v = 0xfff;
     g_walkCallback = (void (*)(void))v;
-    g_phaseTimer_00537e94 = v;
+    g_phaseTimer = v;
 }

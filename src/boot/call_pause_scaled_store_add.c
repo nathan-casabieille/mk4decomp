@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x004078f0 (48b)
@@ -17,14 +17,14 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [eax*4 + 0x28], ecx
  *   mov     edx, [g_fightGroupHead]
  *   add     edx, 0x0a
- *   mov     [g_bootInitSaveSlot_00541dc4], edx
+ *   mov     [g_bootInitSaveSlot], edx
  *   ret
  */
-extern unsigned int g_bootInitSaveSlot_00541dc4;
+extern unsigned int g_bootInitSaveSlot;
 extern void BootChainPushAddSignFlag_004077b0(void);
 void CallPauseScaledStoreAdd_004078f0(void) {
     BootChainPushAddSignFlag_004077b0();
     if (g_framePauseFlag != 0) return;
     ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = (unsigned int)g_walkCallback;
-    g_bootInitSaveSlot_00541dc4 = g_fightGroupHead + 0x0a;
+    g_bootInitSaveSlot = g_fightGroupHead + 0x0a;
 }

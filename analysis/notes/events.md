@@ -91,7 +91,7 @@ scenegraph ([scenegraph.md](scenegraph.md)) feed work into each frame.
 | `0x004e9ea8` | `g_eventHandlerTable_004e9ea8`      | Function-pointer table indexed by `g_eventQueueCurrent`; entries are packed pointers (`base>>2 + cursor`). The per-opcode handler set. |
 | `0x00542044` | `g_scaledInit_00542044`             | The decoder's packed read cursor into the `(op, arg)` stream. Incremented by `IncJmp`. |
 | `0x00542078` | `g_acc_00542078`                    | Decoder accumulator preset by the `0xdd`/`0xaa` opcode helpers. |
-| `0x00542060` | `g_baseSel_00542060`                | Selected entity base used by `EventGateCluster`'s anchor to fetch the per-entity script cursor. |
+| `0x00542060` | `g_baseSel`                | Selected entity base used by `EventGateCluster`'s anchor to fetch the per-entity script cursor. |
 
 ## The opcode dispatch table (g_eventHandlerTable_004e9ea8)
 

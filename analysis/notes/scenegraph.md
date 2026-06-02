@@ -220,7 +220,7 @@ form). 14 byte difference observed in `ScaledMove74to70_0046eaa0`.
 write the cast inline at each access site:
 
 ```c
-unsigned int idx = g_baseSel_00542060;
+unsigned int idx = g_baseSel;
 unsigned int v = ((ScenegraphNode *)(idx * 4))->fsm_state;
 *(unsigned int *)(idx * 4 + 0x70) = v;       /* matches SIB */
 ```

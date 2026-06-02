@@ -4,11 +4,11 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00446280 (56b)
- *   mov     eax, [g_baseSel_00542060]
+ *   mov     eax, [g_baseSel]
  *   shl     eax, 2
  *   mov     ecx, [eax + 0x5c]
  *   mov     [g_scaledInit_00542044], ecx
@@ -28,7 +28,7 @@ void ScaledChainCopyTriple_00446280(void) {
     unsigned char *src;
     unsigned char *dst;
     unsigned int v;
-    src = (unsigned char *)(g_baseSel_00542060 * 4);
+    src = (unsigned char *)(g_baseSel * 4);
     g_scaledInit_00542044 = *(unsigned int *)(src + 0x5c);
     dst = (unsigned char *)(g_scaledInit_00542044 * 4);
     v = *(unsigned int *)(src + 0x3c);

@@ -5,15 +5,15 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern unsigned int g_gameCountdown_0053a718;
+extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_audioBankSel_00537f94;
+extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -57,12 +57,12 @@ extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_cj_00542058;
-extern unsigned int g_rangeSqLimit_0053a180;
+extern unsigned int g_rangeSqLimit;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
-extern unsigned int g_dualBitGate_0053a7b0;
-extern unsigned int g_eventArmReload_0053a770;
-extern unsigned int g_rangeBase_0053a46c;
+extern unsigned int g_dualBitGate;
+extern unsigned int g_eventArmReload;
+extern unsigned int g_rangeBase;
 
 extern void ScaledArrStore_004298c0(void);
 extern void DualFieldAddSubStore_00470340(void);
@@ -97,31 +97,31 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_installOwnerNode_00535cf8;
+extern unsigned int g_stateCountdown;
+extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
-extern unsigned int g_audioBoundNode_005437f0;
-extern unsigned int g_lastGatedValue_00543598;
-extern unsigned int g_lastGatedTick_0054358c;
-extern unsigned int g_fightAxisNegX_00535e70;
-extern unsigned int g_fightAxisNegY_00535e74;
-extern unsigned int g_fightAxisPosX_00535e78;
-extern unsigned int g_fightAxisPosY_00535e7c;
+extern unsigned int g_audioBoundNode;
+extern unsigned int g_lastGatedValue;
+extern unsigned int g_lastGatedTick;
+extern unsigned int g_fightAxisNegX;
+extern unsigned int g_fightAxisNegY;
+extern unsigned int g_fightAxisPosX;
+extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0049ec00 (252b game) - 2-step indirect lookup + 4-way edx select.
- *   mstack-push g_scaledInit_00542044, g_dispatchArg_00535e48.
+ *   mstack-push g_scaledInit_00542044, g_dispatchArg.
  *   ecx = g_audioBitField_00541fc0; eax = g_walkCallback; g_xformEntityIdx=ecx; edx=eax;
- *   ecx += eax (sum index); g_dispatchArg_00535e48=edx (original eax).
+ *   ecx += eax (sum index); g_dispatchArg=edx (original eax).
  *   eax = [ecx*4]; g_xformEntityIdx=eax. ecx = [eax*4]; g_scaledInit_00542044=ecx;
  *   ecx = [ecx*4]; g_walkCallback=ecx. cmp ecx, 0xf;
  *   ecx = [eax*4 + 0x40]; g_scaledInit_00542044=ecx; ecx = [ecx*4];
  *   g_walkCallback=ecx. jbe block_8or10 (ecx<=0xf).
  *   block_c_or_e (ecx>0xf): edx = (ecx!=0 ? 0xe : 0xc).
  *   block_8_or_a: edx = (ecx!=0 ? 0xa : 8).
- *   Merge: edx += g_eventQueueCurrent; eax += edx; g_dispatchArg_00535e48=edx; eax=[eax*4];
+ *   Merge: edx += g_eventQueueCurrent; eax += edx; g_dispatchArg=edx; eax=[eax*4];
  *   g_xformEntityIdx=eax. mstack-pop pair.
  */
-extern unsigned int g_dispatchArg_00535e48;
+extern unsigned int g_dispatchArg;
 extern unsigned int g_audioBitField_00541fc0;
 
 void DoubleIndirectFourWaySelect_0049ec00(void) {
@@ -132,7 +132,7 @@ void DoubleIndirectFourWaySelect_0049ec00(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, dword ptr [g_dispatchArg_00535e48]
+        mov     edx, dword ptr [g_dispatchArg]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], edx
@@ -141,7 +141,7 @@ void DoubleIndirectFourWaySelect_0049ec00(void) {
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     edx, eax
         add     ecx, eax
-        mov     dword ptr [g_dispatchArg_00535e48], edx
+        mov     dword ptr [g_dispatchArg], edx
         mov     eax, dword ptr [ecx*4 + 0]
         mov     dword ptr [g_xformEntityIdx], eax
         mov     ecx, dword ptr [eax*4 + 0]
@@ -175,13 +175,13 @@ void DoubleIndirectFourWaySelect_0049ec00(void) {
         mov     edx, 0x0a
         add     edx, dword ptr [g_eventQueueCurrent]
         add     eax, edx
-        mov     dword ptr [g_dispatchArg_00535e48], edx
+        mov     dword ptr [g_dispatchArg], edx
         mov     eax, dword ptr [eax*4 + 0]
         mov     dword ptr [g_xformEntityIdx], eax
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_dispatchArg_00535e48], ecx
+        mov     dword ptr [g_dispatchArg], ecx
         mov     dword ptr [g_matrixStackTop], eax
         mov     edx, dword ptr [eax*4 + 0]
         dec     eax

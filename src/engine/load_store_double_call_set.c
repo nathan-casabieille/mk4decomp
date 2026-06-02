@@ -11,13 +11,13 @@ extern unsigned int g_scaledInit_00542044;
  *   call F1; pause → ret; call F2; pause → ret;
  *   walk = 2; g_acc_00542078 = 4; jmp T.
  */
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern void MStackPush2RunCountdown_004089e0(void);
 extern void MStackBracket7_DispatchAndChain_004b8fa0(void);
 extern void GuardedSeq_00473f50(void);
 void LoadStoreDoubleCallSet_00448fc0(void) {
-    g_fightGroupHead = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x4c);
+    g_fightGroupHead = *(unsigned int *)(g_baseSel * 4 + 0x4c);
     MStackPush2RunCountdown_004089e0();
     if (g_framePauseFlag) return;
     MStackBracket7_DispatchAndChain_004b8fa0();

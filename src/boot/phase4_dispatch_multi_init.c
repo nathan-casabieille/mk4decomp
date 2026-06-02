@@ -5,15 +5,15 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern unsigned int g_gameCountdown_0053a718;
+extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_audioBankSel_00537f94;
+extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -57,12 +57,12 @@ extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_cj_00542058;
-extern unsigned int g_rangeSqLimit_0053a180;
+extern unsigned int g_rangeSqLimit;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
-extern unsigned int g_dualBitGate_0053a7b0;
-extern unsigned int g_eventArmReload_0053a770;
-extern unsigned int g_rangeBase_0053a46c;
+extern unsigned int g_dualBitGate;
+extern unsigned int g_eventArmReload;
+extern unsigned int g_rangeBase;
 
 extern void ScaledArrStore_004298c0(void);
 extern void DualFieldAddSubStore_00470340(void);
@@ -97,16 +97,16 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_installOwnerNode_00535cf8;
+extern unsigned int g_stateCountdown;
+extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
-extern unsigned int g_audioBoundNode_005437f0;
-extern unsigned int g_lastGatedValue_00543598;
-extern unsigned int g_lastGatedTick_0054358c;
-extern unsigned int g_fightAxisNegX_00535e70;
-extern unsigned int g_fightAxisNegY_00535e74;
-extern unsigned int g_fightAxisPosX_00535e78;
-extern unsigned int g_fightAxisPosY_00535e7c;
+extern unsigned int g_audioBoundNode;
+extern unsigned int g_lastGatedValue;
+extern unsigned int g_lastGatedTick;
+extern unsigned int g_fightAxisNegX;
+extern unsigned int g_fightAxisNegY;
+extern unsigned int g_fightAxisPosX;
+extern unsigned int g_fightAxisPosY;
 
 extern void Phase4DispatchMultiInit_0041b610(void);
 
@@ -114,11 +114,11 @@ extern void Phase4DispatchMultiInit_0041b610(void);
  * EntryBodyInstallSelfMidRef_0041b550 - 178b boot 2-body trampoline.
  *   Entry 0x0041b550: call ScaledZeroFour; if not paused, push 0x004d7ca0 (config name) and tail
  *     ArgSarStoreJmp_004594f0; ret. 4 NOP align to 16b.
- *   Body 0x0041b570: chain = g_baseSel_00542060<<2; saved = chain->state; chain->state=0;
+ *   Body 0x0041b570: chain = g_baseSel<<2; saved = chain->state; chain->state=0;
  *     if saved != 0: push 0x004d7cc8 (different config name), tail ArgSarStoreJmp; ret.
  *     Otherwise install-self at offset of L_body into chain->callback[+8]; stash chain into g_currentNodeIdx;
  *     install (&L_body + 0x01000000) packed into mstack slot[g_currentNodeIdx]; inc cursor;
- *     clear g_baseSel_00542060*4 + 0x84; call Phase4DispatchMultiInit_0041b610; g_framePauseFlag = 1; ret.
+ *     clear g_baseSel*4 + 0x84; call Phase4DispatchMultiInit_0041b610; g_framePauseFlag = 1; ret.
  */
 extern void ArgSarStoreJmp_004594f0(void);
 
@@ -138,7 +138,7 @@ void EntryBodyInstallSelfMidRef_0041b550(void) {
         _emit   90h
         _emit   90h
     L_body:
-        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [g_baseSel]
         shl     eax, 2
         mov     ecx, dword ptr [eax + 0x84]
         mov     dword ptr [eax + 0x84], 0
@@ -151,7 +151,7 @@ void EntryBodyInstallSelfMidRef_0041b550(void) {
         ret
     L_install:
         mov     dword ptr [eax + 8], offset L_body
-        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_baseSel]
         mov     edx, offset L_body
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
@@ -162,7 +162,7 @@ void EntryBodyInstallSelfMidRef_0041b550(void) {
         inc     ecx
         mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
-        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
         call    Phase4DispatchMultiInit_0041b610
         mov     dword ptr [g_framePauseFlag], 1

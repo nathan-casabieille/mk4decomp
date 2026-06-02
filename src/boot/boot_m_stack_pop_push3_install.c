@@ -5,15 +5,15 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern unsigned int g_gameCountdown_0053a718;
+extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_audioBankSel_00537f94;
+extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -57,12 +57,12 @@ extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_cj_00542058;
-extern unsigned int g_rangeSqLimit_0053a180;
+extern unsigned int g_rangeSqLimit;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
-extern unsigned int g_dualBitGate_0053a7b0;
-extern unsigned int g_eventArmReload_0053a770;
-extern unsigned int g_rangeBase_0053a46c;
+extern unsigned int g_dualBitGate;
+extern unsigned int g_eventArmReload;
+extern unsigned int g_rangeBase;
 
 extern void ScaledArrStore_004298c0(void);
 extern void DualFieldAddSubStore_00470340(void);
@@ -97,16 +97,16 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_installOwnerNode_00535cf8;
+extern unsigned int g_stateCountdown;
+extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
-extern unsigned int g_audioBoundNode_005437f0;
-extern unsigned int g_lastGatedValue_00543598;
-extern unsigned int g_lastGatedTick_0054358c;
-extern unsigned int g_fightAxisNegX_00535e70;
-extern unsigned int g_fightAxisNegY_00535e74;
-extern unsigned int g_fightAxisPosX_00535e78;
-extern unsigned int g_fightAxisPosY_00535e7c;
+extern unsigned int g_audioBoundNode;
+extern unsigned int g_lastGatedValue;
+extern unsigned int g_lastGatedTick;
+extern unsigned int g_fightAxisNegX;
+extern unsigned int g_fightAxisNegY;
+extern unsigned int g_fightAxisPosX;
+extern unsigned int g_fightAxisPosY;
 
 extern void Eleven404b90_404c00_004266d0(void);
 extern void InstallSelfCountedAccum_0042e1d0(void);
@@ -116,7 +116,7 @@ __declspec(naked) void BootMStackPopPush3Install_004046d0(void)
 {
     __asm
     {
-        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [g_baseSel]
         push    esi
         lea     esi, [eax*4]
         mov     eax, dword ptr [eax*4 + 0x84]
@@ -127,21 +127,21 @@ __declspec(naked) void BootMStackPopPush3Install_004046d0(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_bmpp3i_ret
-        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_baseSel]
         mov     eax, dword ptr [ecx*4 + 4]
         dec     eax
         mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4]
         mov     dword ptr [g_fightGroupHead], edx
         mov     dword ptr [ecx*4 + 4], eax
-        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_baseSel]
         mov     eax, dword ptr [ecx*4 + 4]
         dec     eax
         mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4]
         mov     dword ptr [g_eventQueueIdx], edx
         mov     dword ptr [ecx*4 + 4], eax
-        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_baseSel]
         mov     eax, dword ptr [ecx*4 + 4]
         dec     eax
         mov     dword ptr [g_currentNodeIdx], eax
@@ -152,7 +152,7 @@ __declspec(naked) void BootMStackPopPush3Install_004046d0(void)
         pop     esi
         ret
     L_bmpp3i_phase0:
-        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [g_baseSel]
         mov     edx, dword ptr [g_eventQueueEnd]
         mov     ecx, dword ptr [eax*4 + 4]
         lea     eax, [eax*4 + 4]
@@ -162,7 +162,7 @@ __declspec(naked) void BootMStackPopPush3Install_004046d0(void)
         inc     ecx
         mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax], ecx
-        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [g_baseSel]
         mov     edx, dword ptr [g_eventQueueIdx]
         mov     ecx, dword ptr [eax*4 + 4]
         lea     eax, [eax*4 + 4]
@@ -172,7 +172,7 @@ __declspec(naked) void BootMStackPopPush3Install_004046d0(void)
         inc     ecx
         mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax], ecx
-        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [g_baseSel]
         mov     edx, dword ptr [g_fightGroupHead]
         mov     ecx, dword ptr [eax*4 + 4]
         lea     eax, [eax*4 + 4]
@@ -192,7 +192,7 @@ __declspec(naked) void BootMStackPopPush3Install_004046d0(void)
         test    eax, eax
         jne     short L_bmpp3i_ret
         mov     dword ptr [esi + 8], offset BootMStackPopPush3Install_004046d0
-        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [g_baseSel]
         mov     ecx, offset BootMStackPopPush3Install_004046d0
         mov     dword ptr [eax*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
@@ -203,7 +203,7 @@ __declspec(naked) void BootMStackPopPush3Install_004046d0(void)
         inc     eax
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
-        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
         call    InstallSelfCountedAccum_0042e1d0
         mov     dword ptr [g_framePauseFlag], 1

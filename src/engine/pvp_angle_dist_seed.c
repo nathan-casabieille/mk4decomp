@@ -5,15 +5,15 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern unsigned int g_gameCountdown_0053a718;
+extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_audioBankSel_00537f94;
+extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -57,12 +57,12 @@ extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_cj_00542058;
-extern unsigned int g_rangeSqLimit_0053a180;
+extern unsigned int g_rangeSqLimit;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
-extern unsigned int g_dualBitGate_0053a7b0;
-extern unsigned int g_eventArmReload_0053a770;
-extern unsigned int g_rangeBase_0053a46c;
+extern unsigned int g_dualBitGate;
+extern unsigned int g_eventArmReload;
+extern unsigned int g_rangeBase;
 
 extern void ScaledArrStore_004298c0(void);
 extern void DualFieldAddSubStore_00470340(void);
@@ -97,16 +97,16 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_installOwnerNode_00535cf8;
+extern unsigned int g_stateCountdown;
+extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
-extern unsigned int g_audioBoundNode_005437f0;
-extern unsigned int g_lastGatedValue_00543598;
-extern unsigned int g_lastGatedTick_0054358c;
-extern unsigned int g_fightAxisNegX_00535e70;
-extern unsigned int g_fightAxisNegY_00535e74;
-extern unsigned int g_fightAxisPosX_00535e78;
-extern unsigned int g_fightAxisPosY_00535e7c;
+extern unsigned int g_audioBoundNode;
+extern unsigned int g_lastGatedValue;
+extern unsigned int g_lastGatedTick;
+extern unsigned int g_fightAxisNegX;
+extern unsigned int g_fightAxisNegY;
+extern unsigned int g_fightAxisPosX;
+extern unsigned int g_fightAxisPosY;
 
 extern s32 g_dlNalt1;
 extern unsigned int g_dispatchSave99_00538040;
@@ -194,23 +194,23 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         nop
         /* === h2 (0x4233f0): p1→p2 seed → 4235f0 === */
         mov      eax, dword ptr [g_player1NodeIdx]
-        mov      ecx, dword ptr [g_baseSel_00542060]
+        mov      ecx, dword ptr [g_baseSel]
         mov      dword ptr [g_fightGroupHead], eax
         mov      eax, dword ptr [g_dlNalt1]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
-        mov      edx, dword ptr [g_baseSel_00542060]
+        mov      edx, dword ptr [g_baseSel]
         mov      eax, dword ptr [g_player2NodeIdx]
         mov      dword ptr [edx*4 + 0x38], eax
-        mov      ecx, dword ptr [g_baseSel_00542060]
+        mov      ecx, dword ptr [g_baseSel]
         mov      edx, dword ptr [g_gtPlayerProbe1]
-        mov      eax, OFFSET g_fightAxisPosX_00535e78
+        mov      eax, OFFSET g_fightAxisPosX
         mov      dword ptr [ecx*4 + 0x3c], edx
-        mov      ecx, dword ptr [g_baseSel_00542060]
+        mov      ecx, dword ptr [g_baseSel]
         shr      eax, 2
         mov      dword ptr [ecx*4 + 0x40], eax
-        mov      edx, dword ptr [g_baseSel_00542060]
-        mov      eax, OFFSET g_fightAxisPosY_00535e7c
+        mov      edx, dword ptr [g_baseSel]
+        mov      eax, OFFSET g_fightAxisPosY
         shr      eax, 2
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [edx*4 + 0x44], eax
@@ -223,23 +223,23 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         nop
         /* === h3 (0x423470): p2→p1 seed → 4235f0 === */
         mov      eax, dword ptr [g_player2NodeIdx]
-        mov      ecx, dword ptr [g_baseSel_00542060]
+        mov      ecx, dword ptr [g_baseSel]
         mov      dword ptr [g_fightGroupHead], eax
         mov      eax, dword ptr [g_dlNalt2]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
-        mov      edx, dword ptr [g_baseSel_00542060]
+        mov      edx, dword ptr [g_baseSel]
         mov      eax, dword ptr [g_player1NodeIdx]
         mov      dword ptr [edx*4 + 0x38], eax
-        mov      ecx, dword ptr [g_baseSel_00542060]
+        mov      ecx, dword ptr [g_baseSel]
         mov      edx, dword ptr [g_gtPlayerProbe2]
-        mov      eax, OFFSET g_fightAxisNegX_00535e70
+        mov      eax, OFFSET g_fightAxisNegX
         mov      dword ptr [ecx*4 + 0x3c], edx
-        mov      ecx, dword ptr [g_baseSel_00542060]
+        mov      ecx, dword ptr [g_baseSel]
         shr      eax, 2
         mov      dword ptr [ecx*4 + 0x40], eax
-        mov      edx, dword ptr [g_baseSel_00542060]
-        mov      eax, OFFSET g_fightAxisNegY_00535e74
+        mov      edx, dword ptr [g_baseSel]
+        mov      eax, OFFSET g_fightAxisNegY
         shr      eax, 2
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [edx*4 + 0x44], eax
@@ -252,23 +252,23 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         nop
         /* === h4 (0x4234f0): p3→p4 seed → 423630 === */
         mov      eax, dword ptr [g_player3NodeIdx]
-        mov      ecx, dword ptr [g_baseSel_00542060]
+        mov      ecx, dword ptr [g_baseSel]
         mov      dword ptr [g_fightGroupHead], eax
         mov      eax, dword ptr [g_dlNalt3]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
-        mov      edx, dword ptr [g_baseSel_00542060]
+        mov      edx, dword ptr [g_baseSel]
         mov      eax, dword ptr [g_player4NodeIdx]
         mov      dword ptr [edx*4 + 0x38], eax
-        mov      ecx, dword ptr [g_baseSel_00542060]
+        mov      ecx, dword ptr [g_baseSel]
         mov      edx, dword ptr [g_dispatchSave98_00538044]
-        mov      eax, OFFSET g_fightAxisPosX_00535e78
+        mov      eax, OFFSET g_fightAxisPosX
         mov      dword ptr [ecx*4 + 0x3c], edx
-        mov      ecx, dword ptr [g_baseSel_00542060]
+        mov      ecx, dword ptr [g_baseSel]
         shr      eax, 2
         mov      dword ptr [ecx*4 + 0x40], eax
-        mov      edx, dword ptr [g_baseSel_00542060]
-        mov      eax, OFFSET g_fightAxisPosY_00535e7c
+        mov      edx, dword ptr [g_baseSel]
+        mov      eax, OFFSET g_fightAxisPosY
         shr      eax, 2
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [edx*4 + 0x44], eax
@@ -281,23 +281,23 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         nop
         /* === h5 (0x423570): p4→p3 seed → 423630 === */
         mov      eax, dword ptr [g_player4NodeIdx]
-        mov      ecx, dword ptr [g_baseSel_00542060]
+        mov      ecx, dword ptr [g_baseSel]
         mov      dword ptr [g_fightGroupHead], eax
         mov      eax, dword ptr [g_dlNalt4]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
-        mov      edx, dword ptr [g_baseSel_00542060]
+        mov      edx, dword ptr [g_baseSel]
         mov      eax, dword ptr [g_player3NodeIdx]
         mov      dword ptr [edx*4 + 0x38], eax
-        mov      ecx, dword ptr [g_baseSel_00542060]
+        mov      ecx, dword ptr [g_baseSel]
         mov      edx, dword ptr [g_dispatchSave99_00538040]
-        mov      eax, OFFSET g_fightAxisNegX_00535e70
+        mov      eax, OFFSET g_fightAxisNegX
         mov      dword ptr [ecx*4 + 0x3c], edx
-        mov      ecx, dword ptr [g_baseSel_00542060]
+        mov      ecx, dword ptr [g_baseSel]
         shr      eax, 2
         mov      dword ptr [ecx*4 + 0x40], eax
-        mov      edx, dword ptr [g_baseSel_00542060]
-        mov      eax, OFFSET g_fightAxisNegY_00535e74
+        mov      edx, dword ptr [g_baseSel]
+        mov      eax, OFFSET g_fightAxisNegY
         shr      eax, 2
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [edx*4 + 0x44], eax

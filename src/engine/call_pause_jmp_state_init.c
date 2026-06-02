@@ -4,9 +4,9 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_phaseTimer_00537e94;
+extern unsigned int g_phaseTimer;
 
 /* @addr 0x004370e0 (20b): call LeaPlus22StoreSelf; if !pause tail-jmp
  * CjInstallSelfRouter_00470480. Entry A of the original 84-byte packed block; entry B

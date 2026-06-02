@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00490330 (28b): scaled and ah, 0xdf */
@@ -49,7 +49,7 @@ void ScaledAndAhfe_00490390(void) {
  */
 extern void PendingMatch_00459510(void);
 void ArgSarStoreJmp_004594f0(int arg) {
-    unsigned int base = g_baseSel_00542060;
+    unsigned int base = g_baseSel;
     int v = arg >> 2;
     g_eventQueueTotal = (unsigned int)v;
     *(int *)(base * 4 + 0x48) = v;

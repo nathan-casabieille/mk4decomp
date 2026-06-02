@@ -4,12 +4,12 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x004314f0 (53b): same shape as 0x0041f1b0 with different ptr/value */
 void ScaledInitWithCounterAndType_004314f0(void) {
-    unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
+    unsigned char *base = (unsigned char *)(g_baseSel * 4);
     ((ScenegraphNode *)base)->install_flag = 0;
     *(unsigned int *)(base + 8) = (unsigned int)ScaledInitWithCounterAndType_004314f0;
     ((ScenegraphNode *)base)->install_flag = 1;
@@ -19,7 +19,7 @@ void ScaledInitWithCounterAndType_004314f0(void) {
 
 /* @addr 0x00446940 (53b): same as 0x0041f1b0 but with diff IMM and value */
 void ScaledInitWithCounterAndType_00446940(void) {
-    unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
+    unsigned char *base = (unsigned char *)(g_baseSel * 4);
     ((ScenegraphNode *)base)->install_flag = 0;
     *(unsigned int *)(base + 8) = (unsigned int)ScaledInitWithCounterAndType_00446940;
     ((ScenegraphNode *)base)->install_flag = 1;

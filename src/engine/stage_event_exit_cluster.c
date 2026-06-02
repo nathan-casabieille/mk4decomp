@@ -5,15 +5,15 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern unsigned int g_gameCountdown_0053a718;
+extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
-extern unsigned int g_audioBankSel_00537f94;
+extern unsigned int g_audioBankSel;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -57,12 +57,12 @@ extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_cj_00542058;
-extern unsigned int g_rangeSqLimit_0053a180;
+extern unsigned int g_rangeSqLimit;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
-extern unsigned int g_dualBitGate_0053a7b0;
-extern unsigned int g_eventArmReload_0053a770;
-extern unsigned int g_rangeBase_0053a46c;
+extern unsigned int g_dualBitGate;
+extern unsigned int g_eventArmReload;
+extern unsigned int g_rangeBase;
 
 extern void ScaledArrStore_004298c0(void);
 extern void DualFieldAddSubStore_00470340(void);
@@ -97,16 +97,16 @@ extern void CallPauseScaledStorePushCall_0045fca0(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
-extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_installOwnerNode_00535cf8;
+extern unsigned int g_stateCountdown;
+extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
-extern unsigned int g_audioBoundNode_005437f0;
-extern unsigned int g_lastGatedValue_00543598;
-extern unsigned int g_lastGatedTick_0054358c;
-extern unsigned int g_fightAxisNegX_00535e70;
-extern unsigned int g_fightAxisNegY_00535e74;
-extern unsigned int g_fightAxisPosX_00535e78;
-extern unsigned int g_fightAxisPosY_00535e7c;
+extern unsigned int g_audioBoundNode;
+extern unsigned int g_lastGatedValue;
+extern unsigned int g_lastGatedTick;
+extern unsigned int g_fightAxisNegX;
+extern unsigned int g_fightAxisNegY;
+extern unsigned int g_fightAxisPosX;
+extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave551_004ffe04;
 extern void Set200dCallPauseJmp_0047c5e0(void);
@@ -116,7 +116,7 @@ extern void ScaledChainJmp_00429470(void);
 
 /* @addr 0x0047c990 (357b game) - install-self w/ MStack snapshot + packed_ptr.
  *   On phase != 0 tail-calls Set200dCallPauseJmp_0047c5e0. Then if
- *   g_audioBankSel_00537f94 != 0 tail-calls StageEventExitCluster_0047cd50.
+ *   g_audioBankSel != 0 tail-calls StageEventExitCluster_0047cd50.
  *   Otherwise pushes g_eventQueueChild onto the mstack and sets
  *   g_walkCallback=0xb333, calls EsiEdiAliasDualMul10_004906b0. On
  *   no-error sets g_xformScratch2088=0x11999, calls PunchAnimCluster_00496d80. Pops
@@ -135,7 +135,7 @@ extern void PunchAnimCluster_00496d80(void);
 
 __declspec(naked) void InstallSelfMStackPackedFlow_0047c990(void) {
     __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [g_baseSel]
         push    esi
         lea     esi, [eax*4]
         mov     eax, dword ptr [eax*4 + 0x84]
@@ -146,7 +146,7 @@ __declspec(naked) void InstallSelfMStackPackedFlow_0047c990(void) {
         pop     esi
         ret
     L_ism_check2:
-        mov     eax, dword ptr [g_audioBankSel_00537f94]
+        mov     eax, dword ptr [g_audioBankSel]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         je      short L_ism_push
@@ -199,7 +199,7 @@ __declspec(naked) void InstallSelfMStackPackedFlow_0047c990(void) {
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [ecx*4 + 0x24], eax
         mov     dword ptr [esi + 8], offset InstallSelfMStackPackedFlow_0047c990
-        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [g_baseSel]
         mov     ecx, offset InstallSelfMStackPackedFlow_0047c990
         mov     dword ptr [eax*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
@@ -210,7 +210,7 @@ __declspec(naked) void InstallSelfMStackPackedFlow_0047c990(void) {
         inc     eax
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
-        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
         call    ScaledChainJmp_00429470
         mov     dword ptr [g_framePauseFlag], 1

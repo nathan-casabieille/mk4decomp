@@ -2,7 +2,7 @@
  * 2 "scaled pop + save deref + persist + tail-jmp" helpers (44b).
  *
  * Pattern:
- *   mov     ecx, [g_baseSel_00542060]
+ *   mov     ecx, [g_baseSel]
  *   mov     eax, [ecx*4 + 4]
  *   dec     eax
  *   mov     [g_scaledInit_00542044], eax     ; save dec'd top
@@ -13,7 +13,7 @@
  */
 #include "engine/scenegraph.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_scaledInit_00542048;
 
@@ -22,7 +22,7 @@ extern void MStackPush5Func_0043aa80(void);
 
 /* @addr 0x00438440 */
 void ScaledPopSaveJmp_00438440(void) {
-    unsigned int idx = g_baseSel_00542060;
+    unsigned int idx = g_baseSel;
     unsigned int n = *(unsigned int *)(idx * 4 + 4) - 1;
     g_scaledInit_00542044 = n;
     g_scaledInit_00542048 = *(unsigned int *)(n * 4);
@@ -32,7 +32,7 @@ void ScaledPopSaveJmp_00438440(void) {
 
 /* @addr 0x0043bb20 */
 void ScaledPopSaveJmp_0043bb20(void) {
-    unsigned int idx = g_baseSel_00542060;
+    unsigned int idx = g_baseSel;
     unsigned int n = *(unsigned int *)(idx * 4 + 4) - 1;
     g_scaledInit_00542044 = n;
     g_walkCallback = (void (*)(void))*(unsigned int *)(n * 4);

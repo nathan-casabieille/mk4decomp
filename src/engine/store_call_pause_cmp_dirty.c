@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_acc_00542078;
 
@@ -27,10 +27,10 @@ extern unsigned int g_acc_00542078;
  *   mov     [g_xformDirtyFlags], eax
  *   ret
  */
-extern unsigned int g_stateCountdown_0053a3c0;
+extern unsigned int g_stateCountdown;
 extern void MStackPushSearchLoop_00463ed0(void);
 void StoreCallPauseCmpDirty_00464240(void) {
-    g_eventQueueCurrent = g_stateCountdown_0053a3c0;
+    g_eventQueueCurrent = g_stateCountdown;
     MStackPushSearchLoop_00463ed0();
     if (g_framePauseFlag != 0) return;
     if (g_eventQueueCurrent > (unsigned int)g_walkCallback) {

@@ -5,14 +5,14 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_baseSel_00542060;
+extern unsigned int g_baseSel;
 
 /* @addr 0x00473ed0 (19b)
- *   mov     eax, [g_baseSel_00542060]
+ *   mov     eax, [g_baseSel]
  *   mov     ecx, [eax*4 + 0x68]
  *   mov     [g_fightGroupHead], ecx
  *   ret
  */
 void ScaledLoadStore_00473ed0(void) {
-    g_fightGroupHead = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x68);
+    g_fightGroupHead = *(unsigned int *)(g_baseSel * 4 + 0x68);
 }
