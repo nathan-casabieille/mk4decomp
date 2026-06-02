@@ -22,12 +22,12 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void func_00489fe6_l(void);
 extern void BootOneShotSetup(void);
-extern void GuardedSeq_0049a650(void);
+extern void GuardedSeq_MStackCall_then_CallSetPause_0049a650(void);
 void Set43DualCallJmp(void) {
     g_walkCallback = (void (*)(void))0x43;
     func_00489fe6_l();
     if (g_framePauseFlag != 0) return;
     BootOneShotSetup();
     if (g_framePauseFlag != 0) return;
-    GuardedSeq_0049a650();
+    GuardedSeq_MStackCall_then_CallSetPause_0049a650();
 }

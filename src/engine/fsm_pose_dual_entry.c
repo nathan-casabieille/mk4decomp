@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern void ChainListVecAdd(void);
 extern void DualEntryRecursiveInstall(void);
-extern void GuardedSeq_00471670(void);
+extern void GuardedSeq_MStackCall_then_CallSetPause_00471670(void);
 extern void TripleCallBitJmp(void);
 
 __declspec(naked) void FsmPoseDualEntry(void)
@@ -140,7 +140,7 @@ __declspec(naked) void FsmPoseDualEntry(void)
         test     eax, eax
         mov      dword ptr [g_xformDirtyFlags], edx
         jne      short L_25cc
-        call     GuardedSeq_00471670
+        call     GuardedSeq_MStackCall_then_CallSetPause_00471670
         pop      edi
         pop      esi
         pop      ebx
@@ -220,7 +220,7 @@ __declspec(naked) void FsmPoseDualEntry(void)
         mov      dword ptr [g_walkCallback], eax
         jne      short L_272d
     L_2724:
-        call     GuardedSeq_00471670
+        call     GuardedSeq_MStackCall_then_CallSetPause_00471670
         pop      edi
         pop      esi
         pop      ebx

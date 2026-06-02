@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
 /*  state 2/3: counter-loop, call 0048d490 then 494e20/return.        */
 /* ------------------------------------------------------------------ */
 extern void InstallSelf3WayChainCmp(void);
-extern void ScaledInit_0048d490(void);
+extern void ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d490(void);
 extern void InstallSelfChain494d60(void);
 extern void DispatchDoubleScaledCluster(void);
 
@@ -163,7 +163,7 @@ __declspec(naked) void MoveDispatch4StateFsm(void)
         mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], edx
-        call     ScaledInit_0048d490
+        call     ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d490
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_4d5c

@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -112,13 +112,13 @@ extern unsigned int g_fightAxisPosY;
  *   set scaledidx[ecx*4+0x28]=4. Second (+0x30): set 0x0054207c=0x501, clear g_cj_00542054,
  *   jmp InstallSelfMStackIndirect. Third (+0x50): load chain[*4+0x3c]/0x74, jmp SetJmp_InstallSelfMStackIndirect.
  */
-extern void GuardedSeq_004297b0(void);
+extern void GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
 extern void InstallSelfMStackIndirect(void);
 extern void SetJmp_InstallSelfMStackIndirect(void);
 
 __declspec(naked) void TripleEntryBitsetMStack(void) {
     __asm {
-        call    GuardedSeq_004297b0
+        call    GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

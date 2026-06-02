@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   eax = g_baseSel; push esi; esi = &[eax*4];
  *   eax = [eax*4+0x84]; [esi+0x84] = 0;
  *   if eax!=0: skip; call CopyJmp_00406ba0; if pause: ret;
- *   skip: call GuardedSeq_004297b0; if pause: ret;
+ *   skip: call GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp; if pause: ret;
  *   cl = byte [g_xformDirtyFlags]; eax=1; test al,cl;
  *   if zero: install;
  *     call ScaledInitOrSelfPtr_00429680; pop esi; ret;
@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY;
  *            g_pendingNodeType=1; g_framePauseFlag=1; pop esi; ret.
  */
 extern void CopyJmp_00406ba0(void);
-extern void GuardedSeq_004297b0(void);
+extern void GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
 extern void GuardedDoubleIncCmpJmp(void);
 extern void CallPauseScaledDecJmp(void);
 extern void ScaledInitOrSelfPtr_00429680(void);
@@ -140,7 +140,7 @@ __declspec(naked) void EsiInstallBitCallChain_00429530(void) {
         test    eax, eax
         _emit   75h
         _emit   3bh
-        call    GuardedSeq_004297b0
+        call    GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

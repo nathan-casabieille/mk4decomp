@@ -24,7 +24,7 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_acc_00542078;
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
-extern void GuardedSeq_00473f50(void);
+extern void GuardedSeq_DualSetShiftCall_then_DualPushSet7dCallPop(void);
 void TwoCallPauseSetJmp(void) {
     MStackPush2RunCountdown();
     if (g_framePauseFlag != 0) return;
@@ -32,5 +32,5 @@ void TwoCallPauseSetJmp(void) {
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))3;
     g_acc_00542078 = 2;
-    GuardedSeq_00473f50();
+    GuardedSeq_DualSetShiftCall_then_DualPushSet7dCallPop();
 }

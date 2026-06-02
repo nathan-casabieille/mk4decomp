@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -115,10 +115,10 @@ extern void MStackPush4DualCallAbsPop4(void);
 extern void WalkTowardTargetFsm(void);
 extern void DualMul10ChainAcc7C(void);
 extern void EsiInstallChainCallCmpThreshold(void);
-extern void GuardedSeq_0042fba0(void);
+extern void GuardedSeq_DualMulScaleStore_then_PhaseInstall2DInterpDispatch_0042fba0(void);
 extern void Mul10Triple0xd999Interp(void);
 extern void SubCmpCallPauseJmp(void);
-extern void GuardedSeq_0042fb80(void);
+extern void GuardedSeq_DualMulScaleStore_then_PhaseInstall2DInterpDispatch_0042fb80(void);
 
 /* @addr 0x0042f8a0 (355b game) - install-self phase dispatcher with 2D
  *   interpolation tails. Phase 0: installs Self at [eax+8] with slot[+0x84]=1
@@ -133,12 +133,12 @@ extern void GuardedSeq_0042fb80(void);
  *     - else (>= 0x370000): compute eax = g_eventQueueWorkType - 0x1999,
  *       store into g_acc_00542078, compare 0x54206c/0x542070 against it
  *       and select one of three tails:
- *         - if 0x54206c <  threshold: GuardedSeq_0042fba0
- *         - else if 0x542070 < threshold: GuardedSeq_0042fba0
+ *         - if 0x54206c <  threshold: GuardedSeq_DualMulScaleStore_then_PhaseInstall2DInterpDispatch_0042fba0
+ *         - else if 0x542070 < threshold: GuardedSeq_DualMulScaleStore_then_PhaseInstall2DInterpDispatch_0042fba0
  *         - else if 0x54206c < 0x542074: pick Mul10Triple0xd999Interp
  *           or SubCmpCallPauseJmp (after stashing 0x5381cc into
  *           g_currentNodeIdx)
- *         - else (>= 0x542074): GuardedSeq_0042fb80 or SubCmpCallPauseJmp.
+ *         - else (>= 0x542074): GuardedSeq_DualMulScaleStore_then_PhaseInstall2DInterpDispatch_0042fb80 or SubCmpCallPauseJmp.
  */
 
 __declspec(naked) void PhaseInstall2DInterpDispatch(void) {
@@ -200,13 +200,13 @@ __declspec(naked) void PhaseInstall2DInterpDispatch(void) {
         cmp     esi, eax
         mov     dword ptr [g_acc_00542078], eax
         jge     short L_pii_eaxOk
-        call    GuardedSeq_0042fba0
+        call    GuardedSeq_DualMulScaleStore_then_PhaseInstall2DInterpDispatch_0042fba0
         pop     esi
         ret
     L_pii_eaxOk:
         cmp     edx, eax
         jge     short L_pii_sample
-        call    GuardedSeq_0042fba0
+        call    GuardedSeq_DualMulScaleStore_then_PhaseInstall2DInterpDispatch_0042fba0
         pop     esi
         ret
     L_pii_sample:
@@ -227,7 +227,7 @@ __declspec(naked) void PhaseInstall2DInterpDispatch(void) {
     L_pii_storeEdx:
         cmp     edx, ecx
         jle     short L_pii_writeEdx
-        call    GuardedSeq_0042fb80
+        call    GuardedSeq_DualMulScaleStore_then_PhaseInstall2DInterpDispatch_0042fb80
         pop     esi
         ret
     L_pii_writeEdx:

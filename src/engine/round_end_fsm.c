@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -116,7 +116,7 @@ extern void Screen_ArcadeEnding(void);
 extern void TwinMStackPushScaledChain(void);
 extern void RoundEndFsm(void);
 extern void CallPauseClear3CallTriple(void);
-extern void ScaledInit_0048f720(void);
+extern void ScaledInit_GuardedDirtyXformFromTable_g_scaledInit(void);
 extern void CopyJmp_00406ba0(void);
 extern void ScaledZero44(void);
 extern void MStackPushSet0001(void);
@@ -135,7 +135,7 @@ extern void ScaledInitWithCounterAndType_004314f0(void);
  *       at body with slot[+0x84]=1, packs (Self + 0x01000000) at the
  *       bumped scaled slot, calls RoundEndFsm, arms 0x541e6c=1.
  *   11b NOP align pad.
- *   Entry 2 (offset 0x120, 90b): 6-call chain (ScaledInit_0048f720,
+ *   Entry 2 (offset 0x120, 90b): 6-call chain (ScaledInit_GuardedDirtyXformFromTable_g_scaledInit,
  *     CopyJmp_00406ba0, ScaledZero44, ScaledZeroFour,
  *     MStackPushSet0001, MStackPushSet0004), each
  *     gated by 0x541e6c. On full success, tail-jmps
@@ -225,7 +225,7 @@ __declspec(naked) void Phase3InstallSelfChain(void) {
         nop
         /* entry 2 (offset 0x120) */
     L_pis2_entry2:
-        call    ScaledInit_0048f720
+        call    ScaledInit_GuardedDirtyXformFromTable_g_scaledInit
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pis2_e2End

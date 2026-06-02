@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
 /* Throw-takedown step cluster (592b game, 3 packed helpers)           */
 /* ------------------------------------------------------------------ */
 extern void Push8e_Push413690(void);
-extern void ScaledArrStore_00429980(void);
+extern void ScaledArrStore_GuardedChainCmpDualBitXor_00429980(void);
 extern void ScoreAiStatusFsmCluster(void);
 extern void InstallSelf3StateFieldSet(void);
 extern void InstallSelf3StateDualChain(void);
@@ -166,7 +166,7 @@ __declspec(naked) void ThrowTakedownStepCluster(void)
         test     eax, eax
         jne      short L_9f15
         mov      dword ptr [g_eventQueueChild], 0x18
-        call     ScaledArrStore_00429980
+        call     ScaledArrStore_GuardedChainCmpDualBitXor_00429980
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_9f15

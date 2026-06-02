@@ -49,7 +49,7 @@ void Wrapper_CmpDualPatchScaledRangeJmp_004e4950(void) { CmpDualPatchScaledRange
 void Wrapper_CmpDualPatchScaledRangeJmp_004e4990(void) { CmpDualPatchScaledRangeJmp(0x004e4990u); }
 
 /* @addr 0x00439310 */
-void Wrapper_ScaledIndexCondCopy_005422f0(void) { ScaledIndexCondCopy(0x005422f0u); }
+void Wrapper_ScaledIndexCondCopy(void) { ScaledIndexCondCopy(0x005422f0u); }
 
 /* @addr 0x0043abf0 */
 void Wrapper_PackedAdvanceCallTailJmp_004e4a58(void) { PackedAdvanceCallTailJmp(0x004e4a58u); }
@@ -145,5 +145,5 @@ void Wrapper_IterLoad_0048fd30_004f12a8(void) { IterLoad_0048fd30(0x004f12a8u); 
 void Wrapper_IterLoad_0048fd30_004f12ac(void) { IterLoad_0048fd30(0x004f12acu); }
 
 /* @addr 0x0049eb10 */
-void Wrapper_SaveCallRestore_00000266(void) { SaveCallRestore(0x00000266u); }
+void Wrapper_SaveCallRestore(void) { SaveCallRestore(0x00000266u); }
 

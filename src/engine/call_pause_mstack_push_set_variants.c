@@ -36,11 +36,11 @@ void CallPauseMStackPushSet0Jmp(void) {
 }
 
 /* @addr 0x0045ffc0 (52b): same shape, value=9 */
-extern void ScaledInit_0048f720(void);
+extern void ScaledInit_GuardedDirtyXformFromTable_g_scaledInit(void);
 extern void SelfInstallPhaseDispatch_00460000(void);
 void CallPauseMStackPushSet9Jmp(void) {
     unsigned int top;
-    ScaledInit_0048f720();
+    ScaledInit_GuardedDirtyXformFromTable_g_scaledInit();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     g_walkCallback = (void (*)(void))9;

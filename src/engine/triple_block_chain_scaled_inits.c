@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -113,8 +113,8 @@ extern void ChainGatedNegAccum(void);
 extern void MStackCall_00406600(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void RosterSetupFsmCluster(void);
-extern void ScaledInit_00450ed0(void);
-extern void ScaledInit_00450ef0(void);
+extern void ScaledInit_TripleBlockChainScaledInits_g_walkCallback_00450ed0(void);
+extern void ScaledInit_TripleBlockChainScaledInits_g_walkCallback_00450ef0(void);
 
 __declspec(naked) void TripleBlockChainScaledInits(void) {
     __asm {
@@ -203,7 +203,7 @@ __declspec(naked) void TripleBlockChainScaledInits(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        call    ScaledInit_00450ed0
+        call    ScaledInit_TripleBlockChainScaledInits_g_walkCallback_00450ed0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -222,7 +222,7 @@ __declspec(naked) void TripleBlockChainScaledInits(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        call    ScaledInit_00450ef0
+        call    ScaledInit_TripleBlockChainScaledInits_g_walkCallback_00450ef0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

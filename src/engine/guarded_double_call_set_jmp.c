@@ -12,7 +12,7 @@ extern unsigned int g_scaledInit_00542044;
  *   push 0x004602b0 onto stack[idx*4]; jmp T.
  */
 extern void ScaledZeroFour(void);
-extern void ScaledInit_0048f720(void);
+extern void ScaledInit_GuardedDirtyXformFromTable_g_scaledInit(void);
 extern void func_004602b0_pp(void);
 extern void MstackPopScaledChainPlusThunks(void);
 void GuardedDoubleCallSetJmp(void) {
@@ -21,7 +21,7 @@ void GuardedDoubleCallSetJmp(void) {
     if (g_framePauseFlag != 0) {
         return;
     }
-    ScaledInit_0048f720();
+    ScaledInit_GuardedDirtyXformFromTable_g_scaledInit();
     if (g_framePauseFlag != 0) {
         return;
     }

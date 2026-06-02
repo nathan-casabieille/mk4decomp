@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -117,7 +117,7 @@ extern void MStackCall_004062a0(void);
 extern void SaveCallRestoreOrXor(void);
 extern void SaveCallRestore(void);
 extern void ThrowFlowSetupCluster(void);
-extern void Wrapper_SaveCallRestore_00000266(void);
+extern void Wrapper_SaveCallRestore(void);
 
 void DualGuardStateMachine_0049ea30(void) {
     __asm {
@@ -183,7 +183,7 @@ void DualGuardStateMachine_0049ea30(void) {
 }
 
 /* @addr 0x0049eb20 (216b game) - variant of DualGuardStateMachine_0049ea30, uses 0x267 tag and
- *   [scaledInit*4+4] field instead of 0x266 and [scaledInit*4+0]. Initial path differs: jmp Wrapper_SaveCallRestore_00000266.
+ *   [scaledInit*4+4] field instead of 0x266 and [scaledInit*4+0]. Initial path differs: jmp Wrapper_SaveCallRestore.
  */
 
 __declspec(naked) void DualGuardStateMachine_0049eb20(void) {
@@ -193,7 +193,7 @@ __declspec(naked) void DualGuardStateMachine_0049eb20(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   05h
-        jmp     Wrapper_SaveCallRestore_00000266
+        jmp     Wrapper_SaveCallRestore
         mov     eax, dword ptr [g_state2_0053a354]
         push    0x00000267
         test    eax, eax

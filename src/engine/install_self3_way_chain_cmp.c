@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *   if (flag == 1): alt path with GuardedSeq + bit test + ScaledInitOrSelfPtr.
  *   else: call StackPopDispatchTagged; pop esi; ret.
  */
-extern void GuardedSeq_004297b0(void);
+extern void GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
 extern void ScaledInitOrSelfPtr_00429680(void);
 
 extern unsigned int g_matrixStack_arr;
@@ -154,7 +154,7 @@ __declspec(naked) void InstallSelf3WayChainCmp(void) {
         mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret
-        call    GuardedSeq_004297b0
+        call    GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

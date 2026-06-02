@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -308,8 +308,8 @@ extern void FiveTableWalkInit(void);
 extern void FlagThunk4EntryDispatcher(void);
 extern void FmodHelper_004ccb7d(void);
 extern void GameModeAdvanceCluster(void);
-extern void GuardedSeq_00471670(void);
-extern void GuardedSeq_0049c340(void);
+extern void GuardedSeq_MStackCall_then_CallSetPause_00471670(void);
+extern void GuardedSeq_MStackCall_then_CallSetPause_0049c340(void);
 extern void GuardedSetupCallTailJmp(void);
 extern void Audio_PlaySoundId(void);
 extern void Helper_MemMalloc_Post(void);
@@ -369,8 +369,8 @@ extern void ScaledChainNegStore(void);
 extern void ScaledChainOr8(void);
 extern void ScaledIndirectJmp_0049c850(void);
 extern void ScaledInitWithCounterAndType_004314f0(void);
-extern void ScaledInit_00417e20(void);
-extern void ScaledInit_0048f720(void);
+extern void ScaledInit_Phase4SevenPackedDispatch_g_eventQueueTotal(void);
+extern void ScaledInit_GuardedDirtyXformFromTable_g_scaledInit(void);
 extern void ScaledLoadCmp1003JmpDispatch(void);
 extern void ScaledStackCallPause(void);
 extern void ScaledStoreThree_00409260(void);
@@ -517,7 +517,7 @@ loop413ea0:
  *     orig was 0: call Phase1ChainExtendedInitLoop. If !pause: dec baseSel[+0x5c]; if was 0:
  *     tail-jmp ScaledIndirectJmp_0049c850. ret.
  *   B3 (0xf0..0x111): call BootOneShotSetup; if !pause: call PendingMatch_0040a8d0;
- *     if !pause: tail-jmp GuardedSeq_0049c340; ret.
+ *     if !pause: tail-jmp GuardedSeq_MStackCall_then_CallSetPause_0049c340; ret.
  */
 __declspec(naked) void DualMul10AndDispatchChain(void) {
     __asm {
@@ -603,7 +603,7 @@ __declspec(naked) void DualMul10AndDispatchChain(void) {
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     GuardedSeq_0049c340
+        jmp     GuardedSeq_MStackCall_then_CallSetPause_0049c340
         ret
     }
 }
@@ -1675,7 +1675,7 @@ __declspec(naked) void StageEntityInitCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_178d
-        call     ScaledInit_0048f720
+        call     ScaledInit_GuardedDirtyXformFromTable_g_scaledInit
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_178d
@@ -1983,7 +1983,7 @@ __declspec(naked) void MainTickChain(void)
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
     L_10bc:
-        call     ScaledInit_0048f720
+        call     ScaledInit_GuardedDirtyXformFromTable_g_scaledInit
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
         call     ScaledAndAldf
@@ -2905,7 +2905,7 @@ __declspec(naked) void PendingMatch_0041d770(void)
         test     eax, eax
         mov      dword ptr [g_eventQueueNotMask], eax
         jg       L_db34
-        call     GuardedSeq_00471670
+        call     GuardedSeq_MStackCall_then_CallSetPause_00471670
         pop      esi
         ret      
     L_dac8:
@@ -4104,7 +4104,7 @@ __declspec(naked) void PendingMatch_00417840(void)
         pop      esi
         pop      ebx
         ret      
-        call     ScaledInit_00417e20
+        call     ScaledInit_Phase4SevenPackedDispatch_g_eventQueueTotal
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7de7
@@ -4211,7 +4211,7 @@ __declspec(naked) void PendingMatch_00417840(void)
         mov      dword ptr [g_eventQueueIdx], eax
         js       L_7de2
     L_7db1:
-        call     ScaledInit_00417e20
+        call     ScaledInit_Phase4SevenPackedDispatch_g_eventQueueTotal
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7de7
@@ -5677,7 +5677,7 @@ __declspec(naked) void PendingMatch_0040a8d0(void)
         test     eax, eax
         mov      dword ptr [g_eventQueueNotMask], eax
         jg       L_ad62
-        call     GuardedSeq_00471670
+        call     GuardedSeq_MStackCall_then_CallSetPause_00471670
         pop      esi
         ret      
     L_ad45:

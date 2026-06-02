@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -261,7 +261,7 @@ __declspec(naked) void BossRoarCluster(void)
         mov      eax, OFFSET g_dispatchTableArr6
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
-        call     ScaledArrStore_004298c0
+        call     ScaledArrStore_ScaledChainJmp_004298c0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_8446

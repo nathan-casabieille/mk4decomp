@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *   Both paths: g_pendingNodeType = 1; g_framePauseFlag = 1.
  */
 extern void CopyJmp_00406ba0(void);
-extern void ScaledArrStore_004285c0(void);
+extern void ScaledArrStore_CallDualStoreXorBit(void);
 
 extern unsigned int g_matrixStack_arr;
 
@@ -149,7 +149,7 @@ __declspec(naked) void TripleBranchInstall(void) {
         mov     ecx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [ecx*4 + 0x28], 0
-        call    ScaledArrStore_004285c0
+        call    ScaledArrStore_CallDualStoreXorBit
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -157,7 +157,7 @@ __declspec(naked) void TripleBranchInstall(void) {
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   75h
         _emit   17h
-        call    ScaledArrStore_004285c0
+        call    ScaledArrStore_CallDualStoreXorBit
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

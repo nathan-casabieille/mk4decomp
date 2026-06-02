@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -133,7 +133,7 @@ extern unsigned int g_chain_disp_40_439a40;
 extern unsigned int g_fightTickSavedSlot;
 extern void TwoStageWalkGate(void);
 extern void TwoConditionalJmp(void);
-extern void Thunk_SetJmp_00439c30(void);
+extern void Thunk_SetJmp(void);
 extern void AudioVolumeRescale(void);
 
 extern void MStackPush2ChainLLInsert(void);
@@ -158,7 +158,7 @@ extern void LoadGeoAsset_Default(void);
 
 extern void CjInstallSelfRouter(void);
 extern void Wrapper_ScaledChainPushCall_004ef898(void);
-extern void ScaledArrStore_00428e70(void);
+extern void ScaledArrStore_EsiInstallBitCallChain_00428e70(void);
 
 extern void PushSetXfmMaskCallPop(void);
 

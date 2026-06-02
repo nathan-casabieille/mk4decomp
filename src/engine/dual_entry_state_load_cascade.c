@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -113,14 +113,14 @@ extern unsigned int g_fightAxisPosY;
  *     jmp DualHelperMul10TailPair.
  *   Block A2 (+0x20): call CjTableThresholdDispatch; if !pause: g_walkCallback=9; call FlagThunk4EntryDispatcher;
  *     if !pause: g_walkCallback=0x6666; call CmpP1DualInitStore_00482ab0; if !pause: jmp RoundTextMenuEventCluster.
- *   Block B (+0x70): g_walkCallback=0; call FlagThunk4EntryDispatcher; if !pause: jmp GuardedSeq_00488890.
+ *   Block B (+0x70): g_walkCallback=0; call FlagThunk4EntryDispatcher; if !pause: jmp GuardedSeq_CjTableThresholdDispatch_then_RoundTextMenuEventCluster.
  */
 extern unsigned int g_load_0052ab10;
 extern void CjTableThresholdDispatch(void);
 extern void CmpP1DualInitStore_00482ab0(void);
 extern void DualHelperMul10TailPair(void);
 extern void FlagThunk4EntryDispatcher(void);
-extern void GuardedSeq_00488890(void);
+extern void GuardedSeq_CjTableThresholdDispatch_then_RoundTextMenuEventCluster(void);
 extern void RoundTextMenuEventCluster(void);
 
 __declspec(naked) void DualEntryStateLoadCascade(void) {
@@ -173,7 +173,7 @@ __declspec(naked) void DualEntryStateLoadCascade(void) {
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     GuardedSeq_00488890
+        jmp     GuardedSeq_CjTableThresholdDispatch_then_RoundTextMenuEventCluster
         ret
     }
 }

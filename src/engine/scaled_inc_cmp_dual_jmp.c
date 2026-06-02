@@ -21,7 +21,7 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     +0x12c
  */
 extern void ScaledChainJmp_004298e0(void);
-extern void ScaledArrStore_00429960(void);
+extern void ScaledArrStore_GuardedChainCmpDualBitXor_00429960(void);
 void ScaledIncCmpDualJmp(void) {
     unsigned int idx;
     unsigned int scaled;
@@ -37,5 +37,5 @@ void ScaledIncCmpDualJmp(void) {
         ScaledChainJmp_004298e0();
         return;
     }
-    ScaledArrStore_00429960();
+    ScaledArrStore_GuardedChainCmpDualBitXor_00429960();
 }

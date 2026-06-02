@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
  *   call F2; pause →ret; set walk=0x3b; jmp T.
  */
 extern void MStackPush2TripleCallChain(void);
-extern void GuardedScaled_0040cd20(void);
+extern void GuardedScaled_MStackPush8_then_PendingMatch(void);
 extern void TableLookupCall_00489ff0(void);
 void ScaledLoadCmp1003JmpDispatch(void) {
     unsigned int v = ((ScenegraphNode *)(g_baseSel * 4))->fsm_state;
@@ -22,7 +22,7 @@ void ScaledLoadCmp1003JmpDispatch(void) {
     if (v != 0x1003) return;
     MStackPush2TripleCallChain();
     if (g_framePauseFlag != 0) return;
-    GuardedScaled_0040cd20();
+    GuardedScaled_MStackPush8_then_PendingMatch();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))0x3b;
     TableLookupCall_00489ff0();

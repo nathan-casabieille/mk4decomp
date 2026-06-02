@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0047dbc0 (88b)
- *   g_xformEntityIdx = 0x500c08>>2; call ScaledArrStore_004298c0;
+ *   g_xformEntityIdx = 0x500c08>>2; call ScaledArrStore_ScaledChainJmp_004298c0;
  *   if pause: ret; ecx = g_cj_0054205c; eax = 0xffffb334;
  *   g_xformScratch2088 = eax; [ecx*4+0x78] = eax;
  *   g_eventQueueWorkType = 0x3333; call DualFieldAddSubStore;
@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchTableArr;
 void DualSetCallPair(void) {
     g_xformEntityIdx = (unsigned int)&g_dispatchTableArr >> 2;
-    ScaledArrStore_004298c0();
+    ScaledArrStore_ScaledChainJmp_004298c0();
     if (g_framePauseFlag != 0) return;
     g_xformScratch2088 = 0xffffb334;
     *(unsigned int *)(g_cj_0054205c * 4 + 0x78) = 0xffffb334;

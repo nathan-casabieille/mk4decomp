@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  *   mstack-push, optional GuardedSeq, mstack-pop, tail-jmp MStackFrameCdeclDouble.
  */
 extern void DoublePushCallDoublePop(void);
-extern void GuardedSeq_00490c60(void);
+extern void GuardedSeq_DualCallPauseDirtyJmp_then_ScaledXorStore(void);
 
 __declspec(naked) void BitDispatchDualCallMStackPush(void) {
     __asm {
@@ -155,7 +155,7 @@ __declspec(naked) void BitDispatchDualCallMStackPush(void) {
         test    al, 1
         _emit   74h
         _emit   12h
-        call    GuardedSeq_00490c60
+        call    GuardedSeq_DualCallPauseDirtyJmp_then_ScaledXorStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -185,7 +185,7 @@ __declspec(naked) void BitDispatchDualCallMStackPush(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_matrixStackTop], ecx
         mov     dword ptr [ecx*4 + 0], eax
-        call    GuardedSeq_00490c60
+        call    GuardedSeq_DualCallPauseDirtyJmp_then_ScaledXorStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

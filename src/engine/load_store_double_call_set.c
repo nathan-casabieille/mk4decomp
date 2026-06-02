@@ -15,7 +15,7 @@ extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
-extern void GuardedSeq_00473f50(void);
+extern void GuardedSeq_DualSetShiftCall_then_DualPushSet7dCallPop(void);
 void LoadStoreDoubleCallSet(void) {
     g_fightGroupHead = *(unsigned int *)(g_baseSel * 4 + 0x4c);
     MStackPush2RunCountdown();
@@ -24,5 +24,5 @@ void LoadStoreDoubleCallSet(void) {
     if (g_framePauseFlag) return;
     g_walkCallback = (void(*)(void))2;
     g_acc_00542078 = 4;
-    GuardedSeq_00473f50();
+    GuardedSeq_DualSetShiftCall_then_DualPushSet7dCallPop();
 }

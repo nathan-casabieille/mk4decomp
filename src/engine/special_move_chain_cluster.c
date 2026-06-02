@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -112,9 +112,9 @@ extern unsigned int g_dispatchSave603;
 extern void ArgSarStoreJmp(void);
 extern void ComboLoopCluster(void);
 extern void EntitySetupCountdownFsm(void);
-extern void GuardedSeq_00476de0(void);
-extern void GuardedSeq_00476f10(void);
-extern void GuardedSeq_00476fc0(void);
+extern void GuardedSeq_DirtyDoubleDeref_then_ScaledOr4Jmp(void);
+extern void GuardedSeq_DirtyDoubleDeref_then_ChainSlotSetupInstallSelf(void);
+extern void GuardedSeq_DirtyDoubleDeref_then_ScaledAndFBJmp(void);
 extern void MStackPush2BitLoop(void);
 extern void PushPopCurrentSetFFFFFFFF(void);
 extern void TwoCallScaledOr1600(void);
@@ -195,7 +195,7 @@ __declspec(naked) void SpecialMoveChainCluster(void)
         mov      eax, dword ptr [g_eventQueueEnd]
         mov      dword ptr [g_fightGroupHead], eax
         mov      dword ptr [g_walkCallback], 3
-        call     GuardedSeq_00476fc0
+        call     GuardedSeq_DirtyDoubleDeref_then_ScaledAndFBJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_fb81
@@ -255,7 +255,7 @@ __declspec(naked) void SpecialMoveChainCluster(void)
         test     ecx, ecx
         je       short L_fbe9
         mov      dword ptr [g_walkCallback], 3
-        call     GuardedSeq_00476de0
+        call     GuardedSeq_DirtyDoubleDeref_then_ScaledOr4Jmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_fc4b
@@ -292,7 +292,7 @@ __declspec(naked) void SpecialMoveChainCluster(void)
         test     ecx, ecx
         je       short L_fc89
         mov      dword ptr [g_walkCallback], 3
-        call     GuardedSeq_00476f10
+        call     GuardedSeq_DirtyDoubleDeref_then_ChainSlotSetupInstallSelf
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_fceb

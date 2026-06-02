@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -113,7 +113,7 @@ extern void DualGatedStateYield(void);
 extern void DualScaledInitCmp_0046df50(void);
 extern void GuardedDualAndFlagToggle(void);
 extern void ScaledChain3c74(void);
-extern void ScaledInit_0048d430(void);
+extern void ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d430(void);
 
 __declspec(naked) void TriCounterReinitChain(void)
 {
@@ -139,7 +139,7 @@ __declspec(naked) void TriCounterReinitChain(void)
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4], ecx
         mov     dword ptr [g_walkCallback], 0
-        call    ScaledInit_0048d430
+        call    ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d430
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_tcrc_ret1
@@ -198,7 +198,7 @@ __declspec(naked) void TriCounterReinitChain(void)
         je      short L_tcrc_sub2_ret
     L_tcrc_sub2_setOne:
         mov     dword ptr [g_walkCallback], 1
-        jmp     ScaledInit_0048d430
+        jmp     ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d430
     L_tcrc_sub3:
         call    DualGatedStateYield
         test    eax, eax

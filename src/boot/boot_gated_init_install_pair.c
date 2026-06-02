@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -113,7 +113,7 @@ extern unsigned int g_dispatchSave74;
 extern void AudioMixerStep(void);
 extern void ChainGetterStateInstaller(void);
 extern void ChainListVecAdd(void);
-extern void GuardedSeq_00471670(void);
+extern void GuardedSeq_MStackCall_then_CallSetPause_00471670(void);
 extern void MStackPop8(void);
 extern void MStackPush8(void);
 extern void MStackPushCallPop(void);
@@ -190,7 +190,7 @@ __declspec(naked) void BootGatedInitInstallPair(void)
         test    eax, eax
         mov     dword ptr [g_eventQueueNotMask], eax
         jg      short L_bgip_skipToChain
-        call    GuardedSeq_00471670
+        call    GuardedSeq_MStackCall_then_CallSetPause_00471670
         pop     esi
         ret
     L_bgip_phase0:

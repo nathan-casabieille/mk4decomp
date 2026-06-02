@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -117,7 +117,7 @@ extern void InstallSelf3WayChainCmp(void);
 extern void InstallSelfPair3Branch(void);
 extern void Phase4DualHelperTrampoline(void);
 extern void Phase4FivePackedHelpers(void);
-extern void ScaledArrStore_00429980(void);
+extern void ScaledArrStore_GuardedChainCmpDualBitXor_00429980(void);
 extern void ScaledLitLoadCall_00480fe0(void);
 extern void ScaledLoadJmp_00428d20(void);
 extern void ScaledLoadJmp_00429390(void);
@@ -266,7 +266,7 @@ __declspec(naked) void MatchStartFsmCluster(void)
         jmp      L_914f
     L_9114:
         mov      dword ptr [g_eventQueueChild], 0x26
-        call     ScaledArrStore_00429980
+        call     ScaledArrStore_GuardedChainCmpDualBitXor_00429980
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_9288
         mov      dword ptr [esi + 8], OFFSET L_8f60
@@ -279,7 +279,7 @@ __declspec(naked) void MatchStartFsmCluster(void)
         je       L_9190
     L_914f:
         mov      dword ptr [g_eventQueueChild], 0x25
-        call     ScaledArrStore_00429980
+        call     ScaledArrStore_GuardedChainCmpDualBitXor_00429980
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_9288
         mov      dword ptr [esi + 8], OFFSET L_8f60

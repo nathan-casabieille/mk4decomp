@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -109,13 +109,13 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void InstallSelfBranchCascade(void);
-extern void GuardedSeq_00471670(void);
+extern void GuardedSeq_MStackCall_then_CallSetPause_00471670(void);
 extern void DualEntryRecursiveInstall(void);
 extern void EnvSpawnRehydratePass(void);
 extern void TripleCallBitJmp(void);
 
 /* @addr 0x00471920 (193b game) - dual-entry: A: g_walkCallback=[g_fightGroupHead*4+0x18];
- *   if zero jmp GuardedSeq_00471670; else jmp InstallSelfBranchCascade.
+ *   if zero jmp GuardedSeq_MStackCall_then_CallSetPause_00471670; else jmp InstallSelfBranchCascade.
  *   B (+0x20): install-self path with countdown; chain[+0x84]!=0 path: g_eventQueueCurrent=0x10000,
  *   g_eventQueueWorkType=0x10000; call DualEntryRecursiveInstall; pause-check; jmp EnvSpawnRehydratePass.
  *   chain[+0x84]==0 path: install-self at +0x08=0x00471940, scaledInit-chain push 0x00471940|0x01000000,
@@ -131,7 +131,7 @@ __declspec(naked) void DualEntryInstall00471920(void) {
         _emit   74h
         _emit   05h
         jmp     InstallSelfBranchCascade
-        jmp     GuardedSeq_00471670
+        jmp     GuardedSeq_MStackCall_then_CallSetPause_00471670
         _emit   90h
         mov     eax, dword ptr [g_baseSel]
         shl     eax, 2

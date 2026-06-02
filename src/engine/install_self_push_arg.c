@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -114,10 +114,10 @@ extern unsigned int g_fightAxisPosY;
  *   chain[base + 0x74] = 0x2001; g_walkCallback = 0x2001;
  *   push 0x00542970; call ArgScaledTestStore; add esp, 4.
  *   pause? -> end.
- *   install self with packed_ptr store and call ScaledArrStore_00429450; pause = 1.
+ *   install self with packed_ptr store and call ScaledArrStore_ScaledChainJmp_00429450; pause = 1.
  */
 extern void ArgScaledTestStore(void);
-extern void ScaledArrStore_00429450(void);
+extern void ScaledArrStore_ScaledChainJmp_00429450(void);
 
 extern unsigned int g_matrixStack_arr;
 
@@ -159,7 +159,7 @@ __declspec(naked) void InstallSelfPushArg(void) {
         mov     [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
-        call    ScaledArrStore_00429450
+        call    ScaledArrStore_ScaledChainJmp_00429450
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret

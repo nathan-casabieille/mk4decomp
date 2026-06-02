@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   helper; if pause unset and walk>=0xf0, snapshot g_table_00535ddc;
  *   if >=0x20000 && walk<=0x258 fall through, else jmp _00439b50.
  *   Then set walk=0xc8, call AudioVolumeRescale, gate again, and if
- *   state-bit 0 set jmp Thunk_SetJmp_00439c30.
+ *   state-bit 0 set jmp Thunk_SetJmp.
  */
 void TwoStageWalkGate(void) {
     int walk;
@@ -134,5 +134,5 @@ void TwoStageWalkGate(void) {
     AudioVolumeRescale();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 1) == 0) return;
-    Thunk_SetJmp_00439c30();
+    Thunk_SetJmp();
 }

@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -113,8 +113,8 @@ extern void GameStateDispatch4Way(void);
 extern void InstallSelfPlusTailThunk(void);
 extern void MStackChainBit2Cascade(void);
 extern void MstackPopScaledChainPlusThunks(void);
-extern void ScaledInit_00495590(void);
-extern void ScaledInit_004955b0(void);
+extern void ScaledInit_GameModeHandlerCluster_g_scaledInit_00495590(void);
+extern void ScaledInit_GameModeHandlerCluster_g_scaledInit_004955b0(void);
 extern void StateGateMStackOverlap(void);
 
 __declspec(naked) void ThrowGrabInitCluster(void)
@@ -154,7 +154,7 @@ __declspec(naked) void ThrowGrabInitCluster(void)
         mov      dword ptr [esi + 0x84], 0
         test     eax, eax
         je       short L_6b99
-        call     ScaledInit_004955b0
+        call     ScaledInit_GameModeHandlerCluster_g_scaledInit_004955b0
         pop      esi
         ret
     L_6b99:
@@ -196,7 +196,7 @@ __declspec(naked) void ThrowGrabInitCluster(void)
         mov      dword ptr [esi + 0x84], 0
         test     eax, eax
         je       short L_6c49
-        call     ScaledInit_00495590
+        call     ScaledInit_GameModeHandlerCluster_g_scaledInit_00495590
         pop      esi
         ret
     L_6c49:

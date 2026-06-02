@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *   Install-self via baseSel[+4] chain push; pause=1; ret.
  */
 extern void MStackIndirectCallBit(void);
-extern void ScaledArrStore_00429980(void);
+extern void ScaledArrStore_GuardedChainCmpDualBitXor_00429980(void);
 
 __declspec(naked) void InstallSelfBranchIndirect(void) {
     __asm {
@@ -147,7 +147,7 @@ __declspec(naked) void InstallSelfBranchIndirect(void) {
         call    dword ptr [eax*4 + 0]
         pop     esi
         ret
-        call    ScaledArrStore_00429980
+        call    ScaledArrStore_GuardedChainCmpDualBitXor_00429980
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -110,14 +110,14 @@ extern unsigned int g_fightAxisPosY;
 
 extern void Phase1ChainSetupCallScale6(void);
 extern void InstallSelfHelper2(void);
-extern void GuardedSeq_004297b0(void);
+extern void GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
 extern void InstallSelfCountdown2Stage_0047e910(void);
 
 /* @addr 0x0047e800 (148b game) - install-self with dual-branch dirty check:
  *   chain[sel].slot84 -> eax; clear. If !=0: call Phase1ChainSetupCallScale6; pause? ret.
  *     g_walkCallback=1; call CmpEqInitCallElseJmp; pause? ret.
  *     if (g_xformDirtyFlags & 1): call InstallSelfHelper2; ret.
- *   Else (or after first branch via 0x5a): call GuardedSeq_004297b0; pause? ret.
+ *   Else (or after first branch via 0x5a): call GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp; pause? ret.
  *     if (g_xformDirtyFlags & 1): call InstallSelfCountdown2Stage_0047e910; ret.
  *     else: install self, set slot84=1, g_pendingNodeType=1, pause flag.
  */
@@ -155,7 +155,7 @@ __declspec(naked) void InstallSelfDualBranch(void) {
         pop     esi
         pop     ebx
         ret
-        call    GuardedSeq_004297b0
+        call    GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

@@ -13,17 +13,17 @@
  */
 #include "engine/scenegraph.h"
 
-extern void ScaledArrStore_00428e70(void);
-extern void ScaledArrStore_00429960(void);
+extern void ScaledArrStore_EsiInstallBitCallChain_00428e70(void);
+extern void ScaledArrStore_GuardedChainCmpDualBitXor_00429960(void);
 
 /* @addr 0x00428d00 */
 void ScaledLoadIncJmp_00428d00(void) {
     g_eventQueueCurrent = ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx + 1;
-    ScaledArrStore_00428e70();
+    ScaledArrStore_EsiInstallBitCallChain_00428e70();
 }
 
 /* @addr 0x00429840 */
 void ScaledLoadIncJmp_00429840(void) {
     g_walkCallback = (void (*)(void))(((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx + 1);
-    ScaledArrStore_00429960();
+    ScaledArrStore_GuardedChainCmpDualBitXor_00429960();
 }

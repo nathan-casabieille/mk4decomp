@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -168,7 +168,7 @@ extern void MStackPushComplexCallPop_004064b0(void);
 extern void PendingMatch_00401b70(void);
 extern void Phase1ChainAdvanceCallScale(void);
 extern void ScaledAnd4InvDirtyClear(void);
-extern void ScaledArrStore_004285c0(void);
+extern void ScaledArrStore_CallDualStoreXorBit(void);
 extern void ScaledClearTripleCallJmp(void);
 extern void ScaledOr4DirtyClear(void);
 extern void ScaledSet1OnNonZero(void);
@@ -1002,7 +1002,7 @@ __declspec(naked) void Match_ChampionScreen(void)
         mov      edx, 0x500320
         shr      edx, 2
         mov      dword ptr [g_eventQueueIdx], edx
-        call     ScaledArrStore_004285c0
+        call     ScaledArrStore_CallDualStoreXorBit
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         mov      eax, 0x506c5c

@@ -18,11 +18,11 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void TableLookupCall_00489ff0(void);
-extern void ScaledInit_0048d490(void);
+extern void ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d490(void);
 void Set1dCallSet16Jmp(void) {
     g_walkCallback = (void (*)(void))0x1d;
     TableLookupCall_00489ff0();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))0x16;
-    ScaledInit_0048d490();
+    ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d490();
 }

@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
  *     else cascade 3 state-threshold gates jumping to Wrapper_PackedAdvanceCallTailJmp_004e4708/70/80 or GuardedSeq.
  */
 extern void CallPauseMStackPushSet2Jmp(void);
-extern void GuardedSeq_00433bb0(void);
+extern void GuardedSeq_PackedSelectLoad6_then_GuardedSeq(void);
 extern void MultiThunkDispatcher9(void);
 extern void PackedAdvanceCallTailJmp(void);
 extern void ScaledChainSignDirtyToggle(void);
@@ -129,7 +129,7 @@ __declspec(naked) void DualEntry5WayThreshold(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   05h
-        jmp     GuardedSeq_00433bb0
+        jmp     GuardedSeq_PackedSelectLoad6_then_GuardedSeq
         cmp     eax, 0x00018000
         _emit   7dh
         _emit   05h
@@ -150,7 +150,7 @@ __declspec(naked) void DualEntry5WayThreshold(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   75h
         _emit   05h
-        jmp     GuardedSeq_00433bb0
+        jmp     GuardedSeq_PackedSelectLoad6_then_GuardedSeq
         mov     eax, dword ptr [g_table_00535ddc]
         cmp     eax, 0x00018000
         mov     dword ptr [g_walkCallback], eax
@@ -165,7 +165,7 @@ __declspec(naked) void DualEntry5WayThreshold(void) {
         _emit   7dh
         _emit   05h
         jmp     Wrapper_PackedAdvanceCallTailJmp_004e4708
-        jmp     GuardedSeq_00433bb0
+        jmp     GuardedSeq_PackedSelectLoad6_then_GuardedSeq
         ret
     }
 }

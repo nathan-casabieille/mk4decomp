@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00435f50 (209b game) - 4-block dual-Mul10Tail + thresholded state dispatcher.
  *   A: Mul10Tail pair on cj[+0x6c]/[+0x74]; if sum zero call CmpRangeJmpStateInit.
- *     Else threshold checks on g_table_00535ddc: <0x13333 jmp PrefixThunkInstallSelf3State, >0x28000 jmp GuardedSeq_00433bb0,
+ *     Else threshold checks on g_table_00535ddc: <0x13333 jmp PrefixThunkInstallSelf3State, >0x28000 jmp GuardedSeq_PackedSelectLoad6_then_GuardedSeq,
  *     else jmp PrefixThunkInstallSelf3State.
  *   B/C (+0x80/+0x90): jmp DualCallPauseDirtyJmp_00435f20.
  *   D (+0xa0): call Cmp2CallDirtyCall; if nz ret; threshold dispatch state_00535ddc: <0x2b333 jmp Wrapper_CmpDualPatchScaledRangeJmp_004e4990,
@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void CmpRangeJmpStateInit(void);
 extern void DualCallPauseDirtyJmp_00435f20(void);
-extern void GuardedSeq_00433bb0(void);
+extern void GuardedSeq_PackedSelectLoad6_then_GuardedSeq(void);
 extern void InstallSelfThreeStateDispatch(void);
 extern void PoseFsm4StateInstall(void);
 extern void PrefixThunkInstallSelf3State(void);
@@ -156,7 +156,7 @@ __declspec(naked) void Mul10ThresholdQuad(void) {
         cmp     eax, 0x00028000
         _emit   7eh
         _emit   05h
-        jmp     GuardedSeq_00433bb0
+        jmp     GuardedSeq_PackedSelectLoad6_then_GuardedSeq
         jmp     PrefixThunkInstallSelf3State
         _emit   90h
         _emit   90h

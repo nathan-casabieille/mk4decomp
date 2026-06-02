@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -119,7 +119,7 @@ extern void CmpDivJmp(void);
 extern void CondPickDualStore(void);
 extern void CopyThreeFields(void);
 extern void DualCmpSwapStore(void);
-extern void GuardedSeq_00497450(void);
+extern void GuardedSeq_MStackCall_then_CallSetPause_00497450(void);
 extern void MStackPush8CallbackInit(void);
 extern void PushCallScaledClearJmp(void);
 extern void ScaledIndirectJmp_0049c850(void);
@@ -338,7 +338,7 @@ __declspec(naked) void SweepKickDispatcher(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_744d
-        jmp      GuardedSeq_00497450
+        jmp      GuardedSeq_MStackCall_then_CallSetPause_00497450
     L_744d:
         ret
     }

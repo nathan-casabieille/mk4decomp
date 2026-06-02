@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern void TailJmpInstallSelfPair(void);
 extern void CopyJmp_00406ba0(void);
-extern void ScaledArrStore_00429450(void);
+extern void ScaledArrStore_ScaledChainJmp_00429450(void);
 
 /* @addr 0x0047e310 (268b game) - 3-state install-self with threshold dispatch.
  *   sub eax, 0; je state-0 path.
@@ -120,7 +120,7 @@ extern void ScaledArrStore_00429450(void);
  *     Else: call CopyJmp_00406ba0; if pause? final-ret.
  *     g_xformEntityIdx = 0x0050014c >> 2; install-self at [esi+8]=0x0047e310;
  *     chain[+0x84]=2; scaledInit-chain push 0x0047e310+0x02000000;
- *     call ScaledArrStore_00429450; pause=1; ret.
+ *     call ScaledArrStore_ScaledChainJmp_00429450; pause=1; ret.
  *   state 0 path (or threshold/sign fall-through): install-self at [esi+8]=0x0047e310;
  *     chain[+0x84]=1; g_pendingNodeType=1; pause=1; ret.
  */
@@ -198,7 +198,7 @@ __declspec(naked) void InstallSelfThresholdDispatch(void) {
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
-        call    ScaledArrStore_00429450
+        call    ScaledArrStore_ScaledChainJmp_00429450
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret

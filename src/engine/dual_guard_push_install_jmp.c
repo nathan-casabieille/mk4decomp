@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004288e0 (106b)
- *   call GuardedSeq_004297b0; if pause: ret;
+ *   call GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp; if pause: ret;
  *   if (bit0 of g_xformDirtyFlags)!=0: jmp ScaledInitOrSelfPtr_00429680;
  *   push 0x4e2908; call GuardedScaledChainJmpIndirect; pop;
  *   if pause: ret; call DirtyToggleByGate; if pause: ret;
@@ -120,7 +120,7 @@ extern void ScaledInitOrSelfPtr_00429680(void);
 extern void GuardedScaledChainJmpIndirect(void);
 void DualGuardPushInstallJmp(void) {
     unsigned int top;
-    GuardedSeq_004297b0();
+    GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 1) != 0) {
         ScaledInitOrSelfPtr_00429680();

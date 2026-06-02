@@ -40,7 +40,7 @@ extern void MStackPush8(void);   /* 0x004ab790 */
 
 /* The wrappers. */
 /* @addr 0x0040cd20 */
-void GuardedScaled_0040cd20(void) {
+void GuardedScaled_MStackPush8_then_PendingMatch(void) {
     MStackPush8();
     if (g_framePauseFlag == 0) {
         g_eventQueueTotal = (unsigned int)&g_table_004d7238 >> 2;
@@ -49,7 +49,7 @@ void GuardedScaled_0040cd20(void) {
 }
 
 /* @addr 0x00474fd0 */
-void GuardedScaled_00474fd0(void) {
+void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00474fd0(void) {
     TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
         g_gs = (unsigned int)&g_table_004ecaf0 >> 2;
@@ -58,7 +58,7 @@ void GuardedScaled_00474fd0(void) {
 }
 
 /* @addr 0x00475000 */
-void GuardedScaled_00475000(void) {
+void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475000(void) {
     TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
         g_gs = (unsigned int)&g_table_004ecb10 >> 2;
@@ -67,7 +67,7 @@ void GuardedScaled_00475000(void) {
 }
 
 /* @addr 0x00475030 */
-void GuardedScaled_00475030(void) {
+void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475030(void) {
     TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
         g_gs = (unsigned int)&g_table_004ecb20 >> 2;
@@ -76,7 +76,7 @@ void GuardedScaled_00475030(void) {
 }
 
 /* @addr 0x00475060 */
-void GuardedScaled_00475060(void) {
+void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475060(void) {
     TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
         g_gs = (unsigned int)&g_table_004ecb28 >> 2;
@@ -85,7 +85,7 @@ void GuardedScaled_00475060(void) {
 }
 
 /* @addr 0x00475090 */
-void GuardedScaled_00475090(void) {
+void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475090(void) {
     TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
         g_gs = (unsigned int)&g_table_004ecb40 >> 2;
@@ -94,7 +94,7 @@ void GuardedScaled_00475090(void) {
 }
 
 /* @addr 0x004750c0 */
-void GuardedScaled_004750c0(void) {
+void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_004750c0(void) {
     TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
         g_gs = (unsigned int)&g_table_004ecb48 >> 2;

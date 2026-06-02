@@ -21,7 +21,7 @@ extern void LinkedListBitMaskSearch(void);     /* 0x0041f8f0 */
 extern void ChainNodeInit(void);     /* 0x0041fa50 */
 extern void StructArrayWalkCondCall(void);     /* 0x0041fc50 */
 extern void ScaledLoadInstallOrCall_00433960(void);     /* 0x00433960 */
-extern void GuardedSeq_00433bb0(void);     /* 0x00433bb0 */
+extern void GuardedSeq_PackedSelectLoad6_then_GuardedSeq(void);     /* 0x00433bb0 */
 extern void InstallSelfThreeStateDispatch(void);     /* 0x00436030 */
 extern void ScaledAddrInit_004368f0(void);     /* 0x004368f0 */
 extern void InstallSelfPacked0x2005(void);     /* 0x00437a90 */
@@ -51,7 +51,7 @@ void Thunk_BootMod6487eClampAndChainMul10(void) { BootMod6487eClampAndChainMul10
 void Thunk_StackPopDispatchTagged_004296e0(void) { StackPopDispatchTagged(); }
 
 /* @addr 0x00433950 */
-void Thunk_ScaledLoadInstallOrCall_00433960(void) { ScaledLoadInstallOrCall_00433960(); }
+void Thunk_ScaledLoadInstallOrCall(void) { ScaledLoadInstallOrCall_00433960(); }
 
 /* @addr 0x004344a0 */
 void Thunk_InstallSelfChainSetB333(void) { InstallSelfChainSetB333(); }
@@ -72,13 +72,13 @@ void Thunk_Wrapper_00438ee0_00435de0(void) { Wrapper_CmpDualPatchScaledRangeJmp_
 void Thunk_Wrapper_00438ee0_004368d0(void) { Wrapper_CmpDualPatchScaledRangeJmp_004e4990(); }
 
 /* @addr 0x004368e0 */
-void Thunk_ScaledAddrInit_004368f0(void) { ScaledAddrInit_004368f0(); }
+void Thunk_ScaledAddrInit(void) { ScaledAddrInit_004368f0(); }
 
 /* @addr 0x004399b0 */
-void Thunk_GuardedSeq_00433bb0(void) { GuardedSeq_00433bb0(); }
+void Thunk_GuardedSeq(void) { GuardedSeq_PackedSelectLoad6_then_GuardedSeq(); }
 
 /* @addr 0x00439c20 */
-void Thunk_SetJmp_00439c30(void) { SetJmp_HitReactionDispatcher(); }
+void Thunk_SetJmp(void) { SetJmp_HitReactionDispatcher(); }
 
 /* @addr 0x00439e30 */
 void Thunk_InstallSelfChainSet2011(void) { InstallSelfChainSet2011(); }
@@ -87,7 +87,7 @@ void Thunk_InstallSelfChainSet2011(void) { InstallSelfChainSet2011(); }
 void Thunk_InstallSelfChainSetB333v2(void) { InstallSelfChainSetB333v2(); }
 
 /* @addr 0x0045dae0 */
-void Thunk_Thunk_0049cbd0(void) { Thunk_ChainNodeInit(); }
+void Thunk_Thunk(void) { Thunk_ChainNodeInit(); }
 
 /* @addr 0x0045e0f0 */
 void Thunk_Thunk_0049cbc0_0045e0f0(void) { Thunk_ScaledNeg1SetPause(); }

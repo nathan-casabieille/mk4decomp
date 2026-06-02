@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -115,7 +115,7 @@ extern void ArgSarStoreJmp(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void DualSetCallPair(void);
 extern void FiveCallGuardSetTail(void);
-extern void GuardedSeq_004297b0(void);
+extern void GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
 extern void InstallSelfCmpJmpIndirect(void);
 extern void InstallSelfIndirectJmpNeg(void);
 extern void MStackSignedMod(void);
@@ -285,7 +285,7 @@ __declspec(naked) void StageEventStartCluster(void)
         mov      ecx, dword ptr [eax*4 + 4]
         cmp      edx, ecx
         jg       short L_019a
-        call     GuardedSeq_004297b0
+        call     GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp
     L_019a:
         pop      esi
         ret

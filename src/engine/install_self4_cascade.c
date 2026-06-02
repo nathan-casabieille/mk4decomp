@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void CmpEqInitCallElseJmp(void);
 extern void MStackPushSet0008(void);
-extern void ScaledArrStore_00429980(void);
+extern void ScaledArrStore_GuardedChainCmpDualBitXor_00429980(void);
 extern void ScaledInitOrSelfPtrSetType_0047a620(void);
 
 __declspec(naked) void InstallSelf4Cascade(void) {
@@ -148,7 +148,7 @@ __declspec(naked) void InstallSelf4Cascade(void) {
         _emit   74h
         _emit   61h
         mov     dword ptr [g_eventQueueChild], 0x13
-        call    ScaledArrStore_00429980
+        call    ScaledArrStore_GuardedChainCmpDualBitXor_00429980
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

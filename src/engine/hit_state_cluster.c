@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -114,13 +114,13 @@ extern unsigned int g_dispatchSave970;
 extern void ArgSarStoreJmp(void);
 extern void ComboScriptDispatchCluster(void);
 extern void FiveCallGuardSetTail(void);
-extern void GuardedSeq_004297b0(void);
+extern void GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
 extern void InstallSelfChainedDispatch(void);
 extern void InstallSelfIndirectJmp(void);
 extern void InstallSelfMStackPush_0046cc80(void);
 extern void PushPopWalkSet1006(void);
 extern void ScaledAndAlfe(void);
-extern void ScaledInit_0048d450(void);
+extern void ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d450(void);
 extern void ScaledLoadIncJmp_00429840(void);
 extern void ScaledMove74to70(void);
 extern void SlotEvent3EntryChain(void);
@@ -312,7 +312,7 @@ __declspec(naked) void HitStateCluster(void)
         pop      ebx
         ret      
     L_ca22:
-        call     GuardedSeq_004297b0
+        call     GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_cb69
@@ -361,7 +361,7 @@ __declspec(naked) void HitStateCluster(void)
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], ecx
         mov      dword ptr [g_walkCallback], 0x27
-        call     ScaledInit_0048d450
+        call     ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d450
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_cb69

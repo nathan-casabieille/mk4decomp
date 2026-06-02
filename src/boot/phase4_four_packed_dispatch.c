@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -118,7 +118,7 @@ extern void DualCallPauseAddrSetRecurse_004197e0(void);
 extern void DualCallPauseAddrSetRecurse_004198a0(void);
 extern void TripleChainTailJmp(void);
 extern void Phase1SlotLinkAndInit(void);
-extern void GuardedScaled_0040cd20(void);
+extern void GuardedScaled_MStackPush8_then_PendingMatch(void);
 extern void BootOneShotMStackPush3(void);
 extern void Phase4FourPackedDispatch(void);
 
@@ -190,7 +190,7 @@ __declspec(naked) void Phase4DispatchMultiInit(void)
         pop     esi
         ret
     L_p4dmi_A_phase2:
-        call    GuardedScaled_0040cd20
+        call    GuardedScaled_MStackPush8_then_PendingMatch
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
@@ -207,7 +207,7 @@ __declspec(naked) void Phase4DispatchMultiInit(void)
         pop     esi
         ret
     L_p4dmi_A_phase1:
-        call    GuardedScaled_0040cd20
+        call    GuardedScaled_MStackPush8_then_PendingMatch
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
@@ -244,7 +244,7 @@ __declspec(naked) void Phase4DispatchMultiInit(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
-        call    GuardedScaled_0040cd20
+        call    GuardedScaled_MStackPush8_then_PendingMatch
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit

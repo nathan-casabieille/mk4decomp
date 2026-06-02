@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -110,11 +110,11 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00438190 (144b game) - install-self + countdown wait.
  *   Block A (+0x00): standard install-self pattern as above; mstack-push 0x004381f0 jmp GameDispatchValidateState.
- *   Block B (+0x60): if g_table_00535ddc > g_currentNodeFlags jmp GuardedSeq_00438630; else countdown
+ *   Block B (+0x60): if g_table_00535ddc > g_currentNodeFlags jmp GuardedSeq_ScaledZeroFour_then_StackPopDispatchTagged; else countdown
  *     g_eventQueueChild; if not zero, self-jmp; else jmp StackPopDispatchTagged.
  */
 extern unsigned int g_matrixStack_arr;
-extern void GuardedSeq_00438630(void);
+extern void GuardedSeq_ScaledZeroFour_then_StackPopDispatchTagged(void);
 
 __declspec(naked) void InstallSelfWaitCmp(void) {
     __asm {
@@ -152,7 +152,7 @@ __declspec(naked) void InstallSelfWaitCmp(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   05h
-        jmp     GuardedSeq_00438630
+        jmp     GuardedSeq_ScaledZeroFour_then_StackPopDispatchTagged
         mov     eax, dword ptr [g_eventQueueChild]
         dec     eax
         mov     dword ptr [g_eventQueueChild], eax

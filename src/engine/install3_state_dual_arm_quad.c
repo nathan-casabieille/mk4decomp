@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004602b0 (323b game) - 3-state install-self with bit0 dual-arm + state-0 quad-chain.
- *   state==0 (sub-eax-0 je): call SlotPhaseResetInstallChain; if pause ret. Call ScaledInit_0048f720; if pause ret.
+ *   state==0 (sub-eax-0 je): call SlotPhaseResetInstallChain; if pause ret. Call ScaledInit_GuardedDirtyXformFromTable_g_scaledInit; if pause ret.
  *     Call PushCallStoreClearJmp; if pause ret. Tail install: state=1; pause=1; ret.
  *   state==1 (dec,je): call DualGatedStateYield; if !=0 ret. Call CjMaskedFlagProbe; if pause ret.
  *     If bit0(0054208c) set: call GuardedDualConst2AndToggle; if pause ret.
@@ -125,7 +125,7 @@ extern void CjMaskedFlagProbe(void);
 extern void DualGatedStateYield(void);
 extern void Init3333Jmp(void);
 extern void PushCallStoreClearJmp(void);
-extern void ScaledInit_0048f720(void);
+extern void ScaledInit_GuardedDirtyXformFromTable_g_scaledInit(void);
 extern void SlotPhaseResetInstallChain(void);
 
 __declspec(naked) void Install3StateDualArmQuad(void) {
@@ -225,7 +225,7 @@ __declspec(naked) void Install3StateDualArmQuad(void) {
         test    eax, eax
         _emit   75h
         _emit   35h
-        call    ScaledInit_0048f720
+        call    ScaledInit_GuardedDirtyXformFromTable_g_scaledInit
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

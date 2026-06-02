@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   dec g_eventQueueChild chain: if existing entry, dec global and
  *   jmp StackPopDispatchTagged when reaches 0; else install self.
  */
-extern void ScaledArrStore_00429980(void);
+extern void ScaledArrStore_GuardedChainCmpDualBitXor_00429980(void);
 
 __declspec(naked) void EsiInstallDecGlobalJmp(void) {
     __asm {
@@ -132,7 +132,7 @@ __declspec(naked) void EsiInstallDecGlobalJmp(void) {
         call    StackPopDispatchTagged
         pop     esi
         ret
-        call    ScaledArrStore_00429980
+        call    ScaledArrStore_GuardedChainCmpDualBitXor_00429980
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

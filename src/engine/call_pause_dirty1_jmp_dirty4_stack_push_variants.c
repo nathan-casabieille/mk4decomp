@@ -13,7 +13,7 @@ extern unsigned int g_phaseTimer;
  *   call F2; pause → ret; testb 4,[dirty]; je +0x1b →ret-tail;
  *   inc g_matrixStackTop; push 0x00428950 onto stack[idx*4]; jmp T2.
  */
-extern void GuardedSeq_004297b0(void);
+extern void GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
 extern void ScaledInitOrSelfPtr_00429680(void);
 extern void DirtyToggleByGate(void);
 extern void func_00428950_oo(void);
@@ -22,7 +22,7 @@ extern void InstallSelfCallBitGate(void);
 
 __declspec(naked) void CallPauseDirty1JmpDirty4StackPush_00428850(void) {
     __asm {
-        call    GuardedSeq_004297b0
+        call    GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

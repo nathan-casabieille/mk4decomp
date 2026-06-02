@@ -9,11 +9,11 @@ extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00453510 (39b): same shape, value=6 */
 extern void CallPauseScaledStoreXJmp(void);
-extern void GuardedSeq_00453780(void);
+extern void GuardedSeq_MStackPushTwoEntryChainCall_then_PoseCopyIdleCluster(void);
 void Const6Call_PauseDirty4_Jmp(void) {
     g_walkCallback = (void(*)(void))6;
     CallPauseScaledStoreXJmp();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 4) return;
-    GuardedSeq_00453780();
+    GuardedSeq_MStackPushTwoEntryChainCall_then_PoseCopyIdleCluster();
 }

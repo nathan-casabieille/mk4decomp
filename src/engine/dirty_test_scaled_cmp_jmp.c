@@ -18,12 +18,12 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  *   ret
  */
-extern void GuardedSeq_0047d980(void);
+extern void GuardedSeq_MStackPushSet0004_then_MoveSelectorCluster(void);
 void DirtyTestScaledCmpJmp(void) {
     unsigned int v;
     if (g_xformScratch2088 != 1) return;
     v = *(unsigned int *)(g_baseSel * 4 + 0x70);
     g_walkCallback = (void (*)(void))v;
     if (v != 0x20e) return;
-    GuardedSeq_0047d980();
+    GuardedSeq_MStackPushSet0004_then_MoveSelectorCluster();
 }

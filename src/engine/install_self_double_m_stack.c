@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0043b9a0 (236b game) - install-self with countdown.
  *   chain[+0x84]!=0 path: dec g_eventQueueNotMask; if not zero call StackPopDispatchTagged; pop+ret;
- *   call GuardedSeq_004297b0; pause-check; mstack-push g_eventQueueChild, mstack-push g_eventQueueChild again
+ *   call GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp; pause-check; mstack-push g_eventQueueChild, mstack-push g_eventQueueChild again
  *   (with g_eventQueueNotMask copied to g_walkCallback then g_eventQueueChild); call CmpEqInitCallElseJmp; pause-check;
  *   mstack-pop g_eventQueueChild, mstack-pop g_eventQueueNotMask; bit-0 test; if set call EsiInstallPushDecPopJmp; pop+ret.
  *   chain[+0x84]==0 path: install-self at +0x08=0x0043b9a0, chain[+0x84]=1, g_pendingNodeType=1, pause=1; pop+ret.
@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_matrixStack_arr;
 extern void CmpEqInitCallElseJmp(void);
 extern void EsiInstallPushDecPopJmp(void);
-extern void GuardedSeq_004297b0(void);
+extern void GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
 
 __declspec(naked) void InstallSelfDoubleMStack(void) {
     __asm {
@@ -138,7 +138,7 @@ __declspec(naked) void InstallSelfDoubleMStack(void) {
         call    StackPopDispatchTagged
         pop     esi
         ret
-        call    GuardedSeq_004297b0
+        call    GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

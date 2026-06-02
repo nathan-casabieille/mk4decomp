@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -125,7 +125,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchState;
 extern void AudioVolumeRescale(void);
 extern void EsiInstallTwoCallCmpInstall(void);
-extern void GuardedSeq_00433bb0(void);
+extern void GuardedSeq_PackedSelectLoad6_then_GuardedSeq(void);
 extern void HitReactionDispatcher(void);
 extern void InstallSelfChainSetB333v2(void);
 extern void InstallSelfChainSetB333v3(void);
@@ -163,7 +163,7 @@ __declspec(naked) void InstallSelfCascadeSequence(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   75h
         _emit   07h
-        call    GuardedSeq_00433bb0
+        call    GuardedSeq_PackedSelectLoad6_then_GuardedSeq
         pop     esi
         ret
         mov     dword ptr [g_currentNodeFlags], 0x78000

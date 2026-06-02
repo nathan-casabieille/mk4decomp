@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *   C (+0x30): call Cmp2CallDirtyCall; if !pause: gate g_table_00535ddc<=0x30000? jmp GuardedSeq else jmp PrefixThunkInstallSelf3State; ret.
  *   D (+0x60): gate g_table_00535ddc>=0x18000? jmp CallPauseTestByteJmpCalls else jmp PrefixThunkInstallSelf3State.
  */
-extern void GuardedSeq_00433bb0(void);
+extern void GuardedSeq_PackedSelectLoad6_then_GuardedSeq(void);
 extern void PackedAdvanceCallTailJmp(void);
 extern void PrefixThunkInstallSelf3State(void);
 
@@ -149,7 +149,7 @@ __declspec(naked) void QuadStringStateGate(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   05h
-        jmp     GuardedSeq_00433bb0
+        jmp     GuardedSeq_PackedSelectLoad6_then_GuardedSeq
         jmp     PrefixThunkInstallSelf3State
         ret
         _emit   90h

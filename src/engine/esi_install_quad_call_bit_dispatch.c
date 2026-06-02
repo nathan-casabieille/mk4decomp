@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -109,11 +109,11 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0049a050 (145b) - install-self pattern w/ 4-call chain
- *   (ClampNegPair + Vec2SumMul10ChainCompute + GuardedSeq_0049a650/AtanDualDeltaThreshold)
+ *   (ClampNegPair + Vec2SumMul10ChainCompute + GuardedSeq_MStackCall_then_CallSetPause_0049a650/AtanDualDeltaThreshold)
  *   + bit-test dispatch to Set43DualCallJmp on success. */
 extern void AtanDualDeltaThreshold(void);
 extern void ClampNegPair(void);
-extern void GuardedSeq_0049a650(void);
+extern void GuardedSeq_MStackCall_then_CallSetPause_0049a650(void);
 extern void Set43DualCallJmp(void);
 extern void Vec2SumMul10ChainCompute(void);
 
@@ -138,7 +138,7 @@ __declspec(naked) void EsiInstallQuadCallBitDispatch(void) {
         cmp     ecx, eax
         _emit   7eh
         _emit   07h
-        call    GuardedSeq_0049a650
+        call    GuardedSeq_MStackCall_then_CallSetPause_0049a650
         pop     esi
         ret
         mov     dword ptr [g_walkCallback], 0x10

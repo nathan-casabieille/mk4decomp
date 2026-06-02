@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -113,12 +113,12 @@ extern unsigned int g_fightAxisPosY;
  *   Else: Wrapper_ScaledChainPushCall_004ef898; pause? ret.
  *   g_eventQueueCurrent = 0x17; install self at +8.
  *   chain[base].slot84 = 1; mstack-push (self + 0x01000000); ++chain[sel].slot4;
- *   chain[base].slot84 = 0; ScaledArrStore_00428e70; g_framePauseFlag = 1; ret.
+ *   chain[base].slot84 = 0; ScaledArrStore_EsiInstallBitCallChain_00428e70; g_framePauseFlag = 1; ret.
  */
 extern void CjInstallSelfRouter(void);
 extern void FiveCallGuardSetTail(void);
 extern void PushPopWalkSet1006(void);
-extern void ScaledArrStore_00428e70(void);
+extern void ScaledArrStore_EsiInstallBitCallChain_00428e70(void);
 extern void ScaledLoadJmp_00428d20(void);
 extern void Wrapper_ScaledChainPushCall_004ef898(void);
 
@@ -157,7 +157,7 @@ __declspec(naked) void InstallSelfMStackPush_0046cc80(void) {
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
-        call    ScaledArrStore_00428e70
+        call    ScaledArrStore_EsiInstallBitCallChain_00428e70
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret

@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void GuardedSeq_00433bb0(void);
+extern void GuardedSeq_PackedSelectLoad6_then_GuardedSeq(void);
 extern void PrefixThunkInstallSelf3State(void);
 extern void JumpTableDispatch(void);
 extern void MStackPushPtr1Jmp_00438e70(void);
@@ -128,7 +128,7 @@ __declspec(naked) void TriEntryGateMain(void)
         cmp     eax, 0x20000
         mov     dword ptr [g_walkCallback], eax
         jle     short L_tegm_jmp2
-        jmp     GuardedSeq_00433bb0
+        jmp     GuardedSeq_PackedSelectLoad6_then_GuardedSeq
     L_tegm_jmp2:
         jmp     PrefixThunkInstallSelf3State
         nop

@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *     phase 1: indirect-call [g_eventQueueEnd].
  *     phase 0: pop mstack into g_eventQueueEnd (saving the prior
  *       function-ptr), call CallDualStoreXorBit; on no-error AND
- *       bit 2 of 0x54208c clear, call ScaledArrStore_004285c0. Tail
+ *       bit 2 of 0x54208c clear, call ScaledArrStore_CallDualStoreXorBit. Tail
  *       installs Self with slot[+0x84] = 2 (bit-2 path) or 1 (clean path).
  *   5b NOP pad.
  *   Entry 2 (offset 0xc0, 70b): ScaledIterStep_0045c020; on no-error writes
@@ -131,7 +131,7 @@ extern unsigned int g_table_004d57b0;
 extern void CallDualStoreXorBit(void);
 extern void DualEntryStateMachine(void);
 extern void PendingMatch_00459510(void);
-extern void ScaledArrStore_004285c0(void);
+extern void ScaledArrStore_CallDualStoreXorBit(void);
 extern void ScaledIterStep_0045c020(void);
 
 __declspec(naked) void Phase3IndirectInstallChain(void) {
@@ -164,7 +164,7 @@ __declspec(naked) void Phase3IndirectInstallChain(void) {
         jne     short L_p3i_done
         test    byte ptr [g_xformDirtyFlags], 4
         jne     short L_p3i_bit2Set
-        call    ScaledArrStore_004285c0
+        call    ScaledArrStore_CallDualStoreXorBit
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_p3i_done

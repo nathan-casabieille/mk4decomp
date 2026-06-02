@@ -23,7 +23,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern unsigned int g_acc_00542078;
-extern void GuardedSeq_0042fb80(void);
+extern void GuardedSeq_DualMulScaleStore_then_PhaseInstall2DInterpDispatch_0042fb80(void);
 extern void PoseBlendDriver(void);
 extern void PhaseInstall2DInterpDispatch(void);
 void SubCmpCallPauseJmp(void) {
@@ -34,7 +34,7 @@ void SubCmpCallPauseJmp(void) {
     acc = (int)g_acc_00542078;
     g_eventQueueWorkType = new_wt;
     if (acc > (int)new_wt) {
-        GuardedSeq_0042fb80();
+        GuardedSeq_DualMulScaleStore_then_PhaseInstall2DInterpDispatch_0042fb80();
         return;
     }
     PoseBlendDriver();

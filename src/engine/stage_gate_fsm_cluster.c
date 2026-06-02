@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
 extern void ScaledLoadIncJmp_00428d00(void);
 extern void EsiInstallChainCmpDualCall(void);
 extern void ScaledLoadJmp_00429390(void);
-extern void GuardedSeq_004297b0(void);
+extern void GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
 extern void StageGateFsmCluster(void);
 extern void EsiEdiAliasDualMul10(void);
 extern unsigned int g_dispatchSave737;
@@ -135,7 +135,7 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b036
-        call     GuardedSeq_004297b0
+        call     GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b036

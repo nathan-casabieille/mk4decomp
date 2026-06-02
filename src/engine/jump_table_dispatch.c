@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -114,12 +114,12 @@ extern void DualCallTestPauseRange(void);
 
 /* @addr 0x00435340 (165b game) - 5-block dispatcher.
  *   Block A: gate g_table_00535ddc>0x20000? jmp Wrapper_CmpDualPatchScaledRangeJmp_004e4990 : jmp InstallSelfPacked0x2005.
- *   Block B (+0x20): jmp GuardedSeq_00433bb0.
+ *   Block B (+0x20): jmp GuardedSeq_PackedSelectLoad6_then_GuardedSeq.
  *   Block C (+0x30): g_walkCallback=g_walkCallback & 0xff; push 0x004e45b0; call JumpTableDispatch; ret.
  *   Block D (+0x50): call Cmp2CallDirtyCall; if nonzero ret; threshold-dispatch.
  *   Blocks E/F/G (+0x80/+0x90/+0xa0): all jmp DualCallTestPauseRange.
  */
-extern void GuardedSeq_00433bb0(void);
+extern void GuardedSeq_PackedSelectLoad6_then_GuardedSeq(void);
 extern void PrefixThunkInstallSelf3State(void);
 extern void Wrapper_CmpDualPatchScaledRangeJmp_004e4990(void);
 
@@ -137,7 +137,7 @@ __declspec(naked) void FiveBlockDispatch_00435340(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        jmp     GuardedSeq_00433bb0
+        jmp     GuardedSeq_PackedSelectLoad6_then_GuardedSeq
         _emit   90h
         _emit   90h
         _emit   90h
@@ -165,7 +165,7 @@ __declspec(naked) void FiveBlockDispatch_00435340(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   05h
-        jmp     GuardedSeq_00433bb0
+        jmp     GuardedSeq_PackedSelectLoad6_then_GuardedSeq
         jmp     PrefixThunkInstallSelf3State
         ret
         _emit   90h

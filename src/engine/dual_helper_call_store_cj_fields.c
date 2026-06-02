@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void ScaledArrStore_00429980(void);
+extern void ScaledArrStore_GuardedChainCmpDualBitXor_00429980(void);
 extern void TripleFieldCopyJmpHi(void);
 extern void TripleFieldCopyHi(void);
 extern void DualHelperCallStoreCjFields(void);
@@ -121,7 +121,7 @@ extern void EsiEdiAliasDualMul10(void);
  *   B1 ([+0x84]==1): call TripleFieldCopyHi; if !pause set g_walkCallback=0xe666
  *     call EsiEdiAliasDualMul10; if !pause install-self + chain[+0x84]=2
  *     + g_pendingNodeType=4 + g_pause=1; ret.
- *   B2 ([+0x84]==2+): set g_eventQueueChild=0x11; call ScaledArrStore_00429980;
+ *   B2 ([+0x84]==2+): set g_eventQueueChild=0x11; call ScaledArrStore_GuardedChainCmpDualBitXor_00429980;
  *     if !pause: tail-call StackPopDispatchTagged; ret.
  */
 
@@ -139,7 +139,7 @@ __declspec(naked) void InstallSelfStateMachine_0047f3f0(void) {
         _emit   74h
         _emit   23h
         mov     dword ptr [g_eventQueueChild], 0x11
-        call    ScaledArrStore_00429980
+        call    ScaledArrStore_GuardedChainCmpDualBitXor_00429980
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

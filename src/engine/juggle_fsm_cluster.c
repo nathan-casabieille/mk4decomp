@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -111,8 +111,8 @@ extern unsigned int g_fightAxisPosY;
 extern void DualScaledStore(void);
 extern void EntryThunkBodyStateMachine(void);
 extern void GatedWordPushCall(void);
-extern void GuardedSeq_00472840(void);
-extern void GuardedSeq_00473f10(void);
+extern void GuardedSeq_DualPushCmp12Dispatch_then_ByteWordTableTaggedDispatch(void);
+extern void GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7d(void);
 extern void MStackPush4ChainCopyPop4(void);
 extern void ScaledLoadTwoCallLit_00451f70(void);
 extern void Set2CallIncJmp(void);
@@ -122,7 +122,7 @@ __declspec(naked) void JuggleFsmCluster(void)
 {
     __asm {
         mov      dword ptr [g_acc_00542078], 0xb
-        jmp      GuardedSeq_00473f10
+        jmp      GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7d
         nop
     L_1ba0:
         mov      eax, dword ptr [g_baseSel]
@@ -193,7 +193,7 @@ __declspec(naked) void JuggleFsmCluster(void)
         ret
     L_1d12:
         mov      dword ptr [g_walkCallback], 8
-        call     GuardedSeq_00472840
+        call     GuardedSeq_DualPushCmp12Dispatch_then_ByteWordTableTaggedDispatch
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0

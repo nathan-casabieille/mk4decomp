@@ -16,7 +16,7 @@
 
 /* Externs. */
 extern void CopyJmp_00406ba0(void);
-extern void Thunk_ScaledLoadInstallOrCall_00433960(void);
+extern void Thunk_ScaledLoadInstallOrCall(void);
 extern void ScaledLoadInstallOrCall_00433960(void);
 extern int  PackedAdvanceCallTailJmp(int arg);
 extern void CopyJmp_0043a620(void);
@@ -34,7 +34,7 @@ void GuardedPushCall_004338a0(void) {
 
 /* @addr 0x004338c0 */
 void GuardedPushCall_004338c0(void) {
-    Thunk_ScaledLoadInstallOrCall_00433960();
+    Thunk_ScaledLoadInstallOrCall();
     if (g_framePauseFlag) return;
     PackedAdvanceCallTailJmp(0x004e44a8);
 }

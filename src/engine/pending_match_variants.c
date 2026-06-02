@@ -65,7 +65,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -190,7 +190,7 @@ extern void ScaledChainCallPauseSetJmp(void);
 extern void MStackBracket2_TreeWalkRecursive(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void CallPauseScaledStoreCopyJmp(void);
-extern void ScaledArrStore_00429980(void);
+extern void ScaledArrStore_GuardedChainCmpDualBitXor_00429980(void);
 extern void MStackPushComplexCallPop_00406430(void);
 extern unsigned int g_counter_0053a51c;
 extern unsigned int g_hitPhase;
@@ -233,7 +233,7 @@ extern void MStackCall_00406340(void);
 extern void PendingMatch_0046cd30(void);
 extern void Phase3InstallPackedSelf(void);
 extern void ZeroSlotsGatedDispatch(void);
-extern void GuardedSeq_004297b0(void);
+extern void GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
 extern void ScaledInitOrSelfPtr_00428950(void);
 extern void MStackPush2ChainSwap(void);
 extern void CopyJmp_00406ba0(void);
@@ -247,7 +247,7 @@ extern void Atan2QuadrantLookup(void);
 extern void InstallSelfChainSet2011(void);
 extern void GuardedChainPushSetCallPop(void);
 extern void MStackPushSet0001(void);
-extern void ScaledInit_0048f720(void);
+extern void ScaledInit_GuardedDirtyXformFromTable_g_scaledInit(void);
 extern void ScaledZero44(void);
 extern void ScaledChainNegStore(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
@@ -275,8 +275,8 @@ extern void CallPauseConstStoreJmp_004350f0(void);
 extern void InstallSelfPair(void);
 extern void MStackPushSet6Jmp(void);
 extern void MStackPushSet0Jmp(void);
-extern void GuardedSeq_00473ef0(void);
-extern void GuardedSeq_00473f10(void);
+extern void GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7b(void);
+extern void GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7d(void);
 extern void Push70CallScaleArith(void);
 extern void StateGateMStackOverlap(void);
 extern void ChainDecCondStoreCallJmp(void);
@@ -299,7 +299,7 @@ extern void SlotPhaseResetInstallChain(void);
 extern void RoundEndDifferenceFsmCluster(void);
 extern void ClampNegPair(void);
 extern void Vec2SumMul10ChainCompute(void);
-extern void GuardedSeq_0049a650(void);
+extern void GuardedSeq_MStackCall_then_CallSetPause_0049a650(void);
 extern void AtanDualDeltaThreshold(void);
 extern void Set43DualCallJmp(void);
 extern unsigned int g_scaledArgChain;
@@ -394,7 +394,7 @@ extern void FourCallBitGateChain(void);
 extern void FramePauseScaledStore(void);
 extern void FsmPoseDualEntry(void);
 extern void GuardedPackedSlotInit(void);
-extern void GuardedSeq_00471670(void);
+extern void GuardedSeq_MStackCall_then_CallSetPause_00471670(void);
 extern void InstallSelfBitGated(void);
 extern void InstallSelfDualCountdown(void);
 extern void InstallSelfIndexWalk(void);
@@ -411,7 +411,7 @@ extern void SaveCallRestoreOrXor(void);
 extern void ScaledAddrInit_004677c0(void);
 extern void ScaledAddrInit_004677e0(void);
 extern void ScaledAndAlfe(void);
-extern void ScaledArrStore_00429960(void);
+extern void ScaledArrStore_GuardedChainCmpDualBitXor_00429960(void);
 extern void ScaledChainJmp_00429470(void);
 extern void ScaledClearJmp_00428d40(void);
 extern void ScaledClearJmp_00428e90(void);
@@ -604,15 +604,15 @@ extern void GuardedCmpDualToggle(void);
 extern void GuardedDirtyXformFromTable(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void GuardedDualScaledChainCopy(void);
-extern void GuardedScaled_00475000(void);
-extern void GuardedScaled_00475060(void);
-extern void GuardedScaled_00475090(void);
-extern void GuardedSeq_00472820(void);
-extern void GuardedSeq_00472840(void);
-extern void GuardedSeq_00473f10(void);
-extern void GuardedSeq_00473f50(void);
-extern void GuardedSeq_00476de0(void);
-extern void GuardedSeq_00476f10(void);
+extern void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475000(void);
+extern void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475060(void);
+extern void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475090(void);
+extern void GuardedSeq_DualPushCmp12Dispatch68_then_ByteWordTableTaggedDispatch(void);
+extern void GuardedSeq_DualPushCmp12Dispatch_then_ByteWordTableTaggedDispatch(void);
+extern void GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7d(void);
+extern void GuardedSeq_DualSetShiftCall_then_DualPushSet7dCallPop(void);
+extern void GuardedSeq_DirtyDoubleDeref_then_ScaledOr4Jmp(void);
+extern void GuardedSeq_DirtyDoubleDeref_then_ChainSlotSetupInstallSelf(void);
 extern void GuardedTripleSetTailJmp8(void);
 extern void Helper_TickAlt(void);
 extern void HitReactionDispatcher(void);
@@ -730,7 +730,7 @@ extern void RoundEndFsm(void);
 extern void ScaledAndAh(void);
 extern void ScaledAndAl7f(void);
 extern void ScaledAndAlbf(void);
-extern void ScaledArrStore_00429980(void);
+extern void ScaledArrStore_GuardedChainCmpDualBitXor_00429980(void);
 extern void ScaledChain3c74(void);
 extern void ScaledChainAndF000DirtyToggle(void);
 extern void ScaledChainCmpDispatch(void);
@@ -741,8 +741,8 @@ extern void ScaledIdxLoadCallTailThunk(void);
 extern void ScaledIndexConditionalAdd(void);
 extern void ScaledInitPauseDirtyStore_00445f00(void);
 extern void ScaledInitWithCounterAndType_004314f0(void);
-extern void ScaledInit_0048d430(void);
-extern void ScaledInit_0048f720(void);
+extern void ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d430(void);
+extern void ScaledInit_GuardedDirtyXformFromTable_g_scaledInit(void);
 extern void ScaledIterStep_0045c020(void);
 extern void ScaledLitLoadCall_00480fe0(void);
 extern void ScaledLitLoadCall_00481020(void);
@@ -762,7 +762,7 @@ extern void ScaledZeroFour(void);
 extern void ScenegraphWalk(void);
 extern void Set2CallIncJmp(void);
 extern void SetJmp_ZeroAndDirty4(void);
-extern void SetJmp_ScaledArrStore_00429960(void);
+extern void SetJmp_ScaledArrStore(void);
 extern void SetJmp_InstallSelfChainEsi(void);
 extern void SetWalk0xaCrossStore(void);
 extern void SetWalkCurCallPauseDirty(void);
@@ -1750,7 +1750,7 @@ __declspec(naked) void StateMachineDualModuloInstall(void) {
         _emit   7fh
         _emit   64h
         mov     dword ptr [g_walkCallback], 0xa
-        call    GuardedSeq_00472820
+        call    GuardedSeq_DualPushCmp12Dispatch68_then_ByteWordTableTaggedDispatch
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -1946,7 +1946,7 @@ __declspec(naked) void StreamFlagPackedSelectChain(void) {
  *       at body with slot[+0x84]=1, packs (Self + 0x01000000) at the
  *       bumped scaled slot, calls RoundEndFsm, arms 0x541e6c=1.
  *   11b NOP align pad.
- *   Entry 2 (offset 0x120, 90b): 6-call chain (ScaledInit_0048f720,
+ *   Entry 2 (offset 0x120, 90b): 6-call chain (ScaledInit_GuardedDirtyXformFromTable_g_scaledInit,
  *     CopyJmp_00406ba0, ScaledZero44, ScaledZeroFour,
  *     MStackPushSet0001, MStackPushSet0004), each
  *     gated by 0x541e6c. On full success, tail-jmps
@@ -2032,7 +2032,7 @@ __declspec(naked) void Phase3InstallSelfChain(void) {
         nop
         /* entry 2 (offset 0x120) */
     L_pis2_entry2:
-        call    ScaledInit_0048f720
+        call    ScaledInit_GuardedDirtyXformFromTable_g_scaledInit
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pis2_e2End
@@ -2290,7 +2290,7 @@ __declspec(naked) void FourPackedSubInitCmpDispatch(void)
         mov     eax, dword ptr [g_eventQueueEnd]
         mov     dword ptr [g_walkCallback], 3
         mov     dword ptr [g_fightGroupHead], eax
-        call    GuardedSeq_00476f10
+        call    GuardedSeq_DirtyDoubleDeref_then_ChainSlotSetupInstallSelf
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_fpsicd_ret1
@@ -2496,7 +2496,7 @@ __declspec(naked) void StageEventExitCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_cf58
-        call     SetJmp_ScaledArrStore_00429960
+        call     SetJmp_ScaledArrStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_cf58
@@ -3410,7 +3410,7 @@ __declspec(naked) void PoseFsmTriHelpers(void)
 /* ------------------------------------------------------------------ */
 /* Match-end fade FSM cluster (732b game, 2 helpers + 4-case jmp tbl):*/
 /*  h1 (0x449010): pre-fade pause-guarded chain (4089e0→408c10→       */
-/*                 4b8fa0) → tail-jmp GuardedSeq_00473f50.                  */
+/*                 4b8fa0) → tail-jmp GuardedSeq_DualSetShiftCall_then_DualPushSet7dCallPop.                  */
 /*  h2 (0x4490a0): pose-fn FSM with 4-case dispatch at 0x4492dc.      */
 /* ------------------------------------------------------------------ */
 
@@ -3444,7 +3444,7 @@ __declspec(naked) void MatchEndFadeFsmCluster(void)
         jne      short L_909c
         mov      dword ptr [g_walkCallback], 2
         mov      dword ptr [g_acc_00542078], 4
-        jmp      GuardedSeq_00473f50
+        jmp      GuardedSeq_DualSetShiftCall_then_DualPushSet7dCallPop
     L_909c:
         ret
         nop
@@ -3790,7 +3790,7 @@ __declspec(naked) void ComboMoveSelectFsmCluster(void)
         jne      short L_a565
         mov      eax, ecx
         mov      dword ptr [g_eventQueueChild], eax
-        call     ScaledArrStore_00429980
+        call     ScaledArrStore_GuardedChainCmpDualBitXor_00429980
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_a565
@@ -3850,7 +3850,7 @@ __declspec(naked) void IntroInitCluster(void)
         push     esi
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], ecx
-        call     GuardedScaled_00475060
+        call     GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475060
         mov      eax, dword ptr [g_framePauseFlag]
         xor      esi, esi
         cmp      eax, esi
@@ -4886,7 +4886,7 @@ __declspec(naked) void BossPunchCluster(void)
         mov      ecx, dword ptr [g_baseSel]
         mov      edx, dword ptr [ecx*4 + 0x64]
         mov      dword ptr [g_eventQueueEnd], edx
-        call     GuardedScaled_00475000
+        call     GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475000
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_6fc5
@@ -5274,7 +5274,7 @@ __declspec(naked) void ScaledRunCountdownCluster(void)
         jne      L_a0d7
         mov      dword ptr [g_walkCallback], 3
         mov      dword ptr [g_acc_00542078], 4
-        jmp      GuardedSeq_00473f10
+        jmp      GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7d
     L_a0d7:
         ret      
         nop      
@@ -5294,7 +5294,7 @@ __declspec(naked) void ScaledRunCountdownCluster(void)
         mov      ecx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [g_walkCallback], 6
         mov      dword ptr [g_fightGroupHead], ecx
-        call     GuardedSeq_00476de0
+        call     GuardedSeq_DirtyDoubleDeref_then_ScaledOr4Jmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a274
@@ -5408,7 +5408,7 @@ __declspec(naked) void ScaledRunCountdownCluster(void)
         mov      edx, dword ptr [ecx*4 + 0x64]
         mov      dword ptr [g_walkCallback], 8
         mov      dword ptr [g_fightGroupHead], edx
-        call     GuardedSeq_00476f10
+        call     GuardedSeq_DirtyDoubleDeref_then_ChainSlotSetupInstallSelf
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a4fa
@@ -5425,7 +5425,7 @@ __declspec(naked) void ScaledRunCountdownCluster(void)
         dec      eax
         mov      dword ptr [g_eventQueueIdx], eax
         jns      L_a4a0
-        call     GuardedScaled_00475090
+        call     GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475090
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a4fa
@@ -5468,7 +5468,7 @@ __declspec(naked) void ScaledRunCountdownCluster(void)
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], ecx
-        call     GuardedScaled_00475090
+        call     GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475090
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a4fa
@@ -5629,7 +5629,7 @@ __declspec(naked) void JuggleSetupCluster(void)
         nop      
         nop      
         mov      dword ptr [g_walkCallback], 4
-        call     GuardedSeq_00472820
+        call     GuardedSeq_DualPushCmp12Dispatch68_then_ByteWordTableTaggedDispatch
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3b7c
@@ -5648,12 +5648,12 @@ __declspec(naked) void JuggleSetupCluster(void)
         mov      eax, dword ptr [g_fightGroupHead]
         mov      dword ptr [eax*4 + 0x28], 0xa9
         mov      dword ptr [g_walkCallback], 4
-        call     GuardedSeq_00472820
+        call     GuardedSeq_DualPushCmp12Dispatch68_then_ByteWordTableTaggedDispatch
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3bf6
         mov      dword ptr [g_walkCallback], 0xc
-        call     GuardedSeq_00472840
+        call     GuardedSeq_DualPushCmp12Dispatch_then_ByteWordTableTaggedDispatch
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3bf6
@@ -6303,7 +6303,7 @@ __declspec(naked) void IntroSettingsFsmCluster(void)
         cmp      eax, 0x107
         je       L_c101
         mov      dword ptr [g_walkCallback], 0x10
-        call     ScaledInit_0048d430
+        call     ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d430
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_c207
         test     byte ptr [g_xformDirtyFlags], bl
@@ -6500,7 +6500,7 @@ __declspec(naked) void IntroSettingsFsmCluster(void)
         ret      
     L_c349:
         mov      dword ptr [g_walkCallback], 0x10
-        call     ScaledInit_0048d430
+        call     ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d430
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c3ce
@@ -7029,7 +7029,7 @@ __declspec(naked) void PendingMatch_0044f8d0(void)
         cmp      eax, edi
         je       L_fbdb
         mov      dword ptr [g_walkCallback], 1
-        call     GuardedSeq_00472840
+        call     GuardedSeq_DualPushCmp12Dispatch_then_ByteWordTableTaggedDispatch
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_fe34
         call     MStackCall_00406740
@@ -8758,7 +8758,7 @@ __declspec(naked) void PendingMatch_0046e2e0(void)
         jmp      CallPauseDirtyMStackPushFn
     L_e7be:
         mov      dword ptr [g_walkCallback], 9
-        call     ScaledArrStore_00429960
+        call     ScaledArrStore_GuardedChainCmpDualBitXor_00429960
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e7e8
@@ -9423,7 +9423,7 @@ __declspec(naked) void PendingMatch_00471e00(void)
         test     eax, eax
         mov      dword ptr [g_xformDirtyFlags], edx
         jne      L_1f72
-        call     GuardedSeq_00471670
+        call     GuardedSeq_MStackCall_then_CallSetPause_00471670
         pop      esi
         pop      ebx
         ret      
@@ -9480,7 +9480,7 @@ __declspec(naked) void PendingMatch_00471e00(void)
         mov      dword ptr [g_walkCallback], eax
         jne      L_20cf
     L_205a:
-        call     GuardedSeq_00471670
+        call     GuardedSeq_MStackCall_then_CallSetPause_00471670
         pop      esi
         pop      ebx
         ret      
@@ -9574,7 +9574,7 @@ __declspec(naked) void PendingMatch_00471e00(void)
         test     eax, eax
         mov      dword ptr [g_xformDirtyFlags], edx
         jne      L_21f2
-        call     GuardedSeq_00471670
+        call     GuardedSeq_MStackCall_then_CallSetPause_00471670
         pop      esi
         pop      ebx
         ret      
@@ -9631,7 +9631,7 @@ __declspec(naked) void PendingMatch_00471e00(void)
         mov      dword ptr [g_walkCallback], eax
         jne      L_234f
     L_22da:
-        call     GuardedSeq_00471670
+        call     GuardedSeq_MStackCall_then_CallSetPause_00471670
         pop      esi
         pop      ebx
         ret      
@@ -10198,7 +10198,7 @@ __declspec(naked) void PendingMatch_00466fc0(void)
         mov      ecx, dword ptr [g_eventQueueIdx]
         mov      dword ptr [eax*4 + 0x68], ecx
         mov      dword ptr [g_walkCallback], 0xc
-        call     GuardedSeq_00472840
+        call     GuardedSeq_DualPushCmp12Dispatch_then_ByteWordTableTaggedDispatch
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_770b
@@ -10551,7 +10551,7 @@ __declspec(naked) void PendingMatch_0044baa0(void)
         nop      
         nop      
         mov      dword ptr [g_walkCallback], 5
-        call     GuardedSeq_00472840
+        call     GuardedSeq_DualPushCmp12Dispatch_then_ByteWordTableTaggedDispatch
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_be95
@@ -10592,7 +10592,7 @@ __declspec(naked) void PendingMatch_0044baa0(void)
         test     eax, eax
         jne      L_bf0b
         mov      dword ptr [g_walkCallback], 3
-        call     GuardedSeq_00472840
+        call     GuardedSeq_DualPushCmp12Dispatch_then_ByteWordTableTaggedDispatch
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_bf0b
@@ -10615,7 +10615,7 @@ __declspec(naked) void PendingMatch_0044baa0(void)
         test     eax, eax
         jne      L_bf5b
         mov      dword ptr [g_walkCallback], 3
-        call     GuardedSeq_00472840
+        call     GuardedSeq_DualPushCmp12Dispatch_then_ByteWordTableTaggedDispatch
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_bf5b
@@ -10644,7 +10644,7 @@ __declspec(naked) void PendingMatch_0044baa0(void)
         test     eax, eax
         jne      L_bfbb
         mov      dword ptr [g_walkCallback], 3
-        call     GuardedSeq_00472840
+        call     GuardedSeq_DualPushCmp12Dispatch_then_ByteWordTableTaggedDispatch
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_bfbb
@@ -10756,14 +10756,14 @@ __declspec(naked) void PendingMatch_0044baa0(void)
         test     eax, eax
         jne      L_c2d1
         mov      dword ptr [g_walkCallback], 8
-        call     GuardedSeq_00472840
+        call     GuardedSeq_DualPushCmp12Dispatch_then_ByteWordTableTaggedDispatch
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c2d1
         mov      ecx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [g_walkCallback], 0xc
         mov      dword ptr [g_fightGroupHead], ecx
-        call     GuardedSeq_00476de0
+        call     GuardedSeq_DirtyDoubleDeref_then_ScaledOr4Jmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c2d1
@@ -11848,7 +11848,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         and      eax, 0xff
         mov      dword ptr [g_eventQueueCurrent], eax
         mov      dword ptr [g_eventQueueChild], eax
-        call     ScaledArrStore_00429980
+        call     ScaledArrStore_GuardedChainCmpDualBitXor_00429980
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_ba95

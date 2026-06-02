@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern void Chain2AxisDiffStoreTailJmp(void);
 extern void DualPushAddCallDualPopJmp(void);
-extern void GuardedSeq_00473f50(void);
+extern void GuardedSeq_DualSetShiftCall_then_DualPushSet7dCallPop(void);
 extern void MStackPush3SideStore(void);
 extern void PendingMatch_004492f0(void);
 extern void StoreLoadJmp(void);
@@ -146,7 +146,7 @@ __declspec(naked) void MatchEndFadeFsmCluster(void)
         jne      short L_909c
         mov      dword ptr [g_walkCallback], 2
         mov      dword ptr [g_acc_00542078], 4
-        jmp      GuardedSeq_00473f50
+        jmp      GuardedSeq_DualSetShiftCall_then_DualPushSet7dCallPop
     L_909c:
         ret
         nop

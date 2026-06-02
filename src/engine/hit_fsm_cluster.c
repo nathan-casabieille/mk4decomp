@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* ------------------------------------------------------------------ */
 /* Move-FSM cluster (545b game, 5 packed move/transition helpers)      */
 /* ------------------------------------------------------------------ */
-extern void GuardedSeq_00433bb0(void);
+extern void GuardedSeq_PackedSelectLoad6_then_GuardedSeq(void);
 extern void Wrapper_PackedAdvanceCallTailJmp_004e46d0(void);
 extern void DualEntry5WayThreshold(void);
 extern void InstallSelfMStackPushDispatch(void);
@@ -234,7 +234,7 @@ __declspec(naked) void MoveFsmCluster(void)
         cmp      eax, 0x30000
         mov      dword ptr [g_walkCallback], eax
         jle      short L_6615
-        jmp      GuardedSeq_00433bb0
+        jmp      GuardedSeq_PackedSelectLoad6_then_GuardedSeq
     L_6615:
         cmp      eax, 0x1cccc
         jge      short L_6621
@@ -290,7 +290,7 @@ __declspec(naked) void MoveFsmCluster(void)
         jle      short L_66bb
         jmp      HitFsmCluster
     L_66bb:
-        jmp      GuardedSeq_00433bb0
+        jmp      GuardedSeq_PackedSelectLoad6_then_GuardedSeq
     L_66c0:
         ret
     }

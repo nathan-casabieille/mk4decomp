@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -117,12 +117,12 @@ extern void StanceEntryCluster(void);
 /* @addr 0x00433e90 (181b game) - 5-block dispatcher.
  *   A: call ScaledCmp200eCallBool; if nonzero: g_walkCallback=0x004e4d40; g_eventQueueCurrent = (eax & 0xff) >> 2;
  *     g_xformEntityIdx = same; jmp AddDerefJmp; else ret.
- *   B (+0x30): scaledInit=baseSel[*4+0x3c]; g_walkCallback=[*4+0x30]; if zero jmp GuardedSeq_00433bb0;
+ *   B (+0x30): scaledInit=baseSel[*4+0x3c]; g_walkCallback=[*4+0x30]; if zero jmp GuardedSeq_PackedSelectLoad6_then_GuardedSeq;
  *     else g_table_00535ddc<=0x30000? jmp Wrapper_CmpDualPatchScaledRangeJmp_004e4990 else jmp InstallSelfChainSet13333Alt.
  *   C (+0x80): threshold-dispatch g_table_00535ddc → GuardedSeq / CallPauseTestByteJmpCalls / InstallSelfChainSetB333v2.
  *   D (+0xb0): jmp StanceEntryCluster.
  */
-extern void GuardedSeq_00433bb0(void);
+extern void GuardedSeq_PackedSelectLoad6_then_GuardedSeq(void);
 extern void Wrapper_CmpDualPatchScaledRangeJmp_004e4990(void);
 
 __declspec(naked) void FiveBlockDispatch_00433e90(void) {
@@ -151,7 +151,7 @@ __declspec(naked) void FiveBlockDispatch_00433e90(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   05h
-        jmp     GuardedSeq_00433bb0
+        jmp     GuardedSeq_PackedSelectLoad6_then_GuardedSeq
         mov     eax, dword ptr [g_table_00535ddc]
         cmp     eax, 0x00030000
         mov     dword ptr [g_walkCallback], eax
@@ -179,7 +179,7 @@ __declspec(naked) void FiveBlockDispatch_00433e90(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   05h
-        jmp     GuardedSeq_00433bb0
+        jmp     GuardedSeq_PackedSelectLoad6_then_GuardedSeq
         cmp     eax, 0x00010000
         _emit   7dh
         _emit   05h

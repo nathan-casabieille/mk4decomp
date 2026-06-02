@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -110,8 +110,8 @@ extern unsigned int g_fightAxisPosY;
 
 extern void AudioVolumeRescale(void);
 extern void DualScaledLoadStoreJmp(void);
-extern void GuardedSeq_00467c10(void);
-extern void GuardedSeq_00467c80(void);
+extern void GuardedSeq_ScaledLoadTwoCallDualConst_then_GuardedSeq_00467c10(void);
+extern void GuardedSeq_GuardedTripleCallSetTail_then_GuardedSeq(void);
 extern void MStackCall_00406340(void);
 extern void PreFightInstallCluster(void);
 extern void PushSetXfmMaskCallPop(void);
@@ -196,11 +196,11 @@ __declspec(naked) void IntroComboFsmCluster(void)
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], ecx
-        call     GuardedSeq_00467c10
+        call     GuardedSeq_ScaledLoadTwoCallDualConst_then_GuardedSeq_00467c10
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7aac
-        call     GuardedSeq_00467c80
+        call     GuardedSeq_GuardedTripleCallSetTail_then_GuardedSeq
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7aac
@@ -262,11 +262,11 @@ __declspec(naked) void IntroComboFsmCluster(void)
         test     byte ptr [g_xformDirtyFlags], bl
         je       L_7a7b
     L_7a5f:
-        call     GuardedSeq_00467c10
+        call     GuardedSeq_ScaledLoadTwoCallDualConst_then_GuardedSeq_00467c10
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7aac
-        call     GuardedSeq_00467c80
+        call     GuardedSeq_GuardedTripleCallSetTail_then_GuardedSeq
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7aac

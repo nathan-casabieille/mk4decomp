@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -112,7 +112,7 @@ extern void ArgSarStoreJmp(void);
 extern void ArgScaledChain(void);
 extern void DirtyGuardLitOrJmp_00496940(void);
 extern void InstallSelfMStackPush_004968a0(void);
-extern void ScaledInit_0048d490(void);
+extern void ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d490(void);
 extern void ScaledLoadIncJmp_00429840(void);
 extern void ScaledLookupGuardJmpIndirect(void);
 extern void StreamInitCountdownBody(void);
@@ -238,7 +238,7 @@ __declspec(naked) void FivePackedSubChainBigEntry(void)
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4], ecx
         mov     dword ptr [g_walkCallback], 0xa
-        call    ScaledInit_0048d490
+        call    ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d490
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_fpscb_main_ret

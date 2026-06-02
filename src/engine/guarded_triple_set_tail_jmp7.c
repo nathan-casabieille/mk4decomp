@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *   [g_xformEntityIdx*4] |= 4; ecx=g_xformEntityIdx;
  *   eax=0xa0000; g_walkCallback=eax; [ecx*4+0x34]=eax;
  *   call MStackBracket7_DispatchAndChain; if pause: ret;
- *   g_acc_00542078 = 5; g_walkCallback = 7; jmp GuardedSeq_00473f10.
+ *   g_acc_00542078 = 5; g_walkCallback = 7; jmp GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7d.
  */
 void GuardedTripleSetTailJmp7(void) {
     unsigned int v;
@@ -132,5 +132,5 @@ void GuardedTripleSetTailJmp7(void) {
     if (g_framePauseFlag != 0) return;
     g_acc_00542078 = 5;
     g_walkCallback = (void (*)(void))7;
-    GuardedSeq_00473f10();
+    GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7d();
 }

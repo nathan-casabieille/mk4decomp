@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *       sets g_eventQueueChild=4, installs Self at [esi+8], sets slot[+0x84]=2,
  *       and writes packed_ptr (Self + 0x02000000) at [eax*4] (with
  *       g_currentNodeIdx bumped after); zeroes slot[+0x84] and calls
- *       GuardedSeq_00428480, arms g_framePauseFlag=1.
+ *       GuardedSeq_CopyJmp_then_GuardedLoopWithCallback, arms g_framePauseFlag=1.
  *     - phase 0 (eax==0): pushes 0x00542aac, calls GuardedPackedSlotInit;
  *       on success sets g_eventQueueChild=2, sets g_eventQueueIdx = &g_dispatchTableArr>>2,
  *       installs Self at [esi+8], sets slot[+0x84]=1, packs (Self + 0x01000000)
@@ -128,7 +128,7 @@ extern unsigned int g_dispatchTableArr;
 extern unsigned int g_dispatchSave31;
 extern void GuardedDirtyXformFromTable(void);
 extern void GuardedPackedSlotInit(void);
-extern void GuardedSeq_00428480(void);
+extern void GuardedSeq_CopyJmp_then_GuardedLoopWithCallback(void);
 extern void ThrowFsmCluster_004700e0(void);
 
 __declspec(naked) void Phase3PackedInstallSelf(void) {
@@ -171,7 +171,7 @@ __declspec(naked) void Phase3PackedInstallSelf(void) {
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
-        call    GuardedSeq_00428480
+        call    GuardedSeq_CopyJmp_then_GuardedLoopWithCallback
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
@@ -200,7 +200,7 @@ __declspec(naked) void Phase3PackedInstallSelf(void) {
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
-        call    GuardedSeq_00428480
+        call    GuardedSeq_CopyJmp_then_GuardedLoopWithCallback
         mov     dword ptr [g_framePauseFlag], 1
     L_pis_done:
         pop     esi

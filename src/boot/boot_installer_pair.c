@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -113,12 +113,12 @@ extern unsigned int g_fightAxisPosY;
  *     calls StoreTwoCall to register the callback.
  *   sub-2 (~309b @ 0x00410210): boot countdown state machine.
  *     If [esi+0x84] non-zero (already installed): decrement g_eventQueueEnd
- *     countdown, jns to chain-walk, else call GuardedSeq_00471670.
+ *     countdown, jns to chain-walk, else call GuardedSeq_MStackCall_then_CallSetPause_00471670.
  *     Else: setup pipeline with DispatcherComplex260_00407400, MStackCall_00406340,
  *     install self at [esi+8] = 0x00410210, set state flags.
  */
 extern void BossRoomInitCluster(void);
-extern void GuardedSeq_00471670(void);
+extern void GuardedSeq_MStackCall_then_CallSetPause_00471670(void);
 extern void MStackCall_00406340(void);
 extern void CallSetPause(void);
 
@@ -156,7 +156,7 @@ __declspec(naked) void BootInstallerPair(void) {
         dec     eax
         mov     dword ptr [g_eventQueueEnd], eax
         jns     L_bip_resume
-        call    GuardedSeq_00471670
+        call    GuardedSeq_MStackCall_then_CallSetPause_00471670
         pop     esi
         ret
     L_bip_init:

@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -113,10 +113,10 @@ extern void ArgSarStoreJmp(void);
 extern void DirtyDoubleDeref(void);
 extern void DualScaledLoadStoreJmp(void);
 extern void DualSlotCopyChain(void);
-extern void GuardedScaled_00475090(void);
-extern void GuardedSeq_00473f10(void);
-extern void GuardedSeq_00476de0(void);
-extern void GuardedSeq_00476f10(void);
+extern void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475090(void);
+extern void GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7d(void);
+extern void GuardedSeq_DirtyDoubleDeref_then_ScaledOr4Jmp(void);
+extern void GuardedSeq_DirtyDoubleDeref_then_ChainSlotSetupInstallSelf(void);
 extern void GuardedTripleSetTailJmp8(void);
 extern void IntroInitCluster(void);
 extern void MStackCall_00406340(void);
@@ -142,7 +142,7 @@ __declspec(naked) void ScaledRunCountdownCluster(void)
         jne      L_a0d7
         mov      dword ptr [g_walkCallback], 3
         mov      dword ptr [g_acc_00542078], 4
-        jmp      GuardedSeq_00473f10
+        jmp      GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7d
     L_a0d7:
         ret      
         nop      
@@ -162,7 +162,7 @@ __declspec(naked) void ScaledRunCountdownCluster(void)
         mov      ecx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [g_walkCallback], 6
         mov      dword ptr [g_fightGroupHead], ecx
-        call     GuardedSeq_00476de0
+        call     GuardedSeq_DirtyDoubleDeref_then_ScaledOr4Jmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a274
@@ -276,7 +276,7 @@ __declspec(naked) void ScaledRunCountdownCluster(void)
         mov      edx, dword ptr [ecx*4 + 0x64]
         mov      dword ptr [g_walkCallback], 8
         mov      dword ptr [g_fightGroupHead], edx
-        call     GuardedSeq_00476f10
+        call     GuardedSeq_DirtyDoubleDeref_then_ChainSlotSetupInstallSelf
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a4fa
@@ -293,7 +293,7 @@ __declspec(naked) void ScaledRunCountdownCluster(void)
         dec      eax
         mov      dword ptr [g_eventQueueIdx], eax
         jns      L_a4a0
-        call     GuardedScaled_00475090
+        call     GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475090
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a4fa
@@ -336,7 +336,7 @@ __declspec(naked) void ScaledRunCountdownCluster(void)
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], ecx
-        call     GuardedScaled_00475090
+        call     GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475090
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a4fa

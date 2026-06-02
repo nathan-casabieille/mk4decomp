@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -109,8 +109,8 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0043ba90 (136b) - install-self pattern w/ mstack push +
- *   GuardedSeq_004297b0 + dec popped value to install or dispatch. */
-extern void GuardedSeq_004297b0(void);
+ *   GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp + dec popped value to install or dispatch. */
+extern void GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
 
 __declspec(naked) void EsiInstallPushDecPopJmp(void) {
     __asm {
@@ -127,7 +127,7 @@ __declspec(naked) void EsiInstallPushDecPopJmp(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
-        call    GuardedSeq_004297b0
+        call    GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

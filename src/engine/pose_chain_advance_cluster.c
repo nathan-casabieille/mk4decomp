@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -124,7 +124,7 @@ extern void PendingMatch_0043d830(void);
 extern void IntroFsmCluster(void);
 extern void GuardedDualScaledChainCopy(void);
 extern void PendingMatch_0044dd80(void);
-extern void GuardedScaled_00475060(void);
+extern void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475060(void);
 extern void InstallSelfChainAccumPath(void);
 extern void GameInstall2BodyMul10ScaledInit(void);
 extern void GatedWordPushCall(void);
@@ -150,7 +150,7 @@ __declspec(naked) void IntroInitCluster(void)
         push     esi
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], ecx
-        call     GuardedScaled_00475060
+        call     GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475060
         mov      eax, dword ptr [g_framePauseFlag]
         xor      esi, esi
         cmp      eax, esi

@@ -18,7 +18,7 @@ extern unsigned int g_clamp_0053a6dc;
 extern unsigned int g_clamp_00537f2c;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_active_00537e88;
-extern void GuardedSeq_004200b0(void);
+extern void GuardedSeq_ZeroTriple_then_PendingMatch(void);
 int CmpDualStateMatch(void) {
     unsigned int v;
     v = g_clamp_0053a6dc;
@@ -30,6 +30,6 @@ int CmpDualStateMatch(void) {
     g_walkCallback = 0;
     g_active_0053a408 = 0;
     g_active_00537e88 = 0;
-    GuardedSeq_004200b0();
+    GuardedSeq_ZeroTriple_then_PendingMatch();
     return 1;
 }

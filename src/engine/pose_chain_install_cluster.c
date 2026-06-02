@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -121,7 +121,7 @@ extern void ScaledChainNegStore(void);
 extern void CallPauseConstStoreJmp_00481360(void);
 extern void ScaledLoadCmp1003JmpDispatch(void);
 extern void PushCallPauseScaledJmpInd(void);
-extern void ScaledInit_0048f720(void);
+extern void ScaledInit_GuardedDirtyXformFromTable_g_scaledInit(void);
 extern void ClearBit2x34(void);
 extern void MStackPushSet0004(void);
 extern void ScaledAndAl7f(void);
@@ -161,7 +161,7 @@ __declspec(naked) void MainTickChain(void)
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
     L_10bc:
-        call     ScaledInit_0048f720
+        call     ScaledInit_GuardedDirtyXformFromTable_g_scaledInit
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
         call     ScaledAndAldf

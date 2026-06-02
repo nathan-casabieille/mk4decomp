@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -113,10 +113,10 @@ extern unsigned int g_fightAxisPosY;
  *   g_walkCallback=2; call BootStateTriple; if pause? ret.
  *   Then for k in {0, 0x30, 0x34, 0x38}: copy scaledInit[k] to g_xformEntityIdx[k]
  *     (first iteration also OR's al with 4).
- *   Then call MStackBracket7_DispatchAndChain; if !pause: g_walkCallback=3, g_acc_00542078=2, tail-jmp GuardedSeq_00473ef0; ret.
+ *   Then call MStackBracket7_DispatchAndChain; if !pause: g_walkCallback=3, g_acc_00542078=2, tail-jmp GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7b; ret.
  */
 extern void BootStateTriple(void);
-extern void GuardedSeq_00473ef0(void);
+extern void GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7b(void);
 
 __declspec(naked) void CjFieldCopyCascade(void) {
     __asm {
@@ -172,7 +172,7 @@ __declspec(naked) void CjFieldCopyCascade(void) {
         _emit   19h
         mov     dword ptr [g_walkCallback], 3
         mov     dword ptr [g_acc_00542078], 2
-        jmp     GuardedSeq_00473ef0
+        jmp     GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7b
         ret
     }
 }

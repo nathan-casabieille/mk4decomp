@@ -23,12 +23,12 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void RoundResultSlotInitTable(void);
 extern void Wrapper_ScaledChainPushCall_004ef8c8(void);
-extern void GuardedSeq_004871b0(void);
+extern void GuardedSeq_CmpJmpTwoBranch_then_Wrapper_ScaledChainPushCall(void);
 void ScaledTestCallPauseJmpFar(void) {
     unsigned int v = *(unsigned int *)(g_baseSel * 4 + 0x30);
     g_walkCallback = (void (*)(void))v;
     if (v == 0) {
-        GuardedSeq_004871b0();
+        GuardedSeq_CmpJmpTwoBranch_then_Wrapper_ScaledChainPushCall();
         return;
     }
     RoundResultSlotInitTable();

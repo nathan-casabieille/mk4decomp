@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY;
  *   install-second-state: install self with [esi+0x84]=ebx (=1).
  */
 extern void GuardedDoubleIncCmpJmp(void);
-extern void ScaledArrStore_00429980(void);
+extern void ScaledArrStore_GuardedChainCmpDualBitXor_00429980(void);
 extern void ScaledInitOrSelfPtr_00429680(void);
 
 extern unsigned int g_matrixStack_arr;
@@ -165,7 +165,7 @@ __declspec(naked) void InstallSelfPair3Branch(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   7ch
         _emit   2eh
-        call    ScaledArrStore_00429980
+        call    ScaledArrStore_GuardedChainCmpDualBitXor_00429980
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

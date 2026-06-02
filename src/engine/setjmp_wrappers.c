@@ -20,7 +20,7 @@ extern void CallPauseScaledStoreAdd(void);   /* 0x004078f0 */
 extern void BootStateTriple(void);   /* 0x00408d30 */
 extern void EsiInstallDecCallChain_004294a0(void);   /* 0x004294a0 */
 extern void EsiInstallBitCallChain_004295a0(void);   /* 0x004295a0 */
-extern void ScaledArrStore_00429960(void);   /* 0x00429960 */
+extern void ScaledArrStore_GuardedChainCmpDualBitXor_00429960(void);   /* 0x00429960 */
 extern void Distance3DMul10Chain(void);   /* 0x0042d090 */
 extern void AudioBridgeMStackChainCopy(void);   /* 0x00440730 */
 extern void SetJmp_GuardedSeq_00473f10_00451ad0(void);   /* 0x00451ad0 */
@@ -32,7 +32,7 @@ extern void SixSubdispatchSpan(void);   /* 0x0045ec10 */
 extern void HitReactionDispatcher(void);   /* 0x0045f650 */
 extern void AlarmCountdownInstall(void);   /* 0x004609e0 */
 extern void StateDispatchYield(void);   /* 0x00471190 */
-extern void GuardedSeq_00473f10(void);   /* 0x00473f10 */
+extern void GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7d(void);   /* 0x00473f10 */
 extern void InstallSelfChainEsi(void);   /* 0x004753b0 */
 extern void ScaledLitLoadCall_00481020(void);   /* 0x00481020 */
 extern void InstallSelfTwoTailJmp(void);   /* 0x00483f30 */
@@ -64,21 +64,21 @@ void SetJmp_BootStateTriple(void) {
 }
 
 /* @addr 0x00428cf0 */
-void SetJmp_EsiInstallDecCallChain_004294a0(void) {
+void SetJmp_EsiInstallDecCallChain(void) {
     g_eventQueueChild = 0x00000003;
     EsiInstallDecCallChain_004294a0();
 }
 
 /* @addr 0x00429230 */
-void SetJmp_EsiInstallBitCallChain_004295a0(void) {
+void SetJmp_EsiInstallBitCallChain(void) {
     g_walkCallback = (void (*)(void))0x00000000;
     EsiInstallBitCallChain_004295a0();
 }
 
 /* @addr 0x00429950 */
-void SetJmp_ScaledArrStore_00429960(void) {
+void SetJmp_ScaledArrStore(void) {
     g_walkCallback = (void (*)(void))0x00000000;
-    ScaledArrStore_00429960();
+    ScaledArrStore_GuardedChainCmpDualBitXor_00429960();
 }
 
 /* @addr 0x0042d070 */
@@ -150,7 +150,7 @@ void SetJmp_SetJmp_00451ad0_00451ac0(void) {
 /* @addr 0x00451ad0 */
 void SetJmp_GuardedSeq_00473f10_00451ad0(void) {
     g_acc_00542078 = 0x00000006;
-    GuardedSeq_00473f10();
+    GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7d();
 }
 
 /* @addr 0x00451ae0 */
@@ -174,7 +174,7 @@ void SetJmp_SetJmp_00451b10_00451b00(void) {
 /* @addr 0x00451b10 */
 void SetJmp_GuardedSeq_00473f10_00451b10(void) {
     g_acc_00542078 = 0x00000005;
-    GuardedSeq_00473f10();
+    GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7d();
 }
 
 /* @addr 0x00451b20 */
@@ -198,7 +198,7 @@ void SetJmp_SetJmp_00451b50_00451b40(void) {
 /* @addr 0x00451b50 */
 void SetJmp_GuardedSeq_00473f10_00451b50(void) {
     g_acc_00542078 = 0x0000000c;
-    GuardedSeq_00473f10();
+    GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7d();
 }
 
 /* @addr 0x00451b60 */
@@ -292,7 +292,7 @@ void SetJmp_InstallSelfMStackIndirect(void) {
 }
 
 /* @addr 0x00489020 */
-void SetJmp_ScaledLitLoadCall_00481020(void) {
+void SetJmp_ScaledLitLoadCall(void) {
     g_walkCallback = (void (*)(void))0x00000002;
     ScaledLitLoadCall_00481020();
 }

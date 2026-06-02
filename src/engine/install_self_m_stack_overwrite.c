@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -110,16 +110,16 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0046e9a0 (206b game) - dual-path install-self with mstack overwrite.
  *   chain[+0x84]!=0 path: esi=g_eventQueueNotMask; call CopyJmp_0048ef90; pause-check; bit-0 test:
- *     if set call CallPauseDirtyMStackPushFn; pop+ret. Else g_walkCallback=esi; call ScaledInit_0048d430;
+ *     if set call CallPauseDirtyMStackPushFn; pop+ret. Else g_walkCallback=esi; call ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d430;
  *     if !pause: call [g_cj_00542058]; pop+ret.
  *   chain[+0x84]==0 path: snapshot+swap mstack top: ecx=mstack[N], save to g_cj_00542058, overwrite mstack[N]=g_walkCallback.
- *     call ScaledArrStore_00429980; pause-check; mstack-pop into g_walkCallback; install-self at +0x08=0x0046e9a0;
+ *     call ScaledArrStore_GuardedChainCmpDualBitXor_00429980; pause-check; mstack-pop into g_walkCallback; install-self at +0x08=0x0046e9a0;
  *     g_pendingNodeType=1; g_pause=1. pop+ret.
  */
 extern unsigned int g_matrixStack_arr;
 extern void CallPauseDirtyMStackPushFn(void);
-extern void ScaledArrStore_00429980(void);
-extern void ScaledInit_0048d430(void);
+extern void ScaledArrStore_GuardedChainCmpDualBitXor_00429980(void);
+extern void ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d430(void);
 
 __declspec(naked) void InstallSelfMStackOverwrite(void) {
     __asm {
@@ -148,7 +148,7 @@ __declspec(naked) void InstallSelfMStackOverwrite(void) {
         pop     esi
         ret
         mov     dword ptr [g_walkCallback], esi
-        call    ScaledInit_0048d430
+        call    ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d430
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -167,7 +167,7 @@ __declspec(naked) void InstallSelfMStackOverwrite(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [g_cj_00542058], ecx
         mov     dword ptr [eax*4 + g_matrixStack_arr], edx
-        call    ScaledArrStore_00429980
+        call    ScaledArrStore_GuardedChainCmpDualBitXor_00429980
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

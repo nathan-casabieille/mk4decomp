@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  *   self.
  */
 extern void MStackPush3CallChain(void);
-extern void Thunk_Thunk_0049cbd0(void);
+extern void Thunk_Thunk(void);
 extern void HitReactionDispatcher(void);
 
 int ChainWalkSelfRecursive(void) {
@@ -135,5 +135,5 @@ int ChainWalkSelfRecursive(void) {
     MStackPush3CallChain();
     if (g_framePauseFlag != 0) return;
     if (g_xformEntityIdx == 0) return;
-    return ((int(*)())Thunk_Thunk_0049cbd0)();
+    return ((int(*)())Thunk_Thunk)();
 }

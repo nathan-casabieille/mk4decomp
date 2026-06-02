@@ -24,7 +24,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_table_00535ddc;
 extern int Cmp2CallDirtyCall(void);
-extern void GuardedSeq_00433bb0(void);
+extern void GuardedSeq_PackedSelectLoad6_then_GuardedSeq(void);
 extern void Mul10ThresholdQuad(void);
 extern void TripleThresholdDispatch(void);
 void Cmp30000And18000(void) {
@@ -33,7 +33,7 @@ void Cmp30000And18000(void) {
     v = g_table_00535ddc;
     g_walkCallback = (void (*)(void))v;
     if ((int)v > 0x30000) {
-        GuardedSeq_00433bb0();
+        GuardedSeq_PackedSelectLoad6_then_GuardedSeq();
         return;
     }
     if ((int)v < 0x18000) {

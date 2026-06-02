@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -117,7 +117,7 @@ extern unsigned int g_chain_disp_40_439a40;
  *   v = chain[cj].slot40; if (v & 2): jmp TwoConditionalJmp.
  *   delta = g_gtFightTickCounter - g_fightTickSavedSlot; if delta < 0x1e0: jmp TwoConditionalJmp.
  *   else: walkCallback=0x64; call AudioVolumeRescale; pause? ret;
- *     if dirty1: jmp Thunk_SetJmp_00439c30; else jmp TwoConditionalJmp.
+ *     if dirty1: jmp Thunk_SetJmp; else jmp TwoConditionalJmp.
  */
 void MultiBranchStateFilter(void) {
     unsigned int v;
@@ -149,7 +149,7 @@ void MultiBranchStateFilter(void) {
     AudioVolumeRescale();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 1) != 0) {
-        Thunk_SetJmp_00439c30();
+        Thunk_SetJmp();
         return;
     }
     TwoConditionalJmp();

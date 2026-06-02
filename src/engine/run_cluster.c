@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -114,7 +114,7 @@ extern void DualHelperCallStoreCjFields(void);
 extern void DualMul10AccCj(void);
 extern void EsiEdiAliasDualMul10(void);
 extern void FiveCallGuardSetTail(void);
-extern void GuardedSeq_0047d980(void);
+extern void GuardedSeq_MStackPushSet0004_then_MoveSelectorCluster(void);
 extern void MoveSelectorCluster(void);
 extern void ScaledLitLoadCall_00480fe0(void);
 extern void ScaledZero44(void);
@@ -299,7 +299,7 @@ __declspec(naked) void RunCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d97c
-        call     GuardedSeq_0047d980
+        call     GuardedSeq_MStackPushSet0004_then_MoveSelectorCluster
         pop      edi
         pop      esi
         ret

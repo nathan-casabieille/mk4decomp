@@ -59,9 +59,9 @@ extern void EntryThunkBodyStateMachine(void);
 extern void FiveCallGuardSetTail(void);
 extern void GatedWordPushCall(void);
 extern void GuardedDispatch4_00489080(void);
-extern void GuardedSeq_00472840(void);
-extern void GuardedSeq_00476de0(void);
-extern void GuardedSeq_00476f10(void);
+extern void GuardedSeq_DualPushCmp12Dispatch_then_ByteWordTableTaggedDispatch(void);
+extern void GuardedSeq_DirtyDoubleDeref_then_ScaledOr4Jmp(void);
+extern void GuardedSeq_DirtyDoubleDeref_then_ChainSlotSetupInstallSelf(void);
 extern void InitZeroChainLookupJmp(void);
 extern void InstallSelf3WayChainCmp(void);
 extern void InstallSelfCmpJlJmp(void);
@@ -1452,7 +1452,7 @@ __declspec(naked) void func_00448990(void) {
         mov      eax, dword ptr [g_fightGroupHead]
         mov      dword ptr [eax*4 + 0x28], 0xe1
         mov      dword ptr [g_walkCallback], 3
-        call     GuardedSeq_00476f10
+        call     GuardedSeq_DirtyDoubleDeref_then_ChainSlotSetupInstallSelf
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8b40
@@ -1506,7 +1506,7 @@ __declspec(naked) void func_00448990(void) {
         mov      eax, dword ptr [g_eventQueueIdx]
         mov      dword ptr [edx*4 + 0x68], eax
         mov      dword ptr [g_walkCallback], 0xc
-        call     GuardedSeq_00472840
+        call     GuardedSeq_DualPushCmp12Dispatch_then_ByteWordTableTaggedDispatch
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8cd2
@@ -1556,12 +1556,12 @@ __declspec(naked) void func_00448990(void) {
         call     StoreLoadJmp
         add      esp, 4
         mov      dword ptr [g_walkCallback], 0xb
-        call     GuardedSeq_00476de0
+        call     GuardedSeq_DirtyDoubleDeref_then_ScaledOr4Jmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8cd2
         mov      dword ptr [g_walkCallback], 0xc
-        call     GuardedSeq_00476de0
+        call     GuardedSeq_DirtyDoubleDeref_then_ScaledOr4Jmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8cd2

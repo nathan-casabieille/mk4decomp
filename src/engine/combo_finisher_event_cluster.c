@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -123,7 +123,7 @@ extern void PunchAnimCluster(void);
 extern void PushPopWalkSet1006(void);
 extern void ScaledChain3c7c(void);
 extern void ScaledClearJmp_00428d40(void);
-extern void ScaledInit_0048d490(void);
+extern void ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d490(void);
 extern void ScaledLoadJmp_00428d20(void);
 extern void ScaledLoadJmp_24(void);
 extern void ScaledLookupGuardJmpIndirect(void);
@@ -180,7 +180,7 @@ __declspec(naked) void ComboFinisherEventCluster(void)
         dec      eax
         jne      L_6067
         mov      dword ptr [g_walkCallback], 0x14
-        call     ScaledInit_0048d490
+        call     ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d490
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_60d0
         mov      eax, dword ptr [g_xformScratch2088]
@@ -258,7 +258,7 @@ __declspec(naked) void ComboFinisherEventCluster(void)
         ret
     L_5fc5:
         mov      dword ptr [g_walkCallback], 0x14
-        call     ScaledInit_0048d490
+        call     ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d490
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_60d0
         cmp      dword ptr [g_xformScratch2088], ebx

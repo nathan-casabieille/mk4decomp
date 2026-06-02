@@ -1020,7 +1020,7 @@ functions:
     status: matched
     file: src/boot/phase1_chain_setup_call_scale6.c
   - addr: 0x0040cd20
-    name: GuardedScaled_0040cd20
+    name: GuardedScaled_MStackPush8_then_PendingMatch
     size: 33
     group: boot
     status: matched
@@ -1392,7 +1392,7 @@ functions:
     status: matched
     file: src/boot/pending_match_variants.c
   - addr: 0x00417e20
-    name: ScaledInit_00417e20
+    name: ScaledInit_Phase4SevenPackedDispatch_g_eventQueueTotal
     size: 18
     group: boot
     status: matched
@@ -1548,7 +1548,7 @@ functions:
     status: matched
     file: src/boot/set_work_type_scaled_call_store_ccc.c
   - addr: 0x0041aad0
-    name: GuardedSeq_0041aad0
+    name: GuardedSeq_BootStateInitLongChain_then_StackPopDispatchTagged
     size: 20
     group: boot
     status: matched
@@ -1776,7 +1776,7 @@ functions:
     status: matched
     file: src/engine/reset_scene_callbacks.c
   - addr: 0x004200b0
-    name: GuardedSeq_004200b0
+    name: GuardedSeq_ZeroTriple_then_PendingMatch
     size: 20
     group: game
     status: matched
@@ -2502,13 +2502,13 @@ functions:
     status: matched
     file: src/engine/scaled_store_idx_zero_jmp.c
   - addr: 0x00428330
-    name: ScaledArrStore_00428330
+    name: ScaledArrStore_GuardedSeq_CopyJmp_then_MStackPushDualJmp
     size: 23
     group: game
     status: matched
     file: src/engine/scaled_array_store.c
   - addr: 0x00428350
-    name: GuardedSeq_00428350
+    name: GuardedSeq_CopyJmp_then_MStackPushDualJmp
     size: 20
     group: game
     status: matched
@@ -2532,7 +2532,7 @@ functions:
     status: matched
     file: src/engine/triple_branch_install.c
   - addr: 0x00428480
-    name: GuardedSeq_00428480
+    name: GuardedSeq_CopyJmp_then_GuardedLoopWithCallback
     size: 20
     group: game
     status: matched
@@ -2562,7 +2562,7 @@ functions:
     status: matched
     file: src/engine/scaled_store_or_flag_xor.c
   - addr: 0x004285c0
-    name: ScaledArrStore_004285c0
+    name: ScaledArrStore_CallDualStoreXorBit
     size: 23
     group: game
     status: matched
@@ -2658,7 +2658,7 @@ functions:
     status: matched
     file: src/engine/install_self_accum_check.c
   - addr: 0x00428cf0
-    name: SetJmp_EsiInstallDecCallChain_004294a0
+    name: SetJmp_EsiInstallDecCallChain
     size: 15
     group: game
     status: matched
@@ -2700,7 +2700,7 @@ functions:
     status: matched
     file: src/engine/scaled_store_ent_zero_jmp.c
   - addr: 0x00428e70
-    name: ScaledArrStore_00428e70
+    name: ScaledArrStore_EsiInstallBitCallChain_00428e70
     size: 23
     group: game
     status: matched
@@ -2742,7 +2742,7 @@ functions:
     status: matched
     file: src/engine/scaled_load_jmp.c
   - addr: 0x00429230
-    name: SetJmp_EsiInstallBitCallChain_004295a0
+    name: SetJmp_EsiInstallBitCallChain
     size: 15
     group: game
     status: matched
@@ -2766,7 +2766,7 @@ functions:
     status: matched
     file: src/engine/scaled_load_jmp.c
   - addr: 0x004293b0
-    name: ScaledArrStore_004293b0
+    name: ScaledArrStore_EsiInstallBitCallChain_004293b0
     size: 23
     group: game
     status: matched
@@ -2778,7 +2778,7 @@ functions:
     status: matched
     file: src/engine/esi_install_dec_call_chain_variants.c
   - addr: 0x00429450
-    name: ScaledArrStore_00429450
+    name: ScaledArrStore_ScaledChainJmp_00429450
     size: 23
     group: game
     status: matched
@@ -2862,7 +2862,7 @@ functions:
     status: matched
     file: src/engine/scaled_load_jmp_24.c
   - addr: 0x004297b0
-    name: GuardedSeq_004297b0
+    name: GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp
     size: 20
     group: game
     status: matched
@@ -2892,7 +2892,7 @@ functions:
     status: matched
     file: src/engine/guarded_double_inc_cmp_jmp.c
   - addr: 0x004298c0
-    name: ScaledArrStore_004298c0
+    name: ScaledArrStore_ScaledChainJmp_004298c0
     size: 23
     group: game
     status: matched
@@ -2904,31 +2904,31 @@ functions:
     status: matched
     file: src/engine/scaled_chain_jmp.c
   - addr: 0x00429910
-    name: ScaledArrStore_00429910
+    name: ScaledArrStore_ScaledArrStore
     size: 23
     group: game
     status: matched
     file: src/engine/scaled_array_store.c
   - addr: 0x00429930
-    name: ScaledArrStore_00429930
+    name: ScaledArrStore_SetJmp_ScaledArrStore
     size: 23
     group: game
     status: matched
     file: src/engine/scaled_array_store.c
   - addr: 0x00429950
-    name: SetJmp_ScaledArrStore_00429960
+    name: SetJmp_ScaledArrStore
     size: 15
     group: game
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x00429960
-    name: ScaledArrStore_00429960
+    name: ScaledArrStore_GuardedChainCmpDualBitXor_00429960
     size: 23
     group: game
     status: matched
     file: src/engine/scaled_array_store.c
   - addr: 0x00429980
-    name: ScaledArrStore_00429980
+    name: ScaledArrStore_GuardedChainCmpDualBitXor_00429980
     size: 23
     group: game
     status: matched
@@ -3336,13 +3336,13 @@ functions:
     status: matched
     file: src/engine/esi_install_chain_call_cmp_threshold.c
   - addr: 0x0042fb80
-    name: GuardedSeq_0042fb80
+    name: GuardedSeq_DualMulScaleStore_then_PhaseInstall2DInterpDispatch_0042fb80
     size: 20
     group: game
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x0042fba0
-    name: GuardedSeq_0042fba0
+    name: GuardedSeq_DualMulScaleStore_then_PhaseInstall2DInterpDispatch_0042fba0
     size: 20
     group: game
     status: matched
@@ -3594,7 +3594,7 @@ functions:
     status: matched
     file: src/engine/four_call_bit_gate_chain.c
   - addr: 0x004335d0
-    name: GuardedSeq_004335d0
+    name: GuardedSeq_BitmapBlitRunLength_then_FiveTableInitChainBracketed
     size: 20
     group: game
     status: matched
@@ -3636,7 +3636,7 @@ functions:
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x00433950
-    name: Thunk_ScaledLoadInstallOrCall_00433960
+    name: Thunk_ScaledLoadInstallOrCall
     size: 5
     group: game
     status: matched
@@ -3660,13 +3660,13 @@ functions:
     status: matched
     file: src/engine/game_dispatch_validate_state.c
   - addr: 0x00433bb0
-    name: GuardedSeq_00433bb0
+    name: GuardedSeq_PackedSelectLoad6_then_GuardedSeq
     size: 20
     group: game
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x00433bd0
-    name: GuardedSeq_00433bd0
+    name: GuardedSeq_CmpP1DualInitStore_then_ScaledIndirectJmp
     size: 20
     group: game
     status: matched
@@ -4062,7 +4062,7 @@ functions:
     status: matched
     file: src/engine/thunks.c
   - addr: 0x004368e0
-    name: Thunk_ScaledAddrInit_004368f0
+    name: Thunk_ScaledAddrInit
     size: 5
     group: game
     status: matched
@@ -4302,7 +4302,7 @@ functions:
     status: matched
     file: src/engine/install_self_bit4_gate.c
   - addr: 0x00438630
-    name: GuardedSeq_00438630
+    name: GuardedSeq_ScaledZeroFour_then_StackPopDispatchTagged
     size: 20
     group: game
     status: matched
@@ -4518,7 +4518,7 @@ functions:
     status: matched
     file: src/engine/packed_advance_call_tail_jmp.c
   - addr: 0x00439310
-    name: Wrapper_ScaledIndexCondCopy_005422f0
+    name: Wrapper_ScaledIndexCondCopy
     size: 14
     group: game
     status: matched
@@ -4620,7 +4620,7 @@ functions:
     status: matched
     file: src/engine/weighted_sum_clamp_helper.c
   - addr: 0x004399b0
-    name: Thunk_GuardedSeq_00433bb0
+    name: Thunk_GuardedSeq
     size: 5
     group: game
     status: matched
@@ -4662,7 +4662,7 @@ functions:
     status: matched
     file: src/engine/dual_entry_bit_gated.c
   - addr: 0x00439c20
-    name: Thunk_SetJmp_00439c30
+    name: Thunk_SetJmp
     size: 5
     group: game
     status: matched
@@ -5160,13 +5160,13 @@ functions:
     status: matched
     file: src/engine/scaled_or_store.c
   - addr: 0x00441e10
-    name: ScaledInit_00441e10
+    name: ScaledInit_TwoStageSetupTripleCopy_g_walkCallback_00441e10
     size: 18
     group: game
     status: matched
     file: src/engine/scaled_init.c
   - addr: 0x00441e30
-    name: ScaledInit_00441e30
+    name: ScaledInit_TwoStageSetupTripleCopy_g_walkCallback_00441e30
     size: 18
     group: game
     status: matched
@@ -5658,7 +5658,7 @@ functions:
     status: matched
     file: src/engine/pending_match_variants.c
   - addr: 0x0044ba10
-    name: GuardedSeq_0044ba10
+    name: GuardedSeq_ScaledLoadTwoCallDualConst_then_GuardedSeq_0044ba10
     size: 20
     group: game
     status: matched
@@ -5670,7 +5670,7 @@ functions:
     status: matched
     file: src/engine/scaled_load_two_call_dual_const.c
   - addr: 0x0044ba80
-    name: GuardedSeq_0044ba80
+    name: GuardedSeq_PendingMatch_then_GuardedSeq
     size: 20
     group: game
     status: matched
@@ -5916,13 +5916,13 @@ functions:
     status: matched
     file: src/engine/install_self_index_walk.c
   - addr: 0x00450ed0
-    name: ScaledInit_00450ed0
+    name: ScaledInit_TripleBlockChainScaledInits_g_walkCallback_00450ed0
     size: 18
     group: game
     status: matched
     file: src/engine/scaled_init.c
   - addr: 0x00450ef0
-    name: ScaledInit_00450ef0
+    name: ScaledInit_TripleBlockChainScaledInits_g_walkCallback_00450ef0
     size: 18
     group: game
     status: matched
@@ -5946,7 +5946,7 @@ functions:
     status: matched
     file: src/engine/quad_call_pause_set_call_seq.c
   - addr: 0x004515a0
-    name: GuardedSeq_004515a0
+    name: GuardedSeq_ChainDirtyBitWalker_then_DualScaledLoadStoreJmp
     size: 20
     group: game
     status: matched
@@ -6174,7 +6174,7 @@ functions:
     status: matched
     file: src/engine/call_pause_scaled_store_x_jmp.c
   - addr: 0x00453780
-    name: GuardedSeq_00453780
+    name: GuardedSeq_MStackPushTwoEntryChainCall_then_PoseCopyIdleCluster
     size: 20
     group: game
     status: matched
@@ -6648,7 +6648,7 @@ functions:
     status: matched
     file: src/engine/triple_install_jmp.c
   - addr: 0x0045dae0
-    name: Thunk_Thunk_0049cbd0
+    name: Thunk_Thunk
     size: 5
     group: game
     status: matched
@@ -6930,7 +6930,7 @@ functions:
     status: matched
     file: src/engine/multi_thunk_dispatcher_variants.c
   - addr: 0x004605b0
-    name: GuardedSeq_004605b0
+    name: GuardedSeq_MStackNegAwareMul10Pair_then_ChainTableWalkStore
     size: 20
     group: game
     status: matched
@@ -7530,7 +7530,7 @@ functions:
     status: matched
     file: src/engine/intro_combo_fsm_cluster.c
   - addr: 0x00467c10
-    name: GuardedSeq_00467c10
+    name: GuardedSeq_ScaledLoadTwoCallDualConst_then_GuardedSeq_00467c10
     size: 20
     group: game
     status: matched
@@ -7542,7 +7542,7 @@ functions:
     status: matched
     file: src/engine/scaled_load_two_call_dual_const.c
   - addr: 0x00467c80
-    name: GuardedSeq_00467c80
+    name: GuardedSeq_GuardedTripleCallSetTail_then_GuardedSeq
     size: 20
     group: game
     status: matched
@@ -8118,7 +8118,7 @@ functions:
     status: matched
     file: src/engine/m_stack_bracketed_store_two_call.c
   - addr: 0x00471670
-    name: GuardedSeq_00471670
+    name: GuardedSeq_MStackCall_then_CallSetPause_00471670
     size: 20
     group: game
     status: matched
@@ -8172,13 +8172,13 @@ functions:
     status: matched
     file: src/engine/fsm_pose_dual_entry.c
   - addr: 0x00472820
-    name: GuardedSeq_00472820
+    name: GuardedSeq_DualPushCmp12Dispatch68_then_ByteWordTableTaggedDispatch
     size: 20
     group: game
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x00472840
-    name: GuardedSeq_00472840
+    name: GuardedSeq_DualPushCmp12Dispatch_then_ByteWordTableTaggedDispatch
     size: 20
     group: game
     status: matched
@@ -8304,31 +8304,31 @@ functions:
     status: matched
     file: src/engine/scaled_load_store.c
   - addr: 0x00473ef0
-    name: GuardedSeq_00473ef0
+    name: GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7b
     size: 20
     group: game
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x00473f10
-    name: GuardedSeq_00473f10
+    name: GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7d
     size: 20
     group: game
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x00473f30
-    name: GuardedSeq_00473f30
+    name: GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp
     size: 20
     group: game
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x00473f50
-    name: GuardedSeq_00473f50
+    name: GuardedSeq_DualSetShiftCall_then_DualPushSet7dCallPop
     size: 20
     group: game
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x00473f70
-    name: GuardedSeq_00473f70
+    name: GuardedSeq_DualSetShiftCall_then_MStackPush2CjMul10Triple
     size: 20
     group: game
     status: matched
@@ -8442,37 +8442,37 @@ functions:
     status: matched
     file: src/engine/state_switch_m_stack_pop.c
   - addr: 0x00474fd0
-    name: GuardedScaled_00474fd0
+    name: GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00474fd0
     size: 33
     group: game
     status: matched
     file: src/engine/guarded_scaled.c
   - addr: 0x00475000
-    name: GuardedScaled_00475000
+    name: GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475000
     size: 33
     group: game
     status: matched
     file: src/engine/guarded_scaled.c
   - addr: 0x00475030
-    name: GuardedScaled_00475030
+    name: GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475030
     size: 33
     group: game
     status: matched
     file: src/engine/guarded_scaled.c
   - addr: 0x00475060
-    name: GuardedScaled_00475060
+    name: GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475060
     size: 33
     group: game
     status: matched
     file: src/engine/guarded_scaled.c
   - addr: 0x00475090
-    name: GuardedScaled_00475090
+    name: GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475090
     size: 33
     group: game
     status: matched
     file: src/engine/guarded_scaled.c
   - addr: 0x004750c0
-    name: GuardedScaled_004750c0
+    name: GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_004750c0
     size: 33
     group: game
     status: matched
@@ -8646,7 +8646,7 @@ functions:
     status: matched
     file: src/engine/m_stack_angle_ratio_subchain.c
   - addr: 0x00476de0
-    name: GuardedSeq_00476de0
+    name: GuardedSeq_DirtyDoubleDeref_then_ScaledOr4Jmp
     size: 20
     group: game
     status: matched
@@ -8676,7 +8676,7 @@ functions:
     status: matched
     file: src/engine/cond_install_dispatch.c
   - addr: 0x00476f10
-    name: GuardedSeq_00476f10
+    name: GuardedSeq_DirtyDoubleDeref_then_ChainSlotSetupInstallSelf
     size: 20
     group: game
     status: matched
@@ -8688,7 +8688,7 @@ functions:
     status: matched
     file: src/engine/chain_slot_setup_install_self.c
   - addr: 0x00476fc0
-    name: GuardedSeq_00476fc0
+    name: GuardedSeq_DirtyDoubleDeref_then_ScaledAndFBJmp
     size: 20
     group: game
     status: matched
@@ -9108,7 +9108,7 @@ functions:
     status: matched
     file: src/engine/run_cluster.c
   - addr: 0x0047d980
-    name: GuardedSeq_0047d980
+    name: GuardedSeq_MStackPushSet0004_then_MoveSelectorCluster
     size: 20
     group: game
     status: matched
@@ -9924,7 +9924,7 @@ functions:
     status: matched
     file: src/engine/sfx_block_cluster.c
   - addr: 0x00485ca0
-    name: GuardedSeq_00485ca0
+    name: GuardedSeq_ScaledZeroFour_then_GuardedSeq
     size: 20
     group: game
     status: matched
@@ -10080,7 +10080,7 @@ functions:
     status: matched
     file: src/engine/scaled_test_call_pause_jmp.c
   - addr: 0x004871b0
-    name: GuardedSeq_004871b0
+    name: GuardedSeq_CmpJmpTwoBranch_then_Wrapper_ScaledChainPushCall
     size: 20
     group: game
     status: matched
@@ -10182,7 +10182,7 @@ functions:
     status: matched
     file: src/engine/dual_entry_state_load_cascade.c
   - addr: 0x00488890
-    name: GuardedSeq_00488890
+    name: GuardedSeq_CjTableThresholdDispatch_then_RoundTextMenuEventCluster
     size: 20
     group: game
     status: matched
@@ -10206,7 +10206,7 @@ functions:
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x00488be0
-    name: GuardedSeq_00488be0
+    name: GuardedSeq_ScaledXorStore_then_LiteralPushCallEntZero
     size: 20
     group: game
     status: matched
@@ -10272,7 +10272,7 @@ functions:
     status: matched
     file: src/engine/cj_table_threshold_dispatch.c
   - addr: 0x00489020
-    name: SetJmp_ScaledLitLoadCall_00481020
+    name: SetJmp_ScaledLitLoadCall
     size: 15
     group: game
     status: matched
@@ -10854,25 +10854,25 @@ functions:
     status: matched
     file: src/engine/move_commit_packed_dispatcher.c
   - addr: 0x0048d430
-    name: ScaledInit_0048d430
+    name: ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d430
     size: 18
     group: game
     status: matched
     file: src/engine/scaled_init.c
   - addr: 0x0048d450
-    name: ScaledInit_0048d450
+    name: ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d450
     size: 18
     group: game
     status: matched
     file: src/engine/scaled_init.c
   - addr: 0x0048d470
-    name: ScaledInit_0048d470
+    name: ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d470
     size: 18
     group: game
     status: matched
     file: src/engine/scaled_init.c
   - addr: 0x0048d490
-    name: ScaledInit_0048d490
+    name: ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d490
     size: 18
     group: game
     status: matched
@@ -11262,7 +11262,7 @@ functions:
     status: matched
     file: src/engine/guarded_dirty_xform_from_table.c
   - addr: 0x0048f720
-    name: ScaledInit_0048f720
+    name: ScaledInit_GuardedDirtyXformFromTable_g_scaledInit
     size: 18
     group: game
     status: matched
@@ -11640,7 +11640,7 @@ functions:
     status: matched
     file: src/engine/dual_call_pause_dirty_jmp.c
   - addr: 0x00490c60
-    name: GuardedSeq_00490c60
+    name: GuardedSeq_DualCallPauseDirtyJmp_then_ScaledXorStore
     size: 20
     group: game
     status: matched
@@ -12138,13 +12138,13 @@ functions:
     status: matched
     file: src/engine/install_self_three_state_sibling_pair.c
   - addr: 0x00495590
-    name: ScaledInit_00495590
+    name: ScaledInit_GameModeHandlerCluster_g_scaledInit_00495590
     size: 18
     group: game
     status: matched
     file: src/engine/scaled_init.c
   - addr: 0x004955b0
-    name: ScaledInit_004955b0
+    name: ScaledInit_GameModeHandlerCluster_g_scaledInit_004955b0
     size: 18
     group: game
     status: matched
@@ -12252,7 +12252,7 @@ functions:
     status: matched
     file: src/engine/sweep_kick_dispatcher.c
   - addr: 0x00497450
-    name: GuardedSeq_00497450
+    name: GuardedSeq_MStackCall_then_CallSetPause_00497450
     size: 20
     group: game
     status: matched
@@ -12450,7 +12450,7 @@ functions:
     status: matched
     file: src/engine/set43_dual_call_jmp.c
   - addr: 0x0049a650
-    name: GuardedSeq_0049a650
+    name: GuardedSeq_MStackCall_then_CallSetPause_0049a650
     size: 20
     group: game
     status: matched
@@ -12564,7 +12564,7 @@ functions:
     status: matched
     file: src/engine/dual_mul10_and_dispatch_chain.c
   - addr: 0x0049c340
-    name: GuardedSeq_0049c340
+    name: GuardedSeq_MStackCall_then_CallSetPause_0049c340
     size: 20
     group: game
     status: matched
@@ -12858,7 +12858,7 @@ functions:
     status: matched
     file: src/engine/dual_guard_state_machine_variants.c
   - addr: 0x0049eb10
-    name: Wrapper_SaveCallRestore_00000266
+    name: Wrapper_SaveCallRestore
     size: 14
     group: game
     status: matched

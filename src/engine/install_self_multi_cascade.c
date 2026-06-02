@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -109,16 +109,16 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004388f0 (190b game) - install-self with multi-stage cascade.
- *   chain[+0x84]!=0 path: call DecOrZeroDirty4; if !pause and !bit-2 ret; else call GuardedSeq_00438630; ret.
+ *   chain[+0x84]!=0 path: call DecOrZeroDirty4; if !pause and !bit-2 ret; else call GuardedSeq_ScaledZeroFour_then_StackPopDispatchTagged; ret.
  *     Continuing: esi=g_eventQueueChild; call Push84CallTestInstallJmp; if !pause:
  *     call DecJneSetCallSetJmp; if !pause: mstack-push 0x00438990; jmp GameDispatchValidateState; ret.
  *   chain[+0x84]==0 path: install-self at +0x08=0x004388f0, g_pendingNodeType=1, pause=1; pop+ret.
- *   Block B (+0xa0): cmp g_table_00535ddc vs g_currentNodeFlags; if le jmp self; else jmp GuardedSeq_00438630.
+ *   Block B (+0xa0): cmp g_table_00535ddc vs g_currentNodeFlags; if le jmp self; else jmp GuardedSeq_ScaledZeroFour_then_StackPopDispatchTagged.
  */
 extern unsigned int g_matrixStack_arr;
 extern void DecJneSetCallSetJmp(void);
 extern void DecOrZeroDirty4(void);
-extern void GuardedSeq_00438630(void);
+extern void GuardedSeq_ScaledZeroFour_then_StackPopDispatchTagged(void);
 extern void Push84CallTestInstallJmp(void);
 
 __declspec(naked) void InstallSelfMultiCascade(void) {
@@ -139,7 +139,7 @@ __declspec(naked) void InstallSelfMultiCascade(void) {
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   74h
         _emit   07h
-        call    GuardedSeq_00438630
+        call    GuardedSeq_ScaledZeroFour_then_StackPopDispatchTagged
         pop     esi
         ret
         mov     esi, dword ptr [g_eventQueueChild]
@@ -175,6 +175,6 @@ __declspec(naked) void InstallSelfMultiCascade(void) {
         _emit   7eh
         _emit   05h
         jmp     InstallSelfMultiCascade
-        jmp     GuardedSeq_00438630
+        jmp     GuardedSeq_ScaledZeroFour_then_StackPopDispatchTagged
     }
 }

@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -112,7 +112,7 @@ extern void Phase1ChainExtendedInitLoop(void);
 extern void ScaledIndirectJmp_0049c850(void);
 extern void BootOneShotSetup(void);
 extern void PendingMatch_0040a8d0(void);
-extern void GuardedSeq_0049c340(void);
+extern void GuardedSeq_MStackCall_then_CallSetPause_0049c340(void);
 
 /* @addr 0x0049c220 (274b game) - three adjacent blocks.
  *   B1 (0..0x7f): 2x Mul10Tail with 0x3333 mod for g_currentNodeFlags/g_xformScratch2088;
@@ -122,7 +122,7 @@ extern void GuardedSeq_0049c340(void);
  *     orig was 0: call Phase1ChainExtendedInitLoop. If !pause: dec baseSel[+0x5c]; if was 0:
  *     tail-jmp ScaledIndirectJmp_0049c850. ret.
  *   B3 (0xf0..0x111): call BootOneShotSetup; if !pause: call PendingMatch_0040a8d0;
- *     if !pause: tail-jmp GuardedSeq_0049c340; ret.
+ *     if !pause: tail-jmp GuardedSeq_MStackCall_then_CallSetPause_0049c340; ret.
  */
 extern unsigned int g_bootInitSaveSlot;
 
@@ -210,7 +210,7 @@ __declspec(naked) void DualMul10AndDispatchChain(void) {
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     GuardedSeq_0049c340
+        jmp     GuardedSeq_MStackCall_then_CallSetPause_0049c340
         ret
     }
 }

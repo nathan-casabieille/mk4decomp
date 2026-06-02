@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0044a500 (133b) - twin of 0x0044a000 with constants 8/6/8 and
- *   tail-jmp GuardedSeq_00473ef0.
+ *   tail-jmp GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7b.
  */
 void GuardedTripleSetTailJmp8(void) {
     unsigned int v;
@@ -127,5 +127,5 @@ void GuardedTripleSetTailJmp8(void) {
     if (g_framePauseFlag != 0) return;
     g_acc_00542078 = 6;
     g_walkCallback = (void (*)(void))8;
-    GuardedSeq_00473ef0();
+    GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7b();
 }

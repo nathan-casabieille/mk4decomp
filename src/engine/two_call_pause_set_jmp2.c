@@ -22,7 +22,7 @@ extern u32 g_framePauseFlag;
  */
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
-extern void GuardedSeq_00473f70(void);
+extern void GuardedSeq_DualSetShiftCall_then_MStackPush2CjMul10Triple(void);
 void TwoCallPauseSetJmp2(void) {
     MStackPush2RunCountdown();
     if (g_framePauseFlag != 0) return;
@@ -30,5 +30,5 @@ void TwoCallPauseSetJmp2(void) {
     if (g_framePauseFlag != 0) return;
     g_acc_00542078 = 2;
     g_walkCallback = (void (*)(void))3;
-    GuardedSeq_00473f70();
+    GuardedSeq_DualSetShiftCall_then_MStackPush2CjMul10Triple();
 }

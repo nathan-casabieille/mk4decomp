@@ -64,7 +64,7 @@ extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
-extern void ScaledArrStore_004298c0(void);
+extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
 extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   On existing slot: chain cmp + bit OR/XOR + call through [g_eventQueueEnd].
  *   On install: pop g_eventQueueEnd from mstack + call ScaledArrStore.
  */
-extern void ScaledArrStore_004285c0(void);
+extern void ScaledArrStore_CallDualStoreXorBit(void);
 
 __declspec(naked) void EsiInstallChainCallIndirect(void) {
     __asm {
@@ -145,7 +145,7 @@ __declspec(naked) void EsiInstallChainCallIndirect(void) {
         dec     eax
         mov     dword ptr [g_eventQueueEnd], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        call    ScaledArrStore_004285c0
+        call    ScaledArrStore_CallDualStoreXorBit
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

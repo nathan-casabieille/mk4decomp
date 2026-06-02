@@ -15,7 +15,7 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_audioRestoreSlot3;
 extern void Wrapper_OrListLoop_004d8e80(void);
 extern void ZeroLargeBlock(void);
-extern void GuardedSeq_004335d0(void);
+extern void GuardedSeq_BitmapBlitRunLength_then_FiveTableInitChainBracketed(void);
 extern void SentinelInitTripleCall(void);
 extern void GlobalsResetInit(void);
 extern void Helper_TickFrameTail(void);
@@ -25,7 +25,7 @@ void Set2FiveCallPauseJmp(void) {
     g_audioRestoreSlot3 = 2;
     ZeroLargeBlock();
     if (g_framePauseFlag) return;
-    GuardedSeq_004335d0();
+    GuardedSeq_BitmapBlitRunLength_then_FiveTableInitChainBracketed();
     if (g_framePauseFlag) return;
     SentinelInitTripleCall();
     if (g_framePauseFlag) return;
