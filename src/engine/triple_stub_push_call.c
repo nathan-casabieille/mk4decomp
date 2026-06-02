@@ -19,11 +19,11 @@ void TripleStubPushCall(void) {
 }
 
 /* @addr 0x00438eb0 (14b) entry B */
-void func_00438eb0(void) {
+void func_CmpDualPatchScaledRangeJmp_with_g_dispatchSave1234(void) {
     CmpDualPatchScaledRangeJmp(&g_dispatchSave1234);
 }
 
 /* @addr 0x00438ec0 (14b) entry C */
-void func_00438ec0(void) {
+void func_CmpDualPatchScaledRangeJmp_with_g_dispatchSave1235(void) {
     CmpDualPatchScaledRangeJmp(&g_dispatchSave1235);
 }

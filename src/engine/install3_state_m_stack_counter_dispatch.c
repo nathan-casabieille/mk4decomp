@@ -129115,7 +129115,7 @@ void func_00498bd0(void) {
 
 /* h8 @ 0x00498c10 (42b): chained DualCmpSwapStore +
  * MstackPushPackChainInit + ArgSar_Set0_Jmp w/ event 004f2298. */
-void func_00498c10(void) {
+void func_DualCmpSwapStore_then_MstackPushPackChainInit_then_call_ArgSar_Set0_Jmp(void) {
     DualCmpSwapStore();
     if (g_framePauseFlag) return;
     MstackPushPackChainInit();
@@ -130158,7 +130158,7 @@ void func_00482240(void) {
 }
 
 /* h5 @ 0x00482290 (48b): 488f00 + 494580 + event 004edc18. */
-void func_00482290(void) {
+void func_CjTableThresholdDispatch_then_GateDispatch6c_then_call_ArgSarStoreJmp_00482290(void) {
     CjTableThresholdDispatch();
     if (g_framePauseFlag) return;
     GateDispatch6c();
@@ -130229,7 +130229,7 @@ void func_00482360(void) {
 }
 
 /* h10 @ 0x004823b0 (48b): 488f00 + 494580 + event 004edcf0. */
-void func_004823b0(void) {
+void func_CjTableThresholdDispatch_then_GateDispatch6c_then_call_ArgSarStoreJmp_004823b0(void) {
     CjTableThresholdDispatch();
     if (g_framePauseFlag) return;
     GateDispatch6c();
@@ -130269,7 +130269,7 @@ void func_call_ArgSarStoreJmp_with_g_dispatchSave757(void) {
 }
 
 /* h13 @ 0x00482480 (48b): 488f00 + 494580 + event 004eddb8. */
-void func_00482480(void) {
+void func_CjTableThresholdDispatch_then_GateDispatch6c_then_call_ArgSarStoreJmp_00482480(void) {
     CjTableThresholdDispatch();
     if (g_framePauseFlag) return;
     GateDispatch6c();
@@ -130278,7 +130278,7 @@ void func_00482480(void) {
 }
 
 /* h14 @ 0x004824b0 (48b): 488f00 + 494580 + event 004ede00. */
-void func_004824b0(void) {
+void func_CjTableThresholdDispatch_then_GateDispatch6c_then_call_ArgSarStoreJmp_004824b0(void) {
     CjTableThresholdDispatch();
     if (g_framePauseFlag) return;
     GateDispatch6c();
