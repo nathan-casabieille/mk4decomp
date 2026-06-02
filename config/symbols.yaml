@@ -2676,13 +2676,13 @@ functions:
     status: matched
     file: src/engine/scaled_load_jmp.c
   - addr: 0x00428d40
-    name: ScaledClearJmp_00428d40
+    name: ScaledClearJmp_InstallSelf3WayChainCmp
     size: 25
     group: game
     status: matched
     file: src/engine/scaled_clear_jmp.c
   - addr: 0x00428d60
-    name: ScaledClearJmp_00428d60
+    name: ScaledClearJmp_EsiInstallBitCallChain
     size: 25
     group: game
     status: matched
@@ -2706,7 +2706,7 @@ functions:
     status: matched
     file: src/engine/scaled_array_store.c
   - addr: 0x00428e90
-    name: ScaledClearJmp_00428e90
+    name: ScaledClearJmp_InstallSelfBitGated
     size: 25
     group: game
     status: matched
@@ -4068,7 +4068,7 @@ functions:
     status: matched
     file: src/engine/thunks.c
   - addr: 0x004368f0
-    name: ScaledAddrInit_004368f0
+    name: ScaledAddrInit_InstallSelfMStackPushDispatch
     size: 18
     group: game
     status: matched
@@ -6600,25 +6600,25 @@ functions:
     status: matched
     file: src/engine/round_end_fsm_cluster.c
   - addr: 0x0045d8e0
-    name: DualScaledInit_0045d8e0
+    name: DualScaledInit_g_table_0052ab18_g_table_0053a2a0
     size: 32
     group: game
     status: matched
     file: src/engine/dual_scaled_init.c
   - addr: 0x0045d900
-    name: DualScaledInit_0045d900
+    name: DualScaledInit_g_table_0053a330_g_table_0053a258
     size: 32
     group: game
     status: matched
     file: src/engine/dual_scaled_init.c
   - addr: 0x0045d920
-    name: DualScaledInit_0045d920
+    name: DualScaledInit_g_table_00541e00_g_table_0053a2f8
     size: 32
     group: game
     status: matched
     file: src/engine/dual_scaled_init.c
   - addr: 0x0045d940
-    name: DualScaledInit_0045d940
+    name: DualScaledInit_g_table_0053a750_g_table_00538048
     size: 32
     group: game
     status: matched
@@ -7512,13 +7512,13 @@ functions:
     status: matched
     file: src/engine/scaled_or_store.c
   - addr: 0x004677c0
-    name: ScaledAddrInit_004677c0
+    name: ScaledAddrInit_IntroComboFsmCluster_004677c0
     size: 18
     group: game
     status: matched
     file: src/engine/scaled_addr_init.c
   - addr: 0x004677e0
-    name: ScaledAddrInit_004677e0
+    name: ScaledAddrInit_IntroComboFsmCluster_004677e0
     size: 18
     group: game
     status: matched
@@ -14250,7 +14250,7 @@ functions:
     status: matched
     file: src/engine/dsound_create_buffer_170.c
   - addr: 0x004aea40
-    name: DSoundBufferInit146_004aea40
+    name: DSoundBufferInit146_a40
     size: 146
     group: engine.install
     status: matched
@@ -14406,7 +14406,7 @@ functions:
     status: matched
     file: src/engine/com_init_sequence.c
   - addr: 0x004afa60
-    name: DSoundBufferInit146_004afa60
+    name: DSoundBufferInit146_a60
     size: 146
     group: engine.install
     status: matched
@@ -14502,7 +14502,7 @@ functions:
     status: matched
     file: src/engine/com_init_sequence.c
   - addr: 0x004b0290
-    name: DSoundBufferInit146_004b0290
+    name: DSoundBufferInit146_b290
     size: 146
     group: engine.ecm
     status: matched
@@ -15084,7 +15084,7 @@ functions:
     status: matched
     file: src/engine/helper_glide_error.c
   - addr: 0x004b5190
-    name: DSoundBufferInit146_004b5190
+    name: DSoundBufferInit146_b519
     size: 146
     group: engine.geo
     status: matched

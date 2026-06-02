@@ -126,7 +126,7 @@ extern unsigned int g_fightAxisPosY;
  *   0x542a58 and calls GuardedPackedSlotInit, then
  *   MStackPush3CmpCall. If bit 0 of 0x54208c set, calls
  *   PendingMatch_004694b0. Then tail-jmp ScaledChainJmp_00429470 or
- *   ScaledClearJmp_00428d60 depending on g_eventQueueChild.
+ *   ScaledClearJmp_EsiInstallBitCallChain depending on g_eventQueueChild.
  */
 extern unsigned int g_dispatchTab;
 extern unsigned int g_mul10TableBase;
@@ -137,7 +137,7 @@ extern void GuardedPackedSlotInit(void);
 extern void Mul10SumStoreNegCommit(void);
 extern void PendingMatch_004694b0(void);
 extern void ScaledChainJmp_00429470(void);
-extern void ScaledClearJmp_00428d60(void);
+extern void ScaledClearJmp_EsiInstallBitCallChain(void);
 extern void ScaledIndexConditionalAdd(void);
 extern void TableLookupCall_g_table_004efa00(void);
 
@@ -236,7 +236,7 @@ __declspec(naked) void StreamFlagPackedSelectChain(void) {
         jne     short L_sfp_tailClear
         jmp     ScaledChainJmp_00429470
     L_sfp_tailClear:
-        jmp     ScaledClearJmp_00428d60
+        jmp     ScaledClearJmp_EsiInstallBitCallChain
     L_sfp_done:
         ret
     }

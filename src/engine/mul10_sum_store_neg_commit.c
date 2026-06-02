@@ -118,7 +118,7 @@ extern void GuardedDualConst2AndToggle(void);
 extern void Mul10SumStoreNegCommit(void);
 extern void MStackPush3CmpCall(void);
 extern void PendingMatch_004694b0(void);
-extern void ScaledClearJmp_00428d60(void);
+extern void ScaledClearJmp_EsiInstallBitCallChain(void);
 
 /* @addr 0x00469340 (364b game) - cdecl chain with stream-flag swap +
  *   packed_ptr select. Sets g_walkCallback=0x52, calls
@@ -138,7 +138,7 @@ extern void ScaledClearJmp_00428d60(void);
  *   0x542a58 and calls GuardedPackedSlotInit, then
  *   MStackPush3CmpCall. If bit 0 of 0x54208c set, calls
  *   PendingMatch_004694b0. Then tail-jmp ScaledChainJmp_00429470 or
- *   ScaledClearJmp_00428d60 depending on g_eventQueueChild.
+ *   ScaledClearJmp_EsiInstallBitCallChain depending on g_eventQueueChild.
  */
 extern void GuardedPackedSlotInit(void);
 extern void ScaledChainJmp_00429470(void);
@@ -239,7 +239,7 @@ __declspec(naked) void StreamFlagPackedSelectChain(void) {
         jne     short L_sfp_tailClear
         jmp     ScaledChainJmp_00429470
     L_sfp_tailClear:
-        jmp     ScaledClearJmp_00428d60
+        jmp     ScaledClearJmp_EsiInstallBitCallChain
     L_sfp_done:
         ret
     }

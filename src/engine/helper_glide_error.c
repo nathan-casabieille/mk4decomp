@@ -30,7 +30,7 @@ void Helper_GlideError(void) {
         ((void(__stdcall *)(unsigned int))g_iat_FreeLibrary)(g_glideFnTable);
         g_glideFnTable = 0;
     }
-    DSoundBufferInit146_004b5190();
+    DSoundBufferInit146_b519();
     g_glideF8 = 0;
     g_renderer1_active = 0;
 }

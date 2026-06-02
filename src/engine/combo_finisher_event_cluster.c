@@ -122,7 +122,7 @@ extern void NotMaskStorePair(void);
 extern void PunchAnimCluster(void);
 extern void PushPopWalkSet1006(void);
 extern void ScaledChain3c7c(void);
-extern void ScaledClearJmp_00428d40(void);
+extern void ScaledClearJmp_InstallSelf3WayChainCmp(void);
 extern void ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d490(void);
 extern void ScaledLoadJmp_00428d20(void);
 extern void ScaledLoadJmp_24(void);
@@ -250,7 +250,7 @@ __declspec(naked) void ComboFinisherEventCluster(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], edi
-        call     ScaledClearJmp_00428d40
+        call     ScaledClearJmp_InstallSelf3WayChainCmp
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi

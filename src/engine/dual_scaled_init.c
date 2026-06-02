@@ -33,28 +33,28 @@ extern unsigned int g_table_0053a750;   /* 0x0053a750 */
 extern unsigned int g_table_00538048;   /* 0x00538048 */
 
 /* @addr 0x0045d8e0 */
-void DualScaledInit_0045d8e0(void) {
+void DualScaledInit_g_table_0052ab18_g_table_0053a2a0(void) {
     g_scaledInit_00542044 = (unsigned int)&g_table_0052ab18 >> 2;
     g_scaledInit_00542048 = (unsigned int)&g_table_0053a2a0 >> 2;
     DualSwapTwoCallsJmp();
 }
 
 /* @addr 0x0045d900 */
-void DualScaledInit_0045d900(void) {
+void DualScaledInit_g_table_0053a330_g_table_0053a258(void) {
     g_scaledInit_00542044 = (unsigned int)&g_table_0053a330 >> 2;
     g_scaledInit_00542048 = (unsigned int)&g_table_0053a258 >> 2;
     DualSwapTwoCallsJmp();
 }
 
 /* @addr 0x0045d920 */
-void DualScaledInit_0045d920(void) {
+void DualScaledInit_g_table_00541e00_g_table_0053a2f8(void) {
     g_scaledInit_00542044 = (unsigned int)&g_table_00541e00 >> 2;
     g_scaledInit_00542048 = (unsigned int)&g_table_0053a2f8 >> 2;
     DualSwapTwoCallsJmp();
 }
 
 /* @addr 0x0045d940 */
-void DualScaledInit_0045d940(void) {
+void DualScaledInit_g_table_0053a750_g_table_00538048(void) {
     g_scaledInit_00542044 = (unsigned int)&g_table_0053a750 >> 2;
     g_scaledInit_00542048 = (unsigned int)&g_table_00538048 >> 2;
     DualSwapTwoCallsJmp();

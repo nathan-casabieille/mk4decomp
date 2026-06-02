@@ -19,21 +19,21 @@ extern void EsiInstallBitCallChain_00429530(void);
 extern void InstallSelfBitGated(void);
 
 /* @addr 0x00428d40 */
-void ScaledClearJmp_00428d40(void) {
+void ScaledClearJmp_InstallSelf3WayChainCmp(void) {
     g_walkCallback = (void (*)(void))0;
     ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = 0;
     InstallSelf3WayChainCmp();
 }
 
 /* @addr 0x00428d60 */
-void ScaledClearJmp_00428d60(void) {
+void ScaledClearJmp_EsiInstallBitCallChain(void) {
     g_walkCallback = (void (*)(void))0;
     ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = 0;
     EsiInstallBitCallChain_00429530();
 }
 
 /* @addr 0x00428e90 */
-void ScaledClearJmp_00428e90(void) {
+void ScaledClearJmp_InstallSelfBitGated(void) {
     g_walkCallback = (void (*)(void))0;
     ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = 0;
     InstallSelfBitGated();

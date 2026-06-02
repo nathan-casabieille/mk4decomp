@@ -19,7 +19,7 @@ extern void ComReleasePair_004af440(void);
 extern void ComRelease_g_comptr_0058c7b8(void);
 extern void ComRelease_g_comptr_0058c7bc(void);
 extern void ComRelease_g_comptr_0058c7c0(void);
-extern void DSoundBufferInit146_004aea40(void);
+extern void DSoundBufferInit146_a40(void);
 extern void R2_Init4(void);
 extern void DSoundDualEntryRelease(void);
 extern void DualVtable8Call(void);
@@ -59,7 +59,7 @@ loop4ad7c0:
         add     esp, 4
         call    ComRelease_g_comptr_0058c7bc
         call    ComReleaseCapture_004aeee0
-        call    DSoundBufferInit146_004aea40
+        call    DSoundBufferInit146_a40
         mov     eax, dword ptr [g_renderer2_initOk]
         mov     dword ptr [g_renderer2_active], 0
         test    eax, eax

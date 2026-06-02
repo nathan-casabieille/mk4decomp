@@ -24,19 +24,19 @@ extern unsigned int g_table_004e4780;   /* 0x004e4780 */
 extern unsigned int g_table_004e56d8;   /* 0x004e56d8 */
 
 /* @addr 0x004368f0 */
-void ScaledAddrInit_004368f0(void) {
+void ScaledAddrInit_InstallSelfMStackPushDispatch(void) {
     g_eventQueueEnd = (unsigned int)((int)&g_table_004e4780 >> 2);
     InstallSelfMStackPushDispatch();
 }
 
 /* @addr 0x004677c0 */
-void ScaledAddrInit_004677c0(void) {
+void ScaledAddrInit_IntroComboFsmCluster_004677c0(void) {
     g_walkCallback = (void (*)(void))((int)&g_table_004e56d8 >> 2);
     IntroComboFsmCluster();
 }
 
 /* @addr 0x004677e0 */
-void ScaledAddrInit_004677e0(void) {
+void ScaledAddrInit_IntroComboFsmCluster_004677e0(void) {
     g_walkCallback = (void (*)(void))((int)&g_table_004e56d8 >> 2);
     IntroComboFsmCluster();
 }

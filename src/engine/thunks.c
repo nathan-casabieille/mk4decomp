@@ -23,7 +23,7 @@ extern void StructArrayWalkCondCall(void);     /* 0x0041fc50 */
 extern void ScaledLoadInstallOrCall_00433960(void);     /* 0x00433960 */
 extern void GuardedSeq_PackedSelectLoad6_then_GuardedSeq(void);     /* 0x00433bb0 */
 extern void InstallSelfThreeStateDispatch(void);     /* 0x00436030 */
-extern void ScaledAddrInit_004368f0(void);     /* 0x004368f0 */
+extern void ScaledAddrInit_InstallSelfMStackPushDispatch(void);     /* 0x004368f0 */
 extern void InstallSelfPacked0x2005(void);     /* 0x00437a90 */
 extern void InstallSelfChainSetB333(void);     /* 0x00437b60 */
 extern void InstallSelfChainSetB333v2(void);     /* 0x00437f00 */
@@ -72,7 +72,7 @@ void Thunk_Wrapper_00438ee0_00435de0(void) { Wrapper_CmpDualPatchScaledRangeJmp_
 void Thunk_Wrapper_00438ee0_004368d0(void) { Wrapper_CmpDualPatchScaledRangeJmp_004e4990(); }
 
 /* @addr 0x004368e0 */
-void Thunk_ScaledAddrInit(void) { ScaledAddrInit_004368f0(); }
+void Thunk_ScaledAddrInit(void) { ScaledAddrInit_InstallSelfMStackPushDispatch(); }
 
 /* @addr 0x004399b0 */
 void Thunk_GuardedSeq(void) { GuardedSeq_PackedSelectLoad6_then_GuardedSeq(); }

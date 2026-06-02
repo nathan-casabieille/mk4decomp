@@ -116,25 +116,25 @@ extern unsigned int g_iat_SetWindowPos;
 
 /* @addr 0x004aea40 */
 
-__declspec(naked) void DSoundBufferInit146_004aea40(void) {
+__declspec(naked) void DSoundBufferInit146_a40(void) {
     DSOUND_BODY(g_a40_state, g_a40_iface, g_a40_secondary, g_a40_config,
                 g_a40_data, g_a40_e1, g_a40_e2, g_a40_e3, g_a40_e4)
 }
 
 /* @addr 0x004afa60 */
-__declspec(naked) void DSoundBufferInit146_004afa60(void) {
+__declspec(naked) void DSoundBufferInit146_a60(void) {
     DSOUND_BODY(g_a60_state, g_a60_iface, g_a60_secondary, g_a60_config,
                 g_a60_data, g_a60_e1, g_a60_e2, g_a60_e3, g_a60_e4)
 }
 
 /* @addr 0x004b0290 */
-__declspec(naked) void DSoundBufferInit146_004b0290(void) {
+__declspec(naked) void DSoundBufferInit146_b290(void) {
     DSOUND_BODY(g_b290_state, g_b290_iface, g_b290_secondary, g_b290_config,
                 g_b290_data, g_b290_e1, g_b290_e2, g_b290_e3, g_b290_e4)
 }
 
 /* @addr 0x004b5190 */
-__declspec(naked) void DSoundBufferInit146_004b5190(void) {
+__declspec(naked) void DSoundBufferInit146_b519(void) {
     DSOUND_BODY(g_b519_state, g_b519_iface, g_b519_secondary, g_b519_config,
                 g_b519_data, g_b519_e1, g_b519_e2, g_b519_e3, g_b519_e4)
 }

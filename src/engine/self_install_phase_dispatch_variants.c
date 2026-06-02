@@ -133,7 +133,7 @@ extern void TableLookupCall_g_table_004efa00(void);
 extern unsigned int g_dispatchSave787;
 extern void ArgScaledTestStore(void);
 extern void ScaledChainJmp_00429470(void);
-extern void ScaledClearJmp_00428d60(void);
+extern void ScaledClearJmp_EsiInstallBitCallChain(void);
 extern void ScaledZeroFour(void);
 extern void SelfInstallPhaseDispatch_00460000(void);
 extern void SelfInstallPhaseDispatch_004943f0(void);
@@ -262,7 +262,7 @@ __declspec(naked) void InstallSelf3StateDualEntry(void) {
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
-        call    ScaledClearJmp_00428d60
+        call    ScaledClearJmp_EsiInstallBitCallChain
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret

@@ -11,7 +11,7 @@ extern void CallDualStoreXorBit(void);
 extern void InstallSelfTri(void);
 extern void FiveCallGuardSetTail(void);
 extern void DirtyToggleByGate(void);
-extern void ScaledClearJmp_00428d60(void);
+extern void ScaledClearJmp_EsiInstallBitCallChain(void);
 extern void InstallSelfReentry(void);
 
 /* @addr 0x00484b40 */
@@ -30,7 +30,7 @@ void GuardedDispatch4_00489080(void) {
     DirtyToggleByGate();
     if (g_framePauseFlag) return;
     if (!(g_xformDirtyFlags & 4)) {
-        ScaledClearJmp_00428d60();
+        ScaledClearJmp_EsiInstallBitCallChain();
         return;
     }
     InstallSelfReentry();

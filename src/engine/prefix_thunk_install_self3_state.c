@@ -2798,7 +2798,7 @@ extern void Crt_fpieee_flt(void);
 extern void Crt_rand(void);
 extern void DSCreateThunk_004d12d2(void);
 extern void DSEnumeratorThunk_004d12cc(void);
-extern void DSoundBufferInit146_004aea40(void);
+extern void DSoundBufferInit146_a40(void);
 extern void DSoundBufferInit146_004aea40_alt(void);
 extern void R2_Init4(void);
 extern void DSoundCaptureSetupGate(void);
@@ -2962,10 +2962,10 @@ extern void DualSave(void);
 extern void DualScaledChainPush(void);
 extern void DualScaledInitClear(void);
 extern void DualScaledInitCmp_0046df50(void);
-extern void DualScaledInit_0045d8e0(void);
-extern void DualScaledInit_0045d900(void);
-extern void DualScaledInit_0045d920(void);
-extern void DualScaledInit_0045d940(void);
+extern void DualScaledInit_g_table_0052ab18_g_table_0053a2a0(void);
+extern void DualScaledInit_g_table_0053a330_g_table_0053a258(void);
+extern void DualScaledInit_g_table_00541e00_g_table_0053a2f8(void);
+extern void DualScaledInit_g_table_0053a750_g_table_00538048(void);
 extern void DualScaledLitInitJmp(void);
 extern void DualScaledLoadStoreJmp(void);
 extern void DualScaledStoreConst(void);
@@ -3877,8 +3877,8 @@ extern void SaveSwapCallRestore(void);
 extern void Scaled3StorePushCallJmp(void);
 extern void ScaledAddDeref(void);
 extern void ScaledAddStore(void);
-extern void ScaledAddrInit_004677c0(void);
-extern void ScaledAddrInit_004677e0(void);
+extern void ScaledAddrInit_IntroComboFsmCluster_004677c0(void);
+extern void ScaledAddrInit_IntroComboFsmCluster_004677e0(void);
 extern void ScaledAnd4InvDirtyClear(void);
 extern void ScaledAndAh(void);
 extern void ScaledAndAl7f(void);
@@ -3917,9 +3917,9 @@ extern void ScaledChainStore24(void);
 extern void ScaledChainStore(void);
 extern void ScaledChainTripleStore(void);
 extern void ScaledChainTwoStores(void);
-extern void ScaledClearJmp_00428d40(void);
-extern void ScaledClearJmp_00428d60(void);
-extern void ScaledClearJmp_00428e90(void);
+extern void ScaledClearJmp_InstallSelf3WayChainCmp(void);
+extern void ScaledClearJmp_EsiInstallBitCallChain(void);
+extern void ScaledClearJmp_InstallSelfBitGated(void);
 extern void ScaledClearTripleCallJmp(void);
 extern void ScaledCmp200eCallBool(void);
 extern void ScaledCmpJlJmp(void);
@@ -5887,7 +5887,7 @@ loop4ad7c0:
         add     esp, 4
         call    ComRelease_g_comptr_0058c7bc
         call    ComReleaseCapture_004aeee0
-        call    DSoundBufferInit146_004aea40
+        call    DSoundBufferInit146_a40
         mov     eax, dword ptr [g_renderer2_initOk]
         mov     dword ptr [g_renderer2_active], 0
         test    eax, eax
@@ -9681,7 +9681,7 @@ void InstallSelfStoreTwoCall(void) {
         mov     [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
-        call    ScaledClearJmp_00428d40
+        call    ScaledClearJmp_InstallSelf3WayChainCmp
         mov     dword ptr [g_framePauseFlag], 1
         }
 }
@@ -24228,7 +24228,7 @@ __declspec(naked) void NestedLoopDispatch(void) {
 /* @addr 0x004916f0 (238b game) - install-self with init-OR-step branch.
  *   snapshot+clear chain[+0x84]. If was zero: install-self ([esi+8]=0x004916f0,
  *     chain[+0x84]=1) + scaledInit-chain push with +0x01000000 packed_ptr; call
- *     ScaledClearJmp_00428d60; pause=1; ret.
+ *     ScaledClearJmp_EsiInstallBitCallChain; pause=1; ret.
  *   If was nonzero: call SlotPhaseResetInstallChain; if pause? ret. call ScaledZeroFour;
  *     if pause? ret. tail-call CallPauseScaledStorePushCall; ret.
  */
@@ -24290,7 +24290,7 @@ __declspec(naked) void InstallSelfScaledChain(void) {
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
-        call    ScaledClearJmp_00428d60
+        call    ScaledClearJmp_EsiInstallBitCallChain
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
@@ -29601,7 +29601,7 @@ __declspec(naked) void InstallSelfStateCounter(void) {
  *   state zero: call RunBlockFsmCluster; if !pause: push 0x0054331c, call
  *     GuardedPackedSlotInit; if !pause: g_eventQueueChild=4; install-self;
  *     chain[+0x84]=1; scaledInit-chain push 0x0049a2f0+0x01000000;
- *     call ScaledClearJmp_00428d40; pause=1; ret.
+ *     call ScaledClearJmp_InstallSelf3WayChainCmp; pause=1; ret.
  *   After 12 NOPs (alignment-only): tail block for another entry/sibling that
  *     calls CondPickDualStore; if !pause: RunBlockFsmCluster; if !pause:
  *     push 0x00543318, GuardedPackedSlotInit; if !pause: tail-jmp InstallSelfStoreTwoCall; ret.
@@ -29653,7 +29653,7 @@ __declspec(naked) void InstallSelfDualPathInit(void) {
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
-        call    ScaledClearJmp_00428d40
+        call    ScaledClearJmp_InstallSelf3WayChainCmp
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
@@ -31937,7 +31937,7 @@ __declspec(naked) void InstallSelf3StateDualEntry(void) {
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
-        call    ScaledClearJmp_00428d60
+        call    ScaledClearJmp_EsiInstallBitCallChain
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
@@ -53464,7 +53464,7 @@ __declspec(naked) void Audio_PlaySoundId(void) {
  *   0x542a58 and calls GuardedPackedSlotInit, then
  *   MStackPush3CmpCall. If bit 0 of 0x54208c set, calls
  *   PendingMatch_004694b0. Then tail-jmp ScaledChainJmp_00429470 or
- *   ScaledClearJmp_00428d60 depending on g_eventQueueChild.
+ *   ScaledClearJmp_EsiInstallBitCallChain depending on g_eventQueueChild.
  */
 __declspec(naked) void StreamFlagPackedSelectChain(void) {
     __asm {
@@ -53561,7 +53561,7 @@ __declspec(naked) void StreamFlagPackedSelectChain(void) {
         jne     short L_sfp_tailClear
         jmp     ScaledChainJmp_00429470
     L_sfp_tailClear:
-        jmp     ScaledClearJmp_00428d60
+        jmp     ScaledClearJmp_EsiInstallBitCallChain
     L_sfp_done:
         ret
     }
@@ -54788,7 +54788,7 @@ __declspec(naked) void MStackInstallBodyChain(void) {
  *       no-error sets g_walkCallback=4, calls ByteWordTableTaggedDispatch,
  *       pushes 0x542ab0 → GuardedPackedSlotInit, installs Self
  *       with slot[+0x84]=1 and packed_ptr (Self + 0x01000000) at bumped
- *       scaled slot, calls ScaledClearJmp_00428d60, arms 0x541e6c=1.
+ *       scaled slot, calls ScaledClearJmp_EsiInstallBitCallChain, arms 0x541e6c=1.
  *     phase 1: writes [g_fightGroupHead*4+0x78]=0xffffb334, sets 0x54206c=
  *       0x3333, calls DualFieldAddSubStore; on no-error
  *       installs Self with slot[+0x84]=2 and g_pendingNodeType=0xa,
@@ -54872,7 +54872,7 @@ __declspec(naked) void Phase3InstallPackedSelf(void) {
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
-        call    ScaledClearJmp_00428d60
+        call    ScaledClearJmp_EsiInstallBitCallChain
         mov     dword ptr [g_framePauseFlag], 1
     L_pis_done:
         pop     esi
@@ -55915,7 +55915,7 @@ __declspec(naked) void MStackPush2LLWalkCompare(void) {
  *     ScaledAndAlfe → push 0x542a78 → ArgScaledTestStore. On
  *     no-error writes g_xformEntityIdx → [0x54205c*4 + 0x24], installs Self
  *     entry 1 (0x46b3b0) with packed_ptr (Self + 0x01000000), calls
- *     ScaledClearJmp_00428d60.
+ *     ScaledClearJmp_EsiInstallBitCallChain.
  *   5b NOP align pad.
  *   Entry 3 (offset 0x130, 70b): FiveCallScaledChainTailJmp;
  *     on no-error reads [scaled+0x34] as state code; if 0x11 → 7. If
@@ -55990,7 +55990,7 @@ __declspec(naked) void StateRemapPackedInstall(void) {
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
-        call    ScaledClearJmp_00428d60
+        call    ScaledClearJmp_EsiInstallBitCallChain
         mov     dword ptr [g_framePauseFlag], 1
     L_srp_e2End:
         pop     esi
@@ -96635,7 +96635,7 @@ __declspec(naked) void GeoTransformDispatchAndApply(void)
  *       GuardedPackedSlotInit (preload)
  *     - g_eventQueueChild := 0xa (tick budget)
  *     - install OFFSET self + state 1 + (OFFSET self | 1<<24)
- *       into active-pool, call ScaledClearJmp_00428d40, mark sync.
+ *       into active-pool, call ScaledClearJmp_InstallSelf3WayChainCmp, mark sync.
  *
  *   state 1 (L_83ce):
  *     - g_eventQueueChild := 0x14
@@ -96763,7 +96763,7 @@ __declspec(naked) void StageEventState4Way(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], edi
-        call     ScaledClearJmp_00428d40
+        call     ScaledClearJmp_InstallSelf3WayChainCmp
         mov      dword ptr [g_framePauseFlag], 1
     L_84da:
         pop      edi
@@ -105100,7 +105100,7 @@ __declspec(naked) void CrouchFsmCluster(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], 0
-        call     ScaledClearJmp_00428d60
+        call     ScaledClearJmp_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], 1
     L_2de2:
         pop      esi
@@ -106214,7 +106214,7 @@ __declspec(naked) void ThrowTakedownCluster(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], 0
-        call     ScaledClearJmp_00428d40
+        call     ScaledClearJmp_InstallSelf3WayChainCmp
         mov      dword ptr [g_framePauseFlag], ebx
     L_de58:
         pop      esi
@@ -106627,7 +106627,7 @@ __declspec(naked) void StanceFsmCluster(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], ebx
-        call     ScaledClearJmp_00428d60
+        call     ScaledClearJmp_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], 1
     L_7380:
         pop      esi
@@ -124154,7 +124154,7 @@ __declspec(naked) void ComboFinisherEventCluster(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], edi
-        call     ScaledClearJmp_00428d40
+        call     ScaledClearJmp_InstallSelf3WayChainCmp
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
@@ -133710,7 +133710,7 @@ __declspec(naked) void AerialBlockFsmCluster(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], 0
-        call     ScaledClearJmp_00428d40
+        call     ScaledClearJmp_InstallSelf3WayChainCmp
         mov      dword ptr [g_framePauseFlag], 1
     L_f8d9:
         pop      esi
@@ -134886,7 +134886,7 @@ __declspec(naked) void RunBlockFsmCluster(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], 0
-        call     ScaledClearJmp_00428d40
+        call     ScaledClearJmp_InstallSelf3WayChainCmp
         mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret      
@@ -134974,7 +134974,7 @@ __declspec(naked) void RunBlockFsmCluster(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], 0
-        call     ScaledClearJmp_00428d40
+        call     ScaledClearJmp_InstallSelf3WayChainCmp
         mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret      
@@ -137117,7 +137117,7 @@ __declspec(naked) void RoundCutsceneCluster(void)
         mov      dword ptr [eax + 4], ecx
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edx
-        call     ScaledClearJmp_00428d60
+        call     ScaledClearJmp_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         ret
@@ -147404,7 +147404,7 @@ __declspec(naked) void TournamentMenuFsmCluster(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], edi
-        call     ScaledClearJmp_00428d40
+        call     ScaledClearJmp_InstallSelf3WayChainCmp
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
@@ -148803,7 +148803,7 @@ __declspec(naked) void PendingMatch_0047cf60(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], 0
-        call     ScaledClearJmp_00428d40
+        call     ScaledClearJmp_InstallSelf3WayChainCmp
         mov      dword ptr [g_framePauseFlag], ebx
     L_d1f8:
         pop      esi
@@ -152947,7 +152947,7 @@ __declspec(naked) void PendingMatch_00469b40(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], 0
-        call     ScaledClearJmp_00428d40
+        call     ScaledClearJmp_InstallSelf3WayChainCmp
         mov      dword ptr [g_framePauseFlag], edi
         pop      edi
         pop      esi
@@ -156073,7 +156073,7 @@ __declspec(naked) void PendingMatch_00466fc0(void)
         mov      ecx, dword ptr [g_baseSel]
         mov      edx, dword ptr [g_xformEntityIdx]
         mov      dword ptr [ecx*4 + 0x44], edx
-        call     ScaledAddrInit_004677e0
+        call     ScaledAddrInit_IntroComboFsmCluster_004677e0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_75ec
@@ -156089,7 +156089,7 @@ __declspec(naked) void PendingMatch_00466fc0(void)
         mov      eax, dword ptr [g_baseSel]
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [eax*4 + 0x48], ecx
-        call     ScaledAddrInit_004677c0
+        call     ScaledAddrInit_IntroComboFsmCluster_004677c0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_75ec
@@ -156108,7 +156108,7 @@ __declspec(naked) void PendingMatch_00466fc0(void)
         mov      ecx, dword ptr [g_baseSel]
         mov      edx, dword ptr [ecx*4 + 0x40]
         mov      dword ptr [g_xformEntityIdx], edx
-        call     ScaledAddrInit_004677e0
+        call     ScaledAddrInit_IntroComboFsmCluster_004677e0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_75ec
@@ -156128,7 +156128,7 @@ __declspec(naked) void PendingMatch_00466fc0(void)
         mov      eax, dword ptr [g_baseSel]
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [eax*4 + 0x50], ecx
-        call     ScaledAddrInit_004677c0
+        call     ScaledAddrInit_IntroComboFsmCluster_004677c0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_75ec
@@ -161020,7 +161020,7 @@ __declspec(naked) void PendingMatch_0042b930(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], 0
-        call     ScaledClearJmp_00428d60
+        call     ScaledClearJmp_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], 1
     L_bed4:
         pop      esi
@@ -162313,7 +162313,7 @@ __declspec(naked) void PendingMatch_00484da0(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], edi
-        call     ScaledClearJmp_00428d40
+        call     ScaledClearJmp_InstallSelf3WayChainCmp
         mov      dword ptr [g_framePauseFlag], 1
     L_521e:
         pop      edi
@@ -162386,7 +162386,7 @@ __declspec(naked) void PendingMatch_00484da0(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], 0
-        call     ScaledClearJmp_00428d60
+        call     ScaledClearJmp_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], 1
     L_5332:
         pop      esi
@@ -162649,7 +162649,7 @@ __declspec(naked) void PendingMatch_00484da0(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], edi
-        call     ScaledClearJmp_00428d40
+        call     ScaledClearJmp_InstallSelf3WayChainCmp
         mov      dword ptr [g_framePauseFlag], 1
     L_56f7:
         pop      edi
@@ -163772,7 +163772,7 @@ __declspec(naked) void PendingMatch_0045c8e0(void)
         jne      L_ca56
     L_ca47:
         mov      dword ptr [g_walkCallback], 1
-        jmp      DualScaledInit_0045d8e0
+        jmp      DualScaledInit_g_table_0052ab18_g_table_0053a2a0
     L_ca56:
         ret      
         nop      
@@ -163791,7 +163791,7 @@ __declspec(naked) void PendingMatch_0045c8e0(void)
         nop      
         nop      
         mov      dword ptr [g_walkCallback], 2
-        jmp      DualScaledInit_0045d8e0
+        jmp      DualScaledInit_g_table_0052ab18_g_table_0053a2a0
         nop      
         push     0x4e8bc0
         call     StateInstallOrForward_0048e6b0
@@ -163800,7 +163800,7 @@ __declspec(naked) void PendingMatch_0045c8e0(void)
         nop      
         nop      
         mov      dword ptr [g_walkCallback], 3
-        jmp      DualScaledInit_0045d8e0
+        jmp      DualScaledInit_g_table_0052ab18_g_table_0053a2a0
         nop      
         push     0x4e8bf8
         call     StateInstallOrForward_0048e6b0
@@ -163809,7 +163809,7 @@ __declspec(naked) void PendingMatch_0045c8e0(void)
         nop      
         nop      
         mov      dword ptr [g_walkCallback], 4
-        jmp      DualScaledInit_0045d8e0
+        jmp      DualScaledInit_g_table_0052ab18_g_table_0053a2a0
         nop      
         push     0x4e8c30
         call     StateInstallOrForward_0048e6b0
@@ -163851,7 +163851,7 @@ __declspec(naked) void PendingMatch_0045c8e0(void)
         test     eax, eax
         jne      L_cb3c
         mov      dword ptr [g_walkCallback], 5
-        jmp      DualScaledInit_0045d900
+        jmp      DualScaledInit_g_table_0053a330_g_table_0053a258
     L_cb3c:
         ret      
         nop      
@@ -163878,7 +163878,7 @@ __declspec(naked) void PendingMatch_0045c8e0(void)
         test     eax, eax
         jne      L_cb9c
         mov      dword ptr [g_walkCallback], 6
-        jmp      DualScaledInit_0045d900
+        jmp      DualScaledInit_g_table_0053a330_g_table_0053a258
     L_cb9c:
         ret      
         nop      
@@ -163943,7 +163943,7 @@ __declspec(naked) void PendingMatch_0045c8e0(void)
         test     eax, eax
         jne      L_cc3c
         mov      dword ptr [g_walkCallback], 7
-        jmp      DualScaledInit_0045d900
+        jmp      DualScaledInit_g_table_0053a330_g_table_0053a258
     L_cc3c:
         ret      
         nop      
@@ -164017,7 +164017,7 @@ __declspec(naked) void PendingMatch_0045c8e0(void)
         test     eax, eax
         jne      L_ccdd
         mov      dword ptr [g_walkCallback], 8
-        jmp      DualScaledInit_0045d900
+        jmp      DualScaledInit_g_table_0053a330_g_table_0053a258
     L_ccdd:
         ret      
         nop      
@@ -164062,7 +164062,7 @@ __declspec(naked) void PendingMatch_0045c8e0(void)
         test     eax, eax
         jne      L_cd5c
         mov      dword ptr [g_walkCallback], 9
-        jmp      DualScaledInit_0045d900
+        jmp      DualScaledInit_g_table_0053a330_g_table_0053a258
     L_cd5c:
         ret      
         nop      
@@ -164194,7 +164194,7 @@ __declspec(naked) void PendingMatch_0045c8e0(void)
         test     eax, eax
         jne      L_ce97
         mov      dword ptr [g_walkCallback], 0xa
-        jmp      DualScaledInit_0045d900
+        jmp      DualScaledInit_g_table_0053a330_g_table_0053a258
     L_ce97:
         ret      
         nop      
@@ -164258,7 +164258,7 @@ __declspec(naked) void PendingMatch_0045c8e0(void)
         jne      L_cf26
     L_cf17:
         mov      dword ptr [g_walkCallback], 1
-        jmp      DualScaledInit_0045d920
+        jmp      DualScaledInit_g_table_00541e00_g_table_0053a2f8
     L_cf26:
         ret      
         nop      
@@ -164277,7 +164277,7 @@ __declspec(naked) void PendingMatch_0045c8e0(void)
         nop      
         nop      
         mov      dword ptr [g_walkCallback], 2
-        jmp      DualScaledInit_0045d920
+        jmp      DualScaledInit_g_table_00541e00_g_table_0053a2f8
         nop      
         push     0x4e8e70
         call     StateInstallOrForward_0048e6e0
@@ -164286,7 +164286,7 @@ __declspec(naked) void PendingMatch_0045c8e0(void)
         nop      
         nop      
         mov      dword ptr [g_walkCallback], 3
-        jmp      DualScaledInit_0045d920
+        jmp      DualScaledInit_g_table_00541e00_g_table_0053a2f8
         nop      
         push     0x4e8ea8
         call     StateInstallOrForward_0048e6e0
@@ -164295,7 +164295,7 @@ __declspec(naked) void PendingMatch_0045c8e0(void)
         nop      
         nop      
         mov      dword ptr [g_walkCallback], 4
-        jmp      DualScaledInit_0045d920
+        jmp      DualScaledInit_g_table_00541e00_g_table_0053a2f8
         nop      
         push     0x4e8ee0
         call     StateInstallOrForward_0048e6e0
@@ -164318,7 +164318,7 @@ __declspec(naked) void PendingMatch_0045c8e0(void)
         test     eax, eax
         jne      L_cfec
         mov      dword ptr [g_walkCallback], 5
-        jmp      DualScaledInit_0045d940
+        jmp      DualScaledInit_g_table_0053a750_g_table_00538048
     L_cfec:
         ret      
         nop      
@@ -164364,7 +164364,7 @@ __declspec(naked) void PendingMatch_0045c8e0(void)
         test     eax, eax
         jne      L_d06c
         mov      dword ptr [g_walkCallback], 6
-        jmp      DualScaledInit_0045d940
+        jmp      DualScaledInit_g_table_0053a750_g_table_00538048
     L_d06c:
         ret      
         nop      
@@ -164633,7 +164633,7 @@ __declspec(naked) void PendingMatch_0045c8e0(void)
         test     eax, eax
         jne      L_d40c
         mov      dword ptr [g_walkCallback], 7
-        jmp      DualScaledInit_0045d940
+        jmp      DualScaledInit_g_table_0053a750_g_table_00538048
     L_d40c:
         ret      
         nop      
@@ -164695,7 +164695,7 @@ __declspec(naked) void PendingMatch_0045c8e0(void)
         test     eax, eax
         jne      L_d49d
         mov      dword ptr [g_walkCallback], 8
-        jmp      DualScaledInit_0045d940
+        jmp      DualScaledInit_g_table_0053a750_g_table_00538048
     L_d49d:
         ret      
         nop      
@@ -164740,7 +164740,7 @@ __declspec(naked) void PendingMatch_0045c8e0(void)
         test     eax, eax
         jne      L_d51c
         mov      dword ptr [g_walkCallback], 9
-        jmp      DualScaledInit_0045d940
+        jmp      DualScaledInit_g_table_0053a750_g_table_00538048
     L_d51c:
         ret      
         nop      
@@ -164804,7 +164804,7 @@ __declspec(naked) void PendingMatch_0045c8e0(void)
         test     eax, eax
         jne      L_d5b7
         mov      dword ptr [g_walkCallback], 0xa
-        jmp      DualScaledInit_0045d940
+        jmp      DualScaledInit_g_table_0053a750_g_table_00538048
     L_d5b7:
         ret      
         nop      
@@ -170713,7 +170713,7 @@ __declspec(naked) void PendingMatch_0041afd0(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], 0
-        call     ScaledClearJmp_00428d40
+        call     ScaledClearJmp_InstallSelf3WayChainCmp
         mov      dword ptr [g_framePauseFlag], 1
     L_b54d:
         pop      esi
@@ -174961,7 +174961,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], 0
-        call     ScaledClearJmp_00428e90
+        call     ScaledClearJmp_InstallSelfBitGated
         mov      dword ptr [g_framePauseFlag], 1
     L_b85a:
         pop      esi
@@ -175045,7 +175045,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], 0
-        call     ScaledClearJmp_00428d40
+        call     ScaledClearJmp_InstallSelf3WayChainCmp
         mov      dword ptr [g_framePauseFlag], 1
     L_b9ba:
         pop      esi
@@ -175083,7 +175083,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], 0
-        call     ScaledClearJmp_00428d60
+        call     ScaledClearJmp_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], 1
     L_ba56:
         pop      esi
@@ -178292,7 +178292,7 @@ __declspec(naked) void PendingMatch_0046b670(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], 0
-        call     ScaledClearJmp_00428d60
+        call     ScaledClearJmp_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], 1
     L_b763:
         pop      esi
@@ -178581,7 +178581,7 @@ __declspec(naked) void PendingMatch_0046b670(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], 0
-        call     ScaledClearJmp_00428d40
+        call     ScaledClearJmp_InstallSelf3WayChainCmp
         mov      dword ptr [g_framePauseFlag], 1
     L_bbb8:
         pop      esi
@@ -184166,7 +184166,7 @@ __declspec(naked) void PendingMatch_004685d0(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edi
-        call     ScaledClearJmp_00428d40
+        call     ScaledClearJmp_InstallSelf3WayChainCmp
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
@@ -220201,7 +220201,7 @@ __declspec(naked) void PendingMatch_00478da0(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], edi
-        call     ScaledClearJmp_00428d40
+        call     ScaledClearJmp_InstallSelf3WayChainCmp
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi

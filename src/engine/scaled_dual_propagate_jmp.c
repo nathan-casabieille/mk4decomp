@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *   - read slot[idx], store into g_eventQueueWorkType + walk arr
  *   - inc slot index, load baseSel slot[+4], compute slot pointer
  *   - propagate slot[+4][edx] to walk[ecx+1] entry
- *   - tail-jump ScaledClearJmp_00428d60.
+ *   - tail-jump ScaledClearJmp_EsiInstallBitCallChain.
  */
 void ScaledDualPropagateJmp(int arg) {
     unsigned int p;
@@ -134,5 +134,5 @@ void ScaledDualPropagateJmp(int arg) {
     idx = (unsigned int)g_walkCallback + 1;
     g_walkCallback = (void (*)(void))idx;
     *slot_p = idx;
-    ScaledClearJmp_00428d60();
+    ScaledClearJmp_EsiInstallBitCallChain();
 }

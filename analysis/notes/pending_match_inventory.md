@@ -357,7 +357,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/engine/pending_match_variants.c`
 - traits: x87 FPU
-- top callees: `PendingMatch_00459510`×8, `ScaledIterStep_0045c020`×5, `PauseTestCmp2CallStore`×5, `GuardedDualConst2AndToggle`, `MStackPush3CmpCall`, `InstallSelfBitGated`, `ScaledClearJmp_00428e90`, `InstallSelfDualCountdown`
+- top callees: `PendingMatch_00459510`×8, `ScaledIterStep_0045c020`×5, `PauseTestCmp2CallStore`×5, `GuardedDualConst2AndToggle`, `MStackPush3CmpCall`, `InstallSelfBitGated`, `ScaledClearJmp_InstallSelfBitGated`, `InstallSelfDualCountdown`
 - top globals: `g_framePauseFlag`×22, `g_currentNodeIdx`×17, `0x542060`×15, `g_eventQueueCurrent`×9, `g_eventQueueChild`×6, `g_pendingNodeType`×4, `0x54206c`×3, `0x542094`×2
 
 ## PendingMatch_00471e00 @ 0x471e00 (1878b)
@@ -399,7 +399,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/engine/pending_match_variants.c`
 - traits: SEH (fs:[0]), cond jmps: 23
-- top callees: `ChainDirtyBitWalker`×6, `MStackBracketedStoreTwoCall`×4, `Thunk_ScaledNeg1SetPause`×4, `GatedWordPushCall`×3, `AllocNode`×2, `SetJmp_ZeroAndDirty4`×2, `ScaledAddrInit_004677e0`×2, `ScaledAddrInit_004677c0`×2
+- top callees: `ChainDirtyBitWalker`×6, `MStackBracketedStoreTwoCall`×4, `Thunk_ScaledNeg1SetPause`×4, `GatedWordPushCall`×3, `AllocNode`×2, `SetJmp_ZeroAndDirty4`×2, `ScaledAddrInit_IntroComboFsmCluster_004677e0`×2, `ScaledAddrInit_IntroComboFsmCluster_004677c0`×2
 - top globals: `g_framePauseFlag`×31, `0x542060`×11, `0x54206c`×7, `g_pendingNodeType`×5, `g_eventQueuePending`×5, `g_fightGroupHead`×3, `g_eventQueueNotMask`×3, `g_eventQueueEnd`×2
 
 ## PendingMatch_004a56c0 @ 0x4a56c0 (2011b)

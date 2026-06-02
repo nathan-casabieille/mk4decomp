@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  *     ScaledAndAlfe → push 0x542a78 → ArgScaledTestStore. On
  *     no-error writes g_xformEntityIdx → [0x54205c*4 + 0x24], installs Self
  *     entry 1 (0x46b3b0) with packed_ptr (Self + 0x01000000), calls
- *     ScaledClearJmp_00428d60.
+ *     ScaledClearJmp_EsiInstallBitCallChain.
  *   5b NOP align pad.
  *   Entry 3 (offset 0x130, 70b): FiveCallScaledChainTailJmp;
  *     on no-error reads [scaled+0x34] as state code; if 0x11 → 7. If
@@ -133,7 +133,7 @@ extern void ArgSarStoreJmp(void);
 extern void ArgScaledTestStore(void);
 extern void Install3StateRouterTail(void);
 extern void ScaledAndAlfe(void);
-extern void ScaledClearJmp_00428d60(void);
+extern void ScaledClearJmp_EsiInstallBitCallChain(void);
 
 __declspec(naked) void StateRemapPackedInstall(void) {
     __asm {
@@ -203,7 +203,7 @@ __declspec(naked) void StateRemapPackedInstall(void) {
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
-        call    ScaledClearJmp_00428d60
+        call    ScaledClearJmp_EsiInstallBitCallChain
         mov     dword ptr [g_framePauseFlag], 1
     L_srp_e2End:
         pop     esi

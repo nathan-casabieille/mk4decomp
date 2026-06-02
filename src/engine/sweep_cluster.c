@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void StageEventState4Way(void);
-extern void ScaledClearJmp_00428d40(void);
+extern void ScaledClearJmp_InstallSelf3WayChainCmp(void);
 extern void InstallSelf3WayChainCmp(void);
 extern void SweepCluster(void);
 extern void CondPickDualStore(void);
@@ -228,7 +228,7 @@ __declspec(naked) void StageEventState4Way(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], edi
-        call     ScaledClearJmp_00428d40
+        call     ScaledClearJmp_InstallSelf3WayChainCmp
         mov      dword ptr [g_framePauseFlag], 1
     L_84da:
         pop      edi

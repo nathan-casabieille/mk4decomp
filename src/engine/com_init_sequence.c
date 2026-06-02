@@ -38,14 +38,14 @@ extern void ComRelease_g_comptr_0058c870(void);
 extern void ComReleasePair_004afcd0(void);
 extern void DDraw3_CreateSurface(int);
 extern void ComReleaseCapture_004afb50(void);
-extern void DSoundBufferInit146_004afa60(void);
+extern void DSoundBufferInit146_a60(void);
 
 extern void Renderer5_EndScene_SW_FS_Hi(void);
 extern void ComRelease_g_comptr_0058c8f0(void);
 extern void ComReleasePair_004b0500(void);
 extern void DDraw5_CreateSurface(int);
 extern void ComReleaseCapture_004b0380(void);
-extern void DSoundBufferInit146_004b0290(void);
+extern void DSoundBufferInit146_b290(void);
 
 /* @addr 0x004afa10 */
 void DDraw3_Cleanup(void) {
@@ -55,7 +55,7 @@ void DDraw3_Cleanup(void) {
     ComReleasePair_004afcd0();
     DDraw3_CreateSurface(0);
     ComReleaseCapture_004afb50();
-    DSoundBufferInit146_004afa60();
+    DSoundBufferInit146_a60();
     state = g_renderer3_surface_active;
     g_lock_0058c874 = (void *)0;
     if (state != 0) {
@@ -72,7 +72,7 @@ void DDraw5_Cleanup(void) {
     ComReleasePair_004b0500();
     DDraw5_CreateSurface(0);
     ComReleaseCapture_004b0380();
-    DSoundBufferInit146_004b0290();
+    DSoundBufferInit146_b290();
     state = g_renderer5_surface_active;
     g_lock_0058c8f4 = (void *)0;
     if (state != 0) {

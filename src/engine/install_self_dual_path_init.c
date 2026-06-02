@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *   state zero: call RunBlockFsmCluster; if !pause: push 0x0054331c, call
  *     GuardedPackedSlotInit; if !pause: g_eventQueueChild=4; install-self;
  *     chain[+0x84]=1; scaledInit-chain push 0x0049a2f0+0x01000000;
- *     call ScaledClearJmp_00428d40; pause=1; ret.
+ *     call ScaledClearJmp_InstallSelf3WayChainCmp; pause=1; ret.
  *   After 12 NOPs (alignment-only): tail block for another entry/sibling that
  *     calls CondPickDualStore; if !pause: RunBlockFsmCluster; if !pause:
  *     push 0x00543318, GuardedPackedSlotInit; if !pause: tail-jmp InstallSelfStoreTwoCall; ret.
@@ -124,7 +124,7 @@ extern void CondPickDualStore(void);
 extern void GuardedPackedSlotInit(void);
 extern void InstallSelfStoreTwoCall(void);
 extern void RunBlockFsmCluster(void);
-extern void ScaledClearJmp_00428d40(void);
+extern void ScaledClearJmp_InstallSelf3WayChainCmp(void);
 
 __declspec(naked) void InstallSelfDualPathInit(void) {
     __asm {
@@ -173,7 +173,7 @@ __declspec(naked) void InstallSelfDualPathInit(void) {
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
-        call    ScaledClearJmp_00428d40
+        call    ScaledClearJmp_InstallSelf3WayChainCmp
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret

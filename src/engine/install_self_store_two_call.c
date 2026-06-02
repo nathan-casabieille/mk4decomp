@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *     g_scaledInit++; chain[+0x84] = 0; call ScaledClearJmp; g_framePauseFlag = 1.
  */
 extern void ArgSarStoreJmp(void);
-extern void ScaledClearJmp_00428d40(void);
+extern void ScaledClearJmp_InstallSelf3WayChainCmp(void);
 
 extern unsigned int g_matrixStack_arr;
 
@@ -158,7 +158,7 @@ void InstallSelfStoreTwoCall(void) {
         mov     [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
-        call    ScaledClearJmp_00428d40
+        call    ScaledClearJmp_InstallSelf3WayChainCmp
         mov     dword ptr [g_framePauseFlag], 1
         }
 }
