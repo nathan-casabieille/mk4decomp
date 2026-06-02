@@ -569,7 +569,7 @@ void func_MStackCall_then_CallSetPause_00498bb0(void) {
 
 /* h7 @ 0x00498bd0 (64b): event 004f2250 forwarder w/ 0x309 status.
  * Sister of h2 with different imm and event addr. */
-void func_00498bd0(void) {
+void func_call_ArgSarStoreJmp_with_g_dispatchSave797(void) {
     unsigned int v;
     CondPickDualStore();
     if (g_framePauseFlag) return;
@@ -590,7 +590,7 @@ void func_DualCmpSwapStore_then_MstackPushPackChainInit_then_call_ArgSar_Set0_Jm
 }
 
 /* h3 @ 0x0047c3c0 (48b): chained event 004ed2f0 -> 004ed2f8 forwarder. */
-void func_0047c3c0(void) {
+void func_call_IterStepDualStore_with_g_dispatchSave715(void) {
     ((void (*)(void *))IterStepDualStore)(&g_dispatchSave714);
     if (g_framePauseFlag) return;
     ((void (*)(void *))ArgSarStoreJmp)(&g_dispatchSave715);
@@ -708,14 +708,14 @@ void func_0047c580(void) {
 }
 
 /* h2 @ 0x00482200 (32b): event 004edb98 forwarder. */
-void func_00482200(void) {
+void func_call_ArgSarStoreJmp_with_g_dispatchSave747(void) {
     GateDispatch6c();
     if (g_framePauseFlag) return;
     ((void (*)(void *))ArgSarStoreJmp)(&g_dispatchSave747);
 }
 
 /* h3 @ 0x00482220 (32b): event 004edba8 forwarder. */
-void func_00482220(void) {
+void func_call_ArgSarStoreJmp_with_g_dispatchSave748(void) {
     GateDispatch6c();
     if (g_framePauseFlag) return;
     ((void (*)(void *))ArgSarStoreJmp)(&g_dispatchSave748);

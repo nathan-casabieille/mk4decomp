@@ -8982,7 +8982,7 @@ functions:
     status: matched
     file: src/engine/aerial_hit_dispatcher.c
   - addr: 0x0047c3c0
-    name: func_0047c3c0
+    name: func_call_IterStepDualStore_with_g_dispatchSave715
     size: 48
     group: game
     status: matched
@@ -9522,13 +9522,13 @@ functions:
     status: matched
     file: src/engine/round_finish_event_group.c
   - addr: 0x00482200
-    name: func_00482200
+    name: func_call_ArgSarStoreJmp_with_g_dispatchSave747
     size: 32
     group: game
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x00482220
-    name: func_00482220
+    name: func_call_ArgSarStoreJmp_with_g_dispatchSave748
     size: 32
     group: game
     status: matched
@@ -12372,7 +12372,7 @@ functions:
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x00498bd0
-    name: func_00498bd0
+    name: func_call_ArgSarStoreJmp_with_g_dispatchSave797
     size: 64
     group: game
     status: matched
