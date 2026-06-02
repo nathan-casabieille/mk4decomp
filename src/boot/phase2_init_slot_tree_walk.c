@@ -113,7 +113,7 @@ extern unsigned int g_walkTreeArrBase_00542378;
 extern void FlagThunk4EntryDispatcher(void);
 extern void DirtyDoubleDeref(void);
 extern void PendingMatch_0041afd0(void);
-extern void BootStateTriple_00408d30(void);
+extern void BootStateTriple(void);
 extern void MStackBracket1_TreeWalkRecursive2(void);
 extern void Thunk_00405ac0(void);
 
@@ -179,7 +179,7 @@ __declspec(naked) void Phase2InitSlotTreeWalk_0041ad60(void)
         test    eax, eax
         jne     L_p2is_ret
         mov     dword ptr [g_walkCallback], 2
-        call    BootStateTriple_00408d30
+        call    BootStateTriple
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p2is_ret

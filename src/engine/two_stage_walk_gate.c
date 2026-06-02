@@ -119,7 +119,7 @@ void TwoStageWalkGate_00439ae0(void) {
     int walk;
     int state_val;
     g_walkCallback = (void (*)(void))0x0e;
-    CmpCondIdxArrLookup_0048e450();
+    CmpCondIdxArrLookup();
     if (g_framePauseFlag != 0) return;
     walk = (int)(unsigned int)g_walkCallback;
     if (walk < 0xf0) return;

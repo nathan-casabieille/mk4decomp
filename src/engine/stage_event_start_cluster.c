@@ -117,7 +117,7 @@ extern void DualSetCallPair_0047dbc0(void);
 extern void FiveCallGuardSetTail(void);
 extern void GuardedSeq_004297b0(void);
 extern void InstallSelfCmpJmpIndirect_0048f470(void);
-extern void InstallSelfIndirectJmpNeg_0048f4f0(void);
+extern void InstallSelfIndirectJmpNeg(void);
 extern void MStackSignedMod_0042fee0(void);
 extern void PushPlayerSwapCallClamp_004801a0(void);
 extern void SlotEvent3EntryChain(void);
@@ -136,7 +136,7 @@ __declspec(naked) void StageEventStartCluster_0047ff80(void)
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], OFFSET L_ffb0
-        jmp      InstallSelfIndirectJmpNeg_0048f4f0
+        jmp      InstallSelfIndirectJmpNeg
     L_ffa9:
         ret
         nop

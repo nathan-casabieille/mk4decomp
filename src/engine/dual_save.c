@@ -16,7 +16,7 @@ extern unsigned int g_baseSel;
  */
 extern unsigned int g_save_0053a7d8;
 extern unsigned int g_save_0053a748;
-void DualSave_00461840(void) {
+void DualSave(void) {
     unsigned int a = g_eventQueueCurrent;
     unsigned int b = (unsigned int)g_walkCallback;
     g_save_0053a7d8 = a;

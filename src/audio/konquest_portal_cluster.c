@@ -123,9 +123,9 @@ extern unsigned int g_count;
 extern unsigned int g_voicePoolTickFlag_005437f4;
 extern void AudioBindEntry_004a1e40(void);
 extern void CharSelect_CpuBattlesToggle(void);
-extern void AudioInitArgs3_004a1f20(void);
+extern void AudioInitArgs3(void);
 extern void AudioState50b4BitDispatcher_004a32c0(void);
-extern void FiveTableWalkInit_00403c90(void);
+extern void FiveTableWalkInit(void);
 extern void InstallSelfPackedF80(void);
 extern void MStackPush2ChainLLInsert(void);
 extern void MStackPushComplexCallPop_00406430(void);
@@ -134,8 +134,8 @@ extern void RetZero_004a1c40(void);
 extern void ScaledByteIdxDualCopy_004a3260(void);
 extern void SetJmp_004a1ac0(void);
 extern void TableWalkBoundedCmp(void);
-extern void TripleCallByteCheck_004a1bf0(void);
-extern void TripleCallSetCopy_004a4880(void);
+extern void TripleCallByteCheck(void);
+extern void TripleCallSetCopy(void);
 
 /* @addr 0x004a5290 - EnduranceMode_Handler: the main mode menu's
  * on-select handler for the ENDURANCE row (table at 0x4f308c, +0x14
@@ -213,7 +213,7 @@ __declspec(naked) void EnduranceMode_Handler(void)
         push     OFFSET g_dispatchSave556_004f3930
         call     AudioState50b4BitDispatcher_004a32c0
         add      esp, 4
-        call     TripleCallByteCheck_004a1bf0
+        call     TripleCallByteCheck
         test     eax, eax
         mov      ebx, 1
         je       short L_53cb
@@ -267,7 +267,7 @@ __declspec(naked) void EnduranceMode_Handler(void)
         mov      dword ptr [g_bootInitState_00535de4], ebx
         call     TableWalkBoundedCmp
         add      esp, 4
-        call     FiveTableWalkInit_00403c90
+        call     FiveTableWalkInit
         cmp      dword ptr [g_framePauseFlag], ebp
         jne      L_552f
         mov      esi, OFFSET g_dispatchSave816_004f394c
@@ -281,7 +281,7 @@ __declspec(naked) void EnduranceMode_Handler(void)
         push     ecx
         push     ebp
         push     OFFSET g_dispatchSave119_0051599c
-        call     AudioInitArgs3_004a1f20
+        call     AudioInitArgs3
         add      esp, 0x10
     L_54a1:
         movsx    edx, byte ptr [esi - 0xc]
@@ -303,7 +303,7 @@ __declspec(naked) void EnduranceMode_Handler(void)
         call     LoadGeoAsset_Default
         cmp      dword ptr [g_framePauseFlag], ebp
         jne      short L_552f
-        call     TripleCallSetCopy_004a4880
+        call     TripleCallSetCopy
         mov      dword ptr [g_eventQueueIdx], ebp
         mov      dword ptr [g_eventQueueWorkType], 9
         call     Push16Call

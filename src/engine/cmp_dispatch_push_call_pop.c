@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void Push80SetWalkDualCallPop_00439350(void);
 extern void InstallSelfBit4Gate_00438590(void);
-void CmpDispatchPushCallPop_00438530(void) {
+void CmpDispatchPushCallPop(void) {
     unsigned int v;
     unsigned int top;
     unsigned int saved;

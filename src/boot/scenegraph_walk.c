@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void NodeUnlink_0041f710(void *p);
 extern unsigned int g_scenegraphWalkEnd_00541d68;
-void ScenegraphWalk_0041f7d0(void) {
+void ScenegraphWalk(void) {
     unsigned char *p = (unsigned char *)&g_nodeSlotsArea;
     do {
         unsigned int v;

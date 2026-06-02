@@ -120,13 +120,13 @@ extern unsigned int g_eventQueueIdx;
 extern unsigned char g_dispatchSave1198_004ded70;
 extern unsigned char g_dispatchSave1199_004ded80;
 extern unsigned int g_arr_4237d0;
-extern void Cmp2DirtyToggle_00423870(void);
+extern void Cmp2DirtyToggle(void);
 
 extern unsigned char g_dispatchSave1277_004ea070;
 extern unsigned int g_arr_461640;
 extern unsigned char g_str_00461980;
 
-extern void PreFightInstallCluster_00474390(void);
+extern void PreFightInstallCluster(void);
 
 extern unsigned int g_chain_disp_30_439a40;
 extern unsigned int g_chain_disp_40_439a40;
@@ -142,7 +142,7 @@ extern void MStackPush2LLWalkCompare(void);
 extern void DirtyDoubleDeref(void);
 extern void PoseCopyIdleCluster_004537a0(void);
 extern void Bit2GatedChainInit_00453620(void);
-extern void GDispatch4_004089c0(void);
+extern void GDispatch4(void);
 
 extern unsigned char g_dispatchSave622_004ebee0;
 extern unsigned int g_arr_491350;
@@ -167,7 +167,7 @@ extern void SaveCallRestore(int);
 extern void SaveCallRestoreOrXor(int);
 
 extern void func_004244d0_fwd(void);
-#define MStackPush1MagicMod2_004244d0 func_004244d0_fwd
+#define MStackPush1MagicMod2 func_004244d0_fwd
 extern unsigned int g_chain_disp_64_40a690_fwd;
 #define g_chain_disp_64_40a690 g_chain_disp_64_40a690_fwd
 
@@ -176,7 +176,7 @@ extern void MStackPushZeroCallPop_00407d00(void);
 
 extern unsigned int g_counter_0053a51c;
 #define g_counter_0053a51c g_counter_0053a51c
-extern void SixCallSeqPushImm_004a1d80(void);
+extern void SixCallSeqPushImm(void);
 extern unsigned int g_phaseTimer;
 #define g_phaseTimer g_phaseTimer
 extern void BossSpinCluster_00487e80(void);

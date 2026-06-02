@@ -26,7 +26,7 @@ extern void InstallSelfDualEsi_0042c4f0(void);
 extern void EightPackedSubInstallSelfWalk_0042b6f0(void);
 extern void EsiAliasInstallChainCall_0042c490(void);
 extern void StageEventDamageCluster_0042c5a0(void);
-extern void MStackPush2ChainSwap_0048f090(void);
+extern void MStackPush2ChainSwap(void);
 extern void CallPauseMStackPushSet3Jmp_00460d00(void);
 extern void CallPauseMStackPushSet4Jmp_00460d40(void);
 
@@ -54,7 +54,7 @@ void GuardedDispatch_0042c570(void) {
 
 /* @addr 0x00460ca0 */
 void GuardedDispatch_00460ca0(void) {
-    MStackPush2ChainSwap_0048f090();
+    MStackPush2ChainSwap();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 1) {
         CallPauseMStackPushSet3Jmp_00460d00();
@@ -65,7 +65,7 @@ void GuardedDispatch_00460ca0(void) {
 
 /* @addr 0x00460cd0 */
 void GuardedDispatch_00460cd0(void) {
-    MStackPush2ChainSwap_0048f090();
+    MStackPush2ChainSwap();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 1) {
         CallPauseMStackPushSet4Jmp_00460d40();

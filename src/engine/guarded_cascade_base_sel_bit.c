@@ -116,14 +116,14 @@ extern unsigned int g_fightAxisPosY;
  *   If bit2 of state set: g_xformEntityIdx = 0x0051962c >> 2. Else: 0x00519ae0 >> 2.
  *   mstack-pop g_cj_0054205c. Call MStackBracket1_TreeWalkRecursive2; if pause/bit2? ret.
  *   g_xformEntityIdx = baseSel[+0x30]. Call Thunk_00405ac0; if pause? ret.
- *   Call SetupVecFsmCluster_0043e3e0; if pause? ret. Else: state |= 4; if scaledInit was 0 ret;
+ *   Call SetupVecFsmCluster; if pause? ret. Else: state |= 4; if scaledInit was 0 ret;
  *   else: state ^= 4 (clear bit2); ret.
  */
 extern void DispatchSetDirtyToggle_004ac150(void);
 extern void MStackBracket1_TreeWalkRecursive2(void);
 extern void Thunk_00405ac0(void);
 extern void PushPopScaled1cDoubleCall(void);
-extern void SetupVecFsmCluster_0043e3e0(void);
+extern void SetupVecFsmCluster(void);
 
 __declspec(naked) void GuardedCascadeBaseSelBit_00446680(void) {
     __asm {
@@ -187,7 +187,7 @@ __declspec(naked) void GuardedCascadeBaseSelBit_00446680(void) {
         test    eax, eax
         _emit   75h
         _emit   2eh
-        call    SetupVecFsmCluster_0043e3e0
+        call    SetupVecFsmCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

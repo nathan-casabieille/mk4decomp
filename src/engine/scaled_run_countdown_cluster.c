@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave684_004e6408;
 extern void ArgSarStoreJmp(void);
 extern void DirtyDoubleDeref(void);
-extern void DualScaledLoadStoreJmp_00475790(void);
+extern void DualScaledLoadStoreJmp(void);
 extern void DualSlotCopyChain_004756f0(void);
 extern void GuardedScaled_00475090(void);
 extern void GuardedSeq_00473f10(void);
@@ -285,7 +285,7 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a4fa
-        call     DualScaledLoadStoreJmp_00475790
+        call     DualScaledLoadStoreJmp
         call     Thunk_0049cbc0
         pop      esi
         ret      
@@ -309,7 +309,7 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a4fa
-        call     DualScaledLoadStoreJmp_00475790
+        call     DualScaledLoadStoreJmp
     L_a385:
         mov      dword ptr [g_eventQueueIdx], 0x29
     L_a38f:

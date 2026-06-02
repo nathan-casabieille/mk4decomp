@@ -118,7 +118,7 @@ extern unsigned int g_glideFnTable;
 extern unsigned int g_dispatchSave1710_00c00000;
 extern void AudioChainInit_004a77c0(void);
 extern void AudioInitLoopTriple_004a7840(void);
-extern void ScaledChainStore24_004a7d40(void);
+extern void ScaledChainStore24(void);
 
 __declspec(naked) void SpawnLeftRightAudioCrew_004a8080(void)
 {
@@ -159,7 +159,7 @@ __declspec(naked) void SpawnLeftRightAudioCrew_004a8080(void)
         mov      dword ptr [eax*4 + 0x5c], 0xc0000
         movsx    ecx, byte ptr [esi - 2]
         mov      dword ptr [g_walkCallback], ecx
-        call     ScaledChainStore24_004a7d40
+        call     ScaledChainStore24
         cmp      byte ptr [esi], 0
         je       short L_816c
         call     AudioInitLoopTriple_004a7840
@@ -212,7 +212,7 @@ __declspec(naked) void SpawnLeftRightAudioCrew_004a8080(void)
         mov      dword ptr [eax*4 + 0x5c], 0xc0000
         movsx    ecx, byte ptr [esi - 2]
         mov      dword ptr [g_walkCallback], ecx
-        call     ScaledChainStore24_004a7d40
+        call     ScaledChainStore24
         cmp      byte ptr [esi], 0
         je       short L_826b
         call     AudioInitLoopTriple_004a7840

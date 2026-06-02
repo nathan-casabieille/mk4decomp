@@ -122,7 +122,7 @@ extern unsigned int g_fightAxisPosY;
 extern void MStackPush2LLWalkCompare(void);
 extern void Thunk_0049cc00(void);
 
-__declspec(naked) void DoubleCallChainInit_0043d780(void) {
+__declspec(naked) void DoubleCallChainInit(void) {
     __asm {
         push    ebx
         push    ebp

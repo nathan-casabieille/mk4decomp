@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern void ScaledCmp200eCallBool_004398f0(void);
 extern void AddDerefJmp_00433e70(void);
-extern void InstallSelfChainSetB333v2_00437f00(void);
+extern void InstallSelfChainSetB333v2(void);
 extern void InstallSelfChainSet13333Alt_004377d0(void);
 extern void StanceEntryCluster_00433f50(void);
 
@@ -184,7 +184,7 @@ __declspec(naked) void FiveBlockDispatch_00433e90(void) {
         _emit   7dh
         _emit   05h
         jmp     CallPauseTestByteJmpCalls
-        jmp     InstallSelfChainSetB333v2_00437f00
+        jmp     InstallSelfChainSetB333v2
         _emit   90h
         _emit   90h
         _emit   90h

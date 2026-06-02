@@ -122,7 +122,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_SetStdHandle_004d20d4;
 extern unsigned int g_crtFdCloseSlot_00520064;
 extern unsigned int g_dispatchSave1469_00fa0ee0;
-extern void Crt_doserrno_004c8bb0(void);
+extern void Crt_doserrno(void);
 extern void Crt_errno(void);
 
 extern unsigned int g_arr_00fa0de0;
@@ -194,7 +194,7 @@ __declspec(naked) void SetFdMode_004cd110(void) {
         ret
         call    Crt_errno
         mov     dword ptr [eax], 9
-        call    Crt_doserrno_004c8bb0
+        call    Crt_doserrno
         pop     edi
         mov     dword ptr [eax], 0
         pop     esi

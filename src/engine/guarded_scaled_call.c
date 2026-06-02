@@ -24,7 +24,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_dispatchVar9_00541dc0;
 extern int TaggedSceneDispatch(int);
-void GuardedScaledCall_0048a020(void) {
+void GuardedScaledCall(void) {
     unsigned int walk;
     int v;
     if ((int)g_dispatchVar9_00541dc0 < 0) return;

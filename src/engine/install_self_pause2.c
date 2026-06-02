@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /*
  * @addr 0x00423630 (104b) - install-self with two pause-guarded
  *   calls: capture/zero base[+0x84]; if non-zero tail-call
- *   Phase3InstallPackedSelf_00471010; else call _00423720, gate, call _00461220, gate,
+ *   Phase3InstallPackedSelf; else call _00423720, gate, call _00461220, gate,
  *   install self with tag 0x1e and raise framePause.
  */
 extern void InstallSelfPause2_00423630(void);
@@ -120,10 +120,10 @@ void InstallSelfPause2_00423630(void) {
     unsigned int prev = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
     if (prev != 0) {
-        Phase3InstallPackedSelf_00471010();
+        Phase3InstallPackedSelf();
         return;
     }
-    ZeroSlotsGatedDispatch_00423720();
+    ZeroSlotsGatedDispatch();
     if (g_framePauseFlag != 0) return;
     CallPauseScaledStoreCopyJmp();
     if (g_framePauseFlag != 0) return;

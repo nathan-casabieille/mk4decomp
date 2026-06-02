@@ -12,16 +12,16 @@ extern unsigned int g_scaledInit_00542044;
  *   g_eventQueueWorkType = walk; ret.
  */
 extern unsigned int g_acc_00542078;
-extern void MStackMagicModMul10_00424410(void);
-extern void ModMagicMul10Index_00424350(void);
+extern void MStackMagicModMul10(void);
+extern void ModMagicMul10Index(void);
 void WalkCbSubMul10(void) {
     unsigned int v = 0x1921f - (unsigned int)g_walkCallback;
     g_walkCallback = (void(*)(void))v;
     g_eventQueueWorkType = v;
-    MStackMagicModMul10_00424410();
+    MStackMagicModMul10();
     if (g_framePauseFlag) return;
     g_acc_00542078 = (unsigned int)g_walkCallback;
-    ModMagicMul10Index_00424350();
+    ModMagicMul10Index();
     if (g_framePauseFlag) return;
     g_eventQueueWorkType = (unsigned int)g_walkCallback;
 }

@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *   into slot[+0x10], chain[+0x14] = original walk; pop state back.
  */
 extern void ClampMulShiftStore(void);
-void PushSetDualDeref_00406650(void) {
+void PushSetDualDeref(void) {
     unsigned int top;
     unsigned int walk;
     unsigned int v1;

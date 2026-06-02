@@ -110,13 +110,13 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_pendingMatchVar3_004d5320;
 extern unsigned int g_dispatchCopyField_00537e9c;
 extern unsigned int g_throwEventTime_0053a3a0;
-extern void WorldCellSetupCluster_0042b000(void);
+extern void WorldCellSetupCluster(void);
 extern void ThrowEventCluster_0043e960(void);
 
 /*
  * @addr 0x0043ed70 (112b game) - push-call-pop dispatcher:
  *   pushes walk on state stack, computes arg = (0x53a3a0-0x4d5320),
- *   calls WorldCellSetupCluster_0042b000 (returns walk), loads slot 0x537e9c, stores
+ *   calls WorldCellSetupCluster (returns walk), loads slot 0x537e9c, stores
  *   walk into slot[+0x64], calls ThrowEventCluster_0043e960; on pause clear pop
  *   state back into walk.
  */
@@ -128,7 +128,7 @@ void StackPushCallPopChain_0043ed70(void) {
     *(unsigned int *)(g_matrixStackTop * 4) = g_scaledInit_00542044;
     diff = (int)g_throwEventTime_0053a3a0 - (int)g_pendingMatchVar3_004d5320;
     g_walkCallback = (void (*)(void))diff;
-    r = ((int (*)(int))WorldCellSetupCluster_0042b000)(diff);
+    r = ((int (*)(int))WorldCellSetupCluster)(diff);
     slot = g_dispatchCopyField_00537e9c;
     g_walkCallback = (void (*)(void))r;
     g_scaledInit_00542044 = slot;

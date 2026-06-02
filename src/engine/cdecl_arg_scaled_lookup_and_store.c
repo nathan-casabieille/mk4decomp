@@ -113,12 +113,12 @@ extern unsigned int g_fightAxisPosY;
  *   Copy [eax*4 +0/+4/+8/+0xc] -> g_eventQueueWorkType/g_acc_00542078/g_eventQueueNotMask/g_eventQueueChild.
  *   If g_cj_0054205c == g_player1NodeIdx: skip second 8-field load; else copy
  *     [eax*4 +0x10/+0x14/+0x18/+0x1c] -> same dests. eax += 8, store; call
- *     NotMaskStorePair_0045f440; if pause? ret.
+ *     NotMaskStorePair; if pause? ret.
  *   AND g_walkCallback &= g_eventQueueNotMask; AND g_eventQueueCurrent &= g_eventQueueChild;
  *   if g_eventQueueWorkType == g_walkCallback then: if g_acc_00542078 == g_eventQueueCurrent:
  *     bit0 of g_xformDirtyFlags set, else clear; else clear bit0; ret.
  */
-extern void NotMaskStorePair_0045f440(void);
+extern void NotMaskStorePair(void);
 
 void CdeclArgScaledLookupAndStore_0045f470(void) {
     __asm {
@@ -149,7 +149,7 @@ void CdeclArgScaledLookupAndStore_0045f470(void) {
         mov     dword ptr [g_eventQueueChild], edx
         add     eax, 8
         mov     dword ptr [g_eventQueueTotal], eax
-        call    NotMaskStorePair_0045f440
+        call    NotMaskStorePair
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

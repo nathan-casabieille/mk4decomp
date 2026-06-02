@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  *     if > 1 set 0x54206c=0xfffff0a4. MStackFrameCdeclDouble
  *     → push 0x4ede68 → ArgSarStoreJmp.
  *   10b NOP align pad.
- *   Entry 3 (offset 0xa0, 20b): DualScaledInitClear_00433c10 → tail-jmp
+ *   Entry 3 (offset 0xa0, 20b): DualScaledInitClear → tail-jmp
  *     LiteralPushCallEntZero.
  *   12b NOP align pad.
  *   Entry 4 (offset 0xc0, 28b): GateDispatch6c → push 0x4ede90
@@ -143,7 +143,7 @@ extern unsigned int g_dispatchSave765_004edef8;
 extern void ArgSarStoreJmp(void);
 extern void CjTableThresholdDispatch(void);
 extern void CmpP1DualInitStore_00482ab0(void);
-extern void DualScaledInitClear_00433c10(void);
+extern void DualScaledInitClear(void);
 extern void GateDispatch6c(void);
 extern void SaveSwapCallRestore_00489030(void);
 extern void TableLookupCall_00489ff0(void);
@@ -204,7 +204,7 @@ __declspec(naked) void EightEntryAlarmDispatch_00482500(void) {
         nop
         /* entry 3 (offset 0xa0) */
     L_eae_entry3:
-        call    DualScaledInitClear_00433c10
+        call    DualScaledInitClear
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eae_e3End

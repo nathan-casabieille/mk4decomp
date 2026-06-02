@@ -108,10 +108,10 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void Chain2AxisDiffStoreTailJmp_0044cad0(void);
+extern void Chain2AxisDiffStoreTailJmp(void);
 extern void DualPushAddCallDualPopJmp_0044cc50(void);
 extern void GuardedSeq_00473f50(void);
-extern void MStackPush3SideStore_0044cb80(void);
+extern void MStackPush3SideStore(void);
 extern void PendingMatch_004492f0(void);
 extern void StoreLoadJmp(void);
 extern void Thunk_0049cbc0(void);
@@ -235,13 +235,13 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         mov      dword ptr [edx*4 + 0x68], eax
         call     StoreLoadJmp
         add      esp, 4
-        call     Chain2AxisDiffStoreTailJmp_0044cad0
+        call     Chain2AxisDiffStoreTailJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_92d8
         mov      dword ptr [g_eventQueueWorkType], 0xb333
         mov      dword ptr [g_walkCallback], 0xfffec000
-        call     MStackPush3SideStore_0044cb80
+        call     MStackPush3SideStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_92d8

@@ -110,9 +110,9 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave779_004f1300;
 extern void ClampMulShiftStore(void);
-extern void FramePauseScaledStore_00406c10(void);
+extern void FramePauseScaledStore(void);
 extern void MStackBracket4_ListInsertZeroFill(void);
-extern void MStackPush2ChainPrepend_00409970(void);
+extern void MStackPush2ChainPrepend(void);
 extern void MStackPush3LinkedListWalk(void);
 extern void MStackPushComplexCallPop_00406430(void);
 extern void ScaledOrStore_004903d0(void);
@@ -163,7 +163,7 @@ __declspec(naked) void ThrowPoseCallbackSetup_00491f10(void)
         inc      eax
         mov      dword ptr [g_xformEntityIdx], edx
         mov      dword ptr [g_pendingNodeType], eax
-        call     FramePauseScaledStore_00406c10
+        call     FramePauseScaledStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2131
@@ -181,7 +181,7 @@ __declspec(naked) void ThrowPoseCallbackSetup_00491f10(void)
         mov      dword ptr [ecx*4 + 0x38], eax
         mov      edx, dword ptr [g_eventQueueTotal]
         mov      dword ptr [g_xformEntityIdx], edx
-        call     MStackPush2ChainPrepend_00409970
+        call     MStackPush2ChainPrepend
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2131

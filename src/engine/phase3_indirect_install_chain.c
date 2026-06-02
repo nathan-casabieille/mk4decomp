@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *     phase 2: tail-call PendingMatch_00459510.
  *     phase 1: indirect-call [g_eventQueueEnd].
  *     phase 0: pop mstack into g_eventQueueEnd (saving the prior
- *       function-ptr), call CallDualStoreXorBit_004285e0; on no-error AND
+ *       function-ptr), call CallDualStoreXorBit; on no-error AND
  *       bit 2 of 0x54208c clear, call ScaledArrStore_004285c0. Tail
  *       installs Self with slot[+0x84] = 2 (bit-2 path) or 1 (clean path).
  *   5b NOP pad.
@@ -128,7 +128,7 @@ extern unsigned int g_fightAxisPosY;
  *     DualEntryStateMachine_0045a180.
  */
 extern unsigned int g_table_004d57b0;
-extern void CallDualStoreXorBit_004285e0(void);
+extern void CallDualStoreXorBit(void);
 extern void DualEntryStateMachine_0045a180(void);
 extern void PendingMatch_00459510(void);
 extern void ScaledArrStore_004285c0(void);
@@ -158,7 +158,7 @@ __declspec(naked) void Phase3IndirectInstallChain_0045a010(void) {
         dec     eax
         mov     dword ptr [g_eventQueueEnd], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        call    CallDualStoreXorBit_004285e0
+        call    CallDualStoreXorBit
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_p3i_done

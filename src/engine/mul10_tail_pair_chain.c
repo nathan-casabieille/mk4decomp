@@ -111,13 +111,13 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00470390 (232b game) - Mul10Tail pair with chain init + indirect via scaledInit pair.
  *   Pick scaledInit from 0x005380c0>>2 (if g_fightGroupHead==g_player1NodeIdx) or 0x0052d728>>2;
  *   chain[+0]=g_walkCallback=[g_fightGroupHead*4+0x54], chain[+4]=g_eventQueueCurrent=[g_fightGroupHead*4+0x5c];
- *   call ScaledChainDouble_004911f0; pause-check.
+ *   call ScaledChainDouble; pause-check.
  *   Two Mul10Tail calls with 0x00027333 multiplier:
  *     g_eventQueueNotMask = Mul10Tail(0x27333, g_eventQueueNotMask);
  *     eax = Mul10Tail(0x27333, g_eventQueueChild); g_eventQueueChild=eax;
  *   accumulate: g_walkCallback += g_eventQueueNotMask, g_eventQueueCurrent += eax; store back to chain[+8/+0xc]. ret.
  */
-extern void ScaledChainDouble_004911f0(void);
+extern void ScaledChainDouble(void);
 
 __declspec(naked) void Mul10TailPairChain_00470390(void) {
     __asm {
@@ -143,7 +143,7 @@ __declspec(naked) void Mul10TailPairChain_00470390(void) {
         mov     eax, dword ptr [g_xformEntityIdx]
         mov     ecx, dword ptr [g_eventQueueCurrent]
         mov     dword ptr [eax*4 + 4], ecx
-        call    ScaledChainDouble_004911f0
+        call    ScaledChainDouble
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

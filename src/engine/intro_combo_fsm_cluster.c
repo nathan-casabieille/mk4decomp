@@ -109,11 +109,11 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void AudioVolumeRescale(void);
-extern void DualScaledLoadStoreJmp_00475790(void);
+extern void DualScaledLoadStoreJmp(void);
 extern void GuardedSeq_00467c10(void);
 extern void GuardedSeq_00467c80(void);
 extern void MStackCall_00406340(void);
-extern void PreFightInstallCluster_00474390(void);
+extern void PreFightInstallCluster(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void SetJmp_00405420(void);
 extern void Thunk_0049cbc0(void);
@@ -228,7 +228,7 @@ __declspec(naked) void IntroComboFsmCluster_00467800(void)
         mov      edx, dword ptr [g_fightGroupHead]
         mov      dword ptr [ecx*4 + 0x4c], edx
         mov      dword ptr [g_eventQueueWorkType], 0
-        mov      dword ptr [g_pendingNodeType], OFFSET PreFightInstallCluster_00474390 + 0x250
+        mov      dword ptr [g_pendingNodeType], OFFSET PreFightInstallCluster + 0x250
         call     AllocNode
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -311,7 +311,7 @@ __declspec(naked) void IntroComboFsmCluster_00467800(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7c07
-        call     DualScaledLoadStoreJmp_00475790
+        call     DualScaledLoadStoreJmp
         call     Thunk_0049cbc0
         pop      esi
         ret      
@@ -331,7 +331,7 @@ __declspec(naked) void IntroComboFsmCluster_00467800(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7c07
-        call     DualScaledLoadStoreJmp_00475790
+        call     DualScaledLoadStoreJmp
         mov      dword ptr [esi + 8], OFFSET L_7ab0
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_pendingNodeType], 4

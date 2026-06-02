@@ -11,7 +11,7 @@ extern unsigned int g_scaledInit_00542044;
  *   scaled chain: baseSel*4 + 0x40 → g_scaledInit; deref *4 → g_eventQueueNotMask
  *   reload baseSel*4 + 0x44 → g_scaledInit; deref *4 → g_eventQueueChild
  */
-void ScaledChainDouble_004911f0(void) {
+void ScaledChainDouble(void) {
     unsigned int base = g_baseSel;
     unsigned int s1 = ((ScenegraphNode *)(base * 4))->child_b;
     unsigned int s2;

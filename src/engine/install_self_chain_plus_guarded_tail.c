@@ -118,12 +118,12 @@ extern unsigned int g_fightAxisPosY;
  *   B2 (208..255): call ScaledLoadOrSetJmp; if !pause: call GateDispatch6c; if !pause:
  *     call ClearBit2x34; if !pause: tail-jmp ScaledInitWithCounterAndType.
  */
-extern void ClearBit2x34_00490130(void);
+extern void ClearBit2x34(void);
 extern void GateDispatch6c(void);
 extern void GuardedPackedSlotInit(void);
 extern void ScaledInitWithCounterAndType_004314f0(void);
 extern void ScaledLoadJmp_00428d20(void);
-extern void ScaledLoadOrSetJmp_00406b20(void);
+extern void ScaledLoadOrSetJmp(void);
 
 __declspec(naked) void InstallSelfChainPlusGuardedTail_00488ca0(void) {
     __asm {
@@ -182,7 +182,7 @@ __declspec(naked) void InstallSelfChainPlusGuardedTail_00488ca0(void) {
         nop
         nop
         nop
-        call    ScaledLoadOrSetJmp_00406b20
+        call    ScaledLoadOrSetJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -192,7 +192,7 @@ __declspec(naked) void InstallSelfChainPlusGuardedTail_00488ca0(void) {
         test    eax, eax
         _emit   75h
         _emit   13h
-        call    ClearBit2x34_00490130
+        call    ClearBit2x34
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

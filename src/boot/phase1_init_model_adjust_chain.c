@@ -112,12 +112,12 @@ extern unsigned int g_pendingMatchVar3_004d5320;
 extern unsigned int g_dispatchSave620_004d59e8;
 extern unsigned int g_phase1ModelArr_00512538;
 extern unsigned int g_phase1ModelChain_0053e35c;
-extern void FramePauseScaledStore_00406c10(void);
+extern void FramePauseScaledStore(void);
 extern void MStackCall_00406250(void);
 extern void MStackPush2ChainLLInsert(void);
 extern void PushSetXfmMaskCallPop(void);
-extern void ScaledChainOr8_00404e50(void);
-extern void ScaledTestPauseStore_00408860(void);
+extern void ScaledChainOr8(void);
+extern void ScaledTestPauseStore(void);
 extern void ScaledTripleCopy54(void);
 extern void Thunk_00405ac0(void);
 
@@ -138,7 +138,7 @@ __declspec(naked) void Phase1InitModelAdjustChain_00410fb0(void)
         shr     edx, 2
         mov     dword ptr [g_fightGroupHead], ecx
         mov     dword ptr [g_xformEntityIdx], edx
-        call    FramePauseScaledStore_00406c10
+        call    FramePauseScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1im_ret
@@ -149,7 +149,7 @@ __declspec(naked) void Phase1InitModelAdjustChain_00410fb0(void)
         or      ah, 6
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x20], eax
-        call    ScaledTestPauseStore_00408860
+        call    ScaledTestPauseStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1im_ret
@@ -176,7 +176,7 @@ __declspec(naked) void Phase1InitModelAdjustChain_00410fb0(void)
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x44], eax
     L_p1im_after_4e50:
-        call    ScaledChainOr8_00404e50
+        call    ScaledChainOr8
         mov     edx, dword ptr [g_xformEntityIdx]
         mov     dword ptr [edx*4 + 0x48], 0xB333
         mov     eax, dword ptr [g_fightGroupHead]

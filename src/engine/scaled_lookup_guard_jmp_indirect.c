@@ -115,10 +115,10 @@ extern unsigned int g_fightAxisPosY;
  *   if zero: jmp end;
  *   call FlagCascadeStateSet; if pause: ret;
  *   if (bit0 of g_xformDirtyFlags) != 0: jmp dword ptr [g_eventQueueTotal];
- *   end: jmp MoveDispatch4StateFsm_00494a60.
+ *   end: jmp MoveDispatch4StateFsm.
  */
 extern void FlagCascadeStateSet(void);
-extern void MoveDispatch4StateFsm_00494a60(void);
+extern void MoveDispatch4StateFsm(void);
 
 __declspec(naked) void ScaledLookupGuardJmpIndirect(void) {
     __asm {
@@ -150,7 +150,7 @@ __declspec(naked) void ScaledLookupGuardJmpIndirect(void) {
         _emit   74h
         _emit   06h
         jmp     dword ptr [g_eventQueueTotal]
-        jmp     MoveDispatch4StateFsm_00494a60
+        jmp     MoveDispatch4StateFsm
         ret
     }
 }

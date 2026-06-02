@@ -119,7 +119,7 @@ extern void BossArrivalSequence_00481950(void);
 extern void CjDispatchCommit_004818e0(void);
 extern void ScaledInitWithCounterAndType_004314f0(void);
 extern void SwapTwoGlobals_004911c0(void);
-extern void TableHitOrSchedule_004be7a0(void);
+extern void TableHitOrSchedule(void);
 
 __declspec(naked) void BlockedCounterCluster_004816d0(void)
 {
@@ -235,7 +235,7 @@ __declspec(naked) void BlockedCounterCluster_004816d0(void)
         test     eax, eax
         je       short L_1874
         push     0x1392
-        call     TableHitOrSchedule_004be7a0
+        call     TableHitOrSchedule
         mov      eax, dword ptr [g_load_0052ab10]
         mov      ecx, 0xfffffd71
         add      esp, 4

@@ -112,7 +112,7 @@ extern unsigned int g_dispatchSave648_004ed8d8;
 extern void AerialHitDispatcher_0047c290(void);
 extern void ArgSarStoreJmp(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
-extern void GuardedDirtyXformFromTable_0048f6d0(void);
+extern void GuardedDirtyXformFromTable(void);
 extern void InstallSelfCmpJgJmp_00480ac0(void);
 extern void ScaledChainTwoStores_00480d20(void);
 extern void Vec2ChainComputeStores_00480b80(void);
@@ -160,7 +160,7 @@ __declspec(naked) void PairedSubInstallSelfBigChain_0047c0d0(void)
         mov     ecx, offset g_dispatchSave648_004ed8d8
         shr     ecx, 2
         mov     dword ptr [g_currentNodeIdx], ecx
-        call    GuardedDirtyXformFromTable_0048f6d0
+        call    GuardedDirtyXformFromTable
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_psisbc_ret

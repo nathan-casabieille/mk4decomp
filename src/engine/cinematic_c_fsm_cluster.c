@@ -117,7 +117,7 @@ extern void ScaledArrStore_004298c0(void);
 extern void IncThunkPlusCjDispatch_00483b80(void);
 extern void CinematicCFsmCluster_004884a0(void);
 extern void InstallSelfIndirectJmp(void);
-extern void InstallSelfIndirectJmpNeg_0048f4f0(void);
+extern void InstallSelfIndirectJmpNeg(void);
 extern void InstallSelfOrCmpJmp_0048f570(void);
 extern unsigned int g_dispatchSave645_004eefd8;
 extern unsigned int g_dispatchSave644_004ef010;
@@ -138,7 +138,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], OFFSET L_8250
-        jmp      InstallSelfIndirectJmpNeg_0048f4f0
+        jmp      InstallSelfIndirectJmpNeg
         nop
         nop
         nop

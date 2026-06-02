@@ -122,7 +122,7 @@ extern void Cmp3DirtyToggle_0049fa20(void);
 extern void DualPushSetCallDualPop(void);
 extern void MStackDualPushSaveRestore_004a09c0(void);
 extern void RoundWinTransition(void);
-extern void SetWalkCurCallPauseDirty_00404c70(void);
+extern void SetWalkCurCallPauseDirty(void);
 extern void TripleStageRollback(void);
 
 __declspec(naked) void GameNetSyncState_0049fb70(void)
@@ -170,7 +170,7 @@ __declspec(naked) void GameNetSyncState_0049fb70(void)
         push     OFFSET g_const_004a0060
         mov      dword ptr [g_walkCallback], ebx
         mov      dword ptr [g_state2_00541d88], ebx
-        call     SetWalkCurCallPauseDirty_00404c70
+        call     SetWalkCurCallPauseDirty
         add      esp, 8
         call     RoundWinTransition
         cmp      dword ptr [g_framePauseFlag], esi
@@ -210,7 +210,7 @@ __declspec(naked) void GameNetSyncState_0049fb70(void)
         push     0x238
         push     OFFSET g_const_004a0b00
         mov      dword ptr [g_eventQueueChild], eax
-        call     SetWalkCurCallPauseDirty_00404c70
+        call     SetWalkCurCallPauseDirty
         add      esp, 8
         pop      esi
         pop      ebx
@@ -221,7 +221,7 @@ __declspec(naked) void GameNetSyncState_0049fb70(void)
         push     0x23d
         push     OFFSET g_const_004a0dc0
         mov      dword ptr [g_eventQueueEnd], esi
-        call     SetWalkCurCallPauseDirty_00404c70
+        call     SetWalkCurCallPauseDirty
         add      esp, 8
         mov      dword ptr [g_walkCallback], ebx
         mov      dword ptr [g_state2_00541d88], ebx
@@ -238,7 +238,7 @@ __declspec(naked) void GameNetSyncState_0049fb70(void)
         add      esp, 4
         push     0x242
         push     OFFSET g_const_004a10d0
-        call     SetWalkCurCallPauseDirty_00404c70
+        call     SetWalkCurCallPauseDirty
         add      esp, 8
         mov      dword ptr [g_walkCallback], ebx
         mov      dword ptr [g_state2_00541d88], ebx

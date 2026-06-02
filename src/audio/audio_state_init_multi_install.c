@@ -113,15 +113,15 @@ extern unsigned int g_byte_0054372c;
 extern unsigned int g_byte_00543730;
 extern unsigned int g_voicePoolTickFlag_005437f4;
 extern void AudioBindEntry_004a1e40(void);
-extern void AudioInitArgs3_004a1f20(void);
+extern void AudioInitArgs3(void);
 extern void AudioState50b4BitDispatcher_004a32c0(void);
-extern void FiveTableWalkInit_00403c90(void);
+extern void FiveTableWalkInit(void);
 extern void InstallSelfPackedF80(void);
 extern void PendingMatch_004a2a80(void);
 extern void RetZero_004a1c40(void);
 extern void ScaledByteIdxDualCopy_004a3260(void);
-extern void TripleCallByteCheck_004a1bf0(void);
-extern void TripleCallSetCopy_004a4880(void);
+extern void TripleCallByteCheck(void);
+extern void TripleCallSetCopy(void);
 extern void DebugMenu_DrawUnlockToggles(void);
 
 __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
@@ -153,7 +153,7 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
         push    0x4f3830
         call    AudioState50b4BitDispatcher_004a32c0
         add     esp, 4
-        call    TripleCallByteCheck_004a1bf0
+        call    TripleCallByteCheck
         test    eax, eax
         mov     ebx, 1
         je      short L_asimi_skipDispatch
@@ -205,11 +205,11 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
         mov     byte ptr [g_byte_00543724], bl
         mov     byte ptr [g_byte_0054372c], bl
         mov     byte ptr [g_byte_00543730], bl
-        call    FiveTableWalkInit_00403c90
+        call    FiveTableWalkInit
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_asimi_ret
-        call    TripleCallSetCopy_004a4880
+        call    TripleCallSetCopy
         mov     esi, 0x4f384c
     L_asimi_loop:
         mov     ecx, dword ptr [esi]
@@ -219,7 +219,7 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
         push    ecx
         push    0
         push    0x5159b8
-        call    AudioInitArgs3_004a1f20
+        call    AudioInitArgs3
         movsx   edx, byte ptr [esi - 0xc]
         mov     eax, dword ptr [g_baseSel]
         add     esi, 0x24

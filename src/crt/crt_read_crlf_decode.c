@@ -111,10 +111,10 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_arr_00fa0de0;
 extern unsigned int g_iat_004d209c;
 extern unsigned int g_iat_004d2124;
-extern void Crt_doserrno_004c8bb0(void);
+extern void Crt_doserrno(void);
 extern void Crt_errno(void);
 extern void DosMapErr_004c8b20(void);
-extern void LseekImpl_004c8e50(void);
+extern void LseekImpl(void);
 
 __declspec(naked) void CrtReadCrlfDecode_004c9040(void)
 {
@@ -174,7 +174,7 @@ __declspec(naked) void CrtReadCrlfDecode_004c9040(void)
         jne      short L_90fc
         call     Crt_errno
         mov      dword ptr [eax], 9
-        call     Crt_doserrno_004c8bb0
+        call     Crt_doserrno
         mov      dword ptr [eax], 5
         or       eax, 0xffffffff
         pop      edi
@@ -295,7 +295,7 @@ __declspec(naked) void CrtReadCrlfDecode_004c9040(void)
         push     1
         push     -1
         push     edx
-        call     LseekImpl_004c8e50
+        call     LseekImpl
         mov      al, byte ptr [esp + 0x1f]
         add      esp, 0xc
         cmp      al, 0xa

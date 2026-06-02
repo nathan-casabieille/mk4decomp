@@ -123,7 +123,7 @@ extern unsigned int g_tickFlagF;
 extern void ArgSarStoreJmp(void);
 extern void CallPauseScaledStoreCopyJmp(void);
 extern void CjInstallSelfRouter(void);
-extern void EsiInstallClampAddCall_0048fe40(void);
+extern void EsiInstallClampAddCall(void);
 extern void StateDispatchTable(void);
 
 __declspec(naked) void Install3StateRouterTail_0046b4e0(void) {
@@ -199,7 +199,7 @@ __declspec(naked) void Install3StateRouterTail_0046b4e0(void) {
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
-        call    EsiInstallClampAddCall_0048fe40
+        call    EsiInstallClampAddCall
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret

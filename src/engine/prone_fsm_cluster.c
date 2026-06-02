@@ -112,7 +112,7 @@ extern void CallPauseConstStoreJmp_00438170(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void EntryThenDispatcherPair_00438cd0(void);
 extern void ProneFsmCluster_004355f0(void);
-extern void InstallSelfPacked0x2005_00437a90(void);
+extern void InstallSelfPacked0x2005(void);
 extern void JumpTableDispatch_0043a550(void);
 
 /* @addr 0x00435df0 (302b game) - 3-block install-self + threshold cascade + masked dispatch.
@@ -121,7 +121,7 @@ extern void JumpTableDispatch_0043a550(void);
  *     state=1; call CallPauseConstStoreJmp; pause=1; pop edi; ret.
  *   Block B (+0xa0): call Cmp2CallDirtyCall; if !=0 ret. Cascade on g_table_00535ddc:
  *     <0x10000 jmp CallPauseTestByteJmpCalls; <0x20000 jmp EntryThenDispatcherPair_00438cd0;
- *     <0x40000 jmp ProneFsmCluster_004355f0; else jmp InstallSelfPacked0x2005_00437a90.
+ *     <0x40000 jmp ProneFsmCluster_004355f0; else jmp InstallSelfPacked0x2005.
  *   Block C (+0xe0): g_scaledInit=[baseSel*4+0x38]; g_eventQueueCurrent=[chain+0x40];
  *     and 0x200 -> g_xformScratch94. If nonzero jmp PrefixThunkInstallSelf3State.
  *     Else: g_walkCallback &= 0xff; push 0x004e4668; call JumpTableDispatch; pop; ret.
@@ -191,7 +191,7 @@ __declspec(naked) void TripleBlockInstallThresholdMasked_00435df0(void) {
         _emit   7dh
         _emit   05h
         jmp     ProneFsmCluster_004355f0
-        jmp     InstallSelfPacked0x2005_00437a90
+        jmp     InstallSelfPacked0x2005
         ret
         _emit   90h
         _emit   90h

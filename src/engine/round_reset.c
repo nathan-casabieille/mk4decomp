@@ -175,8 +175,8 @@ extern unsigned int g_clusterArr541f60_7;
 extern unsigned int g_clusterArr541f60_8;
 extern unsigned int g_clusterArr541f60_9;
 extern unsigned int g_tripleEntryFlag_0054380c;
-extern void Cmp2DirtyToggle_00423870(void);
-extern void TestCmpZeroFour_004238b0(void);
+extern void Cmp2DirtyToggle(void);
+extern void TestCmpZeroFour(void);
 extern void TriBranchFlagWrite_00422720(void);
 extern void TwoStateCopyDup_004225f0(void);
 
@@ -184,7 +184,7 @@ __declspec(naked) void RoundReset_004223e0(void)
 {
     __asm {
         push     ebx
-        call     Cmp2DirtyToggle_00423870
+        call     Cmp2DirtyToggle
         mov      eax, dword ptr [g_framePauseFlag]
         xor      ebx, ebx
         cmp      eax, ebx
@@ -199,7 +199,7 @@ __declspec(naked) void RoundReset_004223e0(void)
         cmp      eax, 2
         mov      dword ptr [g_walkCallback], eax
         jne      short L_242f
-        call     TestCmpZeroFour_004238b0
+        call     TestCmpZeroFour
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_25e9
     L_242f:

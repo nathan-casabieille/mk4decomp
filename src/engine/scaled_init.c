@@ -41,7 +41,7 @@ extern void Phase4SevenPackedDispatch_00417e40(void);   /* 0x00417e40 */
 extern void TwoStageSetupTripleCopy_00441e50(void);   /* 0x00441e50 */
 extern void TripleBlockChainScaledInits_00450f10(void);   /* 0x00450f10 */
 extern void MStackChainInstallDispatch_0048d500(void);   /* 0x0048d500 */
-extern void GuardedDirtyXformFromTable_0048f6d0(void);   /* 0x0048f6d0 */
+extern void GuardedDirtyXformFromTable(void);   /* 0x0048f6d0 */
 extern void GameModeHandlerCluster_004955d0(void);   /* 0x004955d0 */
 
 /* The wrappers. */
@@ -102,7 +102,7 @@ void ScaledInit_0048d490(void) {
 /* @addr 0x0048f720 */
 void ScaledInit_0048f720(void) {
     g_scaledInit_00542044 = (unsigned int)&g_table_00542fb0 >> 2;
-    GuardedDirtyXformFromTable_0048f6d0();
+    GuardedDirtyXformFromTable();
 }
 
 /* @addr 0x00495590 */

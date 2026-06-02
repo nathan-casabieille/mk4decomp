@@ -11,7 +11,7 @@ extern unsigned int g_scaledInit_00542044;
  *   arg sar 2 → g_eventQueueTotal; scaled load [baseSel*4 + 0x30] → g_walkCallback
  *   scaled load [arg*4 + 0] → g_xformEntityIdx; if walk!=0 also load +4.
  */
-void ArgScaledTestStore_00494140(int arg) {
+void ArgScaledTestStore(int arg) {
     unsigned int packed = (unsigned int)(arg >> 2);
     unsigned int *src = (unsigned int *)(packed * 4);
     unsigned int cb;

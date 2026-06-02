@@ -110,18 +110,18 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0046e9a0 (206b game) - dual-path install-self with mstack overwrite.
  *   chain[+0x84]!=0 path: esi=g_eventQueueNotMask; call CopyJmp_0048ef90; pause-check; bit-0 test:
- *     if set call CallPauseDirtyMStackPushFn_0046e2a0; pop+ret. Else g_walkCallback=esi; call ScaledInit_0048d430;
+ *     if set call CallPauseDirtyMStackPushFn; pop+ret. Else g_walkCallback=esi; call ScaledInit_0048d430;
  *     if !pause: call [g_cj_00542058]; pop+ret.
  *   chain[+0x84]==0 path: snapshot+swap mstack top: ecx=mstack[N], save to g_cj_00542058, overwrite mstack[N]=g_walkCallback.
  *     call ScaledArrStore_00429980; pause-check; mstack-pop into g_walkCallback; install-self at +0x08=0x0046e9a0;
  *     g_pendingNodeType=1; g_pause=1. pop+ret.
  */
 extern unsigned int g_matrixStack_arr;
-extern void CallPauseDirtyMStackPushFn_0046e2a0(void);
+extern void CallPauseDirtyMStackPushFn(void);
 extern void ScaledArrStore_00429980(void);
 extern void ScaledInit_0048d430(void);
 
-__declspec(naked) void InstallSelfMStackOverwrite_0046e9a0(void) {
+__declspec(naked) void InstallSelfMStackOverwrite(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -144,7 +144,7 @@ __declspec(naked) void InstallSelfMStackOverwrite_0046e9a0(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   75h
         _emit   07h
-        call    CallPauseDirtyMStackPushFn_0046e2a0
+        call    CallPauseDirtyMStackPushFn
         pop     esi
         ret
         mov     dword ptr [g_walkCallback], esi

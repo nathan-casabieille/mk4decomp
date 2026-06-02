@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00429050 (216b game) - install-self with countdown. */
 extern void Install3WayChainStateAdvance_00429130(void);
-extern void ScaledLoadJmp_24_00429790(void);
+extern void ScaledLoadJmp_24(void);
 extern void Thunk_004296e0(void);
 
 __declspec(naked) void InstallSelfDualCountdown_00429050(void) {
@@ -144,7 +144,7 @@ __declspec(naked) void InstallSelfDualCountdown_00429050(void) {
         mov     ecx, dword ptr [g_fightGroupHead]
         mov     edx, dword ptr [ecx*4 + 0x24]
         mov     dword ptr [g_scaledInit_00542044], edx
-        call    ScaledLoadJmp_24_00429790
+        call    ScaledLoadJmp_24
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

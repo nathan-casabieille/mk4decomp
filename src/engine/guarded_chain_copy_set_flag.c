@@ -113,8 +113,8 @@ extern unsigned int g_fightAxisPosY;
 extern void MStackCall_00406340(void);
 extern void MStackPushDispatchBitGate(void);
 extern void MStackPushTwoEntryChainCall(void);
-extern void PushDualDerefClearPop_004092a0(void);
-extern void PushPopScaled18_004059a0(void);
+extern void PushDualDerefClearPop(void);
+extern void PushPopScaled18(void);
 
 void GuardedChainCopySetFlag_0048c480(void) {
     __asm {
@@ -126,7 +126,7 @@ void GuardedChainCopySetFlag_0048c480(void) {
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   75h
         _emit   6eh
-        call    PushDualDerefClearPop_004092a0
+        call    PushDualDerefClearPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -143,7 +143,7 @@ void GuardedChainCopySetFlag_0048c480(void) {
         test    eax, eax
         _emit   75h
         _emit   28h
-        call    PushPopScaled18_004059a0
+        call    PushPopScaled18
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

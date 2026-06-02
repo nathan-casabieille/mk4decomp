@@ -111,13 +111,13 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00458f40 (238b game) - nested 3x15 loop with character-range dispatch.
  *   mstack-push g_eventQueueWorkType, g_pendingNodeType. esi=3.
  *   g_pendingNodeType=(0x0053a53c>>2); outer g_eventQueueCurrent=0xf; inner g_eventQueueWorkType=esi=3.
- *   LOOP_HEAD: call ScaledMaskByte_004774d0; if pause exit.
+ *   LOOP_HEAD: call ScaledMaskByte; if pause exit.
  *   compare g_walkCallback to {0x20, 0x7b/c/d, 0x5f}; dispatch one path.
  *   inner inc-dec; if !=0 LOOP_HEAD; else dec outer; if 0 -> FINAL_OK; else reset inner.
  *   FINAL_OK: call BitmapBlitRunLength_004592f0; if !pause: mstack-pop pair; ret.
  */
 extern void BitmapBlitRunLength_004592f0(void);
-extern void ScaledMaskByte_004774d0(void);
+extern void ScaledMaskByte(void);
 
 __declspec(naked) void NestedLoopDispatch_00458f40(void) {
     __asm {
@@ -138,7 +138,7 @@ __declspec(naked) void NestedLoopDispatch_00458f40(void) {
         mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_eventQueueCurrent], 0xf
         mov     dword ptr [g_eventQueueWorkType], esi
-        call    ScaledMaskByte_004774d0
+        call    ScaledMaskByte
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

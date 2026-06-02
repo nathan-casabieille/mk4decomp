@@ -114,9 +114,9 @@ extern void CallSetPause(void);
 extern void FiveCallGuardSetTail(void);
 extern void GameModeAdvanceCluster_00482000(void);
 extern void InitZeroChainLookupJmp_00494210(void);
-extern void InstallSelfPair_00435110(void);
+extern void InstallSelfPair(void);
 extern void MStackPushSet0Jmp(void);
-extern void MStackPushSet6Jmp_00438470(void);
+extern void MStackPushSet6Jmp(void);
 extern void ScaledChainJmp_00429470(void);
 extern void ScaledInitWithCounterAndType_004314f0(void);
 
@@ -130,7 +130,7 @@ __declspec(naked) void InstallSelfChainExtendCall_00434f10(void) {
         cmp     ecx, edx
         _emit   74h
         _emit   05h
-        jmp     InstallSelfPair_00435110
+        jmp     InstallSelfPair
         mov     dword ptr [eax + 8], 0x00434f10
         mov     ecx, dword ptr [g_baseSel]
         push    edi
@@ -180,7 +180,7 @@ __declspec(naked) void InstallSelfChainExtendCall_004351b0(void) {
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
-        call    MStackPushSet6Jmp_00438470
+        call    MStackPushSet6Jmp
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         ret

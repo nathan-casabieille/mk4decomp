@@ -109,9 +109,9 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void CjTableThresholdDispatch(void);
-extern void MainTickChain_00481070(void);
+extern void MainTickChain(void);
 extern void PendingMatch_00416e20(void);
-extern void ByteWordTableTaggedDispatch_0048a050(void);
+extern void ByteWordTableTaggedDispatch(void);
 extern void GameModeAdvanceCluster_00482000(void);
 
 /* @addr 0x00483c90 (334b game) - 4-block: thunk + install-self body + 2 small thunks. */
@@ -119,7 +119,7 @@ extern void ArgSarStoreJmp(void);
 extern void CjInstallSelfRouter(void);
 extern void DualBlockChainCallInstall_00483de0(void);
 
-__declspec(naked) void QuadBlockInstallChainThunks_00483c90(void) {
+__declspec(naked) void QuadBlockInstallChainThunks(void) {
     __asm {
         call    CjTableThresholdDispatch
         mov     eax, dword ptr [g_framePauseFlag]
@@ -148,7 +148,7 @@ __declspec(naked) void QuadBlockInstallChainThunks_00483c90(void) {
         pop     esi
         pop     ebx
         ret
-        call    MainTickChain_00481070
+        call    MainTickChain
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -187,7 +187,7 @@ __declspec(naked) void QuadBlockInstallChainThunks_00483c90(void) {
         pop     ebx
         ret
         mov     dword ptr [g_walkCallback], ebx
-        call    ByteWordTableTaggedDispatch_0048a050
+        call    ByteWordTableTaggedDispatch
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -212,7 +212,7 @@ __declspec(naked) void QuadBlockInstallChainThunks_00483c90(void) {
         pop     ebx
         ret
         _emit   90h
-        call    MainTickChain_00481070
+        call    MainTickChain
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -222,7 +222,7 @@ __declspec(naked) void QuadBlockInstallChainThunks_00483c90(void) {
         ret
         _emit   90h
         _emit   90h
-        call    MainTickChain_00481070
+        call    MainTickChain
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

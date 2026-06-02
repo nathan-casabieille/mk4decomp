@@ -58,7 +58,7 @@ void MStackPushSet0040_00490200(void) {
 }
 
 /* @addr 0x00490230 */
-void MStackPushSet0004_00490230(void) {
+void MStackPushSet0004(void) {
     unsigned int acc = g_eventQueueNotMask;
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
@@ -68,7 +68,7 @@ void MStackPushSet0004_00490230(void) {
 }
 
 /* @addr 0x00490260 */
-void MStackPushSet0001_00490260(void) {
+void MStackPushSet0001(void) {
     unsigned int acc = g_eventQueueNotMask;
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;

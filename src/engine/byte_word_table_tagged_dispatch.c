@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern void Wrapper_0048a280(void);
 extern void EntryThunkBodyStateMachine(void);
-extern void ByteWordTableTaggedDispatch_0048a050(void);
+extern void ByteWordTableTaggedDispatch(void);
 extern void StoreTwoCallSubMain_00426b60(void);
 extern unsigned int g_chain_arr_485cc0;
 
@@ -118,7 +118,7 @@ extern unsigned int g_chain_arr_485cc0;
  *   GateDispatch6c -> pause? ret;
  *   Wrapper_0048a280 -> pause? ret;
  *   g_eventQueueNotMask = 0; EntryThunkBodyStateMachine -> pause? ret;
- *   g_walkCallback = 6; ByteWordTableTaggedDispatch_0048a050 -> pause? ret;
+ *   g_walkCallback = 6; ByteWordTableTaggedDispatch -> pause? ret;
  *   g_acc_00542078 = chain[cj].slot54; g_eventQueueNotMask = chain[cj].slot5c;
  *   StoreTwoCallSubMain_00426b60 -> pause? ret.
  *   g_walkCallback = chain[cj].slot48; chain[cj].slot58 = walkCallback.
@@ -148,7 +148,7 @@ void FiveStageSetupChain_00485cc0(void) {
         _emit   75h
         _emit   5eh
         mov     dword ptr [g_walkCallback], 6
-        call    ByteWordTableTaggedDispatch_0048a050
+        call    ByteWordTableTaggedDispatch
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

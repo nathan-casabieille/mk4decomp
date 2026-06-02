@@ -118,7 +118,7 @@ extern unsigned int g_audioVoiceCounter_00535e50;
 /* @addr 0x004266d0 (162b) - 11x ScaledPushArg pattern (6x to 0x404b90,
  *   5x to 0x404c00) pushing globals 0x54206c..0x542080, 0x542048..0x535e50.
  */
-void Eleven404b90_404c00_004266d0(void) {
+void Eleven404b90_404c00(void) {
     ((void (*)(unsigned int))ScaledPushArg_00404b90)((unsigned int)g_walkCallback);
     ((void (*)(unsigned int))ScaledPushArg_00404b90)(g_eventQueueCurrent);
     ((void (*)(unsigned int))ScaledPushArg_00404b90)(g_eventQueueWorkType);

@@ -114,14 +114,14 @@ extern unsigned int g_dispatchSave801_004f2550;
 extern unsigned int g_dispatchSave802_004f2560;
 extern unsigned int g_eq_00542098;
 extern void ArgSarStoreJmp(void);
-extern void ArgSar_Set0_Jmp_0049c6f0(void);
+extern void ArgSar_Set0_Jmp(void);
 extern void CallSetPause(void);
 extern void CondPickDualStore(void);
 extern void CopyThreeFields(void);
 extern void DualCmpSwapStore(void);
 extern void MStackBracket2_TreeWalkRecursive(void);
 extern void MStackBracket5_LinkedListUnlink(void);
-extern void MStackPush2ChainPrepend_00409970(void);
+extern void MStackPush2ChainPrepend(void);
 extern void Phase1ContextSetup3Helpers_0040d990(void);
 extern void QuadBlockSoundInit_0049bb90(void);
 extern void ScaledStackCallPause(void);
@@ -202,7 +202,7 @@ __declspec(naked) void RoundFinalizeCluster_0049b8b0(void)
         mov      eax, dword ptr [g_eq_00542098]
         test     eax, eax
         jne      short L_b9d5
-        call     MStackPush2ChainPrepend_00409970
+        call     MStackPush2ChainPrepend
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b9f9
@@ -323,7 +323,7 @@ __declspec(naked) void RoundFinalizeCluster_0049b8b0(void)
         mov      edx, dword ptr [g_currentNodeIdx]
         push     OFFSET g_dispatchSave802_004f2560
         mov      dword ptr [g_fightGroupHead], edx
-        call     ArgSar_Set0_Jmp_0049c6f0
+        call     ArgSar_Set0_Jmp
         add      esp, 4
     L_bb51:
         pop      esi

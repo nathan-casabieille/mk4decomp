@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00439410 (135b) - install-self pattern w/ dec g_eventQueueChild
  *   + g_table_00535ddc < g_currentNodeFlags cmp gate. */
-extern void PushCallSet2147Jmp_00439320(void);
+extern void PushCallSet2147Jmp(void);
 
 __declspec(naked) void InstallSelfDecCmpGate_00439410(void) {
     __asm {
@@ -139,7 +139,7 @@ __declspec(naked) void InstallSelfDecCmpGate_00439410(void) {
         call    StackPopDispatchTagged
         pop     esi
         ret
-        call    PushCallSet2147Jmp_00439320
+        call    PushCallSet2147Jmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

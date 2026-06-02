@@ -17,20 +17,20 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void ChainDirtyBitWalker(void);
-extern void DualScaledLoadStoreJmp_00475790(void);
+extern void DualScaledLoadStoreJmp(void);
 void ConstStoreCallJmp_00448fa0(void) {
     g_walkCallback = (void(*)(void))3;
     ChainDirtyBitWalker();
     if (g_framePauseFlag) return;
-    DualScaledLoadStoreJmp_00475790();
+    DualScaledLoadStoreJmp();
 }
 
 /* @addr 0x0046ff60 (30b): same shape, value=4 */
-extern void ByteWordTableTaggedDispatch_0048a050(void);
+extern void ByteWordTableTaggedDispatch(void);
 extern void Phase3PackedInstallSelf_0046ff80(void);
 void ConstStoreCallJmp_0046ff60(void) {
     g_walkCallback = (void(*)(void))4;
-    ByteWordTableTaggedDispatch_0048a050();
+    ByteWordTableTaggedDispatch();
     if (g_framePauseFlag) return;
     Phase3PackedInstallSelf_0046ff80();
 }

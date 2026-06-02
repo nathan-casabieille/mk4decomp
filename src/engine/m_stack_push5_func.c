@@ -12,16 +12,16 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_walkCallback], 5
  *   inc     eax
  *   mov     [g_matrixStackTop], eax
- *   mov     [eax*4 + 0], OFFSET StateMachine4ArmCascade_0043aab0
+ *   mov     [eax*4 + 0], OFFSET StateMachine4ArmCascade
  *   jmp     T
  */
-extern void StateMachine4ArmCascade_0043aab0(void);
+extern void StateMachine4ArmCascade(void);
 extern void MstackPopScaledChainPlusThunks(void);
 void MStackPush5Func_0043aa80(void) {
     unsigned int top = g_matrixStackTop;
     g_walkCallback = (void(*)(void))5;
     top++;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = (unsigned int)StateMachine4ArmCascade_0043aab0;
+    *(unsigned int *)(top * 4) = (unsigned int)StateMachine4ArmCascade;
     MstackPopScaledChainPlusThunks();
 }

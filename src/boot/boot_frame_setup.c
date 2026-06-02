@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void ScaledAndAl7f_004902f0(void);
+extern void ScaledAndAl7f(void);
 extern void BootFrameSetup(void);
 extern void GuardedChainCmpDualBitXor(void);
 extern void ScaledXorStore_004903b0(void);
@@ -120,7 +120,7 @@ extern void Wrapper_00484d90(void);
 /* @addr 0x00484b70 (284b game) - 5 adjacent dispatch blocks.
  *   B1 (0..0x24, +11 NOPs): mstack-push 0x00470480 with g_walkCallback=2; tail-jmp
  *     MstackPopScaledChainPlusThunks.
- *   B2 (0x30..0x4b, +4 NOPs): call ScaledAndAl7f_004902f0; if !pause: push 0x004ee8f8,
+ *   B2 (0x30..0x4b, +4 NOPs): call ScaledAndAl7f; if !pause: push 0x004ee8f8,
  *     tail-call ArgSarStoreJmp.
  *   B3 (0x50..0xa4, +11 NOPs): g_xformEntityIdx = 0x00500698>>2; 4-call chain
  *     (BootFrameSetup, GuardedChainCmpDualBitXor, ScaledXorStore, GateDispatch6c);
@@ -166,7 +166,7 @@ __declspec(naked) void FiveBlockDispatchChain_00484b70(void) {
         nop
         nop
         nop
-        call    ScaledAndAl7f_004902f0
+        call    ScaledAndAl7f
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

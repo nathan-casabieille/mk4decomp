@@ -112,7 +112,7 @@ extern unsigned int g_dispatchSave713_004ed0b8;
 extern void ArgSarStoreJmp(void);
 extern void CmpEqInitCallElseJmp(void);
 extern void FiveCallGuardSetTail(void);
-extern void InstallSelf3StateDualChain_0047a1c0(void);
+extern void InstallSelf3StateDualChain(void);
 extern void InstallSelf3StateFieldSet_0047a090(void);
 extern void MStackPushSet0020_004901d0(void);
 extern void Push8e_Push413690_00413560(void);
@@ -227,7 +227,7 @@ __declspec(naked) void ThrowTakedownStepCluster_00479e40(void)
         mov      eax, 0x28f
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x4c], eax
-        call     InstallSelf3StateDualChain_0047a1c0
+        call     InstallSelf3StateDualChain
         pop      esi
         ret
     L_9fb1:

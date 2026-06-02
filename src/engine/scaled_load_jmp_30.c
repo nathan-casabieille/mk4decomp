@@ -12,7 +12,7 @@
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_baseSel;   /* 0x00542060 */
 extern void InstallSelfMagicShift_00472fe0(void);
-extern void LoadCmpAddrJmp_00493ed0(void);
+extern void LoadCmpAddrJmp(void);
 
 /* @addr 0x00472fc0 */
 void ScaledLoadJmp30_00472fc0(void) {
@@ -23,5 +23,5 @@ void ScaledLoadJmp30_00472fc0(void) {
 /* @addr 0x00493eb0 */
 void ScaledLoadJmp30_00493eb0(void) {
     g_walkCallback = (void (*)(void))*(unsigned int *)(g_baseSel * 4 + 0x30);
-    LoadCmpAddrJmp_00493ed0();
+    LoadCmpAddrJmp();
 }

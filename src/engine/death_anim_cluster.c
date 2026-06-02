@@ -122,9 +122,9 @@ extern unsigned int g_dispatchVar3_00543564;
 extern unsigned int g_eventMusicSlot_00543594;
 extern void CallSetPause(void);
 extern void Cmp7CondStateUpdate_0042ed90(void);
-extern void GameMusicState4Way_00426d90(void);
+extern void GameMusicState4Way(void);
 extern void GuardedDualPushTailJmp_004231f0(void);
-extern void ScaledLoadOrSetJmp_00406b20(void);
+extern void ScaledLoadOrSetJmp(void);
 
 __declspec(naked) void DeathAnimCluster_0042eaf0(void)
 {
@@ -180,7 +180,7 @@ __declspec(naked) void DeathAnimCluster_0042eaf0(void)
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [g_zerotriple_00541de8], edx
         mov      dword ptr [g_zerotriple_00541dec], ecx
-        call     GameMusicState4Way_00426d90
+        call     GameMusicState4Way
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_ed0b
         mov      ecx, dword ptr [g_fightGroupHead]
@@ -221,7 +221,7 @@ __declspec(naked) void DeathAnimCluster_0042eaf0(void)
         mov      ecx, dword ptr [g_fightGroupHead]
         mov      eax, dword ptr [g_walkCallback]
         mov      dword ptr [ecx*4 + 0x28], eax
-        call     ScaledLoadOrSetJmp_00406b20
+        call     ScaledLoadOrSetJmp
         cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_ed0b
         mov      eax, dword ptr [g_bootHeavyState_00537f78]

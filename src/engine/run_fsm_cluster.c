@@ -108,12 +108,12 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void GameStateLinearAdvance4Way_00484480(void);
+extern void GameStateLinearAdvance4Way(void);
 extern void EsiAliasInstallSelf_00484650(void);
 extern void RunFsmCluster_004846b0(void);
 
 
-__declspec(naked) void GameStateLinearAdvance4Way_00484480(void)
+__declspec(naked) void GameStateLinearAdvance4Way(void)
 {
     __asm {
         mov      eax, dword ptr [g_baseSel]
@@ -127,9 +127,9 @@ __declspec(naked) void GameStateLinearAdvance4Way_00484480(void)
         ja       L_4629
         jmp      dword ptr [edx*4 + L_480_jmptbl]
     L_44a8:
-        mov      dword ptr [eax + 8], OFFSET GameStateLinearAdvance4Way_00484480
+        mov      dword ptr [eax + 8], OFFSET GameStateLinearAdvance4Way
         mov      edx, dword ptr [g_baseSel]
-        mov      esi, OFFSET GameStateLinearAdvance4Way_00484480
+        mov      esi, OFFSET GameStateLinearAdvance4Way
         mov      dword ptr [edx*4 + 0x84], 2
         mov      edx, dword ptr [eax + 4]
         add      esi, 0x2000000
@@ -147,9 +147,9 @@ __declspec(naked) void GameStateLinearAdvance4Way_00484480(void)
         pop      esi
         ret
     L_4509:
-        mov      dword ptr [eax + 8], OFFSET GameStateLinearAdvance4Way_00484480
+        mov      dword ptr [eax + 8], OFFSET GameStateLinearAdvance4Way
         mov      edx, dword ptr [g_baseSel]
-        mov      esi, OFFSET GameStateLinearAdvance4Way_00484480
+        mov      esi, OFFSET GameStateLinearAdvance4Way
         mov      dword ptr [edx*4 + 0x84], 3
         mov      edx, dword ptr [eax + 4]
         add      esi, 0x3000000
@@ -167,9 +167,9 @@ __declspec(naked) void GameStateLinearAdvance4Way_00484480(void)
         pop      esi
         ret
     L_456a:
-        mov      dword ptr [eax + 8], OFFSET GameStateLinearAdvance4Way_00484480
+        mov      dword ptr [eax + 8], OFFSET GameStateLinearAdvance4Way
         mov      edx, dword ptr [g_baseSel]
-        mov      esi, OFFSET GameStateLinearAdvance4Way_00484480
+        mov      esi, OFFSET GameStateLinearAdvance4Way
         mov      dword ptr [edx*4 + 0x84], 4
         mov      edx, dword ptr [eax + 4]
         add      esi, 0x4000000
@@ -187,10 +187,10 @@ __declspec(naked) void GameStateLinearAdvance4Way_00484480(void)
         pop      esi
         ret
     L_45cb:
-        mov      dword ptr [eax + 8], OFFSET GameStateLinearAdvance4Way_00484480
+        mov      dword ptr [eax + 8], OFFSET GameStateLinearAdvance4Way
         mov      edx, dword ptr [g_baseSel]
         mov      esi, 1
-        mov      edi, OFFSET GameStateLinearAdvance4Way_00484480
+        mov      edi, OFFSET GameStateLinearAdvance4Way
         mov      dword ptr [edx*4 + 0x84], esi
         mov      edx, dword ptr [eax + 4]
         add      edi, 0x1000000

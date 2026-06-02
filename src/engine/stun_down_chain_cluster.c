@@ -110,8 +110,8 @@ extern unsigned int g_fightAxisPosY;
 
 extern void StoreLoadJmp(void);
 extern void ChainDirtyBitWalker(void);
-extern void Chain2AxisDiffStoreTailJmp_0044cad0(void);
-extern void MStackPush3SideStore_0044cb80(void);
+extern void Chain2AxisDiffStoreTailJmp(void);
+extern void MStackPush3SideStore(void);
 extern void StunDownChainCluster_00452310(void);
 extern void func_0045231b(void);
 extern void DualScaledStore(void);
@@ -282,12 +282,12 @@ __declspec(naked) void StunDownCluster_00451fc0(void)
         call     DualScaledStore
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_22df
-        call     Chain2AxisDiffStoreTailJmp_0044cad0
+        call     Chain2AxisDiffStoreTailJmp
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_22df
         mov      dword ptr [g_eventQueueWorkType], 0xe666
         mov      dword ptr [g_walkCallback], 0xfffe7334
-        call     MStackPush3SideStore_0044cb80
+        call     MStackPush3SideStore
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_22df
         mov      eax, 1

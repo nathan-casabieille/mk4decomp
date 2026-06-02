@@ -126,7 +126,7 @@ void BootMStackBracketedScaledStores_0040bf70(void) {
     PushSetXfmMaskCallPop();
     if (g_framePauseFlag != 0) return;
     if (!(g_xformDirtyFlags & 4)) {
-        ScaledChainOr8_00404e50();
+        ScaledChainOr8();
         g_walkCallback = 0x13333;
         *(unsigned int *)(g_xformEntityIdx * 4 + 0x48) = 0x13333;
         g_eventQueueCurrent = 0x2000;
@@ -140,7 +140,7 @@ void BootMStackBracketedScaledStores_0040bf70(void) {
         if (g_framePauseFlag != 0) return;
         g_walkCallback = 0xff;
         g_currentNodeIdx = g_fightGroupHead;
-        PushSetDualDeref_00406650();
+        PushSetDualDeref();
         if (g_framePauseFlag != 0) return;
         MStackCall_00406600();
         if (g_framePauseFlag != 0) return;

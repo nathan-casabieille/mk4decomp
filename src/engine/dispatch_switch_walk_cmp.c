@@ -15,7 +15,7 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_baseSel;
 extern void Wrapper_00438c40(void);
 extern void Wrapper_00438ee0(void);
-void DispatchSwitchWalkCmp_00438bf0(void) {
+void DispatchSwitchWalkCmp(void) {
     unsigned int v = ((ScenegraphNode *)(g_baseSel * 4))->state_mask;
     g_walkCallback = (void (*)(void))v;
     if (v == 0x10) {

@@ -110,16 +110,16 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave650_004a0370;
 extern unsigned int g_poseGridGenVar_004e2864;
-extern void Ten404c40_404bd0_00426780(void);
+extern void Ten404c40_404bd0(void);
 extern void PushCallPauseStorePushDispatch_004a12e0(void);
 extern void TripleStageRollback(void);
 extern void RoundWinTransition(void);
 extern void StoreTwoCall(void);
 extern void TaggedSceneDispatch(void);
 extern void InstallSelf3WaySubDec_004a1320(void);
-extern void LinkedListIndirectDirtyToggle_0049f7b0(void);
+extern void LinkedListIndirectDirtyToggle(void);
 extern void IncWrap0fJmp_004a1120(void);
-extern void Eleven404b90_404c00_004266d0(void);
+extern void Eleven404b90_404c00(void);
 extern void PoseGridGenerator_004a13d0(void);
 
 __declspec(naked) void AudioPhaseDispatch_004a1150(void)
@@ -134,7 +134,7 @@ __declspec(naked) void AudioPhaseDispatch_004a1150(void)
         mov     dword ptr [esi + 0x84], 0
         test    eax, eax
         je      L_apd_phase0
-        call    Ten404c40_404bd0_00426780
+        call    Ten404c40_404bd0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_apd_ret
@@ -175,7 +175,7 @@ __declspec(naked) void AudioPhaseDispatch_004a1150(void)
         pop     ebx
         ret
     L_apd_phase0:
-        call    LinkedListIndirectDirtyToggle_0049f7b0
+        call    LinkedListIndirectDirtyToggle
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_apd_ret
@@ -196,7 +196,7 @@ __declspec(naked) void AudioPhaseDispatch_004a1150(void)
         mov     eax, dword ptr [ecx*4 + 0x14]
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4], ebx
-        call    Eleven404b90_404c00_004266d0
+        call    Eleven404b90_404c00
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_apd_ret

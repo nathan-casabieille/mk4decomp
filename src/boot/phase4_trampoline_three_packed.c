@@ -116,10 +116,10 @@ extern void ClampMulShiftStore(void);
 extern void MStackCall_004062a0(void);
 extern void MStackCall_00406600(void);
 extern void MStackPushZeroCallPop_004066f0(void);
-extern void PushSetDualDeref_00406650(void);
+extern void PushSetDualDeref(void);
 extern void PushSetXfmMaskCallPop(void);
-extern void QuadMul10TailFpuChain_00431120(void);
-extern void ScaledChainOr8_00404e50(void);
+extern void QuadMul10TailFpuChain(void);
+extern void ScaledChainOr8(void);
 
 __declspec(naked) void Phase4TrampolineThreePacked_0040fa20(void)
 {
@@ -207,7 +207,7 @@ __declspec(naked) void Phase4TrampolineThreePacked_0040fa20(void)
         mov     dword ptr [g_eventQueueNotMask], ecx
         mov     edx, dword ptr [eax*4 + 0x5C]
         mov     dword ptr [g_eventQueueChild], edx
-        call    QuadMul10TailFpuChain_00431120
+        call    QuadMul10TailFpuChain
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4ttp_B_exit
@@ -279,7 +279,7 @@ __declspec(naked) void Phase4TrampolineThreePacked_0040fa20(void)
         mov     ecx, dword ptr [g_fightGroupHead]
         mov     dword ptr [ecx*4 + 0x30], 0x46
         mov     dword ptr [g_walkCallback], 0xC0
-        call    PushSetDualDeref_00406650
+        call    PushSetDualDeref
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4ttp_B_exit
@@ -295,7 +295,7 @@ __declspec(naked) void Phase4TrampolineThreePacked_0040fa20(void)
         mov     eax, 0xFFFFEE98
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x70], eax
-        call    ScaledChainOr8_00404e50
+        call    ScaledChainOr8
         mov     edx, dword ptr [g_xformEntityIdx]
         mov     eax, 0x16666
         mov     dword ptr [g_walkCallback], eax

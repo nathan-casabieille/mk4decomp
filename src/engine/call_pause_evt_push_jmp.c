@@ -16,11 +16,11 @@
  *   mov     [ecx*4 + 0], eax
  *   jmp     T
  */
-extern void SwapOrPassSet_0048fbf0(void);
+extern void SwapOrPassSet(void);
 extern void BulletVolleySpawner_00478350(void);
 void CallPauseEvtPushJmp_00422880(void) {
     unsigned int v;
-    SwapOrPassSet_0048fbf0();
+    SwapOrPassSet();
     if (g_framePauseFlag != 0) return;
     v = (unsigned int)g_walkCallback + 1;
     g_walkCallback = (void (*)(void))v;

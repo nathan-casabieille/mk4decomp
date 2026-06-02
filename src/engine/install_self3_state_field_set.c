@@ -109,18 +109,18 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0047a090 (300b game) - 3-state install-self with field-set + sibling-tail.
- *   state==0: call ScaledAndAldf_00490330; if pause ret.
- *     If g_xformScratch2088==1: tail-call MoveSelectorCluster_0047d9a0; ret.
+ *   state==0: call ScaledAndAldf; if pause ret.
+ *     If g_xformScratch2088==1: tail-call MoveSelectorCluster; ret.
  *     Else: install-self at entry+0x01000000; call HopBackFsmCluster_0047a2e0; pause=1; ret.
  *   state==1: g_walkCallback=0x5e; call ScaledLitLoadCall; if pause ret.
  *     Install-self at entry+0x02000000; jmp common chain-push tail.
  *   state>=2: g_walkCallback=0x51e; call ScaledLitLoadCall; if pause ret.
- *     [cj*4+0x4c]=0x51e; tail-call InstallSelf3StateDualChain_0047a1c0; pop+ret.
+ *     [cj*4+0x4c]=0x51e; tail-call InstallSelf3StateDualChain; pop+ret.
  */
 extern void HopBackFsmCluster_0047a2e0(void);
-extern void InstallSelf3StateDualChain_0047a1c0(void);
-extern void MoveSelectorCluster_0047d9a0(void);
-extern void ScaledAndAldf_00490330(void);
+extern void InstallSelf3StateDualChain(void);
+extern void MoveSelectorCluster(void);
+extern void ScaledAndAldf(void);
 extern void ScaledLitLoadCall_00480fe0(void);
 
 __declspec(naked) void InstallSelf3StateFieldSet_0047a090(void) {
@@ -156,7 +156,7 @@ __declspec(naked) void InstallSelf3StateFieldSet_0047a090(void) {
         mov     eax, 0x51e
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x4c], eax
-        call    InstallSelf3StateDualChain_0047a1c0
+        call    InstallSelf3StateDualChain
         pop     esi
         ret
         mov     dword ptr [g_walkCallback], 0x5e
@@ -178,7 +178,7 @@ __declspec(naked) void InstallSelf3StateFieldSet_0047a090(void) {
         add     ecx, 0x02000000
         _emit   0ebh
         _emit   48h
-        call    ScaledAndAldf_00490330
+        call    ScaledAndAldf
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -186,7 +186,7 @@ __declspec(naked) void InstallSelf3StateFieldSet_0047a090(void) {
         cmp     dword ptr [g_xformScratch2088], 1
         _emit   75h
         _emit   07h
-        call    MoveSelectorCluster_0047d9a0
+        call    MoveSelectorCluster
         pop     esi
         ret
         mov     dword ptr [esi + 8], offset InstallSelf3StateFieldSet_0047a090

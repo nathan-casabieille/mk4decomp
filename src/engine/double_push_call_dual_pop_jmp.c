@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00423270 (111b)
  *   Double mstack push: g_eventQueueWorkType, then g_walkCallback;
  *   call DownloadPlayerChar_Variant (DownloadPlayerChar_Variant); if pause: ret;
- *   pop g_walkCallback; pop g_eventQueueWorkType; jmp TripleStateSwapCall_0048cc40.
+ *   pop g_walkCallback; pop g_eventQueueWorkType; jmp TripleStateSwapCall.
  */
 void DoublePushCallDualPopJmp_00423270(void) {
     g_matrixStackTop++;
@@ -124,5 +124,5 @@ void DoublePushCallDualPopJmp_00423270(void) {
     g_matrixStackTop--;
     g_eventQueueWorkType = *(unsigned int *)(g_matrixStackTop * 4);
     g_matrixStackTop--;
-    TripleStateSwapCall_0048cc40();
+    TripleStateSwapCall();
 }

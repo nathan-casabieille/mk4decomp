@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * BootChainBidirRecurseWalk_00405ca0 - 297b boot mstack-push2 + dual-chain bidir walk.
+ * BootChainBidirRecurseWalk - 297b boot mstack-push2 + dual-chain bidir walk.
  *   Push g_currentNodeIdx and g_xformEntityIdx to mstack. g_xformDirtyFlags |= 4.
  *   If g_currentNodeIdx == 0: pop+ret. g_xformDirtyFlags ^= 4. If still ==0: pop+ret.
  *   ecx = chain[+0x1c]; g_walkCallback = ecx; if <=0: skip recurse.
@@ -123,7 +123,7 @@ extern unsigned int g_fightAxisPosY;
 extern void BootChainTreeRecurseWalk_00405b80(void);
 extern void MStackBracket5_LinkedListUnlink(void);
 
-void BootChainBidirRecurseWalk_00405ca0(void) {
+void BootChainBidirRecurseWalk(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_currentNodeIdx]

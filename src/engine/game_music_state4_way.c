@@ -114,7 +114,7 @@ extern void MStackBitLoopTripleCall_0049cc30(void);
 extern void SetJmp_00405420(void);
 extern void SetupHelperCluster_00426fa0(void);
 
-__declspec(naked) void GameMusicState4Way_00426d90(void)
+__declspec(naked) void GameMusicState4Way(void)
 {
     __asm {
         /* H1: trampoline */

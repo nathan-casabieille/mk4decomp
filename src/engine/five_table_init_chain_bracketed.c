@@ -113,7 +113,7 @@ extern unsigned int g_dispatchSave86_0053a530;
 extern unsigned int g_dispatchSave85_0053a654;
 extern unsigned int g_dispatchSave66_00542ab8;
 extern unsigned int g_dispatchSave67_00542b00;
-extern void ScaledDerefStore_004774b0(void);
+extern void ScaledDerefStore(void);
 
 void FiveTableInitChainBracketed_004774f0(void) {
     __asm {
@@ -136,7 +136,7 @@ void FiveTableInitChainBracketed_004774f0(void) {
         mov     dword ptr [eax*4], ecx
         mov     dword ptr [g_eventQueueWorkType], 0x64
         mov     dword ptr [g_pendingNodeType], edx
-        call    ScaledDerefStore_004774b0
+        call    ScaledDerefStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_ftic_abort
@@ -144,7 +144,7 @@ void FiveTableInitChainBracketed_004774f0(void) {
         mov     dword ptr [g_eventQueueWorkType], 0x23
         sar     eax, 2
         mov     dword ptr [g_pendingNodeType], eax
-        call    ScaledDerefStore_004774b0
+        call    ScaledDerefStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_ftic_abort
@@ -159,7 +159,7 @@ void FiveTableInitChainBracketed_004774f0(void) {
         mov     dword ptr [g_currentNodeIdx], eax
         je      short L_ftic_block3
     L_ftic_loop2:
-        call    ScaledDerefStore_004774b0
+        call    ScaledDerefStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_ftic_abort
@@ -182,7 +182,7 @@ void FiveTableInitChainBracketed_004774f0(void) {
         mov     dword ptr [g_currentNodeIdx], eax
         je      short L_ftic_block4
     L_ftic_loop3:
-        call    ScaledDerefStore_004774b0
+        call    ScaledDerefStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_ftic_abort
@@ -198,7 +198,7 @@ void FiveTableInitChainBracketed_004774f0(void) {
         mov     dword ptr [g_eventQueueWorkType], 4
         sar     ecx, 2
         mov     dword ptr [g_pendingNodeType], ecx
-        call    ScaledDerefStore_004774b0
+        call    ScaledDerefStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_ftic_abort

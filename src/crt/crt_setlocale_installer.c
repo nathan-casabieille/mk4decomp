@@ -126,8 +126,8 @@ extern unsigned int g_iat_004d2114;
 extern void BuildCharacterCaseTables_004c9840(void);
 extern void CRTSignalDispatch_004c9750(void);
 extern void InitGlobalsAndZero_004c9800(void);
-extern void Lock_004c6f50(void);
-extern void TableLookupIatCall_004c6fd0(void);
+extern void Lock(void);
+extern void TableLookupIatCall(void);
 extern void TranslateMsgId_004c97a0(void);
 
 extern unsigned int g_dispatchSave114_00522320;
@@ -141,7 +141,7 @@ __declspec(naked) void CrtSetlocaleInstaller_004c9520(void)
         push     esi
         push     edi
         push     0x19
-        call     Lock_004c6f50
+        call     Lock
         mov      eax, dword ptr [esp + 0x2c]
         add      esp, 4
         push     eax
@@ -153,7 +153,7 @@ __declspec(naked) void CrtSetlocaleInstaller_004c9520(void)
         mov      dword ptr [esp + 0x28], ecx
         jne      short L_9561
         push     0x19
-        call     TableLookupIatCall_004c6fd0
+        call     TableLookupIatCall
         add      esp, 4
         xor      eax, eax
         pop      edi
@@ -168,7 +168,7 @@ __declspec(naked) void CrtSetlocaleInstaller_004c9520(void)
         call     InitGlobalsAndZero_004c9800
         call     BuildCharacterCaseTables_004c9840
         push     0x19
-        call     TableLookupIatCall_004c6fd0
+        call     TableLookupIatCall
         add      esp, 4
         xor      eax, eax
         pop      edi
@@ -262,7 +262,7 @@ __declspec(naked) void CrtSetlocaleInstaller_004c9520(void)
     L_9672:
         call     BuildCharacterCaseTables_004c9840
         push     0x19
-        call     TableLookupIatCall_004c6fd0
+        call     TableLookupIatCall
         add      esp, 4
         xor      eax, eax
         pop      edi
@@ -273,7 +273,7 @@ __declspec(naked) void CrtSetlocaleInstaller_004c9520(void)
         ret
     L_968b:
         push     0x19
-        call     TableLookupIatCall_004c6fd0
+        call     TableLookupIatCall
         add      esp, 4
         or       eax, 0xffffffff
         pop      edi

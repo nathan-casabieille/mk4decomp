@@ -126,7 +126,7 @@ extern void PushSetXfmMaskCallPop(void);
 extern void StoreDoubleNegPauseSubStore(void);
 extern void func_004745e0(void);
 
-__declspec(naked) void PreFightInstallCluster_00474390(void)
+__declspec(naked) void PreFightInstallCluster(void)
 {
     __asm {
         /* === Helper 1 (0x474390): pre-fight slot install w/ char branch === */

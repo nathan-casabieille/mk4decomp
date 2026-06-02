@@ -128,7 +128,7 @@ void FourFieldCopyCallSet_00446040(void) {
     v = *(unsigned int *)(src + 0x48);
     g_walkCallback = (void (*)(void))v;
     *(unsigned int *)(dst + 0x20) = v;
-    ScaledClear1cTestWalkCall_004460c0();
+    ScaledClear1cTestWalkCall();
     if (g_framePauseFlag != 0) return;
     g_scaledInit_00542044 = *(unsigned int *)(g_baseSel * 4 + 0x5c);
     g_walkCallback = (void (*)(void))2;

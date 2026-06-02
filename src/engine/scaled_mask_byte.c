@@ -13,6 +13,6 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_walkCallback], ecx
  *   ret
  */
-void ScaledMaskByte_004774d0(void) {
+void ScaledMaskByte(void) {
     g_walkCallback = (void(*)(void))(*(unsigned int *)(g_pendingNodeType * 4) & 0xff);
 }

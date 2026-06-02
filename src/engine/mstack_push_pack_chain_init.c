@@ -114,7 +114,7 @@ extern unsigned int g_savedNode;
 extern void CallSetPause(void);
 extern void CmpDivJmp(void);
 extern void PushSetXfmMaskCallPop(void);
-extern void ScaledTripleCopy4_0049d2d0(void);
+extern void ScaledTripleCopy4(void);
 extern void TripleEntry3Block_00498df0(void);
 extern void Vec3AccMul10ChainBlend_0049c3d0(void);
 
@@ -194,7 +194,7 @@ __declspec(naked) void MstackPushPackChainInit_00498c40(void)
         add     esp, 8
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 8], eax
-        call    ScaledTripleCopy4_0049d2d0
+        call    ScaledTripleCopy4
         cmp     dword ptr [g_framePauseFlag], esi
         jne     short L_mppci_ret
     L_mppci_join:

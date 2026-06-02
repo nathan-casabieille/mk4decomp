@@ -17,12 +17,12 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void MultiThunkDispatcher_00460470(void);
-extern void InstallSelfPair_00435110(void);
+extern void InstallSelfPair(void);
 void CallPauseConstStoreJmp_004350f0(void) {
     MultiThunkDispatcher_00460470();
     if (g_framePauseFlag) return;
     g_eventQueueChild = 0x1e;
-    InstallSelfPair_00435110();
+    InstallSelfPair();
 }
 
 /* @addr 0x00438170 (30b): same shape, value=0x78 */

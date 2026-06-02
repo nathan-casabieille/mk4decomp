@@ -114,10 +114,10 @@ extern unsigned int g_fightAxisPosY;
  *     and [edx*4+4] in g_currentNodeIdx then `call eax` (indirect). On
  *     no-error AND bit 0 of g_xformDirtyFlags set: walks an outer state
  *     loop comparing eax to {1,6,11,16} (each takes the install path);
- *     other values get dec'd, call LinkedListIndirectDirtyToggle_0049f7b0,
+ *     other values get dec'd, call LinkedListIndirectDirtyToggle,
  *     and on bit 0 still set may re-enter the loop. Else writes ecx into
  *     [eax*4], copies g_dispatchArg into g_eventQueueCurrent, calls
- *     RoundWinTransition then GuardedScaledCall_0048a020 with [scaled+8] prep.
+ *     RoundWinTransition then GuardedScaledCall with [scaled+8] prep.
  *     Both successful tails fall through to CallSetPause.
  *   (12b NOP align pad.)
  *   Entry 2 (offset 0x110, 34b): if g_state2_00541d88 != 0 tail-jmp
@@ -133,9 +133,9 @@ extern unsigned int g_state2_00537ea8;
 extern unsigned int g_state2_00541d88;
 extern unsigned int g_audioBitField_00541fc0;
 extern void CallSetPause(void);
-extern void GuardedScaledCall_0048a020(void);
+extern void GuardedScaledCall(void);
 extern void IndirectStateDispatcher_0049f6a0(void);
-extern void LinkedListIndirectDirtyToggle_0049f7b0(void);
+extern void LinkedListIndirectDirtyToggle(void);
 extern void RoundWinTransition(void);
 
 __declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
@@ -173,7 +173,7 @@ __declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
         je      short L_id3_freshPath
         dec     eax
         mov     dword ptr [g_walkCallback], eax
-        call    LinkedListIndirectDirtyToggle_0049f7b0
+        call    LinkedListIndirectDirtyToggle
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_id3_doneNoPop
@@ -198,7 +198,7 @@ __declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
         mov     eax, dword ptr [g_xformEntityIdx]
         mov     ecx, dword ptr [eax*4 + 8]
         mov     dword ptr [g_walkCallback], ecx
-        call    GuardedScaledCall_0048a020
+        call    GuardedScaledCall
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_id3_doneNoPop

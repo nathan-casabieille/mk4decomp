@@ -120,7 +120,7 @@ extern void InstallSelfDispatch_00407620(void);
 extern void MStackBracket4_ListInsertZeroFill(void);
 extern void MStackCall_00406340(void);
 extern void MStackPush3LinkedListWalk(void);
-extern void MStackPush4LLWalkPop4_004090e0(void);
+extern void MStackPush4LLWalkPop4(void);
 
 __declspec(naked) void CombatChainWalkExpand_00463870(void)
 {
@@ -237,7 +237,7 @@ __declspec(naked) void CombatChainWalkExpand_00463870(void)
         mov      edx, OFFSET g_dispatchSave138_0050a49c
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
-        call     MStackPush4LLWalkPop4_004090e0
+        call     MStackPush4LLWalkPop4
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3c6e

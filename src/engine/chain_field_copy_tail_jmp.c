@@ -115,13 +115,13 @@ extern unsigned int g_fightAxisPosY;
  *   Copy chain entries from [g_eventQueueEnd*4]+offset to [g_cj_0054205c*4]+offset:
  *     +0x54 (raw), +0x58 (subtract 0x9999), +0x5c, +0x60, +0x64, +0x68 (raw).
  *   chain[+0x34] ^= 1; copy chain[+0x3c]. Load chain[+0x18] into g_scaledInit.
- *   Zero chain[scaledInit*4 + 0x30/+0x34/+0x38]. Tail-jmp SetupVecFsmCluster_0043e3e0. ret.
+ *   Zero chain[scaledInit*4 + 0x30/+0x34/+0x38]. Tail-jmp SetupVecFsmCluster. ret.
  */
 extern void DirtyDoubleDeref(void);
 extern void MStackCall_004062f0(void);
 extern void MStackPushDispatchBitGate(void);
 extern void MStackPushTwoEntryChainCall(void);
-extern void SetupVecFsmCluster_0043e3e0(void);
+extern void SetupVecFsmCluster(void);
 
 __declspec(naked) void ChainFieldCopyTailJmp_00466e70(void) {
     __asm {
@@ -213,7 +213,7 @@ __declspec(naked) void ChainFieldCopyTailJmp_00466e70(void) {
         mov     eax, dword ptr [g_scaledInit_00542044]
         mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0x38], edx
-        jmp     SetupVecFsmCluster_0043e3e0
+        jmp     SetupVecFsmCluster
         ret
     }
 }

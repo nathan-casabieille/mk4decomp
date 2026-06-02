@@ -118,11 +118,11 @@ extern void CopyThreeFields(void);
  *   mstack-pushes g_xformEntityIdx/00542054/0054205c (3 entries). Caches
  *   g_fightGroupHead into g_eventQueueEnd, sets g_walkCallback =
  *   &g_dispatchVar42_004d5ed0>>2, calls PushSetXfmMaskCallPop.
- *   On no-error AND bit 2 NOT set: calls ScaledChainOr8_00404e50,
+ *   On no-error AND bit 2 NOT set: calls ScaledChainOr8,
  *   writes 0x18000 into [g_xformEntityIdx*4 + 0x48], calls
  *   ScaledTripleCopy54. On no-error sets g_currentNodeIdx =
  *   g_fightGroupHead, g_walkCallback=0xff, calls
- *   PushSetDualDeref_00406650 → MStackCall_00406600. Pops the 3
+ *   PushSetDualDeref → MStackCall_00406600. Pops the 3
  *   mstack entries back into 0054205c/00542054/00542048 in reverse.
  */
 void BootOneShotMStackPush3_0040c100(void) {
@@ -142,14 +142,14 @@ void BootOneShotMStackPush3_0040c100(void) {
     PushSetXfmMaskCallPop();
     if (g_framePauseFlag != 0) return;
     if (!(g_xformDirtyFlags & 4)) {
-        ScaledChainOr8_00404e50();
+        ScaledChainOr8();
         g_walkCallback = 0x18000;
         *(unsigned int *)(g_xformEntityIdx * 4 + 0x48) = 0x18000;
         ScaledTripleCopy54();
         if (g_framePauseFlag != 0) return;
         g_walkCallback = 0xff;
         g_currentNodeIdx = g_fightGroupHead;
-        PushSetDualDeref_00406650();
+        PushSetDualDeref();
         if (g_framePauseFlag != 0) return;
         MStackCall_00406600();
         if (g_framePauseFlag != 0) return;

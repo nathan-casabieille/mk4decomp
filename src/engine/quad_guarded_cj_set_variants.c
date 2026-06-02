@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00422fc0 (237b game) - 4-call guarded sequence ending with cj field set.
  *   call DownloadPlayerChar with g_eventQueueCurrent=2; if pause? ret.
  *   call GuardedDualPushTailJmp_004231f0; if pause? ret.
- *   mstack-push g_scaledInit_00542044, call ScaledOr4DirtyClear_00409320, mstack-pop.
+ *   mstack-push g_scaledInit_00542044, call ScaledOr4DirtyClear, mstack-pop.
  *   cj[+0x30]=3, cj[+0x34] |= 0x1c0000.
  *   call TwoStateLookupDirty_004237d0; if !pause: cj[+0x3c] = g_bootHeavyState_00537f78; ret.
  */
@@ -123,7 +123,7 @@ extern s32 g_dlNalt4;
 extern unsigned int g_particleInitState_00541de0;
 extern void DownloadPlayerChar(void);
 extern void GuardedDualPushTailJmp_004231f0(void);
-extern void ScaledOr4DirtyClear_00409320(void);
+extern void ScaledOr4DirtyClear(void);
 extern void TwoStateLookupDirty_004237d0(void);
 
 void QuadGuardedCjSet_00422fc0(void) {
@@ -161,7 +161,7 @@ void QuadGuardedCjSet_00422fc0(void) {
         mov     dword ptr [eax*4 + 0], ecx
         mov     edx, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_scaledInit_00542044], edx
-        call    ScaledOr4DirtyClear_00409320
+        call    ScaledOr4DirtyClear
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
@@ -238,7 +238,7 @@ void QuadGuardedCjSet_004230b0(void) {
         mov     dword ptr [eax*4 + 0], ecx
         mov     edx, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_scaledInit_00542044], edx
-        call    ScaledOr4DirtyClear_00409320
+        call    ScaledOr4DirtyClear
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax

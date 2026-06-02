@@ -17,7 +17,7 @@ extern unsigned int g_setjmp_00ab5750;   /* 0x00ab5750 */
 /* Externs for jump targets. */
 extern void ZeroAndDirty4(void);   /* 0x00405430 */
 extern void CallPauseScaledStoreAdd_004078f0(void);   /* 0x004078f0 */
-extern void BootStateTriple_00408d30(void);   /* 0x00408d30 */
+extern void BootStateTriple(void);   /* 0x00408d30 */
 extern void EsiInstallDecCallChain_004294a0(void);   /* 0x004294a0 */
 extern void EsiInstallBitCallChain_004295a0(void);   /* 0x004295a0 */
 extern void ScaledArrStore_00429960(void);   /* 0x00429960 */
@@ -28,7 +28,7 @@ extern void SetJmp_00451b10(void);   /* 0x00451b10 */
 extern void SetJmp_00451b50(void);   /* 0x00451b50 */
 extern void JuggleFsmCluster_00451b90(void);   /* 0x00451b90 */
 extern void CharSelectFsmCluster_004561f0(void);   /* 0x004561f0 */
-extern void SixSubdispatchSpan_0045ec10(void);   /* 0x0045ec10 */
+extern void SixSubdispatchSpan(void);   /* 0x0045ec10 */
 extern void HitReactionDispatcher(void);   /* 0x0045f650 */
 extern void AlarmCountdownInstall_004609e0(void);   /* 0x004609e0 */
 extern void StateDispatchYield(void);   /* 0x00471190 */
@@ -60,7 +60,7 @@ void SetJmp_004078e0(void) {
 /* @addr 0x00408d20 */
 void SetJmp_00408d20(void) {
     g_walkCallback = (void (*)(void))0x00000001;
-    BootStateTriple_00408d30();
+    BootStateTriple();
 }
 
 /* @addr 0x00428cf0 */
@@ -240,13 +240,13 @@ void SetJmp_004561e0(void) {
 /* @addr 0x0045ebf0 */
 void SetJmp_0045ebf0(void) {
     g_eventQueueCurrent = 0x00000002;
-    SixSubdispatchSpan_0045ec10();
+    SixSubdispatchSpan();
 }
 
 /* @addr 0x0045ec00 */
 void SetJmp_0045ec00(void) {
     g_eventQueueCurrent = 0x00000001;
-    SixSubdispatchSpan_0045ec10();
+    SixSubdispatchSpan();
 }
 
 /* @addr 0x004609c0 */

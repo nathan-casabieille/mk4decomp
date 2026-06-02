@@ -122,7 +122,7 @@ extern void BootSlotInstallChainTail_00414a00(void);
  *     Pop+ret.
  */
 extern void CallSetPause(void);
-extern void TableHitOrSchedule_004be7a0(void);
+extern void TableHitOrSchedule(void);
 
 __declspec(naked) void BootInstallPeriodicTriple_00414920(void)
 {
@@ -163,7 +163,7 @@ __declspec(naked) void BootInstallPeriodicTriple_00414920(void)
         mov     dword ptr [g_walkCallback], eax
         je      short L_callTrip
         push    0x1392
-        call    TableHitOrSchedule_004be7a0
+        call    TableHitOrSchedule
         add     esp, 4
         call    CallSetPause
         pop     esi

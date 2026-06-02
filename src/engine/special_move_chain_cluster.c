@@ -115,8 +115,8 @@ extern void EntitySetupCountdownFsm_0043fcf0(void);
 extern void GuardedSeq_00476de0(void);
 extern void GuardedSeq_00476f10(void);
 extern void GuardedSeq_00476fc0(void);
-extern void MStackPush2BitLoop_00476670(void);
-extern void PushPopCurrentSetFFFFFFFF_00473070(void);
+extern void MStackPush2BitLoop(void);
+extern void PushPopCurrentSetFFFFFFFF(void);
 extern void TwoCallScaledOr1600_0043f8f0(void);
 
 __declspec(naked) void SpecialMoveChainCluster_0043f9c0(void)
@@ -124,32 +124,32 @@ __declspec(naked) void SpecialMoveChainCluster_0043f9c0(void)
     __asm {
         /* === h1 (0x43f9c0): 7-stage status sequence + event 4e51c8 === */
         mov      dword ptr [g_walkCallback], 0x76
-        call     MStackPush2BitLoop_00476670
+        call     MStackPush2BitLoop
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_fb81
         mov      dword ptr [g_walkCallback], 0x7b
-        call     MStackPush2BitLoop_00476670
+        call     MStackPush2BitLoop
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_fb81
         mov      dword ptr [g_walkCallback], 0x77
-        call     MStackPush2BitLoop_00476670
+        call     MStackPush2BitLoop
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_fb81
         mov      dword ptr [g_walkCallback], 0xc1
-        call     MStackPush2BitLoop_00476670
+        call     MStackPush2BitLoop
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_fb81
         mov      dword ptr [g_walkCallback], 0xc1
-        call     PushPopCurrentSetFFFFFFFF_00473070
+        call     PushPopCurrentSetFFFFFFFF
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_fb81
         mov      dword ptr [g_walkCallback], 0xc0
-        call     PushPopCurrentSetFFFFFFFF_00473070
+        call     PushPopCurrentSetFFFFFFFF
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_fb81
@@ -175,7 +175,7 @@ __declspec(naked) void SpecialMoveChainCluster_0043f9c0(void)
         mov      edx, dword ptr [ecx + 0x44]
         mov      dword ptr [eax + 0x5c], edx
         mov      dword ptr [g_walkCallback], 0x93
-        call     PushPopCurrentSetFFFFFFFF_00473070
+        call     PushPopCurrentSetFFFFFFFF
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_fb81
@@ -200,12 +200,12 @@ __declspec(naked) void SpecialMoveChainCluster_0043f9c0(void)
         test     eax, eax
         jne      short L_fb81
         mov      dword ptr [g_walkCallback], 0x74
-        call     MStackPush2BitLoop_00476670
+        call     MStackPush2BitLoop
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_fb81
         mov      dword ptr [g_walkCallback], 0x75
-        call     MStackPush2BitLoop_00476670
+        call     MStackPush2BitLoop
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_fb81

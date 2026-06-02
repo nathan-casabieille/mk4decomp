@@ -121,7 +121,7 @@ extern void MultiThunkDispatcher9_00436780(void);
  *     else cascade 3 state-threshold gates jumping to Wrapper_00436760/70/80 or GuardedSeq.
  */
 extern void GuardedSeq_00433bb0(void);
-extern void PackedAdvanceCallTailJmp_004392c0(void);
+extern void PackedAdvanceCallTailJmp(void);
 
 __declspec(naked) void DualEntry5WayThreshold_004366d0(void) {
     __asm {
@@ -136,7 +136,7 @@ __declspec(naked) void DualEntry5WayThreshold_004366d0(void) {
         _emit   05h
         jmp     CallPauseMStackPushSet2Jmp_00437930
         push    0x004e46f0
-        call    PackedAdvanceCallTailJmp_004392c0
+        call    PackedAdvanceCallTailJmp
         add     esp, 4
         ret
         call    Cmp2CallDirtyCall

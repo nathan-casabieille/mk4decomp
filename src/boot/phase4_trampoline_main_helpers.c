@@ -110,16 +110,16 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave610_004d77b0;
 extern unsigned int g_tickFlagF;
-extern void CallPauseInc_004ab670(void);
+extern void CallPauseInc(void);
 extern void CallSetPause(void);
-extern void ChainNodeAdvanceCallback_00408e70(void);
+extern void ChainNodeAdvanceCallback(void);
 extern void DirtyDoubleDeref(void);
-extern void FramePauseScaledStore_00406c10(void);
+extern void FramePauseScaledStore(void);
 extern void GuardedSelfRefSet_0048d070(void);
 extern void MStackPushCallCallPop_00405e20(void);
 extern void PushPopScaled1cDoubleCall(void);
 extern void ScaledStoreThree_00409260(void);
-extern void ScaledTestPauseStore_00408860(void);
+extern void ScaledTestPauseStore(void);
 extern void SetJmp_00405420(void);
 extern void StoreDoubleNegPauseSubStore(void);
 extern void StorePauseImulShr16(void);
@@ -181,7 +181,7 @@ __declspec(naked) void Phase4TrampolineMainHelpers_00414b90(void)
         mov     dword ptr [g_eventQueueEnd], 4
     L_p4tmh2_M_call_4ab670:
         mov     dword ptr [g_walkCallback], 0x0C
-        call    CallPauseInc_004ab670
+        call    CallPauseInc
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh2_M_ret
@@ -237,7 +237,7 @@ __declspec(naked) void Phase4TrampolineMainHelpers_00414b90(void)
         mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0x28]
         mov     dword ptr [g_xformEntityIdx], ecx
-        call    ChainNodeAdvanceCallback_00408e70
+        call    ChainNodeAdvanceCallback
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh2_H_pop_ret
@@ -265,13 +265,13 @@ __declspec(naked) void Phase4TrampolineMainHelpers_00414b90(void)
         sar     edx, 2
         and     edx, 0x003FFFFF
         mov     dword ptr [g_xformEntityIdx], edx
-        call    FramePauseScaledStore_00406c10
+        call    FramePauseScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh2_H_pop_ret
         test    byte ptr [g_xformDirtyFlags], 4
         jne     L_p4tmh2_H_tailjmp
-        call    ScaledTestPauseStore_00408860
+        call    ScaledTestPauseStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh2_H_pop_ret

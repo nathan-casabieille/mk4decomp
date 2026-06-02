@@ -122,7 +122,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void DirtyDoubleDeref(void);
 extern void MStackBracket2_TreeWalkRecursive(void);
-extern void MStackInitCallToggle_00408ad0(void);
+extern void MStackInitCallToggle(void);
 
 __declspec(naked) void BootChainMaskAndDispatch_00416cb0(void)
 {
@@ -140,7 +140,7 @@ __declspec(naked) void BootChainMaskAndDispatch_00416cb0(void)
         and     ecx, 0xfffffffb
         mov     dword ptr [eax*4 + 0x20], ecx
         mov     dword ptr [g_walkCallback], 0xffffffec
-        call    MStackInitCallToggle_00408ad0
+        call    MStackInitCallToggle
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_b1_ret
@@ -152,7 +152,7 @@ __declspec(naked) void BootChainMaskAndDispatch_00416cb0(void)
         jne     short L_b1_ret
     L_b1_callMid:
         mov     dword ptr [g_walkCallback], 0xffffffea
-        call    MStackInitCallToggle_00408ad0
+        call    MStackInitCallToggle
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_b1_ret
@@ -170,7 +170,7 @@ __declspec(naked) void BootChainMaskAndDispatch_00416cb0(void)
         _emit   90h
         _emit   90h
         mov     dword ptr [g_walkCallback], 0xffffffec
-        call    MStackInitCallToggle_00408ad0
+        call    MStackInitCallToggle
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_b2_ret
@@ -180,7 +180,7 @@ __declspec(naked) void BootChainMaskAndDispatch_00416cb0(void)
         mov     dword ptr [eax*4 + 0x3c], 0x00008000
     L_b2_step2:
         mov     dword ptr [g_walkCallback], 0xffffffeb
-        call    MStackInitCallToggle_00408ad0
+        call    MStackInitCallToggle
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_b2_ret

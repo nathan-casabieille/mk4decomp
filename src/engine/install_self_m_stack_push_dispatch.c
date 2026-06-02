@@ -115,12 +115,12 @@ extern unsigned int g_fightAxisPosY;
  *   If was zero (advance path): mstack-push g_eventQueueEnd incrementing twice with
  *     state copy to g_eventQueueChild and chain push of edx (scaledInit base+4).
  *     call IncStoreCallIATDec_00439520; if pause? ret. If bit0 of state set:
- *     tail-call StackPopDispatchTagged; else: call PushPop84TripleCall_00438b90;
+ *     tail-call StackPopDispatchTagged; else: call PushPop84TripleCall;
  *     if !pause: install-self at [esi+8]=0x00436910; chain[+0x84]=1; g_pendingNodeType=1; pause=1.
  *   ret.
  */
 extern void IncStoreCallIATDec_00439520(void);
-extern void PushPop84TripleCall_00438b90(void);
+extern void PushPop84TripleCall(void);
 
 __declspec(naked) void InstallSelfMStackPushDispatch_00436910(void) {
     __asm {
@@ -190,7 +190,7 @@ __declspec(naked) void InstallSelfMStackPushDispatch_00436910(void) {
         pop     esi
         pop     ebx
         ret
-        call    PushPop84TripleCall_00438b90
+        call    PushPop84TripleCall
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

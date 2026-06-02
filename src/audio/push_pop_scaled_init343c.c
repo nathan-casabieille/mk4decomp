@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_audioInitScaled_0054343c;
 extern void MStackPush2ChainLLInsert(void);
-void PushPopScaledInit343c_004aa940(void) {
+void PushPopScaledInit343c(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_scaledInit_00542044;
     g_scaledInit_00542044 = g_audioInitScaled_0054343c;

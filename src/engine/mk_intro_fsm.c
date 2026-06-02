@@ -112,7 +112,7 @@ extern unsigned int g_dispatchSave901_004d56d8;
 extern unsigned int g_quadEntryGate_0052d724;
 extern unsigned int g_clamp_00537f2c;
 extern unsigned int g_clamp_0053a6dc;
-extern void Cmp2DirtyToggle_00423870(void);
+extern void Cmp2DirtyToggle(void);
 extern void DualAddSar_004ab600(void);
 extern void SaveCallRestore(void);
 extern void TableLookupCall_00489ff0(void);
@@ -134,7 +134,7 @@ __declspec(naked) void MkIntroFsm_004218b0(void)
         je       L_196c
         dec      eax
         je       short L_1937
-        call     Cmp2DirtyToggle_00423870
+        call     Cmp2DirtyToggle
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1aa1

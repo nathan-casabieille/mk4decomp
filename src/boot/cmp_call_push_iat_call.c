@@ -40,7 +40,7 @@ __declspec(naked) void AppInit_Misc2(void) {
  *   call IAT [g_iat_00520060](0xff); ret.
  */
 extern void (*g_iat_00520060)(int);
-void CmpCallPushIATCall_004c6e60(int arg) {
+void CmpCallPushIATCall(int arg) {
     if (g_crtCleanupFlag_00f9f84c == 1) {
         DualCondCleanupCall_004cc030();
     }

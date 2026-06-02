@@ -10,7 +10,7 @@ extern unsigned int g_scaledInit_00542044;
 /* @addr 0x00475750 (62b)
  *   load g_eventQueueIdx, g_eventQueueEnd; cross-copy [+0x54] then [+0x5c].
  */
-void DoubleScaledCrossStore_00475750(void) {
+void DoubleScaledCrossStore(void) {
     unsigned int v;
     v = ((ScenegraphNode *)(g_eventQueueIdx * 4))->position_x;
     g_walkCallback = (void(*)(void))v;

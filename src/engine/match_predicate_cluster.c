@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern void MatchPredicateCluster_0045ef50(void);
 extern void Mul10Tail(void);
-extern void SixSubdispatchSpan_0045ec10(void);
+extern void SixSubdispatchSpan(void);
 
 /* @addr 0x0045ede0 (356b game) - 2-entry packed dual-stream diff+mul wrapper.
  *   Entry 1 (offset 0, 301b): for each of two streams identified by
@@ -125,7 +125,7 @@ extern void SixSubdispatchSpan_0045ec10(void);
  *   (3b NOP align pad.)
  *   Entry 2 (offset 0x130, 52b): reads [g_fightGroupHead*4 + 0x58] and
  *     compares to 0xfffe3334: if greater clears bit 0 of g_xformDirtyFlags
- *     and returns; else sets g_eventQueueCurrent=4 and tail-jmp SixSubdispatchSpan_0045ec10.
+ *     and returns; else sets g_eventQueueCurrent=4 and tail-jmp SixSubdispatchSpan.
  */
 
 __declspec(naked) void DualStreamSqDistThresh_0045ede0(void) {
@@ -219,6 +219,6 @@ __declspec(naked) void DualStreamSqDistThresh_0045ede0(void) {
         ret
     L_dsd_e2tail:
         mov     dword ptr [g_eventQueueCurrent], 4
-        jmp     SixSubdispatchSpan_0045ec10
+        jmp     SixSubdispatchSpan
     }
 }

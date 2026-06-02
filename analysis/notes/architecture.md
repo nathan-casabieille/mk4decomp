@@ -96,7 +96,7 @@ suffix says what they do with it: `Mul10Accum` (multiply-accumulate),
 calc), `Mul10Tail` / `Mul10TailSqrt` (tail-call forms). When reading
 combat / transform code, mentally expand `Mul10` to "fixmul16".
 
-The sister divide primitive is `FixedDiv16_004ab2a0`
+The sister divide primitive is `FixedDiv16`
 (`(a << 16) / b`, was misleadingly `RangeMulMod`); it does **not**
 follow the `Mul10` family naming because it is a one-off, not part of a
 divide family.

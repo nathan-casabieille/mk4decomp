@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
  *   bit 2 of g_xformDirtyFlags; if [eax+4] mismatches walk, toggle
  *   bit 2 back off.
  */
-void CallDualStoreXorBit_004285e0(void) {
+void CallDualStoreXorBit(void) {
     unsigned int v;
     unsigned int new_cj;
     BootMStackBracket3SubdispatchPair_00407920();

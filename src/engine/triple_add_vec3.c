@@ -18,7 +18,7 @@ extern void Mul10Tail(void);
  * Orig uses edx (B ptr) as accumulator instead. Register choice for
  * commutative addition cannot be controlled from C source.
  */
-__declspec(naked) void TripleAddVec3_00425130(void) {
+__declspec(naked) void TripleAddVec3(void) {
     __asm {
         mov     ecx, dword ptr [g_xformEntityIdx]
         mov     edx, dword ptr [g_pendingNodeType]

@@ -113,14 +113,14 @@ extern unsigned int g_dispatchSave560_004eb710;
 extern unsigned int g_dispatchSave559_004eb720;
 extern unsigned int g_dispatchSave972_004eb738;
 extern unsigned int g_dispatchSave973_004eb740;
-extern void CallPauseDirtyMStackPushFn_0046e2a0(void);
+extern void CallPauseDirtyMStackPushFn(void);
 extern void InstallSelfIndirectJmp(void);
 extern void ScaledMove74to70_0046eaa0(void);
 extern void FiveBlockDispatchChain_0046ec20(void);
-extern void TripleCallPauseJmp_00470500(void);
-extern void ComboScriptDispatchCluster_00470530(void);
-extern void PhaseDispatchListAdvance_004709e0(void);
-extern void IterStepScaledStore_0048e600(void);
+extern void TripleCallPauseJmp(void);
+extern void ComboScriptDispatchCluster(void);
+extern void PhaseDispatchListAdvance(void);
+extern void IterStepScaledStore(void);
 
 /* @addr 0x0046ee00 (356b game) - 5-entry packed install-self + alarm chain.
  *   Entry 1 (offset 0, 135b): phase from [scaled g_baseSel+0x84].
@@ -133,16 +133,16 @@ extern void IterStepScaledStore_0048e600(void);
  *   Entry 2 (offset 0x90, 106b): ScaledMove74to70_0046eaa0; on no-error
  *     sets [g_baseSel*4+0x74]=0x604; if [scaled+0x30] != 0 tail-jmp
  *     FiveBlockDispatchChain_0046ec20; else chain ScaledAndAlfe →
- *     TripleCallPauseJmp_00470500 → push 0x4eb6f8 →
+ *     TripleCallPauseJmp → push 0x4eb6f8 →
  *     ArgSarStoreJmp.
  *   6b NOP align pad.
  *   Entry 3 (offset 0x100, 18b): sets g_eventQueueEnd = &g_dispatchSave560_004eb710>>2
- *     and tail-jmp PhaseDispatchListAdvance_004709e0.
+ *     and tail-jmp PhaseDispatchListAdvance.
  *   14b NOP align pad.
  *   Entry 4 (offset 0x120, 32b): if bit 0 of g_xformDirtyFlags set tail-jmp
- *     CallPauseDirtyMStackPushFn_0046e2a0; else set g_eventQueueEnd =
- *     &g_dispatchSave559_004eb720>>2 and tail-jmp ComboScriptDispatchCluster_00470530.
- *   Entry 5 (offset 0x140, 36b): push 0x4eb738, call IterStepScaledStore_0048e600;
+ *     CallPauseDirtyMStackPushFn; else set g_eventQueueEnd =
+ *     &g_dispatchSave559_004eb720>>2 and tail-jmp ComboScriptDispatchCluster.
+ *   Entry 5 (offset 0x140, 36b): push 0x4eb738, call IterStepScaledStore;
  *     on no-error push 0x4eb740, call ArgSarStoreJmp.
  */
 extern unsigned int g_table_004d57b0;
@@ -165,7 +165,7 @@ __declspec(naked) void FiveEntryAlarmInstallChain_0046ee00(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_table_004d57b0], offset CallPauseDirtyMStackPushFn_0046e2a0
+        mov     dword ptr [eax*4 + g_table_004d57b0], offset CallPauseDirtyMStackPushFn
         call    InstallSelfIndirectJmp
         pop     esi
         ret
@@ -212,7 +212,7 @@ __declspec(naked) void FiveEntryAlarmInstallChain_0046ee00(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_fea_e2End
-        call    TripleCallPauseJmp_00470500
+        call    TripleCallPauseJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_fea_e2End
@@ -232,7 +232,7 @@ __declspec(naked) void FiveEntryAlarmInstallChain_0046ee00(void) {
         mov     eax, offset g_dispatchSave560_004eb710
         sar     eax, 2
         mov     dword ptr [g_eventQueueEnd], eax
-        jmp     PhaseDispatchListAdvance_004709e0
+        jmp     PhaseDispatchListAdvance
         nop
         nop
         nop
@@ -251,16 +251,16 @@ __declspec(naked) void FiveEntryAlarmInstallChain_0046ee00(void) {
     L_fea_entry4:
         test    byte ptr [g_xformDirtyFlags], 1
         je      short L_fea_e4second
-        jmp     CallPauseDirtyMStackPushFn_0046e2a0
+        jmp     CallPauseDirtyMStackPushFn
     L_fea_e4second:
         mov     eax, offset g_dispatchSave559_004eb720
         sar     eax, 2
         mov     dword ptr [g_eventQueueEnd], eax
-        jmp     ComboScriptDispatchCluster_00470530
+        jmp     ComboScriptDispatchCluster
         /* entry 5 (offset 0x140) */
     L_fea_entry5:
         push    offset g_dispatchSave972_004eb738
-        call    IterStepScaledStore_0048e600
+        call    IterStepScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax

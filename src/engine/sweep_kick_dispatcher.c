@@ -113,7 +113,7 @@ extern unsigned int g_dispatchSave791_004f20f0;
 extern unsigned int g_savedNode;
 extern void AiComboDispatcherCluster_00497470(void);
 extern void ArgSarStoreJmp(void);
-extern void ArgSar_Set0_Jmp_0049c6f0(void);
+extern void ArgSar_Set0_Jmp(void);
 extern void BootInstallPeriodicAudio_00413aa0(void);
 extern void CmpDivJmp(void);
 extern void CondPickDualStore(void);
@@ -123,7 +123,7 @@ extern void GuardedSeq_00497450(void);
 extern void MStackPush8CallbackInit_00413b70(void);
 extern void PushCallScaledClearJmp_0040bf20(void);
 extern void ScaledIndirectJmp_0049c850(void);
-extern void ScaledTripleCopy4_0049d2d0(void);
+extern void ScaledTripleCopy4(void);
 extern void SoundSetupLoop_00413ea0(void);
 extern void TableLookupCall_00489ff0(void);
 extern void ThreeChanPackClamp(void);
@@ -227,7 +227,7 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
         add      esp, 8
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [esi + 8], eax
-        call     ScaledTripleCopy4_0049d2d0
+        call     ScaledTripleCopy4
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_739c
@@ -281,7 +281,7 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
         mov      dword ptr [g_walkCallback], eax
         push     OFFSET g_dispatchSave791_004f20f0
         mov      dword ptr [edx*4 + 0x5c], eax
-        call     ArgSar_Set0_Jmp_0049c6f0
+        call     ArgSar_Set0_Jmp
         add      esp, 4
     L_739c:
         pop      edi

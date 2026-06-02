@@ -117,15 +117,15 @@ extern unsigned int g_fightAxisPosY;
 /* ------------------------------------------------------------------ */
 extern void PendingMatch_0040eb80(void);
 extern void PoseChainInstallCluster_00427b60(void);
-extern void ScaledChainNegStore_00470310(void);
+extern void ScaledChainNegStore(void);
 extern void CallPauseConstStoreJmp_00481360(void);
 extern void ScaledLoadCmp1003JmpDispatch_00486530(void);
 extern void PushCallPauseScaledJmpInd_0048e2f0(void);
 extern void ScaledInit_0048f720(void);
-extern void ClearBit2x34_00490130(void);
-extern void MStackPushSet0004_00490230(void);
-extern void ScaledAndAl7f_004902f0(void);
-extern void ScaledAndAldf_00490330(void);
+extern void ClearBit2x34(void);
+extern void MStackPushSet0004(void);
+extern void ScaledAndAl7f(void);
+extern void ScaledAndAldf(void);
 extern void ScaledAndAlbf_00490350(void);
 extern void ScaledAndAlfe(void);
 extern unsigned int g_or_0052ab40;
@@ -139,11 +139,11 @@ extern void GateDispatch6c(void);
 extern void ScaledAndAlf7_00490310(void);
 extern void ScaledLitLoadCall_00480fe0(void);
 
-__declspec(naked) void MainTickChain_00481070(void)
+__declspec(naked) void MainTickChain(void)
 {
     __asm {
         push     esi
-        call     ClearBit2x34_00490130
+        call     ClearBit2x34
         mov      eax, dword ptr [g_framePauseFlag]
         xor      esi, esi
         cmp      eax, esi
@@ -164,13 +164,13 @@ __declspec(naked) void MainTickChain_00481070(void)
         call     ScaledInit_0048f720
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
-        call     ScaledAndAldf_00490330
+        call     ScaledAndAldf
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
         call     ScaledAndAlbf_00490350
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
-        call     ScaledAndAl7f_004902f0
+        call     ScaledAndAl7f
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
         call     ScaledAndAlfe
@@ -179,7 +179,7 @@ __declspec(naked) void MainTickChain_00481070(void)
         call     ScaledAndAlf7_00490310
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
-        call     MStackPushSet0004_00490230
+        call     MStackPushSet0004
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
         cmp      dword ptr [g_pendingMatchCmp_00543888], esi
@@ -232,7 +232,7 @@ __declspec(naked) void MainTickChain_00481070(void)
         mov      dword ptr [eax + 0x60], edx
         mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [eax + 0x68], ecx
-        call     ScaledChainNegStore_00470310
+        call     ScaledChainNegStore
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
         mov      edx, dword ptr [g_fightGroupHead]

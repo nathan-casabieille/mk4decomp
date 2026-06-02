@@ -17,7 +17,7 @@ extern unsigned int g_table_00535ddc;
 extern void GuardedSeq_00433bb0(void);
 extern void PrefixThunkInstallSelf3State(void);
 extern int Cmp2CallDirtyCall(void);
-extern void HitReactionStateCluster_004335f0(void);
+extern void HitReactionStateCluster(void);
 extern void MstackPopScaledChainPlusThunks(void);
 extern void Cmp30000And18000_004362b0(void);
 /* @addr 0x00436250 (27b): if state_ddc > 0x30000 tail-jmp GuardedSeq_00433bb0,

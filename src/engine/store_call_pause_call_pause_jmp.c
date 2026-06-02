@@ -21,14 +21,14 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  *   ret
  */
-extern void GuardedChainPushSetCallPop_00406bb0(void);
+extern void GuardedChainPushSetCallPop(void);
 extern void ScaledZeroFour(void);
-extern void MStackPushSet0004_00490230(void);
+extern void MStackPushSet0004(void);
 void StoreCallPauseCallPauseJmp_0048fa20(void) {
     g_scaledInit_00542044 = g_fightGroupHead;
-    GuardedChainPushSetCallPop_00406bb0();
+    GuardedChainPushSetCallPop();
     if (g_framePauseFlag != 0) return;
     ScaledZeroFour();
     if (g_framePauseFlag != 0) return;
-    MStackPushSet0004_00490230();
+    MStackPushSet0004();
 }

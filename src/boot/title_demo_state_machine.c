@@ -124,7 +124,7 @@ extern unsigned int g_titleDemoState2_00541df4;
 extern void AudioVolumeRescale(void);
 extern void BootInitVec3PhaseInstall_00402c10(void);
 extern void BootStateInitWithRecurseInstall_00402de0(void);
-extern void BootStateMachine4Way_00402f60(void);
+extern void BootStateMachine4Way(void);
 extern void CopyGlobal(void);
 extern void InstallSelfCounter_00404920(void);
 extern void PendingMatch_00402540(void);
@@ -132,7 +132,7 @@ extern void Screen_BestKombatants(void);
 extern void PendingMatch_004a2a80(void);
 extern void PhaseInstallSelf3Step_00402350(void);
 extern void QuadCallPhase2(void);
-extern void SceneFrameStepWithInputs_004be250(void);
+extern void SceneFrameStepWithInputs(void);
 extern void TableWalkBoundedCmp(void);
 
 __declspec(naked) void PendingMatch_00401b70(void)
@@ -162,7 +162,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         add      esp, 0x10
         push     ebx
         push     ebp
-        call     SceneFrameStepWithInputs_004be250
+        call     SceneFrameStepWithInputs
         add      esp, 8
         test     eax, eax
         je       L_1d46
@@ -174,7 +174,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         jne      L_2047
         push     ebx
         push     0x23
-        call     SceneFrameStepWithInputs_004be250
+        call     SceneFrameStepWithInputs
         add      esp, 8
         test     eax, eax
         je       L_2041
@@ -362,7 +362,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      dword ptr [esi + 4], eax
         mov      ecx, dword ptr [g_baseSel]
         mov      dword ptr [ecx*4 + 0x84], ebp
-        call     BootStateMachine4Way_00402f60
+        call     BootStateMachine4Way
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
@@ -481,7 +481,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], ebp
-        call     BootStateMachine4Way_00402f60
+        call     BootStateMachine4Way
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi

@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  *   walk = eax; jmp eax.
  */
 extern void StorePauseImulShr16(void);
-void PackedAdvanceCallTailJmp_004392c0(packed_ptr arg) {
+void PackedAdvanceCallTailJmp(packed_ptr arg) {
     g_scaledInit_00542044 = (unsigned int)((int)arg >> 2);
     g_walkCallback = *(void (**)(void))(g_scaledInit_00542044 * 4);
     g_scaledInit_00542044++;

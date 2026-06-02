@@ -108,9 +108,9 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void Eleven404b90_404c00_004266d0(void);
+extern void Eleven404b90_404c00(void);
 extern void InstallSelfCountedAccum_0042e1d0(void);
-extern void Ten404c40_404bd0_00426780(void);
+extern void Ten404c40_404bd0(void);
 
 __declspec(naked) void BootMStackPopPush3Install_004046d0(void)
 {
@@ -123,7 +123,7 @@ __declspec(naked) void BootMStackPopPush3Install_004046d0(void)
         mov     dword ptr [esi + 0x84], 0
         test    eax, eax
         je      L_bmpp3i_phase0
-        call    Ten404c40_404bd0_00426780
+        call    Ten404c40_404bd0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_bmpp3i_ret
@@ -182,7 +182,7 @@ __declspec(naked) void BootMStackPopPush3Install_004046d0(void)
         inc     ecx
         mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax], ecx
-        call    Eleven404b90_404c00_004266d0
+        call    Eleven404b90_404c00
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bmpp3i_ret

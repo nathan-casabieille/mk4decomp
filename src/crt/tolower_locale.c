@@ -119,8 +119,8 @@ extern unsigned int g_iat_004d20d0;
 extern unsigned int g_dispatchSave1444_00f9fc10;
 extern unsigned int g_dispatchSave1463_00f9fdac;
 extern unsigned int g_dispatchSave1464_00f9fdb0;
-extern void Lock_004c6f50(void);
-extern void TableLookupIatCall_004c6fd0(void);
+extern void Lock(void);
+extern void TableLookupIatCall(void);
 extern void Tolower_004cc780(void);
 
 __declspec(naked) void TolowerLocale_004cc6f0(void) {
@@ -148,7 +148,7 @@ localePath:
         push    offset g_dispatchSave1464_00f9fdb0
         call    edi
         push    0x13
-        call    Lock_004c6f50
+        call    Lock
         add     esp, 4
         mov     esi, 1
         jmp     callInner
@@ -163,7 +163,7 @@ callInner:
         test    esi, esi
         je      directLeave
         push    0x13
-        call    TableLookupIatCall_004c6fd0
+        call    TableLookupIatCall
         add     esp, 4
         mov     eax, ebx
         pop     ebx

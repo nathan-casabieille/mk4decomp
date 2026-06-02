@@ -12,15 +12,15 @@ extern unsigned int g_scaledInit_00542044;
  *   clear walk and g_fightGroupHead[+0x28], jmp T.
  */
 extern unsigned int g_dispatchSave300_00542978;
-extern void ArgScaledTestStore_00494140(void);
-extern void ScaledLoadOrSetJmp_00406b20(void);
+extern void ArgScaledTestStore(void);
+extern void ScaledLoadOrSetJmp(void);
 void PushCallStoreClearJmp_00460420(void) {
-    ArgScaledTestStore_00494140((int)&g_dispatchSave300_00542978);
+    ArgScaledTestStore((int)&g_dispatchSave300_00542978);
     if (g_framePauseFlag != 0) {
         return;
     }
     ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end = g_xformEntityIdx;
     g_walkCallback = (void (*)(void))0;
     ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = 0;
-    ScaledLoadOrSetJmp_00406b20();
+    ScaledLoadOrSetJmp();
 }

@@ -116,10 +116,10 @@ extern void SlotEvent3EntryChain(void);
 extern void DualSetCallPair_0047dbc0(void);
 extern void ThrowTakedownCluster_0047dc20(void);
 extern void InstallSelfCmpJmpIndirect_0048f470(void);
-extern void InstallSelfIndirectJmpNeg_0048f4f0(void);
+extern void InstallSelfIndirectJmpNeg(void);
 extern void Wrapper_0048ff30(void);
 extern void ZeroThreeSlots_00490780(void);
-extern void TripleScaledChainStore_004908f0(int);
+extern void TripleScaledChainStore(int);
 extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void ZeroSixStores6080_00490e40(void);
 extern void ScaledZero44(void);
@@ -129,7 +129,7 @@ extern unsigned int g_phaseTimer;
 
 extern void ArgSarStoreJmp(void);
 
-__declspec(naked) void MoveSelectorCluster_0047d9a0(void)
+__declspec(naked) void MoveSelectorCluster(void)
 {
     __asm {
         /* === Main: move-selector dispatch === */
@@ -149,7 +149,7 @@ __declspec(naked) void MoveSelectorCluster_0047d9a0(void)
         test     eax, eax
         jne      L_dac7
         push     OFFSET g_dispatchSave739_004ed490
-        call     TripleScaledChainStore_004908f0
+        call     TripleScaledChainStore
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         test     eax, eax
@@ -206,7 +206,7 @@ __declspec(naked) void MoveSelectorCluster_0047d9a0(void)
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], OFFSET L_dad0
-        jmp      InstallSelfIndirectJmpNeg_0048f4f0
+        jmp      InstallSelfIndirectJmpNeg
     L_dac7:
         ret
         nop

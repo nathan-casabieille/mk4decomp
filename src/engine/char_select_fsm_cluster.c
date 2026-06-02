@@ -123,7 +123,7 @@ extern void PushSetXfmMaskCallPop(void);
 extern void MStackPushDispatchBitGate(void);
 extern void RoundCleanupCluster_00455920(void);
 extern void CharSelectFsmCluster_004561f0(void);
-extern void ChainGatedNegAccum_0048b740(void);
+extern void ChainGatedNegAccum(void);
 extern unsigned int g_dispatchSave951_004e7f28;
 extern unsigned int g_dispatchSave954_004e8158;
 extern unsigned int g_dispatchSave129_0050d434;
@@ -256,7 +256,7 @@ __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [g_acc_00542078], 0x16666
         mov      dword ptr [g_eventQueueNotMask], 0
-        call     ChainGatedNegAccum_0048b740
+        call     ChainGatedNegAccum
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_58ff

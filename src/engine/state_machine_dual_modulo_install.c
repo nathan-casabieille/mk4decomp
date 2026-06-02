@@ -115,7 +115,7 @@ extern unsigned int g_arr_005d83a4_indexed_28;
 extern unsigned char g_str_0043d8c0;
 extern void DualEntryStub_0043d510(void);
 extern void StoreTwoCall(int, int);
-extern void WorldCellSetupCluster_0042b000(int);
+extern void WorldCellSetupCluster(int);
 extern void StateMachineDualModuloInstall_0043d620(void);
 
 /* @addr 0x0043d5a0 (123b) - decrement counter; if nonzero tail-jmp to 0x43d510.
@@ -152,7 +152,7 @@ L_csc_body:
         lea     eax, [edx + 0x44ccc]
         push    eax
         mov     dword ptr [g_currentNodeFlags], eax
-        call    WorldCellSetupCluster_0042b000
+        call    WorldCellSetupCluster
         add     esp, 4
         mov     dword ptr [g_currentNodeFlags], eax
         jmp     StateMachineDualModuloInstall_0043d620

@@ -115,7 +115,7 @@ extern void GuardedSeq_00472840(void);
 extern void GuardedSeq_00473f10(void);
 extern void MStackPush4ChainCopyPop4_00472e10(void);
 extern void ScaledLoadTwoCallLit_00451f70(void);
-extern void Set2CallIncJmp_00472860(void);
+extern void Set2CallIncJmp(void);
 extern void Thunk_0049cbc0(void);
 
 __declspec(naked) void JuggleFsmCluster_00451b90(void)
@@ -220,7 +220,7 @@ __declspec(naked) void JuggleFsmCluster_00451b90(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
-        call     Set2CallIncJmp_00472860
+        call     Set2CallIncJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
@@ -244,7 +244,7 @@ __declspec(naked) void JuggleFsmCluster_00451b90(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
-        call     Set2CallIncJmp_00472860
+        call     Set2CallIncJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0

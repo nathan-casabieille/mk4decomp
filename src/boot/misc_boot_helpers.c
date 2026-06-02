@@ -16,7 +16,7 @@ extern unsigned int g_scaledInit_00542044;
  *   push g_eventQueueEnd, add 0x15, restore at end after call.
  */
 extern void Copy3Fields38_0040a870(void);
-void StackPushAdd15CallPop_0040a7e0(void) {
+void StackPushAdd15CallPop(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_eventQueueEnd;
     g_eventQueueEnd = g_eventQueueEnd + 0x15;

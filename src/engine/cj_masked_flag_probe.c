@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
  *   mask based on cj == 0x538158; AND with walk; set bit 0 of
  *   state if result non-zero, else clear bit 0.
  */
-extern void PushPopState70Mask_00490650(void);
+extern void PushPopState70Mask(void);
 
 void CjMaskedFlagProbe_0048ecf0(void) {
     __asm {
@@ -127,7 +127,7 @@ void CjMaskedFlagProbe_0048ecf0(void) {
         jne     clearBit
         mov     dword ptr [g_eventQueueCurrent], 0x20
         mov     dword ptr [g_eventQueueWorkType], 0x2000
-        call    PushPopState70Mask_00490650
+        call    PushPopState70Mask
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     done

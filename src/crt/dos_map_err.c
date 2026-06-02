@@ -114,13 +114,13 @@ extern unsigned int g_fightAxisPosY;
  *   0x522178 looking for a match -> picks the paired ANSI errno;
  *   otherwise maps ranges 0x13-0x24->0xd, 0xbc-0xca->0x8, else 0x16.
  */
-extern void Crt_doserrno_004c8bb0(void);
+extern void Crt_doserrno(void);
 extern void Crt_errno(void);
 
 __declspec(naked) void DosMapErr_004c8b20(void) {
     __asm {
         push    esi
-        call    Crt_doserrno_004c8bb0
+        call    Crt_doserrno
         mov     ecx, dword ptr [esp + 8]
         xor     esi, esi
         mov     dword ptr [eax], ecx

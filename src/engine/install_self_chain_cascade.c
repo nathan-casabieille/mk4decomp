@@ -112,17 +112,17 @@ extern unsigned int g_fightAxisPosY;
  *   baseSel<<2 -> eax; snapshot+clear chain[+0x84].
  *   If was zero: push 0x0054295c, call IterStepScaledStore24_00428730; if pause? ret.
  *     call DualCallPauseDirtyJmp_00490c30; if pause? ret.
- *     push 0x00542960; call ArgScaledTestStore_00494140; if pause? ret.
- *     call DualScaledStoreZero_00491080; if pause? ret.
+ *     push 0x00542960; call ArgScaledTestStore; if pause? ret.
+ *     call DualScaledStoreZero; if pause? ret.
  *     cj[+0x24] = g_eventQueueIdx; tail-jmp StackPopDispatchTagged.
  *   If was nonzero: g_eventQueueIdx = cj[+0x24]; g_xformEntityIdx = 0x005009c8>>2;
  *     install-self at [eax+8]=0x0045feb0; chain[+0x84]=1;
  *     scaledInit-chain push 0x0045feb0+0x01000000;
  *     call ScaledStoreEntZeroJmp_00428e40; pause=1; ret.
  */
-extern void ArgScaledTestStore_00494140(void);
+extern void ArgScaledTestStore(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
-extern void DualScaledStoreZero_00491080(void);
+extern void DualScaledStoreZero(void);
 extern void IterStepScaledStore24_00428730(void);
 extern void ScaledStoreEntZeroJmp_00428e40(void);
 
@@ -156,7 +156,7 @@ __declspec(naked) void InstallSelfChainCascade_0045feb0(void) {
         _emit   00h
         _emit   00h
         push    0x00542960
-        call    ArgScaledTestStore_00494140
+        call    ArgScaledTestStore
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
@@ -166,7 +166,7 @@ __declspec(naked) void InstallSelfChainCascade_0045feb0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        call    DualScaledStoreZero_00491080
+        call    DualScaledStoreZero
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

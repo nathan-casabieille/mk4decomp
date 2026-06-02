@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY;
  *     first, then this function's own entry 1 (call -0x8b → 0x4a7e00); same
  *     +0x30==3 conditional restore tail.
  *   (9b NOP padding to 0x4a7eb0.)
- *   Entry 5 (offset 0xb0, big): calls SetJmp_004a1ac0 and DrainQueueCallEach_004a1ec0,
+ *   Entry 5 (offset 0xb0, big): calls SetJmp_004a1ac0 and DrainQueueCallEach,
  *     walks 24-byte-stride records at 0x004f3c20..0x004f3d40 calling
  *     MStackPush2ChainLLInsert for each; then iterates g_audioStateMachine0_004f3ae4 records at +0x34
  *     stride 0x24, then g_audioStateMachine1_004f3ae8 records at +0x48 stride 0x24, and
@@ -133,7 +133,7 @@ extern unsigned int g_counter_005433c8;
 extern void CallSetMultiGlobalsJmp_004a9230(void);
 extern void DecOrDirty_004a7d90(void);
 extern void DecOrDirty_004a7de0(void);
-extern void DrainQueueCallEach_004a1ec0(void);
+extern void DrainQueueCallEach(void);
 extern void IncBoundedDirty_004a7db0(void);
 extern void MStackPush2ChainLLInsert(void);
 extern void SetJmp_004a1ac0(void);
@@ -220,7 +220,7 @@ __declspec(naked) void Audio4EntryScopeDispatch_004a7e00(void) {
     L_a4s_entry5:
         push    esi
         call    SetJmp_004a1ac0
-        call    DrainQueueCallEach_004a1ec0
+        call    DrainQueueCallEach
         mov     esi, 0x004f3c20
     L_a4s_loop1:
         movsx   eax, byte ptr [esi]

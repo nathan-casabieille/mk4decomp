@@ -114,15 +114,15 @@ extern unsigned int g_dispatchSave145_00501a24;
 extern unsigned int g_dispatchSave72_005422fc;
 extern void ArgSarStoreJmp(void);
 extern void CopyJmp_0043a620(void);
-extern void EsiInstallClampAddCall_0048fe40(void);
+extern void EsiInstallClampAddCall(void);
 extern void EsiInstallDecCallChain_004294a0(void);
 extern void GuardedPackedSlotInit(void);
 extern void GuardedPushCall_0043b980(void);
 extern void InstallSelfDoubleMStack_0043b9a0(void);
 extern void ScaledLitLoadCall_00480fe0(void);
 extern void ScaledLoadIncJmp_00428d00(void);
-extern void SfxAttenuateAndApply_0048dee0(void);
-extern void StateMachine4ArmCascade_0043aab0(void);
+extern void SfxAttenuateAndApply(void);
+extern void StateMachine4ArmCascade(void);
 
 __declspec(naked) void VersusScreenEventPoseCluster_0043b680(void)
 {
@@ -156,7 +156,7 @@ __declspec(naked) void VersusScreenEventPoseCluster_0043b680(void)
         je       short L_b731
         dec      eax
         je       short L_b6d3
-        call     StateMachine4ArmCascade_0043aab0
+        call     StateMachine4ArmCascade
         pop      edi
         pop      esi
         ret
@@ -282,7 +282,7 @@ __declspec(naked) void VersusScreenEventPoseCluster_0043b680(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], 0
-        call     EsiInstallClampAddCall_0048fe40
+        call     EsiInstallClampAddCall
         mov      dword ptr [g_framePauseFlag], 1
     L_b919:
         pop      esi
@@ -302,7 +302,7 @@ __declspec(naked) void VersusScreenEventPoseCluster_0043b680(void)
         jmp      GuardedPushCall_0043b980
     L_b93c:
         mov      dword ptr [g_walkCallback], 0x3d70
-        call     SfxAttenuateAndApply_0048dee0
+        call     SfxAttenuateAndApply
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b971

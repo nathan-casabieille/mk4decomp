@@ -117,8 +117,8 @@ extern unsigned int g_fightAxisPosY;
  *   install-path: g_eventQueueChild = 0x50; install self with packed_ptr store; call CmpDispatchPushCallPop;
  *     pause = 1.
  */
-extern void ChainDecCondStoreCallJmp_00434880(void);
-extern void CmpDispatchPushCallPop_00438530(void);
+extern void ChainDecCondStoreCallJmp(void);
+extern void CmpDispatchPushCallPop(void);
 extern void InstallSelfChainSet80Call_004347f0(void);
 
 extern unsigned int g_matrixStack_arr;
@@ -134,7 +134,7 @@ __declspec(naked) void InstallSelfAbsDiff_00434730(void) {
         cmp     ecx, edx
         _emit   74h
         _emit   07h
-        call    ChainDecCondStoreCallJmp_00434880
+        call    ChainDecCondStoreCallJmp
         pop     edi
         ret
         mov     ecx, dword ptr [g_walkCallback]
@@ -166,7 +166,7 @@ __declspec(naked) void InstallSelfAbsDiff_00434730(void) {
         mov     [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     [eax*4 + 0x84], edx
-        call    CmpDispatchPushCallPop_00438530
+        call    CmpDispatchPushCallPop
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         ret

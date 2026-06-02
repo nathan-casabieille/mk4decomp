@@ -117,11 +117,11 @@ extern unsigned int g_audioSavedGlobal2_0054373c;
 extern unsigned int g_audioSavedGlobal3_00543740;
 extern void AudioInstallSelfStatePush(void);
 extern void BootInitGuardedCallChain(void);
-extern void FiveTableWalkInit_00403c90(void);
+extern void FiveTableWalkInit(void);
 extern void MStackPush2ChainLLInsert(void);
 extern void MStackPushComplexCallPop_00406430(void);
-extern void PushPopScaledInit343c_004aa940(void);
-extern void SceneFrameStepWithInputs_004be250(void);
+extern void PushPopScaledInit343c(void);
+extern void SceneFrameStepWithInputs(void);
 
 __declspec(naked) void InstallSelfStateMachine6_004a48e0(void)
 {
@@ -142,7 +142,7 @@ __declspec(naked) void InstallSelfStateMachine6_004a48e0(void)
         mov      dword ptr [g_currentNodeIdx], ecx
         call     MStackPush2ChainLLInsert
         mov      dword ptr [g_tickW1], 0x100
-        call     PushPopScaledInit343c_004aa940
+        call     PushPopScaledInit343c
         mov      dword ptr [esi + 8], 0x4a48e0
         mov      edx, dword ptr [g_baseSel]
         mov      ecx, 0x4a48e0
@@ -165,11 +165,11 @@ __declspec(naked) void InstallSelfStateMachine6_004a48e0(void)
         ret      
         push     ebx
         push     ebx
-        call     SceneFrameStepWithInputs_004be250
+        call     SceneFrameStepWithInputs
         add      esp, 8
         cmp      eax, 9
         je       L_4a51
-        call     PushPopScaledInit343c_004aa940
+        call     PushPopScaledInit343c
         mov      dword ptr [esi + 8], 0x4a48e0
         mov      eax, dword ptr [g_baseSel]
         mov      ecx, 0x4a48e0
@@ -180,11 +180,11 @@ __declspec(naked) void InstallSelfStateMachine6_004a48e0(void)
         jmp      L_4a15
         push     ebx
         push     2
-        call     SceneFrameStepWithInputs_004be250
+        call     SceneFrameStepWithInputs
         add      esp, 8
         cmp      eax, 9
         je       L_4a51
-        call     PushPopScaledInit343c_004aa940
+        call     PushPopScaledInit343c
         mov      dword ptr [esi + 8], 0x4a48e0
         mov      eax, dword ptr [g_baseSel]
         mov      ecx, 0x4a48e0
@@ -208,10 +208,10 @@ __declspec(naked) void InstallSelfStateMachine6_004a48e0(void)
         ret      
         push     ebx
         push     0x23
-        call     SceneFrameStepWithInputs_004be250
+        call     SceneFrameStepWithInputs
         add      esp, 8
     L_4a51:
-        call     FiveTableWalkInit_00403c90
+        call     FiveTableWalkInit
         cmp      dword ptr [g_framePauseFlag], edi
         je       L_4b51
         pop      edi

@@ -19,7 +19,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void MStackBracket4_ListInsertZeroFill(void);
 extern void MStackPush3LinkedListWalk(void);
-void GDispatch4_004089c0(void) {
+void GDispatch4(void) {
     MStackBracket4_ListInsertZeroFill();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 4) return;

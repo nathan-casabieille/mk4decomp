@@ -19,7 +19,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [ecx*4 + 0], eax
  *   ret
  */
-void ScaledChainOr8_00404e50(void) {
+void ScaledChainOr8(void) {
     unsigned int s;
     unsigned int e;
     unsigned int v;

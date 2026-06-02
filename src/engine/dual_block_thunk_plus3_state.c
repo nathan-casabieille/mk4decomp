@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   B1 (0..0x1f): call FiveCallScaledChainTailJmp; if !pause: push 0x004e4b28,
  *     tail-call ArgSarStoreJmp; ret.
  *   B2 (0x20..0x119, 3-state install-self):
- *     state >=2: tail-call StateMachine4ArmCascade_0043aab0.
+ *     state >=2: tail-call StateMachine4ArmCascade.
  *     state 1: install-self [eax+8]=0x0043aef0, chain[+0x84]=2, scaledInit-chain push
  *       0x0043aef0+0x02000000; call ScaledLoadIncJmp_00428d00; pause=1; ret.
  *     state 0: g_eventQueueNotMask=0xa, g_eventQueueChild=0x1f, install-self at
@@ -122,7 +122,7 @@ extern unsigned int g_fightAxisPosY;
 extern void ArgSarStoreJmp(void);
 extern void InstallSelfDoubleMStack_0043b9a0(void);
 extern void ScaledLoadIncJmp_00428d00(void);
-extern void StateMachine4ArmCascade_0043aab0(void);
+extern void StateMachine4ArmCascade(void);
 
 __declspec(naked) void DualBlockThunkPlus3State_0043aed0(void) {
     __asm {
@@ -152,7 +152,7 @@ __declspec(naked) void DualBlockThunkPlus3State_0043aed0(void) {
         dec     ecx
         _emit   74h
         _emit   08h
-        call    StateMachine4ArmCascade_0043aab0
+        call    StateMachine4ArmCascade
         pop     edi
         pop     esi
         ret

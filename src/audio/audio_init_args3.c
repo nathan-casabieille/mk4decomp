@@ -117,7 +117,7 @@ extern unsigned int g_voicePoolTail_00543750;
  *   MStackPushComplexCallPop; if pause clear stash arg1 at walk[+0x54],
  *   arg2 at walk[+0x58], arg3 at walk[+0x5c].
  */
-void AudioInitArgs3_004a1f20(unsigned int arg0, int arg1, int arg2, int arg3) {
+void AudioInitArgs3(unsigned int arg0, int arg1, int arg2, int arg3) {
     g_xformEntityIdx = arg0 >> 2;
     DispatcherComplex260_00407400();
     if (g_framePauseFlag != 0) return;

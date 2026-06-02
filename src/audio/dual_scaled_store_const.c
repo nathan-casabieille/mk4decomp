@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [ecx*4 + 0], 2
  *   ret
  */
-void DualScaledStoreConst_004a22c0(void) {
+void DualScaledStoreConst(void) {
     *(unsigned int *)(g_xformEntityIdx * 4) = 0;
     g_walkCallback = (void (*)(void))2;
     *(unsigned int *)(g_scaledInit_00542044 * 4) = 2;

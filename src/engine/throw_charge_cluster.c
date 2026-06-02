@@ -111,9 +111,9 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_pendingMatchVar;
 extern void AudioMixerStep(void);
 extern void DispatcherComplex138_004760f0(void);
-extern void MStackPush1MagicMod2_004244d0(void);
+extern void MStackPush1MagicMod2(void);
 extern void MStackPush2ChainLLInsert(void);
-extern void SetupVecFsmCluster_0043e3e0(void);
+extern void SetupVecFsmCluster(void);
 extern void StoreDoubleNegPauseSubStore(void);
 extern void StoreLoadJmp(void);
 extern void ThrowFsmCluster_0044eaf0(void);
@@ -155,7 +155,7 @@ __declspec(naked) void ThrowChargeCluster_0044e750(void)
         jne      L_e8df
         mov      edx, dword ptr [g_walkCallback]
         mov      dword ptr [g_eventQueueWorkType], edx
-        call     MStackPush1MagicMod2_004244d0
+        call     MStackPush1MagicMod2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e8df
@@ -237,7 +237,7 @@ __declspec(naked) void ThrowChargeCluster_0044e750(void)
         mov      dword ptr [ebp + 0x84], esi
         cmp      eax, esi
         jne      L_e91f
-        push     OFFSET SetupVecFsmCluster_0043e3e0 + 0x2c0
+        push     OFFSET SetupVecFsmCluster + 0x2c0
         call     StoreLoadJmp
         add      esp, 4
     L_e91f:

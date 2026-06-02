@@ -116,12 +116,12 @@ extern unsigned int g_fightAxisPosY;
  *   = idx) and tail-jmp through g_eventQueueWorkType.
  */
 extern unsigned int g_bootInitSaveSlot;
-extern void Cmp2DirtyToggle_00423870(void);
+extern void Cmp2DirtyToggle(void);
 extern void TowerStageInitCluster_00430560(void);
 
 __declspec(naked) void StackPeekDispatchIndirect_004304e0(void) {
     __asm {
-        call    Cmp2DirtyToggle_00423870
+        call    Cmp2DirtyToggle
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     done

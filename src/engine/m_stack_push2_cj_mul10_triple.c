@@ -110,11 +110,11 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00474170 (282b game) - mstack-push pair + 3 Mul10Tail for cj fields.
  *   mstack-push g_scaledInit_00542044 and g_cj_0054205c. g_scaledInit_00542044 = 0x7d.
- *   Call PreFightInstallCluster_00474390; if pause? final-ret. If bit2 of g_xformDirtyFlags set? skip 3 Mul10Tails.
+ *   Call PreFightInstallCluster; if pause? final-ret. If bit2 of g_xformDirtyFlags set? skip 3 Mul10Tails.
  *   For each cj field (+0x6c/+0x70/+0x74): push value + 0x1c000, Mul10Tail, store back.
  *   mstack-pop pair (g_cj_0054205c, g_scaledInit_00542044); ret.
  */
-extern void PreFightInstallCluster_00474390(void);
+extern void PreFightInstallCluster(void);
 
 void MStackPush2CjMul10Triple_00474170(void) {
     __asm {
@@ -129,7 +129,7 @@ void MStackPush2CjMul10Triple_00474170(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], edx
         mov     dword ptr [g_scaledInit_00542044], 0x7d
-        call    PreFightInstallCluster_00474390
+        call    PreFightInstallCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

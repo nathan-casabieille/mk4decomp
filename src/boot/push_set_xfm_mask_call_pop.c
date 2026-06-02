@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00407140 (95b)
  *   Push g_xformEntityIdx on mstack; eax = g_walkCallback;
  *   g_xformEntityIdx = eax; edx = [eax*4]; edx >>= 2; edx &= 0x3fffff;
- *   g_xformEntityIdx = edx; call BootDispatchSlotInit_004071a0;
+ *   g_xformEntityIdx = edx; call BootDispatchSlotInit;
  *   if pause: ret; pop g_xformEntityIdx; ret.
  */
 void PushSetXfmMaskCallPop(void) {
@@ -123,7 +123,7 @@ void PushSetXfmMaskCallPop(void) {
     wcb = (unsigned int)g_walkCallback;
     g_xformEntityIdx = wcb;
     g_xformEntityIdx = ((int)*(int *)(wcb * 4) >> 2) & 0x3fffff;
-    BootDispatchSlotInit_004071a0();
+    BootDispatchSlotInit();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     g_xformEntityIdx = *(unsigned int *)(top * 4);

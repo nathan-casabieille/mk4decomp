@@ -113,7 +113,7 @@ extern unsigned int g_dispatchSave22_00535dac;
  * @addr 0x004231f0 (125b game) - guarded dual-push call dual-pop +
  *   tail jmp: if g_dispatchSave22_00535dac is null bail; else push _74 and walk,
  *   call DownloadPlayerChar_Variant; on pause clear, pop them, and
- *   tail-jmp TripleStateSwapCall_0048cc40.
+ *   tail-jmp TripleStateSwapCall.
  */
 void GuardedDualPushTailJmp_004231f0(void) {
     unsigned int v;
@@ -131,5 +131,5 @@ void GuardedDualPushTailJmp_004231f0(void) {
         g_eventQueueWorkType = *(unsigned int *)(g_matrixStackTop * 4);
         g_matrixStackTop--;
     }
-    TripleStateSwapCall_0048cc40();
+    TripleStateSwapCall();
 }

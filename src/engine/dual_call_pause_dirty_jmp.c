@@ -41,13 +41,13 @@ void DualCallPauseDirtyJmp_00435f20(void) {
     }
 }
 
-extern void GuardedDualAndFlagToggle_0048f020(void);
+extern void GuardedDualAndFlagToggle(void);
 extern void ScaledXorStore_004903b0(void);
-extern void ChainSetupBitToggle_00491290(void);
+extern void ChainSetupBitToggle(void);
 
 /* @addr 0x00490c30 (43b) */
 void DualCallPauseDirtyJmp_00490c30(void) {
-    GuardedDualAndFlagToggle_0048f020();
+    GuardedDualAndFlagToggle();
     if (g_framePauseFlag != 0) {
         return;
     }
@@ -57,5 +57,5 @@ void DualCallPauseDirtyJmp_00490c30(void) {
             return;
         }
     }
-    ChainSetupBitToggle_00491290();
+    ChainSetupBitToggle();
 }

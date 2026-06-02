@@ -20,12 +20,12 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     +1
  *   ret
  */
-extern void CallPauseInc_004ab670(void);
+extern void CallPauseInc(void);
 extern void InstallSelfMStackCountdown_00437020(void);
 void Set14CallAddJmp_00436ff0(void) {
     unsigned int v;
     g_walkCallback = (void (*)(void))0x14;
-    CallPauseInc_004ab670();
+    CallPauseInc();
     if (g_framePauseFlag != 0) return;
     v = (unsigned int)g_walkCallback + 8;
     g_walkCallback = (void (*)(void))v;

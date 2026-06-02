@@ -110,14 +110,14 @@ extern unsigned int g_fightAxisPosY;
 
 /*
  * @addr 0x00438340 (108b game) - 3-stage call gate cascade:
- *   call DualEntryBitFlagDispatch_0048e820; if pause unset & bit0 set jmp StackPopDispatchTagged;
+ *   call DualEntryBitFlagDispatch; if pause unset & bit0 set jmp StackPopDispatchTagged;
  *   else if g_table_00535ddc > 0x30000 jmp ScaledPopSaveJmp; else set
  *   walk=0x28a, call AudioVolumeRescale; if pause unset & bit0 set jmp
  *   MStackPushSet4Jmp; call PushPop84TripleCall; if pause clear jmp InstallSelfPathSelfLoop_004383b0.
  */
 void ThreeStageGateCascade_00438340(void) {
     unsigned int v;
-    DualEntryBitFlagDispatch_0048e820();
+    DualEntryBitFlagDispatch();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 1) == 0) {
         StackPopDispatchTagged();
@@ -136,7 +136,7 @@ void ThreeStageGateCascade_00438340(void) {
         MStackPushSet4Jmp_004384f0();
         return;
     }
-    PushPop84TripleCall_00438b90();
+    PushPop84TripleCall();
     if (g_framePauseFlag != 0) return;
     InstallSelfPathSelfLoop_004383b0();
 }

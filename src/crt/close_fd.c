@@ -112,7 +112,7 @@ extern unsigned int g_dispatchSave1469_00fa0ee0;
 extern int CloseFd_004c8a50(void);
 extern void DivMod32IAT_004cd320(int);
 extern void Crt_errno(void);
-extern void Crt_doserrno_004c8bb0(void);
+extern void Crt_doserrno(void);
 
 /*
  * @addr 0x004c89e0 (104b crt) - _close(fd): validates fd against
@@ -156,7 +156,7 @@ __declspec(naked) void CloseImpl_004c89e0(void) {
 errorPath:
         call    Crt_errno
         mov     dword ptr [eax], 9
-        call    Crt_doserrno_004c8bb0
+        call    Crt_doserrno
         mov     dword ptr [eax], 0
         pop     edi
         or      eax, -1

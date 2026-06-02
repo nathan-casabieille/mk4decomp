@@ -121,8 +121,8 @@ extern int  Wctomb_004cc350(int, int);
  */
 extern unsigned int g_iat_004d20cc;
 extern unsigned int g_iat_004d20d0;
-extern void Lock_004c6f50(void);
-extern void TableLookupIatCall_004c6fd0(void);
+extern void Lock(void);
+extern void TableLookupIatCall(void);
 
 __declspec(naked) void CritSecWrap350_004cc2e0(void) {
     __asm {
@@ -138,7 +138,7 @@ __declspec(naked) void CritSecWrap350_004cc2e0(void) {
         push    offset g_dispatchSave1464_00f9fdb0
         call    edi
         push    0x13
-        call    Lock_004c6f50
+        call    Lock
         add     esp, 4
         mov     esi, 1
         jmp     skip
@@ -155,7 +155,7 @@ skip:
         test    esi, esi
         je      direct
         push    0x13
-        call    TableLookupIatCall_004c6fd0
+        call    TableLookupIatCall
         add     esp, 4
         mov     eax, ebx
         pop     edi

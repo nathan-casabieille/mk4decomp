@@ -112,7 +112,7 @@ extern unsigned int g_dispatchSave884_004d2320;
 extern unsigned int g_dispatchSave885_004d2330;
 extern unsigned int g_dispatchSave886_004d2340;
 extern unsigned int g_audioStreamState;
-extern void AudioInitInstallerPair_004a2140(void);
+extern void AudioInitInstallerPair(void);
 extern void BootInitGuardedCallChain(void);
 extern void GuardedSetupCallTailJmp(void);
 extern void TwoCallsTwoBranchTail_004a3c50(void);
@@ -240,7 +240,7 @@ __declspec(naked) void Match_OutcomeScreen(void)
         ret
     L_3f23:
         call     BootInitGuardedCallChain
-        call     AudioInitInstallerPair_004a2140
+        call     AudioInitInstallerPair
     L_3f2d:
         pop      edi
         pop      esi

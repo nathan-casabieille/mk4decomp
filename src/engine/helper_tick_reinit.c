@@ -50,7 +50,7 @@ extern void AdvanceTriStripRing(void);
 extern void Helper_DrawCursor(void);
 extern void Init16BitFields_004bcc50(void);
 extern void Mat3x3VecMul_004b3630(void);
-extern void MaxOfThree_004b3d90(void);
+extern void MaxOfThree(void);
 extern void ProjectTwoVertices(void);
 extern void ProjectVertex(void);
 
@@ -262,7 +262,7 @@ __declspec(naked) void Helper_TickReinit(void)
         shl      edx, 0xa
         or       ecx, edx
         mov      word ptr [esp + 0x6e], cx
-        call     MaxOfThree_004b3d90
+        call     MaxOfThree
         mov      word ptr [esp + 0x66], ax
         mov      eax, dword ptr [g_triStripRingB]
         test     eax, eax
@@ -319,7 +319,7 @@ __declspec(naked) void Helper_TickReinit(void)
         shl      edx, 0xa
         or       ecx, edx
         mov      word ptr [esp + 0x6e], cx
-        call     MaxOfThree_004b3d90
+        call     MaxOfThree
         mov      word ptr [esp + 0x66], ax
         mov      eax, dword ptr [g_triStripRingB]
         test     eax, eax

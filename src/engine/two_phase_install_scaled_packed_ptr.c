@@ -109,12 +109,12 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_installCountdownArr_00500c74;
-extern void CallDualStoreXorBit_004285e0(void);
+extern void CallDualStoreXorBit(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void FiveCallGuardSetTail(void);
 extern void ScaledLoadJmp_00428d20(void);
 
-__declspec(naked) void TwoPhaseInstallScaledPackedPtr_00480d50(void)
+__declspec(naked) void TwoPhaseInstallScaledPackedPtr(void)
 {
     __asm
     {
@@ -146,11 +146,11 @@ __declspec(naked) void TwoPhaseInstallScaledPackedPtr_00480d50(void)
         mov     dword ptr [ecx*4 + 0x28], eax
         mov     edx, dword ptr [g_fightGroupHead]
         mov     eax, offset g_installCountdownArr_00500c74
-        mov     ecx, offset TwoPhaseInstallScaledPackedPtr_00480d50
+        mov     ecx, offset TwoPhaseInstallScaledPackedPtr
         shr     eax, 2
         mov     dword ptr [g_eventQueueIdx], eax
         mov     dword ptr [edx*4 + 0x24], eax
-        mov     dword ptr [esi + 8], offset TwoPhaseInstallScaledPackedPtr_00480d50
+        mov     dword ptr [esi + 8], offset TwoPhaseInstallScaledPackedPtr
         mov     eax, dword ptr [g_baseSel]
         add     ecx, 0x2000000
         mov     dword ptr [eax*4 + 0x84], 2
@@ -198,12 +198,12 @@ __declspec(naked) void TwoPhaseInstallScaledPackedPtr_00480d50(void)
         cmp     eax, 0x12
         mov     dword ptr [g_walkCallback], eax
         jge     short L_tpisp_install
-        call    CallDualStoreXorBit_004285e0
+        call    CallDualStoreXorBit
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_tpisp_ret
     L_tpisp_install:
-        mov     dword ptr [esi + 8], offset TwoPhaseInstallScaledPackedPtr_00480d50
+        mov     dword ptr [esi + 8], offset TwoPhaseInstallScaledPackedPtr
         mov     dword ptr [esi + 0x84], ebx
         mov     dword ptr [g_pendingNodeType], ebx
         mov     dword ptr [g_framePauseFlag], ebx

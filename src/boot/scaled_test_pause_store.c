@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  *   store xformEntityIdx into [scaledInit*4 + 0x28]; ret.
  */
 extern void MStackPush2Burst6Init_00405450(void);
-void ScaledTestPauseStore_00408860(void) {
+void ScaledTestPauseStore(void) {
     unsigned int v = ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->queue_idx;
     g_walkCallback = (void(*)(void))v;
     if (v) {

@@ -9,7 +9,7 @@
 /* Externs for wrapper targets. */
 extern void SaveCallRestore(unsigned int arg);   /* 0x004049d0 */
 extern void OrListLoop_0041fcc0(unsigned int arg);   /* 0x0041fcc0 */
-extern void PackedAdvanceCallTailJmp_004392c0(unsigned int arg);   /* 0x004392c0 */
+extern void PackedAdvanceCallTailJmp(unsigned int arg);   /* 0x004392c0 */
 extern void CmpDualPatchScaledRangeJmp_004399c0(unsigned int arg);   /* 0x004399c0 */
 extern void ArgSarStoreJmp(unsigned int arg);   /* 0x004594f0 */
 extern void ScaledChainPushCall_00489ee0(unsigned int arg);   /* 0x00489ee0 */
@@ -25,16 +25,16 @@ void Wrapper_0041fcf0(void) { OrListLoop_0041fcc0(0x004de3f8u); }
 void Wrapper_0041fd00(void) { OrListLoop_0041fcc0(0x004d8e80u); }
 
 /* @addr 0x00433940 */
-void Wrapper_00433940(void) { PackedAdvanceCallTailJmp_004392c0(0x004e44f0u); }
+void Wrapper_00433940(void) { PackedAdvanceCallTailJmp(0x004e44f0u); }
 
 /* @addr 0x00436490 */
-void Wrapper_00436490(void) { PackedAdvanceCallTailJmp_004392c0(0x004e46d0u); }
+void Wrapper_00436490(void) { PackedAdvanceCallTailJmp(0x004e46d0u); }
 
 /* @addr 0x00436760 */
-void Wrapper_00436760(void) { PackedAdvanceCallTailJmp_004392c0(0x004e4708u); }
+void Wrapper_00436760(void) { PackedAdvanceCallTailJmp(0x004e4708u); }
 
 /* @addr 0x00436770 */
-void Wrapper_00436770(void) { PackedAdvanceCallTailJmp_004392c0(0x004e4718u); }
+void Wrapper_00436770(void) { PackedAdvanceCallTailJmp(0x004e4718u); }
 
 /* @addr 0x004377c0 */
 void Wrapper_004377c0(void) { CmpDualPatchScaledRangeJmp_004399c0(0x004e4810u); }
@@ -52,10 +52,10 @@ void Wrapper_00438ee0(void) { CmpDualPatchScaledRangeJmp_004399c0(0x004e4990u); 
 void Wrapper_00439310(void) { ScaledIndexCondCopy_0048e590(0x005422f0u); }
 
 /* @addr 0x0043abf0 */
-void Wrapper_0043abf0(void) { PackedAdvanceCallTailJmp_004392c0(0x004e4a58u); }
+void Wrapper_0043abf0(void) { PackedAdvanceCallTailJmp(0x004e4a58u); }
 
 /* @addr 0x0043ac00 */
-void Wrapper_0043ac00(void) { PackedAdvanceCallTailJmp_004392c0(0x004e4a70u); }
+void Wrapper_0043ac00(void) { PackedAdvanceCallTailJmp(0x004e4a70u); }
 
 /* @addr 0x00471340 */
 void Wrapper_00471340(void) { ArgSarStoreJmp(0x004eba28u); }

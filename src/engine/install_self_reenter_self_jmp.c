@@ -114,13 +114,13 @@ extern unsigned int g_fightAxisPosY;
  *   Block B (+0x50): standard install-self with self-jmp on chain[+0x84]!=0; install-self addr 0x00483180.
  */
 extern unsigned int g_matrixStack_arr;
-extern void DualScaledInitClear_00433c10(void);
+extern void DualScaledInitClear(void);
 extern void FiveCallGuardSetTail(void);
 extern void GuardedSeq_004297b0(void);
 
 __declspec(naked) void InstallSelfReenterSelfJmp_00483130(void) {
     __asm {
-        call    DualScaledInitClear_00433c10
+        call    DualScaledInitClear
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

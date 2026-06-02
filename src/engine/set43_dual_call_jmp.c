@@ -23,7 +23,7 @@ extern unsigned int g_scaledInit_00542044;
 extern void func_00489fe6_l(void);
 extern void BootOneShotSetup_0040bde0(void);
 extern void GuardedSeq_0049a650(void);
-void Set43DualCallJmp_0049a620(void) {
+void Set43DualCallJmp(void) {
     g_walkCallback = (void (*)(void))0x43;
     func_00489fe6_l();
     if (g_framePauseFlag != 0) return;

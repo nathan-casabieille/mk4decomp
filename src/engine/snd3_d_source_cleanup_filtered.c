@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-/* @addr 0x004c3be0 (286b engine.render) - twin of Snd3DSourceCleanup_004c3ad0 with extra flag-check.
+/* @addr 0x004c3be0 (286b engine.render) - twin of Snd3DSourceCleanup with extra flag-check.
  *   Same structure but adds `shl ecx,2; cmp [ecx+g_audioChannelTable], 0; je;
  *   test [ecx+g_flags_00f8fade], 1; je` before the vtbl calls (extra "in-use" filter).
  */

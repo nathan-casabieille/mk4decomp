@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *               [0x5380e0] = [0x537ea0]; [0x53a178] = [0x537edc]; [0x53a250] = [0x53a1cc];
  *               g_walkCallback = [0x53a51c].
  *   call TablePushAccumTailJmp_00429e30; pause? -> end.
- *   call TestCmpZeroFour_004238b0; pause? -> end.
+ *   call TestCmpZeroFour; pause? -> end.
  *   push 0x1000, 0x004202c0; call StoreTwoCall; add esp, 8.
  *   [0x543800] = -1; g_walkCallback = 0; [0x52aac4] = 0.
  */
@@ -136,7 +136,7 @@ extern unsigned int g_byte_00542040;
 extern void BootInitGuardedCallChain(void);
 extern void CopyGlobal(void);
 extern void TablePushAccumTailJmp_00429e30(void);
-extern void TestCmpZeroFour_004238b0(void);
+extern void TestCmpZeroFour(void);
 
 void AudioInitSequence_004a41a0(void) {
     __asm {
@@ -163,7 +163,7 @@ void AudioInitSequence_004a41a0(void) {
         test    eax, eax
         _emit   75h
         _emit   3eh
-        call    TestCmpZeroFour_004238b0
+        call    TestCmpZeroFour
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

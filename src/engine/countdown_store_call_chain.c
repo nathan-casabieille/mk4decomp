@@ -122,7 +122,7 @@ extern unsigned int g_phaseThunkVar8_0053a2d4;
 extern unsigned int g_throwEventTime_0053a3a0;
 extern void DualEntryStub_0043d510(void);
 extern void StateMachineDualModuloInstall_0043d620(void);
-extern void WorldCellSetupCluster_0042b000(void);
+extern void WorldCellSetupCluster(void);
 
 __declspec(naked) void CountdownStoreCallChain_0043d5a0(void) {
     __asm {
@@ -150,7 +150,7 @@ L_csc_body:
         lea     eax, [edx + 0x44ccc]
         push    eax
         mov     dword ptr [g_currentNodeFlags], eax
-        call    WorldCellSetupCluster_0042b000
+        call    WorldCellSetupCluster
         add     esp, 4
         mov     dword ptr [g_currentNodeFlags], eax
         jmp     StateMachineDualModuloInstall_0043d620

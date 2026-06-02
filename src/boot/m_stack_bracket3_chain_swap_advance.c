@@ -112,8 +112,8 @@ extern unsigned int g_phaseChainArr_005114b4;
 extern void MStackCall_00406340(void);
 extern void MStackPushDispatchBitGate(void);
 extern void MStackPushTwoEntryChainCall(void);
-extern void PushDualDerefClearPop_004092a0(void);
-extern void PushPopScaled18_004059a0(void);
+extern void PushDualDerefClearPop(void);
+extern void PushPopScaled18(void);
 extern void ScaledTripleCopy54(void);
 
 void MStackBracket3_ChainSwapAdvance_0041d560(void) {
@@ -157,11 +157,11 @@ void MStackBracket3_ChainSwapAdvance_0041d560(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_msb3csa_abort
-        call    PushPopScaled18_004059a0
+        call    PushPopScaled18
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_msb3csa_abort
-        call    PushDualDerefClearPop_004092a0
+        call    PushDualDerefClearPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_msb3csa_abort

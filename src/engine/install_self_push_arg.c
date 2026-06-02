@@ -112,11 +112,11 @@ extern unsigned int g_fightAxisPosY;
  *   esi = base*4; flag = [esi+0x84]; clear.
  *   if (flag != 0): call CallPauseScaledStorePushCall; pop esi; ret.
  *   chain[base + 0x74] = 0x2001; g_walkCallback = 0x2001;
- *   push 0x00542970; call ArgScaledTestStore_00494140; add esp, 4.
+ *   push 0x00542970; call ArgScaledTestStore; add esp, 4.
  *   pause? -> end.
  *   install self with packed_ptr store and call ScaledArrStore_00429450; pause = 1.
  */
-extern void ArgScaledTestStore_00494140(void);
+extern void ArgScaledTestStore(void);
 extern void ScaledArrStore_00429450(void);
 
 extern unsigned int g_matrixStack_arr;
@@ -139,7 +139,7 @@ __declspec(naked) void InstallSelfPushArg_00460190(void) {
         mov     dword ptr [g_walkCallback], eax
         push    0x00542970
         mov     [ecx*4 + 0x74], eax
-        call    ArgScaledTestStore_00494140
+        call    ArgScaledTestStore
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax

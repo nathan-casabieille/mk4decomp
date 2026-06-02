@@ -123,7 +123,7 @@ extern void ComboMenuFsmCluster_0043f3a0(void);
 extern unsigned int g_pendingMatchAudio2_0053a7a8;
 
 extern unsigned int g_load_0052ab10;
-extern void MStackAngleRatioSubchain_00476af0(void);
+extern void MStackAngleRatioSubchain(void);
 extern void Thunk_0049cbc0(void);
 
 __declspec(naked) void ThrowEventCluster_0043e960(void)
@@ -332,7 +332,7 @@ __declspec(naked) void ThrowEventCluster_0043e960(void)
     L_ec49:
         mov      eax, dword ptr [g_eventQueueEnd]
         mov      dword ptr [g_xformEntityIdx], eax
-        call     MStackAngleRatioSubchain_00476af0
+        call     MStackAngleRatioSubchain
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_ec7d

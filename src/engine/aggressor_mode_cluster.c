@@ -114,7 +114,7 @@ extern unsigned int g_dispatchSave743_004ed560;
 extern unsigned int g_dispatchSave69_00542ba0;
 extern void Alarm3EntryPhaseChain_0047e1a0(void);
 extern void ArgSarStoreJmp(void);
-extern void Cascade3ChainInit_0048fa50(void);
+extern void Cascade3ChainInit(void);
 extern void CmpEqInitCallElseJmp(void);
 extern void EsiInstallDecCallChain_004294a0(void);
 extern void FiveCallGuardSetTail(void);
@@ -174,7 +174,7 @@ __declspec(naked) void AggressorModeCluster_0047df30(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e0fd
-        call     Cascade3ChainInit_0048fa50
+        call     Cascade3ChainInit
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e0fd

@@ -110,12 +110,12 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004910b0 (259b game) - mstack-push + neg-aware Mul10Tail pair.
  *   mstack-push g_eventQueueCurrent, neg ecx if g_phaseThunkState_0053a730 != 0; reswap+push;
- *   call ScaledChainDouble_004911f0; if pause? ret. Then mstack-pop and either:
+ *   call ScaledChainDouble; if pause? ret. Then mstack-pop and either:
  *   if eax < 0 and g_eventQueueNotMask < 0: neg both; else: signs unchanged.
  *   Then 2x Mul10Tail (cdecl) feeding cj[+0x6c] and cj[+0x74].
  */
 extern unsigned int g_phaseThunkState_0053a730;
-extern void ScaledChainDouble_004911f0(void);
+extern void ScaledChainDouble(void);
 
 void MStackNegAwareMul10Pair_004910b0(void) {
     __asm {
@@ -137,7 +137,7 @@ void MStackNegAwareMul10Pair_004910b0(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [g_eventQueueCurrent], edx
         mov     dword ptr [eax*4 + 0], ecx
-        call    ScaledChainDouble_004911f0
+        call    ScaledChainDouble
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

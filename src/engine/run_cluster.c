@@ -109,17 +109,17 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_phaseTimer;
-extern void CallDualStoreXorBit_004285e0(void);
-extern void DualHelperCallStoreCjFields_0048ff40(void);
+extern void CallDualStoreXorBit(void);
+extern void DualHelperCallStoreCjFields(void);
 extern void DualMul10AccCj_00491230(void);
 extern void EsiEdiAliasDualMul10(void);
 extern void FiveCallGuardSetTail(void);
 extern void GuardedSeq_0047d980(void);
-extern void MoveSelectorCluster_0047d9a0(void);
+extern void MoveSelectorCluster(void);
 extern void ScaledLitLoadCall_00480fe0(void);
 extern void ScaledZero44(void);
 extern void TableLookupCall_00489ff0(void);
-extern void TwoPhaseInstallScaledPackedPtr_00480d50(void);
+extern void TwoPhaseInstallScaledPackedPtr(void);
 
 __declspec(naked) void RunCluster_0047d6e0(void)
 {
@@ -144,7 +144,7 @@ __declspec(naked) void RunCluster_0047d6e0(void)
         test     al, 1
         mov      dword ptr [g_eventQueueCurrent], 0
         je       short L_d736
-        jmp      TwoPhaseInstallScaledPackedPtr_00480d50
+        jmp      TwoPhaseInstallScaledPackedPtr
     L_d736:
         jmp      FiveCallGuardSetTail
     L_d73b:
@@ -157,7 +157,7 @@ __declspec(naked) void RunCluster_0047d6e0(void)
         mov      eax, 2
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_phaseTimer], eax
-        call     CallDualStoreXorBit_004285e0
+        call     CallDualStoreXorBit
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d77d
@@ -258,7 +258,7 @@ __declspec(naked) void RunCluster_0047d6e0(void)
     L_d88b:
         cmp      dword ptr [g_xformScratch2088], edi
         jne      short L_d89b
-        call     MoveSelectorCluster_0047d9a0
+        call     MoveSelectorCluster
         pop      edi
         pop      esi
         ret
@@ -272,7 +272,7 @@ __declspec(naked) void RunCluster_0047d6e0(void)
     L_d8c1:
         mov      dword ptr [g_walkCallback], 0x18000
         mov      dword ptr [g_eventQueueCurrent], 0xffffe667
-        call     DualHelperCallStoreCjFields_0048ff40
+        call     DualHelperCallStoreCjFields
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d97c

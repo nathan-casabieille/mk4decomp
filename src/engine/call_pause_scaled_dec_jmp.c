@@ -26,7 +26,7 @@ extern void ScaledStoreCurDirtyClear(void);
 extern void ScaledStoreCurDirtyOr1_00429730(void);
 extern u32 g_framePauseFlag;
 
-__declspec(naked) void CallPauseScaledDecJmp_00429750(void) {
+__declspec(naked) void CallPauseScaledDecJmp(void) {
     __asm {
         call    GuardedChainCmpDualBitXor
         mov     eax, dword ptr [g_framePauseFlag]

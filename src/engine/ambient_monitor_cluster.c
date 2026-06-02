@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void SetWalkCurCallPauseDirty_00404c70(void);
+extern void SetWalkCurCallPauseDirty(void);
 extern void StackPopDispatchTagged(void);
 extern void BootInitGuardedCallChain(void);
 extern void DualTestDirtyToggle_00427ea0(void);
@@ -138,7 +138,7 @@ extern unsigned int g_audioTriEntryFlag_005433ec;
 extern unsigned int g_audioMatchStartFlag_00543714;
 extern unsigned int g_audioStateRemapByte_00543728;
 
-__declspec(naked) void SceneEvalFsm_0049dea0(void)
+__declspec(naked) void SceneEvalFsm(void)
 {
     __asm {
         mov      eax, dword ptr [g_baseSel]
@@ -162,7 +162,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         mov      dword ptr [g_fightGroupHead], ecx
         call     StoreTwoCall
         mov      eax, 1
-        mov      dword ptr [esi + 8], OFFSET SceneEvalFsm_0049dea0
+        mov      dword ptr [esi + 8], OFFSET SceneEvalFsm
         mov      dword ptr [esi + 0x84], 2
         add      esp, 8
         mov      dword ptr [g_pendingNodeType], eax
@@ -179,7 +179,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         ret      
         push     0x251
         push     OFFSET AmbientMonitorCluster_0049e3c0 + 0xd0
-        call     SetWalkCurCallPauseDirty_00404c70
+        call     SetWalkCurCallPauseDirty
         add      esp, 8
         call     MStackDirtyArgsBit0_0049fa50
         cmp      dword ptr [g_framePauseFlag], ebx
@@ -188,7 +188,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         jne      L_df8b
     L_df68:
         mov      eax, 1
-        mov      dword ptr [esi + 8], OFFSET SceneEvalFsm_0049dea0
+        mov      dword ptr [esi + 8], OFFSET SceneEvalFsm
         mov      dword ptr [esi + 0x84], 3
         mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_framePauseFlag], eax
@@ -257,9 +257,9 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
     L_e097:
         mov      dword ptr [g_dlNalt1], ebx
     L_e09d:
-        mov      dword ptr [esi + 8], OFFSET SceneEvalFsm_0049dea0
+        mov      dword ptr [esi + 8], OFFSET SceneEvalFsm
         mov      edx, dword ptr [g_baseSel]
-        mov      ecx, OFFSET SceneEvalFsm_0049dea0
+        mov      ecx, OFFSET SceneEvalFsm
         mov      dword ptr [edx*4 + 0x84], 4
         mov      eax, dword ptr [esi + 4]
         add      ecx, 0x4000000
@@ -289,9 +289,9 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         call     ThrowAnimTriggerCluster_0049efa0
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_e1aa
-        mov      dword ptr [esi + 8], OFFSET SceneEvalFsm_0049dea0
+        mov      dword ptr [esi + 8], OFFSET SceneEvalFsm
         mov      ecx, dword ptr [g_baseSel]
-        mov      edx, OFFSET SceneEvalFsm_0049dea0
+        mov      edx, OFFSET SceneEvalFsm
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      eax, dword ptr [esi + 4]
         add      edx, 0x1000000

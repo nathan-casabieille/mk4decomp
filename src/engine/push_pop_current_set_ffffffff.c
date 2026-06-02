@@ -12,7 +12,7 @@ extern unsigned int g_scaledInit_00542044;
  *   call F; pause-test → ret; pop stack value back into g_eventQueueCurrent.
  */
 extern void Thunk_0049cc00(void);
-void PushPopCurrentSetFFFFFFFF_00473070(void) {
+void PushPopCurrentSetFFFFFFFF(void) {
     unsigned int top;
     top = g_matrixStackTop + 1;
     g_matrixStackTop = top;

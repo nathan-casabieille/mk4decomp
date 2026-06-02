@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  *   g_eventQueueCurrent = eax; g_walkCallback = ecx; ret.
  */
 extern unsigned int g_dispatchSave37_00541ee8;
-void CmpCondIdxArrLookup_0048e450(void) {
+void CmpCondIdxArrLookup(void) {
     unsigned int idx;
     unsigned int adj;
     unsigned int v;

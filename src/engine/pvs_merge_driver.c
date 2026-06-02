@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_bootChainPair0_00541e80;
-extern void GuardedChainPushSetCallPop_00406bb0(void);
+extern void GuardedChainPushSetCallPop(void);
 extern void ScaledLoadGuardedJmp_004066d0(void);
 extern void PvsMergeDriver_00425db0(void);
 extern void MStackBracket2_TreeWalkRecursive(void);
@@ -119,7 +119,7 @@ extern void LinkedListInsert_004ab440(void);
  *   Sets bit 2 of g_xformDirtyFlags. If g_currentNodeIdx is zero, takes the
  *   short path: clears bit 2 again and returns. Otherwise pushes
  *   g_xformEntityIdx / g_fightGroupHead onto mstack, calls
- *   GuardedChainPushSetCallPop_00406bb0 + ScaledLoadGuardedJmp_004066d0.
+ *   GuardedChainPushSetCallPop + ScaledLoadGuardedJmp_004066d0.
  *   Sets g_fightGroupHead = old g_currentNodeIdx, reads [scaled+0x1c]; if
  *   non-zero, toggles bit 2 off and calls PvsMergeDriver_00425db0. Zeroes
  *   g_walkCallback and [scaled+0x1c]. Reads [scaled+0x18]; if non-zero,
@@ -154,7 +154,7 @@ __declspec(naked) void MStackPush2ChainLLInsert(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_table_004d57b0], edx
-        call    GuardedChainPushSetCallPop_00406bb0
+        call    GuardedChainPushSetCallPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mpl_doneNoFE

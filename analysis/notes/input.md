@@ -64,7 +64,7 @@ read on the next tick.
 | 0x004b5650 | `Input_PollPlayerKeyboard`                 |      494 | Per-player keyboard analog of the above. Bails if VK_MENU (0x12) is held (lets Alt+key sequences pass to the OS). Iterates 13 (VK, action mask) bindings at `g_keyBindings_00543ab8..b18` and ORs each pressed key's action mask into the player's action target via `Input_GetAsyncKey`. |
 | 0x004b5850 | `Input_TickPlayers`                        |      448 | Per-frame input tick (was `GameStateMachineMaybeRebuild`). Clears the 4 action accumulators (`g_fightTableC0/C1/C2`, `g_phaseThunkInst_004d50ac`); runs keyboard + joystick polls for players 0 and 1; on a pending paused state checks ENTER/SPACE/ESC to release it; tail inverts each accumulator into the 'released' shadow used by edge-trigger code. |
 | 0x004b7020 | `Menu_PollNavInput`                        |      312 | Menu navigation poll. Reads 8 VKs (up/down/left/right/enter/space/esc/back) + the 2 selected joysticks. Returns a packed nav bitmask: bits 1/2/4/8 = dirs, 0x10 = confirm, 0x20/0x60 = back/cancel. Auto-repeat: if previous nonzero AND current nonzero, sets bit 0x8000. Plays nav SFX (sound id 0xa0) on fresh press. |
-| 0x004be3c0 | `Input_AnyConfirmPressed`                  |      125 | Returns 1 if ENTER (0x0d), SPACE (0x20) or ESC (0x1b) is held via `Input_GetAsyncKey`, OR if either selected joystick reports any button in mask `0x0fffffff`. The 'press anything to advance' probe used by the attract loop in `SceneFrameStepWithInputs_004be250`. |
+| 0x004be3c0 | `Input_AnyConfirmPressed`                  |      125 | Returns 1 if ENTER (0x0d), SPACE (0x20) or ESC (0x1b) is held via `Input_GetAsyncKey`, OR if either selected joystick reports any button in mask `0x0fffffff`. The 'press anything to advance' probe used by the attract loop in `SceneFrameStepWithInputs`. |
 | 0x004c49b0 | `WndProc`                                  |     1728 | The MK4 window procedure registered by `Boot` (WNDCLASS 'Mortal Kombat 4'). Handles WM_DESTROY/SIZE/PAINT/CLOSE/ERASEBKGND/ACTIVATEAPP/SETCURSOR/DISPLAYCHANGE/SYSCOMMAND. WM_KEYDOWN for F1-F9 renderer hotkeys, WM_KEYUP for the PrintScreen `scrngrab.bmp` capture, WM_SYSKEYDOWN/UP for the Alt-key audio-reset cleanup path. NB: gameplay key polling is async (GetAsyncKeyState), NOT via WndProc. |
 
 ## Shared globals
@@ -144,7 +144,7 @@ above) for what looks like an outer-deadzone threshold.
   (which look like already-aggregated per-player action accumulators).
   Used from the audio path. Without knowing the exact slot meanings
   (see TODO below), can't be safely renamed.
-- `SceneFrameStepWithInputs_004be250` - attract/intro playback loop.
+- `SceneFrameStepWithInputs` - attract/intro playback loop.
   Drives ECM track playback and calls `Input_AnyConfirmPressed` to
   exit. Already descriptively named, left alone.
 

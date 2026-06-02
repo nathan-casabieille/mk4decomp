@@ -20,7 +20,7 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_bootInitSaveSlot;
 extern void AnimEventUpdateCluster_00493ef0(void);
 extern unsigned int g_table_004f1e20;
-void LoadCmpAddrJmp_00493ed0(void) {
+void LoadCmpAddrJmp(void) {
     unsigned int packed = (unsigned int)((int)&g_table_004f1e20 >> 2);
     g_bootInitSaveSlot = packed;
     if ((unsigned int)g_walkCallback == packed) {

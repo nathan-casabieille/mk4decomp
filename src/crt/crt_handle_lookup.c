@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_dispatchSave1469_00fa0ee0;
 extern unsigned int g_arr_00fa0de0;
-extern void Crt_doserrno_004c8bb0(void);
+extern void Crt_doserrno(void);
 extern void Crt_errno(void);
 
 void CRTHandleLookup_004cd260(void) {
@@ -37,7 +37,7 @@ void CRTHandleLookup_004cd260(void) {
         ret
         call    Crt_errno
         mov     dword ptr [eax], 9
-        call    Crt_doserrno_004c8bb0
+        call    Crt_doserrno
         mov     dword ptr [eax], 0
         or      eax, 0xffffffff
         }

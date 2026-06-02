@@ -110,12 +110,12 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0044c430 (241b game) - 4-field copy from scaledInit chain to chain via cj alias.
  *   Set cj = baseSel[+0x4c]; call MStackPush2RunCountdown; if pause? ret.
- *   g_walkCallback=2; call BootStateTriple_00408d30; if pause? ret.
+ *   g_walkCallback=2; call BootStateTriple; if pause? ret.
  *   Then for k in {0, 0x30, 0x34, 0x38}: copy scaledInit[k] to g_xformEntityIdx[k]
  *     (first iteration also OR's al with 4).
  *   Then call MStackBracket7_DispatchAndChain; if !pause: g_walkCallback=3, g_acc_00542078=2, tail-jmp GuardedSeq_00473ef0; ret.
  */
-extern void BootStateTriple_00408d30(void);
+extern void BootStateTriple(void);
 extern void GuardedSeq_00473ef0(void);
 
 __declspec(naked) void CjFieldCopyCascade_0044c430(void) {
@@ -133,7 +133,7 @@ __declspec(naked) void CjFieldCopyCascade_0044c430(void) {
         _emit   00h
         _emit   00h
         mov     dword ptr [g_walkCallback], 2
-        call    BootStateTriple_00408d30
+        call    BootStateTriple
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

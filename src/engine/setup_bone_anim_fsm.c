@@ -116,9 +116,9 @@ extern void HelperCallTripleMul10_0043e2d0(void);
 extern void MStackBracketedScaledStores_00475b30(void);
 extern void MStackPush2ChainLLInsert(void);
 extern void MStackPush2LLWalkCompare(void);
-extern void PreFightInstallCluster_00474390(void);
+extern void PreFightInstallCluster(void);
 extern void ScaledSaveCallRestoreJmp_00472f40(void);
-extern void SetupVecFsmCluster_0043e3e0(void);
+extern void SetupVecFsmCluster(void);
 extern void StoreLoadJmp(void);
 extern void Thunk_0049cbc0(void);
 extern void Vec3PackedTripleCallBracket_004764d0(void);
@@ -290,16 +290,16 @@ __declspec(naked) void SetupBoneAnimFsm_0043dea0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e265
-        push     OFFSET SetupVecFsmCluster_0043e3e0 + 0x180
+        push     OFFSET SetupVecFsmCluster + 0x180
         call     StoreLoadJmp
         add      esp, 4
-        push     OFFSET SetupVecFsmCluster_0043e3e0 + 0x2c0
+        push     OFFSET SetupVecFsmCluster + 0x2c0
         call     StoreLoadJmp
         add      esp, 4
-        push     OFFSET SetupVecFsmCluster_0043e3e0 + 0x3e0
+        push     OFFSET SetupVecFsmCluster + 0x3e0
         call     StoreLoadJmp
         add      esp, 4
-        push     OFFSET PreFightInstallCluster_00474390 + 0x250
+        push     OFFSET PreFightInstallCluster + 0x250
         call     StoreLoadJmp
         add      esp, 4
         mov      dword ptr [g_eventQueueEnd], 0x19

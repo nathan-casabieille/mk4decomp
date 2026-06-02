@@ -119,8 +119,8 @@ extern void ScaledChainJmp_00429470(void);
  *   g_audioBankSel != 0 tail-calls StageEventExitCluster_0047cd50.
  *   Otherwise pushes g_eventQueueChild onto the mstack and sets
  *   g_walkCallback=0xb333, calls EsiEdiAliasDualMul10. On
- *   no-error sets g_xformScratch2088=0x11999, calls PunchAnimCluster_00496d80. Pops
- *   back into g_eventQueueChild, then calls NotMaskStorePair_0045f440.
+ *   no-error sets g_xformScratch2088=0x11999, calls PunchAnimCluster. Pops
+ *   back into g_eventQueueChild, then calls NotMaskStorePair.
  *   Selects 0x542074 = 1 or 0x10 based on g_fightGroupHead ==
  *   g_player1NodeIdx, AND with g_eventQueueCurrent → g_xformScratch94: if
  *   nonzero tail-calls InstallSelfCountdown2Stage_0047c8f0; else writes
@@ -130,8 +130,8 @@ extern void ScaledChainJmp_00429470(void);
  */
 extern unsigned int g_table_004d57b0;
 extern void EsiEdiAliasDualMul10(void);
-extern void NotMaskStorePair_0045f440(void);
-extern void PunchAnimCluster_00496d80(void);
+extern void NotMaskStorePair(void);
+extern void PunchAnimCluster(void);
 
 __declspec(naked) void InstallSelfMStackPackedFlow_0047c990(void) {
     __asm {
@@ -165,7 +165,7 @@ __declspec(naked) void InstallSelfMStackPackedFlow_0047c990(void) {
         test    eax, eax
         jne     L_ism_done
         mov     dword ptr [g_xformScratch2088], 0x11999
-        call    PunchAnimCluster_00496d80
+        call    PunchAnimCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_ism_done
@@ -174,7 +174,7 @@ __declspec(naked) void InstallSelfMStackPackedFlow_0047c990(void) {
         dec     eax
         mov     dword ptr [g_eventQueueChild], edx
         mov     dword ptr [g_matrixStackTop], eax
-        call    NotMaskStorePair_0045f440
+        call    NotMaskStorePair
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_ism_done

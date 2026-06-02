@@ -121,15 +121,15 @@ extern unsigned int g_fightAxisPosY;
  *         else: call TwoPathIATDispatch_004c70a0(esi, slot), continue iter.
  *       Else: skip helper, continue iter.
  *   Finalize: if edi != 0, init fields at edi (+0,+4,+8,+0xc,+0x1c = 0; +0x10 = -1).
- *   Unlock(2) via TableLookupIatCall_004c6fd0; return edi.
+ *   Unlock(2) via TableLookupIatCall; return edi.
  */
 extern unsigned int g_dispatchSave1465_00f9fdb4;
 extern unsigned int g_dispatchSave1466_00fa0dc0;
 extern unsigned int g_iat_004d2140;
 extern unsigned int g_iat_004d215c;
 extern void LoadArgPushCall(void);
-extern void Lock_004c6f50(void);
-extern void TableLookupIatCall_004c6fd0(void);
+extern void Lock(void);
+extern void TableLookupIatCall(void);
 extern void TwoPathIATDispatch_004c7030(void);
 extern void TwoPathIATDispatch_004c70a0(void);
 
@@ -142,7 +142,7 @@ __declspec(naked) void HeapScanInit_004c9440(void) {
         push    2
         xor     ebp, ebp
         xor     edi, edi
-        call    Lock_004c6f50
+        call    Lock
         mov     eax, dword ptr [g_dispatchSave1466_00fa0dc0]
         add     esp, 4
         xor     esi, esi
@@ -209,7 +209,7 @@ __declspec(naked) void HeapScanInit_004c9440(void) {
         mov     dword ptr [edi + 0x10], -1
     L_hsi_unlock:
         push    2
-        call    TableLookupIatCall_004c6fd0
+        call    TableLookupIatCall
         add     esp, 4
         mov     eax, edi
         pop     edi

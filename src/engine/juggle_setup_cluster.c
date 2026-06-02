@@ -113,8 +113,8 @@ extern unsigned int g_fightAxisPosY;
 /* sibling 0x4539d0)                                                  */
 /* ------------------------------------------------------------------ */
 extern void MStackCall_004062f0(void);
-extern void Chain2AxisDiffStoreTailJmp_0044cad0(void);
-extern void MStackPush3SideStore_0044cb80(void);
+extern void Chain2AxisDiffStoreTailJmp(void);
+extern void MStackPush3SideStore(void);
 extern void DualScaledStore(void);
 extern void JuggleSetupCluster_004539d0(void);
 extern void func_00453a01(void);
@@ -234,12 +234,12 @@ __declspec(naked) void PoseCopyIdleCluster_004537a0(void)
         call     DualScaledStore
         cmp      dword ptr [g_framePauseFlag], edi
         jne      func_00453a01
-        call     Chain2AxisDiffStoreTailJmp_0044cad0
+        call     Chain2AxisDiffStoreTailJmp
         cmp      dword ptr [g_framePauseFlag], edi
         jne      func_00453a01
         mov      dword ptr [g_eventQueueWorkType], 0xe666
         mov      dword ptr [g_walkCallback], 0xfffef334
-        call     MStackPush3SideStore_0044cb80
+        call     MStackPush3SideStore
         cmp      dword ptr [g_framePauseFlag], edi
         jne      func_00453a01
         mov      ecx, dword ptr [g_installOwner2_0053a7a0]

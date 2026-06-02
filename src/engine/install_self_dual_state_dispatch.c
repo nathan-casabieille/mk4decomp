@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x0042c9f0 (205b game) - dual-entry install-self. */
 extern void ArgSarStoreJmp(void);
 extern void CjInstallSelfRouter(void);
-extern void EsiInstallClampAddCall_0048fe40(void);
+extern void EsiInstallClampAddCall(void);
 extern void StateDispatchTable(void);
 
 __declspec(naked) void InstallSelfDualStateDispatch_0042c9f0(void) {
@@ -160,7 +160,7 @@ __declspec(naked) void InstallSelfDualStateDispatch_0042c9f0(void) {
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
-        call    EsiInstallClampAddCall_0048fe40
+        call    EsiInstallClampAddCall
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret

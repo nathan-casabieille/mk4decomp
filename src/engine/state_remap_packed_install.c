@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   state-remap-call.
  *   Entry 1 (offset 0, 80b): sets g_xformEntityIdx = &g_dispatchTableArr7_005019d0>>2,
  *     reads [g_baseSel*4 + 0x34] as state code; if 0x10 → 2, if
- *     0x11 → 7. If != 0xf, pushes 0x542a70 → ArgScaledTestStore_00494140.
+ *     0x11 → 7. If != 0xf, pushes 0x542a70 → ArgScaledTestStore.
  *   Entry 2 (offset 0x50, 219b): phase-state install. Phase != 0 tail-jmps
  *     StackPopDispatchTagged. Phase 0: writes [scaled+0x74]=0x2002,
  *     ScaledAndAlfe → push 0x542a78 → ArgScaledTestStore. On
@@ -130,7 +130,7 @@ extern unsigned int g_dispatchTableArr7_005019d0;
 extern unsigned int g_dispatchSave64_00542a70;
 extern unsigned int g_dispatchSave65_00542a78;
 extern void ArgSarStoreJmp(void);
-extern void ArgScaledTestStore_00494140(void);
+extern void ArgScaledTestStore(void);
 extern void Install3StateRouterTail_0046b4e0(void);
 extern void ScaledAndAlfe(void);
 extern void ScaledClearJmp_00428d60(void);
@@ -156,7 +156,7 @@ __declspec(naked) void StateRemapPackedInstall_0046b360(void) {
         cmp     eax, 0xf
         je      short L_srp_e1End
         push    offset g_dispatchSave64_00542a70
-        call    ArgScaledTestStore_00494140
+        call    ArgScaledTestStore
         add     esp, 4
     L_srp_e1End:
         ret
@@ -181,7 +181,7 @@ __declspec(naked) void StateRemapPackedInstall_0046b360(void) {
         test    eax, eax
         jne     L_srp_e2End
         push    offset g_dispatchSave65_00542a78
-        call    ArgScaledTestStore_00494140
+        call    ArgScaledTestStore
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax

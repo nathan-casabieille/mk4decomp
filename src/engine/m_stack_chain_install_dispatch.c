@@ -110,12 +110,12 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_audioBank2State_00537f98;
 extern void DirtyFlagsManip_0048de00(void);
-extern void DualEntryBitFlagDispatch_0048e820(void);
+extern void DualEntryBitFlagDispatch(void);
 extern void MStackChainBit2Cascade_0048e8f0(void);
 extern void PendingMatch_0048d7b0(void);
 extern void PushCjWalkDispatchPop_00490810(void);
 extern void ScaledLitLoadCall_00480fe0(void);
-extern void SfxAttenuateAndApply_0048dee0(void);
+extern void SfxAttenuateAndApply(void);
 
 __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
 {
@@ -170,7 +170,7 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         mov      dword ptr [g_xformScratch94], eax
         jne      L_d6a7
         mov      ecx, dword ptr [g_currentNodeIdx]
-        mov      edx, OFFSET DualEntryBitFlagDispatch_0048e820 + 0x40
+        mov      edx, OFFSET DualEntryBitFlagDispatch + 0x40
         mov      dword ptr [g_xformEntityIdx], OFFSET MStackChainBit2Cascade_0048e8f0
         mov      dword ptr [g_pendingNodeType], edx
         mov      eax, dword ptr [ecx*4 + 0x10]
@@ -204,7 +204,7 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         call     Mul10Tail
         add      esp, 8
         mov      dword ptr [g_walkCallback], eax
-        call     SfxAttenuateAndApply_0048dee0
+        call     SfxAttenuateAndApply
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d7ad
@@ -222,7 +222,7 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
     L_d6ac:
         mov      eax, dword ptr [eax*4 + 0x14]
         mov      dword ptr [g_walkCallback], eax
-        call     SfxAttenuateAndApply_0048dee0
+        call     SfxAttenuateAndApply
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d7ad

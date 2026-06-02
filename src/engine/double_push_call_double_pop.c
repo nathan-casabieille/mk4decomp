@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004905e0 (106b)
  *   Double mstack push: g_walkCallback, then g_eventQueueCurrent;
- *   call MStackPush2ChainSwap_0048f090; if pause: ret;
+ *   call MStackPush2ChainSwap; if pause: ret;
  *   pop g_eventQueueCurrent; pop g_walkCallback; ret.
  */
 void DoublePushCallDoublePop_004905e0(void) {
@@ -118,7 +118,7 @@ void DoublePushCallDoublePop_004905e0(void) {
     *(unsigned int *)(g_matrixStackTop * 4) = (unsigned int)g_walkCallback;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_eventQueueCurrent;
-    MStackPush2ChainSwap_0048f090();
+    MStackPush2ChainSwap();
     if (g_framePauseFlag != 0) return;
     g_eventQueueCurrent = *(unsigned int *)(g_matrixStackTop * 4);
     g_matrixStackTop--;

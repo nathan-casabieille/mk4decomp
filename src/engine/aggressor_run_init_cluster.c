@@ -121,7 +121,7 @@ extern void BlockedCounterCluster_004816d0(void);
 extern void BossArrivalSequence_00481950(void);
 extern void CjDispatchCommit_004818e0(void);
 extern void DualScaledStore(void);
-extern void MStackDualDiffSequencer_00477040(void);
+extern void MStackDualDiffSequencer(void);
 extern void PendingMatch_00455bd0(void);
 extern void Push267_Push44eb60_Jmp_00489220(void);
 extern void ScaledInitWithCounterAndType_004314f0(void);
@@ -164,7 +164,7 @@ __declspec(naked) void AggressorRunInitCluster_004813b0(void)
         add      ecx, 0x15
         mov      dword ptr [g_eventQueueWorkType], 0x41
         mov      dword ptr [g_xformEntityIdx], ecx
-        call     MStackDualDiffSequencer_00477040
+        call     MStackDualDiffSequencer
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1475

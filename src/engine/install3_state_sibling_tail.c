@@ -113,7 +113,7 @@ extern void ArgSarStoreJmp(void);
 extern void CallPauseScaledStoreJmp_00428820(void);
 extern void FiveCallGuardSetTail(void);
 extern void GuardedPackedSlotInit(void);
-extern void ScaledAndAl7f_004902f0(void);
+extern void ScaledAndAl7f(void);
 
 __declspec(naked) void Install3StateSiblingTail_00484950(void) {
     __asm {
@@ -192,7 +192,7 @@ __declspec(naked) void Install3StateSiblingTail_00484950(void) {
         pop     esi
         ret
         _emit   90h
-        call    ScaledAndAl7f_004902f0
+        call    ScaledAndAl7f
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

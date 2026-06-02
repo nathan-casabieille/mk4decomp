@@ -72,9 +72,9 @@
 
 extern unsigned int g_scaledInit_00542044;
 
-extern void BootPhaseGateBracketedInit_004060c0(void);
+extern void BootPhaseGateBracketedInit(void);
 extern void MStackBracket1_TreeWalkRecursive2(void);
-extern void FramePauseScaledStore_00406c10(void);
+extern void FramePauseScaledStore(void);
 extern void MStackPush2ChainLLInsert(void);
 
 #define DC260_BODY(WORKER_FN)                                                  \
@@ -85,7 +85,7 @@ extern void MStackPush2ChainLLInsert(void);
         __asm push    ebx                                                      \
         __asm mov     dword ptr [g_matrixStackTop], eax                        \
         __asm mov     dword ptr [eax*4 + 0], ecx                               \
-        __asm call    BootPhaseGateBracketedInit_004060c0                                            \
+        __asm call    BootPhaseGateBracketedInit                                            \
         __asm mov     eax, dword ptr [g_framePauseFlag]                        \
         __asm test    eax, eax                                                 \
         __asm _emit   0fh                                                      \
@@ -162,4 +162,4 @@ extern void MStackPush2ChainLLInsert(void);
 __declspec(naked) void DispatcherComplex260_00407030(void) { DC260_BODY(MStackBracket1_TreeWalkRecursive2) }
 
 /* @addr 0x00407400 */
-__declspec(naked) void DispatcherComplex260_00407400(void) { DC260_BODY(FramePauseScaledStore_00406c10) }
+__declspec(naked) void DispatcherComplex260_00407400(void) { DC260_BODY(FramePauseScaledStore) }

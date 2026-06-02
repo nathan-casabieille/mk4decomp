@@ -34,7 +34,7 @@ extern void DualInstallCallSwap_00490c80(void);
 extern void FpuSqrtMul(void);
 extern void GeoTransformDispatchAndApply_00489840(void);
 extern void Mul10Tail(void);
-extern void FixedDiv16_004ab2a0(void);
+extern void FixedDiv16(void);
 extern void ScaledStateNegCallPauseLoad_00489e90(void);
 
 __declspec(naked) void Helper_PerPlayerTick(void)
@@ -105,7 +105,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      dword ptr [g_currentNodeFlags], edx
         mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_eventQueueCurrent], edx
-        call     FixedDiv16_004ab2a0
+        call     FixedDiv16
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_983c
@@ -117,7 +117,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      dword ptr [g_fightAxisNegX], eax
         mov      eax, dword ptr [g_currentNodeFlags]
         mov      dword ptr [g_eventQueueCurrent], eax
-        call     FixedDiv16_004ab2a0
+        call     FixedDiv16
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_983c
@@ -239,7 +239,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
     L_959e:
         mov      ecx, dword ptr [g_fightAxisPosX]
         mov      dword ptr [g_eventQueueCurrent], ecx
-        call     FixedDiv16_004ab2a0
+        call     FixedDiv16
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_983c

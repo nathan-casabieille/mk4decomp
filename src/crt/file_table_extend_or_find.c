@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004ccfa0 (360b crt) - _ioinit-style file-table extend / find.
- *   Enters crit-sec lock 0x12 (Lock_004c6f50(0x12)), then walks the
+ *   Enters crit-sec lock 0x12 (Lock(0x12)), then walks the
  *   array of 0x480-byte file-table blocks at g_arr_00fa0de0. For each
  *   block, scans 0x24-byte entries looking for one with bit-0 of [+4]
  *   set or count [+8] zero - lazy-initializes the InitializeCriticalSection
@@ -128,8 +128,8 @@ extern unsigned int g_arr_00fa0de0;
 extern unsigned int g_dispatchSave1469_00fa0ee0;
 extern void CritSecLazyEnter_004cd2b0(void);
 extern void LoadArgPushCall(void);
-extern void Lock_004c6f50(void);
-extern void TableLookupIatCall_004c6fd0(void);
+extern void Lock(void);
+extern void TableLookupIatCall(void);
 
 __declspec(naked) void FileTableExtendOrFind_004ccfa0(void) {
     __asm {
@@ -140,7 +140,7 @@ __declspec(naked) void FileTableExtendOrFind_004ccfa0(void) {
         push    edi
         push    0x12
         mov     dword ptr [esp + 0x14], 0xffffffff
-        call    Lock_004c6f50
+        call    Lock
         xor     edi, edi
         add     esp, 4
         mov     dword ptr [esp + 0x14], edi
@@ -160,7 +160,7 @@ __declspec(naked) void FileTableExtendOrFind_004ccfa0(void) {
         test    eax, eax
         jne     short L_fte_initDone
         push    0x11
-        call    Lock_004c6f50
+        call    Lock
         mov     eax, dword ptr [esi + 8]
         add     esp, 4
         test    eax, eax
@@ -171,7 +171,7 @@ __declspec(naked) void FileTableExtendOrFind_004ccfa0(void) {
         inc     dword ptr [esi + 8]
     L_fte_relCrit:
         push    0x11
-        call    TableLookupIatCall_004c6fd0
+        call    TableLookupIatCall
         add     esp, 4
     L_fte_initDone:
         lea     edi, [esi + 0xc]
@@ -245,7 +245,7 @@ __declspec(naked) void FileTableExtendOrFind_004ccfa0(void) {
         add     esp, 4
     L_fte_doneFound:
         push    0x12
-        call    TableLookupIatCall_004c6fd0
+        call    TableLookupIatCall
         mov     eax, dword ptr [esp + 0x14]
         add     esp, 4
         pop     edi

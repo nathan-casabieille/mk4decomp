@@ -108,12 +108,12 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-/* @addr 0x00426a30 (173b game) - mstack-push g_eventQueueWorkType, dispatch Mul10Index/MStackMagicModMul10_00424410,
+/* @addr 0x00426a30 (173b game) - mstack-push g_eventQueueWorkType, dispatch Mul10Index/MStackMagicModMul10,
  *   then two Mul10Tail double-pushes accumulating into g_walkCallback (via g_acc_00542078) and
  *   g_eventQueueCurrent (via g_eventQueueNotMask), with pause-aborts after each callee. mstack-pop g_eventQueueWorkType.
  */
-extern void MStackMagicModMul10_00424410(void);
-extern void ModMagicMul10Index_00424350(void);
+extern void MStackMagicModMul10(void);
+extern void ModMagicMul10Index(void);
 
 extern unsigned int g_matrixStack_arr;
 
@@ -124,7 +124,7 @@ void Chain2CallMul10Accum_00426a30(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], ecx
-        call    ModMagicMul10Index_00424350
+        call    ModMagicMul10Index
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -135,7 +135,7 @@ void Chain2CallMul10Accum_00426a30(void) {
         _emit   00h
         mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [g_eventQueueCurrent], edx
-        call    MStackMagicModMul10_00424410
+        call    MStackMagicModMul10
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

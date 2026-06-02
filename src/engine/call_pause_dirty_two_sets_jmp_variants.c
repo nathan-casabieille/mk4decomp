@@ -20,10 +20,10 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     +0x50
  *   ret
  */
-extern void MStackPush2ChainSwap_0048f090(void);
+extern void MStackPush2ChainSwap(void);
 extern void PushCallSignClampDualStore_0046fc60(void);
 void CallPauseDirtyTwoSetsJmp_0046fbe0(void) {
-    MStackPush2ChainSwap_0048f090();
+    MStackPush2ChainSwap();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))0x0e14;
     if ((g_xformDirtyFlags & 1) == 0) {
@@ -33,10 +33,10 @@ void CallPauseDirtyTwoSetsJmp_0046fbe0(void) {
 }
 
 /* @addr 0x0046fc20 (49b): same as 0x0046fbe0 with constants swapped */
-extern void MStackPush2ChainSwap_0048f090(void);
+extern void MStackPush2ChainSwap(void);
 extern void PushCallSignClampDualStore_0046fc60(void);
 void CallPauseDirtyTwoSetsJmp_0046fc20(void) {
-    MStackPush2ChainSwap_0048f090();
+    MStackPush2ChainSwap();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))0xfffff1ec;
     if ((g_xformDirtyFlags & 1) == 0) {

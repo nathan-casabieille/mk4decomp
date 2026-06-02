@@ -109,14 +109,14 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void ArgSarStoreJmp(void);
-extern void ArgScaledChain_004949b0(void);
+extern void ArgScaledChain(void);
 extern void DirtyGuardLitOrJmp_00496940(void);
 extern void InstallSelfMStackPush_004968a0(void);
 extern void ScaledInit_0048d490(void);
 extern void ScaledLoadIncJmp_00429840(void);
 extern void ScaledLookupGuardJmpIndirect(void);
 extern void StreamInitCountdownBody(void);
-extern void ThresholdSetMatchDispatch_0046dc10(void);
+extern void ThresholdSetMatchDispatch(void);
 
 __declspec(naked) void FivePackedSubChainBigEntry_004966d0(void)
 {
@@ -133,7 +133,7 @@ __declspec(naked) void FivePackedSubChainBigEntry_004966d0(void)
         test    eax, eax
         jne     short L_fpscb_sub1_ret
         push    0x4f1738
-        call    ArgScaledChain_004949b0
+        call    ArgScaledChain
         add     esp, 4
     L_fpscb_sub1_ret:
         ret
@@ -163,7 +163,7 @@ __declspec(naked) void FivePackedSubChainBigEntry_004966d0(void)
         nop
         nop
     L_fpscb_sub3:
-        call    ThresholdSetMatchDispatch_0046dc10
+        call    ThresholdSetMatchDispatch
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_fpscb_sub3_ret

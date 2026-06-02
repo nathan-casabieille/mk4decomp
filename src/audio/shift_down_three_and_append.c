@@ -22,7 +22,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [edx + 0x0c], eax
  *   ret
  */
-__declspec(naked) void ShiftDownThreeAndAppend_004aa3f0(void) {
+__declspec(naked) void ShiftDownThreeAndAppend(void) {
     __asm {
         mov     edx, dword ptr [esp + 4]
         push    esi

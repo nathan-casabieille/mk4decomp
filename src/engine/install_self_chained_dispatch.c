@@ -118,17 +118,17 @@ extern unsigned int g_fightAxisPosY;
  *     if g_walkCallback <= 0xcccc: push 0x004eb268, tail-call ArgSarStoreJmp; ret.
  *     else: call ScaledMove48to58; if pause? ret.
  *     call MStackPushSet0200_00490140; if pause? ret.
- *     scaledInit = 0x004ec0a8 >> 2; call GuardedDirtyXformFromTable_0048f6d0; if pause? ret.
+ *     scaledInit = 0x004ec0a8 >> 2; call GuardedDirtyXformFromTable; if pause? ret.
  *     else: install-self at [esi+8]=0x0046cb70; chain[+0x84]=1; g_pendingNodeType=0xc; pause=1; ret.
  */
 extern void ArgSarStoreJmp(void);
 extern void CopyJmp_0048ee80(void);
 extern void DirtyTestScaledCmpJmp_0046ea70(void);
-extern void GuardedDirtyXformFromTable_0048f6d0(void);
+extern void GuardedDirtyXformFromTable(void);
 extern void InstallSelfIndirectJmp(void);
 extern void MStackPushSet0200_00490140(void);
 extern void ScaledMove48to58(void);
-extern void TripleFieldCopyJmpHi_0048f740(void);
+extern void TripleFieldCopyJmpHi(void);
 
 __declspec(naked) void InstallSelfChainedDispatch_0046cb70(void) {
     __asm {
@@ -196,7 +196,7 @@ __declspec(naked) void InstallSelfChainedDispatch_0046cb70(void) {
         mov     edx, 0x004ec0a8
         shr     edx, 2
         mov     dword ptr [g_scaledInit_00542044], edx
-        call    GuardedDirtyXformFromTable_0048f6d0
+        call    GuardedDirtyXformFromTable
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

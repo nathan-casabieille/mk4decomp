@@ -20,12 +20,12 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  *   ret
  */
-extern void MStackMagicModMul10_00424410(void);
-extern void ModMagicMul10Index_00424350(void);
+extern void MStackMagicModMul10(void);
+extern void ModMagicMul10Index(void);
 void AddStoreCallPauseJmp_00431da0(void) {
     g_eventQueueWorkType = g_xformScratch2088 + 0x0001921f;
-    MStackMagicModMul10_00424410();
+    MStackMagicModMul10();
     if (g_framePauseFlag != 0) return;
     g_eventQueueCurrent = (unsigned int)g_walkCallback;
-    ModMagicMul10Index_00424350();
+    ModMagicMul10Index();
 }

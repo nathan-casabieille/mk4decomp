@@ -113,13 +113,13 @@ extern unsigned int g_fightAxisPosY;
  *   ebx=1. If g_eventQueueChild==0: call ScaledChain3c74; if pause ret.
  *     If g_walkCallback==0x2001: jmp bit2-loop block.
  *   Else (state!=0 OR not 0x2001): mstack-push g_eventQueueChild; load chain[g_eventQueueEnd*4+0] -> g_walkCallback.
- *     Call AtanDualDeltaThreshold_0049c870; if pause ret. Mstack-pop into g_eventQueueChild.
+ *     Call AtanDualDeltaThreshold; if pause ret. Mstack-pop into g_eventQueueChild.
  *     If bit0(0054208c): chain[g_eventQueueEnd*4+8] -> g_scaledInit; indirect call; pop; ret.
  *   bit2-loop: eax = [g_eventQueueEnd*4+4]; ecx=4; set bit2 of g_xformDirtyFlags.
  *     If eax!=0: toggle bit2 off; call eax; if pause ret.
  *     Install-self at entry; state=1; g_pendingNodeType=1; pause=1; pop esi/ebx; ret.
  */
-extern void AtanDualDeltaThreshold_0049c870(void);
+extern void AtanDualDeltaThreshold(void);
 extern void ScaledChain3c74(void);
 extern void TripleBlockChainDiffMStackThunks_0049ca10(void);
 
@@ -170,7 +170,7 @@ __declspec(naked) void InstallSelfBit2LoopIndirect_0049c710(void) {
         mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], ecx
-        call    AtanDualDeltaThreshold_0049c870
+        call    AtanDualDeltaThreshold
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

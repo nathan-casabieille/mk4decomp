@@ -124,7 +124,7 @@ extern void ThrowAnimSetupCluster_00484150(void);
  *     Else: push 0x004ee800; call ArgSarStoreJmp; pop; ret.
  */
 extern void ArgSarStoreJmp(void);
-extern void ByteWordTableTaggedDispatch_0048a050(void);
+extern void ByteWordTableTaggedDispatch(void);
 extern void CallPauseScaledStoreJmp_00428820(void);
 extern void CjInstallSelfRouter(void);
 extern void FiveCallGuardSetTail(void);
@@ -179,7 +179,7 @@ __declspec(naked) void InstallSelfMultiCascadeChainCopy_00484000(void) {
         ret
         _emit   90h
         mov     dword ptr [g_walkCallback], 3
-        call    ByteWordTableTaggedDispatch_0048a050
+        call    ByteWordTableTaggedDispatch
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

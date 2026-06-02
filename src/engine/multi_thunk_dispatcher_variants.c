@@ -121,18 +121,18 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_dispatchSave697_004ea000;
 extern void ArgSarStoreJmp(void);
-extern void ArgSar_Set0_Jmp_0049c6f0(void);
-extern void ArgScaledTestStore_00494140(void);
+extern void ArgSar_Set0_Jmp(void);
+extern void ArgScaledTestStore(void);
 extern void CallPauseCallTestStackPushJmp_00460c60(void);
 extern void CallPauseMStackPushSet0Jmp_0045fcf0(void);
 extern void CallSetPause(void);
 extern void CondPickDualStore(void);
 extern void DualCmpSwapStore(void);
-extern void DualScaledStoreZero_00491080(void);
+extern void DualScaledStoreZero(void);
 extern void GuardedDispatch_00460ca0(void);
 extern void GuardedDispatch_00460cd0(void);
 extern void MStackCall_00406740(void);
-extern void NotShrCmp1Store_00460d80(void);
+extern void NotShrCmp1Store(void);
 extern void PerSlotPhaseRouter_004605d0(void);
 extern void PerSlotPhaseRouter_00460770(void);
 extern void ScaledStackCallPause(void);
@@ -225,7 +225,7 @@ __declspec(naked) void MultiThunkDispatcher_00496fc0(void) {
         mov     dword ptr [ecx*4 + 0x74], edx
         mov     eax, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [g_cj_0054205c], eax
-        call    ArgSar_Set0_Jmp_0049c6f0
+        call    ArgSar_Set0_Jmp
         add     esp, 4
         ret
         _emit   90h
@@ -266,13 +266,13 @@ __declspec(naked) void MultiThunkDispatcher_00496fc0(void) {
 __declspec(naked) void MultiThunkDispatcher_00460470(void) {
     __asm {
         push    0x00542980
-        call    ArgScaledTestStore_00494140
+        call    ArgScaledTestStore
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     DualScaledStoreZero_00491080
+        jmp     DualScaledStoreZero
         ret
         _emit   90h
         _emit   90h
@@ -289,7 +289,7 @@ __declspec(naked) void MultiThunkDispatcher_00460470(void) {
         mov     eax, offset g_dispatchSave697_004ea000
         shr     eax, 2
         mov     dword ptr [g_eventQueueTotal], eax
-        call    NotShrCmp1Store_00460d80
+        call    NotShrCmp1Store
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

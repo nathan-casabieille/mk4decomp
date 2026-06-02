@@ -110,14 +110,14 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004be7a0 (85b engine.scenegraph) - wrapper that searches table;
  *   on hit: tail-call Audio_TimerTeardown.
- *   On miss + (short)arg <= 100: call Snd3DSourceCleanup_004c3ad0(arg+0x7d0, 0).
- *   On miss + > 100: call Snd3DSourceCleanup_004c3ad0(arg/10, 0) using 0x66666667 magic.
+ *   On miss + (short)arg <= 100: call Snd3DSourceCleanup(arg+0x7d0, 0).
+ *   On miss + > 100: call Snd3DSourceCleanup(arg/10, 0) using 0x66666667 magic.
  */
 extern void Audio_TimerTeardown_004ac5f0(void);
-extern void Snd3DSourceCleanup_004c3ad0(void);
+extern void Snd3DSourceCleanup(void);
 extern void TableSearch_004be760(void);
 
-__declspec(naked) void TableHitOrSchedule_004be7a0(void) {
+__declspec(naked) void TableHitOrSchedule(void) {
     __asm {
         push    esi
         mov     esi, dword ptr [esp + 8]
@@ -137,7 +137,7 @@ __declspec(naked) void TableHitOrSchedule_004be7a0(void) {
         add     edx, 0x7d0
         push    0
         push    edx
-        call    Snd3DSourceCleanup_004c3ad0
+        call    Snd3DSourceCleanup
         add     esp, 8
         pop     esi
         ret
@@ -150,7 +150,7 @@ __declspec(naked) void TableHitOrSchedule_004be7a0(void) {
         shr     eax, 0x1f
         add     edx, eax
         push    edx
-        call    Snd3DSourceCleanup_004c3ad0
+        call    Snd3DSourceCleanup
         add     esp, 8
         pop     esi
         ret

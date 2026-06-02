@@ -125,7 +125,7 @@ extern void EntryThunkBodyStateMachine(void);
 extern void InstallSelfIndirectJmp(void);
 extern void MStackPushDispatchBitGate(void);
 extern void ScaledIndexConditionalAdd(void);
-extern void TripleScaledChainStore_004908f0(void);
+extern void TripleScaledChainStore(void);
 
 __declspec(naked) void ThrowGrabPoseCopyCluster_0047f4e0(void)
 {
@@ -137,7 +137,7 @@ __declspec(naked) void ThrowGrabPoseCopyCluster_0047f4e0(void)
         test     eax, eax
         jne      short L_f529
         push     OFFSET g_dispatchSave744_004ed778
-        call     TripleScaledChainStore_004908f0
+        call     TripleScaledChainStore
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         test     eax, eax

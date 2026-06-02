@@ -109,10 +109,10 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void ScaledAndAlfe(void);
-extern void ThresholdSetMatchDispatch_0046dc10(void);
+extern void ThresholdSetMatchDispatch(void);
 
 /* @addr 0x0046dd00 (142b game) - 4-entry-point push+ArgSarStoreJmp chain.
- *   Block A: call ScaledAndAlfe; if !pause: call ThresholdSetMatchDispatch_0046dc10; if !pause: chain[*4+0x74]=0x10b,
+ *   Block A: call ScaledAndAlfe; if !pause: call ThresholdSetMatchDispatch; if !pause: chain[*4+0x74]=0x10b,
  *     chain[*4+0x68]=0x101 via baseSel*4 indirection, push 0x004eb2d8 call ArgSarStoreJmp; ret.
  *   Blocks B,C,D (+0x60/+0x70/+0x80): push 0x004eb318/0x004eb348/0x004eb398; call ArgSarStoreJmp; ret.
  */
@@ -125,7 +125,7 @@ void QuadEntryChainPush_0046dd00(void) {
         test    eax, eax
         _emit   75h
         _emit   42h
-        call    ThresholdSetMatchDispatch_0046dc10
+        call    ThresholdSetMatchDispatch
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

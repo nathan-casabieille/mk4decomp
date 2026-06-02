@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
  *   store eax → [g_fightGroupHead*4+0x24]; ret.
  */
 extern unsigned int g_audioVoiceTrioBase_0050a0f0;
-void ScaledChainStore24_004a7d40(void) {
+void ScaledChainStore24(void) {
     unsigned int p;
     unsigned int sc;
     int v;

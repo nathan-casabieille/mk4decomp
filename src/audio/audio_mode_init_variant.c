@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *   sets up both walk/wt scaled pairs, calls DualScaledStoreConst
  *   twice (one for each pair), then ClearTwoCallSetStore +
  *   SixCallSeqPushImm with constants; on pause clear, tail-jmp
- *   InstallSelfTableWalk_004200d0.
+ *   InstallSelfTableWalk.
  */
 extern unsigned int g_active_0053a408;
 extern unsigned int g_player1State;
@@ -125,15 +125,15 @@ void AudioModeInitVariant_004a2690(void) {
     g_xformDirtyFlags &= 0xfffffffeu;
     g_currentNodeIdx = (unsigned int)&g_active_0053a408 >> 2;
     g_xformEntityIdx = (unsigned int)&g_player1State >> 2;
-    DualScaledStoreConst_004a22c0();
+    DualScaledStoreConst();
     g_currentNodeIdx = (unsigned int)&g_active_00537e88 >> 2;
     g_xformEntityIdx = (unsigned int)&g_player2State >> 2;
-    DualScaledStoreConst_004a22c0();
+    DualScaledStoreConst();
     ClearTwoCallSetStore_004a2270();
     g_dlMode = 1;
-    SixCallSeqPushImm_004a1d80();
+    SixCallSeqPushImm();
     g_eventQueueWorkType = 0;
     Push16Call();
     if (g_framePauseFlag != 0) return;
-    InstallSelfTableWalk_004200d0();
+    InstallSelfTableWalk();
 }

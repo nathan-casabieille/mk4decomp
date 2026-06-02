@@ -111,9 +111,9 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_eq_00542098;
 extern void DualGatedStateYield(void);
 extern void Set1dCallSet16Jmp_004809b0(void);
-extern void ScaledChain3c7c_0048f930(void);
-extern void PunchAnimCluster_00496d80(void);
-extern void NotMaskStorePair_0045f440(void);
+extern void ScaledChain3c7c(void);
+extern void PunchAnimCluster(void);
+extern void NotMaskStorePair(void);
 extern void Install3WayChainCounter_004809e0(void);
 extern void FiveCallGuardSetTail(void);
 
@@ -124,10 +124,10 @@ extern void FiveCallGuardSetTail(void);
  *     and update g_eq_00542098 (sete on dec result), if <= 0 sets it
  *     to 0xc. If g_eq_00542098 != 0 calls Set1dCallSet16Jmp_004809b0.
  *     If g_xformScratch2088 == 1 tail-jmp Install3WayChainCounter_004809e0.
- *     Else calls ScaledChain3c7c_0048f930. If g_walkCallback >= 3
+ *     Else calls ScaledChain3c7c. If g_walkCallback >= 3
  *     tail-jmp Install3WayChainCounter; else sets g_walkCallback=0xb333
  *     and calls EsiEdiAliasDualMul10, sets g_xformScratch2088=0x9999,
- *     calls PunchAnimCluster_00496d80, then NotMaskStorePair_0045f440. Selects
+ *     calls PunchAnimCluster, then NotMaskStorePair. Selects
  *     g_eventQueueWorkType = 1 (if 0x54205c == g_player1NodeIdx) or 0x10,
  *     AND's with g_eventQueueCurrent → g_xformScratch94; if zero tail-jmp
  *     FiveCallGuardSetTail; else continues loop iteration by
@@ -175,7 +175,7 @@ __declspec(naked) void CountdownInstallSelfMultiTail_00480840(void) {
     L_cis_skipCall1:
         cmp     dword ptr [g_xformScratch2088], ebx
         je      L_cis_call9e0
-        call    ScaledChain3c7c_0048f930
+        call    ScaledChain3c7c
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_cis_done
         cmp     dword ptr [g_walkCallback], 3
@@ -185,10 +185,10 @@ __declspec(naked) void CountdownInstallSelfMultiTail_00480840(void) {
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_cis_done
         mov     dword ptr [g_xformScratch2088], ebp
-        call    PunchAnimCluster_00496d80
+        call    PunchAnimCluster
         cmp     dword ptr [g_framePauseFlag], edi
         jne     short L_cis_done
-        call    NotMaskStorePair_0045f440
+        call    NotMaskStorePair
         cmp     dword ptr [g_framePauseFlag], edi
         jne     short L_cis_done
         mov     ecx, dword ptr [g_fightGroupHead]

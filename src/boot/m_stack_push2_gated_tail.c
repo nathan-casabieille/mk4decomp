@@ -109,14 +109,14 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00409420 (167b boot) - mstack-push 2 (g_xformEntityIdx, g_pendingNodeType);
- *   call BootStateTriple_00408d30; pause? ret;
+ *   call BootStateTriple; pause? ret;
  *   g_pendingNodeType = g_xformEntityIdx; mstack-push g_fightGroupHead;
  *   g_xformEntityIdx = chain[g_scaledInit+0x24];
  *   call MStackPushDispatchBitGate; pause? ret;
  *   mstack-pop into g_fightGroupHead; if (g_xformDirtyFlags & 4) ret;
  *   jmp MStackBracket2_StateAdvance6_004094d0.
  */
-extern void BootStateTriple_00408d30(void);
+extern void BootStateTriple(void);
 extern void MStackBracket2_StateAdvance6_004094d0(void);
 extern void MStackPushDispatchBitGate(void);
 
@@ -135,7 +135,7 @@ __declspec(naked) void MStackPush2GatedTail_00409420(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], edx
-        call    BootStateTriple_00408d30
+        call    BootStateTriple
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

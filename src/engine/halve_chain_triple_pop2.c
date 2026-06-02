@@ -111,14 +111,14 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x004740d0 (152b game) - call helper; if not dirty bit 2 set:
  *   halve chain[cj].slot6c/70/74 (sar 1). Then mstack pop 2 into cj and scaledInit.
  */
-extern void PreFightInstallCluster_00474390(void);
+extern void PreFightInstallCluster(void);
 
 extern unsigned int g_chain_arr_4348f0;
 extern unsigned int g_matrixStack_arr;
 
 void HalveChainTriplePop2_004740d0(void) {
     __asm {
-        call    PreFightInstallCluster_00474390
+        call    PreFightInstallCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

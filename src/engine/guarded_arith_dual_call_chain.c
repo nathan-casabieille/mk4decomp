@@ -110,8 +110,8 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00431e90 (170b) - sub-from-const + 2x guarded calls + neg-sub +
  *   shl 3 mul + chain[+0x54,+0x5c,+0x64] stores. */
-extern void MStackMagicModMul10_00424410(void);
-extern void ModMagicMul10Index_00424350(void);
+extern void MStackMagicModMul10(void);
+extern void ModMagicMul10Index(void);
 
 void GuardedArithDualCallChain_00431e90(void) {
     __asm {
@@ -120,7 +120,7 @@ void GuardedArithDualCallChain_00431e90(void) {
         sub     eax, ecx
         mov     dword ptr [g_xformScratch2088], eax
         mov     dword ptr [g_eventQueueWorkType], eax
-        call    ModMagicMul10Index_00424350
+        call    ModMagicMul10Index
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -131,7 +131,7 @@ void GuardedArithDualCallChain_00431e90(void) {
         _emit   00h
         mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [g_acc_00542078], eax
-        call    MStackMagicModMul10_00424410
+        call    MStackMagicModMul10
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

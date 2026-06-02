@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00477920 (165b game) - poll-then-init pattern:
  *   poll: SaveCallRestore(0x22); SaveCallRestoreOrXor(0x22); while (state & 4): retry.
- *   walkCallback = max(g_gameCountdown, 0); call StoreIncrMStackPush6_004275c0; pause? ret.
+ *   walkCallback = max(g_gameCountdown, 0); call StoreIncrMStackPush6; pause? ret.
  *   set fixed state (walkCallback=2, g_eventQueueWorkType=0x22, g_eventQueueCurrent=2,
  *   g_acc_00542078=0, g_eventQueueNotMask=0xff960000, g_currentNodeFlags=2);
  *   call DispatcherComplex181; pause? ret; call RoundCleanupCluster_00427690.
@@ -120,7 +120,7 @@ extern void DispatcherComplex181_004263d0(void);
 extern void RoundCleanupCluster_00427690(void);
 extern void SaveCallRestoreOrXor(void);
 extern void SaveCallRestore(void);
-extern void StoreIncrMStackPush6_004275c0(void);
+extern void StoreIncrMStackPush6(void);
 
 __declspec(naked) void PollThenInit_00477920(void) {
     __asm {
@@ -155,7 +155,7 @@ loopPoll:
         _emit   7dh
         _emit   0ah
         mov     dword ptr [g_walkCallback], 0
-        call    StoreIncrMStackPush6_004275c0
+        call    StoreIncrMStackPush6
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

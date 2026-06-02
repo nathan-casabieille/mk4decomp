@@ -132,7 +132,7 @@ extern unsigned int g_dispatchSave1559_00ab4d9c;
 extern unsigned int g_dispatchSave1576_00ab4e60;
 extern void AdvanceTriStripRing(void);
 extern void Helper_DrawCursor(void);
-extern void MaxOfThree_004b3d90(void);
+extern void MaxOfThree(void);
 extern void ProjectTwoVertices(void);
 extern void ProjectVertex(void);
 
@@ -270,7 +270,7 @@ __declspec(naked) void TristripBatchEmit2_004bb930(void)
         shl      edx, 0xa
         or       ecx, edx
         mov      word ptr [esi + 0x1a], cx
-        call     MaxOfThree_004b3d90
+        call     MaxOfThree
         add      eax, 0x7d0
         mov      dx, word ptr [esi + 0x1a]
         mov      word ptr [esi + 0x12], ax

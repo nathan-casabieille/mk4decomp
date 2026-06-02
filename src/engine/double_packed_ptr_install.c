@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  *   chain[+0x54] = 0x00810000; chain[+0x30] = 0x1f;
  *   call PushSetCallPop; pause? ret; call RegistryPushBindPop;
  */
-extern void RegistryPushBindPop_00403c20(void);
+extern void RegistryPushBindPop(void);
 
 __declspec(naked) void DoublePackedPtrInstall_00458ba0(void) {
     __asm {
@@ -151,7 +151,7 @@ __declspec(naked) void DoublePackedPtrInstall_00458ba0(void) {
         test    eax, eax
         _emit   75h
         _emit   60h
-        call    RegistryPushBindPop_00403c20
+        call    RegistryPushBindPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -174,7 +174,7 @@ __declspec(naked) void DoublePackedPtrInstall_00458ba0(void) {
         test    eax, eax
         _emit   75h
         _emit   05h
-        call    RegistryPushBindPop_00403c20
+        call    RegistryPushBindPop
         pop     esi
         ret
     }

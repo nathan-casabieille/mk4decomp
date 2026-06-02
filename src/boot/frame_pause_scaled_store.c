@@ -114,8 +114,8 @@ extern unsigned int g_chain_disp_64_49b7c0;
 extern unsigned int g_arr_next_49b7c0;
 extern unsigned int g_chain_disp_1c_49b7c0;
 extern unsigned int g_chain_disp_38_49b7c0;
-extern void FramePauseScaledStore_00406c10(void);
-extern void MStackPush2ChainPrepend_00409970(void);
+extern void FramePauseScaledStore(void);
+extern void MStackPush2ChainPrepend(void);
 
 /* @addr 0x0049b7c0 (143b game) - walk linked chain until end:
  *   g_xformEntityIdx = (0x50b4b4 >> 2); call F; pause? ret.
@@ -132,7 +132,7 @@ __declspec(naked) void ChainWalkInstall(void) {
         mov     eax, offset g_framePauseArrBase_0050b4b4
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
-        call    FramePauseScaledStore_00406c10
+        call    FramePauseScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -164,7 +164,7 @@ walkNext:
         mov     dword ptr [g_eventQueueCurrent], eax
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     [edx*4 + g_chain_disp_38_49b7c0], eax
-        jmp     MStackPush2ChainPrepend_00409970
+        jmp     MStackPush2ChainPrepend
         ret
     }
 }

@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void ArgSar_Set0_Jmp_0049c6f0(void);
-extern void PushChainAddCallPop_00493c80(void);
+extern void ArgSar_Set0_Jmp(void);
+extern void PushChainAddCallPop(void);
 extern void Vec2SumMul10ChainCompute(void);
 extern void ScaledIndirectJmp_0049c850(void);
 extern void MStackCall_00406740(void);
@@ -124,5 +124,5 @@ extern unsigned int g_dispatchSave720_004f21c0;
 
 /* h1 @ 0x00498720 (16b): bare event 004f21c0 forwarder. */
 void QuadSubVec2GateInstallSelfPair_00498720(void) {
-    ((void (*)(void *))ArgSar_Set0_Jmp_0049c6f0)(&g_dispatchSave720_004f21c0);
+    ((void (*)(void *))ArgSar_Set0_Jmp)(&g_dispatchSave720_004f21c0);
 }

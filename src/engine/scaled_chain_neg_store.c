@@ -21,7 +21,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void DualFieldAddSubStore(void);
-void ScaledChainNegStore_00470310(void) {
+void ScaledChainNegStore(void) {
     unsigned int s;
     unsigned int v;
     s = ((ScenegraphNode *)(g_fightGroupHead * 4))->child_chain;

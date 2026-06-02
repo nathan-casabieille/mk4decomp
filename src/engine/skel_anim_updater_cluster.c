@@ -116,7 +116,7 @@ extern void CallSetPause(void);
 extern void MStackCall_004062f0(void);
 extern void MStackCall_00406740(void);
 extern void MStackPushDispatchBitGate(void);
-extern void ScaledChainOr8_00404e50(void);
+extern void ScaledChainOr8(void);
 extern void SetJmp_00405420(void);
 extern void ZeroThreeFields_0040a8b0(void);
 
@@ -331,7 +331,7 @@ __declspec(naked) void Phase4DualHelperTrampoline_00412900(void)
         mov     eax, 0xFFFFF334
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x58], eax
-        call    ScaledChainOr8_00404e50
+        call    ScaledChainOr8
         mov     edx, dword ptr [g_xformEntityIdx]
         mov     eax, 0x28F
         mov     dword ptr [g_walkCallback], eax

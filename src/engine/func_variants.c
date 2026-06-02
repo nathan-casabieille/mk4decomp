@@ -41,11 +41,11 @@ extern unsigned int g_dispatchSave938_004e6de0;
 extern unsigned int g_dispatchSave939_004e6e38;
 extern unsigned int g_dispatchSave940_004e6e90;
 extern unsigned int g_dispatchSave941_004e6ee8;
-extern void HitReactionStateCluster_004335f0(void);
+extern void HitReactionStateCluster(void);
 extern void DualCallPauseJmpDual_00439190(void);
 extern void AllocSlotPushTripleGlobals(void);
 extern void ArgSarStoreJmp(void);
-extern void ArgSar_Set0_Jmp_0049c6f0(void);
+extern void ArgSar_Set0_Jmp(void);
 extern void AudioVolumeRescale(void);
 extern void CallSetPause(void);
 extern void ConstStoreCallJmp_00448fa0(void);
@@ -80,9 +80,9 @@ extern void Phase3DispatchScaleInstallSelf_004125e0(void);
 extern void Push70CallScaleArith2_00457b40(void);
 extern void RoundCleanupCluster_00427690(void);
 extern void ScaledZero44(void);
-extern void Set2CallIncJmp_00472860(void);
+extern void Set2CallIncJmp(void);
 extern void SlideAttackEventCluster_00498900(void);
-extern void StoreIncrMStackPush6_004275c0(void);
+extern void StoreIncrMStackPush6(void);
 extern void StoreLoadJmp(void);
 extern void StoreTwoCall(void);
 extern void StreamChainStringInstall(void);
@@ -98,7 +98,7 @@ extern void EsiInstallChainCallIndirect_00428680(void);
 extern void IterStepDualStore(void);
 extern void PendingMatch_00459510(void);
 extern void Phase3IndirectInstallChain_0045a010(void);
-extern void PushChainAddCallPop_00493c80(void);
+extern void PushChainAddCallPop(void);
 
 __declspec(naked) void func_00428390(void) {
     __asm {
@@ -114,7 +114,7 @@ __declspec(naked) void func_00428390(void) {
  * the original packed slot. Reached via OFFSET func_004391b0 references
  * (e.g. from misc_matchesF.c). */
 void func_004391b0(void) {
-    DualScaledInitClear_00433c10();
+    DualScaledInitClear();
     if (g_framePauseFlag != 0) return;
     FiveCallGuardSetTail();
 }
@@ -132,14 +132,14 @@ void func_00497b40(void) {
 }
 
 /* @addr 0x00436270 (47b): call Cmp2CallDirtyCall; if non-zero ret;
- * else mstack-push HitReactionStateCluster_004335f0, set walkCallback=2,
+ * else mstack-push HitReactionStateCluster, set walkCallback=2,
  * tail-jmp MstackPopScaledChainPlusThunks. Orphan sub-entry. */
 void func_00436270(void) {
     if (Cmp2CallDirtyCall() != 0) return;
     g_walkCallback = (void (*)(void))2;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) =
-        (unsigned int)&HitReactionStateCluster_004335f0;
+        (unsigned int)&HitReactionStateCluster;
     MstackPopScaledChainPlusThunks();
 }
 
@@ -289,13 +289,13 @@ void func_00439fa0(void) {
         g_xformDirtyFlags &= 0xfffffffeu;
         return;
     }
-    IdCascadeBitSet_00439760();
+    IdCascadeBitSet();
 }
 
 /* h2 @ 0x00498730 (64b): threshold check + tail-jmp
  * ScaledIndirectJmp_0049c850. */
 void func_00498730(void) {
-    PushChainAddCallPop_00493c80();
+    PushChainAddCallPop();
     if (g_framePauseFlag) return;
     Vec2SumMul10ChainCompute();
     if (g_framePauseFlag) return;
@@ -497,7 +497,7 @@ __declspec(naked) void func_00498980(void)
         mov      dword ptr [ecx*4 + 0x74], edx
         mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_fightGroupHead], eax
-        call     ArgSar_Set0_Jmp_0049c6f0
+        call     ArgSar_Set0_Jmp
         add      esp, 4
         pop      esi
     L_8ae4:
@@ -586,7 +586,7 @@ void func_00498c10(void) {
     if (g_framePauseFlag) return;
     MstackPushPackChainInit_00498c40();
     if (g_framePauseFlag) return;
-    ((void (*)(void *))ArgSar_Set0_Jmp_0049c6f0)(&g_dispatchSave798_004f2298);
+    ((void (*)(void *))ArgSar_Set0_Jmp)(&g_dispatchSave798_004f2298);
 }
 
 /* h3 @ 0x0047c3c0 (48b): chained event 004ed2f0 -> 004ed2f8 forwarder. */
@@ -886,7 +886,7 @@ void func_0044f3d0(void) {
     g_xformScratch2088 = 0x2666;
     v >>= 2;
     g_eventQueueIdx = v;
-    DualSubInstallChain_0044f4b0();
+    DualSubInstallChain();
 }
 
 /* @addr 0x0044f3f0 (28b) */
@@ -895,7 +895,7 @@ void func_0044f3f0(void) {
     g_xformScratch2088 = 0x4ccc;
     v >>= 2;
     g_eventQueueIdx = v;
-    DualSubInstallChain_0044f4b0();
+    DualSubInstallChain();
 }
 
 /* @addr 0x0044f410 (28b) */
@@ -904,7 +904,7 @@ void func_0044f410(void) {
     g_xformScratch2088 = 0x4ccc;
     v >>= 2;
     g_eventQueueIdx = v;
-    DualSubInstallChain_0044f4b0();
+    DualSubInstallChain();
 }
 
 /* @addr 0x0044f430 (28b) */
@@ -913,7 +913,7 @@ void func_0044f430(void) {
     g_xformScratch2088 = 0x4ccc;
     v >>= 2;
     g_eventQueueIdx = v;
-    DualSubInstallChain_0044f4b0();
+    DualSubInstallChain();
 }
 
 /* @addr 0x0044f450 (28b) */
@@ -922,7 +922,7 @@ void func_0044f450(void) {
     g_xformScratch2088 = 0x4ccc;
     v >>= 2;
     g_eventQueueIdx = v;
-    DualSubInstallChain_0044f4b0();
+    DualSubInstallChain();
 }
 
 /* @addr 0x0044f470 (28b) */
@@ -931,7 +931,7 @@ void func_0044f470(void) {
     g_xformScratch2088 = 0x4ccc;
     v >>= 2;
     g_eventQueueIdx = v;
-    DualSubInstallChain_0044f4b0();
+    DualSubInstallChain();
 }
 
 /* @addr 0x0044f490 (28b) */
@@ -940,7 +940,7 @@ void func_0044f490(void) {
     g_xformScratch2088 = 0x1999;
     v >>= 2;
     g_eventQueueIdx = v;
-    DualSubInstallChain_0044f4b0();
+    DualSubInstallChain();
 }
 
 /* @addr 0x00432710 (1973b): entries B+C of the original packed slot.
@@ -989,7 +989,7 @@ __declspec(naked) void func_00432710(void) {
         mov      eax, dword ptr [eax*4]
         add      ecx, eax
         mov      dword ptr [g_currentNodeFlags], ecx
-        call     StoreIncrMStackPush6_004275c0
+        call     StoreIncrMStackPush6
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
@@ -1044,7 +1044,7 @@ __declspec(naked) void func_00432710(void) {
         mov      dword ptr [g_currentNodeFlags], eax
         sar      eax, 0x10
         mov      dword ptr [g_walkCallback], eax
-        call     StoreIncrMStackPush6_004275c0
+        call     StoreIncrMStackPush6
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
@@ -1162,7 +1162,7 @@ __declspec(naked) void func_00432710(void) {
         mov      eax, dword ptr [eax*4]
         add      ecx, eax
         mov      dword ptr [g_currentNodeFlags], ecx
-        call     StoreIncrMStackPush6_004275c0
+        call     StoreIncrMStackPush6
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
@@ -1244,7 +1244,7 @@ __declspec(naked) void func_00432710(void) {
         mov      dword ptr [g_currentNodeFlags], eax
         sar      eax, 0x10
         mov      dword ptr [g_walkCallback], eax
-        call     StoreIncrMStackPush6_004275c0
+        call     StoreIncrMStackPush6
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
@@ -1411,7 +1411,7 @@ __declspec(naked) void func_00448990(void) {
         je       L_8a7f
         dec      eax
         je       L_89fc
-        call     Set2CallIncJmp_00472860
+        call     Set2CallIncJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8b40

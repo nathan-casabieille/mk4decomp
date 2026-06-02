@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_pendingMatchVar3_004d5320;
 extern void RandSarMod0xFFFSub400_0041f1f0(void);
 extern void RandSarMod0xFFF_0041f230(void);
-extern void WorldCellSetupCluster_0042b000(void);
+extern void WorldCellSetupCluster(void);
 
 void RandPushTrigPair_0043f120(void) {
     __asm {
@@ -121,7 +121,7 @@ void RandPushTrigPair_0043f120(void) {
         add     eax, 0xa666
         push    eax
         mov     dword ptr [g_eventQueueWorkType], eax
-        call    WorldCellSetupCluster_0042b000
+        call    WorldCellSetupCluster
         add     esp, 4
         mov     dword ptr [g_eventQueueWorkType], eax
         call    RandSarMod0xFFF_0041f230
@@ -139,7 +139,7 @@ void RandPushTrigPair_0043f120(void) {
         add     eax, 0xa666
         push    eax
         mov     dword ptr [g_eventQueueWorkType], eax
-        call    WorldCellSetupCluster_0042b000
+        call    WorldCellSetupCluster
         add     esp, 4
         mov     dword ptr [g_eventQueueWorkType], eax
         call    RandSarMod0xFFFSub400_0041f1f0
@@ -200,7 +200,7 @@ void RandPushTrigPair_0043f120(void) {
         mov     dword ptr [g_walkCallback], eax
     L_rptp_pos2:
         push    eax
-        call    WorldCellSetupCluster_0042b000
+        call    WorldCellSetupCluster
         mov     edx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_walkCallback], eax
         add     esp, 4

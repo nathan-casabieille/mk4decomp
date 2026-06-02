@@ -118,9 +118,9 @@ extern void Cmp3JmpOrPushCall_004338e0(void);
 extern void GuardedPushCall_004338c0(void);
 extern void GuardedPushCall_004338a0(void);
 extern void ScaledLoadInstallOrCall_00433990(void);
-extern void PackedAdvanceCallTailJmp_004392c0(void);
-extern void CallPauseInc_004ab670(void);
-extern void CmpJmpConstStoreJmp_004389e0(void);
+extern void PackedAdvanceCallTailJmp(void);
+extern void CallPauseInc(void);
+extern void CmpJmpConstStoreJmp(void);
 extern void InstallSelfCountdownCascade_00439fd0(void);
 extern void MultiBranchStateFilter_00439a40(void);
 extern void RoundReadyFsmCluster_0043a080(void);
@@ -132,7 +132,7 @@ extern unsigned int g_dispatchState;
 extern unsigned int g_dispatchSave681_004e49fc;
 extern unsigned int g_dispatchSave680_004e4460;
 
-__declspec(naked) void HitReactionStateCluster_004335f0(void)
+__declspec(naked) void HitReactionStateCluster(void)
 {
     __asm {
         /* === Helper 1 (0x4335f0): hit-launch dispatcher === */
@@ -218,7 +218,7 @@ __declspec(naked) void HitReactionStateCluster_004335f0(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3897
         push     OFFSET g_dispatchSave680_004e4460
-        call     PackedAdvanceCallTailJmp_004392c0
+        call     PackedAdvanceCallTailJmp
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         pop      edi
@@ -226,7 +226,7 @@ __declspec(naked) void HitReactionStateCluster_004335f0(void)
         ret
     L_36f2:
         mov      dword ptr [g_walkCallback], 0xb4
-        call     CallPauseInc_004ab670
+        call     CallPauseInc
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3897
         mov      eax, dword ptr [g_walkCallback]
@@ -247,7 +247,7 @@ __declspec(naked) void HitReactionStateCluster_004335f0(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edi
-        call     CmpJmpConstStoreJmp_004389e0
+        call     CmpJmpConstStoreJmp
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi

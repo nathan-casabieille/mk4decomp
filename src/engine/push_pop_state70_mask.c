@@ -13,7 +13,7 @@ extern unsigned int g_phaseTimer;
  *   does (state_004d50a8 << 16) | (state_004d50a4 & 0xffff);
  *   stores to current and ~that to walk; restores current.
  */
-void PushPopState70Mask_00490650(void) {
+void PushPopState70Mask(void) {
     unsigned int hi;
     unsigned int packed;
     g_matrixStackTop++;

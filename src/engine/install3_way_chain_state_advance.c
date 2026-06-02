@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void ScaledLoadJmp_24_00429790(void);
+extern void ScaledLoadJmp_24(void);
 extern void ScaledChainJmp_004298e0(void);
 extern void Install3WayChainStateAdvance_00429130(void);
 
@@ -116,7 +116,7 @@ extern void Install3WayChainStateAdvance_00429130(void);
  *   esi = base*4; ebx = 1; flag = [esi+0x84]; clear.
  *   if (flag == 0): install-path.
  *   else: if (208c & 1): call ScaledChainJmp_004298e0; pause? ret. (skip first call)
- *     call ScaledLoadJmp_24_00429790; pause? ret.
+ *     call ScaledLoadJmp_24; pause? ret.
  *     if (208c & 1): goto install-path; (skip second call)
  *     call ScaledChainJmp; pause? ret.
  *     call StackPopDispatchTagged; ret.
@@ -145,7 +145,7 @@ __declspec(naked) void InstallSelfBitGated_00428eb0(void) {
         _emit   00h
         _emit   75h
         _emit   16h
-        call    ScaledLoadJmp_24_00429790
+        call    ScaledLoadJmp_24
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

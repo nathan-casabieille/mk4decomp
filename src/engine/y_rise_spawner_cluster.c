@@ -120,7 +120,7 @@ extern void MStackPushComplexCallPop_00406430(void);
 extern void RoundCleanupCluster_00427690(void);
 extern void SaveCallRestoreOrXor(void);
 extern void SaveCallRestore(void);
-extern void StoreIncrMStackPush6_004275c0(void);
+extern void StoreIncrMStackPush6(void);
 
 void YRiseSpawnerCluster_00477bd0(void) {
     __asm {
@@ -158,7 +158,7 @@ void YRiseSpawnerCluster_00477bd0(void) {
         cmp      eax, 0x63
         mov      dword ptr [g_walkCallback], eax
         ja       short L_7ce0
-        call     StoreIncrMStackPush6_004275c0
+        call     StoreIncrMStackPush6
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7e12
@@ -184,7 +184,7 @@ void YRiseSpawnerCluster_00477bd0(void) {
         mov      dword ptr [eax*4 + 0x54], ecx
         mov      ecx, dword ptr [g_player2State]
         mov      dword ptr [g_walkCallback], ecx
-        call     StoreIncrMStackPush6_004275c0
+        call     StoreIncrMStackPush6
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7e12

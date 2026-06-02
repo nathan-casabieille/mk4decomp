@@ -114,14 +114,14 @@ extern unsigned int g_fightAxisPosY;
  *   if eax != 0: dec g_eventQueueChild;
  *     if !=0 after dec: pop esi; ret;
  *     else: call StackPopDispatchTagged; pop esi; ret;
- *   else: call CallPauseScaledDecJmp_00429750; if pause: ret;
+ *   else: call CallPauseScaledDecJmp; if pause: ret;
  *   cl = byte [g_xformDirtyFlags]; eax = 1; test al,cl;
  *   if zero: install_self;
  *     call ScaledInitOrSelfPtr_00429680; pop esi; ret;
  *   install_self: [esi+8]=0x4293d0; [esi+0x84]=1;
  *                g_pendingNodeType=1; g_framePauseFlag=1; pop esi; ret.
  */
-extern void CallPauseScaledDecJmp_00429750(void);
+extern void CallPauseScaledDecJmp(void);
 extern void CopyJmp_00406ba0(void);
 extern void GuardedSeq_004297b0(void);
 extern void ScaledInitOrSelfPtr_00429680(void);
@@ -144,7 +144,7 @@ __declspec(naked) void EsiInstallDecCallChain_004293d0(void) {
         call    StackPopDispatchTagged
         pop     esi
         ret
-        call    CallPauseScaledDecJmp_00429750
+        call    CallPauseScaledDecJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

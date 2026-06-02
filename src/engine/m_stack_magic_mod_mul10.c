@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void ModMagicMul10Index_00424350(void);
-extern void MStackMagicModMul10_00424410(void);
+extern void ModMagicMul10Index(void);
+extern void MStackMagicModMul10(void);
 extern void TripleFieldCopyLo_0048f880(void);
 extern void TripleFieldCopyJmpLo_0048f810(void);
 
@@ -123,7 +123,7 @@ void GuardedArithDualCallChain_00431e90(void) {
         sub     eax, ecx
         mov     dword ptr [g_xformScratch2088], eax
         mov     dword ptr [g_eventQueueWorkType], eax
-        call    ModMagicMul10Index_00424350
+        call    ModMagicMul10Index
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -134,7 +134,7 @@ void GuardedArithDualCallChain_00431e90(void) {
         _emit   00h
         mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [g_acc_00542078], eax
-        call    MStackMagicModMul10_00424410
+        call    MStackMagicModMul10
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

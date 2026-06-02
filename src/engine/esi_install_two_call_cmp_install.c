@@ -109,8 +109,8 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00438b10 (114b) - install-self pattern w/ cleanup call.
- *   If slot used: call PushPop84TripleCall_00438b90; if pause: pop esi, ret;
- *   call Vec3DeltaDualMul10_004394a0; if pause: pop esi, ret;
+ *   If slot used: call PushPop84TripleCall; if pause: pop esi, ret;
+ *   call Vec3DeltaDualMul10; if pause: pop esi, ret;
  *   cmp g_eventQueueWorkType >= g_currentNodeFlags;
  *   if lt: call StackPopDispatchTagged; pop esi, ret;
  *   else: install self ([esi+8]=0x438b10, etc); g_pendingNodeType=1.
@@ -121,10 +121,10 @@ void EsiInstallTwoCallCmpInstall_00438b10(void) {
     unsigned int prev = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
     if (prev == 0) {
-        PushPop84TripleCall_00438b90();
+        PushPop84TripleCall();
         if (g_framePauseFlag != 0) return;
     }
-    Vec3DeltaDualMul10_004394a0();
+    Vec3DeltaDualMul10();
     if (g_framePauseFlag != 0) return;
     if ((int)g_eventQueueWorkType < (int)g_currentNodeFlags) {
         StackPopDispatchTagged();

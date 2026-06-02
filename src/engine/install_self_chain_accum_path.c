@@ -122,7 +122,7 @@ extern void InstallSelfChainAccumPath(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void InstallSelfPackedTailJmp_004751f0(void) {
+__declspec(naked) void InstallSelfPackedTailJmp(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         shl     eax, 2

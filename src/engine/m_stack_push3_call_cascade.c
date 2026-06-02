@@ -119,7 +119,7 @@ extern void CjTableThresholdDispatch(void);
 extern void GatedChainClamp_00486e80(void);
 extern void StanceFsmCluster_004871f0(void);
 
-__declspec(naked) void MStackPush3CallCascade_00486d90(void) {
+__declspec(naked) void MStackPush3CallCascade(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
         mov     ecx, dword ptr [g_eventQueueNotMask]

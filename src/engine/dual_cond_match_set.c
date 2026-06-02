@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_tickFlagF;
 extern void CmpEax1OrSetDirty_00488e90(void);
-extern void SwapOrPassSet_0048fbf0(void);
+extern void SwapOrPassSet(void);
 
 __declspec(naked) void DualCondMatchSet_00488dc0(void) {
     __asm {
@@ -138,7 +138,7 @@ __declspec(naked) void DualCondMatchSet_00488dc0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        call    SwapOrPassSet_0048fbf0
+        call    SwapOrPassSet
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

@@ -118,7 +118,7 @@ extern unsigned int g_dispatchSave1456_00f9fc68;
 extern unsigned int g_dispatchSave1457_00f9fc6c;
 extern unsigned int g_dispatchSave1458_00f9fc70;
 extern unsigned int g_dispatchSave1461_00f9fc9a;
-extern void CrtGetLocaleInfo_004d0bc0(void);
+extern void CrtGetLocaleInfo(void);
 extern void FreeImpl(void);
 extern void LoadArgPushCall(void);
 extern void StringStripSlotReplace_004d0140(void);
@@ -138,7 +138,7 @@ __declspec(naked) void CrtTimeFmtPrefsCluster_004cfe40(void)
         push     0
         mov      dword ptr [esp + 0x1c], 0
         mov      dword ptr [esp + 0x18], 0
-        call     CrtGetLocaleInfo_004d0bc0
+        call     CrtGetLocaleInfo
         add      esp, 0x10
         lea      ecx, [esp + 8]
         mov      esi, eax
@@ -146,7 +146,7 @@ __declspec(naked) void CrtTimeFmtPrefsCluster_004cfe40(void)
         push     0x25
         push     edi
         push     0
-        call     CrtGetLocaleInfo_004d0bc0
+        call     CrtGetLocaleInfo
         add      esp, 0x10
         lea      edx, [esp + 0x14]
         or       esi, eax
@@ -154,7 +154,7 @@ __declspec(naked) void CrtTimeFmtPrefsCluster_004cfe40(void)
         push     0x1e
         push     edi
         push     1
-        call     CrtGetLocaleInfo_004d0bc0
+        call     CrtGetLocaleInfo
         add      esp, 0x10
         or       esi, eax
         je       short L_fe9f
@@ -258,21 +258,21 @@ __declspec(naked) void CrtTimeFmtPrefsCluster_004cfe40(void)
         push     0xe
         push     esi
         push     1
-        call     CrtGetLocaleInfo_004d0bc0
+        call     CrtGetLocaleInfo
         add      esp, 0x10
         mov      edi, eax
         push     OFFSET g_dispatchSave1457_00f9fc6c
         push     0xf
         push     esi
         push     1
-        call     CrtGetLocaleInfo_004d0bc0
+        call     CrtGetLocaleInfo
         add      esp, 0x10
         or       edi, eax
         push     OFFSET g_dispatchSave1458_00f9fc70
         push     0x10
         push     esi
         push     1
-        call     CrtGetLocaleInfo_004d0bc0
+        call     CrtGetLocaleInfo
         add      esp, 0x10
         or       edi, eax
         mov      eax, dword ptr [g_dispatchSave1458_00f9fc70]

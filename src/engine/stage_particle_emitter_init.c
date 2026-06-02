@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_particleEmitterNode;
 extern unsigned int g_bootHeavyState_00537f78;
 extern unsigned int g_particleInitState_00541de0;
-extern void BootPhaseGateBracketedInit_004060c0(void);
+extern void BootPhaseGateBracketedInit(void);
 extern void InstallSelf5CallVecChain_00464660(void);
 extern void MStackCall_004063e0(void);
 
@@ -125,7 +125,7 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         mov      dword ptr [g_walkCallback], eax
         mov      esi, 0xffffae15
         jne      L_4400
-        call     BootPhaseGateBracketedInit_004060c0
+        call     BootPhaseGateBracketedInit
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_4551
@@ -155,7 +155,7 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         test     eax, eax
         mov      dword ptr [g_walkCallback], eax
         jne      L_44ab
-        call     BootPhaseGateBracketedInit_004060c0
+        call     BootPhaseGateBracketedInit
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_4551
@@ -185,7 +185,7 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         test     eax, eax
         mov      dword ptr [g_walkCallback], eax
         jne      L_4551
-        call     BootPhaseGateBracketedInit_004060c0
+        call     BootPhaseGateBracketedInit
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_4551

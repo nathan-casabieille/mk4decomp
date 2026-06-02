@@ -137,7 +137,7 @@ void State6Latch_0048e240(void) {
     if (chain_34 == 6) return;
     if (g_audioBankSel == 0) {
         g_walkCallback = 5;
-        CmpCondIdxArrLookup_0048e450();
+        CmpCondIdxArrLookup();
         if (g_framePauseFlag != 0) return;
         if ((int)g_walkCallback < 0x258) return;
     }
@@ -146,5 +146,5 @@ void State6Latch_0048e240(void) {
     g_walkCallback = 0x2c;
     TableLookupCall_0048a130();
     if (g_framePauseFlag != 0) return;
-    ClearBit2x34_00490130();
+    ClearBit2x34();
 }

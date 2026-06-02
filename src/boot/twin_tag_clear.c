@@ -114,12 +114,12 @@ extern unsigned int g_fightAxisPosY;
  *   of walk array. Repeat with walk = -0x15; same gates; final zero
  *   at +0x3c then ret.
  */
-extern void MStackInitCallToggle_00408ad0(void);
+extern void MStackInitCallToggle(void);
 
 void TwinTagClear_00416db0(void) {
     __asm {
         mov     dword ptr [g_walkCallback], 0xffffffec
-        call    MStackInitCallToggle_00408ad0
+        call    MStackInitCallToggle
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     done
@@ -129,7 +129,7 @@ void TwinTagClear_00416db0(void) {
         mov     dword ptr [eax*4 + 0x3c], 0
 stage2:
         mov     dword ptr [g_walkCallback], 0xffffffeb
-        call    MStackInitCallToggle_00408ad0
+        call    MStackInitCallToggle
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     done

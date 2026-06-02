@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0048bb60 (139b) - mstack push + sar-div + ScaledShrAnd
  *   + chain[+walk] + bit OR/XOR toggle + pop. */
-extern void ScaledShrAnd_0048bb40(void);
+extern void ScaledShrAnd(void);
 
 void PushSarCallBitToggle_0048bb60(void) {
     __asm {
@@ -122,7 +122,7 @@ void PushSarCallBitToggle_0048bb60(void) {
         sar     edx, 2
         mov     dword ptr [eax*4 + 0], ecx
         mov     dword ptr [g_scaledInit_00542044], edx
-        call    ScaledShrAnd_0048bb40
+        call    ScaledShrAnd
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

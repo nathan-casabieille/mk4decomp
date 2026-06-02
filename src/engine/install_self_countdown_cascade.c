@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchState;
 extern void InstallSelfChainSetB333_00437b60(void);
 extern void PendingMatch_0045e640(void);
-extern void PushPop84TripleCall_00438b90(void);
+extern void PushPop84TripleCall(void);
 extern void ScaledChain3c74(void);
 extern void TriStageChainGate_004344b0(void);
 
@@ -151,7 +151,7 @@ __declspec(naked) void InstallSelfCountdownCascade_00439fd0(void) {
         _emit   74h
         _emit   59h
         mov     dword ptr [g_dispatchState], ebx
-        call    PushPop84TripleCall_00438b90
+        call    PushPop84TripleCall
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0048eb20 (118b) - 4-call guard cascade with dual-const path */
-extern void PushPopState70Mask_00490650(void);
+extern void PushPopState70Mask(void);
 
 void GuardedDualConst1AndToggle_0048eb20(void) {
     __asm {
@@ -121,7 +121,7 @@ void GuardedDualConst1AndToggle_0048eb20(void) {
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   75h
         _emit   52h
-        call    PushPopState70Mask_00490650
+        call    PushPopState70Mask
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

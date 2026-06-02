@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void MStackPush3CallChainBit2_004431e0(void);
-extern void MStackPush1MagicMod2_004244d0(void);
+extern void MStackPush1MagicMod2(void);
 extern unsigned int g_dispatchSave682_004e5a00;
 
 /* @addr 0x00442740 (311b game) - field-setup with chain init + Mul10 ops + multi-field bulk store.
@@ -159,7 +159,7 @@ void ChainInitMul10BulkStore_00442740(void) {
         mov     eax, dword ptr [edx*4 + 0x64]
         sub     eax, 0x5b333
         mov     dword ptr [g_eventQueueWorkType], eax
-        call    MStackPush1MagicMod2_004244d0
+        call    MStackPush1MagicMod2
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

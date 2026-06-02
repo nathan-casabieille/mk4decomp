@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_hitPhase_00537f30;
 extern unsigned int g_quadEntryGate_0052d724;
 extern void PendingMatch_0042d240(void);
-extern void ScenegraphWalk_0041f7d0(void);
+extern void ScenegraphWalk(void);
 extern void Screen_ArcadeEnding(void);
 extern void TwinMStackPushScaledChain_00422110(void);
 extern void RoundEndFsm_0042b2f0(void);
@@ -119,17 +119,17 @@ extern void CallPauseClear3CallTriple_00428030(void);
 extern void ScaledInit_0048f720(void);
 extern void CopyJmp_00406ba0(void);
 extern void ScaledZero44(void);
-extern void MStackPushSet0001_00490260(void);
-extern void MStackPushSet0004_00490230(void);
+extern void MStackPushSet0001(void);
+extern void MStackPushSet0004(void);
 extern void ScaledInitWithCounterAndType_004314f0(void);
 
 /* @addr 0x00421380 (378b game) - 2-entry packed phase install + 6-call chain.
  *   Entry 1 (offset 0, 277b): phase-state install.
- *     Phase 1+: SwapOrPassSet_0048fbf0; on no-error compares
+ *     Phase 1+: SwapOrPassSet; on no-error compares
  *       g_walkCallback with g_loaded_004f3608. If equal, tail-call
  *       PendingMatch_0042d240. Else bumps g_hitPhase_00537f30 by 1, calls
  *       CallPauseClear3CallTriple_00428030, then chains
- *       ScenegraphWalk_0041f7d0 + Screen_ArcadeEnding.
+ *       ScenegraphWalk + Screen_ArcadeEnding.
  *     Phase 0: g_quadEntryGate_0052d724=1, reads g_or_0052ab40 and tests
  *       bit 3; if clear calls TwinMStackPushScaledChain_00422110. Either way installs Self
  *       at body with slot[+0x84]=1, packs (Self + 0x01000000) at the
@@ -137,13 +137,13 @@ extern void ScaledInitWithCounterAndType_004314f0(void);
  *   11b NOP align pad.
  *   Entry 2 (offset 0x120, 90b): 6-call chain (ScaledInit_0048f720,
  *     CopyJmp_00406ba0, ScaledZero44, ScaledZeroFour,
- *     MStackPushSet0001_00490260, MStackPushSet0004_00490230), each
+ *     MStackPushSet0001, MStackPushSet0004), each
  *     gated by 0x541e6c. On full success, tail-jmps
  *     ScaledInitWithCounterAndType_004314f0.
  */
 extern unsigned int g_loaded_004f3608;
 extern unsigned int g_or_0052ab40;
-extern void SwapOrPassSet_0048fbf0(void);
+extern void SwapOrPassSet(void);
 
 __declspec(naked) void Phase3InstallSelfChain_00421380(void) {
     __asm {
@@ -154,7 +154,7 @@ __declspec(naked) void Phase3InstallSelfChain_00421380(void) {
         mov     dword ptr [esi + 0x84], 0
         test    eax, eax
         je      short L_pis2_phase0
-        call    SwapOrPassSet_0048fbf0
+        call    SwapOrPassSet
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis2_done
@@ -174,7 +174,7 @@ __declspec(naked) void Phase3InstallSelfChain_00421380(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis2_done
-        call    ScenegraphWalk_0041f7d0
+        call    ScenegraphWalk
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis2_done
@@ -241,11 +241,11 @@ __declspec(naked) void Phase3InstallSelfChain_00421380(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pis2_e2End
-        call    MStackPushSet0001_00490260
+        call    MStackPushSet0001
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pis2_e2End
-        call    MStackPushSet0004_00490230
+        call    MStackPushSet0004
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_pis2_e2End

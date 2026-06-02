@@ -115,7 +115,7 @@ extern unsigned int g_iat_004d2120;
 extern unsigned int g_iat_004d2128;
 extern unsigned int g_iat_004d2138;
 extern unsigned int g_iat_004d2148;
-extern void CmpCallPushIATCall_004c6e60(void);
+extern void CmpCallPushIATCall(void);
 extern void LoadArgPushCall(void);
 
 __declspec(naked) void CrtIoInitFdTable_004c8bc0(void)
@@ -134,7 +134,7 @@ __declspec(naked) void CrtIoInitFdTable_004c8bc0(void)
         cmp      esi, edi
         jne      short L_8be6
         push     0x1b
-        call     CmpCallPushIATCall_004c6e60
+        call     CmpCallPushIATCall
         add      esp, 4
     L_8be6:
         lea      eax, [esi + 0x480]

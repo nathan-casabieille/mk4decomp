@@ -111,8 +111,8 @@ extern unsigned int g_fightAxisPosY;
 extern void CmpEqInitCallElseJmp(void);
 extern void FiveCallGuardSetTail(void);
 extern void InstallSelfIndirectJmp(void);
-extern void MoveSelectorCluster_0047d9a0(void);
-extern void ScaledChainNegStore_00470310(void);
+extern void MoveSelectorCluster(void);
+extern void ScaledChainNegStore(void);
 extern void SlotEvent3EntryChain(void);
 extern void SlotPhaseResetInstallChain(void);
 
@@ -136,7 +136,7 @@ __declspec(naked) void PhaseDispatchPair_004799c0(void)
         jne     short L_pdp_ret1
         test    byte ptr [g_xformDirtyFlags], bl
         je      short L_pdp_scaled
-        call    MoveSelectorCluster_0047d9a0
+        call    MoveSelectorCluster
         pop     esi
         pop     ebx
         ret
@@ -201,7 +201,7 @@ __declspec(naked) void PhaseDispatchPair_004799c0(void)
         mov     dword ptr [eax + 0x60], ecx
         mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax + 0x68], edx
-        call    ScaledChainNegStore_00470310
+        call    ScaledChainNegStore
         cmp     dword ptr [g_framePauseFlag], edi
         jne     short L_pdp_ret2
         call    SlotPhaseResetInstallChain

@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  *     g_cj=scaledInit; push 0x23fb23; call ThreeChanPackClamp; push g_cj; call CopyThreeFields;
  *     push 0x004f2410; call ArgSar_Set0_Jmp; pop+ret.
  */
-extern void ArgSar_Set0_Jmp_0049c6f0(void);
+extern void ArgSar_Set0_Jmp(void);
 extern void CopyThreeFields(void);
 extern void FiveCallGuardSetTail(void);
 extern void PendingMatch_0049a670(void);
@@ -209,7 +209,7 @@ __declspec(naked) void DualBlockInstallMul10Tail_0049a4e0(void) {
         call    CopyThreeFields
         add     esp, 4
         push    0x004f2410
-        call    ArgSar_Set0_Jmp_0049c6f0
+        call    ArgSar_Set0_Jmp
         add     esp, 4
         pop     esi
         ret

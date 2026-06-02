@@ -108,14 +108,14 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void AtanDualDeltaThreshold_0049c870(void);
-extern void RoundOverFsmCluster_0049b1d0(void);
+extern void AtanDualDeltaThreshold(void);
+extern void RoundOverFsmCluster(void);
 
 /* @addr 0x0049aef0 (225b game) - install-self with countdown.
  *   chain[+0x84]==0 path: install-self at +0x08=0x0049aef0; chain[+0x84]=1; g_pendingNodeType=1; pause=1; ret.
- *   chain[+0x84]!=0 path: mstack-push g_eventQueueNotMask, g_eventQueueChild; g_walkCallback=6; call AtanDualDeltaThreshold_0049c870;
+ *   chain[+0x84]!=0 path: mstack-push g_eventQueueNotMask, g_eventQueueChild; g_walkCallback=6; call AtanDualDeltaThreshold;
  *   if !pause: mstack-pop g_eventQueueChild (no dec for first), then dec; g_eventQueueNotMask gets next; bit-0 test;
- *   if set: call RoundOverFsmCluster_0049b1d0; ret. Else dec g_eventQueueNotMask; if not zero call StackPopDispatchTagged; ret.
+ *   if set: call RoundOverFsmCluster; ret. Else dec g_eventQueueNotMask; if not zero call StackPopDispatchTagged; ret.
  */
 extern unsigned int g_matrixStack_arr;
 
@@ -146,7 +146,7 @@ __declspec(naked) void InstallSelfCountdownBit_0049aef0(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_matrixStack_arr], edx
         mov     dword ptr [g_walkCallback], 6
-        call    AtanDualDeltaThreshold_0049c870
+        call    AtanDualDeltaThreshold
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -165,7 +165,7 @@ __declspec(naked) void InstallSelfCountdownBit_0049aef0(void) {
         mov     dword ptr [g_eventQueueNotMask], edx
         _emit   74h
         _emit   08h
-        call    RoundOverFsmCluster_0049b1d0
+        call    RoundOverFsmCluster
         pop     esi
         pop     ebx
         ret

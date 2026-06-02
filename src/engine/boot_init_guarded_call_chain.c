@@ -108,14 +108,14 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void SwapOrPassSet_0048fbf0(void);
+extern void SwapOrPassSet(void);
 extern void StackPopDispatchTagged(void);
 extern void BootInitGuardedCallChain(void);
 
 /* @addr 0x00464280 (145b game) - install-self with state-machine:
  *   chain[sel].slot84 -> eax; clear it; sub eax,0 (test).
  *   If 0: call BootInitGuardedCallChain; pause? ret; install self; return.
- *   If 1: call SwapOrPassSet_0048fbf0; pause? ret;
+ *   If 1: call SwapOrPassSet; pause? ret;
  *     g_eventQueueNotMask = (g_pendingNodeType == g_player1NodeIdx) ? g_dlNalt1 : g_dlNalt2.
  *   Then call StackPopDispatchTagged; ret.
  */
@@ -137,7 +137,7 @@ __declspec(naked) void InstallSelfStateMachine_00464280(void) {
         dec     eax
         _emit   75h
         _emit   33h
-        call    SwapOrPassSet_0048fbf0
+        call    SwapOrPassSet
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

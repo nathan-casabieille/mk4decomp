@@ -113,7 +113,7 @@ extern unsigned int g_dispatchSave907_004d6478;
  * BootCallChainDoubleMul10_0040b890 - 217b boot init via StoreTwoCall + dual Mul10.
  *   Snapshot g_fightGroupHead → g_eventQueueEnd; g_cj_00542058 = (0x004d6478 >> 2);
  *   g_eventQueueNotMask = 0xc1; push 0xc0, 0x0049db40; call StoreTwoCall.
- *   If g_xformDirtyFlags & 1: ret. Call StackPushAdd15CallPop_0040a7e0; if paused: ret.
+ *   If g_xformDirtyFlags & 1: ret. Call StackPushAdd15CallPop; if paused: ret.
  *   g_eventQueueCurrent = 0x3333; load g_fightGroupHead[+0x6c] → eax → g_walkCallback;
  *   push (eax,0x3333); call Mul10Tail; chain[+0x44] = result.
  *   g_walkCallback = 0; chain[+0x48] = 0;
@@ -127,7 +127,7 @@ void BootCallChainDoubleMul10_0040b890(void) {
     g_eventQueueNotMask = 0xc1;
     ((void (*)(int, int))StoreTwoCall)(0x0049db40, 0xc0);
     if (g_xformDirtyFlags & 1) return;
-    StackPushAdd15CallPop_0040a7e0();
+    StackPushAdd15CallPop();
     if (g_framePauseFlag != 0) return;
     g_eventQueueCurrent = 0x3333;
     v = *(unsigned int *)(g_fightGroupHead * 4 + 0x6c);

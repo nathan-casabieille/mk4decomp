@@ -109,8 +109,8 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_load_0052ab10;
-extern void MStackMagicModMul10_00424410(void);
-extern void ModMagicMul10Index_00424350(void);
+extern void MStackMagicModMul10(void);
+extern void ModMagicMul10Index(void);
 
 void SaveRestore7CameraTransform_004267f0(void) {
     __asm {
@@ -159,13 +159,13 @@ void SaveRestore7CameraTransform_004267f0(void) {
         sub      eax, 0x1921f
         mov      dword ptr [g_xformScratch2088], eax
         mov      dword ptr [g_eventQueueWorkType], eax
-        call     ModMagicMul10Index_00424350
+        call     ModMagicMul10Index
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_6a22
         mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [g_eventQueueNotMask], ecx
-        call     MStackMagicModMul10_00424410
+        call     MStackMagicModMul10
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_6a22

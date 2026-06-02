@@ -50,20 +50,20 @@ extern void MStackPush2CjMul10Triple_00474170(void);   /* 0x00474170 */
 extern void DualPushSet7dCallPop_00474290(void);   /* 0x00474290 */
 extern void DualPushCmp12Dispatch_00474d40(void);   /* 0x00474d40 */
 extern void DualPushCmp12Dispatch68_00474de0(void);   /* 0x00474de0 */
-extern void DualScaledLoadStoreJmp_00475790(void);   /* 0x00475790 */
+extern void DualScaledLoadStoreJmp(void);   /* 0x00475790 */
 extern void ScaledOr4Jmp_00476e00(void);   /* 0x00476e00 */
 extern void ChainSlotSetupInstallSelf_00476f30(void);   /* 0x00476f30 */
 extern void ScaledAndFBJmp_00476fe0(void);   /* 0x00476fe0 */
 extern void FiveTableInitChainBracketed_004774f0(void);   /* 0x004774f0 */
-extern void MoveSelectorCluster_0047d9a0(void);   /* 0x0047d9a0 */
+extern void MoveSelectorCluster(void);   /* 0x0047d9a0 */
 extern void CmpJmpTwoBranch_004871d0(void);   /* 0x004871d0 */
 extern void RoundTextMenuEventCluster_004888b0(void);   /* 0x004888b0 */
 extern void GuardedSeq_00488be0(void);   /* 0x00488be0 */
 extern void LiteralPushCallEntZero(void);   /* 0x00488c00 */
 extern void CjTableThresholdDispatch(void);   /* 0x00488f00 */
-extern void ByteWordTableTaggedDispatch_0048a050(void);   /* 0x0048a050 */
+extern void ByteWordTableTaggedDispatch(void);   /* 0x0048a050 */
 extern void Wrapper_0048a3a0(void);   /* 0x0048a3a0 */
-extern void MStackPushSet0004_00490230(void);   /* 0x00490230 */
+extern void MStackPushSet0004(void);   /* 0x00490230 */
 extern void ScaledXorStore_004903b0(void);   /* 0x004903b0 */
 extern void ScaledZeroFour(void);   /* 0x00490740 */
 extern void DualCallPauseDirtyJmp_00490c30(void);   /* 0x00490c30 */
@@ -166,7 +166,7 @@ void GuardedSeq_0044ba80(void) {
 void GuardedSeq_004515a0(void) {
     ChainDirtyBitWalker();
     if (g_framePauseFlag) return;
-    DualScaledLoadStoreJmp_00475790();
+    DualScaledLoadStoreJmp();
 }
 
 /* @addr 0x00453780 */
@@ -208,14 +208,14 @@ void GuardedSeq_00471670(void) {
 void GuardedSeq_00472820(void) {
     DualPushCmp12Dispatch68_00474de0();
     if (g_framePauseFlag) return;
-    ByteWordTableTaggedDispatch_0048a050();
+    ByteWordTableTaggedDispatch();
 }
 
 /* @addr 0x00472840 */
 void GuardedSeq_00472840(void) {
     DualPushCmp12Dispatch_00474d40();
     if (g_framePauseFlag) return;
-    ByteWordTableTaggedDispatch_0048a050();
+    ByteWordTableTaggedDispatch();
 }
 
 /* @addr 0x00473ef0 */
@@ -276,9 +276,9 @@ void GuardedSeq_00476fc0(void) {
 
 /* @addr 0x0047d980 */
 void GuardedSeq_0047d980(void) {
-    MStackPushSet0004_00490230();
+    MStackPushSet0004();
     if (g_framePauseFlag) return;
-    MoveSelectorCluster_0047d9a0();
+    MoveSelectorCluster();
 }
 
 /* @addr 0x00485ca0 */

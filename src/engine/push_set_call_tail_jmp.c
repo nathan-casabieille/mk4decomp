@@ -111,20 +111,20 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00493e40 (98b)
  *   Push g_xformEntityIdx on mstack; edx = g_cj_0054205c;
  *   eax = [edx*4+0x30]; g_walkCallback = eax;
- *   call MStackPushTableWalk_00493a20; if pause: ret;
+ *   call MStackPushTableWalk; if pause: ret;
  *   ecx = g_xformEntityIdx; eax = g_matrixStackTop;
  *   g_walkCallback = ecx; edx = [eax*4]; --eax;
  *   g_xformEntityIdx = edx; g_matrixStackTop = eax;
- *   jmp LoadCmpAddrJmp_00493ed0.
+ *   jmp LoadCmpAddrJmp.
  */
 void PushSetCallTailJmp_00493e40(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_xformEntityIdx;
     g_walkCallback = (void (*)(void))((FightGroupNode *)(g_cj_0054205c * 4))->tag;
-    MStackPushTableWalk_00493a20();
+    MStackPushTableWalk();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))g_xformEntityIdx;
     g_xformEntityIdx = *(unsigned int *)(g_matrixStackTop * 4);
     g_matrixStackTop--;
-    LoadCmpAddrJmp_00493ed0();
+    LoadCmpAddrJmp();
 }

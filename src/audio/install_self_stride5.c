@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_installSelfStride5_00538090;
 extern unsigned int g_audioSequencerSlot_00541fc4;
 extern void CallSetPause(void);
-extern void GuardedScaledCall_0048a020(void);
+extern void GuardedScaledCall(void);
 
 extern unsigned int g_chain_arr_4348f0;
 extern void FiveCallGuardSetTail(void);
@@ -152,7 +152,7 @@ __declspec(naked) void InstallSelfStride5_004a06f0(void) {
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     edx, [eax*4 + g_chain_arr_4348f0 + 0x04]
         mov     dword ptr [g_walkCallback], edx
-        call    GuardedScaledCall_0048a020
+        call    GuardedScaledCall
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

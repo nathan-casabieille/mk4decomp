@@ -115,13 +115,13 @@ extern unsigned int g_fightAxisPosY;
  *   D (+0x60): gate g_table_00535ddc>=0x18000? jmp CallPauseTestByteJmpCalls else jmp PrefixThunkInstallSelf3State.
  */
 extern void GuardedSeq_00433bb0(void);
-extern void PackedAdvanceCallTailJmp_004392c0(void);
+extern void PackedAdvanceCallTailJmp(void);
 extern void PrefixThunkInstallSelf3State(void);
 
 __declspec(naked) void QuadStringStateGate_0043bd50(void) {
     __asm {
         push    0x004e4c58
-        call    PackedAdvanceCallTailJmp_004392c0
+        call    PackedAdvanceCallTailJmp
         add     esp, 4
         ret
         _emit   90h
@@ -132,7 +132,7 @@ __declspec(naked) void QuadStringStateGate_0043bd50(void) {
         _emit   75h
         _emit   0dh
         push    0x004e4c68
-        call    PackedAdvanceCallTailJmp_004392c0
+        call    PackedAdvanceCallTailJmp
         add     esp, 4
         ret
         _emit   90h

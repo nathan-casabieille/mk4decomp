@@ -116,7 +116,7 @@ extern unsigned int g_iat_004d20bc;
 extern unsigned int g_iat_004d20e0;
 extern unsigned int g_dispatchSave1448_00f9fc20;
 extern unsigned int g_dispatchSave1444_00f9fc10;
-extern void Calloc_004c6110(void);
+extern void Calloc(void);
 extern void LoadArgPushCall(void);
 extern void FreeImpl(void);
 extern void CrtMemMove_004c61c0(void);
@@ -224,7 +224,7 @@ __declspec(naked) void MBToWCharCachedDispatch_004cd950(void) {
     L_mbw_havelen:
         push    esi
         push    1
-        call    Calloc_004c6110
+        call    Calloc
         mov     ebp, eax
         add     esp, 8
         test    ebp, ebp

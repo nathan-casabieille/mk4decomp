@@ -112,15 +112,15 @@ extern unsigned int g_fightAxisPosY;
  *   Init: table = (g_audioBitField_00541fc0 + g_dispatchArg); load [table*4 + 4]; call eax indirect.
  *   If pause: ret. If !bit0(0054208c): jmp tail-CallSetPause.
  *   Load state = [g_xformEntityIdx*4 + 0]; if state in {5,0xa,0xf,0x12}: jmp tail-CallSetPause.
- *   Else inc state, call LinkedListIndirectDirtyToggle_0049f7b0; if pause: ret; if bit0 still set & state==5: loop;
+ *   Else inc state, call LinkedListIndirectDirtyToggle; if pause: ret; if bit0 still set & state==5: loop;
  *   if bit0 cleared: store, call RoundWinTransition; if pause ret; load [+8], call GuardedScaledCall;
  *   else fall to tail-CallSetPause; pop ebx; ret.
  */
 extern unsigned int g_dispatchArg;
 extern unsigned int g_audioBitField_00541fc0;
 extern void CallSetPause(void);
-extern void GuardedScaledCall_0048a020(void);
-extern void LinkedListIndirectDirtyToggle_0049f7b0(void);
+extern void GuardedScaledCall(void);
+extern void LinkedListIndirectDirtyToggle(void);
 extern void RoundWinTransition(void);
 
 __declspec(naked) void IndirectStateDispatcher_0049f6a0(void) {
@@ -181,7 +181,7 @@ __declspec(naked) void IndirectStateDispatcher_0049f6a0(void) {
         _emit   79h
         inc     eax
         mov     dword ptr [g_walkCallback], eax
-        call    LinkedListIndirectDirtyToggle_0049f7b0
+        call    LinkedListIndirectDirtyToggle
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -209,7 +209,7 @@ __declspec(naked) void IndirectStateDispatcher_0049f6a0(void) {
         mov     eax, dword ptr [g_xformEntityIdx]
         mov     ecx, dword ptr [eax*4 + 8]
         mov     dword ptr [g_walkCallback], ecx
-        call    GuardedScaledCall_0048a020
+        call    GuardedScaledCall
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

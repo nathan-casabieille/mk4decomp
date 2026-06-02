@@ -117,7 +117,7 @@ extern void DispatcherComplex181_00426310(void);
 extern void MStackPushComplexCallPop_00406430(void);
 extern void RoundCleanupCluster_00427690(void);
 extern void SaveCallRestore(void);
-extern void StoreIncrMStackPush6_004275c0(void);
+extern void StoreIncrMStackPush6(void);
 
 void DualSeqBranchInit_00477a20(void) {
     __asm {
@@ -153,7 +153,7 @@ void DualSeqBranchInit_00477a20(void) {
         jne     L_dsbi_ret
         mov     ecx, dword ptr [g_player1State]
         mov     dword ptr [g_walkCallback], ecx
-        call    StoreIncrMStackPush6_004275c0
+        call    StoreIncrMStackPush6
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_dsbi_ret

@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave883_004d2250;
 extern unsigned int g_audioInitScaled_0054343c;
 extern void GuardedSetupCallTailJmp(void);
-extern void PushPopScaledInit343c_004aa940(void);
+extern void PushPopScaledInit343c(void);
 
 extern void FiveCallGuardSetTail(void);
 
@@ -142,7 +142,7 @@ __declspec(naked) void AudioInstallSelfStatePush(void) {
         call    StackPopDispatchTagged
         pop     esi
         ret
-        call    PushPopScaledInit343c_004aa940
+        call    PushPopScaledInit343c
         push    0x00640000
         push    offset g_dispatchSave883_004d2250
         call    GuardedSetupCallTailJmp

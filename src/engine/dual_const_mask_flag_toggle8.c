@@ -110,20 +110,20 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0048ed70 (105b)
  *   g_eventQueueCurrent = 8; g_eventQueueWorkType = 0x800;
- *   call PushPopState70Mask_00490650; if pause: ret;
+ *   call PushPopState70Mask; if pause: ret;
  *   eax = g_player1NodeIdx; ecx = g_cj_0054205c;
  *   cmp ecx,eax; g_scaledInit = eax;
  *   if eq: eax = g_eventQueueCurrent; else: eax = g_eventQueueWorkType, g_eventQueueCurrent = eax;
  *   eax &= g_walkCallback; g_xformScratch94 = eax;
  *   eax = g_xformDirtyFlags; if je: clear-bit0; else: set-bit0; ret.
  */
-extern void PushPopState70Mask_00490650(void);
+extern void PushPopState70Mask(void);
 
 void DualConstMaskFlagToggle8_0048ed70(void) {
     __asm {
         mov     dword ptr [g_eventQueueCurrent], 8
         mov     dword ptr [g_eventQueueWorkType], 0x800
-        call    PushPopState70Mask_00490650
+        call    PushPopState70Mask
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

@@ -110,8 +110,8 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00424200 (321b game) - 3-state install-self with chain pop + audio dispatch. */
 extern void AudioInstallSelfStatePush(void);
-extern void PushPopScaledInit343c_004aa940(void);
-extern void SceneFrameStepWithInputs_004be250(void);
+extern void PushPopScaledInit343c(void);
+extern void SceneFrameStepWithInputs(void);
 
 __declspec(naked) void Install3StateAudioChain_00424200(void) {
     __asm {
@@ -142,7 +142,7 @@ __declspec(naked) void Install3StateAudioChain_00424200(void) {
         mov     eax, dword ptr [g_eventQueueNotMask]
         add     eax, 0x13
         push    eax
-        call    SceneFrameStepWithInputs_004be250
+        call    SceneFrameStepWithInputs
         add     esp, 8
         _emit   0ebh
         _emit   10h
@@ -169,7 +169,7 @@ __declspec(naked) void Install3StateAudioChain_00424200(void) {
         inc     ecx
         mov     dword ptr [g_scaledInit_00542044], ecx
         mov     dword ptr [eax], ecx
-        call    PushPopScaledInit343c_004aa940
+        call    PushPopScaledInit343c
         mov     dword ptr [esi + 8], offset Install3StateAudioChain_00424200
         mov     edx, dword ptr [g_baseSel]
         mov     ecx, offset Install3StateAudioChain_00424200

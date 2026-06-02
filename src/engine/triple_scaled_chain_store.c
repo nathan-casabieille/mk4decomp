@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004908f0 (119b) - 3 scaled chain walks with double-store. */
-void TripleScaledChainStore_004908f0(int arg) {
+void TripleScaledChainStore(int arg) {
     unsigned int packed;
     unsigned int v;
     unsigned int cj;

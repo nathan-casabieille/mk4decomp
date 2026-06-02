@@ -20,9 +20,9 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [ecx*4 + 0x28], eax
  *   ret
  */
-extern void CallDualStoreXorBit_004285e0(void);
+extern void CallDualStoreXorBit(void);
 void CallPauseDirtyScaledSet7_00480ef0(void) {
-    CallDualStoreXorBit_004285e0();
+    CallDualStoreXorBit();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 4) == 0) return;
     g_walkCallback = (void (*)(void))7;

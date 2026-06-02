@@ -108,17 +108,17 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void AudioStreamFsm5Way_004a3f50(void);
+extern void AudioStreamFsm5Way(void);
 extern void TwoCallsTwoBranchTail_004a3c50(void);
 extern void RoundDisplayInitCluster_004a4f00(void);
 extern void CopyGlobal(void);
 extern unsigned int g_audioStreamState;
 
-extern void AudioInitInstallerPair_004a2140(void);
+extern void AudioInitInstallerPair(void);
 extern void BootInitGuardedCallChain(void);
 extern void GuardedSetupCallTailJmp(void);
 
-__declspec(naked) void AudioStreamFsm5Way_004a3f50(void)
+__declspec(naked) void AudioStreamFsm5Way(void)
 {
     __asm {
         mov      eax, dword ptr [g_baseSel]
@@ -141,7 +141,7 @@ __declspec(naked) void AudioStreamFsm5Way_004a3f50(void)
         call     TwoCallsTwoBranchTail_004a3c50
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_411a
-        mov      dword ptr [esi + 8], OFFSET AudioStreamFsm5Way_004a3f50
+        mov      dword ptr [esi + 8], OFFSET AudioStreamFsm5Way
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_pendingNodeType], 0x3c
         mov      dword ptr [g_framePauseFlag], 1
@@ -149,7 +149,7 @@ __declspec(naked) void AudioStreamFsm5Way_004a3f50(void)
         pop      esi
         ret
     L_3fd3:
-        mov      dword ptr [esi + 8], OFFSET AudioStreamFsm5Way_004a3f50
+        mov      dword ptr [esi + 8], OFFSET AudioStreamFsm5Way
         mov      dword ptr [esi + 0x84], 3
         mov      dword ptr [g_pendingNodeType], 0x3c
         mov      dword ptr [g_framePauseFlag], 1
@@ -157,7 +157,7 @@ __declspec(naked) void AudioStreamFsm5Way_004a3f50(void)
         pop      esi
         ret
     L_3ffb:
-        mov      dword ptr [esi + 8], OFFSET AudioStreamFsm5Way_004a3f50
+        mov      dword ptr [esi + 8], OFFSET AudioStreamFsm5Way
         mov      dword ptr [esi + 0x84], 4
         mov      dword ptr [g_pendingNodeType], 0xf0
         mov      dword ptr [g_framePauseFlag], 1
@@ -170,9 +170,9 @@ __declspec(naked) void AudioStreamFsm5Way_004a3f50(void)
         call     BootInitGuardedCallChain
         cmp      dword ptr [g_gtOtherFlag], edi
         je       short L_4115
-        mov      dword ptr [esi + 8], OFFSET AudioStreamFsm5Way_004a3f50
+        mov      dword ptr [esi + 8], OFFSET AudioStreamFsm5Way
         mov      eax, dword ptr [g_baseSel]
-        mov      ecx, OFFSET AudioStreamFsm5Way_004a3f50
+        mov      ecx, OFFSET AudioStreamFsm5Way
         mov      dword ptr [eax*4 + 0x84], 5
         mov      eax, dword ptr [esi + 4]
         add      ecx, 0x5000000
@@ -204,7 +204,7 @@ __declspec(naked) void AudioStreamFsm5Way_004a3f50(void)
         mov      eax, 1
         mov      edx, dword ptr [ecx*4 + 0x30]
         mov      dword ptr [edx*4 + 0x74], 0xffffc000
-        mov      dword ptr [esi + 8], OFFSET AudioStreamFsm5Way_004a3f50
+        mov      dword ptr [esi + 8], OFFSET AudioStreamFsm5Way
         mov      dword ptr [esi + 0x84], eax
         mov      dword ptr [g_pendingNodeType], 0x24
         mov      dword ptr [g_framePauseFlag], eax
@@ -212,7 +212,7 @@ __declspec(naked) void AudioStreamFsm5Way_004a3f50(void)
         pop      esi
         ret
     L_4115:
-        call     AudioInitInstallerPair_004a2140
+        call     AudioInitInstallerPair
     L_411a:
         pop      edi
         pop      esi

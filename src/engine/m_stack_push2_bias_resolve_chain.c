@@ -119,7 +119,7 @@ extern void PushCallPopScaledJmpIndirect_0048ce00(void);
  *   PushBitFieldMergePop; if still not paused, restore globals and
  *   tail-call PushCallPopScaledJmpIndirect.
  */
-void TripleStateSwapCall_0048cc40(void) {
+void TripleStateSwapCall(void) {
     unsigned int save_70 = g_eventQueueCurrent;
     unsigned int save_walk = (unsigned int)g_walkCallback;
     unsigned int save_74 = g_eventQueueWorkType;

@@ -117,12 +117,12 @@ extern unsigned int g_installSelfCounter_005433e8;
 extern void ArgSarStoreJmp(void);
 extern void CallPauseScaledStoreCopyJmp(void);
 extern void DualSlotPropagateCall_004683e0(void);
-extern void DualWalkRange_00468440(void);
+extern void DualWalkRange(void);
 extern void EsiInstallChainCmpDualCall_00429300(void);
 extern void GateDispatch6c(void);
 extern void InstallSelf3WayChainCmp(void);
 extern void LoadSetFpJmp_004093a0(void);
-extern void MStackPush1MagicMod2_004244d0(void);
+extern void MStackPush1MagicMod2(void);
 extern void PendingMatch_0046b670(void);
 extern void PoseFsmTriHelpers_00431650(void);
 extern void PushCallPauseSetMaxThenCallPauseJmp_0048e380(void);
@@ -362,7 +362,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         mov      eax, dword ptr [g_baseSel]
         mov      ecx, dword ptr [eax*4 + 0x44]
         mov      dword ptr [g_eventQueueWorkType], ecx
-        call     MStackPush1MagicMod2_004244d0
+        call     MStackPush1MagicMod2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_83d1
@@ -428,7 +428,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         mov      eax, dword ptr [g_baseSel]
         mov      edx, dword ptr [g_xformScratch2088]
         mov      dword ptr [eax*4 + 0x3c], edx
-        call     DualWalkRange_00468440
+        call     DualWalkRange
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_83d1

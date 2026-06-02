@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   load cj[+0x70]; if non-negative jmp through g_eventQueueEnd
  *   indirect; else pop state stack into 54, then install self.
  */
-void InstallSelfIndirectJmpNeg_0048f4f0(void) {
+void InstallSelfIndirectJmpNeg(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int slot84 = ((ScenegraphNode *)base)->install_flag;
     int walk;
@@ -130,7 +130,7 @@ void InstallSelfIndirectJmpNeg_0048f4f0(void) {
         g_eventQueueEnd = *(unsigned int *)(top * 4);
         g_matrixStackTop = top - 1;
     }
-    *(unsigned int *)(base + 8) = (unsigned int)InstallSelfIndirectJmpNeg_0048f4f0;
+    *(unsigned int *)(base + 8) = (unsigned int)InstallSelfIndirectJmpNeg;
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;

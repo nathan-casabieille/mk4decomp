@@ -123,7 +123,7 @@ extern unsigned int g_fightAxisPosY;
  *       NineEntryFlagDispatch_00461260; else fall through to install
  *       success tail. Else tail-call ZeroScaledZeroCallPauseJmp_0045fa90.
  *     phase 0: sets g_xformEntityIdx = &g_dispatchTableArr10_00500c50>>2, calls
- *       DualScaledStoreZero_00491080. On no-error writes 0xb into
+ *       DualScaledStoreZero. On no-error writes 0xb into
  *       [g_fightGroupHead*4 + 0x28], g_eventQueueChild=1, installs Self
  *       at body, arms 0x541e6c=1.
  */
@@ -131,7 +131,7 @@ extern unsigned int g_dispatchSave959_004e9f78;
 extern unsigned int g_dispatchSave960_004e9f80;
 extern unsigned int g_dispatchTableArr10_00500c50;
 extern void DispatchThroughBaseSel6c_00460f20(void);
-extern void DualScaledStoreZero_00491080(void);
+extern void DualScaledStoreZero(void);
 extern void GatedScaledSubSat_0048fb40(void);
 extern void GuardedScaledChainJmpIndirect_00460e40(void);
 extern void NineEntryFlagDispatch_00461260(void);
@@ -223,7 +223,7 @@ __declspec(naked) void AlarmCountdownInstall_004609e0(void) {
         mov     ecx, offset g_dispatchTableArr10_00500c50
         shr     ecx, 2
         mov     dword ptr [g_xformEntityIdx], ecx
-        call    DualScaledStoreZero_00491080
+        call    DualScaledStoreZero
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_aci_doneNoPop

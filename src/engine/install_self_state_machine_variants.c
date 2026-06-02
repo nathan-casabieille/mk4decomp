@@ -111,19 +111,19 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00464280 (145b game) - install-self with state-machine:
  *   chain[sel].slot84 -> eax; clear it; sub eax,0 (test).
  *   If 0: call BootInitGuardedCallChain; pause? ret; install self; return.
- *   If 1: call SwapOrPassSet_0048fbf0; pause? ret;
+ *   If 1: call SwapOrPassSet; pause? ret;
  *     g_eventQueueNotMask = (g_pendingNodeType == g_player1NodeIdx) ? g_dlNalt1 : g_dlNalt2.
  *   Then call StackPopDispatchTagged; ret.
  */
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 extern void BootInitGuardedCallChain(void);
-extern void DualHelperCallStoreCjFields_0048ff40(void);
+extern void DualHelperCallStoreCjFields(void);
 extern void EsiEdiAliasDualMul10(void);
 extern void ScaledArrStore_00429980(void);
-extern void SwapOrPassSet_0048fbf0(void);
+extern void SwapOrPassSet(void);
 extern void TripleFieldCopyHi_0048f7b0(void);
-extern void TripleFieldCopyJmpHi_0048f740(void);
+extern void TripleFieldCopyJmpHi(void);
 
 extern void FiveCallGuardSetTail(void);
 
@@ -140,7 +140,7 @@ __declspec(naked) void InstallSelfStateMachine_00464280(void) {
         dec     eax
         _emit   75h
         _emit   33h
-        call    SwapOrPassSet_0048fbf0
+        call    SwapOrPassSet
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -173,8 +173,8 @@ __declspec(naked) void InstallSelfStateMachine_00464280(void) {
 }
 
 /* @addr 0x0047f3f0 (237b game) - install-self with 3-state dispatch by [+0x84].
- *   B0 ([+0x84]==0): mov 0x4ccc, 0xffffb334 locals; call DualHelperCallStoreCjFields_0048ff40; if !pause
- *     call TripleFieldCopyJmpHi_0048f740; if !pause install-self + chain[+0x84]=1
+ *   B0 ([+0x84]==0): mov 0x4ccc, 0xffffb334 locals; call DualHelperCallStoreCjFields; if !pause
+ *     call TripleFieldCopyJmpHi; if !pause install-self + chain[+0x84]=1
  *     + g_pendingNodeType=4 + g_pause=1; ret.
  *   B1 ([+0x84]==1): call TripleFieldCopyHi_0048f7b0; if !pause set g_walkCallback=0xe666
  *     call EsiEdiAliasDualMul10; if !pause install-self + chain[+0x84]=2
@@ -231,12 +231,12 @@ __declspec(naked) void InstallSelfStateMachine_0047f3f0(void) {
         ret
         mov     dword ptr [g_walkCallback], 0x4ccc
         mov     dword ptr [g_eventQueueCurrent], 0xffffb334
-        call    DualHelperCallStoreCjFields_0048ff40
+        call    DualHelperCallStoreCjFields
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   2fh
-        call    TripleFieldCopyJmpHi_0048f740
+        call    TripleFieldCopyJmpHi
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

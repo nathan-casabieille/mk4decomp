@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_matrixStack_arr;
 extern unsigned int g_dispatchSave1580_00ab51f8;
-extern void ChainDecCondStoreCallJmp_00434880(void);
+extern void ChainDecCondStoreCallJmp(void);
 
 __declspec(naked) void InstallSelfFlagCountdown_00434690(void) {
     __asm {
@@ -150,13 +150,13 @@ __declspec(naked) void InstallSelfFlagCountdown_00434690(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   05h
-        jmp     ChainDecCondStoreCallJmp_00434880
+        jmp     ChainDecCondStoreCallJmp
         mov     eax, dword ptr [g_eventQueueChild]
         dec     eax
         mov     dword ptr [g_eventQueueChild], eax
         _emit   74h
         _emit   05h
         jmp     InstallSelfFlagCountdown_00434690
-        jmp     ChainDecCondStoreCallJmp_00434880
+        jmp     ChainDecCondStoreCallJmp
     }
 }

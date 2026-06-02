@@ -108,13 +108,13 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void StoreIncrMStackPush6_004275c0(void);
+extern void StoreIncrMStackPush6(void);
 extern void DispatcherComplex181_004263d0(void);
 extern void RoundCleanupCluster_00427690(void);
 
 /* @addr 0x00477920 (165b game) - poll-then-init pattern:
  *   poll: SaveCallRestore(0x22); SaveCallRestoreOrXor(0x22); while (state & 4): retry.
- *   walkCallback = max(g_gameCountdown, 0); call StoreIncrMStackPush6_004275c0; pause? ret.
+ *   walkCallback = max(g_gameCountdown, 0); call StoreIncrMStackPush6; pause? ret.
  *   set fixed state (walkCallback=2, g_eventQueueWorkType=0x22, g_eventQueueCurrent=2,
  *   g_acc_00542078=0, g_eventQueueNotMask=0xff960000, g_currentNodeFlags=2);
  *   call DispatcherComplex181; pause? ret; call RoundCleanupCluster_00427690.
@@ -126,10 +126,10 @@ extern unsigned int g_dispatchSave692_004e7f70;
 extern unsigned int g_dispatchSave59_00501250;
 extern unsigned int g_gameCountdown;
 extern void ArgSarStoreJmp(void);
-extern void ChainGatedNegAccum_0048b740(void);
+extern void ChainGatedNegAccum(void);
 extern void DualScaledStore(void);
 extern void FiveCallGuardSetTail(void);
-extern void InstallSelfPackedTailJmp_004751f0(void);
+extern void InstallSelfPackedTailJmp(void);
 extern void MStackPush2GlobalSwap_00477400(void);
 extern void PendingMatch_00455bd0(void);
 extern void SaveCallRestoreOrXor(void);
@@ -140,12 +140,12 @@ extern void func_004569f0(void);
 
 extern unsigned int g_dispatchSave583_004eef18;
 extern unsigned int g_dispatchSave582_004eef20;
-extern void DualEntryBitFlagDispatch_0048e820(void);
+extern void DualEntryBitFlagDispatch(void);
 extern void GameLoaderHandlerCluster_004876f0(void);
 extern void IterStepDualStore(void);
-extern void MStackPush3CallCascade_00486d90(void);
+extern void MStackPush3CallCascade(void);
 extern void MStackPush3CmpCall(void);
-extern void MStackPushSet0004_00490230(void);
+extern void MStackPushSet0004(void);
 extern void RoundCleanupCluster_00487510(void);
 extern void TableLookupCall_00489f60(void);
 
@@ -182,7 +182,7 @@ loopPoll:
         _emit   7dh
         _emit   0ah
         mov     dword ptr [g_walkCallback], 0
-        call    StoreIncrMStackPush6_004275c0
+        call    StoreIncrMStackPush6
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -238,7 +238,7 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
         mov      dword ptr [g_eventQueueWorkType], 1
         mov      dword ptr [g_eventQueueNotMask], 2
         mov      dword ptr [g_walkCallback], 0x23d7
-        jmp      MStackPush3CallCascade_00486d90
+        jmp      MStackPush3CallCascade
     L_758b:
         ret
         nop
@@ -252,7 +252,7 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
         add      esp, 4
         test     eax, eax
         jne      short L_75c1
-        call     MStackPushSet0004_00490230
+        call     MStackPushSet0004
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_75c1
@@ -290,7 +290,7 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
         dec      eax
         mov      ebx, 1
         je       short L_763f
-        call     DualEntryBitFlagDispatch_0048e820
+        call     DualEntryBitFlagDispatch
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_76ea
@@ -423,7 +423,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], edi
-        call     InstallSelfPackedTailJmp_004751f0
+        call     InstallSelfPackedTailJmp
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
@@ -470,7 +470,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         mov      dword ptr [g_acc_00542078], 0x16666
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [g_eventQueueNotMask], edi
-        call     ChainGatedNegAccum_0048b740
+        call     ChainGatedNegAccum
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_5b22
         mov      edx, dword ptr [g_eventQueueEnd]

@@ -10,7 +10,7 @@
 
 /* Externs for thunk targets. */
 extern void BootMod6487eClampAndChainMul10(void);     /* 0x00407510 */
-extern void MStackPush2ChainPrepend_00409970(void);     /* 0x00409970 */
+extern void MStackPush2ChainPrepend(void);     /* 0x00409970 */
 extern void ZeroLargeBlock_0041f270(void);     /* 0x0041f270 */
 extern void BootScheduledNodeTimerWalk_0041f570(void);     /* 0x0041f570 */
 extern void StackPopDispatchTagged(void);     /* 0x0041f780 */
@@ -24,13 +24,13 @@ extern void ScaledLoadInstallOrCall_00433960(void);     /* 0x00433960 */
 extern void GuardedSeq_00433bb0(void);     /* 0x00433bb0 */
 extern void InstallSelfThreeStateDispatch_00436030(void);     /* 0x00436030 */
 extern void ScaledAddrInit_004368f0(void);     /* 0x004368f0 */
-extern void InstallSelfPacked0x2005_00437a90(void);     /* 0x00437a90 */
+extern void InstallSelfPacked0x2005(void);     /* 0x00437a90 */
 extern void InstallSelfChainSetB333_00437b60(void);     /* 0x00437b60 */
-extern void InstallSelfChainSetB333v2_00437f00(void);     /* 0x00437f00 */
+extern void InstallSelfChainSetB333v2(void);     /* 0x00437f00 */
 extern void Wrapper_00438ee0(void);     /* 0x00438ee0 */
 extern void PrefixThunkInstallSelf3State(void);     /* 0x00438f80 */
 extern void SetJmp_00439c30(void);     /* 0x00439c30 */
-extern void InstallSelfChainSet2011_00439ec0(void);     /* 0x00439ec0 */
+extern void InstallSelfChainSet2011(void);     /* 0x00439ec0 */
 extern void GuardedDoubleCallSetJmp_00460260(void);     /* 0x00460260 */
 extern void Thunk_0049cbc0(void);     /* 0x0049cbc0 */
 extern void Thunk_0049cbd0(void);     /* 0x0049cbd0 */
@@ -42,7 +42,7 @@ extern void ExitGame(void);     /* 0x004c4870 */
 
 /* The thunks. */
 /* @addr 0x00405ac0 */
-void Thunk_00405ac0(void) { MStackPush2ChainPrepend_00409970(); }
+void Thunk_00405ac0(void) { MStackPush2ChainPrepend(); }
 
 /* @addr 0x00427460 */
 void Thunk_00427460(void) { BootMod6487eClampAndChainMul10(); }
@@ -63,7 +63,7 @@ void Thunk_00434c00(void) { PrefixThunkInstallSelf3State(); }
 void Thunk_00434eb0(void) { InstallSelfThreeStateDispatch_00436030(); }
 
 /* @addr 0x00435330 */
-void Thunk_00435330(void) { InstallSelfPacked0x2005_00437a90(); }
+void Thunk_00435330(void) { InstallSelfPacked0x2005(); }
 
 /* @addr 0x00435de0 */
 void Thunk_00435de0(void) { Wrapper_00438ee0(); }
@@ -81,10 +81,10 @@ void Thunk_004399b0(void) { GuardedSeq_00433bb0(); }
 void Thunk_00439c20(void) { SetJmp_00439c30(); }
 
 /* @addr 0x00439e30 */
-void Thunk_00439e30(void) { InstallSelfChainSet2011_00439ec0(); }
+void Thunk_00439e30(void) { InstallSelfChainSet2011(); }
 
 /* @addr 0x0043a540 */
-void Thunk_0043a540(void) { InstallSelfChainSetB333v2_00437f00(); }
+void Thunk_0043a540(void) { InstallSelfChainSetB333v2(); }
 
 /* @addr 0x0045dae0 */
 void Thunk_0045dae0(void) { Thunk_0049cbd0(); }

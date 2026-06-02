@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern void DispatcherComplex260_00407400(void);
 extern void SnapshotDirtyMark_004a1dc0(void);
 extern void MStackPushComplexCallPop_00406430(void);
-extern void DrainQueueCallEach_004a1ec0(void);
+extern void DrainQueueCallEach(void);
 extern void PendingMatch_004a8ca0(void);
 extern void AudioInstallSelfStateMachine2_004a85c0(void);
 extern unsigned int g_audioInstallArr_0050f114;
@@ -194,7 +194,7 @@ __declspec(naked) void AudioInitLoopTriple_004a7840(void)
         inc     esi
         cmp     esi, 5
         jl      short L_loop3
-        call    DrainQueueCallEach_004a1ec0
+        call    DrainQueueCallEach
         cmp     dword ptr [g_audioMicroEntry_005433f4], 2
         jne     short L_tail85c0
         call    PendingMatch_004a8ca0

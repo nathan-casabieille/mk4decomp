@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  *   Then clears g_walkCallback and the indexed slot.
  */
 
-__declspec(naked) void DualScaledInitClear_00433c10(void) {
+__declspec(naked) void DualScaledInitClear(void) {
     __asm {
         mov     edx, dword ptr [g_fightGroupHead]
         push    esi

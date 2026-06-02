@@ -115,9 +115,9 @@ extern unsigned int g_fightAxisPosY;
  *     - g_eventQueueTotal = [g_eventQueueEnd*4] (deref scope)
  *   If 0x542050 is non-zero AND [g_eventQueueIdx*4] is non-zero, runs a
  *   5-step chain through scaled-buffer indices: QuadInterpolatorV2_004255b0 (+0x15) →
- *   TripleSubVec3 (+0x15) → ThreeMul10Stores_004252c0
+ *   TripleSubVec3 (+0x15) → ThreeMul10Stores
  *   (with 0xcccc weight) → TripleSubVec3 (+0x1b) →
- *   ThreeClampLoop_00425a80 (with 0x4ccc cap) → TripleAddVec3_00425130
+ *   ThreeClampLoop_00425a80 (with 0x4ccc cap) → TripleAddVec3
  *   (with +0x1b advance). Failure path skips remaining calls.
  *
  *   Tail unconditionally installs Self with slot[+0x84]=1,
@@ -127,8 +127,8 @@ extern unsigned int g_installVecChainVar_00541f8c;
 extern unsigned int g_savedNode;
 extern void QuadInterpolatorV2_004255b0(void);
 extern void ThreeClampLoop_00425a80(void);
-extern void ThreeMul10Stores_004252c0(void);
-extern void TripleAddVec3_00425130(void);
+extern void ThreeMul10Stores(void);
+extern void TripleAddVec3(void);
 extern void TripleSubVec3(void);
 
 __declspec(naked) void InstallSelf5CallVecChain_00464660(void) {
@@ -171,7 +171,7 @@ __declspec(naked) void InstallSelf5CallVecChain_00464660(void) {
         mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], 0xcccc
         mov     dword ptr [g_xformEntityIdx], ecx
-        call    ThreeMul10Stores_004252c0
+        call    ThreeMul10Stores
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_isvc_done
@@ -199,7 +199,7 @@ __declspec(naked) void InstallSelf5CallVecChain_00464660(void) {
         add     eax, 0x1b
         mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_currentNodeIdx], eax
-        call    TripleAddVec3_00425130
+        call    TripleAddVec3
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_isvc_done

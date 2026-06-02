@@ -118,14 +118,14 @@ extern void EsiEdiAliasDualMul10(void);
 extern void FiveCallGuardSetTail(void);
 extern void GuardedPackedSlotInit(void);
 extern void IterStepNegStore_00490b10(void);
-extern void NotMaskStorePair_0045f440(void);
-extern void PunchAnimCluster_00496d80(void);
+extern void NotMaskStorePair(void);
+extern void PunchAnimCluster(void);
 extern void PushPopWalkSet1006(void);
-extern void ScaledChain3c7c_0048f930(void);
+extern void ScaledChain3c7c(void);
 extern void ScaledClearJmp_00428d40(void);
 extern void ScaledInit_0048d490(void);
 extern void ScaledLoadJmp_00428d20(void);
-extern void ScaledLoadJmp_24_00429790(void);
+extern void ScaledLoadJmp_24(void);
 extern void ScaledLookupGuardJmpIndirect(void);
 extern void TableLookupCall_00489ff0(void);
 extern void TournamentMenuFsmCluster_004960e0(void);
@@ -187,7 +187,7 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         cmp      eax, ebx
         je       L_5fe8
         jl       short L_5e90
-        call     ScaledChain3c7c_0048f930
+        call     ScaledChain3c7c
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_60d0
         cmp      dword ptr [g_walkCallback], 3
@@ -198,10 +198,10 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_60d0
         mov      dword ptr [g_xformScratch2088], 0x10000
-        call     PunchAnimCluster_00496d80
+        call     PunchAnimCluster
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_60d0
-        call     NotMaskStorePair_0045f440
+        call     NotMaskStorePair
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_60d0
         mov      ecx, dword ptr [g_fightGroupHead]
@@ -295,7 +295,7 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         call     DualGatedStateYield
         test     eax, eax
         jne      short L_60d0
-        call     ScaledLoadJmp_24_00429790
+        call     ScaledLoadJmp_24
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_60d0
         mov      dword ptr [esi + 8], OFFSET L_5e10

@@ -119,7 +119,7 @@ extern unsigned int g_crtFpuStateBuf_00523600;
 extern unsigned int g_crtFpuStack_005236ac;
 extern unsigned int g_dispatchSave1447_00f9fc1c;
 extern unsigned int g_dispatchSave1455_00f9fc64;
-extern void Calloc_004c6110(void);
+extern void Calloc(void);
 extern void CrtInitLocaleInfo_004cf880(void);
 extern void CrtLocaleInfoFreeAll_004cfc00(void);
 extern void FreeImpl(void);
@@ -184,7 +184,7 @@ __declspec(naked) void FpuFlagBundle_004cf770(void) {
         jz      short L_sm_clearPath
         push    0xac
         push    1
-        call    Calloc_004c6110
+        call    Calloc
         mov     esi, eax
         add     esp, 8
         test    esi, esi

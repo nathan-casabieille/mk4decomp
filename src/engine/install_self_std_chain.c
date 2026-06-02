@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern void InstallSelfStdChain_00435030(void);
 extern void Wrapper_00436490(void);
-extern void CmpDispatchPushCallPop_00438530(void);
+extern void CmpDispatchPushCallPop(void);
 
 /* @addr 0x00434f90 (148b) - install-self chain extend w/ g_currentNodeFlags=0x18000
  *   + g_eventQueueChild=0x1e init + StateGateMStackOverlap call. */

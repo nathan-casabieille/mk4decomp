@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * GameInstall2BodyMul10ScaledInit_00475590 - 347b 2-entry game state init.
+ * GameInstall2BodyMul10ScaledInit - 347b 2-entry game state init.
  *   Entry 0x00475590: g_walkCallback = g_eventQueueEnd[+0x30]; call SetJmp_0049cb90; if paused: ret.
  *     edx = g_currentNodeIdx, eax = g_currentNodeFlags; chain[edx*4 + 0x1c] = eax; push 0x004ec890;
  *     call IterLoad_0048e680; pop; ret.
@@ -128,7 +128,7 @@ extern void IterLoad_0048e680(void);
 extern void MStackPushMul10TailSqrt_00424a90(void);
 extern void Wrapper_0048ff30(void);
 
-__declspec(naked) void GameInstall2BodyMul10ScaledInit_00475590(void)
+__declspec(naked) void GameInstall2BodyMul10ScaledInit(void)
 {
     __asm
     {

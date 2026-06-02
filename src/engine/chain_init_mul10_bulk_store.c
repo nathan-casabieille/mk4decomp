@@ -121,7 +121,7 @@ extern unsigned int g_fightAxisPosY;
  *   g_walkCallback=0x28f. ret.
  */
 extern unsigned int g_dispatchSave682_004e5a00;
-extern void MStackPush1MagicMod2_004244d0(void);
+extern void MStackPush1MagicMod2(void);
 extern void MStackPush3CallChainBit2_004431e0(void);
 
 void ChainInitMul10BulkStore_00442740(void) {
@@ -158,7 +158,7 @@ void ChainInitMul10BulkStore_00442740(void) {
         mov     eax, dword ptr [edx*4 + 0x64]
         sub     eax, 0x5b333
         mov     dword ptr [g_eventQueueWorkType], eax
-        call    MStackPush1MagicMod2_004244d0
+        call    MStackPush1MagicMod2
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

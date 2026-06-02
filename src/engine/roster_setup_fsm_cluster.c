@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void ChainGatedNegAccum_0048b740(void);
+extern void ChainGatedNegAccum(void);
 extern void TripleVecAccCallStore(void);
 extern void ScaledInit_00450ed0(void);
 extern void ScaledInit_00450ef0(void);
@@ -154,7 +154,7 @@ __declspec(naked) void TripleBlockChainScaledInits_00450f10(void) {
         mov     dword ptr [g_acc_00542078], edx
         mov     eax, dword ptr [eax*4 + 8]
         mov     dword ptr [g_eventQueueNotMask], eax
-        call    ChainGatedNegAccum_0048b740
+        call    ChainGatedNegAccum
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

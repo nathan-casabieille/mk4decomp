@@ -22,7 +22,7 @@
  *   ret
  */
 
-extern int Lock_004c6f50(int);
+extern int Lock(int);
 extern void *g_iat_004d2140;
 extern void *g_iat_004d213c;
 
@@ -30,7 +30,7 @@ extern void *g_iat_004d213c;
 /* @addr 0x004c7030 */
 void TwoPathIATDispatch_004c7030(int a, int b) {
     if (a < 0x14) {
-        Lock_004c6f50(a + 0x1c);
+        Lock(a + 0x1c);
         return;
     }
     ((void (__stdcall *)(int))g_iat_004d2140)(b + 0x20);
@@ -39,7 +39,7 @@ void TwoPathIATDispatch_004c7030(int a, int b) {
 /* @addr 0x004c70a0 */
 void TwoPathIATDispatch_004c70a0(int a, int b) {
     if (a < 0x14) {
-        Lock_004c6f50(a + 0x1c);
+        Lock(a + 0x1c);
         return;
     }
     ((void (__stdcall *)(int))g_iat_004d213c)(b + 0x20);

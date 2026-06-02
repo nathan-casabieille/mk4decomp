@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_dispatchSave407_00503308;
 extern unsigned int g_dispatchSave408_00506414;
-void TripleCallSetCopy_004a4880(void) {
+void TripleCallSetCopy(void) {
     g_scaledInit_00542044 = (unsigned int)&g_dispatchSave407_00503308 >> 2;
     LoadGeoAsset_Default();
     if (g_framePauseFlag != 0) return;

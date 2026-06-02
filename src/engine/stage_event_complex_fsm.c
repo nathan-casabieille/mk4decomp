@@ -111,14 +111,14 @@ extern unsigned int g_fightAxisPosY;
 extern void StageEventComplexFsm_0047c680(void);
 extern void GuardedDispatch_00460ca0(void);
 extern void GuardedDispatch_00460cd0(void);
-extern void NotShrCmp1Store_00460d80(void);
+extern void NotShrCmp1Store(void);
 extern void OneSetCmpJmpLoadCall_0047c620(void);
 extern void TripleEntryTblPushJmp_0047c880(void);
 extern void StageEventExitCluster_0047cd50(void);
 extern void DeltaAbsCompareBitToggle_0048ea90(void);
 extern void DirtyToggleByGate(void);
 extern void EsiEdiAliasDualMul10(void);
-extern void PunchAnimCluster_00496d80(void);
+extern void PunchAnimCluster(void);
 extern unsigned int g_dispatchSave568_004ffe28;
 
 extern unsigned int g_primary_0052d74c;
@@ -145,7 +145,7 @@ __declspec(naked) void StageEventComplexFsm_0047c680(void)
         cmp      eax, edi
         mov      dword ptr [g_walkCallback], eax
         jne      L_c82f
-        call     NotShrCmp1Store_00460d80
+        call     NotShrCmp1Store
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_c855
         mov      eax, dword ptr [g_walkCallback]
@@ -163,7 +163,7 @@ __declspec(naked) void StageEventComplexFsm_0047c680(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_c855
         mov      dword ptr [g_xformScratch2088], ebx
-        call     PunchAnimCluster_00496d80
+        call     PunchAnimCluster
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_c855
         call     DeltaAbsCompareBitToggle_0048ea90

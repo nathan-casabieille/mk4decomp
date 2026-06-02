@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void Cmp2DirtyToggle_00423870(void);
+extern void Cmp2DirtyToggle(void);
 extern void TowerStageInitCluster_00430560(void);
 
 /*
@@ -122,7 +122,7 @@ extern unsigned int g_bootInitSaveSlot;
 
 __declspec(naked) void StackPeekDispatchIndirect_004304e0(void) {
     __asm {
-        call    Cmp2DirtyToggle_00423870
+        call    Cmp2DirtyToggle
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     done

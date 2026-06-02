@@ -21,7 +21,7 @@
 extern u32 g_framePauseFlag;
 extern void CallPauseScaledStoreXJmp_00453750(void);
 extern void GuardedSeq_00453780(void);
-extern void SetupVecFsmCluster_0043e3e0(void);
+extern void SetupVecFsmCluster(void);
 void Set2CallDirtyCallPauseJmp_004535e0(void) {
     g_walkCallback = (void (*)(void))2;
     CallPauseScaledStoreXJmp_00453750();
@@ -29,5 +29,5 @@ void Set2CallDirtyCallPauseJmp_004535e0(void) {
     if ((g_xformDirtyFlags & 4) != 0) return;
     GuardedSeq_00453780();
     if (g_framePauseFlag != 0) return;
-    SetupVecFsmCluster_0043e3e0();
+    SetupVecFsmCluster();
 }

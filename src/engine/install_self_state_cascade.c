@@ -120,7 +120,7 @@ extern void InstallSelfStateCascade_004382a0(void);
  *   two-step for the ptr; MSVC SP3 /O2 folds into single `mov edx, [ecx*4+4]`
  *   (7b) direct indexed-dereference, never emitting the intermediate lea.
  */
-__declspec(naked) void Scaled3StorePushCallJmp_00438220(void) {
+__declspec(naked) void Scaled3StorePushCallJmp(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         sar     eax, 2

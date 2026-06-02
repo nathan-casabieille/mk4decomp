@@ -124,7 +124,7 @@ extern void StateGateMStackOverlap(void);
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void InstallSelfPacked0x2005_00437a90(void) {
+__declspec(naked) void InstallSelfPacked0x2005(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi

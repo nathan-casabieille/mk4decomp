@@ -108,13 +108,13 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void StateMachine4ArmCascade_0043aab0(void);
+extern void StateMachine4ArmCascade(void);
 
 /* @addr 0x0043aed0 (282b game) - dual block: thunk + 3-state install-self.
  *   B1 (0..0x1f): call FiveCallScaledChainTailJmp; if !pause: push 0x004e4b28,
  *     tail-call ArgSarStoreJmp; ret.
  *   B2 (0x20..0x119, 3-state install-self):
- *     state >=2: tail-call StateMachine4ArmCascade_0043aab0.
+ *     state >=2: tail-call StateMachine4ArmCascade.
  *     state 1: install-self [eax+8]=0x0043aef0, chain[+0x84]=2, scaledInit-chain push
  *       0x0043aef0+0x02000000; call ScaledLoadIncJmp_00428d00; pause=1; ret.
  *     state 0: g_eventQueueNotMask=0xa, g_eventQueueChild=0x1f, install-self at
@@ -153,7 +153,7 @@ __declspec(naked) void DualBlockThunkPlus3State_0043aed0(void) {
         dec     ecx
         _emit   74h
         _emit   08h
-        call    StateMachine4ArmCascade_0043aab0
+        call    StateMachine4ArmCascade
         pop     edi
         pop     esi
         ret

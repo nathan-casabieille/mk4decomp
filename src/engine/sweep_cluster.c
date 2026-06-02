@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void StageEventState4Way_004982f0(void);
+extern void StageEventState4Way(void);
 extern void ScaledClearJmp_00428d40(void);
 extern void InstallSelf3WayChainCmp(void);
 extern void SweepCluster_004984e0(void);
@@ -122,7 +122,7 @@ extern void FiveCallGuardSetTail(void);
 extern void GuardedPackedSlotInit(void);
 extern void ScaledLoadIncJmp_00428d00(void);
 
-__declspec(naked) void StageEventState4Way_004982f0(void)
+__declspec(naked) void StageEventState4Way(void)
 {
     __asm {
         mov      eax, dword ptr [g_baseSel]
@@ -159,9 +159,9 @@ __declspec(naked) void StageEventState4Way_004982f0(void)
         add      esp, 8
         mov      dword ptr [ecx*4 + 0x28], edx
     L_8370:
-        mov      dword ptr [esi + 8], OFFSET StageEventState4Way_004982f0
+        mov      dword ptr [esi + 8], OFFSET StageEventState4Way
         mov      eax, dword ptr [g_baseSel]
-        mov      ecx, OFFSET StageEventState4Way_004982f0
+        mov      ecx, OFFSET StageEventState4Way
         mov      dword ptr [eax*4 + 0x84], 3
         mov      eax, dword ptr [esi + 4]
         add      ecx, 0x3000000
@@ -180,9 +180,9 @@ __declspec(naked) void StageEventState4Way_004982f0(void)
         ret
     L_83ce:
         mov      dword ptr [g_eventQueueChild], 0x14
-        mov      dword ptr [esi + 8], OFFSET StageEventState4Way_004982f0
+        mov      dword ptr [esi + 8], OFFSET StageEventState4Way
         mov      eax, dword ptr [g_baseSel]
-        mov      ecx, OFFSET StageEventState4Way_004982f0
+        mov      ecx, OFFSET StageEventState4Way
         add      ecx, 0x2000000
         mov      dword ptr [eax*4 + 0x84], 2
         mov      eax, dword ptr [esi + 4]
@@ -214,9 +214,9 @@ __declspec(naked) void StageEventState4Way_004982f0(void)
         cmp      eax, edi
         jne      short L_84da
         mov      dword ptr [g_eventQueueChild], 0xa
-        mov      dword ptr [esi + 8], OFFSET StageEventState4Way_004982f0
+        mov      dword ptr [esi + 8], OFFSET StageEventState4Way
         mov      edx, dword ptr [g_baseSel]
-        mov      ecx, OFFSET StageEventState4Way_004982f0
+        mov      ecx, OFFSET StageEventState4Way
         add      ecx, 0x1000000
         mov      dword ptr [edx*4 + 0x84], 1
         mov      eax, dword ptr [esi + 4]

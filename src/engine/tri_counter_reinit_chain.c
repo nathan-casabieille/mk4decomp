@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern void ComboSpecialEventCluster_0046df90(void);
 extern void DualGatedStateYield(void);
 extern void DualScaledInitCmp_0046df50(void);
-extern void GuardedDualAndFlagToggle_0048f020(void);
+extern void GuardedDualAndFlagToggle(void);
 extern void ScaledChain3c74(void);
 extern void ScaledInit_0048d430(void);
 
@@ -203,7 +203,7 @@ __declspec(naked) void TriCounterReinitChain_0046dd90(void)
         call    DualGatedStateYield
         test    eax, eax
         jne     short L_tcrc_sub3_ret
-        call    GuardedDualAndFlagToggle_0048f020
+        call    GuardedDualAndFlagToggle
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_tcrc_sub3_ret

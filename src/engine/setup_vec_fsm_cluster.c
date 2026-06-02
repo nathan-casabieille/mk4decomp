@@ -108,15 +108,15 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void SetupVecFsmCluster_0043e3e0(void);
-extern void MStackDualDiffSequencer_00477040(void);
+extern void SetupVecFsmCluster(void);
+extern void MStackDualDiffSequencer(void);
 
 /* @addr 0x0043e2d0 (259b game) - mstack-push cj, then helper call + 3 Mul10Tail.
  *   mstack-push g_cj_0054205c; g_cj_0054205c = g_scaledInit_00542044;
- *   g_eventQueueEnd = baseSel[+0x64]; call SetupVecFsmCluster_0043e3e0; if pause? final-ret.
+ *   g_eventQueueEnd = baseSel[+0x64]; call SetupVecFsmCluster; if pause? final-ret.
  *   esi = scaledInit*4 base. 3x Mul10Tail for fields +0x78/+0x7c/+0x80 with 0x9999 mod;
  *   then g_xformEntityIdx = g_load_0052ab10 + 0x15; g_eventQueueCurrent = 0x2b85;
- *   g_eventQueueWorkType = 0x20; call MStackDualDiffSequencer_00477040; if pause? final-ret.
+ *   g_eventQueueWorkType = 0x20; call MStackDualDiffSequencer; if pause? final-ret.
  *   mstack-pop g_cj_0054205c; ret.
  */
 extern unsigned int g_load_0052ab10;
@@ -134,7 +134,7 @@ __declspec(naked) void HelperCallTripleMul10_0043e2d0(void) {
         mov     dword ptr [g_cj_0054205c], edx
         mov     ecx, dword ptr [eax*4 + 0x64]
         mov     dword ptr [g_eventQueueEnd], ecx
-        call    SetupVecFsmCluster_0043e3e0
+        call    SetupVecFsmCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -174,7 +174,7 @@ __declspec(naked) void HelperCallTripleMul10_0043e2d0(void) {
         mov     dword ptr [g_eventQueueCurrent], 0x2b85
         mov     dword ptr [g_xformEntityIdx], eax
         mov     dword ptr [g_eventQueueWorkType], 0x20
-        call    MStackDualDiffSequencer_00477040
+        call    MStackDualDiffSequencer
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

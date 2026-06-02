@@ -108,9 +108,9 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void DualScaledStoreZero_00491080(void);
+extern void DualScaledStoreZero(void);
 extern void DirtyToggleByGate(void);
-extern void NotShrCmp1Store_00460d80(void);
+extern void NotShrCmp1Store(void);
 extern void CallPauseCallTestStackPushJmp_00460c60(void);
 extern void CallPauseMStackPushSet0Jmp_0045fcf0(void);
 extern void PerSlotPhaseRouter_00460770(void);
@@ -126,28 +126,28 @@ extern unsigned int g_dispatchSave697_004ea000;
  *     ecx = g_eventQueueTotal + (g_walkCallback & 0xf); jmp [ecx*4].
  *   Block C-H (0xc0..end): 6 thunks, each "call LeaPlus22StoreSelf; if !pause tail-jmp <target>; ret".
  */
-extern void ArgScaledTestStore_00494140(void);
+extern void ArgScaledTestStore(void);
 
 extern void CallPauseCallTestStackPushJmp_00460c60(void);
 extern void CallPauseMStackPushSet0Jmp_0045fcf0(void);
 extern void DirtyToggleByGate(void);
-extern void DualScaledStoreZero_00491080(void);
+extern void DualScaledStoreZero(void);
 extern void GuardedDispatch_00460ca0(void);
 extern void GuardedDispatch_00460cd0(void);
-extern void NotShrCmp1Store_00460d80(void);
+extern void NotShrCmp1Store(void);
 extern void PerSlotPhaseRouter_004605d0(void);
 extern void PerSlotPhaseRouter_00460770(void);
 
 __declspec(naked) void MultiThunkDispatcher_00460470(void) {
     __asm {
         push    0x00542980
-        call    ArgScaledTestStore_00494140
+        call    ArgScaledTestStore
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     DualScaledStoreZero_00491080
+        jmp     DualScaledStoreZero
         ret
         _emit   90h
         _emit   90h
@@ -164,7 +164,7 @@ __declspec(naked) void MultiThunkDispatcher_00460470(void) {
         mov     eax, offset g_dispatchSave697_004ea000
         shr     eax, 2
         mov     dword ptr [g_eventQueueTotal], eax
-        call    NotShrCmp1Store_00460d80
+        call    NotShrCmp1Store
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

@@ -111,13 +111,13 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00494180 (129b)
  *   eax = arg0 >> 2 → g_eventQueueTotal; eax = [eax*4] → g_xformEntityIdx;
  *   eax = g_baseSel[*4+0x30]; test+store g_walkCallback; if zero: ret;
- *   g_walkCallback = 4; call ScaledAddDeref_00494800; if pause: ret;
+ *   g_walkCallback = 4; call ScaledAddDeref; if pause: ret;
  *   eax = g_scaledArgChain_00541e68; cmp eax,g_scaledInit; g_xformEntityIdx=eax;
  *   if ne: ecx = g_eventQueueTotal; edx = [ecx*4+4]; g_xformEntityIdx=edx; ret.
  *   else: edx = g_eventQueueTotal; eax = [edx*4+8]; g_xformEntityIdx=eax; ret.
  */
 extern unsigned int g_scaledArgChain_00541e68;
-extern void ScaledAddDeref_00494800(void);
+extern void ScaledAddDeref(void);
 
 void ScaledArgChainCmpCopy_00494180(void) {
     __asm {
@@ -133,7 +133,7 @@ void ScaledArgChainCmpCopy_00494180(void) {
         _emit   74h
         _emit   52h
         mov     dword ptr [g_walkCallback], 4
-        call    ScaledAddDeref_00494800
+        call    ScaledAddDeref
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

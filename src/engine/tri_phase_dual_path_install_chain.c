@@ -115,7 +115,7 @@ extern void MStackPushSet0020_004901d0(void);
 extern void CmpEqInitCallElseJmp(void);
 extern void TriPhaseDualPathInstallChain_0047e420(void);
 extern void TailJmpInstallSelfPair_0047e690(void);
-extern void ScaledAndAldf_00490330(void);
+extern void ScaledAndAldf(void);
 extern void EsiEdiAliasDualMul10(void);
 extern void InstallSelfThresholdDispatch_0047e310(void);
 
@@ -133,7 +133,7 @@ extern void InstallSelfThresholdDispatch_0047e310(void);
  *     CmpEqInitCallElseJmp, on no-error: if bit 0 of 0x54208c set
  *     tail-call TriPhaseDualPathInstallChain_0047e420; else call TailJmpInstallSelfPair_0047e690.
  *     If g_walkCallback < 0x26666 (threshold) tail-installs Self.
- *     Else chains ScaledAndAldf_00490330 → EsiEdiAliasDualMul10,
+ *     Else chains ScaledAndAldf → EsiEdiAliasDualMul10,
  *     writes 0x28f into [g_fightGroupHead*4+0x4c], calls
  *     InstallSelfThresholdDispatch_0047e310.
  */
@@ -228,7 +228,7 @@ __declspec(naked) void Alarm3EntryPhaseChain_0047e1a0(void) {
         jne     short L_a3e_doneNoPop
         cmp     dword ptr [g_walkCallback], 0x26666
         jl      short L_a3e_installPhase0
-        call    ScaledAndAldf_00490330
+        call    ScaledAndAldf
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a3e_doneNoPop

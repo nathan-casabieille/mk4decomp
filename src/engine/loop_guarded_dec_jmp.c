@@ -12,11 +12,11 @@ extern unsigned int g_baseSel;
  * ArgSarStoreJmp(0x4e37d0). Entry A of the original 79-byte packed
  * block; entry B (loop body) lives in func_0042c7c0. */
 extern unsigned int g_dispatchSave1219_004e37d0;
-extern void Cascade3ChainInit_0048fa50(void);
+extern void Cascade3ChainInit(void);
 extern void TripleEntryStateCascade_0042c7e0(void);
 void LoopGuardedDecJmp_0042c790(void) {
     ((ScenegraphNode *)(g_baseSel * 4))->position_z = (unsigned int)g_walkCallback;
-    Cascade3ChainInit_0048fa50();
+    Cascade3ChainInit();
     if (g_framePauseFlag != 0) return;
     ArgSarStoreJmp(&g_dispatchSave1219_004e37d0);
 }

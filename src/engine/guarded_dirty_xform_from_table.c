@@ -16,7 +16,7 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_dispatchSave416_00542038;
 extern unsigned int g_dispatchSave417_0054203c;
 extern void DirtyToggleByGate(void);
-void GuardedDirtyXformFromTable_0048f6d0(void) {
+void GuardedDirtyXformFromTable(void) {
     unsigned int v;
     DirtyToggleByGate();
     if (g_framePauseFlag) return;

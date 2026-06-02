@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
  *   Same for +0x5c -> +0x44. g_scaledInit = g_baseSel + 0xf.
  *   call Triple3VecMul10Tail; pause? -> ret. jmp ThrowPairPoseCluster_0048a3d0.
  */
-void Chain2AxisDiffStoreTailJmp_0044cad0(void) {
+void Chain2AxisDiffStoreTailJmp(void) {
     unsigned int a, b;
     a = ((ScenegraphNode *)(g_eventQueueEnd * 4))->position_x;
     g_walkCallback = a;

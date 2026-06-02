@@ -110,9 +110,9 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00429300 (144b) - install-self pattern w/ chain[+0x28] vs
  *   g_eventQueueChild cmp gate; on bypass: CopyJmp_00406ba0 +
- *   CallPauseScaledDecJmp_00429750 + bit-test of g_xformDirtyFlags.
+ *   CallPauseScaledDecJmp + bit-test of g_xformDirtyFlags.
  */
-extern void CallPauseScaledDecJmp_00429750(void);
+extern void CallPauseScaledDecJmp(void);
 extern void CopyJmp_00406ba0(void);
 extern void ScaledInitOrSelfPtr_00429680(void);
 
@@ -141,7 +141,7 @@ __declspec(naked) void EsiInstallChainCmpDualCall_00429300(void) {
         test    eax, eax
         _emit   75h
         _emit   3bh
-        call    CallPauseScaledDecJmp_00429750
+        call    CallPauseScaledDecJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

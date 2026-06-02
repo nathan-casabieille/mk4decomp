@@ -124,11 +124,11 @@ extern void TableWalkBoundedCmp(void);
  */
 void TwoStageAudioInit_004a6180(void) {
     ((void (*)(int))TableWalkBoundedCmp)(4);
-    SixCallSeqPushImm_004a1d80();
+    SixCallSeqPushImm();
     g_walkCallback = (void (*)(void))g_counter_0053a51c;
     TablePushAccumTailJmp_00429e30();
     if (g_framePauseFlag != 0) return;
-    TestCmpZeroFour_004238b0();
+    TestCmpZeroFour();
     if (g_framePauseFlag != 0) return;
     g_eventQueueEnd = (unsigned int)&g_dataArr_00535cfc >> 2;
     g_dlEnabledFlag = 1;

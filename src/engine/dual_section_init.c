@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
  *   Section B (+0x70): g_xformEntityIdx=0x0050f3ec>>2; same pattern with chain[+0x54]=0x00630000.
  *   ret with pop esi.
  */
-extern void RegistryPushBindPop_00403c20(void);
+extern void RegistryPushBindPop(void);
 
 __declspec(naked) void DualSectionInit_00492140(void) {
     __asm {
@@ -150,7 +150,7 @@ __declspec(naked) void DualSectionInit_00492140(void) {
         test    eax, eax
         _emit   75h
         _emit   69h
-        call    RegistryPushBindPop_00403c20
+        call    RegistryPushBindPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -176,7 +176,7 @@ __declspec(naked) void DualSectionInit_00492140(void) {
         test    eax, eax
         _emit   75h
         _emit   05h
-        call    RegistryPushBindPop_00403c20
+        call    RegistryPushBindPop
         pop     esi
         ret
     }

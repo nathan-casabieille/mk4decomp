@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  *   mstack-pop into g_xformEntityIdx.
  */
 extern void BootChainTripleStoreThenDispatch_004076b0(void);
-extern void ScaledAddDeref_00494800(void);
+extern void ScaledAddDeref(void);
 
 extern unsigned int g_matrixStack_arr;
 
@@ -133,7 +133,7 @@ void MStackChainDecodeCall_004936f0(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], edx
         mov     dword ptr [g_walkCallback], 2
-        call    ScaledAddDeref_00494800
+        call    ScaledAddDeref
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

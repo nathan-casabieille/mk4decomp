@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   Push g_xformEntityIdx on mstack; eax = g_scaledInit;
  *   edx = eax + 0x1b; eax += 0x18;
  *   g_xformEntityIdx = edx; g_scaledInit = eax;
- *   call Mul10TailPairMidChain_00476a20; if pause: ret;
+ *   call Mul10TailPairMidChain; if pause: ret;
  *   edx = g_scaledInit; eax = g_matrixStackTop;
  *   edx -= 0x18; --eax; g_scaledInit = edx;
  *   ecx = [eax*4 + 4]; g_xformEntityIdx = ecx;
@@ -125,7 +125,7 @@ void PushSetAddCallPop_004769b0(void) {
     sc = g_scaledInit_00542044;
     g_xformEntityIdx = sc + 0x1b;
     g_scaledInit_00542044 = sc + 0x18;
-    Mul10TailPairMidChain_00476a20();
+    Mul10TailPairMidChain();
     if (g_framePauseFlag != 0) return;
     g_scaledInit_00542044 -= 0x18;
     g_xformEntityIdx = *(unsigned int *)(g_matrixStackTop * 4);

@@ -130,9 +130,9 @@ extern unsigned int g_dispatchSave83_00541e20;
  *     state=1; g_pendingNodeType=5; pause=1; pop+ret.
  */
 extern void DualCallPauseDirtyJmp_00490c30(void);
-extern void PackedAdvanceCallTailJmp_004392c0(void);
+extern void PackedAdvanceCallTailJmp(void);
 
-__declspec(naked) void StateMachine4ArmCascade_0043aab0(void) {
+__declspec(naked) void StateMachine4ArmCascade(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -225,7 +225,7 @@ __declspec(naked) void StateMachine4ArmCascade_0043aab0(void) {
         pop     esi
         ret
         push    0x004e4a38
-        call    PackedAdvanceCallTailJmp_004392c0
+        call    PackedAdvanceCallTailJmp
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         pop     edi
@@ -237,7 +237,7 @@ __declspec(naked) void StateMachine4ArmCascade_0043aab0(void) {
         _emit   75h
         _emit   21h
         mov     eax, 1
-        mov     dword ptr [esi + 8], offset StateMachine4ArmCascade_0043aab0
+        mov     dword ptr [esi + 8], offset StateMachine4ArmCascade
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], 5
         mov     dword ptr [g_framePauseFlag], eax

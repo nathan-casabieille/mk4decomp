@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void ScaledChainDouble_004911f0(void);
+extern void ScaledChainDouble(void);
 
 __declspec(naked) void Vec2ChainComputeStores_00480b80(void)
 {
@@ -124,7 +124,7 @@ __declspec(naked) void Vec2ChainComputeStores_00480b80(void)
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4], edx
-        call    ScaledChainDouble_004911f0
+        call    ScaledChainDouble
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_v2ccs_ret

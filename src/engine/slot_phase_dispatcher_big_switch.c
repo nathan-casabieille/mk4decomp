@@ -118,7 +118,7 @@ extern void DualGatedStateYield(void);
 extern void GuardedDispatch_00460ca0(void);
 extern void GuardedDispatch_00460cd0(void);
 extern void GuardedDoubleCallSetJmp_00460260(void);
-extern void NotShrCmp1Store_00460d80(void);
+extern void NotShrCmp1Store(void);
 extern void PerSlotPhaseRouter_004605d0(void);
 extern void PerSlotPhaseRouter_00460770(void);
 extern void UnlinkChainInstall_00460dd0(void);
@@ -149,7 +149,7 @@ __declspec(naked) void SlotPhaseDispatcherBigSwitch_0045fac0(void)
         jne     L_spdbs_ret
         test    byte ptr [g_xformDirtyFlags], 1
         jne     L_spdbs_b1
-        call    NotShrCmp1Store_00460d80
+        call    NotShrCmp1Store
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_spdbs_ret
         mov     eax, dword ptr [g_walkCallback]

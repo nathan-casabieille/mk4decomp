@@ -115,7 +115,7 @@ extern unsigned int g_audioVoiceTrioBase_0050a0f0;
 extern unsigned int g_voiceTrioBaseB_0050c618;
 extern void GuardedSetupCallTailJmp3_004a2000(void);
 extern void MStackPushComplexCallPop_00406430(void);
-extern void ScaledOr4DirtyClear_00409320(void);
+extern void ScaledOr4DirtyClear(void);
 
 __declspec(naked) void VoiceTrioBindAndKick_004a5ea0(void)
 {
@@ -242,7 +242,7 @@ __declspec(naked) void VoiceTrioBindAndKick_004a5ea0(void)
         test     al, al
         mov      dword ptr [esi + 0x14], ecx
         je       short L_607a
-        call     ScaledOr4DirtyClear_00409320
+        call     ScaledOr4DirtyClear
     L_607a:
         pop      edi
         pop      esi

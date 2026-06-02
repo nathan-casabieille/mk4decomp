@@ -108,11 +108,11 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void GDispatch4_004089c0(void);
+extern void GDispatch4(void);
 extern void IntroInitCluster_0044d280(void);
-extern void MStackBracket5_FieldClear_StateAdvance_00405630(void);
+extern void MStackBracket5_FieldClear_StateAdvance(void);
 extern void MStackCall_0044d230(void);
-extern void MStackPush2GuardedFieldClear_0044d0c0(void);
+extern void MStackPush2GuardedFieldClear(void);
 extern void MStackPushTyped_0044cf50(void);
 extern void MStackPushTyped_0044cf80(void);
 extern void MStackPushTyped_0044cfb0(void);
@@ -142,7 +142,7 @@ __declspec(naked) void PreFight4StageSequencer_0044a590(void)
         test     eax, eax
         jne      L_a7ee
         mov      dword ptr [g_walkCallback], 9
-        call     MStackPush2GuardedFieldClear_0044d0c0
+        call     MStackPush2GuardedFieldClear
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a7ee
@@ -169,7 +169,7 @@ __declspec(naked) void PreFight4StageSequencer_0044a590(void)
         mov      dword ptr [g_walkCallback], 7
         mov      dword ptr [g_xformEntityIdx], edx
         mov      dword ptr [g_eventQueueEnd], eax
-        call     MStackPush2GuardedFieldClear_0044d0c0
+        call     MStackPush2GuardedFieldClear
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a7ee
@@ -185,7 +185,7 @@ __declspec(naked) void PreFight4StageSequencer_0044a590(void)
         jne      L_a7ee
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_xformEntityIdx], ecx
-        call     MStackBracket5_FieldClear_StateAdvance_00405630
+        call     MStackBracket5_FieldClear_StateAdvance
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a7ee
@@ -208,7 +208,7 @@ __declspec(naked) void PreFight4StageSequencer_0044a590(void)
         mov      dword ptr [g_xformEntityIdx], eax
         mov      dword ptr [g_walkCallback], 5
         mov      dword ptr [g_eventQueueEnd], ecx
-        call     MStackPush2GuardedFieldClear_0044d0c0
+        call     MStackPush2GuardedFieldClear
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_a7ee
@@ -243,7 +243,7 @@ __declspec(naked) void PreFight4StageSequencer_0044a590(void)
         mov      eax, dword ptr [g_eventQueueTotal]
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [g_fightGroupHead], eax
-        call     GDispatch4_004089c0
+        call     GDispatch4
     L_a7ee:
         pop      ebx
         ret

@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /*
  * AudioTriEntryFlagPairInit_004a22f0 - 207b audio 3-entry init variant of AudioModeInit_004a2610.
- *   Entry 0x004a22f0: same FlagPair logic, but g_dlMode=0 and tail-jmp InstallSelfTableWalk_004200d0.
+ *   Entry 0x004a22f0: same FlagPair logic, but g_dlMode=0 and tail-jmp InstallSelfTableWalk.
  *   Entry 0x004a2370: push 6; TableWalkBoundedCmp; g_audioMatchStartFlag_00543714=1, g_audioTriEntryFlag_005433ec=1; jmp entry1.
  *   Entry 0x004a2390: push 6; TableWalkBoundedCmp; g_audioMatchStartFlag_00543714=1, g_audioTriEntryFlag_005433ec=1, g_gtOtherFlag=1;
  *     g_audioTriEntryFlag2_005433a8=0, g_installSelfCounter_005433e8=0; jmp entry1.
@@ -121,9 +121,9 @@ extern unsigned int g_installSelfCounter_005433e8;
 extern unsigned int g_audioTriEntryFlag_005433ec;
 extern unsigned int g_audioMatchStartFlag_00543714;
 extern void ClearTwoCallSetStore_004a2270(void);
-extern void DualScaledStoreConst_004a22c0(void);
-extern void InstallSelfTableWalk_004200d0(void);
-extern void SixCallSeqPushImm_004a1d80(void);
+extern void DualScaledStoreConst(void);
+extern void InstallSelfTableWalk(void);
+extern void SixCallSeqPushImm(void);
 extern void TableWalkBoundedCmp(void);
 
 __declspec(naked) void AudioTriEntryFlagPairInit_004a22f0(void)
@@ -147,16 +147,16 @@ __declspec(naked) void AudioTriEntryFlagPairInit_004a22f0(void)
         mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_xformEntityIdx], eax
     L_common:
-        call    DualScaledStoreConst_004a22c0
+        call    DualScaledStoreConst
         call    ClearTwoCallSetStore_004a2270
         mov     dword ptr [g_dlMode], 0
-        call    SixCallSeqPushImm_004a1d80
+        call    SixCallSeqPushImm
         mov     dword ptr [g_eventQueueWorkType], 0
         call    Push16Call
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_e1_ret
-        jmp     InstallSelfTableWalk_004200d0
+        jmp     InstallSelfTableWalk
     L_e1_ret:
         ret
         _emit   90h

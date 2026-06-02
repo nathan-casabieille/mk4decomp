@@ -110,16 +110,16 @@ extern unsigned int g_fightAxisPosY;
 
 extern void InstallSelfBranchCascade_00471840(void);
 extern void GuardedSeq_00471670(void);
-extern void DualEntryRecursiveInstall_00471710(void);
+extern void DualEntryRecursiveInstall(void);
 extern void EnvSpawnRehydratePass_004719f0(void);
-extern void TripleCallBitJmp_00471690(void);
+extern void TripleCallBitJmp(void);
 
 /* @addr 0x00471920 (193b game) - dual-entry: A: g_walkCallback=[g_fightGroupHead*4+0x18];
  *   if zero jmp GuardedSeq_00471670; else jmp InstallSelfBranchCascade_00471840.
  *   B (+0x20): install-self path with countdown; chain[+0x84]!=0 path: g_eventQueueCurrent=0x10000,
- *   g_eventQueueWorkType=0x10000; call DualEntryRecursiveInstall_00471710; pause-check; jmp EnvSpawnRehydratePass_004719f0.
+ *   g_eventQueueWorkType=0x10000; call DualEntryRecursiveInstall; pause-check; jmp EnvSpawnRehydratePass_004719f0.
  *   chain[+0x84]==0 path: install-self at +0x08=0x00471940, scaledInit-chain push 0x00471940|0x01000000,
- *   call TripleCallBitJmp_00471690; g_pause=1; ret.
+ *   call TripleCallBitJmp; g_pause=1; ret.
  */
 
 __declspec(naked) void DualEntryInstall00471920_00471920(void) {
@@ -143,7 +143,7 @@ __declspec(naked) void DualEntryInstall00471920_00471920(void) {
         mov     eax, 0x00010000
         mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [g_eventQueueWorkType], eax
-        call    DualEntryRecursiveInstall_00471710
+        call    DualEntryRecursiveInstall
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -163,7 +163,7 @@ __declspec(naked) void DualEntryInstall00471920_00471920(void) {
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
-        call    TripleCallBitJmp_00471690
+        call    TripleCallBitJmp
         mov     dword ptr [g_framePauseFlag], 1
         ret
     }

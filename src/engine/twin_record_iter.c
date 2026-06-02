@@ -111,11 +111,11 @@ extern unsigned int g_fightAxisPosY;
 /*
  * @addr 0x004be590 (126b engine.scenegraph) - twin record iterator:
  *   call Audio_TimerTeardown; loop1: for si 0..99, convert via
- *   magic-divide (val/10 if >100, else +0x7d0), call Snd3DSourceCleanup_004c3ad0.
+ *   magic-divide (val/10 if >100, else +0x7d0), call Snd3DSourceCleanup.
  *   loop2: for di 0x157c..0x158f (20 entries), same convert+call.
  */
 extern void Audio_TimerTeardown_004ac5f0(void);
-extern void Snd3DSourceCleanup_004c3ad0(void);
+extern void Snd3DSourceCleanup(void);
 
 __declspec(naked) void TwinRecordIter_004be590(void) {
     __asm {
@@ -141,7 +141,7 @@ bigPath1:
 call1:
         push    0
         push    edx
-        call    Snd3DSourceCleanup_004c3ad0
+        call    Snd3DSourceCleanup
         add     esp, 8
 loop1Inc:
         inc     esi
@@ -165,7 +165,7 @@ bigPath2:
 call2:
         push    0
         push    edx
-        call    Snd3DSourceCleanup_004c3ad0
+        call    Snd3DSourceCleanup
         add     esp, 8
         inc     edi
         inc     esi

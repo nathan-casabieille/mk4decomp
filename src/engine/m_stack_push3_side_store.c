@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_matrixStack_arr;
 extern void Add0fJmp_0044ccd0(void);
 
-void MStackPush3SideStore_0044cb80(void) {
+void MStackPush3SideStore(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueWorkType]

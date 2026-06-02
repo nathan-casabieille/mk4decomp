@@ -112,16 +112,16 @@ extern unsigned int g_fightAxisPosY;
  *   esi = base*4; flag = [esi+0x84]; clear.
  *   if (flag != 0): call StackPopDispatchTagged; pop esi; ret.
  *   [0x541d90]++; if (>= 0x10): reset to 0; g_walkCallback = same.
- *   call SixCallSeqPushImm. push 1, (g_walkCallback+3); call SceneFrameStepWithInputs_004be250; add esp, 8.
+ *   call SixCallSeqPushImm. push 1, (g_walkCallback+3); call SceneFrameStepWithInputs; add esp, 8.
  *   if (eax == 0xa): install self: [esi+8]=0x404920, [esi+0x84]=1, g_pendingNodeType=1, pause=1.
- *   else: call ScenegraphWalk; call BootInitGuardedCallChain; call AudioInitInstallerPair_004a2140; ret.
+ *   else: call ScenegraphWalk; call BootInitGuardedCallChain; call AudioInitInstallerPair; ret.
  */
 extern unsigned int g_installSelfCounter2_00541d90;
-extern void AudioInitInstallerPair_004a2140(void);
+extern void AudioInitInstallerPair(void);
 extern void BootInitGuardedCallChain(void);
-extern void SceneFrameStepWithInputs_004be250(void);
-extern void ScenegraphWalk_0041f7d0(void);
-extern void SixCallSeqPushImm_004a1d80(void);
+extern void SceneFrameStepWithInputs(void);
+extern void ScenegraphWalk(void);
+extern void SixCallSeqPushImm(void);
 
 extern unsigned int g_matrixStack_arr;
 
@@ -148,19 +148,19 @@ __declspec(naked) void InstallSelfCounter_00404920(void) {
         _emit   0ch
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_installSelfCounter2_00541d90], ecx
-        call    SixCallSeqPushImm_004a1d80
+        call    SixCallSeqPushImm
         mov     eax, dword ptr [g_walkCallback]
         push    1
         add     eax, 3
         push    eax
-        call    SceneFrameStepWithInputs_004be250
+        call    SceneFrameStepWithInputs
         add     esp, 8
         cmp     eax, 0x0a
         _emit   75h
         _emit   11h
-        call    ScenegraphWalk_0041f7d0
+        call    ScenegraphWalk
         call    BootInitGuardedCallChain
-        call    AudioInitInstallerPair_004a2140
+        call    AudioInitInstallerPair
         pop     esi
         ret
         mov     dword ptr [esi + 8], 0x00404920

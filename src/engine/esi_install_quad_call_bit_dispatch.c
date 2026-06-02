@@ -109,12 +109,12 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0049a050 (145b) - install-self pattern w/ 4-call chain
- *   (ClampNegPair_0049a170 + Vec2SumMul10ChainCompute + GuardedSeq_0049a650/AtanDualDeltaThreshold_0049c870)
+ *   (ClampNegPair + Vec2SumMul10ChainCompute + GuardedSeq_0049a650/AtanDualDeltaThreshold)
  *   + bit-test dispatch to Set43DualCallJmp on success. */
-extern void AtanDualDeltaThreshold_0049c870(void);
-extern void ClampNegPair_0049a170(void);
+extern void AtanDualDeltaThreshold(void);
+extern void ClampNegPair(void);
 extern void GuardedSeq_0049a650(void);
-extern void Set43DualCallJmp_0049a620(void);
+extern void Set43DualCallJmp(void);
 extern void Vec2SumMul10ChainCompute(void);
 
 __declspec(naked) void EsiInstallQuadCallBitDispatch_0049a050(void) {
@@ -123,7 +123,7 @@ __declspec(naked) void EsiInstallQuadCallBitDispatch_0049a050(void) {
         push    esi
         mov     dword ptr [eax*4 + 0x84], 0
         lea     esi, [eax*4 + 0]
-        call    ClampNegPair_0049a170
+        call    ClampNegPair
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -142,7 +142,7 @@ __declspec(naked) void EsiInstallQuadCallBitDispatch_0049a050(void) {
         pop     esi
         ret
         mov     dword ptr [g_walkCallback], 0x10
-        call    AtanDualDeltaThreshold_0049c870
+        call    AtanDualDeltaThreshold
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -153,7 +153,7 @@ __declspec(naked) void EsiInstallQuadCallBitDispatch_0049a050(void) {
         _emit   0c8h
         _emit   74h
         _emit   07h
-        call    Set43DualCallJmp_0049a620
+        call    Set43DualCallJmp
         pop     esi
         ret
         mov     dword ptr [esi + 8], 0x0049a050

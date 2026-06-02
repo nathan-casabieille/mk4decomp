@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void Bit2GatedChainInit_00453620(void);
 extern void DirtyDoubleDeref(void);
-extern void GDispatch4_004089c0(void);
+extern void GDispatch4(void);
 extern void PoseCopyIdleCluster_004537a0(void);
 
 extern unsigned int g_chain_arr_4348f0;
@@ -153,7 +153,7 @@ __declspec(naked) void FourStageChainedDispatch_00453540(void) {
         mov     [eax*4 + g_chain_arr_4348f0 + 0x30], ecx
         mov     edx, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_scaledInit_00542044], edx
-        call    GDispatch4_004089c0
+        call    GDispatch4
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

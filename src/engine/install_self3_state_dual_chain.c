@@ -118,10 +118,10 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave558_004ed0dc;
 extern void FiveCallGuardSetTail(void);
 extern void InstallSelf3WayChainCmp(void);
-extern void ScaledAndAldf_00490330(void);
+extern void ScaledAndAldf(void);
 extern void ScaledLoadJmp_00428d20(void);
 
-__declspec(naked) void InstallSelf3StateDualChain_0047a1c0(void) {
+__declspec(naked) void InstallSelf3StateDualChain(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -138,9 +138,9 @@ __declspec(naked) void InstallSelf3StateDualChain_0047a1c0(void) {
         pop     esi
         ret
     case1:
-        mov     dword ptr [esi + 8], offset InstallSelf3StateDualChain_0047a1c0
+        mov     dword ptr [esi + 8], offset InstallSelf3StateDualChain
         mov     ecx, dword ptr [g_baseSel]
-        mov     edx, offset InstallSelf3StateDualChain_0047a1c0
+        mov     edx, offset InstallSelf3StateDualChain
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x02000000
@@ -157,7 +157,7 @@ __declspec(naked) void InstallSelf3StateDualChain_0047a1c0(void) {
         pop     esi
         ret
     case0:
-        call    ScaledAndAldf_00490330
+        call    ScaledAndAldf
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     tail
@@ -168,9 +168,9 @@ __declspec(naked) void InstallSelf3StateDualChain_0047a1c0(void) {
         test    eax, eax
         jne     tail
         mov     dword ptr [g_eventQueueChild], 0x1d
-        mov     dword ptr [esi + 8], offset InstallSelf3StateDualChain_0047a1c0
+        mov     dword ptr [esi + 8], offset InstallSelf3StateDualChain
         mov     ecx, dword ptr [g_baseSel]
-        mov     edx, offset InstallSelf3StateDualChain_0047a1c0
+        mov     edx, offset InstallSelf3StateDualChain
         add     edx, 0x01000000
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]

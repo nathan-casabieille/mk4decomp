@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00470f90 (122b)
- *   call ScaledAndCheckJmp_00470f60; if pause: ret;
+ *   call ScaledAndCheckJmp; if pause: ret;
  *   eax = g_cj_0054205c[*4+0x40]; g_walkCallback=eax;
  *   eax &= 0x200; g_xformScratch94=eax; if zero: ret;
  *   ecx = g_baseSel[*4+0x3c]; g_scaledInit=ecx;
@@ -117,11 +117,11 @@ extern unsigned int g_fightAxisPosY;
  *   if lt: ret;
  *   g_walkCallback=0x1f4; call AudioVolumeRescale; if pause: ret;
  *   test (bit0 of g_xformDirtyFlags); if zero: jmp Wrapper_00438c40;
- *   else: jmp DispatchSwitchWalkCmp_00438bf0.
+ *   else: jmp DispatchSwitchWalkCmp.
  */
 void GuardedBitChainCmpJmp_00470f90(void) {
     int v;
-    ScaledAndCheckJmp_00470f60();
+    ScaledAndCheckJmp();
     if (g_framePauseFlag != 0) return;
     v = (int)((FightGroupNode *)(g_cj_0054205c * 4))->bits;
     g_walkCallback = (void (*)(void))v;
@@ -136,7 +136,7 @@ void GuardedBitChainCmpJmp_00470f90(void) {
     AudioVolumeRescale();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 1) != 0) {
-        DispatchSwitchWalkCmp_00438bf0();
+        DispatchSwitchWalkCmp();
         return;
     }
     Wrapper_00438c40();

@@ -26,13 +26,13 @@ extern unsigned int g_scaledInit_00542044;
 extern void ZeroThreeSlots_00490780(void);
 extern void InitThreeFields_00490e90(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
-extern void ScaledChainNegStore_00470310(void);
-void TripleCallPauseJmp_00470500(void) {
+extern void ScaledChainNegStore(void);
+void TripleCallPauseJmp(void) {
     ZeroThreeSlots_00490780();
     if (g_framePauseFlag != 0) return;
     InitThreeFields_00490e90();
     if (g_framePauseFlag != 0) return;
     DualCallPauseDirtyJmp_00490c30();
     if (g_framePauseFlag != 0) return;
-    ScaledChainNegStore_00470310();
+    ScaledChainNegStore();
 }

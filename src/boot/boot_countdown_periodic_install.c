@@ -126,7 +126,7 @@ extern void LinkSiblingsAndInstallSelf_00414670(void);
 extern void MStackCall_00406740(void);
 extern void MStackPush2ChainLLInsert(void);
 extern void SetDirty4XorScaledLoad_004147b0(void);
-extern void TableHitOrSchedule_004be7a0(void);
+extern void TableHitOrSchedule(void);
 
 __declspec(naked) void BootCountdownPeriodicInstall_00414810(void)
 {
@@ -172,7 +172,7 @@ __declspec(naked) void BootCountdownPeriodicInstall_00414810(void)
         ret
     L_state0:
         push    0x13c9
-        call    TableHitOrSchedule_004be7a0
+        call    TableHitOrSchedule
         mov     edx, dword ptr [g_cj_00542058]
         add     esp, 4
         mov     dword ptr [g_currentNodeIdx], edx

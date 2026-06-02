@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *   ID into walk[+0x3c]. Pops the stack entry back into eventQueue
  *   and decrements.
  */
-void RegistryPushBindPop_00403c20(void) {
+void RegistryPushBindPop(void) {
     unsigned int top;
     unsigned char *base;
     top = g_matrixStackTop + 1;

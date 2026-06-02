@@ -22,7 +22,7 @@ void ScaledChain3c74(void) {
 }
 
 /* @addr 0x0048f930 (31b): same shape with offset 0x7c instead of 0x74 */
-void ScaledChain3c7c_0048f930(void) {
+void ScaledChain3c7c(void) {
     unsigned int v = ((ScenegraphNode *)(g_baseSel * 4))->child_a;
     g_scaledInit_00542044 = v;
     g_walkCallback = (void (*)(void))*(unsigned int *)(v * 4 + 0x7c);

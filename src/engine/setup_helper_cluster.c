@@ -118,7 +118,7 @@ extern unsigned int g_bootClampMod6Base_004e2670;
 
 extern void SetJmp_00405420(void);
 
-__declspec(naked) void GameMusicState4Way_00426d90(void)
+__declspec(naked) void GameMusicState4Way(void)
 {
     __asm {
         /* H1: trampoline */

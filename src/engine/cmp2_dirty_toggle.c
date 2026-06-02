@@ -27,7 +27,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_tickFlagF;
 extern u32 g_dlMode;
-void Cmp2DirtyToggle_00423870(void) {
+void Cmp2DirtyToggle(void) {
     unsigned int state;
     unsigned int mode;
     state = g_tickFlagF;

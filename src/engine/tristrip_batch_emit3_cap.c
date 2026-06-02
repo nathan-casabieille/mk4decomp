@@ -137,7 +137,7 @@ extern unsigned int g_dispatchSave1576_00ab4e60;
 extern void AdvanceTriStripRing(void);
 extern void AltCamMatrixProject_004b9840(void);
 extern void Helper_DrawCursor(void);
-extern void MaxOfThree_004b3d90(void);
+extern void MaxOfThree(void);
 extern void MinOfThree_004b3d70(void);
 extern void ProjectTwoVertices(void);
 extern void ProjectVertex(void);
@@ -294,7 +294,7 @@ __declspec(naked) void TristripBatchEmit3Cap_004bb680(void)
         call     MinOfThree_004b3d70
         jmp      L_b87d
     L_b878:
-        call     MaxOfThree_004b3d90
+        call     MaxOfThree
     L_b87d:
         mov      word ptr [esi + 0x12], ax
         mov      ecx, dword ptr [g_dispatchSave1559_00ab4d9c]

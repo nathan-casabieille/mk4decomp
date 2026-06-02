@@ -21,7 +21,7 @@ extern void *g_table_00520070[];
 extern int (__stdcall *g_iat_004d213c)(void *);
 
 #pragma optimize("y", off)
-int TableLookupIatCall_004c6fd0(int arg) {
+int TableLookupIatCall(int arg) {
     return g_iat_004d213c(g_table_00520070[arg]);
 }
 #pragma optimize("", on)

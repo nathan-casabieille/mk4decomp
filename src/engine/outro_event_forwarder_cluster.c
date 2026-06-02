@@ -121,7 +121,7 @@ extern void FiveCallGuardSetTail(void);
 extern void GateDispatch6c(void);
 extern void Phase3Packed3EntryDispatch_00486130(void);
 extern void QuadBlockDispatch_00483090(void);
-extern void QuadBlockInstallChainThunks_00483c90(void);
+extern void QuadBlockInstallChainThunks(void);
 extern void ScaledAndAlf7_00490310(void);
 extern void ScaledCmpJlJmp_00488ed0(void);
 extern void ScaledDecOrZero_00483b50(void);
@@ -154,13 +154,13 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         cmp      ecx, 0x3333
         mov      dword ptr [g_walkCallback], ecx
         jl       short L_5ecb
-        jmp      QuadBlockInstallChainThunks_00483c90
+        jmp      QuadBlockInstallChainThunks
     L_5ecb:
         mov      eax, dword ptr [eax*4 + 0x34]
         cmp      eax, 0xf
         mov      dword ptr [g_walkCallback], eax
         jne      short L_5ee1
-        jmp      QuadBlockInstallChainThunks_00483c90
+        jmp      QuadBlockInstallChainThunks
     L_5ee1:
         call     L_5e70
         mov      eax, dword ptr [g_framePauseFlag]
@@ -187,7 +187,7 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         cmp      eax, 0x3333
         mov      dword ptr [g_walkCallback], eax
         jl       short L_5f39
-        jmp      QuadBlockInstallChainThunks_00483c90
+        jmp      QuadBlockInstallChainThunks
     L_5f39:
         call     L_5e70
         mov      eax, dword ptr [g_framePauseFlag]

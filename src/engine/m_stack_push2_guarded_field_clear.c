@@ -111,16 +111,16 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x0044d0c0 (276b game) - mstack-push 2, 2 calls, conditional field clear.
  *   mstack-push g_xformEntityIdx. call DirtyDoubleDeref; if pause? final-ret.
  *   esi=0. mstack-push g_scaledInit_00542044; load scaledInit[+0x24] -> g_xformEntityIdx.
- *   Call FramePauseScaledStore_00406c10; if pause? final-ret.
+ *   Call FramePauseScaledStore; if pause? final-ret.
  *   g_pendingNodeType = mstack-top (peek scaledInit before pop).
  *   If bit2 of g_xformDirtyFlags clear: mstack-pop scaledInit + g_xformEntityIdx; pop esi; ret.
  *   Else: drop one more, clear scaledInit[+0x30/+0x34/+0x38/+0x1c], mstack-pop
  *   to g_xformEntityIdx, clear bit2 of state; pop esi; ret.
  */
 extern void DirtyDoubleDeref(void);
-extern void FramePauseScaledStore_00406c10(void);
+extern void FramePauseScaledStore(void);
 
-__declspec(naked) void MStackPush2GuardedFieldClear_0044d0c0(void) {
+__declspec(naked) void MStackPush2GuardedFieldClear(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_xformEntityIdx]
@@ -146,7 +146,7 @@ __declspec(naked) void MStackPush2GuardedFieldClear_0044d0c0(void) {
         mov     eax, dword ptr [g_scaledInit_00542044]
         mov     ecx, dword ptr [eax*4 + 0x24]
         mov     dword ptr [g_xformEntityIdx], ecx
-        call    FramePauseScaledStore_00406c10
+        call    FramePauseScaledStore
         cmp     dword ptr [g_framePauseFlag], esi
         _emit   0fh
         _emit   85h

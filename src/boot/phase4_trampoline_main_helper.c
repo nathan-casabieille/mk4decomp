@@ -119,9 +119,9 @@ extern void ClampMulShiftStore(void);
 extern void CmpDivJmp(void);
 extern void LoopUnrolledTripleMul10_0049d550(void);
 extern void MStackCall_004065b0(void);
-extern void MStackPush1MagicMod2_004244d0(void);
+extern void MStackPush1MagicMod2(void);
 extern void PushSetXfmMaskCallPop(void);
-extern void ScaledTripleCopy10_0049d340(void);
+extern void ScaledTripleCopy10(void);
 extern void SetJmp_00405420(void);
 extern void SetJmp_00408d20(void);
 
@@ -235,7 +235,7 @@ __declspec(naked) void Phase4TrampolineMainHelper_00415180(void)
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_acc_00542078], eax
         mov     dword ptr [g_eventQueueWorkType], ecx
-        call    MStackPush1MagicMod2_004244d0
+        call    MStackPush1MagicMod2
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh_M_ret
@@ -265,7 +265,7 @@ __declspec(naked) void Phase4TrampolineMainHelper_00415180(void)
         add     esp, 8
         mov     dword ptr [g_acc_00542078], eax
         mov     dword ptr [ecx*4 + 4], eax
-        call    ScaledTripleCopy10_0049d340
+        call    ScaledTripleCopy10
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh_M_ret

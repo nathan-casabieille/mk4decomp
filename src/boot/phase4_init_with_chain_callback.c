@@ -120,7 +120,7 @@ extern void MStackPop8(void);
 extern void MStackPush8(void);
 extern void MStackPushNegMul10Var_0040a730(void);
 extern void MStackPushZeroCallPop_004066f0(void);
-extern void StackPushAdd15CallPop_0040a7e0(void);
+extern void StackPushAdd15CallPop(void);
 extern void StoreDoubleNegPauseSubStore(void);
 extern void ZeroThreeFields_0040a8b0(void);
 
@@ -153,7 +153,7 @@ __declspec(naked) void Phase4InitWithChainCallback_0040e860(void)
         add     esp, 8
         test    al, 1
         jne     L_p4iwcc_A_pop_tail
-        call    StackPushAdd15CallPop_0040a7e0
+        call    StackPushAdd15CallPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4iwcc_A_ret

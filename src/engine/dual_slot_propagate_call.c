@@ -115,9 +115,9 @@ extern unsigned int g_fightAxisPosY;
  *   esi = [eax*4+0x30]; ecx += esi; g_currentNodeFlags = ecx;
  *   esi = [eax*4+0x34]; edx += esi; g_xformScratch2088 = edx;
  *   [eax*4+0x38] = ecx; eax = g_baseSel; ecx = g_xformScratch2088;
- *   [eax*4+0x3c] = ecx; call DualWalkRange_00468440; pop esi; ret.
+ *   [eax*4+0x3c] = ecx; call DualWalkRange; pop esi; ret.
  */
-extern void DualWalkRange_00468440(void);
+extern void DualWalkRange(void);
 
 void DualSlotPropagateCall_004683e0(void) {
     unsigned int base, field38, field3c, tmp;
@@ -133,5 +133,5 @@ void DualSlotPropagateCall_004683e0(void) {
     g_xformScratch2088 += tmp;
     *(unsigned int *)(base * 4 + 0x38) = field38;
     ((ScenegraphNode *)(g_baseSel * 4))->child_a = g_xformScratch2088;
-    DualWalkRange_00468440();
+    DualWalkRange();
 }

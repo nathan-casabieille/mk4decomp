@@ -22,7 +22,7 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned char g_byte_00542040;
 extern unsigned int g_or_0052ab40;
 extern unsigned int g_save_0053a7d8;
-void TestCmpZeroFour_004238b0(void) {
+void TestCmpZeroFour(void) {
     g_walkCallback = (void (*)(void))0;
     if (g_byte_00542040 == 0) {
         g_or_0052ab40 = 0;

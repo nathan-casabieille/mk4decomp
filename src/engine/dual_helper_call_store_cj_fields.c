@@ -109,14 +109,14 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void ScaledArrStore_00429980(void);
-extern void TripleFieldCopyJmpHi_0048f740(void);
+extern void TripleFieldCopyJmpHi(void);
 extern void TripleFieldCopyHi_0048f7b0(void);
-extern void DualHelperCallStoreCjFields_0048ff40(void);
+extern void DualHelperCallStoreCjFields(void);
 extern void EsiEdiAliasDualMul10(void);
 
 /* @addr 0x0047f3f0 (237b game) - install-self with 3-state dispatch by [+0x84].
- *   B0 ([+0x84]==0): mov 0x4ccc, 0xffffb334 locals; call DualHelperCallStoreCjFields_0048ff40; if !pause
- *     call TripleFieldCopyJmpHi_0048f740; if !pause install-self + chain[+0x84]=1
+ *   B0 ([+0x84]==0): mov 0x4ccc, 0xffffb334 locals; call DualHelperCallStoreCjFields; if !pause
+ *     call TripleFieldCopyJmpHi; if !pause install-self + chain[+0x84]=1
  *     + g_pendingNodeType=4 + g_pause=1; ret.
  *   B1 ([+0x84]==1): call TripleFieldCopyHi_0048f7b0; if !pause set g_walkCallback=0xe666
  *     call EsiEdiAliasDualMul10; if !pause install-self + chain[+0x84]=2
@@ -174,12 +174,12 @@ __declspec(naked) void InstallSelfStateMachine_0047f3f0(void) {
         ret
         mov     dword ptr [g_walkCallback], 0x4ccc
         mov     dword ptr [g_eventQueueCurrent], 0xffffb334
-        call    DualHelperCallStoreCjFields_0048ff40
+        call    DualHelperCallStoreCjFields
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   2fh
-        call    TripleFieldCopyJmpHi_0048f740
+        call    TripleFieldCopyJmpHi
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

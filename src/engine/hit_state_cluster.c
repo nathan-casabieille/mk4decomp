@@ -112,7 +112,7 @@ extern unsigned int g_dispatchSave968_004eb1e0;
 extern unsigned int g_dispatchSave969_004eb240;
 extern unsigned int g_dispatchSave970_004eb258;
 extern void ArgSarStoreJmp(void);
-extern void ComboScriptDispatchCluster_00470530(void);
+extern void ComboScriptDispatchCluster(void);
 extern void FiveCallGuardSetTail(void);
 extern void GuardedSeq_004297b0(void);
 extern void InstallSelfChainedDispatch_0046cb70(void);
@@ -191,7 +191,7 @@ __declspec(naked) void HitStateCluster_0046c7c0(void)
         mov      eax, OFFSET g_dispatchSave969_004eb240
         sar      eax, 2
         mov      dword ptr [g_eventQueueEnd], eax
-        jmp      ComboScriptDispatchCluster_00470530
+        jmp      ComboScriptDispatchCluster
         nop      
         nop      
         nop      

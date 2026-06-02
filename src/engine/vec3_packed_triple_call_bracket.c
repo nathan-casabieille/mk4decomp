@@ -115,7 +115,7 @@ extern unsigned int g_packedTripleSlot_0053a420;
 extern unsigned int g_dispatchSave90_0053a424;
 extern unsigned int g_dispatchSave89_0053a428;
 extern unsigned int g_packedTripleSlot2_00541f88;
-extern void QuadInterpolator_00425380(void);
+extern void QuadInterpolator(void);
 
 __declspec(naked) void Vec3PackedTripleCallBracket_004764d0(void)
 {
@@ -176,7 +176,7 @@ __declspec(naked) void Vec3PackedTripleCallBracket_004764d0(void)
         mov     dword ptr [g_pendingNodeType], edx
         mov     dword ptr [g_xformEntityIdx], eax
         mov     dword ptr [g_currentNodeIdx], ecx
-        call    QuadInterpolator_00425380
+        call    QuadInterpolator
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_v3ptcb_ret

@@ -112,7 +112,7 @@ extern void Phase3InstallSelf_00403170(void);
 extern unsigned int g_dst_0053a6e0;
 
 /*
- * BootStateMachine4Way_00402f60 - 257b boot 4-state install-self machine.
+ * BootStateMachine4Way - 257b boot 4-state install-self machine.
  *   chain = g_baseSel<<2; saved = chain->state; chain->state=0.
  *   sub ecx,0 flags branch:
  *     state 0 → init full: g_phaseIdx_0053a50c=7; g_dst_0053a6e0=1; g_walkCallback=0; g_dst_00537ea4=0;
@@ -121,14 +121,14 @@ extern unsigned int g_dst_0053a6e0;
  *     state 1 → install-self; chain->state=2; g_pendingNodeType=0xa0; g_framePauseFlag=1; pop+ret.
  *     state 2 → install-self; chain->state=3; g_pendingNodeType=0x384; g_framePauseFlag=1;
  *       g_walkCallback=1; g_smState4Way_00541dc8=1; pop+ret.
- *     state 3+ → tail-call BootDualStateInstallSelf_00403070; pop+ret.
+ *     state 3+ → tail-call BootDualStateInstallSelf; pop+ret.
  */
 extern unsigned int g_phaseIdx_0053a50c;
 extern unsigned int g_smState4Way_00541dc8;
 extern unsigned int g_dst_00537ea4;
-extern void BootDualStateInstallSelf_00403070(void);
+extern void BootDualStateInstallSelf(void);
 
-__declspec(naked) void BootStateMachine4Way_00402f60(void)
+__declspec(naked) void BootStateMachine4Way(void)
 {
     __asm
     {
@@ -145,7 +145,7 @@ __declspec(naked) void BootStateMachine4Way_00402f60(void)
         je      short L_s1
         dec     ecx
         je      short L_s2
-        call    BootDualStateInstallSelf_00403070
+        call    BootDualStateInstallSelf
         pop     edi
         pop     esi
         ret
@@ -153,7 +153,7 @@ __declspec(naked) void BootStateMachine4Way_00402f60(void)
         mov     esi, 1
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [g_smState4Way_00541dc8], esi
-        mov     dword ptr [eax + 8], offset BootStateMachine4Way_00402f60
+        mov     dword ptr [eax + 8], offset BootStateMachine4Way
         mov     dword ptr [eax + 0x84], 3
         mov     dword ptr [g_pendingNodeType], 0x384
         mov     dword ptr [g_framePauseFlag], esi
@@ -161,7 +161,7 @@ __declspec(naked) void BootStateMachine4Way_00402f60(void)
         pop     esi
         ret
     L_s1:
-        mov     dword ptr [eax + 8], offset BootStateMachine4Way_00402f60
+        mov     dword ptr [eax + 8], offset BootStateMachine4Way
         mov     dword ptr [eax + 0x84], 2
         mov     dword ptr [g_pendingNodeType], 0xa0
         mov     dword ptr [g_framePauseFlag], 1
@@ -174,9 +174,9 @@ __declspec(naked) void BootStateMachine4Way_00402f60(void)
         mov     dword ptr [g_dst_0053a6e0], esi
         mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [g_dst_00537ea4], edx
-        mov     dword ptr [eax + 8], offset BootStateMachine4Way_00402f60
+        mov     dword ptr [eax + 8], offset BootStateMachine4Way
         mov     ecx, dword ptr [g_baseSel]
-        mov     edi, offset BootStateMachine4Way_00402f60
+        mov     edi, offset BootStateMachine4Way
         add     edi, 0x01000000
         mov     dword ptr [ecx*4 + 0x84], esi
         mov     ecx, dword ptr [eax + 4]

@@ -124,13 +124,13 @@ void FreeImpl(void *ptr) {
     void *out2;
     void *region;
     if (ptr == 0) return;
-    Lock_004c6f50(9);
+    Lock(9);
     region = HeapRegionLookup_004c7370(ptr, &out1, &out2);
     if (region != 0) {
         CrtHeapCommitFreeCluster_004c73d0(out1, out2, region);
-        TableLookupIatCall_004c6fd0(9);
+        TableLookupIatCall(9);
         return;
     }
-    TableLookupIatCall_004c6fd0(9);
+    TableLookupIatCall(9);
     ((void (__stdcall *)(unsigned int, unsigned int, void *))g_iat_004d214c)(g_dispatchSave1470_00fa0ee4, 0, ptr);
 }

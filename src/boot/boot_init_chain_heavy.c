@@ -131,13 +131,13 @@ extern unsigned int g_dispatchSave80_00541eac;
 extern unsigned int g_bootChainState4_00541eb0;
 extern unsigned int g_audioInitScaled_0054343c;
 extern void AndShlStore_00409280(void);
-extern void BootPhaseGateBracketedInit_004060c0(void);
+extern void BootPhaseGateBracketedInit(void);
 extern void Helper_GeoLoadPre(void);
 extern void LinkedListBuilder_004ab380(void);
 extern void MStackCall_004063e0(void);
 extern void ScaledChainAccumLoop_0049cd40(void);
 extern void Thunk_004bd8d0(void);
-extern void VertexSlotInitFlagWalk_00409740(void);
+extern void VertexSlotInitFlagWalk(void);
 
 __declspec(naked) void BootInitChainHeavy_00404f20(void)
 {
@@ -164,50 +164,50 @@ __declspec(naked) void BootInitChainHeavy_00404f20(void)
         mov     edx, dword ptr [g_bootChainPair1_00541e84]
         mov     dword ptr [g_eventQueueEnd], esi
         mov     dword ptr [g_eventQueueTotal], edx
-        call    VertexSlotInitFlagWalk_00409740
+        call    VertexSlotInitFlagWalk
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         mov     eax, dword ptr [g_bootChainScaled1_00541e88]
         mov     dword ptr [g_eventQueueEnd], esi
         mov     dword ptr [g_eventQueueTotal], eax
-        call    VertexSlotInitFlagWalk_00409740
+        call    VertexSlotInitFlagWalk
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         mov     ecx, dword ptr [g_bootChainScaled2_00541e8c]
         mov     dword ptr [g_eventQueueEnd], esi
         mov     dword ptr [g_eventQueueTotal], ecx
-        call    VertexSlotInitFlagWalk_00409740
+        call    VertexSlotInitFlagWalk
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         mov     edx, dword ptr [g_bootChainState3_00541e98]
         mov     dword ptr [g_eventQueueEnd], esi
         mov     dword ptr [g_eventQueueTotal], edx
-        call    VertexSlotInitFlagWalk_00409740
+        call    VertexSlotInitFlagWalk
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         mov     eax, dword ptr [g_lit_00541e90]
         mov     dword ptr [g_eventQueueEnd], esi
         mov     dword ptr [g_eventQueueTotal], eax
-        call    VertexSlotInitFlagWalk_00409740
+        call    VertexSlotInitFlagWalk
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         mov     ecx, dword ptr [g_lit_00541e94]
         mov     dword ptr [g_eventQueueEnd], esi
         mov     dword ptr [g_eventQueueTotal], ecx
-        call    VertexSlotInitFlagWalk_00409740
+        call    VertexSlotInitFlagWalk
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         mov     edx, dword ptr [g_bootChainScaled4_00541e9c]
         mov     dword ptr [g_eventQueueEnd], esi
         mov     dword ptr [g_eventQueueTotal], edx
-        call    VertexSlotInitFlagWalk_00409740
+        call    VertexSlotInitFlagWalk
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         mov     eax, dword ptr [g_bootChainScaled3_00541ea0]
         mov     dword ptr [g_xformEntityIdx], 3
         mov     dword ptr [g_eventQueueTotal], eax
         mov     dword ptr [g_eventQueueEnd], esi
-        call    VertexSlotInitFlagWalk_00409740
+        call    VertexSlotInitFlagWalk
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         mov     ecx, dword ptr [g_dispatchSave81_00541ea4]
@@ -233,7 +233,7 @@ __declspec(naked) void BootInitChainHeavy_00404f20(void)
         call    ScaledChainAccumLoop_0049cd40
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
-        call    BootPhaseGateBracketedInit_004060c0
+        call    BootPhaseGateBracketedInit
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         mov     edx, dword ptr [g_currentNodeIdx]

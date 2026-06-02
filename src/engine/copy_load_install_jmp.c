@@ -15,7 +15,7 @@ extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 extern void MStackBracket2_TreeWalkRecursive(void);
-extern void BootChainBidirRecurseWalk_00405ca0(void);
+extern void BootChainBidirRecurseWalk(void);
 
 /* @addr 0x00445ed0 */
 void CopyLoadInstallJmp_00445ed0(void) {
@@ -28,5 +28,5 @@ void CopyLoadInstallJmp_00445ed0(void) {
 void CopyLoadInstallJmp_00446210(void) {
     g_fightGroupHead = g_eventQueueEnd;
     g_scaledInit_00542044 = *(unsigned int *)(g_baseSel * 4 + 0x30);
-    BootChainBidirRecurseWalk_00405ca0();
+    BootChainBidirRecurseWalk();
 }

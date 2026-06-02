@@ -110,8 +110,8 @@ extern unsigned int g_fightAxisPosY;
 
 extern void PushCallPauseSetMaxThenCallPauseJmp_0048e380(void);
 extern void HandWalkCluster_00475cd0(void);
-extern void MoveCommitPackedDispatcher_0048d0f0(void);
-extern void PushPopCurrentSetFFFFFFFF_00473070(void);
+extern void MoveCommitPackedDispatcher(void);
+extern void PushPopCurrentSetFFFFFFFF(void);
 extern void TripleStringPauseChain_004468c0(void);
 extern void PoseStateInitNode_0043cd60(void);
 
@@ -121,8 +121,8 @@ extern void PoseStateInitNode_0043cd60(void);
  *     g_eventQueueIdx=g_cj; push 0x90, push body addr; g_eventQueueEnd=[baseSel*4+0x38]; call StoreTwoCall.
  *     Install-self at entry; state=1; g_pendingNodeType=0x64; pause=1; pop+ret. 15-NOP pad.
  *   Body (+0xc0): chain[baseSel*4+0x64]=g_eventQueueEnd; chain[baseSel*4+0x68]=g_eventQueueIdx.
- *     Call HandWalkCluster_00475cd0; if pause ret. Call MoveCommitPackedDispatcher_0048d0f0; if pause ret.
- *     g_cj=g_eventQueueEnd. Call MoveCommitPackedDispatcher_0048d0f0; if pause ret.
+ *     Call HandWalkCluster_00475cd0; if pause ret. Call MoveCommitPackedDispatcher; if pause ret.
+ *     g_cj=g_eventQueueEnd. Call MoveCommitPackedDispatcher; if pause ret.
  *     g_walkCallback=0x80. Call PushPopCurrentSetFFFFFFFF; if pause ret.
  *     Call TripleStringPauseChain; if pause ret. Tail-jmp PoseStateInitNode_0043cd60.
  */
@@ -199,20 +199,20 @@ __declspec(naked) void DualBlockChainInitBody_0043cc10(void) {
         test    eax, eax
         _emit   75h
         _emit   53h
-        call    MoveCommitPackedDispatcher_0048d0f0
+        call    MoveCommitPackedDispatcher
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   45h
         mov     ecx, dword ptr [g_eventQueueEnd]
         mov     dword ptr [g_cj_0054205c], ecx
-        call    MoveCommitPackedDispatcher_0048d0f0
+        call    MoveCommitPackedDispatcher
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   2bh
         mov     dword ptr [g_walkCallback], 0x80
-        call    PushPopCurrentSetFFFFFFFF_00473070
+        call    PushPopCurrentSetFFFFFFFF
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

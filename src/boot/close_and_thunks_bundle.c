@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave1423_00f9f7fc;
 extern unsigned int g_iat_004d2150;
 extern unsigned int g_iat_004d209c;
-extern void Crt_doserrno_004c8bb0(void);
+extern void Crt_doserrno(void);
 extern void Crt_errno(void);
 extern void DosMapErr_004c8b20(void);
 extern void FmodHelper_004ccb7d(void);
@@ -147,7 +147,7 @@ __declspec(naked) void CloseAndThunksBundle_004c6760(void) {
         jz      short L_cl_zero
         call    Crt_errno
         mov     dword ptr [eax], 0x0d
-        call    Crt_doserrno_004c8bb0
+        call    Crt_doserrno
         mov     dword ptr [eax], 5
         or      eax, -1
         ret

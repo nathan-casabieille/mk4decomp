@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   call DirtyToggleByGate; if pause: ret;
  *   if (bit2 of g_xformDirtyFlags)!=0: ret;
  *   eax = arg0>>2 → g_eventQueueTotal, g_scaledInit;
- *   call NotShrCmp1Store_00460d80; if pause: ret;
+ *   call NotShrCmp1Store; if pause: ret;
  *   eax = g_walkCallback; ecx = g_eventQueueTotal;
  *   eax &= 0xf; ecx += eax; g_walkCallback = eax;
  *   g_eventQueueTotal = ecx; eax = [ecx*4];
@@ -129,7 +129,7 @@ void GuardedScaledChainJmpIndirect_00460e40(int arg) {
     idx = (unsigned int)(arg >> 2);
     g_eventQueueTotal = idx;
     g_scaledInit_00542044 = idx;
-    NotShrCmp1Store_00460d80();
+    NotShrCmp1Store();
     if (g_framePauseFlag != 0) return;
     walk = (unsigned int)g_walkCallback & 0xf;
     newIdx = g_eventQueueTotal + walk;

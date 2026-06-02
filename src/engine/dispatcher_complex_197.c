@@ -58,7 +58,7 @@ extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 extern void GuardedSeq_004297b0(void);
-extern void CallPauseScaledDecJmp_00429750(void);
+extern void CallPauseScaledDecJmp(void);
 
 #define DC197_BODY(CALL_FN)                                                   \
     do {                                                                      \
@@ -87,4 +87,4 @@ extern void CallPauseScaledDecJmp_00429750(void);
 void DispatcherComplex197_0045be40(void) { DC197_BODY(GuardedSeq_004297b0); }
 
 /* @addr 0x0045bf10 */
-void DispatcherComplex197_0045bf10(void) { DC197_BODY(CallPauseScaledDecJmp_00429750); }
+void DispatcherComplex197_0045bf10(void) { DC197_BODY(CallPauseScaledDecJmp); }

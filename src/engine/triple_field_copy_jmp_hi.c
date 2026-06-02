@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   g_baseSel[+0x5c/0x60/0x64] (each via walkCallback),
  *   then jmp ScaledZeroFour.
  */
-void TripleFieldCopyJmpHi_0048f740(void) {
+void TripleFieldCopyJmpHi(void) {
     unsigned int val;
     val = *(unsigned int *)(g_cj_0054205c * 4 + 0x6c);
     g_walkCallback = (void (*)(void))val;

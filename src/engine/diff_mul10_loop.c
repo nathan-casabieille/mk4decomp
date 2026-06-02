@@ -111,12 +111,12 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00432000 (264b game) - 4-field setup + 2-iter Mul10Tail loop.
  *   diff = g_walkCallback - [g_pendingNodeType*4]; -= [g_eventQueueTotal*4]; shl 16;
  *   += [g_pendingNodeType*4 +4]; += [g_eventQueueTotal*4 +4].
- *   call DivLongPushCall_004ab320; if pause? final-ret.
+ *   call DivLongPushCall; if pause? final-ret.
  *   Init g_xformLoopCounter = 2. Loop while g_xformLoopCounter >= 0:
  *     Mul10Tail([g_xformEntityIdx*4], g_walkCallback), store to scaledInit++, ++g_xformEntityIdx, --g_xformLoopCounter.
  *   At end: scaledInit -= 3, g_xformEntityIdx -= 4 (rewind to start), pop esi, ret.
  */
-extern void DivLongPushCall_004ab320(void);
+extern void DivLongPushCall(void);
 
 __declspec(naked) void DiffMul10Loop_00432000(void) {
     __asm {
@@ -136,7 +136,7 @@ __declspec(naked) void DiffMul10Loop_00432000(void) {
         mov     ecx, dword ptr [edx*4 + 4]
         add     eax, ecx
         mov     dword ptr [g_walkCallback], eax
-        call    DivLongPushCall_004ab320
+        call    DivLongPushCall
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

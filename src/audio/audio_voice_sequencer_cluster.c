@@ -115,12 +115,12 @@ extern unsigned int g_audioBitField_00541fc0;
 extern unsigned int g_audioSequencerSlot_00541fc4;
 extern unsigned int g_dispatchTab65_00543320;
 extern void AudioInitChainTag_004a1000(void);
-extern void Eleven404b90_404c00_004266d0(void);
-extern void GuardedScaledCall_0048a020(void);
-extern void LinkedListIndirectDirtyToggle_0049f7b0(void);
+extern void Eleven404b90_404c00(void);
+extern void GuardedScaledCall(void);
+extern void LinkedListIndirectDirtyToggle(void);
 extern void RoundWinTransition(void);
 extern void StorePauseImulShr16(void);
-extern void Ten404c40_404bd0_00426780(void);
+extern void Ten404c40_404bd0(void);
 
 __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
 {
@@ -167,7 +167,7 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
         mov      dword ptr [edi + 0x84], esi
         cmp      eax, esi
         je       short L_0e03
-        call     Ten404c40_404bd0_00426780
+        call     Ten404c40_404bd0
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_0ff9
         inc      dword ptr [g_audioVoiceCounter_00535e50]
@@ -185,7 +185,7 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
         jne      L_0ff9
     L_0e3c:
         inc      dword ptr [g_walkCallback]
-        call     LinkedListIndirectDirtyToggle_0049f7b0
+        call     LinkedListIndirectDirtyToggle
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_0ff9
         test     byte ptr [g_xformDirtyFlags], bl
@@ -263,7 +263,7 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], ecx
-        call     GuardedScaledCall_0048a020
+        call     GuardedScaledCall
         cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_0ff9
         mov      eax, dword ptr [g_matrixStackTop]
@@ -276,7 +276,7 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
         mov      dword ptr [g_xformEntityIdx], edx
         mov      edx, dword ptr [ecx*4]
         mov      dword ptr [g_pendingNodeType], edx
-        call     Eleven404b90_404c00_004266d0
+        call     Eleven404b90_404c00
         cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_0ff9
         mov      dword ptr [edi + 8], OFFSET L_0dc0

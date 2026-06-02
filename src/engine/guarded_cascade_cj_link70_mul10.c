@@ -112,11 +112,11 @@ extern unsigned int g_fightAxisPosY;
  *   mstack-push g_eventQueueCurrent; call GuardedCallStoreSlotsCmp; if pause/bit2? ret.
  *   cj[+0x4c] = 0x28f; call GDispatch4; if pause/bit2? ret.
  *   call ThreeCallChainCopy; if pause? ret. mstack-pop. If scaledInit[+0x18]==0? ret.
- *   call CameraZoomFsmCluster_00440aa0; if pause? ret. cj[+0x70] = baseSel[+0x70]; scaledInit+=0x1b;
+ *   call CameraZoomFsmCluster; if pause? ret. cj[+0x70] = baseSel[+0x70]; scaledInit+=0x1b;
  *   g_eventQueueWorkType=0x3333; call MStackPushVec3Mul10; if pause? ret; else scaledInit-=0x1b. ret.
  */
-extern void CameraZoomFsmCluster_00440aa0(void);
-extern void GDispatch4_004089c0(void);
+extern void CameraZoomFsmCluster(void);
+extern void GDispatch4(void);
 extern void GuardedCallStoreSlotsCmp_00440990(void);
 extern void ThreeCallChainCopy_004409e0(void);
 
@@ -147,7 +147,7 @@ void GuardedCascadeCjLink70Mul10_0043e850(void) {
         mov     eax, 0x28f
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x4c], eax
-        call    GDispatch4_004089c0
+        call    GDispatch4
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -183,7 +183,7 @@ void GuardedCascadeCjLink70Mul10_0043e850(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   5ah
-        call    CameraZoomFsmCluster_00440aa0
+        call    CameraZoomFsmCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

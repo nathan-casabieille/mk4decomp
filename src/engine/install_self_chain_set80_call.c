@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x004347f0 (138b) - install-self chain-extension variant w/ extra
  *   g_eventQueueChild = 0x3c init and StateGateMStackOverlap helper.
  */
-extern void ChainDecCondStoreCallJmp_00434880(void);
+extern void ChainDecCondStoreCallJmp(void);
 extern void StateGateMStackOverlap(void);
 
 __declspec(naked) void InstallSelfChainSet80Call_004347f0(void) {
@@ -124,7 +124,7 @@ __declspec(naked) void InstallSelfChainSet80Call_004347f0(void) {
         cmp     ecx, edx
         _emit   74h
         _emit   05h
-        jmp     ChainDecCondStoreCallJmp_00434880
+        jmp     ChainDecCondStoreCallJmp
         mov     dword ptr [g_eventQueueChild], 0x3c
         mov     dword ptr [eax + 8], 0x004347f0
         mov     ecx, dword ptr [g_baseSel]

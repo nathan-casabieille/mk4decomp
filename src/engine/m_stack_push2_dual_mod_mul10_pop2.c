@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern void StoreTwoCall(void);
 extern void BootMod6487eClampAndChainMul10(void);
 extern void MStackPush2DualModMul10Pop2_00424860(void);
-extern void QuadInterpolator_00425380(void);
+extern void QuadInterpolator(void);
 extern unsigned int g_dispatchSave6_00541f94;
 extern unsigned int g_pendingMatchVar3_004d5320;
 extern unsigned int g_load_0052ab10;
@@ -127,7 +127,7 @@ extern unsigned int g_load_0052ab10;
  *   g_eventQueueWorkType = g_walkCallback; g_pendingNodeType = g_dispatchSave6_00541f94;
  *   call MStackPush2DualModMul10Pop2_00424860; pause? ret;
  *   g_scaledInit = g_baseSel + 0xc; g_xformEntityIdx = g_pendingNodeType;
- *   g_pendingNodeType += 9; jmp QuadInterpolator_00425380.
+ *   g_pendingNodeType += 9; jmp QuadInterpolator.
  */
 
 __declspec(naked) void StoreTailJmpSigned_004107d0(void) {
@@ -176,7 +176,7 @@ __declspec(naked) void StoreTailJmpSigned_004107d0(void) {
         mov     dword ptr [g_scaledInit_00542044], edx
         mov     dword ptr [g_xformEntityIdx], eax
         mov     dword ptr [g_pendingNodeType], ecx
-        jmp     QuadInterpolator_00425380
+        jmp     QuadInterpolator
         ret
     }
 }

@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
 /* Boss-room init cluster (640b game, 3 packed helpers)                */
 /* Cross-references jump table inside sibling stub BossRoomBootstrap_004105c0.      */
 /* ------------------------------------------------------------------ */
-extern void ScaledChainOr8_00404e50(void);
+extern void ScaledChainOr8(void);
 extern void Copy3Fields3c4044_00404e90(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void MStackPush2RunCountdown(void);
@@ -209,7 +209,7 @@ __declspec(naked) void BossRoomInitCluster_00410340(void)
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x30], eax
         call     Copy3Fields3c4044_00404e90
-        call     ScaledChainOr8_00404e50
+        call     ScaledChainOr8
         mov      edx, dword ptr [g_xformEntityIdx]
         mov      eax, 0x14ccc
         mov      dword ptr [g_walkCallback], eax

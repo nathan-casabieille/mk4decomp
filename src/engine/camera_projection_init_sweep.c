@@ -113,15 +113,15 @@ extern unsigned int g_dispatchArg;
 extern unsigned int g_audioVoiceCounter_00535e50;
 extern unsigned int g_cameraProjSlot_00537eb4;
 extern unsigned int g_installCountdownArr3_00542408;
-extern void BootPhaseGateBracketedInit_004060c0(void);
+extern void BootPhaseGateBracketedInit(void);
 extern void Chain2CallMul10Accum_00426a30(void);
-extern void FramePauseScaledStore_00406c10(void);
+extern void FramePauseScaledStore(void);
 extern void MStackBracket4_ListInsertZeroFill(void);
 extern void MStackCall_00406340(void);
 extern void MStackPush2ChainLLInsert(void);
-extern void MStackPush2ChainPrepend_00409970(void);
-extern void FixedDiv16_004ab2a0(void);
-extern void RegistryPushBindPop_00403c20(void);
+extern void MStackPush2ChainPrepend(void);
+extern void FixedDiv16(void);
+extern void RegistryPushBindPop(void);
 extern void Thunk_00427460(void);
 
 __declspec(naked) void CameraProjectionInitSweep_00458160(void)
@@ -131,7 +131,7 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         push     edi
         mov      dword ptr [g_walkCallback], 0x6487e
         mov      dword ptr [g_eventQueueCurrent], 0x280000
-        call     FixedDiv16_004ab2a0
+        call     FixedDiv16
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8430
@@ -140,7 +140,7 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         shr      edi, 2
         mov      dword ptr [g_currentNodeFlags], eax
         mov      dword ptr [g_pendingNodeType], edi
-        call     BootPhaseGateBracketedInit_004060c0
+        call     BootPhaseGateBracketedInit
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8430
@@ -154,7 +154,7 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         mov      dword ptr [g_eventQueueTotal], eax
         mov      dword ptr [g_cameraProjSlot_00537eb4], eax
         mov      dword ptr [g_xformEntityIdx], ecx
-        call     FramePauseScaledStore_00406c10
+        call     FramePauseScaledStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8430
@@ -189,7 +189,7 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         mov      dword ptr [g_xformEntityIdx], ecx
         mov      dword ptr [g_pendingNodeType], eax
     L_829d:
-        call     FramePauseScaledStore_00406c10
+        call     FramePauseScaledStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8430
@@ -197,7 +197,7 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         jne      L_840c
         mov      edx, dword ptr [g_eventQueueTotal]
         mov      dword ptr [g_xformEntityIdx], edx
-        call     MStackPush2ChainPrepend_00409970
+        call     MStackPush2ChainPrepend
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8430
@@ -256,7 +256,7 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         jne      short L_8430
         mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_fightGroupHead], eax
-        call     RegistryPushBindPop_00403c20
+        call     RegistryPushBindPop
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_8430

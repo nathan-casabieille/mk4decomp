@@ -112,7 +112,7 @@ extern void InstallSelfDualBranchInit_004201a0(void);
 extern void TableWalkBoundedCmp(int);
 extern void IncOrZero9_00422080(void);
 extern void DispatchPair_00429ac0(void);
-extern void SceneEvalFsm_0049dea0(void);
+extern void SceneEvalFsm(void);
 extern unsigned int g_counter_0053a51c;
 extern unsigned int g_dispatchVar9_00541dc0;
 
@@ -122,12 +122,12 @@ extern unsigned int g_dispatchVar9_00541dc0;
  *   Main: push 8, call TableWalk; add esp, 4; call IncOrZero9_00422080; pause? -> epilogue;
  *   g_walkCallback = [0x53a51c]; call DispatchPair; pause? -> epilogue;
  *   g_walkCallback = 0; g_dispatchVar9_00541dc0 = 0; install self with chain[+0x84]=1, packed ptr store,
- *   g_scaledInit++; chain[+0x84] = 0; call SceneEvalFsm_0049dea0; g_framePauseFlag = 1.
+ *   g_scaledInit++; chain[+0x84] = 0; call SceneEvalFsm; g_framePauseFlag = 1.
  */
 
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void InstallSelfTableWalk_004200d0(void) {
+__declspec(naked) void InstallSelfTableWalk(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -176,7 +176,7 @@ __declspec(naked) void InstallSelfTableWalk_004200d0(void) {
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     [edx*4 + 0x84], edi
-        call    SceneEvalFsm_0049dea0
+        call    SceneEvalFsm
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         pop     esi

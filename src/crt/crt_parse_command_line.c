@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern void CrtParseCommandLine_004cbcc0(void);
 extern void LoadArgPushCall(void);
-extern void CmpCallPushIATCall_004c6e60(void);
+extern void CmpCallPushIATCall(void);
 extern unsigned char g_buf_00f9faf0;
 extern char * g_cmdline;
 extern unsigned int g_dispatchSave1427_00f9f830;
@@ -165,7 +165,7 @@ __declspec(naked) void SetupArgv_004cbc20(void) {
         _emit   75h
         _emit   0ah
         push    8
-        call    CmpCallPushIATCall_004c6e60
+        call    CmpCallPushIATCall
         add     esp, 4
         mov     ecx, [esp + 8]
         lea     edx, [esp + 0x0c]

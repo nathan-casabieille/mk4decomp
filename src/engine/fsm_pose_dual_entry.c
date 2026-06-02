@@ -109,9 +109,9 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void ChainListVecAdd(void);
-extern void DualEntryRecursiveInstall_00471710(void);
+extern void DualEntryRecursiveInstall(void);
 extern void GuardedSeq_00471670(void);
-extern void TripleCallBitJmp_00471690(void);
+extern void TripleCallBitJmp(void);
 
 __declspec(naked) void FsmPoseDualEntry_00472560(void)
 {
@@ -255,7 +255,7 @@ __declspec(naked) void FsmPoseDualEntry_00472560(void)
         je       short L_27b3
         mov      dword ptr [g_eventQueueCurrent], 0x1999
         mov      dword ptr [g_eventQueueWorkType], 0x9999
-        call     DualEntryRecursiveInstall_00471710
+        call     DualEntryRecursiveInstall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2815
@@ -275,7 +275,7 @@ __declspec(naked) void FsmPoseDualEntry_00472560(void)
         mov      dword ptr [eax + 4], ecx
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], 0
-        call     TripleCallBitJmp_00471690
+        call     TripleCallBitJmp
         mov      dword ptr [g_framePauseFlag], 1
     L_2815:
         ret

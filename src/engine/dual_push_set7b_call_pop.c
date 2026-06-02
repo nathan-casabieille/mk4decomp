@@ -115,7 +115,7 @@ void DualPushSet7bCallPop_00474310(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_scaledInit_00542044;
     g_scaledInit_00542044 = 0x7b;
-    PreFightInstallCluster_00474390();
+    PreFightInstallCluster();
     if (g_framePauseFlag != 0) return;
     g_scaledInit_00542044 = *(unsigned int *)(g_matrixStackTop * 4);
     g_matrixStackTop--;

@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_particleEmitterNode;
 extern void MStackCall_004062f0(void);
 extern void MStackPushDispatchBitGate(void);
-extern void MStackPushTableWalk_00493a20(void);
+extern void MStackPushTableWalk(void);
 extern void PushSetCallTailJmp_00493e40(void);
 
 void StateMachineInit_00493000(void) {
@@ -139,7 +139,7 @@ void StateMachineInit_00493000(void) {
         mov     ecx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x30], eax
-        call    MStackPushTableWalk_00493a20
+        call    MStackPushTableWalk
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

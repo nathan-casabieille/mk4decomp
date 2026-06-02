@@ -21,7 +21,7 @@ extern unsigned int g_eventQueueCurrent_mm2;
 extern void func_004c5740_mm(void);
 extern int Alldiv_004c5690(int, int, int, int);
 
-__declspec(naked) void FixedDiv16_004ab2a0(void) {
+__declspec(naked) void FixedDiv16(void) {
     __asm {
         push    esi
         mov     esi, dword ptr [g_eventQueueCurrent_mm2]

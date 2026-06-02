@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchTableArr2_005420c8;
 extern unsigned int g_savedNode;
 extern void VoicePicker_00401000(void);
-extern void ChainNodeAdvanceCallback_00408e70(void);
+extern void ChainNodeAdvanceCallback(void);
 /* extern void Input_PollJoystick(void); -- defined elsewhere with diff sig */
 extern void Audio_PlaySoundId(void);
 extern unsigned int g_joySelP0_00543b68;
@@ -123,7 +123,7 @@ extern void Filbuf_004c8ed0(void);
 extern void Thunk_0049cb70(void);
 extern void Thunk_0049cb80(void);
 extern void Transform9Words_004b3a90(void);
-extern void CrtGetLocaleInfo_004d0bc0(void);
+extern void CrtGetLocaleInfo(void);
 extern void StringDigitConvert_004d03c0(void);
 extern unsigned short g_dispatchSave1460_00f9fc94;
 extern unsigned int g_crtHeapMaxPtr_00522154;
@@ -151,7 +151,7 @@ extern void Test4StatesAny_004a1d20(void);
 extern void BootInitGuardedCallChain(void);
 extern void Push16Call(void);
 extern void InstallSelfPackedF80(void);
-extern void ScenegraphWalk_0041f7d0(void);
+extern void ScenegraphWalk(void);
 extern void CallSetPause(void);
 
 extern void Audio_TimerTeardown_004ac5f0(void);

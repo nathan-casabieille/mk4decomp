@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   call + clamp g_table_00535ddc to [0x40000, 0x40000+0x26666] absolute. */
 extern unsigned int g_dualB_00538038;
 extern unsigned int g_dualB_0053803c;
-extern void ScaledChainDouble_004911f0(void);
+extern void ScaledChainDouble(void);
 
 void PushPlayerSwapCallClamp_004801a0(void) {
     __asm {
@@ -130,7 +130,7 @@ void PushPlayerSwapCallClamp_004801a0(void) {
         _emit   0ch
         mov     ecx, dword ptr [g_dualB_0053803c]
         mov     dword ptr [g_baseSel], ecx
-        call    ScaledChainDouble_004911f0
+        call    ScaledChainDouble
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

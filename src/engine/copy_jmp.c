@@ -15,7 +15,7 @@ extern unsigned int g_cj_00542058;   /* 0x00542058 */
 extern unsigned int g_cj_0054205c;   /* 0x0054205c */
 
 /* Externs for jump targets. */
-extern void GuardedChainPushSetCallPop_00406bb0(void);   /* 0x00406bb0 */
+extern void GuardedChainPushSetCallPop(void);   /* 0x00406bb0 */
 extern void QuadFieldEarlyJmpThenInstall_0043a670(void);   /* 0x0043a670 */
 extern void GuardedSixFieldCopy_00446190(void);   /* 0x00446190 */
 extern void ScaledSubStore_0048ee90(void);   /* 0x0048ee90 */
@@ -25,7 +25,7 @@ extern void SlotCmp3way_0048efa0(void);   /* 0x0048efa0 */
 /* @addr 0x00406ba0 */
 void CopyJmp_00406ba0(void) {
     g_currentNodeIdx = g_cj_0054205c;
-    GuardedChainPushSetCallPop_00406bb0();
+    GuardedChainPushSetCallPop();
 }
 
 /* @addr 0x0043a620 */

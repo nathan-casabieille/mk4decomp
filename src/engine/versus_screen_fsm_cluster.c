@@ -116,11 +116,11 @@ extern void PendingMatch_0043d830(void);
 extern void ArgSarStoreJmp(void);
 extern void StoreLoadJmp(void);
 extern void StoreTwoCall(void);
-extern void DoubleCallChainInit_0043d780(void);
+extern void DoubleCallChainInit(void);
 extern void InstallSelfChainAccumPath(void);
 extern void VersusScreenFsmCluster_0044f670(void);
 
-__declspec(naked) void DualSubInstallChain_0044f4b0(void)
+__declspec(naked) void DualSubInstallChain(void)
 {
     __asm
     {
@@ -136,10 +136,10 @@ __declspec(naked) void DualSubInstallChain_0044f4b0(void)
         mov     ecx, dword ptr [g_installOwner2_0053a7a0]
         mov     dword ptr [g_eventQueueNotMask], edx
         mov     dword ptr [g_eventQueueEnd], ecx
-        mov     dword ptr [eax + 8], offset DualSubInstallChain_0044f4b0
+        mov     dword ptr [eax + 8], offset DualSubInstallChain
         mov     ecx, dword ptr [g_baseSel]
         push    edi
-        mov     edi, offset DualSubInstallChain_0044f4b0
+        mov     edi, offset DualSubInstallChain
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x1000000
@@ -197,7 +197,7 @@ __declspec(naked) void DualSubInstallChain_0044f4b0(void)
         mov     ecx, dword ptr [g_eventQueueIdx]
         add     esp, 8
         mov     dword ptr [g_fightGroupHead], ecx
-        call    DoubleCallChainInit_0043d780
+        call    DoubleCallChainInit
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_dsic_sub2_ret

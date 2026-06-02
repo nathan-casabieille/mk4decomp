@@ -122,7 +122,7 @@ extern unsigned int g_bootInitSaveSlot;
  *   skip2: [ecx*4+0x5c] = eax;
  *   eax = g_bootInitSaveSlot; if zero: jmp 0x4708a0; else ret.
  */
-void DualPickDecJmp_00470840(void) {
+void DualPickDecJmp(void) {
     unsigned int state;
     unsigned int cj;
     unsigned int idx;
@@ -145,5 +145,5 @@ void DualPickDecJmp_00470840(void) {
     }
     *(int *)(idx * 4 + 0x5c) = v;
     if (g_bootInitSaveSlot != 0) return;
-    ScaledStoreCSet58Jmp_004708a0();
+    ScaledStoreCSet58Jmp();
 }

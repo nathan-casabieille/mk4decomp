@@ -108,13 +108,13 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void Cascade3ChainInit_0048fa50(void);
+extern void Cascade3ChainInit(void);
 extern void GameSectionSwitcher_0042cac0(void);
 extern void InstallSelfDualStateDispatch_0042c9f0(void);
 extern void TripleBlockCjCopy_0042c8c0(void);
 
 /* @addr 0x0042c7e0 (218b game) - triple-entry chain.
- *   A: call Cascade3ChainInit_0048fa50; if !pause: push 0x004e3828, call ArgSarStoreJmp; ret.
+ *   A: call Cascade3ChainInit; if !pause: push 0x004e3828, call ArgSarStoreJmp; ret.
  *   B (+0x20): chain[*4+0x68]=0; g_walkCallback=0; push 0x004e34d8; call ArgSarStoreJmp; ret.
  *   C (+0x50): call GameSectionSwitcher_0042cac0; if !pause: if bit-0 set call InstallSelfDualStateDispatch_0042c9f0; ret.
  *     Else load chain at [g_baseSel*4+0x38]; copy fields +0x54/+0x58/+0x5c → g_walkCallback/70/74;
@@ -124,7 +124,7 @@ extern void ArgSarStoreJmp(void);
 
 __declspec(naked) void TripleEntryStateCascade_0042c7e0(void) {
     __asm {
-        call    Cascade3ChainInit_0048fa50
+        call    Cascade3ChainInit
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

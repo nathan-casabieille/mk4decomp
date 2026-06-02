@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
 extern void ScaledMove48to58(void);
 extern void StateDispatchTable(void);
 extern void DualGatedStateYield(void);
-extern void DualScaledInitClear_00433c10(void);
+extern void DualScaledInitClear(void);
 extern void SlotPhaseResetInstallChain(void);
 
 void FiveCallGuardSetTail(void) {
@@ -149,7 +149,7 @@ void FiveCallGuardSetTail(void) {
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   74h
         _emit   0eh
-        call    DualScaledInitClear_00433c10
+        call    DualScaledInitClear
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

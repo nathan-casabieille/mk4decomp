@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_dispatchSave1198_004ded70;
 extern unsigned int g_dispatchSave1199_004ded80;
-extern void Cmp2DirtyToggle_00423870(void);
+extern void Cmp2DirtyToggle(void);
 
 extern unsigned int g_arr_4237d0;
 extern unsigned int g_chain_arr_4348f0;
@@ -133,7 +133,7 @@ void TwoStateLookupDirty_004237d0(void) {
         shr     ecx, 2
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     dword ptr [g_xformEntityIdx], ecx
-        call    Cmp2DirtyToggle_00423870
+        call    Cmp2DirtyToggle
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

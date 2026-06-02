@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
 extern void ScaledZeroFour(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void CallPauseScaledStoreCopyJmp(void);
-void PushPop84TripleCall_00438b90(void) {
+void PushPop84TripleCall(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_currentNodeFlags;
     ScaledZeroFour();

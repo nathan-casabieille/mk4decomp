@@ -17,7 +17,7 @@ extern unsigned int g_scaledInit_00542044;
  *   then pop stack back into g_scaledInit. Standard "save-restore" wrapper.
  */
 extern void ScaledAndMaskInitJmp_00405a00(void);
-void PushPopScaled18_004059a0(void) {
+void PushPopScaled18(void) {
     unsigned int v;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_scaledInit_00542044;
@@ -35,7 +35,7 @@ void PushPopScaled18_004059a0(void) {
 }
 
 /* @addr 0x00405ad0 (90b): same shape but uses g_xformEntityIdx, field +0x14 */
-extern void MStackPush2ChainPrepend_00409970(void);
+extern void MStackPush2ChainPrepend(void);
 void PushPopScaled14_00405ad0(void) {
     unsigned int v;
     g_matrixStackTop++;
@@ -45,7 +45,7 @@ void PushPopScaled14_00405ad0(void) {
     if (v != 0) {
         g_xformEntityIdx = v;
     }
-    MStackPush2ChainPrepend_00409970();
+    MStackPush2ChainPrepend();
     if (g_framePauseFlag != 0) {
         return;
     }

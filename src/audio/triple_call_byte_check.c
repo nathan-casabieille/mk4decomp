@@ -40,7 +40,7 @@ extern int TestQueueGateState_004a1ba0(void);
 extern int InputPollFlagBits_004a1b00(void);
 extern int InputPollFlagBitsHalf_004a1b50(void);
 extern unsigned char g_byte_00543590;
-int TripleCallByteCheck_004a1bf0(void) {
+int TripleCallByteCheck(void) {
     if (TestQueueGateState_004a1ba0() != 0) {
         g_byte_00543590 = 1;
         return 1;

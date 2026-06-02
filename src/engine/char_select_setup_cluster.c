@@ -117,10 +117,10 @@ extern void MStackBracket4_ListInsertZeroFill(void);
 extern void MStackCall_00406600(void);
 extern void PendingMatch_004568b0(void);
 extern void ScaledStoreThree_00409260(void);
-extern void ScaledTestPauseStore_00408860(void);
-extern void TableHitOrSchedule_004be7a0(void);
+extern void ScaledTestPauseStore(void);
+extern void TableHitOrSchedule(void);
 extern void Thunk_0049cbc0(void);
-extern void WorldCellSetupCluster_0042b000(void);
+extern void WorldCellSetupCluster(void);
 
 __declspec(naked) void CharSelectSetupCluster_004565a0(void)
 {
@@ -144,7 +144,7 @@ __declspec(naked) void CharSelectSetupCluster_004565a0(void)
         add      eax, 0x4b65f
         push     eax
         mov      dword ptr [g_walkCallback], eax
-        call     WorldCellSetupCluster_0042b000
+        call     WorldCellSetupCluster
         mov      edx, dword ptr [g_currentNodeIdx]
         add      esp, 4
         mov      dword ptr [edx*4 + 0x64], eax
@@ -159,7 +159,7 @@ __declspec(naked) void CharSelectSetupCluster_004565a0(void)
         mov      dword ptr [g_fightGroupHead], eax
         mov      edx, dword ptr [eax*4 + 0x18]
         mov      dword ptr [g_currentNodeIdx], edx
-        call     ScaledTestPauseStore_00408860
+        call     ScaledTestPauseStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_6688
@@ -201,7 +201,7 @@ __declspec(naked) void CharSelectSetupCluster_004565a0(void)
         test     eax, eax
         jne      L_67a8
         push     0x154f
-        call     TableHitOrSchedule_004be7a0
+        call     TableHitOrSchedule
         add      esp, 4
         call     Thunk_0049cbc0
         pop      esi

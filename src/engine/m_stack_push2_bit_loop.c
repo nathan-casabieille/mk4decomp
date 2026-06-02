@@ -108,35 +108,35 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void PushPopCurrentSetFFFFFFFF_00473070(void);
-extern void MStackPush2BitLoop_00476670(void);
+extern void PushPopCurrentSetFFFFFFFF(void);
+extern void MStackPush2BitLoop(void);
 extern void LoopMStackBitTest_00441fd0(void);
 
 /* @addr 0x00441f00 (197b game) - 6 pause-gated calls with different tag values, then chain bit-clear and tail-jmp.
  *   For tag in [0x93, 0x7e, 0x7b, 0x94, 0x77, 0x7f]: g_walkCallback = tag; call F; pause? ret.
- *   First uses PushPopCurrent (0x473070); rest use MStackPush2BitLoop_00476670.
+ *   First uses PushPopCurrent (0x473070); rest use MStackPush2BitLoop.
  *   chain[g_baseSel + 0x64] = g_fightGroupHead; chain[g_fightGroupHead + 0x34] &= 0xfffffffb; jmp LoopMStackBitTest_00441fd0.
  */
 void SixTagCallsTailJmp_00441f00(void) {
     unsigned int new_cj;
     unsigned int dirty;
     g_walkCallback = 0x93;
-    PushPopCurrentSetFFFFFFFF_00473070();
+    PushPopCurrentSetFFFFFFFF();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = 0x7e;
-    MStackPush2BitLoop_00476670();
+    MStackPush2BitLoop();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = 0x7b;
-    MStackPush2BitLoop_00476670();
+    MStackPush2BitLoop();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = 0x94;
-    MStackPush2BitLoop_00476670();
+    MStackPush2BitLoop();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = 0x77;
-    MStackPush2BitLoop_00476670();
+    MStackPush2BitLoop();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = 0x7f;
-    MStackPush2BitLoop_00476670();
+    MStackPush2BitLoop();
     if (g_framePauseFlag != 0) return;
     new_cj = *(unsigned int *)(g_baseSel * 4 + 0x64);
     g_fightGroupHead = new_cj;

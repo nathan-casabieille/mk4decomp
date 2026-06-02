@@ -120,7 +120,7 @@ extern unsigned int g_dispatchSave6_00541f94;
 extern unsigned int g_savedNode;
 extern unsigned int g_mul10TransformVar_00541f9c;
 
-extern void QuadInterpolator_00425380(void);
+extern void QuadInterpolator(void);
 extern void StoreDoubleNegPauseSubStore(void);
 
 __declspec(naked) void PoseTreeBlendWalker_0049d680(void)
@@ -257,7 +257,7 @@ __declspec(naked) void PoseTreeBlendWalker_0049d680(void)
         add      edx, 4
         mov      dword ptr [g_xformEntityIdx], ecx
         mov      dword ptr [g_currentNodeIdx], edx
-        call     QuadInterpolator_00425380
+        call     QuadInterpolator
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d8d0

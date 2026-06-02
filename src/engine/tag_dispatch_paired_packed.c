@@ -121,7 +121,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_dispatchSave47_00537f9c;
 extern void GatedWordPushCall(void);
-extern void GuardedScaledCall_0048a020(void);
+extern void GuardedScaledCall(void);
 extern void PushSearchToggleBit0_004577a0(void);
 
 extern unsigned int g_matrixStack_arr;
@@ -160,7 +160,7 @@ void TagDispatchPairedPacked_004667f0(void) {
         sar     edx, 2
         mov     [eax*4 + g_matrixStack_arr], ecx
         mov     dword ptr [g_walkCallback], edx
-        call    GuardedScaledCall_0048a020
+        call    GuardedScaledCall
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -174,7 +174,7 @@ void TagDispatchPairedPacked_004667f0(void) {
         mov     eax, 0x004e28cc
         sar     eax, 2
         mov     dword ptr [g_walkCallback], eax
-        call    GuardedScaledCall_0048a020
+        call    GuardedScaledCall
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

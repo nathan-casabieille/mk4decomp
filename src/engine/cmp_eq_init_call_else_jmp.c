@@ -12,7 +12,7 @@ extern unsigned int g_scaledInit_00542044;
  *   else: g_scaledInit = 0x542db8>>2; jmp F.
  */
 extern void MStackChainInstallDispatch_0048d500(void);
-extern void TableHitOrSchedule_004be7a0(int);
+extern void TableHitOrSchedule(int);
 extern unsigned char g_dispatchSave421_00542db8;
 void CmpEqInitCallElseJmp(void) {
     if ((unsigned int)g_walkCallback == 8) {
@@ -20,7 +20,7 @@ void CmpEqInitCallElseJmp(void) {
         MStackChainInstallDispatch_0048d500();
         if (g_framePauseFlag != 0) return;
         if ((g_xformDirtyFlags & 1) != 0) return;
-        TableHitOrSchedule_004be7a0(0x1392);
+        TableHitOrSchedule(0x1392);
         return;
     }
     g_scaledInit_00542044 = (unsigned int)&g_dispatchSave421_00542db8 >> 2;

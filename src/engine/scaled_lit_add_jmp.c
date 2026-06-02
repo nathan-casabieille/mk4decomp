@@ -17,11 +17,11 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_xformEntityIdx], eax
  *   jmp     T
  */
-extern void ScaledChainCallPauseSetJmp_0048f8e0(void);
+extern void ScaledChainCallPauseSetJmp(void);
 extern int g_dispatchSave1315_004ef4d0;
-void ScaledLitAddJmp_00480fb0(void) {
+void ScaledLitAddJmp(void) {
     unsigned int v = (((unsigned int)&g_dispatchSave1315_004ef4d0) >> 2) + (unsigned int)g_walkCallback;
     g_scaledInit_00542044 = v;
     g_xformEntityIdx = *(unsigned int *)(v * 4);
-    ScaledChainCallPauseSetJmp_0048f8e0();
+    ScaledChainCallPauseSetJmp();
 }

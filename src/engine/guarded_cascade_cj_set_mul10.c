@@ -111,14 +111,14 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00440880 (257b game) - mstack-push then 4-call guarded chain with cj sets.
  *   mstack-push g_eventQueueCurrent; call GuardedCallStoreSlotsCmp_00440990; if pause? final-ret.
  *   if bit2 of g_xformDirtyFlags set? final-ret. Else: cj[+0x4c]=0x106;
- *   call GDispatch4_004089c0; if pause/bit2? final-ret.
+ *   call GDispatch4; if pause/bit2? final-ret.
  *   call ThreeCallChainCopy_004409e0; if pause? final-ret. mstack-pop. If scaledInit[+0x18]==0? final-ret.
- *   Else: call CameraZoomFsmCluster_00440aa0; if pause? final-ret. cj[+0x70]=-0x2395; scaledInit+=0x1b;
+ *   Else: call CameraZoomFsmCluster; if pause? final-ret. cj[+0x70]=-0x2395; scaledInit+=0x1b;
  *   g_eventQueueWorkType=0x3333; call MStackPushVec3Mul10; if pause? final-ret.
  *   Else: scaledInit-=0x1b. ret.
  */
-extern void CameraZoomFsmCluster_00440aa0(void);
-extern void GDispatch4_004089c0(void);
+extern void CameraZoomFsmCluster(void);
+extern void GDispatch4(void);
 extern void GuardedCallStoreSlotsCmp_00440990(void);
 extern void ThreeCallChainCopy_004409e0(void);
 
@@ -149,7 +149,7 @@ void GuardedCascadeCjSetMul10_00440880(void) {
         mov     eax, 0x106
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x4c], eax
-        call    GDispatch4_004089c0
+        call    GDispatch4
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -185,7 +185,7 @@ void GuardedCascadeCjSetMul10_00440880(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   53h
-        call    CameraZoomFsmCluster_00440aa0
+        call    CameraZoomFsmCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

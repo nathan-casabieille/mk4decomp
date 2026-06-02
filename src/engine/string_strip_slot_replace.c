@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x004d0140 (303b other) - bundled string-digit-strip + slot-replace pair.
  *   sub-1 (~48b at 0x4d0140): in-place string translation. For each char:
  *     if digit '0'..'9': subtract '0'; if ';': skip (shift rest down).
- *   sub-2 (~239b at 0x4d0180): slot replace - allocate 0x30 bytes via Calloc_004c6110,
+ *   sub-2 (~239b at 0x4d0180): slot replace - allocate 0x30 bytes via Calloc,
  *     copy from g_crtTimeFmtPrefs_005236e8 into new slot, free old, swap pointers.
  *     Path differs based on flag g_dispatchSave1445_00f9fc14.
  */
@@ -119,7 +119,7 @@ extern unsigned int g_dispatchPair_005236b8;
 extern unsigned int g_crtTimeFmtPrefs_005236e8;
 extern unsigned int g_dispatchSave1445_00f9fc14;
 extern unsigned int g_dispatchSave1459_00f9fc74;
-extern void Calloc_004c6110(void);
+extern void Calloc(void);
 extern void CrtFreeLocaleInfo_004d0400(void);
 extern void FreeImpl(void);
 extern void LocaleInfoFill_004d0270(void);
@@ -178,7 +178,7 @@ __declspec(naked) void StringStripSlotReplace_004d0140(void) {
         jz      L_srr_directPath
         push    0x30
         push    1
-        call    Calloc_004c6110
+        call    Calloc
         mov     esi, eax
         add     esp, 8
         test    esi, esi

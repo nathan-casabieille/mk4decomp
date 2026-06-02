@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *     sets g_walkCallback = &g_phaseChainArr2_004d62e8>>2 (stored also in 0x5381 3c),
  *     g_eventQueueIdx = &g_dispatchSave522_004d61d8>>2, g_eventQueueNotMask = 0xc1.
  *     Pushes 0x49db40, 0xc0 onto StoreTwoCall. If bit 0 of
- *     0x54208c clear, calls StackPushAdd15CallPop_0040a7e0 +
+ *     0x54208c clear, calls StackPushAdd15CallPop +
  *     ZeroThreeFields_0040a8b0. Pops the snapshot back and tail-jmps
  *     MStackPop8.
  *   12b NOP align pad.
@@ -133,7 +133,7 @@ extern unsigned int g_table_004d57b0;
 extern void MStackPop8(void);
 extern void MStackPush8(void);
 extern void PendingMatch_0040e310(void);
-extern void StackPushAdd15CallPop_0040a7e0(void);
+extern void StackPushAdd15CallPop(void);
 extern void StoreDoubleNegPauseSubStore(void);
 extern void ZeroThreeFields_0040a8b0(void);
 
@@ -165,7 +165,7 @@ __declspec(naked) void MStackInitTriAlarm_0040e190(void) {
         add     esp, 8
         test    al, 1
         jne     short L_msi_skipAlarm
-        call    StackPushAdd15CallPop_0040a7e0
+        call    StackPushAdd15CallPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_msi_e1Ret

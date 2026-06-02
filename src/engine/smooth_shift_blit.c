@@ -141,7 +141,7 @@ extern void CallZero_004bea30(void);
  */
 extern void Audio_TimerTeardown_004ac5f0(void);
 
-__declspec(naked) void SceneFrameStepWithInputs_004be250(void) {
+__declspec(naked) void SceneFrameStepWithInputs(void) {
     __asm {
         sub     esp, 0x10
         push    ebx

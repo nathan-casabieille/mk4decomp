@@ -119,9 +119,9 @@ extern unsigned int g_fightAxisPosY;
  *     If first not equal: clear bit, ret.
  */
 extern unsigned int g_dispatchVar_005424c0;
-extern void NotMaskStorePair_0045f440(void);
+extern void NotMaskStorePair(void);
 
-void ArgIndexedBitmaskInit_0045f310(void) {
+void ArgIndexedBitmaskInit(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         sar     eax, 2
@@ -164,7 +164,7 @@ void ArgIndexedBitmaskInit_0045f310(void) {
         inc     eax
         mov     dword ptr [g_eventQueueChild], edx
         mov     dword ptr [g_eventQueueTotal], eax
-        call    NotMaskStorePair_0045f440
+        call    NotMaskStorePair
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

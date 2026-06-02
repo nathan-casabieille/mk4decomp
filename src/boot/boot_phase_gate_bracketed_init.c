@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_bootChainPair0_00541e80;
 extern void MStackPushChainStepIndex_004ab510(void);
 
-__declspec(naked) void BootPhaseGateBracketedInit_004060c0(void)
+__declspec(naked) void BootPhaseGateBracketedInit(void)
 {
     __asm
     {

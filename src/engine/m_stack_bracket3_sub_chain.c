@@ -119,14 +119,14 @@ void MStackBracket3SubChain_00493ad0(void) {
     g_fightGroupHead = g_currentNodeIdx;
     g_walkCallback = 0xffff999a;
     *(unsigned int *)(g_currentNodeIdx * 4 + 0x4c) = 0xffff999a;
-    MStackBracket5_FieldClear_StateAdvance_00405630();
+    MStackBracket5_FieldClear_StateAdvance();
     if (g_framePauseFlag != 0) return;
     if (!(g_xformDirtyFlags & 4)) {
         ((ScenegraphNode *)(g_currentNodeIdx * 4))->alloc_flags = 0xfffffff6;
         g_walkCallback = 4;
         ((ScenegraphNode *)(g_currentNodeIdx * 4))->flags = 4;
         g_walkCallback = ((FightGroupNode *)(g_fightGroupHead * 4))->tag;
-        MStackPushTableWalk_00493a20();
+        MStackPushTableWalk();
         if (g_framePauseFlag != 0) return;
         v = ((ScenegraphNode *)(g_xformEntityIdx * 4))->alloc_flags;
         g_walkCallback = v;

@@ -108,11 +108,11 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void ChainNodeAdvanceCallback_00408e70(void);
+extern void ChainNodeAdvanceCallback(void);
 extern void DirtyDoubleDeref(void);
 extern void DualBitGateInitCall_0048a1c0(void);
 extern void OrDualStore_0048a190(void);
-extern void ScaledTestPauseStore_00408860(void);
+extern void ScaledTestPauseStore(void);
 
 __declspec(naked) void AnimEventUpdateCluster_00493ef0(void)
 {
@@ -138,7 +138,7 @@ __declspec(naked) void AnimEventUpdateCluster_00493ef0(void)
         mov      eax, dword ptr [g_currentNodeIdx]
         mov      ecx, dword ptr [eax*4]
         mov      dword ptr [g_currentNodeIdx], ecx
-        call     ScaledTestPauseStore_00408860
+        call     ScaledTestPauseStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_401a
@@ -222,7 +222,7 @@ __declspec(naked) void AnimEventUpdateCluster_00493ef0(void)
         mov      eax, dword ptr [g_gameMode]
         test     eax, eax
         jne      short L_40cd
-        call     ChainNodeAdvanceCallback_00408e70
+        call     ChainNodeAdvanceCallback
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_4131

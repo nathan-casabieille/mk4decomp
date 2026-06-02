@@ -19,11 +19,11 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     +5
  *   ret
  */
-extern void PushPop84TripleCall_00438b90(void);
+extern void PushPop84TripleCall(void);
 extern void InstallSelfCountdownDispatch_00438a10(void);
 extern void InstallSelfCountdownDispatch_00438a10(void);
-void CmpJmpConstStoreJmp_004389e0(void) {
-    PushPop84TripleCall_00438b90();
+void CmpJmpConstStoreJmp(void) {
+    PushPop84TripleCall();
     if (g_framePauseFlag) return;
     if ((int)g_eventQueueChild < 0x64) {
         InstallSelfCountdownDispatch_00438a10();

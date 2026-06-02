@@ -114,7 +114,7 @@ extern void EsiInstallSetCallChain_0047aef0(void);
 extern void InstallSelfPauseTwoCall_0047af70(void);
 extern void ScaledLitLoadCall_00480fe0(void);
 extern void TripleFieldCopyHi_0048f7b0(void);
-extern void TripleFieldCopyJmpHi_0048f740(void);
+extern void TripleFieldCopyJmpHi(void);
 
 __declspec(naked) void TriPhaseDecCounterListAdvance_0047ad20(void)
 {
@@ -213,7 +213,7 @@ __declspec(naked) void TriPhaseDecCounterListAdvance_0047ad20(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_tpdcla_abort
-        call    TripleFieldCopyJmpHi_0048f740
+        call    TripleFieldCopyJmpHi
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_tpdcla_abort

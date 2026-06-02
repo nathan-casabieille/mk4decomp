@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave602_004e5808;
-extern void MStackPush1MagicMod2_004244d0(void);
+extern void MStackPush1MagicMod2(void);
 extern void MStackPush3CallChainBit2_004431e0(void);
 extern void StoreDoubleNegPauseSubStore(void);
 
@@ -156,7 +156,7 @@ __declspec(naked) void SpawnFreezeProjectileChain_00442530(void)
         mov      edx, dword ptr [ecx*4 + 0x64]
         lea      eax, [eax + edx - 0x4b65f]
         mov      dword ptr [g_eventQueueWorkType], eax
-        call     MStackPush1MagicMod2_004244d0
+        call     MStackPush1MagicMod2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2734

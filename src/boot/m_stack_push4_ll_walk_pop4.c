@@ -113,18 +113,18 @@ extern unsigned int g_fightAxisPosY;
  *   walks the linked list rooted at g_xformEntityIdx stepping through
  *   [cur*4]. For each non-zero entry:
  *     - SplitHi8Lo24_004abfc0 (with bl=4 sentinel for bit-2 toggle)
- *     - MStackInitCallToggle_00408ad0 (with g_eventQueueCurrent primed)
+ *     - MStackInitCallToggle (with g_eventQueueCurrent primed)
  *     - if bit 2 of g_xformDirtyFlags clear, also reads [scaled+0x28]; if
  *       non-zero advances g_xformEntityIdx to it (sar 2), saves the prior
  *       in 0x54206c, calls ScaledStoreThree_00409260.
  *   Loop ends on null next-pointer. Pops the 4 mstack entries back.
  */
 extern unsigned int g_table_004d57b0;
-extern void MStackInitCallToggle_00408ad0(void);
+extern void MStackInitCallToggle(void);
 extern void ScaledStoreThree_00409260(void);
 extern void SplitHi8Lo24_004abfc0(void);
 
-__declspec(naked) void MStackPush4LLWalkPop4_004090e0(void) {
+__declspec(naked) void MStackPush4LLWalkPop4(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_currentNodeIdx]
@@ -165,7 +165,7 @@ __declspec(naked) void MStackPush4LLWalkPop4_004090e0(void) {
         jne     L_m4w_doneNoPop
         mov     ecx, dword ptr [g_eventQueueCurrent]
         mov     dword ptr [g_walkCallback], ecx
-        call    MStackInitCallToggle_00408ad0
+        call    MStackInitCallToggle
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_m4w_doneNoPop

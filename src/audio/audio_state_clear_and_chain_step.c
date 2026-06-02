@@ -125,7 +125,7 @@ extern void CopyGlobal(void);
 extern unsigned int g_load_0052ab10;
 extern void TableWalkBoundedCmp(void);
 
-__declspec(naked) void FiveTableWalkInit_00403c90(void) {
+__declspec(naked) void FiveTableWalkInit(void) {
     __asm {
         push    esi
         push    2

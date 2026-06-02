@@ -122,8 +122,8 @@ extern void DispatcherComplex181_00426310(void);
 extern void GuardedDualMaskFlagToggle_004261d0(void);
 extern void RoundCleanupCluster_00427690(void);
 extern void SaveCallRestore(void);
-extern void SetWalkCurCallPauseDirty_00404c70(void);
-extern void StoreIncrMStackPush6_004275c0(void);
+extern void SetWalkCurCallPauseDirty(void);
+extern void StoreIncrMStackPush6(void);
 
 __declspec(naked) void Event23bMusicCluster_0042f540(void)
 {
@@ -160,7 +160,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         jne      short L_f612
         mov      eax, dword ptr [g_phaseThunkVar2_0052aabc]
         mov      dword ptr [g_walkCallback], eax
-        call     StoreIncrMStackPush6_004275c0
+        call     StoreIncrMStackPush6
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_f691
@@ -181,7 +181,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
     L_f612:
         mov      edx, dword ptr [g_phaseThunkVar2_0052aabc]
         mov      dword ptr [g_walkCallback], edx
-        call     StoreIncrMStackPush6_004275c0
+        call     StoreIncrMStackPush6
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f691
@@ -228,7 +228,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         je       short L_f6c9
         push     0x225
         push     OFFSET L_f6d0
-        call     SetWalkCurCallPauseDirty_00404c70
+        call     SetWalkCurCallPauseDirty
         add      esp, 8
     L_f6c9:
         jmp      CallSetPause

@@ -21,7 +21,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void DirtyToggleByGate(void);
 extern void GuardedBitChainCmpJmp_00470f90(void);
-extern void ScaledAndCheckJmp_00470f60(void);
+extern void ScaledAndCheckJmp(void);
 void CallDirty4DualJmp_00470f30(void) {
     DirtyToggleByGate();
     if (g_framePauseFlag) return;
@@ -29,5 +29,5 @@ void CallDirty4DualJmp_00470f30(void) {
         GuardedBitChainCmpJmp_00470f90();
         return;
     }
-    ScaledAndCheckJmp_00470f60();
+    ScaledAndCheckJmp();
 }

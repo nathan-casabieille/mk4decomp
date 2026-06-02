@@ -119,7 +119,7 @@ extern void MStackPushComplexCallPop_00406430(void);
 extern void MultiGateDispatchCallJmp_004779d0(void);
 extern void SaveCallRestoreOrXor(void);
 extern void ScaledLoadGuardedJmp_004066d0(void);
-extern void SwapOrPassSet_0048fbf0(void);
+extern void SwapOrPassSet(void);
 
 __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
 {
@@ -130,7 +130,7 @@ __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], ecx
-        call     SwapOrPassSet_0048fbf0
+        call     SwapOrPassSet
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7eda

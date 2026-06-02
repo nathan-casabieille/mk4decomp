@@ -114,13 +114,13 @@ extern unsigned int g_fightAxisPosY;
  *   Reads char [src], stores to [dst]; if char's class (table[char] & 4) is set, treat as line-end.
  *   Otherwise continues to copy until count exhausted or NUL.
  *   On line-end: null-terminate. Pad remaining buffer with zeros (rep stosd + rep stosb).
- *   Unlock(0x19) (TableLookupIatCall_004c6fd0); return dst.
+ *   Unlock(0x19) (TableLookupIatCall); return dst.
  */
 extern unsigned int g_byte_00f9f8c1;
 extern unsigned int g_dispatchSave1435_00f9fac8;
-extern void Lock_004c6f50(void);
+extern void Lock(void);
 extern void Strncpy_004cdc20(void);
-extern void TableLookupIatCall_004c6fd0(void);
+extern void TableLookupIatCall(void);
 
 __declspec(naked) void FgetsImpl_004c9a30(void) {
     __asm {
@@ -144,7 +144,7 @@ __declspec(naked) void FgetsImpl_004c9a30(void) {
         ret
         push    ebp
         push    0x19
-        call    Lock_004c6f50
+        call    Lock
         mov     edx, [esp + 0x1c]
         add     esp, 4
         test    edx, edx
@@ -202,7 +202,7 @@ __declspec(naked) void FgetsImpl_004c9a30(void) {
         and     ecx, 3
         rep stosb
         push    0x19
-        call    TableLookupIatCall_004c6fd0
+        call    TableLookupIatCall
         add     esp, 4
         mov     eax, esi
         pop     ebp

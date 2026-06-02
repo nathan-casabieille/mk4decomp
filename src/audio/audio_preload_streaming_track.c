@@ -110,12 +110,12 @@ extern unsigned int g_fightAxisPosY;
 
 extern void PendingMatch_004a62b0(void);
 extern void AudioPreloadStreamingTrack_004a6e70(void);
-extern void FiveTableWalkInit_00403c90(void);
+extern void FiveTableWalkInit(void);
 extern void CallSetPause(void);
 extern void BootInitGuardedCallChain(void);
 extern void IncCapped3e7_00491920(void);
 /* extern void AllocNode(void); -- defined elsewhere with diff sig */
-extern void TripleCallSetCopy_004a4880(void);
+extern void TripleCallSetCopy(void);
 extern void MemcpyByteN_004a5680(void);
 extern void AudioInstallSelfStatePush(void);
 extern void LoadGeoAsset_Default(void);
@@ -155,7 +155,7 @@ __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
         push     0x1e
         call     QuadCallPhase2
         add      esp, 0x10
-        call     FiveTableWalkInit_00403c90
+        call     FiveTableWalkInit
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_702b
@@ -166,7 +166,7 @@ __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_702b
-        call     TripleCallSetCopy_004a4880
+        call     TripleCallSetCopy
         mov      eax, dword ptr [g_count]
         cmp      eax, 4
         mov      eax, dword ptr [g_audioBankSel]

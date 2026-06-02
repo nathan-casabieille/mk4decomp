@@ -111,8 +111,8 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_arr_00fa0de0;
 extern unsigned int g_iat_004d215c;
 extern unsigned int g_iat_004d2140;
-extern void Lock_004c6f50(void);
-extern void TableLookupIatCall_004c6fd0(int);
+extern void Lock(void);
+extern void TableLookupIatCall(int);
 
 /*
  * @addr 0x004cd2b0 (101b crt) - lazy per-handle critsec init+enter:
@@ -140,7 +140,7 @@ __declspec(naked) void CritSecLazyEnter_004cd2b0(void) {
         test    eax, eax
         jne     enterCs
         push    0x11
-        call    Lock_004c6f50
+        call    Lock
         mov     eax, dword ptr [esi + 8]
         add     esp, 4
         test    eax, eax
@@ -151,7 +151,7 @@ __declspec(naked) void CritSecLazyEnter_004cd2b0(void) {
         inc     dword ptr [esi + 8]
 drop:
         push    0x11
-        call    TableLookupIatCall_004c6fd0
+        call    TableLookupIatCall
         add     esp, 4
 enterCs:
         mov     eax, dword ptr [ebx]

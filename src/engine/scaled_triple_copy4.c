@@ -11,7 +11,7 @@ extern unsigned int g_scaledInit_00542044;
  *   triple copy from a[0..8] into b[4..0xc] with each pass
  *   echoing through g_walkCallback.
  */
-void ScaledTripleCopy4_0049d2d0(void) {
+void ScaledTripleCopy4(void) {
     unsigned int *src = (unsigned int *)(g_xformEntityIdx * 4);
     unsigned int *dst = (unsigned int *)(g_scaledInit_00542044 * 4);
     unsigned int v;

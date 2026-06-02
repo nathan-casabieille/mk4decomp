@@ -13,14 +13,14 @@ extern unsigned int g_scaledInit_00542044;
  *   clear dirty bit 1; ret.
  */
 extern void func_004bae90_nn(void);
-void ScaledClear1cTestWalkCall_004460c0(void) {
+void ScaledClear1cTestWalkCall(void) {
     unsigned int cb;
     g_walkCallback = (void (*)(void))0;
     ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->alloc_flags = 0;
     cb = ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->alloc_work_type;
     g_walkCallback = (void (*)(void))cb;
     if (cb != 0) {
-        g_walkCallback = (void (*)(void))ScaledClear1cTestWalkCall_004460c0;
+        g_walkCallback = (void (*)(void))ScaledClear1cTestWalkCall;
         func_004bae90_nn();
         if (g_framePauseFlag != 0) {
             return;

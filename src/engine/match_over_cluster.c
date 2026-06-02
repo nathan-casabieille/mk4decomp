@@ -108,25 +108,25 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void TripleCallPauseJmp_00470500(void);
+extern void TripleCallPauseJmp(void);
 extern void Wrapper_0048a3c0(void);
-extern void PhaseDispatchListAdvance_004709e0(void);
-extern void CallPauseDirtyMStackPushFn_0046e2a0(void);
-extern void InstallSelfMStackOverwrite_0046e9a0(void);
+extern void PhaseDispatchListAdvance(void);
+extern void CallPauseDirtyMStackPushFn(void);
+extern void InstallSelfMStackOverwrite(void);
 extern void MatchOverCluster_0046ef70(void);
 extern void MStackJmpInstallSelf_0046ed40(void);
 
 /* @addr 0x0046ec20 (275b game) - 5 adjacent blocks.
  *   B1 (0..0x4f, 64+15 NOPs): call ScaledAndAlfe; if !pause: cj[+0x74]=0x604;
- *     call TripleCallPauseJmp_00470500; if !pause: push 0x004eb6d8, tail-call ArgSarStoreJmp.
+ *     call TripleCallPauseJmp; if !pause: push 0x004eb6d8, tail-call ArgSarStoreJmp.
  *   B2 (0x50..0x7f): call Wrapper_0048a3c0; if !pause: g_eventQueueEnd = 0x004eb6e8>>2;
- *     tail-jmp PhaseDispatchListAdvance_004709e0.
- *   B3 (0x80..0xbf): if bit0 of state set: tail-jmp CallPauseDirtyMStackPushFn_0046e2a0.
+ *     tail-jmp PhaseDispatchListAdvance.
+ *   B3 (0x80..0xbf): if bit0 of state set: tail-jmp CallPauseDirtyMStackPushFn.
  *     Else: g_eventQueueChild=8, g_eventQueueNotMask=8, mstack-push 0x0046ece0 (B4 addr);
- *     tail-jmp InstallSelfMStackOverwrite_0046e9a0.
+ *     tail-jmp InstallSelfMStackOverwrite.
  *   B4 (0xc0..0xff): if bit0 of state set: tail-jmp MatchOverCluster_0046ef70.
  *     Else: g_eventQueueChild=9, g_eventQueueNotMask=8, mstack-push 0x0046ed20 (B5 addr);
- *     tail-jmp InstallSelfMStackOverwrite_0046e9a0.
+ *     tail-jmp InstallSelfMStackOverwrite.
  *   B5 (0x100..0x112): if bit0 of state set: tail-jmp MatchOverCluster_0046ef70.
  *     Else: tail-jmp MStackJmpInstallSelf_0046ed40.
  */
@@ -144,7 +144,7 @@ __declspec(naked) void FiveBlockDispatchChain_0046ec20(void) {
         mov     eax, 0x604
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
-        call    TripleCallPauseJmp_00470500
+        call    TripleCallPauseJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -176,7 +176,7 @@ __declspec(naked) void FiveBlockDispatchChain_0046ec20(void) {
         mov     eax, 0x004eb6e8
         sar     eax, 2
         mov     dword ptr [g_eventQueueEnd], eax
-        jmp     PhaseDispatchListAdvance_004709e0
+        jmp     PhaseDispatchListAdvance
         ret
         nop
         nop
@@ -196,7 +196,7 @@ __declspec(naked) void FiveBlockDispatchChain_0046ec20(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
-        jmp     CallPauseDirtyMStackPushFn_0046e2a0
+        jmp     CallPauseDirtyMStackPushFn
         mov     eax, 8
         mov     dword ptr [g_eventQueueChild], eax
         mov     dword ptr [g_eventQueueNotMask], eax
@@ -214,7 +214,7 @@ __declspec(naked) void FiveBlockDispatchChain_0046ec20(void) {
         _emit   0ech
         _emit   46h
         _emit   00h
-        jmp     InstallSelfMStackOverwrite_0046e9a0
+        jmp     InstallSelfMStackOverwrite
         nop
         nop
         nop
@@ -243,7 +243,7 @@ __declspec(naked) void FiveBlockDispatchChain_0046ec20(void) {
         _emit   0edh
         _emit   46h
         _emit   00h
-        jmp     InstallSelfMStackOverwrite_0046e9a0
+        jmp     InstallSelfMStackOverwrite
         nop
         nop
         nop

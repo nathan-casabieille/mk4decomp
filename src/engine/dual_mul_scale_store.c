@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern void PhaseInstall2DInterpDispatch_0042f8a0(void);
 extern void DualMulScaleStore_0042ffa0(void);
 extern void DualMul10ChainAcc7C_00430020(void);
-extern void ChainGatedNegAccum_0048b740(void);
+extern void ChainGatedNegAccum(void);
 
 /* @addr 0x0048b610 (161b) - cmp g_eventQueueWorkType > 2 dispatch:
  *   if le: direct copy from chain[0]/chain[8]; else mstack push + lea
@@ -144,7 +144,7 @@ void CmpDirectOrIndirectChain_0048b610(void) {
         mov     dword ptr [g_xformEntityIdx], eax
         mov     edx, dword ptr [eax*4 + 0]
         mov     dword ptr [g_eventQueueNotMask], edx
-        call    ChainGatedNegAccum_0048b740
+        call    ChainGatedNegAccum
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

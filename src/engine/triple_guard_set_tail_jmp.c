@@ -113,8 +113,8 @@ extern unsigned int g_fightAxisPosY;
  *   if (bit0 of g_xformDirtyFlags) != 0:
  *     eax = g_cj_0054205c; [eax*4 + 0x4c] = 0x28f;
  *     ecx = g_cj_0054205c; eax = 0x1999; g_walkCallback = eax;
- *     [ecx*4 + 0x70] = eax; jmp TwoEntryWrapperGuarded_004826f0;
- *   else: jmp TwoEntryWrapperGuarded_004826f0; ret.
+ *     [ecx*4 + 0x70] = eax; jmp TwoEntryWrapperGuarded;
+ *   else: jmp TwoEntryWrapperGuarded; ret.
  */
 void TripleGuardSetTailJmp_00482680(void) {
     unsigned int v;
@@ -130,5 +130,5 @@ void TripleGuardSetTailJmp_00482680(void) {
         g_walkCallback = (void (*)(void))v;
         *(unsigned int *)(g_cj_0054205c * 4 + 0x70) = v;
     }
-    TwoEntryWrapperGuarded_004826f0();
+    TwoEntryWrapperGuarded();
 }

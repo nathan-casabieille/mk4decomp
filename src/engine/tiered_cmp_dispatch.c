@@ -109,23 +109,23 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00439cb0 (103b)
- *   call IdCascadeBitSet_00439760; if pause: ret;
+ *   call IdCascadeBitSet; if pause: ret;
  *   al = byte [g_xformDirtyFlags]; ecx = 1; test cl,al;
  *   if zero: ret;
  *   eax = g_table_00535ddc; cmp eax,0x30000; g_walkCallback=eax;
  *   if gt: ret;
  *   cmp eax, 0x20000; g_dispatchState = ecx; if gt: jmp Thunk_00439e30;
  *   cmp eax, 0x18000; if gt: jmp 0x439e30 (cluster);
- *   push 0x4e49d0; call Scaled3StorePushCallJmp_00438220; pop esp; if pause: ret;
+ *   push 0x4e49d0; call Scaled3StorePushCallJmp; pop esp; if pause: ret;
  *   jmp 0x439e30.
  */
 extern unsigned int g_dispatchState;
-extern void IdCascadeBitSet_00439760(void);
-extern void Scaled3StorePushCallJmp_00438220(void);
+extern void IdCascadeBitSet(void);
+extern void Scaled3StorePushCallJmp(void);
 
 void TieredCmpDispatch_00439cb0(void) {
     __asm {
-        call    IdCascadeBitSet_00439760
+        call    IdCascadeBitSet
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -159,7 +159,7 @@ void TieredCmpDispatch_00439cb0(void) {
         _emit   00h
         _emit   00h
         push    0x004e49d0
-        call    Scaled3StorePushCallJmp_00438220
+        call    Scaled3StorePushCallJmp
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax

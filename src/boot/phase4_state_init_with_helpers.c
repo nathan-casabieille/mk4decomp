@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *     mstack-bracketed routine that calls into a state-walker
  *     loop. Sets up a slot's field [0x30]=0x9b, [0x48]=0x28f,
  *     installs callback 0x00414590 at [+0x10], then loops over
- *     pending work via mstack pop + ChainNodeAdvanceCallback_00408e70. Falls into
+ *     pending work via mstack pop + ChainNodeAdvanceCallback. Falls into
  *     a tail at 0x41453b on negative-stack or via the L_skip
  *     branch when bit 4 of g_xformDirtyFlags is already set.
  *
@@ -142,7 +142,7 @@ extern unsigned int g_fightAxisPosY;
  * ============================================================ */
 
 extern unsigned int g_dispatchSave916_004d6a18;
-extern void ChainNodeAdvanceCallback_00408e70(void);
+extern void ChainNodeAdvanceCallback(void);
 extern void MStackCall_00406600(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void ZeroAndDirty4(void);
@@ -202,7 +202,7 @@ __declspec(naked) void Phase4StateInitWithHelpers_004143f0(void)
         inc     ecx
         mov     dword ptr [g_matrixStackTop], ecx
         mov     dword ptr [ecx*4], eax
-        call    ChainNodeAdvanceCallback_00408e70
+        call    ChainNodeAdvanceCallback
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4s_pop1
@@ -217,7 +217,7 @@ __declspec(naked) void Phase4StateInitWithHelpers_004143f0(void)
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4], ecx
-        call    ChainNodeAdvanceCallback_00408e70
+        call    ChainNodeAdvanceCallback
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         je      L_p4s_loop_top

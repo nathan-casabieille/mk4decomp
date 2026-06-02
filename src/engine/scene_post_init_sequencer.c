@@ -128,7 +128,7 @@ extern void *AllocNode(void);
 extern void CopyGlobal(void);
 extern void PendingMatch_00429ef0(void);
 extern void MStackPushDispatchBitGate(void);
-extern void MStackPush4LLWalkPop4_004090e0(void);
+extern void MStackPush4LLWalkPop4(void);
 extern void InstallSelfDispatch_00407620(void);
 extern void MStackCall_00406390(void);
 extern void MStackPop8(void);
@@ -227,7 +227,7 @@ void ScenePostInitSequencer_00429b70(void) {
         mov      dword ptr [g_walkCallback], eax
         je       short L_9d79
         mov      dword ptr [g_xformEntityIdx], eax
-        call     MStackPush4LLWalkPop4_004090e0
+        call     MStackPush4LLWalkPop4
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_9e22

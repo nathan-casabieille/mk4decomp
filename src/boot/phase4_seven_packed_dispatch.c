@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_const_0049db40;
 extern void AudioMixerStep(void);
-extern void BootStateTriple_00408d30(void);
+extern void BootStateTriple(void);
 extern void CallSetPause(void);
 extern void SetJmp_00408d20(void);
 extern void StoreDoubleNegPauseSubStore(void);
@@ -128,7 +128,7 @@ __declspec(naked) void Phase4SevenPackedDispatch_00417e40(void)
         test    eax, eax
         jne     L_p4sp7_A_ret
         mov     dword ptr [g_walkCallback], 2
-        call    BootStateTriple_00408d30
+        call    BootStateTriple
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sp7_A_ret

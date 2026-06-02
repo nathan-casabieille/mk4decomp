@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern void PopCallBitCmpPushCall_0047cb00(void);
 extern void InstallSelfCountdownStr_0047cb90(void);
 extern void InstallSelfMStackPackedFlow_0047c990(void);
-extern void ScaledChain3c7c_0048f930(void);
+extern void ScaledChain3c7c(void);
 
 /* @addr 0x0047c8f0 (154b game) - install-self with 2-stage 3-way dispatch.
  *   Block A: standard install-self at +0x80 (self-addr 0x0047c8f0).
@@ -150,7 +150,7 @@ __declspec(naked) void InstallSelfCountdown2Stage_0047c8f0(void) {
         _emit   7dh
         _emit   05h
         jmp     InstallSelfMStackPackedFlow_0047c990
-        call    ScaledChain3c7c_0048f930
+        call    ScaledChain3c7c
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

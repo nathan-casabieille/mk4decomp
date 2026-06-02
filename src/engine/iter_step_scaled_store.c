@@ -19,7 +19,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [eax*4 + 0x4c], ecx
  *   ret
  */
-void IterStepScaledStore_0048e600(int arg) {
+void IterStepScaledStore(int arg) {
     unsigned int packed = (unsigned int)(arg >> 2);
     unsigned int v;
     g_eventQueueTotal = packed;

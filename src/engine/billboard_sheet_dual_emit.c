@@ -139,7 +139,7 @@ extern unsigned int g_dispatchSave1559_00ab4d9c;
 extern unsigned int g_dispatchSave1576_00ab4e60;
 extern void CopyArgs16ToGlobals_004b2ff0(void);
 extern void Helper_DrawCursor(void);
-extern void MaxOfThree_004b3d90(void);
+extern void MaxOfThree(void);
 extern void ProjectTwoVertices(void);
 extern void ProjectVertex(void);
 
@@ -266,7 +266,7 @@ __declspec(naked) void BillboardSheetDualEmit_004bbda0(void)
         mov      ax, word ptr [g_tickCurMask]
         test     ax, ax
         jne      L_bf84
-        call     MaxOfThree_004b3d90
+        call     MaxOfThree
         mov      ecx, dword ptr [g_dispatchSave1559_00ab4d9c]
         movsx    eax, ax
         cdq

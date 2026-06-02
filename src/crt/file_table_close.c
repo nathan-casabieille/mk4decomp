@@ -117,10 +117,10 @@ extern unsigned int g_dispatchSave1466_00fa0dc0;
 extern unsigned int g_arr_00fa0de0;
 extern unsigned int g_dispatchSave1469_00fa0ee0;
 extern void CRTHandleLookup_004cd260(void);
-extern void Calloc_004c6110(void);
-extern void CmpCallPushIATCall_004c6e60(void);
+extern void Calloc(void);
+extern void CmpCallPushIATCall(void);
 extern void CritSecLazyEnter_004cd2b0(void);
-extern void Crt_doserrno_004c8bb0(void);
+extern void Crt_doserrno(void);
 extern void Crt_errno(void);
 extern void DivMod32IAT_004cd320(void);
 extern void PushConstCall_004c6a10(void);
@@ -166,7 +166,7 @@ __declspec(naked) void FileTableClose_004cb700(void) {
     L_ftc_checkErr:
         test    esi, esi
         je      short L_ftc_skipErr
-        call    Crt_doserrno_004c8bb0
+        call    Crt_doserrno
         mov     dword ptr [eax], esi
     L_ftc_setErr9:
         call    Crt_errno
@@ -208,7 +208,7 @@ __declspec(naked) void FileTableClose_004cb700(void) {
     L_ftc_skipClamp:
         push    4
         push    eax
-        call    Calloc_004c6110
+        call    Calloc
         add     esp, 8
         mov     dword ptr [g_dispatchSave1465_00f9fdb4], eax
         test    eax, eax
@@ -216,13 +216,13 @@ __declspec(naked) void FileTableClose_004cb700(void) {
         push    4
         push    0x14
         mov     dword ptr [g_dispatchSave1466_00fa0dc0], 0x14
-        call    Calloc_004c6110
+        call    Calloc
         add     esp, 8
         mov     dword ptr [g_dispatchSave1465_00f9fdb4], eax
         test    eax, eax
         jne     short L_ftc_initTable
         push    0x1a
-        call    CmpCallPushIATCall_004c6e60
+        call    CmpCallPushIATCall
         mov     eax, dword ptr [g_dispatchSave1465_00f9fdb4]
         add     esp, 4
     L_ftc_initTable:

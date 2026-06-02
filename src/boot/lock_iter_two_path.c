@@ -126,8 +126,8 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave1465_00f9fdb4;
 extern unsigned int g_dispatchSave1466_00fa0dc0;
 extern void CallTestPushSubCall_004c6960(void);
-extern void Lock_004c6f50(void);
-extern void TableLookupIatCall_004c6fd0(void);
+extern void Lock(void);
+extern void TableLookupIatCall(void);
 extern void TwoPathIATDispatch_004c7030(void);
 extern void TwoPathIATDispatch_004c70a0(void);
 
@@ -142,7 +142,7 @@ __declspec(naked) void LockIterTwoPath_004c6a20(void) {
         push    2
         mov     [esp + 0x14], esi
         xor     ebp, ebp
-        call    Lock_004c6f50
+        call    Lock
         mov     eax, dword ptr [g_dispatchSave1466_00fa0dc0]
         mov     edi, [esp + 0x1c]
         add     esp, 4
@@ -206,7 +206,7 @@ __declspec(naked) void LockIterTwoPath_004c6a20(void) {
         _emit   7ch
         _emit   86h
         push    2
-        call    TableLookupIatCall_004c6fd0
+        call    TableLookupIatCall
         mov     eax, [esp + 0x14]
         add     esp, 4
         cmp     edi, 1

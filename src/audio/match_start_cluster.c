@@ -122,14 +122,14 @@ extern u8 g_dlEnabledFlag;
 extern void AudioInstallSelfStatePush(void);
 extern void ClearTwoCallSetStore_004a2270(void);
 extern void DownloadPlayerChar(void);
-extern void DualScaledStoreConst_004a22c0(void);
+extern void DualScaledStoreConst(void);
 extern void IncOrZero9_00422080(void);
-extern void InstallSelfTableWalk_004200d0(void);
+extern void InstallSelfTableWalk(void);
 extern void ScaledClearTripleCallJmp_004202c0(void);
-extern void SixCallSeqPushImm_004a1d80(void);
+extern void SixCallSeqPushImm(void);
 extern void TablePushAccumTailJmp_00429e30(void);
 extern void TableWalkBoundedCmp(void);
-extern void TestCmpZeroFour_004238b0(void);
+extern void TestCmpZeroFour(void);
 
 __declspec(naked) void MatchStartCluster_004a23c0(void)
 {
@@ -144,23 +144,23 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         mov      dword ptr [g_xformDirtyFlags], edx
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [g_xformEntityIdx], ecx
-        call     DualScaledStoreConst_004a22c0
+        call     DualScaledStoreConst
         mov      edx, OFFSET g_active_00537e88
         mov      eax, OFFSET g_player2State
         shr      edx, 2
         shr      eax, 2
         mov      dword ptr [g_currentNodeIdx], edx
         mov      dword ptr [g_xformEntityIdx], eax
-        call     DualScaledStoreConst_004a22c0
+        call     DualScaledStoreConst
         call     ClearTwoCallSetStore_004a2270
         mov      dword ptr [g_dlMode], 0
-        call     SixCallSeqPushImm_004a1d80
+        call     SixCallSeqPushImm
         mov      dword ptr [g_eventQueueWorkType], 0
         call     Push16Call
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2440
-        jmp      InstallSelfTableWalk_004200d0
+        jmp      InstallSelfTableWalk
     L_2440:
         ret
         nop
@@ -199,7 +199,7 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         call     TablePushAccumTailJmp_00429e30
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_260c
-        call     TestCmpZeroFour_004238b0
+        call     TestCmpZeroFour
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_260c
         mov      eax, dword ptr [g_dlNalt1]
@@ -242,20 +242,20 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         mov      dword ptr [g_matchStartClr_00543568], ebx
         mov      dword ptr [g_currentNodeIdx], edx
         mov      dword ptr [g_xformEntityIdx], eax
-        call     DualScaledStoreConst_004a22c0
+        call     DualScaledStoreConst
         mov      ecx, OFFSET g_active_00537e88
         mov      edx, OFFSET g_player2State
         shr      ecx, 2
         shr      edx, 2
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [g_xformEntityIdx], edx
-        call     DualScaledStoreConst_004a22c0
+        call     DualScaledStoreConst
         call     ClearTwoCallSetStore_004a2270
         mov      dword ptr [g_dlMode], edi
         mov      dword ptr [g_dlNalt1], edi
         mov      dword ptr [g_dlNalt2], edi
         call     IncOrZero9_00422080
-        call     SixCallSeqPushImm_004a1d80
+        call     SixCallSeqPushImm
         mov      dword ptr [esi + 8], OFFSET L_2450
         mov      eax, dword ptr [g_baseSel]
         mov      ecx, OFFSET L_2450

@@ -13,7 +13,7 @@
  */
 extern unsigned int g_dispatchSave1426_00f9f820;
 extern u32 g_initRet;
-extern void CmpCallPushIATCall_004c6e60(void);
+extern void CmpCallPushIATCall(void);
 extern void FreeImpl(void);
 extern void LoadArgPushCall(void);
 
@@ -55,7 +55,7 @@ __declspec(naked) void _init_main(void) {
         mov     dword ptr [g_dispatchSave1426_00f9f820], esi
         jne     short L_ep_haveBuf
         push    9
-        call    CmpCallPushIATCall_004c6e60
+        call    CmpCallPushIATCall
         add     esp, 4
     L_ep_haveBuf:
         mov     ebp, dword ptr [g_initRet]
@@ -80,7 +80,7 @@ __declspec(naked) void _init_main(void) {
         test    eax, eax
         jne     short L_ep_copyToken
         push    9
-        call    CmpCallPushIATCall_004c6e60
+        call    CmpCallPushIATCall
         add     esp, 4
     L_ep_copyToken:
         mov     edi, ebp

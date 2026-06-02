@@ -116,7 +116,7 @@ extern void CopyThreeFields(void);
 extern void MStackPop8(void);
 extern void MStackPush8(void);
 extern void SetJmp_00405420(void);
-extern void StackPushAdd15CallPop_0040a7e0(void);
+extern void StackPushAdd15CallPop(void);
 extern void ThreeChanPackClamp(void);
 extern void ZeroThreeFields_0040a8b0(void);
 
@@ -158,7 +158,7 @@ __declspec(naked) void Phase1ContextSetup3Helpers_0040d990(void)
         add     esp, 8
         test    al, 1
         jne     L_p13_tailjmp
-        call    StackPushAdd15CallPop_0040a7e0
+        call    StackPushAdd15CallPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p13_ret

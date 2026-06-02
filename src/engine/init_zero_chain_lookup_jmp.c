@@ -141,5 +141,5 @@ void InitZeroChainLookupJmp_00494210(void) {
     g_eventQueueEnd = eax_val;
     g_currentNodeFlags = *(unsigned int *)(eax_val * 4);
     g_eventQueueEnd = eax_val + 1;
-    InstallSelfCmdStreamInterp_00494290();
+    InstallSelfCmdStreamInterp();
 }

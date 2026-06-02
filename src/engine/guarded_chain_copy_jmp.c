@@ -113,13 +113,13 @@ extern unsigned int g_fightAxisPosY;
  *   if pause: ret; ecx = g_baseSel; eax = [ecx*4+0x38];
  *   g_eventQueueEnd = eax; edx = [eax*4+0x6c]; g_acc_00542078 = edx;
  *   eax = [eax*4+0x74]; g_eventQueueNotMask = eax;
- *   g_walkCallback = 0x48; call ScaledLitAddJmp_00480fb0; if pause: ret;
+ *   g_walkCallback = 0x48; call ScaledLitAddJmp; if pause: ret;
  *   ecx = g_eventQueueEnd; edx = g_acc_00542078;
  *   [ecx*4+0x6c] = edx; lea eax,[ecx*4]; ecx = g_eventQueueNotMask;
  *   [eax+0x74] = ecx; jmp 0x41f830.
  */
 extern void MStackPush2ChainLLInsert(void);
-extern void ScaledLitAddJmp_00480fb0(void);
+extern void ScaledLitAddJmp(void);
 
 void GuardedChainCopyJmp_0049b730(void) {
     __asm {
@@ -138,7 +138,7 @@ void GuardedChainCopyJmp_0049b730(void) {
         mov     eax, dword ptr [eax*4 + 0x74]
         mov     dword ptr [g_eventQueueNotMask], eax
         mov     dword ptr [g_walkCallback], 0x48
-        call    ScaledLitAddJmp_00480fb0
+        call    ScaledLitAddJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

@@ -118,12 +118,12 @@ extern unsigned int g_dispatchTab66_005432a0;
 extern void DirtyDoubleDeref(void);
 extern void MStackBracket1_TreeWalkRecursive2(void);
 extern void MStackChainDecodeCall_004936f0(void);
-extern void MStackPush2ChainPrepend_00409970(void);
+extern void MStackPush2ChainPrepend(void);
 extern void MStackPushCallCallPop_00405e20(void);
 extern void PushSetCallCleanup_00408580(void);
-extern void ScaledAddDeref_00494800(void);
+extern void ScaledAddDeref(void);
 extern void ScaledLoadJmp30_00493eb0(void);
-extern void ScaledTestPauseStore_00408860(void);
+extern void ScaledTestPauseStore(void);
 extern void TestStoreConstJmp_004933b0(void);
 
 void StrikeAnim4Picker_00493100(void) {
@@ -179,14 +179,14 @@ void StrikeAnim4Picker_00493100(void) {
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [edx*4 + 0x30], eax
         mov      dword ptr [g_walkCallback], 1
-        call     ScaledAddDeref_00494800
+        call     ScaledAddDeref
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_33a1
         mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_walkCallback], 2
         mov      dword ptr [g_xformEntityIdx], eax
-        call     ScaledAddDeref_00494800
+        call     ScaledAddDeref
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_33a1
@@ -219,7 +219,7 @@ void StrikeAnim4Picker_00493100(void) {
         jne      L_3350
         mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_eventQueueTotal], edx
-        call     ScaledTestPauseStore_00408860
+        call     ScaledTestPauseStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_33a1
@@ -247,7 +247,7 @@ void StrikeAnim4Picker_00493100(void) {
         mov      ecx, dword ptr [g_eventQueueTotal]
         mov      dword ptr [g_xformEntityIdx], eax
         mov      dword ptr [g_currentNodeIdx], ecx
-        call     MStackPush2ChainPrepend_00409970
+        call     MStackPush2ChainPrepend
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_33a1

@@ -115,20 +115,20 @@ extern u32 g_dlMode;
 extern unsigned int g_state2_0053a1bc;
 extern unsigned int g_state2_0053a354;
 extern void SaveStateSnapshot_004aba40(void);
-extern void MStackRestore27_004abd50(void);
+extern void MStackRestore27(void);
 
 /* @addr 0x0049f7b0 (333b game) - dual-block: linked-list walk with indirect callback + dirty-toggle thunk.
  *   Block A (0..0x82): call SaveStateSnapshot_004aba40. Init scaledInit = (0x004f2980>>2); read pair (ecx, edx).
  *     If ecx<0 (sign): jmp to bit0-toggle path via 0x49f848.
  *     esi=g_walkCallback. Loop: if ecx==esi: call edx (indirect); set bit gate from pause.
  *     Else advance pair; if ecx<0: terminate. Loop until match.
- *     On no match: call MStackRestore27_004abd50; clear bit0; pop esi; ret.
- *     On match-indirect: if pause skip; if bit0(0054208c): call MStackRestore27_004abd50; or bit0; pop+ret.
- *       Else: call MStackRestore27_004abd50; clear bit0; pop esi; ret.
+ *     On no match: call MStackRestore27; clear bit0; pop esi; ret.
+ *     On match-indirect: if pause skip; if bit0(0054208c): call MStackRestore27; or bit0; pop+ret.
+ *       Else: call MStackRestore27; clear bit0; pop esi; ret.
  *   Tail thunks (+0xc0..): call DualTestDirtyToggle; if pause ret. Bit-test gates + chained data lookups.
  *   Multiple 16-byte aligned blocks all set/clear bit0 of g_xformDirtyFlags.
  */
-__declspec(naked) void LinkedListIndirectDirtyToggle_0049f7b0(void) {
+__declspec(naked) void LinkedListIndirectDirtyToggle(void) {
     __asm {
         push    esi
         call    SaveStateSnapshot_004aba40
@@ -162,7 +162,7 @@ __declspec(naked) void LinkedListIndirectDirtyToggle_0049f7b0(void) {
         mov     dword ptr [g_scaledInit_00542044], eax
         _emit   7dh
         _emit   0d2h
-        call    MStackRestore27_004abd50
+        call    MStackRestore27
         mov     eax, dword ptr [g_xformDirtyFlags]
         and     al, 0xfe
         mov     dword ptr [g_xformDirtyFlags], eax
@@ -176,13 +176,13 @@ __declspec(naked) void LinkedListIndirectDirtyToggle_0049f7b0(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   13h
-        call    MStackRestore27_004abd50
+        call    MStackRestore27
         mov     eax, dword ptr [g_xformDirtyFlags]
         and     al, 0xfe
         mov     dword ptr [g_xformDirtyFlags], eax
         pop     esi
         ret
-        call    MStackRestore27_004abd50
+        call    MStackRestore27
         mov     eax, dword ptr [g_xformDirtyFlags]
         or      al, 1
         mov     dword ptr [g_xformDirtyFlags], eax

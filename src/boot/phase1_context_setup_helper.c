@@ -114,7 +114,7 @@ extern unsigned int g_dispatchSave638_004f2650;
 extern void DualCmpSwapStore(void);
 extern void CondPickDualStore(void);
 extern void ScaledStackCallPause(void);
-extern void ArgSar_Set0_Jmp_0049c6f0(void);
+extern void ArgSar_Set0_Jmp(void);
 extern void Vec2SumMul10ChainCompute(void);
 extern void ScaledIndirectJmp_0049c850(void);
 extern void Phase1ContextSetupHelper_0040c260(void);
@@ -136,10 +136,10 @@ extern void MStackCall_00406740(void);
  *     calls multiplying g_currentNodeFlags / 00542088 by 0x3333 (interp
  *     factor) then stores results back. Writes them into [esi+0x6c]
  *     and [esi+0x74], writes g_currentNodeIdx → g_fightGroupHead, sets
- *     [g_baseSel*4+0x5c]=0x30, pushes 0x4f2650 → ArgSar_Set0_Jmp_0049c6f0.
+ *     [g_baseSel*4+0x5c]=0x30, pushes 0x4f2650 → ArgSar_Set0_Jmp.
  *   2b NOP pad.
  *   Entry 4 (offset 0xf0, 40b): Vec2SumMul10ChainCompute → on no-error compare
- *     g_eventQueueCurrent vs g_eventQueueWorkType: if le tail-jmp Phase1ChainSetupCallScale6_0040ca70,
+ *     g_eventQueueCurrent vs g_eventQueueWorkType: if le tail-jmp Phase1ChainSetupCallScale6,
  *     else tail-jmp ScaledIndirectJmp_0049c850.
  *   8b NOP pad.
  *   Entry 5 (offset 0x150, 34b): Phase1ContextSetupHelper_0040c260 + BootCallChainDoubleMul10_0040b890;
@@ -147,7 +147,7 @@ extern void MStackCall_00406740(void);
  */
 extern void ArgSarStoreJmp(void);
 extern void CallSetPause(void);
-extern void Phase1ChainSetupCallScale6_0040ca70(void);
+extern void Phase1ChainSetupCallScale6(void);
 
 __declspec(naked) void Alarm5EntryScopedChain_0049be10(void) {
     __asm {
@@ -242,7 +242,7 @@ __declspec(naked) void Alarm5EntryScopedChain_0049be10(void) {
         mov     dword ptr [g_walkCallback], eax
         push    offset g_dispatchSave638_004f2650
         mov     dword ptr [ecx*4 + 0x5c], eax
-        call    ArgSar_Set0_Jmp_0049c6f0
+        call    ArgSar_Set0_Jmp
         add     esp, 4
     L_a5e_e3End:
         pop     esi
@@ -261,7 +261,7 @@ __declspec(naked) void Alarm5EntryScopedChain_0049be10(void) {
         jle     short L_a5e_e4tail2
         jmp     ScaledIndirectJmp_0049c850
     L_a5e_e4tail2:
-        jmp     Phase1ChainSetupCallScale6_0040ca70
+        jmp     Phase1ChainSetupCallScale6
     L_a5e_e4End:
         ret
         nop

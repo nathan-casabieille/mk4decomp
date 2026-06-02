@@ -121,17 +121,17 @@ extern void CallPauseMStackPushSet9Jmp_0045ffc0(void);
 extern void CjInstallSelfRouter(void);
 extern void CjMaskedFlagProbe_0048ecf0(void);
 extern void DualGatedStateYield(void);
-extern void GuardedDirtyXformFromTable_0048f6d0(void);
-extern void GuardedDualAndFlagToggle_0048f020(void);
+extern void GuardedDirtyXformFromTable(void);
+extern void GuardedDualAndFlagToggle(void);
 extern void InstallSelfChainCascade_0045feb0(void);
-extern void MStackPushSet0001_00490260(void);
+extern void MStackPushSet0001(void);
 extern void MstackPopScaledChainPlusThunks(void);
 extern void MultiThunkDispatcher_00460470(void);
 extern void ScaledAndAlfe(void);
 extern void TableLookupCall_00489ff0(void);
 
 extern unsigned int g_dispatchSave787_004f1a20;
-extern void ArgScaledTestStore_00494140(void);
+extern void ArgScaledTestStore(void);
 extern void ScaledChainJmp_00429470(void);
 extern void ScaledClearJmp_00428d60(void);
 extern void ScaledZeroFour(void);
@@ -239,7 +239,7 @@ __declspec(naked) void InstallSelf3StateDualEntry_00486ff0(void) {
         pop     esi
         ret
         push    0x00542bc8
-        call    ArgScaledTestStore_00494140
+        call    ArgScaledTestStore
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
@@ -279,7 +279,7 @@ __declspec(naked) void InstallSelf3StateDualEntry_00486ff0(void) {
  *     Else (0xfffe0000): load function ptr from next stream slot; indirect call; if pause ret.
  *     Read next; if == 0xffff0000: tail-call StackPopDispatchTagged. Else loop.
  */
-__declspec(naked) void InstallSelfCmdStreamInterp_00494290(void) {
+__declspec(naked) void InstallSelfCmdStreamInterp(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -346,12 +346,12 @@ __declspec(naked) void InstallSelfCmdStreamInterp_00494290(void) {
         inc     eax
         mov     dword ptr [g_acc_00542078], ecx
         mov     dword ptr [g_eventQueueEnd], eax
-        mov     ecx, offset InstallSelfCmdStreamInterp_00494290
+        mov     ecx, offset InstallSelfCmdStreamInterp
         mov     edx, dword ptr [eax*4 + 0]
         inc     eax
         mov     dword ptr [g_xformScratch2088], edx
         mov     dword ptr [g_eventQueueEnd], eax
-        mov     dword ptr [esi + 8], offset InstallSelfCmdStreamInterp_00494290
+        mov     dword ptr [esi + 8], offset InstallSelfCmdStreamInterp
         mov     eax, dword ptr [g_baseSel]
         add     ecx, 0x01000000
         mov     dword ptr [eax*4 + 0x84], 1
@@ -400,7 +400,7 @@ __declspec(naked) void SelfInstallPhaseDispatch_0045fd30(void)
         pop     ebx
         ret
     L_sipd2_continue:
-        call    GuardedDualAndFlagToggle_0048f020
+        call    GuardedDualAndFlagToggle
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_sipd2_retCommon
@@ -432,7 +432,7 @@ __declspec(naked) void SelfInstallPhaseDispatch_0045fd30(void)
         jne     L_sipd2_retCommon
         test    byte ptr [g_xformDirtyFlags], bl
         jne     short L_sipd2_finishInstall
-        call    MStackPushSet0001_00490260
+        call    MStackPushSet0001
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_sipd2_retCommon
@@ -453,7 +453,7 @@ __declspec(naked) void SelfInstallPhaseDispatch_0045fd30(void)
         mov     ecx, offset g_dispatchSave961_004ea058
         shr     ecx, 2
         mov     dword ptr [g_currentNodeIdx], ecx
-        call    GuardedDirtyXformFromTable_0048f6d0
+        call    GuardedDirtyXformFromTable
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_sipd2_retCommon

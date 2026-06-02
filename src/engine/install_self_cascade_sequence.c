@@ -120,14 +120,14 @@ extern unsigned int g_fightAxisPosY;
  *     Else: g_walkCallback=0x1f4; call AudioVolumeRescale; if pause ret.
  *       If bit0(0054208c): jmp InstallSelfChainSetB333v3 (0x00437fb0).
  *       Else: g_eventQueueNotMask=0x10028; jmp HitReactionDispatcher.
- *   Tail (+0x140 after 6-NOP pad): jmp InstallSelfChainSetB333v2_00437f00.
+ *   Tail (+0x140 after 6-NOP pad): jmp InstallSelfChainSetB333v2.
  */
 extern unsigned int g_dispatchState;
 extern void AudioVolumeRescale(void);
 extern void EsiInstallTwoCallCmpInstall_00438b10(void);
 extern void GuardedSeq_00433bb0(void);
 extern void HitReactionDispatcher(void);
-extern void InstallSelfChainSetB333v2_00437f00(void);
+extern void InstallSelfChainSetB333v2(void);
 extern void InstallSelfChainSetB333v3_00437fb0(void);
 extern void InstallSelfCountdownCascade_00439fd0(void);
 extern void InstallSelfThreeStateLeaPlus22_00437970(void);
@@ -226,6 +226,6 @@ __declspec(naked) void InstallSelfCascadeSequence_00434350(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        jmp     InstallSelfChainSetB333v2_00437f00
+        jmp     InstallSelfChainSetB333v2
     }
 }

@@ -131,7 +131,7 @@ extern s32 g_dlNalt2;
 extern unsigned int g_table_00543848;
 extern void AudioMode2BankSetup_004a6080(void);
 extern void BootInitGuardedCallChain(void);
-extern void FiveTableWalkInit_00403c90(void);
+extern void FiveTableWalkInit(void);
 extern void TwoStageAudioInit_004a6180(void);
 
 __declspec(naked) void AudioByteCounterChain_004a9820(void)
@@ -159,7 +159,7 @@ __declspec(naked) void AudioByteCounterChain_004a9820(void)
         call    BootInitGuardedCallChain
         cmp     dword ptr [g_framePauseFlag], ebx
         jne     short L_end
-        call    FiveTableWalkInit_00403c90
+        call    FiveTableWalkInit
         cmp     dword ptr [g_framePauseFlag], ebx
         jne     short L_end
         mov     al, byte ptr [g_byte_00543840]

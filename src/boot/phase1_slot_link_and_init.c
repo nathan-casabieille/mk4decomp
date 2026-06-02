@@ -109,20 +109,20 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_particleEmitterNode;
-extern void BootChainBidirRecurseWalk_00405ca0(void);
-extern void BootPhaseGateBracketedInit_004060c0(void);
-extern void GuardedChainPushSetCallPop_00406bb0(void);
+extern void BootChainBidirRecurseWalk(void);
+extern void BootPhaseGateBracketedInit(void);
+extern void GuardedChainPushSetCallPop(void);
 extern void MStackCall_00406340(void);
-extern void MStackInitCallToggle_00408ad0(void);
+extern void MStackInitCallToggle(void);
 extern void ScaledLoadGuardedJmp_004066d0(void);
-extern void ScaledTestPauseStore_00408860(void);
+extern void ScaledTestPauseStore(void);
 
 __declspec(naked) void Phase1SlotLinkAndInit_00419470(void)
 {
     __asm {
         mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_currentNodeIdx], eax
-        call    GuardedChainPushSetCallPop_00406bb0
+        call    GuardedChainPushSetCallPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1sli_ret
@@ -131,7 +131,7 @@ __declspec(naked) void Phase1SlotLinkAndInit_00419470(void)
         test    eax, eax
         jne     L_p1sli_ret
         mov     dword ptr [g_walkCallback], 0xFFFFFFFF
-        call    MStackInitCallToggle_00408ad0
+        call    MStackInitCallToggle
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1sli_ret
@@ -139,13 +139,13 @@ __declspec(naked) void Phase1SlotLinkAndInit_00419470(void)
         jne     L_p1sli_ret
         mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_eventQueueTotal], ecx
-        call    ScaledTestPauseStore_00408860
+        call    ScaledTestPauseStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1sli_ret
         test    byte ptr [g_xformDirtyFlags], 4
         jne     L_p1sli_ret
-        call    BootPhaseGateBracketedInit_004060c0
+        call    BootPhaseGateBracketedInit
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1sli_ret
@@ -207,7 +207,7 @@ __declspec(naked) void Phase1SlotLinkAndInit_00419470(void)
         mov     dword ptr [ecx*4 + 0x80], eax
         mov     edx, dword ptr [g_eventQueueTotal]
         mov     dword ptr [g_currentNodeIdx], edx
-        call    BootChainBidirRecurseWalk_00405ca0
+        call    BootChainBidirRecurseWalk
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1sli_ret

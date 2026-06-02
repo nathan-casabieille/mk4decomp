@@ -11,8 +11,8 @@ extern unsigned int g_scaledInit_00542044;
  *   arg sar 2 → g_eventQueueEnd; +3 → g_eventQueueTotal;
  *   load [eax*4 + 0]; store at [baseSel*4 + 0x6c]; clear g_eventQueueTotal; jmp T.
  */
-extern void MoveDispatch4StateFsm_00494a60(void);
-void ArgScaledChain_004949b0(int arg) {
+extern void MoveDispatch4StateFsm(void);
+void ArgScaledChain(int arg) {
     unsigned int base = (unsigned int)(arg >> 2);
     unsigned int basePlus3;
     g_eventQueueEnd = base;
@@ -20,5 +20,5 @@ void ArgScaledChain_004949b0(int arg) {
     g_eventQueueTotal = basePlus3;
     *(unsigned int *)(g_baseSel * 4 + 0x6c) = *(unsigned int *)(basePlus3 * 4);
     g_eventQueueTotal = 0;
-    MoveDispatch4StateFsm_00494a60();
+    MoveDispatch4StateFsm();
 }

@@ -24,7 +24,7 @@ extern void *g_lit_004ef218;
 
 extern void ScaledChain3c74Jmp_0048e780(void);
 extern void Wrapper_00433940(void);
-extern int  PackedAdvanceCallTailJmp_004392c0(void *p);
+extern int  PackedAdvanceCallTailJmp(void *p);
 extern void DualCondMatchSet_00488dc0(void);
 extern void InstallSelfChainPlusGuardedTail_00488ca0(void);
 extern int  Cascade5StageInit_00491520(void *p);
@@ -37,7 +37,7 @@ void CallPauseDirtyLit_00433910(void) {
         Wrapper_00433940();
         return;
     }
-    PackedAdvanceCallTailJmp_004392c0(&g_lit_004e44d8);
+    PackedAdvanceCallTailJmp(&g_lit_004e44d8);
 }
 
 /* @addr 0x00488c70 */

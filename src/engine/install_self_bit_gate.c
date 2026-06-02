@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
  *   pause clear and bit0 set tail-jmp StackPopDispatchTagged; else
  *   install self with tag 0xa0 and raise framePause.
  */
-extern void PushPop84TripleCall_00438b90(void);
+extern void PushPop84TripleCall(void);
 extern void StoreCallPauseDirtyStoreJmp_004396c0(void);
 
 __declspec(naked) void InstallSelfBitGate_00438aa0(void) {
@@ -133,7 +133,7 @@ __declspec(naked) void InstallSelfBitGate_00438aa0(void) {
         mov     dword ptr [esi + 0x84], 0
         test    eax, eax
         jne     stage2
-        call    PushPop84TripleCall_00438b90
+        call    PushPop84TripleCall
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     epi

@@ -116,7 +116,7 @@ extern void BootInitGuardedCallChain(void);
 extern void CopyGlobal(void);
 extern void InstallSelfPackedF80(void);
 extern void OpcodeStreamDispatch_00423ea0(void);
-extern void RegistryPushBindPop_00403c20(void);
+extern void RegistryPushBindPop(void);
 
 __declspec(naked) void ContinueScreenFsm_00423c20(void)
 {
@@ -222,7 +222,7 @@ __declspec(naked) void ContinueScreenFsm_00423c20(void)
         call     PushSetCallPop
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_3e8f
-        call     RegistryPushBindPop_00403c20
+        call     RegistryPushBindPop
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_3e8f
         mov      dword ptr [esi + 8], OFFSET L_3c20

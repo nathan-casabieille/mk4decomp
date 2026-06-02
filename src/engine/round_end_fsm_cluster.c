@@ -120,9 +120,9 @@ extern void CallSetPause(void);
 extern void DispatcherComplex115_0049f900(void);
 extern void DispatcherComplex115_0049f980(void);
 extern void InstallSelfPackedF80(void);
-extern void InstallSelfTableWalk_004200d0(void);
-extern void ScenegraphWalk_0041f7d0(void);
-extern void SixCallSeqPushImm_004a1d80(void);
+extern void InstallSelfTableWalk(void);
+extern void ScenegraphWalk(void);
+extern void SixCallSeqPushImm(void);
 extern void TripleStageRollback(void);
 
 __declspec(naked) void RoundEndFsmCluster_0045d680(void)
@@ -153,12 +153,12 @@ __declspec(naked) void RoundEndFsmCluster_0045d680(void)
         pop      ebx
         ret
     L_d6d4:
-        call     SixCallSeqPushImm_004a1d80
+        call     SixCallSeqPushImm
         mov      ecx, dword ptr [g_baseSel]
         mov      eax, 0x1000
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0xc], eax
-        call     InstallSelfTableWalk_004200d0
+        call     InstallSelfTableWalk
         pop      edi
         pop      esi
         pop      ebx
@@ -201,7 +201,7 @@ __declspec(naked) void RoundEndFsmCluster_0045d680(void)
         mov      dword ptr [g_walkCallback], edi
         mov      dword ptr [g_active_0053a408], edi
         mov      dword ptr [g_active_00537e88], edi
-        call     ScenegraphWalk_0041f7d0
+        call     ScenegraphWalk
         mov      dword ptr [g_eventQueueWorkType], 4
         call     Push16Call
         cmp      dword ptr [g_framePauseFlag], edi

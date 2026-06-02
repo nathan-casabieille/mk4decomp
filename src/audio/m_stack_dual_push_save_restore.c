@@ -115,7 +115,7 @@ extern unsigned int g_poseGridGenVar_004e2864;
 extern void Cmp3DirtyToggle_0049fa20(void);
 extern void DualPushSetCallDualPop(void);
 extern void MStackPush2TableNot(void);
-extern void SetWalkCurCallPauseDirty_00404c70(void);
+extern void SetWalkCurCallPauseDirty(void);
 extern void RoundWinTransition(void);
 extern void TripleStageRollback(void);
 extern void TaggedSceneDispatch(void);
@@ -168,7 +168,7 @@ __declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
         push    0x4a0370
         mov     dword ptr [g_walkCallback], ebx
         mov     dword ptr [g_state2_00537ea8], ebx
-        call    SetWalkCurCallPauseDirty_00404c70
+        call    SetWalkCurCallPauseDirty
         add     esp, 8
         call    RoundWinTransition
         mov     eax, dword ptr [g_framePauseFlag]
@@ -210,7 +210,7 @@ __declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
         push    0x239
         push    0x4a0b00
         mov     dword ptr [g_eventQueueChild], eax
-        call    SetWalkCurCallPauseDirty_00404c70
+        call    SetWalkCurCallPauseDirty
         add     esp, 8
         pop     ebx
         ret
@@ -220,7 +220,7 @@ __declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
         push    0x23e
         push    0x4a0dc0
         mov     dword ptr [g_eventQueueEnd], ebx
-        call    SetWalkCurCallPauseDirty_00404c70
+        call    SetWalkCurCallPauseDirty
         add     esp, 8
         mov     dword ptr [g_walkCallback], ebx
         mov     dword ptr [g_state2_00537ea8], ebx
@@ -236,7 +236,7 @@ __declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
         add     esp, 4
         push    0x243
         push    0x4a10d0
-        call    SetWalkCurCallPauseDirty_00404c70
+        call    SetWalkCurCallPauseDirty
         add     esp, 8
         mov     dword ptr [g_walkCallback], ebx
         mov     dword ptr [g_state2_00537ea8], ebx

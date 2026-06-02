@@ -114,8 +114,8 @@ extern void EsiEdiAliasDualMul10(void);
 extern void FiveCallGuardSetTail(void);
 extern void Install3StateLongSeq_00480570(void);
 extern void MStackPushSet0008(void);
-extern void NotMaskStorePair_0045f440(void);
-extern void PunchAnimCluster_00496d80(void);
+extern void NotMaskStorePair(void);
+extern void PunchAnimCluster(void);
 extern void PushCallScaledStore_004143c0(void);
 extern void ScaledChainJmp_004298e0(void);
 extern void ScaledIndexConditionalAdd(void);
@@ -293,11 +293,11 @@ __declspec(naked) void HitContactDispatcherCluster_00480240(void)
         test     eax, eax
         jne      L_0567
         mov      dword ptr [g_xformScratch2088], 0x10000
-        call     PunchAnimCluster_00496d80
+        call     PunchAnimCluster
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_0567
-        call     NotMaskStorePair_0045f440
+        call     NotMaskStorePair
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_0567

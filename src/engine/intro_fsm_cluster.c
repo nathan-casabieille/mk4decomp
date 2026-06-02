@@ -113,9 +113,9 @@ extern unsigned int g_dispatchSave543_004e65b8;
 extern unsigned int g_dispatchSave542_004e65c8;
 extern unsigned int g_dispatchTableArr5_00501088;
 extern void ArgSarStoreJmp(void);
-extern void DoubleScaledCrossStore_00475750(void);
+extern void DoubleScaledCrossStore(void);
 extern void GatedWordPushCall(void);
-extern void InstallSelfPackedTailJmp_004751f0(void);
+extern void InstallSelfPackedTailJmp(void);
 extern void PendingMatch_0044d7a0(void);
 extern void SetJmp_004753a0(void);
 extern void StoreLoadJmp(void);
@@ -174,7 +174,7 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
         je       short L_d68d
         dec      ecx
         je       short L_d61c
-        call     DoubleScaledCrossStore_00475750
+        call     DoubleScaledCrossStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d738
@@ -221,7 +221,7 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
         mov      dword ptr [eax + 4], ecx
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], 0
-        call     InstallSelfPackedTailJmp_004751f0
+        call     InstallSelfPackedTailJmp
         mov      dword ptr [g_framePauseFlag], 1
         ret
     L_d6f0:

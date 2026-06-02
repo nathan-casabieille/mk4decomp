@@ -67,6 +67,6 @@ void Push16Call(void) {
  *   and     dword ptr [eax*4 + 0x34], -5     ; clear bit 2
  *   ret
  */
-void ClearBit2x34_00490130(void) {
+void ClearBit2x34(void) {
     ((ScenegraphNode *)(g_fightGroupHead * 4))->state_mask &= ~4u;
 }

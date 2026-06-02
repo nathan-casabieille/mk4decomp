@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void CjInstallSelfRouter(void);
-extern void ScaledChainCallPauseSetJmp_0048f8e0(void);
+extern void ScaledChainCallPauseSetJmp(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void StageEventDamageCluster_0042c5a0(void);
 
@@ -135,7 +135,7 @@ __declspec(naked) void InstallSelfDualEsi_0042c4f0(void) {
         pop     esi
         ret
         mov     dword ptr [g_xformEntityIdx], 0x0042b6f0
-        call    ScaledChainCallPauseSetJmp_0048f8e0
+        call    ScaledChainCallPauseSetJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

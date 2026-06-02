@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00493c80 (125b) - mstack push + chain access + add + call + pop. */
 
-void PushChainAddCallPop_00493c80(void) {
+void PushChainAddCallPop(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_scaledInit_00542044]

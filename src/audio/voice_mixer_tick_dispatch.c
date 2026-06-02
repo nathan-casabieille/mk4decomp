@@ -117,7 +117,7 @@ extern unsigned int g_dispatchSave723_004f62f8;
 extern unsigned int g_dispatchSave120_00515964;
 extern unsigned int g_dispatchSave1332_00f00000;
 extern void AudioBindEntry_004a1e40(void);
-extern void AudioInitArgs3_004a1f20(void);
+extern void AudioInitArgs3(void);
 extern void GuardedSetupCallTailJmp(void);
 
 __declspec(naked) void VoiceMixerTickDispatch_004a27c0(void)
@@ -137,7 +137,7 @@ __declspec(naked) void VoiceMixerTickDispatch_004a27c0(void)
         push     eax
         push     0
         push     OFFSET g_dispatchSave120_00515964
-        call     AudioInitArgs3_004a1f20
+        call     AudioInitArgs3
         add      esp, 0x10
     L_27ed:
         add      esi, 0x1c

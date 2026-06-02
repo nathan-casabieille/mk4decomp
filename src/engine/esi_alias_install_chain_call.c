@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   eax = [eax*4+0x84]; [esi+0x84] = 0;
  *   if eax != 0: call CjInstallSelfRouter; pop esi; ret;
  *   else: g_xformEntityIdx = 0x42c550;
- *     call ScaledChainCallPauseSetJmp_0048f8e0; if pause: ret;
+ *     call ScaledChainCallPauseSetJmp; if pause: ret;
  *     [esi+8] = 0x42c490; [esi+0x84]=1;
  *     g_pendingNodeType = 1; g_framePauseFlag = 1; pop esi; ret.
  */
@@ -127,7 +127,7 @@ void EsiAliasInstallChainCall_0042c490(void) {
         return;
     }
     g_xformEntityIdx = 0x0042c550;
-    ScaledChainCallPauseSetJmp_0048f8e0();
+    ScaledChainCallPauseSetJmp();
     if (g_framePauseFlag != 0) return;
     *(unsigned int *)(base + 8) = (unsigned int)&EsiAliasInstallChainCall_0042c490;
     ((ScenegraphNode *)base)->install_flag = 1;

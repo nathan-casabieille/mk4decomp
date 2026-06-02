@@ -6,25 +6,25 @@
 
 /* @addr 0x004227b0 (94b)
  *   g_eventQueueCurrent=4; g_scaledInit=0x53a328>>2; g_xformEntityIdx=0x53a788>>2;
- *   call CountdownClampWalk_00422810; if pause: ret;
+ *   call CountdownClampWalk; if pause: ret;
  *   g_eventQueueCurrent=0x40; g_scaledInit=0x53e348>>2; g_xformEntityIdx=0x53e34c>>2;
- *   jmp CountdownClampWalk_00422810.
+ *   jmp CountdownClampWalk.
  */
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_clamp_0053a328;
 extern unsigned int g_dispatchSave39_0053a788;
 extern unsigned int g_clamp_0053e348;
 extern unsigned int g_dispatchClr1_0053e34c;
-extern void CountdownClampWalk_00422810(void);
+extern void CountdownClampWalk(void);
 void Helper_PostPlayerTick(void) {
     g_eventQueueCurrent = 4;
     g_scaledInit_00542044 = (unsigned int)&g_clamp_0053a328 >> 2;
     g_xformEntityIdx = (unsigned int)&g_dispatchSave39_0053a788 >> 2;
-    CountdownClampWalk_00422810();
+    CountdownClampWalk();
     if (g_framePauseFlag != 0) return;
     g_eventQueueCurrent = 0x40;
     g_scaledInit_00542044 = (unsigned int)&g_clamp_0053e348 >> 2;
     g_xformEntityIdx = (unsigned int)&g_dispatchClr1_0053e34c >> 2;
-    CountdownClampWalk_00422810();
+    CountdownClampWalk();
 }
 

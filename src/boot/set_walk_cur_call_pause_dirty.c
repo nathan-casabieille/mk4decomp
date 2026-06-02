@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void Thunk_0049cb70(void);
 /* AllocNode declared in engine/scenegraph.h */
-void SetWalkCurCallPauseDirty_00404c70(int arg1, int arg2) {
+void SetWalkCurCallPauseDirty(int arg1, int arg2) {
     g_walkCallback = (unsigned int)arg2;
     g_eventQueueCurrent = 0xffff;
     Thunk_0049cb70();

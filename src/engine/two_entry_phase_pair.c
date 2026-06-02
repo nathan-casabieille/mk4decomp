@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void CjInstallSelfRouter(void);
-extern void EsiInstallClampAddCall_0048fe40(void);
+extern void EsiInstallClampAddCall(void);
 extern void FiveCallGuardSetTail(void);
 extern void ScaledLoadJmp_00428d20(void);
 extern void StateDispatchTable(void);
@@ -184,7 +184,7 @@ __declspec(naked) void TwoEntryPhasePair_004952e0(void)
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], edi
-        call    EsiInstallClampAddCall_0048fe40
+        call    EsiInstallClampAddCall
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         pop     esi

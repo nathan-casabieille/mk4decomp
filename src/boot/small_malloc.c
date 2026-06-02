@@ -11,8 +11,8 @@
 extern unsigned int g_iat_004d20b4;
 extern unsigned int g_crtHeapMaxPtr_00522154;
 extern unsigned int g_dispatchSave1470_00fa0ee4;
-extern void Lock_004c6f50(void);
-extern void TableLookupIatCall_004c6fd0(void);
+extern void Lock(void);
+extern void TableLookupIatCall(void);
 extern void func_004c7430(void);
 
 __declspec(naked) void* SmallMalloc_004c5520(void) {
@@ -27,7 +27,7 @@ __declspec(naked) void* SmallMalloc_004c5520(void) {
         _emit   77h
         _emit   2dh
         push    9
-        call    Lock_004c6f50
+        call    Lock
         mov     ecx, esi
         add     esp, 4
         shr     ecx, 4
@@ -36,7 +36,7 @@ __declspec(naked) void* SmallMalloc_004c5520(void) {
         add     esp, 4
         mov     edi, eax
         push    9
-        call    TableLookupIatCall_004c6fd0
+        call    TableLookupIatCall
         add     esp, 4
         test    edi, edi
         _emit   74h

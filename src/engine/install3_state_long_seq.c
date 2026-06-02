@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00480570 (333b game) - 3-state install-self with chain init + long state-0 sequence.
  *   state>=2: tail-call FiveCallGuardSetTail; pop+ret.
- *   state==1 (dec,je): chain[baseSel*4+0x74]=0; g_walkCallback=0x1eb8; call SfxAttenuateAndApply_0048dee0; if pause ret.
+ *   state==1 (dec,je): chain[baseSel*4+0x74]=0; g_walkCallback=0x1eb8; call SfxAttenuateAndApply; if pause ret.
  *     g_walkCallback=8; call ScaledIndexConditionalAdd; if pause ret.
  *     Install-self at entry; state=2; g_pendingNodeType=0xe; pause=1; pop+ret.
  *   state==0: call MStackChainBit2Cascade_0048e8f0; if pause ret.
@@ -126,7 +126,7 @@ extern void InstallSelfCascadingCalls_004806c0(void);
 extern void MStackChainBit2Cascade_0048e8f0(void);
 extern void ScaledIndexConditionalAdd(void);
 extern void ScaledLitLoadCall_00480fe0(void);
-extern void SfxAttenuateAndApply_0048dee0(void);
+extern void SfxAttenuateAndApply(void);
 extern void TableLookupCall_00489ff0(void);
 
 __declspec(naked) void Install3StateLongSeq_00480570(void) {
@@ -150,7 +150,7 @@ __declspec(naked) void Install3StateLongSeq_00480570(void) {
         mov     ecx, dword ptr [g_baseSel]
         mov     dword ptr [ecx*4 + 0x74], 0
         mov     dword ptr [g_walkCallback], 0x1eb8
-        call    SfxAttenuateAndApply_0048dee0
+        call    SfxAttenuateAndApply
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

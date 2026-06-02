@@ -18,7 +18,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void MStackCall_00406b50(void);
-void ScaledLoadOrSetJmp_00406b20(void) {
+void ScaledLoadOrSetJmp(void) {
     unsigned int idx = g_fightGroupHead;
     unsigned int v = *(unsigned int *)(idx * 4 + 0x10);
     g_walkCallback = (void (*)(void))v;

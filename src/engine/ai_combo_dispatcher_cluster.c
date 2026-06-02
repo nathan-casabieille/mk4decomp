@@ -115,7 +115,7 @@ extern unsigned int g_dispatchSave794_004f2168;
 extern unsigned int g_dispatchSave538_004f27f0;
 extern unsigned int g_dispatchSave1703_00800000;
 extern void ArgSarStoreJmp(void);
-extern void ArgSar_Set0_Jmp_0049c6f0(void);
+extern void ArgSar_Set0_Jmp(void);
 extern void CallSetPause(void);
 extern void CondPickDualStore(void);
 extern void CopyThreeFields(void);
@@ -291,7 +291,7 @@ __declspec(naked) void AiComboDispatcherCluster_00497470(void)
         mov      dword ptr [g_walkCallback], 1
         push     OFFSET g_dispatchSave794_004f2168
         mov      dword ptr [eax*4 + 0x74], 1
-        call     ArgSar_Set0_Jmp_0049c6f0
+        call     ArgSar_Set0_Jmp
         add      esp, 4
     L_770d:
         pop      esi

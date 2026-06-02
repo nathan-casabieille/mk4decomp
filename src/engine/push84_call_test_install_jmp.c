@@ -109,8 +109,8 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00460940 (120b)
- *   Push g_currentNodeFlags on mstack; call ChainSetupBitToggle_00491290; if pause: ret;
- *   call GuardedDualAndFlagToggle_0048f020; if pause: ret;
+ *   Push g_currentNodeFlags on mstack; call ChainSetupBitToggle; if pause: ret;
+ *   call GuardedDualAndFlagToggle; if pause: ret;
  *   eax = g_matrixStackTop; cl = byte [g_xformDirtyFlags];
  *   edx = [eax*4]; --eax; test cl,1;
  *   g_currentNodeFlags = edx; g_matrixStackTop = eax;
@@ -122,9 +122,9 @@ void Push84CallTestInstallJmp_00460940(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_currentNodeFlags;
-    ChainSetupBitToggle_00491290();
+    ChainSetupBitToggle();
     if (g_framePauseFlag != 0) return;
-    GuardedDualAndFlagToggle_0048f020();
+    GuardedDualAndFlagToggle();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     {

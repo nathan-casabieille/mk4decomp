@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void CallPauseScaledStoreCopyJmp(void);
-extern void GameStateDispatch4Way_00436e50(void);
+extern void GameStateDispatch4Way(void);
 extern void InstallSelfPlusTailThunk_00436a10(void);
 extern void MStackChainBit2Cascade_0048e8f0(void);
 extern void MstackPopScaledChainPlusThunks(void);
@@ -296,7 +296,7 @@ __declspec(naked) void ThrowGrabInitCluster_00436b30(void)
         mov      dword ptr [esi + 0x84], 0
         test     eax, eax
         je       short L_6da9
-        call     GameStateDispatch4Way_00436e50
+        call     GameStateDispatch4Way
         pop      esi
         ret
     L_6da9:
@@ -308,7 +308,7 @@ __declspec(naked) void ThrowGrabInitCluster_00436b30(void)
         cmp      eax, 0x20000
         mov      dword ptr [g_walkCallback], eax
         jge      short L_6dd3
-        call     GameStateDispatch4Way_00436e50
+        call     GameStateDispatch4Way
         pop      esi
         ret
     L_6dd3:

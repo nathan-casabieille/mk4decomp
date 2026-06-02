@@ -12,7 +12,7 @@ extern unsigned int g_scaledInit_00542044;
  *   testb 4,[dirty]; jne ret; load baseSel, scaled, store into [ecx*4 + 0x5c]; jmp T.
  */
 extern void MStackBracket1_TreeWalkRecursive2(void);
-extern void ScaledTestPauseStore_00408860(void);
+extern void ScaledTestPauseStore(void);
 extern unsigned int g_table_0051140c;
 void SpecialInitDirtyJmp_00446000(void) {
     g_xformEntityIdx = (unsigned int)&g_table_0051140c >> 2;
@@ -24,5 +24,5 @@ void SpecialInitDirtyJmp_00446000(void) {
         return;
     }
     *(unsigned int *)(g_baseSel * 4 + 0x5c) = g_scaledInit_00542044;
-    ScaledTestPauseStore_00408860();
+    ScaledTestPauseStore();
 }

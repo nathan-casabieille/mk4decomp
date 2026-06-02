@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void DivLongPushCall_004ab320(void);
+extern void DivLongPushCall(void);
 
 __declspec(naked) void ChainDiff3Mul10Install_004730c0(void)
 {
@@ -154,7 +154,7 @@ __declspec(naked) void ChainDiff3Mul10Install_004730c0(void)
         shl     ecx, 0x10
         mov     dword ptr [g_xformScratch2088], eax
         mov     dword ptr [g_walkCallback], ecx
-        call    DivLongPushCall_004ab320
+        call    DivLongPushCall
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_paused_skip

@@ -121,7 +121,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave707_004ec960;
 extern unsigned int g_dispatchSave708_004ec990;
 extern unsigned int g_dispatchSave709_004ec9c0;
-void TriStageDispatchTailJmp_00473c90(void) {
+void TriStageDispatchTailJmp(void) {
     SetJmp_00405420();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (g_xformDirtyFlags & 4) ? 0x15e : 0xa;

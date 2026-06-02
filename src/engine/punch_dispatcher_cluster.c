@@ -112,11 +112,11 @@ extern unsigned int g_dispatchSave643_004f2178;
 extern unsigned int g_dispatchSave642_004f2190;
 extern unsigned int g_dispatchSave641_004f21a0;
 extern void ArgSarStoreJmp(void);
-extern void ArgSar_Set0_Jmp_0049c6f0(void);
+extern void ArgSar_Set0_Jmp(void);
 extern void CondPickDualStore(void);
 extern void DualCmpSwapStore(void);
 extern void FiveCallGuardSetTail(void);
-extern void PushChainAddCallPop_00493c80(void);
+extern void PushChainAddCallPop(void);
 extern void ScaledIndirectJmp_0049c850(void);
 extern void ScaledLoadIncJmp_00428d00(void);
 extern void StageEventCluster_00497e80(void);
@@ -302,7 +302,7 @@ __declspec(naked) void PunchDispatcherCluster_00497b50(void)
         mov      ecx, dword ptr [g_baseSel]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x68], eax
-        call     ArgSar_Set0_Jmp_0049c6f0
+        call     ArgSar_Set0_Jmp
         add      esp, 4
     L_7e3c:
         pop      esi
@@ -314,7 +314,7 @@ __declspec(naked) void PunchDispatcherCluster_00497b50(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_7e7e
-        call     PushChainAddCallPop_00493c80
+        call     PushChainAddCallPop
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_7e7e

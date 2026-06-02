@@ -120,9 +120,9 @@ extern unsigned int g_fightAxisPosY;
  */
 extern u32 g_dlMode;
 extern void ClearTwoCallSetStore_004a2270(void);
-extern void DualScaledStoreConst_004a22c0(void);
+extern void DualScaledStoreConst(void);
 extern void PendingMatch_004a3400(void);
-extern void SixCallSeqPushImm_004a1d80(void);
+extern void SixCallSeqPushImm(void);
 extern void Thunk_004c48b0(void);
 
 __declspec(naked) void GameMode_EnterScene(void)
@@ -146,10 +146,10 @@ __declspec(naked) void GameMode_EnterScene(void)
         mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_xformEntityIdx], eax
     L_common:
-        call    DualScaledStoreConst_004a22c0
+        call    DualScaledStoreConst
         call    ClearTwoCallSetStore_004a2270
         mov     dword ptr [g_dlMode], 0
-        call    SixCallSeqPushImm_004a1d80
+        call    SixCallSeqPushImm
         mov     dword ptr [g_eventQueueWorkType], 0
         call    Push16Call
         mov     eax, dword ptr [g_framePauseFlag]

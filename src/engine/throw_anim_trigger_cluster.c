@@ -119,7 +119,7 @@ extern void GameStateTick_0049f1f0(void);
 extern void MStackBracket4_ListInsertZeroFill(void);
 extern void MStackCall_00406340(void);
 extern void MStackPush3LinkedListWalk(void);
-extern void MStackPush4LLWalkPop4_004090e0(void);
+extern void MStackPush4LLWalkPop4(void);
 extern void RoundWinTransition(void);
 
 __declspec(naked) void ThrowAnimTriggerCluster_0049efa0(void)
@@ -161,7 +161,7 @@ __declspec(naked) void ThrowAnimTriggerCluster_0049efa0(void)
         mov      eax, OFFSET g_audioVoiceTrioBase_0050a0f0
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
-        call     MStackPush4LLWalkPop4_004090e0
+        call     MStackPush4LLWalkPop4
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f183

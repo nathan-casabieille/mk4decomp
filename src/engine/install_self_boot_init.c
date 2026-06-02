@@ -111,19 +111,19 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00462980 (265b game) - install-self dual path with init / state setup.
  *   snapshot+clear chain[+0x84].
  *   If was nonzero: call BootInitGuardedCallChain; if pause? ret.
- *     baseSel[+0x0c]=0x1000; tail-call InstallSelfTableWalk_004200d0; ret.
+ *     baseSel[+0x0c]=0x1000; tail-call InstallSelfTableWalk; ret.
  *   If was zero: clear scaledInit[0]=0; g_scaledChainLoop_00537f74=1; g_walkCallback=2;
  *     g_active_0053a408=2; g_active_00537e88=2; g_eventQueueWorkType=4.
  *     call Push16Call; if pause? ret.
- *     call ScenegraphWalk_0041f7d0; g_eventQueueCurrent=0xc; install-self at
+ *     call ScenegraphWalk; g_eventQueueCurrent=0xc; install-self at
  *     [esi+8]=0x00462980; chain[+0x84]=1; scaledInit-chain push 0x00462980+0x01000000.
  *     Call InstallSelfPackedF80; pause=1; ret.
  */
 extern unsigned int g_scaledChainLoop_00537f74;
 extern void BootInitGuardedCallChain(void);
 extern void InstallSelfPackedF80(void);
-extern void InstallSelfTableWalk_004200d0(void);
-extern void ScenegraphWalk_0041f7d0(void);
+extern void InstallSelfTableWalk(void);
+extern void ScenegraphWalk(void);
 
 __declspec(naked) void InstallSelfBootInit_00462980(void) {
     __asm {
@@ -148,7 +148,7 @@ __declspec(naked) void InstallSelfBootInit_00462980(void) {
         mov     eax, 0x1000
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x0c], eax
-        call    InstallSelfTableWalk_004200d0
+        call    InstallSelfTableWalk
         pop     esi
         ret
         mov     edx, dword ptr [g_scaledInit_00542044]
@@ -164,7 +164,7 @@ __declspec(naked) void InstallSelfBootInit_00462980(void) {
         test    eax, eax
         _emit   75h
         _emit   6eh
-        call    ScenegraphWalk_0041f7d0
+        call    ScenegraphWalk
         mov     dword ptr [g_eventQueueCurrent], 0x0c
         mov     dword ptr [esi + 8], 0x00462980
         mov     eax, dword ptr [g_baseSel]

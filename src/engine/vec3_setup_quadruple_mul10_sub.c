@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_pendingMatchVar;
 extern void AudioMixerStep(void);
 extern void MStackCall_00406340(void);
-extern void MStackPush1MagicMod2_004244d0(void);
+extern void MStackPush1MagicMod2(void);
 extern void StoreDoubleNegPauseSubStore(void);
 
 __declspec(naked) void Vec3SetupQuadrupleMul10Sub_00442bc0(void)
@@ -153,7 +153,7 @@ __declspec(naked) void Vec3SetupQuadrupleMul10Sub_00442bc0(void)
         jne     L_v3sqs_ret
         mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [g_eventQueueWorkType], edx
-        call    MStackPush1MagicMod2_004244d0
+        call    MStackPush1MagicMod2
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_v3sqs_ret

@@ -113,13 +113,13 @@ extern unsigned int g_dispatchSave581_004f1420;
 extern unsigned int g_dispatchSave580_004f1430;
 extern unsigned int g_dispatchSave512_004f1440;
 extern unsigned int g_dispatchSave511_004f1458;
-extern void ArgScaledChain_004949b0(void);
+extern void ArgScaledChain(void);
 extern void FlagCascadeStateSet(void);
 extern void HitReactionDispatcher(void);
 extern void ScaledLookupGuardJmpIndirect(void);
 extern void SevenThunkDispatcher_00495770(void);
 extern void StreamInitCountdownBody(void);
-extern void ThresholdSetMatchDispatch_0046dc10(void);
+extern void ThresholdSetMatchDispatch(void);
 
 __declspec(naked) void GameModeHandlerCluster_004955d0(void)
 {
@@ -160,7 +160,7 @@ __declspec(naked) void GameModeHandlerCluster_004955d0(void)
         nop
         nop
         nop
-        /* Helper 3: StreamInitCountdownBody + conditional ArgScaledChain_004949b0. */
+        /* Helper 3: StreamInitCountdownBody + conditional ArgScaledChain. */
         push     OFFSET g_dispatchSave581_004f1420
         call     StreamInitCountdownBody
         mov      eax, dword ptr [g_framePauseFlag]
@@ -168,7 +168,7 @@ __declspec(naked) void GameModeHandlerCluster_004955d0(void)
         test     eax, eax
         jne      short L_5663
         push     OFFSET g_dispatchSave580_004f1430
-        call     ArgScaledChain_004949b0
+        call     ArgScaledChain
         add      esp, 4
     L_5663:
         ret
@@ -184,8 +184,8 @@ __declspec(naked) void GameModeHandlerCluster_004955d0(void)
         nop
         nop
         nop
-        /* Helper 4: heavy ThresholdSetMatchDispatch_0046dc10 + state-stack manipulation. */
-        call     ThresholdSetMatchDispatch_0046dc10
+        /* Helper 4: heavy ThresholdSetMatchDispatch + state-stack manipulation. */
+        call     ThresholdSetMatchDispatch
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5711

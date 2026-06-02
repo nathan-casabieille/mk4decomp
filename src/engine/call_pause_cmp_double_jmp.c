@@ -20,7 +20,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void CmpP2P1ScaledJmp_0048ee50(void);
 extern void InstallSelfDualPath_00435260(void);
-extern void InstallSelfPacked0x2005_00437a90(void);
+extern void InstallSelfPacked0x2005(void);
 void CallPauseCmpDoubleJmp_00435230(void) {
     CmpP2P1ScaledJmp_0048ee50();
     if (g_framePauseFlag != 0) {
@@ -29,6 +29,6 @@ void CallPauseCmpDoubleJmp_00435230(void) {
     if ((int)g_walkCallback > 0x13333) {
         InstallSelfDualPath_00435260();
     } else {
-        InstallSelfPacked0x2005_00437a90();
+        InstallSelfPacked0x2005();
     }
 }

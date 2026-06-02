@@ -121,7 +121,7 @@ extern void ScaledArrStore_00429980(void);
 extern void ScaledLitLoadCall_00480fe0(void);
 extern void ScaledLoadJmp_00428d20(void);
 extern void ScaledLoadJmp_00429390(void);
-extern void SfxAttenuateAndApply_0048dee0(void);
+extern void SfxAttenuateAndApply(void);
 extern void StreamFlagPackedSelectChain_00469340(void);
 extern void TableLookupCall_00489ff0(void);
 
@@ -232,7 +232,7 @@ __declspec(naked) void MatchStartFsmCluster_00468eb0(void)
         test     al, bl
         jne      L_90a3
         mov      dword ptr [g_walkCallback], 0x23d7
-        call     SfxAttenuateAndApply_0048dee0
+        call     SfxAttenuateAndApply
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_9288
         mov      dword ptr [g_walkCallback], 0x88

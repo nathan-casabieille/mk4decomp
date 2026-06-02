@@ -115,7 +115,7 @@ extern void GuardedSeq_00471670(void);
 extern void MStackPop8(void);
 extern void MStackPush8(void);
 extern void MStackPushCallPop_0040a830(void);
-extern void MStackScopedSlotSetupPair_0040a520(void);
+extern void MStackScopedSlotSetupPair(void);
 extern void SetJmp_00405420(void);
 
 __declspec(naked) void Phase2InitDispatchInstallSelf_0040ba70(void)
@@ -223,7 +223,7 @@ __declspec(naked) void Phase2InitDispatchInstallSelf_0040ba70(void)
         pop     esi
         ret
     L_p2id_helper_phase0:
-        call    MStackScopedSlotSetupPair_0040a520
+        call    MStackScopedSlotSetupPair
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p2id_helper_pop_ret

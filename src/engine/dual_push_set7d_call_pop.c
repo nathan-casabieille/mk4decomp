@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00474290 (116b) - double mstack push (g_cj_0054205c +
- *   g_scaledInit) + set g_scaledInit=0x7d + call PreFightInstallCluster_00474390 +
+ *   g_scaledInit) + set g_scaledInit=0x7d + call PreFightInstallCluster +
  *   double pop on success. */
 void DualPushSet7dCallPop_00474290(void) {
     g_matrixStackTop++;
@@ -117,7 +117,7 @@ void DualPushSet7dCallPop_00474290(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_scaledInit_00542044;
     g_scaledInit_00542044 = 0x7d;
-    PreFightInstallCluster_00474390();
+    PreFightInstallCluster();
     if (g_framePauseFlag != 0) return;
     g_scaledInit_00542044 = *(unsigned int *)(g_matrixStackTop * 4);
     g_matrixStackTop--;

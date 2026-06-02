@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_arr_4252c0_0;
 extern unsigned int g_arr_4252c0_4_dst;
 
-void ThreeMul10Stores_004252c0(void) {
+void ThreeMul10Stores(void) {
     __asm {
         mov     eax, dword ptr [g_xformEntityIdx]
         mov     edx, dword ptr [g_walkCallback]

@@ -21,7 +21,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void Thunk_0049cbd0(void);
 extern void MStackPush4IndirectCall_0048fd60(void);
-void ScaledChainCallPauseSetJmp_0048f8e0(void) {
+void ScaledChainCallPauseSetJmp(void) {
     g_scaledInit_00542044 = ((ScenegraphNode *)(g_baseSel * 4))->child_a;
     Thunk_0049cbd0();
     if (g_framePauseFlag != 0) return;

@@ -111,11 +111,11 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_vertexInitFlagAlt_00541e70;
 extern unsigned int g_vertexInitFlag_00541e74;
 extern unsigned int g_vertexInitVar_00541e78;
-extern void VertexSlotInitFlagWalk_00409740(void);
+extern void VertexSlotInitFlagWalk(void);
 
 /* @addr 0x00425b20 (177b game) - dual-entry init + compare branch.
  *   A: scaledInit=[0x00541e70]; ecx=[0x00541e74]; init globals 0x48/0x4c/0x50/0x54;
- *     call VertexSlotInitFlagWalk_00409740; if !pause: re-init w/ ecx=0x7fc and store; jmp VertexSlotInitFlagWalk_00409740.
+ *     call VertexSlotInitFlagWalk; if !pause: re-init w/ ecx=0x7fc and store; jmp VertexSlotInitFlagWalk.
  *   B (+0x80): eax = ++[scaledInit*4 + 0xc]; if eax > g_eventQueueCurrent: set bit-0 in 0054208c;
  *     else clear it. ret.
  */
@@ -129,7 +129,7 @@ __declspec(naked) void DualEntryInitCmp_00425b20(void) {
         mov     dword ptr [g_pendingNodeType], 0x00000800
         mov     dword ptr [g_eventQueueTotal], ecx
         mov     dword ptr [g_cj_00542054], 1
-        call    VertexSlotInitFlagWalk_00409740
+        call    VertexSlotInitFlagWalk
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -142,7 +142,7 @@ __declspec(naked) void DualEntryInitCmp_00425b20(void) {
         mov     edx, dword ptr [g_vertexInitVar_00541e78]
         mov     dword ptr [g_eventQueueTotal], edx
         mov     dword ptr [g_cj_00542054], 0
-        jmp     VertexSlotInitFlagWalk_00409740
+        jmp     VertexSlotInitFlagWalk
         ret
         _emit   90h
         _emit   90h

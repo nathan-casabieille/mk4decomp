@@ -109,14 +109,14 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00428f70 (215b game) - install-self with countdown-and-dispatch.
- *   chain[+0x84]!=0 path: if bit-0 set call Thunk_004296e0; else call ScaledLoadJmp_24_00429790;
+ *   chain[+0x84]!=0 path: if bit-0 set call Thunk_004296e0; else call ScaledLoadJmp_24;
  *     if !pause: cmp [g_fightGroupHead*4+0x28] vs g_eventQueueChild; if <: call GuardedChainCmpDualBitXor;
  *     if !pause: call StackPopDispatchTagged.
  *   Else (chain[+0x84]==0): install-self at +0x08=0x00428f70, scaledInit-chain push 0x00428f70|0x01000000;
  *     call Install3WayChainStateAdvance; pause=1. ret.
  */
 extern void Install3WayChainStateAdvance_00429130(void);
-extern void ScaledLoadJmp_24_00429790(void);
+extern void ScaledLoadJmp_24(void);
 extern void Thunk_004296e0(void);
 
 __declspec(naked) void InstallSelfWithDispatch_00428f70(void) {
@@ -135,7 +135,7 @@ __declspec(naked) void InstallSelfWithDispatch_00428f70(void) {
         call    Thunk_004296e0
         pop     esi
         ret
-        call    ScaledLoadJmp_24_00429790
+        call    ScaledLoadJmp_24
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

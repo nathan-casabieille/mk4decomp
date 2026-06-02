@@ -38,7 +38,7 @@
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_lit_00541e90;
 extern unsigned int g_lit_00541e94;
-extern void MStackPush2ChainPrepend_00409970(void);
+extern void MStackPush2ChainPrepend(void);
 
 /* @addr 0x00406430 */
 void MStackPushComplexCallPop_00406430(void) {
@@ -54,7 +54,7 @@ void MStackPushComplexCallPop_00406430(void) {
     ((ScenegraphNode *)(idx * 4))->state_mask = v;
     *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x5c) = 0x00010000;
     g_xformEntityIdx = g_lit_00541e90;
-    MStackPush2ChainPrepend_00409970();
+    MStackPush2ChainPrepend();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     g_xformEntityIdx = *(unsigned int *)(top * 4);
@@ -75,7 +75,7 @@ void MStackPushComplexCallPop_004064b0(void) {
     ((ScenegraphNode *)(idx * 4))->state_mask = v;
     *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x5c) = 0x00010000;
     g_xformEntityIdx = g_lit_00541e94;
-    MStackPush2ChainPrepend_00409970();
+    MStackPush2ChainPrepend();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     g_xformEntityIdx = *(unsigned int *)(top * 4);

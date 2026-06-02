@@ -117,12 +117,12 @@ extern void CallSetPause(void);
 extern void DispatcherComplex181_00426310(void);
 extern void DualAddSar_004ab600(void);
 extern void GuardedRangeCmpFpuJmp_0042b8d0(void);
-extern void GuardedScaledCall_0048a020(void);
+extern void GuardedScaledCall(void);
 extern void MStackPushComplexCallPop_00406430(void);
 extern void PendingMatch_00459510(void);
 extern void RoundCleanupCluster_00427690(void);
 extern void SaveCallRestore(void);
-extern void StoreIncrMStackPush6_004275c0(void);
+extern void StoreIncrMStackPush6(void);
 extern void TableLookupCall_0048a130(void);
 
 __declspec(naked) void HitReactionCluster_0045c080(void)
@@ -393,7 +393,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         jne      L_c59b
         mov      ecx, dword ptr [g_hitPhase_00537f30]
         mov      dword ptr [g_walkCallback], ecx
-        call     StoreIncrMStackPush6_004275c0
+        call     StoreIncrMStackPush6
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_c5a0
         mov      dword ptr [g_eventQueueCurrent], ebx
@@ -421,7 +421,7 @@ __declspec(naked) void HitReactionCluster_0045c080(void)
         add      eax, ecx
         mov      eax, dword ptr [eax*4]
         mov      dword ptr [g_walkCallback], eax
-        call     GuardedScaledCall_0048a020
+        call     GuardedScaledCall
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_c5a0
     L_c570:

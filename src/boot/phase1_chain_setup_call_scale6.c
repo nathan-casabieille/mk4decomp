@@ -108,13 +108,13 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void Phase1ChainSetupCallScale6_0040ca70(void);
+extern void Phase1ChainSetupCallScale6(void);
 extern void InstallSelfHelper2_0047e8a0(void);
 extern void GuardedSeq_004297b0(void);
 extern void InstallSelfCountdown2Stage_0047e910(void);
 
 /* @addr 0x0047e800 (148b game) - install-self with dual-branch dirty check:
- *   chain[sel].slot84 -> eax; clear. If !=0: call Phase1ChainSetupCallScale6_0040ca70; pause? ret.
+ *   chain[sel].slot84 -> eax; clear. If !=0: call Phase1ChainSetupCallScale6; pause? ret.
  *     g_walkCallback=1; call CmpEqInitCallElseJmp; pause? ret.
  *     if (g_xformDirtyFlags & 1): call InstallSelfHelper2_0047e8a0; ret.
  *   Else (or after first branch via 0x5a): call GuardedSeq_004297b0; pause? ret.
@@ -137,7 +137,7 @@ __declspec(naked) void InstallSelfDualBranch_0047e800(void) {
         test    eax, eax
         _emit   74h
         _emit   32h
-        call    Phase1ChainSetupCallScale6_0040ca70
+        call    Phase1ChainSetupCallScale6
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

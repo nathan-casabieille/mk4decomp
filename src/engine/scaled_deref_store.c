@@ -13,6 +13,6 @@ extern unsigned int g_baseSel;
  *   mov     [eax*4 + 0], ecx          ; SIB+0 store
  *   ret
  */
-void ScaledDerefStore_004774b0(void) {
+void ScaledDerefStore(void) {
     *(unsigned int *)(g_pendingNodeType * 4) = g_eventQueueWorkType;
 }

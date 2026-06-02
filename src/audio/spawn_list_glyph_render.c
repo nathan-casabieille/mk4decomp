@@ -114,8 +114,8 @@ extern unsigned int g_audioFlagAggBase2_00543398;
 extern unsigned int g_audioFlagAggBase_005433d8;
 extern void AudioFlagDispatchAggregatorAH_004aa520(void);
 extern void AudioFlagDispatchAggregator_004aa430(void);
-extern void BootPhaseGateBracketedInit_004060c0(void);
-extern void MStackBracket5_FieldClear_StateAdvance_00405630(void);
+extern void BootPhaseGateBracketedInit(void);
+extern void MStackBracket5_FieldClear_StateAdvance(void);
 extern void MStackPush3HelperCondToggle_0049cf70(void);
 extern void MStackPushComplexCallPop_00406430(void);
 extern void SplitInt32_004aa410(void);
@@ -128,7 +128,7 @@ __declspec(naked) void SpawnListGlyphRender_004aa610(void)
         push     ebx
         push     esi
         push     edi
-        call     BootPhaseGateBracketedInit_004060c0
+        call     BootPhaseGateBracketedInit
         mov      al, byte ptr [g_xformDirtyFlags]
         mov      ebx, 4
         test     al, bl
@@ -140,7 +140,7 @@ __declspec(naked) void SpawnListGlyphRender_004aa610(void)
         xor      esi, esi
         cmp      eax, esi
         jne      short L_a73d
-        call     MStackBracket5_FieldClear_StateAdvance_00405630
+        call     MStackBracket5_FieldClear_StateAdvance
         mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [eax*4 + 0x24], esi
         mov      dword ptr [edi*4 + 0x18], eax

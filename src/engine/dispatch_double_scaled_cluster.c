@@ -122,7 +122,7 @@ extern void DispatchDoubleScaledCluster_00494e20(void);
 extern void ScaledLoadIncJmp_00429840(void);
 extern void TableLookupCall_00489ff0(void);
 
-__declspec(naked) void MoveDispatch4StateFsm_00494a60(void)
+__declspec(naked) void MoveDispatch4StateFsm(void)
 {
     __asm {
     L_4a60:

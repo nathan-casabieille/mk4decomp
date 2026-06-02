@@ -112,13 +112,13 @@ extern unsigned int g_fightAxisPosY;
  *   Block 1: mstack-push 0x46ed60 (= install address); tail-jmp InstallSelfIndirectJmp.
  *   Block 2 @ 0x46ed60: esi = base*4; flag = [esi+0x84]; clear.
  *     if (flag != 0): call FiveCallGuardSetTail (= 0x46f6b0); pop esi; ret.
- *     push 0x4eb6f4; call IterStepScaledStore_0048e600; add esp,4; pause? ret.
+ *     push 0x4eb6f4; call IterStepScaledStore; add esp,4; pause? ret.
  *     install self with packed_ptr store; call SlotEvent3EntryChain; pause = 1.
  */
 extern unsigned int g_matrixStack_arr;
 extern void FiveCallGuardSetTail(void);
 extern void InstallSelfIndirectJmp(void);
-extern void IterStepScaledStore_0048e600(void);
+extern void IterStepScaledStore(void);
 extern void SlotEvent3EntryChain(void);
 
 __declspec(naked) void MStackJmpInstallSelf_0046ed40(void) {
@@ -145,7 +145,7 @@ __declspec(naked) void MStackJmpInstallSelf_0046ed40(void) {
         pop     esi
         ret
         push    0x004eb6f4
-        call    IterStepScaledStore_0048e600
+        call    IterStepScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax

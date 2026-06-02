@@ -109,8 +109,8 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00424a20 (111b)
- *   call TripleMul10VecJmpFpu_00424990; if pause: ret;
- *   call DivLongPushCall_004ab320; if pause: ret;
+ *   call TripleMul10VecJmpFpu; if pause: ret;
+ *   call DivLongPushCall; if pause: ret;
  *   eax = g_scaledInit; ecx = g_walkCallback;
  *   push esi; push ecx; edx = [eax*4]; lea esi,[eax*4];
  *   push edx; call Mul10Tail; ecx = [esi+4]; pop esp;
@@ -119,17 +119,17 @@ extern unsigned int g_fightAxisPosY;
  *   edx = g_walkCallback; eax = [esi+8]; push edx; push eax;
  *   call Mul10Tail; pop esp; [esi+8] = eax; pop esi; ret.
  */
-extern void DivLongPushCall_004ab320(void);
-extern void TripleMul10VecJmpFpu_00424990(void);
+extern void DivLongPushCall(void);
+extern void TripleMul10VecJmpFpu(void);
 
 __declspec(naked) void Triple3VecMul10Tail_00424a20(void) {
     __asm {
-        call    TripleMul10VecJmpFpu_00424990
+        call    TripleMul10VecJmpFpu
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   60h
-        call    DivLongPushCall_004ab320
+        call    DivLongPushCall
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

@@ -39,7 +39,7 @@ extern void AdvanceTriStripRing(void);
 extern void AltCamMatrixProject_004b9840(void);
 extern void Helper_DrawCursor(void);
 extern void MatVec2Multiply_004b31e0(void);
-extern void MaxOfThree_004b3d90(void);
+extern void MaxOfThree(void);
 extern void MinOfThree_004b3d70(void);
 extern void ProjectTwoVertices(void);
 extern void ProjectVertex(void);
@@ -360,7 +360,7 @@ __declspec(naked) void DrawMeshBlock(void)
         call     MinOfThree_004b3d70
         jmp      L_b5e1
     L_b5dc:
-        call     MaxOfThree_004b3d90
+        call     MaxOfThree
     L_b5e1:
         mov      word ptr [esi + 0x12], ax
         mov      ecx, dword ptr [g_dispatchSave1559_00ab4d9c]

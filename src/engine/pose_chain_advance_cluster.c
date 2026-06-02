@@ -118,15 +118,15 @@ extern unsigned int g_fightAxisPosY;
 /*  h4 (0x44d540): event 004e65a0 forwarder w/ 0xfffffbc7 wait.       */
 /*  h5 (0x44d570): set state 9 → tail-jmp IntroFsmCluster_0044d580.   */
 /* ------------------------------------------------------------------ */
-extern void MStackBracket5_FieldClear_StateAdvance_00405630(void);
-extern void DoubleCallChainInit_0043d780(void);
+extern void MStackBracket5_FieldClear_StateAdvance(void);
+extern void DoubleCallChainInit(void);
 extern void PendingMatch_0043d830(void);
 extern void IntroFsmCluster_0044d580(void);
 extern void GuardedDualScaledChainCopy_0044dd00(void);
 extern void PendingMatch_0044dd80(void);
 extern void GuardedScaled_00475060(void);
 extern void InstallSelfChainAccumPath(void);
-extern void GameInstall2BodyMul10ScaledInit_00475590(void);
+extern void GameInstall2BodyMul10ScaledInit(void);
 extern void GatedWordPushCall(void);
 extern void PoseChainAdvanceCluster_0044ef50(void);
 extern unsigned int g_dispatchSave685_004e6580;
@@ -136,7 +136,7 @@ extern unsigned int g_dispatchSave61_00501070;
 extern unsigned int g_dispatchSave57_005117c4;
 
 extern void ArgSarStoreJmp(void);
-extern void FramePauseScaledStore_00406c10(void);
+extern void FramePauseScaledStore(void);
 extern void StoreLoadJmp(void);
 
 __declspec(naked) void IntroInitCluster_0044d280(void)
@@ -159,7 +159,7 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         mov      ebx, 4
         test     al, bl
         je       short L_d2d7
-        call     MStackBracket5_FieldClear_StateAdvance_00405630
+        call     MStackBracket5_FieldClear_StateAdvance
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_d395
         test     byte ptr [g_xformDirtyFlags], bl
@@ -169,7 +169,7 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         mov      edx, OFFSET g_dispatchSave57_005117c4
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
-        call     FramePauseScaledStore_00406c10
+        call     FramePauseScaledStore
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_d395
         test     byte ptr [g_xformDirtyFlags], bl
@@ -278,14 +278,14 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         push     OFFSET PoseChainAdvanceCluster_0044ef50 + 0x290
         call     StoreLoadJmp
         add      esp, 4
-        call     DoubleCallChainInit_0043d780
+        call     DoubleCallChainInit
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d4f9
         mov      eax, dword ptr [g_eventQueueIdx]
         mov      dword ptr [g_currentNodeFlags], 0x12666
         mov      dword ptr [g_fightGroupHead], eax
-        call     GameInstall2BodyMul10ScaledInit_00475590
+        call     GameInstall2BodyMul10ScaledInit
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d4f9

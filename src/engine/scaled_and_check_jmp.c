@@ -20,7 +20,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_xformScratch94;
 extern void ScaledAndAlfe(void);
-void ScaledAndCheckJmp_00470f60(void) {
+void ScaledAndCheckJmp(void) {
     unsigned int v = ((FightGroupNode *)(g_fightGroupHead * 4))->bits;
     unsigned int masked;
     g_walkCallback = (void (*)(void))v;

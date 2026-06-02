@@ -27,7 +27,7 @@ extern void DirtyToggleByGate(void);
 extern void PendingMatch_0046e2e0(void);
 extern void GameDispatchValidateState(void);
 extern void PendingMatch_0046e2e0(void);
-void CallPauseDirtyMStackPushFn_0046e2a0(void) {
+void CallPauseDirtyMStackPushFn(void) {
     unsigned int top;
     DirtyToggleByGate();
     if (g_framePauseFlag != 0) return;

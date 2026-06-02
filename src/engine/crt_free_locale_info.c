@@ -227,9 +227,9 @@ extern unsigned int g_dispatchSave1459_00f9fc74;
 extern unsigned int g_dispatchSave1462_00f9fd9c;
 extern unsigned int g_arr_00fa0de0;
 extern unsigned int g_iid_004d28f0;
-extern void Calloc_004c6110(void);
+extern void Calloc(void);
 extern void CfltcvtFormat_004c8650(void);
-extern void CmpCallPushIATCall_004c6e60(void);
+extern void CmpCallPushIATCall(void);
 extern void CrtCodepageDispatcher_004cd6f0(void);
 extern void CrtFreeLocaleInfo_004d0400(void);
 extern void CrtInitLocaleInfo_004cf880(void);
@@ -325,7 +325,7 @@ extern unsigned int g_iat_004d2134;
 /* @addr 0x004cdae0 (312b crt) - WideCharToMultiByte dispatcher (mbslen/wcsstr style).
  *   Caches state in g_dispatchSave1451_00f9fc30 (1/2). Probes via IAT[0x4d20b8] with ".A"/".A0"
  *   buffers (0x4d2f20/0x4d2f24). State 2 fast path: direct IAT[0x4d20bc] call.
- *   State 1 conversion path: allocate via Calloc_004c6110, WideCharToMultiByte via
+ *   State 1 conversion path: allocate via Calloc, WideCharToMultiByte via
  *   IAT[0x4d20e4], MultiByteToWideChar(?) via IAT[0x4d20b8], free temp via FreeImpl.
  */
 __declspec(naked) void WcToMbDispatcher_004cdae0(void) {
@@ -402,7 +402,7 @@ __declspec(naked) void WcToMbDispatcher_004cdae0(void) {
         jz      short L_wm_freeNul
         push    esi
         push    2
-        call    Calloc_004c6110
+        call    Calloc
         mov     edi, eax
         add     esp, 8
         test    edi, edi

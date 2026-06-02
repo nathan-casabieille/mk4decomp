@@ -112,10 +112,10 @@ extern unsigned int g_fightAxisPosY;
  *   If g_currentNodeFlags (= g_currentNodeFlags) < 0x30000: snapshot cj+0x18, g_installOwnerNode+0x15, cj+0x15
  *   to scaledInit/g_xformEntityIdx/g_pendingNodeType; tail-jmp PushStackAllocCall.
  *   Else: mstack-push g_currentNodeFlags; sar g_currentNodeFlags by 1 after adding 0xffff0000;
- *   g_xformEntityIdx = g_installOwnerNode; call MStackAngleRatioSubchain_00476af0; pause? ret; mstack-pop into g_currentNodeFlags.
+ *   g_xformEntityIdx = g_installOwnerNode; call MStackAngleRatioSubchain; pause? ret; mstack-pop into g_currentNodeFlags.
  */
-extern void MStackAngleRatioSubchain_00476af0(void);
-extern void PushStackAllocCall_00425900(void);
+extern void MStackAngleRatioSubchain(void);
+extern void PushStackAllocCall(void);
 
 extern unsigned int g_matrixStack_arr;
 
@@ -133,7 +133,7 @@ __declspec(naked) void LazyAllocOrPush_0048abe0(void) {
         mov     dword ptr [g_scaledInit_00542044], ecx
         mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_pendingNodeType], eax
-        jmp     PushStackAllocCall_00425900
+        jmp     PushStackAllocCall
         mov     eax, dword ptr [g_matrixStackTop]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
@@ -144,7 +144,7 @@ __declspec(naked) void LazyAllocOrPush_0048abe0(void) {
         sar     eax, 1
         mov     dword ptr [g_currentNodeFlags], eax
         mov     dword ptr [g_xformEntityIdx], ecx
-        call    MStackAngleRatioSubchain_00476af0
+        call    MStackAngleRatioSubchain
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

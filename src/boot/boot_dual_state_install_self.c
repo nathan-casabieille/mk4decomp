@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * BootDualStateInstallSelf_00403070 - 246b 3-state install-self.
+ * BootDualStateInstallSelf - 246b 3-state install-self.
  *   chain = g_baseSel<<2; saved = chain->state; chain->state=0.
  *   sub eax, 0 → flags. If state == 0: g_eventQueueWorkType=0; Push16Call; install-self with chain->state=1
  *     and g_pendingNodeType=1, pause=1; pop+ret.
@@ -118,11 +118,11 @@ extern unsigned int g_fightAxisPosY;
  *     chain->state=2; mstack-push (entry+0x02000000); g_currentNodeIdx++; clear g_baseSel*4+0x84;
  *     call InstallSelfPackedF80; g_framePauseFlag=1; pop+ret.
  */
-extern void FiveTableWalkInit_00403c90(void);
+extern void FiveTableWalkInit(void);
 extern void InstallSelfPackedF80(void);
 extern void TwinMStackPushScaledChain_00422110(void);
 
-__declspec(naked) void BootDualStateInstallSelf_00403070(void)
+__declspec(naked) void BootDualStateInstallSelf(void)
 {
     __asm
     {
@@ -135,7 +135,7 @@ __declspec(naked) void BootDualStateInstallSelf_00403070(void)
         je      L_state0
         dec     eax
         je      short L_state2
-        call    FiveTableWalkInit_00403c90
+        call    FiveTableWalkInit
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_ret
@@ -148,9 +148,9 @@ __declspec(naked) void BootDualStateInstallSelf_00403070(void)
         test    eax, eax
         jne     L_ret
         mov     dword ptr [g_eventQueueCurrent], 5
-        mov     dword ptr [esi + 8], offset BootDualStateInstallSelf_00403070
+        mov     dword ptr [esi + 8], offset BootDualStateInstallSelf
         mov     ecx, dword ptr [g_baseSel]
-        mov     edx, offset BootDualStateInstallSelf_00403070
+        mov     edx, offset BootDualStateInstallSelf
         add     edx, 0x02000000
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
@@ -173,7 +173,7 @@ __declspec(naked) void BootDualStateInstallSelf_00403070(void)
         test    eax, eax
         jne     short L_ret
         mov     eax, 1
-        mov     dword ptr [esi + 8], offset BootDualStateInstallSelf_00403070
+        mov     dword ptr [esi + 8], offset BootDualStateInstallSelf
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_framePauseFlag], eax

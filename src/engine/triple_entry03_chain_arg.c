@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *     jmp HitReactionDispatcher.
  *   Block C (+0x60): push 0x004f1a10; call ArgScaledChain; if !pause: jmp Const111ScaledStoreJmp_00495da0.
  */
-extern void ArgScaledChain_004949b0(void);
+extern void ArgScaledChain(void);
 extern void Const111ScaledStoreJmp_00495da0(void);
 extern void HitReactionDispatcher(void);
 
@@ -152,7 +152,7 @@ __declspec(naked) void TripleEntry03ChainArg_00495d20(void) {
         _emit   90h
         _emit   90h
         push    0x004f1a10
-        call    ArgScaledChain_004949b0
+        call    ArgScaledChain
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax

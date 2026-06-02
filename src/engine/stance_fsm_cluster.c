@@ -121,7 +121,7 @@ extern void CjTableThresholdDispatch(void);
  */
 extern unsigned int g_matrixStack_arr;
 
-__declspec(naked) void MStackPush3CallCascade_00486d90(void) {
+__declspec(naked) void MStackPush3CallCascade(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
         mov     ecx, dword ptr [g_eventQueueNotMask]

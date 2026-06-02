@@ -111,10 +111,10 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave651_004d20b0;
 extern unsigned int g_iat_004d209c;
 extern void Helper_ChkStk(void);
-extern void LseekImpl_004c8e50(void);
+extern void LseekImpl(void);
 extern void FileWriteWithLfToCrlf_004c9b60(void);
 extern void Crt_errno(void);
-extern void Crt_doserrno_004c8bb0(void);
+extern void Crt_doserrno(void);
 
 /* @addr 0x004cef10 (334b crt) - text-mode read-CRLF normalize, ~_lread-style.
  *   Big stack frame (4100b via Helper_ChkStk). Saves the current
@@ -123,7 +123,7 @@ extern void Crt_doserrno_004c8bb0(void);
  *   buffer on the stack, switches the fd to binary via Setmode_004d0b50,
  *   then loops reading via FileWriteWithLfToCrlf_004c9b60 (read), decrementing remaining
  *   bytes by the amount returned. On EOF or error, dispatches via
- *   Crt_errno / Crt_doserrno_004c8bb0 to set errno=0xd (EBADF) if the
+ *   Crt_errno / Crt_doserrno to set errno=0xd (EBADF) if the
  *   underlying error code was 5. Finally restores binary→text via Setmode
  *   again. The smaller branch (size <= 0) makes two direct IAT calls
  *   [0x4d20b0] and [0x4d209c] (likely SetFilePointer / GetLastError or
@@ -145,7 +145,7 @@ __declspec(naked) void TextModeReadStream_004cef10(void) {
         push    1
         push    ebp
         push    ebx
-        call    LseekImpl_004c8e50
+        call    LseekImpl
         mov     edi, eax
         add     esp, 0xc
         cmp     edi, -1
@@ -154,7 +154,7 @@ __declspec(naked) void TextModeReadStream_004cef10(void) {
         push    2
         push    ebp
         push    ebx
-        call    LseekImpl_004c8e50
+        call    LseekImpl
         add     esp, 0xc
         cmp     eax, -1
         je      L_tmr_failEarly
@@ -191,7 +191,7 @@ __declspec(naked) void TextModeReadStream_004cef10(void) {
         jle     short L_tmr_readDone
         jmp     short L_tmr_readLoop
     L_tmr_readErr:
-        call    Crt_doserrno_004c8bb0
+        call    Crt_doserrno
         cmp     dword ptr [eax], 5
         jne     short L_tmr_setErrTail
         call    Crt_errno
@@ -207,7 +207,7 @@ __declspec(naked) void TextModeReadStream_004cef10(void) {
         push    0
         push    edi
         push    ebx
-        call    LseekImpl_004c8e50
+        call    LseekImpl
         add     esp, 0xc
         mov     eax, ebp
         pop     edi
@@ -221,7 +221,7 @@ __declspec(naked) void TextModeReadStream_004cef10(void) {
         push    0
         push    ecx
         push    ebx
-        call    LseekImpl_004c8e50
+        call    LseekImpl
         add     esp, 0xc
         push    ebx
         call    CRTHandleLookup_004cd260
@@ -239,13 +239,13 @@ __declspec(naked) void TextModeReadStream_004cef10(void) {
         mov     dword ptr [eax], 0xd
         call    dword ptr [g_iat_004d209c]
         mov     esi, eax
-        call    Crt_doserrno_004c8bb0
+        call    Crt_doserrno
         mov     dword ptr [eax], esi
     L_tmr_restoreOnly:
         push    0
         push    edi
         push    ebx
-        call    LseekImpl_004c8e50
+        call    LseekImpl
         add     esp, 0xc
         mov     eax, ebp
         pop     edi

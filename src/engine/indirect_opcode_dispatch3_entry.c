@@ -113,9 +113,9 @@ extern unsigned int g_state2_00541d88;
 extern unsigned int g_state2_00537ea8;
 
 /* @addr 0x0049f260 (306b game) - state cascade switch + dual-arm thunks (no prologue: continuation of 0x0049f1f0).
- *   Multi-cmp on eax: ==ebx → branch_A; ==2/3/4 → +0xe then call LinkedListIndirectDirtyToggle_0049f7b0; ==5 → use esi.
+ *   Multi-cmp on eax: ==ebx → branch_A; ==2/3/4 → +0xe then call LinkedListIndirectDirtyToggle; ==5 → use esi.
  *     <5 → CallSetPause; ==0xa/0xf → -5; ==0x12 → -4; >0x12 → CallSetPause.
- *   After call LinkedListIndirectDirtyToggle_0049f7b0: if pause CallSetPause; if !bit0(0054208c) loop to start.
+ *   After call LinkedListIndirectDirtyToggle: if pause CallSetPause; if !bit0(0054208c) loop to start.
  *   Else: chain[scaledInit*4]=g_walkCallback; copy g_dispatchArg to g_eventQueueCurrent;
  *     call RoundWinTransition; if pause CallSetPause; load chain[g_xformEntityIdx*4+8];
  *     call GuardedScaledCall; if !pause CallSetPause; pop esi/ebx; ret.
@@ -124,8 +124,8 @@ extern unsigned int g_state2_00537ea8;
  */
 extern unsigned int g_dispatchArg;
 extern void CallSetPause(void);
-extern void GuardedScaledCall_0048a020(void);
-extern void LinkedListIndirectDirtyToggle_0049f7b0(void);
+extern void GuardedScaledCall(void);
+extern void LinkedListIndirectDirtyToggle(void);
 extern void RoundWinTransition(void);
 
 __declspec(naked) void StateCascadeDualThunkContin_0049f260(void) {
@@ -144,7 +144,7 @@ __declspec(naked) void StateCascadeDualThunkContin_0049f260(void) {
         _emit   28h
         add     eax, 0xe
         mov     dword ptr [g_walkCallback], eax
-        call    LinkedListIndirectDirtyToggle_0049f7b0
+        call    LinkedListIndirectDirtyToggle
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -193,7 +193,7 @@ __declspec(naked) void StateCascadeDualThunkContin_0049f260(void) {
         _emit   03h
         sub     eax, 5
         mov     dword ptr [g_walkCallback], eax
-        call    LinkedListIndirectDirtyToggle_0049f7b0
+        call    LinkedListIndirectDirtyToggle
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -225,7 +225,7 @@ __declspec(naked) void StateCascadeDualThunkContin_0049f260(void) {
         mov     eax, dword ptr [g_xformEntityIdx]
         mov     ecx, dword ptr [eax*4 + 8]
         mov     dword ptr [g_walkCallback], ecx
-        call    GuardedScaledCall_0048a020
+        call    GuardedScaledCall
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

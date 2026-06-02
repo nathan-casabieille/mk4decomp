@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_tripleEntryFlag_0054380c;
 extern unsigned int g_or_0052ab40;
 extern void HitReactionDispatcher(void);
-extern void ClearBit2x34_00490130(void);
+extern void ClearBit2x34(void);
 extern void Wrapper_00471340(void);
 extern void CallPauseScaledStoreCopyJmp(void);
 extern void MStackInstallBodyChain_0046a3a0(void);
@@ -123,7 +123,7 @@ extern void MStackInstallBodyChain_0046a3a0(void);
  *   Entry 2 / body1 (offset 0x10, 159b): phase-state install. Phase 0:
  *     calls State6Latch_0048e240, then reads g_or_0052ab40 → 0x54206c,
  *     AND with 0x10 → g_xformScratch94; if bit-4 set goes to phase-1 body.
- *     Otherwise chain ClearBit2x34_00490130 → ScaledZeroFour →
+ *     Otherwise chain ClearBit2x34 → ScaledZeroFour →
  *     sets byte 0x54380c = 1 → tail-call Wrapper_00471340.
  *   Phase non-0: chain CallPauseScaledStoreCopyJmp, install Self
  *     at body1 with slot[+0x84] = 1 and g_pendingNodeType = 0x78, arm
@@ -163,7 +163,7 @@ __declspec(naked) void TripleEntryCountdownInstall_0046a230(void) {
         mov     dword ptr [g_xformScratch94], eax
         jne     short L_tec_b1nonzero
     L_tec_b1install:
-        call    ClearBit2x34_00490130
+        call    ClearBit2x34
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_tec_b1done

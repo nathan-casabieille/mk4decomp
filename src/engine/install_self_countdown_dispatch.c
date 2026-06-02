@@ -111,11 +111,11 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00438a10 (134b game) - install-self + countdown.
  *   Block A: esi=baseSel*4; eax=chain[+0x84]; clear chain[+0x84]; if zero ret;
  *     call DualGatedStateYield; if !pause: mstack-push 0x00438a70, jmp GameDispatchValidateState; else install-self at +0x08, pause=1, 0054204c=1, ret.
- *   Block B (+0x60): call Push84CallTestInstallJmp; if !pause: countdown g_eventQueueChild; if zero jmp CmpJmpConstStoreJmp_004389e0; else self-jmp.
+ *   Block B (+0x60): call Push84CallTestInstallJmp; if !pause: countdown g_eventQueueChild; if zero jmp CmpJmpConstStoreJmp; else self-jmp.
  *   Final tail-jmp StackPopDispatchTagged.
  */
 extern unsigned int g_matrixStack_arr;
-extern void CmpJmpConstStoreJmp_004389e0(void);
+extern void CmpJmpConstStoreJmp(void);
 extern void DualGatedStateYield(void);
 extern void Push84CallTestInstallJmp_00460940(void);
 
@@ -154,7 +154,7 @@ __declspec(naked) void InstallSelfCountdownDispatch_00438a10(void) {
         mov     dword ptr [g_eventQueueChild], eax
         _emit   74h
         _emit   05h
-        jmp     CmpJmpConstStoreJmp_004389e0
+        jmp     CmpJmpConstStoreJmp
         jmp     StackPopDispatchTagged
         ret
     }

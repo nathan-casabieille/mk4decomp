@@ -130,7 +130,7 @@ extern s16 g_vtxScreenX;
 extern s16 g_vtxScreenY;
 extern void AdvanceTriStripRing(void);
 extern void Helper_DrawCursor(void);
-extern void MaxOfThree_004b3d90(void);
+extern void MaxOfThree(void);
 extern void MinOfThree_004b3d70(void);
 extern void ProjectTwoVertices(void);
 extern void ProjectVertex(void);
@@ -258,7 +258,7 @@ __declspec(naked) void TristripBatchEmit_004bbb80(void)
         call     MinOfThree_004b3d70
         jmp      L_bd34
     L_bd2f:
-        call     MaxOfThree_004b3d90
+        call     MaxOfThree
     L_bd34:
         mov      cl, byte ptr [esp + 0x1c]
         mov      word ptr [esi + 0x12], ax

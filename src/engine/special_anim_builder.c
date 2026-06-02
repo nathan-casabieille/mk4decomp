@@ -108,13 +108,13 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void BootChainBidirRecurseWalk_00405ca0(void);
+extern void BootChainBidirRecurseWalk(void);
 extern void DirtyDoubleDeref(void);
 extern void DualBitGateInitCall_0048a1c0(void);
 extern void MStackChainDecodeCall_004936f0(void);
 extern void MStackPush2ChainLLInsert(void);
-extern void MStackPush2ChainPrepend_00409970(void);
-extern void MStackPushTableWalk_00493a20(void);
+extern void MStackPush2ChainPrepend(void);
+extern void MStackPushTableWalk(void);
 extern void OrDualStore_0048a190(void);
 extern void PushSetCallCleanup_00408580(void);
 
@@ -204,7 +204,7 @@ void SpecialAnimBuilder_004937b0(void) {
         mov      dword ptr [g_fightGroupHead], eax
         mov      eax, dword ptr [eax*4 + 0x18]
         mov      dword ptr [g_currentNodeIdx], eax
-        call     BootChainBidirRecurseWalk_00405ca0
+        call     BootChainBidirRecurseWalk
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_3a19
@@ -213,13 +213,13 @@ void SpecialAnimBuilder_004937b0(void) {
         dec      eax
         mov      dword ptr [g_xformEntityIdx], ecx
         mov      dword ptr [g_matrixStackTop], eax
-        call     MStackPush2ChainPrepend_00409970
+        call     MStackPush2ChainPrepend
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_3a19
         mov      edx, dword ptr [g_eventQueueChild]
         mov      dword ptr [g_walkCallback], edx
-        call     MStackPushTableWalk_00493a20
+        call     MStackPushTableWalk
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_3a19

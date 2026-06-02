@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   g_xformEntityIdx = (0x0050f1bc >> 2); call FramePauseScaledStore. If paused: ret.
  *   If g_xformDirtyFlags & 4: tail-jmp TestEqJmpInitFightGroup_004a1740.
  *   Else: chain[g_currentNodeIdx + 0x1c] = g_pendingNodeType; g_xformEntityIdx = g_eventQueueTotal;
- *     call MStackPush2ChainPrepend_00409970. If paused: ret.
+ *     call MStackPush2ChainPrepend. If paused: ret.
  *   chain[+0x30] = g_walkCallback = 0x80000; chain[+0x34] = g_walkCallback;
  *   chain[+0x38] = g_walkCallback = 0x83; g_currentNodeIdx = g_fightGroupHead; call MStackBracket4_ListInsertZeroFill.
  *   If paused: ret. If g_xformDirtyFlags & 4: jmp 0x004a173f.
@@ -124,9 +124,9 @@ extern unsigned int g_fightAxisPosY;
  *   tail-jmp TestEqJmpInitFightGroup_004a1740.
  */
 extern unsigned int g_dispatchSave126_0050f1bc;
-extern void FramePauseScaledStore_00406c10(void);
+extern void FramePauseScaledStore(void);
 extern void MStackBracket4_ListInsertZeroFill(void);
-extern void MStackPush2ChainPrepend_00409970(void);
+extern void MStackPush2ChainPrepend(void);
 extern void MStackPush3LinkedListWalk(void);
 extern void TestEqJmpInitFightGroup_004a1740(void);
 
@@ -137,7 +137,7 @@ __declspec(naked) void AudioChainStateInitSequence_004a1610(void)
         mov     eax, offset g_dispatchSave126_0050f1bc
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
-        call    FramePauseScaledStore_00406c10
+        call    FramePauseScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_a16_ret
@@ -150,7 +150,7 @@ __declspec(naked) void AudioChainStateInitSequence_004a1610(void)
         mov     dword ptr [ecx*4 + 0x1c], edx
         mov     eax, dword ptr [g_eventQueueTotal]
         mov     dword ptr [g_xformEntityIdx], eax
-        call    MStackPush2ChainPrepend_00409970
+        call    MStackPush2ChainPrepend
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_a16_ret

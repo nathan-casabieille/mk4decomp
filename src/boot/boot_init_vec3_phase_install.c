@@ -112,7 +112,7 @@ extern unsigned int g_dispatchSave144_00506d7c;
 extern unsigned int g_particleEmitterNode;
 extern unsigned int g_phaseIdx_0053a50c;
 extern void BootMultiAssetLoadStateInit_00403b10(void);
-extern void FiveTableWalkInit_00403c90(void);
+extern void FiveTableWalkInit(void);
 extern void InstallSelfPackedF80(void);
 extern void MStackCall_00406340(void);
 extern void TableWalkBoundedCmp(void);
@@ -140,7 +140,7 @@ __declspec(naked) void BootInitVec3PhaseInstall_00402c10(void)
         pop     esi
         ret
     L_bivpi_phase0:
-        call    FiveTableWalkInit_00403c90
+        call    FiveTableWalkInit
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_bivpi_pop
         mov     dword ptr [g_phaseIdx_0053a50c], 0xa

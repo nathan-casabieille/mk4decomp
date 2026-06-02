@@ -117,11 +117,11 @@ extern unsigned int g_fightAxisPosY;
  *     DualListInit_004a8290 + [g_gtModeFlag]==1 ? DebugStub_NoOp_A :
  *     DebugStub_NoOp_B. Tests [g_byte_004d50b4] al/ah bit 2 / 3 for
  *     vol-down / vol-up (via dec/inc cl on the 0x18-stride byte table),
- *     wrapping at 0/0xe. Final call TripleCallByteCheck_004a1bf0; on
+ *     wrapping at 0/0xe. Final call TripleCallByteCheck; on
  *     zero, calls AudioMicroEntries_004a7600 with the current vol byte
  *     and tail-jmps StackPopDispatchTagged. Else: stores
  *     g_eventQueueEnd into 0x542044, vol byte into 0x54206c, calls
- *     ScaledChainStore24_004a7d40 and falls through to install tail.
+ *     ScaledChainStore24 and falls through to install tail.
  */
 extern unsigned int g_byte_004d50b4;
 extern unsigned int g_tickFlagF;
@@ -134,9 +134,9 @@ extern void AudioSwap2ChainBank3State_004a8490(void);
 extern void DebugStub_NoOp_A(void);
 extern void DebugStub_NoOp_B(void);
 extern void DualListInit_004a8290(void);
-extern void ScaledChainStore24_004a7d40(void);
+extern void ScaledChainStore24(void);
 extern void SetJmp_004a1ad0(void);
-extern void TripleCallByteCheck_004a1bf0(void);
+extern void TripleCallByteCheck(void);
 
 __declspec(naked) void Phase3InstallVolToggle_004a8310(void) {
     __asm {
@@ -209,7 +209,7 @@ __declspec(naked) void Phase3InstallVolToggle_004a8310(void) {
         jne     short L_p3v_postUp
         mov     byte ptr [eax*8 + g_byte_005435a0], 0
     L_p3v_postUp:
-        call    TripleCallByteCheck_004a1bf0
+        call    TripleCallByteCheck
         test    eax, eax
         mov     eax, dword ptr [g_eventQueueCurrent]
         je      short L_p3v_storeAndCall
@@ -227,7 +227,7 @@ __declspec(naked) void Phase3InstallVolToggle_004a8310(void) {
         mov     dword ptr [g_currentNodeIdx], ecx
         movsx   eax, byte ptr [edx*8 + g_byte_005435a0]
         mov     dword ptr [g_walkCallback], eax
-        call    ScaledChainStore24_004a7d40
+        call    ScaledChainStore24
         jmp     short L_p3v_installTail
     L_p3v_phase0:
         mov     dword ptr [g_tickFlagF], 2

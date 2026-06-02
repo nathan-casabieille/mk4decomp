@@ -109,14 +109,14 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void Set14CallAddJmp_00436ff0(void);
-extern void GameStateDispatch4Way_00436e50(void);
+extern void GameStateDispatch4Way(void);
 extern void Push80SetWalkDualCallPop_00439350(void);
 extern void Push80SetWalkNegDualCallPop_004393b0(void);
 extern void CjInstallSelfRouter(void);
 extern void AudioVolumeRescale(void);
 
 
-__declspec(naked) void GameStateDispatch4Way_00436e50(void)
+__declspec(naked) void GameStateDispatch4Way(void)
 {
     __asm {
         mov      eax, dword ptr [g_baseSel]
@@ -133,9 +133,9 @@ __declspec(naked) void GameStateDispatch4Way_00436e50(void)
         call     Push80SetWalkNegDualCallPop_004393b0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_6fd2
-        mov      dword ptr [esi + 8], OFFSET GameStateDispatch4Way_00436e50
+        mov      dword ptr [esi + 8], OFFSET GameStateDispatch4Way
         mov      ecx, dword ptr [g_baseSel]
-        mov      edx, OFFSET GameStateDispatch4Way_00436e50
+        mov      edx, OFFSET GameStateDispatch4Way
         mov      dword ptr [ecx*4 + 0x84], 2
         mov      eax, dword ptr [esi + 4]
         mov      dword ptr [g_currentNodeIdx], eax
@@ -151,9 +151,9 @@ __declspec(naked) void GameStateDispatch4Way_00436e50(void)
         call     Push80SetWalkDualCallPop_00439350
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_6fd2
-        mov      dword ptr [esi + 8], OFFSET GameStateDispatch4Way_00436e50
+        mov      dword ptr [esi + 8], OFFSET GameStateDispatch4Way
         mov      ecx, dword ptr [g_baseSel]
-        mov      edx, OFFSET GameStateDispatch4Way_00436e50
+        mov      edx, OFFSET GameStateDispatch4Way
         mov      dword ptr [ecx*4 + 0x84], 3
         mov      eax, dword ptr [esi + 4]
         mov      dword ptr [g_currentNodeIdx], eax
@@ -163,9 +163,9 @@ __declspec(naked) void GameStateDispatch4Way_00436e50(void)
         call     Push80SetWalkNegDualCallPop_004393b0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_6fd2
-        mov      dword ptr [esi + 8], OFFSET GameStateDispatch4Way_00436e50
+        mov      dword ptr [esi + 8], OFFSET GameStateDispatch4Way
         mov      ecx, dword ptr [g_baseSel]
-        mov      edx, OFFSET GameStateDispatch4Way_00436e50
+        mov      edx, OFFSET GameStateDispatch4Way
         mov      dword ptr [ecx*4 + 0x84], 4
         mov      eax, dword ptr [esi + 4]
         mov      dword ptr [g_currentNodeIdx], eax
@@ -175,9 +175,9 @@ __declspec(naked) void GameStateDispatch4Way_00436e50(void)
         call     Push80SetWalkDualCallPop_00439350
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_6fd2
-        mov      dword ptr [esi + 8], OFFSET GameStateDispatch4Way_00436e50
+        mov      dword ptr [esi + 8], OFFSET GameStateDispatch4Way
         mov      ecx, dword ptr [g_baseSel]
-        mov      edx, OFFSET GameStateDispatch4Way_00436e50
+        mov      edx, OFFSET GameStateDispatch4Way
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      eax, dword ptr [esi + 4]
         mov      dword ptr [g_currentNodeIdx], eax

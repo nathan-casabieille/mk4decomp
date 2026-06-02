@@ -113,8 +113,8 @@ extern unsigned int g_fightAxisPosY;
  *   call F2; pause? ret; if (g_xformDirtyFlags & 4) ret; call F3; pause? ret;
  *   if (g_xformDirtyFlags & 4) ret; jmp F4.
  */
-extern void BootStateTriple_00408d30(void);
-extern void GDispatch4_004089c0(void);
+extern void BootStateTriple(void);
+extern void GDispatch4(void);
 extern void MStackBracket2_StateAdvance6_004094d0(void);
 
 extern unsigned int g_chain_disp_24_4096b0;
@@ -132,7 +132,7 @@ __declspec(naked) void MStackPush2DispatchChain_004096b0(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], edx
-        call    BootStateTriple_00408d30
+        call    BootStateTriple
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -150,7 +150,7 @@ __declspec(naked) void MStackPush2DispatchChain_004096b0(void) {
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   75h
         _emit   1ch
-        call    GDispatch4_004089c0
+        call    GDispatch4
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

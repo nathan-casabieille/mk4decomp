@@ -118,7 +118,7 @@ extern void GuardedPackedSlotInit(void);
 extern void InstallSelfMStackIndirect_00487920(void);
 extern void ScaledAndAlfb_00490370(void);
 extern void ScaledAndAlfe(void);
-extern void ScaledLoadOrSetJmp_00406b20(void);
+extern void ScaledLoadOrSetJmp(void);
 extern void StateDispatchTable(void);
 extern void TableLookupCall_0048a160(void);
 extern void TripleEntryBitsetMStack_00487890(void);
@@ -172,7 +172,7 @@ __declspec(naked) void GameLoaderHandlerCluster_004876f0(void)
         mov      dword ptr [eax*4 + 0x28], ecx
         mov      edx, dword ptr [g_fightGroupHead]
         mov      dword ptr [g_currentNodeIdx], edx
-        call     ScaledLoadOrSetJmp_00406b20
+        call     ScaledLoadOrSetJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_77a7

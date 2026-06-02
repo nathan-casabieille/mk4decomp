@@ -110,8 +110,8 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004376f0 (207b game) - install-self with 4-call cascade and scaledInit-chain push. */
 extern void DualBlockPauseAbsDirty_00439560(void);
-extern void DualScaledInitClear_00433c10(void);
-extern void HitReactionStateCluster_004335f0(void);
+extern void DualScaledInitClear(void);
+extern void HitReactionStateCluster(void);
 extern void MStackPushSet4Jmp_004384f0(void);
 extern void Wrapper_004377c0(void);
 
@@ -125,7 +125,7 @@ __declspec(naked) void InstallSelfChain4Call_004376f0(void) {
         test    eax, eax
         _emit   74h
         _emit   07h
-        call    HitReactionStateCluster_004335f0
+        call    HitReactionStateCluster
         pop     esi
         ret
         call    LeaPlus22StoreSelf
@@ -152,7 +152,7 @@ __declspec(naked) void InstallSelfChain4Call_004376f0(void) {
         call    Wrapper_004377c0
         pop     esi
         ret
-        call    DualScaledInitClear_00433c10
+        call    DualScaledInitClear
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

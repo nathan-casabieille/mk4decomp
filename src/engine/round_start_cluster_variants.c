@@ -111,9 +111,9 @@ extern unsigned int g_fightAxisPosY;
 extern void RoundStartCluster_0047b900(void);
 extern void ScaledLoadIncJmp_00429840(void);
 extern void StateMachineSharedTail_0047baf0(void);
-extern void AerialPunchCluster_0047bc30(void);
+extern void AerialPunchCluster(void);
 extern void CmpEqInitCallElseJmp(void);
-extern void EsiInstallClampAddCall_0048fe40(void);
+extern void EsiInstallClampAddCall(void);
 extern void MStackPushSet0008(void);
 extern void ScaledZeroFour(void);
 extern unsigned int g_dispatchSave598_004ed1d8;
@@ -127,7 +127,7 @@ extern void BootInitGuardedCallChain(void);
 extern void CallSetPause(void);
 extern void CjInstallSelfRouter(void);
 extern void DualSectionInit_00492140(void);
-extern void Eleven404b90_404c00_004266d0(void);
+extern void Eleven404b90_404c00(void);
 extern void GuardedSetupTailMStackJmp_00492210(void);
 extern void MStackPushChainDispatchInit5_004925d0(void);
 extern void MStackPushComplexCallPop_00406430(void);
@@ -135,7 +135,7 @@ extern void RemapWalkAndJmp_00491e70(void);
 extern void RemapWalkAndJmp_00491ec0(void);
 extern void ScaledLoadIncJmp_00428d00(void);
 extern void StateDispatchTable(void);
-extern void Ten404c40_404bd0_00426780(void);
+extern void Ten404c40_404bd0(void);
 extern void UpperBodyComboFsmCluster_00492aa0(void);
 extern void ZeroTripleJmp_00491e50(void);
 
@@ -183,7 +183,7 @@ __declspec(naked) void RoundStartCluster_0047b900(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], edi
-        call     EsiInstallClampAddCall_0048fe40
+        call     EsiInstallClampAddCall
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
@@ -261,7 +261,7 @@ __declspec(naked) void RoundStartCluster_0047b900(void)
         jne      short L_baed
         test     byte ptr [g_xformDirtyFlags], 1
         jne      short L_bae8
-        jmp      AerialPunchCluster_0047bc30
+        jmp      AerialPunchCluster
     L_bae8:
         jmp      StateMachineSharedTail_0047baf0
     L_baed:
@@ -432,7 +432,7 @@ __declspec(naked) void RoundStartCluster_004919c0(void)
         mov      dword ptr [esi + 0x84], edi
         cmp      eax, edi
         je       L_1ccc
-        call     Ten404c40_404bd0_00426780
+        call     Ten404c40_404bd0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_1e3f
         mov      ecx, dword ptr [g_eventQueueEnd]
@@ -526,7 +526,7 @@ __declspec(naked) void RoundStartCluster_004919c0(void)
         mov      eax, dword ptr [edx*4 + 0x18]
         mov      dword ptr [g_fightGroupHead], eax
     L_1e11:
-        call     Eleven404b90_404c00_004266d0
+        call     Eleven404b90_404c00
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_1e3f
         mov      eax, 1

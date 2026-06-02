@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_str_004ed428;
 extern unsigned int g_phaseTimer;
 extern void ArgSarStoreJmp(void);
-extern void TripleFieldCopyJmpHi_0048f740(void);
+extern void TripleFieldCopyJmpHi(void);
 extern void Wrapper_0047d6d0(void);
 
 extern unsigned int g_arr_chain_68_47d650;
@@ -134,7 +134,7 @@ __declspec(naked) void ChainSetCallPauseDispatch_0047d650(void) {
         test    eax, eax
         _emit   75h
         _emit   46h
-        call    TripleFieldCopyJmpHi_0048f740
+        call    TripleFieldCopyJmpHi
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

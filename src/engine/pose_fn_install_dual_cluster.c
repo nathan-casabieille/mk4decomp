@@ -112,7 +112,7 @@ extern unsigned int g_load_0052ab10;
 extern void CallSetPause(void);
 extern void MStackChainCountdownLoop_00463fb0(void);
 extern void PendingMatch_00432110(void);
-extern void FixedDiv16_004ab2a0(void);
+extern void FixedDiv16(void);
 extern void SaveCallRestoreOrXor(void);
 
 __declspec(naked) void PoseFnInstallDualCluster_00463090(void)
@@ -147,7 +147,7 @@ __declspec(naked) void PoseFnInstallDualCluster_00463090(void)
         mov      dword ptr [edx*4 + 0x34], ecx
         mov      dword ptr [g_walkCallback], 0x6978
         mov      dword ptr [g_eventQueueCurrent], 0x20000
-        call     FixedDiv16_004ab2a0
+        call     FixedDiv16
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_321c
         mov      eax, dword ptr [g_eventQueueWorkType]

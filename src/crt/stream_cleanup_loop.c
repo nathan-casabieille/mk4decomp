@@ -120,8 +120,8 @@ extern unsigned int g_dispatchSave1465_00f9fdb4;
 extern unsigned int g_dispatchSave1466_00fa0dc0;
 extern void FreeImpl(void);
 extern void Helper_FClose(void);
-extern void Lock_004c6f50(void);
-extern void TableLookupIatCall_004c6fd0(void);
+extern void Lock(void);
+extern void TableLookupIatCall(void);
 
 __declspec(naked) int StreamCleanupLoop_004ce0b0(void) {
     __asm {
@@ -129,7 +129,7 @@ __declspec(naked) int StreamCleanupLoop_004ce0b0(void) {
         push    esi
         push    2
         xor     ebp, ebp
-        call    Lock_004c6f50
+        call    Lock
         mov     eax, dword ptr [g_dispatchSave1466_00fa0dc0]
         mov     esi, 3
         add     esp, 4
@@ -181,7 +181,7 @@ loopNext:
         pop     ebx
         pop     edi
         push    2
-        call    TableLookupIatCall_004c6fd0
+        call    TableLookupIatCall
         add     esp, 4
         mov     eax, ebp
         pop     esi

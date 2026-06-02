@@ -21,13 +21,13 @@ extern unsigned int g_scaledInit_00542044;
  *   add     esp, 4
  *   ret
  */
-extern void ScaledAndAldf_00490330(void);
+extern void ScaledAndAldf(void);
 extern int ArgSarStoreJmp(void *p);
 extern void *g_dispatchSave1306_004ed5e0;
 void Set1017CallPausePush_0047e600(void) {
     g_walkCallback = (void (*)(void))0x1017;
     ((ScenegraphNode *)(g_baseSel * 4))->fsm_state = 0x1017;
-    ScaledAndAldf_00490330();
+    ScaledAndAldf();
     if (g_framePauseFlag != 0) return;
     ArgSarStoreJmp(&g_dispatchSave1306_004ed5e0);
 }

@@ -118,7 +118,7 @@ extern void ScaledDecPop_00404c40(void);
 extern void ScaledDecPop_00404bd0(void);
 extern unsigned int g_audioVoiceCounter_00535e50;
 extern unsigned int g_dispatchArg;
-void Ten404c40_404bd0_00426780(void) {
+void Ten404c40_404bd0(void) {
     g_audioVoiceCounter_00535e50 = (unsigned int)((int(*)(void))&ScaledDecPop_00404c40)();
     g_dispatchArg = (unsigned int)((int(*)(void))&ScaledDecPop_00404c40)();
     g_eventQueueTotal = (unsigned int)((int(*)(void))&ScaledDecPop_00404c40)();

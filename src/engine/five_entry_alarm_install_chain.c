@@ -109,11 +109,11 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void ScaledAndAlfe(void);
-extern void TripleCallPauseJmp_00470500(void);
+extern void TripleCallPauseJmp(void);
 extern void Wrapper_0048a3c0(void);
-extern void PhaseDispatchListAdvance_004709e0(void);
-extern void CallPauseDirtyMStackPushFn_0046e2a0(void);
-extern void InstallSelfMStackOverwrite_0046e9a0(void);
+extern void PhaseDispatchListAdvance(void);
+extern void CallPauseDirtyMStackPushFn(void);
+extern void InstallSelfMStackOverwrite(void);
 extern void FiveEntryAlarmInstallChain_0046ee00(void);
 extern void MStackJmpInstallSelf_0046ed40(void);
 extern unsigned int g_dispatchSave701_004eb6c8;
@@ -122,7 +122,7 @@ extern unsigned int g_dispatchSave701_004eb6c8;
  *   Thunk A (0..0x3f): call ScaledAndAlfe; if pause ret. chain[baseSel*4+0x74]=0x603, g_walkCallback=0x603.
  *     Call TripleCallPauseJmp; if pause ret. Push 0x004eb6b8; call ArgSarStoreJmp; pop; ret. 15-NOP pad.
  *   Thunk B (+0x50): call Wrapper_0048a3c0; if pause ret.
- *     g_eventQueueEnd = (0x004eb6c8 >> 2); tail-jmp PhaseDispatchListAdvance_004709e0. ret. 15-NOP pad.
+ *     g_eventQueueEnd = (0x004eb6c8 >> 2); tail-jmp PhaseDispatchListAdvance. ret. 15-NOP pad.
  *   Thunk C (+0x80): if bit0(0054208c): jmp CallPauseDirtyMStackPushFn.
  *     g_eventQueueChild=g_eventQueueNotMask=7. Mstack-push body_eb80; tail-jmp InstallSelfMStackOverwrite. 8-NOP pad.
  *   Thunk D body_eb80 (+0xc0): if bit0: jmp FiveEntryAlarmInstallChain_0046ee00.
@@ -145,7 +145,7 @@ __declspec(naked) void FiveThunkMStackDispatcher_0046eac0(void) {
         mov     eax, 0x603
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
-        call    TripleCallPauseJmp_00470500
+        call    TripleCallPauseJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -177,7 +177,7 @@ __declspec(naked) void FiveThunkMStackDispatcher_0046eac0(void) {
         mov     eax, offset g_dispatchSave701_004eb6c8
         sar     eax, 2
         mov     dword ptr [g_eventQueueEnd], eax
-        jmp     PhaseDispatchListAdvance_004709e0
+        jmp     PhaseDispatchListAdvance
         ret
         _emit   90h
         _emit   90h
@@ -197,7 +197,7 @@ __declspec(naked) void FiveThunkMStackDispatcher_0046eac0(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
-        jmp     CallPauseDirtyMStackPushFn_0046e2a0
+        jmp     CallPauseDirtyMStackPushFn
         mov     eax, 7
         mov     dword ptr [g_eventQueueChild], eax
         mov     dword ptr [g_eventQueueNotMask], eax
@@ -205,7 +205,7 @@ __declspec(naked) void FiveThunkMStackDispatcher_0046eac0(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], offset FiveThunkMStackDispatcher_0046eac0 + 0xc0
-        jmp     InstallSelfMStackOverwrite_0046e9a0
+        jmp     InstallSelfMStackOverwrite
         _emit   90h
         _emit   90h
         _emit   90h
@@ -225,7 +225,7 @@ __declspec(naked) void FiveThunkMStackDispatcher_0046eac0(void) {
         mov     dword ptr [g_eventQueueNotMask], 7
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], offset FiveThunkMStackDispatcher_0046eac0 + 0x100
-        jmp     InstallSelfMStackOverwrite_0046e9a0
+        jmp     InstallSelfMStackOverwrite
         _emit   90h
         _emit   90h
         _emit   90h
@@ -240,7 +240,7 @@ __declspec(naked) void FiveThunkMStackDispatcher_0046eac0(void) {
         mov     dword ptr [g_eventQueueNotMask], 7
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], offset FiveThunkMStackDispatcher_0046eac0 + 0x140
-        jmp     InstallSelfMStackOverwrite_0046e9a0
+        jmp     InstallSelfMStackOverwrite
         _emit   90h
         _emit   90h
         _emit   90h

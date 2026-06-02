@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00439e40 (113b)
  *   eax = g_baseSel; push esi; esi = &[eax*4];
  *   eax = [eax*4+0x84]; [esi+0x84] = 0;
- *   if eax != 0: call InstallSelfChainSet2011_00439ec0; pop esi; ret;
+ *   if eax != 0: call InstallSelfChainSet2011; pop esi; ret;
  *   call ScaledZeroFour; if pause: ret;
  *   ecx = g_baseSel; eax = 0x2011;
  *   g_walkCallback = eax; [ecx*4+0x74] = eax;
@@ -124,7 +124,7 @@ void InstallSelfSetTagJmp_00439e40(void) {
     unsigned int prev = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
     if (prev != 0) {
-        InstallSelfChainSet2011_00439ec0();
+        InstallSelfChainSet2011();
         return;
     }
     ScaledZeroFour();

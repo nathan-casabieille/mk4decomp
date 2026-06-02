@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY;
  *     call StorePauseImulShr16; if pause: skip; else tail-jmp InstallSelfTableDispatch.
  *   state==0: install-self at tail+0; state=1; g_pendingNodeType=0x78; pause=1; ret.
  */
-extern void CallPauseInc_004ab670(void);
+extern void CallPauseInc(void);
 extern void InstallSelfTableDispatch_00461a60(void);
 extern void StorePauseImulShr16(void);
 
@@ -167,7 +167,7 @@ __declspec(naked) void TripleBlockInstallSelfThunk_00461930(void) {
         pop     esi
         ret
         mov     dword ptr [g_walkCallback], 0x14
-        call    CallPauseInc_004ab670
+        call    CallPauseInc
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

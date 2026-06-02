@@ -111,15 +111,15 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x0047baf0 (305b game) - state-machine: 4-arm dispatcher with shared common-tail call.
  *   Load state; clear. If state!=0: scaledInit=[baseSel*4+0x3c]; inc [scaledInit*4+0x7c] -> g_walkCallback.
  *     g_eventQueueNotMask=0; call EntryThunkBodyStateMachine; if pause ret.
- *     g_walkCallback=0x5f; call ScaledLitLoadCall; if pause ret. Tail-call AerialPunchCluster_0047bc30; pop+ret.
+ *     g_walkCallback=0x5f; call ScaledLitLoadCall; if pause ret. Tail-call AerialPunchCluster; pop+ret.
  *   state==0: g_eventQueueNotMask=0; call EntryThunkBodyStateMachine; if pause ret.
- *     If g_xformScratch2088==1: tail-call AerialPunchCluster_0047bc30; pop+ret.
+ *     If g_xformScratch2088==1: tail-call AerialPunchCluster; pop+ret.
  *     Else: call MStackPush3CmpCall; if pause ret.
- *     If bit0(0054208c) set: tail-call AerialPunchCluster_0047bc30; pop+ret.
+ *     If bit0(0054208c) set: tail-call AerialPunchCluster; pop+ret.
  *     Else: g_eventQueueChild=6; install-self at entry+0x01000000; call EsiInstallDecCallChain;
  *     pause=1; pop edi/esi/ebx; ret.
  */
-extern void AerialPunchCluster_0047bc30(void);
+extern void AerialPunchCluster(void);
 extern void EntryThunkBodyStateMachine(void);
 extern void EsiInstallDecCallChain_004294a0(void);
 extern void ScaledLitLoadCall_00480fe0(void);
@@ -162,7 +162,7 @@ __declspec(naked) void StateMachineSharedTail_0047baf0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        call    AerialPunchCluster_0047bc30
+        call    AerialPunchCluster
         pop     edi
         pop     esi
         pop     ebx
@@ -181,7 +181,7 @@ __declspec(naked) void StateMachineSharedTail_0047baf0(void) {
         cmp     eax, ebx
         _emit   75h
         _emit   09h
-        call    AerialPunchCluster_0047bc30
+        call    AerialPunchCluster
         pop     edi
         pop     esi
         pop     ebx
@@ -198,7 +198,7 @@ __declspec(naked) void StateMachineSharedTail_0047baf0(void) {
         _emit   00h
         _emit   74h
         _emit   09h
-        call    AerialPunchCluster_0047bc30
+        call    AerialPunchCluster
         pop     edi
         pop     esi
         pop     ebx

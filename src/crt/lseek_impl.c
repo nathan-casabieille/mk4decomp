@@ -122,7 +122,7 @@ extern void CRTHandleLookup_004cd260(void);
 extern void Crt_errno(void);
 extern void DosMapErr_004c8b20(void);
 
-__declspec(naked) void LseekImpl_004c8e50(void) {
+__declspec(naked) void LseekImpl(void) {
     __asm {
         push    esi
         mov     esi, dword ptr [esp + 8]

@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   g_currentNodeFlags clamped to 0x10000 + MStackPushZeroCallPop tail.
  */
 
-__declspec(naked) void EsiInstallClampAddCall_0048fe40(void) {
+__declspec(naked) void EsiInstallClampAddCall(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi

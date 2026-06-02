@@ -17,7 +17,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_scaledInit_00542044], ecx
  *   ret
  */
-void ScaledAddDeref_00494800(void) {
+void ScaledAddDeref(void) {
     unsigned int idx;
     idx = *(unsigned int *)(g_baseSel * 4 + 0x30) + (unsigned int)g_walkCallback;
     g_scaledInit_00542044 = idx;

@@ -12,9 +12,9 @@ extern unsigned int g_scaledInit_00542044;
  *   load baseSel, scaled +0x38 → g_eventQueueEnd;
  *   testb 1,[g_xformDirtyFlags]; set g_eventQueueChild based on dirty bit.
  */
-extern void MStackPush2ChainSwap_0048f090(void);
+extern void MStackPush2ChainSwap(void);
 void CallPauseScaledByteSet_0043c350(void) {
-    MStackPush2ChainSwap_0048f090();
+    MStackPush2ChainSwap();
     if (g_framePauseFlag != 0) {
         return;
     }

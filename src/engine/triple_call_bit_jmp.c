@@ -111,9 +111,9 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00471690 (118b) - 3-call chain w/ bit-test for tail-jmp loop. */
 extern void MStackBracket4_ListInsertZeroFill(void);
 extern void MStackPush3LinkedListWalk(void);
-extern void MStackScopedSlotSetupPair_0040a520(void);
+extern void MStackScopedSlotSetupPair(void);
 
-__declspec(naked) void TripleCallBitJmp_00471690(void) {
+__declspec(naked) void TripleCallBitJmp(void) {
     __asm {
         mov     eax, dword ptr [g_cj_0054205c]
         mov     ecx, 1
@@ -148,7 +148,7 @@ __declspec(naked) void TripleCallBitJmp_00471690(void) {
         _emit   0ffh
         _emit   0ffh
         _emit   0ffh
-        call    MStackScopedSlotSetupPair_0040a520
+        call    MStackScopedSlotSetupPair
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

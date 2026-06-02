@@ -25,6 +25,6 @@ void MStackPackedInit_004049c0(void) {
  *   mov     [eax*4 + 0x24], ecx
  *   ret
  */
-void ScaledStoreIdx24_00406ce0(void) {
+void ScaledStoreIdx24(void) {
     ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->queue_end = (unsigned int)g_walkCallback;
 }

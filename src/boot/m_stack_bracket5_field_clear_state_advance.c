@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void MStackBracket5_FieldClear_StateAdvance_00405630(void);
+extern void MStackBracket5_FieldClear_StateAdvance(void);
 
 /* @addr 0x00406c10 (198b boot) - call F; pause? ret; (208c&4)? ret;
  *   chain[g_scaledInit + 0x24] = g_xformEntityIdx;
@@ -120,9 +120,9 @@ extern void MStackBracket5_FieldClear_StateAdvance_00405630(void);
 
 extern unsigned int g_matrixStack_arr;
 
-void FramePauseScaledStore_00406c10(void) {
+void FramePauseScaledStore(void) {
     __asm {
-        call    MStackBracket5_FieldClear_StateAdvance_00405630
+        call    MStackBracket5_FieldClear_StateAdvance
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

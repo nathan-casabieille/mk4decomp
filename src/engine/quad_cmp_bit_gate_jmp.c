@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x0046c560 (104b)
  *   call ScaledChain3c74; if pause: ret;
  *   if (g_walkCallback == 0x4004): jmp gate2;
- *   call ScaledChain3c7c_0048f930; if pause: ret;
+ *   call ScaledChain3c7c; if pause: ret;
  *   if (g_walkCallback <= 1): ret;
  *   gate2: call CopyJmp_0048ee80; if pause: ret;
  *   if (g_walkCallback > 0x8000): ret;
@@ -123,7 +123,7 @@ void QuadCmpBitGateJmp_0046c560(void) {
     ScaledChain3c74();
     if (g_framePauseFlag != 0) return;
     if ((unsigned int)g_walkCallback != 0x4004) {
-        ScaledChain3c7c_0048f930();
+        ScaledChain3c7c();
         if (g_framePauseFlag != 0) return;
         if ((int)g_walkCallback <= 1) return;
     }

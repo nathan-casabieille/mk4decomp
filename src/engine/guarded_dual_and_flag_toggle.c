@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0048f020 (112b)
  *   eax = g_cj_0054205c; ecx = [eax*4+0x34]; g_walkCallback = ecx;
- *   call MStackPush2ChainSwap_0048f090; if pause: ret;
+ *   call MStackPush2ChainSwap; if pause: ret;
  *   cl = byte [g_xformDirtyFlags]; eax = 1; test al,cl;
  *   if zero: jmp clear_path;
  *   edx = g_walkCallback & 1; g_xformScratch94 = edx;
@@ -121,14 +121,14 @@ extern unsigned int g_fightAxisPosY;
  *   g_xformDirtyFlags &= 0xfe; ret;
  *   set: g_xformDirtyFlags |= 1; ret.
  */
-extern void MStackPush2ChainSwap_0048f090(void);
+extern void MStackPush2ChainSwap(void);
 
-void GuardedDualAndFlagToggle_0048f020(void) {
+void GuardedDualAndFlagToggle(void) {
     __asm {
         mov     eax, dword ptr [g_cj_0054205c]
         mov     ecx, dword ptr [eax*4 + 0x34]
         mov     dword ptr [g_walkCallback], ecx
-        call    MStackPush2ChainSwap_0048f090
+        call    MStackPush2ChainSwap
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

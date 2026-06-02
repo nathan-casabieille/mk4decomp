@@ -8,7 +8,7 @@ extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x0049d340 (52b): same shape, offsets shift to 0x10/0x14/0x18 */
-void ScaledTripleCopy10_0049d340(void) {
+void ScaledTripleCopy10(void) {
     unsigned int *src = (unsigned int *)(g_xformEntityIdx * 4);
     unsigned int *dst = (unsigned int *)(g_scaledInit_00542044 * 4);
     unsigned int v;

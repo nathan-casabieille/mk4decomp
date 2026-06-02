@@ -109,12 +109,12 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_loaded_004f3608;
-extern void SwapOrPassSet_0048fbf0(void);
+extern void SwapOrPassSet(void);
 extern void TwoPushCallSetDirty_00422050(void);
 
 /*
  * @addr 0x00421fe0 (108b) - guarded chained dispatcher: snapshot
- *   g_gameCountdown -> walk; call SwapOrPassSet_0048fbf0; if framePause set,
+ *   g_gameCountdown -> walk; call SwapOrPassSet; if framePause set,
  *   bail. Else compare walk against probe (0x4f3608); mismatch -> bail.
  *   Compare g_eventQueueTotal against g_gtPlayerProbe2, branch to one of
  *   two scaled lookups; if eax != 0xf tail-jmp TwoPushCallSetDirty.
@@ -126,7 +126,7 @@ void GuardedChainDispatch_00421fe0(void) {
     val = g_gameCountdown;
     g_walkCallback = (void (*)(void))val;
     if (val == 0) goto maskOut;
-    SwapOrPassSet_0048fbf0();
+    SwapOrPassSet();
     if (g_framePauseFlag != 0) return;
     val = (unsigned int)g_walkCallback;
     if (val != g_loaded_004f3608) goto maskOut;

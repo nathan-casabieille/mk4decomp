@@ -109,18 +109,18 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern u32 g_dlMode;
-extern void DualScaledStoreConst_004a22c0(void);
+extern void DualScaledStoreConst(void);
 extern void ClearTwoCallSetStore_004a2270(void);
-extern void SixCallSeqPushImm_004a1d80(void);
+extern void SixCallSeqPushImm(void);
 extern void Push16Call(void);
-extern void InstallSelfTableWalk_004200d0(void);
+extern void InstallSelfTableWalk(void);
 
 /*
  * @addr 0x004a2610 (120b audio) - audio init two-mode setup:
  *   if g_gtModeFlag == 1 use slot 0x53a408/0x53a3e0 else 0x537e88/
  *   0x53a700; call DualScaledStoreConst, ClearTwoCallSetStore, set
  *   g_dlMode=1, call SixCallSeqPushImm; clear g_eventQueueWorkType;
- *   call Push16Call; if pause clear tail-jmp InstallSelfTableWalk_004200d0.
+ *   call Push16Call; if pause clear tail-jmp InstallSelfTableWalk.
  */
 extern unsigned int g_player1State;
 extern unsigned int g_player2State;
@@ -132,12 +132,12 @@ void AudioModeInit_004a2610(void) {
         g_currentNodeIdx = (unsigned int)&g_active_00537e88 >> 2;
         g_xformEntityIdx = (unsigned int)&g_player2State >> 2;
     }
-    DualScaledStoreConst_004a22c0();
+    DualScaledStoreConst();
     ClearTwoCallSetStore_004a2270();
     g_dlMode = 1;
-    SixCallSeqPushImm_004a1d80();
+    SixCallSeqPushImm();
     g_eventQueueWorkType = 0;
     Push16Call();
     if (g_framePauseFlag != 0) return;
-    InstallSelfTableWalk_004200d0();
+    InstallSelfTableWalk();
 }

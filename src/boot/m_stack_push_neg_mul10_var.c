@@ -110,13 +110,13 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0040a730 (166b boot) - same shape as MStackPushNegMul10
  *   but with 3rd FP step: mstack-push scaledInit; snapshot g_load_0052ab10
- *   into scaledInit; chain[+0x64] -> g_eventQueueWorkType; call MStackPush1MagicMod2_004244d0;
+ *   into scaledInit; chain[+0x64] -> g_eventQueueWorkType; call MStackPush1MagicMod2;
  *   pause? ret; Mul10Tail(g_eventQueueCurrent, neg) -> g_eventQueueWorkType;
  *   Mul10Tail(walkCallback, neg) -> g_eventQueueCurrent; neg g_eventQueueWorkType -> walkCallback;
  *   mstack-pop into scaledInit.
  */
 extern unsigned int g_load_0052ab10;
-extern void MStackPush1MagicMod2_004244d0(void);
+extern void MStackPush1MagicMod2(void);
 
 extern unsigned int g_chain_disp_64_40a690;
 extern unsigned int g_matrixStack_arr;
@@ -135,7 +135,7 @@ void MStackPushNegMul10Var_0040a730(void) {
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, [eax*4 + g_chain_disp_64_40a690]
         mov     dword ptr [g_eventQueueWorkType], eax
-        call    MStackPush1MagicMod2_004244d0
+        call    MStackPush1MagicMod2
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

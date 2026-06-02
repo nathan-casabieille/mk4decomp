@@ -18,9 +18,9 @@ extern unsigned int g_scaledInit_00542044;
  * Wait the actual bytes: c7 05 70 20 54 00 e2 fa ff ff has imm=0xfffffae2,
  * which is -0x51e in signed.
  */
-extern void TwoPhaseInstallScaledPackedPtr_00480d50(void);
+extern void TwoPhaseInstallScaledPackedPtr(void);
 void Const20cFae2Jmp_00486510(void) {
     g_walkCallback = (void(*)(void))0x20c;
     g_eventQueueCurrent = 0xfffffae2;
-    TwoPhaseInstallScaledPackedPtr_00480d50();
+    TwoPhaseInstallScaledPackedPtr();
 }

@@ -108,12 +108,12 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void InstallSelfPacked0x2005_00437a90(void);
+extern void InstallSelfPacked0x2005(void);
 extern void JumpTableDispatch_0043a550(void);
 extern void DualCallTestPauseRange_004353f0(void);
 
 /* @addr 0x00435340 (165b game) - 5-block dispatcher.
- *   Block A: gate g_table_00535ddc>0x20000? jmp Wrapper_00438ee0 : jmp InstallSelfPacked0x2005_00437a90.
+ *   Block A: gate g_table_00535ddc>0x20000? jmp Wrapper_00438ee0 : jmp InstallSelfPacked0x2005.
  *   Block B (+0x20): jmp GuardedSeq_00433bb0.
  *   Block C (+0x30): g_walkCallback=g_walkCallback & 0xff; push 0x004e45b0; call JumpTableDispatch_0043a550; ret.
  *   Block D (+0x50): call Cmp2CallDirtyCall; if nonzero ret; threshold-dispatch.
@@ -131,7 +131,7 @@ __declspec(naked) void FiveBlockDispatch_00435340(void) {
         _emit   7eh
         _emit   05h
         jmp     Wrapper_00438ee0
-        jmp     InstallSelfPacked0x2005_00437a90
+        jmp     InstallSelfPacked0x2005
         _emit   90h
         _emit   90h
         _emit   90h

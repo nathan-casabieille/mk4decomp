@@ -15,7 +15,7 @@ extern unsigned int g_phaseTimer;
  *   if equal ret, else shr eax,8; store walk; ret.
  */
 extern unsigned int g_phaseThunkState2_00538094;
-void NotShrCmp1Store_00460d80(void) {
+void NotShrCmp1Store(void) {
     unsigned int e;
     unsigned int chain;
     if (g_phaseThunkState2_00538094 != 0) {

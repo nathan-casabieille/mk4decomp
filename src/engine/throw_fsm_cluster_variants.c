@@ -120,7 +120,7 @@ extern void GuardedPackedSlotInit(void);
  *     - phase 2 (eax-2=0): writes g_xformScratch2088 into [g_fightGroupHead*4+0x78]
  *       and tail-calls ThrowFsmCluster_004700e0.
  *     - phase 1 (eax-1=0): loads &g_dispatchSave520_004ec0c0>>2 (the reloc-survives-shr
- *       packed_ptr base), calls GuardedDirtyXformFromTable_0048f6d0; on success
+ *       packed_ptr base), calls GuardedDirtyXformFromTable; on success
  *       sets g_eventQueueChild=4, installs Self at [esi+8], sets slot[+0x84]=2,
  *       and writes packed_ptr (Self + 0x02000000) at [eax*4] (with
  *       g_currentNodeIdx bumped after); zeroes slot[+0x84] and calls
@@ -130,16 +130,16 @@ extern void GuardedPackedSlotInit(void);
  *       installs Self at [esi+8], sets slot[+0x84]=1, packs (Self + 0x01000000)
  *       at [eax*4], zeroes slot[+0x84], and arms 0x541e6c=1 via GuardedSeq.
  */
-extern void GuardedDirtyXformFromTable_0048f6d0(void);
+extern void GuardedDirtyXformFromTable(void);
 
 extern unsigned int g_pendingMatchVar;
 extern void AudioMixerStep(void);
 extern void DispatcherComplex138_004760f0(void);
 extern void MStackBracketed3StoreCall(void);
-extern void MStackPush1MagicMod2_004244d0(void);
+extern void MStackPush1MagicMod2(void);
 extern void MStackPush2ChainLLInsert(void);
 extern void Mul10Tail(void);
-extern void SetupVecFsmCluster_0043e3e0(void);
+extern void SetupVecFsmCluster(void);
 extern void StoreDoubleNegPauseSubStore(void);
 extern void StoreLoadJmp(void);
 extern void ThrowFsmCluster_0044eaf0(void);
@@ -166,7 +166,7 @@ __declspec(naked) void Phase3PackedInstallSelf_0046ff80(void) {
         mov     eax, offset g_dispatchSave520_004ec0c0
         shr     eax, 2
         mov     dword ptr [g_currentNodeIdx], eax
-        call    GuardedDirtyXformFromTable_0048f6d0
+        call    GuardedDirtyXformFromTable
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis_done
@@ -259,7 +259,7 @@ __declspec(naked) void ThrowChargeCluster_0044e750(void)
         jne      L_e8df
         mov      edx, dword ptr [g_walkCallback]
         mov      dword ptr [g_eventQueueWorkType], edx
-        call     MStackPush1MagicMod2_004244d0
+        call     MStackPush1MagicMod2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e8df
@@ -341,7 +341,7 @@ __declspec(naked) void ThrowChargeCluster_0044e750(void)
         mov      dword ptr [ebp + 0x84], esi
         cmp      eax, esi
         jne      L_e91f
-        push     OFFSET SetupVecFsmCluster_0043e3e0 + 0x2c0
+        push     OFFSET SetupVecFsmCluster + 0x2c0
         call     StoreLoadJmp
         add      esp, 4
     L_e91f:
