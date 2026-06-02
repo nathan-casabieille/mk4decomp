@@ -83,7 +83,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -115,8 +115,8 @@ extern void CallPauseTriCmpJmp(void);
 extern void CjInstallSelfRouter(void);
 extern void CjMaskedFlagProbe(void);
 extern void DualGatedStateYield(void);
-extern void GuardedDispatch_00460ca0(void);
-extern void GuardedDispatch_00460cd0(void);
+extern void GuardedDispatch_CallPauseMStackPushSet3Jmp(void);
+extern void GuardedDispatch_CallPauseMStackPushSet4Jmp(void);
 extern void GuardedDoubleCallSetJmp(void);
 extern void NotShrCmp1Store(void);
 extern void PerSlotPhaseRouter_004605d0(void);
@@ -236,13 +236,13 @@ __declspec(naked) void SlotPhaseDispatcherBigSwitch(void)
         pop     ebx
         ret
     L_spdbs_b9:
-        call    GuardedDispatch_00460ca0
+        call    GuardedDispatch_CallPauseMStackPushSet3Jmp
         pop     edi
         pop     esi
         pop     ebx
         ret
     L_spdbs_b5:
-        call    GuardedDispatch_00460cd0
+        call    GuardedDispatch_CallPauseMStackPushSet4Jmp
         pop     edi
         pop     esi
         pop     ebx

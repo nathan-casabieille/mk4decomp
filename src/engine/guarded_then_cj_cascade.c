@@ -83,7 +83,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -120,7 +120,7 @@ extern void EntryThunkBodyStateMachine(void);
 extern void FiveCallGuardSetTail(void);
 extern void ScaledDualPropagateJmp(void);
 extern void ScaledZero44(void);
-extern void TableLookupCall_00489f60(void);
+extern void TableLookupCall_g_table_004ef998(void);
 
 __declspec(naked) void GuardedThenCjCascade(void) {
     __asm {
@@ -131,7 +131,7 @@ __declspec(naked) void GuardedThenCjCascade(void) {
         _emit   75h
         _emit   2ah
         mov     dword ptr [g_walkCallback], 0x13
-        call    TableLookupCall_00489f60
+        call    TableLookupCall_g_table_004ef998
         push    0x004ed420
         call    ScaledDualPropagateJmp
         mov     eax, dword ptr [g_framePauseFlag]

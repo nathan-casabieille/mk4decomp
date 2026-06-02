@@ -30,7 +30,7 @@ extern unsigned int g_dispatchSave1191;
 extern unsigned int g_dispatchSave1190;
 
 /* @addr 0x00419720 (95b): addr1=0x4d7918/0xa, recurse 0x4196c0, addr2=0x4d78e8/9 */
-void DualCallPauseAddrSetRecurse_00419720(void) {
+void DualCallPauseAddrSetRecurse_func_004196c0_jj(void) {
     MStackPush2RunCountdown();
     if (g_framePauseFlag) return;
     MStackBracket7_DispatchAndChain();
@@ -45,7 +45,7 @@ void DualCallPauseAddrSetRecurse_00419720(void) {
 }
 
 /* @addr 0x004197e0 (95b): addr1=0x4d7ac8/6, recurse 0x419780, addr2=0x4d7b58/5 */
-void DualCallPauseAddrSetRecurse_004197e0(void) {
+void DualCallPauseAddrSetRecurse_func_00419780_jj(void) {
     MStackPush2RunCountdown();
     if (g_framePauseFlag) return;
     MStackBracket7_DispatchAndChain();
@@ -60,7 +60,7 @@ void DualCallPauseAddrSetRecurse_004197e0(void) {
 }
 
 /* @addr 0x004198a0 (95b): addr1=0x4d79d8/0xc, recurse 0x419840, addr2=0x4d79a8/0xb */
-void DualCallPauseAddrSetRecurse_004198a0(void) {
+void DualCallPauseAddrSetRecurse_func_00419840_jj(void) {
     MStackPush2RunCountdown();
     if (g_framePauseFlag) return;
     MStackBracket7_DispatchAndChain();
@@ -75,7 +75,7 @@ void DualCallPauseAddrSetRecurse_004198a0(void) {
 }
 
 /* @addr 0x004199e0 (95b): addr1=0x4d7978/0xe, recurse 0x419980, addr2=0x4d7948/0xd */
-void DualCallPauseAddrSetRecurse_004199e0(void) {
+void DualCallPauseAddrSetRecurse_func_00419980_jj(void) {
     MStackPush2RunCountdown();
     if (g_framePauseFlag) return;
     MStackBracket7_DispatchAndChain();
@@ -90,7 +90,7 @@ void DualCallPauseAddrSetRecurse_004199e0(void) {
 }
 
 /* @addr 0x00419aa0 (95b): addr1=0x4d7a98/8, recurse 0x419a40, addr2=0x4d7a68/7 */
-void DualCallPauseAddrSetRecurse_00419aa0(void) {
+void DualCallPauseAddrSetRecurse_func_00419a40_jj(void) {
     MStackPush2RunCountdown();
     if (g_framePauseFlag) return;
     MStackBracket7_DispatchAndChain();
@@ -105,7 +105,7 @@ void DualCallPauseAddrSetRecurse_00419aa0(void) {
 }
 
 /* @addr 0x00419b60 (95b): addr1=0x4d7a38/0x10, recurse 0x419b00, addr2=0x4d7a08/0xf */
-void DualCallPauseAddrSetRecurse_00419b60(void) {
+void DualCallPauseAddrSetRecurse_func_00419b00_jj(void) {
     MStackPush2RunCountdown();
     if (g_framePauseFlag) return;
     MStackBracket7_DispatchAndChain();

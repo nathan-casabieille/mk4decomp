@@ -20,7 +20,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_eventQueueNotMask], 0x0d
  *   ret
  */
-extern void TableLookupCall_00489f60(void);
+extern void TableLookupCall_g_table_004ef998(void);
 
 void DecJneSetCallSetJmp(void) {
     __asm {
@@ -30,7 +30,7 @@ void DecJneSetCallSetJmp(void) {
         _emit   75h
         _emit   22h
         mov     dword ptr [g_walkCallback], 0x18
-        call    TableLookupCall_00489f60
+        call    TableLookupCall_g_table_004ef998
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

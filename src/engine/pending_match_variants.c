@@ -84,7 +84,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -128,7 +128,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -288,7 +288,7 @@ extern void PushDualDerefClearPop(void);
 extern void MStackPushTwoEntryChainCall(void);
 extern void PushPopScaled18(void);
 extern void PushCallSet2147Jmp(void);
-extern void TableLookupCall_00489ff0(void);
+extern void TableLookupCall_g_table_004efa00(void);
 extern void CmpEqInitCallElseJmp(void);
 extern void MStackAngleRatioSubchain(void);
 extern void PushStackAllocCall(void);
@@ -633,7 +633,7 @@ extern void InstallSelfPackedTailJmp(void);
 extern void IntroFsmCluster(void);
 extern void IntroInitCluster(void);
 extern void IntroSequencePipeline(void);
-extern void LoadSetFpJmp_004093a0(void);
+extern void LoadSetFpJmp_g_bootChainScaled1(void);
 extern void MStackBracket5_FieldClear_StateAdvance(void);
 extern void MStackBracket6_DualGate(void);
 extern void MStackBracket7_DispatchAndChain(void);
@@ -776,8 +776,8 @@ extern void StoreLoadJmp(void);
 extern void StorePauseImulShr16(void);
 extern void StoreTwoCall(void);
 extern void TableHitOrSchedule(void);
-extern void TableLookupCall_00489ff0(void);
-extern void TableLookupCall_0048a130(void);
+extern void TableLookupCall_g_table_004efa00(void);
+extern void TableLookupCall_g_table_004efd18(void);
 extern void TableWalkBoundedCmp(void);
 extern void TagDispatchPairedPacked(void);
 extern void TaggedSceneDispatch(void);
@@ -1814,7 +1814,7 @@ __declspec(naked) void StateMachineDualModuloInstall(void) {
 
 /* @addr 0x00469340 (364b game) - cdecl chain with stream-flag swap +
  *   packed_ptr select. Sets g_walkCallback=0x52, calls
- *   TableLookupCall_00489ff0; on no-error sets 0x54206c=0xa, calls
+ *   TableLookupCall_g_table_004efa00; on no-error sets 0x54206c=0xa, calls
  *   ScaledIndexConditionalAdd. Then dispatches on
  *   g_baseSel:
  *     - matches g_gtPlayerProbe2: if g_mul10SumState is set, picks
@@ -1835,7 +1835,7 @@ __declspec(naked) void StateMachineDualModuloInstall(void) {
 __declspec(naked) void StreamFlagPackedSelectChain(void) {
     __asm {
         mov     dword ptr [g_walkCallback], 0x52
-        call    TableLookupCall_00489ff0
+        call    TableLookupCall_g_table_004efa00
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_sfp_done
@@ -2501,7 +2501,7 @@ __declspec(naked) void StageEventExitCluster(void)
         test     eax, eax
         jne      short L_cf58
         mov      dword ptr [g_walkCallback], 0x30
-        call     TableLookupCall_00489ff0
+        call     TableLookupCall_g_table_004efa00
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_cf58
@@ -2823,7 +2823,7 @@ __declspec(naked) void VersusScreenFsmCluster(void)
         mov      eax, dword ptr [g_eventQueueIdx]
         mov      dword ptr [g_walkCallback], 0x29
         mov      dword ptr [g_fightGroupHead], eax
-        call     TableLookupCall_00489ff0
+        call     TableLookupCall_g_table_004efa00
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f8c6
@@ -5861,7 +5861,7 @@ __declspec(naked) void StoryCharIntroFsmCluster(void)
         je       L_7f81
         dec      eax
         je       L_7f20
-        call     LoadSetFpJmp_004093a0
+        call     LoadSetFpJmp_g_bootChainScaled1
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8019
@@ -6310,7 +6310,7 @@ __declspec(naked) void IntroSettingsFsmCluster(void)
         jne      L_c177
     L_c101:
         mov      dword ptr [g_walkCallback], 0x6f
-        call     TableLookupCall_00489ff0
+        call     TableLookupCall_g_table_004efa00
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_c207
         mov      dword ptr [esi + 8], 0x46bf70
@@ -7036,7 +7036,7 @@ __declspec(naked) void PendingMatch_0044f8d0(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_fe34
         mov      dword ptr [g_walkCallback], 0x43
-        call     TableLookupCall_00489ff0
+        call     TableLookupCall_g_table_004efa00
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_fe34
         call     PendingMatch_00452770
@@ -7681,7 +7681,7 @@ __declspec(naked) void PendingMatch_004694b0(void)
         je       L_95b8
         add      eax, 0x26
         mov      dword ptr [g_walkCallback], eax
-        call     TableLookupCall_0048a130
+        call     TableLookupCall_g_table_004efd18
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_986a
     L_95b8:
@@ -7837,7 +7837,7 @@ __declspec(naked) void PendingMatch_004694b0(void)
         test     eax, eax
         jne      L_98f3
         mov      dword ptr [g_walkCallback], 0x19
-        call     TableLookupCall_00489ff0
+        call     TableLookupCall_g_table_004efa00
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_98f3

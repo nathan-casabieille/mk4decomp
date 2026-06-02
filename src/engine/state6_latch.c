@@ -83,7 +83,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -144,7 +144,7 @@ void State6Latch(void) {
     g_byte_0054389c = 1;
     ((ScenegraphNode *)(g_baseSel * 4))->state_mask = 6;
     g_walkCallback = 0x2c;
-    TableLookupCall_0048a130();
+    TableLookupCall_g_table_004efd18();
     if (g_framePauseFlag != 0) return;
     ClearBit2x34();
 }

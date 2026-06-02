@@ -83,7 +83,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -129,8 +129,8 @@ extern void CallSetPause(void);
 extern void CondPickDualStore(void);
 extern void DualCmpSwapStore(void);
 extern void DualScaledStoreZero(void);
-extern void GuardedDispatch_00460ca0(void);
-extern void GuardedDispatch_00460cd0(void);
+extern void GuardedDispatch_CallPauseMStackPushSet3Jmp(void);
+extern void GuardedDispatch_CallPauseMStackPushSet4Jmp(void);
 extern void MStackCall_00406740(void);
 extern void NotShrCmp1Store(void);
 extern void PerSlotPhaseRouter_004605d0(void);
@@ -369,7 +369,7 @@ __declspec(naked) void MultiThunkDispatcher_00460470(void) {
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     GuardedDispatch_00460cd0
+        jmp     GuardedDispatch_CallPauseMStackPushSet4Jmp
         ret
         _emit   90h
         _emit   90h
@@ -407,7 +407,7 @@ __declspec(naked) void MultiThunkDispatcher_00460470(void) {
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     GuardedDispatch_00460ca0
+        jmp     GuardedDispatch_CallPauseMStackPushSet3Jmp
         ret
     }
 }

@@ -83,7 +83,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -122,7 +122,7 @@ extern void ScaledClearJmp_00428d60(void);
 
 /* @addr 0x00469340 (364b game) - cdecl chain with stream-flag swap +
  *   packed_ptr select. Sets g_walkCallback=0x52, calls
- *   TableLookupCall_00489ff0; on no-error sets 0x54206c=0xa, calls
+ *   TableLookupCall_g_table_004efa00; on no-error sets 0x54206c=0xa, calls
  *   ScaledIndexConditionalAdd. Then dispatches on
  *   g_baseSel:
  *     - matches g_gtPlayerProbe2: if g_mul10SumState is set, picks
@@ -142,12 +142,12 @@ extern void ScaledClearJmp_00428d60(void);
  */
 extern void GuardedPackedSlotInit(void);
 extern void ScaledChainJmp_00429470(void);
-extern void TableLookupCall_00489ff0(void);
+extern void TableLookupCall_g_table_004efa00(void);
 
 __declspec(naked) void StreamFlagPackedSelectChain(void) {
     __asm {
         mov     dword ptr [g_walkCallback], 0x52
-        call    TableLookupCall_00489ff0
+        call    TableLookupCall_g_table_004efa00
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_sfp_done

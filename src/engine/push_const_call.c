@@ -15,21 +15,21 @@ extern int __cdecl Lock(int);
 extern int __cdecl TableLookupIatCall(int);
 
 /* @addr 0x0048bac0 */
-void PushConstCall_0048bac0(void) {
+void PushConstCall_MStackAngleWrapDispatch_1(void) {
     MStackAngleWrapDispatch(1);
 }
 
 /* @addr 0x004c6a10 */
-void PushConstCall_004c6a10(void) {
+void PushConstCall_LockIterTwoPath_1(void) {
     LockIterTwoPath(1);
 }
 
 /* @addr 0x004c6920 */
-void PushConstCall_004c6920(void) {
+void PushConstCall_Lock_0xd(void) {
     Lock(0xd);
 }
 
 /* @addr 0x004c6930 */
-void PushConstCall_004c6930(void) {
+void PushConstCall_TableLookupIatCall_0xd(void) {
     TableLookupIatCall(0xd);
 }

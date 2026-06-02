@@ -83,7 +83,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -125,8 +125,8 @@ extern void ScaledZero44(void);
 extern void SetJmp_MStackPush4IndirectCall(void);
 extern void StoreLitRetSet2(void);
 extern void StreamInitCountdownBody(void);
-extern void TableLookupCall_00489ff0(void);
-extern void TableLookupCall_0048a130(void);
+extern void TableLookupCall_g_table_004efa00(void);
+extern void TableLookupCall_g_table_004efd18(void);
 
 __declspec(naked) void AggressorModeCluster(void)
 {
@@ -202,7 +202,7 @@ __declspec(naked) void AggressorModeCluster(void)
         test     eax, eax
         jne      L_e0fd
         mov      dword ptr [g_walkCallback], 9
-        call     TableLookupCall_00489ff0
+        call     TableLookupCall_g_table_004efa00
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e0fd
@@ -213,7 +213,7 @@ __declspec(naked) void AggressorModeCluster(void)
         test     eax, eax
         jne      short L_e0fd
         mov      dword ptr [g_walkCallback], 0xf
-        call     TableLookupCall_0048a130
+        call     TableLookupCall_g_table_004efd18
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_e0fd

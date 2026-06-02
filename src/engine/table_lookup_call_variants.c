@@ -22,7 +22,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned short g_table_004ef998[];
 extern int TaggedSceneDispatch(int);
-void TableLookupCall_00489f60(void) {
+void TableLookupCall_g_table_004ef998(void) {
     unsigned int idx = (unsigned int)g_walkCallback;
     unsigned short val;
     if (idx > 0x32) return;
@@ -33,7 +33,7 @@ void TableLookupCall_00489f60(void) {
 
 /* @addr 0x00489ff0 (33b): same shape with cmp=0x70, table=0x004efa00 */
 extern unsigned short g_table_004efa00[];
-void TableLookupCall_00489ff0(void) {
+void TableLookupCall_g_table_004efa00(void) {
     unsigned int idx = (unsigned int)g_walkCallback;
     unsigned short val;
     if (idx > 0x70) return;
@@ -44,7 +44,7 @@ void TableLookupCall_00489ff0(void) {
 
 /* @addr 0x0048a130 (33b): same shape with cmp=0x41, table=0x004efd18 */
 extern unsigned short g_table_004efd18[];
-void TableLookupCall_0048a130(void) {
+void TableLookupCall_g_table_004efd18(void) {
     unsigned int idx = (unsigned int)g_walkCallback;
     unsigned short val;
     if (idx > 0x41) return;
@@ -55,7 +55,7 @@ void TableLookupCall_0048a130(void) {
 
 /* @addr 0x0048a160 (33b): same shape with cmp=0x13, table=0x004efae0 */
 extern unsigned short g_table_004efae0[];
-void TableLookupCall_0048a160(void) {
+void TableLookupCall_g_table_004efae0(void) {
     unsigned int idx = (unsigned int)g_walkCallback;
     unsigned short val;
     if (idx > 0x13) return;

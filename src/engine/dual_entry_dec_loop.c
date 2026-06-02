@@ -83,7 +83,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00480f20 (144b game) - dual-entry chain decrement loop.
- *   Block A (+0x00): set [g_xformEntityIdx*4+0x5c]=7; g_walkCallback=0x29; jmp TableLookupCall_00489f60.
+ *   Block A (+0x00): set [g_xformEntityIdx*4+0x5c]=7; g_walkCallback=0x29; jmp TableLookupCall_g_table_004ef998.
  *   Block A2 (+0x20): call CallPauseDirtyScaledSet7; if !pause: call CmpP1GTSetup; if !pause:
  *     ecx=g_xformEntityIdx; eax = --[ecx*4+0x5c]; g_walkCallback=eax; g_bootInitSaveSlot=eax; if eax<0 set
  *     g_walkCallback=1; store back; if g_bootInitSaveSlot!=0 self-jmp. ret.
@@ -119,14 +119,14 @@ extern unsigned int g_phaseTimer;
 extern unsigned int g_bootInitSaveSlot;
 extern void CallPauseDirtyScaledSet7(void);
 extern void CmpP1GTSetup(void);
-extern void TableLookupCall_00489f60(void);
+extern void TableLookupCall_g_table_004ef998(void);
 
 __declspec(naked) void DualEntryDecLoop(void) {
     __asm {
         mov     eax, dword ptr [g_xformEntityIdx]
         mov     dword ptr [eax*4 + 0x5c], 7
         mov     dword ptr [g_walkCallback], 0x29
-        jmp     TableLookupCall_00489f60
+        jmp     TableLookupCall_g_table_004ef998
         _emit   90h
         call    CallPauseDirtyScaledSet7
         mov     eax, dword ptr [g_framePauseFlag]

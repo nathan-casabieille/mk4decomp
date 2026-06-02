@@ -86,7 +86,7 @@ extern void StoreIncrMStackPush6(void);
 extern void StoreLoadJmp(void);
 extern void StoreTwoCall(void);
 extern void StreamChainStringInstall(void);
-extern void TableLookupCall_00489ff0(void);
+extern void TableLookupCall_g_table_004efa00(void);
 extern void Thunk_ScaledNeg1SetPause(void);
 extern void TripleEntryStateCascade(void);
 extern void TripleMStackPushChainStores(void);
@@ -429,7 +429,7 @@ __declspec(naked) void func_00498980(void)
     __asm {
         /* === h3 (0x498980): pose copy + 0x23d7 ratio + 004f2240 === */
         mov      dword ptr [g_walkCallback], 0x47
-        call     TableLookupCall_00489ff0
+        call     TableLookupCall_g_table_004efa00
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8ae4
@@ -531,7 +531,7 @@ __declspec(naked) void func_00498b20(void)
         test     eax, eax
         je       short L_8b61
         mov      dword ptr [g_walkCallback], 0x49
-        call     TableLookupCall_00489ff0
+        call     TableLookupCall_g_table_004efa00
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_8ba8
@@ -544,7 +544,7 @@ __declspec(naked) void func_00498b20(void)
         test     eax, eax
         jne      short L_8ba8
         mov      dword ptr [g_walkCallback], 0x48
-        call     TableLookupCall_00489ff0
+        call     TableLookupCall_g_table_004efa00
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_8ba8

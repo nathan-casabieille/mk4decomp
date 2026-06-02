@@ -83,7 +83,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -128,10 +128,10 @@ extern unsigned int g_fightAxisPosY;
  *   Entry 6 (offset 0x120, 28b): GateDispatch6c → push 0x4edef8
  *     → ArgSarStoreJmp.
  *   4b NOP align pad.
- *   Entry 7 (offset 0x140, 30b): 0x54206c=6 → TableLookupCall_0048a160
+ *   Entry 7 (offset 0x140, 30b): 0x54206c=6 → TableLookupCall_g_table_004efae0
  *     → tail-jmp TripleGuardSetTailJmp.
  *   2b NOP align pad.
- *   Entry 8 (offset 0x160, 30b): 0x54206c=8 → TableLookupCall_00489ff0
+ *   Entry 8 (offset 0x160, 30b): 0x54206c=8 → TableLookupCall_g_table_004efa00
  *     → tail-jmp TripleGuardSetTailJmp.
  */
 extern unsigned int g_dispatchSave760;
@@ -146,8 +146,8 @@ extern void CmpP1DualInitStore_00482ab0(void);
 extern void DualScaledInitClear(void);
 extern void GateDispatch6c(void);
 extern void SaveSwapCallRestore(void);
-extern void TableLookupCall_00489ff0(void);
-extern void TableLookupCall_0048a160(void);
+extern void TableLookupCall_g_table_004efa00(void);
+extern void TableLookupCall_g_table_004efae0(void);
 extern void TripleGuardSetTailJmp(void);
 
 __declspec(naked) void EightEntryAlarmDispatch(void) {
@@ -287,7 +287,7 @@ __declspec(naked) void EightEntryAlarmDispatch(void) {
         /* entry 7 (offset 0x140) */
     L_eae_entry7:
         mov     dword ptr [g_walkCallback], 6
-        call    TableLookupCall_0048a160
+        call    TableLookupCall_g_table_004efae0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eae_e7End
@@ -299,7 +299,7 @@ __declspec(naked) void EightEntryAlarmDispatch(void) {
         /* entry 8 (offset 0x160) */
     L_eae_entry8:
         mov     dword ptr [g_walkCallback], 8
-        call    TableLookupCall_00489ff0
+        call    TableLookupCall_g_table_004efa00
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eae_e8End

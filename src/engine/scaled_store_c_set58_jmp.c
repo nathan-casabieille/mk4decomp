@@ -13,9 +13,9 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_walkCallback], 0x58
  *   jmp     T
  */
-extern void TableLookupCall_00489ff0(void);
+extern void TableLookupCall_g_table_004efa00(void);
 void ScaledStoreCSet58Jmp(void) {
     *(unsigned int *)(g_xformEntityIdx * 4 + 0x5c) = 0x0c;
     g_walkCallback = (void (*)(void))0x58;
-    TableLookupCall_00489ff0();
+    TableLookupCall_g_table_004efa00();
 }

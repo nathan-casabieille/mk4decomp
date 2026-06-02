@@ -83,7 +83,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -120,7 +120,7 @@ extern void ScaledAndAlfb(void);
 extern void ScaledAndAlfe(void);
 extern void ScaledLoadOrSetJmp(void);
 extern void StateDispatchTable(void);
-extern void TableLookupCall_0048a160(void);
+extern void TableLookupCall_g_table_004efae0(void);
 extern void TripleEntryBitsetMStack(void);
 
 __declspec(naked) void GameLoaderHandlerCluster(void)
@@ -251,7 +251,7 @@ __declspec(naked) void GameLoaderHandlerCluster(void)
         test     eax, eax
         jne      short L_788e
         mov      dword ptr [g_walkCallback], 5
-        call     TableLookupCall_0048a160
+        call     TableLookupCall_g_table_004efae0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_788e

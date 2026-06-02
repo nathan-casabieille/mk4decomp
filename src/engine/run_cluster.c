@@ -83,7 +83,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -118,7 +118,7 @@ extern void GuardedSeq_MStackPushSet0004_then_MoveSelectorCluster(void);
 extern void MoveSelectorCluster(void);
 extern void ScaledLitLoadCall_00480fe0(void);
 extern void ScaledZero44(void);
-extern void TableLookupCall_00489ff0(void);
+extern void TableLookupCall_g_table_004efa00(void);
 extern void TwoPhaseInstallScaledPackedPtr(void);
 
 __declspec(naked) void RunCluster(void)
@@ -264,7 +264,7 @@ __declspec(naked) void RunCluster(void)
         ret
     L_d89b:
         mov      dword ptr [g_walkCallback], 0xd
-        call     TableLookupCall_00489ff0
+        call     TableLookupCall_g_table_004efa00
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d97c
@@ -295,7 +295,7 @@ __declspec(naked) void RunCluster(void)
         test     eax, eax
         jne      short L_d97c
         mov      dword ptr [g_walkCallback], 0xc
-        call     TableLookupCall_00489ff0
+        call     TableLookupCall_g_table_004efa00
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d97c

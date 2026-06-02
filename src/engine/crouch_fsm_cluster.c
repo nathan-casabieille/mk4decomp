@@ -83,7 +83,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -108,12 +108,12 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void TableLookupCall_0048a160(void);
+extern void TableLookupCall_g_table_004efae0(void);
 extern void CrouchFsmCluster(void);
 extern void CallPauseFourSet(void);
 
 /* @addr 0x00482b60 (124b game) - dual-entry.
- *   Block A: set g_walkCallback=1; jmp TableLookupCall_0048a160.
+ *   Block A: set g_walkCallback=1; jmp TableLookupCall_g_table_004efae0.
  *   Block A2 (+0x10): set baseSel[*4+0x74]=0x4002; call CmpDualPatchCallJmp; if pause ret;
  *     set g_walkCallback=0x9999; call CmpP1DualInitStore; if pause ret; jmp CrouchFsmCluster.
  *   Block B (+0x60): set baseSel[*4+0x74]=0x4005; jmp CallPauseFourSet.
@@ -124,7 +124,7 @@ extern void CmpP1DualInitStore_00482ab0(void);
 __declspec(naked) void DualEntry4002Chain(void) {
     __asm {
         mov     dword ptr [g_walkCallback], 1
-        jmp     TableLookupCall_0048a160
+        jmp     TableLookupCall_g_table_004efae0
         _emit   90h
         mov     ecx, dword ptr [g_baseSel]
         mov     eax, 0x00004002

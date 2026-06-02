@@ -83,7 +83,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -110,12 +110,12 @@ extern unsigned int g_fightAxisPosY;
 
 extern void BootInstallerPair(void);
 extern void SetWorkTypeScaledCallStoreCcc(void);
-extern void DualCallPauseAddrSetRecurse_00419720(void);
-extern void DualCallPauseAddrSetRecurse_00419b60(void);
-extern void DualCallPauseAddrSetRecurse_00419aa0(void);
-extern void DualCallPauseAddrSetRecurse_004199e0(void);
-extern void DualCallPauseAddrSetRecurse_004197e0(void);
-extern void DualCallPauseAddrSetRecurse_004198a0(void);
+extern void DualCallPauseAddrSetRecurse_func_004196c0_jj(void);
+extern void DualCallPauseAddrSetRecurse_func_00419b00_jj(void);
+extern void DualCallPauseAddrSetRecurse_func_00419a40_jj(void);
+extern void DualCallPauseAddrSetRecurse_func_00419980_jj(void);
+extern void DualCallPauseAddrSetRecurse_func_00419780_jj(void);
+extern void DualCallPauseAddrSetRecurse_func_00419840_jj(void);
 extern void TripleChainTailJmp(void);
 extern void Phase1SlotLinkAndInit(void);
 extern void GuardedScaled_MStackPush8_then_PendingMatch(void);
@@ -147,27 +147,27 @@ __declspec(naked) void Phase4DispatchMultiInit(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
-        call    DualCallPauseAddrSetRecurse_00419720
+        call    DualCallPauseAddrSetRecurse_func_004196c0_jj
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
-        call    DualCallPauseAddrSetRecurse_00419b60
+        call    DualCallPauseAddrSetRecurse_func_00419b00_jj
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
-        call    DualCallPauseAddrSetRecurse_00419aa0
+        call    DualCallPauseAddrSetRecurse_func_00419a40_jj
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
-        call    DualCallPauseAddrSetRecurse_004199e0
+        call    DualCallPauseAddrSetRecurse_func_00419980_jj
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
-        call    DualCallPauseAddrSetRecurse_004197e0
+        call    DualCallPauseAddrSetRecurse_func_00419780_jj
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit
-        call    DualCallPauseAddrSetRecurse_004198a0
+        call    DualCallPauseAddrSetRecurse_func_00419840_jj
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dmi_A_exit

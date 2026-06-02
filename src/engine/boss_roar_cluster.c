@@ -83,7 +83,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -118,7 +118,7 @@ extern void IncThunkPlusCjDispatch(void);
 extern void InstallSelfIndirectJmpNeg(void);
 extern void InstallSelfIndirectJmp(void);
 extern void InstallSelfOrCmpJmp(void);
-extern void TableLookupCall_00489ff0(void);
+extern void TableLookupCall_g_table_004efa00(void);
 
 __declspec(naked) void BossRoarCluster(void)
 {
@@ -172,7 +172,7 @@ __declspec(naked) void BossRoarCluster(void)
         ret
     L_82ab:
         mov      dword ptr [g_walkCallback], 0x40
-        call     TableLookupCall_00489ff0
+        call     TableLookupCall_g_table_004efa00
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_8361

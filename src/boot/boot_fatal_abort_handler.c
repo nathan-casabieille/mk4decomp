@@ -83,7 +83,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -110,12 +110,12 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004c6860 (178b boot) - CRT abort/exit dispatcher with re-entry guard.
  *   Args: ebp=arg0 (push-thru), [esp+0x14]=arg1 flag, [esp+0x18] bl=arg2 flag.
- *   Calls PushConstCall_004c6920 to do beep/header msg, then on g_dispatchSave1429==1:
+ *   Calls PushConstCall_Lock_0xd to do beep/header msg, then on g_dispatchSave1429==1:
  *     ![0x4d2060](arg0); ![0x4d20a4](rv).
  *   Sets g_dispatchSave1428=1, g_byte_00f9f838 = bl.
  *   If arg1 == 0: walk fnptr-stack [g_dispatchSave1471..g_dispatchSave1472] calling each non-null fn,
  *     reloading head each iter; then push pair (0x4d5028, 0x4d5030) and IterFnPtrs.
- *   Push pair (0x4d5034, 0x4d5038), IterFnPtrs; if bl != 0 also call PushConstCall_004c6930.
+ *   Push pair (0x4d5034, 0x4d5038), IterFnPtrs; if bl != 0 also call PushConstCall_TableLookupIatCall_0xd.
  *   Tail: pop esi/ebp/ebx; ret. Re-entry tail: push ebp; g_dispatchSave1429 = 1; ![0x4d2154]; pop+ret.
  */
 extern unsigned int g_byte_00f9f838;
@@ -127,15 +127,15 @@ extern unsigned int g_iat_GetCurrentProcess;
 extern unsigned int g_iat_TerminateProcess;
 extern unsigned int g_iat_ExitProcess;
 extern void IterFnPtrs(void);
-extern void PushConstCall_004c6920(void);
-extern void PushConstCall_004c6930(void);
+extern void PushConstCall_Lock_0xd(void);
+extern void PushConstCall_TableLookupIatCall_0xd(void);
 
 __declspec(naked) void BootFatalAbortHandler(void) {
     __asm {
         push    ebx
         push    ebp
         push    esi
-        call    PushConstCall_004c6920
+        call    PushConstCall_Lock_0xd
         mov     eax, dword ptr [g_dispatchSave1429]
         mov     ebp, dword ptr [esp + 0x10]
         cmp     eax, 1
@@ -180,7 +180,7 @@ __declspec(naked) void BootFatalAbortHandler(void) {
         add     esp, 8
         test    ebx, ebx
         jz      short L_ab_reentry
-        call    PushConstCall_004c6930
+        call    PushConstCall_TableLookupIatCall_0xd
         pop     esi
         pop     ebp
         pop     ebx

@@ -83,7 +83,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -123,7 +123,7 @@ extern void PendingMatch_00459510(void);
 extern void RoundCleanupCluster_00427690(void);
 extern void SaveCallRestore(void);
 extern void StoreIncrMStackPush6(void);
-extern void TableLookupCall_0048a130(void);
+extern void TableLookupCall_g_table_004efd18(void);
 
 __declspec(naked) void HitReactionCluster(void)
 {
@@ -230,7 +230,7 @@ __declspec(naked) void HitReactionCluster(void)
         cmp      dword ptr [g_dlNalt1], 9
         jne      L_c1e5
         mov      dword ptr [g_walkCallback], 0x1a
-        call     TableLookupCall_0048a130
+        call     TableLookupCall_g_table_004efd18
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c21d
@@ -243,7 +243,7 @@ __declspec(naked) void HitReactionCluster(void)
         cmp      dword ptr [g_dlNalt2], 9
         jne      L_c218
         mov      dword ptr [g_walkCallback], 0x1a
-        call     TableLookupCall_0048a130
+        call     TableLookupCall_g_table_004efd18
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c21d
@@ -261,7 +261,7 @@ __declspec(naked) void HitReactionCluster(void)
         cmp      dword ptr [g_dlNalt1], 9
         jne      L_c255
         mov      dword ptr [g_walkCallback], 0x1c
-        call     TableLookupCall_0048a130
+        call     TableLookupCall_g_table_004efd18
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c28d
@@ -274,7 +274,7 @@ __declspec(naked) void HitReactionCluster(void)
         cmp      dword ptr [g_dlNalt2], 9
         jne      L_c288
         mov      dword ptr [g_walkCallback], 0x1c
-        call     TableLookupCall_0048a130
+        call     TableLookupCall_g_table_004efd18
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c28d

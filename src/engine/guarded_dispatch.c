@@ -31,7 +31,7 @@ extern void CallPauseMStackPushSet3Jmp(void);
 extern void CallPauseMStackPushSet4Jmp(void);
 
 /* @addr 0x0042b6c0 */
-void GuardedDispatch_0042b6c0(void) {
+void GuardedDispatch_InstallSelfDualEsi(void) {
     QuadStageStateDispatch();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 1) {
@@ -42,7 +42,7 @@ void GuardedDispatch_0042b6c0(void) {
 }
 
 /* @addr 0x0042c570 */
-void GuardedDispatch_0042c570(void) {
+void GuardedDispatch_EsiAliasInstallChainCall(void) {
     QuadStageStateDispatch();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 1) {
@@ -53,7 +53,7 @@ void GuardedDispatch_0042c570(void) {
 }
 
 /* @addr 0x00460ca0 */
-void GuardedDispatch_00460ca0(void) {
+void GuardedDispatch_CallPauseMStackPushSet3Jmp(void) {
     MStackPush2ChainSwap();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 1) {
@@ -64,7 +64,7 @@ void GuardedDispatch_00460ca0(void) {
 }
 
 /* @addr 0x00460cd0 */
-void GuardedDispatch_00460cd0(void) {
+void GuardedDispatch_CallPauseMStackPushSet4Jmp(void) {
     MStackPush2ChainSwap();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 1) {

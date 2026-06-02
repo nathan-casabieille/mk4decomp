@@ -83,7 +83,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
  *   if bit0 set: jmp SetJmp_StateDispatchYield_00438f50;
  *   call FiveCallScaledChainTailJmp; if pause: ret;
  *   call ScaledZeroFour; if pause: ret;
- *   jmp GuardedDispatch_0042b6c0.
+ *   jmp GuardedDispatch_InstallSelfDualEsi.
  */
 void QuadGuardBitGateJmp(void) {
     MStackPush3CmpCall();
@@ -134,5 +134,5 @@ void QuadGuardBitGateJmp(void) {
     if (g_framePauseFlag != 0) return;
     ScaledZeroFour();
     if (g_framePauseFlag != 0) return;
-    GuardedDispatch_0042b6c0();
+    GuardedDispatch_InstallSelfDualEsi();
 }

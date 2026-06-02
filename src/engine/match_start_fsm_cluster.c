@@ -83,7 +83,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -123,7 +123,7 @@ extern void ScaledLoadJmp_00428d20(void);
 extern void ScaledLoadJmp_00429390(void);
 extern void SfxAttenuateAndApply(void);
 extern void StreamFlagPackedSelectChain(void);
-extern void TableLookupCall_00489ff0(void);
+extern void TableLookupCall_g_table_004efa00(void);
 
 __declspec(naked) void MatchStartFsmCluster(void)
 {
@@ -217,7 +217,7 @@ __declspec(naked) void MatchStartFsmCluster(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_9288
         mov      dword ptr [g_walkCallback], 0x50
-        call     TableLookupCall_00489ff0
+        call     TableLookupCall_g_table_004efa00
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_9288
         mov      dword ptr [g_eventQueueNotMask], 3

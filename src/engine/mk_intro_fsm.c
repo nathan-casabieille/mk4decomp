@@ -83,7 +83,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -115,7 +115,7 @@ extern unsigned int g_clamp_0053a6dc;
 extern void Cmp2DirtyToggle(void);
 extern void DualAddSar(void);
 extern void SaveCallRestore(void);
-extern void TableLookupCall_00489ff0(void);
+extern void TableLookupCall_g_table_004efa00(void);
 extern void func_004214a0(void);
 
 __declspec(naked) void MkIntroFsm(void)
@@ -170,7 +170,7 @@ __declspec(naked) void MkIntroFsm(void)
         ret
     L_196c:
         mov      dword ptr [g_walkCallback], 0x2d
-        call     TableLookupCall_00489ff0
+        call     TableLookupCall_g_table_004efa00
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1aa1

@@ -17,7 +17,7 @@ extern void MStackPush3CmpCall(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void ScaledZeroFour(void);
-extern void GuardedDispatch_0042c570(void);
+extern void GuardedDispatch_EsiAliasInstallChainCall(void);
 void CallPauseTestByteJmpCalls(void) {
     MStackPush3CmpCall();
     if (g_framePauseFlag) return;
@@ -29,5 +29,5 @@ void CallPauseTestByteJmpCalls(void) {
     if (g_framePauseFlag) return;
     ScaledZeroFour();
     if (g_framePauseFlag) return;
-    GuardedDispatch_0042c570();
+    GuardedDispatch_EsiAliasInstallChainCall();
 }

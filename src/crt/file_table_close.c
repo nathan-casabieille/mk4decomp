@@ -83,7 +83,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -123,7 +123,7 @@ extern void CritSecLazyEnter(void);
 extern void Crt_doserrno(void);
 extern void Crt_errno(void);
 extern void DivMod32IAT(void);
-extern void PushConstCall_004c6a10(void);
+extern void PushConstCall_LockIterTwoPath_1(void);
 extern void StreamCleanupLoop(void);
 
 __declspec(naked) void FileTableClose(void) {
@@ -266,7 +266,7 @@ __declspec(naked) void FileTableClose(void) {
         nop
         /* entry 3 (offset 0x160) */
     L_ftc_entry3:
-        call    PushConstCall_004c6a10
+        call    PushConstCall_LockIterTwoPath_1
         mov     al, byte ptr [g_byte_00f9f838]
         test    al, al
         je      short L_ftc_e3End

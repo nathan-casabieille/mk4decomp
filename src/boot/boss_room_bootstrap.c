@@ -83,7 +83,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -127,7 +127,7 @@ extern unsigned int g_dispatchSave903;
 extern unsigned int g_dispatchSave915;
 extern unsigned int g_dispatchSave880;
 extern void MStackCall_004062f0(void);
-extern void TableLookupCall_00489ff0(void);
+extern void TableLookupCall_g_table_004efa00(void);
 
 __declspec(naked) void BossRoomInitCluster(void)
 {
@@ -224,7 +224,7 @@ __declspec(naked) void BossRoomInitCluster(void)
         mov      dword ptr [g_fightGroupHead], ecx
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [g_walkCallback], 0x19
-        call     TableLookupCall_00489ff0
+        call     TableLookupCall_g_table_004efa00
         cmp      dword ptr [g_framePauseFlag], edi
         jne      func_004107b4
     L_04e1:

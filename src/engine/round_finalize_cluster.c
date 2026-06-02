@@ -83,7 +83,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -125,7 +125,7 @@ extern void MStackPush2ChainPrepend(void);
 extern void Phase1ContextSetup3Helpers(void);
 extern void QuadBlockSoundInit(void);
 extern void ScaledStackCallPause(void);
-extern void TableLookupCall_00489ff0(void);
+extern void TableLookupCall_g_table_004efa00(void);
 extern void ThreeChanPackClamp(void);
 
 __declspec(naked) void RoundFinalizeCluster(void)
@@ -343,7 +343,7 @@ __declspec(naked) void RoundFinalizeCluster(void)
         nop
         /* === h5 (0x49bb70): 489ff0+40d990 chain → tail-jmp 49bb90 === */
         mov      dword ptr [g_walkCallback], 0x5e
-        call     TableLookupCall_00489ff0
+        call     TableLookupCall_g_table_004efa00
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_bb8b

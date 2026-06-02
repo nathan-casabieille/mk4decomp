@@ -83,7 +83,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -121,7 +121,7 @@ extern void DualWalkRange(void);
 extern void EsiInstallChainCmpDualCall(void);
 extern void GateDispatch6c(void);
 extern void InstallSelf3WayChainCmp(void);
-extern void LoadSetFpJmp_004093a0(void);
+extern void LoadSetFpJmp_g_bootChainScaled1(void);
 extern void MStackPush1MagicMod2(void);
 extern void PendingMatch_0046b670(void);
 extern void PoseFsmTriHelpers(void);
@@ -141,7 +141,7 @@ __declspec(naked) void StoryCharIntroFsmCluster(void)
         je       L_7f81
         dec      eax
         je       L_7f20
-        call     LoadSetFpJmp_004093a0
+        call     LoadSetFpJmp_g_bootChainScaled1
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8019

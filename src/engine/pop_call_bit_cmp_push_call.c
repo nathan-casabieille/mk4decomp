@@ -83,7 +83,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void CmpEqInitCallElseJmp(void);
 extern void ScaledChain3c74(void);
-extern void TableLookupCall_00489ff0(void);
+extern void TableLookupCall_g_table_004efa00(void);
 
 void PopCallBitCmpPushCall(void) {
     __asm {
@@ -145,7 +145,7 @@ void PopCallBitCmpPushCall(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     dword ptr [g_walkCallback], 0x35
-        call    TableLookupCall_00489ff0
+        call    TableLookupCall_g_table_004efa00
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

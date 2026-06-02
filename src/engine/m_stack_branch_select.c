@@ -83,7 +83,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY;
 extern void DualBranchWordLookup(void);
 extern void EntryThunkBodyStateMachine(void);
 extern void StoreTwoCallSubMain(void);
-extern void TableLookupCall_00489f60(void);
+extern void TableLookupCall_g_table_004ef998(void);
 
 extern unsigned int g_matrixStack_arr;
 
@@ -168,7 +168,7 @@ __declspec(naked) void MStackBranchSelect(void) {
         _emit   75h
         _emit   0fh
         mov     dword ptr [g_walkCallback], 0x13
-        jmp     TableLookupCall_00489f60
+        jmp     TableLookupCall_g_table_004ef998
         ret
     }
 }

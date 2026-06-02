@@ -83,7 +83,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -293,12 +293,12 @@ extern void CrtGetLocaleInfo(void);
 extern void DispatcherComplex260_00407400(void);
 extern void DosMapErr(void);
 extern void DualAddSar(void);
-extern void DualCallPauseAddrSetRecurse_00419720(void);
-extern void DualCallPauseAddrSetRecurse_004197e0(void);
-extern void DualCallPauseAddrSetRecurse_004198a0(void);
-extern void DualCallPauseAddrSetRecurse_004199e0(void);
-extern void DualCallPauseAddrSetRecurse_00419aa0(void);
-extern void DualCallPauseAddrSetRecurse_00419b60(void);
+extern void DualCallPauseAddrSetRecurse_func_004196c0_jj(void);
+extern void DualCallPauseAddrSetRecurse_func_00419780_jj(void);
+extern void DualCallPauseAddrSetRecurse_func_00419840_jj(void);
+extern void DualCallPauseAddrSetRecurse_func_00419980_jj(void);
+extern void DualCallPauseAddrSetRecurse_func_00419a40_jj(void);
+extern void DualCallPauseAddrSetRecurse_func_00419b00_jj(void);
 extern void DualCmpSwapStore(void);
 extern void DualConstMaskFlagToggle4(void);
 extern void DualConstMaskFlagToggle8(void);
@@ -385,7 +385,7 @@ extern void StoreCallPauseCallPauseJmp(void);
 extern void StoreDoubleNegPauseSubStore(void);
 extern void StoreTwoCall(void);
 extern void StringDigitConvert(void);
-extern void TableLookupCall_00489ff0(void);
+extern void TableLookupCall_g_table_004efa00(void);
 extern void TableWalkBoundedCmp(void);
 extern void Test4StatesAny(void);
 extern void TestByteSelectInit(void);
@@ -1095,7 +1095,7 @@ __declspec(naked) void Vec2SumMul10ChainCompute(void)
         nop
     L_v2sm10_sub4:
         mov     dword ptr [g_walkCallback], 0xe
-        call    TableLookupCall_00489ff0
+        call    TableLookupCall_g_table_004efa00
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_v2sm10_sub4_ret
@@ -1462,7 +1462,7 @@ __declspec(naked) void Phase4FourPackedDispatch(void)
         test    eax, eax
         jne     L_p4fpd2_M_ret
         mov     dword ptr [g_walkCallback], 0x0E
-        call    TableLookupCall_00489ff0
+        call    TableLookupCall_g_table_004efa00
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fpd2_M_ret
@@ -1943,7 +1943,7 @@ __declspec(naked) void PunchAnimCluster(void)
         nop
         /* === Helper 6: event 0x65 + jmp 0x496fc0 === */
         mov      dword ptr [g_walkCallback], 0x65
-        call     TableLookupCall_00489ff0
+        call     TableLookupCall_g_table_004efa00
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_6fbd
@@ -4033,7 +4033,7 @@ __declspec(naked) void PendingMatch_00417840(void)
         mov      eax, dword ptr [g_eventQueueEnd]
         mov      dword ptr [eax*4 + 0x10], 0x418030
         mov      dword ptr [g_walkCallback], 0x6c
-        call     TableLookupCall_00489ff0
+        call     TableLookupCall_g_table_004efa00
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7de7
@@ -7396,7 +7396,7 @@ __declspec(naked) void PendingMatch_00419c90(void)
         mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret      
-        call     DualCallPauseAddrSetRecurse_00419720
+        call     DualCallPauseAddrSetRecurse_func_004196c0_jj
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a5df
@@ -7411,7 +7411,7 @@ __declspec(naked) void PendingMatch_00419c90(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a5df
-        call     DualCallPauseAddrSetRecurse_00419b60
+        call     DualCallPauseAddrSetRecurse_func_00419b00_jj
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a5df
@@ -7422,7 +7422,7 @@ __declspec(naked) void PendingMatch_00419c90(void)
         mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret      
-        call     DualCallPauseAddrSetRecurse_00419aa0
+        call     DualCallPauseAddrSetRecurse_func_00419a40_jj
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a5df
@@ -7438,7 +7438,7 @@ __declspec(naked) void PendingMatch_00419c90(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a5df
-        call     DualCallPauseAddrSetRecurse_004199e0
+        call     DualCallPauseAddrSetRecurse_func_00419980_jj
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a5df
@@ -7449,7 +7449,7 @@ __declspec(naked) void PendingMatch_00419c90(void)
         mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret      
-        call     DualCallPauseAddrSetRecurse_004197e0
+        call     DualCallPauseAddrSetRecurse_func_00419780_jj
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a5df
@@ -7460,7 +7460,7 @@ __declspec(naked) void PendingMatch_00419c90(void)
         mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret      
-        call     DualCallPauseAddrSetRecurse_004198a0
+        call     DualCallPauseAddrSetRecurse_func_00419840_jj
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a5df

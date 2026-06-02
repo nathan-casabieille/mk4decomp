@@ -83,7 +83,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -123,7 +123,7 @@ extern void MStackPushDispatchBitGate(void);
 extern void SetJmp_ZeroAndDirty4(void);
 extern void SetJmp_BootStateTriple(void);
 extern void StoreDoubleNegPauseSubStore(void);
-extern void TableLookupCall_00489ff0(void);
+extern void TableLookupCall_g_table_004efa00(void);
 
 __declspec(naked) void Phase4SlotInitPackedHelper(void)
 {
@@ -299,7 +299,7 @@ __declspec(naked) void Phase4SlotInitPackedHelper(void)
         mov     dword ptr [g_eventQueueCurrent], eax
         add     eax, 0x13
         mov     dword ptr [g_walkCallback], eax
-        call    TableLookupCall_00489ff0
+        call    TableLookupCall_g_table_004efa00
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sip_B_ret

@@ -83,7 +83,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -125,7 +125,7 @@ extern void PushCallScaledClearJmp(void);
 extern void ScaledIndirectJmp_0049c850(void);
 extern void ScaledTripleCopy4(void);
 extern void SoundSetupLoop(void);
-extern void TableLookupCall_00489ff0(void);
+extern void TableLookupCall_g_table_004efa00(void);
 extern void ThreeChanPackClamp(void);
 extern void Vec2SumMul10ChainCompute(void);
 
@@ -326,7 +326,7 @@ __declspec(naked) void SweepKickDispatcher(void)
         jne      short L_741e
         mov      dword ptr [g_walkCallback], 0x61
     L_741e:
-        call     TableLookupCall_00489ff0
+        call     TableLookupCall_g_table_004efa00
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_744d

@@ -83,7 +83,7 @@ extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_0042b6c0(void);
+extern void GuardedDispatch_InstallSelfDualEsi(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
@@ -119,7 +119,7 @@ extern void CrouchCounterCluster(void);
  *     state==0: call LeaPlus22StoreSelf; if pause ret. Set g_currentNodeFlags=0x20000, g_eventQueueChild=0x3c;
  *     install-self at body+0x01000000, call StateGateMStackOverlap, pause=1; ret.
  *   Block D (+0x100): call MStackPush3CmpCall; if pause ret. If bit0(0054208c) jmp CrouchCounterCluster;
- *     else jmp GuardedDispatch_0042b6c0.
+ *     else jmp GuardedDispatch_InstallSelfDualEsi.
  */
 extern void PackedAdvanceCallTailJmp(void);
 
@@ -204,7 +204,7 @@ __declspec(naked) void QuadBlockArgInstallChain(void) {
         _emit   74h
         _emit   05h
         jmp     CrouchCounterCluster
-        jmp     GuardedDispatch_0042b6c0
+        jmp     GuardedDispatch_InstallSelfDualEsi
         ret
     }
 }

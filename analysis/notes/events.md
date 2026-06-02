@@ -171,12 +171,12 @@ Structural observations:
 | 0x35 | `0x00460a50` | (unnamed) |
 | 0x37 | `0x00460c60` | `CallPauseCallTestStackPushJmp` |
 | 0x38 | `0x0045fcf0` | `CallPauseMStackPushSet0Jmp` |
-| 0x3b | `0x00460cd0` | `GuardedDispatch_00460cd0` |
-| 0x3f | `0x00460ca0` | `GuardedDispatch_00460ca0` |
+| 0x3b | `0x00460cd0` | `GuardedDispatch_CallPauseMStackPushSet4Jmp` |
+| 0x3f | `0x00460ca0` | `GuardedDispatch_CallPauseMStackPushSet3Jmp` |
 | 0x47 | `0x00460c60` | `CallPauseCallTestStackPushJmp` |
 | 0x48 | `0x0045fcf0` | `CallPauseMStackPushSet0Jmp` |
-| 0x4b | `0x00460cd0` | `GuardedDispatch_00460cd0` |
-| 0x4f | `0x00460ca0` | `GuardedDispatch_00460ca0` |
+| 0x4b | `0x00460cd0` | `GuardedDispatch_CallPauseMStackPushSet4Jmp` |
+| 0x4f | `0x00460ca0` | `GuardedDispatch_CallPauseMStackPushSet3Jmp` |
 | 0x56 | `0x0048e0d0` | (shared catch-all) |
 | 0x57 | `0x004604f0` | (unnamed) |
 | 0x58 | `0x00460510` | (unnamed) |
