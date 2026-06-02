@@ -124,12 +124,26 @@ typedef struct ScenegraphNode {
  * fields) are left unnamed here - access them via ScenegraphNode.
  */
 typedef struct FightGroupNode {
-    u8  _00[0x30];          /* +0x00..+0x2F shared / opaque           */
+    u32 _00[12];            /* +0x00..+0x2F shared / opaque           */
     u32 tag;                /* +0x30 fight-group kind tag             */
     u32 flags;              /* +0x34 fight-group flag bitfield        */
-    u8  _38[0x08];          /* +0x38..+0x3F                           */
+    u32 _38[2];             /* +0x38..+0x3F                           */
     u32 bits;               /* +0x40 bitfield (shr+mask in dispatch)  */
-    u8  _44[0xA4];          /* +0x44..+0xE7 rest (matches 232 total)  */
+    u32 _44[11];            /* +0x44..+0x6F                           */
+    s32 vel_y;              /* +0x70 vertical velocity, integrated
+                             * against +0x58 (position_y) every frame.
+                             * Two ballistic handlers add a per-frame
+                             * delta then check sign + landing; on floor
+                             * contact `vel_y *= -0.60` or `-0.70`
+                             * (restitution). See analysis/notes/node_struct.md
+                             * "Ballistic integration loop".              */
+    u32 _74;                /* +0x74 (fsm_state in ScenegraphNode view) */
+    s32 drag_damped[3];     /* +0x78/+0x7c/+0x80 - 3-vector multiplied
+                             * by 0.99 (0xfd70) each frame alongside the
+                             * +0x70 vel_y term. Linear vs angular
+                             * velocity unconfirmed but the uniform-decay
+                             * pattern is verified.                       */
+    u32 _84[25];            /* +0x84..+0xE7 rest (matches 232 total)  */
 } FightGroupNode;
 
 /* Sister view of the same 232-byte slot when used as a node carrying
@@ -157,11 +171,11 @@ typedef struct FightGroupNode {
  * vec3; otherwise stick with raw `*(unsigned int *)` access.
  */
 typedef struct AuxVec3Node {
-    u8  _00[0x60];          /* +0x00..+0x5F shared / opaque           */
+    u32 _00[24];            /* +0x00..+0x5F shared / opaque           */
     s32 aux_x;              /* +0x60 secondary vec3 X component       */
     s32 aux_y;              /* +0x64 secondary vec3 Y component       */
     s32 aux_z;              /* +0x68 secondary vec3 Z component       */
-    u8  _6C[0x7C];          /* +0x6C..+0xE7 rest (matches 232 total)  */
+    u32 _6C[31];            /* +0x6C..+0xE7 rest (matches 232 total)  */
 } AuxVec3Node;
 
 /* === Allocator ============================================== */
