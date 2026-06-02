@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -124,7 +124,7 @@ extern void Wrapper_ScaledChainPushCall_004ef898(void);
 
 extern unsigned int g_arr_41aaf0_mstack;
 
-__declspec(naked) void InstallSelfMStackPush_0046cc80(void) {
+__declspec(naked) void InstallSelfMStackPush_CjInstallSelfRouter(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -143,9 +143,9 @@ __declspec(naked) void InstallSelfMStackPush_0046cc80(void) {
         _emit   75h
         _emit   69h
         mov     dword ptr [g_eventQueueCurrent], 0x17
-        mov     dword ptr [esi + 8], offset InstallSelfMStackPush_0046cc80
+        mov     dword ptr [esi + 8], offset InstallSelfMStackPush_CjInstallSelfRouter
         mov     ecx, dword ptr [g_baseSel]
-        mov     edx, offset InstallSelfMStackPush_0046cc80
+        mov     edx, offset InstallSelfMStackPush_CjInstallSelfRouter
         add     edx, 0x01000000
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
@@ -167,7 +167,7 @@ __declspec(naked) void InstallSelfMStackPush_0046cc80(void) {
 /* @addr 0x00496630 (152b game) - install-self twin of 0x41aaf0 with
  *   different early-out / second call targets.
  */
-__declspec(naked) void InstallSelfMStackPush_00496630(void) {
+__declspec(naked) void InstallSelfMStackPush_FiveCallGuardSetTail_00496630(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -185,9 +185,9 @@ __declspec(naked) void InstallSelfMStackPush_00496630(void) {
         test    eax, eax
         _emit   75h
         _emit   5fh
-        mov     dword ptr [esi + 8], offset InstallSelfMStackPush_00496630
+        mov     dword ptr [esi + 8], offset InstallSelfMStackPush_FiveCallGuardSetTail_00496630
         mov     ecx, dword ptr [g_baseSel]
-        mov     edx, offset InstallSelfMStackPush_00496630
+        mov     edx, offset InstallSelfMStackPush_FiveCallGuardSetTail_00496630
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x01000000
@@ -207,7 +207,7 @@ __declspec(naked) void InstallSelfMStackPush_00496630(void) {
 }
 
 /* @addr 0x004968a0 (152b game) - install-self twin of 0x496630. */
-__declspec(naked) void InstallSelfMStackPush_004968a0(void) {
+__declspec(naked) void InstallSelfMStackPush_FiveCallGuardSetTail_004968a0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -225,9 +225,9 @@ __declspec(naked) void InstallSelfMStackPush_004968a0(void) {
         test    eax, eax
         _emit   75h
         _emit   5fh
-        mov     dword ptr [esi + 8], offset InstallSelfMStackPush_004968a0
+        mov     dword ptr [esi + 8], offset InstallSelfMStackPush_FiveCallGuardSetTail_004968a0
         mov     ecx, dword ptr [g_baseSel]
-        mov     edx, offset InstallSelfMStackPush_004968a0
+        mov     edx, offset InstallSelfMStackPush_FiveCallGuardSetTail_004968a0
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x01000000

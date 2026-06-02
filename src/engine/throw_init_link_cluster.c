@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -117,15 +117,15 @@ extern unsigned int g_dispatchSave694;
 
 extern void ArgSarStoreJmp(void);
 extern void GatedWordPushCall(void);
-extern void PendingMatch_00452770(void);
+extern void PendingMatch_ArgSarStoreJmp_00452770(void);
 extern void StoreLoadJmp(void);
 extern void Thunk_ScaledNeg1SetPause(void);
 
-__declspec(naked) void StageTransitionCluster_00455340(void)
+__declspec(naked) void StageTransitionCluster_PendingMatch(void)
 {
     __asm {
         /* === Helper 1 (0x455340): pre-stage event + force-slot === */
-        call     PendingMatch_00452770
+        call     PendingMatch_ArgSarStoreJmp_00452770
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_538a

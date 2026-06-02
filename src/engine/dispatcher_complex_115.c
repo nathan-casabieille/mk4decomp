@@ -53,7 +53,7 @@ extern int  TaggedSceneDispatch(int);
 
 /* @addr 0x0049f900 */
 
-__declspec(naked) void DispatcherComplex115_0049f900(void) {
+__declspec(naked) void DispatcherComplex115_Cmp3DirtyToggle_0049f900(void) {
     __asm {
         call    Cmp3DirtyToggle
         mov     eax, dword ptr [g_framePauseFlag]
@@ -95,7 +95,7 @@ __declspec(naked) void DispatcherComplex115_0049f900(void) {
 }
 
 /* @addr 0x0049f980 */
-__declspec(naked) void DispatcherComplex115_0049f980(void) {
+__declspec(naked) void DispatcherComplex115_Cmp3DirtyToggle_0049f980(void) {
     __asm {
         call    Cmp3DirtyToggle
         mov     eax, dword ptr [g_framePauseFlag]

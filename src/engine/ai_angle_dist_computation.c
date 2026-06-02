@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -121,7 +121,7 @@ extern void CameraAimSplineDriver(void);
 extern void DualEntryInitDispatch(void);
 extern void ScaledInitWithCounterAndType_004314f0(void);
 extern void AiAngleDistComputation(void);
-extern void PendingMatch_00432110(void);
+extern void PendingMatch_ThreeMul10Stores(void);
 extern void PendingMatch_ZeroThreeFields6c_then_ZeroThreeSlots(void);
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_dispatchArr;
@@ -253,7 +253,7 @@ __declspec(naked) void PoseFsmTriHelpers(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], edi
-        call     PendingMatch_00432110
+        call     PendingMatch_ThreeMul10Stores
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
@@ -305,7 +305,7 @@ __declspec(naked) void PoseFsmTriHelpers(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edi
-        call     PendingMatch_00432110
+        call     PendingMatch_ThreeMul10Stores
         mov      dword ptr [g_framePauseFlag], 1
     L_191d:
         pop      edi

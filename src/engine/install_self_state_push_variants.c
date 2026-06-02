@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00434990 (148b) - install-self variant of 0x4348f0:
- *   Same shape as InstallSelfStatePush_004348f0, but writes 0x10041 instead
+ *   Same shape as InstallSelfStatePush_InstallSelf3StateDualBody_004348f0, but writes 0x10041 instead
  *   of 0x10042 to g_eventQueueNotMask and installs self at 0x00434990.
  */
 extern unsigned int g_dispatchSave1580;
@@ -121,7 +121,7 @@ extern void Wrapper_CmpDualPatchScaledRangeJmp_004e4990(void);
 extern unsigned int g_chain_arr_4348f0;
 extern void FiveCallGuardSetTail(void);
 
-__declspec(naked) void InstallSelfStatePush_00434990(void) {
+__declspec(naked) void InstallSelfStatePush_InstallSelf3StateDualBody_00434990(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [g_dispatchSave1580], 1
@@ -134,10 +134,10 @@ __declspec(naked) void InstallSelfStatePush_00434990(void) {
         _emit   0fh
         mov     dword ptr [g_eventQueueNotMask], 0x10041
         jmp     HitReactionDispatcher
-        mov     dword ptr [eax + 8], offset InstallSelfStatePush_00434990
+        mov     dword ptr [eax + 8], offset InstallSelfStatePush_InstallSelf3StateDualBody_00434990
         mov     ecx, dword ptr [g_baseSel]
         push    edi
-        mov     edi, offset InstallSelfStatePush_00434990
+        mov     edi, offset InstallSelfStatePush_InstallSelf3StateDualBody_00434990
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x01000000
@@ -157,7 +157,7 @@ __declspec(naked) void InstallSelfStatePush_00434990(void) {
 }
 
 /* @addr 0x00435d40 (148b game) - install-self twin (0x1cccc/0x3c). */
-__declspec(naked) void InstallSelfStatePush_00435d40(void) {
+__declspec(naked) void InstallSelfStatePush_CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp_00435d40(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         xor     edx, edx
@@ -170,10 +170,10 @@ __declspec(naked) void InstallSelfStatePush_00435d40(void) {
         jmp     Wrapper_CmpDualPatchScaledRangeJmp_004e4990
         mov     dword ptr [g_currentNodeFlags], 0x1cccc
         mov     dword ptr [g_eventQueueChild], 0x3c
-        mov     dword ptr [eax + 8], offset InstallSelfStatePush_00435d40
+        mov     dword ptr [eax + 8], offset InstallSelfStatePush_CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp_00435d40
         mov     ecx, dword ptr [g_baseSel]
         push    edi
-        mov     edi, offset InstallSelfStatePush_00435d40
+        mov     edi, offset InstallSelfStatePush_CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp_00435d40
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x01000000
@@ -196,7 +196,7 @@ __declspec(naked) void InstallSelfStatePush_00435d40(void) {
  *   Same shape as InstallSelfStatePush variants, but sets g_currentNodeFlags
  *   = 0x34ccc, g_eventQueueChild = 0x3c, calls CallPauseConstStoreJmp at tail.
  */
-__declspec(naked) void InstallSelfStatePush_00435b00(void) {
+__declspec(naked) void InstallSelfStatePush_CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp_00435b00(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         xor     edx, edx
@@ -209,10 +209,10 @@ __declspec(naked) void InstallSelfStatePush_00435b00(void) {
         jmp     Wrapper_CmpDualPatchScaledRangeJmp_004e4990
         mov     dword ptr [g_currentNodeFlags], 0x34ccc
         mov     dword ptr [g_eventQueueChild], 0x3c
-        mov     dword ptr [eax + 8], offset InstallSelfStatePush_00435b00
+        mov     dword ptr [eax + 8], offset InstallSelfStatePush_CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp_00435b00
         mov     ecx, dword ptr [g_baseSel]
         push    edi
-        mov     edi, offset InstallSelfStatePush_00435b00
+        mov     edi, offset InstallSelfStatePush_CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp_00435b00
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x01000000
@@ -237,7 +237,7 @@ __declspec(naked) void InstallSelfStatePush_00435b00(void) {
  *   into mstack-like arr at scaledInit; clear chain[sel].slot84 in g_x array;
  *   call F2; g_framePauseFlag = 1; ret.
  */
-__declspec(naked) void InstallSelfStatePush_004348f0(void) {
+__declspec(naked) void InstallSelfStatePush_InstallSelf3StateDualBody_004348f0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [g_dispatchSave1580], 1
@@ -250,10 +250,10 @@ __declspec(naked) void InstallSelfStatePush_004348f0(void) {
         _emit   0fh
         mov     dword ptr [g_eventQueueNotMask], 0x10042
         jmp     HitReactionDispatcher
-        mov     dword ptr [eax + 8], offset InstallSelfStatePush_004348f0
+        mov     dword ptr [eax + 8], offset InstallSelfStatePush_InstallSelf3StateDualBody_004348f0
         mov     ecx, dword ptr [g_baseSel]
         push    edi
-        mov     edi, offset InstallSelfStatePush_004348f0
+        mov     edi, offset InstallSelfStatePush_InstallSelf3StateDualBody_004348f0
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x01000000

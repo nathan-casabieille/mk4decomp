@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -109,14 +109,14 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00439fd0 (175b game) - install-self with countdown + 3-stage cascade.
- *   Block A install-self path. Then call PendingMatch_0045e640 + bit-1 test, set g_dispatchState,
+ *   Block A install-self path. Then call PendingMatch_SwapOrPassSet + bit-1 test, set g_dispatchState,
  *     call PushPop84TripleCall, pause-check, set g_eventQueueChild=0x78, call ScaledChain3c74,
  *     pause-check, if g_walkCallback==0x1009 call TriStageChainGate, pop+ret.
  *     Else install-self at +0x08=0x00439fd0, set chain[+0x84]=ebx=1, set 0054204c=1, pause=1; pop+ret.
  */
 extern unsigned int g_dispatchState;
 extern void InstallSelfChainSetB333(void);
-extern void PendingMatch_0045e640(void);
+extern void PendingMatch_SwapOrPassSet(void);
 extern void PushPop84TripleCall(void);
 extern void ScaledChain3c74(void);
 extern void TriStageChainGate(void);
@@ -142,7 +142,7 @@ __declspec(naked) void InstallSelfCountdownCascade(void) {
         pop     esi
         pop     ebx
         ret
-        call    PendingMatch_0045e640
+        call    PendingMatch_SwapOrPassSet
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

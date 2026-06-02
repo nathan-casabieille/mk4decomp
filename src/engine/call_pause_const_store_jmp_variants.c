@@ -16,10 +16,10 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     +3
  *   ret
  */
-extern void MultiThunkDispatcher_00460470(void);
+extern void MultiThunkDispatcher_ArgScaledTestStore(void);
 extern void InstallSelfPair(void);
 void CallPauseConstStoreJmp_MultiThunkDispatcher_then_InstallSelfPair(void) {
-    MultiThunkDispatcher_00460470();
+    MultiThunkDispatcher_ArgScaledTestStore();
     if (g_framePauseFlag) return;
     g_eventQueueChild = 0x1e;
     InstallSelfPair();

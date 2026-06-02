@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern void CallPauseMStackPushSet2Jmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void TwoEntryStateScalar(void);
-extern void InstallSelfStatePush_00435b00(void);
+extern void InstallSelfStatePush_CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp_00435b00(void);
 extern void EntryThenDispatcherPair(void);
 
 /* @addr 0x004359f0 (257b game) - install-self + sibling threshold dispatcher.
@@ -125,7 +125,7 @@ extern void EntryThenDispatcherPair(void);
  *     call StateGateMStackOverlap; pause=1; ret.
  *   B2 (208..256): call Cmp2CallDirtyCall; if eax != 0 ret.
  *     Compare g_table_00535ddc to 0x34f5c then 0x2cccc; pick one of three jumps:
- *     TwoEntryStateScalar / InstallSelfStatePush_00435b00 / EntryThenDispatcherPair.
+ *     TwoEntryStateScalar / InstallSelfStatePush_CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp_00435b00 / EntryThenDispatcherPair.
  */
 extern void PushCallPauseSet1Jmp(void);
 extern void StateGateMStackOverlap(void);
@@ -202,7 +202,7 @@ __declspec(naked) void InstallSelfPlusThresholdJmpChain(void) {
         cmp     eax, 0x0002cccc
         _emit   7eh
         _emit   05h
-        jmp     InstallSelfStatePush_00435b00
+        jmp     InstallSelfStatePush_CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp_00435b00
         jmp     EntryThenDispatcherPair
         ret
     }

@@ -9,13 +9,13 @@
  *   calls helpers to lock and reset, then either points eax at the
  *   per-handle entry in g_arr_00fa0de0 (if fd valid) or at the global
  *   stdfile slot 0x005222e0. Clears bit 1 of the flag byte, calls
- *   IOWrapper(fd,0,0), then RangePathIATDispatch_004c7060 on the FILE.
+ *   IOWrapper(fd,0,0), then RangePathIATDispatch_TableLookupIatCall on the FILE.
  */
 extern unsigned int g_arr_00fa0de0;
 extern void FFlushImpl(void);
-extern void IOWrapper_004c8dd0(void);
-extern void RangePathIATDispatch_004c6ff0(void);
-extern void RangePathIATDispatch_004c7060(void);
+extern void IOWrapper_CritSecLazyEnter_004c8dd0(void);
+extern void RangePathIATDispatch_Lock(void);
+extern void RangePathIATDispatch_TableLookupIatCall(void);
 
 __declspec(naked) void Helper_FOpenPostInit(void) {
     __asm {
@@ -24,7 +24,7 @@ __declspec(naked) void Helper_FOpenPostInit(void) {
         push    edi
         push    esi
         mov     edi, dword ptr [esi + 0x10]
-        call    RangePathIATDispatch_004c6ff0
+        call    RangePathIATDispatch_Lock
         add     esp, 4
         push    esi
         call    FFlushImpl
@@ -57,10 +57,10 @@ callIO:
         push    0
         push    0
         push    edi
-        call    IOWrapper_004c8dd0
+        call    IOWrapper_CritSecLazyEnter_004c8dd0
         add     esp, 0xc
         push    esi
-        call    RangePathIATDispatch_004c7060
+        call    RangePathIATDispatch_TableLookupIatCall
         add     esp, 4
         pop     edi
         pop     esi

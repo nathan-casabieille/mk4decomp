@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void RoundStartCluster_0047b900(void);
+extern void RoundStartCluster_CjInstallSelfRouter(void);
 extern void ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor(void);
 extern void StateMachineSharedTail(void);
 extern void AerialPunchCluster(void);
@@ -139,7 +139,7 @@ extern void Ten404c40_404bd0(void);
 extern void UpperBodyComboFsmCluster(void);
 extern void ZeroTripleJmp(void);
 
-__declspec(naked) void RoundStartCluster_0047b900(void)
+__declspec(naked) void RoundStartCluster_CjInstallSelfRouter(void)
 {
     __asm {
         /* H1: 3-state FSM */
@@ -169,9 +169,9 @@ __declspec(naked) void RoundStartCluster_0047b900(void)
         mov      dword ptr [g_eventQueueNotMask], edi
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      dword ptr [g_currentNodeFlags], 0xccc
-        mov      dword ptr [esi + 8], OFFSET RoundStartCluster_0047b900
+        mov      dword ptr [esi + 8], OFFSET RoundStartCluster_CjInstallSelfRouter
         mov      edx, dword ptr [g_baseSel]
-        mov      ecx, OFFSET RoundStartCluster_0047b900
+        mov      ecx, OFFSET RoundStartCluster_CjInstallSelfRouter
         mov      dword ptr [edx*4 + 0x84], 2
         mov      eax, dword ptr [esi + 4]
         add      ecx, 0x2000000
@@ -196,9 +196,9 @@ __declspec(naked) void RoundStartCluster_0047b900(void)
         mov      eax, 0x100e
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x74], eax
-        mov      dword ptr [esi + 8], OFFSET RoundStartCluster_0047b900
+        mov      dword ptr [esi + 8], OFFSET RoundStartCluster_CjInstallSelfRouter
         mov      edx, dword ptr [g_baseSel]
-        mov      ecx, OFFSET RoundStartCluster_0047b900
+        mov      ecx, OFFSET RoundStartCluster_CjInstallSelfRouter
         add      ecx, 0x1000000
         mov      dword ptr [edx*4 + 0x84], 1
         mov      eax, dword ptr [esi + 4]
@@ -269,7 +269,7 @@ __declspec(naked) void RoundStartCluster_0047b900(void)
     }
 }
 
-__declspec(naked) void RoundStartCluster_004919c0(void)
+__declspec(naked) void RoundStartCluster_RemapWalkAndJmp(void)
 {
     __asm {
         mov      eax, dword ptr [g_baseSel]
@@ -321,7 +321,7 @@ __declspec(naked) void RoundStartCluster_004919c0(void)
         mov      eax, 0xfff9d169
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x6c], eax
-        mov      dword ptr [esi + 8], OFFSET RoundStartCluster_004919c0
+        mov      dword ptr [esi + 8], OFFSET RoundStartCluster_RemapWalkAndJmp
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_pendingNodeType], 0x25
         mov      dword ptr [g_framePauseFlag], 1
@@ -335,7 +335,7 @@ __declspec(naked) void RoundStartCluster_004919c0(void)
         mov      eax, dword ptr [g_eventQueueIdx]
         mov      dword ptr [g_walkCallback], edi
         mov      dword ptr [eax*4 + 0x6c], edi
-        mov      dword ptr [esi + 8], OFFSET RoundStartCluster_004919c0
+        mov      dword ptr [esi + 8], OFFSET RoundStartCluster_RemapWalkAndJmp
         mov      dword ptr [esi + 0x84], 3
         mov      dword ptr [g_pendingNodeType], 0x8c
         mov      dword ptr [g_framePauseFlag], 1
@@ -350,9 +350,9 @@ __declspec(naked) void RoundStartCluster_004919c0(void)
         call     UpperBodyComboFsmCluster
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_1c08
-        mov      dword ptr [esi + 8], OFFSET RoundStartCluster_004919c0
+        mov      dword ptr [esi + 8], OFFSET RoundStartCluster_RemapWalkAndJmp
         mov      ecx, dword ptr [g_baseSel]
-        mov      edx, OFFSET RoundStartCluster_004919c0
+        mov      edx, OFFSET RoundStartCluster_RemapWalkAndJmp
         mov      dword ptr [ecx*4 + 0x84], 4
         mov      eax, dword ptr [esi + 4]
         add      edx, 0x4000000
@@ -381,7 +381,7 @@ __declspec(naked) void RoundStartCluster_004919c0(void)
         push     OFFSET L_1c20
         call     StoreTwoCall
         mov      ebx, 1
-        mov      dword ptr [esi + 8], OFFSET RoundStartCluster_004919c0
+        mov      dword ptr [esi + 8], OFFSET RoundStartCluster_RemapWalkAndJmp
         mov      dword ptr [esi + 0x84], ebx
         add      esp, 8
         mov      dword ptr [g_pendingNodeType], ebx

@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -125,7 +125,7 @@ extern void GuardedDoubleIncCmpJmp(void);
 extern void CallPauseScaledDecJmp(void);
 extern void ScaledInitOrSelfPtr_StackPopDispatchTagged(void);
 
-__declspec(naked) void EsiInstallBitCallChain_00429530(void) {
+__declspec(naked) void EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_00429530(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -164,7 +164,7 @@ __declspec(naked) void EsiInstallBitCallChain_00429530(void) {
 }
 
 /* @addr 0x004295a0 (109b) - twin of 0x00429530 with self-addr 0x4295a0. */
-__declspec(naked) void EsiInstallBitCallChain_004295a0(void) {
+__declspec(naked) void EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_004295a0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -203,7 +203,7 @@ __declspec(naked) void EsiInstallBitCallChain_004295a0(void) {
 }
 
 /* @addr 0x00429610 (109b) - twin of 0x00429530 with self-addr 0x429610. */
-__declspec(naked) void EsiInstallBitCallChain_00429610(void) {
+__declspec(naked) void EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_00429610(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi

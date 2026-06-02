@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -116,14 +116,14 @@ extern unsigned int g_chain_arr_4348f0;
 extern void InstallSelf3StateDualBody(void);
 
 /* @addr 0x00434990 (148b) - install-self variant of 0x4348f0:
- *   Same shape as InstallSelfStatePush_004348f0, but writes 0x10041 instead
+ *   Same shape as InstallSelfStatePush_InstallSelf3StateDualBody_004348f0, but writes 0x10041 instead
  *   of 0x10042 to g_eventQueueNotMask and installs self at 0x00434990.
  */
 extern void HitReactionDispatcher(void);
 
 extern void FiveCallGuardSetTail(void);
 
-__declspec(naked) void InstallSelfStatePush_00434990(void) {
+__declspec(naked) void InstallSelfStatePush_InstallSelf3StateDualBody_00434990(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [g_dispatchSave1580], 1
@@ -136,10 +136,10 @@ __declspec(naked) void InstallSelfStatePush_00434990(void) {
         _emit   0fh
         mov     dword ptr [g_eventQueueNotMask], 0x10041
         jmp     HitReactionDispatcher
-        mov     dword ptr [eax + 8], offset InstallSelfStatePush_00434990
+        mov     dword ptr [eax + 8], offset InstallSelfStatePush_InstallSelf3StateDualBody_00434990
         mov     ecx, dword ptr [g_baseSel]
         push    edi
-        mov     edi, offset InstallSelfStatePush_00434990
+        mov     edi, offset InstallSelfStatePush_InstallSelf3StateDualBody_00434990
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x01000000

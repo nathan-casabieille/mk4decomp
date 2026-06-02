@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -126,7 +126,7 @@ extern void MStackPush8(void);
 extern void TwinLoopSlotFinder(void);
 extern void *AllocNode(void);
 extern void CopyGlobal(void);
-extern void PendingMatch_00429ef0(void);
+extern void PendingMatch_BootStateTriple(void);
 extern void MStackPushDispatchBitGate(void);
 extern void MStackPush4LLWalkPop4(void);
 extern void InstallSelfDispatch(void);
@@ -182,7 +182,7 @@ void ScenePostInitSequencer(void) {
         mov      eax, dword ptr [eax*4 + 0x28]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_dispatchSave657], eax
-        call     PendingMatch_00429ef0
+        call     PendingMatch_BootStateTriple
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_9e22

@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -111,11 +111,11 @@ extern unsigned int g_fightAxisPosY;
 /*
  * @addr 0x004818e0 (104b game) - cj snapshot + dispatch + commit:
  *   stash cj into _58, call ScaledZeroFour; gate pause; call
- *   PendingMatch_0041d770; gate again. Compute walk index either 0x538158>>2
+ *   PendingMatch_MStackBracket3_ChainSwapAdvance; gate again. Compute walk index either 0x538158>>2
  *   or 0x53815c>>2 depending on whether _58 still matches [0x538158];
  *   store [cj*4 + reloc] = walk.
  */
-extern void PendingMatch_0041d770(void);
+extern void PendingMatch_MStackBracket3_ChainSwapAdvance(void);
 
 /*
  * NON-COAXABLE: MSVC /O2 assigns g_player2NodeIdx to eax (b8) and g_player1NodeIdx
@@ -131,7 +131,7 @@ __declspec(naked) void CjDispatchCommit(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     done
-        call    PendingMatch_0041d770
+        call    PendingMatch_MStackBracket3_ChainSwapAdvance
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     done

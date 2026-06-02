@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -111,14 +111,14 @@ extern unsigned int g_fightAxisPosY;
 extern void Phase1ChainSetupCallScale6(void);
 extern void InstallSelfHelper2(void);
 extern void GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
-extern void InstallSelfCountdown2Stage_0047e910(void);
+extern void InstallSelfCountdown2Stage_Phase1ChainSetupCallScale6(void);
 
 /* @addr 0x0047e800 (148b game) - install-self with dual-branch dirty check:
  *   chain[sel].slot84 -> eax; clear. If !=0: call Phase1ChainSetupCallScale6; pause? ret.
  *     g_walkCallback=1; call CmpEqInitCallElseJmp; pause? ret.
  *     if (g_xformDirtyFlags & 1): call InstallSelfHelper2; ret.
  *   Else (or after first branch via 0x5a): call GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp; pause? ret.
- *     if (g_xformDirtyFlags & 1): call InstallSelfCountdown2Stage_0047e910; ret.
+ *     if (g_xformDirtyFlags & 1): call InstallSelfCountdown2Stage_Phase1ChainSetupCallScale6; ret.
  *     else: install self, set slot84=1, g_pendingNodeType=1, pause flag.
  */
 extern void CmpEqInitCallElseJmp(void);
@@ -163,7 +163,7 @@ __declspec(naked) void InstallSelfDualBranch(void) {
         test    byte ptr [g_xformDirtyFlags], bl
         _emit   74h
         _emit   08h
-        call    InstallSelfCountdown2Stage_0047e910
+        call    InstallSelfCountdown2Stage_Phase1ChainSetupCallScale6
         pop     esi
         pop     ebx
         ret

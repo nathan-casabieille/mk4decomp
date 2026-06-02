@@ -22,14 +22,14 @@
  *   pop     esi
  *   ret
  */
-extern void RangePathIATDispatch_004c6ff0(int);
+extern void RangePathIATDispatch_Lock(int);
 extern int FileTellAdjusted(int);
-extern void RangePathIATDispatch_004c7060(int);
+extern void RangePathIATDispatch_TableLookupIatCall(int);
 int Helper_FTell(int arg) {
     int saved;
-    RangePathIATDispatch_004c6ff0(arg);
+    RangePathIATDispatch_Lock(arg);
     saved = FileTellAdjusted(arg);
-    RangePathIATDispatch_004c7060(arg);
+    RangePathIATDispatch_TableLookupIatCall(arg);
     return saved;
 }
 

@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -118,8 +118,8 @@ extern unsigned int g_iat_GetProcAddress;
 extern unsigned int g_iat_GetModuleHandleA;
 extern void FPUPrecisionCheck(void);
 extern void IsCType(void);
-extern void SevenArgThenTwoArg_004ccd20(void);
-extern void SevenArgThenTwoArg_004ccd60(void);
+extern void SevenArgThenTwoArg_PendingMatch_004ccd20(void);
+extern void SevenArgThenTwoArg_PendingMatch_004ccd60(void);
 extern void TolowerLocale(void);
 
 __declspec(naked) void LocaleNumericHelpers(void)
@@ -277,7 +277,7 @@ __declspec(naked) void LocaleNumericHelpers(void)
         nop
         nop
         nop
-        /* Helper 5: 2-dword writeback via SevenArgThenTwoArg_004ccd20. */
+        /* Helper 5: 2-dword writeback via SevenArgThenTwoArg_PendingMatch_004ccd20. */
         mov      eax, dword ptr [esp + 4]
         sub      esp, 8
         test     eax, eax
@@ -291,7 +291,7 @@ __declspec(naked) void LocaleNumericHelpers(void)
         _emit    0x00
         push     eax
         push     ecx
-        call     SevenArgThenTwoArg_004ccd20
+        call     SevenArgThenTwoArg_PendingMatch_004ccd20
         mov      eax, dword ptr [esp + 0x18]
         mov      edx, dword ptr [esp + 8]
         mov      ecx, dword ptr [esp + 0xc]
@@ -300,13 +300,13 @@ __declspec(naked) void LocaleNumericHelpers(void)
         mov      dword ptr [eax + 4], ecx
         add      esp, 8
         ret
-        /* Helper 6: 1-dword writeback via SevenArgThenTwoArg_004ccd60. */
+        /* Helper 6: 1-dword writeback via SevenArgThenTwoArg_PendingMatch_004ccd60. */
     L_85a2:
         mov      edx, dword ptr [esp + 0x14]
         lea      eax, [esp + 0x14]
         push     edx
         push     eax
-        call     SevenArgThenTwoArg_004ccd60
+        call     SevenArgThenTwoArg_PendingMatch_004ccd60
         mov      ecx, dword ptr [esp + 0x18]
         mov      edx, dword ptr [esp + 0x1c]
         add      esp, 8

@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern void ArgSarStoreJmp(void);
 extern void ArgScaledChain(void);
 extern void DirtyGuardLitOrJmp_00496940(void);
-extern void InstallSelfMStackPush_004968a0(void);
+extern void InstallSelfMStackPush_FiveCallGuardSetTail_004968a0(void);
 extern void ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d490(void);
 extern void ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor(void);
 extern void ScaledLookupGuardJmpIndirect(void);
@@ -225,7 +225,7 @@ __declspec(naked) void FivePackedSubChainBigEntry(void)
         dec     eax
         mov     dword ptr [g_eventQueueChild], eax
         jne     short L_fpscb_main_chain
-        call    InstallSelfMStackPush_004968a0
+        call    InstallSelfMStackPush_FiveCallGuardSetTail_004968a0
         pop     esi
         pop     ebx
         ret

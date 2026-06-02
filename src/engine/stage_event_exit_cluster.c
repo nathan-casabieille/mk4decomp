@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave551;
 extern void Set200dCallPauseJmp(void);
 extern void StageEventExitCluster(void);
-extern void InstallSelfCountdown2Stage_0047c8f0(void);
+extern void InstallSelfCountdown2Stage_PopCallBitCmpPushCall(void);
 extern void ScaledChainJmp_00429470(void);
 
 /* @addr 0x0047c990 (357b game) - install-self w/ MStack snapshot + packed_ptr.
@@ -123,7 +123,7 @@ extern void ScaledChainJmp_00429470(void);
  *   back into g_eventQueueChild, then calls NotMaskStorePair.
  *   Selects 0x542074 = 1 or 0x10 based on g_fightGroupHead ==
  *   g_player1NodeIdx, AND with g_eventQueueCurrent → g_xformScratch94: if
- *   nonzero tail-calls InstallSelfCountdown2Stage_0047c8f0; else writes
+ *   nonzero tail-calls InstallSelfCountdown2Stage_PopCallBitCmpPushCall; else writes
  *   &g_dispatchSave551>>2 into g_currentNodeIdx / [ecx*4+0x24] and installs
  *   Self at [esi+8], packs (Self + 0x01000000) at the bumped scaled
  *   slot, slot[+0x84]=0, calls ScaledChainJmp_00429470, arms 0x541e6c.
@@ -190,7 +190,7 @@ __declspec(naked) void InstallSelfMStackPackedFlow(void) {
         and     eax, dword ptr [g_eventQueueCurrent]
         mov     dword ptr [g_xformScratch94], eax
         je      short L_ism_installSelf
-        call    InstallSelfCountdown2Stage_0047c8f0
+        call    InstallSelfCountdown2Stage_PopCallBitCmpPushCall
         pop     esi
         ret
     L_ism_installSelf:

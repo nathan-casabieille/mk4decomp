@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -127,7 +127,7 @@ extern void BootStateInitWithRecurseInstall(void);
 extern void BootStateMachine4Way(void);
 extern void CopyGlobal(void);
 extern void InstallSelfCounter(void);
-extern void PendingMatch_00402540(void);
+extern void PendingMatch_Push16Call_00402540(void);
 extern void Screen_BestKombatants(void);
 extern void PendingMatch_004a2a80(void);
 extern void PhaseInstallSelf3Step(void);
@@ -135,7 +135,7 @@ extern void QuadCallPhase2(void);
 extern void SceneFrameStepWithInputs(void);
 extern void TableWalkBoundedCmp(void);
 
-__declspec(naked) void PendingMatch_00401b70(void)
+__declspec(naked) void PendingMatch_LeaPlus22StoreSelf(void)
 {
     __asm {
         push     ebx
@@ -303,7 +303,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], ebp
-        call     PendingMatch_00402540
+        call     PendingMatch_Push16Call_00402540
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi

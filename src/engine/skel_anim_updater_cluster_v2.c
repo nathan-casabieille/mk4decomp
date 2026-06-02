@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
 /* ------------------------------------------------------------------ */
 extern unsigned int g_particleEmitterNode;
 extern void CmpDivJmp(void);
-extern void LinkedListFieldAdd_0049d380(void);
+extern void LinkedListFieldAdd_StoreDoubleNegPauseSubStore(void);
 extern void MStackCall_00406340(void);
 extern void MStackCall_00406740(void);
 extern void MStackPop8(void);
@@ -219,7 +219,7 @@ __declspec(naked) void SkelAnimUpdaterClusterV2(void)
         mov      edx, dword ptr [g_eventQueueTotal]
         add      edx, 3
         mov      dword ptr [g_xformEntityIdx], edx
-        call     LinkedListFieldAdd_0049d380
+        call     LinkedListFieldAdd_StoreDoubleNegPauseSubStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_ddcb

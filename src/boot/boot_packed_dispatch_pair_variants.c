@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -120,7 +120,7 @@ extern void PushSetXfmMaskCallPop(void);
 extern void ScaledTripleCopy54(void);
 extern void ZeroAndDirty4(void);
 
-__declspec(naked) void BootPackedDispatchPair_00413380(void)
+__declspec(naked) void BootPackedDispatchPair_PushSetXfmMaskCallPop_00413380(void)
 {
     __asm
     {
@@ -225,7 +225,7 @@ __declspec(naked) void BootPackedDispatchPair_00413380(void)
         jne     short L_bpdp_main_ret
         test    byte ptr [g_xformDirtyFlags], 4
         je      short L_bpdp_main_install
-        call    BootPackedDispatchPair_00413380
+        call    BootPackedDispatchPair_PushSetXfmMaskCallPop_00413380
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bpdp_main_ret
@@ -241,7 +241,7 @@ __declspec(naked) void BootPackedDispatchPair_00413380(void)
     }
 }
 
-__declspec(naked) void BootPackedDispatchPair_00413580(void)
+__declspec(naked) void BootPackedDispatchPair_PushSetXfmMaskCallPop_00413580(void)
 {
     __asm
     {
@@ -346,7 +346,7 @@ __declspec(naked) void BootPackedDispatchPair_00413580(void)
         jne     short L_bpdp2_main_ret
         test    byte ptr [g_xformDirtyFlags], 4
         je      short L_bpdp2_main_install
-        call    BootPackedDispatchPair_00413580
+        call    BootPackedDispatchPair_PushSetXfmMaskCallPop_00413580
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bpdp2_main_ret

@@ -43,7 +43,7 @@ extern void Mul10TailPairMidChain(void);
 extern void NotShrCmp1Store(void);
 extern void Wrapper_ScaledChainPushCall_004ef8b0(void);
 extern void Wrapper_ScaledChainPushCall_004ef858(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void FpuSqrtMul(void);
 extern unsigned int g_dualB_00538038;
 extern unsigned int g_dualB_0053803c;

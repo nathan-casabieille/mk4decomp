@@ -12,8 +12,8 @@
 extern void GuardedSeq_CopyJmp_then_MStackPushDualJmp(void);   /* 0x00428350 */
 extern void CallDualStoreXorBit(void);   /* 0x004285e0 */
 extern void ScaledChainJmp_00429470(void);   /* 0x00429470 */
-extern void EsiInstallBitCallChain_00429530(void);   /* 0x00429530 */
-extern void EsiInstallBitCallChain_00429610(void);   /* 0x00429610 */
+extern void EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_00429530(void);   /* 0x00429530 */
+extern void EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_00429610(void);   /* 0x00429610 */
 extern void ScaledChainJmp_004298e0(void);   /* 0x004298e0 */
 extern void SetJmp_ScaledArrStore(void);   /* 0x00429950 */
 extern void ScaledArrStore_GuardedChainCmpDualBitXor_00429960(void);   /* 0x00429960 */
@@ -34,13 +34,13 @@ void ScaledArrStore_CallDualStoreXorBit(void) {
 /* @addr 0x00428e70 - g_X[idx*4 + 0x28] = g_Y; jmp T */
 void ScaledArrStore_EsiInstallBitCallChain_00428e70(void) {
     ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = (unsigned int)g_eventQueueCurrent;
-    EsiInstallBitCallChain_00429530();
+    EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_00429530();
 }
 
 /* @addr 0x004293b0 - g_X[idx*4 + 0x28] = g_Y; jmp T */
 void ScaledArrStore_EsiInstallBitCallChain_004293b0(void) {
     ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = (unsigned int)g_walkCallback;
-    EsiInstallBitCallChain_00429610();
+    EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_00429610();
 }
 
 /* @addr 0x00429450 - g_X[idx*4 + 0x24] = g_Y; jmp T */

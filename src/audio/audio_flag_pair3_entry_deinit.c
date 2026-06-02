@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -114,14 +114,14 @@ extern unsigned int g_fightAxisPosY;
  *     (g_currentNodeIdx,g_xformEntityIdx); else (0x537e88,0x53a700)>>2; call
  *     DualScaledStoreConst, ClearTwoCallSetStore; g_dlMode=0; call
  *     SixCallSeqPushImm; g_eventQueueWorkType=0; call Push16Call; if !paused
- *     tail-jmp PendingMatch_004a3400; ret.
+ *     tail-jmp PendingMatch_Push16Call_004a3400; ret.
  *   Pad-aligned bare-ret entry (0x004a27a0).
  *   Pad-aligned tail-jmp Thunk_ExitGame (0x004a27b0).
  */
 extern u32 g_dlMode;
 extern void ClearTwoCallSetStore(void);
 extern void DualScaledStoreConst(void);
-extern void PendingMatch_004a3400(void);
+extern void PendingMatch_Push16Call_004a3400(void);
 extern void SixCallSeqPushImm(void);
 extern void Thunk_ExitGame(void);
 
@@ -155,7 +155,7 @@ __declspec(naked) void GameMode_EnterScene(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_main_ret
-        jmp     PendingMatch_004a3400
+        jmp     PendingMatch_Push16Call_004a3400
     L_main_ret:
         ret
         _emit   90h

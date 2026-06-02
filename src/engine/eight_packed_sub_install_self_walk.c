@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern void ArgSarStoreJmp(void);
 extern void BootFrameSetup(void);
 extern void FiveCallGuardSetTail(void);
-extern void MStackPushCallPopDirtyJmp_0042cc90(void);
+extern void MStackPushCallPopDirtyJmp_State208cBit0Flag(void);
 extern void ScaledChainCmpDispatch(void);
 extern void State208cBit0Flag(void);
 extern void StateDispatchTable(void);
@@ -135,7 +135,7 @@ __declspec(naked) void EightPackedSubInstallSelfWalk(void)
         nop
         nop
     L_eps_sub2:
-        call    MStackPushCallPopDirtyJmp_0042cc90
+        call    MStackPushCallPopDirtyJmp_State208cBit0Flag
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub2_ret
@@ -180,7 +180,7 @@ __declspec(naked) void EightPackedSubInstallSelfWalk(void)
         nop
         nop
     L_eps_sub4:
-        call    MStackPushCallPopDirtyJmp_0042cc90
+        call    MStackPushCallPopDirtyJmp_State208cBit0Flag
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub4_ret
@@ -245,7 +245,7 @@ __declspec(naked) void EightPackedSubInstallSelfWalk(void)
         jne     short L_eps_sub7_ret
         test    byte ptr [g_xformDirtyFlags], 1
         je      short L_eps_sub7_skipCall
-        call    PendingMatch_0042b930
+        call    PendingMatch_StoreTwoCall_0042b930
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_eps_sub7_ret

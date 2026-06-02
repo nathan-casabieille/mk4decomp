@@ -18,8 +18,8 @@ extern unsigned int g_setjmp;   /* 0x00ab5750 */
 extern void ZeroAndDirty4(void);   /* 0x00405430 */
 extern void CallPauseScaledStoreAdd(void);   /* 0x004078f0 */
 extern void BootStateTriple(void);   /* 0x00408d30 */
-extern void EsiInstallDecCallChain_004294a0(void);   /* 0x004294a0 */
-extern void EsiInstallBitCallChain_004295a0(void);   /* 0x004295a0 */
+extern void EsiInstallDecCallChain_StackPopDispatchTagged_004294a0(void);   /* 0x004294a0 */
+extern void EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_004295a0(void);   /* 0x004295a0 */
 extern void ScaledArrStore_GuardedChainCmpDualBitXor_00429960(void);   /* 0x00429960 */
 extern void Distance3DMul10Chain(void);   /* 0x0042d090 */
 extern void AudioBridgeMStackChainCopy(void);   /* 0x00440730 */
@@ -66,13 +66,13 @@ void SetJmp_BootStateTriple(void) {
 /* @addr 0x00428cf0 */
 void SetJmp_EsiInstallDecCallChain(void) {
     g_eventQueueChild = 0x00000003;
-    EsiInstallDecCallChain_004294a0();
+    EsiInstallDecCallChain_StackPopDispatchTagged_004294a0();
 }
 
 /* @addr 0x00429230 */
 void SetJmp_EsiInstallBitCallChain(void) {
     g_walkCallback = (void (*)(void))0x00000000;
-    EsiInstallBitCallChain_004295a0();
+    EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_004295a0();
 }
 
 /* @addr 0x00429950 */

@@ -20,7 +20,7 @@ extern void func_00428950_oo(void);
 extern void GameDispatchValidateState(void);
 extern void InstallSelfCallBitGate(void);
 
-__declspec(naked) void CallPauseDirty1JmpDirty4StackPush_00428850(void) {
+__declspec(naked) void CallPauseDirty1JmpDirty4StackPush_GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void) {
     __asm {
         call    GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp
         mov     eax, dword ptr [g_framePauseFlag]
@@ -58,7 +58,7 @@ extern void GuardedDoubleIncCmpJmp(void);
 extern void LiteralPushCallEntZero(void);
 extern void func_0048f330_oo(void);
 extern void func_0042b988_oo(void);
-__declspec(naked) void CallPauseDirty1JmpDirty4StackPush_00483a80(void) {
+__declspec(naked) void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void) {
     __asm {
         call    GuardedDoubleIncCmpJmp
         mov     eax, dword ptr [g_framePauseFlag]

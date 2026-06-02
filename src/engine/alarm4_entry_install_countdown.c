@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -118,10 +118,10 @@ extern unsigned int g_fightAxisPosY;
  *   5b NOP pad.
  *   Entry 3 / body (offset 0x70, 202b): phase-state install.
  *     phase != 0: dec g_eventQueueChild; if zero tail-call
- *       InstallSelfMStackPush_004968a0; else fall to mstack-push body.
+ *       InstallSelfMStackPush_FiveCallGuardSetTail_004968a0; else fall to mstack-push body.
  *     phase 0: reset g_eventQueueChild = 2. Push it, call ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d490;
  *       on no-error pop snapshot, if bit 0 of g_xformDirtyFlags set tail-call
- *       InstallSelfMStackPush_004968a0; else call ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor,
+ *       InstallSelfMStackPush_FiveCallGuardSetTail_004968a0; else call ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor,
  *       install Self at offset 0x70 (this entry) and arm 0x541e6c=1.
  *   6b NOP pad.
  *   Entry 4 (offset 0x140, 37b): sets [scaled+0x74]=0x112, pushes
@@ -133,7 +133,7 @@ extern unsigned int g_dispatchSave785;
 extern unsigned int g_dispatchSave786;
 extern unsigned int g_table_004d57b0;
 extern void ArgSarStoreJmp(void);
-extern void InstallSelfMStackPush_004968a0(void);
+extern void InstallSelfMStackPush_FiveCallGuardSetTail_004968a0(void);
 extern void PushPopWalkSet1006(void);
 extern void ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d490(void);
 extern void ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor(void);
@@ -191,7 +191,7 @@ __declspec(naked) void Alarm4EntryInstallCountdown(void) {
         dec     eax
         mov     dword ptr [g_eventQueueChild], eax
         jne     short L_aei_pushSnapshot
-        call    InstallSelfMStackPush_004968a0
+        call    InstallSelfMStackPush_FiveCallGuardSetTail_004968a0
         pop     esi
         pop     ebx
         ret
@@ -217,7 +217,7 @@ __declspec(naked) void Alarm4EntryInstallCountdown(void) {
         test    al, bl
         mov     dword ptr [g_eventQueueChild], edx
         je      short L_aei_notBit0
-        call    InstallSelfMStackPush_004968a0
+        call    InstallSelfMStackPush_FiveCallGuardSetTail_004968a0
         pop     esi
         pop     ebx
         ret

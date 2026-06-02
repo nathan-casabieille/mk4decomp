@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void InstallSelfCountdown2Stage_0047c8f0(void);
+extern void InstallSelfCountdown2Stage_PopCallBitCmpPushCall(void);
 extern void TournamentMenuFsmCluster(void);
 extern void IterStepNegStore(void);
 
@@ -116,7 +116,7 @@ extern void IterStepNegStore(void);
  *   chain[+0x84]==0 path: push 0x004ed338; call IterStepNegStore; if !pause:
  *     install-self at +0x08=0x0047cb90 with scaledInit-chain push, g_eventQueueChild=0xc;
  *     call TournamentMenuFsmCluster; pause=1; pop+ret.
- *   chain[+0x84]!=0 path: g_eventQueueChild=8; jmp InstallSelfCountdown2Stage_0047c8f0.
+ *   chain[+0x84]!=0 path: g_eventQueueChild=8; jmp InstallSelfCountdown2Stage_PopCallBitCmpPushCall.
  */
 
 __declspec(naked) void InstallSelfCountdownStr(void) {
@@ -130,7 +130,7 @@ __declspec(naked) void InstallSelfCountdownStr(void) {
         _emit   74h
         _emit   11h
         mov     dword ptr [g_eventQueueChild], 8
-        call    InstallSelfCountdown2Stage_0047c8f0
+        call    InstallSelfCountdown2Stage_PopCallBitCmpPushCall
         pop     esi
         ret
         push    0x004ed338

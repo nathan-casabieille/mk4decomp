@@ -36,7 +36,7 @@ extern int TableLookupIatCall(int);
 extern unsigned int g_iat_LeaveCriticalSection;
 extern unsigned int g_iat_EnterCriticalSection;
 
-__declspec(naked) void RangePathIATDispatch_004c6ff0(void) {
+__declspec(naked) void RangePathIATDispatch_Lock(void) {
     __asm {
         push    ebp
         mov     ebp, esp
@@ -64,7 +64,7 @@ __declspec(naked) void RangePathIATDispatch_004c6ff0(void) {
 }
 
 /* @addr 0x004c7060 */
-__declspec(naked) void RangePathIATDispatch_004c7060(void) {
+__declspec(naked) void RangePathIATDispatch_TableLookupIatCall(void) {
     __asm {
         push    ebp
         mov     ebp, esp

@@ -10,14 +10,14 @@
  */
 
 extern void Wrapper_OrListLoop_004de3f8(void);
-extern void PendingMatch_0043bdd0(void);
+extern void PendingMatch_CallPauseScaledStoreCopyJmp(void);
 extern void TestCallPush4Zero(void);
 extern void Helper_GeoLoadPost(void);
 
 /* @addr 0x00467d30 */
 void CallJmp(void) {
     Wrapper_OrListLoop_004de3f8();
-    PendingMatch_0043bdd0();
+    PendingMatch_CallPauseScaledStoreCopyJmp();
 }
 
 /* @addr 0x004bd990 */

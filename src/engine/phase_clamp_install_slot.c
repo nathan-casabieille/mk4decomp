@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern void DrainQueueCallEach(void);
 extern void PhaseClampInstallSlot(void);
-extern void PendingMatch_0045c8e0(void);
+extern void PendingMatch_ZeroNDwords(void);
 extern void Init0AndMax(void);
 extern void CopyGlobal(void);
 extern void Init6Struct(void);
@@ -120,7 +120,7 @@ extern void SlideAttackEventCluster(void);
 extern void AndStorePushCallZero(void);
 
 /* @addr 0x004265d0 (249b game) - boot-style init sequence then guarded call chain.
- *   8 setup calls (DrainQueueCallEach, PendingMatch_0045c8e0, Init0AndMax,
+ *   8 setup calls (DrainQueueCallEach, PendingMatch_ZeroNDwords, Init0AndMax,
  *     g_walkCallback=0, CopyGlobal, Init6Struct, ScenegraphWalk,
  *     CallPauseClear3CallTriple). If pause? ret.
  *   mstack-push 3 (0, g_eventQueueCurrent, g_eventQueueWorkType); clear g_dualBitGate;
@@ -132,7 +132,7 @@ extern void AndStorePushCallZero(void);
 void BootInitGuardedCallChain(void) {
     __asm {
         call    DrainQueueCallEach
-        call    PendingMatch_0045c8e0
+        call    PendingMatch_ZeroNDwords
         call    Init0AndMax
         mov     dword ptr [g_walkCallback], 0
         call    CopyGlobal

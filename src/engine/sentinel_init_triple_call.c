@@ -16,7 +16,7 @@ extern unsigned int g_dispatchSave415;
 extern void DualEntryInitCmp(void);
 extern void Thunk_ZeroLargeBlock(void);
 extern void Init6Globals(void);
-extern void PendingMatch_0045c8e0(void);
+extern void PendingMatch_ZeroNDwords(void);
 void SentinelInitTripleCall(void) {
     g_phase1ModelChain = 0xfedcba98;
     g_walkCallback = (void(*)(void))0x8a9dcbef;
@@ -27,5 +27,5 @@ void SentinelInitTripleCall(void) {
     if (g_framePauseFlag) return;
     Init6Globals();
     if (g_framePauseFlag) return;
-    PendingMatch_0045c8e0();
+    PendingMatch_ZeroNDwords();
 }

@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *     Loop1 (esi: byte-table at 0x004f3b48 to 0x004f3c20 step 0x24): chain[(g_baseSel+byte)*4],
  *       call MStackPush2ChainLLInsert. Loop2 (esi 0..5): chain[(g_baseSel+esi)*4 + 0x34], call.
  *     Loop3 (esi 0..5): chain[(g_baseSel+esi)*4 + 0x48], call. DrainQueueCallEach.
- *     if [0x005433f4] == 2: tail-call PendingMatch_004a8ca0 else AudioInstallSelfStateMachine2.
+ *     if [0x005433f4] == 2: tail-call PendingMatch_AudioInitArgs3 else AudioInstallSelfStateMachine2.
  */
 extern unsigned int g_audioInstallArr;
 extern unsigned int g_audioMicroEntry;
@@ -125,7 +125,7 @@ extern void AudioInstallSelfStateMachine2(void);
 extern void DrainQueueCallEach(void);
 extern void MStackPush2ChainLLInsert(void);
 extern void MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430(void);
-extern void PendingMatch_004a8ca0(void);
+extern void PendingMatch_AudioInitArgs3(void);
 extern void SnapshotDirtyMark(void);
 
 __declspec(naked) void AudioInitLoopTriple(void)
@@ -195,7 +195,7 @@ __declspec(naked) void AudioInitLoopTriple(void)
         call    DrainQueueCallEach
         cmp     dword ptr [g_audioMicroEntry], 2
         jne     short L_tail85c0
-        call    PendingMatch_004a8ca0
+        call    PendingMatch_AudioInitArgs3
         pop     esi
         ret
     L_tail85c0:

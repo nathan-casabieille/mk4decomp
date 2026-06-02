@@ -29,7 +29,7 @@
 extern u32 g_pendingNodeType;     /* 0x0054204c */
 extern packed_ptr g_xformEntityIdx;      /* 0x00542048 */
 
-extern void PendingMatch_00447a90(void);
+extern void PendingMatch_ChainDirtyBitWalker(void);
 extern void DualPushSet7dCallPop(void);
 extern void DoubleStackPushAndJmp7d(void);
 
@@ -45,7 +45,7 @@ extern void DoubleStackPushAndJmp7d(void);
         *(unsigned int *)(g_matrixStackTop * 4) = g_eventQueueEnd;             \
         g_matrixStackTop++;                                                    \
         *(unsigned int *)(g_matrixStackTop * 4) = g_fightGroupHead;            \
-        PendingMatch_00447a90();                                               \
+        PendingMatch_ChainDirtyBitWalker();                                               \
         if (g_framePauseFlag != 0) return;                                     \
         WORKER_FN();                                                           \
         if (g_framePauseFlag != 0) return;                                     \

@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -110,14 +110,14 @@ extern unsigned int g_fightAxisPosY;
 
 extern void StoreIncrMStackPush6(void);
 extern void DispatcherComplex181_Push70CallScaleArith(void);
-extern void RoundCleanupCluster_00427690(void);
+extern void RoundCleanupCluster_Ten404c40_404bd0(void);
 
 /* @addr 0x00477920 (165b game) - poll-then-init pattern:
  *   poll: SaveCallRestore(0x22); SaveCallRestoreOrXor(0x22); while (state & 4): retry.
  *   walkCallback = max(g_gameCountdown, 0); call StoreIncrMStackPush6; pause? ret.
  *   set fixed state (walkCallback=2, g_eventQueueWorkType=0x22, g_eventQueueCurrent=2,
  *   g_acc_00542078=0, g_eventQueueNotMask=0xff960000, g_currentNodeFlags=2);
- *   call DispatcherComplex181; pause? ret; call RoundCleanupCluster_00427690.
+ *   call DispatcherComplex181; pause? ret; call RoundCleanupCluster_Ten404c40_404bd0.
  */
 extern unsigned int g_gameCountdown;
 extern void SaveCallRestoreOrXor(void);
@@ -172,7 +172,7 @@ loopPoll:
         test    eax, eax
         _emit   75h
         _emit   05h
-        call    RoundCleanupCluster_00427690
+        call    RoundCleanupCluster_Ten404c40_404bd0
         pop     ebx
         ret
     }

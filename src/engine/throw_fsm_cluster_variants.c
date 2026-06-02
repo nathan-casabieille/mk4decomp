@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -111,14 +111,14 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave520;
 extern unsigned int g_dispatchTableArr;
 extern unsigned int g_dispatchSave31;
-extern void ThrowFsmCluster_004700e0(void);
+extern void ThrowFsmCluster_InstallSelfIndirectJmpNeg(void);
 extern void GuardedSeq_CopyJmp_then_GuardedLoopWithCallback(void);
 extern void GuardedPackedSlotInit(void);
 
 /* @addr 0x0046ff80 (350b game) - 3-phase install-self via packed_ptr tag.
  *   Reads phase from [g_baseSel*4 + 0x84], zeroes it, then dispatches:
  *     - phase 2 (eax-2=0): writes g_xformScratch2088 into [g_fightGroupHead*4+0x78]
- *       and tail-calls ThrowFsmCluster_004700e0.
+ *       and tail-calls ThrowFsmCluster_InstallSelfIndirectJmpNeg.
  *     - phase 1 (eax-1=0): loads &g_dispatchSave520>>2 (the reloc-survives-shr
  *       packed_ptr base), calls GuardedDirtyXformFromTable; on success
  *       sets g_eventQueueChild=4, installs Self at [esi+8], sets slot[+0x84]=2,
@@ -142,7 +142,7 @@ extern void Mul10Tail(void);
 extern void SetupVecFsmCluster(void);
 extern void StoreDoubleNegPauseSubStore(void);
 extern void StoreLoadJmp(void);
-extern void ThrowFsmCluster_0044eaf0(void);
+extern void ThrowFsmCluster_MStackPush2RunCountdown(void);
 extern void Thunk_ScaledNeg1SetPause(void);
 
 __declspec(naked) void Phase3PackedInstallSelf(void) {
@@ -159,7 +159,7 @@ __declspec(naked) void Phase3PackedInstallSelf(void) {
         mov     ecx, dword ptr [g_fightGroupHead]
         mov     edx, dword ptr [g_xformScratch2088]
         mov     dword ptr [ecx*4 + 0x78], edx
-        call    ThrowFsmCluster_004700e0
+        call    ThrowFsmCluster_InstallSelfIndirectJmpNeg
         pop     esi
         ret
     L_pis_phase1:
@@ -424,7 +424,7 @@ __declspec(naked) void ThrowChargeCluster(void)
         je       L_ea94
         dec      eax
         je       L_ea5f
-        call     ThrowFsmCluster_0044eaf0
+        call     ThrowFsmCluster_MStackPush2RunCountdown
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_eae8
@@ -432,7 +432,7 @@ __declspec(naked) void ThrowChargeCluster(void)
         pop      esi
         ret      
     L_ea5f:
-        call     ThrowFsmCluster_0044eaf0
+        call     ThrowFsmCluster_MStackPush2RunCountdown
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_eae8
@@ -449,7 +449,7 @@ __declspec(naked) void ThrowChargeCluster(void)
         mov      eax, dword ptr [g_baseSel]
         mov      ecx, dword ptr [g_eventQueueIdx]
         mov      dword ptr [eax*4 + 0x68], ecx
-        call     ThrowFsmCluster_0044eaf0
+        call     ThrowFsmCluster_MStackPush2RunCountdown
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_eae8

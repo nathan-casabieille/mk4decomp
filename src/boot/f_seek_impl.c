@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -115,14 +115,14 @@ extern unsigned int g_fightAxisPosY;
  *   call FFlushImpl; reload flags.
  *   if (flag&0x80): flags &= ~3; jmp do-io.
  *   else: skip if flag & (1|8) or (ah & 4); set [esi+0x18] = 0x200.
- *   do-io: call IOWrapper_004c8dd0(offset, whence, [esi+0x10], 0); add esp,c.
+ *   do-io: call IOWrapper_CritSecLazyEnter_004c8dd0(offset, whence, [esi+0x10], 0); add esp,c.
  *   Return ((eax+1 != 0) ? 0 : -1) - 1 (encoded via neg/sbb/neg/dec).
  *   Fail: call CallAdd8; *eax = EINVAL (0x16); return -1.
  */
 extern void Crt_errno(void);
 extern void FFlushImpl(void);
 extern void FileTellAdjusted(void);
-extern void IOWrapper_004c8dd0(void);
+extern void IOWrapper_CritSecLazyEnter_004c8dd0(void);
 
 __declspec(naked) void FSeekImpl(void) {
     __asm {
@@ -181,7 +181,7 @@ __declspec(naked) void FSeekImpl(void) {
         push    edi
         push    eax
         push    ecx
-        call    IOWrapper_004c8dd0
+        call    IOWrapper_CritSecLazyEnter_004c8dd0
         add     esp, 0x0c
         inc     eax
         neg     eax

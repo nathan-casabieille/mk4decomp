@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -111,10 +111,10 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x0047c880 (111b game) - triple-entry dispatcher.
  *   Block A: set g_walkCallback=0x37; call TableLookupCall; if !pause set =0x07; ret.
  *   Block B (+0x30): set baseSel[*4+0x74]=0x408; push 0x004ed320; call ArgSarStoreJmp; ret.
- *   Block C (+0x60): set g_eventQueueChild=0x8; jmp InstallSelfCountdown2Stage_0047c8f0.
+ *   Block C (+0x60): set g_eventQueueChild=0x8; jmp InstallSelfCountdown2Stage_PopCallBitCmpPushCall.
  */
 extern void ArgSarStoreJmp(void);
-extern void InstallSelfCountdown2Stage_0047c8f0(void);
+extern void InstallSelfCountdown2Stage_PopCallBitCmpPushCall(void);
 extern void TableLookupCall_g_table_004efa00(void);
 
 __declspec(naked) void TripleEntryTblPushJmp(void) {
@@ -160,6 +160,6 @@ __declspec(naked) void TripleEntryTblPushJmp(void) {
         _emit   90h
         _emit   90h
         mov     dword ptr [g_eventQueueChild], 0x08
-        jmp     InstallSelfCountdown2Stage_0047c8f0
+        jmp     InstallSelfCountdown2Stage_PopCallBitCmpPushCall
     }
 }

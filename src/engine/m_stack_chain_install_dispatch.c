@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -112,7 +112,7 @@ extern unsigned int g_audioBank2State;
 extern void DirtyFlagsManip(void);
 extern void DualEntryBitFlagDispatch(void);
 extern void MStackChainBit2Cascade(void);
-extern void PendingMatch_0048d7b0(void);
+extern void PendingMatch_DirtyFlagsManip(void);
 extern void PushCjWalkDispatchPop(void);
 extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0(void);
 extern void SfxAttenuateAndApply(void);
@@ -122,7 +122,7 @@ __declspec(naked) void MStackChainInstallDispatch(void)
     __asm {
         push     ebx
         push     esi
-        call     PendingMatch_0048d7b0
+        call     PendingMatch_DirtyFlagsManip
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d7ad

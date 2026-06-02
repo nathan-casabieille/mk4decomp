@@ -33,7 +33,7 @@ extern void ChainPickArgScaledInit(int);
 /* @addr 0x0045dcd0 */
 extern void ChainPickArgScaledInit(void);
 
-__declspec(naked) void DualPlayerSetupCall_0045dcd0(void) {
+__declspec(naked) void DualPlayerSetupCall_ChainPickArgScaledInit_0045dcd0(void) {
     __asm {
         mov     edx, dword ptr [g_player2NodeIdx]
         mov     eax, 0x0052ab18
@@ -58,7 +58,7 @@ __declspec(naked) void DualPlayerSetupCall_0045dcd0(void) {
 }
 
 /* @addr 0x0045dd30 */
-__declspec(naked) void DualPlayerSetupCall_0045dd30(void) {
+__declspec(naked) void DualPlayerSetupCall_ChainPickArgScaledInit_0045dd30(void) {
     __asm {
         mov     edx, dword ptr [g_player1NodeIdx]
         mov     eax, 0x00541e00

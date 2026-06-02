@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -120,10 +120,10 @@ extern unsigned int g_fightAxisPosY;
 /* ------------------------------------------------------------------ */
 extern void MStackBracket5_FieldClear_StateAdvance(void);
 extern void DoubleCallChainInit(void);
-extern void PendingMatch_0043d830(void);
+extern void PendingMatch_MStackPush2LLWalkCompare(void);
 extern void IntroFsmCluster(void);
 extern void GuardedDualScaledChainCopy(void);
-extern void PendingMatch_0044dd80(void);
+extern void PendingMatch_Mul10Tail_0044dd80(void);
 extern void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475060(void);
 extern void InstallSelfChainAccumPath(void);
 extern void GameInstall2BodyMul10ScaledInit(void);
@@ -246,7 +246,7 @@ __declspec(naked) void IntroInitCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d4f9
-        call     PendingMatch_0043d830
+        call     PendingMatch_MStackPush2LLWalkCompare
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d4f9
@@ -327,7 +327,7 @@ __declspec(naked) void IntroInitCluster(void)
         nop
         /* === h4 (0x44d540): event 004e65a0 forwarder === */
         mov      dword ptr [g_walkCallback], 0xfffffbc7
-        call     PendingMatch_0044dd80
+        call     PendingMatch_Mul10Tail_0044dd80
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d565

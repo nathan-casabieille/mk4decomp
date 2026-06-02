@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -125,7 +125,7 @@ extern unsigned int g_fightAxisPosY;
  *   Tail: copies chosen base into 0x542044, calls Mul10SumStoreNegCommit, pushes
  *   0x542a58 and calls GuardedPackedSlotInit, then
  *   MStackPush3CmpCall. If bit 0 of 0x54208c set, calls
- *   PendingMatch_004694b0. Then tail-jmp ScaledChainJmp_00429470 or
+ *   PendingMatch_QuadCallPhase2. Then tail-jmp ScaledChainJmp_00429470 or
  *   ScaledClearJmp_EsiInstallBitCallChain depending on g_eventQueueChild.
  */
 extern unsigned int g_dispatchTab;
@@ -135,7 +135,7 @@ extern unsigned int g_mul10SumState;
 extern unsigned int g_mul10SumState2;
 extern void GuardedPackedSlotInit(void);
 extern void Mul10SumStoreNegCommit(void);
-extern void PendingMatch_004694b0(void);
+extern void PendingMatch_QuadCallPhase2(void);
 extern void ScaledChainJmp_00429470(void);
 extern void ScaledClearJmp_EsiInstallBitCallChain(void);
 extern void ScaledIndexConditionalAdd(void);
@@ -226,7 +226,7 @@ __declspec(naked) void StreamFlagPackedSelectChain(void) {
         jne     short L_sfp_done
         test    byte ptr [g_xformDirtyFlags], 1
         je      short L_sfp_skipCallb0
-        call    PendingMatch_004694b0
+        call    PendingMatch_QuadCallPhase2
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_sfp_done

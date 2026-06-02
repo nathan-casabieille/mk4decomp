@@ -15,7 +15,7 @@
 #include "game/tick.h"   /* g_framePauseFlag */
 
 /* Externs for guarded-sequel targets. */
-extern void PendingMatch_00401b70(void);   /* 0x00401b70 */
+extern void PendingMatch_LeaPlus22StoreSelf(void);   /* 0x00401b70 */
 extern void MStackPushTwoEntryChainCall(void);   /* 0x004058c0 */
 extern void MStackCall_00406740(void);   /* 0x00406740 */
 extern void CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(void);   /* 0x00406ba0 */
@@ -36,7 +36,7 @@ extern void ScaledIndirectJmp_00433bf0(void);   /* 0x00433bf0 */
 extern void PackedSelectLoad6(void);   /* 0x00433c60 */
 extern void CmpP1DualInitStore_00433d30(void);   /* 0x00433d30 */
 extern void ScaledLoadTwoCallDualConst_MStackPush2RunCountdown_then_MStackBracket7_DispatchAndChain_0044ba30(void);   /* 0x0044ba30 */
-extern void PendingMatch_0044baa0(void);   /* 0x0044baa0 */
+extern void PendingMatch_MStackPush2RunCountdown_0044baa0(void);   /* 0x0044baa0 */
 extern void PoseCopyIdleCluster(void);   /* 0x004537a0 */
 extern void BitmapBlitRunLength(void);   /* 0x004592f0 */
 extern void ScaledLoadTwoCallDualConst_MStackPush2RunCountdown_then_MStackBracket7_DispatchAndChain_00467c30(void);   /* 0x00467c30 */
@@ -82,7 +82,7 @@ void GuardedSeq_BootStateInitLongChain_then_StackPopDispatchTagged(void) {
 void GuardedSeq_ZeroTriple_then_PendingMatch(void) {
     ZeroTriple();
     if (g_framePauseFlag) return;
-    PendingMatch_00401b70();
+    PendingMatch_LeaPlus22StoreSelf();
 }
 
 /* @addr 0x00428350 */
@@ -157,7 +157,7 @@ void GuardedSeq_ScaledLoadTwoCallDualConst_then_GuardedSeq_0044ba10(void) {
 
 /* @addr 0x0044ba80 */
 void GuardedSeq_PendingMatch_then_GuardedSeq(void) {
-    PendingMatch_0044baa0();
+    PendingMatch_MStackPush2RunCountdown_0044baa0();
     if (g_framePauseFlag) return;
     GuardedSeq_DualSetShiftCall_then_DualPushSet7dCallPop();
 }

@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
 /*                 0040eb80 → 00427b60 → 0048e2f0 → 49cb40 timer install). */
 /*  h2 (0x481340): wait + tail-jmp CallSetPause.                     */
 /* ------------------------------------------------------------------ */
-extern void PendingMatch_0040eb80(void);
+extern void PendingMatch_PushSarCallBitToggle(void);
 extern void PoseChainInstallCluster(void);
 extern void ScaledChainNegStore(void);
 extern void CallPauseConstStoreJmp_BootChainMaskAndDispatch_then_MStackBitLoopTripleCall(void);
@@ -246,7 +246,7 @@ __declspec(naked) void MainTickChain(void)
     L_124a:
         cmp      eax, 0xa
         jne      short L_1260
-        call     PendingMatch_0040eb80
+        call     PendingMatch_PushSarCallBitToggle
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
     L_1260:

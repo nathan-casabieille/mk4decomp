@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  * ============================================================ */
 
 extern void Crt_errno(void);
-extern void IOWrapper_004c8dd0(void);
+extern void IOWrapper_CritSecLazyEnter_004c8dd0(void);
 extern unsigned int g_arr_00fa0de0;
 
 __declspec(naked) void FileTellAdjusted(void)
@@ -134,7 +134,7 @@ __declspec(naked) void FileTellAdjusted(void)
         push     1
         push     0
         push     ebx
-        call     IOWrapper_004c8dd0
+        call     IOWrapper_CritSecLazyEnter_004c8dd0
         mov      ecx, eax
         add      esp, 0xc
         test     ecx, ecx
@@ -231,7 +231,7 @@ __declspec(naked) void FileTellAdjusted(void)
         push     2
         push     0
         push     ebx
-        call     IOWrapper_004c8dd0
+        call     IOWrapper_CritSecLazyEnter_004c8dd0
         mov      ecx, dword ptr [esp + 0x20]
         add      esp, 0xc
         cmp      eax, ecx
@@ -258,7 +258,7 @@ __declspec(naked) void FileTellAdjusted(void)
         push     0
         push     ecx
         push     ebx
-        call     IOWrapper_004c8dd0
+        call     IOWrapper_CritSecLazyEnter_004c8dd0
         add      esp, 0xc
         cmp      esi, 0x200
         ja       short L_5a3d

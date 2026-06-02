@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -113,9 +113,9 @@ extern unsigned int g_dispatchSave599;
 extern unsigned int g_audioBank2State;
 extern void ArgSarStoreJmp(void);
 extern void CmpEqInitCallElseJmp(void);
-extern void EsiInstallDecCallChain_004294a0(void);
+extern void EsiInstallDecCallChain_StackPopDispatchTagged_004294a0(void);
 extern void FiveCallGuardSetTail(void);
-extern void RoundStartCluster_0047b900(void);
+extern void RoundStartCluster_CjInstallSelfRouter(void);
 extern void ScaledIndexConditionalAdd(void);
 extern void ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain(void);
 extern void ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor(void);
@@ -191,7 +191,7 @@ __declspec(naked) void RoundEndCelebrationCluster(void)
         mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_audioBank2State], ecx
         jne      short L_b7cd
-        call     RoundStartCluster_0047b900
+        call     RoundStartCluster_CjInstallSelfRouter
         pop      edi
         pop      esi
         ret
@@ -235,7 +235,7 @@ __declspec(naked) void RoundEndCelebrationCluster(void)
         mov      edi, 1
         cmp      eax, edi
         jne      short L_b892
-        call     RoundStartCluster_0047b900
+        call     RoundStartCluster_CjInstallSelfRouter
         pop      edi
         pop      esi
         ret
@@ -255,7 +255,7 @@ __declspec(naked) void RoundEndCelebrationCluster(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], 0
-        call     EsiInstallDecCallChain_004294a0
+        call     EsiInstallDecCallChain_StackPopDispatchTagged_004294a0
         mov      dword ptr [g_framePauseFlag], edi
     L_b8f3:
         pop      edi

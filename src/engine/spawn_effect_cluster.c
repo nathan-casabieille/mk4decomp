@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -117,7 +117,7 @@ extern void CopyThreeFields(void);
 extern void DispatcherComplex138_004760f0(void);
 extern void FourSegmentPoseWalk(void);
 extern void MStackCall_00406600(void);
-extern void PendingMatch_004411d0(void);
+extern void PendingMatch_ArgSarStoreJmp_004411d0(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void ScaledOr4Jmp(void);
 extern void SpawnFreezeProjectileChain(void);
@@ -214,7 +214,7 @@ __declspec(naked) void SpawnEffectCluster(void)
         mov      dword ptr [ecx*4 + 0x68], edx
         call     StoreLoadJmp
         add      esp, 4
-        push     OFFSET PendingMatch_004411d0 + 0xb60
+        push     OFFSET PendingMatch_ArgSarStoreJmp_004411d0 + 0xb60
         call     StoreLoadJmp
         mov      eax, dword ptr [g_eventQueueEnd]
         add      esp, 4

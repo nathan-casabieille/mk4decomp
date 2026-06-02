@@ -20,14 +20,14 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void AudioVolumeRescale(void);
-extern void RoundCleanupCluster_00487510(void);
+extern void RoundCleanupCluster_TableLookupCall_g_table(void);
 extern void Quad4SequencerInstall(void);
 void Set1f4CallDirtyJmp(void) {
     g_walkCallback = (void (*)(void))0x01f4;
     AudioVolumeRescale();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 1) != 0) {
-        RoundCleanupCluster_00487510();
+        RoundCleanupCluster_TableLookupCall_g_table();
         return;
     }
     Quad4SequencerInstall();

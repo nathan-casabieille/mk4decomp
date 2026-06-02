@@ -19,18 +19,18 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     +0x0e
  */
 extern unsigned int g_counter_0053a51c;
-extern void InstallSelfStatePush_00434990(void);
-extern void InstallSelfStatePush_004348f0(void);
+extern void InstallSelfStatePush_InstallSelf3StateDualBody_00434990(void);
+extern void InstallSelfStatePush_InstallSelf3StateDualBody_004348f0(void);
 extern void FlagInitTableSelector(void);
 void TriBranchJmp(void) {
     unsigned int v = g_counter_0053a51c;
     g_walkCallback = (void (*)(void))v;
     if (v == 8) {
-        InstallSelfStatePush_00434990();
+        InstallSelfStatePush_InstallSelf3StateDualBody_00434990();
         return;
     }
     if (v == 0) {
-        InstallSelfStatePush_004348f0();
+        InstallSelfStatePush_InstallSelf3StateDualBody_004348f0();
         return;
     }
     FlagInitTableSelector();

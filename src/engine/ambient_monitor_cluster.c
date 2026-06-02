@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -113,7 +113,7 @@ extern void StackPopDispatchTagged(void);
 extern void BootInitGuardedCallChain(void);
 extern void DualTestDirtyToggle_00427ea0(void);
 extern void DualTestDirtyToggle_004282c0(void);
-extern void PendingMatch_00461ca0(void);
+extern void PendingMatch_DownloadPlayerChar(void);
 extern void Push16Call(void);
 extern void StoreTwoCall(void);
 extern void PhaseClampInstallSlot(void);
@@ -124,7 +124,7 @@ extern void MStackDirtyArgsBit0(void);
 extern void TableWalkBoundedCmp(int);
 extern void TaggedSceneDispatch(void);
 extern void QuadCallPhase2(void);
-extern void RoundCleanupCluster_00427690(void);
+extern void RoundCleanupCluster_Ten404c40_404bd0(void);
 extern unsigned int g_dispatchSave669;
 extern unsigned int g_dispatchSave637;
 extern unsigned int g_tickFlagF;
@@ -158,7 +158,7 @@ __declspec(naked) void SceneEvalFsm(void)
         mov      ecx, OFFSET g_dispatchSave637
         shr      ecx, 2
         push     0x262
-        push     OFFSET RoundCleanupCluster_00427690 + 0xf0
+        push     OFFSET RoundCleanupCluster_Ten404c40_404bd0 + 0xf0
         mov      dword ptr [g_fightGroupHead], ecx
         call     StoreTwoCall
         mov      eax, 1
@@ -271,7 +271,7 @@ __declspec(naked) void SceneEvalFsm(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], ebx
-        call     PendingMatch_00461ca0
+        call     PendingMatch_DownloadPlayerChar
         mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         pop      ebx

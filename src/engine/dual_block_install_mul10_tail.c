@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   Entry (0..0x96): load state; clear. state!=0: tail-jmp FiveCallGuardSetTail.
  *     state==0: g_walkCallback=0x1016; chain[baseSel*4+0x74]=0x1016; install-self at entry+0x01000000.
  *     state=1; call ScaledLoadJmp; pause=1; pop esi/edi; ret.
- *   Tail (+0xa0): call PendingMatch_0049a670; if pause ret.
+ *   Tail (+0xa0): call PendingMatch_DualCmpSwapStore; if pause ret.
  *     Mul10Tail(0x3333, g_currentNodeFlags)->[g_currentNodeFlags + scaledInit chain offset +0x6c].
  *     Mul10Tail(0x3333, g_xformScratch2088)->chain[+0x74].
  *     g_cj=scaledInit; push 0x23fb23; call ThreeChanPackClamp; push g_cj; call CopyThreeFields;
@@ -121,7 +121,7 @@ extern unsigned int g_fightAxisPosY;
 extern void ArgSar_Set0_Jmp(void);
 extern void CopyThreeFields(void);
 extern void FiveCallGuardSetTail(void);
-extern void PendingMatch_0049a670(void);
+extern void PendingMatch_DualCmpSwapStore(void);
 extern void ScaledLoadJmp_00428d20(void);
 extern void ThreeChanPackClamp(void);
 
@@ -171,7 +171,7 @@ __declspec(naked) void DualBlockInstallMul10Tail(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        call    PendingMatch_0049a670
+        call    PendingMatch_DualCmpSwapStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

@@ -17,7 +17,7 @@
 #include "game/tick.h"
 
 extern void CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00428850(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
 extern void DualGuardPushInstallJmp(void);
 
 /* @addr 0x00428820 */
@@ -25,7 +25,7 @@ void CallPauseScaledStoreJmp_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx
     CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx();
     if (g_framePauseFlag) return;
     ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = g_eventQueueCurrent;
-    CallPauseDirty1JmpDirty4StackPush_00428850();
+    CallPauseDirty1JmpDirty4StackPush_GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp();
 }
 
 /* @addr 0x004288b0 */

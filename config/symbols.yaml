@@ -36,7 +36,7 @@ functions:
     status: matched
     file: src/boot/pending_match_variants.c
   - addr: 0x00401b70
-    name: PendingMatch_00401b70
+    name: PendingMatch_LeaPlus22StoreSelf
     size: 2016
     group: boot
     status: matched
@@ -48,7 +48,7 @@ functions:
     status: matched
     file: src/boot/phase_install_self3_step.c
   - addr: 0x00402540
-    name: PendingMatch_00402540
+    name: PendingMatch_Push16Call_00402540
     size: 1528
     group: boot
     status: matched
@@ -882,7 +882,7 @@ functions:
     status: matched
     file: src/boot/m_stack_bracket5_linked_list_unlink.c
   - addr: 0x00409c90
-    name: PendingMatch_00409c90
+    name: PendingMatch_StoreTailJmpSigned
     size: 2013
     group: boot
     status: matched
@@ -936,13 +936,13 @@ functions:
     status: matched
     file: src/boot/zero_three_fields_variants.c
   - addr: 0x0040a8d0
-    name: PendingMatch_0040a8d0
+    name: PendingMatch_MStackPush8_0040a8d0
     size: 1864
     group: boot
     status: matched
     file: src/boot/pending_match_variants.c
   - addr: 0x0040b020
-    name: PendingMatch_0040b020
+    name: PendingMatch_AudioMixerStep_0040b020
     size: 2149
     group: boot
     status: matched
@@ -1026,13 +1026,13 @@ functions:
     status: matched
     file: src/engine/guarded_scaled.c
   - addr: 0x0040cd50
-    name: PendingMatch_0040cd50
+    name: PendingMatch_MStackPush2RunCountdown_0040cd50
     size: 1142
     group: boot
     status: matched
     file: src/boot/pending_match_variants.c
   - addr: 0x0040d1d0
-    name: PendingMatch_0040d1d0
+    name: PendingMatch_ZeroAndDirty4_0040d1d0
     size: 1977
     group: boot
     status: matched
@@ -1044,7 +1044,7 @@ functions:
     status: matched
     file: src/boot/phase1_context_setup3_helpers.c
   - addr: 0x0040dbb0
-    name: PendingMatch_0040dbb0
+    name: PendingMatch_ChainWalkPushPop_0040dbb0
     size: 1493
     group: boot
     status: matched
@@ -1056,7 +1056,7 @@ functions:
     status: matched
     file: src/boot/m_stack_init_tri_alarm.c
   - addr: 0x0040e310
-    name: PendingMatch_0040e310
+    name: PendingMatch_StoreDoubleNegPauseSubStore
     size: 1357
     group: boot
     status: matched
@@ -1068,7 +1068,7 @@ functions:
     status: matched
     file: src/boot/phase4_init_with_chain_callback.c
   - addr: 0x0040eb80
-    name: PendingMatch_0040eb80
+    name: PendingMatch_PushSarCallBitToggle
     size: 3742
     group: boot
     status: matched
@@ -1110,7 +1110,7 @@ functions:
     status: matched
     file: src/boot/store_tail_jmp_signed.c
   - addr: 0x004108a0
-    name: PendingMatch_004108a0
+    name: PendingMatch_StoreTwoCall_004108a0
     size: 1796
     group: boot
     status: matched
@@ -1134,13 +1134,13 @@ functions:
     status: matched
     file: src/boot/func.c
   - addr: 0x00411210
-    name: PendingMatch_00411210
+    name: PendingMatch_StoreTwoCall_00411210
     size: 1654
     group: boot
     status: matched
     file: src/boot/pending_match_variants.c
   - addr: 0x00411890
-    name: PendingMatch_00411890
+    name: PendingMatch_ChainWalkPushPop_00411890
     size: 1258
     group: boot
     status: matched
@@ -1224,7 +1224,7 @@ functions:
     status: matched
     file: src/boot/push8d_push413490.c
   - addr: 0x00413380
-    name: BootPackedDispatchPair_00413380
+    name: BootPackedDispatchPair_PushSetXfmMaskCallPop_00413380
     size: 472
     group: boot
     status: matched
@@ -1236,7 +1236,7 @@ functions:
     status: matched
     file: src/boot/push8e_push413690.c
   - addr: 0x00413580
-    name: BootPackedDispatchPair_00413580
+    name: BootPackedDispatchPair_PushSetXfmMaskCallPop_00413580
     size: 472
     group: boot
     status: matched
@@ -1272,7 +1272,7 @@ functions:
     status: matched
     file: src/boot/sound_setup_loop.c
   - addr: 0x00413f40
-    name: PendingMatch_00413f40
+    name: PendingMatch_PushSetXfmMaskCallPop_00413f40
     size: 1146
     group: boot
     status: matched
@@ -1344,7 +1344,7 @@ functions:
     status: matched
     file: src/boot/phase4_trampoline_main_helper.c
   - addr: 0x004155c0
-    name: PendingMatch_004155c0
+    name: PendingMatch_StoreTwoCall_004155c0
     size: 2686
     group: boot
     status: matched
@@ -1356,7 +1356,7 @@ functions:
     status: matched
     file: src/boot/phase4_slot_init_packed_helper.c
   - addr: 0x004163c0
-    name: PendingMatch_004163c0
+    name: PendingMatch_StoreTwoCall_004163c0
     size: 2278
     group: boot
     status: matched
@@ -1386,7 +1386,7 @@ functions:
     status: matched
     file: src/boot/func.c
   - addr: 0x00417840
-    name: PendingMatch_00417840
+    name: PendingMatch_TripleSubVec3
     size: 1496
     group: boot
     status: matched
@@ -1404,7 +1404,7 @@ functions:
     status: matched
     file: src/boot/phase4_seven_packed_dispatch.c
   - addr: 0x00418170
-    name: PendingMatch_00418170
+    name: PendingMatch_MStackPush2ChainLLInsert_00418170
     size: 2426
     group: boot
     status: matched
@@ -1524,7 +1524,7 @@ functions:
     status: matched
     file: src/boot/boot_init_triple_add_chain.c
   - addr: 0x00419c90
-    name: PendingMatch_00419c90
+    name: PendingMatch_Mul10Tail_00419c90
     size: 2424
     group: boot
     status: matched
@@ -1554,7 +1554,7 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x0041aaf0
-    name: InstallSelfMStackPush_0041aaf0
+    name: InstallSelfMStackPush_StackPopDispatchTagged
     size: 152
     group: boot
     status: matched
@@ -1572,7 +1572,7 @@ functions:
     status: matched
     file: src/boot/phase2_init_slot_tree_walk.c
   - addr: 0x0041afd0
-    name: PendingMatch_0041afd0
+    name: PendingMatch_DirtyDoubleDeref_0041afd0
     size: 1407
     group: boot
     status: matched
@@ -1596,7 +1596,7 @@ functions:
     status: matched
     file: src/boot/phase4_four_packed_dispatch.c
   - addr: 0x0041bca0
-    name: PendingMatch_0041bca0
+    name: PendingMatch_MStackPush8_0041bca0
     size: 6308
     group: boot
     status: matched
@@ -1614,7 +1614,7 @@ functions:
     status: matched
     file: src/boot/m_stack_bracket3_chain_swap_advance.c
   - addr: 0x0041d770
-    name: PendingMatch_0041d770
+    name: PendingMatch_MStackBracket3_ChainSwapAdvance
     size: 1153
     group: boot
     status: matched
@@ -2436,7 +2436,7 @@ functions:
     status: matched
     file: src/engine/store_incr_m_stack_push6.c
   - addr: 0x00427690
-    name: RoundCleanupCluster_00427690
+    name: RoundCleanupCluster_Ten404c40_404bd0
     size: 1087
     group: game
     status: matched
@@ -2610,7 +2610,7 @@ functions:
     status: matched
     file: src/engine/call_pause_scaled_store_jmp.c
   - addr: 0x00428850
-    name: CallPauseDirty1JmpDirty4StackPush_00428850
+    name: CallPauseDirty1JmpDirty4StackPush_GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp
     size: 84
     group: game
     status: matched
@@ -2634,7 +2634,7 @@ functions:
     status: matched
     file: src/engine/scaled_init_or_self_ptr_variants.c
   - addr: 0x00428990
-    name: SelfInstallPhaseDispatch_00428990
+    name: SelfInstallPhaseDispatch_StackPopDispatchTagged
     size: 399
     group: game
     status: matched
@@ -2772,7 +2772,7 @@ functions:
     status: matched
     file: src/engine/scaled_array_store.c
   - addr: 0x004293d0
-    name: EsiInstallDecCallChain_004293d0
+    name: EsiInstallDecCallChain_StackPopDispatchTagged_004293d0
     size: 115
     group: game
     status: matched
@@ -2790,25 +2790,25 @@ functions:
     status: matched
     file: src/engine/scaled_chain_jmp.c
   - addr: 0x004294a0
-    name: EsiInstallDecCallChain_004294a0
+    name: EsiInstallDecCallChain_StackPopDispatchTagged_004294a0
     size: 129
     group: game
     status: matched
     file: src/engine/esi_install_dec_call_chain_variants.c
   - addr: 0x00429530
-    name: EsiInstallBitCallChain_00429530
+    name: EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_00429530
     size: 109
     group: game
     status: matched
     file: src/engine/esi_install_bit_call_chain_variants.c
   - addr: 0x004295a0
-    name: EsiInstallBitCallChain_004295a0
+    name: EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_004295a0
     size: 109
     group: game
     status: matched
     file: src/engine/esi_install_bit_call_chain_variants.c
   - addr: 0x00429610
-    name: EsiInstallBitCallChain_00429610
+    name: EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_00429610
     size: 109
     group: game
     status: matched
@@ -2964,7 +2964,7 @@ functions:
     status: matched
     file: src/engine/table_push_accum_tail_jmp.c
   - addr: 0x00429ef0
-    name: PendingMatch_00429ef0
+    name: PendingMatch_BootStateTriple
     size: 3861
     group: game
     status: matched
@@ -3030,7 +3030,7 @@ functions:
     status: matched
     file: src/engine/guarded_range_cmp_fpu_jmp.c
   - addr: 0x0042b930
-    name: PendingMatch_0042b930
+    name: PendingMatch_StoreTwoCall_0042b930
     size: 2656
     group: game
     status: matched
@@ -3126,13 +3126,13 @@ functions:
     status: matched
     file: src/engine/game_section_switcher.c
   - addr: 0x0042cc90
-    name: MStackPushCallPopDirtyJmp_0042cc90
+    name: MStackPushCallPopDirtyJmp_State208cBit0Flag
     size: 77
     group: game
     status: matched
     file: src/engine/mstack_push_call_pop_dirty_jmp.c
   - addr: 0x0042cce0
-    name: MStackPushCallPopDirtyJmp_0042cce0
+    name: MStackPushCallPopDirtyJmp_GuardedRangeCmpToggle
     size: 77
     group: game
     status: matched
@@ -3414,7 +3414,7 @@ functions:
     status: matched
     file: src/engine/tower_stage_init_cluster.c
   - addr: 0x004308a0
-    name: RoundFsmCluster_004308a0
+    name: RoundFsmCluster_Atan2QuadrantLookup
     size: 1159
     group: game
     status: matched
@@ -3564,7 +3564,7 @@ functions:
     status: matched
     file: src/engine/diff_mul10_loop.c
   - addr: 0x00432110
-    name: PendingMatch_00432110
+    name: PendingMatch_ThreeMul10Stores
     size: 1412
     group: game
     status: matched
@@ -3576,13 +3576,13 @@ functions:
     status: matched
     file: src/engine/pending_match_variants.c
   - addr: 0x00432710
-    name: func_00432710
+    name: func_PendingMatch
     size: 1973
     group: game
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x00432ed0
-    name: PendingMatch_00432ed0
+    name: PendingMatch_Ten404c40_404bd0
     size: 1526
     group: game
     status: matched
@@ -3714,7 +3714,7 @@ functions:
     status: matched
     file: src/engine/add_deref_jmp.c
   - addr: 0x00433e90
-    name: FiveBlockDispatch_00433e90
+    name: FiveBlockDispatch_ScaledCmp200eCallBool
     size: 181
     group: game
     status: matched
@@ -3780,13 +3780,13 @@ functions:
     status: matched
     file: src/engine/chain_dec_cond_store_call_jmp.c
   - addr: 0x004348f0
-    name: InstallSelfStatePush_004348f0
+    name: InstallSelfStatePush_InstallSelf3StateDualBody_004348f0
     size: 148
     group: game
     status: matched
     file: src/engine/install_self_state_push_variants.c
   - addr: 0x00434990
-    name: InstallSelfStatePush_00434990
+    name: InstallSelfStatePush_InstallSelf3StateDualBody_00434990
     size: 148
     group: game
     status: matched
@@ -3840,7 +3840,7 @@ functions:
     status: matched
     file: src/engine/range_dispatch4.c
   - addr: 0x00434f10
-    name: InstallSelfChainExtendCall_00434f10
+    name: InstallSelfChainExtendCall_MStackPushSet0Jmp
     size: 128
     group: game
     status: matched
@@ -3870,7 +3870,7 @@ functions:
     status: matched
     file: src/engine/install_self_pair.c
   - addr: 0x004351b0
-    name: InstallSelfChainExtendCall_004351b0
+    name: InstallSelfChainExtendCall_MStackPushSet6Jmp
     size: 128
     group: game
     status: matched
@@ -3894,7 +3894,7 @@ functions:
     status: matched
     file: src/engine/thunks.c
   - addr: 0x00435340
-    name: FiveBlockDispatch_00435340
+    name: FiveBlockDispatch_JumpTableDispatch
     size: 165
     group: game
     status: matched
@@ -3924,7 +3924,7 @@ functions:
     status: matched
     file: src/engine/install_self_plus_threshold_jmp_chain.c
   - addr: 0x00435b00
-    name: InstallSelfStatePush_00435b00
+    name: InstallSelfStatePush_CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp_00435b00
     size: 148
     group: game
     status: matched
@@ -3936,7 +3936,7 @@ functions:
     status: matched
     file: src/engine/two_entry_state_scalar.c
   - addr: 0x00435d40
-    name: InstallSelfStatePush_00435d40
+    name: InstallSelfStatePush_CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp_00435d40
     size: 148
     group: game
     status: matched
@@ -4884,7 +4884,7 @@ functions:
     status: matched
     file: src/engine/quad_string_state_gate.c
   - addr: 0x0043bdd0
-    name: PendingMatch_0043bdd0
+    name: PendingMatch_CallPauseScaledStoreCopyJmp
     size: 1399
     group: game
     status: matched
@@ -4902,7 +4902,7 @@ functions:
     status: matched
     file: src/engine/tri_cmp_or_final.c
   - addr: 0x0043c400
-    name: PendingMatch_0043c400
+    name: PendingMatch_CallPauseScaledByteSet
     size: 1782
     group: game
     status: matched
@@ -4974,7 +4974,7 @@ functions:
     status: matched
     file: src/engine/double_call_chain_init.c
   - addr: 0x0043d830
-    name: PendingMatch_0043d830
+    name: PendingMatch_MStackPush2LLWalkCompare
     size: 1635
     group: game
     status: matched
@@ -5148,7 +5148,7 @@ functions:
     status: matched
     file: src/engine/backdash_setup_cluster.c
   - addr: 0x004411d0
-    name: PendingMatch_004411d0
+    name: PendingMatch_ArgSarStoreJmp_004411d0
     size: 3093
     group: game
     status: matched
@@ -5250,13 +5250,13 @@ functions:
     status: matched
     file: src/engine/m_stack_push3_call_chain_bit2.c
   - addr: 0x00443320
-    name: PendingMatch_00443320
+    name: PendingMatch_Thunk_ScaledNeg1SetPause
     size: 2549
     group: game
     status: matched
     file: src/engine/pending_match_variants.c
   - addr: 0x00443d20
-    name: PendingMatch_00443d20
+    name: PendingMatch_DirtyDoubleDeref_00443d20
     size: 1633
     group: game
     status: matched
@@ -5286,7 +5286,7 @@ functions:
     status: matched
     file: src/engine/m_stack_push2_volume_cascade.c
   - addr: 0x00444ef0
-    name: PendingMatch_00444ef0
+    name: PendingMatch_PushSetXfmMaskCallPop_00444ef0
     size: 3976
     group: game
     status: matched
@@ -5532,7 +5532,7 @@ functions:
     status: matched
     file: src/engine/boss_punch_cluster.c
   - addr: 0x00447000
-    name: PendingMatch_00447000
+    name: PendingMatch_MStackBracket1_TreeWalkRecursive2_00447000
     size: 2184
     group: game
     status: matched
@@ -5550,13 +5550,13 @@ functions:
     status: matched
     file: src/engine/dispatcher_complex_249.c
   - addr: 0x00447a90
-    name: PendingMatch_00447a90
+    name: PendingMatch_ChainDirtyBitWalker
     size: 3258
     group: game
     status: matched
     file: src/engine/pending_match_variants.c
   - addr: 0x00448750
-    name: PendingMatch_00448750
+    name: PendingMatch_DoubleScaledCrossStore
     size: 190
     group: game
     status: matched
@@ -5598,7 +5598,7 @@ functions:
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x00448990
-    name: func_00448990
+    name: func_Set2CallIncJmp
     size: 1543
     group: game
     status: matched
@@ -5622,7 +5622,7 @@ functions:
     status: matched
     file: src/engine/match_end_fade_fsm_cluster.c
   - addr: 0x004492f0
-    name: PendingMatch_004492f0
+    name: PendingMatch_StackPopDispatchTagged_004492f0
     size: 3340
     group: game
     status: matched
@@ -5676,7 +5676,7 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x0044baa0
-    name: PendingMatch_0044baa0
+    name: PendingMatch_MStackPush2RunCountdown_0044baa0
     size: 2434
     group: game
     status: matched
@@ -5688,7 +5688,7 @@ functions:
     status: matched
     file: src/engine/cj_field_copy_cascade.c
   - addr: 0x0044c530
-    name: PendingMatch_0044c530
+    name: PendingMatch_MStackPush2RunCountdown_0044c530
     size: 1428
     group: game
     status: matched
@@ -5790,7 +5790,7 @@ functions:
     status: matched
     file: src/engine/intro_fsm_cluster.c
   - addr: 0x0044d7a0
-    name: PendingMatch_0044d7a0
+    name: PendingMatch_ArgSarStoreJmp_0044d7a0
     size: 1376
     group: game
     status: matched
@@ -5802,7 +5802,7 @@ functions:
     status: matched
     file: src/engine/guarded_dual_scaled_chain_copy.c
   - addr: 0x0044dd80
-    name: PendingMatch_0044dd80
+    name: PendingMatch_Mul10Tail_0044dd80
     size: 2508
     group: game
     status: matched
@@ -5814,7 +5814,7 @@ functions:
     status: matched
     file: src/engine/throw_charge_cluster.c
   - addr: 0x0044eaf0
-    name: ThrowFsmCluster_0044eaf0
+    name: ThrowFsmCluster_MStackPush2RunCountdown
     size: 1047
     group: game
     status: matched
@@ -5886,13 +5886,13 @@ functions:
     status: matched
     file: src/engine/versus_screen_fsm_cluster.c
   - addr: 0x0044f8d0
-    name: PendingMatch_0044f8d0
+    name: PendingMatch_MStackPush2BitLoop
     size: 1460
     group: game
     status: matched
     file: src/engine/pending_match_variants.c
   - addr: 0x0044fe90
-    name: PendingMatch_0044fe90
+    name: PendingMatch_GatedWordPushCall
     size: 2020
     group: game
     status: matched
@@ -5904,7 +5904,7 @@ functions:
     status: matched
     file: src/engine/store_three_states_push_call.c
   - addr: 0x004506c0
-    name: PendingMatch_004506c0
+    name: PendingMatch_DispatcherComplex138
     size: 1810
     group: game
     status: matched
@@ -6096,7 +6096,7 @@ functions:
     status: matched
     file: src/engine/dual_scaled_store.c
   - addr: 0x00452770
-    name: PendingMatch_00452770
+    name: PendingMatch_ArgSarStoreJmp_00452770
     size: 2548
     group: game
     status: matched
@@ -6192,13 +6192,13 @@ functions:
     status: matched
     file: src/engine/juggle_setup_cluster.c
   - addr: 0x00453e70
-    name: PendingMatch_00453e70
+    name: PendingMatch_MStackBracket1_TreeWalkRecursive2_00453e70
     size: 1683
     group: game
     status: matched
     file: src/engine/pending_match_variants.c
   - addr: 0x00454510
-    name: PendingMatch_00454510
+    name: PendingMatch_MStackBracket1_TreeWalkRecursive2_00454510
     size: 3284
     group: game
     status: matched
@@ -6210,7 +6210,7 @@ functions:
     status: matched
     file: src/engine/triple_thunk_install_body.c
   - addr: 0x00455340
-    name: StageTransitionCluster_00455340
+    name: StageTransitionCluster_PendingMatch
     size: 683
     group: game
     status: matched
@@ -6222,13 +6222,13 @@ functions:
     status: matched
     file: src/engine/throw_init_link_cluster.c
   - addr: 0x00455920
-    name: RoundCleanupCluster_00455920
+    name: RoundCleanupCluster_ArgSarStoreJmp
     size: 687
     group: game
     status: matched
     file: src/engine/round_cleanup_cluster_variants.c
   - addr: 0x00455bd0
-    name: PendingMatch_00455bd0
+    name: PendingMatch_ArgSarStoreJmp_00455bd0
     size: 1448
     group: game
     status: matched
@@ -6270,7 +6270,7 @@ functions:
     status: matched
     file: src/engine/char_select_setup_cluster.c
   - addr: 0x004568b0
-    name: PendingMatch_004568b0
+    name: PendingMatch_MStackPush2RunCountdown_004568b0
     size: 2440
     group: game
     status: matched
@@ -6498,7 +6498,7 @@ functions:
     status: matched
     file: src/engine/combo_move_select_fsm_cluster.c
   - addr: 0x0045a5c0
-    name: PendingMatch_0045a5c0
+    name: PendingMatch_ScaledArrStore_CallDualStoreXorBit
     size: 3668
     group: game
     status: matched
@@ -6510,7 +6510,7 @@ functions:
     status: matched
     file: src/engine/move_list_cursor_cluster.c
   - addr: 0x0045b620
-    name: PendingMatch_0045b620
+    name: PendingMatch_ScaledIterStep
     size: 1877
     group: game
     status: matched
@@ -6588,7 +6588,7 @@ functions:
     status: matched
     file: src/game/event_queue.c
   - addr: 0x0045c8e0
-    name: PendingMatch_0045c8e0
+    name: PendingMatch_ZeroNDwords
     size: 3478
     group: game
     status: matched
@@ -6672,13 +6672,13 @@ functions:
     status: matched
     file: src/engine/bit_save_push_call_merge_pop.c
   - addr: 0x0045dcd0
-    name: DualPlayerSetupCall_0045dcd0
+    name: DualPlayerSetupCall_ChainPickArgScaledInit_0045dcd0
     size: 86
     group: game
     status: matched
     file: src/engine/dual_player_setup_call.c
   - addr: 0x0045dd30
-    name: DualPlayerSetupCall_0045dd30
+    name: DualPlayerSetupCall_ChainPickArgScaledInit_0045dd30
     size: 86
     group: game
     status: matched
@@ -6744,7 +6744,7 @@ functions:
     status: matched
     file: src/engine/triple_entry_gate.c
   - addr: 0x0045e640
-    name: PendingMatch_0045e640
+    name: PendingMatch_SwapOrPassSet
     size: 1454
     group: game
     status: matched
@@ -6864,7 +6864,7 @@ functions:
     status: matched
     file: src/engine/call_pause_mstack_push_set_variants.c
   - addr: 0x0045fd30
-    name: SelfInstallPhaseDispatch_0045fd30
+    name: SelfInstallPhaseDispatch_DualGatedStateYield_0045fd30
     size: 379
     group: game
     status: matched
@@ -6882,7 +6882,7 @@ functions:
     status: matched
     file: src/engine/call_pause_mstack_push_set_variants.c
   - addr: 0x00460000
-    name: SelfInstallPhaseDispatch_00460000
+    name: SelfInstallPhaseDispatch_DualGatedStateYield_00460000
     size: 396
     group: game
     status: matched
@@ -6924,7 +6924,7 @@ functions:
     status: matched
     file: src/engine/push_call_store_clear_jmp.c
   - addr: 0x00460470
-    name: MultiThunkDispatcher_00460470
+    name: MultiThunkDispatcher_ArgScaledTestStore
     size: 308
     group: game
     status: matched
@@ -6936,13 +6936,13 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x004605d0
-    name: PerSlotPhaseRouter_004605d0
+    name: PerSlotPhaseRouter_DualGatedStateYield_004605d0
     size: 405
     group: game
     status: matched
     file: src/engine/per_slot_phase_router_variants.c
   - addr: 0x00460770
-    name: PerSlotPhaseRouter_00460770
+    name: PerSlotPhaseRouter_DualGatedStateYield_00460770
     size: 413
     group: game
     status: matched
@@ -7242,7 +7242,7 @@ functions:
     status: matched
     file: src/engine/dual_entry_install_self_scaled.c
   - addr: 0x00461ca0
-    name: PendingMatch_00461ca0
+    name: PendingMatch_DownloadPlayerChar
     size: 1996
     group: game
     status: matched
@@ -7278,7 +7278,7 @@ functions:
     status: matched
     file: src/engine/install_self_boot_init.c
   - addr: 0x00462a90
-    name: PendingMatch_00462a90
+    name: PendingMatch_SetWalkCurCallPauseDirty
     size: 1496
     group: game
     status: matched
@@ -7374,7 +7374,7 @@ functions:
     status: matched
     file: src/engine/store_call_pause_cmp_dirty.c
   - addr: 0x00464280
-    name: InstallSelfStateMachine_00464280
+    name: InstallSelfStateMachine_SwapOrPassSet
     size: 145
     group: game
     status: matched
@@ -7488,7 +7488,7 @@ functions:
     status: matched
     file: src/engine/tag_dispatch_paired_packed.c
   - addr: 0x004668b0
-    name: PendingMatch_004668b0
+    name: PendingMatch_SaveCallRestore
     size: 1460
     group: game
     status: matched
@@ -7500,7 +7500,7 @@ functions:
     status: matched
     file: src/engine/chain_field_copy_tail_jmp.c
   - addr: 0x00466fc0
-    name: PendingMatch_00466fc0
+    name: PendingMatch_StackPopDispatchTagged_00466fc0
     size: 2008
     group: game
     status: matched
@@ -7590,7 +7590,7 @@ functions:
     status: matched
     file: src/engine/dual_walk_range.c
   - addr: 0x004685d0
-    name: PendingMatch_004685d0
+    name: PendingMatch_DispatcherComplex260_MStackBracket1_TreeWalkRecursive2_004685d0
     size: 2268
     group: game
     status: matched
@@ -7608,13 +7608,13 @@ functions:
     status: matched
     file: src/engine/stream_flag_packed_select_chain.c
   - addr: 0x004694b0
-    name: PendingMatch_004694b0
+    name: PendingMatch_QuadCallPhase2
     size: 1679
     group: game
     status: matched
     file: src/engine/pending_match_variants.c
   - addr: 0x00469b40
-    name: PendingMatch_00469b40
+    name: PendingMatch_TaggedSceneDispatch
     size: 1684
     group: game
     status: matched
@@ -7668,13 +7668,13 @@ functions:
     status: matched
     file: src/engine/quad_entry_gate_chain.c
   - addr: 0x0046a6e0
-    name: PendingMatch_0046a6e0
+    name: PendingMatch_ArgSarStoreJmp_0046a6e0
     size: 1598
     group: game
     status: matched
     file: src/engine/pending_match_variants.c
   - addr: 0x0046ad20
-    name: PendingMatch_0046ad20
+    name: PendingMatch_FiveCallGuardSetTail
     size: 1592
     group: game
     status: matched
@@ -7704,7 +7704,7 @@ functions:
     status: matched
     file: src/engine/dual_entry_push_call.c
   - addr: 0x0046b670
-    name: PendingMatch_0046b670
+    name: PendingMatch_ArgScaledTestStore
     size: 2084
     group: game
     status: matched
@@ -7758,7 +7758,7 @@ functions:
     status: matched
     file: src/engine/install_self_chained_dispatch.c
   - addr: 0x0046cc80
-    name: InstallSelfMStackPush_0046cc80
+    name: InstallSelfMStackPush_CjInstallSelfRouter
     size: 162
     group: game
     status: matched
@@ -7818,7 +7818,7 @@ functions:
     status: matched
     file: src/engine/call_pause_dirty_mstack_push_fn.c
   - addr: 0x0046e2e0
-    name: PendingMatch_0046e2e0
+    name: PendingMatch_SlotEvent3EntryChain
     size: 1723
     group: game
     status: matched
@@ -7848,7 +7848,7 @@ functions:
     status: matched
     file: src/engine/five_thunk_m_stack_dispatcher.c
   - addr: 0x0046ec20
-    name: FiveBlockDispatchChain_0046ec20
+    name: FiveBlockDispatchChain_ScaledAndAlfe
     size: 275
     group: game
     status: matched
@@ -7878,7 +7878,7 @@ functions:
     status: matched
     file: src/engine/install_self_packed_f190.c
   - addr: 0x0046f250
-    name: StageTransitionCluster_0046f250
+    name: StageTransitionCluster_ArgSarStoreJmp
     size: 773
     group: game
     status: matched
@@ -7956,7 +7956,7 @@ functions:
     status: matched
     file: src/engine/phase3_packed_install_self.c
   - addr: 0x004700e0
-    name: ThrowFsmCluster_004700e0
+    name: ThrowFsmCluster_InstallSelfIndirectJmpNeg
     size: 548
     group: game
     status: matched
@@ -8160,7 +8160,7 @@ functions:
     status: matched
     file: src/engine/spawn_impact_explosion.c
   - addr: 0x00471e00
-    name: PendingMatch_00471e00
+    name: PendingMatch_ZeroAndDirty4_00471e00
     size: 1878
     group: game
     status: matched
@@ -8274,7 +8274,7 @@ functions:
     status: matched
     file: src/engine/size_gate_install_self_then_sub_mul10.c
   - addr: 0x00473640
-    name: PendingMatch_00473640
+    name: PendingMatch_AudioMixerStep_00473640
     size: 1608
     group: game
     status: matched
@@ -8826,7 +8826,7 @@ functions:
     status: matched
     file: src/engine/push_clamp_zero_one_call_pop.c
   - addr: 0x00478da0
-    name: PendingMatch_00478da0
+    name: PendingMatch_DispatcherComplex260_MStackBracket1_TreeWalkRecursive2_00478da0
     size: 3095
     group: game
     status: matched
@@ -8934,7 +8934,7 @@ functions:
     status: matched
     file: src/engine/install_self_pause_two_call.c
   - addr: 0x0047aff0
-    name: RoundFsmCluster_0047aff0
+    name: RoundFsmCluster_EsiEdiAliasDualMul10
     size: 708
     group: game
     status: matched
@@ -8952,7 +8952,7 @@ functions:
     status: matched
     file: src/engine/round_end_celebration_cluster.c
   - addr: 0x0047b900
-    name: RoundStartCluster_0047b900
+    name: RoundStartCluster_CjInstallSelfRouter
     size: 494
     group: game
     status: matched
@@ -8988,7 +8988,7 @@ functions:
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x0047c3f0
-    name: func_0047c3f0
+    name: func_ScaledZero44
     size: 288
     group: game
     status: matched
@@ -9036,7 +9036,7 @@ functions:
     status: matched
     file: src/engine/triple_entry_tbl_push_jmp.c
   - addr: 0x0047c8f0
-    name: InstallSelfCountdown2Stage_0047c8f0
+    name: InstallSelfCountdown2Stage_PopCallBitCmpPushCall
     size: 154
     group: game
     status: matched
@@ -9072,7 +9072,7 @@ functions:
     status: matched
     file: src/engine/stage_event_exit_cluster.c
   - addr: 0x0047cf60
-    name: PendingMatch_0047cf60
+    name: PendingMatch_CmpCondIdxArrLookup
     size: 1447
     group: game
     status: matched
@@ -9132,7 +9132,7 @@ functions:
     status: matched
     file: src/engine/throw_takedown_cluster.c
   - addr: 0x0047de60
-    name: InstallSelfChainExtendCall_0047de60
+    name: InstallSelfChainExtendCall_ScaledChainJmp
     size: 128
     group: game
     status: matched
@@ -9210,7 +9210,7 @@ functions:
     status: matched
     file: src/engine/install_self_helper2.c
   - addr: 0x0047e910
-    name: InstallSelfCountdown2Stage_0047e910
+    name: InstallSelfCountdown2Stage_Phase1ChainSetupCallScale6
     size: 220
     group: game
     status: matched
@@ -9246,7 +9246,7 @@ functions:
     status: matched
     file: src/engine/dirty_guard_lit_or_jmp.c
   - addr: 0x0047ef60
-    name: DualEntryInstallScaledChain_0047ef60
+    name: DualEntryInstallScaledChain_ArgSarStoreJmp_0047ef60
     size: 144
     group: game
     status: matched
@@ -9270,7 +9270,7 @@ functions:
     status: matched
     file: src/engine/install_self_three_state_scaled_load.c
   - addr: 0x0047f3f0
-    name: InstallSelfStateMachine_0047f3f0
+    name: InstallSelfStateMachine_ScaledArrStore_GuardedChainCmpDualBitXor
     size: 237
     group: game
     status: matched
@@ -9498,7 +9498,7 @@ functions:
     status: matched
     file: src/engine/alarm4_entry_install_chain.c
   - addr: 0x00481eb0
-    name: InstallSelfChainExtendCall_00481eb0
+    name: InstallSelfChainExtendCall_GameModeAdvanceCluster
     size: 128
     group: game
     status: matched
@@ -9558,7 +9558,7 @@ functions:
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x004822e0
-    name: func_004822e0
+    name: func_GuardedDispatch4
     size: 128
     group: game
     status: matched
@@ -9774,7 +9774,7 @@ functions:
     status: matched
     file: src/engine/install_self_or_chain_jmp.c
   - addr: 0x00483a80
-    name: CallPauseDirty1JmpDirty4StackPush_00483a80
+    name: CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp
     size: 84
     group: game
     status: matched
@@ -9888,7 +9888,7 @@ functions:
     status: matched
     file: src/engine/guarded_dispatch_4.c
   - addr: 0x00484b70
-    name: FiveBlockDispatchChain_00484b70
+    name: FiveBlockDispatchChain_ScaledAndAl7f
     size: 284
     group: game
     status: matched
@@ -9906,7 +9906,7 @@ functions:
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x00484da0
-    name: PendingMatch_00484da0
+    name: PendingMatch_ArgSarStoreJmp_00484da0
     size: 3172
     group: game
     status: matched
@@ -10002,7 +10002,7 @@ functions:
     status: matched
     file: src/engine/scaled_load_cmp1003_jmp_dispatch.c
   - addr: 0x00486580
-    name: DualEntryInstallScaledChain_00486580
+    name: DualEntryInstallScaledChain_ArgSarStoreJmp_00486580
     size: 144
     group: game
     status: matched
@@ -10104,7 +10104,7 @@ functions:
     status: matched
     file: src/engine/dual_entry_install_self_chain.c
   - addr: 0x00487510
-    name: RoundCleanupCluster_00487510
+    name: RoundCleanupCluster_TableLookupCall_g_table
     size: 477
     group: game
     status: matched
@@ -10794,7 +10794,7 @@ functions:
     status: matched
     file: src/engine/guarded_bit_mask_flag_or_clear.c
   - addr: 0x0048c570
-    name: PendingMatch_0048c570
+    name: PendingMatch_CondPlayerLookup
     size: 1702
     group: game
     status: matched
@@ -10890,7 +10890,7 @@ functions:
     status: matched
     file: src/engine/m_stack_chain_install_dispatch.c
   - addr: 0x0048d7b0
-    name: PendingMatch_0048d7b0
+    name: PendingMatch_DirtyFlagsManip
     size: 1611
     group: game
     status: matched
@@ -11796,7 +11796,7 @@ functions:
     status: matched
     file: src/engine/two_call_state_pause_jmp.c
   - addr: 0x004919c0
-    name: RoundStartCluster_004919c0
+    name: RoundStartCluster_RemapWalkAndJmp
     size: 1155
     group: game
     status: matched
@@ -12054,7 +12054,7 @@ functions:
     status: matched
     file: src/engine/install_self_cmd_stream_interp.c
   - addr: 0x004943f0
-    name: SelfInstallPhaseDispatch_004943f0
+    name: SelfInstallPhaseDispatch_ScaledZeroFour
     size: 399
     group: game
     status: matched
@@ -12066,7 +12066,7 @@ functions:
     status: matched
     file: src/engine/gate_dispatch6c.c
   - addr: 0x004945f0
-    name: InstallSelfChainExtendCall_004945f0
+    name: InstallSelfChainExtendCall_InitZeroChainLookupJmp
     size: 128
     group: game
     status: matched
@@ -12198,7 +12198,7 @@ functions:
     status: matched
     file: src/engine/tournament_menu_fsm_cluster.c
   - addr: 0x00496630
-    name: InstallSelfMStackPush_00496630
+    name: InstallSelfMStackPush_FiveCallGuardSetTail_00496630
     size: 152
     group: game
     status: matched
@@ -12210,7 +12210,7 @@ functions:
     status: matched
     file: src/engine/five_packed_sub_chain_big_entry.c
   - addr: 0x004968a0
-    name: InstallSelfMStackPush_004968a0
+    name: InstallSelfMStackPush_FiveCallGuardSetTail_004968a0
     size: 152
     group: game
     status: matched
@@ -12240,7 +12240,7 @@ functions:
     status: matched
     file: src/engine/punch_anim_cluster.c
   - addr: 0x00496fc0
-    name: MultiThunkDispatcher_00496fc0
+    name: MultiThunkDispatcher_MStackCall
     size: 303
     group: game
     status: matched
@@ -12330,7 +12330,7 @@ functions:
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x00498790
-    name: func_00498790
+    name: func_MStackChainSwapTraversal
     size: 357
     group: game
     status: matched
@@ -12348,7 +12348,7 @@ functions:
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x00498980
-    name: func_00498980
+    name: func_TableLookupCall_g_table_00498980
     size: 368
     group: game
     status: matched
@@ -12360,7 +12360,7 @@ functions:
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x00498b20
-    name: func_00498b20
+    name: func_TableLookupCall_g_table_00498b20
     size: 144
     group: game
     status: matched
@@ -12396,7 +12396,7 @@ functions:
     status: matched
     file: src/engine/triple_entry3_block.c
   - addr: 0x00498eb0
-    name: PendingMatch_00498eb0
+    name: PendingMatch_MStackCall
     size: 3524
     group: game
     status: matched
@@ -12456,7 +12456,7 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x0049a670
-    name: PendingMatch_0049a670
+    name: PendingMatch_DualCmpSwapStore
     size: 2176
     group: game
     status: matched
@@ -12774,7 +12774,7 @@ functions:
     status: matched
     file: src/engine/scaled_triple_copy10.c
   - addr: 0x0049d380
-    name: LinkedListFieldAdd_0049d380
+    name: LinkedListFieldAdd_StoreDoubleNegPauseSubStore
     size: 174
     group: game
     status: matched
@@ -12864,7 +12864,7 @@ functions:
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x0049eb20
-    name: DualGuardStateMachine_0049eb20
+    name: DualGuardStateMachine_SaveCallRestore
     size: 216
     group: game
     status: matched
@@ -12924,13 +12924,13 @@ functions:
     status: matched
     file: src/engine/linked_list_indirect_dirty_toggle.c
   - addr: 0x0049f900
-    name: DispatcherComplex115_0049f900
+    name: DispatcherComplex115_Cmp3DirtyToggle_0049f900
     size: 115
     group: game
     status: matched
     file: src/engine/dispatcher_complex_115.c
   - addr: 0x0049f980
-    name: DispatcherComplex115_0049f980
+    name: DispatcherComplex115_Cmp3DirtyToggle_0049f980
     size: 115
     group: game
     status: matched
@@ -13434,7 +13434,7 @@ functions:
     status: matched
     file: src/audio/audio_state50b4_bit_dispatcher.c
   - addr: 0x004a3400
-    name: PendingMatch_004a3400
+    name: PendingMatch_Push16Call_004a3400
     size: 1228
     group: audio
     status: matched
@@ -13590,7 +13590,7 @@ functions:
     status: matched
     file: src/audio/memset18_step.c
   - addr: 0x004a56c0
-    name: PendingMatch_004a56c0
+    name: PendingMatch_MStackPush2ChainLLInsert_004a56c0
     size: 2011
     group: audio
     status: matched
@@ -13620,7 +13620,7 @@ functions:
     status: matched
     file: src/audio/audio_bind_entry_b.c
   - addr: 0x004a62b0
-    name: PendingMatch_004a62b0
+    name: PendingMatch_Test4StatesAny
     size: 3004
     group: audio
     status: matched
@@ -13752,7 +13752,7 @@ functions:
     status: matched
     file: src/audio/audio_mixer_knob_update.c
   - addr: 0x004a8ca0
-    name: PendingMatch_004a8ca0
+    name: PendingMatch_AudioInitArgs3
     size: 1410
     group: audio
     status: matched
@@ -13848,7 +13848,7 @@ functions:
     status: matched
     file: src/audio/table_lookup_call_jmp_variants.c
   - addr: 0x004aa9f0
-    name: PendingMatch_004aa9f0
+    name: PendingMatch_FiveTableWalkInit
     size: 2164
     group: audio
     status: matched
@@ -16590,7 +16590,7 @@ functions:
     status: matched
     file: src/boot/table_lookup_iat_call.c
   - addr: 0x004c6ff0
-    name: RangePathIATDispatch_004c6ff0
+    name: RangePathIATDispatch_Lock
     size: 54
     group: boot
     status: matched
@@ -16602,7 +16602,7 @@ functions:
     status: matched
     file: src/engine/two_path_iat_dispatch.c
   - addr: 0x004c7060
-    name: RangePathIATDispatch_004c7060
+    name: RangePathIATDispatch_TableLookupIatCall
     size: 54
     group: crt
     status: matched
@@ -16800,7 +16800,7 @@ functions:
     status: matched
     file: src/crt/crt_io_init_fd_table.c
   - addr: 0x004c8dd0
-    name: IOWrapper_004c8dd0
+    name: IOWrapper_CritSecLazyEnter_004c8dd0
     size: 114
     group: crt
     status: matched
@@ -16818,7 +16818,7 @@ functions:
     status: matched
     file: src/crt/filbuf.c
   - addr: 0x004c8fc0
-    name: IOWrapper_004c8fc0
+    name: IOWrapper_CritSecLazyEnter_004c8fc0
     size: 114
     group: crt
     status: matched
@@ -16884,7 +16884,7 @@ functions:
     status: matched
     file: src/crt/fgets_impl.c
   - addr: 0x004c9ae0
-    name: IOWrapper_004c9ae0
+    name: IOWrapper_CritSecLazyEnter_004c9ae0
     size: 114
     group: crt
     status: matched
@@ -17154,13 +17154,13 @@ functions:
     status: matched
     file: src/engine/forward_with_literal.c
   - addr: 0x004ccd20
-    name: SevenArgThenTwoArg_004ccd20
+    name: SevenArgThenTwoArg_PendingMatch_004ccd20
     size: 56
     group: crt
     status: matched
     file: src/engine/seven_arg_then_two_arg.c
   - addr: 0x004ccd60
-    name: SevenArgThenTwoArg_004ccd60
+    name: SevenArgThenTwoArg_PendingMatch_004ccd60
     size: 56
     group: crt
     status: matched

@@ -69,7 +69,7 @@ extern int  FileWriteWithLfToCrlf(int handle, int a, int b);
 
 /* @addr 0x004c8dd0 */
 
-__declspec(naked) void IOWrapper_004c8dd0(void) {
+__declspec(naked) void IOWrapper_CritSecLazyEnter_004c8dd0(void) {
     __asm {
         mov     eax, dword ptr [g_handleCount_004ffae0]
         push    esi
@@ -117,7 +117,7 @@ __declspec(naked) void IOWrapper_004c8dd0(void) {
 }
 
 /* @addr 0x004c8fc0 */
-__declspec(naked) void IOWrapper_004c8fc0(void) {
+__declspec(naked) void IOWrapper_CritSecLazyEnter_004c8fc0(void) {
     __asm {
         mov     eax, dword ptr [g_handleCount_004ffae0]
         push    esi
@@ -165,7 +165,7 @@ __declspec(naked) void IOWrapper_004c8fc0(void) {
 }
 
 /* @addr 0x004c9ae0 */
-__declspec(naked) void IOWrapper_004c9ae0(void) {
+__declspec(naked) void IOWrapper_CritSecLazyEnter_004c9ae0(void) {
     __asm {
         mov     eax, dword ptr [g_handleCount_004ffae0]
         push    esi

@@ -56,13 +56,13 @@ void ScaledInitOrSelfPtr_InstallSelfStackReset(void) {
 }
 
 /* @addr 0x00428950 (64b): ScaledInitOrSelfPtr, store=own, jmp=0x428850 */
-extern void CallPauseDirty1JmpDirty4StackPush_00428850(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
 void ScaledInitOrSelfPtr_CallPauseDirty1JmpDirty4StackPush(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int ptr = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
     if (ptr) {
-        CallPauseDirty1JmpDirty4StackPush_00428850();
+        CallPauseDirty1JmpDirty4StackPush_GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp();
         return;
     }
     *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_CallPauseDirty1JmpDirty4StackPush;

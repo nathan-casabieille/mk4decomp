@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -127,7 +127,7 @@ extern void TripleFieldCopyJmpHi(void);
 
 extern void FiveCallGuardSetTail(void);
 
-__declspec(naked) void InstallSelfStateMachine_00464280(void) {
+__declspec(naked) void InstallSelfStateMachine_SwapOrPassSet(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi
@@ -163,7 +163,7 @@ __declspec(naked) void InstallSelfStateMachine_00464280(void) {
         _emit   75h
         _emit   21h
         mov     eax, 1
-        mov     dword ptr [esi + 8], offset InstallSelfStateMachine_00464280
+        mov     dword ptr [esi + 8], offset InstallSelfStateMachine_SwapOrPassSet
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pendingNodeType], 0xfa
         mov     dword ptr [g_framePauseFlag], eax
@@ -182,7 +182,7 @@ __declspec(naked) void InstallSelfStateMachine_00464280(void) {
  *   B2 ([+0x84]==2+): set g_eventQueueChild=0x11; call ScaledArrStore_GuardedChainCmpDualBitXor_00429980;
  *     if !pause: tail-call StackPopDispatchTagged; ret.
  */
-__declspec(naked) void InstallSelfStateMachine_0047f3f0(void) {
+__declspec(naked) void InstallSelfStateMachine_ScaledArrStore_GuardedChainCmpDualBitXor(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         push    esi

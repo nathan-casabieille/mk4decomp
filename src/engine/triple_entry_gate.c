@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -109,12 +109,12 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0045e5d0 (111b game) - 3-entry threshold/state-check gates.
- *   Block A: if g_table_00535ddc > 0x10000: jmp PendingMatch_0045e640; else clear bit 0 of g_xformDirtyFlags, ret.
+ *   Block A: if g_table_00535ddc > 0x10000: jmp PendingMatch_SwapOrPassSet; else clear bit 0 of g_xformDirtyFlags, ret.
  *   Block B (+0x30): if g_counter_0053a51c == 8: ret (no flag clear); else clear bit 0, ret.
- *   Block C (+0x4c): same as A but inlined (no jmp), then jmp PendingMatch_0045e640 at end.
+ *   Block C (+0x4c): same as A but inlined (no jmp), then jmp PendingMatch_SwapOrPassSet at end.
  */
 extern unsigned int g_counter_0053a51c;
-extern void PendingMatch_0045e640(void);
+extern void PendingMatch_SwapOrPassSet(void);
 
 __declspec(naked) void TripleEntryGate(void) {
     __asm {
@@ -127,7 +127,7 @@ __declspec(naked) void TripleEntryGate(void) {
         and     al, 0xfe
         mov     dword ptr [g_xformDirtyFlags], eax
         ret
-        jmp     PendingMatch_0045e640
+        jmp     PendingMatch_SwapOrPassSet
         _emit   90h
         _emit   90h
         _emit   90h
@@ -159,6 +159,6 @@ __declspec(naked) void TripleEntryGate(void) {
         and     al, 0xfe
         mov     dword ptr [g_xformDirtyFlags], eax
         ret
-        jmp     PendingMatch_0045e640
+        jmp     PendingMatch_SwapOrPassSet
     }
 }

@@ -7,7 +7,7 @@
 extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_acc_00542078;
-extern void SelfInstallPhaseDispatch_0045fd30(void);
+extern void SelfInstallPhaseDispatch_DualGatedStateYield_0045fd30(void);
 extern void LeaPlus22StoreSelf(void);
 
 /* @addr 0x0045fcf0 (52b)
@@ -31,13 +31,13 @@ void CallPauseMStackPushSet0Jmp(void) {
     g_walkCallback = (void (*)(void))0;
     top++;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = (unsigned int)&SelfInstallPhaseDispatch_0045fd30;
+    *(unsigned int *)(top * 4) = (unsigned int)&SelfInstallPhaseDispatch_DualGatedStateYield_0045fd30;
     MstackPopScaledChainPlusThunks();
 }
 
 /* @addr 0x0045ffc0 (52b): same shape, value=9 */
 extern void ScaledInit_GuardedDirtyXformFromTable_g_scaledInit(void);
-extern void SelfInstallPhaseDispatch_00460000(void);
+extern void SelfInstallPhaseDispatch_DualGatedStateYield_00460000(void);
 void CallPauseMStackPushSet9Jmp(void) {
     unsigned int top;
     ScaledInit_GuardedDirtyXformFromTable_g_scaledInit();
@@ -46,7 +46,7 @@ void CallPauseMStackPushSet9Jmp(void) {
     g_walkCallback = (void (*)(void))9;
     top++;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = (unsigned int)&SelfInstallPhaseDispatch_00460000;
+    *(unsigned int *)(top * 4) = (unsigned int)&SelfInstallPhaseDispatch_DualGatedStateYield_00460000;
     MstackPopScaledChainPlusThunks();
 }
 

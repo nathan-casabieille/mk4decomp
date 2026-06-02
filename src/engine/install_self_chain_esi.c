@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -110,11 +110,11 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004753b0 (221b game) - install-self with chain[+0x84] dispatch.
  *   chain[+0x84]==0 path: install-self at +0x08=0x004753b0; g_currentNodeFlags=0x32f1, g_xformScratch2088=0x3333,
- *   g_eventQueueChild=0; scaledInit-chain push 0x004753b0|0x01000000; call SelfInstallPhaseDispatch_00428990; pause=1; pop+ret.
+ *   g_eventQueueChild=0; scaledInit-chain push 0x004753b0|0x01000000; call SelfInstallPhaseDispatch_StackPopDispatchTagged; pause=1; pop+ret.
  *   chain[+0x84]!=0 path: set [g_fightGroupHead*4+0x24]=g_cj_00542054, [g_fightGroupHead*4+0x28]=0, g_walkCallback=0,
  *   g_cj_00542054=baseSel[*4+0x64], g_cj_00542058=baseSel[*4+0x68]; jmp StackPopDispatchTagged.
  */
-extern void SelfInstallPhaseDispatch_00428990(void);
+extern void SelfInstallPhaseDispatch_StackPopDispatchTagged(void);
 
 __declspec(naked) void InstallSelfChainEsi(void) {
     __asm {
@@ -156,7 +156,7 @@ __declspec(naked) void InstallSelfChainEsi(void) {
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
-        call    SelfInstallPhaseDispatch_00428990
+        call    SelfInstallPhaseDispatch_StackPopDispatchTagged
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         ret

@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -112,10 +112,10 @@ extern unsigned int g_fightAxisPosY;
  *   chain[+0x84]!=0 path: call StackPopDispatchTagged; pop+ret.
  *   chain[+0x84]==0 path: chain[*4+0x30]=0x8c, chain[*4+0x34]=0; chain at [esi+0x38..0x48] populated from
  *   g_load_0052ab10 fields (+0x60, 0, +0x68); install-self at +0x08=0x00462470 with scaledInit-chain push;
- *   call PendingMatch_00432110; g_pause=1; pop+ret.
+ *   call PendingMatch_ThreeMul10Stores; g_pause=1; pop+ret.
  */
 extern unsigned int g_load_0052ab10;
-extern void PendingMatch_00432110(void);
+extern void PendingMatch_ThreeMul10Stores(void);
 
 __declspec(naked) void InstallSelfFullChainInit(void) {
     __asm {
@@ -166,7 +166,7 @@ __declspec(naked) void InstallSelfFullChainInit(void) {
         mov     dword ptr [ecx + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], esi
-        call    PendingMatch_00432110
+        call    PendingMatch_ThreeMul10Stores
         mov     dword ptr [g_framePauseFlag], edi
         pop     edi
         pop     esi

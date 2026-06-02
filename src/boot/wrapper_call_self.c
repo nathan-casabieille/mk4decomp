@@ -44,12 +44,12 @@ void _init_premain(void) {
  */
 extern void * HeapScanInit(void);
 extern int FopenMode(int, int, int, void *);
-extern void RangePathIATDispatch_004c7060(void *);
+extern void RangePathIATDispatch_TableLookupIatCall(void *);
 int WrapperCallSelf(int a, int b, int c) {
     int ret;
     void *state = HeapScanInit();
     if (state == 0) return (int)state;
     ret = FopenMode(a, b, c, state);
-    RangePathIATDispatch_004c7060(state);
+    RangePathIATDispatch_TableLookupIatCall(state);
     return ret;
 }

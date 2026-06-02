@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -127,7 +127,7 @@ void DispatchWcSwitch(void) {
     if (v == 0x20c) { Install3StateMStackCounterDispatch(); return; }
     if (v == 0x218) { Thunk_InstallSelfThreeStateDispatch(); return; }
     if (v == 0x202) { CallPauseCmpDoubleJmp(); return; }
-    if (v == 0x20a) { FiveBlockDispatch_00435340(); return; }
+    if (v == 0x20a) { FiveBlockDispatch_JumpTableDispatch(); return; }
     if (v == 0x21c) { RangeDispatch4(); return; }
     if (v == 0x216) { Thunk_InstallSelfPacked0x2005(); return; }
     if (v == 0x20e) { InstallSelfStateCountdown(); return; }

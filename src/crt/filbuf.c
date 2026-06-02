@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -121,7 +121,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_crtFilbufBase;
 extern unsigned int g_arr_00fa0de0;
-extern void IOWrapper_004c8fc0(void);
+extern void IOWrapper_CritSecLazyEnter_004c8fc0(void);
 extern void StreamAllocInit(void);
 
 __declspec(naked) void Filbuf(void) {
@@ -161,7 +161,7 @@ __declspec(naked) void Filbuf(void) {
         push    ecx
         push    edx
         push    eax
-        call    IOWrapper_004c8fc0
+        call    IOWrapper_CritSecLazyEnter_004c8fc0
         add     esp, 0xc
         mov     [esi + 4], eax
         test    eax, eax

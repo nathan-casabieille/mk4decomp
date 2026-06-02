@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -115,13 +115,13 @@ extern unsigned int g_fightAxisPosY;
 /*  h2 (0x455730): pose-fn 2-state - state 0 init via 407330+4058c0+  */
 /*    406340 + push 0x456510 helper-call + 48b740 + status 0x91/bit-flags */
 /*    + event 004e7f28; state 1 install state 1 w/ 0x41 wait.         */
-/*  h3 (0x4558f0): set wait=0x16 → tail-jmp RoundCleanupCluster_00455920.*/
+/*  h3 (0x4558f0): set wait=0x16 → tail-jmp RoundCleanupCluster_ArgSarStoreJmp.*/
 /* ------------------------------------------------------------------ */
 extern void MStackPushTwoEntryChainCall(void);
 extern void MStackCall_00406600(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void MStackPushDispatchBitGate(void);
-extern void RoundCleanupCluster_00455920(void);
+extern void RoundCleanupCluster_ArgSarStoreJmp(void);
 extern void CharSelectFsmCluster(void);
 extern void ChainGatedNegAccum(void);
 extern unsigned int g_dispatchSave951;
@@ -331,6 +331,6 @@ __declspec(naked) void ThrowInitLinkCluster(void)
         nop
         /* === h3 (0x4558f0): set wait=0x16 → tail-jmp 00455920 === */
         mov      dword ptr [g_eventQueueIdx], 0x16
-        jmp      RoundCleanupCluster_00455920
+        jmp      RoundCleanupCluster_ArgSarStoreJmp
     }
 }

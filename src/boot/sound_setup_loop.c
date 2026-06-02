@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   ThreeChanPackClamp(0x408000); CopyThreeFields(cj); MStackPush8;
  *   pause? jmp tail. g_eventQueueTotal=0x23, g_eventQueueEnd=cj; SetJmp; pause? jmp tail.
  *   if !(g_xformDirtyFlags & 4): g_eventQueueTotal = 0x14.
- *   loop: call PendingMatch_00413f40; pause? jmp tail. if dirty bit2: jmp 0x96 path.
+ *   loop: call PendingMatch_PushSetXfmMaskCallPop_00413f40; pause? jmp tail. if dirty bit2: jmp 0x96 path.
  *   if (--g_eventQueueTotal >= 0): loop again.
  *   tail: call MStackPop8; ret.
  */
@@ -120,7 +120,7 @@ extern unsigned int g_dispatchSave1130;
 extern void CopyThreeFields(void);
 extern void MStackPop8(void);
 extern void MStackPush8(void);
-extern void PendingMatch_00413f40(void);
+extern void PendingMatch_PushSetXfmMaskCallPop_00413f40(void);
 extern void SetJmp_ZeroAndDirty4(void);
 extern void ThreeChanPackClamp(void);
 
@@ -155,7 +155,7 @@ __declspec(naked) void SoundSetupLoop(void) {
         _emit   0ah
         mov     dword ptr [g_eventQueueTotal], 0x14
 loop413ea0:
-        call    PendingMatch_00413f40
+        call    PendingMatch_PushSetXfmMaskCallPop_00413f40
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -168,7 +168,7 @@ loop413ea0:
         mov     dword ptr [g_eventQueueTotal], eax
         _emit   78h
         _emit   10h
-        call    PendingMatch_00413f40
+        call    PendingMatch_PushSetXfmMaskCallPop_00413f40
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   74h

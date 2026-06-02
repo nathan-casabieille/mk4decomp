@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -108,11 +108,11 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void SelfInstallPhaseDispatch_00428990(void);
+extern void SelfInstallPhaseDispatch_StackPopDispatchTagged(void);
 
 /* @addr 0x004753b0 (221b game) - install-self with chain[+0x84] dispatch.
  *   chain[+0x84]==0 path: install-self at +0x08=0x004753b0; g_currentNodeFlags=0x32f1, g_xformScratch2088=0x3333,
- *   g_eventQueueChild=0; scaledInit-chain push 0x004753b0|0x01000000; call SelfInstallPhaseDispatch_00428990; pause=1; pop+ret.
+ *   g_eventQueueChild=0; scaledInit-chain push 0x004753b0|0x01000000; call SelfInstallPhaseDispatch_StackPopDispatchTagged; pause=1; pop+ret.
  *   chain[+0x84]!=0 path: set [g_fightGroupHead*4+0x24]=g_cj_00542054, [g_fightGroupHead*4+0x28]=0, g_walkCallback=0,
  *   g_cj_00542054=baseSel[*4+0x64], g_cj_00542058=baseSel[*4+0x68]; jmp StackPopDispatchTagged.
  */
@@ -126,7 +126,7 @@ extern void GuardedDualAndFlagToggle(void);
 extern void InstallSelfChainCascade(void);
 extern void MStackPushSet0001(void);
 extern void MstackPopScaledChainPlusThunks(void);
-extern void MultiThunkDispatcher_00460470(void);
+extern void MultiThunkDispatcher_ArgScaledTestStore(void);
 extern void ScaledAndAlfe(void);
 extern void TableLookupCall_g_table_004efa00(void);
 
@@ -135,8 +135,8 @@ extern void ArgScaledTestStore(void);
 extern void ScaledChainJmp_00429470(void);
 extern void ScaledClearJmp_EsiInstallBitCallChain(void);
 extern void ScaledZeroFour(void);
-extern void SelfInstallPhaseDispatch_00460000(void);
-extern void SelfInstallPhaseDispatch_004943f0(void);
+extern void SelfInstallPhaseDispatch_DualGatedStateYield_00460000(void);
+extern void SelfInstallPhaseDispatch_ScaledZeroFour(void);
 
 __declspec(naked) void InstallSelfChainEsi(void) {
     __asm {
@@ -178,7 +178,7 @@ __declspec(naked) void InstallSelfChainEsi(void) {
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
-        call    SelfInstallPhaseDispatch_00428990
+        call    SelfInstallPhaseDispatch_StackPopDispatchTagged
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         ret
@@ -191,7 +191,7 @@ __declspec(naked) void InstallSelfChainEsi(void) {
  *     [cj*4+0x24]=g_xformEntityIdx. Install-self at func entry +0x01000000.
  *     state=1; chain[+0x84]=0; call ScaledClearJmp; pause=1; ret.
  *   state==1: install-self at func entry +0x02000000. State=2; call ScaledChainJmp; pause=1; ret.
- *   state>=2: call ScaledZeroFour; if pause ret. Tail-call SelfInstallPhaseDispatch_00460000; ret.
+ *   state>=2: call ScaledZeroFour; if pause ret. Tail-call SelfInstallPhaseDispatch_DualGatedStateYield_00460000; ret.
  */
 __declspec(naked) void InstallSelf3StateDualEntry(void) {
     __asm {
@@ -217,7 +217,7 @@ __declspec(naked) void InstallSelf3StateDualEntry(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        call    SelfInstallPhaseDispatch_00460000
+        call    SelfInstallPhaseDispatch_DualGatedStateYield_00460000
         pop     esi
         ret
         mov     dword ptr [esi + 8], offset InstallSelf3StateDualEntry
@@ -275,7 +275,7 @@ __declspec(naked) void InstallSelf3StateDualEntry(void) {
  *     If pause ret.
  *   state==0 (or after table call): iterate g_eventQueueEnd stream:
  *     read ecx; if == 0xffff0000: tail-call StackPopDispatchTagged.
- *     if != 0xfffe0000: install-self at entry+0x01000000; state=1; call SelfInstallPhaseDispatch_004943f0; pause=1; ret.
+ *     if != 0xfffe0000: install-self at entry+0x01000000; state=1; call SelfInstallPhaseDispatch_ScaledZeroFour; pause=1; ret.
  *     Else (0xfffe0000): load function ptr from next stream slot; indirect call; if pause ret.
  *     Read next; if == 0xffff0000: tail-call StackPopDispatchTagged. Else loop.
  */
@@ -364,14 +364,14 @@ __declspec(naked) void InstallSelfCmdStreamInterp(void) {
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
-        call    SelfInstallPhaseDispatch_004943f0
+        call    SelfInstallPhaseDispatch_ScaledZeroFour
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
     }
 }
 
-__declspec(naked) void SelfInstallPhaseDispatch_0045fd30(void)
+__declspec(naked) void SelfInstallPhaseDispatch_DualGatedStateYield_0045fd30(void)
 {
     __asm
     {
@@ -406,9 +406,9 @@ __declspec(naked) void SelfInstallPhaseDispatch_0045fd30(void)
         jne     L_sipd2_retCommon
         test    byte ptr [g_xformDirtyFlags], bl
         jne     short L_sipd2_phase2
-        mov     dword ptr [esi + 8], offset SelfInstallPhaseDispatch_0045fd30
+        mov     dword ptr [esi + 8], offset SelfInstallPhaseDispatch_DualGatedStateYield_0045fd30
         mov     ecx, dword ptr [g_baseSel]
-        mov     edx, offset SelfInstallPhaseDispatch_0045fd30
+        mov     edx, offset SelfInstallPhaseDispatch_DualGatedStateYield_0045fd30
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x2000000
@@ -457,12 +457,12 @@ __declspec(naked) void SelfInstallPhaseDispatch_0045fd30(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_sipd2_retCommon
-        call    MultiThunkDispatcher_00460470
+        call    MultiThunkDispatcher_ArgScaledTestStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_sipd2_retCommon
     L_sipd2_finishInstall:
-        mov     dword ptr [esi + 8], offset SelfInstallPhaseDispatch_0045fd30
+        mov     dword ptr [esi + 8], offset SelfInstallPhaseDispatch_DualGatedStateYield_0045fd30
         mov     dword ptr [esi + 0x84], ebx
         mov     dword ptr [g_pendingNodeType], ebx
         mov     dword ptr [g_framePauseFlag], ebx

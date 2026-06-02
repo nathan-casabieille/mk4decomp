@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -133,11 +133,11 @@ extern void GuardedDispatch_CallPauseMStackPushSet3Jmp(void);
 extern void GuardedDispatch_CallPauseMStackPushSet4Jmp(void);
 extern void MStackCall_00406740(void);
 extern void NotShrCmp1Store(void);
-extern void PerSlotPhaseRouter_004605d0(void);
-extern void PerSlotPhaseRouter_00460770(void);
+extern void PerSlotPhaseRouter_DualGatedStateYield_004605d0(void);
+extern void PerSlotPhaseRouter_DualGatedStateYield_00460770(void);
 extern void ScaledStackCallPause(void);
 
-__declspec(naked) void MultiThunkDispatcher_00496fc0(void) {
+__declspec(naked) void MultiThunkDispatcher_MStackCall(void) {
     __asm {
         call    MStackCall_00406740
         mov     eax, dword ptr [g_framePauseFlag]
@@ -263,7 +263,7 @@ __declspec(naked) void MultiThunkDispatcher_00496fc0(void) {
  *     ecx = g_eventQueueTotal + (g_walkCallback & 0xf); jmp [ecx*4].
  *   Block C-H (0xc0..end): 6 thunks, each "call LeaPlus22StoreSelf; if !pause tail-jmp <target>; ret".
  */
-__declspec(naked) void MultiThunkDispatcher_00460470(void) {
+__declspec(naked) void MultiThunkDispatcher_ArgScaledTestStore(void) {
     __asm {
         push    0x00542980
         call    ArgScaledTestStore
@@ -350,7 +350,7 @@ __declspec(naked) void MultiThunkDispatcher_00460470(void) {
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     PerSlotPhaseRouter_00460770
+        jmp     PerSlotPhaseRouter_DualGatedStateYield_00460770
         ret
         _emit   90h
         _emit   90h
@@ -388,7 +388,7 @@ __declspec(naked) void MultiThunkDispatcher_00460470(void) {
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     PerSlotPhaseRouter_004605d0
+        jmp     PerSlotPhaseRouter_DualGatedStateYield_004605d0
         ret
         _emit   90h
         _emit   90h

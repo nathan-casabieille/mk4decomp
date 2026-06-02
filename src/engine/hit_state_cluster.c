@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -117,7 +117,7 @@ extern void FiveCallGuardSetTail(void);
 extern void GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
 extern void InstallSelfChainedDispatch(void);
 extern void InstallSelfIndirectJmp(void);
-extern void InstallSelfMStackPush_0046cc80(void);
+extern void InstallSelfMStackPush_CjInstallSelfRouter(void);
 extern void PushPopWalkSet1006(void);
 extern void ScaledAndAlfe(void);
 extern void ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d450(void);
@@ -307,7 +307,7 @@ __declspec(naked) void HitStateCluster(void)
         jne      L_cb69
         test     byte ptr [g_xformDirtyFlags], bl
         jne      L_ca22
-        call     InstallSelfMStackPush_0046cc80
+        call     InstallSelfMStackPush_CjInstallSelfRouter
         pop      esi
         pop      ebx
         ret      
@@ -385,7 +385,7 @@ __declspec(naked) void HitStateCluster(void)
         jne      L_cb69
         test     byte ptr [g_xformDirtyFlags], bl
         jne      L_cb50
-        call     InstallSelfMStackPush_0046cc80
+        call     InstallSelfMStackPush_CjInstallSelfRouter
         pop      esi
         pop      ebx
         ret      

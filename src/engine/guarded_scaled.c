@@ -33,7 +33,7 @@ extern unsigned int g_table_004ecb40;   /* 0x004ecb40 */
 extern unsigned int g_table_004ecb48;   /* 0x004ecb48 */
 
 /* Externs for call/jump targets. */
-extern void PendingMatch_0040cd50(void);   /* 0x0040cd50 */
+extern void PendingMatch_MStackPush2RunCountdown_0040cd50(void);   /* 0x0040cd50 */
 extern void LinkedListSearch(void);   /* 0x004750f0 */
 extern void TestP1ReplaceCurrent(void);   /* 0x004751c0 */
 extern void MStackPush8(void);   /* 0x004ab790 */
@@ -44,7 +44,7 @@ void GuardedScaled_MStackPush8_then_PendingMatch(void) {
     MStackPush8();
     if (g_framePauseFlag == 0) {
         g_eventQueueTotal = (unsigned int)&g_table_004d7238 >> 2;
-        PendingMatch_0040cd50();
+        PendingMatch_MStackPush2RunCountdown_0040cd50();
     }
 }
 

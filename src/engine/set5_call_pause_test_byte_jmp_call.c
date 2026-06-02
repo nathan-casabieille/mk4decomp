@@ -16,7 +16,7 @@ extern unsigned int g_tickFlagF;
 extern void DualTestDirtyToggle_004282c0(void);
 extern void StackPopDispatchTagged(void);
 extern void IncCapped3e7(void);
-extern void RoundStartCluster_004919c0(void);
+extern void RoundStartCluster_RemapWalkAndJmp(void);
 void Set5CallPauseTestByteJmpCall(void) {
     g_walkCallback = (void (*)(void))5;
     g_tickFlagF = 5;
@@ -29,5 +29,5 @@ void Set5CallPauseTestByteJmpCall(void) {
         return;
     }
     IncCapped3e7();
-    RoundStartCluster_004919c0();
+    RoundStartCluster_RemapWalkAndJmp();
 }

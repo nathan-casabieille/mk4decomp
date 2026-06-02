@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -112,7 +112,7 @@ extern void ScaledMove48to58(void);
 extern void SixEntryYieldThunks(void);
 extern void InstallSelfPlusTrampoline(void);
 extern void FlagCascadeStateSet(void);
-extern void StageTransitionCluster_0046f250(void);
+extern void StageTransitionCluster_ArgSarStoreJmp(void);
 extern void StateDispatchYield(void);
 extern void QuadEntryChainPush(void);
 extern void MStackBitFlagDispatch(void);
@@ -122,7 +122,7 @@ extern void PushFourCallPopBitJmp(void);
  *   B1 (0..19, +12 NOPs): call ScaledMove48to58; if !pause jmp SixEntryYieldThunks; ret.
  *   B2 (32..71, +8 NOPs): call ScaledMove48to58; if !pause call InstallSelfPlusTrampoline; if !pause
  *     call FlagCascadeStateSet; if !pause test bit0 of g_xformDirtyFlags (clear=>jmp
- *     StageTransitionCluster_0046f250; set=>store 5 at g_walkCallback and tail-jmp StateDispatchYield); ret.
+ *     StageTransitionCluster_ArgSarStoreJmp; set=>store 5 at g_walkCallback and tail-jmp StateDispatchYield); ret.
  *   B3 (112..187, +4 NOPs): scaled chain via baseSel[+0x30]; if eax==0 jmp
  *     QuadEntryChainPush; else call MStackBitFlagDispatch; if !pause: chain[+0xc][+4]
  *     extracted and tail-call eax; ret.
@@ -132,7 +132,7 @@ extern unsigned int g_dispatchSave693;
 extern unsigned int g_dispatchSave694;
 extern void ArgSarStoreJmp(void);
 extern void GatedWordPushCall(void);
-extern void PendingMatch_00452770(void);
+extern void PendingMatch_ArgSarStoreJmp_00452770(void);
 extern void StoreLoadJmp(void);
 extern void ThrowInitLinkCluster(void);
 extern void Thunk_ScaledNeg1SetPause(void);
@@ -176,7 +176,7 @@ __declspec(naked) void QuadStateHandler(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
-        jmp     StageTransitionCluster_0046f250
+        jmp     StageTransitionCluster_ArgSarStoreJmp
         mov     dword ptr [g_walkCallback], 5
         jmp     StateDispatchYield
         ret
@@ -221,11 +221,11 @@ __declspec(naked) void QuadStateHandler(void) {
     }
 }
 
-__declspec(naked) void StageTransitionCluster_00455340(void)
+__declspec(naked) void StageTransitionCluster_PendingMatch(void)
 {
     __asm {
         /* === Helper 1 (0x455340): pre-stage event + force-slot === */
-        call     PendingMatch_00452770
+        call     PendingMatch_ArgSarStoreJmp_00452770
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_538a

@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -120,7 +120,7 @@ extern void ScaledChain3c7c(void);
  *     and g_walkCallback; otherwise call ScaledChain3c7c then 3-way dispatch on g_walkCallback.
  */
 
-__declspec(naked) void InstallSelfCountdown2Stage_0047c8f0(void) {
+__declspec(naked) void InstallSelfCountdown2Stage_PopCallBitCmpPushCall(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         shl     eax, 2

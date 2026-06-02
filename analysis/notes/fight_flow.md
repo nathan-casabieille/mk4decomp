@@ -74,7 +74,7 @@ single role name would mislead, or are genuinely audio:
 
 | Address    | Name | Note |
 |------------|------|------|
-| 0x004a62b0 | `PendingMatch_004a62b0` | 3004b; only "PRESS ACTION KEY"/"WAITING" - too generic to pin which screen |
+| 0x004a62b0 | `PendingMatch_Test4StatesAny` | 3004b; only "PRESS ACTION KEY"/"WAITING" - too generic to pin which screen |
 | 0x004a2a80 / 0x004a3400 / 0x004a8ca0 | `PendingMatch_*` | large fight-setup state machines (no distinctive strings) |
 | 0x004a3f50 | `AudioStreamFsm5Way` | "Game Over" - likely the game-over *music* sequence (genuinely audio) |
 | 0x004a27c0 | `VoiceMixerTickDispatch` | per-frame voice mixer tick (genuinely audio) |
@@ -91,7 +91,7 @@ already plausible, so they are left pending a fuller read:
 | 0x00423c20 | `ContinueScreenFsm` | "MORTAL KOMBAT 4 DESIGN TEAM" | continue screen that rolls into credits, or the credits roll itself |
 | 0x00423b80 | `ChainInit3CallTailJmp` | "GAME ANALYSTS" | credits (testers) - adjacent to the above |
 | 0x0042d240 | `PendingMatch_0042d240` | "GAME OVER" | a game-over handler (string too common to be sure) |
-| 0x004a62b0 | `PendingMatch_004a62b0` | "PRESS ACTION KEY", "WAITING" | the largest (3004b) unidentified screen - likely the VS / pre-fight matchup |
+| 0x004a62b0 | `PendingMatch_Test4StatesAny` | "PRESS ACTION KEY", "WAITING" | the largest (3004b) unidentified screen - likely the VS / pre-fight matchup |
 
 ## TODOs
 
@@ -106,6 +106,6 @@ already plausible, so they are left pending a fuller read:
   sequence (e.g. ARCADE: select -> CpuBattles toggle -> load ->
   fight -> outcome -> champion). The `on_select` handlers in the mode
   table ([menu_state.md](menu_state.md)) are the entry points.
-- **`PendingMatch_004a62b0`** (the 3004-byte "PRESS ACTION KEY" screen)
+- **`PendingMatch_Test4StatesAny`** (the 3004-byte "PRESS ACTION KEY" screen)
   is the largest unidentified screen - likely the VS / pre-fight
   screen. Worth a focused disassembly.

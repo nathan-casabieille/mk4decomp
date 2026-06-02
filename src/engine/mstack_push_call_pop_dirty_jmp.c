@@ -32,7 +32,7 @@ extern void MStackCjChainSwapDualCall(void);
 
 /* @addr 0x0042cc90 */
 
-__declspec(naked) void MStackPushCallPopDirtyJmp_0042cc90(void) {
+__declspec(naked) void MStackPushCallPopDirtyJmp_State208cBit0Flag(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_walkCallback]
@@ -58,7 +58,7 @@ L_mscpd_ret_a:
 }
 
 /* @addr 0x0042cce0 */
-__declspec(naked) void MStackPushCallPopDirtyJmp_0042cce0(void) {
+__declspec(naked) void MStackPushCallPopDirtyJmp_GuardedRangeCmpToggle(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_walkCallback]

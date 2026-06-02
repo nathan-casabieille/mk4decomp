@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  * @addr 0x00484a90 (111b game) - install-self with 3 tail jmps:
  *   captures/zeros base[+0x84]; if set and walk_target non-null
  *   tail-jmps to _00484b00; else call dual-toggle helper; on pause
- *   clear, if state bit 0 set tail-jmp FiveBlockDispatchChain_00484b70 else tail-jmp
+ *   clear, if state bit 0 set tail-jmp FiveBlockDispatchChain_ScaledAndAl7f else tail-jmp
  *   _00484b00; else install self with tag.
  */
 extern void InstallSelfTri(void);
@@ -130,7 +130,7 @@ void InstallSelfTri(void) {
         GuardedDualConst1AndToggle();
         if (g_framePauseFlag != 0) return;
         if ((g_xformDirtyFlags & 1) != 0) {
-            FiveBlockDispatchChain_00484b70();
+            FiveBlockDispatchChain_ScaledAndAl7f();
             return;
         }
         CallPauseDirtyMStackPush484b40();

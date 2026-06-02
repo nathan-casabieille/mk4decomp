@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -116,7 +116,7 @@ extern void ArgSarStoreJmp(void);
 extern void DoubleScaledCrossStore(void);
 extern void GatedWordPushCall(void);
 extern void InstallSelfPackedTailJmp(void);
-extern void PendingMatch_0044d7a0(void);
+extern void PendingMatch_ArgSarStoreJmp_0044d7a0(void);
 extern void SetJmp_InstallSelfChainEsi(void);
 extern void StoreLoadJmp(void);
 extern void Thunk_ScaledNeg1SetPause(void);
@@ -260,7 +260,7 @@ __declspec(naked) void IntroFsmCluster(void)
         test     eax, eax
         jne      short L_d793
         mov      dword ptr [g_eventQueueEnd], 1
-        jmp      PendingMatch_0044d7a0
+        jmp      PendingMatch_ArgSarStoreJmp_0044d7a0
     L_d793:
         ret
     }

@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -121,10 +121,10 @@ extern unsigned int g_fightAxisPosY;
  *   Entry 2 (offset 0xc0, 83b): sets 0x54207c=0x2666, 0x54206c=0x170a;
  *     calls StoreDoubleNegPauseSubStore; on no-error computes
  *     g_walkCallback += 0x10000, multiplies via Mul10Tail
- *     (push twice with the cur cj), negates, and tail-jmps PendingMatch_0040e310.
+ *     (push twice with the cur cj), negates, and tail-jmps PendingMatch_StoreDoubleNegPauseSubStore.
  *   13b NOP align pad.
  *   Entry 3 (offset 0x120, 81b): mirror of entry 2 with 0x3333 / 0x7ae
- *     constants; no negation before final store; tail-jmps PendingMatch_0040e310.
+ *     constants; no negation before final store; tail-jmps PendingMatch_StoreDoubleNegPauseSubStore.
  */
 extern unsigned int g_dispatchSave522;
 extern unsigned int g_phaseChainArr2;
@@ -132,7 +132,7 @@ extern unsigned int g_alarmTriState;
 extern unsigned int g_table_004d57b0;
 extern void MStackPop8(void);
 extern void MStackPush8(void);
-extern void PendingMatch_0040e310(void);
+extern void PendingMatch_StoreDoubleNegPauseSubStore(void);
 extern void StackPushAdd15CallPop(void);
 extern void StoreDoubleNegPauseSubStore(void);
 extern void ZeroThreeFields_0040a8b0(void);
@@ -213,7 +213,7 @@ __declspec(naked) void MStackInitTriAlarm(void) {
         mov     dword ptr [g_eventQueueNotMask], eax
         neg     eax
         mov     dword ptr [g_walkCallback], eax
-        jmp     PendingMatch_0040e310
+        jmp     PendingMatch_StoreDoubleNegPauseSubStore
     L_msi_e2End:
         ret
         nop
@@ -247,7 +247,7 @@ __declspec(naked) void MStackInitTriAlarm(void) {
         add     esp, 8
         mov     dword ptr [g_eventQueueNotMask], eax
         mov     dword ptr [g_walkCallback], eax
-        jmp     PendingMatch_0040e310
+        jmp     PendingMatch_StoreDoubleNegPauseSubStore
     L_msi_e3End:
         ret
     }

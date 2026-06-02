@@ -9,11 +9,11 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_dispatchSave1180;
 
 /* @addr 0x004111f0 (18b): set g_eventQueueIdx = (0x004d5c20>>2); tail-jmp
- * PendingMatch_00411210 (= PendingMatch_00411210). The 4-byte nop gap before this
+ * PendingMatch_StoreTwoCall_00411210 (= PendingMatch_StoreTwoCall_00411210). The 4-byte nop gap before this
  * entry is filled by 0x90-fill. Referenced from g_dispatchSave904 in data.c. */
 void func_set_g_eventQueueIdx_then_PendingMatch(void) {
     g_eventQueueIdx = (unsigned int)&g_dispatchSave1180 >> 2;
-    PendingMatch_00411210();
+    PendingMatch_StoreTwoCall_00411210();
 }
 
 /* h1 @ 0x00416e20 (48b): bootstrap wrapper - install func_00416e50

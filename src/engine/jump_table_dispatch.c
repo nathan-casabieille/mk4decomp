@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -123,7 +123,7 @@ extern void GuardedSeq_PackedSelectLoad6_then_GuardedSeq(void);
 extern void PrefixThunkInstallSelf3State(void);
 extern void Wrapper_CmpDualPatchScaledRangeJmp_004e4990(void);
 
-__declspec(naked) void FiveBlockDispatch_00435340(void) {
+__declspec(naked) void FiveBlockDispatch_JumpTableDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_table_00535ddc]
         cmp     eax, 0x00020000

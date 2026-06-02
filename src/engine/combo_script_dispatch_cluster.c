@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -116,7 +116,7 @@ extern unsigned int g_dispatchSave973;
 extern void CallPauseDirtyMStackPushFn(void);
 extern void InstallSelfIndirectJmp(void);
 extern void ScaledMove74to70(void);
-extern void FiveBlockDispatchChain_0046ec20(void);
+extern void FiveBlockDispatchChain_ScaledAndAlfe(void);
 extern void TripleCallPauseJmp(void);
 extern void ComboScriptDispatchCluster(void);
 extern void PhaseDispatchListAdvance(void);
@@ -132,7 +132,7 @@ extern void IterStepScaledStore(void);
  *   9b NOP align pad.
  *   Entry 2 (offset 0x90, 106b): ScaledMove74to70; on no-error
  *     sets [g_baseSel*4+0x74]=0x604; if [scaled+0x30] != 0 tail-jmp
- *     FiveBlockDispatchChain_0046ec20; else chain ScaledAndAlfe →
+ *     FiveBlockDispatchChain_ScaledAndAlfe; else chain ScaledAndAlfe →
  *     TripleCallPauseJmp → push 0x4eb6f8 →
  *     ArgSarStoreJmp.
  *   6b NOP align pad.
@@ -206,7 +206,7 @@ __declspec(naked) void FiveEntryAlarmInstallChain(void) {
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         je      short L_fea_skipJmp
-        jmp     FiveBlockDispatchChain_0046ec20
+        jmp     FiveBlockDispatchChain_ScaledAndAlfe
     L_fea_skipJmp:
         call    ScaledAndAlfe
         mov     eax, dword ptr [g_framePauseFlag]

@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -114,10 +114,10 @@ extern unsigned int g_fightAxisPosY;
  *     tail-jmp StackPopDispatchTagged.
  *     If was nonzero: g_xformScratch2088=g_currentNodeFlags; g_eventQueueIdx=0x00475570 (sibling);
  *     g_eventQueueChild=0; install-self at [eax+8]=0x00475490; chain[+0x84]=1;
- *     scaledInit-chain push 0x00475490+0x01000000; call SelfInstallPhaseDispatch_00428990; pause=1; ret.
+ *     scaledInit-chain push 0x00475490+0x01000000; call SelfInstallPhaseDispatch_StackPopDispatchTagged; pause=1; ret.
  *   B2 (224..249): cj[+0x58] = cj[+0x48] (sibling at 0x00475570).
  */
-extern void SelfInstallPhaseDispatch_00428990(void);
+extern void SelfInstallPhaseDispatch_StackPopDispatchTagged(void);
 
 __declspec(naked) void InstallSelfWithSibling(void) {
     __asm {
@@ -160,7 +160,7 @@ __declspec(naked) void InstallSelfWithSibling(void) {
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
-        call    SelfInstallPhaseDispatch_00428990
+        call    SelfInstallPhaseDispatch_StackPopDispatchTagged
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         ret

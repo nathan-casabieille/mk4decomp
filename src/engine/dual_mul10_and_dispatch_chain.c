@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -115,13 +115,13 @@ extern unsigned int g_fightAxisPosY;
  *   B2 (0x80..0xe3, +12 NOPs): dec baseSel[+0x74] (clamp to 3 if was 0); if
  *     orig was 0: call Phase1ChainExtendedInitLoop. If !pause: dec baseSel[+0x5c]; if was 0:
  *     tail-jmp ScaledIndirectJmp_0049c850. ret.
- *   B3 (0xf0..0x111): call BootOneShotSetup; if !pause: call PendingMatch_0040a8d0;
+ *   B3 (0xf0..0x111): call BootOneShotSetup; if !pause: call PendingMatch_MStackPush8_0040a8d0;
  *     if !pause: tail-jmp GuardedSeq_MStackCall_then_CallSetPause_0049c340; ret.
  */
 extern unsigned int g_bootInitSaveSlot;
 extern void BootOneShotSetup(void);
 extern void GuardedSeq_MStackCall_then_CallSetPause_0049c340(void);
-extern void PendingMatch_0040a8d0(void);
+extern void PendingMatch_MStackPush8_0040a8d0(void);
 extern void Phase1ChainExtendedInitLoop(void);
 extern void ScaledIndirectJmp_0049c850(void);
 
@@ -204,7 +204,7 @@ __declspec(naked) void DualMul10AndDispatchChain(void) {
         test    eax, eax
         _emit   75h
         _emit   13h
-        call    PendingMatch_0040a8d0
+        call    PendingMatch_MStackPush8_0040a8d0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

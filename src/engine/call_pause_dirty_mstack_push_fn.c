@@ -24,9 +24,9 @@ extern unsigned int g_acc_00542078;
  *   ret
  */
 extern void DirtyToggleByGate(void);
-extern void PendingMatch_0046e2e0(void);
+extern void PendingMatch_SlotEvent3EntryChain(void);
 extern void GameDispatchValidateState(void);
-extern void PendingMatch_0046e2e0(void);
+extern void PendingMatch_SlotEvent3EntryChain(void);
 void CallPauseDirtyMStackPushFn(void) {
     unsigned int top;
     DirtyToggleByGate();
@@ -34,9 +34,9 @@ void CallPauseDirtyMStackPushFn(void) {
     if ((g_xformDirtyFlags & 4) != 0) {
         top = g_matrixStackTop + 1;
         g_matrixStackTop = top;
-        *(unsigned int *)(top * 4) = (unsigned int)&PendingMatch_0046e2e0;
+        *(unsigned int *)(top * 4) = (unsigned int)&PendingMatch_SlotEvent3EntryChain;
         GameDispatchValidateState();
         return;
     }
-    PendingMatch_0046e2e0();
+    PendingMatch_SlotEvent3EntryChain();
 }

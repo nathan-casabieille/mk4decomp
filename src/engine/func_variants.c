@@ -75,10 +75,10 @@ extern void MStackChainSwapTraversal(void);
 extern void MStackPop4Rewrite(void);
 extern void MatchEndFadeFsmCluster(void);
 extern void Mul10Tail(void);
-extern void PendingMatch_00432ed0(void);
+extern void PendingMatch_Ten404c40_404bd0(void);
 extern void Phase3DispatchScaleInstallSelf(void);
 extern void Push70CallScaleArith2(void);
-extern void RoundCleanupCluster_00427690(void);
+extern void RoundCleanupCluster_Ten404c40_404bd0(void);
 extern void ScaledZero44(void);
 extern void Set2CallIncJmp(void);
 extern void SlideAttackEventCluster(void);
@@ -314,7 +314,7 @@ void func_MStackCall_then_CallSetPause_00498770(void) {
 /* h4 @ 0x00498790 (357b naked): pose-fn state machine. Keep naked:
  * self-ref via `mov [esi+8], offset L_qsv_main` (DIR32 reloc to
  * internal label) + callee-saved ebx/esi register caching. */
-__declspec(naked) void func_00498790(void)
+__declspec(naked) void func_MStackChainSwapTraversal(void)
 {
     __asm
     {
@@ -424,7 +424,7 @@ void func_ScaledIndexConditionalAdd_then_CondPickDualStore(void) {
  * 004f2240. Keep naked: 13+ intermediate `mov [g_walkCallback], reg`
  * stores that pure C dead-store-eliminates; callee-saved esi for
  * cross-call value retention; reload-via-global pattern. */
-__declspec(naked) void func_00498980(void)
+__declspec(naked) void func_TableLookupCall_g_table_00498980(void)
 {
     __asm {
         /* === h3 (0x498980): pose copy + 0x23d7 ratio + 004f2240 === */
@@ -518,7 +518,7 @@ void func_Vec2SumMul10ChainCompute_then_ScaledIndirectJmp(void) {
  * `mov [esi+8], OFFSET L_8b20` installs the function's own internal
  * label as a callback (DIR32 reloc to mid-function address - not
  * expressible in pure C). */
-__declspec(naked) void func_00498b20(void)
+__declspec(naked) void func_TableLookupCall_g_table_00498b20(void)
 {
     __asm {
         /* === h5 (0x498b20): pose-fn 2-state w/ 489ff0 + 406740 === */
@@ -599,7 +599,7 @@ void func_0047c3c0(void) {
 /* h4 @ 0x0047c3f0 (288b naked): pose-fn 2-state. Keep naked: self-ref
  * via OFFSET L_c3f0 + cross-ref to func_SfxAttenuateAndApply_then_PendingMatch via OFFSET. */
 extern void func_SfxAttenuateAndApply_then_PendingMatch(void);
-__declspec(naked) void func_0047c3f0(void)
+__declspec(naked) void func_ScaledZero44(void)
 {
     __asm {
         /* === h4 (0x47c3f0): pose-fn 2-state w/ 0xfffc0000 + 48f3f0 === */
@@ -756,7 +756,7 @@ void func_call_ArgSarStoreJmp_with_g_dispatchSave752(void) {
 /* h8 @ 0x004822e0 (128b naked): pose-fn install state 1.
  * Keep naked: self-ref `mov [eax+8], OFFSET L_22e0` + `mov edi,
  * OFFSET L_22e0` (DIR32 reloc to function's own entry label). */
-__declspec(naked) void func_004822e0(void)
+__declspec(naked) void func_GuardedDispatch4(void)
 {
     __asm {
         /* === h8 (0x4822e0): pose-fn install state 1 w/ 00489080 === */
@@ -947,7 +947,7 @@ void func_DualSubInstallChain_g_dispatchSave941(void) {
  * Hand-rolled prologues (push interleaved with body code) and constant
  * register caching (ebx=4, esi=0xff*0000) are non-coaxable in pure C.
  * Internal data-table reference at 0x00432a70 (entry C label) preserved. */
-__declspec(naked) void func_00432710(void) {
+__declspec(naked) void func_PendingMatch(void) {
     __asm {
         mov      eax, dword ptr [g_matrixStackTop]
         mov      ecx, dword ptr [g_currentNodeFlags]
@@ -970,7 +970,7 @@ __declspec(naked) void func_00432710(void) {
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], edx
-        call     PendingMatch_00432ed0
+        call     PendingMatch_Ten404c40_404bd0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
@@ -1003,7 +1003,7 @@ __declspec(naked) void func_00432710(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
-        call     RoundCleanupCluster_00427690
+        call     RoundCleanupCluster_Ten404c40_404bd0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
@@ -1057,7 +1057,7 @@ __declspec(naked) void func_00432710(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
-        call     RoundCleanupCluster_00427690
+        call     RoundCleanupCluster_Ten404c40_404bd0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
@@ -1142,7 +1142,7 @@ __declspec(naked) void func_00432710(void) {
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], edx
-        call     PendingMatch_00432ed0
+        call     PendingMatch_Ten404c40_404bd0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
@@ -1177,7 +1177,7 @@ __declspec(naked) void func_00432710(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
-        call     RoundCleanupCluster_00427690
+        call     RoundCleanupCluster_Ten404c40_404bd0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
@@ -1258,7 +1258,7 @@ __declspec(naked) void func_00432710(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
-        call     RoundCleanupCluster_00427690
+        call     RoundCleanupCluster_Ten404c40_404bd0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
@@ -1400,7 +1400,7 @@ void func_GatedPushAndArgSar_004e6318(void) {
  * install-self states reachable via internal pointers (0x448990, 0x448ce0,
  * 0x448e10, etc.); hand-rolled prologues, push esi interleaved with body
  * setup, and constant register caching make pure-C conversion impractical. */
-__declspec(naked) void func_00448990(void) {
+__declspec(naked) void func_Set2CallIncJmp(void) {
     __asm {
         mov      eax, dword ptr [g_baseSel]
         push     esi

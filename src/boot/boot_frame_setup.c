@@ -33,7 +33,7 @@ extern void Push1eCallTestDirtyLoop(void);
 extern void MStackLoopFieldInit(void);
 extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
 extern void Cmp2CallDirtyCall(void);
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW(void);
@@ -70,7 +70,7 @@ extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
 extern void ChainWalkInstall(void);
 extern void FpuSqrtMul(void);
-extern void PendingMatch_0042b930(void);
+extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void MStackBracketed3StoreCall(void);
@@ -114,7 +114,7 @@ extern void GuardedChainCmpDualBitXor(void);
 extern void ScaledXorStore_004903b0(void);
 extern void CallPauseDirtyPushCall(void);
 extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
-extern void PendingMatch_00484da0(void);
+extern void PendingMatch_ArgSarStoreJmp_00484da0(void);
 extern void Wrapper_ArgSarStoreJmp_004ee958(void);
 
 /* @addr 0x00484b70 (284b game) - 5 adjacent dispatch blocks.
@@ -126,7 +126,7 @@ extern void Wrapper_ArgSarStoreJmp_004ee958(void);
  *     (BootFrameSetup, GuardedChainCmpDualBitXor, ScaledXorStore, GateDispatch6c);
  *     if all !pause: tail-jmp CallPauseDirtyPushCall.
  *   B4 (0xb0..0xe7, +8 NOPs): call GateDispatch6c; if !pause: call CopyJmp_SlotCmp3way_g_currentNodeIdx;
- *     if !pause and bit0 of state set: tail-jmp PendingMatch_00484da0; else: push 0x004ee920,
+ *     if !pause and bit0 of state set: tail-jmp PendingMatch_ArgSarStoreJmp_00484da0; else: push 0x004ee920,
  *     tail-call ArgSarStoreJmp.
  *   B5 (0xf0..0x11b): call DirtyToggleByGate; if !pause and bit2 of state clear:
  *     tail-jmp Wrapper_ArgSarStoreJmp_004ee958; else g_eventQueueChild=0xd and tail-jmp
@@ -137,7 +137,7 @@ extern void DualBlockInstallSelfWithSibling(void);
 extern void GateDispatch6c(void);
 extern void MstackPopScaledChainPlusThunks(void);
 
-__declspec(naked) void FiveBlockDispatchChain_00484b70(void) {
+__declspec(naked) void FiveBlockDispatchChain_ScaledAndAl7f(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     dword ptr [g_walkCallback], 2
@@ -229,7 +229,7 @@ __declspec(naked) void FiveBlockDispatchChain_00484b70(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
-        jmp     PendingMatch_00484da0
+        jmp     PendingMatch_ArgSarStoreJmp_00484da0
         push    0x004ee920
         call    ArgSarStoreJmp
         add     esp, 4

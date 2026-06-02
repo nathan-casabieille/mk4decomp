@@ -17,7 +17,7 @@ extern unsigned int g_table_00535ddc;
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80Call(void);
 extern void InstallSelfStdChain(void);
-extern void InstallSelfChainExtendCall_00434f10(void);
+extern void InstallSelfChainExtendCall_MStackPushSet0Jmp(void);
 extern void CallPauseTestByteJmpCalls(void);
 void RangeDispatch4(void) {
     int v;
@@ -36,7 +36,7 @@ void RangeDispatch4(void) {
         return;
     }
     if (v > 0x10000) {
-        InstallSelfChainExtendCall_00434f10();
+        InstallSelfChainExtendCall_MStackPushSet0Jmp();
         return;
     }
     CallPauseTestByteJmpCalls();

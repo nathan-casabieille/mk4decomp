@@ -30,7 +30,7 @@ extern int ForwardWithLiteral_004ccce0(int a, int b);
 extern int ForwardWithLiteral_004ccd00(int a, int b);
 
 /* @addr 0x004ccd20 */
-__declspec(naked) void SevenArgThenTwoArg_004ccd20(void) {
+__declspec(naked) void SevenArgThenTwoArg_PendingMatch_004ccd20(void) {
     __asm {
         mov     eax, dword ptr [esp + 8]
         sub     esp, 0x0c
@@ -63,7 +63,7 @@ __declspec(naked) void SevenArgThenTwoArg_004ccd20(void) {
 }
 
 /* @addr 0x004ccd60 */
-__declspec(naked) void SevenArgThenTwoArg_004ccd60(void) {
+__declspec(naked) void SevenArgThenTwoArg_PendingMatch_004ccd60(void) {
     __asm {
         mov     eax, dword ptr [esp + 8]
         sub     esp, 0x0c
