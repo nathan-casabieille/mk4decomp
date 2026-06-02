@@ -118,8 +118,8 @@ extern unsigned int g_fightAxisPosY;
  *   if g_dsoundPrimary: vtbl[+8](.); clear. Same for g_dsoundContext.
  */
 extern unsigned int g_byte_00f9efec;
-extern unsigned int g_iat_004d2074;
-extern unsigned int g_iat_004d2240;
+extern unsigned int g_iat_Sleep;
+extern unsigned int g_iat_timeGetTime;
 extern void * g_dsoundContext;
 extern void * g_dsoundPrimary;
 extern unsigned int g_dispatchSave1417_00f9eff0;
@@ -139,7 +139,7 @@ __declspec(naked) void AudioShutdownSequence(void) {
         test    edi, edi
         _emit   7eh
         _emit   3ch
-        mov     ebx, dword ptr [g_iat_004d2240]
+        mov     ebx, dword ptr [g_iat_timeGetTime]
 loopShutdown:
         call    BuildMaskFromArray
         test    eax, eax
@@ -159,7 +159,7 @@ loopShutdown:
         _emit   7eh
         _emit   07h
         push    esi
-        call    dword ptr [g_iat_004d2074]
+        call    dword ptr [g_iat_Sleep]
         dec     edi
         test    edi, edi
         _emit   7fh

@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY;
  *     (eax | edx where edx = result*0x3c (= eax * 5 * 4 * 3? Actually lea+shl gives *60))
  *   Wait: eax_low *= 3; eax *= 5 ((eax + eax*4)); shl 2 → *60 total. So eax_low * 60 + (caps >> 8 & 0xff).
  */
-extern unsigned int g_iat_004d2244;
+extern unsigned int g_iat_mciSendCommandA;
 extern u32 g_audioPreState;
 extern void Helper_AuxAudio_PostInit(void);
 
@@ -139,7 +139,7 @@ __declspec(naked) void AuxAudioDevCapsQuery(void) {
         _emit   00h
         mov     ecx, dword ptr [g_audioPreState]
         mov     edi, [esp + 0x28]
-        mov     esi, dword ptr [g_iat_004d2244]
+        mov     esi, dword ptr [g_iat_mciSendCommandA]
         lea     eax, [esp + 0x14]
         push    eax
         push    0x110

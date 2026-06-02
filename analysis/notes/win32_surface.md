@@ -332,7 +332,7 @@ the IDirectDraw / IDirectDrawSurface objects:
 - **Mode 3 / 5 surface**: vtable slot 32 (`+0x80`) called per
   `EndScene` with arg=0 - probably `IDirectDrawSurface::Flip(NULL)`.
 - **Mode 4 blit**: `Renderer4_PresentFrame` calls the 12-arg
-  `g_iat_004d2034` slot - that's `IDirectDrawSurface::Blt(...)`,
+  `g_iat_SetDIBitsToDevice` slot - that's `IDirectDrawSurface::Blt(...)`,
   with source rect (0,0,320,240) and dest at the window-client
   origin.
 

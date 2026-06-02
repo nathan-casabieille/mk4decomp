@@ -119,9 +119,9 @@ extern unsigned int g_crtFpuSlot1_0052290c;
 extern unsigned int g_crtCType;
 extern unsigned int g_crtCleanupFlag;
 extern unsigned int g_arr_00fa0de0;
-extern unsigned int g_iat_004d20a0;
-extern unsigned int g_iat_004d2108;
-extern unsigned int g_iat_004d2148;
+extern unsigned int g_iat_GetModuleFileNameA;
+extern unsigned int g_iat_WriteFile;
+extern unsigned int g_iat_GetStdHandle;
 extern void LazyLoadInvoke(void);
 extern void Strncpy(void);
 
@@ -160,7 +160,7 @@ __declspec(naked) void RaiseAbortLocalized(void)
         push     0x104
         push     eax
         push     0
-        call     dword ptr [g_iat_004d20a0]
+        call     dword ptr [g_iat_GetModuleFileNameA]
         test     eax, eax
         jne      short L_c0fb
         mov      ecx, 5
@@ -274,7 +274,7 @@ __declspec(naked) void RaiseAbortLocalized(void)
         jne      short L_c218
     L_c20e:
         push     -0xc
-        call     dword ptr [g_iat_004d2148]
+        call     dword ptr [g_iat_GetStdHandle]
         mov      esi, eax
     L_c218:
         mov      edx, dword ptr [ebp*8 + g_crtFpuSlot1_0052290c]
@@ -290,7 +290,7 @@ __declspec(naked) void RaiseAbortLocalized(void)
         push     ecx
         push     edx
         push     esi
-        call     dword ptr [g_iat_004d2108]
+        call     dword ptr [g_iat_WriteFile]
     L_c23b:
         pop      edi
         pop      esi

@@ -8,7 +8,7 @@
  *   esi = (size+0xf) & ~0xf; if (esi > g_crtHeapMaxPtr): HeapAlloc(g_dispatchSave1470_00fa0ee4,0,size).
  *   Else: Lock(9); ptr = func_004c7430(esi >> 4); Unlock(9); return ptr (or 0).
  */
-extern unsigned int g_iat_004d20b4;
+extern unsigned int g_iat_HeapAlloc;
 extern unsigned int g_crtHeapMaxPtr;
 extern unsigned int g_dispatchSave1470_00fa0ee4;
 extern void Lock(void);
@@ -49,7 +49,7 @@ __declspec(naked) void* SmallMalloc(void) {
         push    esi
         push    0
         push    edx
-        call    dword ptr [g_iat_004d20b4]
+        call    dword ptr [g_iat_HeapAlloc]
         pop     edi
         pop     esi
         ret

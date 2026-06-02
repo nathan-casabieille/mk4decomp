@@ -11,8 +11,8 @@
  *   and     eax, 1
  *   ret
  */
-extern unsigned int (__stdcall *g_iat_004d21c0)(int);
+extern unsigned int (__stdcall *g_iat_GetAsyncKeyState)(int);
 int Input_GetAsyncKey(int arg) {
-    return (g_iat_004d21c0(arg) >> 15) & 1;
+    return (g_iat_GetAsyncKeyState(arg) >> 15) & 1;
 }
 

@@ -114,8 +114,8 @@ extern unsigned int g_fightAxisPosY;
  *   _lock(0x13) when init flag set), calls inner, then unlocks /
  *   leaves critsec; returns the inner's result.
  */
-extern unsigned int g_iat_004d20cc;
-extern unsigned int g_iat_004d20d0;
+extern unsigned int g_iat_InterlockedIncrement;
+extern unsigned int g_iat_InterlockedDecrement;
 extern unsigned int g_dispatchSave1463_00f9fdac;
 extern unsigned int g_dispatchSave1464_00f9fdb0;
 extern void Lock(void);
@@ -128,9 +128,9 @@ __declspec(naked) void CritSecWrap350(void) {
         push    esi
         push    edi
         push    offset g_dispatchSave1464_00f9fdb0
-        call    dword ptr [g_iat_004d20cc]
+        call    dword ptr [g_iat_InterlockedIncrement]
         mov     eax, dword ptr [g_dispatchSave1463_00f9fdac]
-        mov     edi, dword ptr [g_iat_004d20d0]
+        mov     edi, dword ptr [g_iat_InterlockedDecrement]
         test    eax, eax
         je      noLock
         push    offset g_dispatchSave1464_00f9fdb0

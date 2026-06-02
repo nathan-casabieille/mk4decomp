@@ -9,7 +9,7 @@
  *   ComRelease 4x, DSoundBufferInit146(0), 3 more releases; if g_renderer2_initOk:
  *   SetEvent via IAT@4d2210; clear g_renderer2_initOk; ret.
  */
-extern unsigned int g_iat_004d2210;
+extern unsigned int g_iat_InvalidateRect;
 extern unsigned int g_comptr_0058c7ac;
 extern int g_renderer2_present_rc;
 extern int g_renderer2_active;
@@ -68,7 +68,7 @@ loop4ad7c0:
         push    1
         push    0
         push    0
-        call    dword ptr [g_iat_004d2210]
+        call    dword ptr [g_iat_InvalidateRect]
         mov     dword ptr [g_renderer2_initOk], 0
         pop     esi
         ret

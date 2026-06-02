@@ -111,10 +111,10 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_arr_00fa0de0;
 extern unsigned int g_dispatchSave1468_00fa0de4;
 extern unsigned int g_dispatchSave1469_00fa0ee0;
-extern unsigned int g_iat_004d2120;
-extern unsigned int g_iat_004d2128;
-extern unsigned int g_iat_004d2138;
-extern unsigned int g_iat_004d2148;
+extern unsigned int g_iat_GetFileType;
+extern unsigned int g_iat_SetHandleCount;
+extern unsigned int g_iat_GetStartupInfoA;
+extern unsigned int g_iat_GetStdHandle;
 extern void CmpCallPushIATCall(void);
 extern void LoadArgPushCall(void);
 
@@ -156,7 +156,7 @@ __declspec(naked) void CrtIoInitFdTable(void)
     L_8c25:
         lea      edx, [esp + 0x14]
         push     edx
-        call     dword ptr [g_iat_004d2138]
+        call     dword ptr [g_iat_GetStartupInfoA]
         cmp      word ptr [esp + 0x46], di
         je       L_8d38
         mov      eax, dword ptr [esp + 0x48]
@@ -227,7 +227,7 @@ __declspec(naked) void CrtIoInitFdTable(void)
         test     al, 8
         jne      short L_8d0a
         push     ecx
-        call     dword ptr [g_iat_004d2120]
+        call     dword ptr [g_iat_GetFileType]
         test     eax, eax
         je       short L_8d2b
     L_8d0a:
@@ -250,7 +250,7 @@ __declspec(naked) void CrtIoInitFdTable(void)
         cmp      esi, eax
         jl       short L_8ced
     L_8d38:
-        mov      ebx, dword ptr [g_iat_004d2148]
+        mov      ebx, dword ptr [g_iat_GetStdHandle]
         xor      ebp, ebp
     L_8d40:
         mov      ecx, dword ptr [g_arr_00fa0de0]
@@ -277,7 +277,7 @@ __declspec(naked) void CrtIoInitFdTable(void)
         cmp      edi, -1
         je       short L_8da2
         push     edi
-        call     dword ptr [g_iat_004d2120]
+        call     dword ptr [g_iat_GetFileType]
         test     eax, eax
         je       short L_8da2
         and      eax, 0xff
@@ -308,7 +308,7 @@ __declspec(naked) void CrtIoInitFdTable(void)
         jl       L_8d40
         mov      edx, dword ptr [g_dispatchSave1469_00fa0ee0]
         push     edx
-        call     dword ptr [g_iat_004d2128]
+        call     dword ptr [g_iat_SetHandleCount]
         pop      edi
         pop      esi
         pop      ebp

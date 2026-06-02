@@ -107,9 +107,9 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
-extern unsigned int g_iat_004d20fc;
-extern unsigned int g_iat_004d2104;
-extern unsigned int g_iat_004d210c;
+extern unsigned int g_iat_TlsAlloc;
+extern unsigned int g_iat_GetCurrentThreadId;
+extern unsigned int g_iat_TlsSetValue;
 extern unsigned int g_crtTlsSlot;
 
 /* @addr 0x004c9d70 (92b crt) - TLS slot init: call init helper;
@@ -120,13 +120,13 @@ extern unsigned int g_crtTlsSlot;
 int TlsSlotInit(void) {
     unsigned int *ptr;
     FourIndirectCalls();
-    g_crtTlsSlot = ((unsigned int (__stdcall *)(void))g_iat_004d20fc)();
+    g_crtTlsSlot = ((unsigned int (__stdcall *)(void))g_iat_TlsAlloc)();
     if (g_crtTlsSlot != 0xffffffff) {
         ptr = (unsigned int *)Calloc(1, 0x74);
         if (ptr != 0) {
-            if (((int (__stdcall *)(unsigned int, void *))g_iat_004d210c)(g_crtTlsSlot, ptr) != 0) {
+            if (((int (__stdcall *)(unsigned int, void *))g_iat_TlsSetValue)(g_crtTlsSlot, ptr) != 0) {
                 InitFields50and14(ptr);
-                ptr[0] = ((unsigned int (__stdcall *)(void))g_iat_004d2104)();
+                ptr[0] = ((unsigned int (__stdcall *)(void))g_iat_GetCurrentThreadId)();
                 ptr[1] = 0xffffffff;
                 return 1;
             }

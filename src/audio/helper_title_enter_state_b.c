@@ -5,8 +5,8 @@
 #include "game/tick.h"
 #include "audio/sound.h"
 
-extern unsigned int g_iat_004d2244;
-extern unsigned int g_iat_004d2240;
+extern unsigned int g_iat_mciSendCommandA;
+extern unsigned int g_iat_timeGetTime;
 
 /*
  * @addr 0x004ac570 (116b audio) - audio re-entrant teardown:
@@ -24,11 +24,11 @@ void Helper_TitleEnterStateB(void) {
     g_audioState0C = 1;
     if (tf != 0) {
         if (((int(*)(void))Helper_AuxAudio_PostInit)() != 0) {
-            ((void(__stdcall *)(unsigned int, int, int, int))g_iat_004d2244)(g_audioPreState, 0x808, 2, 0);
+            ((void(__stdcall *)(unsigned int, int, int, int))g_iat_mciSendCommandA)(g_audioPreState, 0x808, 2, 0);
         }
     }
     if (g_audioState00 != 0) {
-        unsigned int now = ((unsigned int(__stdcall *)(void))g_iat_004d2240)();
+        unsigned int now = ((unsigned int(__stdcall *)(void))g_iat_timeGetTime)();
         now -= g_audioState00;
         g_audioState00 = 0;
         g_timerLastNow += now;

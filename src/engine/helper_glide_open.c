@@ -67,8 +67,8 @@ extern unsigned int g_dispatchSave1650_007b006c;
 extern unsigned int g_dispatchSave1651_007b0070;
 extern unsigned int g_dispatchSave1652_007b0074;
 extern unsigned int g_dispatchSave1653_007b0078;
-extern unsigned int g_iat_004d2050;
-extern unsigned int g_iat_004d2058;
+extern unsigned int g_iat_LoadLibraryA;
+extern unsigned int g_iat_GetProcAddress;
 
 __declspec(naked) void Helper_GlideOpen(void)
 {
@@ -81,11 +81,11 @@ __declspec(naked) void Helper_GlideOpen(void)
         test     eax, eax
         jne      L_4f52
         push     OFFSET g_dispatchSave865_004f4db8
-        call     dword ptr [g_iat_004d2050]
+        call     dword ptr [g_iat_LoadLibraryA]
         test     eax, eax
         mov      dword ptr [g_glideFnTable], eax
         je       L_4f52
-        mov      esi, dword ptr [g_iat_004d2058]
+        mov      esi, dword ptr [g_iat_GetProcAddress]
         push     OFFSET g_dispatchSave864_004f4d9c
         push     eax
         call     esi

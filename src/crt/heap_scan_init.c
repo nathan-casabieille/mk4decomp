@@ -125,8 +125,8 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_dispatchSave1465_00f9fdb4;
 extern unsigned int g_dispatchSave1466_00fa0dc0;
-extern unsigned int g_iat_004d2140;
-extern unsigned int g_iat_004d215c;
+extern unsigned int g_iat_EnterCriticalSection;
+extern unsigned int g_iat_InitializeCriticalSection;
 extern void LoadArgPushCall(void);
 extern void Lock(void);
 extern void TableLookupIatCall(void);
@@ -190,12 +190,12 @@ __declspec(naked) void HeapScanInit(void) {
         jz      short L_hsi_finalize
         add     eax, 0x20
         push    eax
-        call    dword ptr [g_iat_004d215c]
+        call    dword ptr [g_iat_InitializeCriticalSection]
         mov     eax, dword ptr [g_dispatchSave1465_00f9fdb4]
         mov     ecx, [eax + esi]
         add     ecx, 0x20
         push    ecx
-        call    dword ptr [g_iat_004d2140]
+        call    dword ptr [g_iat_EnterCriticalSection]
         mov     edx, dword ptr [g_dispatchSave1465_00f9fdb4]
         mov     edi, [edx + esi]
     L_hsi_finalize:

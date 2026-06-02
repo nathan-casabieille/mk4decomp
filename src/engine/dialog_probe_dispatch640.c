@@ -107,9 +107,9 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
-extern unsigned int g_iat_004d2190;
-extern unsigned int g_iat_004d21a0;
-extern unsigned int g_iat_004d21b0;
+extern unsigned int g_iat_SetWindowPos;
+extern unsigned int g_iat_SetWindowLongA;
+extern unsigned int g_iat_GetSystemMetrics;
 extern unsigned int g_190_iface;
 extern unsigned int g_190_state;
 
@@ -123,11 +123,11 @@ void DialogProbeDispatch640(void) {
     int width;
     int height;
     if (g_190_state == 0) return;
-    setStyle = (void (__stdcall *)(unsigned int, int, unsigned int))g_iat_004d21a0;
+    setStyle = (void (__stdcall *)(unsigned int, int, unsigned int))g_iat_SetWindowLongA;
     setStyle(g_190_iface, -0x14, 8);
     setStyle(g_190_iface, -0x10, 0x90000000);
-    getMetrics = (int (__stdcall *)(int))g_iat_004d21b0;
+    getMetrics = (int (__stdcall *)(int))g_iat_GetSystemMetrics;
     width = getMetrics(1) < 0x280 ? 0x280 : getMetrics(1);
     height = getMetrics(0) < 0x280 ? 0x280 : getMetrics(0);
-    ((void (__stdcall *)(unsigned int, int, int, int, int, int, int))g_iat_004d2190)(g_190_iface, 0, 0, 0, height, width, 0x44);
+    ((void (__stdcall *)(unsigned int, int, int, int, int, int, int))g_iat_SetWindowPos)(g_190_iface, 0, 0, 0, height, width, 0x44);
 }

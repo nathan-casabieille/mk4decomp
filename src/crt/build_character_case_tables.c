@@ -112,7 +112,7 @@ extern unsigned int g_byte_00f9f8c1;
 extern unsigned int g_dispatchSave1434_00f9f9c8;
 extern unsigned int g_dispatchSave1435_00f9fac8;
 extern unsigned int g_dispatchSave1436_00f9facc;
-extern unsigned int g_iat_004d2114;
+extern unsigned int g_iat_GetCPInfo;
 extern void CrtCodepageDispatcher(void);
 extern void WcToMbDispatcher(void);
 
@@ -130,7 +130,7 @@ __declspec(naked) void BuildCharacterCaseTables(void)
         push     ebx
         push     eax
         push     ecx
-        call     dword ptr [g_iat_004d2114]
+        call     dword ptr [g_iat_GetCPInfo]
         cmp      eax, 1
         jne      L_99b4
         push     edi

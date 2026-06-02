@@ -114,9 +114,9 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_dispatchSave632_004f4710;
 extern unsigned int g_dispatchSave631_004f4740;
-extern unsigned int g_iat_004d2000;
-extern unsigned int g_iat_004d2004;
-extern unsigned int g_iat_004d2010;
+extern unsigned int g_iat_RegCreateKeyExA;
+extern unsigned int g_iat_RegCloseKey;
+extern unsigned int g_iat_RegSetValueExA;
 extern u8 g_configBuffer[];
 extern s32 g_installValidated;
 extern void Config_SnapshotGlobals(void);
@@ -156,7 +156,7 @@ void Config_SaveToRegistry(void) {
         push    0
         push    offset g_dispatchSave632_004f4710
         push    0x80000002
-        call    dword ptr [g_iat_004d2000]
+        call    dword ptr [g_iat_RegCreateKeyExA]
         _emit   8bh
         _emit   44h
         _emit   24h
@@ -170,13 +170,13 @@ void Config_SaveToRegistry(void) {
         push    0
         push    offset g_dispatchSave631_004f4740
         push    eax
-        call    dword ptr [g_iat_004d2010]
+        call    dword ptr [g_iat_RegSetValueExA]
         _emit   8bh
         _emit   54h
         _emit   24h
         _emit   00h
         push    edx
-        call    dword ptr [g_iat_004d2004]
+        call    dword ptr [g_iat_RegCloseKey]
         mov     dword ptr [g_installValidated], 0
         add     esp, 8
         }

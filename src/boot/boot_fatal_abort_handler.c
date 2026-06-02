@@ -123,9 +123,9 @@ extern unsigned int g_dispatchSave1428_00f9f83c;
 extern unsigned int g_dispatchSave1429_00f9f840;
 extern unsigned int g_dispatchSave1471_00fa0eec;
 extern unsigned int g_dispatchSave1472_00fa0ef0;
-extern unsigned int g_iat_004d2060;
-extern unsigned int g_iat_004d20a4;
-extern unsigned int g_iat_004d2154;
+extern unsigned int g_iat_GetCurrentProcess;
+extern unsigned int g_iat_TerminateProcess;
+extern unsigned int g_iat_ExitProcess;
 extern void IterFnPtrs(void);
 extern void PushConstCall_004c6920(void);
 extern void PushConstCall_004c6930(void);
@@ -141,9 +141,9 @@ __declspec(naked) void BootFatalAbortHandler(void) {
         cmp     eax, 1
         jne     short L_ab_set
         push    ebp
-        call    dword ptr [g_iat_004d2060]
+        call    dword ptr [g_iat_GetCurrentProcess]
         push    eax
-        call    dword ptr [g_iat_004d20a4]
+        call    dword ptr [g_iat_TerminateProcess]
     L_ab_set:
         mov     eax, dword ptr [esp + 0x14]
         mov     ebx, dword ptr [esp + 0x18]
@@ -188,7 +188,7 @@ __declspec(naked) void BootFatalAbortHandler(void) {
     L_ab_reentry:
         push    ebp
         mov     dword ptr [g_dispatchSave1429_00f9f840], 1
-        call    dword ptr [g_iat_004d2154]
+        call    dword ptr [g_iat_ExitProcess]
         pop     esi
         pop     ebp
         pop     ebx

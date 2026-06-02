@@ -38,21 +38,21 @@ void _init_premain(void) {
 }
 
 /* @addr 0x004c6ee0 (55b)
- *   call IAT [g_iat_004d216c](0, 0x1000, 0); store result;
+ *   call IAT [g_iat_HeapCreate](0, 0x1000, 0); store result;
  *   if (result == 0) return; call 0x4c70d0;
- *   if (eax == 0) call IAT [g_iat_004d2158](result); xor eax; ret;
+ *   if (eax == 0) call IAT [g_iat_HeapDestroy](result); xor eax; ret;
  *   else return 1.
  */
-extern void * (__stdcall *g_iat_004d216c)(int, int, int);
-extern void (__stdcall *g_iat_004d2158)(void *);
+extern void * (__stdcall *g_iat_HeapCreate)(int, int, int);
+extern void (__stdcall *g_iat_HeapDestroy)(void *);
 extern void * g_dispatchSave1470_00fa0ee4;
 extern int VirtualHeapAlloc(void);
 int CallIATIfThenCall(void) {
-    void *p = g_iat_004d216c(0, 0x1000, 0);
+    void *p = g_iat_HeapCreate(0, 0x1000, 0);
     g_dispatchSave1470_00fa0ee4 = p;
     if (p == 0) return 0;
     if (VirtualHeapAlloc() == 0) {
-        g_iat_004d2158(g_dispatchSave1470_00fa0ee4);
+        g_iat_HeapDestroy(g_dispatchSave1470_00fa0ee4);
         return 0;
     }
     return 1;

@@ -23,8 +23,8 @@
  */
 
 extern int Lock(int);
-extern void *g_iat_004d2140;
-extern void *g_iat_004d213c;
+extern void *g_iat_EnterCriticalSection;
+extern void *g_iat_LeaveCriticalSection;
 
 #pragma optimize("y", off)
 /* @addr 0x004c7030 */
@@ -33,7 +33,7 @@ void TwoPathIATDispatch_004c7030(int a, int b) {
         Lock(a + 0x1c);
         return;
     }
-    ((void (__stdcall *)(int))g_iat_004d2140)(b + 0x20);
+    ((void (__stdcall *)(int))g_iat_EnterCriticalSection)(b + 0x20);
 }
 
 /* @addr 0x004c70a0 */
@@ -42,5 +42,5 @@ void TwoPathIATDispatch_004c70a0(int a, int b) {
         Lock(a + 0x1c);
         return;
     }
-    ((void (__stdcall *)(int))g_iat_004d213c)(b + 0x20);
+    ((void (__stdcall *)(int))g_iat_LeaveCriticalSection)(b + 0x20);
 }

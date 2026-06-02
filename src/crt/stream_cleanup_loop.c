@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
  *     If (i >= 0x14): call IAT(stream+0x20); free(stream); slot = 0.
  *   _unlock(2); return ebp.
  */
-extern unsigned int g_iat_004d2170;
+extern unsigned int g_iat_DeleteCriticalSection;
 extern unsigned int g_dispatchSave1465_00f9fdb4;
 extern unsigned int g_dispatchSave1466_00fa0dc0;
 extern void FreeImpl(void);
@@ -137,7 +137,7 @@ __declspec(naked) int StreamCleanupLoop(void) {
         _emit   7eh
         _emit   68h
         push    edi
-        mov     edi, dword ptr [g_iat_004d2170]
+        mov     edi, dword ptr [g_iat_DeleteCriticalSection]
         push    ebx
         mov     bl, 0x83
 loopCe0b0:

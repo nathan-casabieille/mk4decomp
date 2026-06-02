@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
  *   If g_crtFdCloseSlot == 1 and fd in {0,1,2}: SetStdHandle(STD_INPUT/OUTPUT/ERROR, NULL).
  *   Mark slot as -1; return 0.
  */
-extern unsigned int g_iat_004d20d4;
+extern unsigned int g_iat_SetStdHandle;
 extern unsigned int g_crtFdCloseSlot;
 extern unsigned int g_dispatchSave1469_00fa0ee0;
 extern void Crt_doserrno(void);
@@ -173,7 +173,7 @@ __declspec(naked) int CrtFdClose(void) {
         _emit   04h
         push    0
         push    0xfffffff6
-        call    dword ptr [g_iat_004d20d4]
+        call    dword ptr [g_iat_SetStdHandle]
         mov     eax, dword ptr [edi]
         mov     dword ptr [eax + esi], 0xffffffff
         xor     eax, eax

@@ -115,8 +115,8 @@ extern unsigned int g_fightAxisPosY;
  *   maps WinErr->errno via DosMapErr; on success clears bit 1
  *   of the fd entry and returns new position.
  */
-extern unsigned int g_iat_004d209c;
-extern unsigned int g_iat_004d211c;
+extern unsigned int g_iat_GetLastError;
+extern unsigned int g_iat_SetFilePointer;
 extern unsigned int g_arr_00fa0de0;
 extern void CRTHandleLookup(void);
 extern void Crt_errno(void);
@@ -145,11 +145,11 @@ callSeek:
         push    0
         push    edx
         push    eax
-        call    dword ptr [g_iat_004d211c]
+        call    dword ptr [g_iat_SetFilePointer]
         mov     edi, eax
         cmp     edi, -1
         jne     skipErr
-        call    dword ptr [g_iat_004d209c]
+        call    dword ptr [g_iat_GetLastError]
         jmp     checkErr
 skipErr:
         xor     eax, eax

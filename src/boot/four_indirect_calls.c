@@ -28,9 +28,9 @@ extern void *g_iat_005200b4;
 extern void *g_iat_005200a4;
 extern void *g_iat_00520094;
 extern void *g_iat_00520074;
-extern void (__stdcall *g_iat_004d215c)(void *);
+extern void (__stdcall *g_iat_InitializeCriticalSection)(void *);
 void FourIndirectCalls(void) {
-    void (__stdcall *f)(void *) = g_iat_004d215c;
+    void (__stdcall *f)(void *) = g_iat_InitializeCriticalSection;
     f(g_iat_005200b4);
     f(g_iat_005200a4);
     f(g_iat_00520094);

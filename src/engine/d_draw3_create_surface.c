@@ -15,9 +15,9 @@ extern unsigned int g_dd3SurfaceSlot_0058c85c;
 extern unsigned int g_dsmi_b70_main;
 extern unsigned int g_dsmi_b70_ret;
 extern unsigned int g_960_iface;
-extern unsigned int g_iat_004d219c;
-extern unsigned int g_iat_004d21a4;
-extern unsigned int g_iat_004d21ac;
+extern unsigned int g_iat_ShowCursor;
+extern unsigned int g_iat_SetCursorPos;
+extern unsigned int g_iat_GetCursorPos;
 extern void DialogProbeDispatch(void);
 
 __declspec(naked) void DDraw3_CreateSurface(void) {
@@ -37,9 +37,9 @@ __declspec(naked) void DDraw3_CreateSurface(void) {
         mov     dword ptr [g_dispatchSave500_004f47a8], eax
         jz      L_dms2_release
         push    offset g_dd3SurfaceCreate_0058c858
-        call    dword ptr [g_iat_004d21ac]
+        call    dword ptr [g_iat_GetCursorPos]
         push    0
-        call    dword ptr [g_iat_004d219c]
+        call    dword ptr [g_iat_ShowCursor]
         call    DialogProbeDispatch
         mov     eax, dword ptr [g_dsmi_b70_main]
         test    eax, eax
@@ -110,9 +110,9 @@ __declspec(naked) void DDraw3_CreateSurface(void) {
         mov     ecx, dword ptr [g_dd3SurfaceCreate_0058c858]
         push    eax
         push    ecx
-        call    dword ptr [g_iat_004d21a4]
+        call    dword ptr [g_iat_SetCursorPos]
         push    1
-        call    dword ptr [g_iat_004d219c]
+        call    dword ptr [g_iat_ShowCursor]
     L_dms2_okRet:
         mov     eax, 1
         pop     edi

@@ -8,7 +8,7 @@ extern void Helper_GlidePostInit(void);
 extern unsigned int g_glideFnTable;
 extern u32 g_glideF8;
 extern unsigned int g_dispatchSave1642_007b0038;
-extern unsigned int g_iat_004d205c;
+extern unsigned int g_iat_FreeLibrary;
 extern int g_renderer1_active;
 
 /*
@@ -27,7 +27,7 @@ void Helper_GlideError(void) {
                 ((void(*)(void))g_dispatchSave1642_007b0038)();
             }
         }
-        ((void(__stdcall *)(unsigned int))g_iat_004d205c)(g_glideFnTable);
+        ((void(__stdcall *)(unsigned int))g_iat_FreeLibrary)(g_glideFnTable);
         g_glideFnTable = 0;
     }
     DSoundBufferInit146_004b5190();

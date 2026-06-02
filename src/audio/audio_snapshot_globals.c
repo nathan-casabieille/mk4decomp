@@ -112,7 +112,7 @@ extern s32 g_installValidated;
 extern u8 g_configBuffer[];
 extern unsigned char g_dispatchSave632_004f4710;
 extern unsigned char g_dispatchSave631_004f4740;
-/* g_iat_004d2000/2010/2004 declared as unsigned int below */
+/* g_iat_RegCreateKeyExA/2010/2004 declared as unsigned int below */
 extern void Config_SnapshotGlobals(void);
 extern s32 ComputeConfigHash(void);
 extern void DeobfuscateConfig(void);
@@ -121,9 +121,9 @@ extern void DeobfuscateConfig(void);
  *   open key (IAT@4d2000); if success: query (IAT@4d2010), close (IAT@4d2004);
  *   clear g_installValidated; ret.
  */
-extern unsigned int g_iat_004d2000;
-extern unsigned int g_iat_004d2004;
-extern unsigned int g_iat_004d2010;
+extern unsigned int g_iat_RegCreateKeyExA;
+extern unsigned int g_iat_RegCloseKey;
+extern unsigned int g_iat_RegSetValueExA;
 
 void Config_SaveToRegistry(void) {
     __asm {
@@ -158,7 +158,7 @@ void Config_SaveToRegistry(void) {
         push    0
         push    offset g_dispatchSave632_004f4710
         push    0x80000002
-        call    dword ptr [g_iat_004d2000]
+        call    dword ptr [g_iat_RegCreateKeyExA]
         _emit   8bh
         _emit   44h
         _emit   24h
@@ -172,13 +172,13 @@ void Config_SaveToRegistry(void) {
         push    0
         push    offset g_dispatchSave631_004f4740
         push    eax
-        call    dword ptr [g_iat_004d2010]
+        call    dword ptr [g_iat_RegSetValueExA]
         _emit   8bh
         _emit   54h
         _emit   24h
         _emit   00h
         push    edx
-        call    dword ptr [g_iat_004d2004]
+        call    dword ptr [g_iat_RegCloseKey]
         mov     dword ptr [g_installValidated], 0
         add     esp, 8
         }

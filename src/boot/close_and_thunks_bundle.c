@@ -117,8 +117,8 @@ extern unsigned int g_fightAxisPosY;
  *   sub-4 (~30b @ 0x4c67c5): floating-point modulus via fprem (or compat helper).
  */
 extern unsigned int g_dispatchSave1423_00f9f7fc;
-extern unsigned int g_iat_004d2150;
-extern unsigned int g_iat_004d209c;
+extern unsigned int g_iat_GetFileAttributesA;
+extern unsigned int g_iat_GetLastError;
 extern void Crt_doserrno(void);
 extern void Crt_errno(void);
 extern void DosMapErr(void);
@@ -131,10 +131,10 @@ __declspec(naked) void CloseAndThunksBundle(void) {
         /* sub-1: _close */
         mov     eax, [esp + 4]
         push    eax
-        call    dword ptr [g_iat_004d2150]
+        call    dword ptr [g_iat_GetFileAttributesA]
         cmp     eax, -1
         jne     short L_cl_check
-        call    dword ptr [g_iat_004d209c]
+        call    dword ptr [g_iat_GetLastError]
         push    eax
         call    DosMapErr
         add     esp, 4

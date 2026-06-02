@@ -19,8 +19,8 @@
  *   like), subtracts saved start time, accumulates into 0x5438fc and
  *   zeroes 0x543900.
  */
-extern unsigned int g_iat_004d2240;
-extern unsigned int g_iat_004d2244;
+extern unsigned int g_iat_timeGetTime;
+extern unsigned int g_iat_mciSendCommandA;
 extern u32 g_audioPreState;
 extern u32 g_timerActive;
 extern u32 g_timerStartSec;
@@ -46,11 +46,11 @@ __declspec(naked) void Helper_TitleEnterStateA(void) {
         test    eax, eax
         je      L_mtps_done
         call    Helper_AuxAudio_PostInit
-        mov     ebx, dword ptr [g_iat_004d2240]
+        mov     ebx, dword ptr [g_iat_timeGetTime]
         test    eax, eax
         je      L_mtps_finalCheck
         mov     ecx, dword ptr [g_audioPreState]
-        mov     edi, dword ptr [g_iat_004d2244]
+        mov     edi, dword ptr [g_iat_mciSendCommandA]
         lea     eax, [esp + 0x1c]
         mov     dword ptr [esp + 0x20], 0xa
         push    eax

@@ -78,8 +78,8 @@ read on the next tick.
 | `0x004f4dc8..0x004f4e8c` | (per-player action table) | For each of the 4 directions + 9 buttons: a (target-ptr, action-mask) pair. The pollers OR the mask into `*target` when the bound input is held. |
 | `0x004f4ea0..0x004f4f10` | (joystick button-bit masks)   | 13-entry table used by `Input_PollJoystick` to translate raw joystick button bits to packed action bits. |
 | `0x007b00c8`, `0x007b0088`, `0x007b0108`, `0x007b0148` | | Per-axis (X-low, X-high, Y-low, Y-high) per-joy threshold tables built by `Joystick_Init`. Compared against the JOYINFOEX X/Y to set the 4 axis-out-of-range bits in `Input_PollJoystick`'s return. |
-| `0x004d21c0` | `g_iat_004d21c0`                    | IAT slot: `GetAsyncKeyState`. |
-| `0x004d21c4` | `g_iat_004d21c4`                    | IAT slot: `MapVirtualKeyA` (only used by HUD font precache, not input). |
+| `0x004d21c0` | `g_iat_GetAsyncKeyState`                    | IAT slot: `GetAsyncKeyState`. |
+| `0x004d21c4` | `g_iat_MapVirtualKeyA`                    | IAT slot: `MapVirtualKeyA` (only used by HUD font precache, not input). |
 | `0x004d221c` | `g_iat_004d221c`                    | IAT slot: `joyGetDevCapsA`. |
 | `0x004d2228` | `g_iat_004d2228`                    | IAT slot: `joyGetPosEx`. |
 | `0x004d222c` | `g_iat_004d222c`                    | IAT slot: `joyGetPos`. |

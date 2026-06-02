@@ -121,9 +121,9 @@ extern unsigned int g_fightAxisPosY;
  *   LoadArgPushCall(0x480), seeds entries with type=0xa, then
  *   calls CritSecLazyEnter(idx*0x20). Exits crit-sec 0x12.
  */
-extern unsigned int g_iat_004d213c;
-extern unsigned int g_iat_004d2140;
-extern unsigned int g_iat_004d215c;
+extern unsigned int g_iat_LeaveCriticalSection;
+extern unsigned int g_iat_EnterCriticalSection;
+extern unsigned int g_iat_InitializeCriticalSection;
 extern unsigned int g_arr_00fa0de0;
 extern unsigned int g_dispatchSave1469_00fa0ee0;
 extern void CritSecLazyEnter(void);
@@ -167,7 +167,7 @@ __declspec(naked) void FileTableExtendOrFind(void) {
         jne     short L_fte_relCrit
         lea     ecx, [esi + 0xc]
         push    ecx
-        call    dword ptr [g_iat_004d215c]
+        call    dword ptr [g_iat_InitializeCriticalSection]
         inc     dword ptr [esi + 8]
     L_fte_relCrit:
         push    0x11
@@ -176,11 +176,11 @@ __declspec(naked) void FileTableExtendOrFind(void) {
     L_fte_initDone:
         lea     edi, [esi + 0xc]
         push    edi
-        call    dword ptr [g_iat_004d2140]
+        call    dword ptr [g_iat_EnterCriticalSection]
         test    byte ptr [esi + 4], 1
         je      short L_fte_foundFree
         push    edi
-        call    dword ptr [g_iat_004d213c]
+        call    dword ptr [g_iat_LeaveCriticalSection]
     L_fte_advanceEntry:
         mov     edx, dword ptr [ebp]
         add     esi, 0x24

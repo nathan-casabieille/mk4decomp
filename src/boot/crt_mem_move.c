@@ -109,11 +109,11 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave1450_00f9fc2c;
-extern unsigned int g_iat_004d20b8;
+extern unsigned int g_iat_GetStringTypeW;
 extern unsigned int g_crtMemMoveHi;
 extern unsigned int g_crtMemMoveLo;
-extern unsigned int g_iat_004d20bc;
-extern unsigned int g_iat_004d20e0;
+extern unsigned int g_iat_GetStringTypeA;
+extern unsigned int g_iat_WideCharToMultiByte;
 extern unsigned int g_dispatchSave1448_00f9fc20;
 extern unsigned int g_dispatchSave1444_00f9fc10;
 extern void Calloc(void);
@@ -144,7 +144,7 @@ __declspec(naked) void MBToWCharCachedDispatch(void) {
         xor     ebx, ebx
         push    ebp
         push    esi
-        mov     esi, dword ptr [g_iat_004d20b8]
+        mov     esi, dword ptr [g_iat_GetStringTypeW]
         cmp     eax, ebx
         push    edi
         jne     short L_mbw_haveState
@@ -165,7 +165,7 @@ __declspec(naked) void MBToWCharCachedDispatch(void) {
         push    offset g_crtMemMoveLo
         push    1
         push    ebx
-        call    dword ptr [g_iat_004d20bc]
+        call    dword ptr [g_iat_GetStringTypeA]
         test    eax, eax
         je      L_mbw_zeroRet
         mov     eax, 2
@@ -210,7 +210,7 @@ __declspec(naked) void MBToWCharCachedDispatch(void) {
         push    ecx
         push    0x220
         push    edx
-        call    dword ptr [g_iat_004d20e0]
+        call    dword ptr [g_iat_WideCharToMultiByte]
         mov     esi, eax
         cmp     esi, ebx
         jne     short L_mbw_havelen
@@ -248,7 +248,7 @@ __declspec(naked) void MBToWCharCachedDispatch(void) {
         push    eax
         push    0x220
         push    ecx
-        call    dword ptr [g_iat_004d20e0]
+        call    dword ptr [g_iat_WideCharToMultiByte]
         test    eax, eax
         je      short L_mbw_freeAndExit
         lea     edx, [esi + esi + 2]
@@ -272,7 +272,7 @@ __declspec(naked) void MBToWCharCachedDispatch(void) {
         mov     word ptr [ebx + edi], 0xffff
         push    eax
         mov     word ptr [ebx + edi - 2], 0xffff
-        call    dword ptr [g_iat_004d20bc]
+        call    dword ptr [g_iat_GetStringTypeA]
         /* MASM picks cmp r/m16, imm8 (66 83) for 0xffff sign-extension; orig
          * uses the full 7-byte imm16 form (66 81). Emit raw bytes to match. */
         _emit 0x66

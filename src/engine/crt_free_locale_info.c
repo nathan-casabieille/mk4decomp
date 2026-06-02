@@ -117,9 +117,9 @@ extern unsigned int g_fightAxisPosY;
  *   Loop esi=1..14: rv=AuxAudioDevCapsQuery(esi); abs(rv - buf[esi-1]) must be <= 5.
  *   If all pass, set g_demoModeFlag = 1.
  */
-extern unsigned int g_iat_004d20b8;
-extern unsigned int g_iat_004d20bc;
-extern unsigned int g_iat_004d20e4;
+extern unsigned int g_iat_GetStringTypeW;
+extern unsigned int g_iat_GetStringTypeA;
+extern unsigned int g_iat_MultiByteToWideChar;
 extern u32 g_demoModeFlag;
 extern void AuxAudioDevCapsQuery(void);
 extern void DSoundQueryProperty(void);
@@ -308,19 +308,19 @@ __declspec(naked) void AppInit_Misc8(void) {
     }
 }
 
-extern void *g_iat_004d21b8;
-extern void *g_iat_004d202c;
+extern void *g_iat_GetDC;
+extern void *g_iat_CreateDIBSection;
 
 
 extern s32 Mem_Malloc(void **out_ptr, s32 size, s32 tag);
 /* extern void DialogProbeDispatch(void); */
-extern unsigned int g_iat_004d21c4;
+extern unsigned int g_iat_MapVirtualKeyA;
 extern int FSYS_fopen(const char *path, const char *mode);
 extern int FSYS_fclose(int fh);
 extern int FSYS_fread(void *buf, u32 size, u32 count, int fh);
 extern int FSYS_fseek(int fh, u32 off, int whence);
-extern unsigned int g_iat_004d2130;
-extern unsigned int g_iat_004d2134;
+extern unsigned int g_iat_GetLocaleInfoW;
+extern unsigned int g_iat_GetLocaleInfoA;
 
 /* @addr 0x004cdae0 (312b crt) - WideCharToMultiByte dispatcher (mbslen/wcsstr style).
  *   Caches state in g_dispatchSave1451_00f9fc30 (1/2). Probes via IAT[0x4d20b8] with ".A"/".A0"
@@ -335,7 +335,7 @@ __declspec(naked) void WcToMbDispatcher(void) {
         push    ebx
         push    ebp
         push    esi
-        mov     esi, dword ptr [g_iat_004d20bc]
+        mov     esi, dword ptr [g_iat_GetStringTypeA]
         push    edi
         xor     edi, edi
         cmp     eax, edi
@@ -345,7 +345,7 @@ __declspec(naked) void WcToMbDispatcher(void) {
         push    1
         push    offset g_crtMemMoveHi
         push    1
-        call    dword ptr [g_iat_004d20b8]
+        call    dword ptr [g_iat_GetStringTypeW]
         test    eax, eax
         jz      L_wm_tryAlt
         mov     eax, 1
@@ -396,7 +396,7 @@ __declspec(naked) void WcToMbDispatcher(void) {
         push    edx
         push    eax
         push    ebx
-        call    dword ptr [g_iat_004d20e4]
+        call    dword ptr [g_iat_MultiByteToWideChar]
         mov     esi, eax
         test    esi, esi
         jz      short L_wm_freeNul
@@ -414,7 +414,7 @@ __declspec(naked) void WcToMbDispatcher(void) {
         push    ecx
         push    1
         push    ebx
-        call    dword ptr [g_iat_004d20e4]
+        call    dword ptr [g_iat_MultiByteToWideChar]
         test    eax, eax
         jz      short L_wm_freeNul
         mov     edx, [esp + 0x24]
@@ -423,7 +423,7 @@ __declspec(naked) void WcToMbDispatcher(void) {
         mov     eax, [esp + 0x20]
         push    edi
         push    eax
-        call    dword ptr [g_iat_004d20b8]
+        call    dword ptr [g_iat_GetStringTypeW]
         push    edi
         mov     esi, eax
         call    FreeImpl

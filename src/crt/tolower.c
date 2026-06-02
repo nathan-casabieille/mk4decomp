@@ -117,8 +117,8 @@ extern void Tolower(int);
  *   shortcut by adding 0x20; otherwise enter critsec (with lazy
  *   init taking a global _lock(0x13)), call Tolower, exit.
  */
-extern unsigned int g_iat_004d20cc;
-extern unsigned int g_iat_004d20d0;
+extern unsigned int g_iat_InterlockedIncrement;
+extern unsigned int g_iat_InterlockedDecrement;
 extern unsigned int g_dispatchSave1463_00f9fdac;
 extern unsigned int g_dispatchSave1464_00f9fdb0;
 extern void Lock(void);
@@ -141,9 +141,9 @@ localePath:
         push    esi
         push    ebx
         push    offset g_dispatchSave1464_00f9fdb0
-        call    dword ptr [g_iat_004d20cc]
+        call    dword ptr [g_iat_InterlockedIncrement]
         mov     eax, dword ptr [g_dispatchSave1463_00f9fdac]
-        mov     edi, dword ptr [g_iat_004d20d0]
+        mov     edi, dword ptr [g_iat_InterlockedDecrement]
         test    eax, eax
         je      noLock
         push    offset g_dispatchSave1464_00f9fdb0

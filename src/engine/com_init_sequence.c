@@ -26,7 +26,7 @@
  * state was set, an external IAT call clears state first.
  */
 
-extern void (__stdcall *g_iat_004d2210)(int, int, int);
+extern void (__stdcall *g_iat_InvalidateRect)(int, int, int);
 
 extern int g_renderer3_surface_active;
 extern void *g_lock_0058c874;
@@ -59,7 +59,7 @@ void DDraw3_Cleanup(void) {
     state = g_renderer3_surface_active;
     g_lock_0058c874 = (void *)0;
     if (state != 0) {
-        g_iat_004d2210(0, 0, 1);
+        g_iat_InvalidateRect(0, 0, 1);
     }
     g_renderer3_surface_active = (void *)0;
 }
@@ -76,7 +76,7 @@ void DDraw5_Cleanup(void) {
     state = g_renderer5_surface_active;
     g_lock_0058c8f4 = (void *)0;
     if (state != 0) {
-        g_iat_004d2210(0, 0, 1);
+        g_iat_InvalidateRect(0, 0, 1);
     }
     g_renderer5_surface_active = (void *)0;
 }

@@ -17,9 +17,9 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern s32 g_timerInitedSkip;
-extern void (__stdcall *g_iat_004d2220)(int);
+extern void (__stdcall *g_iat_timeEndPeriod)(int);
 void TestCallIat(void) {
     if (g_timerInitedSkip != 0) {
-        g_iat_004d2220(1);
+        g_iat_timeEndPeriod(1);
     }
 }

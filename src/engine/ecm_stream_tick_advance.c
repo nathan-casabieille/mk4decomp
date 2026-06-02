@@ -127,9 +127,9 @@ extern u32 g_ecmReserved;
 extern HANDLE g_ecmThread;
 extern u32 g_ecmVolumeFromFtol;
 extern u32 g_ecmPlayState;
-extern unsigned int g_iat_004d2074;
-extern unsigned int g_iat_004d2084;
-extern unsigned int g_iat_004d2240;
+extern unsigned int g_iat_Sleep;
+extern unsigned int g_iat_ResumeThread;
+extern unsigned int g_iat_timeGetTime;
 extern void DoubleToInt64(void);
 extern void ECM_Cleanup(void);
 extern void EcmFrameDecode(void);
@@ -163,7 +163,7 @@ __declspec(naked) void EcmStreamTickAdvance(void)
         cmp      eax, ebx
         je       L_0e4d
         mov      dword ptr [g_ecmReserved], ebx
-        call     dword ptr [g_iat_004d2240]
+        call     dword ptr [g_iat_timeGetTime]
         mov      ecx, dword ptr [g_ecmFrameSizeDiv8]
         mov      dword ptr [esp + 0x14], ebx
         mov      dword ptr [esp + 0x10], ecx
@@ -188,11 +188,11 @@ __declspec(naked) void EcmStreamTickAdvance(void)
         cmp      eax, ebx
         je       L_0e6f
         push     eax
-        call     dword ptr [g_iat_004d2084]
+        call     dword ptr [g_iat_ResumeThread]
     L_0e6f:
         mov      edx, dword ptr [g_ecmFrameTotal]
         mov      eax, dword ptr [g_ecmFrameIdx]
-        mov      edi, dword ptr [g_iat_004d2074]
+        mov      edi, dword ptr [g_iat_Sleep]
         cmp      edx, eax
         jle      L_0ee6
         mov      edx, dword ptr [g_ecmReserved]
@@ -266,7 +266,7 @@ __declspec(naked) void EcmStreamTickAdvance(void)
         add      esp, 0x10
         test     eax, eax
         jne      L_1077
-        call     dword ptr [g_iat_004d2240]
+        call     dword ptr [g_iat_timeGetTime]
         mov      edx, eax
         mov      eax, dword ptr [g_dispatchSave1605_007ab048]
         sub      eax, edx
@@ -317,7 +317,7 @@ __declspec(naked) void EcmStreamTickAdvance(void)
     L_0fbf:
         cmp      dword ptr [g_ecmRunFlag], ebx
         je       L_0fdd
-        call     dword ptr [g_iat_004d2240]
+        call     dword ptr [g_iat_timeGetTime]
         mov      edi, eax
         mov      dword ptr [g_ecmRunFlag], ebx
         mov      dword ptr [g_dispatchSave1602_007aa224], edi
@@ -338,7 +338,7 @@ __declspec(naked) void EcmStreamTickAdvance(void)
         cmp      eax, ebx
         mov      dword ptr [g_dispatchSave1605_007ab048], edi
         jne      L_1048
-        call     dword ptr [g_iat_004d2240]
+        call     dword ptr [g_iat_timeGetTime]
         mov      ecx, dword ptr [g_dispatchSave1605_007ab048]
         mov      esi, dword ptr [g_ecmFrameSizeDiv8]
         cmp      eax, ecx

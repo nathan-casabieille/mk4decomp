@@ -48,9 +48,9 @@
  *   ret
  */
 
-extern unsigned int g_iat_004d2178;
-extern unsigned int g_iat_004d21a0;
-extern unsigned int g_iat_004d2190;
+extern unsigned int g_iat_SetMenu;
+extern unsigned int g_iat_SetWindowLongA;
+extern unsigned int g_iat_SetWindowPos;
 
 #define DSOUND_BODY(STATE, IFACE, SECONDARY, CONFIG, DATA, E1, E2, E3, E4)    \
     extern unsigned int STATE;                                                 \
@@ -80,11 +80,11 @@ extern unsigned int g_iat_004d2190;
         __asm push    eax                                                      \
         __asm mov     eax, dword ptr [SECONDARY]                               \
         __asm push    eax                                                      \
-        __asm call    dword ptr [g_iat_004d2178]                               \
+        __asm call    dword ptr [g_iat_SetMenu]                               \
         __asm mov     dword ptr [IFACE], 0                                     \
         __asm mov     ecx, dword ptr [CONFIG]                                  \
         __asm mov     edx, dword ptr [SECONDARY]                               \
-        __asm mov     esi, dword ptr [g_iat_004d21a0]                          \
+        __asm mov     esi, dword ptr [g_iat_SetWindowLongA]                          \
         __asm push    ecx                                                      \
         __asm push    -20                                                      \
         __asm push    edx                                                      \
@@ -109,7 +109,7 @@ extern unsigned int g_iat_004d2190;
         __asm push    ecx                                                      \
         __asm push    0                                                        \
         __asm push    eax                                                      \
-        __asm call    dword ptr [g_iat_004d2190]                               \
+        __asm call    dword ptr [g_iat_SetWindowPos]                               \
         __asm pop     esi                                                      \
         __asm ret                                                              \
     }

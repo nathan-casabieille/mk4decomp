@@ -55,9 +55,9 @@
  *   ret
  */
 
-extern unsigned int g_iat_004d2190;
-extern unsigned int g_iat_004d21a0;
-extern unsigned int g_iat_004d21b0;
+extern unsigned int g_iat_SetWindowPos;
+extern unsigned int g_iat_SetWindowLongA;
+extern unsigned int g_iat_GetSystemMetrics;
 
 #define DS_BODY(STATE, IFACE)                                                  \
     extern unsigned int STATE;                                                  \
@@ -70,7 +70,7 @@ extern unsigned int g_iat_004d21b0;
         __asm mov     eax, dword ptr [IFACE]                                    \
         __asm push    edi                                                        \
         __asm push    esi                                                        \
-        __asm mov     esi, dword ptr [g_iat_004d21a0]                           \
+        __asm mov     esi, dword ptr [g_iat_SetWindowLongA]                           \
         __asm push    8                                                          \
         __asm push    -20                                                        \
         __asm push    eax                                                        \
@@ -80,7 +80,7 @@ extern unsigned int g_iat_004d21b0;
         __asm push    -16                                                        \
         __asm push    ecx                                                        \
         __asm call    esi                                                        \
-        __asm mov     esi, dword ptr [g_iat_004d21b0]                           \
+        __asm mov     esi, dword ptr [g_iat_GetSystemMetrics]                           \
         __asm push    1                                                          \
         __asm call    esi                                                        \
         __asm cmp     eax, 0x1e0                                                \
@@ -110,7 +110,7 @@ extern unsigned int g_iat_004d21b0;
         __asm push    0                                                          \
         __asm push    0                                                          \
         __asm push    edx                                                        \
-        __asm call    dword ptr [g_iat_004d2190]                                \
+        __asm call    dword ptr [g_iat_SetWindowPos]                                \
         __asm pop     esi                                                        \
         __asm pop     edi                                                        \
         __asm ret                                                                \

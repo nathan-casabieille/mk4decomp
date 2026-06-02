@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern void (*g_iat_004d2080)();
+extern void (*g_iat_CloseHandle)();
 extern unsigned char g_framePauseArrBase;
 extern unsigned int g_chain_disp_64_49b7c0;
 extern unsigned int g_arr_next_49b7c0;

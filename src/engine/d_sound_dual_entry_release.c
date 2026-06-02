@@ -131,7 +131,7 @@ extern void R2_Init4(void);
  *   ComRelease 4x, DSoundBufferInit146(0), 3 more releases; if g_renderer2_initOk:
  *   SetEvent via IAT@4d2210; clear g_renderer2_initOk; ret.
  */
-extern unsigned int g_iat_004d2210;
+extern unsigned int g_iat_InvalidateRect;
 
 __declspec(naked) void R2_Cleanup(void) {
     __asm {
@@ -174,7 +174,7 @@ loop4ad7c0:
         push    1
         push    0
         push    0
-        call    dword ptr [g_iat_004d2210]
+        call    dword ptr [g_iat_InvalidateRect]
         mov     dword ptr [g_renderer2_initOk], 0
         pop     esi
         ret

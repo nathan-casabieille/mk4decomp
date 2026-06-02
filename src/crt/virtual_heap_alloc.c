@@ -112,10 +112,10 @@ extern unsigned int g_virtualHeapBase;
 extern unsigned int g_heapShrinkPtr;
 extern unsigned int g_heapTeardownSentinel;
 extern unsigned int g_dispatchSave1470_00fa0ee4;
-extern unsigned int g_iat_004d20b4;
-extern unsigned int g_iat_004d2144;
-extern unsigned int g_iat_004d214c;
-extern unsigned int g_iat_004d2168;
+extern unsigned int g_iat_HeapAlloc;
+extern unsigned int g_iat_VirtualAlloc;
+extern unsigned int g_iat_HeapFree;
+extern unsigned int g_iat_VirtualFree;
 
 __declspec(naked) void VirtualHeapAlloc(void)
 {
@@ -133,12 +133,12 @@ __declspec(naked) void VirtualHeapAlloc(void)
         push     0x2020
         push     0
         push     eax
-        call     dword ptr [g_iat_004d20b4]
+        call     dword ptr [g_iat_HeapAlloc]
         mov      ebp, eax
         test     ebp, ebp
         je       L_722c
     L_7101:
-        mov      edi, dword ptr [g_iat_004d2144]
+        mov      edi, dword ptr [g_iat_VirtualAlloc]
         push     4
         push     0x2000
         push     0x400000
@@ -226,7 +226,7 @@ __declspec(naked) void VirtualHeapAlloc(void)
         push     0x8000
         push     0
         push     esi
-        call     dword ptr [g_iat_004d2168]
+        call     dword ptr [g_iat_VirtualFree]
     L_7215:
         cmp      ebp, OFFSET g_virtualHeapBase
         je       short L_722c
@@ -234,7 +234,7 @@ __declspec(naked) void VirtualHeapAlloc(void)
         push     ebp
         push     0
         push     eax
-        call     dword ptr [g_iat_004d214c]
+        call     dword ptr [g_iat_HeapFree]
     L_722c:
         pop      edi
         pop      esi

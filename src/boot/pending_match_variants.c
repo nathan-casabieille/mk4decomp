@@ -130,8 +130,8 @@ extern unsigned int g_titleDemoState;
 extern unsigned int g_titleDemoState2_00541df4;
 extern unsigned int g_dispatchSave6_00541f94;
 extern unsigned int g_mul10TransformVar_00541f9c;
-extern unsigned int g_iat_004d2240;
-extern unsigned int g_iat_004d2244;
+extern unsigned int g_iat_timeGetTime;
+extern unsigned int g_iat_mciSendCommandA;
 extern unsigned int g_table_004d57b0;
 extern unsigned int g_bootInitSaveSlot;
 extern u32 g_audioPreState;
@@ -725,7 +725,7 @@ __declspec(naked) void QuadBlockInstallChainThunks(void) {
 }
 
 /* extern void Input_PollJoystick(void); -- defined elsewhere with diff sig */
-extern void *g_iat_004d2150;
+extern void *g_iat_GetFileAttributesA;
 
 
 /* @addr 0x004ac650 (290b audio) - MIDI MCI playback position setter.
@@ -764,7 +764,7 @@ __declspec(naked) void Audio_TimerSet(void) {
         mov     edx, dword ptr [g_audioPreState]
         lea     ecx, [esp + 0x18]
         push    ebp
-        mov     ebp, dword ptr [g_iat_004d2244]
+        mov     ebp, dword ptr [g_iat_mciSendCommandA]
         push    ecx
         push    0x400
         push    0x80d
@@ -824,7 +824,7 @@ __declspec(naked) void Audio_TimerSet(void) {
         inc     eax
         mov     dword ptr [g_timerFlag], eax
     L_mp_tailCall:
-        call    dword ptr [g_iat_004d2240]
+        call    dword ptr [g_iat_timeGetTime]
         pop     edi
         pop     esi
         mov     dword ptr [g_timerLastNow], eax

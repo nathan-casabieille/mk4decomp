@@ -39,17 +39,17 @@ void _init_premain(void) {
 
 /* @addr 0x004c6e90 (39b)
  *   if g_crtCleanupFlag == 1, call F; then call F2(arg);
- *   call IAT [g_iat_004d2154](0xff); ret.
+ *   call IAT [g_iat_ExitProcess](0xff); ret.
  *   (variant of 0x004c6e60 with different IAT.)
  */
 extern unsigned int g_crtCleanupFlag;
 extern void DualCondCleanupCall(void);
 extern void RaiseAbortLocalized(int);
-extern void (__stdcall *g_iat_004d2154)(int);
+extern void (__stdcall *g_iat_ExitProcess)(int);
 void CmpCallPushIATCall2(int arg) {
     if (g_crtCleanupFlag == 1) {
         DualCondCleanupCall();
     }
     RaiseAbortLocalized(arg);
-    g_iat_004d2154(0xff);
+    g_iat_ExitProcess(0xff);
 }

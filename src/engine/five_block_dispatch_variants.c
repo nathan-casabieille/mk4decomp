@@ -50,7 +50,7 @@ extern double       g_const_004d2b88;
 extern unsigned int g_audioPreloadState;
 extern unsigned int g_dispatchSave1434_00f9f9c8;
 extern unsigned int g_dispatchSave1436_00f9facc;
-extern void *g_iat_004d2114;
+extern void *g_iat_GetCPInfo;
 extern unsigned int g_dispatchSave1435_00f9fac8;
 extern unsigned int g_dispatchSave1710_00c00000;
 extern unsigned int g_dispatchSave1440_00f9fadc;
@@ -380,15 +380,15 @@ extern unsigned int g_mat3x3_007af994;
 extern unsigned int g_mat3x3_007af998;
 extern unsigned int g_dispatchSave1580_00ab51f8;
 extern unsigned int *g_dispatchSave1465_00f9fdb4;
-extern void *g_iat_004d209c;
-extern unsigned int g_iat_004d20d4;
-extern unsigned int g_iat_004d2140;
-extern unsigned int g_iat_004d214c;
-extern unsigned int g_iat_004d2168;
-extern unsigned int g_iat_004d215c;
-extern unsigned int g_iat_004d2210;
-extern void *g_iat_004d2240;
-extern unsigned int g_iat_004d2244;
+extern void *g_iat_GetLastError;
+extern unsigned int g_iat_SetStdHandle;
+extern unsigned int g_iat_EnterCriticalSection;
+extern unsigned int g_iat_HeapFree;
+extern unsigned int g_iat_VirtualFree;
+extern unsigned int g_iat_InitializeCriticalSection;
+extern unsigned int g_iat_InvalidateRect;
+extern void *g_iat_timeGetTime;
+extern unsigned int g_iat_mciSendCommandA;
 extern unsigned int g_load_0052ab04;
 extern unsigned int g_load_0052ab08;
 extern unsigned int g_load_0052ab10;
@@ -954,7 +954,7 @@ void ChainDirtyBitWalker(void) {
 
 extern unsigned int g_dispatchSave1466_00fa0dc0;
 extern unsigned int* g_dispatchSave1465_00f9fdb4;
-extern void (*g_iat_004d2170)();
+extern void (*g_iat_DeleteCriticalSection)();
 extern void* Helper_FClose(void*);
 extern void FreeImpl(void*);
 extern void TableLookupIatCall(int);
@@ -980,7 +980,7 @@ __declspec(naked) int StreamCleanupLoop(void) {
         _emit   7eh
         _emit   68h
         push    edi
-        mov     edi, dword ptr [g_iat_004d2170]
+        mov     edi, dword ptr [g_iat_DeleteCriticalSection]
         push    ebx
         mov     bl, 0x83
 loopCe0b0:
@@ -1159,7 +1159,7 @@ __declspec(naked) int CrtFdClose(void) {
         _emit   04h
         push    0
         push    0xfffffff6
-        call    dword ptr [g_iat_004d20d4]
+        call    dword ptr [g_iat_SetStdHandle]
         mov     eax, dword ptr [edi]
         mov     dword ptr [eax + esi], 0xffffffff
         xor     eax, eax
@@ -1347,7 +1347,7 @@ void VtableDispatchSetDirty(void) {
         }
 }
 
-extern void (*g_iat_004d2080)();
+extern void (*g_iat_CloseHandle)();
 extern unsigned char g_framePauseArrBase;
 extern unsigned int g_chain_disp_64_49b7c0;
 extern unsigned int g_arr_next_49b7c0;
@@ -1446,11 +1446,11 @@ __declspec(naked) int CloseFd(void) {
         call    CRTHandleLookup
         add     esp, 4
         push    eax
-        call    dword ptr [g_iat_004d2080]
+        call    dword ptr [g_iat_CloseHandle]
         test    eax, eax
         _emit   75h
         _emit   0ah
-        call    dword ptr [g_iat_004d209c]
+        call    dword ptr [g_iat_GetLastError]
         mov     edi, eax
         _emit   0ebh
         _emit   02h
@@ -2004,7 +2004,7 @@ loop4ad7c0:
         push    1
         push    0
         push    0
-        call    dword ptr [g_iat_004d2210]
+        call    dword ptr [g_iat_InvalidateRect]
         mov     dword ptr [g_renderer2_initOk], 0
         pop     esi
         ret
@@ -2251,9 +2251,9 @@ extern unsigned int g_dispatchSave1630_007aff48;
 extern unsigned int g_dispatchSave1631_007aff4c;
 extern void (*g_iat_indirect_007b0054)();
 extern void (*g_iat_indirect_007b0050)();
-extern void (*g_iat_004d21ac)();
-extern void (*g_iat_004d219c)();
-extern void (*g_iat_004d21a4)();
+extern void (*g_iat_GetCursorPos)();
+extern void (*g_iat_ShowCursor)();
+extern void (*g_iat_SetCursorPos)();
 extern void DSoundSetAxisPan123_004b50a0(void);
 
 /* @addr 0x004b5010 (134b engine.geo) - mode switch:
@@ -2280,9 +2280,9 @@ int Helper_GlidePostInit(void) {
         _emit   74h
         _emit   3fh
         push    offset g_dispatchSave1630_007aff48
-        call    dword ptr [g_iat_004d21ac]
+        call    dword ptr [g_iat_GetCursorPos]
         push    0
-        call    dword ptr [g_iat_004d219c]
+        call    dword ptr [g_iat_ShowCursor]
         call    DSoundSetAxisPan123_004b50a0
         push    0
         push    2
@@ -2305,9 +2305,9 @@ int Helper_GlidePostInit(void) {
         mov     ecx, dword ptr [g_dispatchSave1630_007aff48]
         push    eax
         push    ecx
-        call    dword ptr [g_iat_004d21a4]
+        call    dword ptr [g_iat_SetCursorPos]
         push    1
-        call    dword ptr [g_iat_004d219c]
+        call    dword ptr [g_iat_ShowCursor]
         mov     eax, 1
         }
 }
@@ -2892,9 +2892,9 @@ __declspec(naked) void TableHitOrSchedule(void) {
 
 
 extern unsigned int g_crtTlsSlot;
-extern void (*g_iat_004d20fc)();
-extern void (*g_iat_004d210c)();
-extern void (*g_iat_004d2104)();
+extern void (*g_iat_TlsAlloc)();
+extern void (*g_iat_TlsSetValue)();
+extern void (*g_iat_GetCurrentThreadId)();
 extern void FourIndirectCalls(void);
 extern void* Calloc(int, int);
 extern void InitFields50and14(void*);
@@ -2907,13 +2907,13 @@ extern void InitFields50and14(void*);
 int TlsSlotInit(void) {
     unsigned int *ptr;
     FourIndirectCalls();
-    g_crtTlsSlot = ((unsigned int (__stdcall *)(void))g_iat_004d20fc)();
+    g_crtTlsSlot = ((unsigned int (__stdcall *)(void))g_iat_TlsAlloc)();
     if (g_crtTlsSlot != 0xffffffff) {
         ptr = (unsigned int *)Calloc(1, 0x74);
         if (ptr != 0) {
-            if (((int (__stdcall *)(unsigned int, void *))g_iat_004d210c)(g_crtTlsSlot, ptr) != 0) {
+            if (((int (__stdcall *)(unsigned int, void *))g_iat_TlsSetValue)(g_crtTlsSlot, ptr) != 0) {
                 InitFields50and14(ptr);
-                ptr[0] = ((unsigned int (__stdcall *)(void))g_iat_004d2104)();
+                ptr[0] = ((unsigned int (__stdcall *)(void))g_iat_GetCurrentThreadId)();
                 ptr[1] = 0xffffffff;
                 return 1;
             }
@@ -2981,14 +2981,14 @@ struct HeapRegion {
 };
 extern unsigned int g_virtualHeapBase;
 void HeapRegionTeardown(struct HeapRegion *region) {
-    ((void (__stdcall *)(void *, unsigned int, unsigned int))g_iat_004d2168)(region->memory_ptr, 0, 0x8000);
+    ((void (__stdcall *)(void *, unsigned int, unsigned int))g_iat_VirtualFree)(region->memory_ptr, 0, 0x8000);
     if ((struct HeapRegion *)g_dispatchBaseQ == region) {
         g_dispatchBaseQ = (unsigned int *)region->next;
     }
     if (region != (struct HeapRegion *)&g_virtualHeapBase) {
         region->next->prev = region->prev;
         region->prev->next = region->next;
-        ((void (__stdcall *)(unsigned int, unsigned int, void *))g_iat_004d214c)(g_dispatchSave1470_00fa0ee4, 0, region);
+        ((void (__stdcall *)(unsigned int, unsigned int, void *))g_iat_HeapFree)(g_dispatchSave1470_00fa0ee4, 0, region);
         return;
     }
     g_heapTeardownSentinel = 0xffffffff;
@@ -3044,7 +3044,7 @@ extern unsigned int g_crtHeapMaxPtr;
 extern void Lock(int);
 extern void TableLookupIatCall(int);
 extern void* func_004c7430(int);
-extern void* (*g_iat_004d20b4)();
+extern void* (*g_iat_HeapAlloc)();
 
 /* @addr 0x004c5520 (85b boot) - small-block malloc with lock fallback.
  *   esi = (size+0xf) & ~0xf; if (esi > g_crtHeapMaxPtr): HeapAlloc(g_dispatchSave1470_00fa0ee4,0,size).
@@ -3084,7 +3084,7 @@ __declspec(naked) void* SmallMalloc(void) {
         push    esi
         push    0
         push    edx
-        call    dword ptr [g_iat_004d20b4]
+        call    dword ptr [g_iat_HeapAlloc]
         pop     edi
         pop     esi
         ret
@@ -3135,7 +3135,7 @@ loop4b5a10:
 }
 
 extern unsigned int g_crtLocaleNumeric;
-extern int (*g_iat_004d20e0)();
+extern int (*g_iat_WideCharToMultiByte)();
 
 /* @addr 0x004cc350 (114b crt) - simple wctomb-style: if (s == NULL) return.
  *   If __mb_cur_max == 0: byte-store low 8 bits of arg2 (if <= 0xff), ret 1.
@@ -3172,7 +3172,7 @@ int Wctomb(void) {
         push    0x220
         push    ecx
         mov     dword ptr [esp + 0x24], 0
-        call    dword ptr [g_iat_004d20e0]
+        call    dword ptr [g_iat_WideCharToMultiByte]
         test    eax, eax
         _emit   74h
         _emit   08h
@@ -3231,9 +3231,9 @@ extern s32 g_installValidated;
 extern u8 g_configBuffer[];
 extern unsigned char g_dispatchSave632_004f4710;
 extern unsigned char g_dispatchSave631_004f4740;
-extern void (*g_iat_004d2000)();
-extern void (*g_iat_004d2010)();
-extern void (*g_iat_004d2004)();
+extern void (*g_iat_RegCreateKeyExA)();
+extern void (*g_iat_RegSetValueExA)();
+extern void (*g_iat_RegCloseKey)();
 extern void Config_SnapshotGlobals(void);
 extern s32 ComputeConfigHash(void);
 extern void DeobfuscateConfig(void);
@@ -3275,7 +3275,7 @@ void Config_SaveToRegistry(void) {
         push    0
         push    offset g_dispatchSave632_004f4710
         push    0x80000002
-        call    dword ptr [g_iat_004d2000]
+        call    dword ptr [g_iat_RegCreateKeyExA]
         _emit   8bh
         _emit   44h
         _emit   24h
@@ -3289,13 +3289,13 @@ void Config_SaveToRegistry(void) {
         push    0
         push    offset g_dispatchSave631_004f4740
         push    eax
-        call    dword ptr [g_iat_004d2010]
+        call    dword ptr [g_iat_RegSetValueExA]
         _emit   8bh
         _emit   54h
         _emit   24h
         _emit   00h
         push    edx
-        call    dword ptr [g_iat_004d2004]
+        call    dword ptr [g_iat_RegCloseKey]
         mov     dword ptr [g_installValidated], 0
         add     esp, 8
         }
@@ -6714,7 +6714,7 @@ __declspec(naked) void AuxAudioDevCapsQuery(void) {
         _emit   00h
         mov     ecx, dword ptr [g_audioPreState]
         mov     edi, [esp + 0x28]
-        mov     esi, dword ptr [g_iat_004d2244]
+        mov     esi, dword ptr [g_iat_mciSendCommandA]
         lea     eax, [esp + 0x14]
         push    eax
         push    0x110
@@ -9748,12 +9748,12 @@ __declspec(naked) void SetFdMode(void) {
     }
 }
 
-extern void (*g_iat_004d208c)(void);
-extern void (*g_iat_004d2094)(void);
-extern void (*g_iat_004d2060)(void);
-extern void (*g_iat_004d2064)(void);
-extern void (*g_iat_004d2068)(void);
-extern void (*g_iat_004d206c)(void);
+extern void (*g_iat_SetPriorityClass)(void);
+extern void (*g_iat_SetThreadPriority)(void);
+extern void (*g_iat_GetCurrentProcess)(void);
+extern void (*g_iat_GetCurrentThread)(void);
+extern void (*g_iat_GetPriorityClass)(void);
+extern void (*g_iat_GetThreadPriority)(void);
 extern unsigned int g_dispatchSave1608_007ab084;
 extern unsigned int g_dispatchSave1606_007ab07c;
 extern unsigned int g_dispatchSave1607_007ab080;
@@ -9772,13 +9772,13 @@ __declspec(naked) int Helper_ECM_PostCleanup(int flag) {
     __asm {
         mov     al, byte ptr [esp + 4]
         push    ebx
-        mov     ebx, dword ptr [g_iat_004d208c]
+        mov     ebx, dword ptr [g_iat_SetPriorityClass]
         push    ebp
-        mov     ebp, dword ptr [g_iat_004d2094]
+        mov     ebp, dword ptr [g_iat_SetThreadPriority]
         push    esi
-        mov     esi, dword ptr [g_iat_004d2060]
+        mov     esi, dword ptr [g_iat_GetCurrentProcess]
         push    edi
-        mov     edi, dword ptr [g_iat_004d2064]
+        mov     edi, dword ptr [g_iat_GetCurrentThread]
         test    al, al
         _emit   74h
         _emit   4eh
@@ -9788,11 +9788,11 @@ __declspec(naked) int Helper_ECM_PostCleanup(int flag) {
         _emit   45h
         call    esi
         push    eax
-        call    dword ptr [g_iat_004d2068]
+        call    dword ptr [g_iat_GetPriorityClass]
         mov     dword ptr [g_dispatchSave1606_007ab07c], eax
         call    edi
         push    eax
-        call    dword ptr [g_iat_004d206c]
+        call    dword ptr [g_iat_GetThreadPriority]
         push    0x80
         mov     dword ptr [g_dispatchSave1607_007ab080], eax
         call    esi
@@ -40990,12 +40990,12 @@ __declspec(naked) void HeapScanInit(void) {
         jz      short L_hsi_finalize
         add     eax, 0x20
         push    eax
-        call    dword ptr [g_iat_004d215c]
+        call    dword ptr [g_iat_InitializeCriticalSection]
         mov     eax, dword ptr [g_dispatchSave1465_00f9fdb4]
         mov     ecx, [eax + esi]
         add     ecx, 0x20
         push    ecx
-        call    dword ptr [g_iat_004d2140]
+        call    dword ptr [g_iat_EnterCriticalSection]
         mov     edx, dword ptr [g_dispatchSave1465_00f9fdb4]
         mov     edi, [edx + esi]
     L_hsi_finalize:
@@ -41146,7 +41146,7 @@ __declspec(naked) void HeapShrinkDecommit(void) {
         add     eax, ebx
         push    0x1000
         push    eax
-        call    dword ptr [g_iat_004d2168]
+        call    dword ptr [g_iat_VirtualFree]
         test    eax, eax
         jz      short L_hs_nextpage
         mov     dword ptr [esi], 0xffffffff
@@ -41489,8 +41489,8 @@ extern unsigned int g_dispatchSave1428_00f9f83c;
 extern unsigned char g_byte_00f9f838;
 extern unsigned int g_dispatchSave1472_00fa0ef0;
 extern unsigned int g_dispatchSave1471_00fa0eec;
-extern void (*g_iat_004d20a4)(void);
-extern void (*g_iat_004d2154)(void);
+extern void (*g_iat_TerminateProcess)(void);
+extern void (*g_iat_ExitProcess)(void);
 extern void PushConstCall_004c6920(void);
 extern void PushConstCall_004c6930(void);
 extern void IterFnPtrs(void);
@@ -41516,9 +41516,9 @@ __declspec(naked) void BootFatalAbortHandler(void) {
         cmp     eax, 1
         jne     short L_ab_set
         push    ebp
-        call    dword ptr [g_iat_004d2060]
+        call    dword ptr [g_iat_GetCurrentProcess]
         push    eax
-        call    dword ptr [g_iat_004d20a4]
+        call    dword ptr [g_iat_TerminateProcess]
     L_ab_set:
         mov     eax, dword ptr [esp + 0x14]
         mov     ebx, dword ptr [esp + 0x18]
@@ -41563,7 +41563,7 @@ __declspec(naked) void BootFatalAbortHandler(void) {
     L_ab_reentry:
         push    ebp
         mov     dword ptr [g_dispatchSave1429_00f9f840], 1
-        call    dword ptr [g_iat_004d2154]
+        call    dword ptr [g_iat_ExitProcess]
         pop     esi
         pop     ebp
         pop     ebx
@@ -41734,8 +41734,8 @@ extern unsigned int g_dispatchSave1621_007af938;
 extern unsigned int g_dispatchSave1620_007af934;
 extern unsigned int g_dispatchSave1622_007af93c;
 extern unsigned int g_dispatchSave1624_007af94c;
-extern void *g_iat_004d21b8;
-extern void *g_iat_004d202c;
+extern void *g_iat_GetDC;
+extern void *g_iat_CreateDIBSection;
 extern void RendererTeardownSW(void);
 
 extern unsigned int g_texturedTriVar;
@@ -41834,7 +41834,7 @@ extern void LocaleInfoFill(void);
 extern void CrtFreeLocaleInfo(void);
 extern unsigned int g_dispatchSave1445_00f9fc14;
 extern unsigned int g_dispatchPair;
-extern void *g_iat_004d21c4;
+extern void *g_iat_MapVirtualKeyA;
 extern unsigned int g_dispatchSave526_004f5398[];
 extern unsigned int g_dispatchSave525_004f5798;
 extern unsigned int g_dispatchVar40_004d505c;
@@ -41851,13 +41851,13 @@ extern void PaletteFillLineHybrid(void);
 extern void Helper_TexUpload(void);
 extern unsigned int g_dispatchSave1462_00f9fd9c;
 extern unsigned int g_dispatchSave1448_00f9fc20;
-extern void *g_iat_004d2130;
-extern void *g_iat_004d2134;
-extern void *g_iat_004d20e4;
+extern void *g_iat_GetLocaleInfoW;
+extern void *g_iat_GetLocaleInfoA;
+extern void *g_iat_MultiByteToWideChar;
 extern unsigned int g_crtDispatchEnd;
 extern unsigned int g_dispatchSave1451_00f9fc30;
-extern void *g_iat_004d20bc;
-extern void *g_iat_004d20b8;
+extern void *g_iat_GetStringTypeA;
+extern void *g_iat_GetStringTypeW;
 extern unsigned int g_crtMemMoveLo;
 extern unsigned int g_crtMemMoveHi;
 
@@ -41874,7 +41874,7 @@ __declspec(naked) void WcToMbDispatcher(void) {
         push    ebx
         push    ebp
         push    esi
-        mov     esi, dword ptr [g_iat_004d20bc]
+        mov     esi, dword ptr [g_iat_GetStringTypeA]
         push    edi
         xor     edi, edi
         cmp     eax, edi
@@ -41884,7 +41884,7 @@ __declspec(naked) void WcToMbDispatcher(void) {
         push    1
         push    offset g_crtMemMoveHi
         push    1
-        call    dword ptr [g_iat_004d20b8]
+        call    dword ptr [g_iat_GetStringTypeW]
         test    eax, eax
         jz      L_wm_tryAlt
         mov     eax, 1
@@ -41935,7 +41935,7 @@ __declspec(naked) void WcToMbDispatcher(void) {
         push    edx
         push    eax
         push    ebx
-        call    dword ptr [g_iat_004d20e4]
+        call    dword ptr [g_iat_MultiByteToWideChar]
         mov     esi, eax
         test    esi, esi
         jz      short L_wm_freeNul
@@ -41953,7 +41953,7 @@ __declspec(naked) void WcToMbDispatcher(void) {
         push    ecx
         push    1
         push    ebx
-        call    dword ptr [g_iat_004d20e4]
+        call    dword ptr [g_iat_MultiByteToWideChar]
         test    eax, eax
         jz      short L_wm_freeNul
         mov     edx, [esp + 0x24]
@@ -41962,7 +41962,7 @@ __declspec(naked) void WcToMbDispatcher(void) {
         mov     eax, [esp + 0x20]
         push    edi
         push    eax
-        call    dword ptr [g_iat_004d20b8]
+        call    dword ptr [g_iat_GetStringTypeW]
         push    edi
         mov     esi, eax
         call    FreeImpl
@@ -42430,7 +42430,7 @@ __declspec(naked) void MbToWcsDispatcher(void) {
         push    ebx
         push    ebp
         push    esi
-        mov     esi, dword ptr [g_iat_004d2130]
+        mov     esi, dword ptr [g_iat_GetLocaleInfoW]
         push    edi
         test    eax, eax
         jne     short L_mw_haveState
@@ -42448,7 +42448,7 @@ __declspec(naked) void MbToWcsDispatcher(void) {
         push    0
         push    1
         push    0
-        call    dword ptr [g_iat_004d2134]
+        call    dword ptr [g_iat_GetLocaleInfoA]
         test    eax, eax
         jz      L_mw_returnZero
         mov     eax, 2
@@ -42486,7 +42486,7 @@ __declspec(naked) void MbToWcsDispatcher(void) {
         push    0
         push    ebx
         push    ebp
-        call    dword ptr [g_iat_004d2134]
+        call    dword ptr [g_iat_GetLocaleInfoA]
         mov     esi, eax
         test    esi, esi
         jne     short L_mw_alloc
@@ -42512,7 +42512,7 @@ __declspec(naked) void MbToWcsDispatcher(void) {
         push    edi
         push    ebx
         push    ebp
-        call    dword ptr [g_iat_004d2134]
+        call    dword ptr [g_iat_GetLocaleInfoA]
         test    eax, eax
         jz      short L_mw_cleanupZero
         mov     eax, [esp + 0x20]
@@ -42525,7 +42525,7 @@ __declspec(naked) void MbToWcsDispatcher(void) {
         push    edi
         push    1
         push    edx
-        call    dword ptr [g_iat_004d20e4]
+        call    dword ptr [g_iat_MultiByteToWideChar]
         mov     esi, eax
         test    esi, esi
         jz      short L_mw_cleanupZero
@@ -42547,7 +42547,7 @@ __declspec(naked) void MbToWcsDispatcher(void) {
         push    edi
         push    1
         push    ecx
-        call    dword ptr [g_iat_004d20e4]
+        call    dword ptr [g_iat_MultiByteToWideChar]
         mov     esi, eax
         test    esi, esi
         jne     short L_mw_freeAndReturn
@@ -42584,7 +42584,7 @@ __declspec(naked) void AppInit_Misc1(void) {
     __asm {
         sub     esp, 8
         push    ebx
-        mov     ebx, dword ptr [g_iat_004d21c4]
+        mov     ebx, dword ptr [g_iat_MapVirtualKeyA]
         push    esi
         push    edi
         xor     edi, edi
@@ -43152,9 +43152,9 @@ __declspec(naked) void DDraw5_CreateSurface(void) {
         mov     dword ptr [g_renderer2_initVar3_004f47b0], eax
         jz      L_dms3_release
         push    offset g_renderer4_ifaceBase_0058c8d8
-        call    dword ptr [g_iat_004d21ac]
+        call    dword ptr [g_iat_GetCursorPos]
         push    0
-        call    dword ptr [g_iat_004d219c]
+        call    dword ptr [g_iat_ShowCursor]
         call    DialogProbeDispatch640
         mov     eax, dword ptr [g_dsmi_3a0_main]
         test    eax, eax
@@ -43225,9 +43225,9 @@ __declspec(naked) void DDraw5_CreateSurface(void) {
         mov     ecx, dword ptr [g_renderer4_ifaceBase_0058c8d8]
         push    eax
         push    ecx
-        call    dword ptr [g_iat_004d21a4]
+        call    dword ptr [g_iat_SetCursorPos]
         push    1
-        call    dword ptr [g_iat_004d219c]
+        call    dword ptr [g_iat_ShowCursor]
     L_dms3_okRet:
         mov     eax, 1
         pop     edi
@@ -43258,9 +43258,9 @@ __declspec(naked) void DDraw3_CreateSurface(void) {
         mov     dword ptr [g_dispatchSave500_004f47a8], eax
         jz      L_dms2_release
         push    offset g_dd3SurfaceCreate_0058c858
-        call    dword ptr [g_iat_004d21ac]
+        call    dword ptr [g_iat_GetCursorPos]
         push    0
-        call    dword ptr [g_iat_004d219c]
+        call    dword ptr [g_iat_ShowCursor]
         call    DialogProbeDispatch
         mov     eax, dword ptr [g_dsmi_b70_main]
         test    eax, eax
@@ -43331,9 +43331,9 @@ __declspec(naked) void DDraw3_CreateSurface(void) {
         mov     ecx, dword ptr [g_dd3SurfaceCreate_0058c858]
         push    eax
         push    ecx
-        call    dword ptr [g_iat_004d21a4]
+        call    dword ptr [g_iat_SetCursorPos]
         push    1
-        call    dword ptr [g_iat_004d219c]
+        call    dword ptr [g_iat_ShowCursor]
     L_dms2_okRet:
         mov     eax, 1
         pop     edi
@@ -43369,9 +43369,9 @@ __declspec(naked) void R2_Init4(void) {
         mov     dword ptr [g_renderer2_initVar2_004f47a0], eax
         jz      L_dms_release
         push    offset g_renderer2_baseB_0058c760
-        call    dword ptr [g_iat_004d21ac]
+        call    dword ptr [g_iat_GetCursorPos]
         push    0
-        call    dword ptr [g_iat_004d219c]
+        call    dword ptr [g_iat_ShowCursor]
         call    DSoundSetAxisPan123_004aec10
         mov     eax, dword ptr [g_comptr_0058c7ac]
         test    eax, eax
@@ -43442,9 +43442,9 @@ __declspec(naked) void R2_Init4(void) {
         mov     ecx, dword ptr [g_renderer2_baseB_0058c760]
         push    eax
         push    ecx
-        call    dword ptr [g_iat_004d21a4]
+        call    dword ptr [g_iat_SetCursorPos]
         push    1
-        call    dword ptr [g_iat_004d219c]
+        call    dword ptr [g_iat_ShowCursor]
     L_dms_okRet:
         mov     eax, 1
         pop     edi
@@ -45256,7 +45256,7 @@ __declspec(naked) void Helper_GfxInit2(void) {
         push    eax
         mov     dword ptr [g_renderer4_surface], esi
         mov     dword ptr [g_dispatchSave1623_007af944], eax
-        call    dword ptr [g_iat_004d21b8]
+        call    dword ptr [g_iat_GetDC]
         cmp     eax, esi
         mov     dword ptr [g_dispatchSave1621_007af938], eax
         jz      short L_si_teardown
@@ -45300,7 +45300,7 @@ __declspec(naked) void Helper_GfxInit2(void) {
         push    eax
         push    ecx
         mov     dword ptr [g_dispatchSave1624_007af94c], esi
-        call    dword ptr [g_iat_004d202c]
+        call    dword ptr [g_iat_CreateDIBSection]
         mov     dword ptr [g_dispatchSave1622_007af93c], eax
         mov     dword ptr [g_renderer4_active], edi
         mov     eax, edi
@@ -45333,7 +45333,7 @@ extern unsigned int g_dispatchSave1470_00fa0ee4;
 extern unsigned int g_dispatchSave1430_00f9f850;
 extern void IndirectCall(void);
 extern void Helper_MemMalloc_Post(void);
-extern void *g_iat_004d2150;
+extern void *g_iat_GetFileAttributesA;
 extern void DosMapErr(void);
 extern void Thunk_004ca77b_helper(void);
 extern void Thunk_004ca701_helper(void);
@@ -45400,7 +45400,7 @@ __declspec(naked) void Audio_TimerSet(void) {
         mov     edx, dword ptr [g_audioPreState]
         lea     ecx, [esp + 0x18]
         push    ebp
-        mov     ebp, dword ptr [g_iat_004d2244]
+        mov     ebp, dword ptr [g_iat_mciSendCommandA]
         push    ecx
         push    0x400
         push    0x80d
@@ -45460,7 +45460,7 @@ __declspec(naked) void Audio_TimerSet(void) {
         inc     eax
         mov     dword ptr [g_timerFlag], eax
     L_mp_tailCall:
-        call    dword ptr [g_iat_004d2240]
+        call    dword ptr [g_iat_timeGetTime]
         pop     edi
         pop     esi
         mov     dword ptr [g_timerLastNow], eax
@@ -45782,10 +45782,10 @@ __declspec(naked) void CloseAndThunksBundle(void) {
         /* sub-1: _close */
         mov     eax, [esp + 4]
         push    eax
-        call    dword ptr [g_iat_004d2150]
+        call    dword ptr [g_iat_GetFileAttributesA]
         cmp     eax, -1
         jne     short L_cl_check
-        call    dword ptr [g_iat_004d209c]
+        call    dword ptr [g_iat_GetLastError]
         push    eax
         call    DosMapErr
         add     esp, 4
@@ -45948,7 +45948,7 @@ __declspec(naked) void *Calloc(int a, int b) {
     L_cal_minSize:
         mov     ebx, 0x10
     L_cal_setup:
-        mov     ebp, dword ptr [g_iat_004d20b4]
+        mov     ebp, dword ptr [g_iat_HeapAlloc]
     L_cal_retry:
         xor     esi, esi
         cmp     ebx, -0x20
@@ -50069,11 +50069,11 @@ __declspec(naked) void Helper_TitleEnterStateA(void) {
         test    eax, eax
         je      L_mtps_done
         call    Helper_AuxAudio_PostInit
-        mov     ebx, dword ptr [g_iat_004d2240]
+        mov     ebx, dword ptr [g_iat_timeGetTime]
         test    eax, eax
         je      L_mtps_finalCheck
         mov     ecx, dword ptr [g_audioPreState]
-        mov     edi, dword ptr [g_iat_004d2244]
+        mov     edi, dword ptr [g_iat_mciSendCommandA]
         lea     eax, [esp + 0x1c]
         mov     dword ptr [esp + 0x20], 0xa
         push    eax
@@ -50776,7 +50776,7 @@ __declspec(naked) void TextModeReadStream(void) {
         jne     short L_tmr_restoreOnly
         call    Crt_errno
         mov     dword ptr [eax], 0xd
-        call    dword ptr [g_iat_004d209c]
+        call    dword ptr [g_iat_GetLastError]
         mov     esi, eax
         call    Crt_doserrno
         mov     dword ptr [eax], esi
@@ -51146,7 +51146,7 @@ void BootOneShotMStackPush3(void) {
     g_matrixStackTop--;
 }
 
-extern unsigned int g_iat_004d213c;
+extern unsigned int g_iat_LeaveCriticalSection;
 extern unsigned int g_dispatchSave1469_00fa0ee0;
 extern void Lock(void);
 extern void TableLookupIatCall(void);
@@ -51202,7 +51202,7 @@ __declspec(naked) void FileTableExtendOrFind(void) {
         jne     short L_fte_relCrit
         lea     ecx, [esi + 0xc]
         push    ecx
-        call    dword ptr [g_iat_004d215c]
+        call    dword ptr [g_iat_InitializeCriticalSection]
         inc     dword ptr [esi + 8]
     L_fte_relCrit:
         push    0x11
@@ -51211,11 +51211,11 @@ __declspec(naked) void FileTableExtendOrFind(void) {
     L_fte_initDone:
         lea     edi, [esi + 0xc]
         push    edi
-        call    dword ptr [g_iat_004d2140]
+        call    dword ptr [g_iat_EnterCriticalSection]
         test    byte ptr [esi + 4], 1
         je      short L_fte_foundFree
         push    edi
-        call    dword ptr [g_iat_004d213c]
+        call    dword ptr [g_iat_LeaveCriticalSection]
     L_fte_advanceEntry:
         mov     edx, dword ptr [ebp]
         add     esi, 0x24
@@ -52980,7 +52980,7 @@ __declspec(naked) void FileTableClose(void) {
         call    dword ptr [g_dispatchSave882_004d20f0]
         test    eax, eax
         jne     short L_ftc_clearErr
-        call    dword ptr [g_iat_004d209c]
+        call    dword ptr [g_iat_GetLastError]
         mov     esi, eax
         jmp     short L_ftc_checkErr
     L_ftc_clearErr:
@@ -54427,7 +54427,7 @@ __declspec(naked) void MBToWCharCachedDispatch(void) {
         xor     ebx, ebx
         push    ebp
         push    esi
-        mov     esi, dword ptr [g_iat_004d20b8]
+        mov     esi, dword ptr [g_iat_GetStringTypeW]
         cmp     eax, ebx
         push    edi
         jne     short L_mbw_haveState
@@ -54448,7 +54448,7 @@ __declspec(naked) void MBToWCharCachedDispatch(void) {
         push    offset g_crtMemMoveLo
         push    1
         push    ebx
-        call    dword ptr [g_iat_004d20bc]
+        call    dword ptr [g_iat_GetStringTypeA]
         test    eax, eax
         je      L_mbw_zeroRet
         mov     eax, 2
@@ -54493,7 +54493,7 @@ __declspec(naked) void MBToWCharCachedDispatch(void) {
         push    ecx
         push    0x220
         push    edx
-        call    dword ptr [g_iat_004d20e0]
+        call    dword ptr [g_iat_WideCharToMultiByte]
         mov     esi, eax
         cmp     esi, ebx
         jne     short L_mbw_havelen
@@ -54531,7 +54531,7 @@ __declspec(naked) void MBToWCharCachedDispatch(void) {
         push    eax
         push    0x220
         push    ecx
-        call    dword ptr [g_iat_004d20e0]
+        call    dword ptr [g_iat_WideCharToMultiByte]
         test    eax, eax
         je      short L_mbw_freeAndExit
         lea     edx, [esi + esi + 2]
@@ -54555,7 +54555,7 @@ __declspec(naked) void MBToWCharCachedDispatch(void) {
         mov     word ptr [ebx + edi], 0xffff
         push    eax
         mov     word ptr [ebx + edi - 2], 0xffff
-        call    dword ptr [g_iat_004d20bc]
+        call    dword ptr [g_iat_GetStringTypeA]
         /* MASM picks cmp r/m16, imm8 (66 83) for 0xffff sign-extension; orig
          * uses the full 7-byte imm16 form (66 81). Emit raw bytes to match. */
         _emit 0x66
@@ -75812,7 +75812,7 @@ __declspec(naked) void Input_TickPlayers(void)
  * Linear no mstack. Returns: void.
  * ============================================================ */
 
-extern unsigned int g_iat_004d21c0;
+extern unsigned int g_iat_GetAsyncKeyState;
 extern unsigned int g_dispatchSave1110_004f4e08;
 extern unsigned int g_dispatchSave1111_004f4e0c;
 extern unsigned int g_dispatchSave1112_004f4e18;
@@ -75850,7 +75850,7 @@ __declspec(naked) void Input_PollPlayerKeyboard(void)
     __asm {
         push    esi
         push    0x12
-        call    dword ptr [g_iat_004d21c0]
+        call    dword ptr [g_iat_GetAsyncKeyState]
         test    eax, 0x8001
         jne     L_ppd_end
         mov     esi, dword ptr [esp + 8]
@@ -79541,8 +79541,8 @@ extern int Helper_ECM_PostCleanup(int);
 extern void ECM_Cleanup(void);
 extern void EcmFrameDecode(void);
 /* extern void DoubleToInt64(void); -- defined elsewhere with diff sig */
-extern void (*g_iat_004d2074)();
-extern void *g_iat_004d2084;
+extern void (*g_iat_Sleep)();
+extern void *g_iat_ResumeThread;
 extern unsigned int g_const_004d2998;
 extern unsigned int g_const_004d29a0;
 extern unsigned int g_const_004d29a8;
@@ -79590,7 +79590,7 @@ __declspec(naked) void EcmStreamTickAdvance(void)
         cmp      eax, ebx
         je       L_0e4d
         mov      dword ptr [g_ecmReserved], ebx
-        call     dword ptr [g_iat_004d2240]
+        call     dword ptr [g_iat_timeGetTime]
         mov      ecx, dword ptr [g_ecmFrameSizeDiv8]
         mov      dword ptr [esp + 0x14], ebx
         mov      dword ptr [esp + 0x10], ecx
@@ -79615,11 +79615,11 @@ __declspec(naked) void EcmStreamTickAdvance(void)
         cmp      eax, ebx
         je       L_0e6f
         push     eax
-        call     dword ptr [g_iat_004d2084]
+        call     dword ptr [g_iat_ResumeThread]
     L_0e6f:
         mov      edx, dword ptr [g_ecmFrameTotal]
         mov      eax, dword ptr [g_ecmFrameIdx]
-        mov      edi, dword ptr [g_iat_004d2074]
+        mov      edi, dword ptr [g_iat_Sleep]
         cmp      edx, eax
         jle      L_0ee6
         mov      edx, dword ptr [g_ecmReserved]
@@ -79693,7 +79693,7 @@ __declspec(naked) void EcmStreamTickAdvance(void)
         add      esp, 0x10
         test     eax, eax
         jne      L_1077
-        call     dword ptr [g_iat_004d2240]
+        call     dword ptr [g_iat_timeGetTime]
         mov      edx, eax
         mov      eax, dword ptr [g_dispatchSave1605_007ab048]
         sub      eax, edx
@@ -79744,7 +79744,7 @@ __declspec(naked) void EcmStreamTickAdvance(void)
     L_0fbf:
         cmp      dword ptr [g_ecmRunFlag], ebx
         je       L_0fdd
-        call     dword ptr [g_iat_004d2240]
+        call     dword ptr [g_iat_timeGetTime]
         mov      edi, eax
         mov      dword ptr [g_ecmRunFlag], ebx
         mov      dword ptr [g_dispatchSave1602_007aa224], edi
@@ -79765,7 +79765,7 @@ __declspec(naked) void EcmStreamTickAdvance(void)
         cmp      eax, ebx
         mov      dword ptr [g_dispatchSave1605_007ab048], edi
         jne      L_1048
-        call     dword ptr [g_iat_004d2240]
+        call     dword ptr [g_iat_timeGetTime]
         mov      ecx, dword ptr [g_dispatchSave1605_007ab048]
         mov      esi, dword ptr [g_ecmFrameSizeDiv8]
         cmp      eax, ecx
@@ -80497,8 +80497,8 @@ __declspec(naked) void ScanlineTexBlitAdditive(void)
  * Linear no mstack. Returns: int (1 = all resolved, 0 = fail).
  * ============================================================ */
 
-extern void *g_iat_004d2050;
-extern void *g_iat_004d2058;
+extern void *g_iat_LoadLibraryA;
+extern void *g_iat_GetProcAddress;
 extern unsigned int g_dispatchSave835_004f4b54;
 extern unsigned int g_dispatchSave836_004f4b70;
 extern unsigned int g_dispatchSave837_004f4b80;
@@ -80559,11 +80559,11 @@ __declspec(naked) void Helper_GlideOpen(void)
         test     eax, eax
         jne      L_4f52
         push     OFFSET g_dispatchSave865_004f4db8
-        call     dword ptr [g_iat_004d2050]
+        call     dword ptr [g_iat_LoadLibraryA]
         test     eax, eax
         mov      dword ptr [g_glideFnTable], eax
         je       L_4f52
-        mov      esi, dword ptr [g_iat_004d2058]
+        mov      esi, dword ptr [g_iat_GetProcAddress]
         push     OFFSET g_dispatchSave864_004f4d9c
         push     eax
         call     esi
@@ -90117,15 +90117,15 @@ __declspec(naked) void Helper_GSM_HandleEvent(void)
  *
  * Allocator that carves a 0x100000-aligned virtual reservation
  * out of a 64-bucket free-list ring rooted at g_virtualHeapBase:
- *   1. Heap-alloc a 0x2020-byte control block via [g_iat_4d20b4]
+ *   1. Heap-alloc a 0x2020-byte control block via [g_iat_HeapAlloc]
  *      (process heap, flags=0). Skip when g_heapTeardownSentinel == -1
  *      (bootstrap path -- use the root sentinel as the cb).
- *   2. Reserve 0x400000 bytes of VAS via [g_iat_4d2144]
+ *   2. Reserve 0x400000 bytes of VAS via [g_iat_VirtualAlloc]
  *      (VirtualAlloc, MEM_RESERVE).
  *   3. Commit the first 0x10000 of that via the same iat slot
- *      (MEM_COMMIT). On failure, release via [g_iat_4d2168]
+ *      (MEM_COMMIT). On failure, release via [g_iat_VirtualFree]
  *      (VirtualFree, MEM_RELEASE) and heap-free via
- *      [g_iat_4d214c]; return NULL.
+ *      [g_iat_HeapFree]; return NULL.
  *   4. Link the cb into the root list, fill cb header fields
  *      ([+8/+0xc/+0x10/+0x14]), then initialize 1024 16-byte
  *      bucket descriptors at cb+0x18 with masks driven by edi=0xf1
@@ -90139,7 +90139,7 @@ __declspec(naked) void Helper_GSM_HandleEvent(void)
  * ============================================================ */
 
 extern unsigned int g_heapTeardownSentinel;
-extern void *g_iat_004d2144;
+extern void *g_iat_VirtualAlloc;
 
 __declspec(naked) void VirtualHeapAlloc(void)
 {
@@ -90157,12 +90157,12 @@ __declspec(naked) void VirtualHeapAlloc(void)
         push     0x2020
         push     0
         push     eax
-        call     dword ptr [g_iat_004d20b4]
+        call     dword ptr [g_iat_HeapAlloc]
         mov      ebp, eax
         test     ebp, ebp
         je       L_722c
     L_7101:
-        mov      edi, dword ptr [g_iat_004d2144]
+        mov      edi, dword ptr [g_iat_VirtualAlloc]
         push     4
         push     0x2000
         push     0x400000
@@ -90250,7 +90250,7 @@ __declspec(naked) void VirtualHeapAlloc(void)
         push     0x8000
         push     0
         push     esi
-        call     dword ptr [g_iat_004d2168]
+        call     dword ptr [g_iat_VirtualFree]
     L_7215:
         cmp      ebp, OFFSET g_virtualHeapBase
         je       short L_722c
@@ -90258,7 +90258,7 @@ __declspec(naked) void VirtualHeapAlloc(void)
         push     ebp
         push     0
         push     eax
-        call     dword ptr [g_iat_004d214c]
+        call     dword ptr [g_iat_HeapFree]
     L_722c:
         pop      edi
         pop      esi
@@ -90769,19 +90769,19 @@ extern void SevenArgThenTwoArg_004ccd20(void);
 extern void SevenArgThenTwoArg_004ccd60(void);
 extern unsigned int g_dispatchSave889_004d2b60;
 extern unsigned int g_dispatchSave890_004d2b7c;
-extern void *g_iat_004d212c;
+extern void *g_iat_GetModuleHandleA;
 
 __declspec(naked) void LocaleNumericHelpers(void)
 {
     __asm {
         /* Helper 1: __setusermatherr early-init guard. */
         push     OFFSET g_dispatchSave890_004d2b7c
-        call     dword ptr [g_iat_004d212c]
+        call     dword ptr [g_iat_GetModuleHandleA]
         test     eax, eax
         je       short L_8474
         push     OFFSET g_dispatchSave889_004d2b60
         push     eax
-        call     dword ptr [g_iat_004d2058]
+        call     dword ptr [g_iat_GetProcAddress]
         test     eax, eax
         je       short L_8474
         push     0
@@ -94054,8 +94054,8 @@ __declspec(naked) void FpExceptionFilter(void)
  *
  * Frame: sub esp, 0x1a8 + push ebx/ebp/esi/edi. Returns: void.
  *
- * Uses Windows API via IAT: g_iat_004d20a0 (GetModuleFileNameA),
- * g_iat_004d2108 (WriteFile), g_iat_004d2148 (_get_osfhandle).
+ * Uses Windows API via IAT: g_iat_GetModuleFileNameA (GetModuleFileNameA),
+ * g_iat_WriteFile (WriteFile), g_iat_GetStdHandle (_get_osfhandle).
  * ============================================================ */
 
 extern void Strncpy(void);
@@ -94069,9 +94069,9 @@ extern unsigned int g_const_004d2ee4;
 extern unsigned int g_const_004d2ee8;
 extern unsigned int g_const_004d2f04;
 extern unsigned int g_const_004d2f08;
-extern void *g_iat_004d20a0;
-extern void *g_iat_004d2108;
-extern void *g_iat_004d2148;
+extern void *g_iat_GetModuleFileNameA;
+extern void *g_iat_WriteFile;
+extern void *g_iat_GetStdHandle;
 
 __declspec(naked) void RaiseAbortLocalized(void)
 {
@@ -94108,7 +94108,7 @@ __declspec(naked) void RaiseAbortLocalized(void)
         push     0x104
         push     eax
         push     0
-        call     dword ptr [g_iat_004d20a0]
+        call     dword ptr [g_iat_GetModuleFileNameA]
         test     eax, eax
         jne      short L_c0fb
         mov      ecx, 5
@@ -94222,7 +94222,7 @@ __declspec(naked) void RaiseAbortLocalized(void)
         jne      short L_c218
     L_c20e:
         push     -0xc
-        call     dword ptr [g_iat_004d2148]
+        call     dword ptr [g_iat_GetStdHandle]
         mov      esi, eax
     L_c218:
         mov      edx, dword ptr [ebp*8 + g_crtFpuSlot1_0052290c]
@@ -94238,7 +94238,7 @@ __declspec(naked) void RaiseAbortLocalized(void)
         push     ecx
         push     edx
         push     esi
-        call     dword ptr [g_iat_004d2108]
+        call     dword ptr [g_iat_WriteFile]
     L_c23b:
         pop      edi
         pop      esi
@@ -94451,7 +94451,7 @@ __declspec(naked) void GameNetSyncState(void)
  * Frame: sub esp, 0x514 + push ebx (+esi/edi only in CP path).
  * Returns: void.
  *
- * Uses the IAT slot for IsValidCodePage at g_iat_004d2114.
+ * Uses the IAT slot for IsValidCodePage at g_iat_GetCPInfo.
  * ============================================================ */
 
 extern void CrtCodepageDispatcher(void);
@@ -94470,7 +94470,7 @@ __declspec(naked) void BuildCharacterCaseTables(void)
         push     ebx
         push     eax
         push     ecx
-        call     dword ptr [g_iat_004d2114]
+        call     dword ptr [g_iat_GetCPInfo]
         cmp      eax, 1
         jne      L_99b4
         push     edi
@@ -99705,7 +99705,7 @@ __declspec(naked) void SpawnFreezeProjectileChain(void)
  *
  * Frame: sub esp, 0x41c + push ebx/ebp/esi/edi.
  *
- * Uses g_iat_004d2108 (WriteFile), g_iat_004d209c
+ * Uses g_iat_WriteFile (WriteFile), g_iat_GetLastError
  * (GetLastError).
  * ============================================================ */
 
@@ -99802,7 +99802,7 @@ __declspec(naked) void FileWriteWithLfToCrlf(void)
         mov      ecx, dword ptr [esp + 0x24]
         mov      edx, dword ptr [ecx + eax]
         push     edx
-        call     dword ptr [g_iat_004d2108]
+        call     dword ptr [g_iat_WriteFile]
         test     eax, eax
         je       L_9d1a
         mov      eax, dword ptr [esp + 0x1c]
@@ -99884,7 +99884,7 @@ __declspec(naked) void FileWriteWithLfToCrlf(void)
         add      esp, 0x41c
         ret
     L_9d1a:
-        call     dword ptr [g_iat_004d209c]
+        call     dword ptr [g_iat_GetLastError]
         mov      dword ptr [esp + 0x18], eax
         jmp      short L_9c6d
     L_9d29:
@@ -99896,7 +99896,7 @@ __declspec(naked) void FileWriteWithLfToCrlf(void)
         push     ebx
         push     ebp
         push     edx
-        call     dword ptr [g_iat_004d2108]
+        call     dword ptr [g_iat_WriteFile]
         test     eax, eax
         je       short L_9d5a
         mov      eax, dword ptr [esp + 0x1c]
@@ -99904,7 +99904,7 @@ __declspec(naked) void FileWriteWithLfToCrlf(void)
         mov      dword ptr [esp + 0x10], eax
         jmp      L_9c71
     L_9d5a:
-        call     dword ptr [g_iat_004d209c]
+        call     dword ptr [g_iat_GetLastError]
         mov      dword ptr [esp + 0x18], eax
         jmp      L_9c71
     }
@@ -100459,7 +100459,7 @@ __declspec(naked) void BlockedCounterCluster(void)
  *      `_amsg_exit`). Store at g_arr_00fa0de0[0].
  *   2. Initialize all 32 fd entries: 0xff in fd, type bytes
  *      cleared, line_end=0xa, count=0.
- *   3. Call GetStartupInfoA via [g_iat_004d2138]. If
+ *   3. Call GetStartupInfoA via [g_iat_GetStartupInfoA]. If
  *      `cb_reserved2` (word) and `lp_reserved2` (dword) are
  *      non-zero, the launcher inherited descriptors:
  *        - Min(count, 0x800) descriptors to copy.
@@ -100477,16 +100477,16 @@ __declspec(naked) void BlockedCounterCluster(void)
  *      size.
  *
  * Frame: sub esp, 0x48 + push ebx/ebp/esi/edi. Returns: void.
- * Uses g_iat_004d2120, g_iat_004d2128, g_iat_004d2138,
- * g_iat_004d2148.
+ * Uses g_iat_GetFileType, g_iat_SetHandleCount, g_iat_GetStartupInfoA,
+ * g_iat_GetStdHandle.
  * ============================================================ */
 
 extern void LoadArgPushCall(void);
 extern void CmpCallPushIATCall(void);
 extern unsigned int g_dispatchSave1468_00fa0de4;
-extern void *g_iat_004d2120;
-extern void *g_iat_004d2128;
-extern void *g_iat_004d2138;
+extern void *g_iat_GetFileType;
+extern void *g_iat_SetHandleCount;
+extern void *g_iat_GetStartupInfoA;
 
 __declspec(naked) void CrtIoInitFdTable(void)
 {
@@ -100526,7 +100526,7 @@ __declspec(naked) void CrtIoInitFdTable(void)
     L_8c25:
         lea      edx, [esp + 0x14]
         push     edx
-        call     dword ptr [g_iat_004d2138]
+        call     dword ptr [g_iat_GetStartupInfoA]
         cmp      word ptr [esp + 0x46], di
         je       L_8d38
         mov      eax, dword ptr [esp + 0x48]
@@ -100597,7 +100597,7 @@ __declspec(naked) void CrtIoInitFdTable(void)
         test     al, 8
         jne      short L_8d0a
         push     ecx
-        call     dword ptr [g_iat_004d2120]
+        call     dword ptr [g_iat_GetFileType]
         test     eax, eax
         je       short L_8d2b
     L_8d0a:
@@ -100620,7 +100620,7 @@ __declspec(naked) void CrtIoInitFdTable(void)
         cmp      esi, eax
         jl       short L_8ced
     L_8d38:
-        mov      ebx, dword ptr [g_iat_004d2148]
+        mov      ebx, dword ptr [g_iat_GetStdHandle]
         xor      ebp, ebp
     L_8d40:
         mov      ecx, dword ptr [g_arr_00fa0de0]
@@ -100647,7 +100647,7 @@ __declspec(naked) void CrtIoInitFdTable(void)
         cmp      edi, -1
         je       short L_8da2
         push     edi
-        call     dword ptr [g_iat_004d2120]
+        call     dword ptr [g_iat_GetFileType]
         test     eax, eax
         je       short L_8da2
         and      eax, 0xff
@@ -100678,7 +100678,7 @@ __declspec(naked) void CrtIoInitFdTable(void)
         jl       L_8d40
         mov      edx, dword ptr [g_dispatchSave1469_00fa0ee0]
         push     edx
-        call     dword ptr [g_iat_004d2128]
+        call     dword ptr [g_iat_SetHandleCount]
         pop      edi
         pop      esi
         pop      ebp
@@ -100697,7 +100697,7 @@ __declspec(naked) void CrtIoInitFdTable(void)
  * matched handler descriptor in eax. Steps:
  *
  *   1. If descriptor is NULL or [desc+8] (handler ptr) is 0:
- *      jmp to default-handler ([g_iat_004d20f8]).
+ *      jmp to default-handler ([g_iat_UnhandledExceptionFilter]).
  *   2. If [desc+8] == 5 (SIG_DFL): zero handler, return 1.
  *   3. If [desc+8] == 1 (SIG_IGN): return -1.
  *   4. Otherwise install the new sigh into the CRT context
@@ -100725,7 +100725,7 @@ extern void CrtInitPerThreadData(void);
 extern void ArraySearch(void);
 extern unsigned int g_crtSehFpuDispatch;
 extern unsigned int g_crtSehFpuDispatch2_005228fc;
-extern void *g_iat_004d20f8;
+extern void *g_iat_UnhandledExceptionFilter;
 
 __declspec(naked) void SehFpuExceptionDispatch(void)
 {
@@ -100949,7 +100949,7 @@ __declspec(naked) void SehFpuExceptionDispatch(void)
     L_ba7c:
         mov      edx, dword ptr [esp + 0x1c]
         push     edx
-        call     dword ptr [g_iat_004d20f8]
+        call     dword ptr [g_iat_UnhandledExceptionFilter]
         pop      edi
         pop      esi
         pop      ebp
@@ -104100,7 +104100,7 @@ extern void DosMapErr(void);
 extern void Crt_errno(void);
 extern void Crt_doserrno(void);
 extern void LseekImpl(void);
-extern void *g_iat_004d2124;
+extern void *g_iat_ReadFile;
 
 __declspec(naked) void CrtReadCrlfDecode(void)
 {
@@ -104152,10 +104152,10 @@ __declspec(naked) void CrtReadCrlfDecode(void)
         mov      edx, dword ptr [esi]
         mov      eax, dword ptr [ebx + edx]
         push     eax
-        call     dword ptr [g_iat_004d2124]
+        call     dword ptr [g_iat_ReadFile]
         test     eax, eax
         jne      short L_9119
-        call     dword ptr [g_iat_004d209c]
+        call     dword ptr [g_iat_GetLastError]
         cmp      eax, 5
         jne      short L_90fc
         call     Crt_errno
@@ -104243,10 +104243,10 @@ __declspec(naked) void CrtReadCrlfDecode(void)
         mov      eax, dword ptr [ebx + edx]
         push     eax
         inc      edi
-        call     dword ptr [g_iat_004d2124]
+        call     dword ptr [g_iat_ReadFile]
         test     eax, eax
         jne      short L_91b9
-        call     dword ptr [g_iat_004d209c]
+        call     dword ptr [g_iat_GetLastError]
         mov      ebp, eax
     L_91b9:
         test     ebp, ebp
@@ -104341,15 +104341,15 @@ extern void LoadArgPushCall(void);
 extern void FreeImpl(void);
 extern void StrNLen(void);
 extern unsigned int g_dispatchSave1449_00f9fc28;
-extern void *g_iat_004d20c0;
-extern void *g_iat_004d20c8;
+extern void *g_iat_LCMapStringA;
+extern void *g_iat_LCMapStringW;
 
 __declspec(naked) void CrtCodepageDispatcher(void)
 {
     __asm {
         mov      eax, dword ptr [g_dispatchSave1449_00f9fc28]
         push     ebx
-        mov      ebx, dword ptr [g_iat_004d20c0]
+        mov      ebx, dword ptr [g_iat_LCMapStringA]
         push     ebp
         push     esi
         push     edi
@@ -104361,7 +104361,7 @@ __declspec(naked) void CrtCodepageDispatcher(void)
         push     OFFSET g_crtMemMoveHi
         push     0x100
         push     0
-        call     dword ptr [g_iat_004d20c8]
+        call     dword ptr [g_iat_LCMapStringW]
         test     eax, eax
         je       short L_d726
         mov      eax, 1
@@ -104434,7 +104434,7 @@ __declspec(naked) void CrtCodepageDispatcher(void)
         push     edi
         push     edx
         push     ebp
-        call     dword ptr [g_iat_004d20e4]
+        call     dword ptr [g_iat_MultiByteToWideChar]
         mov      edi, eax
         test     edi, edi
         jne      short L_d7db
@@ -104464,7 +104464,7 @@ __declspec(naked) void CrtCodepageDispatcher(void)
         push     ecx
         push     1
         push     ebp
-        call     dword ptr [g_iat_004d20e4]
+        call     dword ptr [g_iat_MultiByteToWideChar]
         test     eax, eax
         je       L_d8f8
         mov      ebp, dword ptr [esp + 0x18]
@@ -104475,7 +104475,7 @@ __declspec(naked) void CrtCodepageDispatcher(void)
         push     ebx
         push     ebp
         push     edx
-        call     dword ptr [g_iat_004d20c8]
+        call     dword ptr [g_iat_LCMapStringW]
         mov      esi, eax
         test     esi, esi
         je       L_d8f8
@@ -104494,7 +104494,7 @@ __declspec(naked) void CrtCodepageDispatcher(void)
         push     ebx
         push     ebp
         push     ecx
-        call     dword ptr [g_iat_004d20c8]
+        call     dword ptr [g_iat_LCMapStringW]
         test     eax, eax
         je       short L_d8f8
     L_d85f:
@@ -104527,7 +104527,7 @@ __declspec(naked) void CrtCodepageDispatcher(void)
         push     ebx
         push     ebp
         push     ecx
-        call     dword ptr [g_iat_004d20c8]
+        call     dword ptr [g_iat_LCMapStringW]
         test     eax, eax
         je       short L_d8f8
         mov      eax, dword ptr [esp + 0x28]
@@ -104543,7 +104543,7 @@ __declspec(naked) void CrtCodepageDispatcher(void)
         push     edx
         push     0x220
         push     eax
-        call     dword ptr [g_iat_004d20e0]
+        call     dword ptr [g_iat_WideCharToMultiByte]
         mov      esi, eax
         test     esi, esi
         je       short L_d8f8
@@ -104558,7 +104558,7 @@ __declspec(naked) void CrtCodepageDispatcher(void)
         push     edx
         push     0x220
         push     eax
-        call     dword ptr [g_iat_004d20e0]
+        call     dword ptr [g_iat_WideCharToMultiByte]
         mov      esi, eax
         test     esi, esi
         jne      short L_d85f
@@ -104925,7 +104925,7 @@ __declspec(naked) void CrtSetlocaleInstaller(void)
         lea      edx, [esp + 0x10]
         push     edx
         push     ecx
-        call     dword ptr [g_iat_004d2114]
+        call     dword ptr [g_iat_GetCPInfo]
         mov      esi, 1
         cmp      eax, esi
         jne      L_9664
@@ -113663,7 +113663,7 @@ __declspec(naked) void CrtHeapCommitFreeCluster(void)
         push     eax
         push     edi
         mov      dword ptr [esp + 0x20], eax
-        call     dword ptr [g_iat_004d2144]
+        call     dword ptr [g_iat_VirtualAlloc]
         cmp      eax, edi
         jne      short L_765b
         mov      edx, dword ptr [esp + 0x18]

@@ -51,12 +51,12 @@
  *   ret
  */
 
-extern unsigned int g_iat_004d2178;
-extern unsigned int g_iat_004d217c;
-extern unsigned int g_iat_004d2188;
-extern unsigned int g_iat_004d218c;
-extern unsigned int g_iat_004d2194;
-extern unsigned int g_iat_004d2198;
+extern unsigned int g_iat_SetMenu;
+extern unsigned int g_iat_GetWindowLongA;
+extern unsigned int g_iat_GetMenu;
+extern unsigned int g_iat_GetWindowRect;
+extern unsigned int g_iat_ShowWindow;
+extern unsigned int g_iat_GetWindowPlacement;
 
 #define DSBI_BODY(STATE, IFACE, BUFDESC, QUALITY, PAN, SEC, D1, D2)            \
     extern unsigned int STATE;                                                  \
@@ -82,7 +82,7 @@ extern unsigned int g_iat_004d2198;
         __asm push    eax                                                        \
         __asm mov     dword ptr [STATE], 1                                       \
         __asm mov     dword ptr [BUFDESC], 0x2c                                  \
-        __asm call    dword ptr [g_iat_004d2198]                                 \
+        __asm call    dword ptr [g_iat_GetWindowPlacement]                                 \
         __asm mov     eax, dword ptr [QUALITY]                                   \
         __asm cmp     eax, 3                                                     \
         __asm _emit   74h                                                        \
@@ -93,21 +93,21 @@ extern unsigned int g_iat_004d2198;
         __asm mov     ecx, dword ptr [IFACE]                                     \
         __asm push    9                                                           \
         __asm push    ecx                                                         \
-        __asm call    dword ptr [g_iat_004d2194]                                 \
+        __asm call    dword ptr [g_iat_ShowWindow]                                 \
         __asm mov     edx, dword ptr [IFACE]                                     \
         __asm push    OFFSET PAN                                                  \
         __asm push    edx                                                         \
-        __asm call    dword ptr [g_iat_004d218c]                                 \
+        __asm call    dword ptr [g_iat_GetWindowRect]                                 \
         __asm mov     eax, dword ptr [IFACE]                                     \
         __asm push    eax                                                         \
-        __asm call    dword ptr [g_iat_004d2188]                                 \
+        __asm call    dword ptr [g_iat_GetMenu]                                 \
         __asm mov     ecx, dword ptr [IFACE]                                     \
         __asm push    0                                                           \
         __asm push    ecx                                                         \
         __asm mov     dword ptr [SEC], eax                                        \
-        __asm call    dword ptr [g_iat_004d2178]                                 \
+        __asm call    dword ptr [g_iat_SetMenu]                                 \
         __asm mov     edx, dword ptr [IFACE]                                     \
-        __asm mov     esi, dword ptr [g_iat_004d217c]                            \
+        __asm mov     esi, dword ptr [g_iat_GetWindowLongA]                            \
         __asm push    -20                                                         \
         __asm push    edx                                                         \
         __asm call    esi                                                         \

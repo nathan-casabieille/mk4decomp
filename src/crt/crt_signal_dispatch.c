@@ -13,8 +13,8 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_dispatchSave1440_00f9fadc;
 extern unsigned int g_dispatchSave1448_00f9fc20;
-extern unsigned int g_iat_004d2110;
-extern unsigned int g_iat_004d2118;
+extern unsigned int g_iat_GetACP;
+extern unsigned int g_iat_GetOEMCP;
 
 __declspec(naked) void CRTSignalDispatch(void) {
     __asm {
@@ -24,12 +24,12 @@ __declspec(naked) void CRTSignalDispatch(void) {
         _emit   75h
         _emit   10h
         mov     dword ptr [g_dispatchSave1440_00f9fadc], 1
-        jmp     dword ptr [g_iat_004d2118]
+        jmp     dword ptr [g_iat_GetOEMCP]
         cmp     eax, -3
         _emit   75h
         _emit   10h
         mov     dword ptr [g_dispatchSave1440_00f9fadc], 1
-        jmp     dword ptr [g_iat_004d2110]
+        jmp     dword ptr [g_iat_GetACP]
         cmp     eax, -4
         _emit   75h
         _emit   0fh

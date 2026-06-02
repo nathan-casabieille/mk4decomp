@@ -12,7 +12,7 @@
  */
 extern u32 g_audioPreState;
 extern u32 g_audioState08;
-extern unsigned int g_iat_004d2244;
+extern unsigned int g_iat_mciSendCommandA;
 
 __declspec(naked) void Helper_AuxAudio_PostInit(void) {
     __asm {
@@ -20,7 +20,7 @@ __declspec(naked) void Helper_AuxAudio_PostInit(void) {
         sub     esp, 0x24
         test    eax, eax
         push    esi
-        mov     esi, dword ptr [g_iat_004d2244]
+        mov     esi, dword ptr [g_iat_mciSendCommandA]
         jne     skipBegin
         lea     eax, [esp + 0x14]
         mov     dword ptr [esp + 0x1c], 0x004f4684

@@ -131,7 +131,7 @@ extern unsigned int g_dispatchSave1470_00fa0ee4;
 extern unsigned int g_dispatchSave1430_00f9f850;
 extern void IndirectCall(void);
 extern void Helper_MemMalloc_Post(void);
-extern void *g_iat_004d2150;
+extern void *g_iat_GetFileAttributesA;
 extern void DosMapErr(void);
 extern void Thunk_004ca77b_helper(void);
 extern void Thunk_004ca701_helper(void);
@@ -172,8 +172,8 @@ extern u32 g_timerFlag;
  *     Set flag 0x543904 on success. Tail-call timeGetTime via IAT[0x4d2240];
  *     save in 0x5438fc.
  */
-extern unsigned int g_iat_004d2240;
-extern unsigned int g_iat_004d2244;
+extern unsigned int g_iat_timeGetTime;
+extern unsigned int g_iat_mciSendCommandA;
 extern u32 g_audioPreState;
 extern void Helper_AuxAudio_PostInit(void);
 
@@ -204,7 +204,7 @@ __declspec(naked) void Audio_TimerSet(void) {
         mov     edx, dword ptr [g_audioPreState]
         lea     ecx, [esp + 0x18]
         push    ebp
-        mov     ebp, dword ptr [g_iat_004d2244]
+        mov     ebp, dword ptr [g_iat_mciSendCommandA]
         push    ecx
         push    0x400
         push    0x80d
@@ -264,7 +264,7 @@ __declspec(naked) void Audio_TimerSet(void) {
         inc     eax
         mov     dword ptr [g_timerFlag], eax
     L_mp_tailCall:
-        call    dword ptr [g_iat_004d2240]
+        call    dword ptr [g_iat_timeGetTime]
         pop     edi
         pop     esi
         mov     dword ptr [g_timerLastNow], eax

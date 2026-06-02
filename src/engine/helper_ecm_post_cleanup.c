@@ -13,12 +13,12 @@
  *   arg2 ([esp+0x14] al): if zero AND [0x7ab084]!=0:
  *     ebp(edi([0x7ab080]), ebx(esi([0x7ab07c]))); [0x7ab084] = 0.
  */
-extern unsigned int g_iat_004d2060;
-extern unsigned int g_iat_004d2064;
-extern unsigned int g_iat_004d2068;
-extern unsigned int g_iat_004d206c;
-extern unsigned int g_iat_004d208c;
-extern unsigned int g_iat_004d2094;
+extern unsigned int g_iat_GetCurrentProcess;
+extern unsigned int g_iat_GetCurrentThread;
+extern unsigned int g_iat_GetPriorityClass;
+extern unsigned int g_iat_GetThreadPriority;
+extern unsigned int g_iat_SetPriorityClass;
+extern unsigned int g_iat_SetThreadPriority;
 extern HANDLE g_ecmThread;
 extern unsigned int g_dispatchSave1606_007ab07c;
 extern unsigned int g_dispatchSave1607_007ab080;
@@ -28,13 +28,13 @@ __declspec(naked) int Helper_ECM_PostCleanup(int flag) {
     __asm {
         mov     al, byte ptr [esp + 4]
         push    ebx
-        mov     ebx, dword ptr [g_iat_004d208c]
+        mov     ebx, dword ptr [g_iat_SetPriorityClass]
         push    ebp
-        mov     ebp, dword ptr [g_iat_004d2094]
+        mov     ebp, dword ptr [g_iat_SetThreadPriority]
         push    esi
-        mov     esi, dword ptr [g_iat_004d2060]
+        mov     esi, dword ptr [g_iat_GetCurrentProcess]
         push    edi
-        mov     edi, dword ptr [g_iat_004d2064]
+        mov     edi, dword ptr [g_iat_GetCurrentThread]
         test    al, al
         _emit   74h
         _emit   4eh
@@ -44,11 +44,11 @@ __declspec(naked) int Helper_ECM_PostCleanup(int flag) {
         _emit   45h
         call    esi
         push    eax
-        call    dword ptr [g_iat_004d2068]
+        call    dword ptr [g_iat_GetPriorityClass]
         mov     dword ptr [g_dispatchSave1606_007ab07c], eax
         call    edi
         push    eax
-        call    dword ptr [g_iat_004d206c]
+        call    dword ptr [g_iat_GetThreadPriority]
         push    0x80
         mov     dword ptr [g_dispatchSave1607_007ab080], eax
         call    esi

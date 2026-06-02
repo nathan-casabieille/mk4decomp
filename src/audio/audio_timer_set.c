@@ -20,8 +20,8 @@ extern u32 g_timerHandle;
 extern u32 g_timerLastNow;
 extern u32 g_timerFlag;
 extern u32 g_audioState0C;
-extern unsigned int g_iat_004d2240;
-extern unsigned int g_iat_004d2244;
+extern unsigned int g_iat_timeGetTime;
+extern unsigned int g_iat_mciSendCommandA;
 extern u32 g_audioPreState;
 extern void Audio_TimerTeardown(void);
 extern void Helper_AuxAudio_PostInit(void);
@@ -53,7 +53,7 @@ __declspec(naked) void Audio_TimerSet(void) {
         mov     edx, dword ptr [g_audioPreState]
         lea     ecx, [esp + 0x18]
         push    ebp
-        mov     ebp, dword ptr [g_iat_004d2244]
+        mov     ebp, dword ptr [g_iat_mciSendCommandA]
         push    ecx
         push    0x400
         push    0x80d
@@ -113,7 +113,7 @@ __declspec(naked) void Audio_TimerSet(void) {
         inc     eax
         mov     dword ptr [g_timerFlag], eax
     L_mp_tailCall:
-        call    dword ptr [g_iat_004d2240]
+        call    dword ptr [g_iat_timeGetTime]
         pop     edi
         pop     esi
         mov     dword ptr [g_timerLastNow], eax

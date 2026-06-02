@@ -116,9 +116,9 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_dispatchSave1448_00f9fc20;
 extern unsigned int g_dispatchSave1462_00f9fd9c;
-extern unsigned int g_iat_004d20e4;
-extern unsigned int g_iat_004d2130;
-extern unsigned int g_iat_004d2134;
+extern unsigned int g_iat_MultiByteToWideChar;
+extern unsigned int g_iat_GetLocaleInfoW;
+extern unsigned int g_iat_GetLocaleInfoA;
 extern void FreeImpl(void);
 extern void LoadArgPushCall(void);
 
@@ -128,7 +128,7 @@ __declspec(naked) void MbToWcsDispatcher(void) {
         push    ebx
         push    ebp
         push    esi
-        mov     esi, dword ptr [g_iat_004d2130]
+        mov     esi, dword ptr [g_iat_GetLocaleInfoW]
         push    edi
         test    eax, eax
         jne     short L_mw_haveState
@@ -146,7 +146,7 @@ __declspec(naked) void MbToWcsDispatcher(void) {
         push    0
         push    1
         push    0
-        call    dword ptr [g_iat_004d2134]
+        call    dword ptr [g_iat_GetLocaleInfoA]
         test    eax, eax
         jz      L_mw_returnZero
         mov     eax, 2
@@ -184,7 +184,7 @@ __declspec(naked) void MbToWcsDispatcher(void) {
         push    0
         push    ebx
         push    ebp
-        call    dword ptr [g_iat_004d2134]
+        call    dword ptr [g_iat_GetLocaleInfoA]
         mov     esi, eax
         test    esi, esi
         jne     short L_mw_alloc
@@ -210,7 +210,7 @@ __declspec(naked) void MbToWcsDispatcher(void) {
         push    edi
         push    ebx
         push    ebp
-        call    dword ptr [g_iat_004d2134]
+        call    dword ptr [g_iat_GetLocaleInfoA]
         test    eax, eax
         jz      short L_mw_cleanupZero
         mov     eax, [esp + 0x20]
@@ -223,7 +223,7 @@ __declspec(naked) void MbToWcsDispatcher(void) {
         push    edi
         push    1
         push    edx
-        call    dword ptr [g_iat_004d20e4]
+        call    dword ptr [g_iat_MultiByteToWideChar]
         mov     esi, eax
         test    esi, esi
         jz      short L_mw_cleanupZero
@@ -245,7 +245,7 @@ __declspec(naked) void MbToWcsDispatcher(void) {
         push    edi
         push    1
         push    ecx
-        call    dword ptr [g_iat_004d20e4]
+        call    dword ptr [g_iat_MultiByteToWideChar]
         mov     esi, eax
         test    esi, esi
         jne     short L_mw_freeAndReturn

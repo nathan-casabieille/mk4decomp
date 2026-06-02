@@ -122,7 +122,7 @@ extern unsigned int g_dispatchSave1438_00f9fad4;
 extern unsigned int g_dispatchSave1439_00f9fad8;
 extern unsigned int g_dispatchSave1440_00f9fadc;
 extern unsigned int g_dispatchSave1467_00fa0dc4;
-extern unsigned int g_iat_004d2114;
+extern unsigned int g_iat_GetCPInfo;
 extern void BuildCharacterCaseTables(void);
 extern void CRTSignalDispatch(void);
 extern void InitGlobalsAndZero(void);
@@ -190,7 +190,7 @@ __declspec(naked) void CrtSetlocaleInstaller(void)
         lea      edx, [esp + 0x10]
         push     edx
         push     ecx
-        call     dword ptr [g_iat_004d2114]
+        call     dword ptr [g_iat_GetCPInfo]
         mov      esi, 1
         cmp      eax, esi
         jne      L_9664

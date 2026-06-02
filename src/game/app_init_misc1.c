@@ -16,7 +16,7 @@ extern unsigned int g_dispatchSave525_004f5798;
 extern unsigned int g_dispatchSave524_004f613c;
 extern u16 g_texStripeBuf[];
 extern unsigned int g_dispatchSave1348_00f6ce50;
-extern unsigned int g_iat_004d21c4;
+extern unsigned int g_iat_MapVirtualKeyA;
 extern void FSYS_fclose(void);
 extern void FSYS_fopen(void);
 extern void FSYS_fread(void);
@@ -28,7 +28,7 @@ __declspec(naked) void AppInit_Misc1(void) {
     __asm {
         sub     esp, 8
         push    ebx
-        mov     ebx, dword ptr [g_iat_004d21c4]
+        mov     ebx, dword ptr [g_iat_MapVirtualKeyA]
         push    esi
         push    edi
         xor     edi, edi

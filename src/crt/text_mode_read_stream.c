@@ -121,7 +121,7 @@ extern unsigned int g_fightAxisPosY;
  *   [0x4d20b0] and [0x4d209c] (likely SetFilePointer / GetLastError or
  *   similar) to fall back to the OS handle. Returns ebp (success/-1).
  */
-extern unsigned int g_iat_004d209c;
+extern unsigned int g_iat_GetLastError;
 extern unsigned int g_dispatchSave651_004d20b0;
 extern void CRTHandleLookup(void);
 extern void Crt_doserrno(void);
@@ -236,7 +236,7 @@ __declspec(naked) void TextModeReadStream(void) {
         jne     short L_tmr_restoreOnly
         call    Crt_errno
         mov     dword ptr [eax], 0xd
-        call    dword ptr [g_iat_004d209c]
+        call    dword ptr [g_iat_GetLastError]
         mov     esi, eax
         call    Crt_doserrno
         mov     dword ptr [eax], esi

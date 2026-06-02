@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_heapShrinkPtr;
 extern unsigned int g_dispatchSave1432_00f9f8b8;
-extern unsigned int g_iat_004d2168;
+extern unsigned int g_iat_VirtualFree;
 extern void HeapRegionTeardown(void);
 
 __declspec(naked) void HeapShrinkDecommit(void) {
@@ -143,7 +143,7 @@ __declspec(naked) void HeapShrinkDecommit(void) {
         add     eax, ebx
         push    0x1000
         push    eax
-        call    dword ptr [g_iat_004d2168]
+        call    dword ptr [g_iat_VirtualFree]
         test    eax, eax
         jz      short L_hs_nextpage
         mov     dword ptr [esi], 0xffffffff

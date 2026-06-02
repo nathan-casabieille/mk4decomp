@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
-extern unsigned int g_iat_004d2230;
-extern unsigned int g_iat_004d2244;
+extern unsigned int g_iat_auxSetVolume;
+extern unsigned int g_iat_mciSendCommandA;
 
 void AuxAudio_Teardown(void) {
     int i;
@@ -117,11 +117,11 @@ void AuxAudio_Teardown(void) {
     struct AuxChannel *p;
     Audio_TimerTeardown();
     if (g_audioState08 != 0) {
-        ((void (__stdcall *)(unsigned int, unsigned int, unsigned int, unsigned int))g_iat_004d2244)(g_audioPreState, 0x804, 0, 0);
+        ((void (__stdcall *)(unsigned int, unsigned int, unsigned int, unsigned int))g_iat_mciSendCommandA)(g_audioPreState, 0x804, 0, 0);
     }
     i = 0;
     if (g_auxCount > 0) {
-        cb = (void (__stdcall *)(unsigned int, unsigned int))g_iat_004d2230;
+        cb = (void (__stdcall *)(unsigned int, unsigned int))g_iat_auxSetVolume;
         p = (struct AuxChannel *)&g_auxChannels;
         do {
             cb(p->deviceId, p->_pad);

@@ -33,8 +33,8 @@
 extern int Lock(int);
 extern int TableLookupIatCall(int);
 /* @addr 0x004c6ff0 */
-extern unsigned int g_iat_004d213c;
-extern unsigned int g_iat_004d2140;
+extern unsigned int g_iat_LeaveCriticalSection;
+extern unsigned int g_iat_EnterCriticalSection;
 
 __declspec(naked) void RangePathIATDispatch_004c6ff0(void) {
     __asm {
@@ -57,7 +57,7 @@ __declspec(naked) void RangePathIATDispatch_004c6ff0(void) {
         ret
         add     eax, 0x20
         push    eax
-        call    dword ptr [g_iat_004d2140]
+        call    dword ptr [g_iat_EnterCriticalSection]
         pop     ebp
         ret
     }
@@ -85,7 +85,7 @@ __declspec(naked) void RangePathIATDispatch_004c7060(void) {
         ret
         add     eax, 0x20
         push    eax
-        call    dword ptr [g_iat_004d213c]
+        call    dword ptr [g_iat_LeaveCriticalSection]
         pop     ebp
         ret
     }

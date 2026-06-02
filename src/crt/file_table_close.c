@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004cb700 (372b crt) - 3-entry CRT FILE table mgmt. */
-extern unsigned int g_iat_004d209c;
+extern unsigned int g_iat_GetLastError;
 extern unsigned int g_dispatchSave882_004d20f0;
 extern unsigned int g_byte_00f9f838;
 extern unsigned int g_dispatchSave1465_00f9fdb4;
@@ -158,7 +158,7 @@ __declspec(naked) void FileTableClose(void) {
         call    dword ptr [g_dispatchSave882_004d20f0]
         test    eax, eax
         jne     short L_ftc_clearErr
-        call    dword ptr [g_iat_004d209c]
+        call    dword ptr [g_iat_GetLastError]
         mov     esi, eax
         jmp     short L_ftc_checkErr
     L_ftc_clearErr:

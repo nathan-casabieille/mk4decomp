@@ -20,8 +20,8 @@ extern int g_renderer4_active;
 extern unsigned int g_dispatchSave1623_007af944;
 extern int g_renderer4_surface;
 extern unsigned int g_dispatchSave1624_007af94c;
-extern unsigned int g_iat_004d202c;
-extern unsigned int g_iat_004d21b8;
+extern unsigned int g_iat_CreateDIBSection;
+extern unsigned int g_iat_GetDC;
 extern void LoadArgPushCall(void);
 extern void RendererTeardownSW(void);
 
@@ -49,7 +49,7 @@ __declspec(naked) void Helper_GfxInit2(void) {
         push    eax
         mov     dword ptr [g_renderer4_surface], esi
         mov     dword ptr [g_dispatchSave1623_007af944], eax
-        call    dword ptr [g_iat_004d21b8]
+        call    dword ptr [g_iat_GetDC]
         cmp     eax, esi
         mov     dword ptr [g_dispatchSave1621_007af938], eax
         jz      short L_si_teardown
@@ -93,7 +93,7 @@ __declspec(naked) void Helper_GfxInit2(void) {
         push    eax
         push    ecx
         mov     dword ptr [g_dispatchSave1624_007af94c], esi
-        call    dword ptr [g_iat_004d202c]
+        call    dword ptr [g_iat_CreateDIBSection]
         mov     dword ptr [g_dispatchSave1622_007af93c], eax
         mov     dword ptr [g_renderer4_active], edi
         mov     eax, edi

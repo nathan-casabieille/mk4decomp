@@ -14,9 +14,9 @@ extern unsigned int g_renderer4_dispatchSlot_0058c8dc;
 extern unsigned int g_dsmi_3a0_main;
 extern unsigned int g_dsmi_3a0_ret;
 extern unsigned int g_190_iface;
-extern unsigned int g_iat_004d219c;
-extern unsigned int g_iat_004d21a4;
-extern unsigned int g_iat_004d21ac;
+extern unsigned int g_iat_ShowCursor;
+extern unsigned int g_iat_SetCursorPos;
+extern unsigned int g_iat_GetCursorPos;
 extern void DialogProbeDispatch640(void);
 
 __declspec(naked) void DDraw5_CreateSurface(void) {
@@ -36,9 +36,9 @@ __declspec(naked) void DDraw5_CreateSurface(void) {
         mov     dword ptr [g_renderer2_initVar3_004f47b0], eax
         jz      L_dms3_release
         push    offset g_renderer4_ifaceBase_0058c8d8
-        call    dword ptr [g_iat_004d21ac]
+        call    dword ptr [g_iat_GetCursorPos]
         push    0
-        call    dword ptr [g_iat_004d219c]
+        call    dword ptr [g_iat_ShowCursor]
         call    DialogProbeDispatch640
         mov     eax, dword ptr [g_dsmi_3a0_main]
         test    eax, eax
@@ -109,9 +109,9 @@ __declspec(naked) void DDraw5_CreateSurface(void) {
         mov     ecx, dword ptr [g_renderer4_ifaceBase_0058c8d8]
         push    eax
         push    ecx
-        call    dword ptr [g_iat_004d21a4]
+        call    dword ptr [g_iat_SetCursorPos]
         push    1
-        call    dword ptr [g_iat_004d219c]
+        call    dword ptr [g_iat_ShowCursor]
     L_dms3_okRet:
         mov     eax, 1
         pop     edi

@@ -10,9 +10,9 @@
  *   Store arg1; if arg1 == 0: tail-call clean-up (set window mode); ret 1.
  *   Else: call setup; if user mode == 1: re-call setup; return 1; else return 0.
  */
-extern unsigned int g_iat_004d219c;
-extern unsigned int g_iat_004d21a4;
-extern unsigned int g_iat_004d21ac;
+extern unsigned int g_iat_ShowCursor;
+extern unsigned int g_iat_SetCursorPos;
+extern unsigned int g_iat_GetCursorPos;
 extern unsigned int g_iat_indirect_007b0050;
 extern unsigned int g_iat_indirect_007b0054;
 extern unsigned int g_dispatchVar41_004f4b50;
@@ -38,9 +38,9 @@ int Helper_GlidePostInit(void) {
         _emit   74h
         _emit   3fh
         push    offset g_dispatchSave1630_007aff48
-        call    dword ptr [g_iat_004d21ac]
+        call    dword ptr [g_iat_GetCursorPos]
         push    0
-        call    dword ptr [g_iat_004d219c]
+        call    dword ptr [g_iat_ShowCursor]
         call    DSoundSetAxisPan123_004b50a0
         push    0
         push    2
@@ -63,9 +63,9 @@ int Helper_GlidePostInit(void) {
         mov     ecx, dword ptr [g_dispatchSave1630_007aff48]
         push    eax
         push    ecx
-        call    dword ptr [g_iat_004d21a4]
+        call    dword ptr [g_iat_SetCursorPos]
         push    1
-        call    dword ptr [g_iat_004d219c]
+        call    dword ptr [g_iat_ShowCursor]
         mov     eax, 1
         }
 }

@@ -114,8 +114,8 @@ extern unsigned int g_dispatchSave890_004d2b7c;
 extern unsigned int g_crtCType;
 extern unsigned int g_crtLocaleNumeric;
 extern unsigned int g_byte_00522bb4;
-extern unsigned int g_iat_004d2058;
-extern unsigned int g_iat_004d212c;
+extern unsigned int g_iat_GetProcAddress;
+extern unsigned int g_iat_GetModuleHandleA;
 extern void FPUPrecisionCheck(void);
 extern void IsCType(void);
 extern void SevenArgThenTwoArg_004ccd20(void);
@@ -127,12 +127,12 @@ __declspec(naked) void LocaleNumericHelpers(void)
     __asm {
         /* Helper 1: __setusermatherr early-init guard. */
         push     OFFSET g_dispatchSave890_004d2b7c
-        call     dword ptr [g_iat_004d212c]
+        call     dword ptr [g_iat_GetModuleHandleA]
         test     eax, eax
         je       short L_8474
         push     OFFSET g_dispatchSave889_004d2b60
         push     eax
-        call     dword ptr [g_iat_004d2058]
+        call     dword ptr [g_iat_GetProcAddress]
         test     eax, eax
         je       short L_8474
         push     0

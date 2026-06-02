@@ -20,9 +20,9 @@ extern unsigned int g_renderer2_var3_0058c764;
 extern unsigned int g_comptr_0058c7ac;
 extern unsigned int g_990_iface;
 extern int g_renderer2_present_rc;
-extern unsigned int g_iat_004d219c;
-extern unsigned int g_iat_004d21a4;
-extern unsigned int g_iat_004d21ac;
+extern unsigned int g_iat_ShowCursor;
+extern unsigned int g_iat_SetCursorPos;
+extern unsigned int g_iat_GetCursorPos;
 extern void DSoundSetAxisPan123_004aec10(void);
 
 __declspec(naked) void R2_Init4(void) {
@@ -42,9 +42,9 @@ __declspec(naked) void R2_Init4(void) {
         mov     dword ptr [g_renderer2_initVar2_004f47a0], eax
         jz      L_dms_release
         push    offset g_renderer2_baseB_0058c760
-        call    dword ptr [g_iat_004d21ac]
+        call    dword ptr [g_iat_GetCursorPos]
         push    0
-        call    dword ptr [g_iat_004d219c]
+        call    dword ptr [g_iat_ShowCursor]
         call    DSoundSetAxisPan123_004aec10
         mov     eax, dword ptr [g_comptr_0058c7ac]
         test    eax, eax
@@ -115,9 +115,9 @@ __declspec(naked) void R2_Init4(void) {
         mov     ecx, dword ptr [g_renderer2_baseB_0058c760]
         push    eax
         push    ecx
-        call    dword ptr [g_iat_004d21a4]
+        call    dword ptr [g_iat_SetCursorPos]
         push    1
-        call    dword ptr [g_iat_004d219c]
+        call    dword ptr [g_iat_ShowCursor]
     L_dms_okRet:
         mov     eax, 1
         pop     edi

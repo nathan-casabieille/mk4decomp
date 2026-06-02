@@ -107,7 +107,7 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
-extern unsigned int g_iat_004d2244;
+extern unsigned int g_iat_mciSendCommandA;
 extern u32 g_audioState00;
 extern u32 g_timerActive;
 extern u32 g_timerEndSec;
@@ -128,7 +128,7 @@ void Audio_TimerTeardown(void) {
     unsigned int zero = 0;
     if (g_timerFlag != zero) {
         if (((int (*)(void))Helper_AuxAudio_PostInit)() != 0) {
-            ((void (__stdcall *)(unsigned int, unsigned int, unsigned int, unsigned int))g_iat_004d2244)(g_audioPreState, 0x808, 2, zero);
+            ((void (__stdcall *)(unsigned int, unsigned int, unsigned int, unsigned int))g_iat_mciSendCommandA)(g_audioPreState, 0x808, 2, zero);
         }
     }
     g_timerFlag = zero;

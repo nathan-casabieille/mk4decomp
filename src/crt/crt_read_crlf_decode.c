@@ -109,8 +109,8 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_arr_00fa0de0;
-extern unsigned int g_iat_004d209c;
-extern unsigned int g_iat_004d2124;
+extern unsigned int g_iat_GetLastError;
+extern unsigned int g_iat_ReadFile;
 extern void Crt_doserrno(void);
 extern void Crt_errno(void);
 extern void DosMapErr(void);
@@ -166,10 +166,10 @@ __declspec(naked) void CrtReadCrlfDecode(void)
         mov      edx, dword ptr [esi]
         mov      eax, dword ptr [ebx + edx]
         push     eax
-        call     dword ptr [g_iat_004d2124]
+        call     dword ptr [g_iat_ReadFile]
         test     eax, eax
         jne      short L_9119
-        call     dword ptr [g_iat_004d209c]
+        call     dword ptr [g_iat_GetLastError]
         cmp      eax, 5
         jne      short L_90fc
         call     Crt_errno
@@ -257,10 +257,10 @@ __declspec(naked) void CrtReadCrlfDecode(void)
         mov      eax, dword ptr [ebx + edx]
         push     eax
         inc      edi
-        call     dword ptr [g_iat_004d2124]
+        call     dword ptr [g_iat_ReadFile]
         test     eax, eax
         jne      short L_91b9
-        call     dword ptr [g_iat_004d209c]
+        call     dword ptr [g_iat_GetLastError]
         mov      ebp, eax
     L_91b9:
         test     ebp, ebp

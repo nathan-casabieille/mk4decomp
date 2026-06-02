@@ -115,8 +115,8 @@ extern unsigned int g_fightAxisPosY;
  *   InitializeCriticalSection(slot+0xc), bump slot[+8]; release lock
  *   0x11; EnterCriticalSection(*base + slot_off + 0xc).
  */
-extern unsigned int g_iat_004d2140;
-extern unsigned int g_iat_004d215c;
+extern unsigned int g_iat_EnterCriticalSection;
+extern unsigned int g_iat_InitializeCriticalSection;
 extern unsigned int g_arr_00fa0de0;
 extern void Lock(void);
 extern void TableLookupIatCall(void);
@@ -146,7 +146,7 @@ __declspec(naked) void CritSecLazyEnter(void) {
         jne     drop
         lea     edx, [esi + 0xc]
         push    edx
-        call    dword ptr [g_iat_004d215c]
+        call    dword ptr [g_iat_InitializeCriticalSection]
         inc     dword ptr [esi + 8]
 drop:
         push    0x11
@@ -156,7 +156,7 @@ enterCs:
         mov     eax, dword ptr [ebx]
         lea     ecx, [eax + edi + 0xc]
         push    ecx
-        call    dword ptr [g_iat_004d2140]
+        call    dword ptr [g_iat_EnterCriticalSection]
         pop     edi
         pop     esi
         pop     ebx

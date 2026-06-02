@@ -26,7 +26,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern s32 g_clientWidth;
 extern void CallThreeSumLea(void);
-extern unsigned int g_iat_004d21b0;
+extern unsigned int g_iat_GetSystemMetrics;
 
 /*
  * NON-COAXABLE: MSVC picks lea eax,[edi+edi]+pop edi+a3 store over
@@ -36,7 +36,7 @@ extern unsigned int g_iat_004d21b0;
 __declspec(naked) void CallTwoSumShl(void) {
     __asm {
         push    esi
-        mov     esi, dword ptr [g_iat_004d21b0]
+        mov     esi, dword ptr [g_iat_GetSystemMetrics]
         push    edi
         push    0x2d
         call    esi

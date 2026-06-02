@@ -112,7 +112,7 @@ extern void CrtInitPerThreadData(void);
 extern void ArraySearch(void);
 extern unsigned int g_crtSehFpuDispatch;
 extern unsigned int g_crtSehFpuDispatch2_005228fc;
-extern unsigned int g_iat_004d20f8;
+extern unsigned int g_iat_UnhandledExceptionFilter;
 
 __declspec(naked) void SehFpuExceptionDispatch(void)
 {
@@ -336,7 +336,7 @@ __declspec(naked) void SehFpuExceptionDispatch(void)
     L_ba7c:
         mov      edx, dword ptr [esp + 0x1c]
         push     edx
-        call     dword ptr [g_iat_004d20f8]
+        call     dword ptr [g_iat_UnhandledExceptionFilter]
         pop      edi
         pop      esi
         pop      ebp

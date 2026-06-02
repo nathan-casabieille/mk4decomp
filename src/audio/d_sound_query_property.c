@@ -15,7 +15,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void Helper_AuxAudio_PostInit(void);
 extern unsigned int g_dsoundDevice_005438e8;
-extern unsigned int g_iat_004d2244;
+extern unsigned int g_iat_mciSendCommandA;
 
 void DSoundQueryProperty(void) {
     __asm {
@@ -36,7 +36,7 @@ void DSoundQueryProperty(void) {
         push    0x814
         push    ecx
         mov     dword ptr [esp + 0x18], 3
-        call    dword ptr [g_iat_004d2244]
+        call    dword ptr [g_iat_mciSendCommandA]
         mov     ecx, dword ptr [esp + 4]
         neg     eax
         sbb     eax, eax

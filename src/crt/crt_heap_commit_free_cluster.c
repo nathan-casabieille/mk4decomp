@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern void* HeapRegionLookup(void *ptr, void **out1, void **out2);
 extern void CrtHeapCommitFreeCluster(void *, void *, int);
-extern void *g_iat_004d214c;
+extern void *g_iat_HeapFree;
 extern unsigned int g_dispatchSave1470_00fa0ee4;
 
 /*
@@ -132,5 +132,5 @@ void FreeImpl(void *ptr) {
         return;
     }
     TableLookupIatCall(9);
-    ((void (__stdcall *)(unsigned int, unsigned int, void *))g_iat_004d214c)(g_dispatchSave1470_00fa0ee4, 0, ptr);
+    ((void (__stdcall *)(unsigned int, unsigned int, void *))g_iat_HeapFree)(g_dispatchSave1470_00fa0ee4, 0, ptr);
 }

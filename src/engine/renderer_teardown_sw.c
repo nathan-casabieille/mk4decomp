@@ -107,9 +107,9 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
-extern unsigned int g_iat_004d2030;
-extern unsigned int g_iat_004d21a8;
-extern unsigned int g_iat_004d2210;
+extern unsigned int g_iat_DeleteObject;
+extern unsigned int g_iat_ReleaseDC;
+extern unsigned int g_iat_InvalidateRect;
 extern unsigned int g_dispatchSave1620_007af934;
 extern unsigned int g_dispatchSave1621_007af938;
 extern unsigned int g_dispatchSave1622_007af93c;
@@ -131,16 +131,16 @@ void RendererTeardownSW(void) {
         g_dispatchSave1620_007af934 = zero;
     }
     if (g_dispatchSave1621_007af938 != zero) {
-        ((void (__stdcall *)(unsigned int, unsigned int))g_iat_004d21a8)(g_dispatchSave1623_007af944, g_dispatchSave1621_007af938);
+        ((void (__stdcall *)(unsigned int, unsigned int))g_iat_ReleaseDC)(g_dispatchSave1623_007af944, g_dispatchSave1621_007af938);
         g_dispatchSave1621_007af938 = zero;
     }
     if (g_dispatchSave1622_007af93c != zero) {
-        ((void (__stdcall *)(unsigned int))g_iat_004d2030)(g_dispatchSave1622_007af93c);
+        ((void (__stdcall *)(unsigned int))g_iat_DeleteObject)(g_dispatchSave1622_007af93c);
         g_dispatchSave1622_007af93c = zero;
     }
     g_renderer4_active = zero;
     if (g_dispatchSave1625_007af950 != zero) {
-        ((void (__stdcall *)(unsigned int, unsigned int, unsigned int))g_iat_004d2210)(zero, zero, 1);
+        ((void (__stdcall *)(unsigned int, unsigned int, unsigned int))g_iat_InvalidateRect)(zero, zero, 1);
     }
     g_dispatchSave1625_007af950 = zero;
 }
