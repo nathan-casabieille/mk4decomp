@@ -84,14 +84,14 @@ extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_InstallSelfDualEsi(void);
-extern void MStackPushZeroCallPop_00407d00(void);
+extern void MStackPushZeroCallPop_PendingMatch(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
 extern void CrouchAttackFsmCluster(void);
 extern void MStackPushVec3Mul10(void);
 extern void LiteralPushCallEntZero(void);
 extern void LeaPlus22StoreSelf(void);
-extern void IterLoad_00491050(void);
+extern void IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0046f740 (90b)
  *   eax = g_xformScratch2088; g_eventQueueCurrent = 0;
- *   g_walkCallback = eax; call MStackPushZeroCallPop_00407d00;
+ *   g_walkCallback = eax; call MStackPushZeroCallPop_PendingMatch;
  *   if pause: ret; call DirtyToggleByGate; if pause: ret;
  *   if (bit2 of g_xformDirtyFlags) != 0:
  *     ++g_matrixStackTop; [mstack[*4]] = 0x46f7a0;
@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY;
 void BitGateInstallChainJmp(void) {
     g_walkCallback = (void (*)(void))g_xformScratch2088;
     g_eventQueueCurrent = 0;
-    MStackPushZeroCallPop_00407d00();
+    MStackPushZeroCallPop_PendingMatch();
     if (g_framePauseFlag != 0) return;
     DirtyToggleByGate();
     if (g_framePauseFlag != 0) return;

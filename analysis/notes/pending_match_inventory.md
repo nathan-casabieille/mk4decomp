@@ -126,7 +126,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/audio/pending_match_variants.c`
 - traits: x87 FPU, cond jmps: 11
-- top callees: `Push16Call`×5, `MStackPush2ChainLLInsert`×3, `DispatcherComplex260_MStackBracket1_TreeWalkRecursive2`×2, `MStackPushComplexCallPop_00406430`×2, `AudioMicroEntries`×2, `SetJmp_Push16Call_004a1ac0`×2, `AudioInitArgs3`, `AudioBindEntry`
+- top callees: `Push16Call`×5, `MStackPush2ChainLLInsert`×3, `DispatcherComplex260_MStackBracket1_TreeWalkRecursive2`×2, `MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430`×2, `AudioMicroEntries`×2, `SetJmp_Push16Call_004a1ac0`×2, `AudioInitArgs3`, `AudioBindEntry`
 - top globals: `g_eventQueueIdx`×6, `g_currentNodeIdx`×5, `0x542060`×4, `0x543440`×3, `g_eventQueueWorkType`×2, `g_eventQueueCurrent`×2, `0x4f3ae4`×2, `0x4f3ae8`×2
 
 ## PendingMatch_00432110 @ 0x432110 (1412b)
@@ -210,14 +210,14 @@ Total: 99 functions, sorted by size.
 
 - file: `src/boot/pending_match_variants.c`
 - traits: switch-via-jumptable, SEH (fs:[0]), cond jmps: 21
-- top callees: `DispatcherComplex260_FramePauseScaledStore`×4, `MStackPushComplexCallPop_00406430`×4, `Push16Call`×3, `RegistryPushBindPop`×3, `SaveCallRestore`×2, `LoadGeoAsset_Default`×2, `extern_0x2088c964`, `InstallSelfSearchAccum`
+- top callees: `DispatcherComplex260_FramePauseScaledStore`×4, `MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430`×4, `Push16Call`×3, `RegistryPushBindPop`×3, `SaveCallRestore`×2, `LoadGeoAsset_Default`×2, `extern_0x2088c964`, `InstallSelfSearchAccum`
 - top globals: `g_currentNodeIdx`×12, `0x54206c`×4, `0x542060`×3, `g_eventQueueEnd`×2, `g_pendingNodeType`×2, `g_framePauseFlag`×2, `g_eventQueueIdx`
 
 ## PendingMatch_0046ad20 @ 0x46ad20 (1592b)
 
 - file: `src/engine/pending_match_variants.c`
 - traits: switch-via-jumptable, cond jmps: 13
-- top callees: `ScaledArrStore_GuardedChainCmpDualBitXor_00429960`×3, `ScaledAndAlfe`×3, `ScaledLitAddJmp`×2, `ScaledLoadJmp_00428d20`×2, `MStackPushZeroCallPop_00407d00`×2, `StackPopDispatchTagged`×2, `FiveCallGuardSetTail`, `BootFrameSetup`
+- top callees: `ScaledArrStore_GuardedChainCmpDualBitXor_00429960`×3, `ScaledAndAlfe`×3, `ScaledLitAddJmp`×2, `ScaledLoadJmp_00428d20`×2, `MStackPushZeroCallPop_PendingMatch`×2, `StackPopDispatchTagged`×2, `FiveCallGuardSetTail`, `BootFrameSetup`
 - top globals: `g_framePauseFlag`×19, `g_currentNodeIdx`×12, `0x542060`×10, `0x54206c`×3, `g_xformScratch2088`×2, `g_fightGroupHead`, `g_eventQueuePending`, `g_eventQueueEnd`
 
 ## PendingMatch_0046a6e0 @ 0x46a6e0 (1598b)
@@ -448,14 +448,14 @@ Total: 99 functions, sorted by size.
 
 - file: `src/audio/pending_match_variants.c`
 - traits: switch-via-jumptable, x87 FPU, cond jmps: 23
-- top callees: `SetJmp_Push16Call_004a1ad0`×12, `ScaledOr4DirtyClear`×5, `Push16Call`×5, `BootInitGuardedCallChain`×5, `DispatcherComplex260_FramePauseScaledStore`×4, `SixCallSeqPushImm`×4, `SceneFrameStepWithInputs`×4, `MStackPushComplexCallPop_00406430`×3
+- top callees: `SetJmp_Push16Call_004a1ad0`×12, `ScaledOr4DirtyClear`×5, `Push16Call`×5, `BootInitGuardedCallChain`×5, `DispatcherComplex260_FramePauseScaledStore`×4, `SixCallSeqPushImm`×4, `SceneFrameStepWithInputs`×4, `MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430`×3
 - top globals: `g_currentNodeIdx`×12, `0x542060`×6, `0x4d50b4`×6, `0x543448`×6, `0x54344c`×5, `g_framePauseFlag`×2, `0x543404`×2, `g_eventQueuePending`
 
 ## PendingMatch_0049a670 @ 0x49a670 (2176b)
 
 - file: `src/engine/pending_match_variants.c`
 - traits: switch-via-jumptable, SEH (fs:[0]), cond jmps: 26
-- top callees: `PushPopScaled1cDoubleCall`×5, `DirtyDoubleDeref`×5, `InstallSelfCountdownBit`×4, `MStackPushCallCallPop_00405b30`×4, `Mul10Tail`×3, `DualCmpSwapStore`×2, `ArgSarStoreJmp`×2, `ScaledStackCallPause`
+- top callees: `PushPopScaled1cDoubleCall`×5, `DirtyDoubleDeref`×5, `InstallSelfCountdownBit`×4, `MStackPushCallCallPop_func_00405b30`×4, `Mul10Tail`×3, `DualCmpSwapStore`×2, `ArgSarStoreJmp`×2, `ScaledStackCallPause`
 - top globals: `g_currentNodeIdx`×21, `g_framePauseFlag`×15, `0x542060`×14, `0x54206c`×12, `g_fightGroupHead`×4, `g_eventQueueChild`×3, `g_matrixStackTop`×2, `g_eventQueueNotMask`
 
 ## PendingMatch_00447000 @ 0x447000 (2184b)

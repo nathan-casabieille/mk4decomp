@@ -41,7 +41,7 @@ extern unsigned int g_lit_00541e94;
 extern void MStackPush2ChainPrepend(void);
 
 /* @addr 0x00406430 */
-void MStackPushComplexCallPop_00406430(void) {
+void MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430(void) {
     unsigned int idx;
     unsigned int v;
     unsigned int top;
@@ -62,7 +62,7 @@ void MStackPushComplexCallPop_00406430(void) {
 }
 
 /* @addr 0x004064b0 */
-void MStackPushComplexCallPop_004064b0(void) {
+void MStackPushComplexCallPop_MStackPush2ChainPrepend_004064b0(void) {
     unsigned int idx;
     unsigned int v;
     unsigned int top;

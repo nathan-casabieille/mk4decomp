@@ -366,7 +366,7 @@ functions:
     status: matched
     file: src/boot/scaled_pushpop_helpers.c
   - addr: 0x00405b30
-    name: MStackPushCallCallPop_00405b30
+    name: MStackPushCallCallPop_func_00405b30
     size: 77
     group: boot
     status: matched
@@ -384,13 +384,13 @@ functions:
     status: matched
     file: src/boot/boot_chain_bidir_recurse_walk.c
   - addr: 0x00405dd0
-    name: MStackPushCallCallPop_00405dd0
+    name: MStackPushCallCallPop_func_00405dd0
     size: 77
     group: boot
     status: matched
     file: src/engine/mstack_push_call_call_pop.c
   - addr: 0x00405e20
-    name: MStackPushCallCallPop_00405e20
+    name: MStackPushCallCallPop_func_00405e20
     size: 77
     group: boot
     status: matched
@@ -444,13 +444,13 @@ functions:
     status: matched
     file: src/engine/mstack_calls.c
   - addr: 0x00406430
-    name: MStackPushComplexCallPop_00406430
+    name: MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430
     size: 117
     group: boot
     status: matched
     file: src/engine/mstack_push_complex_call_pop.c
   - addr: 0x004064b0
-    name: MStackPushComplexCallPop_004064b0
+    name: MStackPushComplexCallPop_MStackPush2ChainPrepend_004064b0
     size: 117
     group: boot
     status: matched
@@ -654,7 +654,7 @@ functions:
     status: matched
     file: src/boot/three_chan11_bit_pack.c
   - addr: 0x00407d00
-    name: MStackPushZeroCallPop_00407d00
+    name: MStackPushZeroCallPop_PendingMatch
     size: 73
     group: boot
     status: matched
@@ -11016,7 +11016,7 @@ functions:
     status: matched
     file: src/engine/packed_advance_call_continue.c
   - addr: 0x0048e680
-    name: IterLoad_0048e680
+    name: IterLoad_g_scaledInit_00542048_then_Thunk_Thunk_0049cbc0
     size: 36
     group: game
     status: matched
@@ -11364,7 +11364,7 @@ functions:
     status: matched
     file: src/engine/dual_gated_state_yield.c
   - addr: 0x0048fd30
-    name: IterLoad_0048fd30
+    name: IterLoad_g_scaledInit_00542044_then_MStackPush4IndirectCall
     size: 36
     group: game
     status: matched
@@ -11688,7 +11688,7 @@ functions:
     status: matched
     file: src/engine/state_dispatch_table.c
   - addr: 0x00491050
-    name: IterLoad_00491050
+    name: IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero
     size: 36
     group: game
     status: matched

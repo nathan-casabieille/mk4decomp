@@ -84,14 +84,14 @@ extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_InstallSelfDualEsi(void);
-extern void MStackPushZeroCallPop_00407d00(void);
+extern void MStackPushZeroCallPop_PendingMatch(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
 extern void CrouchAttackFsmCluster(void);
 extern void MStackPushVec3Mul10(void);
 extern void LiteralPushCallEntZero(void);
 extern void LeaPlus22StoreSelf(void);
-extern void IterLoad_00491050(void);
+extern void IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
@@ -117,7 +117,7 @@ extern void AudioFlagDispatchAggregator(void);
 extern void BootPhaseGateBracketedInit(void);
 extern void MStackBracket5_FieldClear_StateAdvance(void);
 extern void MStackPush3HelperCondToggle(void);
-extern void MStackPushComplexCallPop_00406430(void);
+extern void MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430(void);
 extern void SplitInt32(void);
 
 __declspec(naked) void SpawnListGlyphRender(void)
@@ -135,7 +135,7 @@ __declspec(naked) void SpawnListGlyphRender(void)
         jne      L_a73d
         mov      edi, dword ptr [g_currentNodeIdx]
         or       dword ptr [edi*4 + 0x34], 0x20000
-        call     MStackPushComplexCallPop_00406430
+        call     MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430
         mov      eax, dword ptr [g_framePauseFlag]
         xor      esi, esi
         cmp      eax, esi

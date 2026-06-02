@@ -84,14 +84,14 @@ extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_InstallSelfDualEsi(void);
-extern void MStackPushZeroCallPop_00407d00(void);
+extern void MStackPushZeroCallPop_PendingMatch(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
 extern void CrouchAttackFsmCluster(void);
 extern void MStackPushVec3Mul10(void);
 extern void LiteralPushCallEntZero(void);
 extern void LeaPlus22StoreSelf(void);
-extern void IterLoad_00491050(void);
+extern void IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
@@ -114,7 +114,7 @@ extern unsigned int g_audioStateMachineVar;
 extern unsigned int g_audioVoiceTrioBase;
 extern unsigned int g_voiceTrioBaseB;
 extern void GuardedSetupCallTailJmp3(void);
-extern void MStackPushComplexCallPop_00406430(void);
+extern void MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430(void);
 extern void ScaledOr4DirtyClear(void);
 
 __declspec(naked) void VoiceTrioBindAndKick(void)
@@ -151,7 +151,7 @@ __declspec(naked) void VoiceTrioBindAndKick(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_607a
-        call     MStackPushComplexCallPop_00406430
+        call     MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_607a

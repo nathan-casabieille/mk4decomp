@@ -84,14 +84,14 @@ extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_InstallSelfDualEsi(void);
-extern void MStackPushZeroCallPop_00407d00(void);
+extern void MStackPushZeroCallPop_PendingMatch(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
 extern void CrouchAttackFsmCluster(void);
 extern void MStackPushVec3Mul10(void);
 extern void LiteralPushCallEntZero(void);
 extern void LeaPlus22StoreSelf(void);
-extern void IterLoad_00491050(void);
+extern void IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
@@ -116,7 +116,7 @@ extern void ChainNodeAdvanceCallback(void);
 extern void DirtyDoubleDeref(void);
 extern void FramePauseScaledStore(void);
 extern void GuardedSelfRefSet(void);
-extern void MStackPushCallCallPop_00405e20(void);
+extern void MStackPushCallCallPop_func_00405e20(void);
 extern void PushPopScaled1cDoubleCall(void);
 extern void ScaledStoreThree_00409260(void);
 extern void ScaledTestPauseStore(void);
@@ -366,7 +366,7 @@ __declspec(naked) void Phase4TrampolineMainHelpers(void)
         pop     edi
         ret
     L_p4tmh2_H_call_5e20:
-        call    MStackPushCallCallPop_00405e20
+        call    MStackPushCallCallPop_func_00405e20
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh2_H_pop_ret
@@ -378,7 +378,7 @@ __declspec(naked) void Phase4TrampolineMainHelpers(void)
         nop
         nop
     L_p4tmh2_S:
-        call    MStackPushCallCallPop_00405e20
+        call    MStackPushCallCallPop_func_00405e20
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh2_S_ret

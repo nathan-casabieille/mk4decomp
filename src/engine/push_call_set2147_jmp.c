@@ -18,11 +18,11 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  *   ret
  */
-extern int IterLoad_00491050(void *);
+extern int IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero(void *);
 extern void *g_dispatchSave418;
 extern void MStackFrameCdeclDouble(void);
 void PushCallSet2147Jmp(void) {
-    IterLoad_00491050(&g_dispatchSave418);
+    IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero(&g_dispatchSave418);
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))0x2147;
     MStackFrameCdeclDouble();

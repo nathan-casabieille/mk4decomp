@@ -33,7 +33,7 @@ extern void MStackBracket2_TreeWalkRecursive(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void CallPauseScaledStoreCopyJmp(void);
 extern void ScaledArrStore_GuardedChainCmpDualBitXor_00429980(void);
-extern void MStackPushComplexCallPop_00406430(void);
+extern void MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430(void);
 extern unsigned int g_counter_0053a51c;
 extern unsigned int g_tickFlagF;
 extern unsigned int g_hitPhase;

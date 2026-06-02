@@ -84,14 +84,14 @@ extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_InstallSelfDualEsi(void);
-extern void MStackPushZeroCallPop_00407d00(void);
+extern void MStackPushZeroCallPop_PendingMatch(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
 extern void CrouchAttackFsmCluster(void);
 extern void MStackPushVec3Mul10(void);
 extern void LiteralPushCallEntZero(void);
 extern void LeaPlus22StoreSelf(void);
-extern void IterLoad_00491050(void);
+extern void IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
  *   [ecx*4 + 0x54] = 0; edx = g_scaledInit;
  *   [edx*4 + 0x58] = 0x760000; ecx = g_scaledInit;
  *   g_walkCallback = eax; [ecx*4 + 0x30] = eax;
- *   jmp MStackPushComplexCallPop_00406430.
+ *   jmp MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430.
  */
 extern unsigned int g_dispatchSave413;
 void GuardedSetupTailMStackJmp(void) {
@@ -129,5 +129,5 @@ void GuardedSetupTailMStackJmp(void) {
     ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_y = 0x760000;
     g_walkCallback = (void (*)(void))v;
     *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x30) = v;
-    MStackPushComplexCallPop_00406430();
+    MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430();
 }

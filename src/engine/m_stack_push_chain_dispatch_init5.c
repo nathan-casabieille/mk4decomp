@@ -84,14 +84,14 @@ extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_InstallSelfDualEsi(void);
-extern void MStackPushZeroCallPop_00407d00(void);
+extern void MStackPushZeroCallPop_PendingMatch(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
 extern void CrouchAttackFsmCluster(void);
 extern void MStackPushVec3Mul10(void);
 extern void LiteralPushCallEntZero(void);
 extern void LeaPlus22StoreSelf(void);
-extern void IterLoad_00491050(void);
+extern void IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   call DispatcherComplex260_FramePauseScaledStore; if pause? final-ret.
  *   If bit2 of g_xformDirtyFlags set, skip to final-ret.
  *   Else: scaledInit[+0x54]=0, scaledInit[+0x58]=0xff920000, scaledInit[+0x30]=0x1c.
- *   call MStackPushComplexCallPop_00406430; if pause? final-ret.
+ *   call MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430; if pause? final-ret.
  *   g_walkCallback = g_bootInitState; call StoreIncrMStackPush6; if pause? final-ret.
  *   Set 5 fields (g_eventQueueCurrent=1, _74=0x1d, _78=0, _7c=0xffb50000, _84=0).
  *   call DispatcherComplex181_Push70CallScaleArith; if pause? final-ret.
@@ -121,7 +121,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_bootInitState;
 extern void DispatcherComplex181_Push70CallScaleArith(void);
-extern void MStackPushComplexCallPop_00406430(void);
+extern void MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430(void);
 extern void RoundCleanupCluster_00427690(void);
 extern void StoreIncrMStackPush6(void);
 
@@ -159,7 +159,7 @@ void MStackPushChainDispatchInit5(void) {
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x30], eax
-        call    MStackPushComplexCallPop_00406430
+        call    MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

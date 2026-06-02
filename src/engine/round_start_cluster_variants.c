@@ -84,14 +84,14 @@ extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_InstallSelfDualEsi(void);
-extern void MStackPushZeroCallPop_00407d00(void);
+extern void MStackPushZeroCallPop_PendingMatch(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
 extern void CrouchAttackFsmCluster(void);
 extern void MStackPushVec3Mul10(void);
 extern void LiteralPushCallEntZero(void);
 extern void LeaPlus22StoreSelf(void);
-extern void IterLoad_00491050(void);
+extern void IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
@@ -130,7 +130,7 @@ extern void DualSectionInit(void);
 extern void Eleven404b90_404c00(void);
 extern void GuardedSetupTailMStackJmp(void);
 extern void MStackPushChainDispatchInit5(void);
-extern void MStackPushComplexCallPop_00406430(void);
+extern void MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430(void);
 extern void RemapWalkAndJmp_00491e70(void);
 extern void RemapWalkAndJmp_00491ec0(void);
 extern void ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain(void);
@@ -504,7 +504,7 @@ __declspec(naked) void RoundStartCluster_004919c0(void)
         mov      dword ptr [ecx*4 + 0x30], eax
         mov      edx, dword ptr [g_eventQueueIdx]
         mov      dword ptr [g_currentNodeIdx], edx
-        call     MStackPushComplexCallPop_00406430
+        call     MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_1e3f
         mov      eax, dword ptr [g_eventQueueIdx]
@@ -513,7 +513,7 @@ __declspec(naked) void RoundStartCluster_004919c0(void)
         mov      dword ptr [eax*4 + 0x5c], ebx
         mov      ecx, dword ptr [g_fightGroupHead]
         mov      dword ptr [g_currentNodeIdx], ecx
-        call     MStackPushComplexCallPop_00406430
+        call     MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_1e3f
         mov      edx, dword ptr [g_fightGroupHead]

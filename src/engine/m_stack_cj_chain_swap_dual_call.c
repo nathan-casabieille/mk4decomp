@@ -84,14 +84,14 @@ extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_InstallSelfDualEsi(void);
-extern void MStackPushZeroCallPop_00407d00(void);
+extern void MStackPushZeroCallPop_PendingMatch(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
 extern void CrouchAttackFsmCluster(void);
 extern void MStackPushVec3Mul10(void);
 extern void LiteralPushCallEntZero(void);
 extern void LeaPlus22StoreSelf(void);
-extern void IterLoad_00491050(void);
+extern void IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
  *   Swap [0x00535e70/74/78/7c] with globals (using esi); mstack pop g_walkCallback; pop esi; ret.
  */
 extern void DualCallPauseDirtyJmp_00490c30(void);
-extern void IterLoad_0048fd30(void);
+extern void IterLoad_g_scaledInit_00542044_then_MStackPush4IndirectCall(void);
 
 extern unsigned int g_matrixStack_arr;
 
@@ -154,7 +154,7 @@ __declspec(naked) void MStackCjChainSwapDualCall(void) {
         _emit   75h
         _emit   75h
         push    0x004e3698
-        call    IterLoad_0048fd30
+        call    IterLoad_g_scaledInit_00542044_then_MStackPush4IndirectCall
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax

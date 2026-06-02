@@ -84,14 +84,14 @@ extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_InstallSelfDualEsi(void);
-extern void MStackPushZeroCallPop_00407d00(void);
+extern void MStackPushZeroCallPop_PendingMatch(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
 extern void CrouchAttackFsmCluster(void);
 extern void MStackPushVec3Mul10(void);
 extern void LiteralPushCallEntZero(void);
 extern void LeaPlus22StoreSelf(void);
-extern void IterLoad_00491050(void);
+extern void IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
@@ -118,7 +118,7 @@ extern void DispatcherComplex181_StreamChainStringInstall(void);
 extern void DualAddSar(void);
 extern void GuardedRangeCmpFpuJmp(void);
 extern void GuardedScaledCall(void);
-extern void MStackPushComplexCallPop_00406430(void);
+extern void MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430(void);
 extern void PendingMatch_00459510(void);
 extern void RoundCleanupCluster_00427690(void);
 extern void SaveCallRestore(void);
@@ -313,7 +313,7 @@ __declspec(naked) void HitReactionCluster(void)
         mov      eax, 0xffc40000
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x58], eax
-        call     MStackPushComplexCallPop_00406430
+        call     MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_c5a0
         mov      edx, dword ptr [g_currentNodeIdx]

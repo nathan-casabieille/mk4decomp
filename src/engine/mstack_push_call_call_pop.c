@@ -39,7 +39,7 @@ extern void MStackCall_00406740(void);
 extern void MStackBracket2_TreeWalkRecursive(void);
 
 /* @addr 0x00405b30 */
-void MStackPushCallCallPop_00405b30(void) {
+void MStackPushCallCallPop_func_00405b30(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_fightGroupHead;
@@ -53,7 +53,7 @@ void MStackPushCallCallPop_00405b30(void) {
 }
 
 /* @addr 0x00405dd0 */
-void MStackPushCallCallPop_00405dd0(void) {
+void MStackPushCallCallPop_func_00405dd0(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_fightGroupHead;
@@ -67,7 +67,7 @@ void MStackPushCallCallPop_00405dd0(void) {
 }
 
 /* @addr 0x00405e20 */
-void MStackPushCallCallPop_00405e20(void) {
+void MStackPushCallCallPop_func_00405e20(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_fightGroupHead;

@@ -84,14 +84,14 @@ extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_InstallSelfDualEsi(void);
-extern void MStackPushZeroCallPop_00407d00(void);
+extern void MStackPushZeroCallPop_PendingMatch(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
 extern void CrouchAttackFsmCluster(void);
 extern void MStackPushVec3Mul10(void);
 extern void LiteralPushCallEntZero(void);
 extern void LeaPlus22StoreSelf(void);
-extern void IterLoad_00491050(void);
+extern void IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   [eax*4+0x80] = 0; edx = g_baseSel; ecx = g_walkCallback;
  *   eax = 0x1009; [edx*4+0x7c] = ecx; ecx = g_baseSel;
  *   g_walkCallback = 0x1009; [ecx*4+0x74] = 0x1009;
- *   call IterLoad_00491050; pop esp; if pause: ret;
+ *   call IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero; pop esp; if pause: ret;
  *   jmp ScaledInitOrSelfPtrSetType_0046a5e0.
  */
 extern unsigned char g_dispatchSave420;
@@ -123,7 +123,7 @@ void PushArgClearSetCallJmp(void) {
     *(unsigned int *)(g_baseSel * 4 + 0x7c) = (unsigned int)g_walkCallback;
     g_walkCallback = (void (*)(void))0x1009;
     ((ScenegraphNode *)(g_baseSel * 4))->fsm_state = (unsigned int)g_walkCallback;
-    ((void (*)(void *))IterLoad_00491050)(&g_dispatchSave420);
+    ((void (*)(void *))IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero)(&g_dispatchSave420);
     if (g_framePauseFlag != 0) return;
     ScaledInitOrSelfPtrSetType_0046a5e0();
 }

@@ -84,14 +84,14 @@ extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_InstallSelfDualEsi(void);
-extern void MStackPushZeroCallPop_00407d00(void);
+extern void MStackPushZeroCallPop_PendingMatch(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
 extern void CrouchAttackFsmCluster(void);
 extern void MStackPushVec3Mul10(void);
 extern void LiteralPushCallEntZero(void);
 extern void LeaPlus22StoreSelf(void);
-extern void IterLoad_00491050(void);
+extern void IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
@@ -164,7 +164,7 @@ extern void InstallChainInitTailJmp(void);
 extern void EnduranceMode_Handler(void);
 extern void MStackBracket3_FieldSequentialCopy(void);
 extern void MStackPush2ChainLLInsert(void);
-extern void MStackPushComplexCallPop_004064b0(void);
+extern void MStackPushComplexCallPop_MStackPush2ChainPrepend_004064b0(void);
 extern void PendingMatch_00401b70(void);
 extern void Phase1ChainAdvanceCallScale(void);
 extern void ScaledAnd4InvDirtyClear(void);
@@ -222,7 +222,7 @@ extern void IncCapped3e7(void);
 extern void InstallSelfPackedF80(void);
 extern void IsNonzeroBoolFlagged(void);
 extern void LoadGeoAsset_Default(void);
-extern void MStackPushComplexCallPop_00406430(void);
+extern void MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430(void);
 extern void MemcpyByteN(void);
 extern void Memset18Step(void);
 extern void PendingMatch_004a2a80(void);
@@ -340,7 +340,7 @@ __declspec(naked) void AudioInitLoopTriple(void)
         push    0x13333
         call    SnapshotDirtyMark
         add     esp, 4
-        call    MStackPushComplexCallPop_00406430
+        call    MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_e0_ret
@@ -1458,7 +1458,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5e93
-        call     MStackPushComplexCallPop_00406430
+        call     MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5e93
@@ -1841,7 +1841,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5e93
-        call     MStackPushComplexCallPop_004064b0
+        call     MStackPushComplexCallPop_MStackPush2ChainPrepend_004064b0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5e93

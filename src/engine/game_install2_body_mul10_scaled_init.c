@@ -84,14 +84,14 @@ extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_InstallSelfDualEsi(void);
-extern void MStackPushZeroCallPop_00407d00(void);
+extern void MStackPushZeroCallPop_PendingMatch(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
 extern void CrouchAttackFsmCluster(void);
 extern void MStackPushVec3Mul10(void);
 extern void LiteralPushCallEntZero(void);
 extern void LeaPlus22StoreSelf(void);
-extern void IterLoad_00491050(void);
+extern void IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  * GameInstall2BodyMul10ScaledInit - 347b 2-entry game state init.
  *   Entry 0x00475590: g_walkCallback = g_eventQueueEnd[+0x30]; call SetJmp_Thunk_LinkedListBitMaskSearch; if paused: ret.
  *     edx = g_currentNodeIdx, eax = g_currentNodeFlags; chain[edx*4 + 0x1c] = eax; push 0x004ec890;
- *     call IterLoad_0048e680; pop; ret.
+ *     call IterLoad_g_scaledInit_00542048_then_Thunk_Thunk_0049cbc0; pop; ret.
  *   Body 0x004755d0 (16b-padded): chain = g_baseSel<<2; saved=chain->state; chain->state=0.
  *     If state == 0: setup g_eventQueueWorkType = g_fightGroupHead+0x15; eax = chain[+0x38];
  *       g_currentNodeIdx = eax; g_pendingNodeType = eax+0x15. Call MStackPushMul10TailSqrt; if paused: ret.
@@ -124,7 +124,7 @@ extern unsigned int g_fightAxisPosY;
  *       call Wrapper_IterLoad_0048fd30_004f12ac; if paused: ret. Install-self; chain->state=1; g_pendingNodeType=1;
  *       pause=1; ret.
  */
-extern void IterLoad_0048e680(void);
+extern void IterLoad_g_scaledInit_00542048_then_Thunk_Thunk_0049cbc0(void);
 extern void MStackPushMul10TailSqrt(void);
 extern void Wrapper_IterLoad_0048fd30_004f12ac(void);
 
@@ -143,7 +143,7 @@ __declspec(naked) void GameInstall2BodyMul10ScaledInit(void)
         mov     eax, dword ptr [g_currentNodeFlags]
         push    0x004ec890
         mov     dword ptr [edx*4 + 0x1c], eax
-        call    IterLoad_0048e680
+        call    IterLoad_g_scaledInit_00542048_then_Thunk_Thunk_0049cbc0
         add     esp, 4
     L_e1_ret:
         ret

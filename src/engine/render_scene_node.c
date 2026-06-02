@@ -42,7 +42,7 @@ extern void DirtyBitTripleWriteOrCall(void);
 extern void DirtyTestScaledCopy(void);
 extern void DrawMeshBlock(void);
 extern void LeaScaledCall(void);
-extern void MStackPushCallCallPop_00405dd0(void);
+extern void MStackPushCallCallPop_func_00405dd0(void);
 extern void MatrixTransform3x3Q12(void);
 extern void MovesPanelEmit(void);
 extern void TransformAccumulate(void);
@@ -221,7 +221,7 @@ __declspec(naked) void RenderSceneNode(void)
         add      esp, 4
         jmp      L_adb3
     L_a9aa:
-        call     MStackPushCallCallPop_00405dd0
+        call     MStackPushCallCallPop_func_00405dd0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       L_ab22

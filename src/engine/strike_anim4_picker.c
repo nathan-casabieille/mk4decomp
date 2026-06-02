@@ -84,14 +84,14 @@ extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_InstallSelfDualEsi(void);
-extern void MStackPushZeroCallPop_00407d00(void);
+extern void MStackPushZeroCallPop_PendingMatch(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
 extern void CrouchAttackFsmCluster(void);
 extern void MStackPushVec3Mul10(void);
 extern void LiteralPushCallEntZero(void);
 extern void LeaPlus22StoreSelf(void);
-extern void IterLoad_00491050(void);
+extern void IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
@@ -119,7 +119,7 @@ extern void DirtyDoubleDeref(void);
 extern void MStackBracket1_TreeWalkRecursive2(void);
 extern void MStackChainDecodeCall(void);
 extern void MStackPush2ChainPrepend(void);
-extern void MStackPushCallCallPop_00405e20(void);
+extern void MStackPushCallCallPop_func_00405e20(void);
 extern void PushSetCallCleanup(void);
 extern void ScaledAddDeref(void);
 extern void ScaledLoadJmp30_set_g_walkCallback_then_LoadCmpAddrJmp(void);
@@ -262,7 +262,7 @@ void StrikeAnim4Picker(void) {
         mov      dword ptr [ecx*4 + 0x40], eax
         jmp      short L_3350
     L_3342:
-        call     MStackPushCallCallPop_00405e20
+        call     MStackPushCallCallPop_func_00405e20
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_33a1

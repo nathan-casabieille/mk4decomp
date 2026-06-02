@@ -14,7 +14,7 @@ extern void CmpDualPatchScaledRangeJmp(unsigned int arg);   /* 0x004399c0 */
 extern void ArgSarStoreJmp(unsigned int arg);   /* 0x004594f0 */
 extern void ScaledChainPushCall(unsigned int arg);   /* 0x00489ee0 */
 extern void ScaledIndexCondCopy(unsigned int arg);   /* 0x0048e590 */
-extern void IterLoad_0048fd30(unsigned int arg);   /* 0x0048fd30 */
+extern void IterLoad_g_scaledInit_00542044_then_MStackPush4IndirectCall(unsigned int arg);   /* 0x0048fd30 */
 extern void Cascade5StageInit(unsigned int arg);   /* 0x00491520 */
 
 /* The wrappers. */
@@ -67,7 +67,7 @@ void Wrapper_ArgSarStoreJmp_004ed440(void) { ArgSarStoreJmp(0x004ed440u); }
 void Wrapper_ArgSarStoreJmp_004ed660(void) { ArgSarStoreJmp(0x004ed660u); }
 
 /* @addr 0x00481060 */
-void Wrapper_IterLoad_0048fd30_004ed980(void) { IterLoad_0048fd30(0x004ed980u); }
+void Wrapper_IterLoad_0048fd30_004ed980(void) { IterLoad_g_scaledInit_00542044_then_MStackPush4IndirectCall(0x004ed980u); }
 
 /* @addr 0x00484470 */
 void Wrapper_ArgSarStoreJmp_004ee850(void) { ArgSarStoreJmp(0x004ee850u); }
@@ -136,13 +136,13 @@ void Wrapper_ScaledChainPushCall_004ef888(void) { ScaledChainPushCall(0x004ef888
 void Wrapper_ScaledChainPushCall_004ef838(void) { ScaledChainPushCall(0x004ef838u); }
 
 /* @addr 0x0048ec20 */
-void Wrapper_IterLoad_0048fd30_004f12a0(void) { IterLoad_0048fd30(0x004f12a0u); }
+void Wrapper_IterLoad_0048fd30_004f12a0(void) { IterLoad_g_scaledInit_00542044_then_MStackPush4IndirectCall(0x004f12a0u); }
 
 /* @addr 0x0048fbc0 */
-void Wrapper_IterLoad_0048fd30_004f12a8(void) { IterLoad_0048fd30(0x004f12a8u); }
+void Wrapper_IterLoad_0048fd30_004f12a8(void) { IterLoad_g_scaledInit_00542044_then_MStackPush4IndirectCall(0x004f12a8u); }
 
 /* @addr 0x0048ff30 */
-void Wrapper_IterLoad_0048fd30_004f12ac(void) { IterLoad_0048fd30(0x004f12acu); }
+void Wrapper_IterLoad_0048fd30_004f12ac(void) { IterLoad_g_scaledInit_00542044_then_MStackPush4IndirectCall(0x004f12acu); }
 
 /* @addr 0x0049eb10 */
 void Wrapper_SaveCallRestore(void) { SaveCallRestore(0x00000266u); }

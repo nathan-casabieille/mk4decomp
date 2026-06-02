@@ -86,14 +86,14 @@ extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_InstallSelfDualEsi(void);
-extern void MStackPushZeroCallPop_00407d00(void);
+extern void MStackPushZeroCallPop_PendingMatch(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
 extern void CrouchAttackFsmCluster(void);
 extern void MStackPushVec3Mul10(void);
 extern void LiteralPushCallEntZero(void);
 extern void LeaPlus22StoreSelf(void);
-extern void IterLoad_00491050(void);
+extern void IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
@@ -116,7 +116,7 @@ extern unsigned int g_dispatchClr0;
 extern unsigned int g_player2State;
 extern void BootMstackInit(void);
 extern void DispatcherComplex181_StreamChainStringInstall(void);
-extern void MStackPushComplexCallPop_00406430(void);
+extern void MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430(void);
 extern void RoundCleanupCluster_00427690(void);
 extern void SaveCallRestoreOrXor(void);
 extern void SaveCallRestore(void);
@@ -150,7 +150,7 @@ void YRiseSpawnerCluster(void) {
         mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_walkCallback], 0x24
         mov      dword ptr [eax*4 + 0x30], 0x24
-        call     MStackPushComplexCallPop_00406430
+        call     MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7e12
@@ -220,7 +220,7 @@ void YRiseSpawnerCluster(void) {
         mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_walkCallback], 0x233
         mov      dword ptr [edx*4 + 0x30], 0x233
-        call     MStackPushComplexCallPop_00406430
+        call     MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_7e12

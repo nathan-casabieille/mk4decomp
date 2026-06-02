@@ -84,14 +84,14 @@ extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_InstallSelfDualEsi(void);
-extern void MStackPushZeroCallPop_00407d00(void);
+extern void MStackPushZeroCallPop_PendingMatch(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
 extern void CrouchAttackFsmCluster(void);
 extern void MStackPushVec3Mul10(void);
 extern void LiteralPushCallEntZero(void);
 extern void LeaPlus22StoreSelf(void);
-extern void IterLoad_00491050(void);
+extern void IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void SnapshotDirtyMark(void);
-extern void MStackPushComplexCallPop_00406430(void);
+extern void MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430(void);
 extern void DrainQueueCallEach(void);
 extern void PendingMatch_004a8ca0(void);
 extern void AudioInstallSelfStateMachine2(void);
@@ -144,7 +144,7 @@ __declspec(naked) void AudioInitLoopTriple(void)
         push    0x13333
         call    SnapshotDirtyMark
         add     esp, 4
-        call    MStackPushComplexCallPop_00406430
+        call    MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_e0_ret

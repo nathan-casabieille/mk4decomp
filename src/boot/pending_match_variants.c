@@ -84,14 +84,14 @@ extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_InstallSelfDualEsi(void);
-extern void MStackPushZeroCallPop_00407d00(void);
+extern void MStackPushZeroCallPop_PendingMatch(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
 extern void CrouchAttackFsmCluster(void);
 extern void MStackPushVec3Mul10(void);
 extern void LiteralPushCallEntZero(void);
 extern void LeaPlus22StoreSelf(void);
-extern void IterLoad_00491050(void);
+extern void IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
@@ -173,7 +173,7 @@ extern void MStackPush2ChainLLInsert(void);
 extern void MStackPush2DualModMul10Pop2(void);
 extern void MStackPush2TripleCallChain(void);
 extern void MStackPush3InitCallChain(void);
-extern void MStackPushComplexCallPop_00406430(void);
+extern void MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430(void);
 extern void MStackPushNegMul10(void);
 extern void MStackPushPairTriCall(void);
 extern void MStackPushZeroCallPop_004066f0(void);
@@ -318,7 +318,7 @@ extern void IndirectCall(void);
 extern void InstallSelf3WayState(void);
 extern void InstallSelfChainExtendCall_00481eb0(void);
 extern void InstallSelfPackedF80(void);
-extern void IterLoad_0048fd30(void);
+extern void IterLoad_g_scaledInit_00542044_then_MStackPush4IndirectCall(void);
 extern void MStackBracket3_ChainSwapAdvance(void);
 extern void MStackCall_004062f0(void);
 extern void MStackCall_00406340(void);
@@ -1713,7 +1713,7 @@ __declspec(naked) void StageEntityInitCluster(void)
         test     eax, eax
         jne      short L_182b
         push     OFFSET g_dispatchSave606
-        call     IterLoad_0048fd30
+        call     IterLoad_g_scaledInit_00542044_then_MStackPush4IndirectCall
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         test     eax, eax
@@ -4694,7 +4694,7 @@ __declspec(naked) void PendingMatch_00402540(void)
         mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x58], eax
-        call     MStackPushComplexCallPop_00406430
+        call     MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_2b0f
         push     0x31
@@ -4723,7 +4723,7 @@ __declspec(naked) void PendingMatch_00402540(void)
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_walkCallback], ebx
         mov      dword ptr [ecx*4 + 0x30], ebx
-        call     MStackPushComplexCallPop_00406430
+        call     MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_2b0f
         mov      edx, dword ptr [g_currentNodeIdx]
@@ -4749,7 +4749,7 @@ __declspec(naked) void PendingMatch_00402540(void)
         mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_walkCallback], ebx
         mov      dword ptr [edx*4 + 0x30], ebx
-        call     MStackPushComplexCallPop_00406430
+        call     MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_2b0f
         mov      eax, dword ptr [g_currentNodeIdx]
@@ -4861,7 +4861,7 @@ __declspec(naked) void PendingMatch_00402540(void)
         mov      dword ptr [eax + 0x58], 0x640000
         mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [eax + 0x30], ecx
-        call     MStackPushComplexCallPop_00406430
+        call     MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_2b0f
         mov      ecx, 0x506d98

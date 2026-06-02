@@ -85,14 +85,14 @@ extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_InstallSelfDualEsi(void);
-extern void MStackPushZeroCallPop_00407d00(void);
+extern void MStackPushZeroCallPop_PendingMatch(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
 extern void CrouchAttackFsmCluster(void);
 extern void MStackPushVec3Mul10(void);
 extern void LiteralPushCallEntZero(void);
 extern void LeaPlus22StoreSelf(void);
-extern void IterLoad_00491050(void);
+extern void IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
@@ -129,14 +129,14 @@ extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_InstallSelfDualEsi(void);
-extern void MStackPushZeroCallPop_00407d00(void);
+extern void MStackPushZeroCallPop_PendingMatch(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
 extern void CrouchAttackFsmCluster(void);
 extern void MStackPushVec3Mul10(void);
 extern void LiteralPushCallEntZero(void);
 extern void LeaPlus22StoreSelf(void);
-extern void IterLoad_00491050(void);
+extern void IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
@@ -191,7 +191,7 @@ extern void MStackBracket2_TreeWalkRecursive(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void CallPauseScaledStoreCopyJmp(void);
 extern void ScaledArrStore_GuardedChainCmpDualBitXor_00429980(void);
-extern void MStackPushComplexCallPop_00406430(void);
+extern void MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430(void);
 extern unsigned int g_counter_0053a51c;
 extern unsigned int g_hitPhase;
 extern void StreamChainStringInstall(void);
@@ -659,7 +659,7 @@ extern void MStackPushSet0004(void);
 extern void MStackPushSet0020(void);
 extern void MStackPushSet0040(void);
 extern void MStackPushSet0200(void);
-extern void MStackPushZeroCallPop_00407d00(void);
+extern void MStackPushZeroCallPop_PendingMatch(void);
 extern void MStackVecSetupScopedRun(void);
 extern void ModuloMagic(void);
 extern void Mul10SumStoreNegCommit(void);
@@ -1578,7 +1578,7 @@ __declspec(naked) void DualEntryStateMachine(void) {
         mov     ecx, dword ptr [eax*4 + 0x24]
         mov     dword ptr [g_walkCallback], 0x8000
         mov     dword ptr [g_eventQueueEnd], ecx
-        call    MStackPushZeroCallPop_00407d00
+        call    MStackPushZeroCallPop_PendingMatch
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

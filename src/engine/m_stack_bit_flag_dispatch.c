@@ -84,14 +84,14 @@ extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_InstallSelfDualEsi(void);
-extern void MStackPushZeroCallPop_00407d00(void);
+extern void MStackPushZeroCallPop_PendingMatch(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
 extern void CrouchAttackFsmCluster(void);
 extern void MStackPushVec3Mul10(void);
 extern void LiteralPushCallEntZero(void);
 extern void LeaPlus22StoreSelf(void);
-extern void IterLoad_00491050(void);
+extern void IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
@@ -116,9 +116,9 @@ extern unsigned int g_fightAxisPosY;
  *   if (208c & 1): skip first call. else: g_walkCallback = 0x78; call ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0; pause? -> ret.
  *   mstack-pop into g_eventQueueChild. counter--.
  *   if (popped == 0): ret.
- *   else: push 0x004f1400; call IterLoad_0048fd30; add esp, 4; ret.
+ *   else: push 0x004f1400; call IterLoad_g_scaledInit_00542044_then_MStackPush4IndirectCall; add esp, 4; ret.
  */
-extern void IterLoad_0048fd30(void);
+extern void IterLoad_g_scaledInit_00542044_then_MStackPush4IndirectCall(void);
 extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0(void);
 
 extern unsigned int g_matrixStack_arr;
@@ -165,7 +165,7 @@ void MStackBitFlagDispatch(void) {
         _emit   74h
         _emit   0dh
         push    0x004f1400
-        call    IterLoad_0048fd30
+        call    IterLoad_g_scaledInit_00542044_then_MStackPush4IndirectCall
         add     esp, 4
         }
 }

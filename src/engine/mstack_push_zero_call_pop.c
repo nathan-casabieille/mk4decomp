@@ -42,7 +42,7 @@ void MStackPushZeroCallPop_004066f0(void) {
 }
 
 /* @addr 0x00407d00 */
-void MStackPushZeroCallPop_00407d00(void) {
+void MStackPushZeroCallPop_PendingMatch(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_eventQueueTotal;

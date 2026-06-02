@@ -84,14 +84,14 @@ extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_StateDispatchYield_00438f50(void);
 extern void SetJmp_StateDispatchYield_00438f60(void);
 extern void GuardedDispatch_InstallSelfDualEsi(void);
-extern void MStackPushZeroCallPop_00407d00(void);
+extern void MStackPushZeroCallPop_PendingMatch(void);
 extern void DirtyToggleByGate(void);
 extern void GameDispatchValidateState(void);
 extern void CrouchAttackFsmCluster(void);
 extern void MStackPushVec3Mul10(void);
 extern void LiteralPushCallEntZero(void);
 extern void LeaPlus22StoreSelf(void);
-extern void IterLoad_00491050(void);
+extern void IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *   walk[+0x58] = 0x730000/esi (esi passed in by caller); call
  *   MStackPushComplexCallPop; on pause clear, walk[+0x5c] = 0x14ccc.
  */
-extern void MStackPushComplexCallPop_004064b0(void);
+extern void MStackPushComplexCallPop_MStackPush2ChainPrepend_004064b0(void);
 
 void AudioBindEntryB(void) {
     __asm {
@@ -133,7 +133,7 @@ void AudioBindEntryB(void) {
         mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x58], eax
-        call    MStackPushComplexCallPop_004064b0
+        call    MStackPushComplexCallPop_MStackPush2ChainPrepend_004064b0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     done

@@ -23,7 +23,7 @@ extern void MStackPush4IndirectCall(void);
 extern void DualScaledStoreZero(void);
 
 /* @addr 0x0048e680 */
-void IterLoad_0048e680(int arg) {
+void IterLoad_g_scaledInit_00542048_then_Thunk_Thunk_0049cbc0(int arg) {
     int p = arg >> 2;
     g_eventQueueTotal = p;
     g_scaledInit_00542048 = *(unsigned int *)(p * 4);
@@ -33,7 +33,7 @@ void IterLoad_0048e680(int arg) {
 }
 
 /* @addr 0x0048fd30 */
-void IterLoad_0048fd30(int arg) {
+void IterLoad_g_scaledInit_00542044_then_MStackPush4IndirectCall(int arg) {
     int p = arg >> 2;
     g_eventQueueTotal = p;
     g_scaledInit_00542044 = *(unsigned int *)(p * 4);
@@ -43,7 +43,7 @@ void IterLoad_0048fd30(int arg) {
 }
 
 /* @addr 0x00491050 */
-void IterLoad_00491050(int arg) {
+void IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero(int arg) {
     int p = arg >> 2;
     g_eventQueueTotal = p;
     g_scaledInit_00542048 = *(unsigned int *)(p * 4);
