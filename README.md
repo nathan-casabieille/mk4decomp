@@ -15,15 +15,22 @@ matching, the C source is the canonical representation of the game.
 </p>
 
 <p align="center">
-  <img src=".github/progress.svg" alt="Decompiled to C">
+  <img src=".github/progress.svg" alt="MK4 decomp progress (multi-axis)">
 </p>
 
-| Metric | Progress |
-|---|---|
-| **Byte-perfect rebuild** | **100%** (2914 / 2914 functions) |
-| Pure C (no `__asm`) | ~49% (1423 / 2914 functions) - asymptote reached |
-| Hybrid (no `naked`, body still `__asm`) | ~7% (212 / 2914 functions) |
-| Still `__declspec(naked)` | ~31% (896 / 2914 functions) |
+The decomp moves along several independent axes. A single "pure C %"
+number conflates portability with comprehension and gives the wrong
+picture once the pure-C ceiling is reached. The metrics below are
+orthogonal; each one captures a different kind of progress.
+
+| Axis | Value | What it measures |
+|---|---|---|
+| **Byte-perfect rebuild** | **100%** (2914 / 2914 fns) | `make matching` produces a binary that is MD5-identical to orig. Locked. The foundation - everything else must preserve it. |
+| **Pure C portability** | ~49% (1423 / 2914 fns) - *ceiling reached* | Fns with no `__asm` block. Relevant for a future WASM / Emscripten port. **Has a practical ceiling around 49%** under MSVC 5.0 SP3; the remaining functions have all been surveyed and the failure modes documented per-function in `NON-COAXABLE:` comments. |
+| **Function naming** | tickers up with [Priority 4](#4-rename-functions-to-what-they-actually-do) | % of fns in `symbols.yaml` whose name has NO `_00xxxxxx` address suffix. `LoadGeoAsset_Textures` = named; `Helper_00412ff0` = placeholder waiting for investigation. |
+| **Global naming** | tickers up with [Priority 3](#3-rename-globals-to-what-they-actually-do) | Same idea for the `g_*` globals declared in `include/`. `g_framePauseFlag` = named; `g_audioBank_005433c0` = address-disambiguated and worth promoting. |
+| **Struct field coverage** | tickers up with [Priority 1](#1-reconstruct-typed-structs) | % of fields in `typedef struct` blocks under `include/` that have a real name (not `_NN` / `_NN[K]`). Each `ScenegraphNode` / `FightGroupNode` / `DrawEntry` slot named ticks it up. |
+| **Functional understanding** | mean of the three naming axes above | The composite shown on top of the SVG. Excludes byte-match (always 100%, doesn't move) and pure C (ceiling, would unfairly cap the score). This is the headline number that reflects *current* work velocity. |
 
 In plain words:
 
@@ -42,24 +49,28 @@ In plain words:
 - **Pure C ratio has hit its practical ceiling.** The remaining ~896
   naked functions have all been individually surveyed and confirmed
   non-coaxable from pure C against our MSVC 5.0 SP3 toolchain (CL
-  11.00.7022). Reasons documented per-function in NON-COAXABLE comments:
-  MSVC register-allocator choices that depend on undocumented heuristics
-  (flag preservation across stores, raw-index-in-esi SIB form, CH/AL
-  byte-register peepholes, cross-path callee-saved defaults, etc.). The
-  same compiler version is used for the rebuild, yet specific orig
-  patterns cannot be reproduced from any standard C construct. The
-  __asm blocks that remain are minimal, well-documented, and stable.
+  11.00.7022). Reasons documented per-function in `NON-COAXABLE:`
+  comments: MSVC register-allocator choices that depend on undocumented
+  heuristics (flag preservation across stores, raw-index-in-esi SIB
+  form, CH/AL byte-register peepholes, cross-path callee-saved
+  defaults, etc.). The same compiler version is used for the rebuild,
+  yet specific orig patterns cannot be reproduced from any standard C
+  construct. The `__asm` blocks that remain are minimal,
+  well-documented, and stable. **This is why pure-C % is not the
+  headline metric.**
 
-- **Where work continues.** With the byte-match locked and the pure-C
-  ceiling reached, current contributions focus on **functional
-  understanding**: naming the remaining `g_data_005xxxxx` globals after
-  what they actually represent in the engine, writing per-subsystem
-  READMEs (audio mixer, FSM combat, scene graph, render pipeline),
-  reconstructing typed `struct`s from raw memory layouts, and
-  cross-referencing IAT calls into a documented DirectX/Win32 surface.
-  See `analysis/notes/` for the current architectural map.
+- **Functional understanding is open-ended.** With the byte-match
+  locked and the pure-C ceiling reached, current contributions focus
+  on **comprehending the engine**: naming functions and globals after
+  what they actually do, reconstructing typed `struct`s from raw
+  memory layouts (see [analysis/notes/node_struct.md](analysis/notes/node_struct.md)
+  for the live work on the central node pool), refining the
+  per-subsystem notes (`analysis/notes/`), and cross-referencing IAT
+  calls into a documented DirectX/Win32 surface. The composite metric
+  on the SVG reflects this work.
 
-Run `python3 tools/decomp/progress.py` for a live per-subsystem breakdown.
+Run `python3 tools/decomp/progress.py` for a live multi-axis breakdown
+(and a per-subsystem pure-C table).
 
 The rebuild path:
 1. **MSVC 5.0 SP3 compiles** every C source (`src/*.c`) to COFF `.obj` files.
@@ -139,39 +150,65 @@ codegen quirk that pure C cannot reproduce. Each is annotated with a
 
 Where contributions move the needle now is **functional understanding**:
 
-### 1. Rename globals to what they actually do
+### 1. Reconstruct typed structs
 
-Hundreds of `g_data_005xxxxx`, `g_state_005xxxxx`, `g_x_005xxxxx`
-placeholders remain. Each comes from a specific subsystem; inferring
-the semantic role from call-site context (audio buffer? AI flag? FSM
-state byte? scene graph node?) and giving it a real name is the
-single highest-impact contribution.
+Most of the engine still treats memory as `unsigned int *` with
+hand-computed offsets. Identifying a recurring offset pattern (e.g.
+the 232-byte node pool addressed via `[reg*4 + 0xNN]`) and lifting it
+to a real `typedef struct` makes hundreds of functions readable
+simultaneously. **This is where the live work is** -
+[analysis/notes/node_struct.md](analysis/notes/node_struct.md) is the
+running hypothesis log; [include/engine/scenegraph.h](include/engine/scenegraph.h)
+is the authoritative typedef. Each newly-named slot ticks the **struct
+field coverage** axis up.
 
 ```sh
-# Find unnamed globals and their callers
-grep -RhoE 'g_(data|state|x)_005[0-9a-f]+' src/ include/ | sort -u | head
-grep -RE 'g_data_00541fa4' src/                              # see all uses
+# Pick an offset still named `_NN` in a typed struct
+grep -nE '_[0-9a-f]{2}(\[|;)' include/engine/scenegraph.h
+# Find every reader/writer
+grep -RE '\[[a-z]+\*4\s*\+\s*0x4c\]' src/
 ```
 
-### 2. Write per-subsystem READMEs
+### 2. Refine per-subsystem notes
 
-`analysis/notes/architecture.md` has the high-level map. What's
-missing is per-subsystem deep-dive docs:
+The originally-targeted subsystem deep-dives all exist in
+`analysis/notes/` (15 files: audio, scenegraph, combat FSM, render,
+install, etc.). What's left is **refinement**: reconcile notes with
+newly-named fields/globals as Priority 1 progresses, resolve
+`TODO`/`?` markers when surrounding code becomes legible, add a note
+only when a subsystem genuinely lacks one (rare at this point - scan
+the directory first).
 
-- `audio/` - mixer pipeline, voice allocation, DirectSound surface
-- `engine/scenegraph/` - node layout, dirty propagation, transform stack
-- `game/` (combat FSM) - state IDs, transition table, animation hooks
-- `engine/render/` - draw-call ordering, glide/d3d branching, geometry binding
-- `engine/install/` - asset loader, ECM stream format, file IO
+### 3. Rename globals to what they actually do
 
-### 3. Reconstruct typed structs
+The bare `g_(data|state|x)_005xxxxx` placeholders are exhausted. What
+remains is ~730 globals that already carry a semantic prefix but
+still keep the address suffix for disambiguation (e.g.
+`g_audioBankPick_005433c0`). Drop the suffix when the global is
+uniquely identifiable; upgrade to a struct field when it sits in a
+contiguous block with other named globals; keep the suffix only when
+disambiguation truly requires the address. Ticks the **global
+naming** axis up.
 
-Most of the engine treats memory as `unsigned int *` with hand-computed
-offsets. Identifying a recurring offset pattern (e.g. fighter entity at
-0x540000) and lifting it to a proper `struct fighter { ... }` makes
-hundreds of functions readable at once.
+```sh
+# Suffix-still-present globals, ranked by usage
+grep -rhoE 'g_[a-zA-Z_]*_00[0-9a-f]{6}' src/ include/ | sort | uniq -c | sort -rn | head
+```
 
-### 4. Document the IAT / Win32 surface
+### 4. Rename functions to what they actually do
+
+Many functions still carry generated names like `Helper_004xxxxx`,
+`MStackBracket_004xxxxx`. Pick one, read it alongside its callers,
+give it a semantic name in `config/symbols.yaml`, and optionally add
+a one-line comment summarising its job. Ticks the **function
+naming** axis up.
+
+```sh
+# Functions still labelled with an address suffix
+grep -E '^    name:' config/symbols.yaml | grep -E '_00[0-9a-f]{6}$' | head
+```
+
+### 5. Document the IAT / Win32 surface
 
 `config/iat_map.yaml` lists every Win32 import. Annotating which
 internal wrapper calls which API, and grouping them by use case
