@@ -134,7 +134,7 @@ extern void CondPickDualStore(void);
 extern void DualCmpSwapStore(void);
 extern void FiveCallGuardSetTail(void);
 extern void ScaledIndirectJmp_0049c850(void);
-extern void ScaledLoadIncJmp_00428d00(void);
+extern void ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain(void);
 
 __declspec(naked) void PunchDispatcherCluster(void)
 {
@@ -215,7 +215,7 @@ __declspec(naked) void PunchDispatcherCluster(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], 0
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], 1
     L_7ca3:
         pop      esi

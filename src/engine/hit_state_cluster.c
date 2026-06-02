@@ -121,7 +121,7 @@ extern void InstallSelfMStackPush_0046cc80(void);
 extern void PushPopWalkSet1006(void);
 extern void ScaledAndAlfe(void);
 extern void ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d450(void);
-extern void ScaledLoadIncJmp_00429840(void);
+extern void ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor(void);
 extern void ScaledMove74to70(void);
 extern void SlotEvent3EntryChain(void);
 
@@ -351,7 +351,7 @@ __declspec(naked) void HitStateCluster(void)
     L_cab8:
         mov      dword ptr [g_eventQueueChild], 3
     L_cac2:
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_cb69

@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void FiveCallGuardSetTail(void);
 extern void PushPopWalkSet1006(void);
-extern void ScaledLoadIncJmp_00428d00(void);
+extern void ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain(void);
 
 extern unsigned int g_matrixStack_arr;
 
@@ -150,7 +150,7 @@ __declspec(naked) void InstallSelfPackedF190(void) {
         mov     [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
-        call    ScaledLoadIncJmp_00428d00
+        call    ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret

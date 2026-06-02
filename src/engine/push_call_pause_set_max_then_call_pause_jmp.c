@@ -11,7 +11,7 @@ extern unsigned int g_phaseTimer;
 /* @addr 0x0048e380 (62b): push lit + call PackedAdvanceCallContinue;
  * if !pause set workType=0x3c, call Push16Call; if !pause set walk
  * and state_00537e94 to 0xfff. Entry A of the original 84-byte packed
- * block; entry B (call+pause+tail-jmp) lives in func_0048e3c0. The
+ * block; entry B (call+pause+tail-jmp) lives in func_DualEntryInitDispatch_then_ScaledInitWithCounterAndType. The
  * 2-byte nop gap is filled by 0x90-fill. */
 extern void *g_dispatchSave1317;
 extern int PackedAdvanceCallContinue(void *);

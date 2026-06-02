@@ -120,7 +120,7 @@ extern void GuardedPackedSlotInit(void);
 extern void GuardedPushCall_CopyJmp_then_ArgSarStoreJmp_0043b980(void);
 extern void InstallSelfDoubleMStack(void);
 extern void ScaledLitLoadCall_00480fe0(void);
-extern void ScaledLoadIncJmp_00428d00(void);
+extern void ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain(void);
 extern void SfxAttenuateAndApply(void);
 extern void StateMachine4ArmCascade(void);
 
@@ -176,7 +176,7 @@ __declspec(naked) void VersusScreenEventPoseCluster(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edi
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi

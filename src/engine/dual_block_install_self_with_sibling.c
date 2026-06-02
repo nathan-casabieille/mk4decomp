@@ -116,10 +116,10 @@ extern unsigned int g_fightAxisPosY;
  *     FiveCallGuardSetTail. Else: dec g_eventQueueChild; if zero ->
  *     tail-call 0x00484c90 (self), else: install-self at [eax+8]=0x00484cf0;
  *     chain[+0x84]=1; scaledInit-chain push 0x00484cf0+0x01000000;
- *     call ScaledLoadIncJmp_00428d00; pause=1; ret.
+ *     call ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain; pause=1; ret.
  */
 extern void FiveCallGuardSetTail(void);
-extern void ScaledLoadIncJmp_00428d00(void);
+extern void ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain(void);
 
 __declspec(naked) void DualBlockInstallSelfWithSibling(void) {
     __asm {
@@ -195,7 +195,7 @@ __declspec(naked) void DualBlockInstallSelfWithSibling(void) {
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
-        call    ScaledLoadIncJmp_00428d00
+        call    ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         ret

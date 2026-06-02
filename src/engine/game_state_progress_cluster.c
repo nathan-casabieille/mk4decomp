@@ -114,7 +114,7 @@ extern void CmpDispatchPushCallPop(void);
 extern void CrouchCounterCluster(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void InstallSelfDoubleMStack(void);
-extern void ScaledLoadIncJmp_00428d00(void);
+extern void ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain(void);
 extern void StateMachine4ArmCascade(void);
 
 __declspec(naked) void GameStateProgressCluster(void)
@@ -169,7 +169,7 @@ __declspec(naked) void GameStateProgressCluster(void)
         mov      dword ptr [eax + 4], ecx
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edx
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi

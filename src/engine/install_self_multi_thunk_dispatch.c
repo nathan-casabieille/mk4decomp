@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0046c3d0 (332b game) - install-self with multi-thunk dispatch.
  *   state!=0: tail-jmp FiveCallGuardSetTail. state==0: install-self at entry+0x01000000;
- *     state=1; call ScaledLoadIncJmp_00428d00; pause=1; pop edi; ret.
+ *     state=1; call ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain; pause=1; pop edi; ret.
  *   Thunk B (+0x80): call ScaledMove48to58; if pause ret. g_eventQueueNotMask=[baseSel*4+0x30].
  *     If nonzero: jmp CallPauseTripleScaledJmp. Else call MStackPush3CmpCall; if pause ret.
  *     If bit0(0054208c): jmp DualEntryStateGated. Else cmp g_table_00535ddc<=0xcccc;
@@ -125,7 +125,7 @@ extern void DualEntryStateGated(void);
 extern void FiveCallGuardSetTail(void);
 extern void IntroSettingsFsmCluster(void);
 extern void QuadCmpBitGateJmp(void);
-extern void ScaledLoadIncJmp_00428d00(void);
+extern void ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain(void);
 extern void ScaledMove48to58(void);
 
 __declspec(naked) void InstallSelfMultiThunkDispatch(void) {
@@ -154,7 +154,7 @@ __declspec(naked) void InstallSelfMultiThunkDispatch(void) {
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
-        call    ScaledLoadIncJmp_00428d00
+        call    ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         ret

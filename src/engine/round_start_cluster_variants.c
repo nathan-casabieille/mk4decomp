@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void RoundStartCluster_0047b900(void);
-extern void ScaledLoadIncJmp_00429840(void);
+extern void ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor(void);
 extern void StateMachineSharedTail(void);
 extern void AerialPunchCluster(void);
 extern void CmpEqInitCallElseJmp(void);
@@ -133,7 +133,7 @@ extern void MStackPushChainDispatchInit5(void);
 extern void MStackPushComplexCallPop_00406430(void);
 extern void RemapWalkAndJmp_00491e70(void);
 extern void RemapWalkAndJmp_00491ec0(void);
-extern void ScaledLoadIncJmp_00428d00(void);
+extern void ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain(void);
 extern void StateDispatchTable(void);
 extern void Ten404c40_404bd0(void);
 extern void UpperBodyComboFsmCluster(void);
@@ -210,7 +210,7 @@ __declspec(naked) void RoundStartCluster_0047b900(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], edi
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], 1
     L_ba4d:
         pop      edi
@@ -237,7 +237,7 @@ __declspec(naked) void RoundStartCluster_0047b900(void)
         nop
         nop
         /* H3: scenario picker */
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_baed
@@ -250,7 +250,7 @@ __declspec(naked) void RoundStartCluster_0047b900(void)
         je       short L_bab4
         jmp      StateMachineSharedTail
     L_bab4:
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_baed

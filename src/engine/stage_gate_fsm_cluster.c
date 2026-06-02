@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
 /*  h3 (0x47b070): pose-fn FSM dispatching on g_data_..._84 (0..5),  */
 /*                 jump table @0x47b29c, each case installs next state.*/
 /* ------------------------------------------------------------------ */
-extern void ScaledLoadIncJmp_00428d00(void);
+extern void ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain(void);
 extern void EsiInstallChainCmpDualCall(void);
 extern void ScaledLoadJmp_00429390(void);
 extern void GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
@@ -249,7 +249,7 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         mov      dword ptr [g_eventQueueNotMask], eax
         je       short L_b1f8
     L_b19a:
-        /* install state 4 via ScaledLoadIncJmp_00428d00 */
+        /* install state 4 via ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain */
         mov      dword ptr [esi + 8], OFFSET L_b070
         mov      ecx, dword ptr [g_baseSel]
         mov      edx, OFFSET L_b070
@@ -264,7 +264,7 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edi
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi

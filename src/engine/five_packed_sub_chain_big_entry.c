@@ -113,7 +113,7 @@ extern void ArgScaledChain(void);
 extern void DirtyGuardLitOrJmp_00496940(void);
 extern void InstallSelfMStackPush_004968a0(void);
 extern void ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d490(void);
-extern void ScaledLoadIncJmp_00429840(void);
+extern void ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor(void);
 extern void ScaledLookupGuardJmpIndirect(void);
 extern void StreamInitCountdownBody(void);
 extern void ThresholdSetMatchDispatch(void);
@@ -256,7 +256,7 @@ __declspec(naked) void FivePackedSubChainBigEntry(void)
         pop     ebx
         ret
     L_fpscb_main_doCall:
-        call    ScaledLoadIncJmp_00429840
+        call    ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_fpscb_main_ret

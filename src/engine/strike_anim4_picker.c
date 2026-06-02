@@ -122,7 +122,7 @@ extern void MStackPush2ChainPrepend(void);
 extern void MStackPushCallCallPop_00405e20(void);
 extern void PushSetCallCleanup(void);
 extern void ScaledAddDeref(void);
-extern void ScaledLoadJmp30_00493eb0(void);
+extern void ScaledLoadJmp30_set_g_walkCallback_then_LoadCmpAddrJmp(void);
 extern void ScaledTestPauseStore(void);
 extern void TestStoreConstJmp(void);
 
@@ -251,7 +251,7 @@ void StrikeAnim4Picker(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_33a1
-        call     ScaledLoadJmp30_00493eb0
+        call     ScaledLoadJmp30_set_g_walkCallback_then_LoadCmpAddrJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_33a1

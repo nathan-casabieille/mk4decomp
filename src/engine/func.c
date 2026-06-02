@@ -38,7 +38,7 @@ void func_004bd5e0(void) {}
 extern void OrDualStore_0048e4b0(void);
 
 /* @addr 0x00461350 (15b) walk=2 entry */
-void func_00461350(void) {
+void func_set_g_walkCallback_then_OrDualStore_00461350(void) {
     g_walkCallback = (void (*)(void))2;
     OrDualStore_0048e4b0();
 }

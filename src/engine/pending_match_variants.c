@@ -747,7 +747,7 @@ extern void ScaledIterStep_0045c020(void);
 extern void ScaledLitLoadCall_00480fe0(void);
 extern void ScaledLitLoadCall_00481020(void);
 extern void ScaledLoadCmp0fJmp(void);
-extern void ScaledLoadIncJmp_00428d00(void);
+extern void ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain(void);
 extern void ScaledLoadJmp_00429390(void);
 extern void ScaledMove48to58(void);
 extern void ScaledOrAh8CallPauseJmp(void);
@@ -6327,7 +6327,7 @@ __declspec(naked) void IntroSettingsFsmCluster(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], edi
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
@@ -6360,7 +6360,7 @@ __declspec(naked) void IntroSettingsFsmCluster(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edi
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
@@ -7901,7 +7901,7 @@ __declspec(naked) void PendingMatch_004694b0(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], 0
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret      

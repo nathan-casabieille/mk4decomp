@@ -117,8 +117,8 @@ extern void EsiInstallDecCallChain_004294a0(void);
 extern void FiveCallGuardSetTail(void);
 extern void RoundStartCluster_0047b900(void);
 extern void ScaledIndexConditionalAdd(void);
-extern void ScaledLoadIncJmp_00428d00(void);
-extern void ScaledLoadIncJmp_00429840(void);
+extern void ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain(void);
+extern void ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor(void);
 
 __declspec(naked) void RoundEndCelebrationCluster(void)
 {
@@ -167,7 +167,7 @@ __declspec(naked) void RoundEndCelebrationCluster(void)
         pop      esi
         ret
     L_b753:
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_b8f3
@@ -211,7 +211,7 @@ __declspec(naked) void RoundEndCelebrationCluster(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], 0
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], edi
         pop      edi
         pop      esi
@@ -222,7 +222,7 @@ __declspec(naked) void RoundEndCelebrationCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b8f3
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b8f3

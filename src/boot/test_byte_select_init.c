@@ -9,7 +9,7 @@ extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x004111d0 (28b): byte-gate + set g_eventQueueIdx = (0x004d5c38>>2);
  * tail-jmp PendingMatch_00411210 (= PendingMatch_00411210 via extras_map). Entry A
- * of the original 50-byte packed block; sub-entry at +0x20 (func_004111f0)
+ * of the original 50-byte packed block; sub-entry at +0x20 (func_set_g_eventQueueIdx_then_PendingMatch)
  * referenced from data table at g_dispatchSave904 in data.c. */
 extern unsigned char g_byte_004f360c;
 extern unsigned int g_dispatchSave1180;

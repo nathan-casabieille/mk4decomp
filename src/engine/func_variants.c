@@ -111,22 +111,22 @@ __declspec(naked) void func_00428390(void) {
 }
 
 /* @addr 0x004391b0 (20b): twin of DualCallPauseJmpDual at +0x20 in
- * the original packed slot. Reached via OFFSET func_004391b0 references
+ * the original packed slot. Reached via OFFSET func_DualScaledInitClear_then_FiveCallGuardSetTail references
  * (e.g. from misc_matchesF.c). */
-void func_004391b0(void) {
+void func_DualScaledInitClear_then_FiveCallGuardSetTail(void) {
     DualScaledInitClear();
     if (g_framePauseFlag != 0) return;
     FiveCallGuardSetTail();
 }
 
 /* @addr 0x00497b30 (15b): set g_eventQueueChild = 1; tail-jmp PunchDispatcher. */
-void func_00497b30(void) {
+void func_set_g_eventQueueChild_then_PunchDispatcherCluster_00497b30(void) {
     g_eventQueueChild = 1;
     PunchDispatcherCluster();
 }
 
 /* @addr 0x00497b40 (15b): set g_eventQueueChild = 0; tail-jmp PunchDispatcher. */
-void func_00497b40(void) {
+void func_set_g_eventQueueChild_then_PunchDispatcherCluster_00497b40(void) {
     g_eventQueueChild = 0;
     PunchDispatcherCluster();
 }
@@ -144,7 +144,7 @@ void func_00436270(void) {
 }
 
 /* @addr 0x004362a0 (5b): orphan tail-jmp into Cmp30000And18000. */
-void func_004362a0(void) {
+void func_Cmp30000And18000(void) {
     Cmp30000And18000();
 }
 
@@ -163,7 +163,7 @@ void func_00437100(void) {
 
 /* @addr 0x0048e3c0 (20b): call DualEntryInitDispatch; if !pause tail-jmp
  * ScaledInitWithCounterAndType_004314f0. Orphan sub-entry of the original packed block. */
-void func_0048e3c0(void) {
+void func_DualEntryInitDispatch_then_ScaledInitWithCounterAndType(void) {
     DualEntryInitDispatch();
     if (g_framePauseFlag != 0) return;
     ScaledInitWithCounterAndType_004314f0();
@@ -171,13 +171,13 @@ void func_0048e3c0(void) {
 
 /* @addr 0x004bf080 (5b) tail-jmp wrapper to LoadStoreRetNopJmp
  * (resolved via the LoadStoreRetNopJmp alias in extras_map). */
-void func_004bf080(void) {
+void func_LoadStoreRetNopJmp(void) {
     LoadStoreRetNopJmp();
 }
 
 /* @addr 0x004bf0a0 (5b) tail-jmp wrapper to AddStore
  * (resolved via the AddStore alias in extras_map). */
-void func_004bf0a0(void) {
+void func_AddStore(void) {
     AddStore();
 }
 
@@ -193,7 +193,7 @@ void GuardedLoopWithCallback(void) {
 }
 
 /* @addr 0x004667e0 (5b) tail-jmp wrapper. */
-void func_004667e0(void) {
+void func_CallSetPause(void) {
     CallSetPause();
 }
 
@@ -238,32 +238,32 @@ L_lgdj_done:
 }
 
 /* @addr 0x00461370 (15b) walk=8 entry */
-void func_00461370(void) {
+void func_set_g_walkCallback_then_OrDualStore_00461370(void) {
     g_walkCallback = (void (*)(void))8;
     OrDualStore_0048e4b0();
 }
 
 /* @addr 0x00461380 (15b) walk=0x10 entry */
-void func_00461380(void) {
+void func_set_g_walkCallback_then_OrDualStore_00461380(void) {
     g_walkCallback = (void (*)(void))0x10;
     OrDualStore_0048e4b0();
 }
 
 /* @addr 0x00461390 (15b) walk=0x20 entry */
-void func_00461390(void) {
+void func_set_g_walkCallback_then_OrDualStore_00461390(void) {
     g_walkCallback = (void (*)(void))0x20;
     OrDualStore_0048e4b0();
 }
 
 /* @addr 0x004613a0 (15b) walk=0x80 entry */
-void func_004613a0(void) {
+void func_set_g_walkCallback_then_OrDualStore_004613a0(void) {
     g_walkCallback = (void (*)(void))0x80;
     OrDualStore_0048e4b0();
 }
 
 /* @addr 0x0042ce70 (20b): call GuardedTriple + pause-gated tail-jmp
  * CjInstallSelfRouter. Orphan TCO wrapper. */
-void func_0042ce70(void) {
+void func_GuardedTripleCallSwapJmp_then_CjInstallSelfRouter(void) {
     GuardedTripleCallSwapJmp();
     if (g_framePauseFlag != 0) return;
     CjInstallSelfRouter();
@@ -305,7 +305,7 @@ void func_00498730(void) {
 
 /* h3 @ 0x00498770 (32b): MStackCall + tail-jmp CallSetPause.
  * Standard TCO wrapper. */
-void func_00498770(void) {
+void func_MStackCall_then_CallSetPause_00498770(void) {
     MStackCall_00406740();
     if (g_framePauseFlag) return;
     CallSetPause();
@@ -561,7 +561,7 @@ __declspec(naked) void func_00498b20(void)
 
 /* h6 @ 0x00498bb0 (32b): MStackCall + pause-test -> tail-jmp
  * CallSetPause. Standard TCO wrapper. */
-void func_00498bb0(void) {
+void func_MStackCall_then_CallSetPause_00498bb0(void) {
     MStackCall_00406740();
     if (g_framePauseFlag) return;
     CallSetPause();
@@ -876,7 +876,7 @@ void func_004824e0(void) {
  * InstallSelfState88. Packed as a trailing sub-entry of
  * the 853-byte AiAngleDistComputation symbol (11-byte nop
  * pad between Part 1's ret and this entry, filled via synth 0x90). */
-void func_00431c70(void) {
+void func_InstallSelfState88(void) {
     InstallSelfState88();
 }
 

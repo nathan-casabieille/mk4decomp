@@ -9,7 +9,7 @@ extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00497b10 (20b): MStackCall + pause-gated tail-jmp to CallSetPause.
  * Entry A of the original 63-byte packed block; entries B (set child=1) and
- * C (set child=0) live in func_00497b30 / func_00497b40. The 12-byte nop gap
+ * C (set child=0) live in func_set_g_eventQueueChild_then_PunchDispatcherCluster_00497b30 / func_set_g_eventQueueChild_then_PunchDispatcherCluster_00497b40. The 12-byte nop gap
  * before entry B is filled by 0x90-fill. */
 extern void MStackCall_00406740(void);
 extern void CallSetPause(void);

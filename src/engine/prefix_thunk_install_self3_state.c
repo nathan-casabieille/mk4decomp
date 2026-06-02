@@ -3973,11 +3973,11 @@ extern void ScaledLoadCmp1003JmpDispatch(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void ScaledLoadDirtyOrSetJmp(void);
 extern void ScaledLoadGuardedJmp(void);
-extern void ScaledLoadIncJmp_00428d00(void);
-extern void ScaledLoadIncJmp_00429840(void);
+extern void ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain(void);
+extern void ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor(void);
 extern void ScaledLoadInstallOrCall_00433990(void);
-extern void ScaledLoadJmp30_00472fc0(void);
-extern void ScaledLoadJmp30_00493eb0(void);
+extern void ScaledLoadJmp30_set_g_scaledInit_00542044_then_InstallSelfMagicShift(void);
+extern void ScaledLoadJmp30_set_g_walkCallback_then_LoadCmpAddrJmp(void);
 extern void ScaledLoadJmpIfNonzero(void);
 extern void ScaledLoadJmpPauseSetMax(void);
 extern void ScaledLoadJmp_00428d20(void);
@@ -10535,7 +10535,7 @@ __declspec(naked) void InstallSelfPackedF190(void) {
         mov     [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
-        call    ScaledLoadIncJmp_00428d00
+        call    ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
@@ -23236,7 +23236,7 @@ __declspec(naked) void InstallSelfDoubleMStack(void) {
 
 /* @addr 0x0042ce60 (14b): cdecl wrapper - push 0x004e36a0 + call
  * ArgSarStoreJmp + cleanup + ret. Entry A of the original 82-byte triple-
- * helper block; entries B and C live in func_0042ce70 / func_0042ce90.
+ * helper block; entries B and C live in func_GuardedTripleCallSwapJmp_then_CjInstallSelfRouter / func_0042ce90.
  * The 2/12-byte nop gaps are filled by 0x90-fill. */
 void PauseGuardChainTriple(void) {
     ((void (*)(int))ArgSarStoreJmp)(0x004e36a0);
@@ -23244,7 +23244,7 @@ void PauseGuardChainTriple(void) {
 
 /* @addr 0x0042ce70 (20b): call GuardedTriple + pause-gated tail-jmp
  * CjInstallSelfRouter. Orphan TCO wrapper. */
-void func_0042ce70(void) {
+void func_GuardedTripleCallSwapJmp_then_CjInstallSelfRouter(void) {
     GuardedTripleCallSwapJmp();
     if (g_framePauseFlag != 0) return;
     CjInstallSelfRouter();
@@ -25202,7 +25202,7 @@ __declspec(naked) void InstallSelfMStackPushDispatch(void) {
  *     FiveCallGuardSetTail. Else: dec g_eventQueueChild; if zero ->
  *     tail-call 0x00484c90 (self), else: install-self at [eax+8]=0x00484cf0;
  *     chain[+0x84]=1; scaledInit-chain push 0x00484cf0+0x01000000;
- *     call ScaledLoadIncJmp_00428d00; pause=1; ret.
+ *     call ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain; pause=1; ret.
  */
 __declspec(naked) void DualBlockInstallSelfWithSibling(void) {
     __asm {
@@ -25278,7 +25278,7 @@ __declspec(naked) void DualBlockInstallSelfWithSibling(void) {
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
-        call    ScaledLoadIncJmp_00428d00
+        call    ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         ret
@@ -29698,7 +29698,7 @@ __declspec(naked) void InstallSelfDualPathInit(void) {
  *   B2 (0x20..0x119, 3-state install-self):
  *     state >=2: tail-call StateMachine4ArmCascade.
  *     state 1: install-self [eax+8]=0x0043aef0, chain[+0x84]=2, scaledInit-chain push
- *       0x0043aef0+0x02000000; call ScaledLoadIncJmp_00428d00; pause=1; ret.
+ *       0x0043aef0+0x02000000; call ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain; pause=1; ret.
  *     state 0: g_eventQueueNotMask=0xa, g_eventQueueChild=0x1f, install-self at
  *       [eax+8]=0x0043aef0; chain[+0x84]=1; scaledInit-chain push 0x0043aef0+0x01000000;
  *       call InstallSelfDoubleMStack; pause=1; ret.
@@ -29749,7 +29749,7 @@ __declspec(naked) void DualBlockThunkPlus3State(void) {
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
-        call    ScaledLoadIncJmp_00428d00
+        call    ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         pop     esi
@@ -36905,7 +36905,7 @@ void TripleThunkInstallBody(void) {
 
 /* @addr 0x0046c3d0 (332b game) - install-self with multi-thunk dispatch.
  *   state!=0: tail-jmp FiveCallGuardSetTail. state==0: install-self at entry+0x01000000;
- *     state=1; call ScaledLoadIncJmp_00428d00; pause=1; pop edi; ret.
+ *     state=1; call ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain; pause=1; pop edi; ret.
  *   Thunk B (+0x80): call ScaledMove48to58; if pause ret. g_eventQueueNotMask=[baseSel*4+0x30].
  *     If nonzero: jmp CallPauseTripleScaledJmp. Else call MStackPush3CmpCall; if pause ret.
  *     If bit0(0054208c): jmp DualEntryStateGated. Else cmp g_table_00535ddc<=0xcccc;
@@ -36941,7 +36941,7 @@ __declspec(naked) void InstallSelfMultiThunkDispatch(void) {
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
-        call    ScaledLoadIncJmp_00428d00
+        call    ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         ret
@@ -52007,7 +52007,7 @@ __declspec(naked) void InstallSelfMStackPackedFlow(void) {
  *       InstallSelfMStackPush_004968a0; else fall to mstack-push body.
  *     phase 0: reset g_eventQueueChild = 2. Push it, call ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d490;
  *       on no-error pop snapshot, if bit 0 of g_xformDirtyFlags set tail-call
- *       InstallSelfMStackPush_004968a0; else call ScaledLoadIncJmp_00429840,
+ *       InstallSelfMStackPush_004968a0; else call ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor,
  *       install Self at offset 0x70 (this entry) and arm 0x541e6c=1.
  *   6b NOP pad.
  *   Entry 4 (offset 0x140, 37b): sets [scaled+0x74]=0x112, pushes
@@ -52095,7 +52095,7 @@ __declspec(naked) void Alarm4EntryInstallCountdown(void) {
         pop     ebx
         ret
     L_aei_notBit0:
-        call    ScaledLoadIncJmp_00429840
+        call    ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_aei_e3End
@@ -61690,7 +61690,7 @@ __declspec(naked) void TwoPhasePackInstall(void)
     L_tppi_sub4_phase0:
         mov     dword ptr [g_eventQueueChild], 4
     L_tppi_sub4_after:
-        call    ScaledLoadIncJmp_00429840
+        call    ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_tppi_sub4_ret
@@ -61956,7 +61956,7 @@ __declspec(naked) void PhaseDispatchListAdvance(void)
         pop     ebx
         ret
     L_pdla_install:
-        call    ScaledLoadIncJmp_00429840
+        call    ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pdla_abort
@@ -64869,7 +64869,7 @@ __declspec(naked) void FivePackedSubChainBigEntry(void)
         pop     ebx
         ret
     L_fpscb_main_doCall:
-        call    ScaledLoadIncJmp_00429840
+        call    ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_fpscb_main_ret
@@ -66514,7 +66514,7 @@ void func_00498730(void) {
 
 /* h3 @ 0x00498770 (32b): MStackCall + tail-jmp CallSetPause.
  * Standard TCO wrapper. */
-void func_00498770(void) {
+void func_MStackCall_then_CallSetPause_00498770(void) {
     MStackCall_00406740();
     if (g_framePauseFlag) return;
     CallSetPause();
@@ -95012,7 +95012,7 @@ __declspec(naked) void BuildCharacterCaseTables(void)
  *          g_eventQueueChild := 0x20, install OFFSET L_b020 + state
  *          1, call InstallSelfDoubleMStack, mark sync.
  *        - state 1 (L_b047): install OFFSET L_b020 + state 2,
- *          call ScaledLoadIncJmp_00428d00, mark sync.
+ *          call ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain, mark sync.
  *        - state >= 2: call StateMachine4ArmCascade and exit.
  *
  *   3. 0x43b120 (L_b120, ~131b): per-entity clear + advance.
@@ -95077,7 +95077,7 @@ __declspec(naked) void GameStateProgressCluster(void)
         mov      dword ptr [eax + 4], ecx
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edx
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
@@ -96649,7 +96649,7 @@ __declspec(naked) void GeoTransformDispatchAndApply(void)
  *       via StoreTwoCall, snapshot g_fightGroupHead into the
  *       active slot's [+0x28].
  *     - install OFFSET self + state 3 + (OFFSET self | 3<<24),
- *       call ScaledLoadIncJmp_00428d00.
+ *       call ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain.
  *
  *   state ≥3 (default): tail FiveCallGuardSetTail.
  *
@@ -96708,7 +96708,7 @@ __declspec(naked) void StageEventState4Way(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], edi
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
@@ -96782,7 +96782,7 @@ __declspec(naked) void StageEventState4Way(void)
  *      states:
  *        0 (L_b9cd): MStackPushSet0008 (audio bring-up); set state
  *          code 0x100e, install OFFSET self + state 1, call
- *          ScaledLoadIncJmp_00428d00.
+ *          ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain.
  *        1 (L_b930): ScaledZeroFour + StateDispatchTable; set
  *          g_eventQueueEnd := state-code, g_currentNodeFlags :=
  *          0xccc; install OFFSET self + state 2, call
@@ -96793,7 +96793,7 @@ __declspec(naked) void StageEventState4Way(void)
  *      push &g_dispatchSave598 + ArgSarStoreJmp.
  *
  *   3. 0x47ba7c (~119b): Dual-attempt scenario picker. Calls
- *      ScaledLoadIncJmp_00429840 + CmpEqInitCallElseJmp twice, each with a check
+ *      ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor + CmpEqInitCallElseJmp twice, each with a check
  *      of bit 0 of g_xformDirtyFlags - first attempt tail-jmps
  *      StateMachineSharedTail if set, else takes a second attempt and
  *      decides between AerialPunchCluster (success) and
@@ -96874,7 +96874,7 @@ __declspec(naked) void RoundStartCluster_0047b900(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], edi
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], 1
     L_ba4d:
         pop      edi
@@ -96901,7 +96901,7 @@ __declspec(naked) void RoundStartCluster_0047b900(void)
         nop
         nop
         /* H3: scenario picker */
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_baed
@@ -96914,7 +96914,7 @@ __declspec(naked) void RoundStartCluster_0047b900(void)
         je       short L_bab4
         jmp      StateMachineSharedTail
     L_bab4:
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_baed
@@ -101242,7 +101242,7 @@ __declspec(naked) void IntroFsmCluster(void)
  *      ArgSarStoreJmp.
  *
  *   4. 0x46f030 (L_f030, ~163b): "voice-of-defeat" handler. If
- *      previous state was non-zero call ScaledLoadIncJmp_00429840 +
+ *      previous state was non-zero call ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor +
  *      ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d450(0x24) + InstallSelfPackedF190. Else same pre-pass
  *      then check bit 0 of g_xformDirtyFlags: set → InstallSelfPackedF190;
  *      clear → install OFFSET L_f030 + state 1 + 0x54204c := 1.
@@ -101331,7 +101331,7 @@ __declspec(naked) void MatchOverCluster(void)
         mov      dword ptr [esi + 0x84], 0
         test     eax, eax
         je       short L_f07f
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f0d2
@@ -101344,7 +101344,7 @@ __declspec(naked) void MatchOverCluster(void)
         pop      esi
         ret
     L_f07f:
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f0d2
@@ -101389,7 +101389,7 @@ __declspec(naked) void MatchOverCluster(void)
         mov      dword ptr [esi + 0x84], 0
         test     eax, eax
         je       short L_f12f
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f182
@@ -101402,7 +101402,7 @@ __declspec(naked) void MatchOverCluster(void)
         pop      esi
         ret
     L_f12f:
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f182
@@ -101440,14 +101440,14 @@ __declspec(naked) void MatchOverCluster(void)
  *
  *   3. 0x47b720 (L_b720, ~482b): per-entity 2-state FSM.
  *      State 0 (L_b836): set state code 9 + ScaledIndexConditionalAdd, then
- *        ScaledLoadIncJmp_00429840 + state 0x12 + CmpEqInitCallElseJmp; if
+ *        ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor + state 0x12 + CmpEqInitCallElseJmp; if
  *        g_xformScratch2088 == 1 tail-jmp RoundStartCluster_0047b900; else
  *        g_eventQueueChild := 6, install OFFSET L_b720 + state 1,
  *        call EsiInstallDecCallChain_004294a0.
- *      State 1 (L_b753): ScaledLoadIncJmp_00429840 + push g_audioBank2State
+ *      State 1 (L_b753): ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor + push g_audioBank2State
  *        onto dispatch stack + state 0x12 + CmpEqInitCallElseJmp;
  *        same: if 0x542088==1 tail-jmp RoundStartCluster_0047b900; else
- *        install OFFSET L_b720 + state 2, call ScaledLoadIncJmp_00428d00.
+ *        install OFFSET L_b720 + state 2, call ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain.
  *      State ≥2: FiveCallGuardSetTail (exit).
  *
  * Frame: H1, H2 = no prologue; H3 = push esi/edi.
@@ -101501,7 +101501,7 @@ __declspec(naked) void RoundEndCelebrationCluster(void)
         pop      esi
         ret
     L_b753:
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_b8f3
@@ -101545,7 +101545,7 @@ __declspec(naked) void RoundEndCelebrationCluster(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], 0
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], edi
         pop      edi
         pop      esi
@@ -101556,7 +101556,7 @@ __declspec(naked) void RoundEndCelebrationCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b8f3
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b8f3
@@ -106185,7 +106185,7 @@ __declspec(naked) void ThrowTakedownCluster(void)
         pop      ebx
         ret
     L_ddbb:
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_de58
@@ -112216,7 +112216,7 @@ __declspec(naked) void HopBackFsmCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a54c
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a54c
@@ -112233,7 +112233,7 @@ __declspec(naked) void HopBackFsmCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a54c
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_a54c
@@ -112250,7 +112250,7 @@ __declspec(naked) void HopBackFsmCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_a54c
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_a54c
@@ -112266,7 +112266,7 @@ __declspec(naked) void HopBackFsmCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_a54c
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_a54c
@@ -115124,7 +115124,7 @@ void StrikeAnim4Picker(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_33a1
-        call     ScaledLoadJmp30_00493eb0
+        call     ScaledLoadJmp30_set_g_walkCallback_then_LoadCmpAddrJmp
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_33a1
@@ -118306,7 +118306,7 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         mov      dword ptr [g_eventQueueNotMask], eax
         je       short L_b1f8
     L_b19a:
-        /* install state 4 via ScaledLoadIncJmp_00428d00 */
+        /* install state 4 via ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain */
         mov      dword ptr [esi + 8], OFFSET L_b070
         mov      ecx, dword ptr [g_baseSel]
         mov      edx, OFFSET L_b070
@@ -118321,7 +118321,7 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edi
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
@@ -120222,7 +120222,7 @@ __declspec(naked) void ScoreAiStatusFsmCluster(void)
         pop      ebx
         ret
     L_9c31:
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_9e27
@@ -120335,7 +120335,7 @@ __declspec(naked) void ScoreAiStatusFsmCluster(void)
         pop      ebx
         ret
     L_9df8:
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_9e27
@@ -120914,7 +120914,7 @@ __declspec(naked) void VersusScreenEventPoseCluster(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edi
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
@@ -122208,7 +122208,7 @@ __declspec(naked) void MoveDispatch4StateFsm(void)
         mov      cl, byte ptr [edx*4 + 5]
         mov      dword ptr [g_eventQueueChild], ecx
     L_4aba:
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_4d5c
@@ -123098,7 +123098,7 @@ __declspec(naked) void StageTransitionCluster_0046f250(void)
         je       L_f390
         dec      eax
         je       short L_f32f
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_f3e3
@@ -123111,7 +123111,7 @@ __declspec(naked) void StageTransitionCluster_0046f250(void)
         pop      esi
         ret
     L_f32f:
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_f3e3
@@ -123135,7 +123135,7 @@ __declspec(naked) void StageTransitionCluster_0046f250(void)
         pop      esi
         ret
     L_f390:
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f3e3
@@ -123212,7 +123212,7 @@ __declspec(naked) void StageTransitionCluster_0046f250(void)
         je       L_f500
         dec      eax
         je       short L_f49f
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_f553
@@ -123225,7 +123225,7 @@ __declspec(naked) void StageTransitionCluster_0046f250(void)
         pop      esi
         ret
     L_f49f:
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_f553
@@ -123249,7 +123249,7 @@ __declspec(naked) void StageTransitionCluster_0046f250(void)
         pop      esi
         ret
     L_f500:
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f553
@@ -126699,7 +126699,7 @@ __declspec(naked) void PunchDispatcherCluster(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], 0
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], 1
     L_7ca3:
         pop      esi
@@ -127671,7 +127671,7 @@ __declspec(naked) void func_00498b20(void)
 
 /* h6 @ 0x00498bb0 (32b): MStackCall + pause-test -> tail-jmp
  * CallSetPause. Standard TCO wrapper. */
-void func_00498bb0(void) {
+void func_MStackCall_then_CallSetPause_00498bb0(void) {
     MStackCall_00406740();
     if (g_framePauseFlag) return;
     CallSetPause();
@@ -129028,7 +129028,7 @@ __declspec(naked) void AiAngleDistComputation(void)
  * InstallSelfState88. Packed as a trailing sub-entry of
  * the 853-byte AiAngleDistComputation symbol (11-byte nop
  * pad between Part 1's ret and this entry, filled via synth 0x90). */
-void func_00431c70(void) {
+void func_InstallSelfState88(void) {
     InstallSelfState88();
 }
 
@@ -132989,7 +132989,7 @@ __declspec(naked) void HitStateCluster(void)
     L_cab8:
         mov      dword ptr [g_eventQueueChild], 3
     L_cac2:
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_cb69
@@ -138743,7 +138743,7 @@ __declspec(naked) void ProneAnimFsmCluster(void)
         pop      ebx
         ret      
     L_59b0:
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_59d7
@@ -138951,7 +138951,7 @@ __declspec(naked) void ProneAnimFsmCluster(void)
         pop      ebx
         ret      
     L_5be0:
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5c07
@@ -141727,7 +141727,7 @@ __declspec(naked) void AerialPunchCluster(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edi
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
@@ -142378,7 +142378,7 @@ __declspec(naked) void CrouchCounterCluster(void)
         mov      dword ptr [eax + 4], ecx
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edx
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
@@ -143089,7 +143089,7 @@ __declspec(naked) void DispatchDoubleScaledCluster(void)
         ja       L_514f
         jmp      dword ptr [eax*4 + L_5158_jmptbl]
     L_4fbe:
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5154
@@ -143101,7 +143101,7 @@ __declspec(naked) void DispatchDoubleScaledCluster(void)
         pop      esi
         ret
     L_4ff3:
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5154
@@ -143112,7 +143112,7 @@ __declspec(naked) void DispatchDoubleScaledCluster(void)
         pop      esi
         ret
     L_502c:
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5154
@@ -143146,7 +143146,7 @@ __declspec(naked) void DispatchDoubleScaledCluster(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], 0
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
@@ -143230,7 +143230,7 @@ __declspec(naked) void DispatchDoubleScaledCluster(void)
         mov      dword ptr [eax + 4], ecx
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], 0
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], 1
     L_5201:
         ret
@@ -146099,7 +146099,7 @@ __declspec(naked) void IntroSettingsFsmCluster(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], edi
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
@@ -146132,7 +146132,7 @@ __declspec(naked) void IntroSettingsFsmCluster(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edi
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
@@ -147434,7 +147434,7 @@ __declspec(naked) void TournamentMenuFsmCluster(void)
         test     al, bl
         mov      dword ptr [g_eventQueueChild], edx
         jne      L_641f
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_6424
         mov      dword ptr [esi + 8], 0x4961a0
@@ -152577,7 +152577,7 @@ __declspec(naked) void PendingMatch_004694b0(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], 0
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret      
@@ -156463,7 +156463,7 @@ __declspec(naked) void PendingMatch_0044fe90(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_023c
-        call     ScaledLoadJmp30_00472fc0
+        call     ScaledLoadJmp30_set_g_scaledInit_00542044_then_InstallSelfMagicShift
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_023c
@@ -162472,7 +162472,7 @@ __declspec(naked) void PendingMatch_00484da0(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], edi
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
@@ -162701,7 +162701,7 @@ __declspec(naked) void PendingMatch_00484da0(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], 0
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret      
@@ -170672,7 +170672,7 @@ __declspec(naked) void PendingMatch_0041afd0(void)
         pop      esi
         ret      
     L_b47d:
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_b54d
@@ -178701,7 +178701,7 @@ __declspec(naked) void PendingMatch_0046b670(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], edi
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
@@ -178739,7 +178739,7 @@ __declspec(naked) void PendingMatch_0046b670(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edi
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
@@ -183906,7 +183906,7 @@ __declspec(naked) void PendingMatch_004685d0(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], 0
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], 1
     L_8a01:
         pop      esi
@@ -184057,7 +184057,7 @@ __declspec(naked) void PendingMatch_004685d0(void)
         jmp      L_8d34
         mov      dword ptr [g_eventQueueChild], 3
         jmp      L_8c14
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_8e93
         mov      eax, dword ptr [g_eventQueueChild]
@@ -219866,7 +219866,7 @@ __declspec(naked) void PendingMatch_00478da0(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], 0
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], 1
     L_8f36:
         pop      esi
@@ -220124,7 +220124,7 @@ __declspec(naked) void PendingMatch_00478da0(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edi
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi
@@ -220145,7 +220145,7 @@ __declspec(naked) void PendingMatch_00478da0(void)
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_baseSel]
         mov      dword ptr [eax*4 + 0x84], edi
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], ebx
         pop      edi
         pop      esi

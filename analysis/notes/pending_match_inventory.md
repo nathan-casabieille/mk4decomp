@@ -434,7 +434,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/engine/pending_match_variants.c`
 - traits: switch-via-jumptable, SEH (fs:[0]), x87 FPU, cond jmps: 15
-- top callees: `ArgSarStoreJmp`×4, `ArgScaledTestStore`×2, `StackPopDispatchTagged`×2, `ScaledChain3c74`×2, `ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d450`×2, `PushPopWalkSet1006`×2, `ScaledChainJmp_00429470`×2, `ScaledLoadIncJmp_00428d00`×2
+- top callees: `ArgSarStoreJmp`×4, `ArgScaledTestStore`×2, `StackPopDispatchTagged`×2, `ScaledChain3c74`×2, `ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d450`×2, `PushPopWalkSet1006`×2, `ScaledChainJmp_00429470`×2, `ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain`×2
 - top globals: `g_currentNodeIdx`×27, `0x542060`×13, `g_framePauseFlag`×12, `0x54206c`×5, `g_pendingNodeType`×2, `g_eventQueuePending`, `g_fightGroupHead`
 
 ## PendingMatch_0040b020 @ 0x40b020 (2149b)
@@ -581,7 +581,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/engine/pending_match_variants.c`
 - traits: switch-via-jumptable, x87 FPU, cond jmps: 35
-- top callees: `TableLookupCall_g_table_004efa00`×4, `CmpEqInitCallElseJmp`×4, `FiveCallGuardSetTail`×3, `ScaledLoadIncJmp_00428d00`×3, `ScaledIndexConditionalAdd`×3, `ScaledArrStore_GuardedChainCmpDualBitXor_00429980`×3, `MStackFrameCdeclDouble`×3, `IterStepDualStore`×3
+- top callees: `TableLookupCall_g_table_004efa00`×4, `CmpEqInitCallElseJmp`×4, `FiveCallGuardSetTail`×3, `ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain`×3, `ScaledIndexConditionalAdd`×3, `ScaledArrStore_GuardedChainCmpDualBitXor_00429980`×3, `MStackFrameCdeclDouble`×3, `IterStepDualStore`×3
 - top globals: `g_framePauseFlag`×30, `g_currentNodeIdx`×18, `0x542060`×11, `g_eventQueueChild`×8, `g_matrixStackTop`×8, `g_pendingNodeType`×7, `0x542078`×4, `0x54206c`×3
 
 ## PendingMatch_00484da0 @ 0x484da0 (3172b)

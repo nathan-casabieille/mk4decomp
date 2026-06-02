@@ -121,7 +121,7 @@ extern unsigned int g_fightAxisPosY;
  *       InstallSelfMStackPush_004968a0; else fall to mstack-push body.
  *     phase 0: reset g_eventQueueChild = 2. Push it, call ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d490;
  *       on no-error pop snapshot, if bit 0 of g_xformDirtyFlags set tail-call
- *       InstallSelfMStackPush_004968a0; else call ScaledLoadIncJmp_00429840,
+ *       InstallSelfMStackPush_004968a0; else call ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor,
  *       install Self at offset 0x70 (this entry) and arm 0x541e6c=1.
  *   6b NOP pad.
  *   Entry 4 (offset 0x140, 37b): sets [scaled+0x74]=0x112, pushes
@@ -136,7 +136,7 @@ extern void ArgSarStoreJmp(void);
 extern void InstallSelfMStackPush_004968a0(void);
 extern void PushPopWalkSet1006(void);
 extern void ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d490(void);
-extern void ScaledLoadIncJmp_00429840(void);
+extern void ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor(void);
 extern void ScaledLookupGuardJmpIndirect(void);
 extern void StreamInitCountdownBody(void);
 
@@ -222,7 +222,7 @@ __declspec(naked) void Alarm4EntryInstallCountdown(void) {
         pop     ebx
         ret
     L_aei_notBit0:
-        call    ScaledLoadIncJmp_00429840
+        call    ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_aei_e3End

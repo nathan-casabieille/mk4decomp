@@ -7,7 +7,7 @@
 #include "engine/scenegraph.h"
 
 extern void DualCallPauseJmpDual(void);
-extern void func_004391b0(void);
+extern void func_DualScaledInitClear_then_FiveCallGuardSetTail(void);
 
 /* @addr 0x00438e70 (37b)
  *   mov     eax, [g_matrixStackTop]
@@ -32,7 +32,7 @@ void MStackPushPtr1Jmp_00438e70(void) {
  *   mov     [g_walkCallback], 1
  *   inc     eax
  *   mov     [g_matrixStackTop], eax
- *   mov     [eax*4 + 0], OFFSET func_004391b0
+ *   mov     [eax*4 + 0], OFFSET func_DualScaledInitClear_then_FiveCallGuardSetTail
  *   jmp     T
  */
 extern void MstackPopScaledChainPlusThunks(void);
@@ -41,6 +41,6 @@ void MStackPushPtr1Jmp_00438ef0(void) {
     g_walkCallback = (void (*)(void))1;
     v++;
     g_matrixStackTop = v;
-    *(unsigned int *)(v * 4) = (unsigned int)&func_004391b0;
+    *(unsigned int *)(v * 4) = (unsigned int)&func_DualScaledInitClear_then_FiveCallGuardSetTail;
     MstackPopScaledChainPlusThunks();
 }

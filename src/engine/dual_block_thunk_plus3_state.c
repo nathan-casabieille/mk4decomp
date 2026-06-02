@@ -114,14 +114,14 @@ extern unsigned int g_fightAxisPosY;
  *   B2 (0x20..0x119, 3-state install-self):
  *     state >=2: tail-call StateMachine4ArmCascade.
  *     state 1: install-self [eax+8]=0x0043aef0, chain[+0x84]=2, scaledInit-chain push
- *       0x0043aef0+0x02000000; call ScaledLoadIncJmp_00428d00; pause=1; ret.
+ *       0x0043aef0+0x02000000; call ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain; pause=1; ret.
  *     state 0: g_eventQueueNotMask=0xa, g_eventQueueChild=0x1f, install-self at
  *       [eax+8]=0x0043aef0; chain[+0x84]=1; scaledInit-chain push 0x0043aef0+0x01000000;
  *       call InstallSelfDoubleMStack; pause=1; ret.
  */
 extern void ArgSarStoreJmp(void);
 extern void InstallSelfDoubleMStack(void);
-extern void ScaledLoadIncJmp_00428d00(void);
+extern void ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain(void);
 extern void StateMachine4ArmCascade(void);
 
 __declspec(naked) void DualBlockThunkPlus3State(void) {
@@ -170,7 +170,7 @@ __declspec(naked) void DualBlockThunkPlus3State(void) {
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
-        call    ScaledLoadIncJmp_00428d00
+        call    ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         pop     esi

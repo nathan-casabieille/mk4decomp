@@ -9,7 +9,7 @@ extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00482eb0 (36b): push F1-arg + call + pause + push F2-arg + call.
  * Entry A of the original 53-byte packed block; the 5-byte tail-jmp
- * sub-entry at +0x30 (func_00482ee0) is split into its own symbol.
+ * sub-entry at +0x30 (func_Chain3CallGuarded) is split into its own symbol.
  * The 12-byte nop gap is filled by 0x90-fill. */
 extern int IterStepDualStore(void *);
 extern int ArgSarStoreJmp(void *);
@@ -23,6 +23,6 @@ void DualPushCallPause(void) {
 }
 
 /* @addr 0x00482ee0 (5b): tail-jmp into Chain3CallGuarded sub-entry. */
-void func_00482ee0(void) {
+void func_Chain3CallGuarded(void) {
     Chain3CallGuarded();
 }

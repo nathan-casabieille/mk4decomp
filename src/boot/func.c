@@ -11,7 +11,7 @@ extern unsigned int g_dispatchSave1180;
 /* @addr 0x004111f0 (18b): set g_eventQueueIdx = (0x004d5c20>>2); tail-jmp
  * PendingMatch_00411210 (= PendingMatch_00411210). The 4-byte nop gap before this
  * entry is filled by 0x90-fill. Referenced from g_dispatchSave904 in data.c. */
-void func_004111f0(void) {
+void func_set_g_eventQueueIdx_then_PendingMatch(void) {
     g_eventQueueIdx = (unsigned int)&g_dispatchSave1180 >> 2;
     PendingMatch_00411210();
 }

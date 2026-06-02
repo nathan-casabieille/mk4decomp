@@ -120,7 +120,7 @@ extern unsigned int g_sweepClusterBase;
 
 extern void FiveCallGuardSetTail(void);
 extern void GuardedPackedSlotInit(void);
-extern void ScaledLoadIncJmp_00428d00(void);
+extern void ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain(void);
 
 __declspec(naked) void StageEventState4Way(void)
 {
@@ -173,7 +173,7 @@ __declspec(naked) void StageEventState4Way(void)
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [edx*4 + 0x84], edi
-        call     ScaledLoadIncJmp_00428d00
+        call     ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi

@@ -1128,7 +1128,7 @@ functions:
     status: matched
     file: src/boot/test_byte_select_init.c
   - addr: 0x004111f0
-    name: func_004111f0
+    name: func_set_g_eventQueueIdx_then_PendingMatch
     size: 18
     group: boot
     status: matched
@@ -2664,7 +2664,7 @@ functions:
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x00428d00
-    name: ScaledLoadIncJmp_00428d00
+    name: ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain
     size: 24
     group: game
     status: matched
@@ -2880,7 +2880,7 @@ functions:
     status: matched
     file: src/engine/scaled_inc_cmp_dual_jmp.c
   - addr: 0x00429840
-    name: ScaledLoadIncJmp_00429840
+    name: ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
     size: 24
     group: game
     status: matched
@@ -3150,7 +3150,7 @@ functions:
     status: matched
     file: src/engine/pause_guard_chain_triple.c
   - addr: 0x0042ce70
-    name: func_0042ce70
+    name: func_GuardedTripleCallSwapJmp_then_CjInstallSelfRouter
     size: 20
     group: game
     status: matched
@@ -3510,7 +3510,7 @@ functions:
     status: matched
     file: src/engine/ai_angle_dist_computation.c
   - addr: 0x00431c70
-    name: func_00431c70
+    name: func_InstallSelfState88
     size: 5
     group: game
     status: matched
@@ -3990,7 +3990,7 @@ functions:
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x004362a0
-    name: func_004362a0
+    name: func_Cmp30000And18000
     size: 5
     group: game
     status: matched
@@ -4260,7 +4260,7 @@ functions:
     status: matched
     file: src/engine/m_stack_push_set6_jmp.c
   - addr: 0x004384a0
-    name: MStackCleanupFrom_004384a0
+    name: MStackCleanupFrom_StackPopDispatchTagged_004384a0
     size: 5
     group: game
     status: matched
@@ -4272,7 +4272,7 @@ functions:
     status: matched
     file: src/engine/m_stack_push_set0_jmp.c
   - addr: 0x004384e0
-    name: MStackCleanupFrom_004384e0
+    name: MStackCleanupFrom_StackPopDispatchTagged_004384e0
     size: 5
     group: game
     status: matched
@@ -4284,7 +4284,7 @@ functions:
     status: matched
     file: src/engine/m_stack_push_set4_jmp.c
   - addr: 0x00438520
-    name: MStackCleanupFrom_00438520
+    name: MStackCleanupFrom_StackPopDispatchTagged_00438520
     size: 5
     group: game
     status: matched
@@ -4494,7 +4494,7 @@ functions:
     status: matched
     file: src/engine/dual_call_pause_jmp_dual.c
   - addr: 0x004391b0
-    name: func_004391b0
+    name: func_DualScaledInitClear_then_FiveCallGuardSetTail
     size: 20
     group: game
     status: matched
@@ -4950,7 +4950,7 @@ functions:
     status: matched
     file: src/engine/push_call_ret_nop_jmp.c
   - addr: 0x0043d590
-    name: TailJmpTo_0043d5a0
+    name: TailJmpTo_CountdownStoreCallChain
     size: 5
     group: game
     status: matched
@@ -7086,7 +7086,7 @@ functions:
     status: matched
     file: src/engine/set1_jmp_set2_jmp.c
   - addr: 0x00461350
-    name: func_00461350
+    name: func_set_g_walkCallback_then_OrDualStore_00461350
     size: 15
     group: game
     status: matched
@@ -7098,25 +7098,25 @@ functions:
     status: matched
     file: src/engine/five_set_walk_jmp.c
   - addr: 0x00461370
-    name: func_00461370
+    name: func_set_g_walkCallback_then_OrDualStore_00461370
     size: 15
     group: game
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x00461380
-    name: func_00461380
+    name: func_set_g_walkCallback_then_OrDualStore_00461380
     size: 15
     group: game
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x00461390
-    name: func_00461390
+    name: func_set_g_walkCallback_then_OrDualStore_00461390
     size: 15
     group: game
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x004613a0
-    name: func_004613a0
+    name: func_set_g_walkCallback_then_OrDualStore_004613a0
     size: 15
     group: game
     status: matched
@@ -7476,7 +7476,7 @@ functions:
     status: matched
     file: src/engine/store_fight_field_call_tail_jmp.c
   - addr: 0x004667e0
-    name: func_004667e0
+    name: func_CallSetPause
     size: 5
     group: game
     status: matched
@@ -8232,7 +8232,7 @@ functions:
     status: matched
     file: src/engine/scaled_save_call_restore_jmp.c
   - addr: 0x00472fc0
-    name: ScaledLoadJmp30_00472fc0
+    name: ScaledLoadJmp30_set_g_scaledInit_00542044_then_InstallSelfMagicShift
     size: 23
     group: game
     status: matched
@@ -9702,7 +9702,7 @@ functions:
     status: matched
     file: src/engine/dual_push_call_pause.c
   - addr: 0x00482ee0
-    name: func_00482ee0
+    name: func_Chain3CallGuarded
     size: 5
     group: game
     status: matched
@@ -10944,7 +10944,7 @@ functions:
     status: matched
     file: src/engine/push_call_pause_set_max_then_call_pause_jmp.c
   - addr: 0x0048e3c0
-    name: func_0048e3c0
+    name: func_DualEntryInitDispatch_then_ScaledInitWithCounterAndType
     size: 20
     group: game
     status: matched
@@ -12012,7 +12012,7 @@ functions:
     status: matched
     file: src/engine/push_set_call_tail_jmp.c
   - addr: 0x00493eb0
-    name: ScaledLoadJmp30_00493eb0
+    name: ScaledLoadJmp30_set_g_walkCallback_then_LoadCmpAddrJmp
     size: 23
     group: game
     status: matched
@@ -12276,13 +12276,13 @@ functions:
     status: matched
     file: src/engine/call_pause_jmp_then_set_child.c
   - addr: 0x00497b30
-    name: func_00497b30
+    name: func_set_g_eventQueueChild_then_PunchDispatcherCluster_00497b30
     size: 15
     group: game
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x00497b40
-    name: func_00497b40
+    name: func_set_g_eventQueueChild_then_PunchDispatcherCluster_00497b40
     size: 15
     group: game
     status: matched
@@ -12324,7 +12324,7 @@ functions:
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x00498770
-    name: func_00498770
+    name: func_MStackCall_then_CallSetPause_00498770
     size: 32
     group: game
     status: matched
@@ -12366,7 +12366,7 @@ functions:
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x00498bb0
-    name: func_00498bb0
+    name: func_MStackCall_then_CallSetPause_00498bb0
     size: 32
     group: game
     status: matched
@@ -15894,7 +15894,7 @@ functions:
     status: matched
     file: src/engine/mov_and_store_ret_jmp.c
   - addr: 0x004bf080
-    name: func_004bf080
+    name: func_LoadStoreRetNopJmp
     size: 5
     group: engine.scenegraph
     status: matched
@@ -15906,7 +15906,7 @@ functions:
     status: matched
     file: src/engine/load_store_ret_nop_jmp.c
   - addr: 0x004bf0a0
-    name: func_004bf0a0
+    name: func_AddStore
     size: 5
     group: engine.scenegraph
     status: matched
@@ -16200,7 +16200,7 @@ functions:
     status: matched
     file: src/platform/win32/call_two_sum_shl.c
   - addr: 0x004c45c0
-    name: TailJmpTo_004c45d0
+    name: TailJmpTo_CallThreeSumLea
     size: 5
     group: platform.win32
     status: matched

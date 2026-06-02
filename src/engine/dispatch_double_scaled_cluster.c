@@ -119,7 +119,7 @@ extern void ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d490(void);
 extern void InstallSelfChain494d60(void);
 extern void DispatchDoubleScaledCluster(void);
 
-extern void ScaledLoadIncJmp_00429840(void);
+extern void ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor(void);
 extern void TableLookupCall_g_table_004efa00(void);
 
 __declspec(naked) void MoveDispatch4StateFsm(void)
@@ -150,7 +150,7 @@ __declspec(naked) void MoveDispatch4StateFsm(void)
         mov      cl, byte ptr [edx*4 + 5]
         mov      dword ptr [g_eventQueueChild], ecx
     L_4aba:
-        call     ScaledLoadIncJmp_00429840
+        call     ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_4d5c
