@@ -53,7 +53,7 @@ extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
 extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
@@ -95,7 +95,7 @@ extern void IterLoad_00491050(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   if zero: eax = 0x50cd34>>2; g_xformEntityIdx = eax;
  *           jmp skip;
  *   else:   ecx = 0x50cd50>>2; g_xformEntityIdx = ecx;
- *   skip: call DispatcherComplex260_00407030; if pause: ret;
+ *   skip: call DispatcherComplex260_MStackBracket1_TreeWalkRecursive2; if pause: ret;
  *   if (bit2 of g_xformDirtyFlags)!=0: ret;
  *   call MStackCall_00406340; if pause: ret;
  *   edx = g_scaledInit; eax = 0x1b333;
@@ -130,7 +130,7 @@ void DualPathCallSetup(void) {
     } else {
         g_xformEntityIdx = (unsigned int)&g_dispatchSave412 >> 2;
     }
-    DispatcherComplex260_00407030();
+    DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 4) != 0) return;
     MStackCall_00406340();

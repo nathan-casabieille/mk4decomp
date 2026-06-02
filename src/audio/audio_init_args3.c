@@ -53,7 +53,7 @@ extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
 extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
@@ -95,7 +95,7 @@ extern void IterLoad_00491050(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
@@ -119,7 +119,7 @@ extern unsigned int g_voicePoolTail;
  */
 void AudioInitArgs3(unsigned int arg0, int arg1, int arg2, int arg3) {
     g_xformEntityIdx = arg0 >> 2;
-    DispatcherComplex260_00407400();
+    DispatcherComplex260_FramePauseScaledStore();
     if (g_framePauseFlag != 0) return;
     if (g_currentNodeIdx == 0) return;
     (&g_voicePoolTail)[g_voicePoolHead] = g_currentNodeIdx;

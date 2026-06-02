@@ -53,7 +53,7 @@ extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
 extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
@@ -95,7 +95,7 @@ extern void IterLoad_00491050(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
@@ -141,7 +141,7 @@ void DirtyBitToggleDispatch(void) {
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, [eax*4 + g_arr_463390]
         mov     dword ptr [g_xformEntityIdx], eax
-        call    DispatcherComplex260_00407400
+        call    DispatcherComplex260_FramePauseScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

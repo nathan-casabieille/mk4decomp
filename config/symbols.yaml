@@ -564,7 +564,7 @@ functions:
     status: matched
     file: src/boot/m_stack_bracket1_tree_walk_recursive2.c
   - addr: 0x00407030
-    name: DispatcherComplex260_00407030
+    name: DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
     size: 260
     group: boot
     status: matched
@@ -588,7 +588,7 @@ functions:
     status: matched
     file: src/boot/m_stack_push_dispatch_bit_gate.c
   - addr: 0x00407400
-    name: DispatcherComplex260_00407400
+    name: DispatcherComplex260_FramePauseScaledStore
     size: 260
     group: boot
     status: matched
@@ -2316,19 +2316,19 @@ functions:
     status: matched
     file: src/engine/m_stack_push2_table_not.c
   - addr: 0x00426310
-    name: DispatcherComplex181_00426310
+    name: DispatcherComplex181_StreamChainStringInstall
     size: 181
     group: game
     status: matched
     file: src/engine/dispatcher_complex_181.c
   - addr: 0x004263d0
-    name: DispatcherComplex181_004263d0
+    name: DispatcherComplex181_Push70CallScaleArith
     size: 181
     group: game
     status: matched
     file: src/engine/dispatcher_complex_181.c
   - addr: 0x00426490
-    name: DispatcherComplex181_00426490
+    name: DispatcherComplex181_Push70CallScaleArith2
     size: 181
     group: game
     status: matched

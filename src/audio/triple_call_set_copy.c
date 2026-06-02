@@ -53,7 +53,7 @@ extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
 extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
@@ -95,7 +95,7 @@ extern void IterLoad_00491050(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x004a4880 (92b)
  *   g_scaledInit = 0x503308>>2; call LoadGeoAsset_Default;
  *   if pause: ret; g_xformEntityIdx = 0x506414>>2;
- *   call DispatcherComplex260_00407400; if pause: ret;
+ *   call DispatcherComplex260_FramePauseScaledStore; if pause: ret;
  *   call PushSetCallPop; if pause: ret;
  *   g_cj_00542058 = 0; g_eventQueueEnd = g_scaledInit; ret.
  */
@@ -122,7 +122,7 @@ void TripleCallSetCopy(void) {
     LoadGeoAsset_Default();
     if (g_framePauseFlag != 0) return;
     g_xformEntityIdx = (unsigned int)&g_dispatchSave408 >> 2;
-    DispatcherComplex260_00407400();
+    DispatcherComplex260_FramePauseScaledStore();
     if (g_framePauseFlag != 0) return;
     PushSetCallPop();
     if (g_framePauseFlag != 0) return;

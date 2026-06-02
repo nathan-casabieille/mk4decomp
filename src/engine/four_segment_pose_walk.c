@@ -53,7 +53,7 @@ extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
 extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
@@ -95,7 +95,7 @@ extern void IterLoad_00491050(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
@@ -184,7 +184,7 @@ __declspec(naked) void FourSegmentPoseWalk(void)
         mov      esi, OFFSET g_phase4SlotArr4
         shr      esi, 2
         mov      dword ptr [g_xformEntityIdx], esi
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2bb9
@@ -200,7 +200,7 @@ __declspec(naked) void FourSegmentPoseWalk(void)
         mov      dword ptr [g_eventQueueIdx], eax
         js       short L_2a20
         mov      dword ptr [g_xformEntityIdx], esi
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       short L_29de
@@ -220,7 +220,7 @@ __declspec(naked) void FourSegmentPoseWalk(void)
         mov      esi, OFFSET g_phase4SlotArr3
         shr      esi, 2
         mov      dword ptr [g_xformEntityIdx], esi
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2bb9
@@ -236,7 +236,7 @@ __declspec(naked) void FourSegmentPoseWalk(void)
         mov      dword ptr [g_eventQueueIdx], eax
         js       short L_2ab0
         mov      dword ptr [g_xformEntityIdx], esi
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       short L_2a6e
@@ -256,7 +256,7 @@ __declspec(naked) void FourSegmentPoseWalk(void)
         mov      esi, OFFSET g_segPoseArr
         shr      esi, 2
         mov      dword ptr [g_xformEntityIdx], esi
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2bb9
@@ -272,7 +272,7 @@ __declspec(naked) void FourSegmentPoseWalk(void)
         mov      dword ptr [g_eventQueueIdx], eax
         js       short L_2b3c
         mov      dword ptr [g_xformEntityIdx], esi
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       short L_2afa
@@ -292,7 +292,7 @@ __declspec(naked) void FourSegmentPoseWalk(void)
         mov      esi, OFFSET g_phase4SlotArr2
         shr      esi, 2
         mov      dword ptr [g_xformEntityIdx], esi
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2bb9
@@ -308,7 +308,7 @@ __declspec(naked) void FourSegmentPoseWalk(void)
         mov      dword ptr [g_eventQueueIdx], eax
         js       short L_2bb9
         mov      dword ptr [g_xformEntityIdx], esi
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       short L_2b82

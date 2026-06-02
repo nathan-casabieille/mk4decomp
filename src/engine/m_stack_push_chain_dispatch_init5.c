@@ -53,7 +53,7 @@ extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
 extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
@@ -95,7 +95,7 @@ extern void IterLoad_00491050(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
@@ -110,17 +110,17 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004925d0 (266b game) - mstack-push scaledInit + multi-call dispatch with 5-field init.
  *   mstack-push g_scaledInit_00542044; g_xformEntityIdx = 0x0050f4e8 >> 2.
- *   call DispatcherComplex260_00407400; if pause? final-ret.
+ *   call DispatcherComplex260_FramePauseScaledStore; if pause? final-ret.
  *   If bit2 of g_xformDirtyFlags set, skip to final-ret.
  *   Else: scaledInit[+0x54]=0, scaledInit[+0x58]=0xff920000, scaledInit[+0x30]=0x1c.
  *   call MStackPushComplexCallPop_00406430; if pause? final-ret.
  *   g_walkCallback = g_bootInitState; call StoreIncrMStackPush6; if pause? final-ret.
  *   Set 5 fields (g_eventQueueCurrent=1, _74=0x1d, _78=0, _7c=0xffb50000, _84=0).
- *   call DispatcherComplex181_004263d0; if pause? final-ret.
+ *   call DispatcherComplex181_Push70CallScaleArith; if pause? final-ret.
  *   call RoundCleanupCluster_00427690; if pause? final-ret. mstack-pop scaledInit; ret.
  */
 extern unsigned int g_bootInitState;
-extern void DispatcherComplex181_004263d0(void);
+extern void DispatcherComplex181_Push70CallScaleArith(void);
 extern void MStackPushComplexCallPop_00406430(void);
 extern void RoundCleanupCluster_00427690(void);
 extern void StoreIncrMStackPush6(void);
@@ -135,7 +135,7 @@ void MStackPushChainDispatchInit5(void) {
         shr     edx, 2
         mov     dword ptr [eax*4 + 0], ecx
         mov     dword ptr [g_xformEntityIdx], edx
-        call    DispatcherComplex260_00407400
+        call    DispatcherComplex260_FramePauseScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -176,7 +176,7 @@ void MStackPushChainDispatchInit5(void) {
         mov     dword ptr [g_acc_00542078], 0
         mov     dword ptr [g_eventQueueNotMask], 0xffb50000
         mov     dword ptr [g_currentNodeFlags], 0
-        call    DispatcherComplex181_004263d0
+        call    DispatcherComplex181_Push70CallScaleArith
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

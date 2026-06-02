@@ -21,21 +21,21 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void *g_table_004f3f40[];
 extern void *g_table_004f3f90[];
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void MStackPushComplexCallPop_00406430(void);
 void TableLookupCallJmp_DispatcherComplex260_then_MStackPushComplexCallPop_004aa990(void) {
     g_xformEntityIdx = (unsigned int)((int)g_table_004f3f40[(unsigned int)g_walkCallback] >> 2);
-    DispatcherComplex260_00407400();
+    DispatcherComplex260_FramePauseScaledStore();
     if (g_framePauseFlag != 0) return;
     MStackPushComplexCallPop_00406430();
 }
 
 /* @addr 0x004aa9c0 (41b): same shape with table=0x004f3f90 */
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void MStackPushComplexCallPop_00406430(void);
 void TableLookupCallJmp_DispatcherComplex260_then_MStackPushComplexCallPop_004aa9c0(void) {
     g_xformEntityIdx = (unsigned int)((int)g_table_004f3f90[(unsigned int)g_walkCallback] >> 2);
-    DispatcherComplex260_00407400();
+    DispatcherComplex260_FramePauseScaledStore();
     if (g_framePauseFlag != 0) return;
     MStackPushComplexCallPop_00406430();
 }

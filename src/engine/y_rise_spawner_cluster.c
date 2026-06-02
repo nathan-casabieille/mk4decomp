@@ -55,7 +55,7 @@ extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
 extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
@@ -97,7 +97,7 @@ extern void IterLoad_00491050(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
@@ -115,7 +115,7 @@ extern unsigned int g_dispatchTableArr3;
 extern unsigned int g_dispatchClr0;
 extern unsigned int g_player2State;
 extern void BootMstackInit(void);
-extern void DispatcherComplex181_00426310(void);
+extern void DispatcherComplex181_StreamChainStringInstall(void);
 extern void MStackPushComplexCallPop_00406430(void);
 extern void RoundCleanupCluster_00427690(void);
 extern void SaveCallRestoreOrXor(void);
@@ -137,7 +137,7 @@ void YRiseSpawnerCluster(void) {
         add      esp, 4
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7e12
@@ -167,7 +167,7 @@ void YRiseSpawnerCluster(void) {
         mov      dword ptr [g_acc_00542078], 0xa00000
         mov      dword ptr [g_eventQueueNotMask], 0xff970000
         mov      dword ptr [g_currentNodeFlags], 2
-        call     DispatcherComplex181_00426310
+        call     DispatcherComplex181_StreamChainStringInstall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_7e12
@@ -193,7 +193,7 @@ void YRiseSpawnerCluster(void) {
         mov      dword ptr [g_acc_00542078], 0x970000
         mov      dword ptr [g_eventQueueNotMask], 0xff970000
         mov      dword ptr [g_currentNodeFlags], 2
-        call     DispatcherComplex181_00426310
+        call     DispatcherComplex181_StreamChainStringInstall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_7e12
@@ -207,7 +207,7 @@ void YRiseSpawnerCluster(void) {
         add      esp, 4
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_7e12

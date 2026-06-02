@@ -63,7 +63,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/boot/pending_match_variants.c`
 - traits: cond jmps: 21
-- top callees: `DispatcherComplex181_00426490`×3, `ScaledMaskByte`×2, `StreamChainStringInstall`×2, `TableWalkBoundedCmp`, `StackPopDispatchTagged`, `BootInitGuardedCallChain`, `StoreTwoCall`, `BootMultiAssetLoadStateInit`
+- top callees: `DispatcherComplex181_Push70CallScaleArith2`×3, `ScaledMaskByte`×2, `StreamChainStringInstall`×2, `TableWalkBoundedCmp`, `StackPopDispatchTagged`, `BootInitGuardedCallChain`, `StoreTwoCall`, `BootMultiAssetLoadStateInit`
 - top globals: `g_framePauseFlag`×7, `g_eventQueuePending`×4, `g_xformLoopCounter`×4, `g_currentNodeIdx`×4, `0x542060`×3, `g_eventQueueNotMask`×2, `g_pendingNodeType`, `g_eventQueueChild`
 
 ## PendingMatch_004a3400 @ 0x4a3400 (1228b)
@@ -91,7 +91,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/audio/pending_match_variants.c`
 - traits: x87 FPU, cond jmps: 19
-- top callees: `GuardedSetupCallTailJmp`×4, `LoadGeoAsset_Default`×3, `Push16Call`×2, `BootInitGuardedCallChain`×2, `DispatcherComplex260_00407400`×2, `PushSetCallPop`×2, `CallDualStoreXorBit`, `DualAddSar`
+- top callees: `GuardedSetupCallTailJmp`×4, `LoadGeoAsset_Default`×3, `Push16Call`×2, `BootInitGuardedCallChain`×2, `DispatcherComplex260_FramePauseScaledStore`×2, `PushSetCallPop`×2, `CallDualStoreXorBit`, `DualAddSar`
 - top globals: `g_currentNodeIdx`×8, `g_fightGroupHead`×3, `0x54206c`×2, `0x542060`, `0x541f98`, `g_eventQueuePending`, `0x53a7a8`, `0x543830`
 
 ## PendingMatch_0040e310 @ 0x40e310 (1357b)
@@ -126,7 +126,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/audio/pending_match_variants.c`
 - traits: x87 FPU, cond jmps: 11
-- top callees: `Push16Call`×5, `MStackPush2ChainLLInsert`×3, `DispatcherComplex260_00407030`×2, `MStackPushComplexCallPop_00406430`×2, `AudioMicroEntries`×2, `SetJmp_Push16Call_004a1ac0`×2, `AudioInitArgs3`, `AudioBindEntry`
+- top callees: `Push16Call`×5, `MStackPush2ChainLLInsert`×3, `DispatcherComplex260_MStackBracket1_TreeWalkRecursive2`×2, `MStackPushComplexCallPop_00406430`×2, `AudioMicroEntries`×2, `SetJmp_Push16Call_004a1ac0`×2, `AudioInitArgs3`, `AudioBindEntry`
 - top globals: `g_eventQueueIdx`×6, `g_currentNodeIdx`×5, `0x542060`×4, `0x543440`×3, `g_eventQueueWorkType`×2, `g_eventQueueCurrent`×2, `0x4f3ae4`×2, `0x4f3ae8`×2
 
 ## PendingMatch_00432110 @ 0x432110 (1412b)
@@ -210,7 +210,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/boot/pending_match_variants.c`
 - traits: switch-via-jumptable, SEH (fs:[0]), cond jmps: 21
-- top callees: `DispatcherComplex260_00407400`×4, `MStackPushComplexCallPop_00406430`×4, `Push16Call`×3, `RegistryPushBindPop`×3, `SaveCallRestore`×2, `LoadGeoAsset_Default`×2, `extern_0x2088c964`, `InstallSelfSearchAccum`
+- top callees: `DispatcherComplex260_FramePauseScaledStore`×4, `MStackPushComplexCallPop_00406430`×4, `Push16Call`×3, `RegistryPushBindPop`×3, `SaveCallRestore`×2, `LoadGeoAsset_Default`×2, `extern_0x2088c964`, `InstallSelfSearchAccum`
 - top globals: `g_currentNodeIdx`×12, `0x54206c`×4, `0x542060`×3, `g_eventQueueEnd`×2, `g_pendingNodeType`×2, `g_framePauseFlag`×2, `g_eventQueueIdx`
 
 ## PendingMatch_0046ad20 @ 0x46ad20 (1592b)
@@ -259,7 +259,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/audio/pending_match_variants.c`
 - traits: switch-via-jumptable, SEH (fs:[0]), x87 FPU, IAT calls: 1, cond jmps: 8
-- top callees: `Push16Call`×4, `VoiceTableInit`×4, `Title_PressStartScreen`×2, `DispatcherComplex260_00407400`×2, `PushSetCallPop`×2, `FiveTableWalkInit`×2, `LoadGeoAsset_Default`×2, `Config_RestoreGlobals`
+- top callees: `Push16Call`×4, `VoiceTableInit`×4, `Title_PressStartScreen`×2, `DispatcherComplex260_FramePauseScaledStore`×2, `PushSetCallPop`×2, `FiveTableWalkInit`×2, `LoadGeoAsset_Default`×2, `Config_RestoreGlobals`
 - top globals: `g_currentNodeIdx`×10, `0x542060`×5, `0x4f31cc`×4, `0x4f31d0`×4, `0x5437fc`×4, `g_gtConfig4f`×4, `0x5437f8`×4, `0x54206c`×2
 
 ## PendingMatch_00411210 @ 0x411210 (1654b)
@@ -343,7 +343,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/boot/pending_match_variants.c`
 - traits: x87 FPU, cond jmps: 20
-- top callees: `Mul10Tail`×3, `StoreTwoCall`×2, `DispatcherComplex260_00407030`×2, `StoreDoubleNegPauseSubStore`×2, `BootMod6487eClampAndChainMul10`×2, `ChainListVecAdd`×2, `MStackPush2ChainLLInsert`×2, `MStackPush8`
+- top callees: `Mul10Tail`×3, `StoreTwoCall`×2, `DispatcherComplex260_MStackBracket1_TreeWalkRecursive2`×2, `StoreDoubleNegPauseSubStore`×2, `BootMod6487eClampAndChainMul10`×2, `ChainListVecAdd`×2, `MStackPush2ChainLLInsert`×2, `MStackPush8`
 - top globals: `0x54206c`×14, `g_currentNodeIdx`×10, `g_framePauseFlag`×9, `g_eventQueuePending`×9, `g_eventQueueNotMask`×7, `g_fightGroupHead`×6, `0x542060`×4, `g_pendingNodeType`×4
 
 ## PendingMatch_004bfc00 @ 0x4bfc00 (1873b)
@@ -406,7 +406,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/audio/pending_match_variants.c`
 - traits: x87 FPU, rep stosd, cond jmps: 6
-- top callees: `MStackPush2ChainLLInsert`×11, `ScaledOr4DirtyClear`×3, `GuardedSetupCallTailJmp`×3, `SetJmp_Push16Call_004a1ac0`×3, `SetJmp_Push16Call_004a1ad0`×2, `Push16Call`×2, `extern_0x248ee0b5`, `DispatcherComplex260_00407400`
+- top callees: `MStackPush2ChainLLInsert`×11, `ScaledOr4DirtyClear`×3, `GuardedSetupCallTailJmp`×3, `SetJmp_Push16Call_004a1ac0`×3, `SetJmp_Push16Call_004a1ad0`×2, `Push16Call`×2, `extern_0x248ee0b5`, `DispatcherComplex260_FramePauseScaledStore`
 - top globals: `g_currentNodeIdx`×17, `0x542060`×11, `0x5433b8`×4, `g_framePauseFlag`×4, `0x5433cc`×3, `g_eventQueuePending`×2, `0x4d50b4`×2, `0x541d8c`
 
 ## PendingMatch_00409c90 @ 0x409c90 (2013b)
@@ -448,7 +448,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/audio/pending_match_variants.c`
 - traits: switch-via-jumptable, x87 FPU, cond jmps: 23
-- top callees: `SetJmp_Push16Call_004a1ad0`×12, `ScaledOr4DirtyClear`×5, `Push16Call`×5, `BootInitGuardedCallChain`×5, `DispatcherComplex260_00407400`×4, `SixCallSeqPushImm`×4, `SceneFrameStepWithInputs`×4, `MStackPushComplexCallPop_00406430`×3
+- top callees: `SetJmp_Push16Call_004a1ad0`×12, `ScaledOr4DirtyClear`×5, `Push16Call`×5, `BootInitGuardedCallChain`×5, `DispatcherComplex260_FramePauseScaledStore`×4, `SixCallSeqPushImm`×4, `SceneFrameStepWithInputs`×4, `MStackPushComplexCallPop_00406430`×3
 - top globals: `g_currentNodeIdx`×12, `0x542060`×6, `0x4d50b4`×6, `0x543448`×6, `0x54344c`×5, `g_framePauseFlag`×2, `0x543404`×2, `g_eventQueuePending`
 
 ## PendingMatch_0049a670 @ 0x49a670 (2176b)
@@ -469,7 +469,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/engine/pending_match_variants.c`
 - traits: switch-via-jumptable, SEH (fs:[0]), x87 FPU, cond jmps: 12
-- top callees: `ArgSarStoreJmp`×3, `InstallSelf3WayChainCmp`×3, `MatchStartFsmCluster`×3, `StoreTwoCall`×2, `InstallSelfWithDispatch`×2, `CmpEqInitCallElseJmp`×2, `extern_0x208f28dd`, `DispatcherComplex260_00407030`
+- top callees: `ArgSarStoreJmp`×3, `InstallSelf3WayChainCmp`×3, `MatchStartFsmCluster`×3, `StoreTwoCall`×2, `InstallSelfWithDispatch`×2, `CmpEqInitCallElseJmp`×2, `extern_0x208f28dd`, `DispatcherComplex260_MStackBracket1_TreeWalkRecursive2`
 - top globals: `g_currentNodeIdx`×27, `0x542060`×15, `g_matrixStackTop`×10, `g_framePauseFlag`×7, `0x54206c`×7, `g_eventQueueChild`×4, `g_eventQueueNotMask`×4, `g_eventQueueWorkType`×2
 
 ## PendingMatch_004163c0 @ 0x4163c0 (2278b)
@@ -518,7 +518,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/engine/pending_match_variants.c`
 - traits: SEH (fs:[0]), x87 FPU, cond jmps: 20
-- top callees: `StoreLoadJmp`×11, `Thunk_ScaledNeg1SetPause`×6, `MStackPush2RunCountdown`×3, `MStackBracket7_DispatchAndChain`×3, `ChainDirtyBitWalker`×3, `GatedWordPushCall`×3, `Mul10Tail`×2, `DispatcherComplex260_00407030`×2
+- top callees: `StoreLoadJmp`×11, `Thunk_ScaledNeg1SetPause`×6, `MStackPush2RunCountdown`×3, `MStackBracket7_DispatchAndChain`×3, `ChainDirtyBitWalker`×3, `GatedWordPushCall`×3, `Mul10Tail`×2, `DispatcherComplex260_MStackBracket1_TreeWalkRecursive2`×2
 - top globals: `g_framePauseFlag`×24, `0x54206c`×14, `0x542060`×12, `g_eventQueueIdx`×5, `g_eventQueueCurrent`×4, `g_eventQueueEnd`×4, `g_matrixStackTop`×4, `g_currentNodeIdx`×3
 
 ## PendingMatch_00452770 @ 0x452770 (2548b)
@@ -560,7 +560,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/audio/pending_match_variants.c`
 - traits: SEH (fs:[0]), x87 FPU, IAT calls: 1, cond jmps: 20
-- top callees: `GuardedSetupCallTailJmp`×7, `Push16Call`×6, `MStackPush2ChainLLInsert`×5, `FiveTableWalkInit`×3, `TeamMode_JoinScreen`×3, `SetJmp_Push16Call_004a1ac0`×3, `DispatcherComplex260_00407030`×3, `PendingMatch_004a2a80`×2
+- top callees: `GuardedSetupCallTailJmp`×7, `Push16Call`×6, `MStackPush2ChainLLInsert`×5, `FiveTableWalkInit`×3, `TeamMode_JoinScreen`×3, `SetJmp_Push16Call_004a1ac0`×3, `DispatcherComplex260_MStackBracket1_TreeWalkRecursive2`×3, `PendingMatch_004a2a80`×2
 - top globals: `g_currentNodeIdx`×21, `0x542060`×11, `0x54206c`×3, `0x5433d0`×3, `g_framePauseFlag`×2, `0x543708`×2, `0x5433fc`×2, `g_eventQueueIdx`
 
 ## PendingMatch_004a62b0 @ 0x4a62b0 (3004b)

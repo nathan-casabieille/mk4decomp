@@ -53,7 +53,7 @@ extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
 extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
@@ -95,7 +95,7 @@ extern void IterLoad_00491050(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   push 8; TableWalkBoundedCmp; g_currentNodeIdx = (0x00506c14>>2);
  *   call LoadGeoAsset_Default; if paused: ret. g_currentNodeIdx = (0x00506c14>>2) again;
  *   call LoadGeoAsset_Default; if paused: ret. g_xformEntityIdx = (0x005080d8>>2);
- *   call DispatcherComplex260_00407400; if paused: ret. esi=0x1f; chain[g_currentNodeIdx*4 + 0x54] = 0x00627d70;
+ *   call DispatcherComplex260_FramePauseScaledStore; if paused: ret. esi=0x1f; chain[g_currentNodeIdx*4 + 0x54] = 0x00627d70;
  *   g_walkCallback=0x1f; chain[g_currentNodeIdx*4 + 0x30]=0x1f; call PushSetCallPop; if paused: ret.
  *   call RegistryPushBindPop; if paused: ret. g_xformEntityIdx = (0x005080bc>>2);
  *   call DispatcherComplex260; if paused: ret. chain[g_currentNodeIdx*4 + 0x54] = 0x8bff9b80;
@@ -150,7 +150,7 @@ __declspec(naked) void BootMultiAssetLoadStateInit(void)
         mov     edx, offset g_dispatchSave142
         shr     edx, 2
         mov     dword ptr [g_xformEntityIdx], edx
-        call    DispatcherComplex260_00407400
+        call    DispatcherComplex260_FramePauseScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_ml_ret
@@ -171,7 +171,7 @@ __declspec(naked) void BootMultiAssetLoadStateInit(void)
         mov     edx, offset g_dispatchSave143
         shr     edx, 2
         mov     dword ptr [g_xformEntityIdx], edx
-        call    DispatcherComplex260_00407400
+        call    DispatcherComplex260_FramePauseScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_ml_ret

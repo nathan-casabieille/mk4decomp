@@ -53,7 +53,7 @@ extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
 extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
@@ -95,7 +95,7 @@ extern void IterLoad_00491050(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern void StoreIncrMStackPush6(void);
-extern void DispatcherComplex181_004263d0(void);
+extern void DispatcherComplex181_Push70CallScaleArith(void);
 extern void RoundCleanupCluster_00427690(void);
 
 /* @addr 0x00477920 (165b game) - poll-then-init pattern:
@@ -167,7 +167,7 @@ loopPoll:
         mov     dword ptr [g_acc_00542078], 0
         mov     dword ptr [g_eventQueueNotMask], 0xff960000
         mov     dword ptr [g_currentNodeFlags], eax
-        call    DispatcherComplex181_004263d0
+        call    DispatcherComplex181_Push70CallScaleArith
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

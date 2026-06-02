@@ -61,7 +61,7 @@ extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
 extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
@@ -103,7 +103,7 @@ extern void IterLoad_00491050(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
@@ -2075,7 +2075,7 @@ __declspec(naked) void ThreeChanPackClamp(void) {
 }
 
 extern void BootStateTriple(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void GDispatch4(void);
 extern void MStackBracket2_StateAdvance6(void);
 
@@ -2106,7 +2106,7 @@ __declspec(naked) void MStackPush2DispatchChain(void) {
         mov     dword ptr [g_pendingNodeType], eax
         mov     edx, [ecx*4 + g_chain_disp_24_4096b0]
         mov     dword ptr [g_xformEntityIdx], edx
-        call    DispatcherComplex260_00407400
+        call    DispatcherComplex260_FramePauseScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -4513,7 +4513,7 @@ __declspec(naked) void DoublePackedPtrInstall(void) {
         push    esi
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
-        call    DispatcherComplex260_00407400
+        call    DispatcherComplex260_FramePauseScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -4548,7 +4548,7 @@ __declspec(naked) void DoublePackedPtrInstall(void) {
         mov     eax, 0x0050f210
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
-        call    DispatcherComplex260_00407400
+        call    DispatcherComplex260_FramePauseScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -17075,7 +17075,7 @@ __declspec(naked) void InstallSelfChain4Call(void) {
     }
 }
 
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
 extern void RegistryPushBindPop(void);
 
@@ -17092,7 +17092,7 @@ __declspec(naked) void DualSectionInit(void) {
         push    esi
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
-        call    DispatcherComplex260_00407400
+        call    DispatcherComplex260_FramePauseScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -17127,7 +17127,7 @@ __declspec(naked) void DualSectionInit(void) {
         mov     eax, 0x0050f3ec
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
-        call    DispatcherComplex260_00407400
+        call    DispatcherComplex260_FramePauseScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -18437,7 +18437,7 @@ void StateMachineInit(void) {
 
 extern void SaveCallRestore(void);
 extern void SaveCallRestoreOrXor(void);
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void MStackCall_004062a0(void);
 extern void ThrowFlowSetupCluster(void);
 extern unsigned int g_state2_0053a1bc;
@@ -18476,7 +18476,7 @@ void DualGuardStateMachine_0049ea30(void) {
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, dword ptr [eax*4 + 0x28]
         mov     dword ptr [g_xformEntityIdx], eax
-        call    DispatcherComplex260_00407030
+        call    DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -18545,7 +18545,7 @@ __declspec(naked) void DualGuardStateMachine_0049eb20(void) {
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, dword ptr [eax*4 + 0x28]
         mov     dword ptr [g_xformEntityIdx], eax
-        call    DispatcherComplex260_00407030
+        call    DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -19790,10 +19790,10 @@ __declspec(naked) void StateGateMStackOverlap(void) {
     }
 }
 
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 
 /* @addr 0x00424080 (227b game) - mstack-push g_walkCallback; advance g_cj_00542058 counter twice;
- *   call DispatcherComplex260_00407400; pause-check; call 0x00406430; pause-check;
+ *   call DispatcherComplex260_FramePauseScaledStore; pause-check; call 0x00406430; pause-check;
  *   load 2 chain values via scaledInit, shift, store; mstack-pop g_walkCallback. ret.
  */
 void MStackPush1ChainPair(void) {
@@ -19808,7 +19808,7 @@ void MStackPush1ChainPair(void) {
         inc     eax
         mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_cj_00542058], eax
-        call    DispatcherComplex260_00407400
+        call    DispatcherComplex260_FramePauseScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -20875,7 +20875,7 @@ __declspec(naked) void InstallSelfBranchCascade(void) {
     }
 }
 
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void MStackCall_00406340(void);
 
 /* @addr 0x0043ec80 (227b game) - dispatch then 6-field copy.
@@ -20891,7 +20891,7 @@ void DispatchCopyFields(void) {
         mov     eax, 0x004ec8f8
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
-        call    DispatcherComplex260_00407030
+        call    DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -21705,7 +21705,7 @@ __declspec(naked) void MstackPopScaledChainPlusThunks(void) {
 }
 
 /* @addr 0x0048ff40 (239b game) - call into mid-function helper at 0x004074f0
- * (inside DispatcherComplex260_00407400). Uses two cdecl-style call+push pairs
+ * (inside DispatcherComplex260_FramePauseScaledStore). Uses two cdecl-style call+push pairs
  * to compute fields +0x54/+0x5c via the helper, then stores results into scaledInit
  * chain[+0x54], chain[+0x5c] and cj[+0x58].
  */
@@ -22358,7 +22358,7 @@ extern void MStackPushComplexCallPop_00406430(void);
 extern void ClampMulShiftStore(void);
 
 /* @addr 0x004260d0 (248b game) - dual-block: guarded chain set + ramp clamp.
- *   B1 (0..188, +2 NOPs): shr 0x00514f1c >>2 -> g_xformEntityIdx; call DispatcherComplex260_00407030;
+ *   B1 (0..188, +2 NOPs): shr 0x00514f1c >>2 -> g_xformEntityIdx; call DispatcherComplex260_MStackBracket1_TreeWalkRecursive2;
  *     if pause? ret. If bit2 of g_xformDirtyFlags set? ret. Set scaledInit[+0x54]=0xf8300000,
  *     [+0x30]=0x274, scaledInit chain[+0x18][+0x1c]=1; g_pendingNodeType=eax; call
  *     MStackBracket4_ListInsertZeroFill; if pause or bit2? ret. call MStackPush3LinkedListWalk; if pause or bit2? ret.
@@ -22372,7 +22372,7 @@ __declspec(naked) void DispatcherChainRampClamp(void) {
         mov     eax, 0x00514f1c
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
-        call    DispatcherComplex260_00407030
+        call    DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -24989,18 +24989,18 @@ __declspec(naked) void InstallSelfBootInit(void) {
 
 extern unsigned int g_bootInitState;
 extern void StoreIncrMStackPush6(void);
-extern void DispatcherComplex181_004263d0(void);
+extern void DispatcherComplex181_Push70CallScaleArith(void);
 extern void RoundCleanupCluster_00427690(void);
 
 /* @addr 0x004925d0 (266b game) - mstack-push scaledInit + multi-call dispatch with 5-field init.
  *   mstack-push g_scaledInit_00542044; g_xformEntityIdx = 0x0050f4e8 >> 2.
- *   call DispatcherComplex260_00407400; if pause? final-ret.
+ *   call DispatcherComplex260_FramePauseScaledStore; if pause? final-ret.
  *   If bit2 of g_xformDirtyFlags set, skip to final-ret.
  *   Else: scaledInit[+0x54]=0, scaledInit[+0x58]=0xff920000, scaledInit[+0x30]=0x1c.
  *   call MStackPushComplexCallPop_00406430; if pause? final-ret.
  *   g_walkCallback = g_bootInitState; call StoreIncrMStackPush6; if pause? final-ret.
  *   Set 5 fields (g_eventQueueCurrent=1, _74=0x1d, _78=0, _7c=0xffb50000, _84=0).
- *   call DispatcherComplex181_004263d0; if pause? final-ret.
+ *   call DispatcherComplex181_Push70CallScaleArith; if pause? final-ret.
  *   call RoundCleanupCluster_00427690; if pause? final-ret. mstack-pop scaledInit; ret.
  */
 void MStackPushChainDispatchInit5(void) {
@@ -25013,7 +25013,7 @@ void MStackPushChainDispatchInit5(void) {
         shr     edx, 2
         mov     dword ptr [eax*4 + 0], ecx
         mov     dword ptr [g_xformEntityIdx], edx
-        call    DispatcherComplex260_00407400
+        call    DispatcherComplex260_FramePauseScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -25054,7 +25054,7 @@ void MStackPushChainDispatchInit5(void) {
         mov     dword ptr [g_acc_00542078], 0
         mov     dword ptr [g_eventQueueNotMask], 0xffb50000
         mov     dword ptr [g_currentNodeFlags], 0
-        call    DispatcherComplex181_004263d0
+        call    DispatcherComplex181_Push70CallScaleArith
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -29198,7 +29198,7 @@ __declspec(naked) void TableWalkMatchInsert(void) {
 }
 
 extern void PushPopWalkDecMod(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void MStackPushComplexCallPop_00406430(void);
 extern unsigned int g_dispatchSave28;
 
@@ -29249,7 +29249,7 @@ __declspec(naked) void MStackLoopFieldInit(void) {
         mov     dword ptr [g_scaledInit_00542044], ecx
         mov     eax, dword ptr [eax*4 + 0]
         mov     dword ptr [g_xformEntityIdx], eax
-        call    DispatcherComplex260_00407400
+        call    DispatcherComplex260_FramePauseScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh
@@ -36703,7 +36703,7 @@ __declspec(naked) void MStackPushDispatchBitGate(void)
         push    ebx
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4], ecx
-        call    DispatcherComplex260_00407030
+        call    DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pop_ret
@@ -37661,7 +37661,7 @@ __declspec(naked) void AudioInstallSelfShiftedChainInit(void)
     }
 }
 
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void SnapshotDirtyMark(void);
 extern void MStackPushComplexCallPop_00406430(void);
 extern void DrainQueueCallEach(void);
@@ -37688,7 +37688,7 @@ __declspec(naked) void AudioInitLoopTriple(void)
         mov     eax, offset g_audioInstallArr
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
-        call    DispatcherComplex260_00407400
+        call    DispatcherComplex260_FramePauseScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_e0_ret
@@ -38673,7 +38673,7 @@ extern void PushSetCallPop(void);
  *   push 8; TableWalkBoundedCmp; g_currentNodeIdx = (0x00506c14>>2);
  *   call LoadGeoAsset_Default; if paused: ret. g_currentNodeIdx = (0x00506c14>>2) again;
  *   call LoadGeoAsset_Default; if paused: ret. g_xformEntityIdx = (0x005080d8>>2);
- *   call DispatcherComplex260_00407400; if paused: ret. esi=0x1f; chain[g_currentNodeIdx*4 + 0x54] = 0x00627d70;
+ *   call DispatcherComplex260_FramePauseScaledStore; if paused: ret. esi=0x1f; chain[g_currentNodeIdx*4 + 0x54] = 0x00627d70;
  *   g_walkCallback=0x1f; chain[g_currentNodeIdx*4 + 0x30]=0x1f; call PushSetCallPop; if paused: ret.
  *   call RegistryPushBindPop; if paused: ret. g_xformEntityIdx = (0x005080bc>>2);
  *   call DispatcherComplex260; if paused: ret. chain[g_currentNodeIdx*4 + 0x54] = 0x8bff9b80;
@@ -38704,7 +38704,7 @@ __declspec(naked) void BootMultiAssetLoadStateInit(void)
         mov     edx, offset g_dispatchSave142
         shr     edx, 2
         mov     dword ptr [g_xformEntityIdx], edx
-        call    DispatcherComplex260_00407400
+        call    DispatcherComplex260_FramePauseScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_ml_ret
@@ -38725,7 +38725,7 @@ __declspec(naked) void BootMultiAssetLoadStateInit(void)
         mov     edx, offset g_dispatchSave143
         shr     edx, 2
         mov     dword ptr [g_xformEntityIdx], edx
-        call    DispatcherComplex260_00407400
+        call    DispatcherComplex260_FramePauseScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_ml_ret
@@ -45791,7 +45791,7 @@ extern unsigned int g_dispatchSave5;
 extern unsigned int g_phaseThunkSave;
 extern unsigned char g_dispatchSave54;
 extern void PendingMatch_004013a0(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void CopyGlobal(void);
 extern void Test4StatesAny(void);
 extern void BootInitGuardedCallChain(void);
@@ -46011,7 +46011,7 @@ extern void BossRoomInitCluster(void);
  *   sub-2 (~309b @ 0x00410210): boot countdown state machine.
  *     If [esi+0x84] non-zero (already installed): decrement g_eventQueueEnd
  *     countdown, jns to chain-walk, else call GuardedSeq_MStackCall_then_CallSetPause_00471670.
- *     Else: setup pipeline with DispatcherComplex260_00407400, MStackCall_00406340,
+ *     Else: setup pipeline with DispatcherComplex260_FramePauseScaledStore, MStackCall_00406340,
  *     install self at [esi+8] = 0x00410210, set state flags.
  */
 __declspec(naked) void BootInstallerPair(void) {
@@ -46055,7 +46055,7 @@ __declspec(naked) void BootInstallerPair(void) {
         mov     ecx, 0x004d57f8
         shr     ecx, 2
         mov     dword ptr [g_xformEntityIdx], ecx
-        call    DispatcherComplex260_00407400
+        call    DispatcherComplex260_FramePauseScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_bip_done
@@ -51001,13 +51001,13 @@ __declspec(naked) void SlotEvent3EntryChain(void) {
 }
 
 extern unsigned int g_vecSetupArrBase;
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void TripleVecAccCallStore(void);
 extern void MStackCall_00406340(void);
 
 /* @addr 0x004749a0 (360b game) - mstack snapshot + vec setup + scoped run.
  *   Sets g_xformEntityIdx = &g_vecSetupArrBase>>2 (packed_ptr), calls
- *   DispatcherComplex260_00407030. On no-error AND bit 2 of 0x54208c clear:
+ *   DispatcherComplex260_MStackBracket1_TreeWalkRecursive2. On no-error AND bit 2 of 0x54208c clear:
  *   pushes g_currentNodeIdx, walks one level of [scaled+0x18] indirection,
  *   OR's bit 9 into [resolved+0x20]. Pops the snapshot back into 0x542044,
  *   writes 0x95 into [snapshot+0x30], copies the 3-component vec at
@@ -51023,7 +51023,7 @@ void MStackVecSetupScopedRun(void) {
         mov     eax, offset g_vecSetupArrBase
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
-        call    DispatcherComplex260_00407030
+        call    DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mvss_done
@@ -56918,7 +56918,7 @@ void MStackBracketedStoreTwoCall(void) {
     g_matrixStackTop--;
 }
 
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void MStackBracket4_ListInsertZeroFill(void);
 extern void MStackPush3LinkedListWalk(void);
 extern void BootStateTriple(void);
@@ -56942,7 +56942,7 @@ __declspec(naked) void BootDispatchSlotInit(void)
         mov     dword ptr [eax*4], edx
         mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [g_pendingNodeType], eax
-        call    DispatcherComplex260_00407400
+        call    DispatcherComplex260_FramePauseScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_bdsi_pop
@@ -59076,7 +59076,7 @@ __declspec(naked) void BootScheduledNodeTimerWalk(void)
     }
 }
 
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void MStackPushComplexCallPop_00406430(void);
 extern void StackPopDispatchTagged(void);
 
@@ -59109,7 +59109,7 @@ __declspec(naked) void PhaseClampInstallSlot(void)
         mov     dword ptr [ecx*4 + 0x5c], eax
         shr     edx, 2
         mov     dword ptr [g_xformEntityIdx], edx
-        call    DispatcherComplex260_00407400
+        call    DispatcherComplex260_FramePauseScaledStore
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_pcis_ret
         test    byte ptr [g_xformDirtyFlags], 4
@@ -59302,7 +59302,7 @@ __declspec(naked) void TwoEntryStateScalar(void)
 
 extern unsigned int g_dispatchSave133;
 extern unsigned int g_dispatchSave124;
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void MStackBracket4_ListInsertZeroFill(void);
 extern void InstallSelfDispatch(void);
 extern void MStackCall_00406390(void);
@@ -59327,7 +59327,7 @@ void MStackChainPackedDispatch(void) {
         shr     edx, 2
         mov     dword ptr [eax*4], ecx
         mov     dword ptr [g_xformEntityIdx], edx
-        call    DispatcherComplex260_00407030
+        call    DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mscpd_ret
@@ -61089,10 +61089,10 @@ extern unsigned int g_dispatchClr0;
 extern unsigned int g_dispatchTableArr4;
 extern unsigned int g_dispatchTableArr3;
 extern void SaveCallRestore(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void MStackPushComplexCallPop_00406430(void);
 extern void StoreIncrMStackPush6(void);
-extern void DispatcherComplex181_00426310(void);
+extern void DispatcherComplex181_StreamChainStringInstall(void);
 extern void RoundCleanupCluster_00427690(void);
 extern void BootMstackInit(void);
 
@@ -61111,7 +61111,7 @@ void DualSeqBranchInit(void) {
         add     esp, 4
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
-        call    DispatcherComplex260_00407400
+        call    DispatcherComplex260_FramePauseScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_dsbi_ret
@@ -61139,7 +61139,7 @@ void DualSeqBranchInit(void) {
         mov     dword ptr [g_acc_00542078], 0xff780000
         mov     dword ptr [g_eventQueueNotMask], 0xff970000
         mov     dword ptr [g_currentNodeFlags], 2
-        call    DispatcherComplex181_00426310
+        call    DispatcherComplex181_StreamChainStringInstall
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_dsbi_ret
@@ -61153,7 +61153,7 @@ void DualSeqBranchInit(void) {
         add     esp, 4
         shr     edx, 2
         mov     dword ptr [g_xformEntityIdx], edx
-        call    DispatcherComplex260_00407400
+        call    DispatcherComplex260_FramePauseScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_dsbi_ret
@@ -63420,7 +63420,7 @@ __declspec(naked) void Vec3SetupQuadrupleMul10Sub(void)
 }
 
 extern unsigned int g_dispatchSave249;
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void GDispatch4(void);
 extern void ChainDirtyBitWalker(void);
 extern void MStackCall_00406390(void);
@@ -63445,7 +63445,7 @@ void MStackBracket3Init4bd5e0Tail(void) {
         shr     edx, 2
         mov     dword ptr [eax*4], ecx
         mov     dword ptr [g_xformEntityIdx], edx
-        call    DispatcherComplex260_00407030
+        call    DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mb3i_abort
@@ -64204,7 +64204,7 @@ extern void TableWalkBoundedCmp(int);
 extern void StackPopDispatchTagged(void);
 extern void FiveTableWalkInit(void);
 extern void BootMultiAssetLoadStateInit(void);
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void InstallSelfPackedF80(void);
 extern void MStackCall_00406340(void);
 
@@ -64245,7 +64245,7 @@ __declspec(naked) void BootInitVec3PhaseInstall(void)
         add     esp, 8
         shr     ecx, 2
         mov     dword ptr [g_xformEntityIdx], ecx
-        call    DispatcherComplex260_00407030
+        call    DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_bivpi_pop
         test    byte ptr [g_xformDirtyFlags], 4
@@ -66792,10 +66792,10 @@ __declspec(naked) void MStackBracket5_LinkedListUnlink(void)
  *       StoreTwoCall(&g_dispatchSave509, 0);
  *       [0x53a50c]=3
  *       LoadGeoAsset_Default (using packed_ptr 0x506c2c >> 2) twice;
- *       DispatcherComplex260_00407400 (packed_ptr 0x508308 >> 2);
+ *       DispatcherComplex260_FramePauseScaledStore (packed_ptr 0x508308 >> 2);
  *       slot[+0x54]=0xFFB00000, slot[+0x30]=0x1F;
  *       PushSetCallPop; RegistryPushBindPop;
- *       DispatcherComplex260_00407400 (packed_ptr 0x508324 >> 2);
+ *       DispatcherComplex260_FramePauseScaledStore (packed_ptr 0x508324 >> 2);
  *       slot[+0x54]=0x00770000, slot[+0x30]=0x1F;
  *       PushSetCallPop; RegistryPushBindPop;
  *       installs self at [esi+8], phase=1;
@@ -66815,7 +66815,7 @@ __declspec(naked) void MStackBracket5_LinkedListUnlink(void)
 extern void StackPopDispatchTagged(void);
 extern void StoreTwoCall(int, int);
 extern void LoadGeoAsset_Default(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void RegistryPushBindPop(void);
 extern void InstallSelfPackedF80(void);
 extern unsigned int g_phaseInstall3Base;
@@ -66888,7 +66888,7 @@ __declspec(naked) void PhaseInstallSelf3Step(void)
         mov     eax, offset g_dispatchSave140
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
-        call    DispatcherComplex260_00407400
+        call    DispatcherComplex260_FramePauseScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis3_exit
@@ -66909,7 +66909,7 @@ __declspec(naked) void PhaseInstallSelf3Step(void)
         mov     eax, offset g_dispatchSave139
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
-        call    DispatcherComplex260_00407400
+        call    DispatcherComplex260_FramePauseScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis3_exit
@@ -69352,7 +69352,7 @@ __declspec(naked) void SlotInitAndChainLink(void)
  *   - g_walkCallback=8; call FlagThunk4EntryDispatcher; pause-gate;
  *   - g_walkCallback=2; call DirtyDoubleDeref; pause-gate;
  *   - g_xformEntityIdx := slot_44[+0x24];
- *   - call DispatcherComplex260_00407400; pause-gate;
+ *   - call DispatcherComplex260_FramePauseScaledStore; pause-gate;
  *   - if bit 2 of g_xformDirtyFlags is set: tail-jmp 0x41afd0;
  *   - else: paint slot fields (+0x30=0x80, +0x3c=g_particleEmitterNode,
  *     +0x80=0x147A); paint OR-bit-0 of slot_5c[+0x34] into
@@ -69402,7 +69402,7 @@ __declspec(naked) void Phase2InitSlotTreeWalk(void)
         mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [eax*4 + 0x24]
         mov     dword ptr [g_xformEntityIdx], ecx
-        call    DispatcherComplex260_00407400
+        call    DispatcherComplex260_FramePauseScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p2is_ret
@@ -74246,7 +74246,7 @@ __declspec(naked) void Phase4TrampolineThreePacked(void)
  *
  *   A at 0x41a610 (442b + 5 nops): main entry.
  *     phase==0: g_xformEntityIdx := packed_ptr(&g_phase4ThreePackedBase>>2);
- *       call DispatcherComplex260_00407030; pause-gate; bit-2 of g_xformDirtyFlags
+ *       call DispatcherComplex260_MStackBracket1_TreeWalkRecursive2; pause-gate; bit-2 of g_xformDirtyFlags
  *       not set: continue.
  *     If bit set or phase!=0: call Thunk_ScaledNeg1SetPause; pop edi/esi/ret.
  *     Else: save g_currentNodeIdx to g_installOwnerNode, slot+0x64 :=
@@ -74277,7 +74277,7 @@ __declspec(naked) void Phase4TrampolineThreePacked(void)
  * [[feedback_packed_helpers_one_naked]].
  * ============================================================ */
 
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void Thunk_ScaledNeg1SetPause(void);
 extern void StoreLoadJmp(void);
 extern void StorePauseImulShr16(void);
@@ -74301,7 +74301,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf(void)
         mov     ecx, offset g_phase4ThreePackedBase
         shr     ecx, 2
         mov     dword ptr [g_xformEntityIdx], ecx
-        call    DispatcherComplex260_00407030
+        call    DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_p4tpis_A_ret
         test    byte ptr [g_xformDirtyFlags], 4
@@ -95437,7 +95437,7 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
  *   1. Resolve the voice handle base from either g_audioVoiceTrioBase
  *      (default) or, if [esi+2]==1, follow a 2-level chained
  *      lookup into [esi[0]*4 + g_audioVoiceTrioBase/4]*4.
- *   2. Run DispatcherComplex260_00407400 (open voices) + MStackPushComplexCallPop_00406430 (config).
+ *   2. Run DispatcherComplex260_FramePauseScaledStore (open voices) + MStackPushComplexCallPop_00406430 (config).
  *   3. If g_xformDirtyFlags has bit 2 clear, prep three position
  *      slots at [voice_slot*4 + 0x54/0x58/0x5c] from the 3-arg
  *      (xyz) tuple passed to the function; if [esi+2]!=0 set
@@ -95458,7 +95458,7 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
  * ============================================================ */
 
 extern void MStackPushComplexCallPop_00406430(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void ScaledOr4DirtyClear(void);
 extern void GuardedSetupCallTailJmp3(void);
 extern unsigned int g_audioVoiceTrioBase;
@@ -95496,7 +95496,7 @@ __declspec(naked) void VoiceTrioBindAndKick(void)
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
     L_5ef4:
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_607a
@@ -96420,7 +96420,7 @@ __declspec(naked) void NetEntityScanAndPunish(void)
  *        - Loads `clamped_idx = min(max([slot]*4, 0), 0x28)`
  *          from g_stateChangeBase base; saves to g_dispatchArg.
  *        - Indexes g_installCountdownArr3 base by that clamped value
- *          to get the enemy id, calls DispatcherComplex260_00407030 (look-up).
+ *          to get the enemy id, calls DispatcherComplex260_MStackBracket1_TreeWalkRecursive2 (look-up).
  *        - On success indexes `g_dispatchSave696[i*2 +
  *          g_eventQueueWorkType]` to pull a 4-dword tuple of
  *          (x,y,z,kind) into the new entity at +0x54/0x58/0x5c
@@ -96440,7 +96440,7 @@ __declspec(naked) void NetEntityScanAndPunish(void)
 
 extern void RegistryPushBindPop(void);
 extern void SaveCallRestore(void);
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void CallSetPause(void);
 extern void GuardedStateChangePair(void);
 extern unsigned int g_dispatchSave696;
@@ -96492,7 +96492,7 @@ __declspec(naked) void SpawnTrioInitCluster(void)
         add      edx, eax
         mov      eax, dword ptr [edx*4]
         mov      dword ptr [g_xformEntityIdx], eax
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_85e1
@@ -98691,7 +98691,7 @@ __declspec(naked) void SpawnListBatchLoader(void)
  *   1. Compute table offset = (g_dispatchSave29 >> 2) +
  *      arena_id; load [.*4] to get the prop record pointer.
  *      If -1, skip this side.
- *   2. Call DispatcherComplex260_00407400 (prop look-up).
+ *   2. Call DispatcherComplex260_FramePauseScaledStore (prop look-up).
  *   3. If pause bit (4) of g_xformDirtyFlags is set, skip to
  *      stack-pop tail.
  *   4. Stamp positions and state into entity slot at
@@ -98749,7 +98749,7 @@ __declspec(naked) void SpawnLeftRightProps(void)
         cmp      eax, -1
         mov      dword ptr [g_xformEntityIdx], eax
         je       short L_823b
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8341
@@ -98788,7 +98788,7 @@ __declspec(naked) void SpawnLeftRightProps(void)
         call     Mul10Tail
         add      esp, 8
         mov      dword ptr [g_eventQueueCurrent], eax
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_8341
@@ -101974,7 +101974,7 @@ __declspec(naked) void RoundEndCelebrationCluster(void)
  *      calls SaveCallRestoreOrXor(0x23c) for one sample, then for each
  *      of 2 sample blocks (OFFSET g_dispatchTableArr11>>2 and
  *      0050d258>>2) does:
- *        - calls DispatcherComplex260_00407030 to look up
+ *        - calls DispatcherComplex260_MStackBracket1_TreeWalkRecursive2 to look up
  *        - if pause-bit 2 of g_xformDirtyFlags clear, plays it via
  *          ScaledChainInit2Phase(0x23a or 0x268).
  *      Restores stack at end.
@@ -102022,7 +102022,7 @@ void RoundEndAudioCluster(void) {
         add      esp, 4
         mov      dword ptr [g_eventQueueEnd], eax
         mov      dword ptr [g_xformEntityIdx], ecx
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e9a6
@@ -102035,7 +102035,7 @@ void RoundEndAudioCluster(void) {
         mov      edx, OFFSET g_dispatchSave130
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_e9a6
@@ -102986,7 +102986,7 @@ __declspec(naked) void SfxBlockCluster(void)
 extern void SaveCallRestore(void);
 extern void SetWalkCurCallPauseDirty(void);
 extern void GuardedDualMaskFlagToggle(void);
-extern void DispatcherComplex181_00426310(void);
+extern void DispatcherComplex181_StreamChainStringInstall(void);
 extern void StoreIncrMStackPush6(void);
 extern void Cmp7DirtyToggle(void);
 extern unsigned int g_eventMusicSlot2;
@@ -103039,7 +103039,7 @@ __declspec(naked) void Event23bMusicCluster(void)
         mov      dword ptr [g_acc_00542078], OFFSET g_dispatchTab61
         mov      dword ptr [g_eventQueueNotMask], OFFSET g_dispatchSave1705
         mov      dword ptr [g_currentNodeFlags], 1
-        call     DispatcherComplex181_00426310
+        call     DispatcherComplex181_StreamChainStringInstall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f691
@@ -103060,7 +103060,7 @@ __declspec(naked) void Event23bMusicCluster(void)
         mov      dword ptr [g_acc_00542078], 0xff920000
         mov      dword ptr [g_eventQueueNotMask], OFFSET g_dispatchSave1705
         mov      dword ptr [g_currentNodeFlags], 1
-        call     DispatcherComplex181_00426310
+        call     DispatcherComplex181_StreamChainStringInstall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f691
@@ -104226,7 +104226,7 @@ __declspec(naked) void MeshReplicateDriver(void)
 /* ------------------------------------------------------------------ */
 extern void MStackPushComplexCallPop_00406430(void);
 extern void FramePauseScaledStore(void);
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ChainDirtyBitWalker(void);
 extern void MStackPush2ChainPrepend(void);
 extern void ScaledOrStore_004903d0(void);
@@ -104248,7 +104248,7 @@ __declspec(naked) void ThrowPoseCallbackSetup(void)
         inc      eax
         mov      dword ptr [g_xformEntityIdx], ecx
         mov      dword ptr [g_pendingNodeType], eax
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2131
@@ -107401,7 +107401,7 @@ __declspec(naked) void PunchAnimCluster(void)
         mov      eax, OFFSET g_dispatchSave505
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_6f69
@@ -107550,7 +107550,7 @@ __declspec(naked) void BulletVolleySpawner(void)
         mov      dword ptr [g_eventQueueWorkType], 0xff470000
         shr      esi, 2
         mov      dword ptr [g_xformEntityIdx], esi
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_858c
@@ -107577,7 +107577,7 @@ __declspec(naked) void BulletVolleySpawner(void)
         mov      dword ptr [g_acc_00542078], eax
         je       short L_8499
         mov      dword ptr [g_xformEntityIdx], esi
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       L_840e
@@ -107597,7 +107597,7 @@ __declspec(naked) void BulletVolleySpawner(void)
         mov      dword ptr [g_eventQueueWorkType], 0xb90000
         shr      esi, 2
         mov      dword ptr [g_xformEntityIdx], esi
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_858c
@@ -107624,7 +107624,7 @@ __declspec(naked) void BulletVolleySpawner(void)
         mov      dword ptr [g_acc_00542078], eax
         je       short L_8561
         mov      dword ptr [g_xformEntityIdx], esi
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       short L_84e1
@@ -107829,7 +107829,7 @@ __declspec(naked) void ThrowAnimTriggerCluster(void)
         shr      edx, 2
         mov      dword ptr [eax*4], ecx
         mov      dword ptr [g_xformEntityIdx], edx
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_f183
@@ -107977,7 +107977,7 @@ void YRiseSpawnerCluster(void) {
         add      esp, 4
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7e12
@@ -108007,7 +108007,7 @@ void YRiseSpawnerCluster(void) {
         mov      dword ptr [g_acc_00542078], 0xa00000
         mov      dword ptr [g_eventQueueNotMask], 0xff970000
         mov      dword ptr [g_currentNodeFlags], 2
-        call     DispatcherComplex181_00426310
+        call     DispatcherComplex181_StreamChainStringInstall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_7e12
@@ -108033,7 +108033,7 @@ void YRiseSpawnerCluster(void) {
         mov      dword ptr [g_acc_00542078], 0x970000
         mov      dword ptr [g_eventQueueNotMask], 0xff970000
         mov      dword ptr [g_currentNodeFlags], 2
-        call     DispatcherComplex181_00426310
+        call     DispatcherComplex181_StreamChainStringInstall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_7e12
@@ -108047,7 +108047,7 @@ void YRiseSpawnerCluster(void) {
         add      esp, 4
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_7e12
@@ -109252,7 +109252,7 @@ void RoundWinTransition(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_ea2f
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_ea2f
@@ -109305,7 +109305,7 @@ void RoundWinTransition(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_ea2f
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_ea2f
@@ -111333,7 +111333,7 @@ __declspec(naked) void VersusSwapCluster(void)
         mov      edi, OFFSET g_dispatchSave240
         shr      edi, 2
         mov      dword ptr [g_xformEntityIdx], edi
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8cf6
@@ -111830,7 +111830,7 @@ __declspec(naked) void ContinueScreenFsm(void)
         mov      edx, OFFSET g_dispatchSave141
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_3e8f
         mov      eax, dword ptr [g_currentNodeIdx]
@@ -114240,7 +114240,7 @@ __declspec(naked) void PreFightInstallCluster(void)
         mov      ecx, OFFSET g_dispatchSave136
         shr      ecx, 2
         mov      dword ptr [g_xformEntityIdx], ecx
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       short L_4478
@@ -116159,7 +116159,7 @@ __declspec(naked) void EnduranceMode_Handler(void)
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
     L_530d:
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         cmp      dword ptr [g_framePauseFlag], ebp
         jne      L_552f
         mov      eax, dword ptr [g_currentNodeIdx]
@@ -120880,7 +120880,7 @@ void MStackAngleRatioSubchain(void) {
 /*  h2 (0x42b020): main 20-cell setup w/ 6x ab700/ab750 calls per cell.*/
 /*  h3 (0x42b280): cell counter increment (alt entry, 49cb40 install).*/
 /* ------------------------------------------------------------------ */
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void CallSetPause(void);
 extern void AudioMixerStep(void);
 extern void StoreDoubleNegPauseSubStore(void);
@@ -120985,7 +120985,7 @@ __declspec(naked) void WorldCellSetupCluster(void)
         mov      eax, dword ptr [esp + 0x10]
     L_b111:
         mov      dword ptr [g_xformEntityIdx], eax
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_b273
@@ -123857,7 +123857,7 @@ __declspec(naked) void CharSelectSetupCluster(void)
         mov      eax, OFFSET g_dispatchSave58
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_6688
@@ -128314,7 +128314,7 @@ __declspec(naked) void TowerStageInitCluster(void)
         mov      eax, OFFSET g_dispatchSave505
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_0748
         call     MStackCall_00406340
@@ -128473,7 +128473,7 @@ __declspec(naked) void ThrowPairPoseCluster(void)
         mov      eax, OFFSET g_phase4ThreePackedBase
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a471
@@ -128974,7 +128974,7 @@ __declspec(naked) void func_00498980(void)
         mov      eax, OFFSET g_dispatchSave505
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8ae4
@@ -129207,7 +129207,7 @@ __declspec(naked) void FourSegmentPoseWalk(void)
         mov      esi, OFFSET g_phase4SlotArr4
         shr      esi, 2
         mov      dword ptr [g_xformEntityIdx], esi
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2bb9
@@ -129223,7 +129223,7 @@ __declspec(naked) void FourSegmentPoseWalk(void)
         mov      dword ptr [g_eventQueueIdx], eax
         js       short L_2a20
         mov      dword ptr [g_xformEntityIdx], esi
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       short L_29de
@@ -129243,7 +129243,7 @@ __declspec(naked) void FourSegmentPoseWalk(void)
         mov      esi, OFFSET g_phase4SlotArr3
         shr      esi, 2
         mov      dword ptr [g_xformEntityIdx], esi
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2bb9
@@ -129259,7 +129259,7 @@ __declspec(naked) void FourSegmentPoseWalk(void)
         mov      dword ptr [g_eventQueueIdx], eax
         js       short L_2ab0
         mov      dword ptr [g_xformEntityIdx], esi
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       short L_2a6e
@@ -129279,7 +129279,7 @@ __declspec(naked) void FourSegmentPoseWalk(void)
         mov      esi, OFFSET g_segPoseArr
         shr      esi, 2
         mov      dword ptr [g_xformEntityIdx], esi
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2bb9
@@ -129295,7 +129295,7 @@ __declspec(naked) void FourSegmentPoseWalk(void)
         mov      dword ptr [g_eventQueueIdx], eax
         js       short L_2b3c
         mov      dword ptr [g_xformEntityIdx], esi
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       short L_2afa
@@ -129315,7 +129315,7 @@ __declspec(naked) void FourSegmentPoseWalk(void)
         mov      esi, OFFSET g_phase4SlotArr2
         shr      esi, 2
         mov      dword ptr [g_xformEntityIdx], esi
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2bb9
@@ -129331,7 +129331,7 @@ __declspec(naked) void FourSegmentPoseWalk(void)
         mov      dword ptr [g_eventQueueIdx], eax
         js       short L_2bb9
         mov      dword ptr [g_xformEntityIdx], esi
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       short L_2b82
@@ -129355,7 +129355,7 @@ __declspec(naked) void FourSegmentPoseWalk(void)
 /* ------------------------------------------------------------------ */
 extern void ScaledChainOr8(void);
 extern void Copy3Fields3c4044(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void GuardedScaledCall(void);
 extern unsigned int g_dispatchSave1204;
 extern unsigned int g_dispatchSave668;
@@ -129495,7 +129495,7 @@ __declspec(naked) void PoseChainInstallCluster(void)
         mov      edx, OFFSET g_dispatchSave241
         sar      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7e9b
@@ -133504,7 +133504,7 @@ __declspec(naked) void PainStateCluster(void)
 // Externs:
 extern void SaveCallRestore(void);
 extern void MStackPushComplexCallPop_00406430(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void StackPopDispatchTagged(void);
 extern void AllocSlotPushTripleGlobals(void);
 extern void MStackPop4Rewrite(void);
@@ -133610,7 +133610,7 @@ __declspec(naked) void RoundEndFsm(void)
         mov      edx, OFFSET g_dispatchSave245
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_b687
         test     byte ptr [g_xformDirtyFlags], 4
@@ -135137,7 +135137,7 @@ __declspec(naked) void EventGateCluster(void)
 }
 // Externs:
 extern void MStackPushComplexCallPop_00406430(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void CallSetPause(void);
 extern unsigned int g_dispatchSave962;
 extern unsigned int g_dispatchTableBase;
@@ -135235,7 +135235,7 @@ __declspec(naked) void UpperBodyComboFsmCluster(void)
         inc      eax
         mov      dword ptr [g_xformEntityIdx], ecx
         mov      dword ptr [g_eventQueueEnd], eax
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2cc0
@@ -135330,7 +135330,7 @@ __declspec(naked) void UpperBodyComboFsmCluster(void)
         inc      eax
         mov      dword ptr [g_xformEntityIdx], ecx
         mov      dword ptr [g_eventQueueEnd], eax
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2e4f
@@ -138581,7 +138581,7 @@ __declspec(naked) void BackdashSetupCluster(void)
 }
 // Externs:
 extern void MStackCall_00406340(void);
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void InstallSelfDispatch(void);
 extern void MStackBracket4_ListInsertZeroFill(void);
 extern void MStackPush3LinkedListWalk(void);
@@ -138605,7 +138605,7 @@ __declspec(naked) void CombatChainWalkExpand(void)
         mov      dword ptr [g_eventQueueTotal], ecx
         mov      dword ptr [g_eventQueueNotMask], 0
         mov      dword ptr [g_xformEntityIdx], edx
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3c6e
@@ -138663,7 +138663,7 @@ __declspec(naked) void CombatChainWalkExpand(void)
         mov      edi, 0x4baf40
     L_39cd:
         mov      dword ptr [g_xformEntityIdx], ebx
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3c6e
@@ -139373,8 +139373,8 @@ __declspec(naked) void RoundCutsceneCluster(void)
 // Externs:
 extern void StoreLoadJmp(void);
 extern void MStackCall_00406340(void);
-extern void DispatcherComplex260_00407030(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void MStackPush2RunCountdown(void);
 extern void ChainDirtyBitWalker(void);
 extern void DirtyDoubleDeref(void);
@@ -139473,7 +139473,7 @@ __declspec(naked) void ThrowFsmCluster_0044eaf0(void)
         cmp      eax, 2
         mov      dword ptr [g_walkCallback], eax
         jne      L_ed1a
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_ef05
@@ -139517,7 +139517,7 @@ __declspec(naked) void ThrowFsmCluster_0044eaf0(void)
         mov      dword ptr [g_matrixStackTop], eax
         jmp      L_ed2c
     L_ed1a:
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_ef05
@@ -140498,7 +140498,7 @@ __declspec(naked) void MatchInitMonsterChain(void)
 }
 // Externs:
 extern void MStackCall_00406340(void);
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void MStackPush2RunCountdown(void);
 extern void ChainDirtyBitWalker(void);
 extern void StackPopDispatchTagged(void);
@@ -140579,7 +140579,7 @@ __declspec(naked) void StunDownChainCluster(void)
         mov      eax, OFFSET g_phase4ThreePackedBase
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_25cf
         test     byte ptr [g_xformDirtyFlags], 4
@@ -142700,7 +142700,7 @@ __declspec(naked) void StageEventCluster(void)
 }
 // Externs:
 extern void MStackPushComplexCallPop_00406430(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void StackPopDispatchTagged(void);
 extern void CallSetPause(void);
 extern void BootInitGuardedCallChain(void);
@@ -142921,7 +142921,7 @@ __declspec(naked) void RoundStartCluster_004919c0(void)
         inc      eax
         mov      dword ptr [g_xformEntityIdx], ecx
         mov      dword ptr [g_eventQueueEnd], eax
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_1e3f
         test     byte ptr [g_xformDirtyFlags], 4
@@ -142934,7 +142934,7 @@ __declspec(naked) void RoundStartCluster_004919c0(void)
     L_1d0f:
         mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_eventQueueIdx], edx
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_1e3f
         mov      eax, dword ptr [g_currentNodeIdx]
@@ -145672,7 +145672,7 @@ __declspec(naked) void DispatchDoubleScaledCluster(void)
 extern void Mul10Tail(void);
 extern void SaveCallRestore(void);
 extern void MStackPushComplexCallPop_00406430(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void CallSetPause(void);
 extern void GuardedScaledCall(void);
 extern void ChainGatedNegAccum(void);
@@ -145835,7 +145835,7 @@ __declspec(naked) void RoundEndDifferenceFsmCluster(void)
         mov      eax, OFFSET g_dispatchSave248
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_7779
         test     byte ptr [g_xformDirtyFlags], 4
@@ -145885,7 +145885,7 @@ __declspec(naked) void RoundEndDifferenceFsmCluster(void)
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
     L_7653:
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_7779
         test     byte ptr [g_xformDirtyFlags], 4
@@ -148775,7 +148775,7 @@ __declspec(naked) void IntroSettingsFsmCluster(void)
 extern void GuardedRangeCmpFpuJmp(void);
 extern void DualAddSar(void);
 extern void TaggedSceneDispatch(void);
-extern void DispatcherComplex181_00426310(void);
+extern void DispatcherComplex181_StreamChainStringInstall(void);
 extern void RoundCleanupCluster_00427690(void);
 extern void StoreIncrMStackPush6(void);
 extern unsigned int g_dispatchSave923;
@@ -148958,7 +148958,7 @@ __declspec(naked) void HitReactionCluster(void)
         mov      ecx, 0x50d8b0
         shr      ecx, 2
         mov      dword ptr [g_xformEntityIdx], ecx
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_c5a0
         test     byte ptr [g_xformDirtyFlags], bl
@@ -149060,7 +149060,7 @@ __declspec(naked) void HitReactionCluster(void)
         mov      dword ptr [g_acc_00542078], 0x230000
         mov      dword ptr [g_eventQueueNotMask], 0xffd20000
         mov      dword ptr [g_currentNodeFlags], ebx
-        call     DispatcherComplex181_00426310
+        call     DispatcherComplex181_StreamChainStringInstall
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_c5a0
         call     RoundCleanupCluster_00427690
@@ -152075,7 +152075,7 @@ __declspec(naked) void PendingMatch_0045e640(void)
 // === EXTERNS ===
 extern void ChainGatedNegAccum(void);
 extern void DispatcherComplex138_00476060(void);
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void DualScaledStore(void);
 extern void GuardedSeq_DualPushCmp12Dispatch_then_ByteWordTableTaggedDispatch(void);
 extern void MStackCall_00406600(void);
@@ -152306,7 +152306,7 @@ __declspec(naked) void PendingMatch_0044f8d0(void)
         mov      edx, 0x50be38
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_fe34
         test     byte ptr [g_xformDirtyFlags], 4
@@ -159644,8 +159644,8 @@ __declspec(naked) void PendingMatch_0044fe90(void)
 
 // === EXTERNS ===
 extern void AllocSlotPushTripleGlobals(void);
-extern void DispatcherComplex181_00426310(void);
-extern void DispatcherComplex181_00426490(void);
+extern void DispatcherComplex181_StreamChainStringInstall(void);
+extern void DispatcherComplex181_Push70CallScaleArith2(void);
 extern void DualPushSetCallDualPop(void);
 extern void MStackPop4Rewrite(void);
 extern void PendingMatch_00432ed0(void);
@@ -159746,7 +159746,7 @@ __declspec(naked) void func_00432710(void) {
         mov      dword ptr [g_acc_00542078], 0xfe9d0000
         mov      dword ptr [g_eventQueueNotMask], 0xff9c0000
         mov      dword ptr [g_currentNodeFlags], 1
-        call     DispatcherComplex181_00426490
+        call     DispatcherComplex181_Push70CallScaleArith2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
@@ -159800,7 +159800,7 @@ __declspec(naked) void func_00432710(void) {
         mov      dword ptr [g_acc_00542078], 0xfe540000
         mov      dword ptr [g_eventQueueNotMask], 0xffb00000
         mov      dword ptr [g_currentNodeFlags], 1
-        call     DispatcherComplex181_00426490
+        call     DispatcherComplex181_Push70CallScaleArith2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
@@ -159920,7 +159920,7 @@ __declspec(naked) void func_00432710(void) {
         mov      dword ptr [g_acc_00542078], 0x1310000
         mov      dword ptr [g_eventQueueNotMask], esi
         mov      dword ptr [g_currentNodeFlags], 1
-        call     DispatcherComplex181_00426310
+        call     DispatcherComplex181_StreamChainStringInstall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
@@ -160001,7 +160001,7 @@ __declspec(naked) void func_00432710(void) {
         mov      dword ptr [g_acc_00542078], 0x1310000
         mov      dword ptr [g_eventQueueNotMask], esi
         mov      dword ptr [g_currentNodeFlags], 1
-        call     DispatcherComplex181_00426310
+        call     DispatcherComplex181_StreamChainStringInstall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
@@ -162330,8 +162330,8 @@ extern void AudioMixerStep(void);
 extern void ChainDirtyBitWalker(void);
 extern void CopyThreeFields(void);
 extern void DirtyDoubleDeref(void);
-extern void DispatcherComplex260_00407030(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void EntryThunkBodyStateMachine(void);
 extern void GatedWordPushCall(void);
 extern void MStackBracket7_DispatchAndChain(void);
@@ -162784,7 +162784,7 @@ __declspec(naked) void PendingMatch_0044dd80(void)
         cmp      eax, esi
         mov      dword ptr [g_xformEntityIdx], ecx
         jne      L_e444
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         cmp      dword ptr [g_framePauseFlag], esi
         je       L_e455
         pop      edi
@@ -162793,7 +162793,7 @@ __declspec(naked) void PendingMatch_0044dd80(void)
         pop      ebx
         ret      
     L_e444:
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_e57a
     L_e455:
@@ -162909,7 +162909,7 @@ __declspec(naked) void PendingMatch_0044dd80(void)
         mov      edi, 3
     L_e646:
         mov      dword ptr [g_xformEntityIdx], eax
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e748
@@ -170351,7 +170351,7 @@ __declspec(naked) void PendingMatch_0045a5c0(void)
 // === EXTERNS ===
 extern void AudioInstallSelfStatePush(void);
 extern void BootInitGuardedCallChain(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void FiveTableWalkInit(void);
 extern void MStackPush2ChainLLInsert(void);
 extern void MStackPushComplexCallPop_00406430(void);
@@ -170473,7 +170473,7 @@ __declspec(naked) void InstallSelfStateMachine6(void)
         mov      ecx, dword ptr [eax*4 + g_dispatchSave814]
         shr      ecx, 2
         mov      dword ptr [g_xformEntityIdx], ecx
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_4b66
         mov      edx, dword ptr [g_currentNodeIdx]
@@ -172349,7 +172349,7 @@ extern void AllocSlotPushTripleGlobals(void);
 extern void BootInitGuardedCallChain(void);
 extern void BootMultiAssetLoadStateInit(void);
 extern void CopyByteUntilNull(void);
-extern void DispatcherComplex181_00426490(void);
+extern void DispatcherComplex181_Push70CallScaleArith2(void);
 extern void InstallSelfPackedF80(void);
 extern void MStackPop4Rewrite(void);
 extern void NestedLoopDispatch(void);
@@ -172438,7 +172438,7 @@ __declspec(naked) void Screen_BestKombatants(void)
         mov      dword ptr [g_currentNodeFlags], edi
         mov      edx, dword ptr [ecx*4 + 0x30]
         mov      dword ptr [g_walkCallback], edx
-        call     DispatcherComplex181_00426490
+        call     DispatcherComplex181_Push70CallScaleArith2
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_3b07
     L_37ea:
@@ -172522,7 +172522,7 @@ __declspec(naked) void Screen_BestKombatants(void)
         mov      dword ptr [g_pendingNodeType], ecx
         mov      dword ptr [g_acc_00542078], 0xffe20000
         mov      dword ptr [g_currentNodeFlags], edi
-        call     DispatcherComplex181_00426490
+        call     DispatcherComplex181_Push70CallScaleArith2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3b07
@@ -172563,7 +172563,7 @@ __declspec(naked) void Screen_BestKombatants(void)
         mov      dword ptr [g_currentNodeFlags], edi
         mov      ecx, dword ptr [eax*4 + 0x30]
         mov      dword ptr [g_walkCallback], ecx
-        call     DispatcherComplex181_00426490
+        call     DispatcherComplex181_Push70CallScaleArith2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       L_37ea
@@ -172960,7 +172960,7 @@ __declspec(naked) void AudioInstallSelfStateMachine2(void)
         mov      ecx, 0x50c7a0
         shr      ecx, 2
         mov      dword ptr [g_xformEntityIdx], ecx
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_8626
         call     MStackPushComplexCallPop_00406430
@@ -172972,7 +172972,7 @@ __declspec(naked) void AudioInstallSelfStateMachine2(void)
         shr      ecx, 2
         mov      dword ptr [edx*4 + 0x7c], eax
         mov      dword ptr [g_xformEntityIdx], ecx
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_8626
         call     MStackPushComplexCallPop_00406430
@@ -173309,7 +173309,7 @@ __declspec(naked) void Match_ChampionScreen(void)
         mov      edx, 0x505b8c
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         mov      eax, dword ptr [g_currentNodeIdx]
@@ -173320,7 +173320,7 @@ __declspec(naked) void Match_ChampionScreen(void)
         shr      edx, 2
         mov      dword ptr [ecx*4 + 0x58], 0xfffe8000
         mov      dword ptr [g_xformEntityIdx], edx
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         mov      eax, dword ptr [g_currentNodeIdx]
@@ -173335,7 +173335,7 @@ __declspec(naked) void Match_ChampionScreen(void)
         mov      ecx, 0x5063f8
         shr      ecx, 2
         mov      dword ptr [g_xformEntityIdx], ecx
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         mov      edx, dword ptr [g_currentNodeIdx]
@@ -174169,7 +174169,7 @@ __declspec(naked) void PendingMatch_004a8ca0(void)
         mov      eax, 0x50c7a0
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_921d
         call     MStackPushComplexCallPop_00406430
@@ -174181,7 +174181,7 @@ __declspec(naked) void PendingMatch_004a8ca0(void)
         shr      eax, 2
         mov      dword ptr [ecx*4 + 0x74], edx
         mov      dword ptr [g_xformEntityIdx], eax
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_921d
         call     MStackPushComplexCallPop_00406430
@@ -176292,7 +176292,7 @@ __declspec(naked) void PendingMatch_00455bd0(void)
         mov      edx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [edx*4 + 0x24]
         mov      dword ptr [g_xformEntityIdx], eax
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5ef6
@@ -176604,7 +176604,7 @@ __declspec(naked) void PendingMatch_00402540(void)
         mov      ecx, 0x50835c
         shr      ecx, 2
         mov      dword ptr [g_xformEntityIdx], ecx
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_2b0f
         test     byte ptr [g_xformDirtyFlags], 4
@@ -176635,7 +176635,7 @@ __declspec(naked) void PendingMatch_00402540(void)
         mov      eax, 0x5082d0
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_2b0f
         mov      ecx, dword ptr [g_currentNodeIdx]
@@ -176662,7 +176662,7 @@ __declspec(naked) void PendingMatch_00402540(void)
         mov      ecx, 0x5082ec
         shr      ecx, 2
         mov      dword ptr [g_xformEntityIdx], ecx
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_2b0f
         mov      edx, dword ptr [g_currentNodeIdx]
@@ -176773,7 +176773,7 @@ __declspec(naked) void PendingMatch_00402540(void)
         mov      edx, 0x508340
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_2b0f
         test     byte ptr [g_xformDirtyFlags], bl
@@ -176791,7 +176791,7 @@ __declspec(naked) void PendingMatch_00402540(void)
         mov      ecx, 0x506d98
         shr      ecx, 2
         mov      dword ptr [g_xformEntityIdx], ecx
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_2b0f
         mov      edx, dword ptr [g_currentNodeIdx]
@@ -177807,7 +177807,7 @@ __declspec(naked) void PendingMatch_0040a8d0(void)
         mov      dword ptr [g_eventQueueNotMask], ebp
         mov      dword ptr [esp + 0x10], eax
         mov      dword ptr [g_xformEntityIdx], eax
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         cmp      dword ptr [g_framePauseFlag], ebp
         jne      L_acd2
         mov      edi, 0x40
@@ -177933,7 +177933,7 @@ __declspec(naked) void PendingMatch_0040a8d0(void)
         jge      L_acbb
         mov      edx, dword ptr [esp + 0x10]
         mov      dword ptr [g_xformEntityIdx], edx
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         cmp      dword ptr [g_framePauseFlag], ebp
         je       L_aa0a
         pop      edi
@@ -180033,7 +180033,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         sar      edx, 2
         and      edx, 0x3fffff
         mov      dword ptr [g_xformEntityIdx], edx
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5e93
@@ -180416,7 +180416,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         mov      edx, 0x50c960
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5e93
@@ -182721,7 +182721,7 @@ __declspec(naked) void PendingMatch_004aa9f0(void)
         mov      eax, 0x508cfc
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_adae
         call     PushSetCallPop
@@ -182730,7 +182730,7 @@ __declspec(naked) void PendingMatch_004aa9f0(void)
         mov      ecx, 0x508d50
         shr      ecx, 2
         mov      dword ptr [g_xformEntityIdx], ecx
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_adae
         call     MStackPushComplexCallPop_00406430
@@ -182741,7 +182741,7 @@ __declspec(naked) void PendingMatch_004aa9f0(void)
         shr      eax, 2
         mov      dword ptr [edx*4 + 0x58], 0xff920000
         mov      dword ptr [g_xformEntityIdx], eax
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_adae
         call     MStackPushComplexCallPop_00406430
@@ -182759,7 +182759,7 @@ __declspec(naked) void PendingMatch_004aa9f0(void)
         shr      edx, 2
         mov      dword ptr [eax*4 + 0x34], ecx
         mov      dword ptr [g_xformEntityIdx], edx
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_adae
         call     MStackPushComplexCallPop_00406430
@@ -182814,7 +182814,7 @@ __declspec(naked) void PendingMatch_004aa9f0(void)
         mov      ecx, 0x508d6c
         shr      ecx, 2
         mov      dword ptr [g_xformEntityIdx], ecx
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_adae
@@ -184081,7 +184081,7 @@ __declspec(naked) void Screen_GreatestWarrior(void)
         mov      dword ptr [g_acc_00542078], 0xffa60000
         mov      dword ptr [g_eventQueueNotMask], edi
         mov      dword ptr [g_currentNodeFlags], 1
-        call     DispatcherComplex181_00426490
+        call     DispatcherComplex181_Push70CallScaleArith2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_45f9
@@ -185985,7 +185985,7 @@ __declspec(naked) void TitleDemoStateMachine(void)
         mov      ecx, 0x50d894
         shr      ecx, 2
         mov      dword ptr [g_xformEntityIdx], ecx
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_363d
         test     byte ptr [g_xformDirtyFlags], 4
@@ -187074,7 +187074,7 @@ __declspec(naked) void PendingMatch_004685d0(void)
         mov      eax, 0x511364
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_866a
@@ -188418,7 +188418,7 @@ __declspec(naked) void PendingMatch_00418170(void)
         mov      edx, 0x50d974
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_85ac
         test     byte ptr [g_xformDirtyFlags], 4
@@ -216243,7 +216243,7 @@ __declspec(naked) void func_00416e50(void)
         mov      ecx, 0x4d57f8
         shr      ecx, 2
         mov      dword ptr [g_xformEntityIdx], ecx
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_783c
@@ -223211,7 +223211,7 @@ __declspec(naked) void PendingMatch_00478da0(void)
         inc      eax
         mov      dword ptr [g_xformEntityIdx], ecx
         mov      dword ptr [g_pendingNodeType], eax
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8e48
@@ -223238,7 +223238,7 @@ __declspec(naked) void PendingMatch_00478da0(void)
         inc      eax
         mov      dword ptr [g_xformEntityIdx], ecx
         mov      dword ptr [g_pendingNodeType], eax
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         je       L_8dda
@@ -225290,7 +225290,7 @@ __declspec(naked) void PendingMatch_00454510(void)
         mov      ecx, 0x4ec8f8
         shr      ecx, 2
         mov      dword ptr [g_xformEntityIdx], ecx
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5056
@@ -237614,7 +237614,7 @@ __declspec(naked) void PendingMatch_00429ef0(void)
         shr      ecx, 2
         mov      dword ptr [g_xformEntityIdx], ecx
     L_a3f7:
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_a95e

@@ -12,8 +12,8 @@ extern unsigned int g_scaledInit_00542044;
  *   if eax == 2: jmp T (0x407030); else call F2; load pause; ret.
  */
 extern void DirtyDoubleDeref(void);
-extern void DispatcherComplex260_00407400(void);
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 int GuardedCallStoreSlotsCmp(void) {
     unsigned int s;
     DirtyDoubleDeref();
@@ -22,8 +22,8 @@ int GuardedCallStoreSlotsCmp(void) {
     g_xformEntityIdx = ((ScenegraphNode *)(s * 4))->queue_end;
     g_eventQueueIdx = ((ScenegraphNode *)(s * 4))->queue_idx;
     if ((unsigned int)g_walkCallback != 2) {
-        DispatcherComplex260_00407400();
+        DispatcherComplex260_FramePauseScaledStore();
         return g_framePauseFlag;
     }
-    return ((int (*)(void))DispatcherComplex260_00407030)();
+    return ((int (*)(void))DispatcherComplex260_MStackBracket1_TreeWalkRecursive2)();
 }

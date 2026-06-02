@@ -53,7 +53,7 @@ extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
 extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
@@ -95,7 +95,7 @@ extern void IterLoad_00491050(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
@@ -470,7 +470,7 @@ __declspec(naked) void RoundStartCluster_004919c0(void)
         inc      eax
         mov      dword ptr [g_xformEntityIdx], ecx
         mov      dword ptr [g_eventQueueEnd], eax
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_1e3f
         test     byte ptr [g_xformDirtyFlags], 4
@@ -483,7 +483,7 @@ __declspec(naked) void RoundStartCluster_004919c0(void)
     L_1d0f:
         mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_eventQueueIdx], edx
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_1e3f
         mov      eax, dword ptr [g_currentNodeIdx]

@@ -50,9 +50,9 @@ extern void AudioVolumeRescale(void);
 extern void CallSetPause(void);
 extern void ConstStoreCallJmp_ChainDirtyBitWalker_then_DualScaledLoadStoreJmp(void);
 extern void DirtyOrFlagDispatch(void);
-extern void DispatcherComplex181_00426310(void);
-extern void DispatcherComplex181_00426490(void);
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex181_StreamChainStringInstall(void);
+extern void DispatcherComplex181_Push70CallScaleArith2(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void DualCmpSwapStore(void);
 extern void DualPushSetCallDualPop(void);
 extern void EntryThunkBodyStateMachine(void);
@@ -440,7 +440,7 @@ __declspec(naked) void func_00498980(void)
         mov      eax, OFFSET g_dispatchSave505
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8ae4
@@ -999,7 +999,7 @@ __declspec(naked) void func_00432710(void) {
         mov      dword ptr [g_acc_00542078], 0xfe9d0000
         mov      dword ptr [g_eventQueueNotMask], 0xff9c0000
         mov      dword ptr [g_currentNodeFlags], 1
-        call     DispatcherComplex181_00426490
+        call     DispatcherComplex181_Push70CallScaleArith2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
@@ -1053,7 +1053,7 @@ __declspec(naked) void func_00432710(void) {
         mov      dword ptr [g_acc_00542078], 0xfe540000
         mov      dword ptr [g_eventQueueNotMask], 0xffb00000
         mov      dword ptr [g_currentNodeFlags], 1
-        call     DispatcherComplex181_00426490
+        call     DispatcherComplex181_Push70CallScaleArith2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
@@ -1173,7 +1173,7 @@ __declspec(naked) void func_00432710(void) {
         mov      dword ptr [g_acc_00542078], 0x1310000
         mov      dword ptr [g_eventQueueNotMask], esi
         mov      dword ptr [g_currentNodeFlags], 1
-        call     DispatcherComplex181_00426310
+        call     DispatcherComplex181_StreamChainStringInstall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
@@ -1254,7 +1254,7 @@ __declspec(naked) void func_00432710(void) {
         mov      dword ptr [g_acc_00542078], 0x1310000
         mov      dword ptr [g_eventQueueNotMask], esi
         mov      dword ptr [g_currentNodeFlags], 1
-        call     DispatcherComplex181_00426310
+        call     DispatcherComplex181_StreamChainStringInstall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2

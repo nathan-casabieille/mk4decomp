@@ -53,7 +53,7 @@ extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
 extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
@@ -95,7 +95,7 @@ extern void IterLoad_00491050(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
@@ -114,7 +114,7 @@ extern unsigned int g_hitPhase;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 extern void CallSetPause(void);
-extern void DispatcherComplex181_00426310(void);
+extern void DispatcherComplex181_StreamChainStringInstall(void);
 extern void DualAddSar(void);
 extern void GuardedRangeCmpFpuJmp(void);
 extern void GuardedScaledCall(void);
@@ -300,7 +300,7 @@ __declspec(naked) void HitReactionCluster(void)
         mov      ecx, 0x50d8b0
         shr      ecx, 2
         mov      dword ptr [g_xformEntityIdx], ecx
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_c5a0
         test     byte ptr [g_xformDirtyFlags], bl
@@ -402,7 +402,7 @@ __declspec(naked) void HitReactionCluster(void)
         mov      dword ptr [g_acc_00542078], 0x230000
         mov      dword ptr [g_eventQueueNotMask], 0xffd20000
         mov      dword ptr [g_currentNodeFlags], ebx
-        call     DispatcherComplex181_00426310
+        call     DispatcherComplex181_StreamChainStringInstall
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_c5a0
         call     RoundCleanupCluster_00427690

@@ -53,7 +53,7 @@ extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
 extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
@@ -95,7 +95,7 @@ extern void IterLoad_00491050(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
@@ -214,7 +214,7 @@ extern void AudioState50b4BitDispatcher(void);
 extern void BootInitGuardedCallChain(void);
 extern void CallSetPause(void);
 extern void CmpByteJmp(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void DrainQueueCallEach(void);
 extern void DualCallSetByte(void);
 extern void FiveTableWalkInit(void);
@@ -333,7 +333,7 @@ __declspec(naked) void AudioInitLoopTriple(void)
         mov     eax, offset g_audioInstallArr
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
-        call    DispatcherComplex260_00407400
+        call    DispatcherComplex260_FramePauseScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_e0_ret
@@ -902,7 +902,7 @@ __declspec(naked) void Match_ChampionScreen(void)
         mov      edx, 0x505b8c
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         mov      eax, dword ptr [g_currentNodeIdx]
@@ -913,7 +913,7 @@ __declspec(naked) void Match_ChampionScreen(void)
         shr      edx, 2
         mov      dword ptr [ecx*4 + 0x58], 0xfffe8000
         mov      dword ptr [g_xformEntityIdx], edx
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         mov      eax, dword ptr [g_currentNodeIdx]
@@ -928,7 +928,7 @@ __declspec(naked) void Match_ChampionScreen(void)
         mov      ecx, 0x5063f8
         shr      ecx, 2
         mov      dword ptr [g_xformEntityIdx], ecx
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         mov      edx, dword ptr [g_currentNodeIdx]
@@ -1454,7 +1454,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         sar      edx, 2
         and      edx, 0x3fffff
         mov      dword ptr [g_xformEntityIdx], edx
-        call     DispatcherComplex260_00407400
+        call     DispatcherComplex260_FramePauseScaledStore
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5e93
@@ -1837,7 +1837,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         mov      edx, 0x50c960
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
-        call     DispatcherComplex260_00407030
+        call     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5e93

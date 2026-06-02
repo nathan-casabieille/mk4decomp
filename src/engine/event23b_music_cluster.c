@@ -53,7 +53,7 @@ extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
 extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
@@ -95,7 +95,7 @@ extern void IterLoad_00491050(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
@@ -118,7 +118,7 @@ extern unsigned int g_dispatchTab61;
 extern unsigned int g_dispatchSave1705;
 extern void CallSetPause(void);
 extern void Cmp7DirtyToggle(void);
-extern void DispatcherComplex181_00426310(void);
+extern void DispatcherComplex181_StreamChainStringInstall(void);
 extern void GuardedDualMaskFlagToggle(void);
 extern void RoundCleanupCluster_00427690(void);
 extern void SaveCallRestore(void);
@@ -169,7 +169,7 @@ __declspec(naked) void Event23bMusicCluster(void)
         mov      dword ptr [g_acc_00542078], OFFSET g_dispatchTab61
         mov      dword ptr [g_eventQueueNotMask], OFFSET g_dispatchSave1705
         mov      dword ptr [g_currentNodeFlags], 1
-        call     DispatcherComplex181_00426310
+        call     DispatcherComplex181_StreamChainStringInstall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f691
@@ -190,7 +190,7 @@ __declspec(naked) void Event23bMusicCluster(void)
         mov      dword ptr [g_acc_00542078], 0xff920000
         mov      dword ptr [g_eventQueueNotMask], OFFSET g_dispatchSave1705
         mov      dword ptr [g_currentNodeFlags], 1
-        call     DispatcherComplex181_00426310
+        call     DispatcherComplex181_StreamChainStringInstall
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f691

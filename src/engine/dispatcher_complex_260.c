@@ -159,7 +159,7 @@ extern void MStackPush2ChainLLInsert(void);
     }
 
 /* @addr 0x00407030 */
-__declspec(naked) void DispatcherComplex260_00407030(void) { DC260_BODY(MStackBracket1_TreeWalkRecursive2) }
+__declspec(naked) void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void) { DC260_BODY(MStackBracket1_TreeWalkRecursive2) }
 
 /* @addr 0x00407400 */
-__declspec(naked) void DispatcherComplex260_00407400(void) { DC260_BODY(FramePauseScaledStore) }
+__declspec(naked) void DispatcherComplex260_FramePauseScaledStore(void) { DC260_BODY(FramePauseScaledStore) }

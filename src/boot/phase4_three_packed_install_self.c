@@ -53,7 +53,7 @@ extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
 extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
@@ -95,7 +95,7 @@ extern void IterLoad_00491050(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
@@ -142,7 +142,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf(void)
         mov     ecx, offset g_phase4ThreePackedBase
         shr     ecx, 2
         mov     dword ptr [g_xformEntityIdx], ecx
-        call    DispatcherComplex260_00407030
+        call    DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_p4tpis_A_ret
         test    byte ptr [g_xformDirtyFlags], 4

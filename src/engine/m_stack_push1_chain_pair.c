@@ -53,7 +53,7 @@ extern void StreamChainStringInstall(void);
 extern void MStackFrameCdeclDouble(void);
 extern void ChainTableWalkStore(void);
 extern void Push16Call(void);
-extern void DispatcherComplex260_00407030(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
@@ -95,7 +95,7 @@ extern void IterLoad_00491050(void);
 extern void GuardedDualConst2AndToggle(void);
 extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
-extern void DispatcherComplex260_00407400(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00424080 (227b game) - mstack-push g_walkCallback; advance g_cj_00542058 counter twice;
- *   call DispatcherComplex260_00407400; pause-check; call 0x00406430; pause-check;
+ *   call DispatcherComplex260_FramePauseScaledStore; pause-check; call 0x00406430; pause-check;
  *   load 2 chain values via scaledInit, shift, store; mstack-pop g_walkCallback. ret.
  */
 extern unsigned int g_matrixStack_arr;
@@ -126,7 +126,7 @@ void MStackPush1ChainPair(void) {
         inc     eax
         mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_cj_00542058], eax
-        call    DispatcherComplex260_00407400
+        call    DispatcherComplex260_FramePauseScaledStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

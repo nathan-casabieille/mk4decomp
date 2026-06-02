@@ -109,10 +109,10 @@ extern void Push70CallScaleArith2(void);
 
 /* @addr 0x00426310 */
 
-__declspec(naked) void DispatcherComplex181_00426310(void) { BODY(StreamChainStringInstall) }
+__declspec(naked) void DispatcherComplex181_StreamChainStringInstall(void) { BODY(StreamChainStringInstall) }
 
 /* @addr 0x004263d0 */
-__declspec(naked) void DispatcherComplex181_004263d0(void) { BODY(Push70CallScaleArith) }
+__declspec(naked) void DispatcherComplex181_Push70CallScaleArith(void) { BODY(Push70CallScaleArith) }
 
 /* @addr 0x00426490 */
-__declspec(naked) void DispatcherComplex181_00426490(void) { BODY(Push70CallScaleArith2) }
+__declspec(naked) void DispatcherComplex181_Push70CallScaleArith2(void) { BODY(Push70CallScaleArith2) }
