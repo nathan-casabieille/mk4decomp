@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     +0x0c0b5e
  */
 extern void Sar64_004c5660(void);
-__declspec(naked) void Mul10Tail_00404af0(void) {
+__declspec(naked) void Mul10Tail(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         mov     ecx, 0x10

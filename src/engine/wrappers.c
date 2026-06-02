@@ -11,7 +11,7 @@ extern void SaveCallRestore_004049d0(unsigned int arg);   /* 0x004049d0 */
 extern void OrListLoop_0041fcc0(unsigned int arg);   /* 0x0041fcc0 */
 extern void PackedAdvanceCallTailJmp_004392c0(unsigned int arg);   /* 0x004392c0 */
 extern void CmpDualPatchScaledRangeJmp_004399c0(unsigned int arg);   /* 0x004399c0 */
-extern void ArgSarStoreJmp_004594f0(unsigned int arg);   /* 0x004594f0 */
+extern void ArgSarStoreJmp(unsigned int arg);   /* 0x004594f0 */
 extern void ScaledChainPushCall_00489ee0(unsigned int arg);   /* 0x00489ee0 */
 extern void ScaledIndexCondCopy_0048e590(unsigned int arg);   /* 0x0048e590 */
 extern void IterLoad_0048fd30(unsigned int arg);   /* 0x0048fd30 */
@@ -58,25 +58,25 @@ void Wrapper_0043abf0(void) { PackedAdvanceCallTailJmp_004392c0(0x004e4a58u); }
 void Wrapper_0043ac00(void) { PackedAdvanceCallTailJmp_004392c0(0x004e4a70u); }
 
 /* @addr 0x00471340 */
-void Wrapper_00471340(void) { ArgSarStoreJmp_004594f0(0x004eba28u); }
+void Wrapper_00471340(void) { ArgSarStoreJmp(0x004eba28u); }
 
 /* @addr 0x0047d6d0 */
-void Wrapper_0047d6d0(void) { ArgSarStoreJmp_004594f0(0x004ed440u); }
+void Wrapper_0047d6d0(void) { ArgSarStoreJmp(0x004ed440u); }
 
 /* @addr 0x0047ed80 */
-void Wrapper_0047ed80(void) { ArgSarStoreJmp_004594f0(0x004ed660u); }
+void Wrapper_0047ed80(void) { ArgSarStoreJmp(0x004ed660u); }
 
 /* @addr 0x00481060 */
 void Wrapper_00481060(void) { IterLoad_0048fd30(0x004ed980u); }
 
 /* @addr 0x00484470 */
-void Wrapper_00484470(void) { ArgSarStoreJmp_004594f0(0x004ee850u); }
+void Wrapper_00484470(void) { ArgSarStoreJmp(0x004ee850u); }
 
 /* @addr 0x00484d90 */
-void Wrapper_00484d90(void) { ArgSarStoreJmp_004594f0(0x004ee958u); }
+void Wrapper_00484d90(void) { ArgSarStoreJmp(0x004ee958u); }
 
 /* @addr 0x00487140 */
-void Wrapper_00487140(void) { ArgSarStoreJmp_004594f0(0x004eeeb0u); }
+void Wrapper_00487140(void) { ArgSarStoreJmp(0x004eeeb0u); }
 
 /* @addr 0x00488bd0 */
 void Wrapper_00488bd0(void) { Cascade5StageInit_00491520(0x004ef1e8u); }

@@ -16,11 +16,11 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     Tail
  *   ret
  */
-extern void ChainDirtyBitWalker_00408c10(void);
+extern void ChainDirtyBitWalker(void);
 extern void DualScaledLoadStoreJmp_00475790(void);
 void ConstStoreCallJmp_00448fa0(void) {
     g_walkCallback = (void(*)(void))3;
-    ChainDirtyBitWalker_00408c10();
+    ChainDirtyBitWalker();
     if (g_framePauseFlag) return;
     DualScaledLoadStoreJmp_00475790();
 }

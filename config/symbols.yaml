@@ -180,7 +180,7 @@ functions:
     status: matched
     file: src/boot/triple_stage_rollback.c
   - addr: 0x00404af0
-    name: Mul10Tail_00404af0
+    name: Mul10Tail
     size: 18
     group: boot
     status: matched
@@ -456,7 +456,7 @@ functions:
     status: matched
     file: src/engine/mstack_push_complex_call_pop.c
   - addr: 0x00406530
-    name: PushSetCallPop_00406530
+    name: PushSetCallPop
     size: 118
     group: boot
     status: matched
@@ -594,7 +594,7 @@ functions:
     status: matched
     file: src/engine/dispatcher_complex_260.c
   - addr: 0x00407510
-    name: BootMod6487eClampAndChainMul10_00407510
+    name: BootMod6487eClampAndChainMul10
     size: 261
     group: boot
     status: matched
@@ -726,7 +726,7 @@ functions:
     status: matched
     file: src/boot/g_dispatch4.c
   - addr: 0x004089e0
-    name: MStackPush2RunCountdown_004089e0
+    name: MStackPush2RunCountdown
     size: 226
     group: boot
     status: matched
@@ -744,7 +744,7 @@ functions:
     status: matched
     file: src/boot/dirty_toggle_install.c
   - addr: 0x00408c10
-    name: ChainDirtyBitWalker_00408c10
+    name: ChainDirtyBitWalker
     size: 148
     group: boot
     status: matched
@@ -1674,7 +1674,7 @@ functions:
     status: matched
     file: src/boot/node_unlink.c
   - addr: 0x0041f780
-    name: StackPopDispatchTagged_0041f780
+    name: StackPopDispatchTagged
     size: 77
     group: boot
     status: matched
@@ -1692,7 +1692,7 @@ functions:
     status: matched
     file: src/boot/load_shl_deref_call_skip.c
   - addr: 0x0041f830
-    name: CallSetPause_0041f830
+    name: CallSetPause
     size: 16
     group: boot
     status: matched
@@ -2310,7 +2310,7 @@ functions:
     status: matched
     file: src/engine/guarded_dual_mask_flag_toggle.c
   - addr: 0x00426230
-    name: MStackPush2TableNot_00426230
+    name: MStackPush2TableNot
     size: 216
     group: game
     status: matched
@@ -2418,13 +2418,13 @@ functions:
     status: matched
     file: src/engine/thunks.c
   - addr: 0x00427470
-    name: AllocSlotPushTripleGlobals_00427470
+    name: AllocSlotPushTripleGlobals
     size: 126
     group: game
     status: matched
     file: src/engine/alloc_slot_push_triple_globals.c
   - addr: 0x004274f0
-    name: MStackPop4Rewrite_004274f0
+    name: MStackPop4Rewrite
     size: 208
     group: game
     status: matched
@@ -2934,7 +2934,7 @@ functions:
     status: matched
     file: src/engine/scaled_array_store.c
   - addr: 0x004299a0
-    name: GuardedChainCmpDualBitXor_004299a0
+    name: GuardedChainCmpDualBitXor
     size: 160
     group: game
     status: matched
@@ -3654,7 +3654,7 @@ functions:
     status: matched
     file: src/engine/scaled_load_install_or_call.c
   - addr: 0x004339c0
-    name: GameDispatchValidateState_004339c0
+    name: GameDispatchValidateState
     size: 482
     group: game
     status: matched
@@ -4476,7 +4476,7 @@ functions:
     status: matched
     file: src/engine/cmp_cccc_call_pause_dirty_jmp.c
   - addr: 0x004390f0
-    name: CallPauseTestByteJmpCalls_004390f0
+    name: CallPauseTestByteJmpCalls
     size: 62
     group: game
     status: matched
@@ -4602,7 +4602,7 @@ functions:
     status: matched
     file: src/engine/m_stack_chain_extract_call.c
   - addr: 0x004398b0
-    name: Cmp2CallDirtyCall_004398b0
+    name: Cmp2CallDirtyCall
     size: 54
     group: game
     status: matched
@@ -4776,7 +4776,7 @@ functions:
     status: matched
     file: src/engine/install_self_scaled_adv3d7_cmp.c
   - addr: 0x0043a950
-    name: QuadBlockArgInstallChain_0043a950
+    name: QuadBlockArgInstallChain
     size: 290
     group: game
     status: matched
@@ -6306,13 +6306,13 @@ functions:
     status: matched
     file: src/engine/str_len.c
   - addr: 0x00457900
-    name: StreamChainStringInstall_00457900
+    name: StreamChainStringInstall
     size: 462
     group: game
     status: matched
     file: src/engine/stream_chain_string_install.c
   - addr: 0x00457ad0
-    name: Push70CallScaleArith_00457ad0
+    name: Push70CallScaleArith
     size: 100
     group: game
     status: matched
@@ -6456,7 +6456,7 @@ functions:
     status: matched
     file: src/engine/bitmap_blit_run_length.c
   - addr: 0x004594f0
-    name: ArgSarStoreJmp_004594f0
+    name: ArgSarStoreJmp
     size: 30
     group: game
     status: matched
@@ -6828,7 +6828,7 @@ functions:
     status: matched
     file: src/engine/hit_reaction_dispatcher.c
   - addr: 0x0045f8d0
-    name: FiveCallScaledChainTailJmp_0045f8d0
+    name: FiveCallScaledChainTailJmp
     size: 113
     group: game
     status: matched
@@ -6852,7 +6852,7 @@ functions:
     status: matched
     file: src/engine/slot_phase_dispatcher_big_switch.c
   - addr: 0x0045fca0
-    name: CallPauseScaledStorePushCall_0045fca0
+    name: CallPauseScaledStorePushCall
     size: 65
     group: game
     status: matched
@@ -7902,7 +7902,7 @@ functions:
     status: matched
     file: src/engine/bit_gate_install_chain_jmp.c
   - addr: 0x0046f7a0
-    name: CrouchAttackFsmCluster_0046f7a0
+    name: CrouchAttackFsmCluster
     size: 1088
     group: game
     status: matched
@@ -7968,7 +7968,7 @@ functions:
     status: matched
     file: src/engine/scaled_chain_neg_store.c
   - addr: 0x00470340
-    name: DualFieldAddSubStore_00470340
+    name: DualFieldAddSubStore
     size: 76
     group: game
     status: matched
@@ -8550,7 +8550,7 @@ functions:
     status: matched
     file: src/engine/m_stack_bracket3_packed_slot_init.c
   - addr: 0x00475990
-    name: MStackBracketed3StoreCall_00475990
+    name: MStackBracketed3StoreCall
     size: 412
     group: game
     status: matched
@@ -8610,13 +8610,13 @@ functions:
     status: matched
     file: src/engine/push_search_toggle_bit.c
   - addr: 0x004767e0
-    name: MStackPushVec3Mul10_004767e0
+    name: MStackPushVec3Mul10
     size: 150
     group: game
     status: matched
     file: src/engine/m_stack_push_vec3_mul10.c
   - addr: 0x00476880
-    name: TripleVecAccCallStore_00476880
+    name: TripleVecAccCallStore
     size: 165
     group: game
     status: matched
@@ -8886,7 +8886,7 @@ functions:
     status: matched
     file: src/engine/triple_sub_install_self_pair.c
   - addr: 0x0047a840
-    name: InstallSelfFullPath_0047a840
+    name: InstallSelfFullPath
     size: 174
     group: game
     status: matched
@@ -10212,7 +10212,7 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x00488c00
-    name: LiteralPushCallEntZero_00488c00
+    name: LiteralPushCallEntZero
     size: 37
     group: game
     status: matched
@@ -10362,7 +10362,7 @@ functions:
     status: matched
     file: src/engine/scaled_chain_push_call.c
   - addr: 0x00489f50
-    name: Push16Call_00489f50
+    name: Push16Call
     size: 16
     group: game
     status: matched
@@ -10974,7 +10974,7 @@ functions:
     status: matched
     file: src/engine/or_dual_store.c
   - addr: 0x0048e4d0
-    name: LeaPlus22StoreSelf_0048e4d0
+    name: LeaPlus22StoreSelf
     size: 22
     group: game
     status: matched
@@ -11094,7 +11094,7 @@ functions:
     status: matched
     file: src/engine/guarded_dual_const1_and_toggle.c
   - addr: 0x0048eba0
-    name: GuardedDualConst2AndToggle_0048eba0
+    name: GuardedDualConst2AndToggle
     size: 118
     group: game
     status: matched
@@ -11148,7 +11148,7 @@ functions:
     status: matched
     file: src/engine/scaled_sub_store.c
   - addr: 0x0048eec0
-    name: MStackPush3CmpCall_0048eec0
+    name: MStackPush3CmpCall
     size: 208
     group: game
     status: matched
@@ -11208,7 +11208,7 @@ functions:
     status: matched
     file: src/engine/dirty_toggle_by_base_sel.c
   - addr: 0x0048f350
-    name: DirtyToggleByGate_0048f350
+    name: DirtyToggleByGate
     size: 97
     group: game
     status: matched
@@ -11538,7 +11538,7 @@ functions:
     status: matched
     file: src/engine/scaled_or_store.c
   - addr: 0x004903f0
-    name: MStackFrameCdeclDouble_004903f0
+    name: MStackFrameCdeclDouble
     size: 198
     group: game
     status: matched
@@ -11574,7 +11574,7 @@ functions:
     status: matched
     file: src/engine/scaled_move48to58.c
   - addr: 0x00490740
-    name: ScaledZeroFour_00490740
+    name: ScaledZeroFour
     size: 51
     group: game
     status: matched
@@ -11622,7 +11622,7 @@ functions:
     status: matched
     file: src/engine/iter_step_neg_store.c
   - addr: 0x00490b40
-    name: IterStepDualStore_00490b40
+    name: IterStepDualStore
     size: 44
     group: game
     status: matched
@@ -12504,7 +12504,7 @@ functions:
     status: matched
     file: src/engine/guarded_chain_copy_jmp.c
   - addr: 0x0049b7c0
-    name: ChainWalkInstall_0049b7c0
+    name: ChainWalkInstall
     size: 143
     group: game
     status: matched
@@ -12630,7 +12630,7 @@ functions:
     status: matched
     file: src/engine/triple_block_chain_diff_m_stack_thunks.c
   - addr: 0x0049cb40
-    name: StoreTwoCall_0049cb40
+    name: StoreTwoCall
     size: 28
     group: game
     status: matched
@@ -13878,7 +13878,7 @@ functions:
     status: matched
     file: src/audio/div_long_push_call.c
   - addr: 0x004ab350
-    name: FpuSqrtMul_004ab350
+    name: FpuSqrtMul
     size: 40
     group: audio
     status: matched
@@ -15384,7 +15384,7 @@ functions:
     status: matched
     file: src/game/dispatch_scaled_lea.c
   - addr: 0x004b8fa0
-    name: MStackBracket7_DispatchAndChain_004b8fa0
+    name: MStackBracket7_DispatchAndChain
     size: 674
     group: game.menu
     status: matched
@@ -15810,7 +15810,7 @@ functions:
     status: matched
     file: src/engine/six_double_push_call.c
   - addr: 0x004be690
-    name: TaggedSceneDispatch_004be690
+    name: TaggedSceneDispatch
     size: 197
     group: engine.scenegraph
     status: matched

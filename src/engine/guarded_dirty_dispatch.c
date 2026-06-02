@@ -13,13 +13,13 @@ extern unsigned int g_scaledInit_00542044;
  *   if (dirty & 1): jmp T2;
  *   else: walk = 9; jmp T3.
  */
-extern void MStackPush3CmpCall_0048eec0(void);
+extern void MStackPush3CmpCall(void);
 extern void SetJmp_00438f60(void);
 extern void ScaledChain3c74Jmp_0048e780(void);
 extern void CallPauseDirtyConstJmp_00438ca0(void);
 extern void StateDispatchYield_00471190(void);
 void GuardedDirtyDispatch_00438c50(void) {
-    MStackPush3CmpCall_0048eec0();
+    MStackPush3CmpCall();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 1) {
         SetJmp_00438f60();

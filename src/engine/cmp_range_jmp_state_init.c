@@ -16,7 +16,7 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_table_00535ddc;
 extern void GuardedSeq_00433bb0(void);
 extern void PrefixThunkInstallSelf3State_00438f80(void);
-extern int Cmp2CallDirtyCall_004398b0(void);
+extern int Cmp2CallDirtyCall(void);
 extern void HitReactionStateCluster_004335f0(void);
 extern void MstackPopScaledChainPlusThunks_00471250(void);
 extern void Cmp30000And18000_004362b0(void);

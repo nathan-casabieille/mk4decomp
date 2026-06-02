@@ -15,47 +15,47 @@ extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
 
-extern void StoreTwoCall_0049cb40(int, int);
+extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
-extern void ScaledZeroFour_00490740(void);
+extern void ScaledZeroFour(void);
 extern void WalkCbSubMul10_00431d50(void);
-extern void Mul10Tail_00404af0(unsigned int a, unsigned int b);
-extern void BootMod6487eClampAndChainMul10_00407510(void);
+extern void Mul10Tail(unsigned int a, unsigned int b);
+extern void BootMod6487eClampAndChainMul10(void);
 extern void SpawnListBatchLoader_00477710(void);
-extern void MStackPush2TableNot_00426230(void);
-extern void GuardedChainCmpDualBitXor_004299a0(void);
+extern void MStackPush2TableNot(void);
+extern void GuardedChainCmpDualBitXor(void);
 extern void ScaledLoadDecJmp_00429710(void);
 extern void ScaledStoreCurDirtyClear_004296f0(void);
 extern void MStackBitmaskIncMod_00492450(void);
 extern void MStackBitmaskUpdate_00492510(void);
 extern void Push1eCallTestDirtyLoop_004923b0(void);
 extern void MStackLoopFieldInit_00492280(void);
-extern void TaggedSceneDispatch_004be690(void);
+extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn_004839d0(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
-extern void Cmp2CallDirtyCall_004398b0(void);
-extern void QuadBlockArgInstallChain_0043a950(void);
+extern void Cmp2CallDirtyCall(void);
+extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW_004363f0(void);
 extern void Wrapper_00436490(void);
 extern void MoveFsmCluster_004364a0(void);
-extern void CallPauseTestByteJmpCalls_004390f0(void);
-extern void InstallSelfFullPath_0047a840(void);
+extern void CallPauseTestByteJmpCalls(void);
+extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain_0047a950(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
-extern void TripleVecAccCallStore_00476880(void);
+extern void TripleVecAccCallStore(void);
 extern void Thunk_004bd5c0(void);
-extern void AllocSlotPushTripleGlobals_00427470(void);
-extern void MStackPop4Rewrite_004274f0(void);
-extern void Push70CallScaleArith_00457ad0(void);
-extern void StreamChainStringInstall_00457900(void);
-extern void MStackFrameCdeclDouble_004903f0(void);
+extern void AllocSlotPushTripleGlobals(void);
+extern void MStackPop4Rewrite(void);
+extern void Push70CallScaleArith(void);
+extern void StreamChainStringInstall(void);
+extern void MStackFrameCdeclDouble(void);
 extern void ChainTableWalkStore_004917e0(void);
-extern void Push16Call_00489f50(void);
+extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
-extern void StackPopDispatchTagged_0041f780(void);
+extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
 extern unsigned int g_zero_00541fa4;
@@ -65,38 +65,38 @@ extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
 extern void ScaledArrStore_004298c0(void);
-extern void DualFieldAddSubStore_00470340(void);
-extern void IterStepDualStore_00490b40(int);
+extern void DualFieldAddSubStore(void);
+extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
-extern void ChainWalkInstall_0049b7c0(void);
-extern void FpuSqrtMul_004ab350(void);
+extern void ChainWalkInstall(void);
+extern void FpuSqrtMul(void);
 extern void PendingMatch_0042b930(void);
-extern void MStackPush2RunCountdown_004089e0(void);
-extern void MStackBracket7_DispatchAndChain_004b8fa0(void);
-extern void MStackBracketed3StoreCall_00475990(void);
-extern void ChainDirtyBitWalker_00408c10(void);
+extern void MStackPush2RunCountdown(void);
+extern void MStackBracket7_DispatchAndChain(void);
+extern void MStackBracketed3StoreCall(void);
+extern void ChainDirtyBitWalker(void);
 extern void Wrapper_0048a350(void);
 extern void Wrapper_0048a3a0(void);
 extern void Helper_DownloadSetup(void);
-extern void MStackPush3CmpCall_0048eec0(void);
+extern void MStackPush3CmpCall(void);
 extern void Wrapper_0048ec20(void);
-extern void FiveCallScaledChainTailJmp_0045f8d0(void);
+extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_00438f50(void);
 extern void SetJmp_00438f60(void);
 extern void GuardedDispatch_0042b6c0(void);
 extern void MStackPushZeroCallPop_00407d00(void);
-extern void DirtyToggleByGate_0048f350(void);
-extern void GameDispatchValidateState_004339c0(void);
-extern void CrouchAttackFsmCluster_0046f7a0(void);
-extern void MStackPushVec3Mul10_004767e0(void);
-extern void LiteralPushCallEntZero_00488c00(void);
-extern void LeaPlus22StoreSelf_0048e4d0(void);
+extern void DirtyToggleByGate(void);
+extern void GameDispatchValidateState(void);
+extern void CrouchAttackFsmCluster(void);
+extern void MStackPushVec3Mul10(void);
+extern void LiteralPushCallEntZero(void);
+extern void LeaPlus22StoreSelf(void);
 extern void IterLoad_00491050(void);
-extern void GuardedDualConst2AndToggle_0048eba0(void);
-extern void CallPauseScaledStorePushCall_0045fca0(void);
+extern void GuardedDualConst2AndToggle(void);
+extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
-extern void PushSetCallPop_00406530(void);
+extern void PushSetCallPop(void);
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
@@ -114,7 +114,7 @@ extern unsigned int g_tickFlagF;
 extern unsigned int g_byte_00538148;
 extern unsigned int g_audioStreamState;
 extern unsigned int g_installSelfCounter_005433e8;
-extern void ArgSarStoreJmp_004594f0(void);
+extern void ArgSarStoreJmp(void);
 extern void CallPauseScaledStoreCopyJmp_00461220(void);
 extern void DualSlotPropagateCall_004683e0(void);
 extern void DualWalkRange_00468440(void);
@@ -146,7 +146,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         test     eax, eax
         jne      L_8019
         push     OFFSET g_dispatchSave704_004eb938
-        call     ArgSarStoreJmp_004594f0
+        call     ArgSarStoreJmp
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         pop      esi
@@ -202,7 +202,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
     L_7fe5:
         push     0
         push     OFFSET L_8200
-        call     StoreTwoCall_0049cb40
+        call     StoreTwoCall
         mov      dword ptr [esi + 8], OFFSET StoryCharIntroFsmCluster_00467ed0
         mov      dword ptr [esi + 0x84], 1
         add      esp, 8
@@ -309,7 +309,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         ret
     L_81cb:
         mov      dword ptr [g_eventQueueWorkType], 0x3d
-        call     Push16Call_00489f50
+        call     Push16Call
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_81e7
         call     ScaledInitWithCounterAndType_004314f0
@@ -370,26 +370,26 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         mov      dword ptr [g_eventQueueWorkType], 0x60000
         push     edx
         push     0x60000
-        call     Mul10Tail_00404af0
+        call     Mul10Tail
         mov      ecx, dword ptr [g_eventQueueWorkType]
         add      esp, 8
         mov      dword ptr [g_currentNodeFlags], eax
         mov      eax, dword ptr [g_eventQueueCurrent]
         push     eax
         push     ecx
-        call     Mul10Tail_00404af0
+        call     Mul10Tail
         mov      edx, dword ptr [g_walkCallback]
         add      esp, 8
         mov      dword ptr [g_xformScratch2088], eax
         push     edx
         push     0x11999
-        call     Mul10Tail_00404af0
+        call     Mul10Tail
         add      esp, 8
         mov      dword ptr [g_walkCallback], eax
         mov      eax, dword ptr [g_eventQueueCurrent]
         push     eax
         push     0x11999
-        call     Mul10Tail_00404af0
+        call     Mul10Tail
         mov      ecx, dword ptr [g_walkCallback]
         mov      esi, dword ptr [g_currentNodeFlags]
         mov      dword ptr [g_eventQueueCurrent], eax
@@ -407,13 +407,13 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         push     ecx
         push     0x14ccc
         mov      dword ptr [g_xformScratch2088], edx
-        call     Mul10Tail_00404af0
+        call     Mul10Tail
         mov      ecx, dword ptr [g_eventQueueCurrent]
         add      esp, 8
         mov      dword ptr [g_walkCallback], eax
         push     ecx
         push     0x14ccc
-        call     Mul10Tail_00404af0
+        call     Mul10Tail
         mov      edx, dword ptr [g_baseSel]
         mov      dword ptr [g_eventQueueCurrent], eax
         mov      eax, dword ptr [g_walkCallback]
@@ -441,7 +441,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         test     eax, eax
         jne      L_83d1
         push     OFFSET g_dispatchSave705_004eb958
-        call     ArgSarStoreJmp_004594f0
+        call     ArgSarStoreJmp
         add      esp, 4
     L_83d1:
         pop      esi

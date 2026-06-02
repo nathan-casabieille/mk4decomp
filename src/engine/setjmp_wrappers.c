@@ -38,7 +38,7 @@ extern void ScaledLitLoadCall_00481020(void);   /* 0x00481020 */
 extern void InstallSelfTwoTailJmp_00483f30(void);   /* 0x00483f30 */
 extern void DualLoadDualStoreJmp_00485d70(void);   /* 0x00485d70 */
 extern void InstallSelfMStackIndirect_00487920(void);   /* 0x00487920 */
-extern void Push16Call_00489f50(void);   /* 0x00489f50 */
+extern void Push16Call(void);   /* 0x00489f50 */
 extern void Phase3InstallTableCheck_0048acd0(void);   /* 0x0048acd0 */
 extern void MStackPush4IndirectCall_0048fd60(void);   /* 0x0048fd60 */
 extern void Thunk_0049cba0(void);   /* 0x0049cba0 */
@@ -312,13 +312,13 @@ void SetJmp_0049cb90(void) {
 /* @addr 0x004a1ac0 */
 void SetJmp_004a1ac0(void) {
     g_eventQueueWorkType = 0x00000325;
-    Push16Call_00489f50();
+    Push16Call();
 }
 
 /* @addr 0x004a1ad0 */
 void SetJmp_004a1ad0(void) {
     g_eventQueueWorkType = 0x00000320;
-    Push16Call_00489f50();
+    Push16Call();
 }
 
 /* @addr 0x004bea40 */

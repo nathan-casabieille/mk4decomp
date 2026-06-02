@@ -23,13 +23,13 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern unsigned int g_table_00535ddc;
-extern int Cmp2CallDirtyCall_004398b0(void);
+extern int Cmp2CallDirtyCall(void);
 extern void GuardedSeq_00433bb0(void);
 extern void Mul10ThresholdQuad_00435f50(void);
 extern void TripleThresholdDispatch_004362f0(void);
 void Cmp30000And18000_004362b0(void) {
     unsigned int v;
-    if (Cmp2CallDirtyCall_004398b0() != 0) return;
+    if (Cmp2CallDirtyCall() != 0) return;
     v = g_table_00535ddc;
     g_walkCallback = (void (*)(void))v;
     if ((int)v > 0x30000) {

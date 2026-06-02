@@ -13,12 +13,12 @@ extern unsigned int g_scaledInit_00542044;
  *   store walk and [ecx*4 + 0x6c]; jmp T2.
  */
 extern void SaveCallRestoreOrXor_00404a00(int);
-extern void StackPopDispatchTagged_0041f780(void);
+extern void StackPopDispatchTagged(void);
 extern void InstallSelfPauseGate_004a1a50(void);
 void PushCallTestByte4Jmp_004a1a10(void) {
     SaveCallRestoreOrXor_00404a00(0x25a);
     if ((g_xformDirtyFlags & 4) != 0) {
-        StackPopDispatchTagged_0041f780();
+        StackPopDispatchTagged();
         return;
     }
     g_walkCallback = (void (*)(void))0xfffb0000;

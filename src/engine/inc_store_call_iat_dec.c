@@ -6,7 +6,7 @@
 
 extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
-extern void Mul10Tail_00404af0(void);
+extern void Mul10Tail(void);
 
 /* @addr 0x00439520 (64b)
  *   inc g_matrixStackTop, store callback to stack[idx*4],

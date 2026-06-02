@@ -523,7 +523,7 @@ family that all wrap by this constant:
   triple in the xform-record view), normalising each into one
   revolution.
 - `ModuloMagic_0042afc0`, `m_stack_angle_wrap_dispatch`,
-  `BootMod6487eClampAndChainMul10_00407510`, `triple_mod411262` - same
+  `BootMod6487eClampAndChainMul10`, `triple_mod411262` - same
   `0x6487e` wrap.
 
 The wrap is a reciprocal-magic modulo: `q = (x or (lower - x)) *

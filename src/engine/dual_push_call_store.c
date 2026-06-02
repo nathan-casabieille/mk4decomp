@@ -22,14 +22,14 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [0x00538044], ecx
  *   ret
  */
-extern int StoreTwoCall_0049cb40(void *p, int n);
+extern int StoreTwoCall(void *p, int n);
 extern void *g_dispatchSave1138_004234f0;
 extern void *g_dispatchSave1139_00423570;
 extern unsigned int g_dispatchSave99_00538040;
 extern unsigned int g_dispatchSave98_00538044;
 void DualPushCallStore_004231b0(void) {
-    StoreTwoCall_0049cb40(&g_dispatchSave1138_004234f0, 3);
+    StoreTwoCall(&g_dispatchSave1138_004234f0, 3);
     g_dispatchSave99_00538040 = g_scaledInit_00542044;
-    StoreTwoCall_0049cb40(&g_dispatchSave1139_00423570, 4);
+    StoreTwoCall(&g_dispatchSave1139_00423570, 4);
     g_dispatchSave98_00538044 = g_scaledInit_00542044;
 }

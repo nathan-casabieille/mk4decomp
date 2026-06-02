@@ -11,7 +11,7 @@ extern unsigned int g_scaledInit_00542044;
  *   stores eax both to g_eventQueueCurrent and back to [ecx*4+0x34];
  *   then eax = [fightGroupHead*4+0x58] - walk; same dual store.
  */
-void DualFieldAddSubStore_00470340(void) {
+void DualFieldAddSubStore(void) {
     unsigned int s = ((ScenegraphNode *)(g_fightGroupHead * 4))->child_chain;
     unsigned int v;
     g_scaledInit_00542044 = s;

@@ -6,7 +6,7 @@
 
 extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
-extern void Mul10Tail_00404af0(void);
+extern void Mul10Tail(void);
 
 /* @addr 0x00457ff0 (62b)
  *   call F1; pause-test +0x2f → ret

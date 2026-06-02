@@ -15,7 +15,7 @@ extern unsigned int g_phaseTimer;
 extern unsigned int g_dispatchSave1305_004ed4e0;
 extern void AggressorModeCluster_0047df30(void);
 extern void ScaledIndexConditionalAdd_0048e400(void);
-extern int ArgSarStoreJmp_004594f0(unsigned int *p);
+extern int ArgSarStoreJmp(unsigned int *p);
 void GuardedSetCallSetCall_0047dee0(void) {
     if (g_xformScratch2088 == 1) {
         AggressorModeCluster_0047df30();
@@ -26,5 +26,5 @@ void GuardedSetCallSetCall_0047dee0(void) {
     if (g_framePauseFlag) return;
     g_walkCallback = (void(*)(void))0x0f;
     g_phaseTimer = 0x0f;
-    ArgSarStoreJmp_004594f0(&g_dispatchSave1305_004ed4e0);
+    ArgSarStoreJmp(&g_dispatchSave1305_004ed4e0);
 }

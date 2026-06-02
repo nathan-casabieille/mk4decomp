@@ -54,8 +54,8 @@
 
 extern unsigned int g_scaledInit_00542044;
 extern void Sprintf2WaySelect_00426550(void);
-extern void StreamChainStringInstall_00457900(void);
-extern void Push70CallScaleArith_00457ad0(void);
+extern void StreamChainStringInstall(void);
+extern void Push70CallScaleArith(void);
 extern void Push70CallScaleArith2_00457b40(void);
 
 #define BODY(WORKER_FN)                                                       \
@@ -109,10 +109,10 @@ extern void Push70CallScaleArith2_00457b40(void);
 
 /* @addr 0x00426310 */
 
-__declspec(naked) void DispatcherComplex181_00426310(void) { BODY(StreamChainStringInstall_00457900) }
+__declspec(naked) void DispatcherComplex181_00426310(void) { BODY(StreamChainStringInstall) }
 
 /* @addr 0x004263d0 */
-__declspec(naked) void DispatcherComplex181_004263d0(void) { BODY(Push70CallScaleArith_00457ad0) }
+__declspec(naked) void DispatcherComplex181_004263d0(void) { BODY(Push70CallScaleArith) }
 
 /* @addr 0x00426490 */
 __declspec(naked) void DispatcherComplex181_00426490(void) { BODY(Push70CallScaleArith2_00457b40) }

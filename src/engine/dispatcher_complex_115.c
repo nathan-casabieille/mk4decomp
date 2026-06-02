@@ -49,7 +49,7 @@ extern unsigned int g_lit16_004e286c;
 extern void Cmp3DirtyToggle_0049fa20(void);
 extern void RoundWinTransition_0049e7e0(void);
 extern void StateAdd5Capped_0049fa00(void);
-extern int  TaggedSceneDispatch_004be690(int);
+extern int  TaggedSceneDispatch(int);
 
 /* @addr 0x0049f900 */
 
@@ -88,7 +88,7 @@ __declspec(naked) void DispatcherComplex115_0049f900(void) {
         _emit   0fh
         mov     ax, word ptr [g_lit16_004e286c]
         push    eax
-        call    TaggedSceneDispatch_004be690
+        call    TaggedSceneDispatch
         add     esp, 4
         ret
     }
@@ -130,7 +130,7 @@ __declspec(naked) void DispatcherComplex115_0049f980(void) {
         _emit   0fh
         mov     ax, word ptr [g_lit16_004e286c]
         push    eax
-        call    TaggedSceneDispatch_004be690
+        call    TaggedSceneDispatch
         add     esp, 4
         ret
     }

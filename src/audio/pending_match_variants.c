@@ -15,47 +15,47 @@ extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
 
-extern void StoreTwoCall_0049cb40(int, int);
+extern void StoreTwoCall(int, int);
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
-extern void ScaledZeroFour_00490740(void);
+extern void ScaledZeroFour(void);
 extern void WalkCbSubMul10_00431d50(void);
-extern void Mul10Tail_00404af0(unsigned int a, unsigned int b);
-extern void BootMod6487eClampAndChainMul10_00407510(void);
+extern void Mul10Tail(unsigned int a, unsigned int b);
+extern void BootMod6487eClampAndChainMul10(void);
 extern void SpawnListBatchLoader_00477710(void);
-extern void MStackPush2TableNot_00426230(void);
-extern void GuardedChainCmpDualBitXor_004299a0(void);
+extern void MStackPush2TableNot(void);
+extern void GuardedChainCmpDualBitXor(void);
 extern void ScaledLoadDecJmp_00429710(void);
 extern void ScaledStoreCurDirtyClear_004296f0(void);
 extern void MStackBitmaskIncMod_00492450(void);
 extern void MStackBitmaskUpdate_00492510(void);
 extern void Push1eCallTestDirtyLoop_004923b0(void);
 extern void MStackLoopFieldInit_00492280(void);
-extern void TaggedSceneDispatch_004be690(void);
+extern void TaggedSceneDispatch(void);
 extern void CallPauseDirty4StackPushFn_004839d0(void);
 extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
-extern void Cmp2CallDirtyCall_004398b0(void);
-extern void QuadBlockArgInstallChain_0043a950(void);
+extern void Cmp2CallDirtyCall(void);
+extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80CallW_004363f0(void);
 extern void Wrapper_00436490(void);
 extern void MoveFsmCluster_004364a0(void);
-extern void CallPauseTestByteJmpCalls_004390f0(void);
-extern void InstallSelfFullPath_0047a840(void);
+extern void CallPauseTestByteJmpCalls(void);
+extern void InstallSelfFullPath(void);
 extern void InstallSelfCountdownChain_0047a950(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
-extern void TripleVecAccCallStore_00476880(void);
+extern void TripleVecAccCallStore(void);
 extern void Thunk_004bd5c0(void);
-extern void AllocSlotPushTripleGlobals_00427470(void);
-extern void MStackPop4Rewrite_004274f0(void);
-extern void Push70CallScaleArith_00457ad0(void);
-extern void StreamChainStringInstall_00457900(void);
-extern void MStackFrameCdeclDouble_004903f0(void);
+extern void AllocSlotPushTripleGlobals(void);
+extern void MStackPop4Rewrite(void);
+extern void Push70CallScaleArith(void);
+extern void StreamChainStringInstall(void);
+extern void MStackFrameCdeclDouble(void);
 extern void ChainTableWalkStore_004917e0(void);
-extern void Push16Call_00489f50(void);
+extern void Push16Call(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
-extern void StackPopDispatchTagged_0041f780(void);
+extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
 extern unsigned int g_zero_00541fa4;
@@ -65,38 +65,38 @@ extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
 
 extern void ScaledArrStore_004298c0(void);
-extern void DualFieldAddSubStore_00470340(void);
-extern void IterStepDualStore_00490b40(int);
+extern void DualFieldAddSubStore(void);
+extern void IterStepDualStore(int);
 extern void ScaledXorStore_004900f0(void);
-extern void ChainWalkInstall_0049b7c0(void);
-extern void FpuSqrtMul_004ab350(void);
+extern void ChainWalkInstall(void);
+extern void FpuSqrtMul(void);
 extern void PendingMatch_0042b930(void);
-extern void MStackPush2RunCountdown_004089e0(void);
-extern void MStackBracket7_DispatchAndChain_004b8fa0(void);
-extern void MStackBracketed3StoreCall_00475990(void);
-extern void ChainDirtyBitWalker_00408c10(void);
+extern void MStackPush2RunCountdown(void);
+extern void MStackBracket7_DispatchAndChain(void);
+extern void MStackBracketed3StoreCall(void);
+extern void ChainDirtyBitWalker(void);
 extern void Wrapper_0048a350(void);
 extern void Wrapper_0048a3a0(void);
 extern void Helper_DownloadSetup(void);
-extern void MStackPush3CmpCall_0048eec0(void);
+extern void MStackPush3CmpCall(void);
 extern void Wrapper_0048ec20(void);
-extern void FiveCallScaledChainTailJmp_0045f8d0(void);
+extern void FiveCallScaledChainTailJmp(void);
 extern void SetJmp_00438f50(void);
 extern void SetJmp_00438f60(void);
 extern void GuardedDispatch_0042b6c0(void);
 extern void MStackPushZeroCallPop_00407d00(void);
-extern void DirtyToggleByGate_0048f350(void);
-extern void GameDispatchValidateState_004339c0(void);
-extern void CrouchAttackFsmCluster_0046f7a0(void);
-extern void MStackPushVec3Mul10_004767e0(void);
-extern void LiteralPushCallEntZero_00488c00(void);
-extern void LeaPlus22StoreSelf_0048e4d0(void);
+extern void DirtyToggleByGate(void);
+extern void GameDispatchValidateState(void);
+extern void CrouchAttackFsmCluster(void);
+extern void MStackPushVec3Mul10(void);
+extern void LiteralPushCallEntZero(void);
+extern void LeaPlus22StoreSelf(void);
 extern void IterLoad_00491050(void);
-extern void GuardedDualConst2AndToggle_0048eba0(void);
-extern void CallPauseScaledStorePushCall_0045fca0(void);
+extern void GuardedDualConst2AndToggle(void);
+extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
-extern void PushSetCallPop_00406530(void);
+extern void PushSetCallPop(void);
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
@@ -212,7 +212,7 @@ extern void AudioInstallSelfStatePush_004aa8a0(void);
 extern void AudioPreloadStreamingTrack_004a6e70(void);
 extern void AudioState50b4BitDispatcher_004a32c0(void);
 extern void BootInitGuardedCallChain_004265d0(void);
-extern void CallSetPause_0041f830(void);
+extern void CallSetPause(void);
 extern void CmpByteJmp_004a4180(void);
 extern void DispatcherComplex260_00407400(void);
 extern void DrainQueueCallEach_004a1ec0(void);
@@ -231,7 +231,7 @@ extern void PendingMatch_004a62b0(void);
 extern void PendingMatch_004a8ca0(void);
 extern void Match_TeamOutcomeScreen(void);
 extern void PendingMatch_004aa9f0(void);
-extern void Push16Call_00489f50(void);
+extern void Push16Call(void);
 extern void QuadCallPhase2_004be800(void);
 extern void ScaledByteIdxDualCopy_004a3260(void);
 extern void SnapshotDirtyMark_004a1dc0(void);
@@ -279,7 +279,7 @@ __declspec(naked) void GameMode_EnterScene(void)
         mov     dword ptr [g_dlMode], 0
         call    SixCallSeqPushImm_004a1d80
         mov     dword ptr [g_eventQueueWorkType], 0
-        call    Push16Call_00489f50
+        call    Push16Call
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_main_ret
@@ -358,7 +358,7 @@ __declspec(naked) void AudioInitLoopTriple_004a7840(void)
         _emit   90h
         push    esi
         mov     dword ptr [g_eventQueueWorkType], 0x32a
-        call    Push16Call_00489f50
+        call    Push16Call
         mov     esi, 0x004f3b48
     L_loop1:
         movsx   eax, byte ptr [esi]
@@ -591,7 +591,7 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
         je      L_asimi_install2
     L_asimi_skipRetZero:
         mov     dword ptr [g_eventQueueWorkType], 0x32f
-        call    Push16Call_00489f50
+        call    Push16Call
         call    DebugMenu_DrawUnlockToggles
         mov     dword ptr [g_eventQueueCurrent], 0x20
         mov     dword ptr [edi + 8], offset AudioStateInitMultiInstall_004a4d20
@@ -748,7 +748,7 @@ __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_702b
-        jmp      CallSetPause_0041f830
+        jmp      CallSetPause
     L_6fc9:
         mov      dword ptr [eax + 8], OFFSET AudioPreloadStreamingTrack_004a6e70
         mov      ecx, dword ptr [g_baseSel]
@@ -797,14 +797,14 @@ __declspec(naked) void Match_ChampionScreen(void)
         call     DualAddSar_004ab600
         test     byte ptr [g_walkCallback], 0xf
         jne      L_724e
-        call     MStackPush2RunCountdown_004089e0
+        call     MStackPush2RunCountdown
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
-        call     MStackBracket7_DispatchAndChain_004b8fa0
+        call     MStackBracket7_DispatchAndChain
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         mov      dword ptr [g_walkCallback], 9
-        call     ChainDirtyBitWalker_00408c10
+        call     ChainDirtyBitWalker
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         test     byte ptr [g_xformDirtyFlags], 4
@@ -865,14 +865,14 @@ __declspec(naked) void Match_ChampionScreen(void)
         test     eax, eax
         je       L_75df
         mov      dword ptr [g_eventQueueWorkType], 0x325
-        call     Push16Call_00489f50
+        call     Push16Call
         call     BootInitGuardedCallChain_004265d0
         mov      dword ptr [g_pendingNodeType], 0x401b70
         mov      dword ptr [g_eventQueueWorkType], 0x1000
         call     AllocNode
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
-        call     CallSetPause_0041f830
+        call     CallSetPause
         pop      edi
         pop      esi
         pop      ebp
@@ -922,7 +922,7 @@ __declspec(naked) void Match_ChampionScreen(void)
         mov      dword ptr [eax + 0x54], 0xff010000
         mov      dword ptr [g_walkCallback], esi
         mov      dword ptr [eax + 0x58], esi
-        call     PushSetCallPop_00406530
+        call     PushSetCallPop
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         mov      ecx, 0x5063f8
@@ -936,7 +936,7 @@ __declspec(naked) void Match_ChampionScreen(void)
         mov      dword ptr [g_walkCallback], esi
         mov      dword ptr [edx*4 + 0x58], esi
         lea      eax, [edx*4]
-        call     PushSetCallPop_00406530
+        call     PushSetCallPop
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_75fb
         cmp      dword ptr [g_count], 4
@@ -1020,7 +1020,7 @@ __declspec(naked) void Match_ChampionScreen(void)
         call     Phase1ChainAdvanceCallScale_00418f80
         call     InstallChainInitTailJmp_004a7030
         mov      dword ptr [g_eventQueueWorkType], 9
-        call     Push16Call_00489f50
+        call     Push16Call
     L_75df:
         mov      eax, 1
         mov      dword ptr [ebp + 8], 0x4a70f0
@@ -1067,7 +1067,7 @@ __declspec(naked) void PendingMatch_004a3400(void)
         mov      dword ptr [g_audioPendingBcSlot_005433bc], eax
         jle      L_3483
         mov      dword ptr [g_eventQueueWorkType], 0xcc6
-        call     Push16Call_00489f50
+        call     Push16Call
         call     AudioStateInitMultiInstall_004a4d20
         pop      edi
         pop      esi
@@ -1078,7 +1078,7 @@ __declspec(naked) void PendingMatch_004a3400(void)
         cmp      eax, 0x12c
         jne      L_34a1
         mov      dword ptr [g_eventQueueWorkType], 0x18bf
-        call     Push16Call_00489f50
+        call     Push16Call
         jmp      L_34a1
     L_349b:
         mov      dword ptr [g_audioPendingBcSlot_005433bc], ebx
@@ -1099,7 +1099,7 @@ __declspec(naked) void PendingMatch_004a3400(void)
         cmp      eax, 7
         jne      L_352d
         mov      dword ptr [g_eventQueueWorkType], 0x32a
-        call     Push16Call_00489f50
+        call     Push16Call
         call     DebugMenu_DrawMatchOptions
         mov      dword ptr [g_eventQueueCurrent], 0x20
         mov      dword ptr [edi + 8], 0x4a3400
@@ -1123,7 +1123,7 @@ __declspec(naked) void PendingMatch_004a3400(void)
         cmp      eax, 9
         jne      L_358b
         mov      dword ptr [g_eventQueueWorkType], 0x32f
-        call     Push16Call_00489f50
+        call     Push16Call
         call     DebugMenu_DrawMatchOptions
         mov      dword ptr [g_eventQueueCurrent], 0x20
         mov      dword ptr [edi + 8], 0x4a3400
@@ -1139,7 +1139,7 @@ __declspec(naked) void PendingMatch_004a3400(void)
         test     eax, eax
         je       L_37fa
         mov      dword ptr [g_eventQueueWorkType], 0x32f
-        call     Push16Call_00489f50
+        call     Push16Call
         call     DebugMenu_DrawMatchOptions
         mov      dword ptr [g_eventQueueCurrent], 0x20
         mov      dword ptr [edi + 8], 0x4a3400
@@ -1250,7 +1250,7 @@ __declspec(naked) void PendingMatch_004a3400(void)
         mov      dword ptr [g_audioPendingByte_005433f8], eax
         call     TripleCallSetCopy_004a4880
         mov      dword ptr [g_eventQueueWorkType], 9
-        call     Push16Call_00489f50
+        call     Push16Call
         mov      dword ptr [g_eventQueueChild], 0x1c20
         mov      esi, 0x4f326c
     L_379b:
@@ -1728,7 +1728,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         test     eax, eax
         je       L_5ce6
         mov      dword ptr [g_eventQueueWorkType], 0x32a
-        call     Push16Call_00489f50
+        call     Push16Call
         mov      eax, dword ptr [g_audioPendingCcSlot_005433cc]
         mov      dword ptr [g_currentNodeIdx], eax
         call     MStackPush2ChainLLInsert_00406790
@@ -1767,7 +1767,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         test     eax, eax
         je       L_5e75
         mov      dword ptr [g_eventQueueWorkType], 0x32f
-        call     Push16Call_00489f50
+        call     Push16Call
         call     EnduranceMode_Handler
         pop      edi
         pop      esi

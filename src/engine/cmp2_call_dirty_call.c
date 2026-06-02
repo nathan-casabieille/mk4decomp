@@ -29,7 +29,7 @@ extern unsigned int g_tickFlagF;
 extern void Thunk_004399b0(void);
 extern void WeightedSumClampHelper_00439920(void);
 extern void Thunk_004399b0(void);
-int Cmp2CallDirtyCall_004398b0(void) {
+int Cmp2CallDirtyCall(void) {
     unsigned int v = g_tickFlagF;
     g_walkCallback = (void (*)(void))v;
     if (v == 2) {

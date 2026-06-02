@@ -21,14 +21,14 @@
  *   jmp     -0x57
  *   ret
  */
-extern void GuardedChainCmpDualBitXor_004299a0(void);
+extern void GuardedChainCmpDualBitXor(void);
 extern void ScaledStoreCurDirtyClear_004296f0(void);
 extern void ScaledStoreCurDirtyOr1_00429730(void);
 extern u32 g_framePauseFlag;
 
 __declspec(naked) void CallPauseScaledDecJmp_00429750(void) {
     __asm {
-        call    GuardedChainCmpDualBitXor_004299a0
+        call    GuardedChainCmpDualBitXor
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_cpsdj_ret

@@ -22,13 +22,13 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void GuardedChainPushSetCallPop_00406bb0(void);
-extern void ScaledZeroFour_00490740(void);
+extern void ScaledZeroFour(void);
 extern void MStackPushSet0004_00490230(void);
 void StoreCallPauseCallPauseJmp_0048fa20(void) {
     g_scaledInit_00542044 = g_fightGroupHead;
     GuardedChainPushSetCallPop_00406bb0();
     if (g_framePauseFlag != 0) return;
-    ScaledZeroFour_00490740();
+    ScaledZeroFour();
     if (g_framePauseFlag != 0) return;
     MStackPushSet0004_00490230();
 }

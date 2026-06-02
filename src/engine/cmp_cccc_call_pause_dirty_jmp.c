@@ -27,7 +27,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_table_00535ddc;
 extern void Wrapper_0048ec20(void);
 extern void DualCallPauseJmpDual_00439190(void);
-extern void CallPauseTestByteJmpCalls_004390f0(void);
+extern void CallPauseTestByteJmpCalls(void);
 extern void GuardedDirtyDispatch_00438c50(void);
 void CmpccccCallPauseDirtyJmp_004390b0(void) {
     unsigned int v = g_table_00535ddc;
@@ -42,5 +42,5 @@ void CmpccccCallPauseDirtyJmp_004390b0(void) {
         GuardedDirtyDispatch_00438c50();
         return;
     }
-    CallPauseTestByteJmpCalls_004390f0();
+    CallPauseTestByteJmpCalls();
 }

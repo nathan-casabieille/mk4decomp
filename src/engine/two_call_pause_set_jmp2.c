@@ -20,13 +20,13 @@ extern u32 g_framePauseFlag;
  *   jmp     T
  *   ret
  */
-extern void MStackPush2RunCountdown_004089e0(void);
-extern void MStackBracket7_DispatchAndChain_004b8fa0(void);
+extern void MStackPush2RunCountdown(void);
+extern void MStackBracket7_DispatchAndChain(void);
 extern void GuardedSeq_00473f70(void);
 void TwoCallPauseSetJmp2_00456180(void) {
-    MStackPush2RunCountdown_004089e0();
+    MStackPush2RunCountdown();
     if (g_framePauseFlag != 0) return;
-    MStackBracket7_DispatchAndChain_004b8fa0();
+    MStackBracket7_DispatchAndChain();
     if (g_framePauseFlag != 0) return;
     g_acc_00542078 = 2;
     g_walkCallback = (void (*)(void))3;

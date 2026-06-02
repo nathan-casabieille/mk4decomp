@@ -14,14 +14,14 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_dispatchSave1237_004e4a04;
 extern unsigned int g_table_00535ddc;
-extern void QuadBlockArgInstallChain_0043a950(void);
+extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80Call_00434f90(void);
 extern void InstallSelfStdChain_00435030(void);
 extern void InstallSelfChainExtendCall_00434f10(void);
-extern void CallPauseTestByteJmpCalls_004390f0(void);
+extern void CallPauseTestByteJmpCalls(void);
 void RangeDispatch4_00434ec0(void) {
     int v;
-    QuadBlockArgInstallChain_0043a950((void *)&g_dispatchSave1237_004e4a04);
+    QuadBlockArgInstallChain((void *)&g_dispatchSave1237_004e4a04);
     if (g_framePauseFlag != 0) {
         return;
     }
@@ -39,5 +39,5 @@ void RangeDispatch4_00434ec0(void) {
         InstallSelfChainExtendCall_00434f10();
         return;
     }
-    CallPauseTestByteJmpCalls_004390f0();
+    CallPauseTestByteJmpCalls();
 }

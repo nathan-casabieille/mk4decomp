@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
 extern void CjTableThresholdDispatch_00488f00(void);
 extern void GateDispatch6c_00494580(void);
 extern void ScaledLoadJmp_74_0048e7b0(void);
-extern void ArgSarStoreJmp_004594f0(void);
+extern void ArgSarStoreJmp(void);
 extern unsigned int g_dispatchSave1309_004ee2f0;
 
 void TripleCallPauseTestPush_00482e60(void) {
@@ -43,7 +43,7 @@ void TripleCallPauseTestPush_00482e60(void) {
         _emit   00h
         _emit   00h
         push    OFFSET g_dispatchSave1309_004ee2f0
-        call    ArgSarStoreJmp_004594f0
+        call    ArgSarStoreJmp
         add     esp, 4
         }
 }

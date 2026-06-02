@@ -23,5 +23,5 @@ void DualSwapTwoCallsJmp_0045d960(void) {
     g_eventQueueWorkType = (unsigned int)g_walkCallback;
     ChainShiftRight8_0045d9b0();
     if (g_framePauseFlag) return;
-    CallSetPause_0041f830();
+    CallSetPause();
 }

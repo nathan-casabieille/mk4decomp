@@ -10,7 +10,7 @@
 extern void CallDualStoreXorBit_004285e0(void);
 extern void InstallSelfTri_00484a90(void);
 extern void FiveCallGuardSetTail_0046f6b0(void);
-extern void DirtyToggleByGate_0048f350(void);
+extern void DirtyToggleByGate(void);
 extern void ScaledClearJmp_00428d60(void);
 extern void InstallSelfReentry_004890b0(void);
 
@@ -27,7 +27,7 @@ void GuardedDispatch4_00484b40(void) {
 
 /* @addr 0x00489080 */
 void GuardedDispatch4_00489080(void) {
-    DirtyToggleByGate_0048f350();
+    DirtyToggleByGate();
     if (g_framePauseFlag) return;
     if (!(g_xformDirtyFlags & 4)) {
         ScaledClearJmp_00428d60();

@@ -13,18 +13,18 @@ extern unsigned int g_scaledInit_00542044;
  *   push 0x00483a20 onto stack[idx*4]; jmp T.
  */
 extern void GuardedDoubleIncCmpJmp_00429860(void);
-extern void DirtyToggleByGate_0048f350(void);
+extern void DirtyToggleByGate(void);
 extern void InstallSelfOrChainJmp_00483a20(void);
-extern void GameDispatchValidateState_004339c0(void);
+extern void GameDispatchValidateState(void);
 void CallPauseDirty4StackPushFn_004839d0(void) {
     GuardedDoubleIncCmpJmp_00429860();
     if (g_framePauseFlag != 0) return;
-    DirtyToggleByGate_0048f350();
+    DirtyToggleByGate();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 4) != 0) {
         g_matrixStackTop++;
         *(unsigned int *)(g_matrixStackTop * 4) = (unsigned int)&InstallSelfOrChainJmp_00483a20;
-        GameDispatchValidateState_004339c0();
+        GameDispatchValidateState();
         return;
     }
     InstallSelfOrChainJmp_00483a20();

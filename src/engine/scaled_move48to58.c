@@ -46,11 +46,11 @@ void ScaledAndAhfe_00490390(void) {
  *   mov     [eax*4 + 0x58], ecx
  *   jmp     +2
  */
-extern void ScaledZeroFour_00490740(void);
+extern void ScaledZeroFour(void);
 void ScaledMove48to58_00490720(void) {
     packed_ptr fg = g_fightGroupHead;
     unsigned int v = *(unsigned int *)(fg * 4 + 0x48);
     g_walkCallback = (void (*)(void))v;
     ((ScenegraphNode *)(fg * 4))->position_y = v;
-    ScaledZeroFour_00490740();
+    ScaledZeroFour();
 }

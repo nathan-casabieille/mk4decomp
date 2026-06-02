@@ -6,7 +6,7 @@
 
 extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
-extern void Mul10Tail_00404af0(void);
+extern void Mul10Tail(void);
 
 /* @addr 0x00425130 (61b)
  *   3-component vector add: out[i] = a[i] + b[i] across i=0,1,2

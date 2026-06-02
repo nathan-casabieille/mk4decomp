@@ -13,21 +13,21 @@ extern unsigned int g_phaseTimer;
  *   testb 1,[dirty] ; je → call F2 ; pause → jne ret
  *   call F3; pause → jne ret; jmp T
  */
-extern void MStackPush3CmpCall_0048eec0(void);
+extern void MStackPush3CmpCall(void);
 extern void SetJmp_00438f60(void);
-extern void FiveCallScaledChainTailJmp_0045f8d0(void);
-extern void ScaledZeroFour_00490740(void);
+extern void FiveCallScaledChainTailJmp(void);
+extern void ScaledZeroFour(void);
 extern void GuardedDispatch_0042c570(void);
-void CallPauseTestByteJmpCalls_004390f0(void) {
-    MStackPush3CmpCall_0048eec0();
+void CallPauseTestByteJmpCalls(void) {
+    MStackPush3CmpCall();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 1) {
         SetJmp_00438f60();
         return;
     }
-    FiveCallScaledChainTailJmp_0045f8d0();
+    FiveCallScaledChainTailJmp();
     if (g_framePauseFlag) return;
-    ScaledZeroFour_00490740();
+    ScaledZeroFour();
     if (g_framePauseFlag) return;
     GuardedDispatch_0042c570();
 }

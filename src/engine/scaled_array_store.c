@@ -17,7 +17,7 @@ extern void EsiInstallBitCallChain_00429610(void);   /* 0x00429610 */
 extern void ScaledChainJmp_004298e0(void);   /* 0x004298e0 */
 extern void SetJmp_00429950(void);   /* 0x00429950 */
 extern void ScaledArrStore_00429960(void);   /* 0x00429960 */
-extern void GuardedChainCmpDualBitXor_004299a0(void);   /* 0x004299a0 */
+extern void GuardedChainCmpDualBitXor(void);   /* 0x004299a0 */
 
 /* @addr 0x00428330 - g_X[idx*4 + 0x28] = g_Y; jmp T */
 void ScaledArrStore_00428330(void) {
@@ -70,12 +70,12 @@ void ScaledArrStore_00429930(void) {
 /* @addr 0x00429960 - g_X[idx*4 + 0x28] = g_Y; jmp T */
 void ScaledArrStore_00429960(void) {
     ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = (unsigned int)g_walkCallback;
-    GuardedChainCmpDualBitXor_004299a0();
+    GuardedChainCmpDualBitXor();
 }
 
 /* @addr 0x00429980 - g_X[idx*4 + 0x28] = g_Y; jmp T */
 void ScaledArrStore_00429980(void) {
     ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = (unsigned int)g_eventQueueChild;
-    GuardedChainCmpDualBitXor_004299a0();
+    GuardedChainCmpDualBitXor();
 }
 

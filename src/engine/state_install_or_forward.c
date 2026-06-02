@@ -19,7 +19,7 @@
 extern unsigned int g_active_0053a408;
 extern unsigned int g_active_00537e88;
 
-extern void CallSetPause_0041f830(void);
+extern void CallSetPause(void);
 extern void ArgSarAddDerefJmp_0048e710(int);
 
 /* @addr 0x0048e6b0 */
@@ -27,7 +27,7 @@ void StateInstallOrForward_0048e6b0(int arg) {
     unsigned int v = g_active_0053a408;
     g_walkCallback = (void (*)(void))v;
     if (v == 0) {
-        CallSetPause_0041f830();
+        CallSetPause();
         return;
     }
     ArgSarAddDerefJmp_0048e710(arg);
@@ -38,7 +38,7 @@ void StateInstallOrForward_0048e6e0(int arg) {
     unsigned int v = g_active_00537e88;
     g_walkCallback = (void (*)(void))v;
     if (v == 0) {
-        CallSetPause_0041f830();
+        CallSetPause();
         return;
     }
     ArgSarAddDerefJmp_0048e710(arg);

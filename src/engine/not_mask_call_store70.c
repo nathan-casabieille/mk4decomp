@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  *   add esp 8; restore [head*4+0x70] = eax; ret.
  */
 extern void EsiEdiAliasDualMul10_004906b0(void);
-extern void Mul10Tail_00404af0(void);
+extern void Mul10Tail(void);
 void NotMaskCallStore70_0047e640(void) {
     unsigned int v;
     unsigned int r;
@@ -22,7 +22,7 @@ void NotMaskCallStore70_0047e640(void) {
     if (g_framePauseFlag != 0) return;
     v = *(unsigned int *)(g_fightGroupHead * 4 + 0x70);
     g_walkCallback = (void (*)(void))v;
-    r = ((unsigned int (*)(int, int))Mul10Tail_00404af0)((int)g_eventQueueNotMask, (int)v);
+    r = ((unsigned int (*)(int, int))Mul10Tail)((int)g_eventQueueNotMask, (int)v);
     g_walkCallback = (void (*)(void))r;
     *(unsigned int *)(g_fightGroupHead * 4 + 0x70) = r;
 }

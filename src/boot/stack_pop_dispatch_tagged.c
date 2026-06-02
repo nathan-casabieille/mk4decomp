@@ -15,7 +15,7 @@ extern unsigned int g_baseSel;
  *   Hand-rolled tail-dispatch: pops a 24-bit "next" + 8-bit "tag"
  *   from a stack-of-callbacks, invokes the next.
  */
-void StackPopDispatchTagged_0041f780(void) {
+void StackPopDispatchTagged(void) {
     unsigned int base = g_baseSel;
     unsigned int top = *(unsigned int *)(base * 4 + 4) - 1;
     unsigned int walk;

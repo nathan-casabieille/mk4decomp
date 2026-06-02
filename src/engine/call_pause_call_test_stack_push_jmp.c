@@ -11,14 +11,14 @@ extern unsigned int g_scaledInit_00542044;
  *   call F1; pause → ret; call F2; if eax != 0 → ret;
  *   inc g_matrixStackTop; set walk=2; push 0x46f6b0 to stack[idx*4]; jmp T.
  */
-extern void LeaPlus22StoreSelf_0048e4d0(void);
+extern void LeaPlus22StoreSelf(void);
 extern int DualGatedStateYield_0048fc80(void);
 extern unsigned int g_matrixStackTop;
 extern void MstackPopScaledChainPlusThunks_00471250(void);
 extern void FiveCallGuardSetTail_0046f6b0(void);
 void CallPauseCallTestStackPushJmp_00460c60(void) {
     unsigned int top;
-    LeaPlus22StoreSelf_0048e4d0();
+    LeaPlus22StoreSelf();
     if (g_framePauseFlag != 0) {
         return;
     }

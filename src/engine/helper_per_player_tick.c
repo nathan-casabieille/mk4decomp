@@ -31,9 +31,9 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_xformScratch94;
 extern void DualInstallCallSwap_00489cd0(void);
 extern void DualInstallCallSwap_00490c80(void);
-extern void FpuSqrtMul_004ab350(void);
+extern void FpuSqrtMul(void);
 extern void GeoTransformDispatchAndApply_00489840(void);
-extern void Mul10Tail_00404af0(void);
+extern void Mul10Tail(void);
 extern void FixedDiv16_004ab2a0(void);
 extern void ScaledStateNegCallPauseLoad_00489e90(void);
 
@@ -71,19 +71,19 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      dword ptr [g_acc_00542078], ecx
         mov      dword ptr [g_eventQueueNotMask], eax
         mov      dword ptr [g_eventQueueChild], ecx
-        call     Mul10Tail_00404af0
+        call     Mul10Tail
         add      esp, 8
         mov      dword ptr [g_eventQueueWorkType], eax
         mov      eax, dword ptr [g_acc_00542078]
         push     eax
         push     eax
-        call     Mul10Tail_00404af0
+        call     Mul10Tail
         mov      ecx, dword ptr [g_eventQueueWorkType]
         add      esp, 8
         add      ecx, eax
         mov      dword ptr [g_acc_00542078], eax
         mov      dword ptr [g_eventQueueWorkType], ecx
-        call     FpuSqrtMul_004ab350
+        call     FpuSqrtMul
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_983c
@@ -171,13 +171,13 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      dword ptr [g_eventQueueCurrent], esi
         mov      dword ptr [g_eventQueueWorkType], eax
         mov      dword ptr [g_acc_00542078], ecx
-        call     Mul10Tail_00404af0
+        call     Mul10Tail
         add      esp, 8
         mov      dword ptr [g_eventQueueWorkType], eax
         mov      eax, dword ptr [g_acc_00542078]
         push     eax
         push     eax
-        call     Mul10Tail_00404af0
+        call     Mul10Tail
         mov      ecx, dword ptr [g_eventQueueWorkType]
         mov      edi, dword ptr [g_walkCallback]
         mov      esi, dword ptr [g_eventQueueChild]
@@ -193,13 +193,13 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         push     eax
         mov      dword ptr [g_eventQueueNotMask], eax
         mov      dword ptr [g_eventQueueChild], esi
-        call     Mul10Tail_00404af0
+        call     Mul10Tail
         add      esp, 8
         mov      dword ptr [g_eventQueueNotMask], eax
         mov      eax, dword ptr [g_eventQueueChild]
         push     eax
         push     eax
-        call     Mul10Tail_00404af0
+        call     Mul10Tail
         mov      edx, dword ptr [g_eventQueueNotMask]
         mov      esi, dword ptr [g_eventQueueWorkType]
         mov      ecx, dword ptr [g_audioBridgeSlot2_0052d720]
@@ -259,7 +259,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         push     edx
         mov      dword ptr [g_eventQueueNotMask], eax
         mov      dword ptr [g_eventQueueChild], esi
-        call     Mul10Tail_00404af0
+        call     Mul10Tail
         add      esp, 8
     L_9613:
         mov      edx, dword ptr [g_eventQueueChild]

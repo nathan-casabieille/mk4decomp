@@ -14,7 +14,7 @@ extern unsigned int g_baseSel;
  *   mov     [eax*4 + 4], ecx
  *   ret
  */
-void LeaPlus22StoreSelf_0048e4d0(void) {
+void LeaPlus22StoreSelf(void) {
     u32 base = g_baseSel;
     u32 v = base + 0x22;
     g_walkCallback = (NodeHandlerFn)v;

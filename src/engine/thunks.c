@@ -9,11 +9,11 @@
  */
 
 /* Externs for thunk targets. */
-extern void BootMod6487eClampAndChainMul10_00407510(void);     /* 0x00407510 */
+extern void BootMod6487eClampAndChainMul10(void);     /* 0x00407510 */
 extern void MStackPush2ChainPrepend_00409970(void);     /* 0x00409970 */
 extern void ZeroLargeBlock_0041f270(void);     /* 0x0041f270 */
 extern void BootScheduledNodeTimerWalk_0041f570(void);     /* 0x0041f570 */
-extern void StackPopDispatchTagged_0041f780(void);     /* 0x0041f780 */
+extern void StackPopDispatchTagged(void);     /* 0x0041f780 */
 extern void LoadShlDerefCallSkip_0041f810(void);     /* 0x0041f810 */
 extern void ScaledNeg1SetPause_0041f840(void);     /* 0x0041f840 */
 extern void NodeChainMaskMatch_0041f870(void);     /* 0x0041f870 */
@@ -45,10 +45,10 @@ extern void ExitGame(void);     /* 0x004c4870 */
 void Thunk_00405ac0(void) { MStackPush2ChainPrepend_00409970(); }
 
 /* @addr 0x00427460 */
-void Thunk_00427460(void) { BootMod6487eClampAndChainMul10_00407510(); }
+void Thunk_00427460(void) { BootMod6487eClampAndChainMul10(); }
 
 /* @addr 0x004296e0 */
-void Thunk_004296e0(void) { StackPopDispatchTagged_0041f780(); }
+void Thunk_004296e0(void) { StackPopDispatchTagged(); }
 
 /* @addr 0x00433950 */
 void Thunk_00433950(void) { ScaledLoadInstallOrCall_00433960(); }
@@ -96,7 +96,7 @@ void Thunk_0045e0f0(void) { Thunk_0049cbc0(); }
 void Thunk_00460250(void) { GuardedDoubleCallSetJmp_00460260(); }
 
 /* @addr 0x004647f0 */
-void Thunk_004647f0(void) { StackPopDispatchTagged_0041f780(); }
+void Thunk_004647f0(void) { StackPopDispatchTagged(); }
 
 /* @addr 0x0049cb70 */
 void Thunk_0049cb70(void) { NodeChainMaskMatch_0041f870(); }

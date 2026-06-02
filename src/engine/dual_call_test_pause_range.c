@@ -15,7 +15,7 @@ extern unsigned int g_phaseTimer;
  *   load g_table_00535ddc; cmp 0x30000; store; jle → jmp T1; jmp T2
  *   ret
  */
-extern void Cmp2CallDirtyCall_004398b0(void);
+extern void Cmp2CallDirtyCall(void);
 extern void Wrapper_00439310(void);
 extern unsigned int g_table_00535ddc;
 extern void TriEntryGateMain_00435440(void);
@@ -23,7 +23,7 @@ extern void GuardedSeq_00433bb0(void);
 extern void PrefixThunkInstallSelf3State_00438f80(void);
 void DualCallTestPauseRange_004353f0(void) {
     int state_y;
-    if (((int (*)(void))Cmp2CallDirtyCall_004398b0)() != 0) return;
+    if (((int (*)(void))Cmp2CallDirtyCall)() != 0) return;
     Wrapper_00439310();
     if (g_framePauseFlag != 0) return;
     if ((int)g_walkCallback < 0) {

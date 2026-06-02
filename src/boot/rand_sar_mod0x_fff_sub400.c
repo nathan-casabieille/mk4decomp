@@ -6,7 +6,7 @@
 
 extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
-extern void Mul10Tail_00404af0(void);
+extern void Mul10Tail(void);
 
 /* @addr 0x0041f1f0 (54b)
  *   mov     eax, [g_eventQueueWorkType]
@@ -26,7 +26,7 @@ extern void Mul10Tail_00404af0(void);
 void RandSarMod0xFFFSub400_0041f1f0(void) {
     int r;
     unsigned int idx;
-    r = ((int (*)(int, int))Mul10Tail_00404af0)(0x028be602, (int)g_eventQueueWorkType);
+    r = ((int (*)(int, int))Mul10Tail)(0x028be602, (int)g_eventQueueWorkType);
     r = (r >> 16) - 0x400;
     idx = (unsigned int)r & 0xfff;
     g_eventQueueWorkType = idx;

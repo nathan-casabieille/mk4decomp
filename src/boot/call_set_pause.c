@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void ScaledNeg1SetPause_0041f840(void);
-void CallSetPause_0041f830(void) {
+void CallSetPause(void) {
     ScaledNeg1SetPause_0041f840();
     g_framePauseFlag = 1;
 }

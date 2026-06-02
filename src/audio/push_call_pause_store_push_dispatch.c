@@ -14,8 +14,8 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void TripleStageRollback_00404a50(int);
 extern void RoundWinTransition_0049e7e0(void);
-extern int StoreTwoCall_0049cb40(void *, int);
-extern int TaggedSceneDispatch_004be690(unsigned short);
+extern int StoreTwoCall(void *, int);
+extern int TaggedSceneDispatch(unsigned short);
 extern void *g_const_004a0060;
 extern unsigned short g_word_004e2860;
 extern void InstallSelf3WaySubDec_004a1320(void);
@@ -23,7 +23,7 @@ void PushCallPauseStorePushDispatch_004a12e0(void) {
     TripleStageRollback_00404a50(0x22f);
     RoundWinTransition_0049e7e0();
     if (g_framePauseFlag) return;
-    StoreTwoCall_0049cb40(&g_const_004a0060, 0x15);
-    TaggedSceneDispatch_004be690(g_word_004e2860);
+    StoreTwoCall(&g_const_004a0060, 0x15);
+    TaggedSceneDispatch(g_word_004e2860);
     ((int (*)(void))InstallSelf3WaySubDec_004a1320)();
 }

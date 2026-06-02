@@ -14,7 +14,7 @@ extern unsigned int g_dispatchSave1307_004edf38;
 extern unsigned int g_dispatchSave1308_004edf68;
 extern void GateDispatch6c_00494580(void);
 extern void ScaledChainCmp61_00482740(void);
-extern void LiteralPushCallEntZero_00488c00(void);
+extern void LiteralPushCallEntZero(void);
 void TwoEntryWrapperGuarded_004826f0(void) {
-    ArgSarStoreJmp_004594f0(&g_dispatchSave1307_004edf38);
+    ArgSarStoreJmp(&g_dispatchSave1307_004edf38);
 }

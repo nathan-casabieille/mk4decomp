@@ -19,9 +19,9 @@ void func_004111f0(void) {
 /* h1 @ 0x00416e20 (48b): bootstrap wrapper - install func_00416e50
  * as state callback w/ priority 0xb6, then store packed_ptr into
  * scaled-state slot. */
-extern void StoreTwoCall_0049cb40(unsigned int, unsigned int);
+extern void StoreTwoCall(unsigned int, unsigned int);
 extern void func_00416e50(void);
 void PendingMatch_00416e20(void) {
-    StoreTwoCall_0049cb40((unsigned int)&func_00416e50, 0xb6);
+    StoreTwoCall((unsigned int)&func_00416e50, 0xb6);
     ((ScenegraphNode *)(g_currentNodeIdx * 4))->group_head = g_fightGroupHead;
 }

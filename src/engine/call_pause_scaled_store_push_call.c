@@ -17,7 +17,7 @@ extern void SlotPhaseResetInstallChain_0048e0e0(void);
 extern int IterStepScaledStore24_00428730(void *);
 extern void *g_dispatchSave419_00542958;
 extern void SelfInstallPhaseDispatch_0045fd30(void);
-void CallPauseScaledStorePushCall_0045fca0(void) {
+void CallPauseScaledStorePushCall(void) {
     SlotPhaseResetInstallChain_0048e0e0();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))0x2001;

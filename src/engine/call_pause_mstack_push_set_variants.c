@@ -8,7 +8,7 @@ extern unsigned int g_baseSel;
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_acc_00542078;
 extern void SelfInstallPhaseDispatch_0045fd30(void);
-extern void LeaPlus22StoreSelf_0048e4d0(void);
+extern void LeaPlus22StoreSelf(void);
 
 /* @addr 0x0045fcf0 (52b)
  *   call    F
@@ -25,7 +25,7 @@ extern void LeaPlus22StoreSelf_0048e4d0(void);
  */
 void CallPauseMStackPushSet0Jmp_0045fcf0(void) {
     unsigned int top;
-    LeaPlus22StoreSelf_0048e4d0();
+    LeaPlus22StoreSelf();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     g_walkCallback = (void (*)(void))0;
@@ -51,11 +51,11 @@ void CallPauseMStackPushSet9Jmp_0045ffc0(void) {
 }
 
 /* @addr 0x00460d00 (52b): same shape, value=3, OFFSET 0x00470480 */
-extern void LeaPlus22StoreSelf_0048e4d0(void);
+extern void LeaPlus22StoreSelf(void);
 extern void CjInstallSelfRouter_00470480(void);
 void CallPauseMStackPushSet3Jmp_00460d00(void) {
     unsigned int top;
-    LeaPlus22StoreSelf_0048e4d0();
+    LeaPlus22StoreSelf();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     g_walkCallback = (void (*)(void))3;
@@ -66,10 +66,10 @@ void CallPauseMStackPushSet3Jmp_00460d00(void) {
 }
 
 /* @addr 0x00460d40 (52b): same shape, value=4 */
-extern void LeaPlus22StoreSelf_0048e4d0(void);
+extern void LeaPlus22StoreSelf(void);
 void CallPauseMStackPushSet4Jmp_00460d40(void) {
     unsigned int top;
-    LeaPlus22StoreSelf_0048e4d0();
+    LeaPlus22StoreSelf();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     g_walkCallback = (void (*)(void))4;

@@ -22,13 +22,13 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern unsigned int g_acc_00542078;
-extern void MStackPush2RunCountdown_004089e0(void);
-extern void MStackBracket7_DispatchAndChain_004b8fa0(void);
+extern void MStackPush2RunCountdown(void);
+extern void MStackBracket7_DispatchAndChain(void);
 extern void GuardedSeq_00473f50(void);
 void TwoCallPauseSetJmp_00445e80(void) {
-    MStackPush2RunCountdown_004089e0();
+    MStackPush2RunCountdown();
     if (g_framePauseFlag != 0) return;
-    MStackBracket7_DispatchAndChain_004b8fa0();
+    MStackBracket7_DispatchAndChain();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))3;
     g_acc_00542078 = 2;

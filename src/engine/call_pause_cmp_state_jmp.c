@@ -23,13 +23,13 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern unsigned int g_table_00535ddc;
-extern void ScaledZeroFour_00490740(void);
-extern void ArgSarStoreJmp_004594f0(void *p);
+extern void ScaledZeroFour(void);
+extern void ArgSarStoreJmp(void *p);
 extern void *g_dispatchSave1280_004eabb0;
 extern void GuardedPushCall_0046a560(void);
 void CallPauseCmpStateJmp_0046a520(void) {
     unsigned int v;
-    ScaledZeroFour_00490740();
+    ScaledZeroFour();
     if (g_framePauseFlag != 0) return;
     v = g_table_00535ddc;
     g_walkCallback = (void (*)(void))v;
@@ -37,5 +37,5 @@ void CallPauseCmpStateJmp_0046a520(void) {
         GuardedPushCall_0046a560();
         return;
     }
-    ArgSarStoreJmp_004594f0(&g_dispatchSave1280_004eabb0);
+    ArgSarStoreJmp(&g_dispatchSave1280_004eabb0);
 }

@@ -20,10 +20,10 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern int IterLoad_00491050(void *);
 extern void *g_dispatchSave418_005422f8;
-extern void MStackFrameCdeclDouble_004903f0(void);
+extern void MStackFrameCdeclDouble(void);
 void PushCallSet2147Jmp_00439320(void) {
     IterLoad_00491050(&g_dispatchSave418_005422f8);
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))0x2147;
-    MStackFrameCdeclDouble_004903f0();
+    MStackFrameCdeclDouble();
 }

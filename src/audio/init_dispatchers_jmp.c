@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_tickFlagF;
 extern void *AllocNode(void);
-extern void Push16Call_00489f50(void);
+extern void Push16Call(void);
 void InitDispatchersJmp_004a4260(void) {
     g_pendingNodeType = 0x004200b0;
     g_eventQueueWorkType = 0x1000;
@@ -26,5 +26,5 @@ void InitDispatchersJmp_004a4260(void) {
     g_walkCallback = (void (*)(void))2;
     g_tickFlagF = 2;
     g_eventQueueWorkType = 0;
-    Push16Call_00489f50();
+    Push16Call();
 }

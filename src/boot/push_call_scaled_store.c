@@ -17,9 +17,9 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [ecx*4 + 0x34], eax
  *   ret
  */
-extern int StoreTwoCall_0049cb40(int, void *);
+extern int StoreTwoCall(int, void *);
 extern void *g_dispatchSave1134_004146d0;
 void PushCallScaledStore_004143c0(void) {
-    StoreTwoCall_0049cb40((int)&g_dispatchSave1134_004146d0, 0x8f);
+    StoreTwoCall((int)&g_dispatchSave1134_004146d0, 0x8f);
     ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->state_mask = g_baseSel;
 }

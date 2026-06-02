@@ -22,7 +22,7 @@ extern double g_const_004d27b0;
 extern double g_const_004d27b8;
 extern int DoubleToInt64_004c57d0(void);
 
-void FpuSqrtMul_004ab350(void) {
+void FpuSqrtMul(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueWorkType]
         test    eax, eax

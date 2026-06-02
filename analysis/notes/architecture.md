@@ -76,7 +76,7 @@ arithmetic primitive is a **signed 16.16 fixed-point multiply**, and
 the project's symbol convention abbreviates it **`Mul10`** - where the
 `10` is the **`0x10` = 16-bit shift count**, not "times ten".
 
-Canonical primitive, `Mul10Tail_00404af0` (verified):
+Canonical primitive, `Mul10Tail` (verified):
 
 ```asm
 mov  eax, [esp+4]          ; a

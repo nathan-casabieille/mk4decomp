@@ -72,13 +72,13 @@ void ScaledInitOrSelfPtr_00428950(void) {
 }
 
 /* @addr 0x00429680 (64b): ScaledInitOrSelfPtr, store=own, jmp=0x41f780 */
-extern void StackPopDispatchTagged_0041f780(void);
+extern void StackPopDispatchTagged(void);
 void ScaledInitOrSelfPtr_00429680(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int ptr = ((ScenegraphNode *)base)->install_flag;
     ((ScenegraphNode *)base)->install_flag = 0;
     if (ptr) {
-        StackPopDispatchTagged_0041f780();
+        StackPopDispatchTagged();
         return;
     }
     *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_00429680;

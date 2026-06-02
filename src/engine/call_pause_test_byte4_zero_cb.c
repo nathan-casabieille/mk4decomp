@@ -17,15 +17,15 @@ extern unsigned int g_phaseTimer;
  *   ret
  */
 extern void SetJmp_00405420(void);
-extern void MStackPush2RunCountdown_004089e0(void);
-extern void MStackBracket7_DispatchAndChain_004b8fa0(void);
+extern void MStackPush2RunCountdown(void);
+extern void MStackBracket7_DispatchAndChain(void);
 void CallPauseTestByte4ZeroCB_00451a60(void) {
     SetJmp_00405420();
     if (g_framePauseFlag) return;
     if (!(g_xformDirtyFlags & 4)) return;
-    MStackPush2RunCountdown_004089e0();
+    MStackPush2RunCountdown();
     if (g_framePauseFlag) return;
-    MStackBracket7_DispatchAndChain_004b8fa0();
+    MStackBracket7_DispatchAndChain();
     if (g_framePauseFlag) return;
     g_walkCallback = 0;
 }

@@ -24,15 +24,15 @@
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 
-extern void MStackPush2RunCountdown_004089e0(void);
-extern void MStackBracket7_DispatchAndChain_004b8fa0(void);
+extern void MStackPush2RunCountdown(void);
+extern void MStackBracket7_DispatchAndChain(void);
 
 /* @addr 0x0044ba30 */
 void ScaledLoadTwoCallDualConst_0044ba30(void) {
     g_fightGroupHead = *(unsigned int*)(g_baseSel * 4 + 0x4c);
-    MStackPush2RunCountdown_004089e0();
+    MStackPush2RunCountdown();
     if (g_framePauseFlag) return;
-    MStackBracket7_DispatchAndChain_004b8fa0();
+    MStackBracket7_DispatchAndChain();
     if (g_framePauseFlag) return;
     g_walkCallback = (void(*)(void))2;
     g_acc_00542078 = 3;
@@ -41,9 +41,9 @@ void ScaledLoadTwoCallDualConst_0044ba30(void) {
 /* @addr 0x00467c30 */
 void ScaledLoadTwoCallDualConst_00467c30(void) {
     g_fightGroupHead = *(unsigned int*)(g_baseSel * 4 + 0x4c);
-    MStackPush2RunCountdown_004089e0();
+    MStackPush2RunCountdown();
     if (g_framePauseFlag) return;
-    MStackBracket7_DispatchAndChain_004b8fa0();
+    MStackBracket7_DispatchAndChain();
     if (g_framePauseFlag) return;
     g_walkCallback = (void(*)(void))2;
     g_acc_00542078 = 3;

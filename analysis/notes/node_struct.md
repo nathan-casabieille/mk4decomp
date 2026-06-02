@@ -201,7 +201,7 @@ if (g_xformDirtyFlags & 1)
     node->vel_y = fixmul(node->vel_y, RESTITUTION);  // +0x70 *= ~ -0.6 / -0.7
 ```
 
-Evidence (16.16 fixed-point constants, `Mul10Tail_00404af0` =
+Evidence (16.16 fixed-point constants, `Mul10Tail` =
 fixed-point multiply):
 - `0x1999` = +0.0999 -> the gravity increment on Y (+0x58), the same
   constant `HitContactDispatcherCluster` uses (see axis-roles row).

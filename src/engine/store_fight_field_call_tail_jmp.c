@@ -12,12 +12,12 @@ extern unsigned int g_scaledInit_00542044;
  *   mov [eventQueueEnd*4+0x64]=eax; call F; add esp,4; ret.
  */
 extern unsigned int g_dispatchSave1279_004eaa58;
-extern void CallSetPause_0041f830(void);
+extern void CallSetPause(void);
 void StoreFightFieldCallTailJmp_004667a0(void) {
     unsigned int fg = (unsigned int)g_fightGroupHead;
     unsigned int eq = g_eventQueueEnd;
     unsigned int v = *(unsigned int *)(fg * 4 + 0x64) - 0x4ccc;
     g_walkCallback = (void (*)(void))v;
     *(unsigned int *)(eq * 4 + 0x64) = v;
-    ArgSarStoreJmp_004594f0(&g_dispatchSave1279_004eaa58);
+    ArgSarStoreJmp(&g_dispatchSave1279_004eaa58);
 }

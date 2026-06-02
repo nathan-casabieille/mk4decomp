@@ -24,11 +24,11 @@ void GuardedDirty4ScaledJmp_00473d50(void) {
         ScaledLoadStore_00473ed0();
         return;
     }
-    MStackPush2RunCountdown_004089e0();
+    MStackPush2RunCountdown();
     if (g_framePauseFlag != 0) {
         return;
     }
-    MStackBracket7_DispatchAndChain_004b8fa0();
+    MStackBracket7_DispatchAndChain();
     if (g_framePauseFlag != 0) {
         return;
     }

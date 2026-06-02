@@ -48,7 +48,7 @@ void ScaledAndAhfe_00490390(void) {
  *   jmp     +2
  */
 extern void PendingMatch_00459510(void);
-void ArgSarStoreJmp_004594f0(int arg) {
+void ArgSarStoreJmp(int arg) {
     unsigned int base = g_baseSel;
     int v = arg >> 2;
     g_eventQueueTotal = (unsigned int)v;

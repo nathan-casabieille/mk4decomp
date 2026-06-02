@@ -22,19 +22,19 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     +9
  *   ret
  */
-extern void DirtyToggleByGate_0048f350(void);
+extern void DirtyToggleByGate(void);
 extern void GuardedDispatch4_00484b40(void);
-extern void GameDispatchValidateState_004339c0(void);
+extern void GameDispatchValidateState(void);
 extern void GuardedDispatch4_00484b40(void);
 void CallPauseDirtyMStackPush484b40_00484b00(void) {
     unsigned int v;
-    DirtyToggleByGate_0048f350();
+    DirtyToggleByGate();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 4) != 0) {
         v = g_matrixStackTop + 1;
         g_matrixStackTop = v;
         *(unsigned int *)(v * 4) = (unsigned int)&GuardedDispatch4_00484b40;
-        GameDispatchValidateState_004339c0();
+        GameDispatchValidateState();
         return;
     }
     GuardedDispatch4_00484b40();
