@@ -38,12 +38,14 @@ typedef struct DrawEntry {
     s16 x0, y0;          /* +0x00/+0x02 vertex 0 screen X / Y          */
     s16 x1, y1;          /* +0x04/+0x06 vertex 1 (skipped if flags&0x20) */
     s16 x2, y2;          /* +0x08/+0x0A vertex 2 screen X / Y          */
-    u8  _0c[6];          /* +0x0C..+0x11 coords / UVs / colors         */
+    u16 attr0[3];        /* +0x0C..+0x11 per-vertex attribute slot 0
+                          * (UVs or screen-Z, depending on rendering mode) */
     u16 sort_key;        /* +0x12 z key, rewritten to bucket id via g_zSortKeyLUT */
-    u8  _14[6];          /* +0x14..+0x19 UVs / shaded RGB555 colors    */
+    u16 attr1[3];        /* +0x14..+0x19 per-vertex attribute slot 1
+                          * (UVs or shaded RGB555 colors) */
     u8  flags;           /* +0x1A bit 0x20 = skip vertex 1 (tri vs quad);
                                   bit 0x400 carries the facing/valid bit */
-    u8  _1b;             /* +0x1B                                       */
+    u8  pad_1b;          /* +0x1B padding (always 0)                   */
 } DrawEntry;             /* 28 bytes (DRAW_QUEUE_SIZE) */
 
 /* Direct3D 2 transformed-and-lit vertex (D3DVT_TLVERTEX = 3, the vertex
